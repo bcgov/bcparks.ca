@@ -1,0 +1,87 @@
+main {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  min-height: 100vh;
+  position: relative;
+}
+
+.page {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.content {
+  flex-direction: column;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.sidecard {
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bcgov-normal-blue {
+  color: white;
+  font-weight: 700;
+  font-style: normal;
+  background-color: #003366;
+}
+
+.bcgov-normal-blue:hover {
+  background-color: rgba(43, 91, 164, 1);
+  color: white;
+}
+
+.bcgov-normal-white {
+  color: #003366;
+  background-color: white;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(204, 204, 204, 1);
+}
+
+.bcgov-normal-white:hover {
+  box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  background-color: rgba(242, 242, 242, 1);
+  border-color: rgba(204, 204, 204, 1);
+}
+
+@media (max-width: 575.98px) {
+  .page {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 576px) {
+  footer {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    position: absolute;
+  }
+  .page {
+    padding-bottom: 100px;
+  }
+}
+
+@media print {
+  body {
+    visibility: hidden;
+  }
+
+  .print {
+    width: 100%;
+    visibility: visible;
+    margin-left: 1cm;
+  }
+}

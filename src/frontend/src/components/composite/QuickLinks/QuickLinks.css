@@ -1,0 +1,19 @@
+.QuickLinks .padding-vertical {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.QuickLinks {
+  min-height: 250px;
+}
+
+.link a {
+  color: #003366 !important;
+  text-decoration: none;
+}
+
+/* .QuickLinks *,
+.QuickLinks *::before,
+.QuickLinks *::after {
+  box-sizing: border-box;
+} */

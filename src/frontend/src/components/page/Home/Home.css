@@ -1,0 +1,59 @@
+.explore-bc .link {
+  display: block;
+  font-size: 1.1rem;
+}
+
+.explore-bc .gradient {
+  background: linear-gradient(25deg, #003366 0%, rgba(0, 51, 102, 0) 100%);
+  min-height: 600px;
+  padding-top: 175px;
+  padding-bottom: 50px;
+}
+
+.shadow {
+  text-shadow: 1px 1px 1px #000000;
+}
+
+.form-home {
+  display: flex;
+}
+
+.form-home div {
+  width: 100%;
+  padding-right: 10px;
+}
+.explore-bc {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: url("../../../assets/bedwell-lake-strathcona-park-bc.jpg");
+  background-size: cover;
+  position: relative;
+}
+
+.explore-bc p {
+  color: #e0e9f2;
+  font-size: 1.2rem;
+}
+
+.explore-bc h1 {
+  color: #ffb200;
+}
+
+.explore-bc .bcgov-dropdown {
+  background-color: rgba(224, 233, 242, 0.7) !important;
+  color: #003366 !important;
+  padding: 10px 30px !important;
+  border-radius: 20px;
+  border: none !important;
+}
+
+.fa-chevron-down {
+  right: 2em !important;
+}
+
+:focus {
+  outline: none!important;
+  outline-offset: 1px;
+}
