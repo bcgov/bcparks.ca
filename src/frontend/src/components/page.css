@@ -29,31 +29,31 @@ main {
 }
 
 .bcgov-normal-blue {
-  color: white;
-  font-weight: 700;
-  font-style: normal;
-  background-color: #003366;
+  color: white !important;
+  font-weight: 700!important;
+  font-style: normal!important;
+  background-color: #003366!important;
 }
 
 .bcgov-normal-blue:hover {
-  background-color: rgba(43, 91, 164, 1);
-  color: white;
+  background-color: rgba(43, 91, 164, 1)!important;
+  color: white!important;
 }
 
 .bcgov-normal-white {
-  color: #003366;
-  background-color: white;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgba(204, 204, 204, 1);
+  color: #003366!important;
+  background-color: white!important;
+  border-width: 1px!important;
+  border-style: solid!important;
+  border-color: rgba(204, 204, 204, 1)!important;
 }
 
 .bcgov-normal-white:hover {
-  box-sizing: border-box;
-  border-width: 1px;
-  border-style: solid;
-  background-color: rgba(242, 242, 242, 1);
-  border-color: rgba(204, 204, 204, 1);
+  box-sizing: border-box!important;
+  border-width: 1px!important;
+  border-style: solid!important;
+  background-color: rgba(242, 242, 242, 1)!important;
+  border-color: rgba(204, 204, 204, 1)!important;
 }
 
 @media (max-width: 575.98px) {
