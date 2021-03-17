@@ -1,0 +1,81 @@
+{
+  "kind": "collectionType",
+  "collectionName": "public_advisory_events",
+  "info": {
+    "name": "PublicAdvisoryEvent"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "ParData": {
+      "type": "string"
+    },
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "Submitter": {
+      "type": "string"
+    },
+    "AccessStatus": {
+      "type": "string"
+    },
+    "EventType": {
+      "type": "string"
+    },
+    "DCTicketNumber": {
+      "type": "integer"
+    },
+    "OrderURL": {
+      "type": "string"
+    },
+    "MapURL": {
+      "type": "string"
+    },
+    "EvacuationURL": {
+      "type": "string"
+    },
+    "InformationBulletinURL": {
+      "type": "string"
+    },
+    "Alert": {
+      "type": "string"
+    },
+    "Approved": {
+      "type": "string"
+    },
+    "AdvisoryStatus": {
+      "type": "string"
+    },
+    "ListingRank": {
+      "type": "string"
+    },
+    "Note": {
+      "type": "string"
+    },
+    "Coordinates": {
+      "type": "string"
+    },
+    "CreatedDate": {
+      "type": "datetime"
+    },
+    "CreatedBy": {
+      "type": "string"
+    },
+    "ModifiedDate": {
+      "type": "datetime"
+    },
+    "ModifiedBy": {
+      "type": "string"
+    },
+    "public_advisory": {
+      "via": "public_advisory_events",
+      "model": "public-advisory"
+    }
+  }
+}

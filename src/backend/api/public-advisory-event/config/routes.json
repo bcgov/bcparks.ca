@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/public-advisory-events",
+      "handler": "public-advisory-event.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/public-advisory-events/count",
+      "handler": "public-advisory-event.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/public-advisory-events/:id",
+      "handler": "public-advisory-event.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/public-advisory-events",
+      "handler": "public-advisory-event.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/public-advisory-events/:id",
+      "handler": "public-advisory-event.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/public-advisory-events/:id",
+      "handler": "public-advisory-event.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

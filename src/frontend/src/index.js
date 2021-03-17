@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css";
 import "./components/page.css";
 import axios from "axios";
+import { BrowserRouter } from "react-router-dom";
 
 if (window.REACT_APP_API_BASE_URL) {
   axios.defaults.baseURL = window.REACT_APP_API_BASE_URL;
@@ -14,9 +15,9 @@ if (window.REACT_APP_API_BASE_URL) {
 }
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <App />
-  </React.StrictMode>,
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
