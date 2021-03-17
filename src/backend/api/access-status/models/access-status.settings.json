@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "access_statuses",
+  "info": {
+    "name": "AccessStatus",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "AccessStatus": {
+      "type": "string"
+    }
+  }
+}

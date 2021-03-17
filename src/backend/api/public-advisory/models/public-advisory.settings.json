@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "public_advisories",
   "info": {
-    "name": "PublicAdvisory"
+    "name": "PublicAdvisory",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -11,25 +12,41 @@
   },
   "attributes": {
     "AdvisoryID": {
-      "type": "string"
-    },
-    "Rank": {
-      "type": "string"
-    },
-    "Alert": {
-      "type": "string"
-    },
-    "DisplayAdvisoryDate": {
-      "type": "string"
+      "type": "integer"
     },
     "AdvisoryDate": {
+      "type": "datetime"
+    },
+    "EffectiveDate": {
+      "type": "datetime"
+    },
+    "EndDate": {
+      "type": "datetime"
+    },
+    "ExpiryDate": {
+      "type": "datetime"
+    },
+    "RemovalDate": {
+      "type": "datetime"
+    },
+    "UpdatedDate": {
+      "type": "datetime"
+    },
+    "CreatedDate": {
+      "type": "datetime"
+    },
+    "CreatedBy": {
       "type": "string"
     },
-    "Headline": {
+    "ModifiedDate": {
+      "type": "datetime"
+    },
+    "ModifiedBy": {
       "type": "string"
     },
-    "Description": {
-      "type": "string"
+    "public_advisory_events": {
+      "collection": "public-advisory-event",
+      "via": "public_advisory"
     }
   }
 }

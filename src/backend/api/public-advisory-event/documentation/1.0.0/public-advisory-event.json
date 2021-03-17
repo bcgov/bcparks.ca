@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/public-advisories": {
+    "/public-advisory-events": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -52,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Public-advisory"
+          "Public-advisory-event"
         ],
         "parameters": [
           {
@@ -244,7 +244,7 @@
         },
         "summary": "",
         "tags": [
-          "Public-advisory"
+          "Public-advisory-event"
         ],
         "requestBody": {
           "description": "",
@@ -252,14 +252,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPublic-advisory"
+                "$ref": "#/components/schemas/NewPublic-advisory-event"
               }
             }
           }
         }
       }
     },
-    "/public-advisories/count": {
+    "/public-advisory-events/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -311,12 +311,12 @@
         },
         "summary": "",
         "tags": [
-          "Public-advisory"
+          "Public-advisory-event"
         ],
         "parameters": []
       }
     },
-    "/public-advisories/{id}": {
+    "/public-advisory-events/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -368,7 +368,7 @@
         },
         "summary": "",
         "tags": [
-          "Public-advisory"
+          "Public-advisory-event"
         ],
         "parameters": [
           {
@@ -434,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Public-advisory"
+          "Public-advisory-event"
         ],
         "requestBody": {
           "description": "",
@@ -442,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPublic-advisory"
+                "$ref": "#/components/schemas/NewPublic-advisory-event"
               }
             }
           }
@@ -508,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Public-advisory"
+          "Public-advisory-event"
         ],
         "parameters": [
           {
@@ -527,7 +527,7 @@
   },
   "components": {
     "schemas": {
-      "Public-advisory": {
+      "Public-advisory-event": {
         "required": [
           "id"
         ],
@@ -535,32 +535,56 @@
           "id": {
             "type": "string"
           },
-          "AdvisoryID": {
+          "ParData": {
+            "type": "string"
+          },
+          "Title": {
+            "type": "string"
+          },
+          "Description": {
+            "type": "string"
+          },
+          "Submitter": {
+            "type": "string"
+          },
+          "AccessStatus": {
+            "type": "string"
+          },
+          "EventType": {
+            "type": "string"
+          },
+          "DCTicketNumber": {
             "type": "integer"
           },
-          "AdvisoryDate": {
-            "type": "string",
-            "format": "date-time"
+          "OrderURL": {
+            "type": "string"
           },
-          "EffectiveDate": {
-            "type": "string",
-            "format": "date-time"
+          "MapURL": {
+            "type": "string"
           },
-          "EndDate": {
-            "type": "string",
-            "format": "date-time"
+          "EvacuationURL": {
+            "type": "string"
           },
-          "ExpiryDate": {
-            "type": "string",
-            "format": "date-time"
+          "InformationBulletinURL": {
+            "type": "string"
           },
-          "RemovalDate": {
-            "type": "string",
-            "format": "date-time"
+          "Alert": {
+            "type": "string"
           },
-          "UpdatedDate": {
-            "type": "string",
-            "format": "date-time"
+          "Approved": {
+            "type": "string"
+          },
+          "AdvisoryStatus": {
+            "type": "string"
+          },
+          "ListingRank": {
+            "type": "string"
+          },
+          "Note": {
+            "type": "string"
+          },
+          "Coordinates": {
+            "type": "string"
           },
           "CreatedDate": {
             "type": "string",
@@ -576,91 +600,61 @@
           "ModifiedBy": {
             "type": "string"
           },
-          "public_advisory_events": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "ParData": {
-                  "type": "string"
-                },
-                "Title": {
-                  "type": "string"
-                },
-                "Description": {
-                  "type": "string"
-                },
-                "Submitter": {
-                  "type": "string"
-                },
-                "AccessStatus": {
-                  "type": "string"
-                },
-                "EventType": {
-                  "type": "string"
-                },
-                "DCTicketNumber": {
-                  "type": "integer"
-                },
-                "OrderURL": {
-                  "type": "string"
-                },
-                "MapURL": {
-                  "type": "string"
-                },
-                "EvacuationURL": {
-                  "type": "string"
-                },
-                "InformationBulletinURL": {
-                  "type": "string"
-                },
-                "Alert": {
-                  "type": "string"
-                },
-                "Approved": {
-                  "type": "string"
-                },
-                "AdvisoryStatus": {
-                  "type": "string"
-                },
-                "ListingRank": {
-                  "type": "string"
-                },
-                "Note": {
-                  "type": "string"
-                },
-                "Coordinates": {
-                  "type": "string"
-                },
-                "CreatedDate": {
-                  "type": "string"
-                },
-                "CreatedBy": {
-                  "type": "string"
-                },
-                "ModifiedDate": {
-                  "type": "string"
-                },
-                "ModifiedBy": {
-                  "type": "string"
-                },
-                "public_advisory": {
-                  "type": "string"
-                },
-                "published_at": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
+          "public_advisory": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "AdvisoryID": {
+                "type": "integer"
+              },
+              "AdvisoryDate": {
+                "type": "string"
+              },
+              "EffectiveDate": {
+                "type": "string"
+              },
+              "EndDate": {
+                "type": "string"
+              },
+              "ExpiryDate": {
+                "type": "string"
+              },
+              "RemovalDate": {
+                "type": "string"
+              },
+              "UpdatedDate": {
+                "type": "string"
+              },
+              "CreatedDate": {
+                "type": "string"
+              },
+              "CreatedBy": {
+                "type": "string"
+              },
+              "ModifiedDate": {
+                "type": "string"
+              },
+              "ModifiedBy": {
+                "type": "string"
+              },
+              "public_advisory_events": {
+                "type": "array",
+                "items": {
                   "type": "string"
                 }
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
           },
@@ -670,34 +664,58 @@
           }
         }
       },
-      "NewPublic-advisory": {
+      "NewPublic-advisory-event": {
         "properties": {
-          "AdvisoryID": {
+          "ParData": {
+            "type": "string"
+          },
+          "Title": {
+            "type": "string"
+          },
+          "Description": {
+            "type": "string"
+          },
+          "Submitter": {
+            "type": "string"
+          },
+          "AccessStatus": {
+            "type": "string"
+          },
+          "EventType": {
+            "type": "string"
+          },
+          "DCTicketNumber": {
             "type": "integer"
           },
-          "AdvisoryDate": {
-            "type": "string",
-            "format": "date-time"
+          "OrderURL": {
+            "type": "string"
           },
-          "EffectiveDate": {
-            "type": "string",
-            "format": "date-time"
+          "MapURL": {
+            "type": "string"
           },
-          "EndDate": {
-            "type": "string",
-            "format": "date-time"
+          "EvacuationURL": {
+            "type": "string"
           },
-          "ExpiryDate": {
-            "type": "string",
-            "format": "date-time"
+          "InformationBulletinURL": {
+            "type": "string"
           },
-          "RemovalDate": {
-            "type": "string",
-            "format": "date-time"
+          "Alert": {
+            "type": "string"
           },
-          "UpdatedDate": {
-            "type": "string",
-            "format": "date-time"
+          "Approved": {
+            "type": "string"
+          },
+          "AdvisoryStatus": {
+            "type": "string"
+          },
+          "ListingRank": {
+            "type": "string"
+          },
+          "Note": {
+            "type": "string"
+          },
+          "Coordinates": {
+            "type": "string"
           },
           "CreatedDate": {
             "type": "string",
@@ -713,11 +731,8 @@
           "ModifiedBy": {
             "type": "string"
           },
-          "public_advisory_events": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "public_advisory": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
