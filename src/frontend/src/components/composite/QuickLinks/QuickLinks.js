@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./QuickLinks.css";
+import "./QuickLinks.css";
 import image1 from "../../../../src/assets/bc-parks-foundation-icon@2x.png";
 import image2 from "../../../../src/assets/support-icon@2x.png";
 import image3 from "../../../../src/assets/bc-parks-licence-plates-icon@2x.png";
