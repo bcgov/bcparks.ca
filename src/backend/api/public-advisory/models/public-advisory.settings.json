@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "public_advisories",
+  "info": {
+    "name": "PublicAdvisory"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "AdvisoryID": {
+      "type": "string"
+    },
+    "Rank": {
+      "type": "string"
+    },
+    "Alert": {
+      "type": "string"
+    },
+    "DisplayAdvisoryDate": {
+      "type": "string"
+    },
+    "AdvisoryDate": {
+      "type": "string"
+    },
+    "Headline": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    }
+  }
+}
