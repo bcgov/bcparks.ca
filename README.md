@@ -26,7 +26,7 @@ Docker command:
 For full development, developer dependencies are the following:
 
 	Visual Studio Code
-  Strapi
+  	Strapi
 	Gitlab
 	Postman
 
@@ -34,8 +34,8 @@ The following technologies are used in this project:
 
 	React
 	Strapi
-  Gatsby
-  Kong
+  	Gatsby
+  	Kong
 	PostgreSQL
 
 Your changes will be deployed automatically next time the app starts.
