@@ -5,7 +5,12 @@ services:
     container_name: bcp-frontend
     restart: unless-stopped
     build:
-      context: ./frontend
+      context: frontend
+      dockerfile: Dockerfile
+    environment:
+      REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
+      REACT_APP_FRONTEND_BASE_URL: ${REACT_APP_FRONTEND_BASE_URL}
+      PUBLIC_URL: ${PUBLIC_URL}
     networks:
       - bcp-cms-network
     volumes:
@@ -21,7 +26,8 @@ services:
     restart: unless-stopped
     env_file: .env
     build:
-      context: ./backend
+      context: backend
+      dockerfile: Dockerfile
     environment:
       DATABASE_HOST: ${DATABASE_HOST}
       DATABASE_PORT: ${DATABASE_PORT}

@@ -1,13 +1,6 @@
 # pull official base image
 FROM node:14.16.0-alpine
 
-ARG DATABASE_HOST=postgres
-ARG DATABASE_PORT=5432
-ARG DATABASE_NAME=postgres
-ARG DATABASE_USERNAME=postgres
-ARG DATABASE_PASSWORD=postgres
-ARG DATABASE_SSL=false
-
 ENV DATABASE_HOST=${DATABASE_HOST}
 ENV DATABASE_PORT=${DATABASE_PORT}
 ENV DATABASE_NAME=${DATABASE_NAME}
@@ -24,12 +17,10 @@ ENV PATH ./node_modules/.bin:$PATH
 # install app dependencies
 COPY package.json ./
 RUN npm install --silent
-
-# add bash to the image
-RUN apk add --no-cache bash
+RUN npm run build
 
 # add app
 COPY . ./
 
 # start app
-CMD ["npm", "start"]
+CMD [ "npm", "start" ]

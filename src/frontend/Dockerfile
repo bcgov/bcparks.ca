@@ -1,6 +1,10 @@
 # pull official base image
 FROM node:14.16.0-alpine
 
+ENV REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+ENV REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL}
+ENV PUBLIC_URL=${PUBLIC_URL}
+
 # set working directory
 WORKDIR /frontend
 
