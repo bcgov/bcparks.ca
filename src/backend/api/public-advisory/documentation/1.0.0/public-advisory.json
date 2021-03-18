@@ -598,12 +598,6 @@
                 "Submitter": {
                   "type": "string"
                 },
-                "AccessStatus": {
-                  "type": "string"
-                },
-                "EventType": {
-                  "type": "string"
-                },
                 "DCTicketNumber": {
                   "type": "integer"
                 },
@@ -650,6 +644,12 @@
                   "type": "string"
                 },
                 "public_advisory": {
+                  "type": "string"
+                },
+                "access_status": {
+                  "type": "string"
+                },
+                "event_type": {
                   "type": "string"
                 },
                 "published_at": {

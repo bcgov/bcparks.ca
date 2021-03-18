@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "public_advisory_events",
   "info": {
-    "name": "PublicAdvisoryEvent"
+    "name": "PublicAdvisoryEvent",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -10,22 +11,16 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "ParData": {
+    "Title": {
       "type": "string"
     },
-    "Title": {
+    "ParData": {
       "type": "string"
     },
     "Description": {
       "type": "string"
     },
     "Submitter": {
-      "type": "string"
-    },
-    "AccessStatus": {
-      "type": "string"
-    },
-    "EventType": {
       "type": "string"
     },
     "DCTicketNumber": {
@@ -74,8 +69,16 @@
       "type": "string"
     },
     "public_advisory": {
-      "via": "public_advisory_events",
-      "model": "public-advisory"
+      "model": "public-advisory",
+      "via": "public_advisory_events"
+    },
+    "access_status": {
+      "model": "access-status",
+      "via": "public_advisory_events"
+    },
+    "event_type": {
+      "model": "event-type",
+      "via": "public_advisory_events"
     }
   }
 }

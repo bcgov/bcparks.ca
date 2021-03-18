@@ -547,12 +547,6 @@
           "Submitter": {
             "type": "string"
           },
-          "AccessStatus": {
-            "type": "string"
-          },
-          "EventType": {
-            "type": "string"
-          },
           "DCTicketNumber": {
             "type": "integer"
           },
@@ -658,6 +652,62 @@
               }
             }
           },
+          "access_status": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "AccessStatus": {
+                "type": "string"
+              },
+              "public_advisory_events": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "event_type": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "EventType": {
+                "type": "string"
+              },
+              "public_advisory_events": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -676,12 +726,6 @@
             "type": "string"
           },
           "Submitter": {
-            "type": "string"
-          },
-          "AccessStatus": {
-            "type": "string"
-          },
-          "EventType": {
             "type": "string"
           },
           "DCTicketNumber": {
@@ -732,6 +776,12 @@
             "type": "string"
           },
           "public_advisory": {
+            "type": "string"
+          },
+          "access_status": {
+            "type": "string"
+          },
+          "event_type": {
             "type": "string"
           },
           "published_at": {
