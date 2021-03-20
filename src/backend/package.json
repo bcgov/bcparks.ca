@@ -11,17 +11,18 @@
   },
   "devDependencies": {},
   "dependencies": {
+    "axios": "^0.21.1",
+    "knex": "0.21.18",
+    "pg": "8.5.1",
     "strapi": "3.5.3",
     "strapi-admin": "3.5.3",
-    "strapi-utils": "3.5.3",
-    "strapi-plugin-content-type-builder": "3.5.3",
+    "strapi-connector-bookshelf": "3.5.3",
     "strapi-plugin-content-manager": "3.5.3",
-    "strapi-plugin-users-permissions": "3.5.3",
+    "strapi-plugin-content-type-builder": "3.5.3",
     "strapi-plugin-email": "3.5.3",
     "strapi-plugin-upload": "3.5.3",
-    "strapi-connector-bookshelf": "3.5.3",
-    "knex": "0.21.18",
-    "pg": "8.5.1"
+    "strapi-plugin-users-permissions": "3.5.3",
+    "strapi-utils": "3.5.3"
   },
   "strapi": {
     "uuid": "4d57707a-8e32-4a4f-b83d-52150fd0f678"

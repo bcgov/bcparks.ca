@@ -1,9 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "parks",
+  "collectionName": "sites",
   "info": {
-    "name": "Park",
-    "description": ""
+    "name": "Site"
   },
   "options": {
     "increments": true,
@@ -11,14 +10,25 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "ParkName": {
+    "ORCS": {
+      "type": "integer",
+      "required": true
+    },
+    "Name": {
       "type": "string"
     },
-    "TypeCode": {
+    "SiteNumber": {
+      "type": "integer",
+      "required": true
+    },
+    "Status": {
       "type": "string"
     },
-    "ParkID": {
-      "type": "string"
+    "EstablishedDate": {
+      "type": "date"
+    },
+    "RepealedDate": {
+      "type": "date"
     },
     "URL": {
       "type": "string"
@@ -29,16 +39,7 @@
     "Longitude": {
       "type": "string"
     },
-    "EstablishedDate": {
-      "type": "string"
-    },
-    "TotalArea": {
-      "type": "string"
-    },
-    "UploadArea": {
-      "type": "string"
-    },
-    "MarineArea": {
+    "MapZoom": {
       "type": "string"
     }
   }

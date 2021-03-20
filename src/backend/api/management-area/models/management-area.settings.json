@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "management_areas",
+  "info": {
+    "name": "ManagementArea"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Number": {
+      "type": "integer",
+      "unique": true,
+      "required": true
+    },
+    "Name": {
+      "type": "string"
+    },
+    "Section": {
+      "via": "ManagementAreas",
+      "model": "section"
+    }
+  }
+}

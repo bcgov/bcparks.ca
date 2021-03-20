@@ -1,0 +1,81 @@
+{
+  "kind": "collectionType",
+  "collectionName": "protected_areas",
+  "info": {
+    "name": "ProtectedArea",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "ORCS": {
+      "type": "integer",
+      "unique": true,
+      "required": true
+    },
+    "ParkName": {
+      "type": "string"
+    },
+    "TotalArea": {
+      "type": "decimal"
+    },
+    "UplandArea": {
+      "type": "decimal"
+    },
+    "MarineArea": {
+      "type": "decimal"
+    },
+    "MarineProtectedArea": {
+      "type": "string",
+      "maxLength": 1,
+      "minLength": 1,
+      "regex": "[Y,N]"
+    },
+    "Type": {
+      "type": "string"
+    },
+    "Class": {
+      "type": "string"
+    },
+    "EstablishedDate": {
+      "type": "date"
+    },
+    "RepealedDate": {
+      "type": "date"
+    },
+    "Active": {
+      "type": "string"
+    },
+    "URL": {
+      "type": "string"
+    },
+    "TypeCode": {
+      "type": "enumeration",
+      "enum": [
+        "PK",
+        "PA",
+        "RA",
+        "ER",
+        "CS"
+      ]
+    },
+    "Latitude": {
+      "type": "string"
+    },
+    "Longitude": {
+      "type": "string"
+    },
+    "MapZoom": {
+      "type": "string"
+    },
+    "Sites": {
+      "collection": "site"
+    },
+    "ManagementAreas": {
+      "collection": "management-area"
+    }
+  }
+}

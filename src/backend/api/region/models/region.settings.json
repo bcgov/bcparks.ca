@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "regions",
+  "info": {
+    "name": "Region",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Number": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "Name": {
+      "type": "string"
+    },
+    "Sections": {
+      "collection": "section",
+      "via": "Region"
+    }
+  }
+}
