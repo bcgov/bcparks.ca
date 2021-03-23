@@ -3,7 +3,7 @@
   "collectionName": "sites",
   "info": {
     "name": "Site",
-    "description": ""
+    "description": "Site"
   },
   "options": {
     "increments": true,
@@ -11,17 +11,11 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "ORCS": {
-      "type": "integer",
-      "required": true
-    },
-    "Name": {
+    "SiteName": {
       "type": "string"
     },
     "SiteNumber": {
-      "type": "integer",
-      "required": true,
-      "unique": true
+      "type": "integer"
     },
     "Status": {
       "type": "string"
@@ -47,6 +41,11 @@
     "ProtectedArea": {
       "model": "protected-area",
       "via": "Sites"
+    },
+    "ORCSSiteNumber": {
+      "type": "string",
+      "unique": true,
+      "required": true
     }
   }
 }

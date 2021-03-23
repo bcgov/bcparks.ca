@@ -22,7 +22,8 @@
     "strapi-plugin-email": "3.5.3",
     "strapi-plugin-upload": "3.5.3",
     "strapi-plugin-users-permissions": "3.5.3",
-    "strapi-utils": "3.5.3"
+    "strapi-utils": "3.5.3",
+    "utf8": "^3.0.0"
   },
   "strapi": {
     "uuid": "4d57707a-8e32-4a4f-b83d-52150fd0f678"

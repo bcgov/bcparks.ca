@@ -18,7 +18,7 @@
     },
     {
       "method": "GET",
-      "path": "/protected-areas/:id",
+      "path": "/protected-areas/:oRCS",
       "handler": "protected-area.findOne",
       "config": {
         "policies": []
@@ -34,7 +34,7 @@
     },
     {
       "method": "PUT",
-      "path": "/protected-areas/:id",
+      "path": "/protected-areas/:oRCS",
       "handler": "protected-area.update",
       "config": {
         "policies": []
@@ -42,7 +42,7 @@
     },
     {
       "method": "DELETE",
-      "path": "/protected-areas/:id",
+      "path": "/protected-areas/:oRCS",
       "handler": "protected-area.delete",
       "config": {
         "policies": []

@@ -3,7 +3,7 @@
   "collectionName": "management_areas",
   "info": {
     "name": "ManagementArea",
-    "description": ""
+    "description": "Management Area"
   },
   "options": {
     "increments": true,
@@ -11,12 +11,12 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "Number": {
+    "ManagementAreaNumber": {
       "type": "integer",
       "unique": true,
       "required": true
     },
-    "Name": {
+    "ManagementAreaName": {
       "type": "string"
     },
     "Section": {
@@ -28,8 +28,8 @@
       "via": "ManagementArea"
     },
     "ProtectedArea": {
-      "via": "ManagementAreas",
-      "model": "protected-area"
+      "model": "protected-area",
+      "via": "ManagementAreas"
     }
   }
 }

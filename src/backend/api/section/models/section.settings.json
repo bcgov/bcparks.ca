@@ -3,7 +3,7 @@
   "collectionName": "sections",
   "info": {
     "name": "Section",
-    "description": ""
+    "description": "Section"
   },
   "options": {
     "increments": true,
@@ -11,12 +11,12 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "Number": {
+    "SectionNumber": {
       "type": "integer",
       "required": true,
       "unique": true
     },
-    "Name": {
+    "SectionName": {
       "type": "string"
     },
     "ManagementAreas": {
@@ -24,8 +24,8 @@
       "collection": "management-area"
     },
     "Region": {
-      "via": "Sections",
-      "model": "region"
+      "model": "region",
+      "via": "Sections"
     }
   }
 }

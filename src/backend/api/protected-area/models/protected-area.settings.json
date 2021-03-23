@@ -3,7 +3,7 @@
   "collectionName": "protected_areas",
   "info": {
     "name": "ProtectedArea",
-    "description": ""
+    "description": "Protected Area"
   },
   "options": {
     "increments": true,
@@ -16,7 +16,7 @@
       "unique": true,
       "required": true
     },
-    "ParkName": {
+    "ProtectedAreaName": {
       "type": "string"
     },
     "TotalArea": {
@@ -76,8 +76,8 @@
       "collection": "site"
     },
     "ManagementAreas": {
-      "collection": "management-area",
-      "via": "ProtectedArea"
+      "via": "ProtectedArea",
+      "collection": "management-area"
     }
   }
 }

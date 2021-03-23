@@ -1,6 +1,8 @@
 "use strict";
+const fs = require("fs");
 const axios = require("axios");
 const moment = require("moment");
+const utf8 = require("utf8");
 
 /**
  * An asynchronous bootstrap function that runs before
@@ -14,7 +16,7 @@ const moment = require("moment");
 const loadParData = async () => {
   const currentProtectedAreas = await strapi.services["protected-area"].find();
   if (currentProtectedAreas.length == 0) {
-    console.log("Loading Protected Areas data");
+    console.log("Loading Protected Areas data..");
     axios
       .get("https://a100.gov.bc.ca/pub/parws/protectedLands", {
         params: {
@@ -39,14 +41,14 @@ const loadParData = async () => {
 const loadRegion = async (area) => {
   const region = await Promise.resolve(
     strapi.services["region"].create({
-      Number: area.protectedLandRegionNumber,
-      Name: area.protectedLandRegionName,
+      RegionNumber: area.protectedLandRegionNumber,
+      RegionName: area.protectedLandRegionName,
     })
   )
     .catch(() => {
       return Promise.resolve(
         strapi.query("region").findOne({
-          Number: area.protectedLandRegionNumber,
+          RegionNumber: area.protectedLandRegionNumber,
         })
       );
     })
@@ -57,15 +59,15 @@ const loadRegion = async (area) => {
 const loadSection = async (area, region) => {
   const section = await Promise.resolve(
     strapi.services["section"].create({
-      Number: area.protectedLandSectionNumber,
-      Name: area.protectedLandSectionName,
+      SectionNumber: area.protectedLandSectionNumber,
+      SectionName: area.protectedLandSectionName,
       Region: region,
     })
   )
     .catch(() => {
       return Promise.resolve(
         strapi.query("section").findOne({
-          Number: area.protectedLandSectionNumber,
+          SectionNumber: area.protectedLandSectionNumber,
         })
       );
     })
@@ -76,8 +78,8 @@ const loadSection = async (area, region) => {
 const loadManagementArea = async (area, region, section) => {
   const managementArea = await Promise.resolve(
     strapi.services["management-area"].create({
-      Number: area.protectedLandManagementAreaNumber,
-      Name: area.protectedLandManagementAreaName,
+      ManagementAreaNumber: area.protectedLandManagementAreaNumber,
+      ManagementAreaName: area.protectedLandManagementAreaName,
       Section: section,
       Region: region,
     })
@@ -85,7 +87,7 @@ const loadManagementArea = async (area, region, section) => {
     .catch(() => {
       return Promise.resolve(
         strapi.query("management-area").findOne({
-          Number: area.protectedLandManagementAreaNumber,
+          ManagementAreaNumber: area.protectedLandManagementAreaNumber,
         })
       );
     })
@@ -111,9 +113,9 @@ const loadManagementAreas = async (managementAreas) => {
 const loadSite = async (site, orcNumber) => {
   const siteObj = await Promise.resolve(
     strapi.services["site"].create({
-      ORCS: orcNumber,
+      ORCSSiteNumber: orcNumber + "-" + site.protectedLandSiteNumber,
       SiteNumber: site.protectedLandSiteNumber,
-      Name: site.protectedLandSiteName,
+      SiteName: site.protectedLandSiteName,
       Status: site.protectedLandSiteStatusCode,
       EstablishedDate: site.protectedLandSiteEstablishedDate
         ? moment(site.protectedLandSiteEstablishedDate, "YYYY-MM-DD")
@@ -134,7 +136,7 @@ const loadSite = async (site, orcNumber) => {
     .catch(() => {
       return Promise.resolve(
         strapi.query("site").findOne({
-          SiteNumber: site.protectedLandSiteNumber,
+          ORCSSiteNumber: orcNumber + "-" + site.protectedLandSiteNumber,
         })
       );
     })
@@ -159,7 +161,7 @@ const loadProtectedLandData = async (protectedLandData) => {
     );
     await strapi.services["protected-area"].create({
       ORCS: protectedLandData.orcNumber,
-      ParkName: protectedLandData.protectedLandName,
+      ProtectedAreaName: utf8.encode(protectedLandData.protectedLandName),
       TotalArea: protectedLandData.totalArea,
       UplandArea: protectedLandData.uplandArea,
       MarineArea: protectedLandData.marineArea,
@@ -229,23 +231,67 @@ const createPublicAdvisoryEvent = async () => {
 };
 
 // This method is used for testing and development purposes only
-const removeParData = async () => {
-  console.log("Removing PAR data for testing");
+const removeAllData = async () => {
+  console.log("Removing all data for testing..");
   await strapi.services["protected-area"].delete();
   await strapi.services["section"].delete();
   await strapi.services["management-area"].delete();
   await strapi.services["region"].delete();
   await strapi.services["site"].delete();
+  await strapi.services["public-advisory"].delete();
+  await strapi.services["access-status"].delete();
+  await strapi.services["event-type"].delete();
+  await strapi.services["public-advisory-event"].delete();
 };
 
-module.exports = async () => {
+const isFirstRun = async () => {
+  const pluginStore = strapi.store({
+    environment: strapi.config.environment,
+    type: "type",
+    name: "setup",
+  });
+  const initHasRun = await pluginStore.get({ key: "initHasRun" });
+  await pluginStore.set({ key: "initHasRun", value: true });
+  return !initHasRun;
+};
+
+const setDefaultPermissions = async () => {
+  const role = await findPublicRole();
+  const permissions = await strapi
+    .query("permission", "users-permissions")
+    .find({ type: "application", role: role.id });
+  await Promise.all(
+    permissions.map((p) =>
+      strapi
+        .query("permission", "users-permissions")
+        .update({ id: p.id }, { enabled: true })
+    )
+  );
+};
+
+const findPublicRole = async () => {
+  const result = await strapi
+    .query("role", "users-permissions")
+    .findOne({ type: "public" });
+  return result;
+};
+
+const loadData = async () => {
   try {
     await loadParData();
-    //await removeParData();
     await createAccessStatus();
     await createEventType();
     await createPublicAdvisoryEvent();
   } catch (error) {
     console.log(error);
+  }
+};
+
+module.exports = async () => {
+  // Load data and set default public roles on first run
+  const shouldSetDefaultPermissions = await isFirstRun();
+  if (shouldSetDefaultPermissions) {
+    await setDefaultPermissions();
+    await loadData();
   }
 };

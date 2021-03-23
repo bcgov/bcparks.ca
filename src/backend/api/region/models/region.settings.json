@@ -3,7 +3,7 @@
   "collectionName": "regions",
   "info": {
     "name": "Region",
-    "description": ""
+    "description": "Region"
   },
   "options": {
     "increments": true,
@@ -11,17 +11,17 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "Number": {
+    "RegionNumber": {
       "type": "integer",
       "required": true,
       "unique": true
     },
-    "Name": {
+    "RegionName": {
       "type": "string"
     },
     "Sections": {
-      "collection": "section",
-      "via": "Region"
+      "via": "Region",
+      "collection": "section"
     },
     "ManagementArea": {
       "via": "Region",
