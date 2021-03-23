@@ -18,7 +18,7 @@
     },
     {
       "method": "GET",
-      "path": "/sections/:id",
+      "path": "/sections/:number",
       "handler": "section.findOne",
       "config": {
         "policies": []
@@ -34,7 +34,7 @@
     },
     {
       "method": "PUT",
-      "path": "/sections/:id",
+      "path": "/sections/:number",
       "handler": "section.update",
       "config": {
         "policies": []
@@ -42,7 +42,7 @@
     },
     {
       "method": "DELETE",
-      "path": "/sections/:id",
+      "path": "/sections/:number",
       "handler": "section.delete",
       "config": {
         "policies": []

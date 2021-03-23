@@ -46,7 +46,7 @@
     "RepealedDate": {
       "type": "date"
     },
-    "Active": {
+    "Status": {
       "type": "string"
     },
     "URL": {
@@ -72,10 +72,12 @@
       "type": "string"
     },
     "Sites": {
+      "via": "ProtectedArea",
       "collection": "site"
     },
     "ManagementAreas": {
-      "collection": "management-area"
+      "collection": "management-area",
+      "via": "ProtectedArea"
     }
   }
 }

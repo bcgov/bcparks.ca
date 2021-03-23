@@ -20,8 +20,8 @@
       "type": "string"
     },
     "ManagementAreas": {
-      "collection": "management-area",
-      "via": "Section"
+      "via": "Section",
+      "collection": "management-area"
     },
     "Region": {
       "via": "Sections",
