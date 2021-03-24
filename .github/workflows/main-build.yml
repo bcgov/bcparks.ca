@@ -13,6 +13,7 @@ jobs:
       IMAGE_TAGS: latest
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
+      SERVICE_NAME: frontend
       IMAGE_NAME: react-frontend
 
     steps:
@@ -24,9 +25,9 @@ jobs:
           --build-arg REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}} \
           --build-arg REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}} \
           --build-arg PUBLIC_URL=${{secrets.PUBLIC_URL}} \
-          $IMAGE_NAME
-
-          docker tag BCP-CMS_${{ env.IMAGE_NAME }} ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/${{ env.IMAGE_NAME }}
+          $SERVICE_NAME
+          docker image ls
+          docker tag bcp-cms_${{ env.IMAGE_NAME }} ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/${{ env.IMAGE_NAME }}
           docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} -u ${{ secrets.OPENSHIFT_SA_USERNAME }} -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
           docker image push --all-tags ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/${{ env.IMAGE_NAME }}
   build-cms:
@@ -51,8 +52,8 @@ jobs:
             --build-arg DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} \
             --build-arg DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} \
             --build-arg DATABASE_SSL=${{secrets.DATABASE_SSL}} \
-            $IMAGE_NAME
-
-          docker tag BCP-CMS_${{ env.IMAGE_NAME }} ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/${{ env.IMAGE_NAME }}
+            $SERVICE_NAME
+          docker image ls
+          docker tag bcp-cms_${{ env.IMAGE_NAME }} ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/${{ env.IMAGE_NAME }}
           docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} -u ${{ secrets.OPENSHIFT_SA_USERNAME }} -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
           docker image push --all-tags ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/${{ env.IMAGE_NAME }}
