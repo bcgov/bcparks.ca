@@ -186,46 +186,38 @@ const loadProtectedLandData = async (protectedLandData) => {
   } catch (error) {}
 };
 
-const createAccessStatus = async () => {
+const loadAccessStatus = async () => {
   const currentData = await strapi.services["access-status"].find();
   if (currentData.length == 0) {
     console.log("Loading Access Statuses..");
     var jsonData = fs.readFileSync("./data/access-status.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
     dataSeed.forEach((data) => {
-      strapi.services["access-status"].create({
-        AccessStatus: data.AccessStatus,
-      });
+      strapi.services["access-status"].create(data);
     });
   }
 };
 
-const createEventType = async () => {
+const loadEventType = async () => {
   const currentData = await strapi.services["event-type"].find();
   if (currentData.length == 0) {
     console.log("Loading Event Statuses..");
     var jsonData = fs.readFileSync("./data/event-type.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
     dataSeed.forEach((data) => {
-      strapi.services["event-type"].create({
-        EventType: data.EventType,
-      });
+      strapi.services["event-type"].create(data);
     });
   }
 };
 
-const createPublicAdvisoryEvent = async () => {
+const loadPublicAdvisoryEvent = async () => {
   const currentData = await strapi.services["public-advisory-event"].find();
   if (currentData.length == 0) {
     console.log("Loading Public Advisory Event..");
     var jsonData = fs.readFileSync("./data/public-advisory-event.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
     dataSeed.forEach((data) => {
-      strapi.services["public-advisory-event"].create({
-        Title: data.Title,
-        Submitter: data.Submitter,
-        AdvisoryStatus: data.AdvisoryStatus,
-      });
+      strapi.services["public-advisory-event"].create(data);
     });
   }
 };
@@ -279,9 +271,9 @@ const findPublicRole = async () => {
 const loadData = async () => {
   try {
     await loadParData();
-    await createAccessStatus();
-    await createEventType();
-    await createPublicAdvisoryEvent();
+    await loadAccessStatus();
+    await loadEventType();
+    await loadPublicAdvisoryEvent();
   } catch (error) {
     console.log(error);
   }

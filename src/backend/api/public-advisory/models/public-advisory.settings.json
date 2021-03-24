@@ -45,7 +45,6 @@
       "type": "string"
     },
     "public_advisory_events": {
-      "via": "public_advisory",
       "collection": "public-advisory-event"
     }
   }
