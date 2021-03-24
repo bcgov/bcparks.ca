@@ -216,7 +216,14 @@ const loadPublicAdvisoryEvent = async () => {
     console.log("Loading Public Advisory Event..");
     var jsonData = fs.readFileSync("./data/public-advisory-event.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
-    dataSeed.forEach((data) => {
+    dataSeed.forEach(async (data) => {
+      data.event_type = await strapi
+        .query("event-type")
+        .findOne({ EventType: data.EventType });
+
+      data.access_status = await strapi
+        .query("access-status")
+        .findOne({ AccessStatus: data.AccessStatus });
       strapi.services["public-advisory-event"].create(data);
     });
   }
