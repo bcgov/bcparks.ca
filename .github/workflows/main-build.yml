@@ -13,8 +13,8 @@ jobs:
       IMAGE_TAGS: latest
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
-      SERVICE_NAME: frontend
-      IMAGE_NAME: react-frontend
+      SERVICE_NAME: react-frontend
+      IMAGE_NAME: frontend
 
     steps:
       - uses: actions/checkout@v2
@@ -22,10 +22,10 @@ jobs:
         run: |          
           docker login ${{ secrets.REDHAT_REPO }} -u ${{ secrets.REDHAT_REPO_USER }} -p ${{ secrets.REDHAT_REPO_AUTH }}
           docker-compose build --force-rm --no-cache \
-          --build-arg REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}} \
-          --build-arg REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}} \
-          --build-arg PUBLIC_URL=${{secrets.PUBLIC_URL}} \
-          $SERVICE_NAME
+            --build-arg REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}} \
+            --build-arg REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}} \
+            --build-arg PUBLIC_URL=${{secrets.PUBLIC_URL}} \
+            $SERVICE_NAME
           docker image ls
           docker tag bcp-cms_${{ env.IMAGE_NAME }} ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/${{ env.IMAGE_NAME }}
           docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} -u ${{ secrets.OPENSHIFT_SA_USERNAME }} -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
@@ -39,6 +39,7 @@ jobs:
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
       IMAGE_NAME: strapi
+      SERVICE_NAME: strapi
 
     steps:
       - uses: actions/checkout@v2
