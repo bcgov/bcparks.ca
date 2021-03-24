@@ -27,9 +27,16 @@ jobs:
             --build-arg PUBLIC_URL=${{secrets.PUBLIC_URL}} \
             $SERVICE_NAME
           docker image ls
-          docker tag bcp-cms_${{ env.SERVICE_NAME }} ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/${{ env.IMAGE_NAME }}
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} -u ${{ secrets.OPENSHIFT_SA_USERNAME }} -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
-          docker image push --all-tags ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/${{ env.IMAGE_NAME }}
+          printenv
+          docker tag \
+            bcp-cms_${{ env.SERVICE_NAME }} \
+            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/${{ env.IMAGE_NAME }}
+          docker login \
+            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} \
+            -u ${{ secrets.OPENSHIFT_SA_USERNAME }} \
+            -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
+          docker image push --all-tags \
+            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/${{ env.IMAGE_NAME }}
   build-cms:
     runs-on: ubuntu-20.04
     environment: Main
@@ -55,6 +62,13 @@ jobs:
             --build-arg DATABASE_SSL=${{secrets.DATABASE_SSL}} \
             $SERVICE_NAME
           docker image ls
-          docker tag bcp-cms_${{ env.SERVICE_NAME }} ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/${{ env.IMAGE_NAME }}
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} -u ${{ secrets.OPENSHIFT_SA_USERNAME }} -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
-          docker image push --all-tags ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/${{ env.IMAGE_NAME }}
+          printenv
+          docker tag \
+            bcp-cms_${{ env.SERVICE_NAME }} \
+            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/${{ env.IMAGE_NAME }}
+          docker login \
+            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} \
+            -u ${{ secrets.OPENSHIFT_SA_USERNAME }} \
+            -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
+          docker image push --all-tags \
+            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/${{ env.IMAGE_NAME }}
