@@ -68,10 +68,6 @@
     "ModifiedBy": {
       "type": "string"
     },
-    "public_advisory": {
-      "model": "public-advisory",
-      "via": "public_advisory_events"
-    },
     "access_status": {
       "model": "access-status",
       "via": "public_advisory_events"
