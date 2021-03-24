@@ -13,7 +13,7 @@ jobs:
       IMAGE_TAGS: latest
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
-      IMAGE_NAME: frontend
+      IMAGE_NAME: react-frontend
 
     steps:
       - uses: actions/checkout@v2
