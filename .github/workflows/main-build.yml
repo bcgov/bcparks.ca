@@ -1,0 +1,58 @@
+name: Main-Build .NET API Image and Push to Openshift Registry
+on:
+  push:
+    branches: [main, tools]
+  workflow_dispatch:
+    branches: [main, tools]
+jobs:
+  build-frontend:
+    runs-on: ubuntu-20.04
+    environment: Main
+    env:
+      VERSION: v1
+      IMAGE_TAGS: latest
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      DOCKER_BUILDKIT: 1
+      IMAGE_NAME: frontend
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Frontend
+        run: |          
+          docker login ${{ secrets.REDHAT_REPO }} -u ${{ secrets.REDHAT_REPO_USER }} -p ${{ secrets.REDHAT_REPO_AUTH }}
+          docker-compose build --force-rm --no-cache \
+          --build-arg REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}} \
+          --build-arg REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}} \
+          --build-arg PUBLIC_URL=${{secrets.PUBLIC_URL}} \
+          $IMAGE_NAME
+
+          docker tag BCP-CMS_${{ env.IMAGE_NAME }} ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/${{ env.IMAGE_NAME }}
+          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} -u ${{ secrets.OPENSHIFT_SA_USERNAME }} -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
+          docker image push --all-tags ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/${{ env.IMAGE_NAME }}
+  build-cms:
+    runs-on: ubuntu-20.04
+    environment: Main
+    env:
+      VERSION: v1
+      IMAGE_TAGS: latest
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      DOCKER_BUILDKIT: 1
+      IMAGE_NAME: strapi
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the CMS
+        run: |          
+          docker login ${{ secrets.REDHAT_REPO }} -u ${{ secrets.REDHAT_REPO_USER }} -p ${{ secrets.REDHAT_REPO_AUTH }}
+          docker-compose build --force-rm --no-cache \
+            --build-arg DATABASE_HOST=${{secrets.DATABASE_HOST}} \
+            --build-arg DATABASE_PORT=${{secrets.DATABASE_PORT}} \
+            --build-arg DATABASE_NAME=${{secrets.DATABASE_NAME}} \
+            --build-arg DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} \
+            --build-arg DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} \
+            --build-arg DATABASE_SSL=${{secrets.DATABASE_SSL}} \
+            $IMAGE_NAME
+
+          docker tag BCP-CMS_${{ env.IMAGE_NAME }} ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/${{ env.IMAGE_NAME }}
+          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} -u ${{ secrets.OPENSHIFT_SA_USERNAME }} -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
+          docker image push --all-tags ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_TOOLS_NAMESPACE }}/${{ env.IMAGE_NAME }}
