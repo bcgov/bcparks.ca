@@ -4,34 +4,34 @@
 		"Submitter": "System",
 		"AdvisoryStatus": "Submitted",
         "AccessStatus": "Open",
-        "EventType": "Fire"
+        "EventType": "Storm damage"
 	},
     {
 		"Title": "Water facilities closed during cold weather",
 		"Submitter": "System",
 		"AdvisoryStatus": "Open",
         "AccessStatus": "Closed",
-        "EventType": "Flood"
+        "EventType": "Weather"
 	},
     {
 		"Title": "Visitors encouraged to wear masks while travelling through congested areas",
 		"Submitter": "System",
 		"AdvisoryStatus": "Approved",
         "AccessStatus": "Open",
-        "EventType": "Avalanche"
+        "EventType": "Pandemic"
 	},
     {
 		"Title": "Caution - Trails and parking lots not maintained during winter",
 		"Submitter": "System",
 		"AdvisoryStatus": "Submitted",
         "AccessStatus": "Open",
-        "EventType": "Avalanche"
+        "EventType": "Winter conditions"
 	},
     {
 		"Title": "Gates closed due to snow",
 		"Submitter": "System",
 		"AdvisoryStatus": "Submitted",
         "AccessStatus": "Open",
-        "EventType": "Avalanche"
+        "EventType": "Winter conditions"
 	}
 ]
