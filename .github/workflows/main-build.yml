@@ -30,13 +30,13 @@ jobs:
           printenv
           docker tag \
             bcp-cms_${{ env.SERVICE_NAME }} \
-            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/${{ env.IMAGE_NAME }}
+            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/$IMAGE_NAME
           docker login \
             ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} \
             -u ${{ secrets.OPENSHIFT_SA_USERNAME }} \
             -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
           docker image push --all-tags \
-            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/${{ env.IMAGE_NAME }}
+            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/$IMAGE_NAME
   build-cms:
     runs-on: ubuntu-20.04
     environment: Main
@@ -65,10 +65,10 @@ jobs:
           printenv
           docker tag \
             bcp-cms_${{ env.SERVICE_NAME }} \
-            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/${{ env.IMAGE_NAME }}
+            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/$IMAGE_NAME
           docker login \
             ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} \
             -u ${{ secrets.OPENSHIFT_SA_USERNAME }} \
             -p ${{ secrets.OPENSHIFT_SA_PASSWORD }}
           docker image push --all-tags \
-            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/${{ env.IMAGE_NAME }}
+            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_NAMESPACE }}/$IMAGE_NAME

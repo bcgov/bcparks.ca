@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:14.16.0-alpine
+FROM node:14.16.0-alpine AS build
 ARG REACT_APP_API_BASE_URL
 ARG REACT_APP_FRONTEND_BASE_URL
 ARG PUBLIC_URL
@@ -19,21 +19,28 @@ RUN apk add --update \
     python-dev \
     py-pip \
     build-base \
+    bash \ 
     git \
     openssh-client \
     && pip install virtualenv \
     && rm -rf /var/cache/apk/*
 
 # install app dependencies
-COPY package.json ./
-RUN npm install --silent
-RUN npm install react-scripts@3.4.1 -g
+# COPY package.json ./
+COPY . .
+RUN npm install && \
+    npm install -g @angular/cli react-scripts@3.4.1
 
-# add bash to the image
-RUN apk add --no-cache bash
-
+RUN ng build --prod
+########################################
+### Stage 2 - Production environment ###
+########################################
+FROM registry.redhat.io/rhel8/nginx-118
 # add app
-COPY . ./
+# COPY . ./
+
+COPY --from=build-deps /frontend /opt/app-root/src
+COPY --from=build-deps /frontend/nginx.conf /etc/nginx/conf.d/bcp_cms.conf
 
 # start app
 CMD ["npm", "start"]
