@@ -38,10 +38,10 @@ jobs:
           echo "Tagging ${IMAGE_NAME}..."
           docker tag \
             bcp-cms_${SERVICE_NAME} \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_NAMESPACE}}/${IMAGE_NAME}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}${{secrets.OPENSHIFT_STUB}}/${IMAGE_NAME}
           echo "Pushing ${IMAGE_NAME}..."
           docker image push --all-tags \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_NAMESPACE}}/${IMAGE_NAME}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}${{secrets.OPENSHIFT_STUB}}/${IMAGE_NAME}
 
   build-cms:
     runs-on: ubuntu-20.04
@@ -77,7 +77,7 @@ jobs:
             ${SERVICE_NAME}
           echo "Tagging ${IMAGE_NAME}..."
           docker tag ${IMAGE_SOURCE} \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_NAMESPACE}}/${IMAGE_NAME}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}${{secrets.OPENSHIFT_STUB}}/${IMAGE_NAME}
           echo "Pushing ${IMAGE_NAME}..."
           docker image push --all-tags \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_NAMESPACE}}/${IMAGE_NAME}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}${{secrets.OPENSHIFT_STUB}}/${IMAGE_NAME}
