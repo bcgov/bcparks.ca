@@ -44,3 +44,4 @@ COPY . ./
 
 # start app
 CMD ["npm", "start"]
+# CMD ["sh","-c","nginx -g 'daemon off;'"]
