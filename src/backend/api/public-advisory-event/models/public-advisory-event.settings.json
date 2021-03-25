@@ -14,9 +14,6 @@
     "Title": {
       "type": "string"
     },
-    "ParData": {
-      "type": "string"
-    },
     "Description": {
       "type": "string"
     },
@@ -73,8 +70,10 @@
       "via": "public_advisory_events"
     },
     "event_type": {
-      "model": "event-type",
-      "via": "public_advisory_events"
+      "model": "event-type"
+    },
+    "protected_areas": {
+      "collection": "protected-area"
     }
   }
 }
