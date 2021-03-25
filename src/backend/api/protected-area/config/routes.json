@@ -2,7 +2,7 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/protected-areas",
+      "path": "/protectedAreas",
       "handler": "protected-area.find",
       "config": {
         "policies": []
@@ -10,7 +10,7 @@
     },
     {
       "method": "GET",
-      "path": "/protected-areas/count",
+      "path": "/protectedAreas/count",
       "handler": "protected-area.count",
       "config": {
         "policies": []
@@ -18,7 +18,7 @@
     },
     {
       "method": "GET",
-      "path": "/protected-areas/:oRCS",
+      "path": "/protectedAreas/:ORCS",
       "handler": "protected-area.findOne",
       "config": {
         "policies": []
@@ -26,7 +26,7 @@
     },
     {
       "method": "POST",
-      "path": "/protected-areas",
+      "path": "/protectedAreas",
       "handler": "protected-area.create",
       "config": {
         "policies": []
@@ -34,7 +34,7 @@
     },
     {
       "method": "PUT",
-      "path": "/protected-areas/:oRCS",
+      "path": "/protectedAreas/:ORCS",
       "handler": "protected-area.update",
       "config": {
         "policies": []
@@ -42,7 +42,7 @@
     },
     {
       "method": "DELETE",
-      "path": "/protected-areas/:oRCS",
+      "path": "/protectedAreas/:ORCS",
       "handler": "protected-area.delete",
       "config": {
         "policies": []

@@ -18,7 +18,7 @@
     },
     {
       "method": "GET",
-      "path": "/regions/:regionNumber",
+      "path": "/regions/:RegionNumber",
       "handler": "region.findOne",
       "config": {
         "policies": []
@@ -34,7 +34,7 @@
     },
     {
       "method": "PUT",
-      "path": "/regions/:regionNumber",
+      "path": "/regions/:RegionNumber",
       "handler": "region.update",
       "config": {
         "policies": []
@@ -42,7 +42,7 @@
     },
     {
       "method": "DELETE",
-      "path": "/regions/:regionNumber",
+      "path": "/regions/:RegionNumber",
       "handler": "region.delete",
       "config": {
         "policies": []
