@@ -31,7 +31,7 @@ COPY . .
 RUN npm install && \
     npm install -g @angular/cli react-scripts@3.4.1
 
-RUN ng build --prod
+# RUN ng build --prod
 # add app
 COPY . ./
 

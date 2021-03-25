@@ -48,10 +48,10 @@ jobs:
     environment: Main
     env:
       VERSION: v1
-      IMAGE_TAGS: latest
+      IMAGE_TAGS: 3.5.3
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
-      IMAGE_SOURCE: strapi/strapi
+      IMAGE_SOURCE: docker.io/strapi/strapi:3.5.3
       IMAGE_NAME: strapi
       SERVICE_NAME: strapi
     steps:
