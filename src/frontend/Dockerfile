@@ -32,15 +32,15 @@ RUN npm install && \
     npm install -g @angular/cli react-scripts@3.4.1
 
 RUN ng build --prod
+# add app
+COPY . ./
+
 ########################################
 ### Stage 2 - Production environment ###
 ########################################
-FROM registry.redhat.io/rhel8/nginx-118 AS runtime
-# add app
-# COPY . ./
-
-COPY --from=build-deps /frontend /opt/app-root/src
-COPY --from=build-deps /frontend/nginx.conf /etc/nginx/conf.d/bcp_cms.conf
+# FROM registry.redhat.io/rhel8/nginx-118 AS runtime
+# COPY --from=build-deps /frontend /opt/app-root/src
+# COPY --from=build-deps /frontend/nginx.conf /etc/nginx/conf.d/bcp_cms.conf
 
 # start app
 CMD ["npm", "start"]
