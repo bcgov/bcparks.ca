@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:14.16.0-alpine AS build
+FROM node:14.16.0-alpine AS build-deps
 ARG REACT_APP_API_BASE_URL
 ARG REACT_APP_FRONTEND_BASE_URL
 ARG PUBLIC_URL
@@ -35,7 +35,7 @@ RUN ng build --prod
 ########################################
 ### Stage 2 - Production environment ###
 ########################################
-FROM registry.redhat.io/rhel8/nginx-118
+FROM registry.redhat.io/rhel8/nginx-118 AS runtime
 # add app
 # COPY . ./
 
