@@ -40,28 +40,24 @@ jobs:
 
       - name: Login to Docker repositories
         run: |
-          docker login ${{ secrets.REDHAT_REPO }} -u ${{ secrets.REDHAT_REPO_USER }} -p '${{ secrets.REDHAT_REPO_AUTH }}'
-          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY} \
-            -u ${OPENSHIFT_SA_USERNAME} \
-            -p '${OPENSHIFT_SA_PASSWORD}'
+          docker login ${{secrets.REDHAT_REPO}} -u ${{secrets.REDHAT_REPO_USER}} -p '${{secrets.REDHAT_REPO_AUTH}}'
+          docker login ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}} \
+            -u ${{secrets.OPENSHIFT_SA_USERNAME}} \
+            -p '${{secrets.OPENSHIFT_SA_PASSWORD}}'
 
       - name: Build the Frontend
         run: |          
           docker-compose build --force-rm --no-cache \
-            --build-arg REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL} \
-            --build-arg REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL} \
-            --build-arg PUBLIC_URL=${PUBLIC_URL} \
+            --build-arg REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}} \
+            --build-arg REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}} \
+            --build-arg PUBLIC_URL=${{secrets.PUBLIC_URL}} \
             ${SERVICE_NAME}
-          
-          docker image ls
-          printenv
-          
           docker tag \
             bcp-cms_${SERVICE_NAME} \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_NAMESPACE}/${IMAGE_NAME}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_NAMESPACE}}/${IMAGE_NAME}
           
             docker image push --all-tags \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_NAMESPACE}/${IMAGE_NAME}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_NAMESPACE}}/${IMAGE_NAME}
 
   build-cms:
     runs-on: ubuntu-20.04
@@ -79,20 +75,20 @@ jobs:
         run: |          
     
           docker-compose build --force-rm --no-cache \
-            --build-arg DATABASE_HOST=${DATABASE_HOST} \
-            --build-arg DATABASE_PORT=${DATABASE_PORT}} \
-            --build-arg DATABASE_NAME=${DATABASE_NAME} \
-            --build-arg DATABASE_USERNAME=${DATABASE_USERNAME} \
-            --build-arg DATABASE_PASSWORD=${DATABASE_PASSWORD} \
-            --build-arg DATABASE_SSL=${DATABASE_SSL} \
-            $SERVICE_NAME
+            --build-arg DATABASE_HOST=${{secrets.DATABASE_HOST}} \
+            --build-arg DATABASE_PORT=${{secrets.DATABASE_PORT}} \
+            --build-arg DATABASE_NAME=${{secrets.DATABASE_NAME}} \
+            --build-arg DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} \
+            --build-arg DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} \
+            --build-arg DATABASE_SSL=${{secrets.DATABASE_SSL}} \
+            ${SERVICE_NAME}
           
           docker image ls
           
           printenv
           
           docker tag bcp-cms_${SERVICE_NAME} \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_NAMESPACE}/${IMAGE_NAME}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_NAMESPACE}}/${IMAGE_NAME}
           
           docker image push --all-tags \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_NAMESPACE}/${IMAGE_NAME}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_NAMESPACE}}/${IMAGE_NAME}
