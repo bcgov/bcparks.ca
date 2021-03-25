@@ -5,6 +5,26 @@ on:
   workflow_dispatch:
     branches: [main, tools]
 jobs:
+  login-to-docker:
+    runs-on: ubuntu-20.04
+    environment: Main
+    env:
+      VERSION: v1
+      IMAGE_TAGS: latest
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      DOCKER_BUILDKIT: 1
+      SERVICE_NAME: react-frontend
+      IMAGE_NAME: frontend
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to Docker repositories
+        run: |
+          docker login ${{ secrets.REDHAT_REPO }} -u ${{ secrets.REDHAT_REPO_USER }} -p '${{ secrets.REDHAT_REPO_AUTH }}'
+          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY} \
+            -u ${OPENSHIFT_SA_USERNAME} \
+            -p '${OPENSHIFT_SA_PASSWORD}'
+
   build-frontend:
     runs-on: ubuntu-20.04
     environment: Main
@@ -15,9 +35,7 @@ jobs:
       DOCKER_BUILDKIT: 1
       SERVICE_NAME: react-frontend
       IMAGE_NAME: frontend
-
     steps:
-
       - uses: actions/checkout@v2
 
       - name: Login to Docker repositories
@@ -55,7 +73,6 @@ jobs:
       DOCKER_BUILDKIT: 1
       IMAGE_NAME: strapi
       SERVICE_NAME: strapi
-
     steps:
       - uses: actions/checkout@v2
       - name: Build the CMS
