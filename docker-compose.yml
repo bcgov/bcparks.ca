@@ -24,7 +24,6 @@ services:
     image: strapi/strapi:3.5.3
     container_name: bcp-strapi
     restart: unless-stopped
-    env_file: .env
     build:
       context: ./src/backend
       dockerfile: Dockerfile
