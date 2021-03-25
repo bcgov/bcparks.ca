@@ -17,11 +17,18 @@ jobs:
       IMAGE_NAME: frontend
 
     steps:
+
       - uses: actions/checkout@v2
+
+      - name: Login to Docker repositories
+        run: |
+          docker login ${{ secrets.REDHAT_REPO }} -u ${{ secrets.REDHAT_REPO_USER }} -p '${{ secrets.REDHAT_REPO_AUTH }}'
+          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY} \
+            -u ${OPENSHIFT_SA_USERNAME} \
+            -p '${OPENSHIFT_SA_PASSWORD}'
+
       - name: Build the Frontend
         run: |          
-          docker login ${{ secrets.REDHAT_REPO }} -u ${{ secrets.REDHAT_REPO_USER }} -p ${{ secrets.REDHAT_REPO_AUTH }}
-          
           docker-compose build --force-rm --no-cache \
             --build-arg REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL} \
             --build-arg REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL} \
@@ -34,11 +41,6 @@ jobs:
           docker tag \
             bcp-cms_${SERVICE_NAME} \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_NAMESPACE}/${IMAGE_NAME}
-          
-          docker login \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY} \
-            -u ${OPENSHIFT_SA_USERNAME} \
-            -p ${OPENSHIFT_SA_PASSWORD}
           
             docker image push --all-tags \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_NAMESPACE}/${IMAGE_NAME}
@@ -58,8 +60,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the CMS
         run: |          
-          docker login ${{ secrets.REDHAT_REPO }} -u ${{ secrets.REDHAT_REPO_USER }} -p ${{ secrets.REDHAT_REPO_AUTH }}
-          
+    
           docker-compose build --force-rm --no-cache \
             --build-arg DATABASE_HOST=${DATABASE_HOST} \
             --build-arg DATABASE_PORT=${DATABASE_PORT}} \
@@ -75,10 +76,6 @@ jobs:
           
           docker tag bcp-cms_${SERVICE_NAME} \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_NAMESPACE}/${IMAGE_NAME}
-          
-          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY} \
-            -u ${OPENSHIFT_SA_USERNAME} \
-            -p ${OPENSHIFT_SA_PASSWORD}
           
           docker image push --all-tags \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_NAMESPACE}/${IMAGE_NAME}
