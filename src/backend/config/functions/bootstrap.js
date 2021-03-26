@@ -311,5 +311,4 @@ module.exports = async () => {
     await setDefaultPermissions();
     await loadData();
   }
-  await loadData();
 };
