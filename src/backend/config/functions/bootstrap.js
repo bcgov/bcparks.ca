@@ -210,6 +210,18 @@ const loadEventType = async () => {
   }
 };
 
+const loadUrgency = async () => {
+  const currentData = await strapi.services["urgency"].find();
+  if (currentData.length == 0) {
+    console.log("Loading Event Statuses..");
+    var jsonData = fs.readFileSync("./data/urgency.json", "utf8");
+    const dataSeed = JSON.parse(jsonData);
+    dataSeed.forEach((data) => {
+      strapi.services["urgency"].create(data);
+    });
+  }
+};
+
 const loadPublicAdvisoryEvent = async () => {
   const currentData = await strapi.services["public-advisory-event"].find();
   if (currentData.length == 0) {
@@ -224,6 +236,11 @@ const loadPublicAdvisoryEvent = async () => {
       data.access_status = await strapi
         .query("access-status")
         .findOne({ AccessStatus: data.AccessStatus });
+
+      data.urgency = await strapi
+        .query("urgency")
+        .findOne({ Urgency: data.Urgency });
+
       strapi.services["public-advisory-event"].create(data);
     });
   }
@@ -280,6 +297,7 @@ const loadData = async () => {
     await loadParData();
     await loadAccessStatus();
     await loadEventType();
+    await loadUrgency();
     await loadPublicAdvisoryEvent();
   } catch (error) {
     console.log(error);
@@ -293,4 +311,5 @@ module.exports = async () => {
     await setDefaultPermissions();
     await loadData();
   }
+  await loadData();
 };

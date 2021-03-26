@@ -11,69 +11,44 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "Title": {
-      "type": "string"
-    },
-    "Description": {
-      "type": "string"
-    },
-    "Submitter": {
-      "type": "string"
-    },
-    "DCTicketNumber": {
-      "type": "integer"
-    },
-    "OrderURL": {
-      "type": "string"
-    },
-    "MapURL": {
-      "type": "string"
-    },
-    "EvacuationURL": {
-      "type": "string"
-    },
-    "InformationBulletinURL": {
-      "type": "string"
-    },
-    "Alert": {
-      "type": "string"
-    },
-    "Approved": {
-      "type": "string"
-    },
-    "AdvisoryStatus": {
-      "type": "string"
-    },
-    "ListingRank": {
-      "type": "string"
-    },
-    "Note": {
-      "type": "string"
-    },
-    "Coordinates": {
-      "type": "string"
-    },
-    "CreatedDate": {
-      "type": "datetime"
-    },
-    "CreatedBy": {
-      "type": "string"
-    },
-    "ModifiedDate": {
-      "type": "datetime"
-    },
-    "ModifiedBy": {
-      "type": "string"
+    "Title" : { "type": "string"},
+    "Description" : { "type": "string"},
+    "SubmittedBy" : { "type": "string"},
+    "DCTicketNumber" : { "type": "number"},
+    "OrderURL" : { "type": "string"},
+    "MapURL" : { "type": "string"},
+    "EvacuationURL" : { "type": "string"},
+    "InformationBulletinURL" : { "type": "string"},
+    "Alert" : { "type": "string"},
+    "Approved" : { "type": "string"},
+    "AdvisoryStatus" : { "type": "string"},
+    "ListingRank" : { "type": "integer"},
+    "Note" : { "type": "string"},
+    "Latitude" : { "type": "float"},
+    "Longitude" : { "type": "float"},
+    "CreatedDate" : { "type": "datetime"},
+    "CreatedBy" : { "type": "string"},
+    "ModifiedDate" : { "type": "datetime"},
+    "ModifiedBy" : { "type": "string"},
+    "public_advisory": {
+      "model": "public-advisory",
+      "via": "public_advisory_events"
     },
     "access_status": {
-      "model": "access-status",
-      "via": "public_advisory_events"
+      "model": "access-status"
     },
     "event_type": {
       "model": "event-type"
     },
+    "urgency": {
+      "model": "urgency"
+    },
     "protected_areas": {
       "collection": "protected-area"
+    },
+    "links": {
+      "collection": "link",
+      "via": "public_advisory_event"
     }
   }
 }
