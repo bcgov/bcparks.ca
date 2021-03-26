@@ -1,0 +1,42 @@
+[
+	{
+		"Title": "Ongoing environmental spill response",
+		"Submitter": "System",
+		"AdvisoryStatus": "Submitted",
+        "AccessStatus": "Warning",
+        "EventType": "Storm damage",
+		"Urgency": "High"
+	},
+    {
+		"Title": "Water facilities closed during cold weather",
+		"Submitter": "System",
+		"AdvisoryStatus": "Open",
+        "AccessStatus": "Warning",
+        "EventType": "Weather",
+		"Urgency": "Low"
+	},
+    {
+		"Title": "Visitors encouraged to wear masks while travelling through congested areas",
+		"Submitter": "System",
+		"AdvisoryStatus": "Approved",
+        "AccessStatus": "Open",
+        "EventType": "Pandemic",
+		"Urgency": "High"
+	},
+    {
+		"Title": "Caution - Trails and parking lots not maintained during winter",
+		"Submitter": "System",
+		"AdvisoryStatus": "Submitted",
+        "AccessStatus": "Open",
+        "EventType": "Winter conditions",
+		"Urgency": "Medium"
+	},
+    {
+		"Title": "Gates closed due to snow",
+		"Submitter": "System",
+		"AdvisoryStatus": "Submitted",
+        "AccessStatus": "Warning",
+        "EventType": "Winter conditions",
+		"Urgency": "Low"
+	}
+]

@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "links",
+  "info": {
+    "name": "Link"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Type": {
+      "type": "string"
+    },
+    "URL": {
+      "type": "string"
+    },
+    "public_advisory_event": {
+      "via": "links",
+      "model": "public-advisory-event"
+    }
+  }
+}

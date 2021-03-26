@@ -535,20 +535,17 @@
           "id": {
             "type": "string"
           },
-          "ParData": {
-            "type": "string"
-          },
           "Title": {
             "type": "string"
           },
           "Description": {
             "type": "string"
           },
-          "Submitter": {
+          "SubmittedBy": {
             "type": "string"
           },
           "DCTicketNumber": {
-            "type": "integer"
+            "type": "number"
           },
           "OrderURL": {
             "type": "string"
@@ -572,13 +569,16 @@
             "type": "string"
           },
           "ListingRank": {
-            "type": "string"
+            "type": "integer"
           },
           "Note": {
             "type": "string"
           },
-          "Coordinates": {
-            "type": "string"
+          "Latitude": {
+            "type": "number"
+          },
+          "Longitude": {
+            "type": "number"
           },
           "CreatedDate": {
             "type": "string",
@@ -663,12 +663,6 @@
               "AccessStatus": {
                 "type": "string"
               },
-              "public_advisory_events": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "published_at": {
                 "type": "string"
               },
@@ -691,11 +685,27 @@
               "EventType": {
                 "type": "string"
               },
-              "public_advisory_events": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "urgency": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "Urgency": {
+                "type": "string"
               },
               "published_at": {
                 "type": "string"
@@ -708,6 +718,130 @@
               }
             }
           },
+          "protected_areas": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "ORCS"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "ORCS": {
+                  "type": "integer"
+                },
+                "ProtectedAreaName": {
+                  "type": "string"
+                },
+                "TotalArea": {
+                  "type": "number"
+                },
+                "UplandArea": {
+                  "type": "number"
+                },
+                "MarineArea": {
+                  "type": "number"
+                },
+                "MarineProtectedArea": {
+                  "type": "string"
+                },
+                "Type": {
+                  "type": "string"
+                },
+                "Class": {
+                  "type": "string"
+                },
+                "EstablishedDate": {
+                  "type": "string"
+                },
+                "RepealedDate": {
+                  "type": "string"
+                },
+                "Status": {
+                  "type": "string"
+                },
+                "URL": {
+                  "type": "string"
+                },
+                "TypeCode": {
+                  "type": "string",
+                  "enum": [
+                    "PK",
+                    "PA",
+                    "RA",
+                    "ER",
+                    "CS"
+                  ]
+                },
+                "Latitude": {
+                  "type": "string"
+                },
+                "Longitude": {
+                  "type": "string"
+                },
+                "MapZoom": {
+                  "type": "string"
+                },
+                "Sites": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "ManagementAreas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "Title": {
+                  "type": "string"
+                },
+                "Type": {
+                  "type": "string"
+                },
+                "URL": {
+                  "type": "string"
+                },
+                "public_advisory_event": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -716,20 +850,17 @@
       },
       "NewPublic-advisory-event": {
         "properties": {
-          "ParData": {
-            "type": "string"
-          },
           "Title": {
             "type": "string"
           },
           "Description": {
             "type": "string"
           },
-          "Submitter": {
+          "SubmittedBy": {
             "type": "string"
           },
           "DCTicketNumber": {
-            "type": "integer"
+            "type": "number"
           },
           "OrderURL": {
             "type": "string"
@@ -753,13 +884,16 @@
             "type": "string"
           },
           "ListingRank": {
-            "type": "string"
+            "type": "integer"
           },
           "Note": {
             "type": "string"
           },
-          "Coordinates": {
-            "type": "string"
+          "Latitude": {
+            "type": "number"
+          },
+          "Longitude": {
+            "type": "number"
           },
           "CreatedDate": {
             "type": "string",
@@ -783,6 +917,21 @@
           },
           "event_type": {
             "type": "string"
+          },
+          "urgency": {
+            "type": "string"
+          },
+          "protected_areas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "published_at": {
             "type": "string",
