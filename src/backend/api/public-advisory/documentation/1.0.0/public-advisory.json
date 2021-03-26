@@ -567,8 +567,7 @@
             "format": "date-time"
           },
           "CreatedBy": {
-            "type": "string",
-            "format": "date-time"
+            "type": "string"
           },
           "ModifiedDate": {
             "type": "string",
@@ -587,17 +586,20 @@
                 "id": {
                   "type": "string"
                 },
+                "ParData": {
+                  "type": "string"
+                },
                 "Title": {
                   "type": "string"
                 },
                 "Description": {
                   "type": "string"
                 },
-                "SubmittedBy": {
+                "Submitter": {
                   "type": "string"
                 },
                 "DCTicketNumber": {
-                  "type": "number"
+                  "type": "integer"
                 },
                 "OrderURL": {
                   "type": "string"
@@ -621,16 +623,13 @@
                   "type": "string"
                 },
                 "ListingRank": {
-                  "type": "integer"
+                  "type": "string"
                 },
                 "Note": {
                   "type": "string"
                 },
-                "Latitude": {
-                  "type": "number"
-                },
-                "Longitude": {
-                  "type": "number"
+                "Coordinates": {
+                  "type": "string"
                 },
                 "CreatedDate": {
                   "type": "string"
@@ -652,21 +651,6 @@
                 },
                 "event_type": {
                   "type": "string"
-                },
-                "urgency": {
-                  "type": "string"
-                },
-                "protected_areas": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "links": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
                 },
                 "published_at": {
                   "type": "string"
@@ -720,8 +704,7 @@
             "format": "date-time"
           },
           "CreatedBy": {
-            "type": "string",
-            "format": "date-time"
+            "type": "string"
           },
           "ModifiedDate": {
             "type": "string",

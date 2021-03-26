@@ -12,6 +12,10 @@
   "attributes": {
     "EventType": {
       "type": "string"
+    },
+    "public_advisory_events": {
+      "via": "event_type",
+      "collection": "public-advisory-event"
     }
   }
 }

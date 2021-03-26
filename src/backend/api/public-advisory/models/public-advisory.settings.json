@@ -36,7 +36,7 @@
       "type": "datetime"
     },
     "CreatedBy": {
-      "type": "datetime"
+      "type": "string"
     },
     "ModifiedDate": {
       "type": "datetime"
