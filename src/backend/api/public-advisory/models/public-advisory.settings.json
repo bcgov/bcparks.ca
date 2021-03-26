@@ -36,7 +36,7 @@
       "type": "datetime"
     },
     "CreatedBy": {
-      "type": "string"
+      "type": "datetime"
     },
     "ModifiedDate": {
       "type": "datetime"
@@ -45,6 +45,7 @@
       "type": "string"
     },
     "public_advisory_events": {
+      "via": "public_advisory",
       "collection": "public-advisory-event"
     }
   }

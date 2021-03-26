@@ -1,9 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "access_statuses",
+  "collectionName": "urgencies",
   "info": {
-    "name": "AccessStatus",
-    "description": ""
+    "name": "Urgency"
   },
   "options": {
     "increments": true,
@@ -11,7 +10,7 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "AccessStatus": {
+    "Urgency": {
       "type": "string"
     }
   }
