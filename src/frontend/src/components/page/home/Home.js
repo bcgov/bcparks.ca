@@ -3,7 +3,6 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Header } from "shared-components/build/components/header/Header";
-import { Footer } from "shared-components/build/components/footer/Footer";
 import { Dropdown } from "shared-components/build/components/dropdown/Dropdown";
 import { Button } from "shared-components/build/components/button/Button";
 import styles from "./Home.css";
@@ -83,7 +82,6 @@ export default function Home({ page: { header, setError } }) {
         </section>
         <QuickLinks></QuickLinks>
       </div>
-      <Footer />
     </main>
   );
 }
