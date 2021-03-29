@@ -7,6 +7,8 @@ import { Header } from "shared-components/build/components/header/Header";
 import { Footer } from "shared-components/build/components/footer/Footer";
 import { Button } from "shared-components/build/components/button/Button";
 import MaterialTable from "material-table";
+import Select from "react-select";
+import Moment from "react-moment";
 
 import AddBox from "@material-ui/icons/AddBox";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
@@ -25,15 +27,56 @@ import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 
 const columns = [
-  { title: "Title", field: "Title" },
-  { title: "Event Type", field: "event_type.EventType" },
-  { title: "Access Status", field: "access_status.AccessStatus" },
-  { title: "Last Updated", field: "updated_at" },
+  {
+    field: "urgency.Urgency",
+    cellStyle: {
+      width: 5,
+      maxWidth: 5,
+    },
+    render: (rowData) => (
+      <span className={rowData.urgency.Urgency.toLowerCase()}>&nbsp;</span>
+    ),
+  },
+  {
+    field: "urgency.Urgency",
+    title: "Urgency",
+  },
+  {
+    field: "updated_at",
+    title: "Posted Date",
+    render: (rowData) => (
+      <Moment format="MMM DD YYYY">{rowData.updated_at}</Moment>
+    ),
+  },
+  { field: "Title", title: "Headline" },
+  { field: "event_type.EventType", title: "Event Type" },
+  {
+    field: "updated_at",
+    title: "Start Date",
+    render: (rowData) => (
+      <Moment format="MMM DD YYYY">{rowData.updated_at}</Moment>
+    ),
+  },
+  {
+    field: "updated_at",
+    title: "End Date",
+    render: (rowData) => (
+      <Moment format="MMM DD YYYY">{rowData.updated_at}</Moment>
+    ),
+  },
+  // { field: "access_status.AccessStatus", title: "Access Status" },
 ];
 
 const options = {
-  headerStyle: { backgroundColor: "#01579b", color: "#FFF" },
-  filtering: true,
+  headerStyle: {
+    backgroundColor: "#f3f3f3",
+    zIndex: 0,
+    padding: "2px",
+    fontWeight: "bolder",
+  },
+  cellStyle: {},
+  rowStyle: {},
+  filtering: false,
 };
 
 const tableIcons = {
@@ -63,12 +106,34 @@ const tableIcons = {
 export default function AdvisoryDashboard({ page: { header, setError } }) {
   const [toError, setToError] = useState(false);
   const [toHome, setToHome] = useState(false);
+  const [parkNames, setParkNames] = useState([]);
+  const [selectedParkId, setSelectedParkId] = useState(0);
 
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`/public-advisory-events`)
+      .get(`/protectedAreas`)
+      .then((res) => {
+        const parkNames = res.data.map((p) => ({
+          label: p.ProtectedAreaName,
+          value: p.id,
+        }));
+        setParkNames(["Select a Park", ...parkNames]);
+      })
+      .catch(() => {
+        setToError(true);
+        setError({
+          status: 500,
+          message: "Error occurred",
+        });
+      });
+  }, [setParkNames, setToError, setError]);
+
+  useEffect(() => {
+    let url = `public-advisory-events?protected_areas.id=${selectedParkId}`;
+    axios
+      .get(url)
       .then((resp) => setRows(resp.data))
       .catch(() => {
         setToError(true);
@@ -77,7 +142,7 @@ export default function AdvisoryDashboard({ page: { header, setError } }) {
           message: "Error occurred",
         });
       });
-  }, [setToError, setError]);
+  }, [setToError, setError, selectedParkId]);
 
   if (toHome) {
     return <Redirect to="/bcparks" />;
@@ -91,7 +156,12 @@ export default function AdvisoryDashboard({ page: { header, setError } }) {
     <main>
       <Header header={header} />
       <br />
+
       <div className={styles.AdvisoryDashboard} data-testid="AdvisoryDashboard">
+        <Select
+          options={parkNames}
+          onChange={(e) => setSelectedParkId(e.value)}
+        />
         <MaterialTable
           options={options}
           icons={tableIcons}

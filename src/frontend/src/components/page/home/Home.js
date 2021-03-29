@@ -16,7 +16,7 @@ export default function Home({ page: { header, setError } }) {
 
   useEffect(() => {
     axios
-      .get(`/protected-areas`)
+      .get(`/protectedAreas`)
       .then((res) => {
         const parkData = res.data;
         const parkNames = parkData.map((p) => {
