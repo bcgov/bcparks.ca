@@ -198,6 +198,18 @@ const loadAccessStatus = async () => {
   }
 };
 
+const loadAdvisoryStatus = async () => {
+  const currentData = await strapi.services["advisory-status"].find();
+  if (currentData.length == 0) {
+    console.log("Loading Event Statuses..");
+    var jsonData = fs.readFileSync("./data/advisory-status.json", "utf8");
+    const dataSeed = JSON.parse(jsonData);
+    dataSeed.forEach((data) => {
+      strapi.services["advisory-status"].create(data);
+    });
+  }
+};
+
 const loadEventType = async () => {
   const currentData = await strapi.services["event-type"].find();
   if (currentData.length == 0) {
@@ -222,11 +234,11 @@ const loadUrgency = async () => {
   }
 };
 
-const loadPublicAdvisoryEvent = async () => {
-  const currentData = await strapi.services["public-advisory-event"].find();
+const loadPublicAdvisory = async () => {
+  const currentData = await strapi.services["public-advisory"].find();
   if (currentData.length == 0) {
     console.log("Loading Public Advisory Event..");
-    var jsonData = fs.readFileSync("./data/public-advisory-event.json", "utf8");
+    var jsonData = fs.readFileSync("./data/public-advisory.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
     dataSeed.forEach(async (data) => {
       data.event_type = await strapi
@@ -241,7 +253,7 @@ const loadPublicAdvisoryEvent = async () => {
         .query("urgency")
         .findOne({ Urgency: data.Urgency });
 
-      strapi.services["public-advisory-event"].create(data);
+      strapi.services["public-advisory"].create(data);
     });
   }
 };
@@ -257,7 +269,7 @@ const removeAllData = async () => {
   await strapi.services["public-advisory"].delete();
   await strapi.services["access-status"].delete();
   await strapi.services["event-type"].delete();
-  await strapi.services["public-advisory-event"].delete();
+  await strapi.services["public-advisory"].delete();
 };
 
 const isFirstRun = async () => {
@@ -296,9 +308,10 @@ const loadData = async () => {
   try {
     await loadParData();
     await loadAccessStatus();
+    await loadAdvisoryStatus();
     await loadEventType();
     await loadUrgency();
-    await loadPublicAdvisoryEvent();
+    await loadPublicAdvisory();
   } catch (error) {
     console.log(error);
   }

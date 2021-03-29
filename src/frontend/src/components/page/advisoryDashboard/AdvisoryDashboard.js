@@ -131,7 +131,7 @@ export default function AdvisoryDashboard({ page: { header, setError } }) {
   }, [setParkNames, setToError, setError]);
 
   useEffect(() => {
-    let url = `public-advisory-events?protected_areas.id=${selectedParkId}`;
+    let url = `public-advisories?protected_areas.id=${selectedParkId}`;
     axios
       .get(url)
       .then((resp) => setRows(resp.data))

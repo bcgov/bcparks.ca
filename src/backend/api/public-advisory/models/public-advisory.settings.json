@@ -11,8 +11,47 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "AdvisoryID": {
+    "AdvisoryNumber": {
       "type": "integer"
+    },
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "DCTicketNumber": {
+      "type": "integer"
+    },
+    "Alert": {
+      "type": "boolean"
+    },
+    "Approved": {
+      "type": "boolean"
+    },
+    "ListingRank": {
+      "type": "integer"
+    },
+    "Note": {
+      "type": "string"
+    },
+    "Latitude": {
+      "type": "float"
+    },
+    "Longitude": {
+      "type": "float"
+    },
+    "MapZoom": {
+      "type": "integer"
+    },
+    "SubmittedBy": {
+      "type": "string"
+    },
+    "CreatedDate": {
+      "type": "datetime"
+    },
+    "CreatedBy": {
+      "type": "string"
     },
     "AdvisoryDate": {
       "type": "datetime"
@@ -32,21 +71,29 @@
     "UpdatedDate": {
       "type": "datetime"
     },
-    "CreatedDate": {
-      "type": "datetime"
-    },
-    "CreatedBy": {
-      "type": "datetime"
-    },
     "ModifiedDate": {
       "type": "datetime"
     },
     "ModifiedBy": {
       "type": "string"
     },
-    "public_advisory_events": {
-      "via": "public_advisory",
-      "collection": "public-advisory-event"
+    "access_status": {
+      "model": "access-status"
+    },
+    "event_type": {
+      "model": "event-type"
+    },
+    "urgency": {
+      "model": "urgency"
+    },
+    "protected_areas": {
+      "collection": "protected-area"
+    },
+    "advisory_status": {
+      "model": "advisory-status"
+    },
+    "links": {
+      "collection": "link"
     }
   }
 }
