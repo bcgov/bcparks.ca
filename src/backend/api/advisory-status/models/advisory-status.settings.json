@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "links",
+  "collectionName": "advisory_statuses",
   "info": {
-    "name": "Link"
+    "name": "AdvisoryStatus"
   },
   "options": {
     "increments": true,
@@ -10,13 +10,7 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "Title": {
-      "type": "string"
-    },
-    "Type": {
-      "type": "string"
-    },
-    "URL": {
+    "AdvisoryStatus": {
       "type": "string"
     }
   }

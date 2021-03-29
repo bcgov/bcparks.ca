@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "test_models",
+  "info": {
+    "name": "TestModel",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "AnyText": {
+      "type": "string"
+    },
+    "EnunField": {
+      "type": "enumeration",
+      "enum": [
+        "enun100",
+        "enun2",
+        "enun3",
+        "enun4"
+      ]
+    }
+  }
+}

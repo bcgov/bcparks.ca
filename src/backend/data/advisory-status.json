@@ -1,0 +1,17 @@
+[
+    {
+      "AdvisoryStatus": "Inactive"
+    },
+    {
+      "AdvisoryStatus": "Draft"
+    },
+    {
+      "AdvisoryStatus": "Approval Requested"
+    },
+    {
+      "AdvisoryStatus": "Approved"
+    },
+    {
+      "AdvisoryStatus": "Active"
+    }
+  ]
