@@ -34,7 +34,9 @@ RUN npm install && \
 # RUN ng build --prod
 # add app
 COPY . ./
-
+USER 0
+RUN mkdir -p /frontend/node_modules/.cache && \
+    chmod 777 /frontend/node_modules/.cache
 ########################################
 ### Stage 2 - Production environment ###
 ########################################
