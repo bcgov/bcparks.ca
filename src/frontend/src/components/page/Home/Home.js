@@ -6,7 +6,7 @@ import { Header } from "shared-components/build/components/header/Header";
 import { Dropdown } from "shared-components/build/components/dropdown/Dropdown";
 import { Button } from "shared-components/build/components/button/Button";
 import styles from "./Home.css";
-import QuickLinks from "../../composite/QuickLinks/QuickLinks";
+import QuickLinks from "../../composite/quickLinks/QuickLinks";
 
 export default function Home({ page: { header, setError } }) {
   const [parkNames, setParkNames] = useState([]);
@@ -15,11 +15,11 @@ export default function Home({ page: { header, setError } }) {
 
   useEffect(() => {
     axios
-      .get(`/parks`)
+      .get(`/protectedAreas`)
       .then((res) => {
         const parkData = res.data;
         const parkNames = parkData.map((p) => {
-          return p.ParkName;
+          return p.ProtectedAreaName;
         });
         setParkNames(["Select a Park", ...parkNames]);
       })

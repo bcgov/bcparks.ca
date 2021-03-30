@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "management_areas",
+  "info": {
+    "name": "ManagementArea",
+    "description": "Management Area"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "ManagementAreaNumber": {
+      "type": "integer",
+      "unique": true,
+      "required": true
+    },
+    "ManagementAreaName": {
+      "type": "string"
+    },
+    "Section": {
+      "model": "section",
+      "via": "ManagementAreas"
+    },
+    "Region": {
+      "model": "region",
+      "via": "ManagementArea"
+    },
+    "ProtectedArea": {
+      "model": "protected-area",
+      "via": "ManagementAreas"
+    }
+  }
+}

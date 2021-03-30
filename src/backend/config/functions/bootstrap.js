@@ -1,5 +1,8 @@
 "use strict";
 const fs = require("fs");
+const axios = require("axios");
+const moment = require("moment");
+const utf8 = require("utf8");
 
 /**
  * An asynchronous bootstrap function that runs before
@@ -10,24 +13,27 @@ const fs = require("fs");
  *
  * See more details here: https://strapi.io/documentation/developer-docs/latest/concepts/configurations.html#bootstrap
  */
-const createParks = async () => {
-  const currentParks = await strapi.services.park.find();
-  if (currentParks.length == 0) {
-    console.log("Loading Parks data");
-    var parksData = fs.readFileSync("./data/park.json", "utf8");
-    const parks = JSON.parse(parksData);
-    parks.forEach((park) => {
-      strapi.services.park.create({
-        ParkID: park.ParkID,
-        TypeCode: park.TypeCode,
-        ParkName: park.ParkName,
-        URL: park.URL,
-        Latitude: park.Latitude,
-        Longitude: park.Longitude,
-        EstablishedDate: park.EstablishedDate,
-        TotalArea: park.TypeCode,
-        UploadArea: park.UploadArea,
-        MarineArea: park.MarineArea,
+const loadParData = async () => {
+  const currentProtectedAreas = await strapi.services["protected-area"].find();
+  if (currentProtectedAreas.length == 0) {
+    console.log("Loading Protected Areas data..");
+    axios
+      .get("https://a100.gov.bc.ca/pub/parws/protectedLands", {
+        params: {
+          protectedLandName: "%",
+          protectedLandTypeCodes: "CS,ER,PA,PK,RA",
+        },
+      })
+      .then((response) => {
+        const protectedAreas = response.data.data;
+        return Promise.resolve(
+          protectedAreas.forEach((protectedArea) => {
+            loadProtectedLandData(protectedArea);
+          })
+        );
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }
 };
@@ -312,5 +318,10 @@ const loadData = async () => {
 };
 
 module.exports = async () => {
-  await createParks();
+  // Load data and set default public roles on first run
+  const shouldSetDefaultPermissions = await isFirstRun();
+  if (shouldSetDefaultPermissions) {
+    await setDefaultPermissions();
+    await loadData();
+  }
 };

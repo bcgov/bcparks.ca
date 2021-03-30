@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "event_types",
+  "collectionName": "urgencies",
   "info": {
-    "name": "EventType"
+    "name": "Urgency"
   },
   "options": {
     "increments": true,
@@ -10,7 +10,7 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "EventType": {
+    "Urgency": {
       "type": "string"
     }
   }
