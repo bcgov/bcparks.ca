@@ -20,25 +20,28 @@ jobs:
 
       - name: Login to Docker repositories
         run: |
+          echo "Logging in to RedHat..."
           docker login ${{secrets.REDHAT_REPO}} \
             -u ${{secrets.REDHAT_REPO_USER}} \
             -p '${{secrets.REDHAT_REPO_AUTH}}'
-          docker login ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}} \
-            -u ${{secrets.OPENSHIFT_SA_USERNAME}} \
-            -p '${{secrets.OPENSHIFT_SA_PASSWORD}}'
-
-      - name: Build the Frontend
-        run: |
+        
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
             --build-arg REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}} \
             --build-arg REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}} \
             --build-arg PUBLIC_URL=${{secrets.PUBLIC_URL}} \
             ${SERVICE_NAME}
+          
           echo "Tagging ${IMAGE_NAME}..."
           docker tag \
             bcp-cms_${SERVICE_NAME} \
             ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}${{secrets.OPENSHIFT_STUB}}/${IMAGE_NAME}
+          
+          echo "Logging in to OpenShift repository..."
+          docker login ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}} \
+            -u ${{secrets.OPENSHIFT_SA_USERNAME}} \
+            -p '${{secrets.OPENSHIFT_SA_PASSWORD}}'
+          
           echo "Pushing ${IMAGE_NAME}..."
           docker image push --all-tags \
             ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}${{secrets.OPENSHIFT_STUB}}/${IMAGE_NAME}
@@ -58,14 +61,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: Login to Docker repositories
         run: |
+          echo "Logging in to RedHat..."
           docker login ${{secrets.REDHAT_REPO}} \
             -u ${{secrets.REDHAT_REPO_USER}} \
             -p '${{secrets.REDHAT_REPO_AUTH}}'
-          docker login ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}} \
-            -u ${{secrets.OPENSHIFT_SA_USERNAME}} \
-            -p '${{secrets.OPENSHIFT_SA_PASSWORD}}'
-      - name: Build the CMS
-        run: |          
+
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
             --build-arg DATABASE_HOST=${{secrets.DATABASE_HOST}} \
@@ -75,9 +75,16 @@ jobs:
             --build-arg DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} \
             --build-arg DATABASE_SSL=${{secrets.DATABASE_SSL}} \
             ${SERVICE_NAME}
+
           echo "Tagging ${IMAGE_NAME}..."
           docker tag ${IMAGE_SOURCE} \
             ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}${{secrets.OPENSHIFT_STUB}}/${IMAGE_NAME}
+
+          echo "Logging in to OpenShift repository..."
+          docker login ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}} \
+            -u ${{secrets.OPENSHIFT_SA_USERNAME}} \
+            -p '${{secrets.OPENSHIFT_SA_PASSWORD}}'
+          
           echo "Pushing ${IMAGE_NAME}..."
           docker image push --all-tags \
             ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}${{secrets.OPENSHIFT_STUB}}/${IMAGE_NAME}
