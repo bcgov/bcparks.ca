@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Home from "./components/page/Home/Home";
+import Home from "./components/page/home/Home";
 import Error from "./components/page/error/Error";
 import { useHistory } from "react-router-dom";
-import AdvisoryDashboard from "./components/page/AdvisoryDashboard/AdvisoryDashboard";
+import AdvisoryDashboard from "./components/page/advisoryDashboard/AdvisoryDashboard";
+import CreateAdvisory from "./components/page/createAdvisory/CreateAdvisory";
 
 function App() {
   const [error, setError] = useState({});
   const header = {
-    name: "BC Parks",
+    name: "",
     history: useHistory(),
   };
   return (
@@ -20,6 +21,9 @@ function App() {
         </Route>
         <Route path="/bcparks/advisory-dash">
           <AdvisoryDashboard page={{ header, setError }} />
+        </Route>
+        <Route path="/bcparks/create-advisory">
+          <CreateAdvisory page={{ header, setError }} />
         </Route>
         <Route path="/bcparks/error">
           <Error page={{ header, error }} />
