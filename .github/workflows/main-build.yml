@@ -35,7 +35,7 @@ jobs:
           echo "Tagging ${IMAGE_NAME}..."
           docker tag \
             bcp-cms_${SERVICE_NAME} \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}${{secrets.OPENSHIFT_STUB}}/${IMAGE_NAME}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${{secrets.OPENSHIFT_STUB}}
           
           echo "Logging in to OpenShift repository..."
           docker login ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}} \
@@ -43,8 +43,8 @@ jobs:
             -p '${{secrets.OPENSHIFT_SA_PASSWORD}}'
           
           echo "Pushing ${IMAGE_NAME}..."
-          docker image push --all-tags \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}${{secrets.OPENSHIFT_STUB}}/${IMAGE_NAME}
+          docker image push \
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${{secrets.OPENSHIFT_STUB}}
 
   build-cms:
     runs-on: ubuntu-20.04
@@ -78,7 +78,7 @@ jobs:
 
           echo "Tagging ${IMAGE_NAME}..."
           docker tag ${IMAGE_SOURCE} \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}${{secrets.OPENSHIFT_STUB}}/${IMAGE_NAME}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${{secrets.OPENSHIFT_STUB}}
 
           echo "Logging in to OpenShift repository..."
           docker login ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}} \
@@ -86,5 +86,5 @@ jobs:
             -p '${{secrets.OPENSHIFT_SA_PASSWORD}}'
           
           echo "Pushing ${IMAGE_NAME}..."
-          docker image push --all-tags \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}${{secrets.OPENSHIFT_STUB}}/${IMAGE_NAME}
+          docker image push \
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${{secrets.OPENSHIFT_STUB}}

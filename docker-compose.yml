@@ -1,7 +1,7 @@
 version: "3.4"
 
 services:
-  react-frontend:
+  bcp-frontend:
     container_name: bcp-frontend
     restart: unless-stopped
     build:
