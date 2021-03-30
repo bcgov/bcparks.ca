@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/regions",
-      "handler": "region.find",
+      "path": "/parks",
+      "handler": "park.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/regions/count",
-      "handler": "region.count",
+      "path": "/parks/count",
+      "handler": "park.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/regions/:regionNumber",
-      "handler": "region.findOne",
+      "path": "/parks/:id",
+      "handler": "park.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/regions",
-      "handler": "region.create",
+      "path": "/parks",
+      "handler": "park.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/regions/:regionNumber",
-      "handler": "region.update",
+      "path": "/parks/:id",
+      "handler": "park.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/regions/:regionNumber",
-      "handler": "region.delete",
+      "path": "/parks/:id",
+      "handler": "park.delete",
       "config": {
         "policies": []
       }
