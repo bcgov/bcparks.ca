@@ -42,7 +42,7 @@ jobs:
           echo "Tagging ${IMAGE_NAME}..."
           docker tag \
             bcp-cms_${SERVICE_NAME} \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+            image-registry.apps.silver.devops.gov.bc.ca/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
           
           echo "Logging in to OpenShift repository..."
           docker login ${OPENSHIFT_EXTERNAL_REPOSITORY} \
@@ -51,7 +51,7 @@ jobs:
           
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+            image-registry.apps.silver.devops.gov.bc.ca/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
 
   build-cms:
     runs-on: ubuntu-20.04
@@ -95,7 +95,7 @@ jobs:
 
           echo "Tagging ${IMAGE_NAME}..."
           docker tag ${IMAGE_SOURCE} \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+            image-registry.apps.silver.devops.gov.bc.ca/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
 
           echo "Logging in to OpenShift repository..."
           docker login ${OPENSHIFT_EXTERNAL_REPOSITORY} \
@@ -104,5 +104,5 @@ jobs:
           
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+            image-registry.apps.silver.devops.gov.bc.ca/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
 
