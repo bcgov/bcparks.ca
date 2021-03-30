@@ -5,7 +5,7 @@ services:
     container_name: bcp-frontend
     restart: unless-stopped
     build:
-      context: frontend
+      context: ./src/frontend
       dockerfile: Dockerfile
     environment:
       REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
@@ -21,12 +21,10 @@ services:
     tty: true
 
   strapi:
-    image: strapi/strapi:3.5.3
     container_name: bcp-strapi
     restart: unless-stopped
-    env_file: .env
     build:
-      context: backend
+      context: ./src/backend
       dockerfile: Dockerfile
     environment:
       DATABASE_HOST: ${DATABASE_HOST}

@@ -1,5 +1,8 @@
 # pull official base image
-FROM node:14.16.0-alpine
+FROM registry.access.redhat.com/ubi7/nodejs-14 AS build-deps
+ARG REACT_APP_API_BASE_URL
+ARG REACT_APP_FRONTEND_BASE_URL
+ARG PUBLIC_URL
 
 ENV REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
 ENV REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL}
@@ -10,27 +13,35 @@ WORKDIR /frontend
 
 # add `/node_modules/.bin` to $PATH
 ENV PATH ./node_modules/.bin:$PATH
-
-RUN apk add --update \
+USER 0
+RUN yum install -y \
     python \
     python-dev \
-    py-pip \
+    python-pip \
     build-base \
+    bash \ 
     git \
-    openssh-client \
-    && pip install virtualenv \
-    && rm -rf /var/cache/apk/*
+    openssh-client
+# RUN pip3 install virtualenv
 
 # install app dependencies
-COPY package.json ./
-RUN npm install --silent
-RUN npm install react-scripts@3.4.1 -g
+# COPY package.json ./
+COPY . .
+RUN npm install && \
+    npm install -g @angular/cli react-scripts@3.4.1
 
-# add bash to the image
-RUN apk add --no-cache bash
-
+# RUN ng build --prod
 # add app
-COPY . ./
+
+RUN mkdir -p /frontend/node_modules/.cache && \
+    chmod 777 /frontend/node_modules/.cache
+########################################
+### Stage 2 - Production environment ###
+########################################
+# FROM registry.redhat.io/rhel8/nginx-118 AS runtime
+# COPY --from=build-deps /frontend /opt/app-root/src
+# COPY --from=build-deps /frontend/nginx.conf /etc/nginx/conf.d/bcp_cms.conf
 
 # start app
 CMD ["npm", "start"]
+# CMD ["sh","-c","nginx -g 'daemon off;'"]

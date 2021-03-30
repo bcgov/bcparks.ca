@@ -1,0 +1,107 @@
+name: Main-Build .NET API Image and Push to Openshift Registry
+on:
+  push:
+    branches: [main, tools]
+  workflow_dispatch:
+    branches: [main, tools]
+jobs:
+  build-frontend:
+    runs-on: ubuntu-20.04
+    environment: Main
+    env:
+      VERSION: v1
+      IMAGE_TAGS: dev
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      DOCKER_BUILDKIT: 1
+      SERVICE_NAME: react-frontend
+      IMAGE_NAME: frontend
+      REACT_APP_API_BASE_URL: ${{secrets.REACT_APP_API_BASE_URL}}
+      REACT_APP_FRONTEND_BASE_URL: ${{secrets.REACT_APP_FRONTEND_BASE_URL}}
+      PUBLIC_URL: ${{secrets.PUBLIC_URL}}
+      OPENSHIFT_EXTERNAL_REPOSITORY: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+      OPENSHIFT_LICENSE_PLATE: ${{secrets.OPENSHIFT_LICENSE_PLATE}}
+      OPENSHIFT_SA_USERNAME: ${{secrets.OPENSHIFT_SA_USERNAME}}
+      OPENSHIFT_SA_PASSWORD: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Building, pushing frontend
+        run: |
+          echo "Logging in to RedHat..."
+          docker login ${{ secrets.REDHAT_REPO }} \
+            -u ${{ secrets.REDHAT_REPO_USER }} \
+            -p '${{ secrets.REDHAT_REPO_AUTH }}'
+          
+          echo "Logging in to OpenShift repository with Secrets..."
+          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} \
+            -u ${{ secrets.OPENSHIFT_SA_USERNAME}} \
+            -p ${{ secrets.OPENSHIFT_SA_PASSWORD}}
+
+          echo "Building ${IMAGE_NAME}..."
+          docker-compose build --force-rm --no-cache \
+            --build-arg REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL} \
+            --build-arg REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL} \
+            --build-arg PUBLIC_URL=${PUBLIC_URL} \
+            ${SERVICE_NAME}
+          
+          echo "Tagging ${IMAGE_NAME}..."
+          docker tag \
+            bcp-cms_${SERVICE_NAME} \
+            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+          
+          echo "Pushing ${IMAGE_NAME}..."
+          docker image push \
+            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+
+  build-cms:
+    runs-on: ubuntu-20.04
+    environment: Main
+    env:
+      VERSION: v1
+      IMAGE_TAGS: dev
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      DOCKER_BUILDKIT: 1
+      IMAGE_NAME: strapi
+      SERVICE_NAME: strapi
+      DATABASE_HOST: ${{secrets.DATABASE_HOST}}
+      DATABASE_PORT: ${{secrets.DATABASE_PORT}}
+      DATABASE_NAME: ${{secrets.DATABASE_NAME}}
+      DATABASE_USERNAME: ${{secrets.DATABASE_USERNAME}}
+      DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
+      DATABASE_SSL: ${{secrets.DATABASE_SSL}} 
+      OPENSHIFT_EXTERNAL_REPOSITORY: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+      OPENSHIFT_LICENSE_PLATE: ${{secrets.OPENSHIFT_LICENSE_PLATE}}
+      OPENSHIFT_SA_USERNAME: ${{secrets.OPENSHIFT_SA_USERNAME}}
+      OPENSHIFT_SA_PASSWORD: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Building, pushing api
+        run: |
+          echo "Logging in to RedHat..."
+          docker login ${{ secrets.REDHAT_REPO }} \
+            -u ${{ secrets.REDHAT_REPO_USER }} \
+            -p '${{ secrets.REDHAT_REPO_AUTH }}'
+          
+          echo "Logging in to OpenShift repository with Secrets..."
+          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} \
+            -u ${{ secrets.OPENSHIFT_SA_USERNAME}} \
+            -p ${{ secrets.OPENSHIFT_SA_PASSWORD}}
+          
+          echo "Building ${IMAGE_NAME}..."
+          docker-compose build --force-rm --no-cache \
+            --build-arg DATABASE_HOST=${DATABASE_HOST} \
+            --build-arg DATABASE_PORT=${DATABASE_PORT} \
+            --build-arg DATABASE_NAME=${DATABASE_NAME} \
+            --build-arg DATABASE_USERNAME=${DATABASE_USERNAME} \
+            --build-arg DATABASE_PASSWORD=${DATABASE_PASSWORD} \
+            --build-arg DATABASE_SSL=${DATABASE_SSL} \
+            ${SERVICE_NAME}
+
+          echo "Tagging ${IMAGE_NAME}..."
+          docker tag bcp-cms_${SERVICE_NAME} \
+            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+
+          echo "Pushing ${IMAGE_NAME}..."
+          docker image push \
+            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+

@@ -1,5 +1,11 @@
 # pull official base image
-FROM node:14.16.0-alpine
+FROM registry.access.redhat.com/ubi7/nodejs-14
+ARG DATABASE_HOST
+ARG DATABASE_PORT
+ARG DATABASE_NAME
+ARG DATABASE_USERNAME
+ARG DATABASE_PASSWORD
+ARG DATABASE_SSL
 
 ENV DATABASE_HOST=${DATABASE_HOST}
 ENV DATABASE_PORT=${DATABASE_PORT}
@@ -9,7 +15,7 @@ ENV DATABASE_PASSWORD=${DATABASE_PASSWORD}
 ENV DATABASE_SSL=${DATABASE_SSL}
 
 # set working directory
-WORKDIR /backend
+# WORKDIR /backend
 
 # add `/node_modules/.bin` to $PATH
 ENV PATH ./node_modules/.bin:$PATH
@@ -21,6 +27,9 @@ RUN npm run build
 
 # add app
 COPY . ./
+# for debugging
+USER 0
+RUN yum install -y nmap iputils postgresql telnet
 
 # start app
 CMD [ "npm", "start" ]
