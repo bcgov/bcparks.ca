@@ -29,7 +29,7 @@ RUN npm run build
 COPY . ./
 # for debugging
 USER 0
-RUN yum install -y nmap iputils postgresql
+RUN yum install -y nmap iputils postgresql telnet
 
 # start app
 CMD [ "npm", "start" ]

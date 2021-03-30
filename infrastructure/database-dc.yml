@@ -2,9 +2,6 @@ kind: DeploymentConfig
 apiVersion: apps.openshift.io/v1
 metadata:
   name: bcpcmsdb
-  namespace: 61d198-dev
-  labels:
-    template: postgresql-ephemeral-template
 spec:
   strategy:
     type: Recreate
@@ -23,21 +20,20 @@ spec:
           namespace: openshift
           name: 'postgresql:10'
         lastTriggeredImage: >-
-          image-registry.openshift-image-registry.svc:5000/openshift/postgresql:10
+          image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:a145b5c2f38e25e832bef0be3a01a92a1f62d5c39c5edfcf074332f8642cb68f
     - type: ConfigChange
   replicas: 1
   revisionHistoryLimit: 10
   test: false
   selector:
-    name: bcpcmsdb
+    name: postgresql
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        name: bcpcmsdb
+        name: postgresql
     spec:
       volumes:
-        - name: bcpcmsdb-data
+        - name: postgresql-data
           emptyDir: {}
       containers:
         - resources:
@@ -80,15 +76,12 @@ spec:
                 secretKeyRef:
                   name: postgres-secrets
                   key: DATABASE_NAME
-          securityContext:
-            capabilities: {}
-            privileged: false
           ports:
             - containerPort: 5432
               protocol: TCP
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: bcpcmsdb-data
+            - name: postgresql-data
               mountPath: /var/lib/pgsql/data
           terminationMessagePolicy: File
           image: >-

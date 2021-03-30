@@ -4,9 +4,10 @@ metadata:
   name: bcpcmsdb
   namespace: 61d198-dev
 spec:
-  selector:
-    app: bcparks-online
   ports:
-    - protocol: TCP
+    - name: postgresql
+      protocol: TCP
       port: 5432
       targetPort: 5432
+  selector:
+    name: bcpcmsdb
