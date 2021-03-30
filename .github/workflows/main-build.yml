@@ -27,15 +27,15 @@ jobs:
         
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
-            --build-arg REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}} \
-            --build-arg REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}} \
-            --build-arg PUBLIC_URL=${{secrets.PUBLIC_URL}} \
+            --build-arg REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL} \
+            --build-arg REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL} \
+            --build-arg PUBLIC_URL=${PUBLIC_URL} \
             ${SERVICE_NAME}
           
           echo "Tagging ${IMAGE_NAME}..."
           docker tag \
             bcp-cms_${SERVICE_NAME} \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${{secrets.OPENSHIFT_STUB}}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${OPENSHIFT_STUB}
           
           echo "Logging in to OpenShift repository..."
           docker login ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}} \
@@ -44,7 +44,7 @@ jobs:
           
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${{secrets.OPENSHIFT_STUB}}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${OPENSHIFT_STUB}
 
   build-cms:
     runs-on: ubuntu-20.04
@@ -68,17 +68,17 @@ jobs:
 
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
-            --build-arg DATABASE_HOST=${{secrets.DATABASE_HOST}} \
-            --build-arg DATABASE_PORT=${{secrets.DATABASE_PORT}} \
-            --build-arg DATABASE_NAME=${{secrets.DATABASE_NAME}} \
-            --build-arg DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} \
-            --build-arg DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} \
-            --build-arg DATABASE_SSL=${{secrets.DATABASE_SSL}} \
+            --build-arg DATABASE_HOST=${DATABASE_HOST} \
+            --build-arg DATABASE_PORT=${DATABASE_PORT} \
+            --build-arg DATABASE_NAME=${DATABASE_NAME} \
+            --build-arg DATABASE_USERNAME=${DATABASE_USERNAME} \
+            --build-arg DATABASE_PASSWORD=${DATABASE_PASSWORD} \
+            --build-arg DATABASE_SSL=${DATABASE_SSL} \
             ${SERVICE_NAME}
 
           echo "Tagging ${IMAGE_NAME}..."
           docker tag ${IMAGE_SOURCE} \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${{secrets.OPENSHIFT_STUB}}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${OPENSHIFT_STUB}
 
           echo "Logging in to OpenShift repository..."
           docker login ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}} \
@@ -87,4 +87,5 @@ jobs:
           
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${{secrets.OPENSHIFT_STUB}}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${OPENSHIFT_STUB}
+
