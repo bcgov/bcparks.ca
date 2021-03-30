@@ -61,7 +61,6 @@ jobs:
       IMAGE_TAGS: dev
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
-      IMAGE_SOURCE: docker.io/strapi/strapi:3.5.3
       IMAGE_NAME: strapi
       SERVICE_NAME: strapi
       DATABASE_HOST: ${{secrets.DATABASE_HOST}}
@@ -99,7 +98,7 @@ jobs:
             ${SERVICE_NAME}
 
           echo "Tagging ${IMAGE_NAME}..."
-          docker tag ${IMAGE_SOURCE} \
+          docker tag bcp-cms_${SERVICE_NAME} \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
 
           echo "Pushing ${IMAGE_NAME}..."
