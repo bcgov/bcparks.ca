@@ -4,7 +4,6 @@ import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./AdvisoryDashboard.css";
 import { Header } from "shared-components/build/components/header/Header";
-import { Footer } from "shared-components/build/components/footer/Footer";
 import { Button } from "shared-components/build/components/button/Button";
 import MaterialTable from "material-table";
 import Select from "react-select";
@@ -106,6 +105,7 @@ const tableIcons = {
 export default function AdvisoryDashboard({ page: { header, setError } }) {
   const [toError, setToError] = useState(false);
   const [toHome, setToHome] = useState(false);
+  const [toCreate, setToCreate] = useState(false);
   const [parkNames, setParkNames] = useState([]);
   const [selectedParkId, setSelectedParkId] = useState(0);
 
@@ -152,34 +152,40 @@ export default function AdvisoryDashboard({ page: { header, setError } }) {
     return <Redirect to="/bcparks/error" />;
   }
 
+  if (toCreate) {
+    return <Redirect to="/bcparks/create-advisory" />;
+  }
+
   return (
     <main>
       <Header header={header} />
       <br />
-
       <div className={styles.AdvisoryDashboard} data-testid="AdvisoryDashboard">
-        <Select
-          options={parkNames}
-          onChange={(e) => setSelectedParkId(e.value)}
-        />
-        <MaterialTable
-          options={options}
-          icons={tableIcons}
-          columns={columns}
-          data={rows}
-          title="Public Advisory"
-        />
-        <br />
-        <Button
-          label="Home"
-          styling="bcgov-normal-blue btn"
-          onClick={() => {
-            sessionStorage.clear();
-            setToHome(true);
-          }}
-        />
+        <div className="container">
+          <Select
+            options={parkNames}
+            onChange={(e) => setSelectedParkId(e.value)}
+          />
+          <MaterialTable
+            options={options}
+            icons={tableIcons}
+            columns={columns}
+            data={rows}
+            title="Public Advisory"
+          />
+          <br />
+          <div className="txt-center">
+            <Button
+              label="Create Advisory"
+              styling="bcgov-normal-yellow btn"
+              onClick={() => {
+                sessionStorage.clear();
+                setToCreate(true);
+              }}
+            />
+          </div>
+        </div>
       </div>
-      <Footer />
     </main>
   );
 }
