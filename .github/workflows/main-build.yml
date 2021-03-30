@@ -10,11 +10,14 @@ jobs:
     environment: Main
     env:
       VERSION: v1
-      IMAGE_TAGS: latest
+      IMAGE_TAGS: ${{secrets.OPENSHIFT_STUB}}
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
       SERVICE_NAME: react-frontend
       IMAGE_NAME: frontend
+      REACT_APP_API_BASE_URL: ${{secrets.REACT_APP_API_BASE_URL}}
+      REACT_APP_FRONTEND_BASE_URL: ${{secrets.REACT_APP_FRONTEND_BASE_URL}}
+      PUBLIC_URL: ${{secrets.PUBLIC_URL}}
     steps:
       - uses: actions/checkout@v2
 
@@ -35,7 +38,7 @@ jobs:
           echo "Tagging ${IMAGE_NAME}..."
           docker tag \
             bcp-cms_${SERVICE_NAME} \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${OPENSHIFT_STUB}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
           
           echo "Logging in to OpenShift repository..."
           docker login ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}} \
@@ -44,19 +47,25 @@ jobs:
           
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${OPENSHIFT_STUB}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
 
   build-cms:
     runs-on: ubuntu-20.04
     environment: Main
     env:
       VERSION: v1
-      IMAGE_TAGS: 3.5.3
+      IMAGE_TAGS: ${{secrets.OPENSHIFT_STUB}}
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
       IMAGE_SOURCE: docker.io/strapi/strapi:3.5.3
       IMAGE_NAME: strapi
       SERVICE_NAME: strapi
+      DATABASE_HOST: ${{secrets.DATABASE_HOST}}
+      DATABASE_PORT: ${{secrets.DATABASE_PORT}}
+      DATABASE_NAME: ${{secrets.DATABASE_NAME}}
+      DATABASE_USERNAME: ${{secrets.DATABASE_USERNAME}}
+      DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
+      DATABASE_SSL: ${{secrets.DATABASE_SSL}} 
     steps:
       - uses: actions/checkout@v2
       - name: Building, pushing api
@@ -78,7 +87,7 @@ jobs:
 
           echo "Tagging ${IMAGE_NAME}..."
           docker tag ${IMAGE_SOURCE} \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${OPENSHIFT_STUB}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
 
           echo "Logging in to OpenShift repository..."
           docker login ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}} \
@@ -87,5 +96,5 @@ jobs:
           
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
-            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${OPENSHIFT_STUB}
+            ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
 
