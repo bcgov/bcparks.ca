@@ -1,0 +1,51 @@
+.CreateAdvisory {
+}
+
+.button-row {
+  /* padding-top: 20px !important; */
+  text-align: center !important;
+  align-items: center !important;
+}
+
+.ad-form {
+  display: table;
+}
+
+.ad-row {
+  display: table-row;
+}
+
+.ad-label {
+  text-align: right;
+  font-weight: bold;
+  color: #003366 !important;
+  vertical-align: middle !important;
+}
+
+.ad-btn-group .bcgov-button {
+  margin-right: 5px !important;
+}
+
+.ad-field {
+  background: #e3eaf8 0% 0% no-repeat padding-box !important;
+  padding: 10px;
+}
+
+.ad-flex {
+  display: flex;
+}
+
+.ad-interval-box .fa-chevron-down {
+  top: 15px !important;
+  right: 0px !important;
+}
+
+.row {
+  padding: 5px 0px;
+}
+
+@media (max-width: 767.98px) {
+  .ad-label {
+    text-align: left !important;
+  }
+}

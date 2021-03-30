@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "table_lookups",
+  "info": {
+    "name": "tableLookup",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "Text": {
+      "type": "string"
+    }
+  }
+}
