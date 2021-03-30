@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bcpcmsdb
+  namespace: 61d198-dev
+spec:
+  selector:
+    app: bcparks-online
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

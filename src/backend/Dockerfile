@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:14.16.0-alpine
+FROM registry.access.redhat.com/ubi7/nodejs-14
 ARG DATABASE_HOST
 ARG DATABASE_PORT
 ARG DATABASE_NAME
@@ -15,7 +15,7 @@ ENV DATABASE_PASSWORD=${DATABASE_PASSWORD}
 ENV DATABASE_SSL=${DATABASE_SSL}
 
 # set working directory
-WORKDIR /backend
+# WORKDIR /backend
 
 # add `/node_modules/.bin` to $PATH
 ENV PATH ./node_modules/.bin:$PATH
