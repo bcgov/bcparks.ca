@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:14.16.0-alpine AS build-deps
+FROM registry.access.redhat.com/ubi7/nodejs-14 AS build-deps
 ARG REACT_APP_API_BASE_URL
 ARG REACT_APP_FRONTEND_BASE_URL
 ARG PUBLIC_URL
