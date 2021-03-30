@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Home from "./components/page/home/Home";
+import Home from "./components/page/Home/Home";
 import Error from "./components/page/error/Error";
 import { useHistory } from "react-router-dom";
 import AdvisoryDashboard from "./components/page/advisoryDashboard/AdvisoryDashboard";

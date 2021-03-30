@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/access-statuses": {
+    "/urgencies": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -10,10 +10,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Urgency"
                   }
                 }
               }
@@ -52,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Urgency"
         ],
         "parameters": [
           {
@@ -202,11 +201,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Urgency"
                 }
               }
             }
@@ -244,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Urgency"
         ],
         "requestBody": {
           "description": "",
@@ -252,14 +247,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAccess-status"
+                "$ref": "#/components/schemas/NewUrgency"
               }
             }
           }
         }
       }
     },
-    "/access-statuses/count": {
+    "/urgencies/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -270,8 +265,8 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "foo": {
-                      "type": "string"
+                    "count": {
+                      "type": "integer"
                     }
                   }
                 }
@@ -311,12 +306,12 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Urgency"
         ],
         "parameters": []
       }
     },
-    "/access-statuses/{id}": {
+    "/urgencies/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -326,11 +321,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Urgency"
                 }
               }
             }
@@ -368,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Urgency"
         ],
         "parameters": [
           {
@@ -392,11 +383,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Urgency"
                 }
               }
             }
@@ -434,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Urgency"
         ],
         "requestBody": {
           "description": "",
@@ -442,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAccess-status"
+                "$ref": "#/components/schemas/NewUrgency"
               }
             }
           }
@@ -508,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Urgency"
         ],
         "parameters": [
           {
@@ -527,7 +514,7 @@
   },
   "components": {
     "schemas": {
-      "Access-status": {
+      "Urgency": {
         "required": [
           "id"
         ],
@@ -535,96 +522,8 @@
           "id": {
             "type": "string"
           },
-          "AccessStatus": {
+          "Urgency": {
             "type": "string"
-          },
-          "public_advisory_events": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "ParData": {
-                  "type": "string"
-                },
-                "Title": {
-                  "type": "string"
-                },
-                "Description": {
-                  "type": "string"
-                },
-                "Submitter": {
-                  "type": "string"
-                },
-                "DCTicketNumber": {
-                  "type": "integer"
-                },
-                "OrderURL": {
-                  "type": "string"
-                },
-                "MapURL": {
-                  "type": "string"
-                },
-                "EvacuationURL": {
-                  "type": "string"
-                },
-                "InformationBulletinURL": {
-                  "type": "string"
-                },
-                "Alert": {
-                  "type": "string"
-                },
-                "Approved": {
-                  "type": "string"
-                },
-                "AdvisoryStatus": {
-                  "type": "string"
-                },
-                "ListingRank": {
-                  "type": "string"
-                },
-                "Note": {
-                  "type": "string"
-                },
-                "Coordinates": {
-                  "type": "string"
-                },
-                "CreatedDate": {
-                  "type": "string"
-                },
-                "CreatedBy": {
-                  "type": "string"
-                },
-                "ModifiedDate": {
-                  "type": "string"
-                },
-                "ModifiedBy": {
-                  "type": "string"
-                },
-                "public_advisory": {
-                  "type": "string"
-                },
-                "access_status": {
-                  "type": "string"
-                },
-                "event_type": {
-                  "type": "string"
-                },
-                "published_at": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
           },
           "published_at": {
             "type": "string",
@@ -632,16 +531,10 @@
           }
         }
       },
-      "NewAccess-status": {
+      "NewUrgency": {
         "properties": {
-          "AccessStatus": {
+          "Urgency": {
             "type": "string"
-          },
-          "public_advisory_events": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "published_at": {
             "type": "string",
@@ -657,5 +550,9 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    {
+      "name": "Urgency"
+    }
+  ]
 }

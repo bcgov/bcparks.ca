@@ -13,6 +13,10 @@
   "attributes": {
     "AccessStatus": {
       "type": "string"
+    },
+    "public_advisory_events": {
+      "via": "access_status",
+      "collection": "public-advisory-event"
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/access-statuses": {
+    "/sections": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -10,10 +10,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Section"
                   }
                 }
               }
@@ -52,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Section"
         ],
         "parameters": [
           {
@@ -202,11 +201,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Section"
                 }
               }
             }
@@ -244,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Section"
         ],
         "requestBody": {
           "description": "",
@@ -252,14 +247,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAccess-status"
+                "$ref": "#/components/schemas/NewSection"
               }
             }
           }
         }
       }
     },
-    "/access-statuses/count": {
+    "/sections/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -270,8 +265,8 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "foo": {
-                      "type": "string"
+                    "count": {
+                      "type": "integer"
                     }
                   }
                 }
@@ -311,12 +306,12 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Section"
         ],
         "parameters": []
       }
     },
-    "/access-statuses/{id}": {
+    "/sections/{SectionNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -326,11 +321,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Section"
                 }
               }
             }
@@ -368,11 +359,11 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Section"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "SectionNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -392,11 +383,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Section"
                 }
               }
             }
@@ -434,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Section"
         ],
         "requestBody": {
           "description": "",
@@ -442,14 +429,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAccess-status"
+                "$ref": "#/components/schemas/NewSection"
               }
             }
           }
         },
         "parameters": [
           {
-            "name": "id",
+            "name": "SectionNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -508,11 +495,11 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Section"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "SectionNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -527,91 +514,45 @@
   },
   "components": {
     "schemas": {
-      "Access-status": {
+      "Section": {
         "required": [
-          "id"
+          "id",
+          "SectionNumber"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "AccessStatus": {
+          "SectionNumber": {
+            "type": "integer"
+          },
+          "SectionName": {
             "type": "string"
           },
-          "public_advisory_events": {
+          "ManagementAreas": {
             "type": "array",
             "items": {
               "required": [
-                "id"
+                "id",
+                "ManagementAreaNumber"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "ParData": {
-                  "type": "string"
-                },
-                "Title": {
-                  "type": "string"
-                },
-                "Description": {
-                  "type": "string"
-                },
-                "Submitter": {
-                  "type": "string"
-                },
-                "DCTicketNumber": {
+                "ManagementAreaNumber": {
                   "type": "integer"
                 },
-                "OrderURL": {
+                "ManagementAreaName": {
                   "type": "string"
                 },
-                "MapURL": {
+                "Section": {
                   "type": "string"
                 },
-                "EvacuationURL": {
+                "Region": {
                   "type": "string"
                 },
-                "InformationBulletinURL": {
-                  "type": "string"
-                },
-                "Alert": {
-                  "type": "string"
-                },
-                "Approved": {
-                  "type": "string"
-                },
-                "AdvisoryStatus": {
-                  "type": "string"
-                },
-                "ListingRank": {
-                  "type": "string"
-                },
-                "Note": {
-                  "type": "string"
-                },
-                "Coordinates": {
-                  "type": "string"
-                },
-                "CreatedDate": {
-                  "type": "string"
-                },
-                "CreatedBy": {
-                  "type": "string"
-                },
-                "ModifiedDate": {
-                  "type": "string"
-                },
-                "ModifiedBy": {
-                  "type": "string"
-                },
-                "public_advisory": {
-                  "type": "string"
-                },
-                "access_status": {
-                  "type": "string"
-                },
-                "event_type": {
+                "ProtectedArea": {
                   "type": "string"
                 },
                 "published_at": {
@@ -626,22 +567,69 @@
               }
             }
           },
+          "Region": {
+            "required": [
+              "id",
+              "RegionNumber"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "RegionNumber": {
+                "type": "integer"
+              },
+              "RegionName": {
+                "type": "string"
+              },
+              "Sections": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "ManagementArea": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
           }
         }
       },
-      "NewAccess-status": {
+      "NewSection": {
+        "required": [
+          "SectionNumber"
+        ],
         "properties": {
-          "AccessStatus": {
+          "SectionNumber": {
+            "type": "integer"
+          },
+          "SectionName": {
             "type": "string"
           },
-          "public_advisory_events": {
+          "ManagementAreas": {
             "type": "array",
             "items": {
               "type": "string"
             }
+          },
+          "Region": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -657,5 +645,9 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    {
+      "name": "Section"
+    }
+  ]
 }

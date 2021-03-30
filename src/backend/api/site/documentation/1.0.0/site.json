@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/access-statuses": {
+    "/sites": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -10,10 +10,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Site"
                   }
                 }
               }
@@ -52,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Site"
         ],
         "parameters": [
           {
@@ -202,11 +201,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Site"
                 }
               }
             }
@@ -244,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Site"
         ],
         "requestBody": {
           "description": "",
@@ -252,14 +247,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAccess-status"
+                "$ref": "#/components/schemas/NewSite"
               }
             }
           }
         }
       }
     },
-    "/access-statuses/count": {
+    "/sites/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -270,8 +265,8 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "foo": {
-                      "type": "string"
+                    "count": {
+                      "type": "integer"
                     }
                   }
                 }
@@ -311,12 +306,12 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Site"
         ],
         "parameters": []
       }
     },
-    "/access-statuses/{id}": {
+    "/sites/{ORCSSiteNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -326,11 +321,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Site"
                 }
               }
             }
@@ -368,11 +359,11 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Site"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "ORCSSiteNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -392,11 +383,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Site"
                 }
               }
             }
@@ -434,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Site"
         ],
         "requestBody": {
           "description": "",
@@ -442,14 +429,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAccess-status"
+                "$ref": "#/components/schemas/NewSite"
               }
             }
           }
         },
         "parameters": [
           {
-            "name": "id",
+            "name": "ORCSSiteNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -508,11 +495,11 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Site"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "ORCSSiteNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -527,104 +514,133 @@
   },
   "components": {
     "schemas": {
-      "Access-status": {
+      "Site": {
         "required": [
-          "id"
+          "id",
+          "ORCSSiteNumber"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "AccessStatus": {
+          "SiteName": {
             "type": "string"
           },
-          "public_advisory_events": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "ParData": {
-                  "type": "string"
-                },
-                "Title": {
-                  "type": "string"
-                },
-                "Description": {
-                  "type": "string"
-                },
-                "Submitter": {
-                  "type": "string"
-                },
-                "DCTicketNumber": {
-                  "type": "integer"
-                },
-                "OrderURL": {
-                  "type": "string"
-                },
-                "MapURL": {
-                  "type": "string"
-                },
-                "EvacuationURL": {
-                  "type": "string"
-                },
-                "InformationBulletinURL": {
-                  "type": "string"
-                },
-                "Alert": {
-                  "type": "string"
-                },
-                "Approved": {
-                  "type": "string"
-                },
-                "AdvisoryStatus": {
-                  "type": "string"
-                },
-                "ListingRank": {
-                  "type": "string"
-                },
-                "Note": {
-                  "type": "string"
-                },
-                "Coordinates": {
-                  "type": "string"
-                },
-                "CreatedDate": {
-                  "type": "string"
-                },
-                "CreatedBy": {
-                  "type": "string"
-                },
-                "ModifiedDate": {
-                  "type": "string"
-                },
-                "ModifiedBy": {
-                  "type": "string"
-                },
-                "public_advisory": {
-                  "type": "string"
-                },
-                "access_status": {
-                  "type": "string"
-                },
-                "event_type": {
-                  "type": "string"
-                },
-                "published_at": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
+          "SiteNumber": {
+            "type": "integer"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "EstablishedDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "RepealedDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "URL": {
+            "type": "string"
+          },
+          "Latitude": {
+            "type": "string"
+          },
+          "Longitude": {
+            "type": "string"
+          },
+          "MapZoom": {
+            "type": "string"
+          },
+          "ProtectedArea": {
+            "required": [
+              "id",
+              "ORCS"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "ORCS": {
+                "type": "integer"
+              },
+              "ProtectedAreaName": {
+                "type": "string"
+              },
+              "TotalArea": {
+                "type": "number"
+              },
+              "UplandArea": {
+                "type": "number"
+              },
+              "MarineArea": {
+                "type": "number"
+              },
+              "MarineProtectedArea": {
+                "type": "string"
+              },
+              "Type": {
+                "type": "string"
+              },
+              "Class": {
+                "type": "string"
+              },
+              "EstablishedDate": {
+                "type": "string"
+              },
+              "RepealedDate": {
+                "type": "string"
+              },
+              "Status": {
+                "type": "string"
+              },
+              "URL": {
+                "type": "string"
+              },
+              "TypeCode": {
+                "type": "string",
+                "enum": [
+                  "PK",
+                  "PA",
+                  "RA",
+                  "ER",
+                  "CS"
+                ]
+              },
+              "Latitude": {
+                "type": "string"
+              },
+              "Longitude": {
+                "type": "string"
+              },
+              "MapZoom": {
+                "type": "string"
+              },
+              "Sites": {
+                "type": "array",
+                "items": {
                   "type": "string"
                 }
+              },
+              "ManagementAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
+          },
+          "ORCSSiteNumber": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -632,16 +648,45 @@
           }
         }
       },
-      "NewAccess-status": {
+      "NewSite": {
+        "required": [
+          "ORCSSiteNumber"
+        ],
         "properties": {
-          "AccessStatus": {
+          "SiteName": {
             "type": "string"
           },
-          "public_advisory_events": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "SiteNumber": {
+            "type": "integer"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "EstablishedDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "RepealedDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "URL": {
+            "type": "string"
+          },
+          "Latitude": {
+            "type": "string"
+          },
+          "Longitude": {
+            "type": "string"
+          },
+          "MapZoom": {
+            "type": "string"
+          },
+          "ProtectedArea": {
+            "type": "string"
+          },
+          "ORCSSiteNumber": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -657,5 +702,9 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    {
+      "name": "Site"
+    }
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/access-statuses": {
+    "/regions": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -10,10 +10,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Region"
                   }
                 }
               }
@@ -52,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Region"
         ],
         "parameters": [
           {
@@ -202,11 +201,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Region"
                 }
               }
             }
@@ -244,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Region"
         ],
         "requestBody": {
           "description": "",
@@ -252,14 +247,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAccess-status"
+                "$ref": "#/components/schemas/NewRegion"
               }
             }
           }
         }
       }
     },
-    "/access-statuses/count": {
+    "/regions/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -270,8 +265,8 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "foo": {
-                      "type": "string"
+                    "count": {
+                      "type": "integer"
                     }
                   }
                 }
@@ -311,12 +306,12 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Region"
         ],
         "parameters": []
       }
     },
-    "/access-statuses/{id}": {
+    "/regions/{RegionNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -326,11 +321,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Region"
                 }
               }
             }
@@ -368,11 +359,11 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Region"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "RegionNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -392,11 +383,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Region"
                 }
               }
             }
@@ -434,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Region"
         ],
         "requestBody": {
           "description": "",
@@ -442,14 +429,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewAccess-status"
+                "$ref": "#/components/schemas/NewRegion"
               }
             }
           }
         },
         "parameters": [
           {
-            "name": "id",
+            "name": "RegionNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -508,11 +495,11 @@
         },
         "summary": "",
         "tags": [
-          "Access-status"
+          "Region"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "RegionNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -527,91 +514,83 @@
   },
   "components": {
     "schemas": {
-      "Access-status": {
+      "Region": {
         "required": [
-          "id"
+          "id",
+          "RegionNumber"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "AccessStatus": {
+          "RegionNumber": {
+            "type": "integer"
+          },
+          "RegionName": {
             "type": "string"
           },
-          "public_advisory_events": {
+          "Sections": {
             "type": "array",
             "items": {
               "required": [
-                "id"
+                "id",
+                "SectionNumber"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "ParData": {
-                  "type": "string"
-                },
-                "Title": {
-                  "type": "string"
-                },
-                "Description": {
-                  "type": "string"
-                },
-                "Submitter": {
-                  "type": "string"
-                },
-                "DCTicketNumber": {
+                "SectionNumber": {
                   "type": "integer"
                 },
-                "OrderURL": {
+                "SectionName": {
                   "type": "string"
                 },
-                "MapURL": {
+                "ManagementAreas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "Region": {
                   "type": "string"
                 },
-                "EvacuationURL": {
+                "published_at": {
                   "type": "string"
                 },
-                "InformationBulletinURL": {
+                "created_by": {
                   "type": "string"
                 },
-                "Alert": {
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "ManagementArea": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "ManagementAreaNumber"
+              ],
+              "properties": {
+                "id": {
                   "type": "string"
                 },
-                "Approved": {
+                "ManagementAreaNumber": {
+                  "type": "integer"
+                },
+                "ManagementAreaName": {
                   "type": "string"
                 },
-                "AdvisoryStatus": {
+                "Section": {
                   "type": "string"
                 },
-                "ListingRank": {
+                "Region": {
                   "type": "string"
                 },
-                "Note": {
-                  "type": "string"
-                },
-                "Coordinates": {
-                  "type": "string"
-                },
-                "CreatedDate": {
-                  "type": "string"
-                },
-                "CreatedBy": {
-                  "type": "string"
-                },
-                "ModifiedDate": {
-                  "type": "string"
-                },
-                "ModifiedBy": {
-                  "type": "string"
-                },
-                "public_advisory": {
-                  "type": "string"
-                },
-                "access_status": {
-                  "type": "string"
-                },
-                "event_type": {
+                "ProtectedArea": {
                   "type": "string"
                 },
                 "published_at": {
@@ -632,12 +611,24 @@
           }
         }
       },
-      "NewAccess-status": {
+      "NewRegion": {
+        "required": [
+          "RegionNumber"
+        ],
         "properties": {
-          "AccessStatus": {
+          "RegionNumber": {
+            "type": "integer"
+          },
+          "RegionName": {
             "type": "string"
           },
-          "public_advisory_events": {
+          "Sections": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ManagementArea": {
             "type": "array",
             "items": {
               "type": "string"
@@ -657,5 +648,9 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    {
+      "name": "Region"
+    }
+  ]
 }

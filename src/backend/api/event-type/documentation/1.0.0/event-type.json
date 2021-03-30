@@ -538,6 +538,94 @@
           "EventType": {
             "type": "string"
           },
+          "public_advisory_events": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "ParData": {
+                  "type": "string"
+                },
+                "Title": {
+                  "type": "string"
+                },
+                "Description": {
+                  "type": "string"
+                },
+                "Submitter": {
+                  "type": "string"
+                },
+                "DCTicketNumber": {
+                  "type": "integer"
+                },
+                "OrderURL": {
+                  "type": "string"
+                },
+                "MapURL": {
+                  "type": "string"
+                },
+                "EvacuationURL": {
+                  "type": "string"
+                },
+                "InformationBulletinURL": {
+                  "type": "string"
+                },
+                "Alert": {
+                  "type": "string"
+                },
+                "Approved": {
+                  "type": "string"
+                },
+                "AdvisoryStatus": {
+                  "type": "string"
+                },
+                "ListingRank": {
+                  "type": "string"
+                },
+                "Note": {
+                  "type": "string"
+                },
+                "Coordinates": {
+                  "type": "string"
+                },
+                "CreatedDate": {
+                  "type": "string"
+                },
+                "CreatedBy": {
+                  "type": "string"
+                },
+                "ModifiedDate": {
+                  "type": "string"
+                },
+                "ModifiedBy": {
+                  "type": "string"
+                },
+                "public_advisory": {
+                  "type": "string"
+                },
+                "access_status": {
+                  "type": "string"
+                },
+                "event_type": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -548,6 +636,12 @@
         "properties": {
           "EventType": {
             "type": "string"
+          },
+          "public_advisory_events": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "published_at": {
             "type": "string",
