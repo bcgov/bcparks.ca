@@ -26,6 +26,20 @@
   margin-right: 5px !important;
 }
 
+.ad-field {
+  background: #e3eaf8 0% 0% no-repeat padding-box !important;
+  padding: 10px;
+}
+
+.ad-flex {
+  display: flex;
+}
+
+.ad-interval-box .fa-chevron-down {
+  top: 15px !important;
+  right: 0px !important;
+}
+
 .row {
   padding: 5px 0px;
 }

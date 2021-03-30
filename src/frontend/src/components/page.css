@@ -77,12 +77,15 @@ main {
 .bcgov-button {
   min-width: 120px !important;
 }
+
 .btn {
   border-radius: 5px !important;
 }
+
 .bcgov-editable-white,
 .bcgov-text-input,
-.bcgov-dropdown {
+.bcgov-dropdown,
+.react-datepicker-wrapper input {
   background: #e3eaf8 0% 0% no-repeat padding-box !important;
   opacity: 1 !important;
   color: #003366 !important;
@@ -91,6 +94,21 @@ main {
   width: 100% !important;
   margin: 0px !important;
   border-radius: 2px !important;
+}
+
+.react-datepicker-wrapper input {
+  background: #fff !important;
+  border-radius: 20px !important;
+  text-align: center !important;
+  margin-left: 10px !important;
+}
+
+.react-datepicker-wrapper {
+  width: 100% !important;
+}
+
+.bcgov-move-right {
+  display: none !important;
 }
 
 .bcgov-dropdown-wrapper {
@@ -104,7 +122,23 @@ main {
 
 .bcgov-dropdown {
   width: 100% !important;
-  padding: 8px 45px 8px 15px !important;
+  padding: 8px 25px 8px 15px !important;
+}
+
+.p10 {
+  padding: 10px !important;
+}
+
+.ptm3 {
+  padding-top: 3px !important;
+}
+
+.fileContainer .deleteImage {
+  background: #003366 !important;
+  font-size: 12px !important;
+  line-height: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
 }
 
 @media (max-width: 575.98px) {

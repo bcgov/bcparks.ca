@@ -49,11 +49,7 @@
   border: none !important;
 }
 
-.fa-chevron-down {
-  right: 2em !important;
-}
-
 :focus {
-  outline: none!important;
+  outline: none !important;
   outline-offset: 1px;
 }

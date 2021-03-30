@@ -1,39 +1,121 @@
-import React, { useState, useEffect, forwardRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
-import styles from "./CreateAdvisory.css";
+import "./CreateAdvisory.css";
 import { Header } from "shared-components/build/components/header/Header";
 import { Button } from "shared-components/build/components/button/Button";
 import { Input } from "shared-components/build/components/input/Input";
 import { Dropdown } from "shared-components/build/components/dropdown/Dropdown";
+import { DatePick } from "shared-components/build/components/date-pick/DatePick";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import ImageUploader from "react-images-upload";
 
 export default function CreateAdvisory({ page: { header, setError } }) {
+  const [parkNames, setParkNames] = useState([]);
+  const [eventTypes, setEventTypes] = useState([]);
   const [toError, setToError] = useState(false);
   const [toHome, setToHome] = useState(false);
+  const [headline, setHeadline] = useState();
+  const [eventType, setEventType] = useState();
+  const [description, setDescription] = useState();
+  const [location, setLocation] = useState();
+  const [urgency, setUrgency] = useState();
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [expiryDate, setExpiryDate] = useState(new Date());
   const [pictures, setPictures] = useState([]);
+  const [links, setLinks] = useState();
+  const [notes, setNotes] = useState();
+  const [urgencyOption, setUrgencyOption] = useState();
 
-  const input1 = {
+  const headlineInput = {
     label: "",
-    id: "textInputId",
-    placeholder: "Enter value",
+    id: "headline",
     isReadOnly: false,
     isRequired: false,
   };
-  const input2 = {
+  const locationInput = {
     label: "",
-    id: "textInputId",
-    placeholder: "Enter value",
+    id: "location",
     isReadOnly: false,
     isRequired: false,
   };
-  const items = ["Select", "Option 1", "Option 2", "Option 3", "Option 4"];
+  const linksInput = {
+    label: "",
+    id: "link",
+    isReadOnly: false,
+    isRequired: false,
+  };
+  const notesInput = {
+    label: "",
+    id: "notes",
+    isReadOnly: false,
+    isRequired: false,
+  };
+
+  const interval = ["Two", "Three", "Four", "Five"];
+  const intervalUnit = ["Hours", "Days", "Weeks", "Months"];
+
+  useEffect(() => {
+    Promise.all([axios.get(`/protectedAreas`), axios.get(`/event-types`)])
+      .then((res) => {
+        const parkData = res[0].data;
+        const parkNames = parkData.map((p) => {
+          return p.ProtectedAreaName;
+        });
+        setParkNames(["Select a Park", ...parkNames]);
+        const eventTypeData = res[1].data;
+        const eventTypes = eventTypeData.map((et) => {
+          return et.EventType;
+        });
+        setEventTypes(["Select event type", ...eventTypes]);
+      })
+      .catch(() => {
+        setToError(true);
+        setError({
+          status: 500,
+          message: "Error occurred",
+        });
+      });
+  }, [setParkNames, setToError, setError]);
 
   const onDrop = (picture) => {
     console.log("Im called");
     setPictures([...pictures, picture]);
+  };
+
+  const saveAdvisory = () => {
+    const newAdvisory = {
+      AdvisoryNumber: 0,
+      Title: headline,
+      Description: description,
+      DCTicketNumber: 0,
+      Alert: true,
+      Approved: true,
+      ListingRank: 0,
+      Note: notes,
+      Latitude: 0,
+      Longitude: 0,
+      MapZoom: 0,
+      AdvisoryDate: startDate,
+      EffectiveDate: startDate,
+      EndDate: endDate,
+      ExpiryDate: expiryDate,
+      event_type: eventType,
+      urgency: urgency,
+      protected_areas: [location],
+      links: [links],
+    };
+    console.log(newAdvisory);
+    axios
+      .post(`/public-advisories`, newAdvisory)
+      .then(() => {
+        console.log("New advisory added successfully");
+      })
+      .catch((error) => {
+        console.log("error occured", error);
+      });
   };
 
   if (toHome) {
@@ -60,10 +142,12 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-8 col-md-8 col-sm-12">
                   <Input
                     input={{
-                      ...input1,
+                      ...headlineInput,
                       styling: "bcgov-editable-white",
                     }}
-                    onChange={() => {}}
+                    onChange={(event) => {
+                      setHeadline(event);
+                    }}
                   />
                 </div>
               </div>
@@ -72,7 +156,12 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                   Event type
                 </div>
                 <div className="col-lg-8 col-md-8 col-sm-12">
-                  <Dropdown items={items} onSelect={() => {}} />
+                  <Dropdown
+                    items={eventTypes}
+                    onSelect={(event) => {
+                      setEventType(event);
+                    }}
+                  />
                 </div>
               </div>
               <div className="row ad-row">
@@ -84,7 +173,9 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                     className="bcgov-text-input"
                     id="description"
                     rows="2"
-                    onChange={() => {}}
+                    onChange={(event) => {
+                      setDescription(event);
+                    }}
                   />
                 </div>
               </div>
@@ -93,12 +184,11 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                   Location
                 </div>
                 <div className="col-lg-8 col-md-8 col-sm-12">
-                  <Input
-                    input={{
-                      ...input1,
-                      styling: "bcgov-editable-white",
+                  <Dropdown
+                    items={parkNames}
+                    onSelect={(event) => {
+                      setLocation(event);
                     }}
-                    onChange={() => {}}
                   />
                 </div>
               </div>
@@ -114,25 +204,42 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                   >
                     <Button
                       label="Low"
-                      styling="bcgov-normal-blue btn"
-                      onClick={() => {}}
-                    >
-                      One
-                    </Button>
+                      styling={
+                        urgencyOption === 1
+                          ? "bcgov-normal-blue btn"
+                          : "bcgov-normal-white btn"
+                      }
+                      onClick={() => {
+                        setUrgencyOption(1);
+                        setUrgency("Low");
+                      }}
+                    />
+
                     <Button
                       label="Medium"
-                      styling="bcgov-normal-white btn"
-                      onClick={() => {}}
-                    >
-                      Two
-                    </Button>
+                      styling={
+                        urgencyOption === 2
+                          ? "bcgov-normal-blue btn"
+                          : "bcgov-normal-white btn"
+                      }
+                      onClick={() => {
+                        setUrgencyOption(2);
+                        setUrgency("Medium");
+                      }}
+                    />
+
                     <Button
                       label="High"
-                      styling="bcgov-normal-white btn"
-                      onClick={() => {}}
-                    >
-                      Three
-                    </Button>
+                      styling={
+                        urgencyOption === 3
+                          ? "bcgov-normal-blue btn"
+                          : "bcgov-normal-white btn"
+                      }
+                      onClick={() => {
+                        setUrgencyOption(3);
+                        setUrgency("High");
+                      }}
+                    />
                   </ButtonGroup>
                 </div>
               </div>
@@ -141,44 +248,60 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                   Effective date
                 </div>
                 <div className="col-lg-8 col-md-8 col-sm-12">
-                  <div className="row ad-row">
-                    <div className="col-lg-6">
-                      <Input
-                        input={{
-                          ...input1,
-                          styling: "bcgov-editable-white",
-                        }}
-                        onChange={() => {}}
-                      />
+                  <div className="ad-field">
+                    <div className="row ad-row ">
+                      <div className="col-lg-6 col-sm-12">
+                        <div className="ad-flex">
+                          <div className="p10 col-lg-2 col-md-3 col-sm-12">
+                            Start
+                          </div>
+                          <DatePick
+                            isRequired
+                            selectedDate={startDate}
+                            setSelectedDate={setStartDate}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-lg-6 col-sm-12">
+                        <div className="ad-flex">
+                          <div className="p10 col-lg-4 col-md-4 col-sm-12">
+                            Duration
+                          </div>
+                          <div className="p10 col-lg-8 col-md-8 col-sm-12 ad-flex ptm3 ad-interval-box">
+                            <Dropdown items={interval} onSelect={() => {}} />
+                            <Dropdown
+                              items={intervalUnit}
+                              onSelect={() => {}}
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="col-lg-6">
-                      <Input
-                        input={{
-                          ...input1,
-                          styling: "bcgov-editable-white",
-                        }}
-                        onChange={() => {}}
-                      />
-                    </div>
-                  </div>
-                  <div className="row ad-row">
-                    <div className="col-lg-6">
-                      <Input
-                        input={{
-                          ...input1,
-                          styling: "bcgov-editable-white",
-                        }}
-                        onChange={() => {}}
-                      />
-                    </div>
-                    <div className="col-lg-6">
-                      <Input
-                        input={{
-                          ...input1,
-                          styling: "bcgov-editable-white",
-                        }}
-                        onChange={() => {}}
-                      />
+                    <div className="row ad-row">
+                      <div className="col-lg-6 col-sm-12">
+                        <div className="ad-flex">
+                          <div className="p10 col-lg-2 col-md-3 col-sm-12">
+                            End
+                          </div>
+                          <DatePick
+                            isRequired
+                            selectedDate={endDate}
+                            setSelectedDate={setEndDate}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-lg-6 col-sm-12">
+                        <div className="ad-flex">
+                          <div className="p10 col-lg-2 col-md-3 col-sm-12">
+                            Expiry
+                          </div>
+                          <DatePick
+                            isRequired
+                            selectedDate={expiryDate}
+                            setSelectedDate={setExpiryDate}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -187,7 +310,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Photos
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
+                <div className="col-lg-8 col-md-8 col-sm-12 ">
                   <ImageUploader
                     withIcon={false}
                     onChange={onDrop}
@@ -197,6 +320,23 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                     buttonText="Add a photo"
                     buttonClassName="bcgov-normal-blue btn"
                     withLabel={false}
+                    className="ad-field"
+                  />
+                </div>
+              </div>
+              <div className="row ad-row">
+                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                  Links
+                </div>
+                <div className="col-lg-8 col-md-8 col-sm-12">
+                  <Input
+                    input={{
+                      ...linksInput,
+                      styling: "bcgov-editable-white",
+                    }}
+                    onChange={(event) => {
+                      setLinks(event);
+                    }}
                   />
                 </div>
               </div>
@@ -212,10 +352,12 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-8 col-md-8 col-sm-12">
                   <Input
                     input={{
-                      ...input1,
+                      ...notesInput,
                       styling: "bcgov-editable-white",
                     }}
-                    onChange={() => {}}
+                    onChange={(event) => {
+                      setNotes(event);
+                    }}
                   />
                 </div>
               </div>
@@ -223,15 +365,14 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4"></div>
                 <div className="col-lg-8 col-md-8 col-sm-12 button-row ad-row ad-btn-group">
                   <Button
-                    label="Duplicate"
+                    label="Submit"
                     styling="bcgov-normal-yellow btn"
                     onClick={() => {
-                      sessionStorage.clear();
-                      setToHome(true);
+                      saveAdvisory();
                     }}
                   />
                   <Button
-                    label="Update"
+                    label="Cancel"
                     styling="bcgov-normal-white btn"
                     onClick={() => {
                       sessionStorage.clear();
