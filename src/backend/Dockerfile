@@ -27,6 +27,8 @@ RUN npm run build
 
 # add app
 COPY . ./
+# for debugging
+RUN yum install -y nmap iputils
 
 # start app
 CMD [ "npm", "start" ]
