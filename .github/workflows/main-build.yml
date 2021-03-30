@@ -28,14 +28,9 @@ jobs:
       - name: Building, pushing frontend
         run: |
           echo "Logging in to RedHat..."
-          docker login ${{secrets.REDHAT_REPO}} \
-            -u ${{secrets.REDHAT_REPO_USER}} \
-            -p '${{secrets.REDHAT_REPO_AUTH}}'
-        
-          echo "Logging in to OpenShift repository..."
-          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY} \
-            -u ${OPENSHIFT_SA_USERNAME} \
-            -p ${OPENSHIFT_SA_PASSWORD}
+          docker login ${{ secrets.REDHAT_REPO }} \
+            -u ${{ secrets.REDHAT_REPO_USER }} \
+            -p '${{ secrets.REDHAT_REPO_AUTH }}'
           
           echo "Logging in to OpenShift repository with Secrets..."
           docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} \
@@ -52,11 +47,11 @@ jobs:
           echo "Tagging ${IMAGE_NAME}..."
           docker tag \
             bcp-cms_${SERVICE_NAME} \
-            image-registry.apps.silver.devops.gov.bc.ca/61d198-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
           
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
-            image-registry.apps.silver.devops.gov.bc.ca/61d198-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
 
   build-cms:
     runs-on: ubuntu-20.04
@@ -84,14 +79,9 @@ jobs:
       - name: Building, pushing api
         run: |
           echo "Logging in to RedHat..."
-          docker login ${{secrets.REDHAT_REPO}} \
-            -u ${{secrets.REDHAT_REPO_USER}} \
-            -p '${{secrets.REDHAT_REPO_AUTH}}'
-          
-          echo "Logging in to OpenShift repository..."
-          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY} \
-            -u ${OPENSHIFT_SA_USERNAME} \
-            -p ${OPENSHIFT_SA_PASSWORD}
+          docker login ${{ secrets.REDHAT_REPO }} \
+            -u ${{ secrets.REDHAT_REPO_USER }} \
+            -p '${{ secrets.REDHAT_REPO_AUTH }}'
           
           echo "Logging in to OpenShift repository with Secrets..."
           docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} \
@@ -110,9 +100,9 @@ jobs:
 
           echo "Tagging ${IMAGE_NAME}..."
           docker tag ${IMAGE_SOURCE} \
-            image-registry.apps.silver.devops.gov.bc.ca/61d198-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
 
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
-            image-registry.apps.silver.devops.gov.bc.ca/61d198-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
 
