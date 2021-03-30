@@ -12,8 +12,12 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import ImageUploader from "react-images-upload";
 
 export default function CreateAdvisory({ page: { header, setError } }) {
+  const [parkMap, setParkMap] = useState([]);
   const [parkNames, setParkNames] = useState([]);
+  const [eventTypeMap, setEventTypeMap] = useState([]);
   const [eventTypes, setEventTypes] = useState([]);
+  const [urgencyMap, setUrgencyMap] = useState([]);
+  const [urgencies, setUrgencies] = useState([]);
   const [toError, setToError] = useState(false);
   const [toHome, setToHome] = useState(false);
   const [headline, setHeadline] = useState();
@@ -58,18 +62,40 @@ export default function CreateAdvisory({ page: { header, setError } }) {
   const intervalUnit = ["Hours", "Days", "Weeks", "Months"];
 
   useEffect(() => {
-    Promise.all([axios.get(`/protectedAreas`), axios.get(`/event-types`)])
+    Promise.all([
+      axios.get(`/protectedAreas?_limit=-1`),
+      axios.get(`/event-types?_limit=-1`),
+      axios.get(`/urgencies?_limit=-1`),
+    ])
       .then((res) => {
         const parkData = res[0].data;
-        const parkNames = parkData.map((p) => {
-          return p.ProtectedAreaName;
+        const parkMap = {};
+        parkData.map((p) => {
+          parkMap[p.ORCS.toString()] = p.ProtectedAreaName;
+          return parkMap;
         });
+        const parkNames = Object.values(parkMap);
         setParkNames(["Select a Park", ...parkNames]);
+        setParkMap(parkMap);
         const eventTypeData = res[1].data;
-        const eventTypes = eventTypeData.map((et) => {
-          return et.EventType;
+        const eventTypeMap = {};
+        eventTypeData.map((et) => {
+          eventTypeMap[et.id.toString()] = et.EventType;
+          return eventTypeMap;
         });
+        const eventTypes = Object.values(eventTypeMap);
+        setEventTypeMap(eventTypeMap);
         setEventTypes(["Select event type", ...eventTypes]);
+        const urgencyData = res[2].data;
+        const urgencyMap = {};
+        urgencyData.map((u) => {
+          urgencyMap[u.id.toString()] = u.Urgency;
+          return urgencyMap;
+        });
+        const urgencies = Object.values(urgencyMap);
+        setUrgencyMap(urgencyMap);
+        setUrgencies([...urgencies]);
+        setUrgencyOption(0);
       })
       .catch(() => {
         setToError(true);
@@ -78,42 +104,66 @@ export default function CreateAdvisory({ page: { header, setError } }) {
           message: "Error occurred",
         });
       });
-  }, [setParkNames, setToError, setError]);
+  }, [
+    setParkNames,
+    setParkMap,
+    setUrgencies,
+    setUrgencyMap,
+    setEventTypes,
+    setEventTypeMap,
+    setToError,
+    setUrgencyOption,
+    setError,
+  ]);
+
+  const getKeyByValue = (object, value) => {
+    return Object.keys(object).find((key) => object[key] === value);
+  };
 
   const onDrop = (picture) => {
     setPictures([...pictures, picture]);
   };
 
   const saveAdvisory = () => {
-    const newAdvisory = {
-      AdvisoryNumber: 0,
-      Title: headline,
-      Description: description,
-      DCTicketNumber: 0,
-      Alert: true,
-      Approved: true,
-      ListingRank: 0,
-      Note: notes,
-      Latitude: 0,
-      Longitude: 0,
-      MapZoom: 0,
-      AdvisoryDate: startDate,
-      EffectiveDate: startDate,
-      EndDate: endDate,
-      ExpiryDate: expiryDate,
-      event_type: eventType,
-      urgency: urgency,
-      protected_areas: [location],
-      links: [links],
-    };
-    console.log(newAdvisory);
-    axios
-      .post(`/public-advisories`, newAdvisory)
-      .then(() => {
-        console.log("New advisory added successfully");
+    const eventKey = getKeyByValue(eventTypeMap, eventType);
+    const protectedAreaKey = getKeyByValue(parkMap, location);
+    const urgencyKey = getKeyByValue(urgencyMap, urgency);
+    console.log(protectedAreaKey);
+    Promise.all([
+      axios.get(`/protectedAreas/${protectedAreaKey}`),
+      axios.get(`/event-types/${eventKey}`),
+      axios.get(`/urgencies/${urgencyKey}`),
+      axios.get(`​/advisory-statuses/5`),
+    ])
+      .then((res) => {
+        const newAdvisory = {
+          AdvisoryDate: startDate,
+          EffectiveDate: startDate,
+          EndDate: endDate,
+          ExpiryDate: expiryDate,
+          Title: headline,
+          Description: description,
+          Note: notes,
+          event_type: res[1].data,
+          urgency: res[2].data,
+          advisory_status: res[3].data,
+          protected_areas: [res[0].data],
+        };
+        axios
+          .post(`/public-advisories`, newAdvisory)
+          .then(() => {
+            console.log("New advisory added successfully");
+          })
+          .catch((error) => {
+            console.log("error occurred", error);
+          });
       })
-      .catch((error) => {
-        console.log("error occured", error);
+      .catch(() => {
+        setToError(true);
+        setError({
+          status: 500,
+          message: "Error occurred",
+        });
       });
   };
 
@@ -173,7 +223,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                     id="description"
                     rows="2"
                     onChange={(event) => {
-                      setDescription(event);
+                      setDescription(event.target.value);
                     }}
                   />
                 </div>
@@ -201,44 +251,21 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                     color="primary"
                     aria-label="outlined primary button group"
                   >
-                    <Button
-                      label="Low"
-                      styling={
-                        urgencyOption === 1
-                          ? "bcgov-normal-blue btn"
-                          : "bcgov-normal-white btn"
-                      }
-                      onClick={() => {
-                        setUrgencyOption(1);
-                        setUrgency("Low");
-                      }}
-                    />
-
-                    <Button
-                      label="Medium"
-                      styling={
-                        urgencyOption === 2
-                          ? "bcgov-normal-blue btn"
-                          : "bcgov-normal-white btn"
-                      }
-                      onClick={() => {
-                        setUrgencyOption(2);
-                        setUrgency("Medium");
-                      }}
-                    />
-
-                    <Button
-                      label="High"
-                      styling={
-                        urgencyOption === 3
-                          ? "bcgov-normal-blue btn"
-                          : "bcgov-normal-white btn"
-                      }
-                      onClick={() => {
-                        setUrgencyOption(3);
-                        setUrgency("High");
-                      }}
-                    />
+                    {urgencies.map((name, index) => (
+                      <Button
+                        key={name}
+                        label={name}
+                        styling={
+                          urgencyOption === index
+                            ? "bcgov-normal-blue btn"
+                            : "bcgov-normal-white btn"
+                        }
+                        onClick={() => {
+                          setUrgencyOption(index);
+                          setUrgency(name);
+                        }}
+                      />
+                    ))}
                   </ButtonGroup>
                 </div>
               </div>

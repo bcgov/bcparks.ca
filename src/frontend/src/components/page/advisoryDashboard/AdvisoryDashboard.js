@@ -113,7 +113,7 @@ export default function AdvisoryDashboard({ page: { header, setError } }) {
 
   useEffect(() => {
     axios
-      .get(`/protectedAreas`)
+      .get(`/protectedAreas?_limit=-1`)
       .then((res) => {
         const parkNames = res.data.map((p) => ({
           label: p.ProtectedAreaName,
