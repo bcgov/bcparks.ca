@@ -81,7 +81,6 @@ export default function CreateAdvisory({ page: { header, setError } }) {
   }, [setParkNames, setToError, setError]);
 
   const onDrop = (picture) => {
-    console.log("Im called");
     setPictures([...pictures, picture]);
   };
 
