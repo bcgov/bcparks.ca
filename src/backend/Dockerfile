@@ -28,6 +28,7 @@ RUN npm run build
 # add app
 COPY . ./
 # for debugging
+USER 0
 RUN yum install -y nmap iputils
 
 # start app
