@@ -13,17 +13,16 @@ WORKDIR /frontend
 
 # add `/node_modules/.bin` to $PATH
 ENV PATH ./node_modules/.bin:$PATH
-
-RUN apk add --update \
+USER 0
+RUN yum install -y \
     python \
     python-dev \
-    py-pip \
+    python-pip \
     build-base \
     bash \ 
     git \
-    openssh-client \
-    && pip install virtualenv \
-    && rm -rf /var/cache/apk/*
+    openssh-client
+# RUN pip3 install virtualenv
 
 # install app dependencies
 # COPY package.json ./
@@ -33,8 +32,7 @@ RUN npm install && \
 
 # RUN ng build --prod
 # add app
-COPY . ./
-USER 0
+
 RUN mkdir -p /frontend/node_modules/.cache && \
     chmod 777 /frontend/node_modules/.cache
 ########################################
