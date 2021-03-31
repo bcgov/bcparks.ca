@@ -1,9 +1,7 @@
----
 apiVersion: v1
 kind: Template
 metadata:
   name: bcparks
-  creationTimestamp: null
   description: >-
     Deployment template for the BC Parks App
 parameters:
@@ -42,121 +40,243 @@ parameters:
 objects:
 ### Frontend
 #   Deployment Config
-- apiVersion: v1
-  kind: DeploymentConfig
-  metadata:
-    name: "${FRONTEND_POD}"
-  spec:
-    completionDeadlineSeconds: 1200
-    replicas: 1
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      name: "${FRONTEND_POD}"
+    spec:
+      completionDeadlineSeconds: 1200
+      replicas: 1
+      selector:
+        app: "${NAME}"
+        role: "${FRONTEND_POD}"
+      strategy:
+        type: Recreate
+        maxSurge: 50%
+        maxUnavailable: 0
+      template:
+        metadata:
+        spec:
+          containers:
+            - env:
+                - name: REACT_APP_API_BASE_URL
+                  value: "${API_URL}"
+                - name: REACT_APP_FRONTEND_BASE_URL
+                  value: "${FRONTEND_URL}"
+                - name: PUBLIC_URL
+                  value: "${FRONTEND_URL}"
+              image: >-
+                image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/${FRONTEND_POD}:${OC_APP}
+              name: ${FRONTEND_POD}
+              ports:
+                - containerPort: 3000
+                - containerPort: 8080
+      triggers:
+        - type: ConfigChange
+        - type: ImageChange
+          imageChangeParams:
+            automatic: true
+            containerNames:
+              - ${FRONTEND_POD}
+            from:
+              kind: ImageStreamTag
+              namespace: "${OC_NAMESPACE}-tools"
+              name: '${FRONTEND_POD}:${OC_APP}'
+    status: {}
+#   Frontend Service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: "${FRONTEND_POD}"
+    spec:
+      ports:
+        - name: "NPM"
+          port: 3000
+          targetPort: 3000
+        - name: "HTTP"
+          port: 8080
+          targetPort: 8080
+        - name: "HTTPS"
+          port: 8443
+          targetPort: 8443
     selector:
-      app: "${NAME}"
-      role: "${FRONTEND_POD}"
-    strategy: null
-    template:
-      metadata:
-      spec:
-        containers:
-          - env:
-              - name: REACT_APP_API_BASE_URL
-                value: "${API_URL}"
-              - name: REACT_APP_FRONTEND_BASE_URL
-                value: "${FRONTEND_URL}"
-              - name: PUBLIC_URL
-                value: "${FRONTEND_URL}"
-            image: >-
-              image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/${FRONTEND_POD}:${OC_APP}
-            name: ${FRONTEND_POD}
-            ports:
-              - containerPort: 3000
-              - containerPort: 8080
-    triggers:
-      - type: ConfigChange
-      - type: ImageChange
-        imageChangeParams:
-          automatic: true
-          containerNames:
-            - ${FRONTEND_POD}
-          from:
-            kind: ImageStreamTag
-            namespace: "${OC_NAMESPACE}-tools"
-            name: '${FRONTEND_POD}:${OC_APP}'
-  status: {}
-#   Service
-- apiVersion: v1
-  kind: Service
-  metadata:
-    name: "${FRONTEND_POD}"
-  spec:
-    ports:
-      - name: "NPM"
-        port: 3000
-        targetPort: 3000
-      - name: "HTTP"
-        port: 8080
-        targetPort: 8080
-      - name: "HTTPS"
-        port: 8443
-        targetPort: 8443
-  selector:
-    app: ${NAME}
-    deploymentconfig: ${FRONTEND_POD}
+      app: ${NAME}
+      deploymentconfig: ${FRONTEND_POD}
 ### API
-- apiVersion: v1
-  kind: DeploymentConfig
-  metadata:
-    name: "${API_POD}"
-  spec:
-    completionDeadlineSeconds: 1200
-    replicas: 1
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      name: "${API_POD}"
+    spec:
+      completionDeadlineSeconds: 1200
+      replicas: 1
+      selector:
+        app: "${NAME}"
+        role: "${API_POD}"
+      strategy:
+        type: Recreate
+        maxSurge: 50%
+        maxUnavailable: 0
+      template:
+        metadata:
+        spec:
+          containers:
+            - env:
+                - name: DATABASE_HOST
+                  value: ${DB_POD}
+                - name: DATABASE_PORT
+                  value: ${DB_PORT}
+                - name: DATABASE_NAME
+                  value: ${DB_NAME}
+                - name: DATABASE_USERNAME
+                  value: ${DB_USERNAME}
+                - name: DATABASE_PASSWORD
+                  value: ${DB_PASSWORD}
+                - name: DATABASE_SSL
+                  value: ${DB_SSL}
+              image: >-
+                image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/${API_POD}:${OC_APP}
+              name: ${API_POD}
+              ports:
+                - containerPort: 1377
+      triggers:
+        - type: ConfigChange
+        - type: ImageChange
+          imageChangeParams:
+            automatic: true
+            containerNames:
+              - ${API_POD}
+            from:
+              kind: ImageStreamTag
+              namespace: "${OC_NAMESPACE}-tools"
+              name: '${API_POD}:${OC_APP}'
+    status: {}
+#   API Service
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: "${API_POD}"
+    spec:
+      ports:
+        - name: "Strapi"
+          port: 1337
+          targetPort: 1337
     selector:
-      app: "${NAME}"
-      role: "${API_POD}"
-    strategy: null
-    template:
-      metadata:
-      spec:
-        containers:
-          - env:
-              - name: DATABASE_HOST
-                value: ${DB_POD}
-              - name: DATABASE_PORT
-                value: ${DB_PORT}
-              - name: DATABASE_NAME
-                value: ${DB_NAME}
-              - name: DATABASE_USERNAME
-                value: ${DB_USERNAME}
-              - name: DATABASE_PASSWORD
-                value: ${DB_PASSWORD}
-              - name: DATABASE_SSL
-                value: ${DB_SSL}
-            image: >-
-              image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/${API_POD}:${OC_APP}
-            name: ${API_POD}
-            ports:
-              - containerPort: 1377
-    triggers:
-      - type: ConfigChange
-      - type: ImageChange
-        imageChangeParams:
-          automatic: true
-          containerNames:
-            - ${API_POD}
-          from:
-            kind: ImageStreamTag
-            namespace: "${OC_NAMESPACE}-tools"
-            name: '${API_POD}:${OC_APP}'
-  status: {}
-#   Service
-- apiVersion: v1
-  kind: Service
-  metadata:
-    name: "${API_POD}"
-  spec:
-    ports:
-      - name: "Strapi"
-        port: 1337
-        targetPort: 1337
-  selector:
-    app: ${NAME}
-    deploymentconfig: ${API_POD}
+      app: ${NAME}
+      deploymentconfig: ${API_POD}
+### Database
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: ${DB_POD}
+    spec:
+      ports:
+        - name: ${DB_POD}
+          nodePort: 0
+          port: 5432
+          protocol: TCP
+          targetPort: 5432
+      selector:
+        app: ${NAME}
+        deploymentconfig: ${DB_POD}
+      sessionAffinity: None
+      type: ClusterIP
+    status:
+      loadBalancer: {}
+  - apiVersion: apps.openshift.io/v1
+    kind: DeploymentConfig
+    metadata:
+      name: ${DB_POD}
+    spec:
+      replicas: 1
+      selector:
+        app: ${NAME}
+        role: ${DB_POD}
+      strategy: null
+      template:
+        metadata:
+          labels:
+            name: ${DB_POD}
+        spec:
+          containers:
+            - capabilities: {}
+              env:
+                - name: DB_HOST
+                  value: ${DB_POD}
+                # PostgreSQL environment variables
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: DATABASE_PASSWORD
+                      name: "postgres-secrets"
+                - name: POSTGRESQL_USER
+                  valueFrom:
+                    secretKeyRef:
+                      key: DATABASE_USERNAME
+                      name: "postgres-secrets"
+                - name: POSTGRESQL_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: DATABASE_PASSWORD
+                      name: "postgres-secrets"
+                - name: POSTGRESQL_DATABASE
+                  valueFrom:
+                    secretKeyRef:
+                      key: DATABASE_PASSWORD
+                      name: "postgres-secrets"
+              image: openshift/postgres:10
+              imagePullPolicy: IfNotPresent
+              lifecycle:
+                preStop:
+                  exec:
+                    command: ['pg_ctl', 'stop']
+              livenessProbe:
+                initialDelaySeconds: 30
+                tcpSocket:
+                  port: 5432
+                timeoutSeconds: 1
+              name: ${DB_POD}
+              ports:
+                - containerPort: 5432
+                  protocol: TCP
+                  name: postgresql
+              readinessProbe:
+                exec:
+                  command:
+                    - /bin/sh
+                    - '-i'
+                    - '-c'
+                    - >-
+                      psql -h 127.0.0.1 -d postgres -U
+                      $POSTGRESQL_USER -c 'SELECT 1'
+                initialDelaySeconds: 5
+                timeoutSeconds: 1
+              resources: {}
+              securityContext:
+                capabilities: {}
+                privileged: false
+              terminationMessagePath: /dev/termination-log
+              volumeMounts:
+                - mountPath: /var/lib/pgsql/data
+                  name: ${DB_POD}-data
+                - mountPath: /var/run/postgresql
+                  name: ${DB_POD}-run
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          volumes:
+            - name: ${DB_POD}-data
+              emptyDir: {}
+            - name: ${DB_POD}-run
+              emptyDir: {}
+      triggers:
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - ${DB_POD}
+            from:
+              kind: ImageStreamTag
+              name: 'postgresql-10:latest'
+              namespace: openshift
+            lastTriggeredImage: ''
+        - type: ConfigChange
+    status: {}
