@@ -28,6 +28,7 @@ import ViewColumn from "@material-ui/icons/ViewColumn";
 const columns = [
   {
     field: "urgency.Urgency",
+    filtering: false,
     cellStyle: {
       width: 5,
       maxWidth: 5,
@@ -41,26 +42,31 @@ const columns = [
     title: "Urgency",
   },
   {
-    field: "updated_at",
+    field: "advisory_status.AdvisoryStatus",
+    title: "Status",
+  },
+  {
+    field: "AdvisoryDate",
     title: "Posted Date",
     render: (rowData) => (
-      <Moment format="MMM DD YYYY">{rowData.updated_at}</Moment>
+      <Moment format="MMM DD YYYY">{rowData.AdvisoryDate}</Moment>
     ),
   },
   { field: "Title", title: "Headline" },
   { field: "event_type.EventType", title: "Event Type" },
   {
-    field: "updated_at",
+    field: "EffectiveDate",
     title: "Start Date",
     render: (rowData) => (
-      <Moment format="MMM DD YYYY">{rowData.updated_at}</Moment>
+      <Moment format="MMM DD YYYY">{rowData.EffectiveDate}</Moment>
     ),
   },
+
   {
-    field: "updated_at",
+    field: "EndDate",
     title: "End Date",
     render: (rowData) => (
-      <Moment format="MMM DD YYYY">{rowData.updated_at}</Moment>
+      <Moment format="MMM DD YYYY">{rowData.EndDate}</Moment>
     ),
   },
   // { field: "access_status.AccessStatus", title: "Access Status" },
@@ -75,7 +81,8 @@ const options = {
   },
   cellStyle: {},
   rowStyle: {},
-  filtering: false,
+  filtering: true,
+  search: false,
 };
 
 const tableIcons = {
@@ -113,7 +120,7 @@ export default function AdvisoryDashboard({ page: { header, setError } }) {
 
   useEffect(() => {
     axios
-      .get(`/protectedAreas?_limit=-1`)
+      .get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`)
       .then((res) => {
         const parkNames = res.data.map((p) => ({
           label: p.ProtectedAreaName,
@@ -160,18 +167,27 @@ export default function AdvisoryDashboard({ page: { header, setError } }) {
     <main>
       <Header header={header} />
       <br />
+
       <div className={styles.AdvisoryDashboard} data-testid="AdvisoryDashboard">
         <div className="container">
+          <h2>Public Advisories</h2>
           <Select
             options={parkNames}
             onChange={(e) => setSelectedParkId(e.value)}
+            placeholder="Select Park..."
           />
+        </div>
+        <br />
+        <div className="container">
           <MaterialTable
             options={options}
             icons={tableIcons}
             columns={columns}
             data={rows}
-            title="Public Advisory"
+            title=""
+            components={{
+              Toolbar: (props) => <div></div>,
+            }}
           />
           <br />
           <div className="txt-center">
