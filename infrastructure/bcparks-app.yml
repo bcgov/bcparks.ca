@@ -1,0 +1,162 @@
+---
+apiVersion: v1
+kind: Template
+metadata:
+  name: bcparks
+  creationTimestamp: null
+  description: >-
+    Deployment template for the BC Parks App
+parameters:
+- name: NAME
+  displayName: Name
+  description: A prefix appended to all objects
+  required: true
+  value: bcparks
+- name: OC_NAMESPACE
+  required: true
+  value: 61d198
+- name: OC_APP
+  required: true
+- name: FRONTEND_POD
+  required: true
+  value: frontend
+- name: FRONTEND_URL
+  required: true
+- name: API_POD
+  required: true
+  value: strapi
+- name: API_URL
+  required: true
+- name: DB_POD
+  value: postgres
+  required: true
+- name: DB_PORT
+  value: 5432
+- name: DB_USERNAME
+  required: true
+- name: DB_PASSWORD
+  required: true
+- name: DB_SSL
+  value: false
+
+objects:
+### Frontend
+#   Deployment Config
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: "${FRONTEND_POD}"
+  spec:
+    completionDeadlineSeconds: 1200
+    replicas: 1
+    selector:
+      app: "${NAME}"
+      role: "${FRONTEND_POD}"
+    strategy: null
+    template:
+      metadata:
+      spec:
+        containers:
+          - env:
+              - name: REACT_APP_API_BASE_URL
+                value: "${API_URL}"
+              - name: REACT_APP_FRONTEND_BASE_URL
+                value: "${FRONTEND_URL}"
+              - name: PUBLIC_URL
+                value: "${FRONTEND_URL}"
+            image: >-
+              image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/${FRONTEND_POD}:${OC_APP}
+            name: ${FRONTEND_POD}
+            ports:
+              - containerPort: 3000
+              - containerPort: 8080
+    triggers:
+      - type: ConfigChange
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - ${FRONTEND_POD}
+          from:
+            kind: ImageStreamTag
+            namespace: "${OC_NAMESPACE}-tools"
+            name: '${FRONTEND_POD}:${OC_APP}'
+  status: {}
+#   Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: "${FRONTEND_POD}"
+  spec:
+    ports:
+      - name: "NPM"
+        port: 3000
+        targetPort: 3000
+      - name: "HTTP"
+        port: 8080
+        targetPort: 8080
+      - name: "HTTPS"
+        port: 8443
+        targetPort: 8443
+  selector:
+    app: ${NAME}
+    deploymentconfig: ${FRONTEND_POD}
+### API
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: "${API_POD}"
+  spec:
+    completionDeadlineSeconds: 1200
+    replicas: 1
+    selector:
+      app: "${NAME}"
+      role: "${API_POD}"
+    strategy: null
+    template:
+      metadata:
+      spec:
+        containers:
+          - env:
+              - name: DATABASE_HOST
+                value: ${DB_POD}
+              - name: DATABASE_PORT
+                value: ${DB_PORT}
+              - name: DATABASE_NAME
+                value: ${DB_NAME}
+              - name: DATABASE_USERNAME
+                value: ${DB_USERNAME}
+              - name: DATABASE_PASSWORD
+                value: ${DB_PASSWORD}
+              - name: DATABASE_SSL
+                value: ${DB_SSL}
+            image: >-
+              image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/${API_POD}:${OC_APP}
+            name: ${API_POD}
+            ports:
+              - containerPort: 1377
+    triggers:
+      - type: ConfigChange
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - ${API_POD}
+          from:
+            kind: ImageStreamTag
+            namespace: "${OC_NAMESPACE}-tools"
+            name: '${API_POD}:${OC_APP}'
+  status: {}
+#   Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: "${API_POD}"
+  spec:
+    ports:
+      - name: "Strapi"
+        port: 1337
+        targetPort: 1337
+  selector:
+    app: ${NAME}
+    deploymentconfig: ${API_POD}
