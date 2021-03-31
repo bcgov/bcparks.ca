@@ -128,12 +128,11 @@ export default function CreateAdvisory({ page: { header, setError } }) {
     const eventKey = getKeyByValue(eventTypeMap, eventType);
     const protectedAreaKey = getKeyByValue(parkMap, location);
     const urgencyKey = getKeyByValue(urgencyMap, urgency);
-    console.log(protectedAreaKey);
     Promise.all([
       axios.get(`/protectedAreas/${protectedAreaKey}`),
       axios.get(`/event-types/${eventKey}`),
       axios.get(`/urgencies/${urgencyKey}`),
-      axios.get(`​/advisory-statuses/5`),
+      axios.get(`/advisory-statuses/5`),
     ])
       .then((res) => {
         const newAdvisory = {
@@ -153,6 +152,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
           .post(`/public-advisories`, newAdvisory)
           .then(() => {
             console.log("New advisory added successfully");
+            setToHome(true);
           })
           .catch((error) => {
             console.log("error occurred", error);
@@ -181,14 +181,13 @@ export default function CreateAdvisory({ page: { header, setError } }) {
       <br />
       <div className="CreateAdvisory" data-testid="CreateAdvisory">
         <div className="container">
-          <h3>Submit a new advisory</h3>
           <form>
             <div className="container-fluid ad-form">
               <div className="row ad-row">
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Headline
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
+                <div className="col-lg-7 col-md-8 col-sm-12">
                   <Input
                     input={{
                       ...headlineInput,
@@ -204,7 +203,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Event type
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
+                <div className="col-lg-7 col-md-8 col-sm-12">
                   <Dropdown
                     items={eventTypes}
                     onSelect={(event) => {
@@ -217,7 +216,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Description
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
+                <div className="col-lg-7 col-md-8 col-sm-12">
                   <textarea
                     className="bcgov-text-input"
                     id="description"
@@ -232,7 +231,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Location
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
+                <div className="col-lg-7 col-md-8 col-sm-12">
                   <Dropdown
                     items={parkNames}
                     onSelect={(event) => {
@@ -245,7 +244,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Urgency level
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
+                <div className="col-lg-7 col-md-8 col-sm-12">
                   <ButtonGroup
                     className="ad-btn-group"
                     color="primary"
@@ -273,27 +272,29 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Effective date
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
+                <div className="col-lg-7 col-md-8 col-sm-12">
                   <div className="ad-field">
                     <div className="row ad-row ">
-                      <div className="col-lg-6 col-sm-12">
+                      <div className="col-lg-6 col-md-12 col-sm-12">
                         <div className="ad-flex">
                           <div className="p10 col-lg-2 col-md-3 col-sm-12">
                             Start
                           </div>
-                          <DatePick
-                            isRequired
-                            selectedDate={startDate}
-                            setSelectedDate={setStartDate}
-                          />
+                          <div className="col-lg-9 col-md-9 col-sm-12">
+                            <DatePick
+                              isRequired
+                              selectedDate={startDate}
+                              setSelectedDate={setStartDate}
+                            />
+                          </div>
                         </div>
                       </div>
-                      <div className="col-lg-6 col-sm-12">
+                      <div className="col-lg-6 col-md-12 col-sm-12">
                         <div className="ad-flex">
-                          <div className="p10 col-lg-4 col-md-4 col-sm-12">
+                          <div className="p10 col-lg-3 col-md-4 col-sm-12">
                             Duration
                           </div>
-                          <div className="p10 col-lg-8 col-md-8 col-sm-12 ad-flex ptm3 ad-interval-box">
+                          <div className="p10 col-lg-9 col-md-8 col-sm-12 ad-flex ptm3 ad-interval-box">
                             <Dropdown items={interval} onSelect={() => {}} />
                             <Dropdown
                               items={intervalUnit}
@@ -304,28 +305,32 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                       </div>
                     </div>
                     <div className="row ad-row">
-                      <div className="col-lg-6 col-sm-12">
+                      <div className="col-lg-6 col-md-12 col-sm-12">
                         <div className="ad-flex">
                           <div className="p10 col-lg-2 col-md-3 col-sm-12">
                             End
                           </div>
-                          <DatePick
-                            isRequired
-                            selectedDate={endDate}
-                            setSelectedDate={setEndDate}
-                          />
+                          <div className="col-lg-9 col-md-9 col-sm-12">
+                            <DatePick
+                              isRequired
+                              selectedDate={endDate}
+                              setSelectedDate={setEndDate}
+                            />
+                          </div>
                         </div>
                       </div>
-                      <div className="col-lg-6 col-sm-12">
+                      <div className="col-lg-6 col-md-12 col-sm-12 ptm3">
                         <div className="ad-flex">
                           <div className="p10 col-lg-2 col-md-3 col-sm-12">
                             Expiry
                           </div>
-                          <DatePick
-                            isRequired
-                            selectedDate={expiryDate}
-                            setSelectedDate={setExpiryDate}
-                          />
+                          <div className="col-lg-9 col-md-9 col-sm-12">
+                            <DatePick
+                              isRequired
+                              selectedDate={expiryDate}
+                              setSelectedDate={setExpiryDate}
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -336,7 +341,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Photos
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12 ">
+                <div className="col-lg-7 col-md-8 col-sm-12 ">
                   <ImageUploader
                     withIcon={false}
                     onChange={onDrop}
@@ -354,7 +359,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Links
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
+                <div className="col-lg-7 col-md-8 col-sm-12">
                   <Input
                     input={{
                       ...linksInput,
@@ -375,7 +380,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Internal notes
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
+                <div className="col-lg-7 col-md-8 col-sm-12">
                   <Input
                     input={{
                       ...notesInput,
@@ -388,7 +393,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 </div>
               </div>
               <div className="row ad-row">
-                <div className="col-lg-4 col-md-4"></div>
+                <div className="col-lg-3 col-md-4"></div>
                 <div className="col-lg-8 col-md-8 col-sm-12 button-row ad-row ad-btn-group">
                   <Button
                     label="Submit"
