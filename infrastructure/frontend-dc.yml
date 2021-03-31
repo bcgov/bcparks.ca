@@ -19,3 +19,6 @@ spec:
           ports:
             - containerPort: 8080
             - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: frontend-secrets
