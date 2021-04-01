@@ -7,23 +7,20 @@ import { Header } from "shared-components/build/components/header/Header";
 import { Button } from "shared-components/build/components/button/Button";
 import { Input } from "shared-components/build/components/input/Input";
 import { Dropdown } from "shared-components/build/components/dropdown/Dropdown";
-import { DatePick } from "shared-components/build/components/date-pick/DatePick";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
+import { TextField, ButtonGroup } from "@material-ui/core";
 import ImageUploader from "react-images-upload";
+import Select from "react-select";
 
 export default function CreateAdvisory({ page: { header, setError } }) {
-  const [parkMap, setParkMap] = useState([]);
-  const [parkNames, setParkNames] = useState([]);
-  const [eventTypeMap, setEventTypeMap] = useState([]);
+  const [protectedAreaNames, setProtectedAreaNames] = useState([]);
   const [eventTypes, setEventTypes] = useState([]);
-  const [urgencyMap, setUrgencyMap] = useState([]);
   const [urgencies, setUrgencies] = useState([]);
   const [toError, setToError] = useState(false);
   const [toHome, setToHome] = useState(false);
   const [headline, setHeadline] = useState();
   const [eventType, setEventType] = useState();
   const [description, setDescription] = useState();
-  const [location, setLocation] = useState();
+  const [locations, setLocations] = useState([]);
   const [urgency, setUrgency] = useState();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -31,17 +28,10 @@ export default function CreateAdvisory({ page: { header, setError } }) {
   const [pictures, setPictures] = useState([]);
   const [links, setLinks] = useState();
   const [notes, setNotes] = useState();
-  const [urgencyOption, setUrgencyOption] = useState();
 
   const headlineInput = {
     label: "",
     id: "headline",
-    isReadOnly: false,
-    isRequired: false,
-  };
-  const locationInput = {
-    label: "",
-    id: "location",
     isReadOnly: false,
     isRequired: false,
   };
@@ -61,41 +51,34 @@ export default function CreateAdvisory({ page: { header, setError } }) {
   const interval = ["Two", "Three", "Four", "Five"];
   const intervalUnit = ["Hours", "Days", "Weeks", "Months"];
 
+  const currentTime = new Date().toISOString().substring(0, 16);
+
   useEffect(() => {
     Promise.all([
-      axios.get(`/protectedAreas?_limit=-1`),
-      axios.get(`/event-types?_limit=-1`),
-      axios.get(`/urgencies?_limit=-1`),
+      axios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
+      axios.get(`/event-types?_limit=-1&_sort=EventType`),
+      axios.get(`/urgencies?_limit=-1&_sort=id`),
     ])
       .then((res) => {
-        const parkData = res[0].data;
-        const parkMap = {};
-        parkData.map((p) => {
-          parkMap[p.ORCS.toString()] = p.ProtectedAreaName;
-          return parkMap;
-        });
-        const parkNames = Object.values(parkMap);
-        setParkNames(["Select a Park", ...parkNames]);
-        setParkMap(parkMap);
+        const protectedAreaData = res[0].data;
+        const protectedAreaNames = protectedAreaData.map((p) => ({
+          label: p.ProtectedAreaName,
+          value: p.ORCS,
+        }));
+        setProtectedAreaNames([...protectedAreaNames]);
         const eventTypeData = res[1].data;
-        const eventTypeMap = {};
-        eventTypeData.map((et) => {
-          eventTypeMap[et.id.toString()] = et.EventType;
-          return eventTypeMap;
-        });
-        const eventTypes = Object.values(eventTypeMap);
-        setEventTypeMap(eventTypeMap);
-        setEventTypes(["Select event type", ...eventTypes]);
+        const eventTypes = eventTypeData.map((et) => ({
+          label: et.EventType,
+          value: et.id,
+        }));
+        setEventTypes([...eventTypes]);
         const urgencyData = res[2].data;
-        const urgencyMap = {};
-        urgencyData.map((u) => {
-          urgencyMap[u.id.toString()] = u.Urgency;
-          return urgencyMap;
-        });
-        const urgencies = Object.values(urgencyMap);
-        setUrgencyMap(urgencyMap);
+        const urgencies = urgencyData.map((u) => ({
+          label: u.Urgency,
+          value: u.id,
+        }));
         setUrgencies([...urgencies]);
-        setUrgencyOption(0);
+        setUrgency(1);
       })
       .catch(() => {
         setToError(true);
@@ -105,34 +88,34 @@ export default function CreateAdvisory({ page: { header, setError } }) {
         });
       });
   }, [
-    setParkNames,
-    setParkMap,
+    setProtectedAreaNames,
     setUrgencies,
-    setUrgencyMap,
     setEventTypes,
-    setEventTypeMap,
+    setUrgency,
     setToError,
-    setUrgencyOption,
     setError,
   ]);
 
-  const getKeyByValue = (object, value) => {
-    return Object.keys(object).find((key) => object[key] === value);
-  };
+  
 
   const onDrop = (picture) => {
     setPictures([...pictures, picture]);
   };
 
   const saveAdvisory = () => {
-    const eventKey = getKeyByValue(eventTypeMap, eventType);
-    const protectedAreaKey = getKeyByValue(parkMap, location);
-    const urgencyKey = getKeyByValue(urgencyMap, urgency);
+    let protectedAreaQuery = "";
+    locations.forEach((loc, index, array) => {
+      protectedAreaQuery += `ORCS_in=${loc}`;
+      if (!Object.is(array.length - 1, index)) {
+        protectedAreaQuery += "&";
+      }
+    });
+    console.log(protectedAreaQuery);
     Promise.all([
-      axios.get(`/protectedAreas/${protectedAreaKey}`),
-      axios.get(`/event-types/${eventKey}`),
-      axios.get(`/urgencies/${urgencyKey}`),
+      axios.get(`/event-types/${eventType}`),
+      axios.get(`/urgencies/${urgency}`),
       axios.get(`/advisory-statuses/5`),
+      axios.get(`/protectedAreas?${protectedAreaQuery}`),
     ])
       .then((res) => {
         const newAdvisory = {
@@ -143,10 +126,10 @@ export default function CreateAdvisory({ page: { header, setError } }) {
           Title: headline,
           Description: description,
           Note: notes,
-          event_type: res[1].data,
-          urgency: res[2].data,
-          advisory_status: res[3].data,
-          protected_areas: [res[0].data],
+          event_type: res[0].data,
+          urgency: res[1].data,
+          advisory_status: res[2].data,
+          protected_areas: res[3].data,
         };
         axios
           .post(`/public-advisories`, newAdvisory)
@@ -187,7 +170,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Headline
                 </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
+                <div className="col-lg-8 col-md-8 col-sm-12">
                   <Input
                     input={{
                       ...headlineInput,
@@ -203,12 +186,12 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Event type
                 </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
-                  <Dropdown
-                    items={eventTypes}
-                    onSelect={(event) => {
-                      setEventType(event);
-                    }}
+                <div className="col-lg-8 col-md-8 col-sm-12">
+                  <Select
+                    options={eventTypes}
+                    onChange={(e) => setEventType(e.value)}
+                    placeholder="Select an event type"
+                    className="bg-blue f-select"
                   />
                 </div>
               </div>
@@ -216,7 +199,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Description
                 </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
+                <div className="col-lg-8 col-md-8 col-sm-12">
                   <textarea
                     className="bcgov-text-input"
                     id="description"
@@ -231,12 +214,15 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Location
                 </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
-                  <Dropdown
-                    items={parkNames}
-                    onSelect={(event) => {
-                      setLocation(event);
+                <div className="col-lg-8 col-md-8 col-sm-12">
+                  <Select
+                    options={protectedAreaNames}
+                    onChange={(e) => {
+                      setLocations(e.map((o) => o.value));
                     }}
+                    placeholder="Select a Park"
+                    className="bg-blue f-select"
+                    isMulti="true"
                   />
                 </div>
               </div>
@@ -244,24 +230,23 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Urgency level
                 </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
+                <div className="col-lg-8 col-md-8 col-sm-12">
                   <ButtonGroup
                     className="ad-btn-group"
                     color="primary"
                     aria-label="outlined primary button group"
                   >
-                    {urgencies.map((name, index) => (
+                    {urgencies.map((u) => (
                       <Button
-                        key={name}
-                        label={name}
+                        key={u.value}
+                        label={u.label}
                         styling={
-                          urgencyOption === index
+                          urgency === u.value
                             ? "bcgov-normal-blue btn"
                             : "bcgov-normal-white btn"
                         }
                         onClick={() => {
-                          setUrgencyOption(index);
-                          setUrgency(name);
+                          setUrgency(u.value);
                         }}
                       />
                     ))}
@@ -272,19 +257,23 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Effective date
                 </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
-                  <div className="ad-field">
+                <div className="col-lg-8 col-md-8 col-sm-12">
+                  <div className="ad-field field-bg-blue">
                     <div className="row ad-row ">
-                      <div className="col-lg-6 col-md-12 col-sm-12">
+                      <div className="col-lg-6 col-md-12 col-sm-12 pr0">
                         <div className="ad-flex">
                           <div className="p10 col-lg-2 col-md-3 col-sm-12">
                             Start
                           </div>
-                          <div className="col-lg-9 col-md-9 col-sm-12">
-                            <DatePick
-                              isRequired
-                              selectedDate={startDate}
-                              setSelectedDate={setStartDate}
+                          <div className="col-lg-10 col-md-9 col-sm-12">
+                            <TextField
+                              id="startDate"
+                              type="datetime-local"
+                              defaultValue={currentTime}
+                              className="react-datepicker-wrapper"
+                              onChange={(e) => {
+                                setStartDate(e.target.value);
+                              }}
                             />
                           </div>
                         </div>
@@ -305,30 +294,38 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                       </div>
                     </div>
                     <div className="row ad-row">
-                      <div className="col-lg-6 col-md-12 col-sm-12">
+                      <div className="col-lg-6 col-md-12 col-sm-12 pr0">
                         <div className="ad-flex">
                           <div className="p10 col-lg-2 col-md-3 col-sm-12">
                             End
                           </div>
-                          <div className="col-lg-9 col-md-9 col-sm-12">
-                            <DatePick
-                              isRequired
-                              selectedDate={endDate}
-                              setSelectedDate={setEndDate}
+                          <div className="col-lg-10 col-md-9 col-sm-12">
+                            <TextField
+                              id="endDate"
+                              type="datetime-local"
+                              defaultValue={currentTime}
+                              className="react-datepicker-wrapper"
+                              onChange={(e) => {
+                                setEndDate(e.target.value);
+                              }}
                             />
                           </div>
                         </div>
                       </div>
-                      <div className="col-lg-6 col-md-12 col-sm-12 ptm3">
+                      <div className="col-lg-6 col-md-12 col-sm-12 ptm3 pr0">
                         <div className="ad-flex">
                           <div className="p10 col-lg-2 col-md-3 col-sm-12">
                             Expiry
                           </div>
-                          <div className="col-lg-9 col-md-9 col-sm-12">
-                            <DatePick
-                              isRequired
-                              selectedDate={expiryDate}
-                              setSelectedDate={setExpiryDate}
+                          <div className="col-lg-10 col-md-9 col-sm-12">
+                            <TextField
+                              id="expiryDate"
+                              type="datetime-local"
+                              defaultValue={currentTime}
+                              className="react-datepicker-wrapper"
+                              onChange={(e) => {
+                                setExpiryDate(e.target.value);
+                              }}
                             />
                           </div>
                         </div>
@@ -341,7 +338,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Photos
                 </div>
-                <div className="col-lg-7 col-md-8 col-sm-12 ">
+                <div className="col-lg-8 col-md-8 col-sm-12 ">
                   <ImageUploader
                     withIcon={false}
                     onChange={onDrop}
@@ -351,7 +348,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                     buttonText="Add a photo"
                     buttonClassName="bcgov-normal-blue btn"
                     withLabel={false}
-                    className="ad-field"
+                    className="ad-field bg-blue"
                   />
                 </div>
               </div>
@@ -359,7 +356,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Links
                 </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
+                <div className="col-lg-8 col-md-8 col-sm-12">
                   <Input
                     input={{
                       ...linksInput,
@@ -380,7 +377,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                 <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                   Internal notes
                 </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
+                <div className="col-lg-8 col-md-8 col-sm-12">
                   <Input
                     input={{
                       ...notesInput,
@@ -392,6 +389,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                   />
                 </div>
               </div>
+              <br />
               <div className="row ad-row">
                 <div className="col-lg-3 col-md-4"></div>
                 <div className="col-lg-8 col-md-8 col-sm-12 button-row ad-row ad-btn-group">

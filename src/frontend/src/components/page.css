@@ -99,9 +99,9 @@ main {
 
 .react-datepicker-wrapper input {
   background: #fff !important;
-  border-radius: 20px !important;
+  border-radius: 10px !important;
   text-align: center !important;
-  margin-left: 10px !important;
+  margin-left: 0 !important;
 }
 
 .react-datepicker-wrapper {
@@ -134,21 +134,40 @@ main {
   padding-top: 3px !important;
 }
 
-.fileContainer .deleteImage {
-  background: #003366 !important;
-  font-size: 12px !important;
-  line-height: 20px !important;
-  width: 20px !important;
-  height: 20px !important;
+.pr0 {
+  padding-right: 0px !important;
 }
 
 .txt-center {
   text-align: center !important;
 }
 
+.field-bg-blue,
+.bg-blue,
+.bg-blue div {
+  background: #e3eaf8 0% 0% no-repeat padding-box !important;
+}
+
+.f-select div {
+  border: none !important;
+  border-radius: 2px !important;
+}
+
 :focus {
   outline: none !important;
   outline-offset: 1px;
+}
+
+.MuiTableCell-root div,
+.MuiTableCell-root span,
+.MuiTableCell-root,
+.MuiInputBase-root {
+  font-family: BCSans, Verdana, Arial, sans serif !important;
+}
+
+.MuiInput-underline:before,
+.MuiInput-underline:after {
+  border: none !important;
 }
 
 @media (max-width: 575.98px) {
