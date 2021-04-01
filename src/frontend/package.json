@@ -1,7 +1,6 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "homepage": "bcparks",
   "private": true,
   "dependencies": {
     "@babel/preset-react": "^7.12.13",
