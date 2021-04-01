@@ -13,9 +13,9 @@ services:
       PUBLIC_URL: ${PUBLIC_URL}
     networks:
       - bcp-cms-network
-    volumes:
-      - "./frontend:/app"
-      - "./frontend/node_modules:/app/node_modules"
+    # volumes:
+    #   - "./frontend:/app"
+    #   - "./frontend/node_modules:/app/node_modules"
     ports:
       - "3000:3000"
       - "8080:8080"

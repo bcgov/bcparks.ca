@@ -42,12 +42,13 @@ RUN npm run build --prod
 FROM registry.redhat.io/rhel8/nginx-118 AS runtime
 # COPY --from=build-deps /frontend/build /opt/app-root/src/bcparks
 COPY --from=build-deps /frontend/build /opt/app-root/src
-COPY --from=build-deps /frontend/nginx.conf /etc/nginx/conf.d/bcp_cms.conf
-COPY --from=build-deps /frontend /opt/app-root/src/frontend
-COPY --from=build-deps /frontend/node_modules /opt/app-root/src/frontend/node_modules
-      # - "./frontend/node_modules:/app/node_modules"
-USER 0
-RUN chmod -R 777 /opt/app-root/src
+COPY --from=build-deps /frontend/nginx.conf /opt/app-root/etc/nginx.default.d/bcp_cms.conf
+COPY --from=build-deps /frontend /opt/app-root/src
+# COPY --from=build-deps /frontend/node_modules /opt/app-root/src/node_modules
+# - "./frontend/node_modules:/app/node_modules"
+
+# USER 0
+# RUN chmod -R 766 /opt/app-root/src
 # start app
 # CMD ["npm", "start"]
 CMD ["sh","-c","nginx -g 'daemon off;'"]
