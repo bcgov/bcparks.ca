@@ -7,6 +7,10 @@ services:
     build:
       context: ./src/frontend
       dockerfile: Dockerfile
+      args:
+        REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
+        REACT_APP_FRONTEND_BASE_URL: ${REACT_APP_FRONTEND_BASE_URL}
+        PUBLIC_URL: ${PUBLIC_URL}
     environment:
       REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
       REACT_APP_FRONTEND_BASE_URL: ${REACT_APP_FRONTEND_BASE_URL}
@@ -17,7 +21,7 @@ services:
       - "./frontend:/app"
       - "./frontend/node_modules:/app/node_modules"
     ports:
-      - "3000:3000"
+      - "3000:80"
     tty: true
 
   strapi:

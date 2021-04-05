@@ -38,10 +38,11 @@ RUN mkdir -p /frontend/node_modules/.cache && \
 ########################################
 ### Stage 2 - Production environment ###
 ########################################
-# FROM registry.redhat.io/rhel8/nginx-118 AS runtime
-# COPY --from=build-deps /frontend /opt/app-root/src
-# COPY --from=build-deps /frontend/nginx.conf /etc/nginx/conf.d/bcp_cms.conf
+COPY . ./
+RUN npm run build --prod
 
-# start app
-CMD ["npm", "start"]
-# CMD ["sh","-c","nginx -g 'daemon off;'"]
+FROM nginx:stable-alpine
+COPY --from=build-deps /frontend/build /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
