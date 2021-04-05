@@ -6,6 +6,7 @@ on:
     branches: [main, tools]
 
 jobs:
+
   build-frontend:
     runs-on: ubuntu-20.04
     environment: Main
