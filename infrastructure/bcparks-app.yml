@@ -1,0 +1,339 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: bcparks
+  description: >-
+    Deployment template for the BC Parks App
+parameters:
+- name: NAME
+  displayName: Name
+  description: A prefix appended to all objects
+  required: true
+  value: bcparks
+- name: OC_NAMESPACE
+  required: true
+  value: 61d198
+- name: OC_APP
+  required: true
+- name: FRONTEND_POD
+  required: true
+  value: web
+- name: FRONTEND_URL
+  required: true
+- name: API_POD
+  required: true
+  value: api
+- name: API_URL
+  required: true
+- name: DB_POD
+  value: db
+  required: true
+- name: DB_PORT
+  value: "5432"
+- name: DB_SSL
+  value: "false"
+- name: WEB_SCHEMA
+  value: http
+- name: URL_STUB
+  value: "-61d198-dev.apps.silver.devops.gov.bc.ca"
+  required: false
+objects:
+### Frontend
+#   Deployment Config
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    name: ${FRONTEND_POD}
+    labels:
+      app.kubernetes.io/part-of: ${NAME}
+  spec:
+    completionDeadlineSeconds: 1200
+    replicas: 1
+    selector:
+      name: ${FRONTEND_POD}
+    strategy:
+      type: Recreate
+      maxSurge: 50%
+      maxUnavailable: 0
+    template:
+      metadata:
+        labels:
+          dev-app: ${NAME}
+          name: ${FRONTEND_POD}
+      spec:
+        containers:
+          - env:
+              - name: REACT_APP_API_BASE_URL
+                value: "${WEB_SCHEMA}://${API_URL}${URL_STUB}"
+              - name: REACT_APP_FRONTEND_BASE_URL
+                value: "${WEB_SCHEMA}://${FRONTEND_URL}${URL_STUB}"
+              - name: PUBLIC_URL
+                value: "${WEB_SCHEMA}://${FRONTEND_URL}${URL_STUB}"
+            image: >-
+              image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/frontend:${OC_APP}
+            name: ${FRONTEND_POD}
+            ports:
+              - containerPort: 3000
+              - containerPort: 8080
+    triggers:
+      - type: ConfigChange
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - ${FRONTEND_POD}
+          from:
+            kind: ImageStreamTag
+            namespace: "${OC_NAMESPACE}-tools"
+            name: 'frontend:${OC_APP}'
+  status: {}
+#   Frontend Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: ${FRONTEND_POD}
+    labels:
+      app.kubernetes.io/part-of: ${NAME}
+  spec:
+    ports:
+      - name: "npm"
+        port: 3000
+        targetPort: 3000
+      - name: "http"
+        port: 8080
+        targetPort: 8080
+      - name: "https"
+        port: 8443
+        targetPort: 8443
+    selector:
+      name: ${FRONTEND_POD}
+#   Frontend Route
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  namespace: ${OC_NAMESPACE}-${OC_APP}
+  labels:
+    app: ${FRONTEND_POD}
+    app.kubernetes.io/component: ${NAME}
+    app.kubernetes.io/instance: ${NAME}
+    app.kubernetes.io/part-of: ${NAME}
+  metadata:
+    name: ${FRONTEND_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
+  spec:
+    host: ${FRONTEND_URL}${URL_STUB}
+    to:
+      kind: Service
+      name: ${FRONTEND_POD}
+      weight: 100
+    port:
+      targetPort: 3000
+    wildcardPolicy: None
+
+### API
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    name: ${API_POD}
+    labels:
+      app.kubernetes.io/part-of: ${NAME}
+  spec:
+    completionDeadlineSeconds: 1200
+    replicas: 1
+    selector:
+      name: ${API_POD}
+    strategy:
+      type: Recreate
+      maxSurge: 50%
+      maxUnavailable: 0
+    template:
+      metadata:
+        labels:
+          dev-app: ${NAME}
+          name: ${API_POD}
+      spec:
+        containers:
+          - env:
+              - name: DATABASE_HOST
+                value: ${DB_POD}
+              - name: DATABASE_PORT
+                value: ${DB_PORT}
+              - name: DATABASE_NAME
+                valueFrom:
+                  secretKeyRef:
+                    key: DATABASE_USERNAME
+                    name: ${DB_POD}-secrets
+              - name: DATABASE_USERNAME
+                valueFrom:
+                  secretKeyRef:
+                    key: DATABASE_USERNAME
+                    name: ${DB_POD}-secrets
+              - name: DATABASE_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    key: DATABASE_PASSWORD
+                    name: ${DB_POD}-secrets
+              - name: DATABASE_SSL
+                value: ${DB_SSL}
+            image: >-
+              image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/strapi:${OC_APP}
+            name: ${API_POD}
+            ports:
+              - containerPort: 1377
+    triggers:
+      - type: ConfigChange
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - ${API_POD}
+          from:
+            kind: ImageStreamTag
+            namespace: "${OC_NAMESPACE}-tools"
+            name: 'strapi:${OC_APP}'
+  status: {}
+#   API Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: ${API_POD}
+    labels:
+      app.kubernetes.io/part-of: ${NAME}
+  spec:
+    ports:
+      - name: ${API_POD}
+        port: 1337
+        targetPort: 1337
+    selector:
+      name: ${API_POD}
+#   API Route
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  namespace: ${OC_NAMESPACE}-${OC_APP}
+  labels:
+    app: ${API_POD}
+    app.kubernetes.io/component: ${NAME}
+    app.kubernetes.io/instance: ${NAME}
+    app.kubernetes.io/part-of: ${NAME}
+  metadata:
+    name: ${API_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
+  spec:
+    host: ${API_URL}${URL_STUB}
+    to:
+      kind: Service
+      name: ${API_POD}
+      weight: 100
+    port:
+      targetPort: 1337
+    wildcardPolicy: None
+
+### Database
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    name: ${DB_POD}
+    labels:
+      app.kubernetes.io/part-of: ${NAME}
+  spec:
+    replicas: 1
+    selector:
+      name: ${DB_POD}
+    strategy: null
+    template:
+      metadata:
+        labels:
+          dev-app: ${NAME}
+          name: ${DB_POD}
+      spec:
+        containers:
+          - capabilities: {}
+            env:
+              - name: DB_HOST
+                value: ${DB_POD}
+              # PostgreSQL environment variables
+              - name: PGPASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    key: DATABASE_PASSWORD
+                    name: ${DB_POD}-secrets
+              - name: POSTGRESQL_USER
+                valueFrom:
+                  secretKeyRef:
+                    key: DATABASE_USERNAME
+                    name: ${DB_POD}-secrets
+              - name: POSTGRESQL_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    key: DATABASE_PASSWORD
+                    name: ${DB_POD}-secrets
+              - name: POSTGRESQL_DATABASE
+                valueFrom:
+                  secretKeyRef:
+                    key: DATABASE_USERNAME
+                    name: ${DB_POD}-secrets
+            image: >-
+              image-registry.openshift-image-registry.svc:5000/openshift/postgresql:12
+            imagePullPolicy: IfNotPresent
+            lifecycle:
+              preStop:
+                exec:
+                  command: ['pg_ctl', 'stop']
+            livenessProbe:
+              initialDelaySeconds: 30
+              tcpSocket:
+                port: 5432
+              timeoutSeconds: 1
+            name: ${DB_POD}
+            ports:
+              - containerPort: 5432
+                protocol: TCP
+                name: postgresql
+            readinessProbe:
+              exec:
+                command:
+                  - /bin/sh
+                  - '-i'
+                  - '-c'
+                  - >-
+                    psql -h 127.0.0.1 -d postgres -U
+                    $POSTGRESQL_USER -c 'SELECT 1'
+              initialDelaySeconds: 5
+              timeoutSeconds: 1
+            resources: {}
+            securityContext:
+              capabilities: {}
+              privileged: false
+            terminationMessagePath: /dev/termination-log
+            volumeMounts:
+              - mountPath: /var/lib/pgsql/data
+                name: ${DB_POD}-data
+              - mountPath: /var/run/postgresql
+                name: ${DB_POD}-run
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        volumes:
+          - name: ${DB_POD}-data
+            emptyDir: {}
+          - name: ${DB_POD}-run
+            emptyDir: {}
+  status: {}
+#   DB Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: ${DB_POD}
+    labels:
+      app.kubernetes.io/part-of: ${NAME}
+  spec:
+    ports:
+      - name: ${DB_POD}
+        nodePort: 0
+        port: 5432
+        protocol: TCP
+        targetPort: 5432
+    selector:
+      name: ${DB_POD}
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}

@@ -41,7 +41,7 @@ RUN mkdir -p /frontend/node_modules/.cache && \
 COPY . ./
 RUN npm run build --prod
 
-FROM nginx:stable-alpine
+FROM registry.access.redhat.com/ubi8/nginx-118 AS runtime
 COPY --from=build-deps /frontend/build /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
