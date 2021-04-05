@@ -42,7 +42,7 @@ COPY . ./
 RUN npm run build --prod
 
 FROM registry.access.redhat.com/ubi8/nginx-118 AS runtime
-COPY --from=build-deps /frontend/build .
+COPY --from=build-deps /frontend/build opt/app-root/src
 COPY ./nginx.conf /opt/app-root/etc/nginx.d/bcparks.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
