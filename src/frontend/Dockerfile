@@ -39,7 +39,7 @@ RUN mkdir -p /frontend/node_modules/.cache && \
 ### Stage 2 - Production environment ###
 ########################################
 COPY . ./
-RUN npm run build
+RUN npm run build --prod
 
 FROM nginx:stable-alpine
 COPY --from=build-deps /frontend/build /usr/share/nginx/html
