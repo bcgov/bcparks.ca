@@ -42,7 +42,7 @@ COPY . ./
 RUN npm run build --prod
 
 FROM registry.access.redhat.com/ubi8/nginx-118 AS runtime
-COPY --from=build-deps /frontend/build /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build-deps /frontend/build .
+COPY ./nginx.conf /opt/app-root/etc/nginx.default.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
