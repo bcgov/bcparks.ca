@@ -15,14 +15,14 @@ services:
       REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
       REACT_APP_FRONTEND_BASE_URL: ${REACT_APP_FRONTEND_BASE_URL}
       PUBLIC_URL: ${PUBLIC_URL}
+    ports:
+      - "8080:8080"
+    tty: true
     networks:
       - bcp-cms-network
-    volumes:
-      - "./frontend:/app"
-      - "./frontend/node_modules:/app/node_modules"
-    ports:
-      - "3000:80"
-    tty: true
+    # volumes:
+    #   - "./frontend:/app"
+    #   - "./frontend/node_modules:/app/node_modules"
 
   strapi:
     container_name: bcp-strapi
