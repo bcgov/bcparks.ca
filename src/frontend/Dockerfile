@@ -41,8 +41,11 @@ RUN mkdir -p /frontend/node_modules/.cache && \
 COPY . ./
 RUN npm run build --prod
 
-FROM registry.redhat.io/rhel8/nginx-116 AS runtime
+FROM registry.redhat.io/rhel8/nginx-118 AS runtime
+USER 0
+RUN mkdir -p /var/cache/nginx/client_temp &&\
+    chmod -R 777 /var/cache/nginx/client_temp
 COPY --from=build-deps /frontend/build /opt/app-root/src
-COPY ./nginx.conf /opt/app-root/etc/nginx.default.d/bcparks.conf
+COPY ./nginx.conf /etc/nginx/nginx.conf
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
