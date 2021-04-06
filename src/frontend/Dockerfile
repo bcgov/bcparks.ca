@@ -41,7 +41,7 @@ RUN mkdir -p /frontend/node_modules/.cache && \
 COPY . ./
 RUN npm run build --prod
 
-FROM registry.access.redhat.com/ubi8/nginx-118 AS runtime
+FROM registry.redhat.io/rhel8/nginx-116 AS runtime
 COPY --from=build-deps /frontend/build /opt/app-root/src
 COPY ./nginx.conf /opt/app-root/etc/nginx.default.d/bcparks.conf
 EXPOSE 8080
