@@ -94,6 +94,15 @@
     },
     "links": {
       "collection": "link"
+    },
+    "regions": {
+      "collection": "region"
+    },
+    "section": {
+      "model": "section"
+    },
+    "management_area": {
+      "model": "management-area"
     }
   }
 }
