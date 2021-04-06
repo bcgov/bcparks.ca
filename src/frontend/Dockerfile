@@ -41,7 +41,7 @@ RUN mkdir -p /frontend/node_modules/.cache && \
 COPY . ./
 RUN npm run build --prod
 
-FROM registry.redhat.io/ubi/nginx-118 AS runtime
+FROM registry.access.redhat.com/ubi/nginx-118 AS runtime
 USER 0
 RUN mkdir -p /var/cache/nginx/client_temp &&\
     chmod -R 777 /var/cache/nginx/client_temp
