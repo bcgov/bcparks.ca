@@ -1,6 +1,6 @@
 import React, { useState, useEffect, forwardRef } from "react";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./AdvisoryDashboard.css";
 import { Header } from "shared-components/build/components/header/Header";
@@ -69,7 +69,12 @@ const columns = [
       <Moment format="MMM DD YYYY">{rowData.EndDate}</Moment>
     ),
   },
-  // { field: "access_status.AccessStatus", title: "Access Status" },
+  {
+    title: "",
+    field: "id",
+    editable: false,
+    render: (rowData) => <Link to={`update-advisory/${rowData.id}`}>View</Link>,
+  },
 ];
 
 const options = {

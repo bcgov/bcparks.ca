@@ -5,6 +5,7 @@ import Error from "./components/page/error/Error";
 import { useHistory } from "react-router-dom";
 import AdvisoryDashboard from "./components/page/advisoryDashboard/AdvisoryDashboard";
 import CreateAdvisory from "./components/page/createAdvisory/CreateAdvisory";
+import UpdateAdvisory from "./components/page/updateAdvisory/UpdateAdvisory";
 
 function App() {
   const [error, setError] = useState({});
@@ -24,6 +25,9 @@ function App() {
         </Route>
         <Route path="/bcparks/create-advisory">
           <CreateAdvisory page={{ header, setError }} />
+        </Route>
+        <Route path="/bcparks/update-advisory/:id">
+          <UpdateAdvisory page={{ header, setError }} />
         </Route>
         <Route path="/bcparks/error">
           <Error page={{ header, error }} />
