@@ -3,10 +3,6 @@
   align-items: center !important;
 }
 
-.ad-row {
-  display: table-row;
-}
-
 .ad-label {
   text-align: right;
   font-weight: bold;
