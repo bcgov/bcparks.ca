@@ -222,6 +222,32 @@ const loadEventType = async () => {
   }
 };
 
+const createApiUser = async () => {
+  const authRole = await findRole("authenticated");
+  const apiUser = await Promise.resolve(
+    strapi.query("user", "users-permissions").create({
+      username: process.env.API_USER_NAME,
+      email: process.env.API_USER_EMAIL,
+      password: process.env.API_USER_PASSWORD,
+      provider: "local",
+      confirmed: true,
+      blocked: false,
+      role: authRole,
+    })
+  );
+  return apiUser;
+};
+
+const createApiToken = async () => {
+  const apiUser = await createApiUser();
+  Promise.resolve(
+    strapi.services["token"].create({
+      Token: process.env.API_TOKEN,
+      User: apiUser,
+    })
+  );
+};
+
 const loadUrgency = async () => {
   const currentData = await strapi.services["urgency"].find();
   if (currentData.length == 0) {
@@ -284,12 +310,32 @@ const isFirstRun = async () => {
 };
 
 const setDefaultPermissions = async () => {
-  const role = await findPublicRole();
-  const permissions = await strapi
+  const authRole = await findRole("authenticated");
+
+  const authPermissions = await strapi
     .query("permission", "users-permissions")
-    .find({ type: "application", role: role.id });
+    .find({ type: "application", role: authRole.id });
+
   await Promise.all(
-    permissions.map((p) =>
+    authPermissions.map((p) =>
+      strapi
+        .query("permission", "users-permissions")
+        .update({ id: p.id }, { enabled: true })
+    )
+  );
+
+  const publicRole = await findRole("public");
+
+  const publicPermissions = await strapi
+    .query("permission", "users-permissions")
+    .find({
+      type: "application",
+      role: publicRole.id,
+      action_in: ["find", "findone"],
+    });
+
+  await Promise.all(
+    publicPermissions.map((p) =>
       strapi
         .query("permission", "users-permissions")
         .update({ id: p.id }, { enabled: true })
@@ -297,10 +343,10 @@ const setDefaultPermissions = async () => {
   );
 };
 
-const findPublicRole = async () => {
+const findRole = async (role) => {
   const result = await strapi
     .query("role", "users-permissions")
-    .findOne({ type: "public" });
+    .findOne({ type: role });
   return result;
 };
 
@@ -312,6 +358,7 @@ const loadData = async () => {
     await loadEventType();
     await loadUrgency();
     await loadPublicAdvisory();
+    await createApiToken();
   } catch (error) {
     console.log(error);
   }
