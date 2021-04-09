@@ -1,0 +1,15 @@
+.navbar > .container-fluid {
+  width: 95% !important;
+  justify-content: inherit !important;
+  padding: 20px 0px !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+@media (max-width: 575.98px) {
+  .page {
+    flex-direction: column;
+  }
+}

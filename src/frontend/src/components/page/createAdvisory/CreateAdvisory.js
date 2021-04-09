@@ -7,6 +7,7 @@ import { Button } from "shared-components/build/components/button/Button";
 import { Input } from "shared-components/build/components/input/Input";
 import { Dropdown } from "shared-components/build/components/dropdown/Dropdown";
 import { TextField, ButtonGroup } from "@material-ui/core";
+import Header from "../../composite/header/Header";
 import ImageUploader from "react-images-upload";
 import Select from "react-select";
 
@@ -27,6 +28,10 @@ export default function CreateAdvisory({ page: { setError } }) {
   const [pictures, setPictures] = useState([]);
   const [links, setLinks] = useState();
   const [notes, setNotes] = useState();
+
+  const header = {
+    name: "",
+  };
 
   const headlineInput = {
     label: "",
@@ -157,6 +162,7 @@ export default function CreateAdvisory({ page: { setError } }) {
 
   return (
     <main>
+      <Header header={header} />
       <br />
       <div className="CreateAdvisory" data-testid="CreateAdvisory">
         <div className="container">
@@ -418,8 +424,5 @@ export default function CreateAdvisory({ page: { setError } }) {
 CreateAdvisory.propTypes = {
   page: PropTypes.shape({
     setError: PropTypes.func.isRequired,
-    header: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
   }).isRequired,
 };

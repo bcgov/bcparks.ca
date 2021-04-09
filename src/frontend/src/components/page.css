@@ -49,24 +49,6 @@
   border-color: rgba(204, 204, 204, 1) !important;
 }
 
-.img-fluid.d-md-none.bcgov-pointer {
-  width: 181px !important;
-}
-
-.navbar-brand.bcgov-pointer {
-  width: 100% !important;
-}
-
-.bcgov-pointer.navbar-brand.nav-item.nav-link {
-  display: none;
-}
-
-.bcgov-header .navbar {
-  flex-flow: row nowrap !important;
-  justify-content: flex-start !important;
-  padding: 30px 0px !important;
-}
-
 .bcgov-button {
   min-width: 120px !important;
 }

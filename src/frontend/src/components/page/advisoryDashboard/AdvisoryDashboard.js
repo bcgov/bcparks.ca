@@ -120,9 +120,9 @@ export default function AdvisoryDashboard({ page: { setError } }) {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    if (!keycloak.authenticated) {
-      setToHome(true);
-    }
+    // if (!keycloak.authenticated) {
+    //   setToHome(true);
+    // }
     console.log("Called");
     cmsAxios
       .get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`)
