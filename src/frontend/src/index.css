@@ -3,3 +3,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+main {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  min-height: 100vh !important;
+  position: relative;
+  color: #003366 !important;
+}
+
+.page-loader {
+  padding-top: 20% !important;
+  text-align: center !important;
+}

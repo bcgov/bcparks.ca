@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { cmsAxios, apiAxios } from "../../../axios_config";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./CreateAdvisory.css";
-import { Header } from "shared-components/build/components/header/Header";
 import { Button } from "shared-components/build/components/button/Button";
 import { Input } from "shared-components/build/components/input/Input";
 import { Dropdown } from "shared-components/build/components/dropdown/Dropdown";
@@ -11,7 +10,7 @@ import { TextField, ButtonGroup } from "@material-ui/core";
 import ImageUploader from "react-images-upload";
 import Select from "react-select";
 
-export default function CreateAdvisory({ page: { header, setError } }) {
+export default function CreateAdvisory({ page: { setError } }) {
   const [protectedAreaNames, setProtectedAreaNames] = useState([]);
   const [eventTypes, setEventTypes] = useState([]);
   const [urgencies, setUrgencies] = useState([]);
@@ -55,9 +54,9 @@ export default function CreateAdvisory({ page: { header, setError } }) {
 
   useEffect(() => {
     Promise.all([
-      axios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
-      axios.get(`/event-types?_limit=-1&_sort=EventType`),
-      axios.get(`/urgencies?_limit=-1&_sort=id`),
+      cmsAxios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
+      cmsAxios.get(`/event-types?_limit=-1&_sort=EventType`),
+      cmsAxios.get(`/urgencies?_limit=-1&_sort=id`),
     ])
       .then((res) => {
         const protectedAreaData = res[0].data;
@@ -96,8 +95,6 @@ export default function CreateAdvisory({ page: { header, setError } }) {
     setError,
   ]);
 
-  
-
   const onDrop = (picture) => {
     setPictures([...pictures, picture]);
   };
@@ -112,10 +109,10 @@ export default function CreateAdvisory({ page: { header, setError } }) {
     });
     console.log(protectedAreaQuery);
     Promise.all([
-      axios.get(`/event-types/${eventType}`),
-      axios.get(`/urgencies/${urgency}`),
-      axios.get(`/advisory-statuses/5`),
-      axios.get(`/protectedAreas?${protectedAreaQuery}`),
+      cmsAxios.get(`/event-types/${eventType}`),
+      cmsAxios.get(`/urgencies/${urgency}`),
+      cmsAxios.get(`/advisory-statuses/5`),
+      cmsAxios.get(`/protectedAreas?${protectedAreaQuery}`),
     ])
       .then((res) => {
         const newAdvisory = {
@@ -131,7 +128,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
           advisory_status: res[2].data,
           protected_areas: res[3].data,
         };
-        axios
+        apiAxios
           .post(`/public-advisories`, newAdvisory)
           .then(() => {
             console.log("New advisory added successfully");
@@ -160,7 +157,6 @@ export default function CreateAdvisory({ page: { header, setError } }) {
 
   return (
     <main>
-      <Header header={header} />
       <br />
       <div className="CreateAdvisory" data-testid="CreateAdvisory">
         <div className="container">

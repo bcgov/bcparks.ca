@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Header } from "shared-components/build/components/header/Header";
+import { useKeycloak } from "@react-keycloak/web";
 import { Button } from "shared-components/build/components/button/Button";
 import { Input } from "shared-components/build/components/input/Input";
 import styles from "./Home.css";
 
-export default function Home({ page: { header, setError } }) {
+export default function Home({ page: { setError } }) {
+  const { keycloak } = useKeycloak();
   const [toError, setToError] = useState(false);
   const [toAdvisoryDashboard, setToAdvisoryDashboard] = useState(false);
+
+  useEffect(() => {
+    setToAdvisoryDashboard(keycloak.authenticated);
+  }, [setToAdvisoryDashboard, keycloak]);
 
   const usernameInput = {
     label: "",
@@ -35,7 +40,6 @@ export default function Home({ page: { header, setError } }) {
 
   return (
     <main>
-      <Header header={header} />
       <div className={styles.Home} data-testid="Home">
         <div className="container hm-container">
           <h1>Welcome to BC Parks Public Advisories</h1>
@@ -65,9 +69,7 @@ export default function Home({ page: { header, setError } }) {
                   </div>
                   <div className="row hm-row ">
                     <Button
-                      onClick={() => {
-                        setToAdvisoryDashboard(true);
-                      }}
+                      onClick={() => keycloak.login()}
                       label="Login"
                       styling="bcgov-normal-yellow btn"
                     />

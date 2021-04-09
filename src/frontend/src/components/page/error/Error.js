@@ -7,7 +7,7 @@ import { Header } from "shared-components/build/components/header/Header";
 import { Footer } from "shared-components/build/components/footer/Footer";
 import { Button } from "shared-components/build/components/button/Button";
 
-export default function Error({ page: { header, error } }) {
+export default function Error({ page: { error } }) {
   const [toHome, setToHome] = useState(false);
 
   if (toHome) {
@@ -65,7 +65,6 @@ export default function Error({ page: { header, error } }) {
 
   return (
     <main>
-      <Header header={header} />
       <div className="page" data-testid="Error">
         <div className="content col-md-8">
           {errorContent}

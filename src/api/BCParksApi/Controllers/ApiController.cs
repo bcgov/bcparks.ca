@@ -37,12 +37,12 @@ namespace BCParksApi.Controllers
         {
             try
             {
-                string url = _configuration["StrapiUrl"] + route;
+                string url = _configuration["CmsUrl"] + route;
                 if (param != "")
                 {
                     url += "?" + param;
                 }
-                url = url + "/token=" + _configuration["ApiToken"];
+                url = url + "?token=" + _configuration["ApiToken"];
                 string apiResponse = await ApiHelper.httpClient.GetStringAsync(url);
                 return Ok(JsonConvert.DeserializeObject<object>(apiResponse));
             }
@@ -62,7 +62,7 @@ namespace BCParksApi.Controllers
         {
             try
             {
-                string url = _configuration["StrapiUrl"] + route + "/token=" + _configuration["ApiToken"];
+                string url = _configuration["CmsUrl"] + route + "?token=" + _configuration["ApiToken"];
                 HttpResponseMessage apiResponse = await ApiHelper.httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json"));
                 apiResponse.EnsureSuccessStatusCode();
                 string responseBody = await apiResponse.Content.ReadAsStringAsync();

@@ -1,9 +1,8 @@
 import React, { useState, useEffect, forwardRef } from "react";
-import axios from "axios";
+import { cmsAxios } from "../../../axios_config";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./AdvisoryDashboard.css";
-import { Header } from "shared-components/build/components/header/Header";
 import { Button } from "shared-components/build/components/button/Button";
 import MaterialTable from "material-table";
 import Select from "react-select";
@@ -24,6 +23,7 @@ import Remove from "@material-ui/icons/Remove";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
+import { useKeycloak } from "@react-keycloak/web";
 
 const columns = [
   {
@@ -109,37 +109,44 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-export default function AdvisoryDashboard({ page: { header, setError } }) {
+export default function AdvisoryDashboard({ page: { setError } }) {
   const [toError, setToError] = useState(false);
   const [toHome, setToHome] = useState(false);
   const [toCreate, setToCreate] = useState(false);
   const [parkNames, setParkNames] = useState([]);
   const [selectedParkId, setSelectedParkId] = useState(0);
+  const { keycloak } = useKeycloak();
 
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    axios
+    if (!keycloak.authenticated) {
+      setToHome(true);
+    }
+    console.log("Called");
+    cmsAxios
       .get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`)
       .then((res) => {
+        console.log(res);
         const parkNames = res.data.map((p) => ({
           label: p.ProtectedAreaName,
           value: p.id,
         }));
         setParkNames(["Select a Park", ...parkNames]);
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e);
         setToError(true);
         setError({
           status: 500,
           message: "Error occurred",
         });
       });
-  }, [setParkNames, setToError, setError]);
+  }, [setParkNames, setToError, setError, setToHome]);
 
   useEffect(() => {
     let url = `public-advisories?protected_areas.id=${selectedParkId}`;
-    axios
+    cmsAxios
       .get(url)
       .then((resp) => setRows(resp.data))
       .catch(() => {
@@ -165,7 +172,6 @@ export default function AdvisoryDashboard({ page: { header, setError } }) {
 
   return (
     <main>
-      <Header header={header} />
       <br />
 
       <div className={styles.AdvisoryDashboard} data-testid="AdvisoryDashboard">
