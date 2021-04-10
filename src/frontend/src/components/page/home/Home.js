@@ -9,26 +9,18 @@ import styles from "./Home.css";
 export default function Home({ page: { setError } }) {
   const { keycloak } = useKeycloak();
   const [toError, setToError] = useState(false);
-  const [toAdvisoryDashboard, setToAdvisoryDashboard] = useState(false);
-  const header = {
-    name: "",
-  };
-
-  useEffect(() => {
-    setToAdvisoryDashboard(keycloak.authenticated);
-  }, [setToAdvisoryDashboard, keycloak]);
 
   if (toError) {
     return <Redirect to="/bcparks/error" />;
   }
 
-  if (toAdvisoryDashboard) {
-    return <Redirect to="/bcparks/advisory-dash" />;
-  }
-
   return (
     <main>
-      <Header header={header} />
+      <Header
+        header={{
+          name: "",
+        }}
+      />
       <div className={styles.Home} data-testid="Home">
         <div className="container hm-container">
           <h1>Welcome to BC Parks Public Advisories</h1>
@@ -40,7 +32,11 @@ export default function Home({ page: { setError } }) {
                 <div className="container-fluid ad-form">
                   <div className="row hm-row ">
                     <Button
-                      onClick={() => keycloak.login()}
+                      onClick={() =>
+                        keycloak.login({
+                          redirectUri: `http://localhost:3000/bcparks/advisory-dash`,
+                        })
+                      }
                       label="Login"
                       styling="bcgov-normal-yellow btn"
                     />

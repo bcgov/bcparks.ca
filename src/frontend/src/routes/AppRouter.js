@@ -5,7 +5,6 @@ import Error from "../components/page/error/Error";
 import AdvisoryDashboard from "../components/page/advisoryDashboard/AdvisoryDashboard";
 import CreateAdvisory from "../components/page/createAdvisory/CreateAdvisory";
 import { useKeycloak } from "@react-keycloak/web";
-import AccountInfo from "../components/composite/accountInfo/AccountInfo";
 import { Loader } from "shared-components/build/components/loader/Loader";
 
 function AppRouter() {
@@ -21,7 +20,6 @@ function AppRouter() {
   }
   return (
     <div>
-      <AccountInfo />
       <BrowserRouter>
         <Switch>
           <Redirect exact from="/" to="/bcparks" />

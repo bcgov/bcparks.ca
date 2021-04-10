@@ -24,6 +24,7 @@ import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import { useKeycloak } from "@react-keycloak/web";
+import Header from "../../composite/header/Header";
 
 const columns = [
   {
@@ -120,43 +121,55 @@ export default function AdvisoryDashboard({ page: { setError } }) {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    // if (!keycloak.authenticated) {
-    //   setToHome(true);
-    // }
-    console.log("Called");
-    cmsAxios
-      .get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`)
-      .then((res) => {
-        console.log(res);
-        const parkNames = res.data.map((p) => ({
-          label: p.ProtectedAreaName,
-          value: p.id,
-        }));
-        setParkNames(["Select a Park", ...parkNames]);
-      })
-      .catch((e) => {
-        console.log(e);
-        setToError(true);
-        setError({
-          status: 500,
-          message: "Error occurred",
-        });
+    if (!keycloak.authenticated) {
+      setToError(true);
+      setError({
+        status: 401,
+        message: "Login required",
       });
-  }, [setParkNames, setToError, setError, setToHome]);
+    } else {
+      cmsAxios
+        .get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`)
+        .then((res) => {
+          console.log(res);
+          const parkNames = res.data.map((p) => ({
+            label: p.ProtectedAreaName,
+            value: p.id,
+          }));
+          setParkNames(["Select a Park", ...parkNames]);
+        })
+        .catch((e) => {
+          console.log(e);
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Error occurred",
+          });
+        });
+    }
+  }, [setParkNames, setToError, setError, setToHome, keycloak]);
 
   useEffect(() => {
-    let url = `public-advisories?protected_areas.id=${selectedParkId}`;
-    cmsAxios
-      .get(url)
-      .then((resp) => setRows(resp.data))
-      .catch(() => {
-        setToError(true);
-        setError({
-          status: 500,
-          message: "Error occurred",
-        });
+    if (!keycloak.authenticated) {
+      setToError(true);
+      setError({
+        status: 401,
+        message: "Login required",
       });
-  }, [setToError, setError, selectedParkId]);
+    } else {
+      let url = `public-advisories?protected_areas.id=${selectedParkId}`;
+      cmsAxios
+        .get(url)
+        .then((resp) => setRows(resp.data))
+        .catch(() => {
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Error occurred",
+          });
+        });
+    }
+  }, [setToError, setError, selectedParkId, keycloak]);
 
   if (toHome) {
     return <Redirect to="/bcparks" />;
@@ -172,6 +185,11 @@ export default function AdvisoryDashboard({ page: { setError } }) {
 
   return (
     <main>
+      <Header
+        header={{
+          name: "",
+        }}
+      />
       <br />
 
       <div className={styles.AdvisoryDashboard} data-testid="AdvisoryDashboard">
@@ -215,8 +233,5 @@ export default function AdvisoryDashboard({ page: { setError } }) {
 AdvisoryDashboard.propTypes = {
   page: PropTypes.shape({
     setError: PropTypes.func.isRequired,
-    header: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
   }).isRequired,
 };

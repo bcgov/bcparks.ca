@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
-
 import "../../page.css";
-import { Header } from "shared-components/build/components/header/Header";
 import { Footer } from "shared-components/build/components/footer/Footer";
 import { Button } from "shared-components/build/components/button/Button";
+import Header from "../../composite/header/Header";
 
 export default function Error({ page: { error } }) {
   const [toHome, setToHome] = useState(false);
@@ -65,6 +64,11 @@ export default function Error({ page: { error } }) {
 
   return (
     <main>
+      <Header
+        header={{
+          name: "",
+        }}
+      />
       <div className="page" data-testid="Error">
         <div className="content col-md-8">
           {errorContent}
@@ -88,8 +92,5 @@ export default function Error({ page: { error } }) {
 Error.propTypes = {
   page: PropTypes.shape({
     error: PropTypes.object.isRequired,
-    header: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
   }).isRequired,
 };

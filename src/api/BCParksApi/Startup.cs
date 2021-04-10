@@ -46,6 +46,7 @@ namespace BCParksApi
                 options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
             });
 
+            services.AddCors();
             services.AddControllers().AddNewtonsoftJson();
 
             ConfigureOpenApi(services);
@@ -129,7 +130,7 @@ namespace BCParksApi
             });
 
             app.UseRouting();
-
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
             app.UseAuthentication();
             app.UseAuthorization();
 

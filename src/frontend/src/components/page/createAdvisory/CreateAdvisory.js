@@ -10,6 +10,7 @@ import { TextField, ButtonGroup } from "@material-ui/core";
 import Header from "../../composite/header/Header";
 import ImageUploader from "react-images-upload";
 import Select from "react-select";
+import { useKeycloak } from "@react-keycloak/web";
 
 export default function CreateAdvisory({ page: { setError } }) {
   const [protectedAreaNames, setProtectedAreaNames] = useState([]);
@@ -28,10 +29,7 @@ export default function CreateAdvisory({ page: { setError } }) {
   const [pictures, setPictures] = useState([]);
   const [links, setLinks] = useState();
   const [notes, setNotes] = useState();
-
-  const header = {
-    name: "",
-  };
+  const { keycloak } = useKeycloak();
 
   const headlineInput = {
     label: "",
@@ -58,39 +56,47 @@ export default function CreateAdvisory({ page: { setError } }) {
   const currentTime = new Date().toISOString().substring(0, 16);
 
   useEffect(() => {
-    Promise.all([
-      cmsAxios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
-      cmsAxios.get(`/event-types?_limit=-1&_sort=EventType`),
-      cmsAxios.get(`/urgencies?_limit=-1&_sort=id`),
-    ])
-      .then((res) => {
-        const protectedAreaData = res[0].data;
-        const protectedAreaNames = protectedAreaData.map((p) => ({
-          label: p.ProtectedAreaName,
-          value: p.ORCS,
-        }));
-        setProtectedAreaNames([...protectedAreaNames]);
-        const eventTypeData = res[1].data;
-        const eventTypes = eventTypeData.map((et) => ({
-          label: et.EventType,
-          value: et.id,
-        }));
-        setEventTypes([...eventTypes]);
-        const urgencyData = res[2].data;
-        const urgencies = urgencyData.map((u) => ({
-          label: u.Urgency,
-          value: u.id,
-        }));
-        setUrgencies([...urgencies]);
-        setUrgency(1);
-      })
-      .catch(() => {
-        setToError(true);
-        setError({
-          status: 500,
-          message: "Error occurred",
-        });
+    if (!keycloak.authenticated) {
+      setToError(true);
+      setError({
+        status: 401,
+        message: "Login required",
       });
+    } else {
+      Promise.all([
+        cmsAxios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
+        cmsAxios.get(`/event-types?_limit=-1&_sort=EventType`),
+        cmsAxios.get(`/urgencies?_limit=-1&_sort=id`),
+      ])
+        .then((res) => {
+          const protectedAreaData = res[0].data;
+          const protectedAreaNames = protectedAreaData.map((p) => ({
+            label: p.ProtectedAreaName,
+            value: p.ORCS,
+          }));
+          setProtectedAreaNames([...protectedAreaNames]);
+          const eventTypeData = res[1].data;
+          const eventTypes = eventTypeData.map((et) => ({
+            label: et.EventType,
+            value: et.id,
+          }));
+          setEventTypes([...eventTypes]);
+          const urgencyData = res[2].data;
+          const urgencies = urgencyData.map((u) => ({
+            label: u.Urgency,
+            value: u.id,
+          }));
+          setUrgencies([...urgencies]);
+          setUrgency(1);
+        })
+        .catch(() => {
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Error occurred",
+          });
+        });
+    }
   }, [
     setProtectedAreaNames,
     setUrgencies,
@@ -98,6 +104,8 @@ export default function CreateAdvisory({ page: { setError } }) {
     setUrgency,
     setToError,
     setError,
+    setToHome,
+    keycloak,
   ]);
 
   const onDrop = (picture) => {
@@ -112,7 +120,6 @@ export default function CreateAdvisory({ page: { setError } }) {
         protectedAreaQuery += "&";
       }
     });
-    console.log(protectedAreaQuery);
     Promise.all([
       cmsAxios.get(`/event-types/${eventType}`),
       cmsAxios.get(`/urgencies/${urgency}`),
@@ -134,7 +141,9 @@ export default function CreateAdvisory({ page: { setError } }) {
           protected_areas: res[3].data,
         };
         apiAxios
-          .post(`/public-advisories`, newAdvisory)
+          .post(`api/add/public-advisories`, newAdvisory, {
+            headers: { Authorization: `Bearer ${keycloak.idToken}` },
+          })
           .then(() => {
             console.log("New advisory added successfully");
             setToHome(true);
@@ -162,7 +171,11 @@ export default function CreateAdvisory({ page: { setError } }) {
 
   return (
     <main>
-      <Header header={header} />
+      <Header
+        header={{
+          name: "",
+        }}
+      />
       <br />
       <div className="CreateAdvisory" data-testid="CreateAdvisory">
         <div className="container">
