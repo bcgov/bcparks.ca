@@ -130,7 +130,7 @@ namespace BCParksApi
             });
 
             app.UseRouting();
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins(_configuration["StaffAppUrl"]));
             app.UseAuthentication();
             app.UseAuthorization();
 
