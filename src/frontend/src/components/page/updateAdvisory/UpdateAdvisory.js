@@ -13,6 +13,8 @@ import Select from "react-select";
 import Loading from "../../composite/loading/Loading";
 
 export default function UpdateAdvisory({ page: { header, setError } }) {
+  const currentTime = new Date().toISOString().substring(0, 16);
+
   const [isLoading, setIsLoading] = useState(true);
   const [toError, setToError] = useState(false);
   const [toAdvisoryDashboard, setToAdvisoryDashboard] = useState(false);
@@ -27,9 +29,9 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
   const [locations, setLocations] = useState([]);
   const [urgency, setUrgency] = useState(1);
   const [advisoryStatus, setAdvisoryStatus] = useState(0);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [expiryDate, setExpiryDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(currentTime);
+  const [endDate, setEndDate] = useState(currentTime);
+  const [expiryDate, setExpiryDate] = useState(currentTime);
   const [pictures, setPictures] = useState([]);
   const [links, setLinks] = useState();
   const [notes, setNotes] = useState();
@@ -106,9 +108,9 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
       if (publicAdvisoryData.advisory_status)
         setAdvisoryStatus(publicAdvisoryData.advisory_status.id);
 
-      if (publicAdvisoryData.AdvisoryDate)
+      if (publicAdvisoryData.AdvisoryDate) {
         setStartDate(publicAdvisoryData.AdvisoryDate.substring(0, 16));
-
+      }
       if (publicAdvisoryData.EndDate)
         setEndDate(publicAdvisoryData.EndDate.substring(0, 16));
 
