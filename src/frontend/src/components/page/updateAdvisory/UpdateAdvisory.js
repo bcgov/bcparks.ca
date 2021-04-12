@@ -25,7 +25,7 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
   const [eventType, setEventType] = useState(0);
   const [description, setDescription] = useState();
   const [locations, setLocations] = useState([]);
-  const [urgency, setUrgency] = useState(0);
+  const [urgency, setUrgency] = useState(1);
   const [advisoryStatus, setAdvisoryStatus] = useState(0);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -52,12 +52,6 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
     label: "",
     id: "notes",
     isReadOnly: false,
-    isRequired: false,
-  };
-  const advisoryStatusInput = {
-    label: "",
-    id: "notes",
-    isReadOnly: true,
     isRequired: false,
   };
 
@@ -102,8 +96,6 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
       setAdvisoryStatuses([...advisoryStatuses]);
 
       const publicAdvisoryData = res[4].data;
-      console.log(publicAdvisoryData);
-
       setHeadline(publicAdvisoryData.Title);
       setDescription(publicAdvisoryData.Description);
       if (publicAdvisoryData.event_type)
@@ -158,12 +150,16 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
 
   const saveAdvisory = () => {
     let protectedAreaQuery = "";
-    locations.forEach((loc, index, array) => {
-      protectedAreaQuery += `ORCS_in=${loc}`;
-      if (!Object.is(array.length - 1, index)) {
-        protectedAreaQuery += "&";
-      }
-    });
+    if (locations.length > 0) {
+      locations.forEach((loc, index, array) => {
+        protectedAreaQuery += `ORCS_in=${loc}`;
+        if (!Object.is(array.length - 1, index)) {
+          protectedAreaQuery += "&";
+        }
+      });
+    } else {
+      protectedAreaQuery = "ORCS=-1";
+    }
     console.log(protectedAreaQuery);
     Promise.all([
       axios.get(`/event-types/${eventType}`),
@@ -172,6 +168,7 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
       axios.get(`/protectedAreas?${protectedAreaQuery}`),
     ])
       .then((res) => {
+        console.log(res);
         const publicAdvisory = {
           AdvisoryDate: startDate,
           EffectiveDate: startDate,
@@ -216,14 +213,14 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
       <Header header={header} />
       <br />
       <div className="container-fluid">
-        <h3 className="text-center">Update Advisory</h3>
+        <h3 className="text-center">Update Public Advisory</h3>
       </div>
       {isLoading && <Loading />}
       {!isLoading && (
         <div className="UpdateAdvisory" data-testid="UpdateAdvisory">
           <div className="container">
-            <hr />
             <form>
+              <hr />
               <div className="container-fluid ad-form">
                 <div className="row ad-row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
@@ -267,6 +264,7 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
                       className="bcgov-text-input"
                       id="description"
                       rows="2"
+                      value={description}
                       onChange={(e) => {
                         setDescription(e.target.value);
                       }}

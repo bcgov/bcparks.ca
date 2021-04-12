@@ -7,7 +7,7 @@ function Loading() {
     <>
       <br className="px-30" />
       <div className="d-flex justify-content-center">
-        <Spinner animation="border" variant="light" role="status">
+        <Spinner animation="border" variant="secondary" role="status">
           <span className="sr-only">Loading...</span>
         </Spinner>
       </div>

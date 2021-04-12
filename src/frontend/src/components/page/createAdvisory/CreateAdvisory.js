@@ -103,12 +103,16 @@ export default function CreateAdvisory({ page: { header, setError } }) {
 
   const saveAdvisory = () => {
     let protectedAreaQuery = "";
-    locations.forEach((loc, index, array) => {
-      protectedAreaQuery += `ORCS_in=${loc}`;
-      if (!Object.is(array.length - 1, index)) {
-        protectedAreaQuery += "&";
-      }
-    });
+    if (locations.length > 0) {
+      locations.forEach((loc, index, array) => {
+        protectedAreaQuery += `ORCS_in=${loc}`;
+        if (!Object.is(array.length - 1, index)) {
+          protectedAreaQuery += "&";
+        }
+      });
+    } else {
+      protectedAreaQuery = "ORCS=-1";
+    }
     console.log(protectedAreaQuery);
     Promise.all([
       axios.get(`/event-types/${eventType}`),
@@ -165,8 +169,12 @@ export default function CreateAdvisory({ page: { header, setError } }) {
     <main>
       <Header header={header} />
       <br />
+      <div className="container-fluid">
+        <h3 className="text-center">Create Public Advisory</h3>
+      </div>
       <div className="CreateAdvisory" data-testid="CreateAdvisory">
         <div className="container">
+          <hr />
           <form>
             <div className="container-fluid ad-form">
               <div className="row ad-row">
