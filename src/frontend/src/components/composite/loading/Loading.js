@@ -1,15 +1,12 @@
 import React from "react";
-import Spinner from "react-bootstrap/Spinner";
+import { Loader } from "shared-components/build/components/loader/Loader";
 import "./Loading.css";
 
 function Loading() {
   return (
     <>
-      <br className="px-30" />
-      <div className="d-flex justify-content-center">
-        <Spinner animation="border" variant="secondary" role="status">
-          <span className="sr-only">Loading...</span>
-        </Spinner>
+      <div className="justify-content-center page-loader">
+        <Loader page />;
       </div>
     </>
   );
