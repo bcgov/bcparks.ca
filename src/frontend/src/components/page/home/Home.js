@@ -1,41 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Header } from "shared-components/build/components/header/Header";
+import { useKeycloak } from "@react-keycloak/web";
 import { Button } from "shared-components/build/components/button/Button";
-import { Input } from "shared-components/build/components/input/Input";
+import Header from "../../composite/header/Header";
 import styles from "./Home.css";
 
-export default function Home({ page: { header, setError } }) {
+export default function Home({ page: { setError } }) {
+  const { keycloak } = useKeycloak();
   const [toError, setToError] = useState(false);
-  const [toAdvisoryDashboard, setToAdvisoryDashboard] = useState(false);
-
-  const usernameInput = {
-    label: "",
-    id: "username",
-    isReadOnly: false,
-    isRequired: false,
-    placeholder: "ID",
-  };
-  const passwordInput = {
-    label: "",
-    id: "password",
-    isReadOnly: false,
-    isRequired: false,
-    placeholder: "Password",
-  };
 
   if (toError) {
     return <Redirect to="/bcparks/error" />;
   }
 
-  if (toAdvisoryDashboard) {
-    return <Redirect to="/bcparks/advisory-dash" />;
-  }
-
   return (
     <main>
-      <Header header={header} />
+      <Header
+        header={{
+          name: "",
+        }}
+      />
       <div className={styles.Home} data-testid="Home">
         <div className="container hm-container">
           <h1>Welcome to BC Parks Public Advisories</h1>
@@ -46,28 +31,12 @@ export default function Home({ page: { header, setError } }) {
               <form className="form-home">
                 <div className="container-fluid ad-form">
                   <div className="row hm-row ">
-                    <Input
-                      input={{
-                        ...usernameInput,
-                        styling: "bcgov-editable-white",
-                      }}
-                      onChange={(event) => {}}
-                    />
-                  </div>
-                  <div className="row hm-row ">
-                    <Input
-                      input={{
-                        ...passwordInput,
-                        styling: "bcgov-editable-white",
-                      }}
-                      onChange={(event) => {}}
-                    />
-                  </div>
-                  <div className="row hm-row ">
                     <Button
-                      onClick={() => {
-                        setToAdvisoryDashboard(true);
-                      }}
+                      onClick={() =>
+                        keycloak.login({
+                          redirectUri: `http://localhost:3000/bcparks/advisory-dash`,
+                        })
+                      }
                       label="Login"
                       styling="bcgov-normal-yellow btn"
                     />
@@ -95,8 +64,5 @@ export default function Home({ page: { header, setError } }) {
 Home.propTypes = {
   page: PropTypes.shape({
     setError: PropTypes.func.isRequired,
-    header: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
   }).isRequired,
 };

@@ -1,14 +1,12 @@
 import React, { useState, useEffect, forwardRef } from "react";
-import axios from "axios";
+import { cmsAxios } from "../../../axios_config";
 import { Redirect, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./AdvisoryDashboard.css";
-import { Header } from "shared-components/build/components/header/Header";
 import { Button } from "shared-components/build/components/button/Button";
 import MaterialTable from "material-table";
 import Select from "react-select";
 import Moment from "react-moment";
-import Loading from "../../composite/loading/Loading";
 
 import AddBox from "@material-ui/icons/AddBox";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
@@ -25,6 +23,9 @@ import Remove from "@material-ui/icons/Remove";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
+import { useKeycloak } from "@react-keycloak/web";
+import Header from "../../composite/header/Header";
+import Loading from "../../composite/loading/Loading";
 
 const columns = [
   {
@@ -121,51 +122,74 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-export default function AdvisoryDashboard({ page: { header, setError } }) {
+export default function AdvisoryDashboard({ page: { setError } }) {
   const [isLoading, setIsLoading] = useState(true);
   const [toError, setToError] = useState(false);
+  const [toHome, setToHome] = useState(false);
   const [toCreate, setToCreate] = useState(false);
   const [parkNames, setParkNames] = useState([]);
   const [selectedParkId, setSelectedParkId] = useState(0);
+  const { keycloak } = useKeycloak();
 
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`)
-      .then((res) => {
-        const parkNames = res.data.map((p) => ({
-          label: p.ProtectedAreaName,
-          value: p.id,
-        }));
-        setParkNames(["Select a Park", ...parkNames]);
-      })
-      .catch(() => {
-        setToError(true);
-        setError({
-          status: 500,
-          message: "Error occurred",
-        });
+    if (!keycloak.authenticated) {
+      setToError(true);
+      setError({
+        status: 401,
+        message: "Login required",
       });
-  }, [setParkNames, setToError, setError]);
+    } else {
+      cmsAxios
+        .get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`)
+        .then((res) => {
+          console.log(res);
+          const parkNames = res.data.map((p) => ({
+            label: p.ProtectedAreaName,
+            value: p.id,
+          }));
+          setParkNames(["Select a Park", ...parkNames]);
+        })
+        .catch((e) => {
+          console.log(e);
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Error occurred",
+          });
+        });
+    }
+  }, [setParkNames, setToError, setError, setToHome, keycloak]);
 
   useEffect(() => {
-    let url = "public-advisories";
-    if (selectedParkId) url = `${url}?protected_areas.id=${selectedParkId}`;
-    axios
-      .get(url)
-      .then((resp) => {
-        setRows(resp.data);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setToError(true);
-        setError({
-          status: 500,
-          message: "Error occurred",
-        });
+    if (!keycloak.authenticated) {
+      setToError(true);
+      setError({
+        status: 401,
+        message: "Login required",
       });
-  }, [setToError, setError, selectedParkId]);
+    } else {
+      let url = `public-advisories?protected_areas.id=${selectedParkId}`;
+      cmsAxios
+        .get(url)
+        .then((resp) => {
+          setRows(resp.data);
+          setIsLoading(false);
+        })
+        .catch(() => {
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Error occurred",
+          });
+        });
+    }
+  }, [setToError, setError, selectedParkId, keycloak]);
+
+  if (toHome) {
+    return <Redirect to="/bcparks" />;
+  }
 
   if (toError) {
     return <Redirect to="/bcparks/error" />;
@@ -177,7 +201,11 @@ export default function AdvisoryDashboard({ page: { header, setError } }) {
 
   return (
     <main>
-      <Header header={header} />
+      <Header
+        header={{
+          name: "",
+        }}
+      />
       <br />
       <div className={styles.AdvisoryDashboard} data-testid="AdvisoryDashboard">
         <div className="container-fluid">
@@ -227,8 +255,5 @@ export default function AdvisoryDashboard({ page: { header, setError } }) {
 AdvisoryDashboard.propTypes = {
   page: PropTypes.shape({
     setError: PropTypes.func.isRequired,
-    header: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
   }).isRequired,
 };
