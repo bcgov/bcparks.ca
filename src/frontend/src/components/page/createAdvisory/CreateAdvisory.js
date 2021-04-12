@@ -17,6 +17,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
   const [urgencies, setUrgencies] = useState([]);
   const [toError, setToError] = useState(false);
   const [toHome, setToHome] = useState(false);
+  const [toAdvisoryDashboard, setToAdvisoryDashboard] = useState(false);
   const [headline, setHeadline] = useState();
   const [eventType, setEventType] = useState();
   const [description, setDescription] = useState();
@@ -96,8 +97,6 @@ export default function CreateAdvisory({ page: { header, setError } }) {
     setError,
   ]);
 
-  
-
   const onDrop = (picture) => {
     setPictures([...pictures, picture]);
   };
@@ -152,6 +151,10 @@ export default function CreateAdvisory({ page: { header, setError } }) {
 
   if (toHome) {
     return <Redirect to="/bcparks" />;
+  }
+
+  if (toAdvisoryDashboard) {
+    return <Redirect to="/bcparks/advisory-dash" />;
   }
 
   if (toError) {
@@ -405,7 +408,7 @@ export default function CreateAdvisory({ page: { header, setError } }) {
                     styling="bcgov-normal-white btn"
                     onClick={() => {
                       sessionStorage.clear();
-                      setToHome(true);
+                      setToAdvisoryDashboard(true);
                     }}
                   />
                 </div>

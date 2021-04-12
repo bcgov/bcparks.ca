@@ -8,6 +8,7 @@ import { Button } from "shared-components/build/components/button/Button";
 import MaterialTable from "material-table";
 import Select from "react-select";
 import Moment from "react-moment";
+import Loading from "../../composite/loading/Loading";
 
 import AddBox from "@material-ui/icons/AddBox";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
@@ -28,18 +29,21 @@ import ViewColumn from "@material-ui/icons/ViewColumn";
 const columns = [
   {
     field: "urgency.Urgency",
-    filtering: false,
-    cellStyle: {
-      width: 5,
-      maxWidth: 5,
-    },
-    render: (rowData) => (
-      <span className={rowData.urgency.Urgency.toLowerCase()}>&nbsp;</span>
-    ),
-  },
-  {
-    field: "urgency.Urgency",
     title: "Urgency",
+    cellStyle: (e, rowData) => {
+      if (rowData.urgency !== null) {
+        switch (rowData.urgency.Urgency.toLowerCase()) {
+          case "low":
+            return { paddingRight: "10px", borderLeft: "8px solid #06f542" };
+          case "medium":
+            return { paddingLeft: "10px", borderLeft: "8px solid #f5d20e" };
+          case "high":
+            return { borderLeft: "8px solid #f30505" };
+          default:
+            return {};
+        }
+      }
+    },
   },
   {
     field: "advisory_status.AdvisoryStatus",
@@ -72,7 +76,10 @@ const columns = [
   {
     title: "",
     field: "id",
-    editable: false,
+    filtering: false,
+    cellStyle: (rowData) => {
+      "backgroundColor-color:red";
+    },
     render: (rowData) => <Link to={`update-advisory/${rowData.id}`}>View</Link>,
   },
 ];
@@ -84,7 +91,7 @@ const options = {
     padding: "2px",
     fontWeight: "bolder",
   },
-  cellStyle: {},
+  cellStyle: { padding: "4px 4px 4px 4px" },
   rowStyle: {},
   filtering: true,
   search: false,
@@ -115,8 +122,8 @@ const tableIcons = {
 };
 
 export default function AdvisoryDashboard({ page: { header, setError } }) {
+  const [isLoading, setIsLoading] = useState(true);
   const [toError, setToError] = useState(false);
-  const [toHome, setToHome] = useState(false);
   const [toCreate, setToCreate] = useState(false);
   const [parkNames, setParkNames] = useState([]);
   const [selectedParkId, setSelectedParkId] = useState(0);
@@ -143,10 +150,14 @@ export default function AdvisoryDashboard({ page: { header, setError } }) {
   }, [setParkNames, setToError, setError]);
 
   useEffect(() => {
-    let url = `public-advisories?protected_areas.id=${selectedParkId}`;
+    let url = "public-advisories";
+    if (selectedParkId) url = `${url}?protected_areas.id=${selectedParkId}`;
     axios
       .get(url)
-      .then((resp) => setRows(resp.data))
+      .then((resp) => {
+        setRows(resp.data);
+        setIsLoading(false);
+      })
       .catch(() => {
         setToError(true);
         setError({
@@ -155,10 +166,6 @@ export default function AdvisoryDashboard({ page: { header, setError } }) {
         });
       });
   }, [setToError, setError, selectedParkId]);
-
-  if (toHome) {
-    return <Redirect to="/bcparks" />;
-  }
 
   if (toError) {
     return <Redirect to="/bcparks/error" />;
@@ -172,40 +179,46 @@ export default function AdvisoryDashboard({ page: { header, setError } }) {
     <main>
       <Header header={header} />
       <br />
-
       <div className={styles.AdvisoryDashboard} data-testid="AdvisoryDashboard">
-        <div className="container">
-          <h2>Public Advisories</h2>
+        <div className="container-fluid">
+          <div className="row ad-row">
+            <div className="col-lg-6 col-md-4 col-sm-12 ad-label">
+              <h2 className="float-left">Public Advisories</h2>
+            </div>
+            <div className="col-lg-6 col-md-4 col-sm-12 ad-label">
+              <Button
+                label="Create a new Advisory"
+                styling="bcgov-normal-yellow btn"
+                onClick={() => {
+                  sessionStorage.clear();
+                  setToCreate(true);
+                }}
+              />
+            </div>
+          </div>
           <Select
             options={parkNames}
             onChange={(e) => setSelectedParkId(e.value)}
-            placeholder="Select Park..."
+            placeholder="Select a Park..."
+            className="bg-blue f-select"
           />
         </div>
         <br />
-        <div className="container">
-          <MaterialTable
-            options={options}
-            icons={tableIcons}
-            columns={columns}
-            data={rows}
-            title=""
-            components={{
-              Toolbar: (props) => <div></div>,
-            }}
-          />
-          <br />
-          <div className="txt-center">
-            <Button
-              label="Create Advisory"
-              styling="bcgov-normal-yellow btn"
-              onClick={() => {
-                sessionStorage.clear();
-                setToCreate(true);
+        {isLoading && <Loading />}
+        {!isLoading && (
+          <div className="container-fluid">
+            <MaterialTable
+              options={options}
+              icons={tableIcons}
+              columns={columns}
+              data={rows}
+              title=""
+              components={{
+                Toolbar: (props) => <div></div>,
               }}
             />
           </div>
-        </div>
+        )}
       </div>
     </main>
   );
