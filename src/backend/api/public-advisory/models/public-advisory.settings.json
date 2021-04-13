@@ -18,7 +18,7 @@
       "type": "string"
     },
     "Description": {
-      "type": "string"
+      "type": "text"
     },
     "DCTicketNumber": {
       "type": "integer"
@@ -94,6 +94,15 @@
     },
     "links": {
       "collection": "link"
+    },
+    "regions": {
+      "collection": "region"
+    },
+    "section": {
+      "model": "section"
+    },
+    "management_area": {
+      "model": "management-area"
     }
   }
 }

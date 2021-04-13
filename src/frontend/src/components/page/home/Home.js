@@ -1,86 +1,61 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Header } from "shared-components/build/components/header/Header";
-import { Dropdown } from "shared-components/build/components/dropdown/Dropdown";
+import { useKeycloak } from "@react-keycloak/web";
 import { Button } from "shared-components/build/components/button/Button";
+import Header from "../../composite/header/Header";
 import styles from "./Home.css";
-import QuickLinks from "../../composite/quickLinks/QuickLinks";
 
-export default function Home({ page: { header, setError } }) {
-  const [parkNames, setParkNames] = useState([]);
+export default function Home({ page: { setError } }) {
+  const { keycloak } = useKeycloak();
   const [toError, setToError] = useState(false);
-  const [toAdvisoryDashboard, setToAdvisoryDashboard] = useState(false);
-
-  useEffect(() => {
-    axios
-      .get(`/protectedAreas`)
-      .then((res) => {
-        const parkData = res.data;
-        const parkNames = parkData.map((p) => {
-          return p.ProtectedAreaName;
-        });
-        setParkNames(["Select a Park", ...parkNames]);
-      })
-      .catch(() => {
-        setToError(true);
-        setError({
-          status: 500,
-          message: "Error occurred",
-        });
-      });
-  }, [setParkNames, setToError, setError]);
 
   if (toError) {
     return <Redirect to="/bcparks/error" />;
   }
 
-  if (toAdvisoryDashboard) {
-    return <Redirect to="/bcparks/advisory-dash" />;
-  }
-
   return (
     <main>
-      <Header header={header} />
+      <Header
+        header={{
+          name: "",
+        }}
+      />
       <div className={styles.Home} data-testid="Home">
-        <section className="explore-bc">
-          <div className="gradient">
-            <div className="container">
-              <div className="row justify-content-lg-center">
-                <div className="col-sm-12 col-lg-8">
-                  <div className="mx-3 mx-lg-0">
-                    <h1>Explore BC Parks</h1>
-
-                    <p>
-                      British Columbia’s incredible system of provincial parks
-                      offers experiences as unforgettable and diverse as the
-                      province’s natural landscape.
-                    </p>
-
-                    <p>
-                      You can find your next adventure here. If you know the
-                      name of the park you want to visit, just type in the name
-                      and follow the link.
-                    </p>
-
-                    <form className="form-home">
-                      <Dropdown items={parkNames} onSelect={() => {}} />
-                      <Button
-                        onClick={() => {
-                          setToAdvisoryDashboard(true);
-                        }}
-                        label="Submit"
-                        styling="bcgov-normal-white btn"
-                      />
-                    </form>
+        <div className="container hm-container">
+          <h1>Welcome to BC Parks Public Advisories</h1>
+          <h3>Please log in here to access Public Advisory:</h3>
+          <div className="row">
+            <div className="col-lg-4"></div>
+            <div className="col-lg-4">
+              <form className="form-home">
+                <div className="container-fluid ad-form">
+                  <div className="row hm-row ">
+                    <Button
+                      onClick={() =>
+                        keycloak.login({
+                          redirectUri: `http://localhost:3000/bcparks/advisory-dash`,
+                        })
+                      }
+                      label="Login"
+                      styling="bcgov-normal-yellow btn"
+                    />
                   </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
-        </section>
-        <QuickLinks></QuickLinks>
+          <div>
+            <p>Can't login? call XXX-XXX-XXXX</p>
+            <p>
+              If you are a <b>contract field staff</b>, please call your
+              <br /> regional staff representative to report any advisory.
+              <br />
+              Business hours of the web team: <br />
+              Monday-Friday 8:30 am to 4:30 pm
+            </p>
+          </div>
+        </div>
       </div>
     </main>
   );
@@ -89,8 +64,5 @@ export default function Home({ page: { header, setError } }) {
 Home.propTypes = {
   page: PropTypes.shape({
     setError: PropTypes.func.isRequired,
-    header: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
   }).isRequired,
 };

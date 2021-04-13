@@ -818,6 +818,117 @@
               }
             }
           },
+          "regions": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "RegionNumber"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "RegionNumber": {
+                  "type": "integer"
+                },
+                "RegionName": {
+                  "type": "string"
+                },
+                "Sections": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "ManagementArea": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "section": {
+            "required": [
+              "id",
+              "SectionNumber"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "SectionNumber": {
+                "type": "integer"
+              },
+              "SectionName": {
+                "type": "string"
+              },
+              "ManagementAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "Region": {
+                "type": "string"
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "management_area": {
+            "required": [
+              "id",
+              "ManagementAreaNumber"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "ManagementAreaNumber": {
+                "type": "integer"
+              },
+              "ManagementAreaName": {
+                "type": "string"
+              },
+              "Section": {
+                "type": "string"
+              },
+              "Region": {
+                "type": "string"
+              },
+              "ProtectedArea": {
+                "type": "string"
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -923,6 +1034,18 @@
             "items": {
               "type": "string"
             }
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "section": {
+            "type": "string"
+          },
+          "management_area": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
