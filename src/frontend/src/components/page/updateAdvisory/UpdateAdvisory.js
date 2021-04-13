@@ -212,7 +212,11 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
 
   return (
     <main>
-      <Header header={header} />
+      <Header
+        header={{
+          name: "",
+        }}
+      />
       <br />
       <div className="container-fluid">
         <h3 className="text-center">Update Public Advisory</h3>

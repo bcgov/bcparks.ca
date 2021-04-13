@@ -170,7 +170,8 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         message: "Login required",
       });
     } else {
-      let url = `public-advisories?protected_areas.id=${selectedParkId}`;
+      let url = "public-advisories";
+      if (selectedParkId) url = `${url}?protected_areas.id=${selectedParkId}`;
       cmsAxios
         .get(url)
         .then((resp) => {
