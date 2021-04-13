@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { cmsAxios, apiAxios } from "../../../axios_config";
 import { Redirect, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./UpdateAdvisory.css";
-import { Header } from "shared-components/build/components/header/Header";
 import { Button } from "shared-components/build/components/button/Button";
 import { Input } from "shared-components/build/components/input/Input";
 import { Dropdown } from "shared-components/build/components/dropdown/Dropdown";
 import { TextField, ButtonGroup } from "@material-ui/core";
+import Header from "../../composite/header/Header";
 import ImageUploader from "react-images-upload";
 import Select from "react-select";
+import { useKeycloak } from "@react-keycloak/web";
 import Loading from "../../composite/loading/Loading";
 
-export default function UpdateAdvisory({ page: { header, setError } }) {
+export default function UpdateAdvisory({ page: { setError } }) {
   const currentTime = new Date().toISOString().substring(0, 16);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -35,6 +36,7 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
   const [pictures, setPictures] = useState([]);
   const [links, setLinks] = useState();
   const [notes, setNotes] = useState();
+  const { keycloak } = useKeycloak();
 
   const { id } = useParams();
 
@@ -61,72 +63,83 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
   const intervalUnit = ["Hours", "Days", "Weeks", "Months"];
 
   useEffect(() => {
-    Promise.all([
-      axios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
-      axios.get(`/event-types?_limit=-1&_sort=EventType`),
-      axios.get(`/urgencies?_limit=-1&_sort=id`),
-      axios.get(`/advisory-statuses?_limit=-1&_sort=AdvisoryStatus`),
-      axios.get(`/public-advisories/${id}`),
-    ]).then((res) => {
-      setIsLoading(false);
-      const protectedAreaData = res[0].data;
+    if (!keycloak.authenticated) {
+      setToError(true);
+      setError({
+        status: 401,
+        message: "Login required",
+      });
+    } else {
+      Promise.all([
+        cmsAxios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
+        cmsAxios.get(`/event-types?_limit=-1&_sort=EventType`),
+        cmsAxios.get(`/urgencies?_limit=-1&_sort=id`),
+        cmsAxios.get(`/advisory-statuses?_limit=-1&_sort=AdvisoryStatus`),
+        cmsAxios.get(`/public-advisories/${id}`),
+      ]).then((res) => {
+        setIsLoading(false);
+        const protectedAreaData = res[0].data;
 
-      const protectedAreaNames = protectedAreaData.map((p) => ({
-        label: p.ProtectedAreaName,
-        value: p.ORCS,
-      }));
+        const protectedAreaNames = protectedAreaData.map((p) => ({
+          label: p.ProtectedAreaName,
+          value: p.ORCS,
+        }));
 
-      setProtectedAreaNames([...protectedAreaNames]);
-      const eventTypeData = res[1].data;
-      const eventTypes = eventTypeData.map((et) => ({
-        label: et.EventType,
-        value: et.id,
-      }));
-      setEventTypes([...eventTypes]);
-      const urgencyData = res[2].data;
-      const urgencies = urgencyData.map((u) => ({
-        label: u.Urgency,
-        value: u.id,
-      }));
-      setUrgencies([...urgencies]);
+        setProtectedAreaNames([...protectedAreaNames]);
+        const eventTypeData = res[1].data;
+        const eventTypes = eventTypeData.map((et) => ({
+          label: et.EventType,
+          value: et.id,
+        }));
+        setEventTypes([...eventTypes]);
+        const urgencyData = res[2].data;
+        const urgencies = urgencyData.map((u) => ({
+          label: u.Urgency,
+          value: u.id,
+        }));
+        setUrgencies([...urgencies]);
 
-      const advisoryStatusData = res[3].data;
-      const advisoryStatuses = advisoryStatusData.map((u) => ({
-        label: u.AdvisoryStatus,
-        value: u.id,
-      }));
-      setAdvisoryStatuses([...advisoryStatuses]);
+        const advisoryStatusData = res[3].data;
+        const advisoryStatuses = advisoryStatusData.map((u) => ({
+          label: u.AdvisoryStatus,
+          value: u.id,
+        }));
+        setAdvisoryStatuses([...advisoryStatuses]);
 
-      const publicAdvisoryData = res[4].data;
-      setHeadline(publicAdvisoryData.Title);
-      setDescription(publicAdvisoryData.Description);
-      if (publicAdvisoryData.event_type)
-        setEventType(publicAdvisoryData.event_type.id);
+        const publicAdvisoryData = res[4].data;
+        setHeadline(publicAdvisoryData.Title);
+        setDescription(publicAdvisoryData.Description);
+        if (publicAdvisoryData.event_type)
+          setEventType(publicAdvisoryData.event_type.id);
 
-      if (publicAdvisoryData.urgency) setUrgency(publicAdvisoryData.urgency.id);
+        if (publicAdvisoryData.urgency)
+          setUrgency(publicAdvisoryData.urgency.id);
 
-      if (publicAdvisoryData.advisory_status)
-        setAdvisoryStatus(publicAdvisoryData.advisory_status.id);
+        if (publicAdvisoryData.advisory_status)
+          setAdvisoryStatus(publicAdvisoryData.advisory_status.id);
 
-      if (publicAdvisoryData.AdvisoryDate) {
-        setStartDate(publicAdvisoryData.AdvisoryDate.substring(0, 16));
-      }
-      if (publicAdvisoryData.EndDate)
-        setEndDate(publicAdvisoryData.EndDate.substring(0, 16));
+        if (publicAdvisoryData.AdvisoryDate) {
+          setStartDate(publicAdvisoryData.AdvisoryDate.substring(0, 16));
+        }
+        if (publicAdvisoryData.EndDate)
+          setEndDate(publicAdvisoryData.EndDate.substring(0, 16));
 
-      if (publicAdvisoryData.ExpiryDate)
-        setExpiryDate(publicAdvisoryData.ExpiryDate.substring(0, 16));
+        if (publicAdvisoryData.ExpiryDate)
+          setExpiryDate(publicAdvisoryData.ExpiryDate.substring(0, 16));
 
-      const locations = publicAdvisoryData.protected_areas.map((p) => p.ORCS);
-      setLocations([...locations]);
+        const locations = publicAdvisoryData.protected_areas.map((p) => p.ORCS);
+        setLocations([...locations]);
 
-      const selectedLocations = publicAdvisoryData.protected_areas.map((p) => ({
-        label: p.ProtectedAreaName,
-        value: p.ORCS,
-      }));
+        const selectedLocations = publicAdvisoryData.protected_areas.map(
+          (p) => ({
+            label: p.ProtectedAreaName,
+            value: p.ORCS,
+          })
+        );
 
-      setSelectedLocations(selectedLocations);
-    });
+        setSelectedLocations(selectedLocations);
+      });
+    }
   }, [
     id,
     setHeadline,
@@ -144,6 +157,7 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
     setAdvisoryStatus,
     setToError,
     setError,
+    keycloak,
   ]);
 
   const onDrop = (picture) => {
@@ -162,12 +176,11 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
     } else {
       protectedAreaQuery = "ORCS=-1";
     }
-    console.log(protectedAreaQuery);
     Promise.all([
-      axios.get(`/event-types/${eventType}`),
-      axios.get(`/urgencies/${urgency}`),
-      axios.get(`/advisory-statuses/${advisoryStatus}`),
-      axios.get(`/protectedAreas?${protectedAreaQuery}`),
+      cmsAxios.get(`/event-types/${eventType}`),
+      cmsAxios.get(`/urgencies/${urgency}`),
+      cmsAxios.get(`/advisory-statuses/${advisoryStatus}`),
+      cmsAxios.get(`/protectedAreas?${protectedAreaQuery}`),
     ])
       .then((res) => {
         console.log(res);
@@ -184,7 +197,7 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
           advisory_status: res[2].data,
           protected_areas: res[3].data,
         };
-        axios
+        apiAxios
           .put(`/public-advisories/${id}`, publicAdvisory)
           .then(() => {
             setToAdvisoryDashboard(true);
@@ -512,8 +525,5 @@ export default function UpdateAdvisory({ page: { header, setError } }) {
 UpdateAdvisory.propTypes = {
   page: PropTypes.shape({
     setError: PropTypes.func.isRequired,
-    header: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
   }).isRequired,
 };
