@@ -7,6 +7,7 @@ import { Button } from "shared-components/build/components/button/Button";
 import MaterialTable from "material-table";
 import Select from "react-select";
 import Moment from "react-moment";
+import { Loader } from "shared-components/build/components/loader/Loader";
 
 import AddBox from "@material-ui/icons/AddBox";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
@@ -25,7 +26,6 @@ import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import { useKeycloak } from "@react-keycloak/web";
 import Header from "../../composite/header/Header";
-import Loading from "../../composite/loading/Loading";
 
 const columns = [
   {
@@ -233,7 +233,11 @@ export default function AdvisoryDashboard({ page: { setError } }) {
           />
         </div>
         <br />
-        {isLoading && <Loading />}
+        {isLoading && (
+          <div className="page-loader">
+            <Loader page />
+          </div>
+        )}
         {!isLoading && (
           <div className="container-fluid">
             <MaterialTable

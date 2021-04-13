@@ -47,6 +47,11 @@
   height: 20px !important;
 }
 
+.page-loader {
+  padding-top: 2% !important;
+  text-align: center !important;
+}
+
 @media (max-width: 767.98px) {
   .ad-label {
     text-align: left !important;

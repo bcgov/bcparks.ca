@@ -16,3 +16,8 @@
 .MuiTableCell-root {
   padding: 4px !important;
 }
+
+.page-loader {
+  padding-top: 2% !important;
+  text-align: center !important;
+}

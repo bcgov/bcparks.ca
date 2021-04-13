@@ -11,8 +11,7 @@ import Header from "../../composite/header/Header";
 import ImageUploader from "react-images-upload";
 import Select from "react-select";
 import { useKeycloak } from "@react-keycloak/web";
-import Loading from "../../composite/loading/Loading";
-
+import { Loader } from "shared-components/build/components/loader/Loader";
 export default function UpdateAdvisory({ page: { setError } }) {
   const currentTime = new Date().toISOString().substring(0, 16);
 
@@ -234,7 +233,11 @@ export default function UpdateAdvisory({ page: { setError } }) {
       <div className="container-fluid">
         <h3 className="text-center">Update Public Advisory</h3>
       </div>
-      {isLoading && <Loading />}
+      {isLoading && (
+        <div className="page-loader">
+          <Loader page />
+        </div>
+      )}
       {!isLoading && (
         <div className="UpdateAdvisory" data-testid="UpdateAdvisory">
           <div className="container">
