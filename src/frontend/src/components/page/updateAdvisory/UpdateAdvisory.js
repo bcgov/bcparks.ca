@@ -197,7 +197,7 @@ export default function UpdateAdvisory({ page: { setError } }) {
           advisory_status: res[2].data,
           protected_areas: res[3].data,
         };
-        apiAxios
+        cmsAxios
           .put(`/public-advisories/${id}`, publicAdvisory)
           .then(() => {
             setToAdvisoryDashboard(true);
