@@ -114,6 +114,7 @@
 **/.strapi-updater.json
 **/package-lock.json
 **/yarn.lock
+**/server.js
 
 ############################
 # Documentation
