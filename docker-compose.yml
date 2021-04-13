@@ -30,7 +30,10 @@ services:
     build:
       context: ./src/backend
       dockerfile: Dockerfile
+      args:
+        PUBLIC_URL: ${PUBLIC_URL}
     environment:
+      PUBLIC_URL: ${PUBLIC_URL}
       DATABASE_HOST: ${DATABASE_HOST}
       DATABASE_PORT: ${DATABASE_PORT}
       DATABASE_NAME: ${DATABASE_NAME}

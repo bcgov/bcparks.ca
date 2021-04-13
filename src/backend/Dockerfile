@@ -6,6 +6,7 @@ ARG DATABASE_NAME
 ARG DATABASE_USERNAME
 ARG DATABASE_PASSWORD
 ARG DATABASE_SSL
+ARG PUBLIC_URL
 
 ENV DATABASE_HOST=${DATABASE_HOST}
 ENV DATABASE_PORT=${DATABASE_PORT}
@@ -13,6 +14,7 @@ ENV DATABASE_NAME=${DATABASE_NAME}
 ENV DATABASE_USERNAME=${DATABASE_USERNAME}
 ENV DATABASE_PASSWORD=${DATABASE_PASSWORD}
 ENV DATABASE_SSL=${DATABASE_SSL}
+ENV PUBLIC_URL=${PUBLIC_URL}
 
 # set working directory
 # WORKDIR /backend
@@ -22,14 +24,22 @@ ENV PATH ./node_modules/.bin:$PATH
 
 # install app dependencies
 COPY package.json ./
+
+
 RUN npm install --silent
 RUN npm run build
 
 # add app
 COPY . ./
-# for debugging
 USER 0
-RUN yum install -y nmap iputils postgresql telnet
+RUN cat ./config/server_template.js | envsubst > ./config/server.js && \
+    chmod 766 ./config/server.js && \
+    cat ./config/server.js && \
+    mkdir -p /opt/app-root/src/api/token/documentation && \
+    chmod -R 777 /opt/app-root/src/api/token/documentation
+# for debugging
+
+# RUN yum install -y nmap iputils postgresql telnet
 
 # start app
 CMD [ "npm", "start" ]
