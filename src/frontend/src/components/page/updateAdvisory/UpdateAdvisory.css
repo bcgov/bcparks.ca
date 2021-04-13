@@ -1,0 +1,66 @@
+.button-row {
+  text-align: center !important;
+  align-items: center !important;
+}
+
+.ad-row {
+  display: table-row;
+}
+
+.ad-label {
+  text-align: right;
+  font-weight: bold;
+  color: #003366 !important;
+  vertical-align: middle !important;
+}
+
+.ad-btn-group .bcgov-button {
+  margin-right: 5px !important;
+}
+
+.ad-field {
+  padding: 10px;
+}
+
+.ad-flex {
+  display: flex;
+}
+
+.ad-interval-box .fa-chevron-down {
+  top: 15px !important;
+  right: 0px !important;
+}
+
+.row {
+  padding: 5px 0px;
+}
+
+.fileContainer {
+  box-shadow: none !important;
+}
+
+.fileContainer .deleteImage {
+  background: #003366 !important;
+  font-size: 12px !important;
+  line-height: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.page-loader {
+  padding-top: 2% !important;
+  text-align: center !important;
+}
+
+@media (max-width: 767.98px) {
+  .ad-label {
+    text-align: left !important;
+  }
+  .ad-flex,
+  .ad-btn-group {
+    display: block !important;
+  }
+  .ad-btn-group button {
+    width: 100% !important;
+  }
+}

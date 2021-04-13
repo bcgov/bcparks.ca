@@ -1,12 +1,13 @@
 import React, { useState, useEffect, forwardRef } from "react";
 import { cmsAxios } from "../../../axios_config";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./AdvisoryDashboard.css";
 import { Button } from "shared-components/build/components/button/Button";
 import MaterialTable from "material-table";
 import Select from "react-select";
 import Moment from "react-moment";
+import { Loader } from "shared-components/build/components/loader/Loader";
 
 import AddBox from "@material-ui/icons/AddBox";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
@@ -29,18 +30,21 @@ import Header from "../../composite/header/Header";
 const columns = [
   {
     field: "urgency.Urgency",
-    filtering: false,
-    cellStyle: {
-      width: 5,
-      maxWidth: 5,
-    },
-    render: (rowData) => (
-      <span className={rowData.urgency.Urgency.toLowerCase()}>&nbsp;</span>
-    ),
-  },
-  {
-    field: "urgency.Urgency",
     title: "Urgency",
+    cellStyle: (e, rowData) => {
+      if (rowData.urgency !== null) {
+        switch (rowData.urgency.Urgency.toLowerCase()) {
+          case "low":
+            return { paddingRight: "10px", borderLeft: "8px solid #06f542" };
+          case "medium":
+            return { paddingLeft: "10px", borderLeft: "8px solid #f5d20e" };
+          case "high":
+            return { borderLeft: "8px solid #f30505" };
+          default:
+            return {};
+        }
+      }
+    },
   },
   {
     field: "advisory_status.AdvisoryStatus",
@@ -70,7 +74,15 @@ const columns = [
       <Moment format="MMM DD YYYY">{rowData.EndDate}</Moment>
     ),
   },
-  // { field: "access_status.AccessStatus", title: "Access Status" },
+  {
+    title: "",
+    field: "id",
+    filtering: false,
+    cellStyle: (rowData) => {
+      "backgroundColor-color:red";
+    },
+    render: (rowData) => <Link to={`update-advisory/${rowData.id}`}>View</Link>,
+  },
 ];
 
 const options = {
@@ -80,7 +92,7 @@ const options = {
     padding: "2px",
     fontWeight: "bolder",
   },
-  cellStyle: {},
+  cellStyle: { padding: "4px 4px 4px 4px" },
   rowStyle: {},
   filtering: true,
   search: false,
@@ -111,6 +123,7 @@ const tableIcons = {
 };
 
 export default function AdvisoryDashboard({ page: { setError } }) {
+  const [isLoading, setIsLoading] = useState(true);
   const [toError, setToError] = useState(false);
   const [toHome, setToHome] = useState(false);
   const [toCreate, setToCreate] = useState(false);
@@ -157,10 +170,14 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         message: "Login required",
       });
     } else {
-      let url = `public-advisories?protected_areas.id=${selectedParkId}`;
+      let url = "public-advisories";
+      if (selectedParkId) url = `${url}?protected_areas.id=${selectedParkId}`;
       cmsAxios
         .get(url)
-        .then((resp) => setRows(resp.data))
+        .then((resp) => {
+          setRows(resp.data);
+          setIsLoading(false);
+        })
         .catch(() => {
           setToError(true);
           setError({
@@ -191,40 +208,50 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         }}
       />
       <br />
-
       <div className={styles.AdvisoryDashboard} data-testid="AdvisoryDashboard">
-        <div className="container">
-          <h2>Public Advisories</h2>
+        <div className="container-fluid">
+          <div className="row ad-row">
+            <div className="col-lg-6 col-md-4 col-sm-12 ad-label">
+              <h2 className="float-left">Public Advisories</h2>
+            </div>
+            <div className="col-lg-6 col-md-4 col-sm-12 ad-label">
+              <Button
+                label="Create a new Advisory"
+                styling="bcgov-normal-yellow btn"
+                onClick={() => {
+                  sessionStorage.clear();
+                  setToCreate(true);
+                }}
+              />
+            </div>
+          </div>
           <Select
             options={parkNames}
             onChange={(e) => setSelectedParkId(e.value)}
-            placeholder="Select Park..."
+            placeholder="Select a Park..."
+            className="bg-blue f-select"
           />
         </div>
         <br />
-        <div className="container">
-          <MaterialTable
-            options={options}
-            icons={tableIcons}
-            columns={columns}
-            data={rows}
-            title=""
-            components={{
-              Toolbar: (props) => <div></div>,
-            }}
-          />
-          <br />
-          <div className="txt-center">
-            <Button
-              label="Create Advisory"
-              styling="bcgov-normal-yellow btn"
-              onClick={() => {
-                sessionStorage.clear();
-                setToCreate(true);
+        {isLoading && (
+          <div className="page-loader">
+            <Loader page />
+          </div>
+        )}
+        {!isLoading && (
+          <div className="container-fluid">
+            <MaterialTable
+              options={options}
+              icons={tableIcons}
+              columns={columns}
+              data={rows}
+              title=""
+              components={{
+                Toolbar: (props) => <div></div>,
               }}
             />
           </div>
-        </div>
+        )}
       </div>
     </main>
   );

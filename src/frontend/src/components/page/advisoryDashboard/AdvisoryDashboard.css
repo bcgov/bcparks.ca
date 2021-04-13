@@ -4,7 +4,7 @@
 }
 
 .medium {
-  border-left: 5px solid #1e06f5;
+  border-left: 5px solid #06f542;
   text-align: left;
 }
 
@@ -15,4 +15,9 @@
 
 .MuiTableCell-root {
   padding: 4px !important;
+}
+
+.page-loader {
+  padding-top: 2% !important;
+  text-align: center !important;
 }

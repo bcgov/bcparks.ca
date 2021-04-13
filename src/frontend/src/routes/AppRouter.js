@@ -4,6 +4,7 @@ import Home from "../components/page/home/Home";
 import Error from "../components/page/error/Error";
 import AdvisoryDashboard from "../components/page/advisoryDashboard/AdvisoryDashboard";
 import CreateAdvisory from "../components/page/createAdvisory/CreateAdvisory";
+import UpdateAdvisory from "../components/page/updateAdvisory/UpdateAdvisory";
 import { useKeycloak } from "@react-keycloak/web";
 import { Loader } from "shared-components/build/components/loader/Loader";
 
@@ -31,6 +32,9 @@ function AppRouter() {
           </Route>
           <Route path="/bcparks/create-advisory">
             <CreateAdvisory page={{ setError }} />
+          </Route>
+          <Route path="/bcparks/update-advisory/:id">
+            <UpdateAdvisory page={{ setError }} />
           </Route>
           <Route path="/bcparks/error">
             <Error page={{ error }} />
