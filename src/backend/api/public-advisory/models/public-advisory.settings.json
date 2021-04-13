@@ -18,7 +18,7 @@
       "type": "string"
     },
     "Description": {
-      "type": "string"
+      "type": "text"
     },
     "DCTicketNumber": {
       "type": "integer"

@@ -1,0 +1,20 @@
+.navbar > .container-fluid {
+  width: 95% !important;
+  justify-content: inherit !important;
+  padding: 0px !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.img-fluid {
+  padding-top: 15px !important;
+}
+
+@media (max-width: 575.98px) {
+  .navbar > .container-fluid {
+    flex-flow: row nowrap !important;
+    justify-content: flex-start !important;
+  }
+}

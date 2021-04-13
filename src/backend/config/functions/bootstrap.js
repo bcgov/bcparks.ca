@@ -222,6 +222,32 @@ const loadEventType = async () => {
   }
 };
 
+const createApiUser = async () => {
+  const authRole = await findRole("authenticated");
+  const apiUser = await Promise.resolve(
+    strapi.query("user", "users-permissions").create({
+      username: process.env.API_USER_NAME,
+      email: process.env.API_USER_EMAIL,
+      password: process.env.API_USER_PASSWORD,
+      provider: "local",
+      confirmed: true,
+      blocked: false,
+      role: authRole,
+    })
+  );
+  return apiUser;
+};
+
+const createApiToken = async () => {
+  const apiUser = await createApiUser();
+  Promise.resolve(
+    strapi.services["token"].create({
+      Token: process.env.API_TOKEN,
+      User: apiUser,
+    })
+  );
+};
+
 const loadUrgency = async () => {
   const currentData = await strapi.services["urgency"].find();
   if (currentData.length == 0) {
@@ -236,24 +262,80 @@ const loadUrgency = async () => {
 
 const loadPublicAdvisory = async () => {
   const currentData = await strapi.services["public-advisory"].find();
-  if (currentData.length == 0) {
+  if (currentData.length === 0) {
     console.log("Loading Public Advisory Event..");
     var jsonData = fs.readFileSync("./data/public-advisory.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
-    dataSeed.forEach(async (data) => {
-      data.event_type = await strapi
-        .query("event-type")
-        .findOne({ EventType: data.EventType });
+
+    var jsonData = fs.readFileSync("./data/public-advisory-xref.json", "utf8");
+    const dataXref = JSON.parse(jsonData);
+
+    dataSeed.public_advisory.map(async (data) => {
+      const orcsXref = await dataXref.public_advisory_xref.filter(
+        (x) => x.AdvisoryNumber == data.AdvisoryNumber
+      );
+
+      let orcs = [];
+      await Promise.all(
+        orcsXref.map(async (o) => {
+          const orc = await strapi
+            .query("protected-area")
+            .find({ ORCS: o.ORCS });
+          orcs = [...orcs, ...orc];
+        })
+      );
+      data.protected_areas = orcs;
 
       data.access_status = await strapi
         .query("access-status")
         .findOne({ AccessStatus: data.AccessStatus });
 
+      data.advisory_status = await strapi
+        .query("advisory-status")
+        .findOne({ AdvisoryStatus: data.AdvisoryStatus });
+
+      data.event_type = await strapi
+        .query("event-type")
+        .findOne({ EventType: data.EventType });
+
       data.urgency = await strapi
         .query("urgency")
         .findOne({ Urgency: data.Urgency });
 
-      strapi.services["public-advisory"].create(data);
+      data.DCTicketNumber = +data.DCTicketNumber;
+      data.ListingRank = +data.ListingRank;
+      data.Latitude = +data.Latitude;
+      data.Longitude = +data.Longitude;
+      data.MapZoom = +data.MapZoom;
+      data.AdvisoryDate = data.AdvisoryDate
+        ? moment(data.AdvisoryDate, "YYYY-MM-DD").tz("UTC").format()
+        : null;
+      data.EffectiveDate = data.EffectiveDate
+        ? moment(data.EffectiveDate, "YYYY-MM-DD").tz("UTC").format()
+        : null;
+      data.EndDate = data.EndDate
+        ? moment(data.EndDate, "YYYY-MM-DD").tz("UTC").format()
+        : null;
+      data.ExpiryDate = data.ExpiryDate
+        ? moment(data.ExpiryDate, "YYYY-MM-DD").tz("UTC").format()
+        : null;
+      data.RemovalDate = data.RemovalDate
+        ? moment(data.RemovalDate, "YYYY-MM-DD").tz("UTC").format()
+        : null;
+      data.UpdatedDate = data.UpdatedDate
+        ? moment(data.UpdatedDate, "YYYY-MM-DD").tz("UTC").format()
+        : null;
+      data.DisplayAdvisoryDate = data.DisplayAdvisoryDate
+        ? moment(data.DisplayAdvisoryDate, "YYYY-MM-DD").tz("UTC").format()
+        : null;
+      data.CreatedDate = data.CreatedDate
+        ? moment(data.CreatedDate, "YYYY-MM-DD").tz("UTC").format()
+        : null;
+      data.ModifiedDate = data.ModifiedDate
+        ? moment(data.ModifiedDate, "YYYY-MM-DD").tz("UTC").format()
+        : null;
+      console.log(data);
+      await strapi.services["public-advisory"].create(data);
     });
   }
 };
@@ -284,12 +366,32 @@ const isFirstRun = async () => {
 };
 
 const setDefaultPermissions = async () => {
-  const role = await findPublicRole();
-  const permissions = await strapi
+  const authRole = await findRole("authenticated");
+
+  const authPermissions = await strapi
     .query("permission", "users-permissions")
-    .find({ type: "application", role: role.id });
+    .find({ type: "application", role: authRole.id });
+
   await Promise.all(
-    permissions.map((p) =>
+    authPermissions.map((p) =>
+      strapi
+        .query("permission", "users-permissions")
+        .update({ id: p.id }, { enabled: true })
+    )
+  );
+
+  const publicRole = await findRole("public");
+
+  const publicPermissions = await strapi
+    .query("permission", "users-permissions")
+    .find({
+      type: "application",
+      role: publicRole.id,
+      action_in: ["find", "findone"],
+    });
+
+  await Promise.all(
+    publicPermissions.map((p) =>
       strapi
         .query("permission", "users-permissions")
         .update({ id: p.id }, { enabled: true })
@@ -297,10 +399,10 @@ const setDefaultPermissions = async () => {
   );
 };
 
-const findPublicRole = async () => {
+const findRole = async (role) => {
   const result = await strapi
     .query("role", "users-permissions")
-    .findOne({ type: "public" });
+    .findOne({ type: role });
   return result;
 };
 
@@ -312,6 +414,7 @@ const loadData = async () => {
     await loadEventType();
     await loadUrgency();
     await loadPublicAdvisory();
+    await createApiToken();
   } catch (error) {
     console.log(error);
   }
@@ -324,4 +427,5 @@ module.exports = async () => {
     await setDefaultPermissions();
     await loadData();
   }
+  await loadPublicAdvisory();
 };
