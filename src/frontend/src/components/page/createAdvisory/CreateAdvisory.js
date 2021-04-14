@@ -11,13 +11,14 @@ import Header from "../../composite/header/Header";
 import ImageUploader from "react-images-upload";
 import Select from "react-select";
 import { useKeycloak } from "@react-keycloak/web";
+import { Loader } from "shared-components/build/components/loader/Loader";
 
 export default function CreateAdvisory({ page: { setError } }) {
   const [protectedAreaNames, setProtectedAreaNames] = useState([]);
   const [eventTypes, setEventTypes] = useState([]);
   const [urgencies, setUrgencies] = useState([]);
   const [toError, setToError] = useState(false);
-  const [toHome, setToHome] = useState(false);
+  const [toDashboard, setToDashboard] = useState(false);
   const [headline, setHeadline] = useState();
   const [eventType, setEventType] = useState();
   const [description, setDescription] = useState();
@@ -29,7 +30,8 @@ export default function CreateAdvisory({ page: { setError } }) {
   const [pictures, setPictures] = useState([]);
   const [links, setLinks] = useState();
   const [notes, setNotes] = useState();
-  const { keycloak } = useKeycloak();
+  const { keycloak, initialized } = useKeycloak();
+  const [isLoading, setIsLoading] = useState(true);
 
   const headlineInput = {
     label: "",
@@ -56,7 +58,9 @@ export default function CreateAdvisory({ page: { setError } }) {
   const currentTime = new Date().toISOString().substring(0, 16);
 
   useEffect(() => {
-    if (!keycloak.authenticated) {
+    if (!initialized) {
+      setIsLoading(true);
+    } else if (!keycloak.authenticated) {
       setToError(true);
       setError({
         status: 401,
@@ -88,6 +92,7 @@ export default function CreateAdvisory({ page: { setError } }) {
           }));
           setUrgencies([...urgencies]);
           setUrgency(1);
+          setIsLoading(false);
         })
         .catch(() => {
           setToError(true);
@@ -104,8 +109,10 @@ export default function CreateAdvisory({ page: { setError } }) {
     setUrgency,
     setToError,
     setError,
-    setToHome,
+    setToDashboard,
     keycloak,
+    initialized,
+    setIsLoading,
   ]);
 
   const onDrop = (picture) => {
@@ -146,7 +153,7 @@ export default function CreateAdvisory({ page: { setError } }) {
           })
           .then(() => {
             console.log("New advisory added successfully");
-            setToHome(true);
+            setToDashboard(true);
           })
           .catch((error) => {
             console.log("error occurred", error);
@@ -161,8 +168,8 @@ export default function CreateAdvisory({ page: { setError } }) {
       });
   };
 
-  if (toHome) {
-    return <Redirect to="/bcparks" />;
+  if (toDashboard) {
+    return <Redirect to="/bcparks/advisory-dash" />;
   }
 
   if (toError) {
@@ -179,254 +186,261 @@ export default function CreateAdvisory({ page: { setError } }) {
       <br />
       <div className="CreateAdvisory" data-testid="CreateAdvisory">
         <div className="container">
-          <form>
-            <div className="container-fluid ad-form">
-              <div className="row ad-row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-                  Headline
+          {isLoading && (
+            <div className="page-loader">
+              <Loader page />
+            </div>
+          )}
+          {!isLoading && (
+            <form>
+              <div className="container-fluid ad-form">
+                <div className="row ad-row">
+                  <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                    Headline
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-sm-12">
+                    <Input
+                      input={{
+                        ...headlineInput,
+                        styling: "bcgov-editable-white",
+                      }}
+                      onChange={(event) => {
+                        setHeadline(event);
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
-                  <Input
-                    input={{
-                      ...headlineInput,
-                      styling: "bcgov-editable-white",
-                    }}
-                    onChange={(event) => {
-                      setHeadline(event);
-                    }}
-                  />
+                <div className="row ad-row">
+                  <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                    Event type
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-sm-12">
+                    <Select
+                      options={eventTypes}
+                      onChange={(e) => setEventType(e.value)}
+                      placeholder="Select an event type"
+                      className="bg-blue f-select"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="row ad-row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-                  Event type
+                <div className="row ad-row">
+                  <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                    Description
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-sm-12">
+                    <textarea
+                      className="bcgov-text-input"
+                      id="description"
+                      rows="2"
+                      onChange={(event) => {
+                        setDescription(event.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
-                  <Select
-                    options={eventTypes}
-                    onChange={(e) => setEventType(e.value)}
-                    placeholder="Select an event type"
-                    className="bg-blue f-select"
-                  />
+                <div className="row ad-row">
+                  <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                    Location
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-sm-12">
+                    <Select
+                      options={protectedAreaNames}
+                      onChange={(e) => {
+                        setLocations(e.map((o) => o.value));
+                      }}
+                      placeholder="Select a Park"
+                      className="bg-blue f-select"
+                      isMulti="true"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="row ad-row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-                  Description
+                <div className="row ad-row">
+                  <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                    Urgency level
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-sm-12">
+                    <ButtonGroup
+                      className="ad-btn-group"
+                      color="primary"
+                      aria-label="outlined primary button group"
+                    >
+                      {urgencies.map((u) => (
+                        <Button
+                          key={u.value}
+                          label={u.label}
+                          styling={
+                            urgency === u.value
+                              ? "bcgov-normal-blue btn"
+                              : "bcgov-normal-white btn"
+                          }
+                          onClick={() => {
+                            setUrgency(u.value);
+                          }}
+                        />
+                      ))}
+                    </ButtonGroup>
+                  </div>
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
-                  <textarea
-                    className="bcgov-text-input"
-                    id="description"
-                    rows="2"
-                    onChange={(event) => {
-                      setDescription(event.target.value);
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="row ad-row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-                  Location
-                </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
-                  <Select
-                    options={protectedAreaNames}
-                    onChange={(e) => {
-                      setLocations(e.map((o) => o.value));
-                    }}
-                    placeholder="Select a Park"
-                    className="bg-blue f-select"
-                    isMulti="true"
-                  />
-                </div>
-              </div>
-              <div className="row ad-row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-                  Urgency level
-                </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
-                  <ButtonGroup
-                    className="ad-btn-group"
-                    color="primary"
-                    aria-label="outlined primary button group"
-                  >
-                    {urgencies.map((u) => (
-                      <Button
-                        key={u.value}
-                        label={u.label}
-                        styling={
-                          urgency === u.value
-                            ? "bcgov-normal-blue btn"
-                            : "bcgov-normal-white btn"
-                        }
-                        onClick={() => {
-                          setUrgency(u.value);
-                        }}
-                      />
-                    ))}
-                  </ButtonGroup>
-                </div>
-              </div>
-              <div className="row ad-row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-                  Effective date
-                </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
-                  <div className="ad-field field-bg-blue">
-                    <div className="row ad-row ">
-                      <div className="col-lg-6 col-md-12 col-sm-12 pr0">
-                        <div className="ad-flex">
-                          <div className="p10 col-lg-2 col-md-3 col-sm-12">
-                            Start
+                <div className="row ad-row">
+                  <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                    Effective date
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-sm-12">
+                    <div className="ad-field field-bg-blue">
+                      <div className="row ad-row ">
+                        <div className="col-lg-6 col-md-12 col-sm-12 pr0">
+                          <div className="ad-flex">
+                            <div className="p10 col-lg-2 col-md-3 col-sm-12">
+                              Start
+                            </div>
+                            <div className="col-lg-10 col-md-9 col-sm-12">
+                              <TextField
+                                id="startDate"
+                                type="datetime-local"
+                                defaultValue={currentTime}
+                                className="react-datepicker-wrapper"
+                                onChange={(e) => {
+                                  setStartDate(e.target.value);
+                                }}
+                              />
+                            </div>
                           </div>
-                          <div className="col-lg-10 col-md-9 col-sm-12">
-                            <TextField
-                              id="startDate"
-                              type="datetime-local"
-                              defaultValue={currentTime}
-                              className="react-datepicker-wrapper"
-                              onChange={(e) => {
-                                setStartDate(e.target.value);
-                              }}
-                            />
+                        </div>
+                        <div className="col-lg-6 col-md-12 col-sm-12">
+                          <div className="ad-flex">
+                            <div className="p10 col-lg-3 col-md-4 col-sm-12">
+                              Duration
+                            </div>
+                            <div className="p10 col-lg-9 col-md-8 col-sm-12 ad-flex ptm3 ad-interval-box">
+                              <Dropdown items={interval} onSelect={() => {}} />
+                              <Dropdown
+                                items={intervalUnit}
+                                onSelect={() => {}}
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <div className="col-lg-6 col-md-12 col-sm-12">
-                        <div className="ad-flex">
-                          <div className="p10 col-lg-3 col-md-4 col-sm-12">
-                            Duration
-                          </div>
-                          <div className="p10 col-lg-9 col-md-8 col-sm-12 ad-flex ptm3 ad-interval-box">
-                            <Dropdown items={interval} onSelect={() => {}} />
-                            <Dropdown
-                              items={intervalUnit}
-                              onSelect={() => {}}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row ad-row">
-                      <div className="col-lg-6 col-md-12 col-sm-12 pr0">
-                        <div className="ad-flex">
-                          <div className="p10 col-lg-2 col-md-3 col-sm-12">
-                            End
-                          </div>
-                          <div className="col-lg-10 col-md-9 col-sm-12">
-                            <TextField
-                              id="endDate"
-                              type="datetime-local"
-                              defaultValue={currentTime}
-                              className="react-datepicker-wrapper"
-                              onChange={(e) => {
-                                setEndDate(e.target.value);
-                              }}
-                            />
+                      <div className="row ad-row">
+                        <div className="col-lg-6 col-md-12 col-sm-12 pr0">
+                          <div className="ad-flex">
+                            <div className="p10 col-lg-2 col-md-3 col-sm-12">
+                              End
+                            </div>
+                            <div className="col-lg-10 col-md-9 col-sm-12">
+                              <TextField
+                                id="endDate"
+                                type="datetime-local"
+                                defaultValue={currentTime}
+                                className="react-datepicker-wrapper"
+                                onChange={(e) => {
+                                  setEndDate(e.target.value);
+                                }}
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="col-lg-6 col-md-12 col-sm-12 ptm3 pr0">
-                        <div className="ad-flex">
-                          <div className="p10 col-lg-2 col-md-3 col-sm-12">
-                            Expiry
-                          </div>
-                          <div className="col-lg-10 col-md-9 col-sm-12">
-                            <TextField
-                              id="expiryDate"
-                              type="datetime-local"
-                              defaultValue={currentTime}
-                              className="react-datepicker-wrapper"
-                              onChange={(e) => {
-                                setExpiryDate(e.target.value);
-                              }}
-                            />
+                        <div className="col-lg-6 col-md-12 col-sm-12 ptm3 pr0">
+                          <div className="ad-flex">
+                            <div className="p10 col-lg-2 col-md-3 col-sm-12">
+                              Expiry
+                            </div>
+                            <div className="col-lg-10 col-md-9 col-sm-12">
+                              <TextField
+                                id="expiryDate"
+                                type="datetime-local"
+                                defaultValue={currentTime}
+                                className="react-datepicker-wrapper"
+                                onChange={(e) => {
+                                  setExpiryDate(e.target.value);
+                                }}
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <div className="row ad-row">
+                  <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                    Photos
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-sm-12 ">
+                    <ImageUploader
+                      withIcon={false}
+                      onChange={onDrop}
+                      imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+                      maxFileSize={5242880}
+                      withPreview={true}
+                      buttonText="Add a photo"
+                      buttonClassName="bcgov-normal-blue btn"
+                      withLabel={false}
+                      className="ad-field bg-blue"
+                    />
+                  </div>
+                </div>
+                <div className="row ad-row">
+                  <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                    Links
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-sm-12">
+                    <Input
+                      input={{
+                        ...linksInput,
+                        styling: "bcgov-editable-white",
+                      }}
+                      onChange={(event) => {
+                        setLinks(event);
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="row ad-row">
+                  <div className="col-lg-12 col-md-12 col-sm-12">
+                    <hr />
+                  </div>
+                </div>
+                <div className="row ad-row">
+                  <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                    Internal notes
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-sm-12">
+                    <Input
+                      input={{
+                        ...notesInput,
+                        styling: "bcgov-editable-white",
+                      }}
+                      onChange={(event) => {
+                        setNotes(event);
+                      }}
+                    />
+                  </div>
+                </div>
+                <br />
+                <div className="row ad-row">
+                  <div className="col-lg-3 col-md-4"></div>
+                  <div className="col-lg-8 col-md-8 col-sm-12 button-row ad-row ad-btn-group">
+                    <Button
+                      label="Submit"
+                      styling="bcgov-normal-yellow btn"
+                      onClick={() => {
+                        saveAdvisory();
+                      }}
+                    />
+                    <Button
+                      label="Cancel"
+                      styling="bcgov-normal-white btn"
+                      onClick={() => {
+                        sessionStorage.clear();
+                        setToDashboard(true);
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="row ad-row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-                  Photos
-                </div>
-                <div className="col-lg-8 col-md-8 col-sm-12 ">
-                  <ImageUploader
-                    withIcon={false}
-                    onChange={onDrop}
-                    imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-                    maxFileSize={5242880}
-                    withPreview={true}
-                    buttonText="Add a photo"
-                    buttonClassName="bcgov-normal-blue btn"
-                    withLabel={false}
-                    className="ad-field bg-blue"
-                  />
-                </div>
-              </div>
-              <div className="row ad-row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-                  Links
-                </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
-                  <Input
-                    input={{
-                      ...linksInput,
-                      styling: "bcgov-editable-white",
-                    }}
-                    onChange={(event) => {
-                      setLinks(event);
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="row ad-row">
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <hr />
-                </div>
-              </div>
-              <div className="row ad-row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-                  Internal notes
-                </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
-                  <Input
-                    input={{
-                      ...notesInput,
-                      styling: "bcgov-editable-white",
-                    }}
-                    onChange={(event) => {
-                      setNotes(event);
-                    }}
-                  />
-                </div>
-              </div>
-              <br />
-              <div className="row ad-row">
-                <div className="col-lg-3 col-md-4"></div>
-                <div className="col-lg-8 col-md-8 col-sm-12 button-row ad-row ad-btn-group">
-                  <Button
-                    label="Submit"
-                    styling="bcgov-normal-yellow btn"
-                    onClick={() => {
-                      saveAdvisory();
-                    }}
-                  />
-                  <Button
-                    label="Cancel"
-                    styling="bcgov-normal-white btn"
-                    onClick={() => {
-                      sessionStorage.clear();
-                      setToHome(true);
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          </form>
+            </form>
+          )}
         </div>
         <br />
       </div>

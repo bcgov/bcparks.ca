@@ -4,20 +4,10 @@ import Home from "../components/page/home/Home";
 import Error from "../components/page/error/Error";
 import AdvisoryDashboard from "../components/page/advisoryDashboard/AdvisoryDashboard";
 import CreateAdvisory from "../components/page/createAdvisory/CreateAdvisory";
-import { useKeycloak } from "@react-keycloak/web";
-import { Loader } from "shared-components/build/components/loader/Loader";
+import UpdateAdvisory from "../components/page/updateAdvisory/UpdateAdvisory";
 
 function AppRouter() {
   const [error, setError] = useState({});
-
-  const { initialized } = useKeycloak();
-  if (!initialized) {
-    return (
-      <main className="page-loader">
-        <Loader page />
-      </main>
-    );
-  }
   return (
     <div>
       <BrowserRouter>
@@ -31,6 +21,9 @@ function AppRouter() {
           </Route>
           <Route path="/bcparks/create-advisory">
             <CreateAdvisory page={{ setError }} />
+          </Route>
+          <Route path="/bcparks/update-advisory/:id">
+            <UpdateAdvisory page={{ setError }} />
           </Route>
           <Route path="/bcparks/error">
             <Error page={{ error }} />

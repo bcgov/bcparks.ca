@@ -74,5 +74,27 @@ namespace BCParksApi.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPut]
+        [Route("update/{route}/{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateData([FromBody] Object obj, string route, string id)
+        {
+            try
+            {
+                string url = _configuration["CmsUrl"] + route + "/" + id + "?token=" + _configuration["ApiToken"];
+                HttpResponseMessage apiResponse = await ApiHelper.httpClient.PutAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json"));
+                apiResponse.EnsureSuccessStatusCode();
+                string responseBody = await apiResponse.Content.ReadAsStringAsync();
+                return Ok(JsonConvert.DeserializeObject<object>(responseBody));
+            }
+            catch (HttpRequestException e)
+            {
+                _logger.LogError("Message :{0} ", e.Message);
+                return BadRequest();
+            }
+        }
     }
 }
