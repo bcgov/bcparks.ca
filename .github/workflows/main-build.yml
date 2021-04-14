@@ -109,3 +109,40 @@ jobs:
           docker image push \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
 
+  build-staging:
+    runs-on: ubuntu-20.04
+    environment: Main
+    env:
+      VERSION: v1
+      IMAGE_TAGS: dev
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      DOCKER_BUILDKIT: 1
+      SERVICE_NAME: staging
+      IMAGE_NAME: staging
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Building, pushing staging
+        run: |
+          echo "Logging in to RedHat..."
+          docker login ${{ secrets.REDHAT_REPO }} \
+            -u ${{ secrets.REDHAT_REPO_USER }} \
+            -p '${{ secrets.REDHAT_REPO_AUTH }}'
+          
+          echo "Logging in to OpenShift repository with Secrets..."
+          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} \
+            -u ${{ secrets.OPENSHIFT_SA_USERNAME}} \
+            -p ${{ secrets.OPENSHIFT_SA_PASSWORD}}
+
+          echo "Building ${IMAGE_NAME}..."
+          docker-compose build --force-rm --no-cache \
+            ${SERVICE_NAME}
+          
+          echo "Tagging ${IMAGE_NAME}..."
+          docker tag \
+            bcp-cms_${SERVICE_NAME} \
+            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+          
+          echo "Pushing ${IMAGE_NAME}..."
+          docker image push \
+            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
