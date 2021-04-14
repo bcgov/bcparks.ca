@@ -8,6 +8,7 @@ import MaterialTable from "material-table";
 import Select from "react-select";
 import Moment from "react-moment";
 import { Loader } from "shared-components/build/components/loader/Loader";
+import IconButton from "@material-ui/core/IconButton";
 
 import AddBox from "@material-ui/icons/AddBox";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
@@ -24,6 +25,7 @@ import Remove from "@material-ui/icons/Remove";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useKeycloak } from "@react-keycloak/web";
 import Header from "../../composite/header/Header";
 
@@ -39,7 +41,7 @@ const columns = [
           case "medium":
             return { paddingLeft: "10px", borderLeft: "8px solid #f5d20e" };
           case "high":
-            return { borderLeft: "8px solid #f30505" };
+            return { borderLeft: "10px solid #f30505" };
           default:
             return {};
         }
@@ -53,41 +55,52 @@ const columns = [
   {
     field: "AdvisoryDate",
     title: "Posted Date",
-    render: (rowData) => (
-      <Moment format="MMM DD YYYY">{rowData.AdvisoryDate}</Moment>
-    ),
+    render: (rowData) => {
+      if (rowData.AdvisoryDate != null)
+        return <Moment format="MMM DD, YYYY">{rowData.AdvisoryDate}</Moment>;
+    },
   },
   { field: "Title", title: "Headline" },
   { field: "event_type.EventType", title: "Event Type" },
   {
     field: "EffectiveDate",
     title: "Start Date",
-    render: (rowData) => (
-      <Moment format="MMM DD YYYY">{rowData.EffectiveDate}</Moment>
-    ),
+    render: (rowData) => {
+      if (rowData.EffectiveDate != null)
+        return <Moment format="MMM DD, YYYY">{rowData.EffectiveDate}</Moment>;
+    },
   },
-
   {
     field: "EndDate",
     title: "End Date",
-    render: (rowData) => (
-      <Moment format="MMM DD YYYY">{rowData.EndDate}</Moment>
-    ),
+    render: (rowData) => {
+      if (rowData.EndDate != null)
+        return <Moment format="MMM DD, YYYY">{rowData.EndDate}</Moment>;
+    },
   },
   {
     title: "",
     field: "id",
     filtering: false,
-    cellStyle: (rowData) => {
-      "backgroundColor-color:red";
+    cellStyle: {
+      width: "1px",
+      maxWidth: "10px",
+      textAlign: "right",
+      paddingRight: "10px",
     },
-    render: (rowData) => <Link to={`update-advisory/${rowData.id}`}>View</Link>,
+    render: (rowData) => (
+      <Link to={`update-advisory/${rowData.id}`}>
+        <IconButton>
+          <MoreVertIcon />
+        </IconButton>
+      </Link>
+    ),
   },
 ];
 
 const options = {
   headerStyle: {
-    backgroundColor: "#f3f3f3",
+    backgroundColor: "#e3eaf8",
     zIndex: 0,
     padding: "2px",
     fontWeight: "bolder",
@@ -144,7 +157,6 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       cmsAxios
         .get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`)
         .then((res) => {
-          console.log(res);
           const parkNames = res.data.map((p) => ({
             label: p.ProtectedAreaName,
             value: p.id,

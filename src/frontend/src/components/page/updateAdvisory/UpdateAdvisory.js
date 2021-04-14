@@ -137,6 +137,7 @@ export default function UpdateAdvisory({ page: { setError } }) {
         );
 
         setSelectedLocations(selectedLocations);
+        setNotes(publicAdvisoryData.Note);
       });
     }
   }, [
@@ -182,7 +183,6 @@ export default function UpdateAdvisory({ page: { setError } }) {
       cmsAxios.get(`/protectedAreas?${protectedAreaQuery}`),
     ])
       .then((res) => {
-        console.log(res);
         const publicAdvisory = {
           AdvisoryDate: startDate,
           EffectiveDate: startDate,
@@ -487,6 +487,7 @@ export default function UpdateAdvisory({ page: { setError } }) {
                       input={{
                         ...notesInput,
                         styling: "bcgov-editable-white",
+                        value: notes,
                       }}
                       onChange={(e) => {
                         setNotes(e);
