@@ -139,6 +139,7 @@ export default function UpdateAdvisory({ page: { setError } }) {
         );
 
         setSelectedLocations(selectedLocations);
+        setNotes(publicAdvisoryData.Note);
       });
     }
   }, [
@@ -495,6 +496,7 @@ export default function UpdateAdvisory({ page: { setError } }) {
                         input={{
                           ...notesInput,
                           styling: "bcgov-editable-white",
+                          value: notes,
                         }}
                         onChange={(e) => {
                           setNotes(e);
