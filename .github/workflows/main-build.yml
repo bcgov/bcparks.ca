@@ -119,6 +119,10 @@ jobs:
       DOCKER_BUILDKIT: 1
       SERVICE_NAME: staging
       IMAGE_NAME: staging
+      OPENSHIFT_EXTERNAL_REPOSITORY: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+      OPENSHIFT_LICENSE_PLATE: ${{secrets.OPENSHIFT_LICENSE_PLATE}}
+      OPENSHIFT_SA_USERNAME: ${{secrets.OPENSHIFT_SA_USERNAME}}
+      OPENSHIFT_SA_PASSWORD: ${{secrets.OPENSHIFT_SA_PASSWORD}}
     steps:
       - uses: actions/checkout@v2
 
