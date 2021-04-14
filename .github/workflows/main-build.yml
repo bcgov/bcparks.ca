@@ -100,7 +100,7 @@ jobs:
             ${SERVICE_NAME}
 
           echo "Tagging ${IMAGE_NAME}..."
-          docker tag bcp-cms_${SERVICE_NAME} \
+          docker tag ${SERVICE_NAME} \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
 
           echo "Pushing ${IMAGE_NAME}..."
