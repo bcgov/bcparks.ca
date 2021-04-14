@@ -14,7 +14,9 @@ const AccountInfo = ({}) => {
             label="Logout"
             styling="btn"
             onClick={() => {
-              keycloak.logout({ redirectUri: `http://localhost:3000/bcparks` });
+              keycloak.logout({
+                redirectUri: `${process.env.REACT_APP_FRONTEND_BASE_URL}/bcparks`,
+              });
             }}
           />
         </div>
