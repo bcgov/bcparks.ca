@@ -5,20 +5,9 @@ import Error from "../components/page/error/Error";
 import AdvisoryDashboard from "../components/page/advisoryDashboard/AdvisoryDashboard";
 import CreateAdvisory from "../components/page/createAdvisory/CreateAdvisory";
 import UpdateAdvisory from "../components/page/updateAdvisory/UpdateAdvisory";
-import { useKeycloak } from "@react-keycloak/web";
-import { Loader } from "shared-components/build/components/loader/Loader";
 
 function AppRouter() {
   const [error, setError] = useState({});
-
-  const { initialized } = useKeycloak();
-  if (!initialized) {
-    return (
-      <main className="page-loader">
-        <Loader page />
-      </main>
-    );
-  }
   return (
     <div>
       <BrowserRouter>

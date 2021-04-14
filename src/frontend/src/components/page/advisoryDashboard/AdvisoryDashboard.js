@@ -129,12 +129,14 @@ export default function AdvisoryDashboard({ page: { setError } }) {
   const [toCreate, setToCreate] = useState(false);
   const [parkNames, setParkNames] = useState([]);
   const [selectedParkId, setSelectedParkId] = useState(0);
-  const { keycloak } = useKeycloak();
+  const { keycloak, initialized } = useKeycloak();
 
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    if (!keycloak.authenticated) {
+    if (!initialized) {
+      setIsLoading(true);
+    } else if (!keycloak.authenticated) {
       setToError(true);
       setError({
         status: 401,
@@ -144,12 +146,12 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       cmsAxios
         .get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`)
         .then((res) => {
-          console.log(res);
           const parkNames = res.data.map((p) => ({
             label: p.ProtectedAreaName,
             value: p.id,
           }));
           setParkNames(["Select a Park", ...parkNames]);
+          setIsLoading(false);
         })
         .catch((e) => {
           console.log(e);
@@ -160,10 +162,12 @@ export default function AdvisoryDashboard({ page: { setError } }) {
           });
         });
     }
-  }, [setParkNames, setToError, setError, setToHome, keycloak]);
+  }, [setParkNames, setToError, setError, setToHome, keycloak, initialized]);
 
   useEffect(() => {
-    if (!keycloak.authenticated) {
+    if (!initialized) {
+      setIsLoading(true);
+    } else if (!keycloak.authenticated) {
       setToError(true);
       setError({
         status: 401,
@@ -186,7 +190,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
           });
         });
     }
-  }, [setToError, setError, selectedParkId, keycloak]);
+  }, [setToError, setError, selectedParkId, keycloak, initialized]);
 
   if (toHome) {
     return <Redirect to="/bcparks" />;
@@ -208,37 +212,41 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         }}
       />
       <br />
-      <div className={styles.AdvisoryDashboard} data-testid="AdvisoryDashboard">
-        <div className="container-fluid">
-          <div className="row ad-row">
-            <div className="col-lg-6 col-md-4 col-sm-12 ad-label">
-              <h2 className="float-left">Public Advisories</h2>
-            </div>
-            <div className="col-lg-6 col-md-4 col-sm-12 ad-label">
-              <Button
-                label="Create a new Advisory"
-                styling="bcgov-normal-yellow btn"
-                onClick={() => {
-                  sessionStorage.clear();
-                  setToCreate(true);
-                }}
-              />
-            </div>
-          </div>
-          <Select
-            options={parkNames}
-            onChange={(e) => setSelectedParkId(e.value)}
-            placeholder="Select a Park..."
-            className="bg-blue f-select"
-          />
+      {isLoading && (
+        <div className="page-loader">
+          <Loader page />
         </div>
-        <br />
-        {isLoading && (
-          <div className="page-loader">
-            <Loader page />
+      )}
+      {!isLoading && (
+        <div
+          className={styles.AdvisoryDashboard}
+          data-testid="AdvisoryDashboard"
+        >
+          <div className="container-fluid">
+            <div className="row ad-row">
+              <div className="col-lg-6 col-md-4 col-sm-12 ad-label">
+                <h2 className="float-left">Public Advisories</h2>
+              </div>
+              <div className="col-lg-6 col-md-4 col-sm-12 ad-label">
+                <Button
+                  label="Create a new Advisory"
+                  styling="bcgov-normal-yellow btn"
+                  onClick={() => {
+                    sessionStorage.clear();
+                    setToCreate(true);
+                  }}
+                />
+              </div>
+            </div>
+            <Select
+              options={parkNames}
+              onChange={(e) => setSelectedParkId(e.value)}
+              placeholder="Select a Park..."
+              className="bg-blue f-select"
+            />
           </div>
-        )}
-        {!isLoading && (
+          <br />
+
           <div className="container-fluid">
             <MaterialTable
               options={options}
@@ -251,8 +259,8 @@ export default function AdvisoryDashboard({ page: { setError } }) {
               }}
             />
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </main>
   );
 }
