@@ -28,6 +28,6 @@ RUN npm install -g gatsby-cli
 
 # add app
 COPY . ./
-
+EXPOSE 8000
 # start app
-CMD ["gatsby", "develop"]
+CMD ["gatsby", "develop", "-H", "0.0.0.0"]
