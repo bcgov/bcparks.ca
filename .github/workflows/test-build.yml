@@ -1,4 +1,4 @@
-name: Main-Build .NET API Image and Push to Openshift Registry
+name: Build Test Branch
 on:
   push:
     branches: [test]
