@@ -9,7 +9,7 @@ const AccountInfo = ({}) => {
     <div>
       {keycloak && keycloak.authenticated && (
         <div className="account-info-box">
-          <p>Welcome, {keycloak.tokenParsed.preferred_username}</p>
+          <p>Welcome, {keycloak.tokenParsed.name}</p>
           <Button
             label="Logout"
             styling="btn"
