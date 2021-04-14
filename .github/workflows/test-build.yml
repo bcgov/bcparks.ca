@@ -1,18 +1,18 @@
 name: Main-Build .NET API Image and Push to Openshift Registry
 on:
   push:
-    branches: [main,tools]
+    branches: [test]
   workflow_dispatch:
-    branches: [main,tools]
+    branches: [test]
 
 jobs:
 
   build-frontend:
     runs-on: ubuntu-20.04
-    environment: Main
+    environment: Test
     env:
       VERSION: v1
-      IMAGE_TAGS: dev
+      IMAGE_TAGS: test
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
       SERVICE_NAME: react-frontend
@@ -57,10 +57,10 @@ jobs:
 
   build-cms:
     runs-on: ubuntu-20.04
-    environment: Main
+    environment: Test
     env:
       VERSION: v1
-      IMAGE_TAGS: dev
+      IMAGE_TAGS: test
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
       IMAGE_NAME: strapi
@@ -111,18 +111,14 @@ jobs:
 
   build-staging:
     runs-on: ubuntu-20.04
-    environment: Main
+    environment: Test
     env:
       VERSION: v1
-      IMAGE_TAGS: dev
+      IMAGE_TAGS: test
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
       SERVICE_NAME: staging
       IMAGE_NAME: staging
-      OPENSHIFT_EXTERNAL_REPOSITORY: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-      OPENSHIFT_LICENSE_PLATE: ${{secrets.OPENSHIFT_LICENSE_PLATE}}
-      OPENSHIFT_SA_USERNAME: ${{secrets.OPENSHIFT_SA_USERNAME}}
-      OPENSHIFT_SA_PASSWORD: ${{secrets.OPENSHIFT_SA_PASSWORD}}
     steps:
       - uses: actions/checkout@v2
 
@@ -140,13 +136,13 @@ jobs:
 
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
-            ${SERVICE_NAME}
-          docker image ls
+            bcp-cms_$${SERVICE_NAME}
+          
           echo "Tagging ${IMAGE_NAME}..."
           docker tag \
             bcp-cms_${SERVICE_NAME} \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
-
+          
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
