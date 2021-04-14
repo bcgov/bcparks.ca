@@ -35,7 +35,7 @@ jobs:
             -p '${{ secrets.REDHAT_REPO_AUTH }}'
           
           echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}\${OPENSHIFT_LICENSE_PLATE}-tools \
+          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
             -u ${{ secrets.OPENSHIFT_SA_USERNAME}} \
             -p ${{ secrets.OPENSHIFT_SA_PASSWORD}}
 
@@ -85,7 +85,7 @@ jobs:
             -p '${{ secrets.REDHAT_REPO_AUTH }}'
           
           echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}\${OPENSHIFT_LICENSE_PLATE}-tools \
+          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
             -u ${{ secrets.OPENSHIFT_SA_USERNAME}} \
             -p ${{ secrets.OPENSHIFT_SA_PASSWORD}}
           
@@ -130,7 +130,7 @@ jobs:
             -p '${{ secrets.REDHAT_REPO_AUTH }}'
           
           echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}\${OPENSHIFT_LICENSE_PLATE}-tools \
+          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
             -u ${{ secrets.OPENSHIFT_SA_USERNAME}} \
             -p ${{ secrets.OPENSHIFT_SA_PASSWORD}}
 
