@@ -1,18 +1,18 @@
 name: Main-Build .NET API Image and Push to Openshift Registry
 on:
   push:
-    branches: [main, tools]
+    branches: [test]
   workflow_dispatch:
-    branches: [main, tools]
+    branches: [test]
 
 jobs:
 
   build-frontend:
     runs-on: ubuntu-20.04
-    environment: Main
+    environment: Test
     env:
       VERSION: v1
-      IMAGE_TAGS: dev
+      IMAGE_TAGS: test
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
       SERVICE_NAME: react-frontend
@@ -57,10 +57,10 @@ jobs:
 
   build-cms:
     runs-on: ubuntu-20.04
-    environment: Main
+    environment: Test
     env:
       VERSION: v1
-      IMAGE_TAGS: dev
+      IMAGE_TAGS: test
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
       IMAGE_NAME: strapi
@@ -111,10 +111,10 @@ jobs:
 
   build-staging:
     runs-on: ubuntu-20.04
-    environment: Main
+    environment: Test
     env:
       VERSION: v1
-      IMAGE_TAGS: dev
+      IMAGE_TAGS: test
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
       SERVICE_NAME: staging
