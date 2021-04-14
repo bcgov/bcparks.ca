@@ -136,7 +136,7 @@ jobs:
 
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
-            ${SERVICE_NAME}
+            bcp-cms_$${SERVICE_NAME}
           
           echo "Tagging ${IMAGE_NAME}..."
           docker tag \
