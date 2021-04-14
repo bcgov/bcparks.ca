@@ -102,7 +102,7 @@ jobs:
           docker image ls
 
           echo "Tagging ${IMAGE_NAME}..."
-          docker tag ${SERVICE_NAME} \
+          docker tag ${IMAGE_NAME}/${IMAGE_NAME} \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
 
           echo "Pushing ${IMAGE_NAME}..."
