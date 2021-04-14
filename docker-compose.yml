@@ -17,7 +17,7 @@ services:
     container_name: bcp-frontend
     restart: unless-stopped
     build:
-      context: ./src/frontend
+      context: src/frontend
       dockerfile: Dockerfile
       args:
         REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
@@ -42,15 +42,14 @@ services:
       - bcp-cms-network
 
   strapi:
+    image: strapi/strapi:3.5.3
     container_name: bcp-strapi
     restart: unless-stopped
+    env_file: .env
     build:
-      context: ./src/backend
+      context: src/backend
       dockerfile: Dockerfile
-      args:
-        PUBLIC_URL: ${PUBLIC_URL}
     environment:
-      PUBLIC_URL: ${PUBLIC_URL}
       DATABASE_HOST: ${DATABASE_HOST}
       DATABASE_PORT: ${DATABASE_PORT}
       DATABASE_NAME: ${DATABASE_NAME}
@@ -83,9 +82,38 @@ services:
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
 
+  staging:
+    container_name: bcp-staging
+    restart: unless-stopped
+    build:
+      context: src/web
+      dockerfile: Dockerfile
+    volumes:
+      - "./web:/opt/app-root/src/app"
+      - "./web/node_modules:/opt/app-root/src/app/node_modules"
+      - website:/app/site
+    ports:
+      - "8000:8000"
+    networks:
+      - bcp-cms-network
+
+  # public:
+  #   container_name: bcp-public
+  #   restart: unless-stopped
+  #   build:
+  #     context: src/web
+  #     dockerfile: Dockerfile-public
+  #   networks:
+  #     - bcp-cms-network
+  #   volumes:
+  #     - website:/usr/local/nginx/html
+  #   ports:
+  #     - "80:80"
+
 networks:
   bcp-cms-network:
     driver: bridge
 
 volumes:
   local_postgres_data:
+  website:

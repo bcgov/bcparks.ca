@@ -34,7 +34,7 @@ export default function Home({ page: { setError } }) {
                     <Button
                       onClick={() =>
                         keycloak.login({
-                          redirectUri: `http://localhost:3000/bcparks/advisory-dash`,
+                          redirectUri: `${process.env.REACT_APP_FRONTEND_BASE_URL}/bcparks/advisory-dash`,
                         })
                       }
                       label="Login"
