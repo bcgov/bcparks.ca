@@ -28,6 +28,9 @@ parameters:
 - name: DB_POD
   value: db
   required: true
+- name: STAGING_POD
+  value: staging
+  required: true
 - name: DB_PORT
   value: "5432"
 - name: DB_SSL
@@ -337,3 +340,83 @@ objects:
     type: ClusterIP
   status:
     loadBalancer: {}
+
+### Staging
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    name: ${STAGING_POD}
+    labels:
+      app.kubernetes.io/part-of: ${NAME}
+  spec:
+    completionDeadlineSeconds: 1200
+    replicas: 1
+    selector:
+      name: ${STAGING_POD}
+    strategy:
+      type: Recreate
+      maxSurge: 50%
+      maxUnavailable: 0
+    template:
+      metadata:
+        labels:
+          dev-app: ${NAME}
+          name: ${STAGING_POD}
+      spec:
+        containers:
+          - capabilities: {}
+            image: >-
+              image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/staging:${OC_APP}
+            name: ${STAGING_POD}
+            ports:
+              - containerPort: 8000
+    triggers:
+      - type: ConfigChange
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - ${STAGING_POD}
+          from:
+            kind: ImageStreamTag
+            namespace: "${OC_NAMESPACE}-tools"
+            name: 'staging:d${OC_APP}'
+  status: {}
+
+
+#   Staging Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: ${STAGING_POD}
+    labels:
+      app.kubernetes.io/part-of: ${NAME}
+  spec:
+    ports:
+      - name: ${STAGING_POD}
+        port: 8000
+        targetPort: 8000
+    selector:
+      name: ${STAGING_POD}
+
+#   Staging Route
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  namespace: ${OC_NAMESPACE}-${OC_APP}
+  labels:
+    app: ${STAGING_POD}
+    app.kubernetes.io/component: ${NAME}
+    app.kubernetes.io/instance: ${NAME}
+    app.kubernetes.io/part-of: ${NAME}
+  metadata:
+    name: ${STAGING_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
+  spec:
+    host: ${STAGING_POD}${URL_STUB}
+    to:
+      kind: Service
+      name: ${STAGING_POD}
+      weight: 100
+    port:
+      targetPort: 8000
+    wildcardPolicy: None

@@ -4,7 +4,7 @@ FROM registry.access.redhat.com/ubi8/nodejs-14
 # set working directory
 # WORKDIR /web
 USER 0
-
+# COPY ./web /opt/app-root/src/app
 RUN yum install -y \
     python3-pip \
     python3 \
@@ -12,15 +12,15 @@ RUN yum install -y \
 	automake \
 	libtool \
     git \
-    openssh
-RUN chmod -R 777 /opt/app-root/src
-RUN pip3 install virtualenv 
-
-
+    openssh && \
+    mkdir -p /opt/app-root/src/app/node_modules && \
+    mkdir -p /opt/app-root/src/app/site && \
+    chmod -R 777 /opt/app-root/src && \
+    pip3 install virtualenv 
 
 # install app dependencies
 COPY package.json ./
-RUN npm install --unsafe-perm
+RUN npm install --unsafe-perm 
 RUN npm install -g gatsby-cli
 
 # add bash to the image
