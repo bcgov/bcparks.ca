@@ -18,7 +18,6 @@ RUN yum install -y \
     chmod -R 777 /opt/app-root/src && \
     pip3 install virtualenv 
 
-
 # install app dependencies
 COPY package.json ./
 RUN npm install --unsafe-perm 
