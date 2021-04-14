@@ -1,6 +1,18 @@
 version: "3.4"
 
 services:
+  bcparks-api:
+    container_name: bcparks-api
+    build:
+      context: ./src/api/BCParksApi
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    ports:
+      - "5000:5000"
+    restart: always
+    networks:
+      - bcp-cms-network
+
   react-frontend:
     container_name: bcp-frontend
     restart: unless-stopped
@@ -9,16 +21,17 @@ services:
       dockerfile: Dockerfile
     environment:
       REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
+      REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
       REACT_APP_FRONTEND_BASE_URL: ${REACT_APP_FRONTEND_BASE_URL}
       PUBLIC_URL: ${PUBLIC_URL}
-    networks:
-      - bcp-cms-network
-    # volumes:
-    #   - "./frontend:/app"
-    #   - "./frontend/node_modules:/app/node_modules"
+      REACT_APP_KEYCLOAK_AUTH_URL: ${REACT_APP_KEYCLOAK_AUTH_URL}
+      REACT_APP_KEYCLOAK_REALM: ${REACT_APP_KEYCLOAK_REALM}
+      REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
     ports:
       - "8080:8080"
     tty: true
+    networks:
+      - bcp-cms-network
 
   strapi:
     image: strapi/strapi:3.5.3
@@ -35,6 +48,10 @@ services:
       DATABASE_USERNAME: ${DATABASE_USERNAME}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       DATABASE_SSL: ${DATABASE_SSL}
+      API_TOKEN: ${API_TOKEN}
+      API_USER_NAME: ${API_USER_NAME}
+      API_USER_EMAIL: ${API_USER_EMAIL}
+      API_USER_PASSWORD: ${API_USER_PASSWORD}
     networks:
       - bcp-cms-network
     depends_on:
@@ -62,7 +79,7 @@ services:
     restart: unless-stopped
     build:
       context: src/web
-      dockerfile: Dockerfile   
+      dockerfile: Dockerfile
     # volumes:
     #   - "./web:/opt/app-root/src/app"
     #   - "./web/node_modules:/opt/app-root/src/app/node_modules"
@@ -77,7 +94,7 @@ services:
   #   restart: unless-stopped
   #   build:
   #     context: src/web
-  #     dockerfile: Dockerfile-public    
+  #     dockerfile: Dockerfile-public
   #   networks:
   #     - bcp-cms-network
   #   volumes:

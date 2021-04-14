@@ -156,14 +156,19 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         message: "Login required",
       });
     } else {
-      cmsAxios
-        .get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`)
+      Promise.all([
+        cmsAxios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
+        cmsAxios.get(`/public-advisories?_sort=updated_at:DESC`),
+      ])
         .then((res) => {
-          const parkNames = res.data.map((p) => ({
+          const parkNamesData = res[0].data;
+          const publicAdvisoryData = res[1].data;
+          const parkNames = parkNamesData.map((p) => ({
             label: p.ProtectedAreaName,
             value: p.id,
           }));
           setParkNames(["Select a Park", ...parkNames]);
+          setRows(publicAdvisoryData);
           setIsLoading(false);
         })
         .catch((e) => {
@@ -177,34 +182,24 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     }
   }, [setParkNames, setToError, setError, setToHome, keycloak, initialized]);
 
-  useEffect(() => {
-    if (!initialized) {
-      setIsLoading(true);
-    } else if (!keycloak.authenticated) {
-      setToError(true);
-      setError({
-        status: 401,
-        message: "Login required",
-      });
-    } else {
-      let url = "public-advisories";
-      if (selectedParkId)
-        url = `${url}?protected_areas.id=${selectedParkId}_sort=updated_at:DESC`;
-      cmsAxios
-        .get(url)
-        .then((resp) => {
-          setRows(resp.data);
-          setIsLoading(false);
-        })
-        .catch(() => {
-          setToError(true);
-          setError({
-            status: 500,
-            message: "Error occurred",
-          });
+  const onSelectChange = (e) => {
+    setIsLoading(false);
+    let url = "public-advisories?_sort=updated_at:DESC";
+    if (e.value) url = `${url}&protected_areas.id=${e.value}`;
+    cmsAxios
+      .get(url)
+      .then((resp) => {
+        setRows(resp.data);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setToError(true);
+        setError({
+          status: 500,
+          message: "Error occurred",
         });
-    }
-  }, [setToError, setError, selectedParkId, keycloak, initialized]);
+      });
+  };
 
   if (toHome) {
     return <Redirect to="/bcparks" />;
@@ -254,7 +249,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
             </div>
             <Select
               options={parkNames}
-              onChange={(e) => setSelectedParkId(e.value)}
+              onChange={(e) => onSelectChange(e)}
               placeholder="Select a Park..."
               className="bg-blue f-select"
             />
