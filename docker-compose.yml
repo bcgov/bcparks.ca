@@ -63,10 +63,10 @@ services:
     build:
       context: src/web
       dockerfile: Dockerfile   
-    volumes:
-      - "./web:/opt/app-root/src/app"
-      - "./web/node_modules:/opt/app-root/src/app/node_modules"
-      - website:/app/site
+    # volumes:
+    #   - "./web:/opt/app-root/src/app"
+    #   - "./web/node_modules:/opt/app-root/src/app/node_modules"
+    #   - website:/app/site
     ports:
       - "8000:8000"
     networks:

@@ -99,6 +99,8 @@ jobs:
             --build-arg DATABASE_SSL=${DATABASE_SSL} \
             ${SERVICE_NAME}
 
+          docker image ls
+
           echo "Tagging ${IMAGE_NAME}..."
           docker tag ${SERVICE_NAME} \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
