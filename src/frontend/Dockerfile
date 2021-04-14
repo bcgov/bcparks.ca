@@ -46,6 +46,7 @@ USER 0
 RUN mkdir -p /var/cache/nginx/client_temp &&\
     chmod -R 777 /var/cache/nginx/client_temp
 COPY --from=build-deps /frontend/build /opt/app-root/src
+COPY ./frontend /opt/app-root/src/app
 COPY ./nginx.conf /etc/nginx/nginx.conf
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
