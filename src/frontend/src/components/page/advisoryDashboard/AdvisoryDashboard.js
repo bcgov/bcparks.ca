@@ -100,7 +100,7 @@ const columns = [
 
 const options = {
   headerStyle: {
-    backgroundColor: "#f3f3f3",
+    backgroundColor: "#e3eaf8",
     zIndex: 0,
     padding: "2px",
     fontWeight: "bolder",
@@ -188,7 +188,8 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       });
     } else {
       let url = "public-advisories";
-      if (selectedParkId) url = `${url}?protected_areas.id=${selectedParkId}`;
+      if (selectedParkId)
+        url = `${url}?protected_areas.id=${selectedParkId}_sort=updated_at:DESC`;
       cmsAxios
         .get(url)
         .then((resp) => {
