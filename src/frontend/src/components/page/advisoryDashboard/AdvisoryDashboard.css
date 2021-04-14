@@ -13,6 +13,10 @@
   text-align: left;
 }
 
+.MuiTable-root {
+  width:100% !important;
+}
+
 .MuiTableCell-root {
   padding: 4px !important;
 }
