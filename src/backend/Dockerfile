@@ -35,7 +35,6 @@ USER 0
 RUN cat ./config/server_template.js | envsubst > ./config/server.js && \
     chmod 766 ./config/server.js && \
     cat ./config/server.js && \
-    mkdir -p /opt/app-root/src/api/token/documentation && \
     chmod -R 777 /opt/app-root/src/
 # for debugging
 
