@@ -28,7 +28,7 @@ jobs:
         with:
           context: ./src/frontend
           push: true
-          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:latest
+          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:dev
           build-args:
             REACT_APP_API_BASE_URL={{secrets.REACT_APP_API_BASE_URL}}
             REACT_APP_CMS_BASE_URL={{secrets.REACT_APP_CMS_BASE_URL}}
@@ -59,7 +59,7 @@ jobs:
         with:
           context: ./src/backend
           push: true
-          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:latest
+          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:dev
           build-args:
             DATABASE_HOST=${{secrets.DATABASE_HOST}}
             DATABASE_PORT=${{secrets.DATABASE_PORT}}
@@ -94,7 +94,7 @@ jobs:
         with:
           context: ./src/api/BCParksApi
           push: true
-          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:latest
+          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:dev
  
   build-staging:
     runs-on: ubuntu-20.04
@@ -118,4 +118,4 @@ jobs:
         with:
           context: ./src/web
           push: true
-          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:latest
+          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:dev
