@@ -192,7 +192,7 @@ objects:
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/strapi:${OC_APP}
             name: ${CMS_POD}
             ports:
-              - containerPort: 1377
+              - containerPort: 1337
     triggers:
       - type: ConfigChange
       - type: ImageChange
