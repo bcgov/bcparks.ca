@@ -29,112 +29,6 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useKeycloak } from "@react-keycloak/web";
 import Header from "../../composite/header/Header";
 
-const columns = [
-  {
-    field: "urgency.Urgency",
-    title: "Urgency",
-    cellStyle: (e, rowData) => {
-      if (rowData.urgency !== null) {
-        switch (rowData.urgency.Urgency.toLowerCase()) {
-          case "low":
-            return { paddingRight: "10px", borderLeft: "8px solid #06f542" };
-          case "medium":
-            return { paddingLeft: "10px", borderLeft: "8px solid #f5d20e" };
-          case "high":
-            return { borderLeft: "10px solid #f30505" };
-          default:
-            return {};
-        }
-      }
-    },
-  },
-  {
-    field: "advisory_status.AdvisoryStatus",
-    title: "Status",
-  },
-  {
-    field: "AdvisoryDate",
-    title: "Posted Date",
-    render: (rowData) => {
-      if (rowData.AdvisoryDate != null)
-        return <Moment format="MMM DD, YYYY">{rowData.AdvisoryDate}</Moment>;
-    },
-  },
-  { field: "Title", title: "Headline" },
-  { field: "event_type.EventType", title: "Event Type" },
-  {
-    field: "EffectiveDate",
-    title: "Start Date",
-    render: (rowData) => {
-      if (rowData.EffectiveDate != null)
-        return <Moment format="MMM DD, YYYY">{rowData.EffectiveDate}</Moment>;
-    },
-  },
-  {
-    field: "EndDate",
-    title: "End Date",
-    render: (rowData) => {
-      if (rowData.EndDate != null)
-        return <Moment format="MMM DD, YYYY">{rowData.EndDate}</Moment>;
-    },
-  },
-  {
-    title: "",
-    field: "id",
-    filtering: false,
-    cellStyle: {
-      width: "1px",
-      maxWidth: "10px",
-      textAlign: "right",
-      paddingRight: "10px",
-    },
-    render: (rowData) => (
-      <Link to={`update-advisory/${rowData.id}`}>
-        <IconButton>
-          <MoreVertIcon />
-        </IconButton>
-      </Link>
-    ),
-  },
-];
-
-const options = {
-  headerStyle: {
-    backgroundColor: "#e3eaf8",
-    zIndex: 0,
-    padding: "2px",
-    fontWeight: "bolder",
-  },
-  cellStyle: { padding: "4px 4px 4px 4px" },
-  rowStyle: {},
-  filtering: true,
-  search: false,
-};
-
-const tableIcons = {
-  Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-  Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-  Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-  Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
-  DetailPanel: forwardRef((props, ref) => (
-    <ChevronRight {...props} ref={ref} />
-  )),
-  Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-  Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-  Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-  FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-  LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-  NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-  PreviousPage: forwardRef((props, ref) => (
-    <ChevronLeft {...props} ref={ref} />
-  )),
-  ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-  Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-  SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
-  ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-  ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
-};
-
 export default function AdvisoryDashboard({ page: { setError } }) {
   const [isLoading, setIsLoading] = useState(true);
   const [toError, setToError] = useState(false);
@@ -143,8 +37,117 @@ export default function AdvisoryDashboard({ page: { setError } }) {
   const [parkNames, setParkNames] = useState([]);
   const [selectedParkId, setSelectedParkId] = useState(0);
   const { keycloak, initialized } = useKeycloak();
-
   const [rows, setRows] = useState([]);
+
+  const columns = [
+    {
+      field: "urgency.Urgency",
+      title: "Urgency",
+      cellStyle: (e, rowData) => {
+        if (rowData.urgency !== null) {
+          switch (rowData.urgency.Urgency.toLowerCase()) {
+            case "low":
+              return { paddingRight: "10px", borderLeft: "8px solid #06f542" };
+            case "medium":
+              return { paddingLeft: "10px", borderLeft: "8px solid #f5d20e" };
+            case "high":
+              return { borderLeft: "10px solid #f30505" };
+            default:
+              return {};
+          }
+        }
+      },
+    },
+    {
+      field: "advisory_status.AdvisoryStatus",
+      title: "Status",
+    },
+    {
+      field: "AdvisoryDate",
+      title: "Posted Date",
+      render: (rowData) => {
+        if (rowData.AdvisoryDate != null)
+          return <Moment format="MMM DD, YYYY">{rowData.AdvisoryDate}</Moment>;
+      },
+    },
+    { field: "Title", title: "Headline" },
+    { field: "event_type.EventType", title: "Event Type" },
+    {
+      field: "EffectiveDate",
+      title: "Start Date",
+      render: (rowData) => {
+        if (rowData.EffectiveDate != null)
+          return <Moment format="MMM DD, YYYY">{rowData.EffectiveDate}</Moment>;
+      },
+    },
+    {
+      field: "EndDate",
+      title: "End Date",
+      render: (rowData) => {
+        if (rowData.EndDate != null)
+          return <Moment format="MMM DD, YYYY">{rowData.EndDate}</Moment>;
+      },
+    },
+    {
+      title: "",
+      field: "id",
+      filtering: false,
+      cellStyle: {
+        width: "1px",
+        maxWidth: "10px",
+        textAlign: "right",
+        paddingRight: "10px",
+      },
+      render: (rowData) => (
+        <Link to={`update-advisory/${rowData.id}`}>
+          <IconButton>
+            <MoreVertIcon />
+          </IconButton>
+        </Link>
+      ),
+    },
+  ];
+
+  const options = {
+    headerStyle: {
+      backgroundColor: "#e3eaf8",
+      zIndex: 0,
+      padding: "2px",
+      fontWeight: "bolder",
+    },
+    cellStyle: { padding: "4px 4px 4px 4px" },
+    rowStyle: {},
+    filtering: true,
+    search: false,
+  };
+
+  const tableIcons = {
+    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
+    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+    DetailPanel: forwardRef((props, ref) => (
+      <ChevronRight {...props} ref={ref} />
+    )),
+    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
+    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
+    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
+    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
+    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+    PreviousPage: forwardRef((props, ref) => (
+      <ChevronLeft {...props} ref={ref} />
+    )),
+    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
+    SortArrow: forwardRef((props, ref) => (
+      <ArrowDownward {...props} ref={ref} />
+    )),
+    ThirdStateCheck: forwardRef((props, ref) => (
+      <Remove {...props} ref={ref} />
+    )),
+    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
+  };
 
   useEffect(() => {
     if (!initialized) {
@@ -156,9 +159,13 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         message: "Login required",
       });
     } else {
+      let parkIdQuery = "";
+      if (selectedParkId > 0) {
+        parkIdQuery = `&protected_areas.id=${selectedParkId}`;
+      }
       Promise.all([
         cmsAxios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
-        cmsAxios.get(`/public-advisories?_sort=updated_at:DESC`),
+        cmsAxios.get(`/public-advisories?_sort=updated_at:DESC${parkIdQuery}`),
       ])
         .then((res) => {
           const parkNamesData = res[0].data;
@@ -180,26 +187,17 @@ export default function AdvisoryDashboard({ page: { setError } }) {
           });
         });
     }
-  }, [setParkNames, setToError, setError, setToHome, keycloak, initialized]);
-
-  const onSelectChange = (e) => {
-    setIsLoading(false);
-    let url = "public-advisories?_sort=updated_at:DESC";
-    if (e.value) url = `${url}&protected_areas.id=${e.value}`;
-    cmsAxios
-      .get(url)
-      .then((resp) => {
-        setRows(resp.data);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setToError(true);
-        setError({
-          status: 500,
-          message: "Error occurred",
-        });
-      });
-  };
+  }, [
+    setParkNames,
+    setToError,
+    setIsLoading,
+    setError,
+    setRows,
+    selectedParkId,
+    setToHome,
+    keycloak,
+    initialized,
+  ]);
 
   if (toHome) {
     return <Redirect to="/bcparks" />;
@@ -249,7 +247,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
             </div>
             <Select
               options={parkNames}
-              onChange={(e) => onSelectChange(e)}
+              onChange={(e) => setSelectedParkId(e.value)}
               placeholder="Select a Park..."
               className="bg-blue f-select"
             />
