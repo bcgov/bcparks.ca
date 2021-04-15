@@ -53,12 +53,11 @@ jobs:
 
           echo "Building ${IMAGE_NAME}..."
           docker build \
-            ${CONTEXT} \
             --build-arg REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL} \
             --build-arg REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL} \
             --build-arg PUBLIC_URL=${PUBLIC_URL} \
             --tag ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${IMAGE_NAME}:${IMAGE_TAGS} \
-            ${SERVICE_NAME}
+            ${CONTEXT}
           
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
@@ -113,7 +112,6 @@ jobs:
 
           echo "Building ${IMAGE_NAME}..."
           docker build \
-            ${CONTEXT} \
             --build-arg DATABASE_HOST=${DATABASE_HOST} \
             --build-arg DATABASE_PORT=${DATABASE_PORT} \
             --build-arg DATABASE_NAME=${DATABASE_NAME} \
@@ -121,7 +119,7 @@ jobs:
             --build-arg DATABASE_PASSWORD=${DATABASE_PASSWORD} \
             --build-arg DATABASE_SSL=${DATABASE_SSL} \
             --tag ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${IMAGE_NAME}:${IMAGE_TAGS} \
-            ${SERVICE_NAME}
+            ${CONTEXT}
 
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
@@ -166,10 +164,9 @@ jobs:
 
           echo "Building ${IMAGE_NAME}..."
           docker build \
-            ${CONTEXT} \
             --tag ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${IMAGE_NAME}:${IMAGE_TAGS} \
-            bcp-cms_${SERVICE_NAME}
-
+            ${CONTEXT}
+  
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
             ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
