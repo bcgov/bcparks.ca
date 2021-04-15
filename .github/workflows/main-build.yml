@@ -58,11 +58,6 @@ jobs:
             --tag ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${IMAGE_NAME}:${IMAGE_TAGS} \
             ${SERVICE_NAME}
           
-          echo "Tagging ${IMAGE_NAME}..."
-          docker tag \
-            bcp-cms_${SERVICE_NAME} \
-            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
-
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
             ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
@@ -124,10 +119,6 @@ jobs:
             --tag ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${IMAGE_NAME}:${IMAGE_TAGS} \
             ${SERVICE_NAME}
 
-          echo "Tagging ${IMAGE_NAME}..."
-          docker tag strapi/strapi:3.5.3 \
-            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
-
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
             ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
@@ -172,11 +163,6 @@ jobs:
           docker-compose build --force-rm --no-cache \
             --tag ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${IMAGE_NAME}:${IMAGE_TAGS} \
             bcp-cms_${SERVICE_NAME}
-          
-          echo "Tagging ${IMAGE_NAME}..."
-          docker tag \
-            bcp-cms_${SERVICE_NAME} \
-            ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
 
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
