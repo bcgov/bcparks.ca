@@ -6,7 +6,6 @@ on:
     branches: [main,tools]
 
 jobs:
-
   build-frontend:
     runs-on: ubuntu-20.04
     environment: Main
@@ -17,46 +16,35 @@ jobs:
       DOCKER_BUILDKIT: 1
       SERVICE_NAME: react-frontend
       IMAGE_NAME: frontend
-      REACT_APP_API_BASE_URL: ${{secrets.REACT_APP_API_BASE_URL}}
-      REACT_APP_FRONTEND_BASE_URL: ${{secrets.REACT_APP_FRONTEND_BASE_URL}}
-      PUBLIC_URL: ${{secrets.PUBLIC_URL}}
-      OPENSHIFT_EXTERNAL_REPOSITORY: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-      OPENSHIFT_LICENSE_PLATE: ${{secrets.OPENSHIFT_LICENSE_PLATE}}
-      OPENSHIFT_SA_USERNAME: ${{secrets.OPENSHIFT_SA_USERNAME}}
-      OPENSHIFT_SA_PASSWORD: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+      REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
+      REACT_APP_FRONTEND_BASE_URL: ${{ secrets.REACT_APP_FRONTEND_BASE_URL }}
+      PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
+      OPENSHIFT_EXTERNAL_REPOSITORY: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}
+      OPENSHIFT_LICENSE_PLATE: ${{ secrets.OPENSHIFT_LICENSE_PLATE }}
+      OPENSHIFT_SA_USERNAME: ${{ secrets.OPENSHIFT_SA_USERNAME }}
+      OPENSHIFT_SA_PASSWORD: ${{ secrets.OPENSHIFT_SA_PASSWORD }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Login to OpenShift
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}
+          username: ${{ secrets.OPENSHIFT_SA_USERNAME }}
+          password: ${{ secrets.OPENSHIFT_SA_PASSWORD }}
 
-      - name: Building, pushing frontend
-        run: |
-          docker logout
-          echo "Logging in to RedHat..."
-          docker login ${{ secrets.REDHAT_REPO }} \
-            -u ${{ secrets.REDHAT_REPO_USER }} \
-            -p '${{ secrets.REDHAT_REPO_AUTH }}'
-          
-          echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${OPENSHIFT_SA_USERNAME} \
-            -p ${OPENSHIFT_SA_PASSWORD}
+      - name: Login to RedHat
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.REDHAT_REPO }}
+          username: ${{ secrets.REDHAT_REPO_USER }}
+          password: ${{ secrets.REDHAT_REPO_AUTH }}
 
-          echo "Building ${IMAGE_NAME}..."
-          docker-compose build --force-rm --no-cache \
-            --build-arg REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL} \
-            --build-arg REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL} \
-            --build-arg PUBLIC_URL=${PUBLIC_URL} \
-            ${SERVICE_NAME}
-          
-          echo "Tagging ${IMAGE_NAME}..."
-          docker tag \
-            bcp-cms_${SERVICE_NAME} \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
-        
-
-          echo "Pushing ${IMAGE_NAME}..."
-          docker image push \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
-
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+      
   build-cms:
     runs-on: ubuntu-20.04
     environment: Main
@@ -78,19 +66,23 @@ jobs:
       OPENSHIFT_SA_USERNAME: ${{secrets.OPENSHIFT_SA_USERNAME}}
       OPENSHIFT_SA_PASSWORD: ${{secrets.OPENSHIFT_SA_PASSWORD}}
     steps:
-      - uses: actions/checkout@v2
-      - name: Building, pushing api
-        run: |
-          echo "Logging in to RedHat..."
-          docker logout
-          docker login ${{ secrets.REDHAT_REPO }} \
-            -u ${{ secrets.REDHAT_REPO_USER }} \
-            -p '${{ secrets.REDHAT_REPO_AUTH }}'
-          
-          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${OPENSHIFT_SA_USERNAME} \
-            -p ${OPENSHIFT_SA_PASSWORD}
+      - name: Login to OpenShift
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}
+          username: ${{ secrets.OPENSHIFT_SA_USERNAME }}
+          password: ${{ secrets.OPENSHIFT_SA_PASSWORD }}
 
+      - name: Login to RedHat
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.REDHAT_REPO }}
+          username: ${{ secrets.REDHAT_REPO_USER }}
+          password: ${{ secrets.REDHAT_REPO_AUTH }}
+
+      - name: Building, pushing api
+        uses: docker/build-push-action@v2
+        run: |
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
             --build-arg DATABASE_HOST=${DATABASE_HOST} \
@@ -126,21 +118,23 @@ jobs:
       OPENSHIFT_SA_USERNAME: ${{secrets.OPENSHIFT_SA_USERNAME}}
       OPENSHIFT_SA_PASSWORD: ${{secrets.OPENSHIFT_SA_PASSWORD}}
     steps:
-      - uses: actions/checkout@v2
+      - name: Login to OpenShift
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}
+          username: ${{ secrets.OPENSHIFT_SA_USERNAME }}
+          password: ${{ secrets.OPENSHIFT_SA_PASSWORD }}
 
-      - name: Building, pushing staging
-        run: |
-          docker logout
-          echo "Logging in to RedHat..."
-          docker login ${{ secrets.REDHAT_REPO }} \
-            -u ${{ secrets.REDHAT_REPO_USER }} \
-            -p '${{ secrets.REDHAT_REPO_AUTH }}'
+      - name: Login to RedHat
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.REDHAT_REPO }}
+          username: ${{ secrets.REDHAT_REPO_USER }}
+          password: ${{ secrets.REDHAT_REPO_AUTH }}
           
-          echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${OPENSHIFT_SA_USERNAME} \
-            -p ${OPENSHIFT_SA_PASSWORD}
-
+      - name: Building, pushing staging
+        uses: actions/checkout@v2
+        run: |
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
             ${SERVICE_NAME}
