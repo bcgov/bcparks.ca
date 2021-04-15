@@ -30,12 +30,10 @@ jobs:
           push: true
           tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:latest
           build-args:
-            REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}}
             REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}}
-            PUBLIC_URL=${{secrets.PUBLIC_URL}}
-            REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
-            REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
-            REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL}
+            PUBLIC_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}}
+            REACT_APP_API_BASE_URL={{secrets.REACT_APP_API_BASE_URL}}
+            REACT_APP_CMS_BASE_URL={{secrets.REACT_APP_CMS_BASE_URL}}
             REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}}
             REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}}
             REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}}
