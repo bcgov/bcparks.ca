@@ -23,7 +23,6 @@ services:
       REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
       REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
       REACT_APP_FRONTEND_BASE_URL: ${REACT_APP_FRONTEND_BASE_URL}
-      PUBLIC_URL: ${REACT_APP_FRONTEND_BASE_URL}
       REACT_APP_KEYCLOAK_AUTH_URL: ${REACT_APP_KEYCLOAK_AUTH_URL}
       REACT_APP_KEYCLOAK_REALM: ${REACT_APP_KEYCLOAK_REALM}
       REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
@@ -52,7 +51,6 @@ services:
       API_USER_NAME: ${API_USER_NAME}
       API_USER_EMAIL: ${API_USER_EMAIL}
       API_USER_PASSWORD: ${API_USER_PASSWORD}
-      PUBLIC_URL: ${REACT_APP_FRONTEND_BASE_URL}
     networks:
       - bcp-cms-network
     depends_on:
@@ -81,27 +79,10 @@ services:
     build:
       context: src/web
       dockerfile: Dockerfile
-    # volumes:
-    #   - "./web:/opt/app-root/src/app"
-    #   - "./web/node_modules:/opt/app-root/src/app/node_modules"
-    #   - website:/app/site
     ports:
       - "8000:8000"
     networks:
       - bcp-cms-network
-
-  # public:
-  #   container_name: bcp-public
-  #   restart: unless-stopped
-  #   build:
-  #     context: src/web
-  #     dockerfile: Dockerfile-public
-  #   networks:
-  #     - bcp-cms-network
-  #   volumes:
-  #     - website:/usr/local/nginx/html
-  #   ports:
-  #     - "80:80"
 
 networks:
   bcp-cms-network:
