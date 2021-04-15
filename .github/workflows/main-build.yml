@@ -125,6 +125,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2.4.0
         with:
-          context: ./src/api/web
+          context: ./src/web
           push: true
           tags: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/api:latest
