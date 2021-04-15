@@ -49,10 +49,12 @@ RUN npm run build --prod
 
 FROM registry.access.redhat.com/ubi8/nginx-118 AS runtime
 USER 0
-RUN mkdir -p /var/cache/nginx/client_temp &&\
-    chmod -R 777 /var/cache/nginx/client_temp
+RUN mkdir -p /var/cache/nginx/client_temp
 COPY --from=build-deps /frontend/build /opt/app-root/src
 # COPY ./frontend /opt/app-root/src/app
 COPY ./nginx.conf /etc/nginx/nginx.conf
-EXPOSE 8080
+RUN chmod -R 777 /var/cache/nginx/client_temp && \
+    chown -R 1007770000 /var/cache/nginx/ && \
+    chown -R 1007770000 /opt/app-root/src
+USER 1007770000
 CMD ["nginx", "-g", "daemon off;"]

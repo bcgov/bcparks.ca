@@ -20,7 +20,7 @@ ENV DATABASE_SSL=${DATABASE_SSL}
 
 # add `/node_modules/.bin` to $PATH
 ENV PATH ./node_modules/.bin:$PATH
-
+USER 1007770000
 # install app dependencies
 COPY package.json ./
 
@@ -35,6 +35,8 @@ RUN cat ./config/server_template.js | envsubst > ./config/server.js && \
     chmod 766 ./config/server.js && \
     cat ./config/server.js
 
-RUN chmod -R 777 /opt/app-root/src/
+RUN chmod -R 777 /opt/app-root/src/ && \
+    chown -R 1007770000 /opt/app-root/src/
+USER 1007770000
 # start app
 CMD [ "npm", "start" ]

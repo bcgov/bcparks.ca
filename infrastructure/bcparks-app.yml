@@ -382,7 +382,7 @@ objects:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: ${STAGING_POD}
+    name: staging
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -408,10 +408,10 @@ objects:
     host: ${STAGING_POD}${URL_STUB}
     to:
       kind: Service
-      name: ${STAGING_POD}
+      name: staging
       weight: 100
     port:
-      targetPort: 8000
+      targetPort: ${STAGING_POD}
     wildcardPolicy: None
 
 ### API

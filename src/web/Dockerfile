@@ -19,6 +19,7 @@ RUN yum install -y \
     pip3 install virtualenv 
 
 # install app dependencies
+USER 1007770000
 COPY package.json ./
 RUN npm install --unsafe-perm 
 RUN npm install -g gatsby-cli
@@ -28,7 +29,10 @@ RUN npm install -g gatsby-cli
     
 # add app
 COPY . ./
-RUN chmod -R 777 /opt/app-root/src/
+USER 0
+RUN chmod -R 777 . && \
+    chown -R 1007770000 .
+USER 1007770000
 EXPOSE 8000
 # start app
 CMD ["gatsby", "develop", "-H", "0.0.0.0"]
