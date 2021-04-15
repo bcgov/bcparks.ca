@@ -49,6 +49,7 @@ RUN npm run build --prod
 
 FROM registry.access.redhat.com/ubi8/nginx-118 AS runtime
 USER 0
+RUN yum install -y nmap iputils
 RUN mkdir -p /var/cache/nginx/client_temp
 COPY --from=build-deps /frontend/build /opt/app-root/src
 # COPY ./frontend /opt/app-root/src/app
