@@ -25,9 +25,10 @@ RUN npm install -g gatsby-cli
 
 # add bash to the image
 # RUN apk add --no-cache bash
-
+    
 # add app
 COPY . ./
+RUN chmod -R 777 /opt/app-root/src/
 EXPOSE 8000
 # start app
 CMD ["gatsby", "develop", "-H", "0.0.0.0"]
