@@ -30,9 +30,9 @@ jobs:
           push: true
           tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:latest
           build-args:
-            REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}}
             REACT_APP_API_BASE_URL={{secrets.REACT_APP_API_BASE_URL}}
             REACT_APP_CMS_BASE_URL={{secrets.REACT_APP_CMS_BASE_URL}}
+            REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}}
             REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}}
             REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}}
             REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}}
@@ -67,6 +67,10 @@ jobs:
             DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}}
             DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} 
             DATABASE_SSL=${{secrets.DATABASE_SSL}}
+            API_TOKEN=${{secrets.API_TOKEN}}
+            API_USER_NAME=${{secrets.API_USER_NAME}}
+            API_USER_EMAIL=${{secrets.API_USER_EMAIL}}
+            API_USER_PASSWORD=${{secrets.API_USER_PASSWORD}}
  
   build-api:
     runs-on: ubuntu-20.04
@@ -91,7 +95,7 @@ jobs:
           context: ./src/api/BCParksApi
           push: true
           tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:latest
-
+ 
   build-staging:
     runs-on: ubuntu-20.04
     environment: Main
