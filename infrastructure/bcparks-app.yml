@@ -50,8 +50,10 @@ objects:
 #   Deployment Config
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
     name: ${FRONTEND_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -142,8 +144,10 @@ objects:
 ### CMS
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
     name: ${CMS_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -204,8 +208,10 @@ objects:
 #   CMS Service
 - apiVersion: v1
   kind: Service
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
     name: ${CMS_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -240,8 +246,10 @@ objects:
 ### Database
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
     name: ${DB_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -319,8 +327,10 @@ objects:
 #   DB Service
 - apiVersion: v1
   kind: Service
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
     name: ${DB_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -340,8 +350,10 @@ objects:
 ### Staging
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
     name: ${STAGING_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -380,9 +392,11 @@ objects:
   status: {}
 #   Staging Service
 - apiVersion: v1
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   kind: Service
   metadata:
     name: staging
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -417,8 +431,10 @@ objects:
 ### API
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
     name: ${API_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -458,8 +474,10 @@ objects:
 #   API Service
 - apiVersion: v1
   kind: Service
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
     name: bcparks-api
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
