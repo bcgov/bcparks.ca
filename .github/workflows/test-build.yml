@@ -35,9 +35,9 @@ jobs:
             -p '${{ secrets.REDHAT_REPO_AUTH }}'
                     
           echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${{secrets.OPENSHIFT_SA_USERNAME}} \
-            -p '${(secrets.OPENSHIFT_SA_PASSWORD}}'
+          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools \
+            -u ${secrets.OPENSHIFT_SA_USERNAME} \
+            -p ${secrets.OPENSHIFT_SA_PASSWORD}
 
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
@@ -85,9 +85,9 @@ jobs:
             -p '${{ secrets.REDHAT_REPO_AUTH }}'
                     
           echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${{secrets.OPENSHIFT_SA_USERNAME}} \
-            -p '${(secrets.OPENSHIFT_SA_PASSWORD}}'
+          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools \
+            -u ${secrets.OPENSHIFT_SA_USERNAME} \
+            -p ${secrets.OPENSHIFT_SA_PASSWORD}
 
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
@@ -130,9 +130,9 @@ jobs:
             -p '${{ secrets.REDHAT_REPO_AUTH }}'
           
           echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${{secrets.OPENSHIFT_SA_USERNAME}} \
-            -p '${(secrets.OPENSHIFT_SA_PASSWORD}}'
+          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools \
+            -u ${secrets.OPENSHIFT_SA_USERNAME} \
+            -p ${secrets.OPENSHIFT_SA_PASSWORD}
 
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \

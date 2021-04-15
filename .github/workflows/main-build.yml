@@ -36,9 +36,9 @@ jobs:
             -p '${{ secrets.REDHAT_REPO_AUTH }}'
           
           echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${{secrets.OPENSHIFT_SA_USERNAME}} \
-            -p '${(secrets.OPENSHIFT_SA_PASSWORD}}'
+          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools \
+            -u ${secrets.OPENSHIFT_SA_USERNAME} \
+            -p ${secrets.OPENSHIFT_SA_PASSWORD}
 
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
@@ -87,11 +87,10 @@ jobs:
             -u ${{ secrets.REDHAT_REPO_USER }} \
             -p '${{ secrets.REDHAT_REPO_AUTH }}'
           
-          echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${{secrets.OPENSHIFT_SA_USERNAME}} \
-            -p '${(secrets.OPENSHIFT_SA_PASSWORD}}'
-          
+          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools \
+            -u ${secrets.OPENSHIFT_SA_USERNAME} \
+            -p ${secrets.OPENSHIFT_SA_PASSWORD}
+
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
             --build-arg DATABASE_HOST=${DATABASE_HOST} \
@@ -138,9 +137,9 @@ jobs:
             -p '${{ secrets.REDHAT_REPO_AUTH }}'
           
           echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${{secrets.OPENSHIFT_SA_USERNAME}} \
-            -p '${(secrets.OPENSHIFT_SA_PASSWORD}}'
+          docker login ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools \
+            -u ${secrets.OPENSHIFT_SA_USERNAME} \
+            -p ${secrets.OPENSHIFT_SA_PASSWORD}
 
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
