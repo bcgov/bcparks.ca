@@ -39,11 +39,16 @@ jobs:
           password: ${{ secrets.REDHAT_REPO_AUTH }}
 
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v2.4.0
         with:
-          context: src/frontend
+          context: ./src/frontend
           push: true
           tags: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/frontend:latest
+          build-args:
+            REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}
+            REACT_APP_FRONTEND_BASE_URL=${{ secrets.REACT_APP_FRONTEND_BASE_URL }}
+            PUBLIC_URL=${{ secrets.PUBLIC_URL }}
+
       
   # build-cms:
   #   runs-on: ubuntu-20.04
