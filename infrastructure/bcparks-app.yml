@@ -369,7 +369,7 @@ objects:
           from:
             kind: ImageStreamTag
             namespace: "${OC_NAMESPACE}-tools"
-            name: 'staging:d${OC_APP}'
+            name: 'staging:${OC_APP}'
   status: {}
 
 
