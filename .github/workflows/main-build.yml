@@ -24,6 +24,8 @@ jobs:
       OPENSHIFT_SA_USERNAME: ${{ secrets.OPENSHIFT_SA_USERNAME }}
       OPENSHIFT_SA_PASSWORD: ${{ secrets.OPENSHIFT_SA_PASSWORD }}
     steps:
+      - name: checkout
+        uses: actions/checkout@v2
       - name: Login to OpenShift
         uses: docker/login-action@v1
         with:
@@ -48,6 +50,7 @@ jobs:
             REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}
             REACT_APP_FRONTEND_BASE_URL=${{ secrets.REACT_APP_FRONTEND_BASE_URL }}
             PUBLIC_URL=${{ secrets.PUBLIC_URL }}
+          
 
       
   # build-cms:
