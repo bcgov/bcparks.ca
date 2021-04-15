@@ -28,7 +28,7 @@ jobs:
         with:
           context: ./src/frontend
           push: true
-          tags: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/frontend:latest
+          tags: image-registry.apps.silver.devops.gov.bc.ca/61d198-tools/frontend:latest
           build-args:
             REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}
             REACT_APP_FRONTEND_BASE_URL=${{ secrets.REACT_APP_FRONTEND_BASE_URL }}
