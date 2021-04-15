@@ -34,6 +34,11 @@ jobs:
           docker login ${{ secrets.REDHAT_REPO }} \
             -u ${{ secrets.REDHAT_REPO_USER }} \
             -p '${{ secrets.REDHAT_REPO_AUTH }}'
+          
+          echo "Logging in to OpenShift repository with Secrets..."
+          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
+            -u ${{secrets.OPENSHIFT_SA_USERNAME}} \
+            -p '${(secrets.OPENSHIFT_SA_PASSWORD}}'
 
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
@@ -46,11 +51,7 @@ jobs:
           docker tag \
             bcp-cms_${SERVICE_NAME} \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
-          
-          echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${OPENSHIFT_SA_USERNAME} \
-            -p ${OPENSHIFT_SA_PASSWORD}
+        
 
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
@@ -88,8 +89,8 @@ jobs:
           
           echo "Logging in to OpenShift repository with Secrets..."
           docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${OPENSHIFT_SA_USERNAME} \
-            -p ${OPENSHIFT_SA_PASSWORD}
+            -u ${{secrets.OPENSHIFT_SA_USERNAME}} \
+            -p '${(secrets.OPENSHIFT_SA_PASSWORD}}'
           
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
@@ -138,8 +139,8 @@ jobs:
           
           echo "Logging in to OpenShift repository with Secrets..."
           docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${{ secrets.OPENSHIFT_SA_USERNAME}} \
-            -p ${{ secrets.OPENSHIFT_SA_PASSWORD}}
+            -u ${{secrets.OPENSHIFT_SA_USERNAME}} \
+            -p '${(secrets.OPENSHIFT_SA_PASSWORD}}'
 
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
@@ -151,11 +152,6 @@ jobs:
           docker tag \
             bcp-cms_${SERVICE_NAME} \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
-          
-          echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${OPENSHIFT_SA_USERNAME} \
-            -p ${OPENSHIFT_SA_PASSWORD}
 
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
