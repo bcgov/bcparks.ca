@@ -291,17 +291,6 @@ objects:
               - containerPort: 5432
                 protocol: TCP
                 name: postgresql
-            readinessProbe:
-              exec:
-                command:
-                  - /bin/sh
-                  - '-i'
-                  - '-c'
-                  - >-
-                    psql -h 127.0.0.1 -d postgres -U
-                    $POSTGRESQL_USER -c 'SELECT 1'
-              initialDelaySeconds: 5
-              timeoutSeconds: 1
             resources: {}
             securityContext:
               capabilities: {}
