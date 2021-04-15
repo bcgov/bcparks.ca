@@ -29,15 +29,11 @@ jobs:
 
       - name: Building, pushing frontend
         run: |
+          docker logout
           echo "Logging in to RedHat..."
           docker login ${{ secrets.REDHAT_REPO }} \
             -u ${{ secrets.REDHAT_REPO_USER }} \
             -p '${{ secrets.REDHAT_REPO_AUTH }}'
-          
-          echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${{ secrets.OPENSHIFT_SA_USERNAME}} \
-            -p ${{ secrets.OPENSHIFT_SA_PASSWORD}}
 
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
@@ -51,6 +47,11 @@ jobs:
             bcp-cms_${SERVICE_NAME} \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
           
+          echo "Logging in to OpenShift repository with Secrets..."
+          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
+            -u ${{ secrets.OPENSHIFT_SA_USERNAME}} \
+            -p ${{ secrets.OPENSHIFT_SA_PASSWORD}}
+
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
@@ -80,6 +81,7 @@ jobs:
       - name: Building, pushing api
         run: |
           echo "Logging in to RedHat..."
+          docker logout
           docker login ${{ secrets.REDHAT_REPO }} \
             -u ${{ secrets.REDHAT_REPO_USER }} \
             -p '${{ secrets.REDHAT_REPO_AUTH }}'
@@ -128,6 +130,7 @@ jobs:
 
       - name: Building, pushing staging
         run: |
+          docker logout
           echo "Logging in to RedHat..."
           docker login ${{ secrets.REDHAT_REPO }} \
             -u ${{ secrets.REDHAT_REPO_USER }} \
@@ -141,11 +144,18 @@ jobs:
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
             ${SERVICE_NAME}
+
           docker image ls
+          
           echo "Tagging ${IMAGE_NAME}..."
           docker tag \
             bcp-cms_${SERVICE_NAME} \
             ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+          
+          echo "Logging in to OpenShift repository with Secrets..."
+          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${OPENSHIFT_LICENSE_PLATE}-tools \
+            -u ${{ secrets.OPENSHIFT_SA_USERNAME}} \
+            -p ${{ secrets.OPENSHIFT_SA_PASSWORD}}
 
           echo "Pushing ${IMAGE_NAME}..."
           docker image push \
