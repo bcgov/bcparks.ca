@@ -47,8 +47,8 @@ jobs:
                     
           echo "Logging in to OpenShift repository with Secrets..."
           docker login ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${OPENSHIFT_SA_USERNAME} \
-            -p ${OPENSHIFT_SA_PASSWORD}
+            -u ${{ secrets.OPENSHIFT_SA_USERNAME }} \
+            -p '${{ secrets.OPENSHIFT_SA_PASSWORD }}'
 
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
@@ -109,8 +109,8 @@ jobs:
                     
           echo "Logging in to OpenShift repository with Secrets..."
           docker login ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${OPENSHIFT_SA_USERNAME} \
-            -p ${OPENSHIFT_SA_PASSWORD}
+            -u ${{ secrets.OPENSHIFT_SA_USERNAME }} \
+            -p '${{ secrets.OPENSHIFT_SA_PASSWORD }}'
 
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
@@ -165,8 +165,8 @@ jobs:
           
           echo "Logging in to OpenShift repository with Secrets..."
           docker login ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools \
-            -u ${OPENSHIFT_SA_USERNAME} \
-            -p ${OPENSHIFT_SA_PASSWORD}
+            -u ${{ secrets.OPENSHIFT_SA_USERNAME }} \
+            -p '${{ secrets.OPENSHIFT_SA_PASSWORD }}'
 
           echo "Building ${IMAGE_NAME}..."
           docker-compose build --force-rm --no-cache \
