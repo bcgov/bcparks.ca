@@ -24,6 +24,7 @@ jobs:
       OPENSHIFT_LICENSE_PLATE: ${{secrets.OPENSHIFT_LICENSE_PLATE}}
       OPENSHIFT_SA_USERNAME: ${{secrets.OPENSHIFT_SA_USERNAME}}
       OPENSHIFT_SA_PASSWORD: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+      CONTEXT: ./src/frontend
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -51,7 +52,8 @@ jobs:
             -p '${{ secrets.OPENSHIFT_SA_PASSWORD }}'
 
           echo "Building ${IMAGE_NAME}..."
-          docker-compose build --force-rm --no-cache \
+          docker build \
+            ${CONTEXT} \
             --build-arg REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL} \
             --build-arg REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL} \
             --build-arg PUBLIC_URL=${PUBLIC_URL} \
@@ -82,6 +84,7 @@ jobs:
       OPENSHIFT_LICENSE_PLATE: ${{secrets.OPENSHIFT_LICENSE_PLATE}}
       OPENSHIFT_SA_USERNAME: ${{secrets.OPENSHIFT_SA_USERNAME}}
       OPENSHIFT_SA_PASSWORD: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+      CONTEXT: ./src/backend
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -109,7 +112,8 @@ jobs:
             -p '${{ secrets.OPENSHIFT_SA_PASSWORD }}'
 
           echo "Building ${IMAGE_NAME}..."
-          docker-compose build --force-rm --no-cache \
+          docker build \
+            ${CONTEXT} \
             --build-arg DATABASE_HOST=${DATABASE_HOST} \
             --build-arg DATABASE_PORT=${DATABASE_PORT} \
             --build-arg DATABASE_NAME=${DATABASE_NAME} \
@@ -133,6 +137,7 @@ jobs:
       DOCKER_BUILDKIT: 1
       SERVICE_NAME: staging
       IMAGE_NAME: staging
+      CONTEXT: ./src/web
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -160,7 +165,8 @@ jobs:
             -p '${{ secrets.OPENSHIFT_SA_PASSWORD }}'
 
           echo "Building ${IMAGE_NAME}..."
-          docker-compose build --force-rm --no-cache \
+          docker build \
+            ${CONTEXT} \
             --tag ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${IMAGE_NAME}:${IMAGE_TAGS} \
             bcp-cms_${SERVICE_NAME}
 
