@@ -39,7 +39,6 @@ jobs:
           password: ${{ secrets.OPENSHIFT_SA_PASSWORD }}
 
       - name: Building, pushing frontend
-        uses: actions/checkout@v2
         run: |
           echo "Logging in to RedHat..."
           docker login ${{ secrets.REDHAT_REPO }} \
@@ -102,7 +101,6 @@ jobs:
           password: ${{ secrets.OPENSHIFT_SA_PASSWORD }}
 
       - name: Building, pushing api
-        uses: actions/checkout@v2
         run: |
           echo "Logging in to RedHat..."
           docker login ${{ secrets.REDHAT_REPO }} \
@@ -159,7 +157,6 @@ jobs:
           password: ${{ secrets.OPENSHIFT_SA_PASSWORD }}
 
       - name: Building, pushing staging
-        uses: actions/checkout@v2
         run: |
           echo "Logging in to RedHat..."
           docker login ${{ secrets.REDHAT_REPO }} \
