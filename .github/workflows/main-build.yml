@@ -19,9 +19,9 @@ jobs:
       - name: Login to OpenShift
         uses: docker/login-action@v1
         with:
-          registry: image-registry.apps.silver.devops.gov.bc.ca
-          username: githubactions
-          password: eyJhbGciOiJSUzI1NiIsImtpZCI6InIxU0VzMHpBT1pXeEhSZVlxek14aXQ2R2FLUDF3RXprMlhHald5SFJaNzQifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiI2MWQxOTgtdG9vbHMiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoiZ2l0aHViYWN0aW9ucy10b2tlbi12dHZqcCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJnaXRodWJhY3Rpb25zIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiZDcyMGJhZTItZjhlMi00YTVmLTkyM2EtZjc0MDlkNjc4YzA4Iiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OjYxZDE5OC10b29sczpnaXRodWJhY3Rpb25zIn0.P_qyZwGQQu4ALBeIGoQGiNfJHt0YxvupWrlywt1N3re6uYzqadrpMW1le1caI6hYdvYnmgpIvtqLRTsRAo9iRAQhFMPBqBEMwUp8BvyhYrQoMtakU-y_U-fPPcdZz4lPtP2GR1IdGnjplksTn8QAjGsD1Np1-iO9bl4YdW7O4E40vpSB59aAp0aKlrRRRZpjAsiXceJOl8CsXVoo7pjQA96BK_yUU7ZUOipq14cqqM1xJyV60kvY8EZ6JiJk7-OhyCGmq0-PS6QgMWY32vLde3SutfS2MWzGA4p2yinUcc2HIKfKArHiSPBJrnHS8iohyziU-V2hDEruS5Uqaf94fQ
+          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
 
       - name: Build and push
         uses: docker/build-push-action@v2.4.0
