@@ -22,7 +22,7 @@ parameters:
   required: true
 - name: CMS_POD
   required: true
-  value: cms
+  value: strapi
 - name: CMS_URL
   required: true
 - name: API_POD
@@ -98,8 +98,10 @@ objects:
 #   Frontend Service
 - apiVersion: v1
   kind: Service
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
     name: ${FRONTEND_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -134,7 +136,7 @@ objects:
       name: ${FRONTEND_POD}
       weight: 100
     port:
-      targetPort: 3000
+      targetPort: http
     wildcardPolicy: None
 
 ### CMS
@@ -457,7 +459,7 @@ objects:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: ${API_POD}
+    name: bcparks-api
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -484,7 +486,7 @@ objects:
     host: ${API_URL}${URL_STUB}
     to:
       kind: Service
-      name: ${API_POD}
+      name: bcparks-api
       weight: 100
     port:
       targetPort: 5000
