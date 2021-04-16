@@ -35,10 +35,6 @@ RUN yum install -y \
 COPY . .
 RUN npm install && \
     npm install -g @angular/cli react-scripts@3.4.1
-
-# RUN ng build --prod
-# add app
-
 RUN mkdir -p /frontend/node_modules/.cache && \
     chmod 777 /frontend/node_modules/.cache
 ########################################
@@ -60,4 +56,4 @@ COPY . ./
 #     chown -R 1007770000 /opt/app-root/src
 # USER 1007770000
 # CMD ["nginx", "-g", "daemon off;"]
-CMD ["npm","start","--port","8080"]
+CMD ["npm","start"]
