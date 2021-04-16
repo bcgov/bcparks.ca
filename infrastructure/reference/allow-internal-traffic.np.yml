@@ -17,5 +17,9 @@ spec:
           port: 80
         - protocol: TCP
           port: 5432
+        - protocol: TCP
+          port: 8000
+        - protocol: TCP
+          port: 5000
   policyTypes:
     - Ingress
