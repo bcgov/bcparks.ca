@@ -20,7 +20,7 @@ const apiUrl = () => {
 };
 
 const cmsAxios = axios.create({
-  baseURL: cmsUrl(),
+  baseURL: "http://cms-61d198-dev.apps.silver.devops.gov.bc.ca",
 });
 
 const apiAxios = axios.create({
