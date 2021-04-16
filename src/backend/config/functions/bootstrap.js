@@ -261,6 +261,7 @@ const loadUrgency = async () => {
 };
 
 const loadPublicAdvisory = async () => {
+  await strapi.services["public-advisory"].delete();
   const currentData = await strapi.services["public-advisory"].find();
   if (currentData.length === 0) {
     console.log("Loading Public Advisory Event..");
