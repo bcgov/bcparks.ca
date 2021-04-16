@@ -36,7 +36,7 @@ jobs:
           context: ./src/frontend
           push: true
           tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:dev
-          build-args:
+          buildArgs:
             REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}}
             REACT_APP_API_BASE_URL={{secrets.REACT_APP_API_BASE_URL}}
             REACT_APP_CMS_BASE_URL={{secrets.REACT_APP_CMS_BASE_URL}}
@@ -75,7 +75,7 @@ jobs:
           context: ./src/api/BCParksApi
           push: true
           tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:dev
-          build-args:
+          buildArgs:
             ASPNETCORE_ENVIRONMENT=${{secrets.ASPNETCORE_ENVIRONMENT}}
             ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}}
             REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}}
@@ -115,7 +115,7 @@ jobs:
           context: ./src/backend
           push: true
           tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:dev
-          build-args:
+          buildArgs:
             DATABASE_HOST=${{secrets.DATABASE_HOST}}
             DATABASE_PORT=${{secrets.DATABASE_PORT}}
             DATABASE_NAME=${{secrets.DATABASE_NAME}}
