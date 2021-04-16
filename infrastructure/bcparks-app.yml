@@ -20,6 +20,11 @@ parameters:
   value: web
 - name: FRONTEND_URL
   required: true
+- name: CMS_POD
+  required: true
+  value: strapi
+- name: CMS_URL
+  required: true
 - name: API_POD
   required: true
   value: api
@@ -45,8 +50,10 @@ objects:
 #   Deployment Config
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
     name: ${FRONTEND_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -93,8 +100,10 @@ objects:
 #   Frontend Service
 - apiVersion: v1
   kind: Service
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
     name: ${FRONTEND_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -129,21 +138,23 @@ objects:
       name: ${FRONTEND_POD}
       weight: 100
     port:
-      targetPort: 3000
+      targetPort: http
     wildcardPolicy: None
 
-### API
+### CMS
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
-    name: ${API_POD}
+    name: ${CMS_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
     completionDeadlineSeconds: 1200
     replicas: 1
     selector:
-      name: ${API_POD}
+      name: ${CMS_POD}
     strategy:
       type: Recreate
       maxSurge: 50%
@@ -152,7 +163,7 @@ objects:
       metadata:
         labels:
           dev-app: ${NAME}
-          name: ${API_POD}
+          name: ${CMS_POD}
       spec:
         containers:
           - env:
@@ -179,52 +190,54 @@ objects:
                 value: ${DB_SSL}
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/strapi:${OC_APP}
-            name: ${API_POD}
+            name: ${CMS_POD}
             ports:
-              - containerPort: 1377
+              - containerPort: 1337
     triggers:
       - type: ConfigChange
       - type: ImageChange
         imageChangeParams:
           automatic: true
           containerNames:
-            - ${API_POD}
+            - ${CMS_POD}
           from:
             kind: ImageStreamTag
             namespace: "${OC_NAMESPACE}-tools"
             name: 'strapi:${OC_APP}'
   status: {}
-#   API Service
+#   CMS Service
 - apiVersion: v1
   kind: Service
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
-    name: ${API_POD}
+    name: ${CMS_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
     ports:
-      - name: ${API_POD}
+      - name: ${CMS_POD}
         port: 1337
         targetPort: 1337
     selector:
-      name: ${API_POD}
-#   API Route
+      name: ${CMS_POD}
+#   CMS Route
 - apiVersion: route.openshift.io/v1
   kind: Route
   namespace: ${OC_NAMESPACE}-${OC_APP}
   labels:
-    app: ${API_POD}
+    app: ${CMS_POD}
     app.kubernetes.io/component: ${NAME}
     app.kubernetes.io/instance: ${NAME}
     app.kubernetes.io/part-of: ${NAME}
   metadata:
-    name: ${API_POD}
+    name: ${CMS_POD}
     namespace: ${OC_NAMESPACE}-${OC_APP}
   spec:
-    host: ${API_URL}${URL_STUB}
+    host: ${CMS_URL}${URL_STUB}
     to:
       kind: Service
-      name: ${API_POD}
+      name: ${CMS_POD}
       weight: 100
     port:
       targetPort: 1337
@@ -233,8 +246,10 @@ objects:
 ### Database
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
     name: ${DB_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -291,17 +306,6 @@ objects:
               - containerPort: 5432
                 protocol: TCP
                 name: postgresql
-            readinessProbe:
-              exec:
-                command:
-                  - /bin/sh
-                  - '-i'
-                  - '-c'
-                  - >-
-                    psql -h 127.0.0.1 -d postgres -U
-                    $POSTGRESQL_USER -c 'SELECT 1'
-              initialDelaySeconds: 5
-              timeoutSeconds: 1
             resources: {}
             securityContext:
               capabilities: {}
@@ -323,8 +327,10 @@ objects:
 #   DB Service
 - apiVersion: v1
   kind: Service
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
     name: ${DB_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -344,8 +350,10 @@ objects:
 ### Staging
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
     name: ${STAGING_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -380,15 +388,15 @@ objects:
           from:
             kind: ImageStreamTag
             namespace: "${OC_NAMESPACE}-tools"
-            name: 'staging:d${OC_APP}'
+            name: 'staging:${OC_APP}'
   status: {}
-
-
 #   Staging Service
 - apiVersion: v1
+  namespace: ${OC_NAMESPACE}-${OC_APP}
   kind: Service
   metadata:
-    name: ${STAGING_POD}
+    name: staging
+    namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
   spec:
@@ -398,7 +406,6 @@ objects:
         targetPort: 8000
     selector:
       name: ${STAGING_POD}
-
 #   Staging Route
 - apiVersion: route.openshift.io/v1
   kind: Route
@@ -415,8 +422,90 @@ objects:
     host: ${STAGING_POD}${URL_STUB}
     to:
       kind: Service
-      name: ${STAGING_POD}
+      name: staging
       weight: 100
     port:
-      targetPort: 8000
+      targetPort: ${STAGING_POD}
+    wildcardPolicy: None
+
+### API
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  namespace: ${OC_NAMESPACE}-${OC_APP}
+  metadata:
+    name: ${API_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
+    labels:
+      app.kubernetes.io/part-of: ${NAME}
+  spec:
+    completionDeadlineSeconds: 1200
+    replicas: 1
+    selector:
+      name: ${API_POD}
+    strategy:
+      type: Recreate
+      maxSurge: 50%
+      maxUnavailable: 0
+    template:
+      metadata:
+        labels:
+          dev-app: ${NAME}
+          name: ${API_POD}
+      spec:
+        containers:
+          - env:
+            image: >-
+              image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/api:${OC_APP}
+            name: ${API_POD}
+            ports:
+              - containerPort: 5000
+    triggers:
+      - type: ConfigChange
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - ${API_POD}
+          from:
+            kind: ImageStreamTag
+            namespace: "${OC_NAMESPACE}-tools"
+            name: 'api:${OC_APP}'
+  status: {}
+#   API Service
+- apiVersion: v1
+  kind: Service
+  namespace: ${OC_NAMESPACE}-${OC_APP}
+  metadata:
+    name: bcparks-api
+    namespace: ${OC_NAMESPACE}-${OC_APP}
+    labels:
+      app.kubernetes.io/part-of: ${NAME}
+  spec:
+    ports:
+      - name: ${API_POD}
+        port: 5000
+        targetPort: 5000
+    selector:
+      name: ${API_POD}
+
+#   API Route
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  namespace: ${OC_NAMESPACE}-${OC_APP}
+  labels:
+    app: ${API_POD}
+    app.kubernetes.io/component: ${NAME}
+    app.kubernetes.io/instance: ${NAME}
+    app.kubernetes.io/part-of: ${NAME}
+  metadata:
+    name: ${API_POD}
+    namespace: ${OC_NAMESPACE}-${OC_APP}
+  spec:
+    host: ${API_URL}${URL_STUB}
+    to:
+      kind: Service
+      name: bcparks-api
+      weight: 100
+    port:
+      targetPort: 5000
     wildcardPolicy: None
