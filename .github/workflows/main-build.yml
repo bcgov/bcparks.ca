@@ -76,8 +76,9 @@ jobs:
           push: true
           tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:dev
           buildArgs:
-            ASPNETCORE_ENVIRONMENT=${{secrets.ASPNETCORE_ENVIRONMENT}}
+            API_TOKEN=${{secrets.API_TOKEN}}
             ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}}
+            ASPNETCORE_ENVIRONMENT=${{secrets.ASPNETCORE_ENVIRONMENT}}
             REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}}
             REACT_APP_CMS_BASE_URL=${{secrets.REACT_APP_CMS_BASE_URL}}
             REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}}
