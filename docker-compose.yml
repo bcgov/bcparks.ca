@@ -16,7 +16,6 @@ services:
       REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
     ports:
       - "5000:5000"
-    restart: always
     networks:
       - bcp-cms-network
 
@@ -70,7 +69,6 @@ services:
 
   postgres:
     image: postgres:13.2
-    restart: always
     container_name: bcp-db
     environment:
       POSTGRES_PASSWORD: postgres
