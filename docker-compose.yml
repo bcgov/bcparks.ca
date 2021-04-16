@@ -51,6 +51,7 @@ services:
       API_USER_NAME: ${API_USER_NAME}
       API_USER_EMAIL: ${API_USER_EMAIL}
       API_USER_PASSWORD: ${API_USER_PASSWORD}
+      REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
     networks:
       - bcp-cms-network
     depends_on:
