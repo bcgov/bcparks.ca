@@ -28,21 +28,26 @@ jobs:
           password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
 
       - name: Build and push
-        uses: docker/build-push-action@v2.4.0
-        with:
-          context: ./src/frontend
-          push: true
-          no-cache: true
-          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:dev
-          build-args:
-            REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}}
-            REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}}
-            REACT_APP_CMS_BASE_URL=${{secrets.REACT_APP_CMS_BASE_URL}}
-            REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}}
-            REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}}
-            REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}}
-            API_TOKEN=${{secrets.API_TOKEN}}
- 
+        env:
+          COMPOSE_DOCKER_CLI_BUILD: 1
+          DOCKER_BUILDKIT: 1
+          CONTEXT: ./src/frontend
+        run: |  
+          docker build \
+          --tag ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:${{secrets.OC_APP}}\
+          --push \
+          --build-arg \
+            API_TOKEN=${{secrets.API_TOKEN}} \
+            ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}} \
+            ASPNETCORE_ENVIRONMENT=${{secrets.ASPNETCORE_ENVIRONMENT}} \
+            REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}} \
+            REACT_APP_CMS_BASE_URL=${{secrets.REACT_APP_CMS_BASE_URL}} \
+            REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}} \
+            REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}} \
+            REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
+            REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
+          ${CONTEXT}
+
   build-api:
     runs-on: ubuntu-20.04
     environment: Main
@@ -65,22 +70,26 @@ jobs:
           password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
 
       - name: Build and push
-        uses: docker/build-push-action@v2.4.0
-        with:
-          context: ./src/api/BCParksApi
-          push: true
-          no-cache: true
-          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:dev
-          build-args:
-            API_TOKEN=${{secrets.API_TOKEN}}
-            ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}}
-            ASPNETCORE_ENVIRONMENT=${{secrets.ASPNETCORE_ENVIRONMENT}}
-            REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}}
-            REACT_APP_CMS_BASE_URL=${{secrets.REACT_APP_CMS_BASE_URL}}
-            REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}}
-            REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}}
-            REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}}
-            REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}}
+        env:
+          COMPOSE_DOCKER_CLI_BUILD: 1
+          DOCKER_BUILDKIT: 1
+          CONTEXT: ./src/api/BCParksApi
+        run: |  
+          docker build \
+          --tag ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:${{secrets.OC_APP}} \
+          --push \
+          --build-arg \
+            API_TOKEN=${{secrets.API_TOKEN}} \
+            ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}} \
+            ASPNETCORE_ENVIRONMENT=${{secrets.ASPNETCORE_ENVIRONMENT}} \
+            REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}} \
+            REACT_APP_CMS_BASE_URL=${{secrets.REACT_APP_CMS_BASE_URL}} \
+            REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}} \
+            REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}} \
+            REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
+            REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
+          ${CONTEXT}
+
  
   build-cms:
     runs-on: ubuntu-20.04
@@ -104,24 +113,27 @@ jobs:
           password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
 
       - name: Build and push
-        uses: docker/build-push-action@v2.4.0
-        with:
-          context: ./src/backend
-          push: true
-          no-cache: true
-          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:dev
-          build-args:
-            DATABASE_HOST=${{secrets.DATABASE_HOST}}
-            DATABASE_PORT=${{secrets.DATABASE_PORT}}
-            DATABASE_NAME=${{secrets.DATABASE_NAME}}
-            DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}}
-            DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}}
-            DATABASE_SSL=${{secrets.DATABASE_SSL}}
-            API_TOKEN=${{secrets.API_TOKEN}}
-            API_USER_NAME=${{secrets.API_USER_NAME}}
-            API_USER_EMAIL=${{secrets.API_USER_EMAIL}}
-            API_USER_PASSWORD=${{secrets.API_USER_PASSWORD}}
-            REACT_APP_CMS_BASE_URL=${{secrets.REACT_APP_CMS_BASE_URL}}
+        env:
+          COMPOSE_DOCKER_CLI_BUILD: 1
+          DOCKER_BUILDKIT: 1
+          CONTEXT: ./src/backend
+        run: |  
+          docker build \
+          --tag ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:${{secrets.OC_APP}} \
+          --push \
+          --build-arg \
+            DATABASE_HOST=${{secrets.DATABASE_HOST}} \
+            DATABASE_PORT=${{secrets.DATABASE_PORT}} \
+            DATABASE_NAME=${{secrets.DATABASE_NAME}} \
+            DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} \
+            DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} \
+            DATABASE_SSL=${{secrets.DATABASE_SSL}} \
+            API_TOKEN=${{secrets.API_TOKEN}} \
+            API_USER_NAME=${{secrets.API_USER_NAME}} \
+            API_USER_EMAIL=${{secrets.API_USER_EMAIL}} \
+            API_USER_PASSWORD=${{secrets.API_USER_PASSWORD}} \
+            REACT_APP_CMS_BASE_URL=${{secrets.REACT_APP_CMS_BASE_URL}} \
+          ${CONTEXT}
 
   build-staging:
     runs-on: ubuntu-20.04
