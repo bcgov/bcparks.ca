@@ -3,7 +3,6 @@ FROM registry.access.redhat.com/ubi7/nodejs-14 AS build-deps
 ARG REACT_APP_API_BASE_URL
 ARG REACT_APP_CMS_BASE_URL
 ARG REACT_APP_FRONTEND_BASE_URL
-ARG PUBLIC_URL
 ARG REACT_APP_KEYCLOAK_AUTH_URL
 ARG REACT_APP_KEYCLOAK_REALM
 ARG REACT_APP_KEYCLOAK_CLIENT_ID
@@ -11,11 +10,9 @@ ARG REACT_APP_KEYCLOAK_CLIENT_ID
 ENV REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
 ENV REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
 ENV REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL}
-ENV PUBLIC_URL=${PUBLIC_URL}
 ENV REACT_APP_KEYCLOAK_AUTH_URL=${REACT_APP_KEYCLOAK_AUTH_URL}
 ENV REACT_APP_KEYCLOAK_REALM=${REACT_APP_KEYCLOAK_REALM}
 ENV REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
-
 
 # set working directory
 WORKDIR /frontend
@@ -52,10 +49,14 @@ RUN npm run build --prod
 
 FROM registry.access.redhat.com/ubi8/nginx-118 AS runtime
 USER 0
-RUN mkdir -p /var/cache/nginx/client_temp &&\
-    chmod -R 777 /var/cache/nginx/client_temp
+RUN yum install -y nmap iputils
+RUN mkdir -p /var/cache/nginx/client_temp
 COPY --from=build-deps /frontend/build /opt/app-root/src
 # COPY ./frontend /opt/app-root/src/app
-COPY ./nginx.conf /etc/nginx/nginx.conf
-EXPOSE 8080
+# COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./default.conf /opt/app-root/etc/nginx.default.d/default.conf
+RUN chmod -R 777 /var/cache/nginx/client_temp && \
+    chown -R 1007770000 /var/cache/nginx/ && \
+    chown -R 1007770000 /opt/app-root/src
+USER 1007770000
 CMD ["nginx", "-g", "daemon off;"]

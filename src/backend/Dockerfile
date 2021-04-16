@@ -27,7 +27,7 @@ ENV API_USER_PASSWORD=${API_USER_PASSWORD}
 
 # add `/node_modules/.bin` to $PATH
 ENV PATH ./node_modules/.bin:$PATH
-
+USER 1007770000
 # install app dependencies
 COPY package.json ./
 
@@ -40,12 +40,10 @@ COPY . ./
 USER 0
 RUN cat ./config/server_template.js | envsubst > ./config/server.js && \
     chmod 766 ./config/server.js && \
-    cat ./config/server.js && \
-    mkdir -p /opt/app-root/src/api/token/documentation && \
-    chmod -R 777 /opt/app-root/src/api/token/documentation
-# for debugging
+    cat ./config/server.js
 
-# RUN yum install -y nmap iputils postgresql telnet
-
+RUN chmod -R 777 /opt/app-root/src/ && \
+    chown -R 1007770000 /opt/app-root/src/
+USER 1007770000
 # start app
 CMD [ "npm", "start" ]

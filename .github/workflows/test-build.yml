@@ -1,4 +1,4 @@
-name: Main-Build .NET API Image and Push to Openshift Registry
+name: Build Test Branch
 on:
   push:
     branches: [test]
@@ -6,143 +6,137 @@ on:
     branches: [test]
 
 jobs:
-
   build-frontend:
     runs-on: ubuntu-20.04
     environment: Test
-    env:
-      VERSION: v1
-      IMAGE_TAGS: test
-      COMPOSE_DOCKER_CLI_BUILD: 1
-      DOCKER_BUILDKIT: 1
-      SERVICE_NAME: react-frontend
-      IMAGE_NAME: frontend
-      REACT_APP_API_BASE_URL: ${{secrets.REACT_APP_API_BASE_URL}}
-      REACT_APP_FRONTEND_BASE_URL: ${{secrets.REACT_APP_FRONTEND_BASE_URL}}
-      PUBLIC_URL: ${{secrets.PUBLIC_URL}}
-      OPENSHIFT_EXTERNAL_REPOSITORY: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-      OPENSHIFT_LICENSE_PLATE: ${{secrets.OPENSHIFT_LICENSE_PLATE}}
-      OPENSHIFT_SA_USERNAME: ${{secrets.OPENSHIFT_SA_USERNAME}}
-      OPENSHIFT_SA_PASSWORD: ${{secrets.OPENSHIFT_SA_PASSWORD}}
     steps:
-      - uses: actions/checkout@v2
+      - name: Git Checkout
+        uses: actions/checkout@v2
 
-      - name: Building, pushing frontend
-        run: |
-          echo "Logging in to RedHat..."
-          docker login ${{ secrets.REDHAT_REPO }} \
-            -u ${{ secrets.REDHAT_REPO_USER }} \
-            -p '${{ secrets.REDHAT_REPO_AUTH }}'
-          
-          echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} \
-            -u ${{ secrets.OPENSHIFT_SA_USERNAME}} \
-            -p ${{ secrets.OPENSHIFT_SA_PASSWORD}}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-          echo "Building ${IMAGE_NAME}..."
-          docker-compose build --force-rm --no-cache \
-            --build-arg REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL} \
-            --build-arg REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL} \
-            --build-arg PUBLIC_URL=${PUBLIC_URL} \
-            ${SERVICE_NAME}
-          
-          echo "Tagging ${IMAGE_NAME}..."
-          docker tag \
-            bcp-cms_${SERVICE_NAME} \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
-          
-          echo "Pushing ${IMAGE_NAME}..."
-          docker image push \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+      - name: Login to RedHat
+        uses: docker/login-action@v1
+        with:
+          registry: ${{secrets.REDHAT_REPO}}
+          username: ${{secrets.REDHAT_REPO_USER}}
+          password: ${{secrets.REDHAT_REPO_AUTH}}
+
+      - name: Login to OpenShift
+        uses: docker/login-action@v1
+        with:
+          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2.4.0
+        with:
+          context: ./src/frontend
+          push: true
+          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:dev
+          build-args:
+            REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}}
+            REACT_APP_API_BASE_URL={{secrets.REACT_APP_FRONTEND_BASE_URL}}/api
+            REACT_APP_CMS_BASE_URL={{secrets.REACT_APP_FRONTEND_BASE_URL}}/cms
+            REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}}
+            REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}}
+            REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}}
 
   build-cms:
     runs-on: ubuntu-20.04
     environment: Test
-    env:
-      VERSION: v1
-      IMAGE_TAGS: test
-      COMPOSE_DOCKER_CLI_BUILD: 1
-      DOCKER_BUILDKIT: 1
-      IMAGE_NAME: strapi
-      SERVICE_NAME: strapi
-      DATABASE_HOST: ${{secrets.DATABASE_HOST}}
-      DATABASE_PORT: ${{secrets.DATABASE_PORT}}
-      DATABASE_NAME: ${{secrets.DATABASE_NAME}}
-      DATABASE_USERNAME: ${{secrets.DATABASE_USERNAME}}
-      DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
-      DATABASE_SSL: ${{secrets.DATABASE_SSL}} 
-      OPENSHIFT_EXTERNAL_REPOSITORY: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-      OPENSHIFT_LICENSE_PLATE: ${{secrets.OPENSHIFT_LICENSE_PLATE}}
-      OPENSHIFT_SA_USERNAME: ${{secrets.OPENSHIFT_SA_USERNAME}}
-      OPENSHIFT_SA_PASSWORD: ${{secrets.OPENSHIFT_SA_PASSWORD}}
     steps:
-      - uses: actions/checkout@v2
-      - name: Building, pushing api
-        run: |
-          echo "Logging in to RedHat..."
-          docker login ${{ secrets.REDHAT_REPO }} \
-            -u ${{ secrets.REDHAT_REPO_USER }} \
-            -p '${{ secrets.REDHAT_REPO_AUTH }}'
-          
-          echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} \
-            -u ${{ secrets.OPENSHIFT_SA_USERNAME}} \
-            -p ${{ secrets.OPENSHIFT_SA_PASSWORD}}
-          
-          echo "Building ${IMAGE_NAME}..."
-          docker-compose build --force-rm --no-cache \
-            --build-arg DATABASE_HOST=${DATABASE_HOST} \
-            --build-arg DATABASE_PORT=${DATABASE_PORT} \
-            --build-arg DATABASE_NAME=${DATABASE_NAME} \
-            --build-arg DATABASE_USERNAME=${DATABASE_USERNAME} \
-            --build-arg DATABASE_PASSWORD=${DATABASE_PASSWORD} \
-            --build-arg DATABASE_SSL=${DATABASE_SSL} \
-            ${SERVICE_NAME}
+      - name: Git Checkout
+        uses: actions/checkout@v2
 
-          docker image ls
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-          echo "Tagging ${IMAGE_NAME}..."
-          docker tag strapi/strapi:3.5.3 \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+      - name: Login to RedHat
+        uses: docker/login-action@v1
+        with:
+          registry: ${{secrets.REDHAT_REPO}}
+          username: ${{secrets.REDHAT_REPO_USER}}
+          password: ${{secrets.REDHAT_REPO_AUTH}}
 
-          echo "Pushing ${IMAGE_NAME}..."
-          docker image push \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+      - name: Login to OpenShift
+        uses: docker/login-action@v1
+        with:
+          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
 
+      - name: Build and push
+        uses: docker/build-push-action@v2.4.0
+        with:
+          context: ./src/backend
+          push: true
+          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:dev
+          build-args:
+            DATABASE_HOST=${{secrets.DATABASE_HOST}}
+            DATABASE_PORT=${{secrets.DATABASE_PORT}}
+            DATABASE_NAME=${{secrets.DATABASE_NAME}}
+            DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}}
+            DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} 
+            DATABASE_SSL=${{secrets.DATABASE_SSL}}
+            API_TOKEN=${{secrets.API_TOKEN}}
+            API_USER_NAME=${{secrets.API_USER_NAME}}
+            API_USER_EMAIL=${{secrets.API_USER_EMAIL}}
+            API_USER_PASSWORD=${{secrets.API_USER_PASSWORD}}
+ 
+  build-api:
+    runs-on: ubuntu-20.04
+    environment: Test
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to RedHat
+        uses: docker/login-action@v1
+        with:
+          registry: ${{secrets.REDHAT_REPO}}
+          username: ${{secrets.REDHAT_REPO_USER}}
+          password: ${{secrets.REDHAT_REPO_AUTH}}
+
+      - name: Login to OpenShift
+        uses: docker/login-action@v1
+        with:
+          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2.4.0
+        with:
+          context: ./src/api/BCParksApi
+          push: true
+          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:dev
+ 
   build-staging:
     runs-on: ubuntu-20.04
     environment: Test
-    env:
-      VERSION: v1
-      IMAGE_TAGS: test
-      COMPOSE_DOCKER_CLI_BUILD: 1
-      DOCKER_BUILDKIT: 1
-      SERVICE_NAME: staging
-      IMAGE_NAME: staging
     steps:
-      - uses: actions/checkout@v2
+      - name: Git Checkout
+        uses: actions/checkout@v2
 
-      - name: Building, pushing staging
-        run: |
-          echo "Logging in to RedHat..."
-          docker login ${{ secrets.REDHAT_REPO }} \
-            -u ${{ secrets.REDHAT_REPO_USER }} \
-            -p '${{ secrets.REDHAT_REPO_AUTH }}'
-          
-          echo "Logging in to OpenShift repository with Secrets..."
-          docker login ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }} \
-            -u ${{ secrets.OPENSHIFT_SA_USERNAME}} \
-            -p ${{ secrets.OPENSHIFT_SA_PASSWORD}}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-          echo "Building ${IMAGE_NAME}..."
-          docker-compose build --force-rm --no-cache \
-            bcp-cms_$${SERVICE_NAME}
-          
-          echo "Tagging ${IMAGE_NAME}..."
-          docker tag \
-            bcp-cms_${SERVICE_NAME} \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
-          
-          echo "Pushing ${IMAGE_NAME}..."
-          docker image push \
-            ${OPENSHIFT_EXTERNAL_REPOSITORY}/${OPENSHIFT_LICENSE_PLATE}-tools/${IMAGE_NAME}:${IMAGE_TAGS}
+      - name: Login to OpenShift
+        uses: docker/login-action@v1
+        with:
+          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2.4.0
+        with:
+          context: ./src/web
+          push: true
+          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/staging:dev

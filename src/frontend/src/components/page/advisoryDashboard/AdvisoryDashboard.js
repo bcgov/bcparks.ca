@@ -35,7 +35,6 @@ export default function AdvisoryDashboard({ page: { setError } }) {
   const [toHome, setToHome] = useState(false);
   const [toCreate, setToCreate] = useState(false);
   const [parkNames, setParkNames] = useState([]);
-  const [selectedParkId, setSelectedParkId] = useState(0);
   const { keycloak, initialized } = useKeycloak();
   const [rows, setRows] = useState([]);
 
@@ -150,6 +149,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
   };
 
   useEffect(() => {
+    console.log("use effect called");
     if (!initialized) {
       setIsLoading(true);
     } else if (!keycloak.authenticated) {
