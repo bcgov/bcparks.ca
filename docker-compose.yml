@@ -19,6 +19,7 @@ services:
     build:
       context: src/frontend
       dockerfile: Dockerfile
+    env_file: .env
     environment:
       REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
       REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
