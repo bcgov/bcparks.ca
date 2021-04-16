@@ -488,7 +488,7 @@ objects:
   kind: Service
   namespace: ${OC_NAMESPACE}-${OC_APP}
   metadata:
-    name: bcparks-api
+    name: ${API_POD}
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
@@ -516,7 +516,7 @@ objects:
     host: ${API_URL}${URL_STUB}
     to:
       kind: Service
-      name: bcparks-api
+      name: ${API_POD}
       weight: 100
     port:
       targetPort: ${API_POD}
