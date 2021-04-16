@@ -147,8 +147,8 @@ export default function CreateAdvisory({ page: { setError } }) {
           advisory_status: res[2].data,
           protected_areas: res[3].data,
         };
-        apiAxios
-          .post(`api/add/public-advisories`, newAdvisory, {
+        cmsAxios
+          .post(`/public-advisories`, newAdvisory, {
             headers: { Authorization: `Bearer ${keycloak.idToken}` },
           })
           .then(() => {
