@@ -20,7 +20,8 @@ WORKDIR /src
 
 COPY . .
 # WORKDIR "/src/."
-RUN cat ./appsettings.json.template | envsubst > ./appsettings.json && \
+RUN echo "Populating environment..." && \
+    (eval "echo \"$(cat ./appsettings.json.template )\"" ) > ./appsettings.json && \
     chmod 766 ./appsettings.json && \
     cat ./appsettings.json
 RUN dotnet restore "./BCParksApi.csproj"
