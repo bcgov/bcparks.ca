@@ -32,7 +32,7 @@ jobs:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
           CONTEXT: ./src/frontend
-          IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:${{secrets.OC_APP}} 
+          IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:${{secrets.OC_APP}} 
         run: |  
           docker build \
             --build-arg API_TOKEN=${{secrets.API_TOKEN}} \
