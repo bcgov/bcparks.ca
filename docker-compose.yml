@@ -28,7 +28,7 @@ services:
       REACT_APP_KEYCLOAK_REALM: ${REACT_APP_KEYCLOAK_REALM}
       REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
     ports:
-      - "8080:8080"
+      - "8080:3000"
     # tty: true
     networks:
       - bcp-cms-network
