@@ -24,6 +24,7 @@ import LastPage from "@material-ui/icons/LastPage";
 import Remove from "@material-ui/icons/Remove";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
+import TimerIcon from "@material-ui/icons/Timer";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useKeycloak } from "@react-keycloak/web";
@@ -84,8 +85,26 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       field: "EndDate",
       title: "End Date",
       render: (rowData) => {
-        if (rowData.EndDate != null)
-          return <Moment format="MMM DD, YYYY">{rowData.EndDate}</Moment>;
+        if (rowData.EndDate) {
+          return (
+            <>
+              <Moment format="MMM DD, YYYY">{rowData.EndDate}</Moment>
+              {rowData.ExpiryDate && <TimerIcon color="primary" />}
+            </>
+          );
+        }
+      },
+    },
+    {
+      field: "protected_areas",
+      title: "Associated Park(s)",
+      render: (rowData) => {
+        if (rowData.protected_areas != null) {
+          const parks = rowData.protected_areas
+            .map((p) => p.ProtectedAreaName)
+            .join(", ");
+          return parks;
+        }
       },
     },
     {
