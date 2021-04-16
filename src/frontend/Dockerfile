@@ -1,5 +1,8 @@
 # pull official base image
 FROM registry.access.redhat.com/ubi7/nodejs-14 AS build-deps
+WORKDIR /frontend
+ENV PATH ./node_modules/.bin:$PATH
+
 ARG API_TOKEN
 ARG REACT_APP_API_BASE_URL
 ARG REACT_APP_CMS_BASE_URL
@@ -17,10 +20,10 @@ ENV REACT_APP_KEYCLOAK_REALM=${REACT_APP_KEYCLOAK_REALM}
 ENV REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
 
 # set working directory
-WORKDIR /frontend
+
 
 # add `/node_modules/.bin` to $PATH
-ENV PATH ./node_modules/.bin:$PATH
+
 USER 0
 RUN yum install -y \
     python \
