@@ -8,7 +8,7 @@ RUN dotnet restore "./BCParksApi.csproj"
 RUN dotnet build "BCParksApi.csproj" -c Release -o /app/build
 RUN dotnet publish "BCParksApi.csproj" -c Release -o /app/publish
 
-FROM registry.redhat.io/rhel8/dotnet-50-runtime AS base
+FROM registry.redhat.io/ubi8/dotnet-50-runtime AS base
 WORKDIR /opt/app-root
 EXPOSE 5000
 COPY --from=build /app/publish .
