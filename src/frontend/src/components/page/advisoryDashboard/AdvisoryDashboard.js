@@ -79,6 +79,22 @@ const columns = [
     },
   },
   {
+    field: "protected_areas",
+    title: "Associated Park(s)",
+    cellStyle: {
+      whiteSpace: "pre",
+    },
+
+    render: (rowData) => {
+      if (rowData.protected_areas != null) {
+        const parks = rowData.protected_areas
+          .map((p) => p.ProtectedAreaName)
+          .join(", ");
+        return parks;
+      }
+    },
+  },
+  {
     title: "",
     field: "id",
     filtering: false,
@@ -141,12 +157,12 @@ export default function AdvisoryDashboard({ page: { setError } }) {
   const [toHome, setToHome] = useState(false);
   const [toCreate, setToCreate] = useState(false);
   const [parkNames, setParkNames] = useState([]);
-  const [selectedParkId, setSelectedParkId] = useState(0);
   const { keycloak, initialized } = useKeycloak();
 
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
+    console.log("use effect called");
     if (!initialized) {
       setIsLoading(true);
     } else if (!keycloak.authenticated) {
@@ -180,7 +196,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
           });
         });
     }
-  }, [setParkNames, setToError, setError, setToHome, keycloak, initialized]);
+  }, [setToError, setError, setToHome, keycloak, initialized]);
 
   const onSelectChange = (e) => {
     setIsLoading(false);
