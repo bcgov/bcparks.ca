@@ -1,5 +1,6 @@
 # pull official base image
 FROM registry.access.redhat.com/ubi7/nodejs-14 AS build-deps
+ARG API_TOKEN
 ARG REACT_APP_API_BASE_URL
 ARG REACT_APP_CMS_BASE_URL
 ARG REACT_APP_FRONTEND_BASE_URL
@@ -7,6 +8,7 @@ ARG REACT_APP_KEYCLOAK_AUTH_URL
 ARG REACT_APP_KEYCLOAK_REALM
 ARG REACT_APP_KEYCLOAK_CLIENT_ID
 
+ENV API_TOKEN=${API_TOKEN}
 ENV REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
 ENV REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
 ENV REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL}
@@ -37,6 +39,7 @@ RUN npm install && \
     npm install -g @angular/cli react-scripts@3.4.1
 RUN mkdir -p /frontend/node_modules/.cache && \
     chmod 777 /frontend/node_modules/.cache
+
 ########################################
 ### Stage 2 - Production environment ###
 ########################################
