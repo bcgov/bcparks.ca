@@ -95,6 +95,17 @@ services:
     ports:
       - "1337:1337"
 
+  staging:
+    container_name: bcp-staging
+    restart: unless-stopped
+    build:
+      context: src/web
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - bcp-cms-network
+
   postgres:
     image: postgres:13.2
     container_name: bcp-db
@@ -109,17 +120,6 @@ services:
       - bcp-cms-network
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
-
-  staging:
-    container_name: bcp-staging
-    restart: unless-stopped
-    build:
-      context: src/web
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
-    networks:
-      - bcp-cms-network
 
 networks:
   bcp-cms-network:

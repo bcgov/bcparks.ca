@@ -148,7 +148,7 @@ objects:
       name: ${FRONTEND_POD}
       weight: 100
     port:
-      targetPort: http
+      targetPort: npm
     wildcardPolicy: None
 
 ### CMS

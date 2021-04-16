@@ -13,7 +13,7 @@
   },
   "Jwt": {
     "Authority": "$REACT_APP_KEYCLOAK_AUTH_URL",
-    "Audience": "REACT_APP_KEYCLOAK_CLIENT_ID"
+    "Audience": "$REACT_APP_KEYCLOAK_CLIENT_ID"
   },
   "CmsUrl":"$REACT_APP_CMS_BASE_URL",
   "ApiToken":"$API_TOKEN",
