@@ -34,8 +34,7 @@ jobs:
           CONTEXT: ./src/frontend
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:${{secrets.OC_APP}} 
         run: |  
-          docker build --tag ${IMAGE} \
-            --build-arg \
+          docker build --build-arg \
             API_TOKEN=${{secrets.API_TOKEN}} \
             ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}} \
             ASPNETCORE_ENVIRONMENT=${{secrets.ASPNETCORE_ENVIRONMENT}} \
@@ -45,6 +44,7 @@ jobs:
             REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}} \
             REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
             REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
+             --tag ${IMAGE} \
             ${CONTEXT}
           docker push ${IMAGE}
 
@@ -76,8 +76,7 @@ jobs:
           CONTEXT: ./src/api/BCParksApi
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:${{secrets.OC_APP}}
         run: |  
-          docker build --tag ${IMAGE} \
-            --build-arg \
+          docker build --build-arg \
             API_TOKEN=${{secrets.API_TOKEN}} \
             ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}} \
             ASPNETCORE_ENVIRONMENT=${{secrets.ASPNETCORE_ENVIRONMENT}} \
@@ -87,6 +86,7 @@ jobs:
             REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}} \
             REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
             REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
+            --tag ${IMAGE} \
             ${CONTEXT}
           docker push ${IMAGE}
 
@@ -119,8 +119,7 @@ jobs:
           CONTEXT: ./src/backend
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:${{secrets.OC_APP}}
         run: |  
-          docker build --tag ${IMAGE} \
-            --build-arg \
+          docker build --build-arg \
             DATABASE_HOST=${{secrets.DATABASE_HOST}} \
             DATABASE_PORT=${{secrets.DATABASE_PORT}} \
             DATABASE_NAME=${{secrets.DATABASE_NAME}} \
@@ -132,6 +131,7 @@ jobs:
             API_USER_EMAIL=${{secrets.API_USER_EMAIL}} \
             API_USER_PASSWORD=${{secrets.API_USER_PASSWORD}} \
             REACT_APP_CMS_BASE_URL=${{secrets.REACT_APP_CMS_BASE_URL}} \
+            --tag ${IMAGE} \
             ${CONTEXT}
           docker push ${IMAGE}
 
