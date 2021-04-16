@@ -35,6 +35,7 @@ services:
       context: ./src/api/BCParksApi
       args:
         - ASPNETCORE_ENVIRONMENT=Development
+        - API_TOKEN=${API_TOKEN}
         - ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET}
         - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
         - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
