@@ -53,7 +53,8 @@ RUN yum install -y nmap iputils
 RUN mkdir -p /var/cache/nginx/client_temp
 COPY --from=build-deps /frontend/build /opt/app-root/src
 # COPY ./frontend /opt/app-root/src/app
-COPY ./nginx.conf /etc/nginx/nginx.conf
+# COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./default.conf /opt/app-root/etc/nginx.default.d/default.conf
 RUN chmod -R 777 /var/cache/nginx/client_temp && \
     chown -R 1007770000 /var/cache/nginx/ && \
     chown -R 1007770000 /opt/app-root/src
