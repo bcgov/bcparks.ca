@@ -1,24 +1,20 @@
 version: "3.4"
 
 services:
-  bcparks-api:
-    container_name: bcparks-api
-    build:
-      context: ./src/api/BCParksApi
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-    ports:
-      - "5000:5000"
-    restart: always
-    networks:
-      - bcp-cms-network
-
   react-frontend:
     container_name: bcp-frontend
     restart: unless-stopped
     build:
       context: src/frontend
-      dockerfile: Dockerfile
+      args:
+        - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+        - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
+        - REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL}
+        - REACT_APP_KEYCLOAK_AUTH_URL=${REACT_APP_KEYCLOAK_AUTH_URL}
+        - REACT_APP_KEYCLOAK_REALM=${REACT_APP_KEYCLOAK_REALM}
+        - REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
+        - API_TOKEN=${API_TOKEN}
+    env_file: .env
     environment:
       REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
       REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
@@ -26,9 +22,38 @@ services:
       REACT_APP_KEYCLOAK_AUTH_URL: ${REACT_APP_KEYCLOAK_AUTH_URL}
       REACT_APP_KEYCLOAK_REALM: ${REACT_APP_KEYCLOAK_REALM}
       REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
+      API_TOKEN: ${API_TOKEN}
     ports:
-      - "8080:8080"
-    # tty: true
+      - "8080:3000"
+    networks:
+      - bcp-cms-network
+
+  bcparks-api:
+    container_name: bcparks-api
+    restart: unless-stopped
+    build:
+      context: ./src/api/BCParksApi
+      args:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET}
+        - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+        - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
+        - REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL}
+        - REACT_APP_KEYCLOAK_AUTH_URL=${REACT_APP_KEYCLOAK_AUTH_URL}
+        - REACT_APP_KEYCLOAK_REALM=${REACT_APP_KEYCLOAK_REALM}
+        - REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
+    env_file: .env
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
+      REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
+      REACT_APP_FRONTEND_BASE_URL: ${REACT_APP_FRONTEND_BASE_URL}
+      REACT_APP_KEYCLOAK_AUTH_URL: ${REACT_APP_KEYCLOAK_AUTH_URL}
+      REACT_APP_KEYCLOAK_REALM: ${REACT_APP_KEYCLOAK_REALM}
+      REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
+    ports:
+      - "5000:5000"
     networks:
       - bcp-cms-network
 
@@ -39,7 +64,18 @@ services:
     env_file: .env
     build:
       context: src/backend
-      dockerfile: Dockerfile
+      args:
+        - DATABASE_HOST=${DATABASE_HOST}
+        - DATABASE_PORT=${DATABASE_PORT}
+        - DATABASE_NAME=${DATABASE_NAME}
+        - DATABASE_USERNAME=${DATABASE_USERNAME}
+        - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+        - DATABASE_SSL=${DATABASE_SSL}
+        - API_TOKEN=${API_TOKEN}
+        - API_USER_NAME=${API_USER_NAME}
+        - API_USER_EMAIL=${API_USER_EMAIL}
+        - API_USER_PASSWORD=${API_USER_PASSWORD}
+        - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
     environment:
       DATABASE_HOST: ${DATABASE_HOST}
       DATABASE_PORT: ${DATABASE_PORT}
@@ -61,8 +97,8 @@ services:
 
   postgres:
     image: postgres:13.2
-    restart: always
     container_name: bcp-db
+    restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USERNAME: postgres

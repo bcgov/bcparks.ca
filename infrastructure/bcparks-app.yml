@@ -30,6 +30,9 @@ parameters:
   value: api
 - name: API_URL
   required: true
+- name: ASP_ENV
+  value: Development
+  required: true
 - name: DB_POD
   value: db
   required: true
@@ -85,6 +88,13 @@ objects:
             ports:
               - containerPort: 3000
               - containerPort: 8080
+            resources:
+              limits:
+                cpu: 2500m
+                memory: 2Gi
+              requests:
+                cpu: 1000m
+                memory: 512Mi
     triggers:
       - type: ConfigChange
       - type: ImageChange
@@ -454,6 +464,8 @@ objects:
       spec:
         containers:
           - env:
+              - name: ASPNETCORE_ENVIRONMENT
+                value: ${ASP_ENV}
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/api:${OC_APP}
             name: ${API_POD}
@@ -507,5 +519,5 @@ objects:
       name: bcparks-api
       weight: 100
     port:
-      targetPort: 5000
+      targetPort: ${API_POD}
     wildcardPolicy: None
