@@ -13,8 +13,6 @@ import Select from "react-select";
 import { useKeycloak } from "@react-keycloak/web";
 import { Loader } from "shared-components/build/components/loader/Loader";
 export default function UpdateAdvisory({ page: { setError } }) {
-  const currentTime = new Date().toISOString().substring(0, 16);
-
   const [isLoading, setIsLoading] = useState(true);
   const [toError, setToError] = useState(false);
   const [toAdvisoryDashboard, setToAdvisoryDashboard] = useState(false);
@@ -29,9 +27,9 @@ export default function UpdateAdvisory({ page: { setError } }) {
   const [locations, setLocations] = useState([]);
   const [urgency, setUrgency] = useState(1);
   const [advisoryStatus, setAdvisoryStatus] = useState(0);
-  const [startDate, setStartDate] = useState(currentTime);
-  const [endDate, setEndDate] = useState(currentTime);
-  const [expiryDate, setExpiryDate] = useState(currentTime);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [expiryDate, setExpiryDate] = useState(null);
   const [pictures, setPictures] = useState([]);
   const [links, setLinks] = useState();
   const [notes, setNotes] = useState();
