@@ -34,8 +34,7 @@ jobs:
           CONTEXT: ./src/frontend
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:${{secrets.OC_APP}} 
         run: |  
-          docker build \
-            --tag ${IMAGE} \
+          docker build --tag ${IMAGE} \
             --build-arg \
             API_TOKEN=${{secrets.API_TOKEN}} \
             ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}} \
@@ -77,8 +76,7 @@ jobs:
           CONTEXT: ./src/api/BCParksApi
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:${{secrets.OC_APP}}
         run: |  
-          docker build \
-            --tag ${IMAGE} \
+          docker build --tag ${IMAGE} \
             --build-arg \
             API_TOKEN=${{secrets.API_TOKEN}} \
             ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}} \
@@ -121,9 +119,7 @@ jobs:
           CONTEXT: ./src/backend
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:${{secrets.OC_APP}}
         run: |  
-          docker build \
-            --tag ${IMAGE} \
-            --push \
+          docker build --tag ${IMAGE} \
             --build-arg \
             DATABASE_HOST=${{secrets.DATABASE_HOST}} \
             DATABASE_PORT=${{secrets.DATABASE_PORT}} \
