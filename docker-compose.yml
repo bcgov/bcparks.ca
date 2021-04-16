@@ -1,6 +1,33 @@
 version: "3.4"
 
 services:
+  react-frontend:
+    container_name: bcp-frontend
+    restart: unless-stopped
+    build:
+      context: src/frontend
+      args:
+        - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+        - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
+        - REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL}
+        - REACT_APP_KEYCLOAK_AUTH_URL=${REACT_APP_KEYCLOAK_AUTH_URL}
+        - REACT_APP_KEYCLOAK_REALM=${REACT_APP_KEYCLOAK_REALM}
+        - REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
+        - API_TOKEN=${API_TOKEN}
+    env_file: .env
+    environment:
+      REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
+      REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
+      REACT_APP_FRONTEND_BASE_URL: ${REACT_APP_FRONTEND_BASE_URL}
+      REACT_APP_KEYCLOAK_AUTH_URL: ${REACT_APP_KEYCLOAK_AUTH_URL}
+      REACT_APP_KEYCLOAK_REALM: ${REACT_APP_KEYCLOAK_REALM}
+      REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
+      API_TOKEN: ${API_TOKEN}
+    ports:
+      - "8080:3000"
+    networks:
+      - bcp-cms-network
+
   bcparks-api:
     container_name: bcparks-api
     restart: unless-stopped
@@ -27,34 +54,6 @@ services:
       REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
     ports:
       - "5000:5000"
-    networks:
-      - bcp-cms-network
-
-  react-frontend:
-    container_name: bcp-frontend
-    restart: unless-stopped
-    build:
-      context: src/frontend
-      args:
-        - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
-        - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
-        - REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL}
-        - REACT_APP_KEYCLOAK_AUTH_URL=${REACT_APP_KEYCLOAK_AUTH_URL}
-        - REACT_APP_KEYCLOAK_REALM=${REACT_APP_KEYCLOAK_REALM}
-        - REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
-        - API_TOKEN=${API_TOKEN}
-    env_file: .env
-    environment:
-      REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
-      REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
-      REACT_APP_FRONTEND_BASE_URL: ${REACT_APP_FRONTEND_BASE_URL}
-      REACT_APP_KEYCLOAK_AUTH_URL: ${REACT_APP_KEYCLOAK_AUTH_URL}
-      REACT_APP_KEYCLOAK_REALM: ${REACT_APP_KEYCLOAK_REALM}
-      REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
-      API_TOKEN: ${API_TOKEN}
-    ports:
-      - "8080:3000"
-    # tty: true
     networks:
       - bcp-cms-network
 
