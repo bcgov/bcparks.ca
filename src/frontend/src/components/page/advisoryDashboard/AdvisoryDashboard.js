@@ -37,6 +37,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
   const [parkNames, setParkNames] = useState([]);
   const { keycloak, initialized } = useKeycloak();
   const [rows, setRows] = useState([]);
+  const [selectedParkId, setSelectedParkId] = useState(0);
 
   const columns = [
     {
