@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "advisory_statuses",
   "info": {
-    "name": "AdvisoryStatus"
+    "name": "AdvisoryStatus",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -11,6 +12,9 @@
   },
   "attributes": {
     "AdvisoryStatus": {
+      "type": "string"
+    },
+    "Code": {
       "type": "string"
     }
   }

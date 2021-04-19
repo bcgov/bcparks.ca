@@ -538,6 +538,9 @@
           "AdvisoryStatus": {
             "type": "string"
           },
+          "Code": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -547,6 +550,9 @@
       "NewAdvisory-status": {
         "properties": {
           "AdvisoryStatus": {
+            "type": "string"
+          },
+          "Code": {
             "type": "string"
           },
           "published_at": {
