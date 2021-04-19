@@ -16,7 +16,7 @@ const utf8 = require("utf8");
 const loadParData = async () => {
   const currentProtectedAreas = await strapi.services["protected-area"].find();
   if (currentProtectedAreas.length == 0) {
-    console.log("Loading Protected Areas data..");
+    strapi.log.info("Loading Protected Areas data..");
     axios
       .get("https://a100.gov.bc.ca/pub/parws/protectedLands", {
         params: {
@@ -33,7 +33,7 @@ const loadParData = async () => {
         );
       })
       .catch((error) => {
-        console.log(error);
+        strapi.log.error(error);
       });
   }
 };
@@ -197,7 +197,7 @@ const loadAccessStatus = async () => {
 
   const currentData = await strapi.services["access-status"].find();
   if (currentData.length == 0) {
-    console.log("Loading Access Statuses..");
+    strapi.log.info("Loading Access Statuses..");
     var jsonData = fs.readFileSync("./data/access-status.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
     dataSeed.forEach((data) => {
@@ -217,7 +217,7 @@ const loadAdvisoryStatus = async () => {
 
   const currentData = await strapi.services["advisory-status"].find();
   if (currentData.length == 0) {
-    console.log(`loading ${modelName}...`);
+    strapi.log.info(`loading ${modelName}...`);
     var jsonData = fs.readFileSync("./data/advisory-status.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
     dataSeed.forEach((data) => {
@@ -229,7 +229,7 @@ const loadAdvisoryStatus = async () => {
 const loadEventType = async () => {
   const currentData = await strapi.services["event-type"].find();
   if (currentData.length == 0) {
-    console.log("Loading Event Statuses..");
+    strapi.log.info("Loading Event Statuses..");
     var jsonData = fs.readFileSync("./data/event-type.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
     dataSeed.forEach((data) => {
@@ -240,11 +240,14 @@ const loadEventType = async () => {
 
 const createApiUser = async () => {
   const authRole = await findRole("authenticated");
+  const password = await strapi.admin.services.auth.hashPassword(
+    process.env.API_USER_PASSWORD
+  );
   const apiUser = await Promise.resolve(
     strapi.query("user", "users-permissions").create({
       username: process.env.API_USER_NAME,
       email: process.env.API_USER_EMAIL,
-      password: process.env.API_USER_PASSWORD,
+      password: password,
       provider: "local",
       confirmed: true,
       blocked: false,
@@ -275,7 +278,7 @@ const loadUrgency = async () => {
 
   const currentData = await strapi.services["urgency"].find();
   if (currentData.length == 0) {
-    console.log(`loading ${modelName}...`);
+    strapi.log.info(`loading ${modelName}...`);
     var jsonData = fs.readFileSync("./data/urgency.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
     dataSeed.forEach((data) => {
@@ -295,7 +298,7 @@ const loadPublicAdvisory = async () => {
 
   const currentData = await strapi.services["public-advisory"].find();
   if (currentData.length === 0) {
-    console.log(`loading ${modelName}...`);
+    strapi.log.info(`loading ${modelName}...`);
     var jsonData = fs.readFileSync("./data/public-advisory.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
 
@@ -366,10 +369,10 @@ const loadPublicAdvisory = async () => {
       data.ModifiedDate = data.ModifiedDate
         ? moment(data.ModifiedDate, "YYYY-MM-DD").tz("UTC").format()
         : null;
-      console.log({
-        title: data.Title,
-        "protected_areas-count": data.protected_areas.length,
-      });
+      // console.log({
+      //   title: data.Title,
+      //   "protected_areas-count": data.protected_areas.length,
+      // });
       await strapi.services["public-advisory"].create(data);
     });
   }
@@ -391,22 +394,8 @@ const getDataLoadSetting = async (modelName) => {
     message.purge = loadSetting.purge;
   }
 
-  console.log("load config", message);
+  strapi.log.info("load config", message);
   return loadSetting;
-};
-
-// This method is used for testing and development purposes only
-const removeAllData = async () => {
-  console.log("Removing all data for testing..");
-  await strapi.services["protected-area"].delete();
-  await strapi.services["section"].delete();
-  await strapi.services["management-area"].delete();
-  await strapi.services["region"].delete();
-  await strapi.services["site"].delete();
-  await strapi.services["public-advisory"].delete();
-  await strapi.services["access-status"].delete();
-  await strapi.services["event-type"].delete();
-  await strapi.services["public-advisory"].delete();
 };
 
 const isFirstRun = async () => {
@@ -461,6 +450,57 @@ const findRole = async (role) => {
   return result;
 };
 
+const loadBusinessHours = async () => {
+  strapi.log.info("Loading Business hours..");
+  var jsonData = fs.readFileSync("./data/business-hours.json", "utf8");
+  const data = JSON.parse(jsonData);
+  strapi.services["business-hours"].createOrUpdate(data);
+};
+
+const createAdmin = async () => {
+  const params = {
+    username: process.env.ADMIN_USER,
+    password: process.env.ADMIN_PASSWORD,
+    firstname: process.env.ADMIN_FIRST_NAME,
+    lastname: process.env.ADMIN_LAST_NAME,
+    email: process.env.ADMIN_EMAIL,
+    blocked: false,
+    isActive: true,
+  };
+  //Check if any account exists.
+  const admins = await strapi.query("user", "admin").find();
+
+  if (admins.length === 0) {
+    try {
+      let verifyRole = await strapi
+        .query("role", "admin")
+        .findOne({ code: "strapi-super-admin" });
+      if (!verifyRole) {
+        verifyRole = await strapi.query("role", "admin").create({
+          name: "Super Admin",
+          code: "strapi-super-admin",
+          description:
+            "Super Admins can access and manage all features and settings.",
+        });
+      }
+      params.roles = [verifyRole.id];
+      params.password = await strapi.admin.services.auth.hashPassword(
+        params.password
+      );
+      await strapi.query("user", "admin").create({
+        ...params,
+      });
+      strapi.log.info("Admin account was successfully created.");
+      strapi.log.info(`Email: ${params.email}`);
+    } catch (error) {
+      strapi.log.error(
+        `Couldn't create Admin account during bootstrap: `,
+        error
+      );
+    }
+  }
+};
+
 const loadData = async () => {
   try {
     await loadParData();
@@ -470,15 +510,17 @@ const loadData = async () => {
     await loadUrgency();
     await loadPublicAdvisory();
     await createApiToken();
+    await loadBusinessHours();
   } catch (error) {
-    console.log(error);
+    strapi.log.error(error);
   }
 };
 
 module.exports = async () => {
   // Load data and set default public roles on first run
-  const shouldSetDefaultPermissions = await isFirstRun();
-  if (shouldSetDefaultPermissions) {
+  const setupCMS = await isFirstRun();
+  if (setupCMS) {
+    await createAdmin();
     await setDefaultPermissions();
     await loadData();
   }
