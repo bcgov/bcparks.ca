@@ -25,6 +25,7 @@ import Remove from "@material-ui/icons/Remove";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import TimerIcon from "@material-ui/icons/Timer";
+import Tooltip from "@material-ui/core/Tooltip";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useKeycloak } from "@react-keycloak/web";
@@ -43,25 +44,48 @@ export default function AdvisoryDashboard({ page: { setError } }) {
   const columns = [
     {
       field: "urgency.Urgency",
-      title: "Urgency",
+      title: "U",
       cellStyle: (e, rowData) => {
         if (rowData.urgency !== null) {
           switch (rowData.urgency.Urgency.toLowerCase()) {
             case "low":
-              return { paddingRight: "10px", borderLeft: "8px solid #06f542" };
+              return {
+                borderLeft: "8px solid #06f542",
+              };
             case "medium":
-              return { paddingLeft: "10px", borderLeft: "8px solid #f5d20e" };
+              return {
+                borderLeft: "8px solid #f5d20e",
+              };
             case "high":
-              return { borderLeft: "10px solid #f30505" };
+              return {
+                borderLeft: "8px solid #f30505",
+              };
             default:
               return {};
           }
         }
       },
+      render: (rowData) => {
+        return (
+          <>
+            <div className="urgency-column"></div>
+          </>
+        );
+      },
     },
     {
       field: "advisory_status.AdvisoryStatus",
       title: "Status",
+
+      render: (rowData) => (
+        <div className="advisory-status">
+          <Tooltip title={rowData.advisory_status.AdvisoryStatus}>
+            <span className={rowData.advisory_status.Code.toLowerCase()}>
+              {rowData.advisory_status.Code}
+            </span>
+          </Tooltip>
+        </div>
+      ),
     },
     {
       field: "AdvisoryDate",
@@ -87,10 +111,23 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       render: (rowData) => {
         if (rowData.EndDate) {
           return (
-            <>
+            <div className="text-nowrap">
               <Moment format="MMM DD, YYYY">{rowData.EndDate}</Moment>
-              {rowData.ExpiryDate && <TimerIcon color="primary" />}
-            </>
+              {rowData.ExpiryDate && (
+                <Tooltip
+                  title={
+                    <span>
+                      Expiry Date:
+                      <Moment format="MMM DD, YYYY">
+                        {rowData.ExpiryDate}
+                      </Moment>
+                    </span>
+                  }
+                >
+                  <TimerIcon color="primary" />
+                </Tooltip>
+              )}
+            </div>
           );
         }
       },
