@@ -525,6 +525,12 @@
           "Urgency": {
             "type": "string"
           },
+          "Code": {
+            "type": "string"
+          },
+          "Sequence": {
+            "type": "integer"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -535,6 +541,12 @@
         "properties": {
           "Urgency": {
             "type": "string"
+          },
+          "Code": {
+            "type": "string"
+          },
+          "Sequence": {
+            "type": "integer"
           },
           "published_at": {
             "type": "string",

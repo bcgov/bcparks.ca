@@ -664,6 +664,12 @@
               "Urgency": {
                 "type": "string"
               },
+              "Code": {
+                "type": "string"
+              },
+              "Sequence": {
+                "type": "integer"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -774,6 +780,9 @@
                 "type": "string"
               },
               "AdvisoryStatus": {
+                "type": "string"
+              },
+              "Code": {
                 "type": "string"
               },
               "published_at": {

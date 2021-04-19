@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/data-load-settings",
+      "handler": "data-load-setting.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/data-load-settings/count",
+      "handler": "data-load-setting.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/data-load-settings/:id",
+      "handler": "data-load-setting.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/data-load-settings",
+      "handler": "data-load-setting.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/data-load-settings/:id",
+      "handler": "data-load-setting.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/data-load-settings/:id",
+      "handler": "data-load-setting.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

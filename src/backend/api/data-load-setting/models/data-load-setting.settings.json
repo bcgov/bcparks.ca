@@ -1,9 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "urgencies",
+  "collectionName": "data_load_settings",
   "info": {
-    "name": "Urgency",
-    "description": ""
+    "name": "DataLoadSetting"
   },
   "options": {
     "increments": true,
@@ -11,14 +10,14 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "Urgency": {
+    "model": {
       "type": "string"
     },
-    "Code": {
-      "type": "string"
+    "reload": {
+      "type": "boolean"
     },
-    "Sequence": {
-      "type": "integer"
+    "purge": {
+      "type": "boolean"
     }
   }
 }

@@ -187,6 +187,14 @@ const loadProtectedLandData = async (protectedLandData) => {
 };
 
 const loadAccessStatus = async () => {
+  const modelName = "access-status";
+  const loadSetting = await getDataLoadSetting(modelName);
+
+  if (loadSetting && loadSetting.purge)
+    await strapi.services["access-status"].delete();
+
+  if (loadSetting && !loadSetting.reload) return;
+
   const currentData = await strapi.services["access-status"].find();
   if (currentData.length == 0) {
     console.log("Loading Access Statuses..");
@@ -199,9 +207,17 @@ const loadAccessStatus = async () => {
 };
 
 const loadAdvisoryStatus = async () => {
+  const modelName = "advisory-status";
+  const loadSetting = await getDataLoadSetting(modelName);
+
+  if (loadSetting && loadSetting.purge)
+    await strapi.services["advisory-status"].delete();
+
+  if (loadSetting && !loadSetting.reload) return;
+
   const currentData = await strapi.services["advisory-status"].find();
   if (currentData.length == 0) {
-    console.log("Loading Event Statuses..");
+    console.log(`loading ${modelName}...`);
     var jsonData = fs.readFileSync("./data/advisory-status.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
     dataSeed.forEach((data) => {
@@ -249,9 +265,17 @@ const createApiToken = async () => {
 };
 
 const loadUrgency = async () => {
+  const modelName = "urgency";
+  const loadSetting = await getDataLoadSetting(modelName);
+
+  if (loadSetting && loadSetting.purge)
+    await strapi.services["urgency"].delete();
+
+  if (loadSetting && !loadSetting.reload) return;
+
   const currentData = await strapi.services["urgency"].find();
   if (currentData.length == 0) {
-    console.log("Loading Event Statuses..");
+    console.log(`loading ${modelName}...`);
     var jsonData = fs.readFileSync("./data/urgency.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
     dataSeed.forEach((data) => {
@@ -261,10 +285,17 @@ const loadUrgency = async () => {
 };
 
 const loadPublicAdvisory = async () => {
-  await strapi.services["public-advisory"].delete();
+  const modelName = "public-advisory";
+  const loadSetting = await getDataLoadSetting(modelName);
+
+  if (loadSetting && loadSetting.purge)
+    await strapi.services["public-advisory"].delete();
+
+  if (loadSetting && !loadSetting.reload) return;
+
   const currentData = await strapi.services["public-advisory"].find();
   if (currentData.length === 0) {
-    console.log("Loading Public Advisory Event..");
+    console.log(`loading ${modelName}...`);
     var jsonData = fs.readFileSync("./data/public-advisory.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
 
@@ -335,10 +366,33 @@ const loadPublicAdvisory = async () => {
       data.ModifiedDate = data.ModifiedDate
         ? moment(data.ModifiedDate, "YYYY-MM-DD").tz("UTC").format()
         : null;
-      console.log(data);
+      console.log({
+        title: data.Title,
+        "protected_areas-count": data.protected_areas.length,
+      });
       await strapi.services["public-advisory"].create(data);
     });
   }
+};
+
+const getDataLoadSetting = async (modelName) => {
+  const loadSetting = await strapi
+    .query("data-load-setting")
+    .findOne({ model: modelName });
+
+  let message = {
+    model: modelName,
+    reload: null,
+    purge: null,
+  };
+
+  if (loadSetting) {
+    message.reload = loadSetting.reload;
+    message.purge = loadSetting.purge;
+  }
+
+  console.log("load config", message);
+  return loadSetting;
 };
 
 // This method is used for testing and development purposes only
@@ -428,5 +482,4 @@ module.exports = async () => {
     await setDefaultPermissions();
     await loadData();
   }
-  await loadPublicAdvisory();
 };
