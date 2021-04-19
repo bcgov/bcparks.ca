@@ -482,8 +482,4 @@ module.exports = async () => {
     await setDefaultPermissions();
     await loadData();
   }
-  await loadUrgency();
-  await loadAccessStatus();
-  await loadAdvisoryStatus();
-  await loadPublicAdvisory();
 };
