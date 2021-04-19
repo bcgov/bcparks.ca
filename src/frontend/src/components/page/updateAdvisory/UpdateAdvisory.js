@@ -198,8 +198,8 @@ export default function UpdateAdvisory({ page: { setError } }) {
           advisory_status: res[2].data,
           protected_areas: res[3].data,
         };
-        cmsAxios
-          .put(`/public-advisories/${id}`, publicAdvisory, {
+        apiAxios
+          .put(`api/update/public-advisories/${id}`, publicAdvisory, {
             headers: { Authorization: `Bearer ${keycloak.idToken}` },
           })
           .then(() => {
