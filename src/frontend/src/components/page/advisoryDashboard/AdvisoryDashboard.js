@@ -28,6 +28,12 @@ import TimerIcon from "@material-ui/icons/Timer";
 import Tooltip from "@material-ui/core/Tooltip";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import WatchLaterIcon from "@material-ui/icons/WatchLater";
+import EditIcon from "@material-ui/icons/Edit";
+import InfoIcon from "@material-ui/icons/Info";
+import PublishIcon from "@material-ui/icons/Publish";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import { useKeycloak } from "@react-keycloak/web";
 import Header from "../../composite/header/Header";
 
@@ -45,6 +51,9 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     {
       field: "urgency.Urgency",
       title: "U",
+      headerStyle: {
+        width: 10,
+      },
       cellStyle: (e, rowData) => {
         if (rowData.urgency !== null) {
           switch (rowData.urgency.Urgency.toLowerCase()) {
@@ -76,12 +85,31 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     {
       field: "advisory_status.AdvisoryStatus",
       title: "Status",
-
+      cellStyle: {
+        textAlign: "center",
+      },
       render: (rowData) => (
         <div className="advisory-status">
           <Tooltip title={rowData.advisory_status.AdvisoryStatus}>
-            <span className={rowData.advisory_status.Code.toLowerCase()}>
-              {rowData.advisory_status.Code}
+            <span>
+              {rowData.advisory_status.Code == "DFT" && (
+                <EditIcon className="draftIcon" />
+              )}
+              {rowData.advisory_status.Code == "INA" && (
+                <WatchLaterIcon className="inactiveIcon" />
+              )}
+              {rowData.advisory_status.Code == "ACT" && (
+                <CheckCircleIcon className="activeIcon" />
+              )}
+              {rowData.advisory_status.Code == "APR" && (
+                <ThumbUpIcon className="approvedIcon" />
+              )}
+              {rowData.advisory_status.Code == "ARQ" && (
+                <InfoIcon className="approvalRequestedIcon" />
+              )}
+              {rowData.advisory_status.Code == "PUB" && (
+                <PublishIcon className="publishedIcon" />
+              )}
             </span>
           </Tooltip>
         </div>
@@ -91,17 +119,22 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       field: "AdvisoryDate",
       title: "Posted Date",
       render: (rowData) => {
-        if (rowData.AdvisoryDate != null)
+        if (rowData.AdvisoryDate)
           return <Moment format="MMM DD, YYYY">{rowData.AdvisoryDate}</Moment>;
       },
     },
-    { field: "Title", title: "Headline" },
+    {
+      field: "Title",
+      title: "Headline",
+      headerStyle: { width: 400 },
+      cellStyle: { width: 400 },
+    },
     { field: "event_type.EventType", title: "Event Type" },
     {
       field: "EffectiveDate",
       title: "Start Date",
       render: (rowData) => {
-        if (rowData.EffectiveDate != null)
+        if (rowData.EffectiveDate)
           return <Moment format="MMM DD, YYYY">{rowData.EffectiveDate}</Moment>;
       },
     },
@@ -135,6 +168,8 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     {
       field: "protected_areas",
       title: "Associated Park(s)",
+      headerStyle: { width: 400 },
+      cellStyle: { width: 400 },
       render: (rowData) => {
         if (rowData.protected_areas != null) {
           const parks = rowData.protected_areas
@@ -148,9 +183,15 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       title: "",
       field: "id",
       filtering: false,
+      headerStyle: {
+        width: 10,
+        maxWidth: 10,
+        minWidth: 10,
+      },
       cellStyle: {
-        width: "1px",
-        maxWidth: "10px",
+        width: 10,
+        maxWidth: 10,
+        minWidth: 10,
         textAlign: "right",
         paddingRight: "10px",
       },
@@ -171,7 +212,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       padding: "2px",
       fontWeight: "bolder",
     },
-    cellStyle: { padding: "4px 4px 4px 4px" },
+    cellStyle: { padding: 2 },
     rowStyle: {},
     filtering: true,
     search: false,

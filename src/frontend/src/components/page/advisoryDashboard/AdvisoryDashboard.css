@@ -76,17 +76,46 @@
   background-color:white;
 }
 
+.draftIcon
+{
+  color:#4989C5; 
+}
+
+.approvedIcon
+{
+  color:#4989C5 
+}
+.activeIcon
+{
+  color:#4989C5 
+}
+
+.publishedIcon
+{
+  color:#4989C5 
+}
+.approvalRequestedIcon
+{
+  color:#EE5F3B; 
+}
+.inactiveIcon
+{
+  color:#bdd9ed; 
+}
+
+
 .urgency-column{
   padding-left:10px;
   width:2px;
 
 }
+
 .MuiTable-root {
-  width:99% !important;
+  width:100% !important;
 }
 
 .MuiTableCell-root {
-  padding: 4px !important;
+  padding: 2px !important;
 }
 
 .page-loader {
