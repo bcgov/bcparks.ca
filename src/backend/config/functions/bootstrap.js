@@ -291,10 +291,10 @@ const loadPublicAdvisory = async () => {
   const modelName = "public-advisory";
   const loadSetting = await getDataLoadSetting(modelName);
 
-  //if (loadSetting && loadSetting.purge)
+  // if (loadSetting && loadSetting.purge)
   await strapi.services["public-advisory"].delete();
 
-  //if (loadSetting && !loadSetting.reload) return;
+  // if (loadSetting && !loadSetting.reload) return;
 
   const currentData = await strapi.services["public-advisory"].find();
   if (currentData.length === 0) {
