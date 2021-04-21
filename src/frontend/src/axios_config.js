@@ -27,4 +27,4 @@ const apiAxios = axios.create({
   baseURL: apiUrl(),
 });
 
-export { cmsAxios, apiAxios };
+export { cmsAxios, apiAxios, axios };
