@@ -1,4 +1,5 @@
-[
+{"access-status":
+ [
 	{
 		"AccessStatus": "Open"
 	},
@@ -20,4 +21,5 @@
 	{
 		"AccessStatus": "Closed to the public"
 	}
-]
+  ]
+} 

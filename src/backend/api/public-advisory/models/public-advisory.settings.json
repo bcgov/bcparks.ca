@@ -103,6 +103,9 @@
     },
     "management_area": {
       "model": "management-area"
+    },
+    "fire_zones": {
+      "collection": "fire-zone"
     }
   }
 }

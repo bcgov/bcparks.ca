@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "04/21/2021 10:36:22 AM"
+    "x-generation-date": "04/21/2021 2:16:48 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -12050,6 +12050,40 @@
               }
             }
           },
+          "fire_zones": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "FireZoneNumber": {
+                  "type": "integer"
+                },
+                "FireZoneName": {
+                  "type": "string"
+                },
+                "HeadquartersCityName": {
+                  "type": "string"
+                },
+                "fire_centre": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -12167,6 +12201,12 @@
           },
           "management_area": {
             "type": "string"
+          },
+          "fire_zones": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "published_at": {
             "type": "string",

@@ -1,4 +1,5 @@
-[
+{"advisory-status":
+  [
     {
       "AdvisoryStatus": "Inactive",
       "Code":"INA"
@@ -24,3 +25,4 @@
       "Code":"PUB"
     }
   ]
+}
