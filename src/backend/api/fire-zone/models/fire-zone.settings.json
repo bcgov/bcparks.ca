@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "fire_zones",
+  "info": {
+    "name": "FireZone",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "FireZoneNumber": {
+      "type": "integer"
+    },
+    "FireZoneName": {
+      "type": "string"
+    },
+    "HeadquartersCityName": {
+      "type": "string"
+    },
+    "fire_centre": {
+      "model": "fire-centre"
+    }
+  }
+}

@@ -72,12 +72,21 @@
       "type": "string"
     },
     "Sites": {
-      "via": "ProtectedArea",
-      "collection": "site"
+      "collection": "site",
+      "via": "ProtectedArea"
     },
     "ManagementAreas": {
-      "via": "ProtectedArea",
-      "collection": "management-area"
+      "collection": "management-area",
+      "via": "ProtectedArea"
+    },
+    "DayUsePass": {
+      "type": "boolean"
+    },
+    "FogZone": {
+      "type": "boolean"
+    },
+    "fire_zones": {
+      "collection": "fire-zone"
     }
   }
 }

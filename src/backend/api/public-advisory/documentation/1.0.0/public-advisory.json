@@ -759,6 +759,18 @@
                     "type": "string"
                   }
                 },
+                "DayUsePass": {
+                  "type": "boolean"
+                },
+                "FogZone": {
+                  "type": "boolean"
+                },
+                "fire_zones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "published_at": {
                   "type": "string"
                 },
@@ -938,6 +950,40 @@
               }
             }
           },
+          "fire_zones": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "FireZoneNumber": {
+                  "type": "integer"
+                },
+                "FireZoneName": {
+                  "type": "string"
+                },
+                "HeadquartersCityName": {
+                  "type": "string"
+                },
+                "fire_centre": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -1055,6 +1101,12 @@
           },
           "management_area": {
             "type": "string"
+          },
+          "fire_zones": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "published_at": {
             "type": "string",

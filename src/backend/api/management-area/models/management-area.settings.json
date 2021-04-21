@@ -28,8 +28,8 @@
       "via": "ManagementArea"
     },
     "ProtectedArea": {
-      "model": "protected-area",
-      "via": "ManagementAreas"
+      "via": "ManagementAreas",
+      "model": "protected-area"
     }
   }
 }

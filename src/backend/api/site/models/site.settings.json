@@ -39,8 +39,8 @@
       "type": "string"
     },
     "ProtectedArea": {
-      "model": "protected-area",
-      "via": "Sites"
+      "via": "Sites",
+      "model": "protected-area"
     },
     "ORCSSiteNumber": {
       "type": "string",
