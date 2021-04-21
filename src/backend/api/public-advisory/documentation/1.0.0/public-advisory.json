@@ -759,6 +759,18 @@
                     "type": "string"
                   }
                 },
+                "DayUsePass": {
+                  "type": "boolean"
+                },
+                "FogZone": {
+                  "type": "boolean"
+                },
+                "fire_zones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "published_at": {
                   "type": "string"
                 },

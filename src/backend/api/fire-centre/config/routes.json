@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/fire-centres",
+      "handler": "fire-centre.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/fire-centres/count",
+      "handler": "fire-centre.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/fire-centres/:id",
+      "handler": "fire-centre.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/fire-centres",
+      "handler": "fire-centre.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/fire-centres/:id",
+      "handler": "fire-centre.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/fire-centres/:id",
+      "handler": "fire-centre.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

@@ -191,17 +191,17 @@ const loadAccessStatus = async () => {
   const loadSetting = await getDataLoadSetting(modelName);
 
   if (loadSetting && loadSetting.purge)
-    await strapi.services["access-status"].delete();
+    await strapi.services[modelName].delete();
 
   if (loadSetting && !loadSetting.reload) return;
 
-  const currentData = await strapi.services["access-status"].find();
+  const currentData = await strapi.services[modelName].find();
   if (currentData.length == 0) {
     strapi.log.info("Loading Access Statuses..");
     var jsonData = fs.readFileSync("./data/access-status.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
     dataSeed.forEach((data) => {
-      strapi.services["access-status"].create(data);
+      strapi.services[modelName].create(data);
     });
   }
 };
@@ -210,33 +210,105 @@ const loadAdvisoryStatus = async () => {
   const modelName = "advisory-status";
   const loadSetting = await getDataLoadSetting(modelName);
 
-  //if (loadSetting && loadSetting.purge)
-  await strapi.services["advisory-status"].delete();
+  if (loadSetting && loadSetting.purge)
+    await strapi.services[modelName].delete();
 
-  //if (loadSetting && !loadSetting.reload) return;
+  if (loadSetting && !loadSetting.reload) return;
 
-  const currentData = await strapi.services["advisory-status"].find();
+  const currentData = await strapi.services[modelName].find();
   if (currentData.length == 0) {
     strapi.log.info(`loading ${modelName}...`);
     var jsonData = fs.readFileSync("./data/advisory-status.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
     dataSeed.forEach((data) => {
-      strapi.services["advisory-status"].create(data);
+      strapi.services[modelName].create(data);
     });
   }
 };
 
 const loadEventType = async () => {
-  const currentData = await strapi.services["event-type"].find();
+  const modelName = "event-type";
+  const currentData = await strapi.services[modelName].find();
   if (currentData.length == 0) {
     strapi.log.info("Loading Event Statuses..");
     var jsonData = fs.readFileSync("./data/event-type.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
     dataSeed.forEach((data) => {
-      strapi.services["event-type"].create(data);
+      strapi.services[modelName].create(data);
     });
   }
 };
+
+const loadFireCentre = async () => {
+  const currentData = await strapi.services["fire-centre"].find();
+  if (currentData.length == 0) {
+    strapi.log.info("loading fire centre...");
+    var jsonData = fs.readFileSync("./data/fire-centre.json", "utf8");
+    const dataSeed = JSON.parse(jsonData)["fire-centre"];
+    dataSeed.forEach((data) => {
+      strapi.services["fire-centre"].create(data);
+    });
+  }
+};
+
+const loadFireZone = async () => {
+  const currentData = await strapi.services["fire-zone"].find();
+  if (currentData.length == 0) {
+    strapi.log.info("loading fire zone...");
+    var jsonData = fs.readFileSync("./data/fire-zone.json", "utf8");
+    const dataSeed = JSON.parse(jsonData)["fire-zone"];
+    dataSeed.forEach(async (data) => {
+      data.fire_centre = await strapi.services["fire-centre"].findOne({
+        FireCentreNumber: data.FireCentreNumber,
+      });
+      console.log(data);
+      strapi.services["fire-zone"].create(data);
+    });
+  }
+};
+
+const loadParkFireZone = async () => {
+  strapi.log.info("loading park fire zone...");
+  var jsonData = fs.readFileSync("./data/park-fire-zone-xref.json", "utf8");
+  const dataSeed = JSON.parse(jsonData)["park-fire-zone-xref"];
+  dataSeed.forEach(async (data) => {
+    const protectedArea = await strapi.services["protected-area"].findOne({
+      ORCS: data.ORCS,
+    });
+    if (protectedArea) {
+      const fireZones = await strapi.services["fire-zone"].find({
+        FireZoneNumber: data.FireZoneNumber,
+      });
+
+      protectedArea.fire_zones = fireZones;
+
+      strapi
+        .query("protected-area")
+        .update({ id: protectedArea.id }, protectedArea);
+    }
+  });
+};
+
+const loadParkFogZone = async () => {
+  strapi.log.info("loading park fog zone...");
+  var jsonData = fs.readFileSync("./data/park-fog-zone-xref.json", "utf8");
+  const dataSeed = JSON.parse(jsonData)["park-fog-zone-xref"];
+  dataSeed.forEach(async (data) => {
+    const protectedArea = await strapi.services["protected-area"].findOne({
+      ORCS: data.ORCS,
+    });
+    if (protectedArea) {
+      if (data.FogZone === "Y") protectedArea.FogZone = true;
+      else protectedArea.FogZone = false;
+
+      strapi
+        .query("protected-area")
+        .update({ id: protectedArea.id }, protectedArea);
+    }
+  });
+};
+
+// const loadParkFireZone = (async() = {});
 
 const createApiUser = async () => {
   const authRole = await findRole("authenticated");
@@ -292,20 +364,20 @@ const loadPublicAdvisory = async () => {
   const loadSetting = await getDataLoadSetting(modelName);
 
   // if (loadSetting && loadSetting.purge)
-  await strapi.services["public-advisory"].delete();
+  await strapi.services[modelName].delete();
 
   // if (loadSetting && !loadSetting.reload) return;
 
-  const currentData = await strapi.services["public-advisory"].find();
+  const currentData = await strapi.services[modelName].find();
   if (currentData.length === 0) {
     strapi.log.info(`loading ${modelName}...`);
     var jsonData = fs.readFileSync("./data/public-advisory.json", "utf8");
     const dataSeed = JSON.parse(jsonData);
 
     var jsonData = fs.readFileSync("./data/public-advisory-xref.json", "utf8");
-    const dataXref = JSON.parse(jsonData);
+    const dataXref = JSON.parse(jsonData)[modelName];
 
-    dataSeed.public_advisory.map(async (data) => {
+    dataSeed.map(async (data) => {
       const orcsXref = await dataXref.public_advisory_xref.filter(
         (x) => x.AdvisoryNumber == data.AdvisoryNumber
       );
@@ -501,12 +573,32 @@ const createAdmin = async () => {
   }
 };
 
+const loadJsonData = async (model, jsonFile, object) => {
+  const loadSetting = await getDataLoadSetting(model);
+
+  if (loadSetting && loadSetting.purge) await strapi.services[model].delete();
+
+  if (loadSetting && !loadSetting.reload) return;
+
+  const currentData = await strapi.services[model].find();
+  if (currentData.length == 0) {
+    strapi.log.info(`loading ${model}...`);
+    var jsonData = fs.readFileSync(jsonFile, "utf8");
+    const dataSeed = JSON.parse(jsonData)[object];
+    dataSeed.forEach((data) => {
+      strapi.services[model].create(data);
+    });
+  }
+};
 const loadData = async () => {
   try {
     await loadParData();
     await loadAccessStatus();
     await loadAdvisoryStatus();
     await loadEventType();
+    await loadFireCentre();
+    await loadFireZone();
+    await loadParkFogZone();
     await loadUrgency();
     await loadPublicAdvisory();
     await createApiToken();
@@ -524,7 +616,6 @@ module.exports = async () => {
     await setDefaultPermissions();
     await loadData();
   }
-  await loadUrgency();
-  await loadAdvisoryStatus();
-  await loadPublicAdvisory();
+  await loadJsonData("fire-centre", "./data/fire-centre.json", "fire-centre");
+  // await loadJsonData("fire-zone", "./data/fire-zone.json","fire-zone")
 };
