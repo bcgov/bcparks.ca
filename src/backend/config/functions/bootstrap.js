@@ -302,34 +302,6 @@ const loadPublicAdvisory = async () => {
   }
 };
 
-const loadParkFireZoneXref = async () => {
-  strapi.log.info("loading park fire zone xref...");
-  var jsonData = fs.readFileSync("./data/park-fire-zone-xref.json", "utf8");
-  const dataSeed = JSON.parse(jsonData)["park-fire-zone-xref"];
-  dataSeed.forEach(async (data) => {
-    console.log(data);
-  });
-
-  dataSeed.forEach(async (data) => {
-    const protectedArea = await strapi.services["protected-area"].findOne({
-      ORCS: data.ORCS,
-    });
-    if (protectedArea) {
-      const fireZones = await strapi.services["fire-zone"].find({
-        FireZoneNumber: data.FireZoneNumber,
-      });
-      if (fireZones) {
-        console.log(protectedArea.id, fireZones);
-        protectedArea.fire_zones = fireZones;
-
-        await strapi
-          .query("protected-area")
-          .update({ id: protectedArea.id }, protectedArea);
-      }
-    }
-  });
-};
-
 const loadParkFogZoneXref = async () => {
   strapi.log.info("loading park fog zone xref...");
   var jsonData = fs.readFileSync("./data/park-fog-zone-xref.json", "utf8");
@@ -543,5 +515,4 @@ module.exports = async () => {
   await loadJsonData("fire-zone", "./data/fire-zone.json", "fire-zone");
   await loadPublicAdvisory();
   await loadParkFogZoneXref();
-  await loadParkFireZoneXref();
 };
