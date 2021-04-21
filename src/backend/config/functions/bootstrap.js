@@ -457,46 +457,54 @@ const loadBusinessHours = async () => {
   strapi.services["business-hours"].createOrUpdate(data);
 };
 
-const createAdmin = async () => {
-  const params = {
-    username: process.env.ADMIN_USER,
-    password: process.env.ADMIN_PASSWORD,
-    firstname: process.env.ADMIN_FIRST_NAME,
-    lastname: process.env.ADMIN_LAST_NAME,
-    email: process.env.ADMIN_EMAIL,
-    blocked: false,
-    isActive: true,
-  };
-  //Check if any account exists.
-  const admins = await strapi.query("user", "admin").find();
+const loadStatutoryHolidays = async () => {
+  strapi.log.info("Setting Empty Statutory Holidays..");
+  const data = JSON.parse({});
+  strapi.services["statutory-holidays"].createOrUpdate(data);
+};
 
-  if (admins.length === 0) {
-    try {
-      let verifyRole = await strapi
-        .query("role", "admin")
-        .findOne({ code: "strapi-super-admin" });
-      if (!verifyRole) {
-        verifyRole = await strapi.query("role", "admin").create({
-          name: "Super Admin",
-          code: "strapi-super-admin",
-          description:
-            "Super Admins can access and manage all features and settings.",
+const createAdmin = async () => {
+  if (process.env.NODE_ENV === "development") {
+    const params = {
+      username: process.env.ADMIN_USER,
+      password: process.env.ADMIN_PASSWORD,
+      firstname: process.env.ADMIN_FIRST_NAME,
+      lastname: process.env.ADMIN_LAST_NAME,
+      email: process.env.ADMIN_EMAIL,
+      blocked: false,
+      isActive: true,
+    };
+    //Check if any account exists.
+    const admins = await strapi.query("user", "admin").find();
+
+    if (admins.length === 0) {
+      try {
+        let verifyRole = await strapi
+          .query("role", "admin")
+          .findOne({ code: "strapi-super-admin" });
+        if (!verifyRole) {
+          verifyRole = await strapi.query("role", "admin").create({
+            name: "Super Admin",
+            code: "strapi-super-admin",
+            description:
+              "Super Admins can access and manage all features and settings.",
+          });
+        }
+        params.roles = [verifyRole.id];
+        params.password = await strapi.admin.services.auth.hashPassword(
+          params.password
+        );
+        await strapi.query("user", "admin").create({
+          ...params,
         });
+        strapi.log.info("Admin account was successfully created.");
+        strapi.log.info(`Email: ${params.email}`);
+      } catch (error) {
+        strapi.log.error(
+          `Couldn't create Admin account during bootstrap: `,
+          error
+        );
       }
-      params.roles = [verifyRole.id];
-      params.password = await strapi.admin.services.auth.hashPassword(
-        params.password
-      );
-      await strapi.query("user", "admin").create({
-        ...params,
-      });
-      strapi.log.info("Admin account was successfully created.");
-      strapi.log.info(`Email: ${params.email}`);
-    } catch (error) {
-      strapi.log.error(
-        `Couldn't create Admin account during bootstrap: `,
-        error
-      );
     }
   }
 };
@@ -511,6 +519,7 @@ const loadData = async () => {
     await loadPublicAdvisory();
     await createApiToken();
     await loadBusinessHours();
+    await loadStatutoryHolidays();
   } catch (error) {
     strapi.log.error(error);
   }

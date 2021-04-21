@@ -76,15 +76,20 @@ namespace BCParksApi.Controllers
         }
 
         [HttpPut]
-        [Route("update/{route}/{id}")]
+        [Route("update/{route}/{id?}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateData([FromBody] Object obj, string route, string id)
+        public async Task<IActionResult> UpdateData([FromBody] Object obj, string route, string id = "")
         {
             try
             {
-                string url = _configuration["CmsUrl"] + route + "/" + id + "?token=" + _configuration["ApiToken"];
+                string url = _configuration["CmsUrl"] + route;
+                if (id != "")
+                {
+                    url += "/" + id;
+                }
+                url = url + "?token=" + _configuration["ApiToken"];
                 HttpResponseMessage apiResponse = await ApiHelper.httpClient.PutAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json"));
                 apiResponse.EnsureSuccessStatusCode();
                 string responseBody = await apiResponse.Content.ReadAsStringAsync();

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { cmsAxios, apiAxios } from "../../../axios_config";
+import { cmsAxios, apiAxios, axios } from "../../../axios_config";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./CreateAdvisory.css";
@@ -10,6 +10,7 @@ import { TextField, ButtonGroup } from "@material-ui/core";
 import Header from "../../composite/header/Header";
 import ImageUploader from "react-images-upload";
 import Select from "react-select";
+import moment from "moment";
 import { useKeycloak } from "@react-keycloak/web";
 import { Loader } from "shared-components/build/components/loader/Loader";
 
@@ -32,6 +33,8 @@ export default function CreateAdvisory({ page: { setError } }) {
   const [notes, setNotes] = useState();
   const { keycloak, initialized } = useKeycloak();
   const [isLoading, setIsLoading] = useState(true);
+  const [isStatHoliday, setIsStatHoliday] = useState(false);
+  const [isAfterHours, setIsAfterHours] = useState(false);
 
   const headlineInput = {
     label: "",
@@ -57,6 +60,87 @@ export default function CreateAdvisory({ page: { setError } }) {
 
   const currentTime = new Date().toISOString().substring(0, 16);
 
+  const calculateStatHoliday = (statData) => {
+    for (let hol of statData["province"]["holidays"]) {
+      if (moment(hol["date"]).isSame(Date.now(), "day")) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const calculateAfterHours = (businessHours) => {
+    const currentDate = moment().format("YYYY-MM-DD");
+    const currentDay = moment().format("dddd");
+    const businessStartTime = moment(
+      currentDate + " " + businessHours["StartTime"]
+    );
+    const businessEndTime = moment(
+      currentDate + " " + businessHours["EndTime"]
+    );
+    const businessHour = moment().isBetween(businessStartTime, businessEndTime);
+    if (!businessHours[currentDay] || !businessHour) {
+      return true;
+    }
+    return false;
+  };
+
+  const isLatestStatutoryHolidayList = (statData) => {
+    for (let hol of statData["province"]["holidays"]) {
+      if (!moment(hol["date"]).isSame(Date.now(), "year")) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  useEffect(() => {
+    if (initialized && keycloak.authenticated) {
+      Promise.resolve(
+        cmsAxios
+          .get(`/statutory-holidays`)
+          .then((res) => {
+            const statData = res.data.Data;
+            if (
+              Object.keys(statData).length === 0 ||
+              !isLatestStatutoryHolidayList(statData)
+            ) {
+              throw new Error("Obsolete Holiday List");
+            }
+            setIsStatHoliday(calculateStatHoliday(statData));
+          })
+          .catch((err) => {
+            console.log(err);
+            // Call Statutory Holiday API if CMS cache is not available
+            axios
+              .get(process.env.REACT_APP_STAT_HOLIDAY_API)
+              .then((res) => {
+                const statInfo = { Data: res.data };
+                setIsStatHoliday(calculateStatHoliday(res.data));
+                // Write Statutory Data to CMS cache
+                apiAxios
+                  .put(`api/update/statutory-holidays`, statInfo, {
+                    headers: { Authorization: `Bearer ${keycloak.idToken}` },
+                  })
+                  .catch((error) => {
+                    console.log(
+                      "error occurred writing statutory holidays to cms",
+                      error
+                    );
+                  });
+              })
+              .catch((error) => {
+                setIsStatHoliday(false);
+                console.log(
+                  "error occurred fetching statutory holidays from API",
+                  error
+                );
+              });
+          })
+      );
+    }
+  }, [keycloak, initialized, setIsStatHoliday]);
+
   useEffect(() => {
     if (!initialized) {
       setIsLoading(true);
@@ -70,7 +154,8 @@ export default function CreateAdvisory({ page: { setError } }) {
       Promise.all([
         cmsAxios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
         cmsAxios.get(`/event-types?_limit=-1&_sort=EventType`),
-        cmsAxios.get(`/urgencies?_limit=-1&_sort=id`),
+        cmsAxios.get(`/urgencies?_limit=-1&_sort=Sequence`),
+        cmsAxios.get(`/business-hours`),
       ])
         .then((res) => {
           const protectedAreaData = res[0].data;
@@ -92,6 +177,7 @@ export default function CreateAdvisory({ page: { setError } }) {
           }));
           setUrgencies([...urgencies]);
           setUrgency(1);
+          setIsAfterHours(calculateAfterHours(res[3].data));
           setIsLoading(false);
         })
         .catch(() => {
@@ -109,10 +195,10 @@ export default function CreateAdvisory({ page: { setError } }) {
     setUrgency,
     setToError,
     setError,
-    setToDashboard,
     keycloak,
     initialized,
     setIsLoading,
+    setIsAfterHours,
   ]);
 
   const onDrop = (picture) => {
@@ -417,6 +503,18 @@ export default function CreateAdvisory({ page: { setError } }) {
                     />
                   </div>
                 </div>
+                {(isStatHoliday || isAfterHours) && (
+                  <div className="row ad-row">
+                    <div className="col-lg-4 col-md-4 col-sm-12 ad-label"></div>
+                    <div className="col-lg-8 col-md-8 col-sm-12">
+                      <p className="ad-after-hour-box">
+                        This is an after-hours advisory. <br />
+                        The web team business hours are Monday to Friday,
+                        8:30AM–4:30PM
+                      </p>
+                    </div>
+                  </div>
+                )}
                 <br />
                 <div className="row ad-row">
                   <div className="col-lg-3 col-md-4"></div>
