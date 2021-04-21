@@ -210,10 +210,10 @@ const loadAdvisoryStatus = async () => {
   const modelName = "advisory-status";
   const loadSetting = await getDataLoadSetting(modelName);
 
-  if (loadSetting && loadSetting.purge)
-    await strapi.services["advisory-status"].delete();
+  //if (loadSetting && loadSetting.purge)
+  await strapi.services["advisory-status"].delete();
 
-  if (loadSetting && !loadSetting.reload) return;
+  //if (loadSetting && !loadSetting.reload) return;
 
   const currentData = await strapi.services["advisory-status"].find();
   if (currentData.length == 0) {
@@ -271,10 +271,10 @@ const loadUrgency = async () => {
   const modelName = "urgency";
   const loadSetting = await getDataLoadSetting(modelName);
 
-  if (loadSetting && loadSetting.purge)
-    await strapi.services["urgency"].delete();
+  //if (loadSetting && loadSetting.purge)
+  await strapi.services["urgency"].delete();
 
-  if (loadSetting && !loadSetting.reload) return;
+  //if (loadSetting && !loadSetting.reload) return;
 
   const currentData = await strapi.services["urgency"].find();
   if (currentData.length == 0) {
@@ -291,10 +291,10 @@ const loadPublicAdvisory = async () => {
   const modelName = "public-advisory";
   const loadSetting = await getDataLoadSetting(modelName);
 
-  if (loadSetting && loadSetting.purge)
-    await strapi.services["public-advisory"].delete();
+  // if (loadSetting && loadSetting.purge)
+  await strapi.services["public-advisory"].delete();
 
-  if (loadSetting && !loadSetting.reload) return;
+  // if (loadSetting && !loadSetting.reload) return;
 
   const currentData = await strapi.services["public-advisory"].find();
   if (currentData.length === 0) {
@@ -533,4 +533,7 @@ module.exports = async () => {
     await setDefaultPermissions();
     await loadData();
   }
+  await loadUrgency();
+  await loadAdvisoryStatus();
+  await loadPublicAdvisory();
 };
