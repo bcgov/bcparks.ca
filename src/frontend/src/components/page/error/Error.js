@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import "../../page.css";
-import { Footer } from "shared-components/build/components/footer/Footer";
 import { Button } from "shared-components/build/components/button/Button";
 import Header from "../../composite/header/Header";
 
@@ -84,7 +83,6 @@ export default function Error({ page: { error } }) {
           </div>
         </div>
       </div>
-      <Footer />
     </main>
   );
 }
