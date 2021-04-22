@@ -10,7 +10,7 @@
 .ad-label {
   text-align: right;
   font-weight: bold;
-  color: #003366 !important;
+  color: #234075 !important;
   vertical-align: middle !important;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .fileContainer .deleteImage {
-  background: #003366 !important;
+  background: #234075 !important;
   font-size: 12px !important;
   line-height: 20px !important;
   width: 20px !important;
