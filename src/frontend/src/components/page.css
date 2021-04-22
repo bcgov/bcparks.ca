@@ -25,7 +25,7 @@
   color: white !important;
   font-weight: 700 !important;
   font-style: normal !important;
-  background-color: #003366 !important;
+  background-color: #234075 !important;
 }
 
 .bcgov-normal-blue:hover {
@@ -34,7 +34,7 @@
 }
 
 .bcgov-normal-white {
-  color: #003366 !important;
+  color: #234075 !important;
   background-color: white !important;
   border-width: 1px !important;
   border-style: solid !important;
@@ -47,6 +47,38 @@
   border-style: solid !important;
   background-color: rgba(242, 242, 242, 1) !important;
   border-color: rgba(204, 204, 204, 1) !important;
+}
+
+.bcgov-normal-light {
+  color: #234075 !important;
+  background-color: #e3eaf8 !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: #e3eaf8 !important;
+}
+
+.bcgov-normal-light:hover {
+  box-sizing: border-box !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  background-color: #bdd3ff !important;
+  border-color: #bdd3ff !important;
+}
+
+.bcgov-normal-yellow {
+  color: #234075 !important;
+  background-color: #e3a82b !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: #e3a82b !important;
+}
+
+.bcgov-normal-yellow:hover {
+  box-sizing: border-box !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  background-color: #ffae00 !important;
+  border-color: #ffae00 !important;
 }
 
 .bcgov-button {
@@ -63,7 +95,7 @@
 .react-datepicker-wrapper input {
   background: #e3eaf8 0% 0% no-repeat padding-box !important;
   opacity: 1 !important;
-  color: #003366 !important;
+  color: #234075 !important;
   padding: 10px !important;
   border: none !important;
   width: 100% !important;
@@ -89,12 +121,6 @@
 .bcgov-dropdown-wrapper {
   width: 100% !important;
 }
-
-.bcgov-normal-yellow {
-  background: #e3a82b 0% 0% no-repeat padding-box !important;
-  opacity: 1 !important;
-}
-
 .bcgov-dropdown {
   width: 100% !important;
   padding: 8px 25px 8px 15px !important;

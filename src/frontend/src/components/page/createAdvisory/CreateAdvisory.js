@@ -6,18 +6,20 @@ import "./CreateAdvisory.css";
 import { Button } from "shared-components/build/components/button/Button";
 import { Input } from "shared-components/build/components/input/Input";
 import { Dropdown } from "shared-components/build/components/dropdown/Dropdown";
-import { TextField, ButtonGroup } from "@material-ui/core";
+import { TextField, ButtonGroup, Radio } from "@material-ui/core";
 import Header from "../../composite/header/Header";
 import ImageUploader from "react-images-upload";
 import Select from "react-select";
 import moment from "moment";
 import { useKeycloak } from "@react-keycloak/web";
 import { Loader } from "shared-components/build/components/loader/Loader";
+import WarningIcon from "@material-ui/icons/Warning";
 
 export default function CreateAdvisory({ page: { setError } }) {
   const [protectedAreaNames, setProtectedAreaNames] = useState([]);
   const [eventTypes, setEventTypes] = useState([]);
   const [urgencies, setUrgencies] = useState([]);
+  const [advisoryStatuses, setAdvisoryStatuses] = useState([]);
   const [toError, setToError] = useState(false);
   const [toDashboard, setToDashboard] = useState(false);
   const [headline, setHeadline] = useState();
@@ -35,6 +37,7 @@ export default function CreateAdvisory({ page: { setError } }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isStatHoliday, setIsStatHoliday] = useState(false);
   const [isAfterHours, setIsAfterHours] = useState(false);
+  const [isAfterHourPublish, setIsAfterHourPublish] = useState(false);
 
   const headlineInput = {
     label: "",
@@ -156,6 +159,7 @@ export default function CreateAdvisory({ page: { setError } }) {
         cmsAxios.get(`/event-types?_limit=-1&_sort=EventType`),
         cmsAxios.get(`/urgencies?_limit=-1&_sort=Sequence`),
         cmsAxios.get(`/business-hours`),
+        cmsAxios.get(`/advisory-statuses`),
       ])
         .then((res) => {
           const protectedAreaData = res[0].data;
@@ -176,8 +180,15 @@ export default function CreateAdvisory({ page: { setError } }) {
             value: u.id,
           }));
           setUrgencies([...urgencies]);
-          setUrgency(1);
+          setUrgency(urgencyData[0].id);
           setIsAfterHours(calculateAfterHours(res[3].data));
+
+          const advisoryStatusData = res[4].data;
+          const advisoryStatuses = advisoryStatusData.map((s) => ({
+            code: s.Code,
+            id: s.id,
+          }));
+          setAdvisoryStatuses([...advisoryStatuses]);
           setIsLoading(false);
         })
         .catch(() => {
@@ -191,6 +202,7 @@ export default function CreateAdvisory({ page: { setError } }) {
   }, [
     setProtectedAreaNames,
     setUrgencies,
+    setAdvisoryStatuses,
     setEventTypes,
     setUrgency,
     setToError,
@@ -205,7 +217,23 @@ export default function CreateAdvisory({ page: { setError } }) {
     setPictures([...pictures, picture]);
   };
 
-  const saveAdvisory = () => {
+  const getAdvisoryStatusId = (type) => {
+    let status = {};
+    if (type === "submit") {
+      status = advisoryStatuses.filter((s) => s.code === "AR");
+    } else if (type === "draft") {
+      status = advisoryStatuses.filter((s) => s.code === "DFT");
+    } else if (type === "publish") {
+      status = advisoryStatuses.filter((s) => s.code === "PUB");
+    }
+    return status[0]["id"];
+  };
+
+  const saveAdvisory = (type) => {
+    if (type === "submit" && isAfterHourPublish) {
+      type = "publish";
+    }
+    const advisoryStatus = getAdvisoryStatusId(type);
     let protectedAreaQuery = "";
     locations.forEach((loc, index, array) => {
       protectedAreaQuery += `ORCS_in=${loc}`;
@@ -216,7 +244,7 @@ export default function CreateAdvisory({ page: { setError } }) {
     Promise.all([
       cmsAxios.get(`/event-types/${eventType}`),
       cmsAxios.get(`/urgencies/${urgency}`),
-      cmsAxios.get(`/advisory-statuses/5`),
+      cmsAxios.get(`/advisory-statuses/${advisoryStatus}`),
       cmsAxios.get(`/protectedAreas?${protectedAreaQuery}`),
     ])
       .then((res) => {
@@ -483,11 +511,6 @@ export default function CreateAdvisory({ page: { setError } }) {
                   </div>
                 </div>
                 <div className="row ad-row">
-                  <div className="col-lg-12 col-md-12 col-sm-12">
-                    <hr />
-                  </div>
-                </div>
-                <div className="row ad-row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Internal notes
                   </div>
@@ -504,14 +527,59 @@ export default function CreateAdvisory({ page: { setError } }) {
                   </div>
                 </div>
                 {(isStatHoliday || isAfterHours) && (
-                  <div className="row ad-row">
-                    <div className="col-lg-4 col-md-4 col-sm-12 ad-label"></div>
-                    <div className="col-lg-8 col-md-8 col-sm-12">
-                      <p className="ad-after-hour-box">
-                        This is an after-hours advisory. <br />
-                        The web team business hours are Monday to Friday,
-                        8:30AM–4:30PM
-                      </p>
+                  <div className="ad-af-hour-box">
+                    <div className="row ad-row">
+                      <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                        <WarningIcon className="warningIcon" />
+                      </div>
+                      <div className="col-lg-8 col-md-8 col-sm-12">
+                        <p>
+                          <b>
+                            This is an after-hours advisory. <br />
+                            The web team business hours are Monday to Friday,
+                            8:30AM–4:30PM
+                          </b>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="row ad-row">
+                      <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                        <Radio
+                          checked={isAfterHourPublish}
+                          onChange={() => {
+                            setIsAfterHourPublish(true);
+                          }}
+                          value="Publish"
+                          name="after-hour-submission"
+                          inputProps={{ "aria-label": "Publish immediately" }}
+                        />
+                      </div>
+                      <div className="col-lg-8 col-md-8 col-sm-12">
+                        <p>
+                          Advisory is urgent/safety-related. Publish
+                          immediately.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="row ad-row">
+                      <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                        <Radio
+                          checked={!isAfterHourPublish}
+                          onChange={() => {
+                            setIsAfterHourPublish(false);
+                          }}
+                          value="Review"
+                          name="after-hour-submission"
+                          inputProps={{
+                            "aria-label": "Submit for web team review",
+                          }}
+                        />
+                      </div>
+                      <div className="col-lg-8 col-md-8 col-sm-12">
+                        <p>
+                          Advisory is not urgent. Submit for web team review.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -523,12 +591,19 @@ export default function CreateAdvisory({ page: { setError } }) {
                       label="Submit"
                       styling="bcgov-normal-yellow btn"
                       onClick={() => {
-                        saveAdvisory();
+                        saveAdvisory("submit");
+                      }}
+                    />
+                    <Button
+                      label="Save Draft"
+                      styling="bcgov-normal-light btn"
+                      onClick={() => {
+                        saveAdvisory("draft");
                       }}
                     />
                     <Button
                       label="Cancel"
-                      styling="bcgov-normal-white btn"
+                      styling="bcgov-normal-light btn"
                       onClick={() => {
                         sessionStorage.clear();
                         setToDashboard(true);
