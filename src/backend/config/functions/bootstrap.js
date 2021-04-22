@@ -302,23 +302,72 @@ const loadPublicAdvisory = async () => {
   }
 };
 
+const loadFireZone = async () => {
+  const currentData = await strapi.services["fire-zone"].find();
+  if (currentData.length == 0) {
+    strapi.log.info("loading fire zone...");
+    var jsonData = fs.readFileSync("./data/fire-zone.json", "utf8");
+    const dataSeed = JSON.parse(jsonData)["fire-zone"];
+    dataSeed.forEach(async (data) => {
+      data.fire_centre = await strapi.services["fire-centre"].findOne({
+        FireCentreNumber: data.FireCentreNumber,
+      });
+      strapi.services["fire-zone"].create(data);
+    });
+  }
+};
+
+const loadParkFireZoneXref = async () => {
+  strapi.log.info("loading park fire zone xref...");
+  var jsonData = fs.readFileSync("./data/park-fire-zone-xref.json", "utf8");
+  const dataSeed = JSON.parse(jsonData)["park-fire-zone-xref"];
+
+  const parkFireZoneXref = Object.entries(
+    dataSeed.reduce((acc, { ORCS, FireZoneNumber }) => {
+      acc[ORCS] = [...(acc[ORCS] || []), { FireZoneNumber }];
+      return acc;
+    }, {})
+  ).map(([key, value]) => ({ ORCS: key, FireZoneNumber: value }));
+
+  for (const parkXref of parkFireZoneXref) {
+    const protectedArea = await strapi.services["protected-area"].findOne({
+      ORCS: parkXref.ORCS,
+    });
+    if (protectedArea) {
+      let fireZones = [];
+      for (const item of parkXref.FireZoneNumber) {
+        const fireZone = await strapi.services["fire-zone"].findOne({
+          FireZoneNumber: item.FireZoneNumber,
+        });
+        fireZones = [...fireZones, fireZone];
+      }
+
+      if (fireZones.length > 0) {
+        protectedArea.fire_zones = fireZones;
+        strapi
+          .query("protected-area")
+          .update({ id: protectedArea.id }, protectedArea);
+      }
+    }
+  }
+};
+
 const loadParkFogZoneXref = async () => {
   strapi.log.info("loading park fog zone xref...");
   var jsonData = fs.readFileSync("./data/park-fog-zone-xref.json", "utf8");
   const dataSeed = JSON.parse(jsonData)["park-fog-zone-xref"];
-  dataSeed.forEach(async (data) => {
+  for (const data of dataSeed) {
     const protectedArea = await strapi.services["protected-area"].findOne({
       ORCS: data.ORCS,
     });
     if (protectedArea) {
-      if (data.FogZone === "Y") protectedArea.FogZone = true;
-      else protectedArea.FogZone = false;
+      protectedArea.FogZone = data.FogZone === "Y" ? true : false;
 
       strapi
         .query("protected-area")
         .update({ id: protectedArea.id }, protectedArea);
     }
-  });
+  }
 };
 
 const getDataLoadSetting = async (modelName) => {
@@ -488,8 +537,8 @@ const loadData = async () => {
     );
     await loadJsonData("event-type", "./data/event-type.json", "event-type");
     await loadJsonData("fire-centre", "./data/fire-centre.json", "fire-centre");
-    await loadJsonData("fire-zone", "./data/fire-zone.json", "fire-zone");
     await loadJsonData("urgency", "./data/urgency.json", "urgency");
+    await loadFireZone();
     await loadPublicAdvisory();
     await loadParkFogZoneXref();
     await loadParkFireZoneXref();
@@ -506,13 +555,8 @@ module.exports = async () => {
     await setDefaultPermissions();
     await loadData();
   }
-  await loadJsonData(
-    "advisory-status",
-    "./data/advisory-status.json",
-    "advisory-status"
-  );
-  await loadJsonData("fire-centre", "./data/fire-centre.json", "fire-centre");
-  await loadJsonData("fire-zone", "./data/fire-zone.json", "fire-zone");
-  await loadPublicAdvisory();
+  // the lines below are temporary and will be removed once the data is loaded in dev
+  await loadFireZone();
   await loadParkFogZoneXref();
+  await loadParkFireZoneXref();
 };
