@@ -3,7 +3,6 @@ const fs = require("fs");
 const axios = require("axios");
 const moment = require("moment");
 const utf8 = require("utf8");
-const { resolve } = require("path");
 
 /**
  * An asynchronous bootstrap function that runs before
