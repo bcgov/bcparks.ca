@@ -317,6 +317,76 @@ const loadFireZone = async () => {
   }
 };
 
+const loadParkActivityXref = async () => {
+  strapi.log.info("loading park activity xref...");
+  var jsonData = fs.readFileSync("./data/park-activity-xref.json", "utf8");
+  const dataSeed = JSON.parse(jsonData)["park-activity-xref"];
+
+  const xrefs = Object.entries(
+    dataSeed.reduce((acc, { ORCS, ActivityID }) => {
+      acc[ORCS] = [...(acc[ORCS] || []), { ActivityID }];
+      return acc;
+    }, {})
+  ).map(([key, value]) => ({ ORCS: key, ActivityID: value }));
+
+  for (const xref of xrefs) {
+    const protectedArea = await strapi.services["protected-area"].findOne({
+      ORCS: xref.ORCS,
+    });
+    if (protectedArea) {
+      let activities = [];
+      for (const item of xref.ActivityID) {
+        const activity = await strapi.services["activity"].findOne({
+          ActivityNumber: item.ActivityID,
+        });
+        activities = [...activities, activity];
+      }
+
+      if (activities.length > 0) {
+        protectedArea.activities = activities;
+        strapi
+          .query("protected-area")
+          .update({ id: protectedArea.id }, protectedArea);
+      }
+    }
+  }
+};
+
+const loadParkFacilityXref = async () => {
+  strapi.log.info("loading park facility xref...");
+  var jsonData = fs.readFileSync("./data/park-facility-xref.json", "utf8");
+  const dataSeed = JSON.parse(jsonData)["park-facility-xref"];
+
+  const xrefs = Object.entries(
+    dataSeed.reduce((acc, { ORCS, FacilityID }) => {
+      acc[ORCS] = [...(acc[ORCS] || []), { FacilityID }];
+      return acc;
+    }, {})
+  ).map(([key, value]) => ({ ORCS: key, FacilityID: value }));
+
+  for (const xref of xrefs) {
+    const protectedArea = await strapi.services["protected-area"].findOne({
+      ORCS: xref.ORCS,
+    });
+    if (protectedArea) {
+      let facilities = [];
+      for (const item of xref.FacilityID) {
+        const facility = await strapi.services["facility"].findOne({
+          FacilityNumber: item.FacilityID,
+        });
+        facilities = [...facilities, facility];
+      }
+
+      if (facilities.length > 0) {
+        protectedArea.facilities = facilities;
+        strapi
+          .query("protected-area")
+          .update({ id: protectedArea.id }, protectedArea);
+      }
+    }
+  }
+};
+
 const loadParkFireZoneXref = async () => {
   strapi.log.info("loading park fire zone xref...");
   var jsonData = fs.readFileSync("./data/park-fire-zone-xref.json", "utf8");
@@ -502,20 +572,31 @@ const createAdmin = async () => {
 };
 
 const loadJsonData = async (model, jsonFile, object) => {
-  const loadSetting = await getDataLoadSetting(model);
+  try {
+    const loadSetting = await getDataLoadSetting(model);
 
-  if (loadSetting && loadSetting.purge) await strapi.services[model].delete();
+    if (loadSetting && loadSetting.purge) await strapi.services[model].delete();
 
-  if (loadSetting && !loadSetting.reload) return;
+    if (loadSetting && !loadSetting.reload) return;
 
-  const currentData = await strapi.services[model].find();
-  if (currentData.length == 0) {
-    strapi.log.info(`loading ${model}...`);
-    var jsonData = fs.readFileSync(jsonFile, "utf8");
-    const dataSeed = JSON.parse(jsonData)[object];
-    dataSeed.forEach((data) => {
-      strapi.services[model].create(data);
-    });
+    const currentData = await strapi.services[model].find();
+    if (currentData.length == 0) {
+      strapi.log.info(`loading ${model}...`);
+      var jsonData = fs.readFileSync(jsonFile, "utf8");
+      const dataSeed = JSON.parse(jsonData)[object];
+
+      dataSeed.forEach((data) => {
+        const keys = Object.keys(data);
+        for (let i = 0; i < keys.length; i++) {
+          if (data[keys[i]] === "") data[keys[i]] = null;
+        }
+
+        strapi.services[model].create(data);
+      });
+    }
+  } catch (error) {
+    strapi.log.error(`error loading ${model}...`);
+    strapi.log.error(error);
   }
 };
 
@@ -537,11 +618,24 @@ const loadData = async () => {
     );
     await loadJsonData("event-type", "./data/event-type.json", "event-type");
     await loadJsonData("fire-centre", "./data/fire-centre.json", "fire-centre");
+    await loadJsonData(
+      "activity",
+      "./data/park-activity.json",
+      "park-activity"
+    );
+    await loadJsonData(
+      "facility",
+      "./data/park-facility.json",
+      "park-facility"
+    );
     await loadJsonData("urgency", "./data/urgency.json", "urgency");
+
     await loadFireZone();
     await loadPublicAdvisory();
-    await loadParkFogZoneXref();
+    await loadParkActivityXref();
+    await loadParkFacilityXref();
     await loadParkFireZoneXref();
+    await loadParkFogZoneXref();
   } catch (error) {
     strapi.log.error(error);
   }
@@ -555,8 +649,4 @@ module.exports = async () => {
     await setDefaultPermissions();
     await loadData();
   }
-  // the lines below are temporary and will be removed once the data is loaded in dev
-  await loadFireZone();
-  await loadParkFogZoneXref();
-  await loadParkFireZoneXref();
 };

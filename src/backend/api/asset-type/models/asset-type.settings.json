@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "asset_types",
+  "info": {
+    "name": "AssetType"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "AssetTypeNumber": {
+      "type": "integer"
+    },
+    "AssetType": {
+      "type": "string"
+    },
+    "AssetCategory": {
+      "type": "string"
+    }
+  }
+}

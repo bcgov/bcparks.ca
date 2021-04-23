@@ -87,6 +87,12 @@
     },
     "fire_zones": {
       "collection": "fire-zone"
+    },
+    "activities": {
+      "collection": "activity"
+    },
+    "facilities": {
+      "collection": "facility"
     }
   }
 }

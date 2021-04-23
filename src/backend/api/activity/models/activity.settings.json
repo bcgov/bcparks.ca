@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "activities",
+  "info": {
+    "name": "Activity"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "ActivityNumber": {
+      "type": "integer"
+    },
+    "ActivityName": {
+      "type": "string"
+    },
+    "ActivityCode": {
+      "type": "string"
+    },
+    "Icon": {
+      "type": "string"
+    },
+    "IconNA": {
+      "type": "string"
+    },
+    "Rank": {
+      "type": "integer"
+    },
+    "Note": {
+      "type": "string"
+    },
+    "Active": {
+      "type": "boolean"
+    }
+  }
+}
