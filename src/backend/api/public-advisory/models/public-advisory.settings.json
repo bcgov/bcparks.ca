@@ -21,12 +21,9 @@
       "type": "text"
     },
     "DCTicketNumber": {
-      "type": "integer"
+      "type": "biginteger"
     },
     "Alert": {
-      "type": "boolean"
-    },
-    "Approved": {
       "type": "boolean"
     },
     "ListingRank": {
@@ -98,14 +95,17 @@
     "regions": {
       "collection": "region"
     },
-    "section": {
-      "model": "section"
+    "sections": {
+      "collection": "section"
     },
-    "management_area": {
-      "model": "management-area"
+    "management_areas": {
+      "collection": "management-area"
     },
     "fire_zones": {
       "collection": "fire-zone"
+    },
+    "ReservationsAffected": {
+      "type": "boolean"
     }
   }
 }
