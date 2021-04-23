@@ -6,7 +6,7 @@ import "./CreateAdvisory.css";
 import { Button } from "shared-components/build/components/button/Button";
 import { Input } from "shared-components/build/components/input/Input";
 import { Dropdown } from "shared-components/build/components/dropdown/Dropdown";
-import { TextField, ButtonGroup, Radio } from "@material-ui/core";
+import { TextField, ButtonGroup, Radio, Checkbox } from "@material-ui/core";
 import Header from "../../composite/header/Header";
 import ImageUploader from "react-images-upload";
 import Select from "react-select";
@@ -18,12 +18,14 @@ import WarningIcon from "@material-ui/icons/Warning";
 export default function CreateAdvisory({ page: { setError } }) {
   const [protectedAreaNames, setProtectedAreaNames] = useState([]);
   const [eventTypes, setEventTypes] = useState([]);
+  const [accessStatuses, setAccessStatuses] = useState();
   const [urgencies, setUrgencies] = useState([]);
   const [advisoryStatuses, setAdvisoryStatuses] = useState([]);
   const [toError, setToError] = useState(false);
   const [toDashboard, setToDashboard] = useState(false);
   const [headline, setHeadline] = useState();
   const [eventType, setEventType] = useState();
+  const [accessStatus, setAccessStatus] = useState();
   const [description, setDescription] = useState();
   const [locations, setLocations] = useState([]);
   const [urgency, setUrgency] = useState();
@@ -33,6 +35,9 @@ export default function CreateAdvisory({ page: { setError } }) {
   const [pictures, setPictures] = useState([]);
   const [links, setLinks] = useState();
   const [notes, setNotes] = useState();
+  const [isSafetyRelated, setIsSafetyRelated] = useState(false);
+  const [isReservationAffected, setIsReservationAffected] = useState(false);
+  const [ticketNumber, setTicketNumber] = useState();
   const { keycloak, initialized } = useKeycloak();
   const [isLoading, setIsLoading] = useState(true);
   const [isStatHoliday, setIsStatHoliday] = useState(false);
@@ -54,6 +59,13 @@ export default function CreateAdvisory({ page: { setError } }) {
   const notesInput = {
     label: "",
     id: "notes",
+    isReadOnly: false,
+    isRequired: false,
+  };
+
+  const ticketNumberInput = {
+    label: "",
+    id: "ticketNumber",
     isReadOnly: false,
     isRequired: false,
   };
@@ -157,6 +169,7 @@ export default function CreateAdvisory({ page: { setError } }) {
       Promise.all([
         cmsAxios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
         cmsAxios.get(`/event-types?_limit=-1&_sort=EventType`),
+        cmsAxios.get(`/access-statuses?_limit=-1&_sort=AccessStatus`),
         cmsAxios.get(`/urgencies?_limit=-1&_sort=Sequence`),
         cmsAxios.get(`/business-hours`),
         cmsAxios.get(`/advisory-statuses`),
@@ -174,16 +187,22 @@ export default function CreateAdvisory({ page: { setError } }) {
             value: et.id,
           }));
           setEventTypes([...eventTypes]);
-          const urgencyData = res[2].data;
+          const accessStatusData = res[2].data;
+          const accessStatuses = accessStatusData.map((a) => ({
+            label: a.AccessStatus,
+            value: a.id,
+          }));
+          setAccessStatuses([...accessStatuses]);
+          const urgencyData = res[3].data;
           const urgencies = urgencyData.map((u) => ({
             label: u.Urgency,
             value: u.id,
           }));
           setUrgencies([...urgencies]);
           setUrgency(urgencyData[0].id);
-          setIsAfterHours(calculateAfterHours(res[3].data));
+          setIsAfterHours(calculateAfterHours(res[4].data));
 
-          const advisoryStatusData = res[4].data;
+          const advisoryStatusData = res[5].data;
           const advisoryStatuses = advisoryStatusData.map((s) => ({
             code: s.Code,
             id: s.id,
@@ -242,24 +261,37 @@ export default function CreateAdvisory({ page: { setError } }) {
       }
     });
     Promise.all([
+      cmsAxios.get(`/access-statuses/${accessStatus}`),
       cmsAxios.get(`/event-types/${eventType}`),
       cmsAxios.get(`/urgencies/${urgency}`),
-      cmsAxios.get(`/advisory-statuses/${advisoryStatus}`),
       cmsAxios.get(`/protectedAreas?${protectedAreaQuery}`),
+      cmsAxios.get(`/advisory-statuses/${advisoryStatus}`),
     ])
       .then((res) => {
         const newAdvisory = {
-          AdvisoryDate: startDate,
+          Title: headline,
+          Description: description,
+          DCTicketNumber: parseInt(ticketNumber),
+          Alert: isSafetyRelated,
+          Approved: false,
+          Note: notes,
+          SubmittedBy: keycloak.tokenParsed.name,
+          CreatedDate: moment().toISOString(),
+          CreatedBy: keycloak.tokenParsed.name,
           EffectiveDate: startDate,
           EndDate: endDate,
           ExpiryDate: expiryDate,
-          Title: headline,
-          Description: description,
-          Note: notes,
-          event_type: res[0].data,
-          urgency: res[1].data,
-          advisory_status: res[2].data,
+          access_status: res[0].data,
+          event_type: res[1].data,
+          urgency: res[2].data,
           protected_areas: res[3].data,
+          advisory_status: res[4].data,
+          links: [],
+          regions: [],
+          section: [],
+          management_area: [],
+          fire_zones: [],
+          ReservationsAffected: isReservationAffected,
         };
         apiAxios
           .post(`api/add/public-advisories`, newAdvisory, {
@@ -339,6 +371,19 @@ export default function CreateAdvisory({ page: { setError } }) {
                 </div>
                 <div className="row ad-row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                    Access Status
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-sm-12">
+                    <Select
+                      options={accessStatuses}
+                      onChange={(e) => setAccessStatus(e.value)}
+                      placeholder="Select an access status"
+                      className="bg-blue f-select"
+                    />
+                  </div>
+                </div>
+                <div className="row ad-row">
+                  <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Description
                   </div>
                   <div className="col-lg-8 col-md-8 col-sm-12">
@@ -393,6 +438,20 @@ export default function CreateAdvisory({ page: { setError } }) {
                         />
                       ))}
                     </ButtonGroup>
+                  </div>
+                </div>
+                <div className="row ad-row">
+                  <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                    Safety related
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-sm-12">
+                    <Checkbox
+                      checked={isSafetyRelated}
+                      onChange={(e) => {
+                        setIsSafetyRelated(e.target.checked);
+                      }}
+                      inputProps={{ "aria-label": "safety related" }}
+                    />
                   </div>
                 </div>
                 <div className="row ad-row">
@@ -474,6 +533,36 @@ export default function CreateAdvisory({ page: { setError } }) {
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div className="row ad-row">
+                  <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                    Discover Camping reservation affected
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-sm-12">
+                    <Checkbox
+                      checked={isReservationAffected}
+                      onChange={(e) => {
+                        setIsReservationAffected(e.target.checked);
+                      }}
+                      inputProps={{ "aria-label": "Discover camping affected" }}
+                    />
+                  </div>
+                </div>
+                <div className="row ad-row">
+                  <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                    Discover Camping ticket number
+                  </div>
+                  <div className="col-lg-8 col-md-8 col-sm-12">
+                    <Input
+                      input={{
+                        ...ticketNumberInput,
+                        styling: "bcgov-editable-white",
+                      }}
+                      onChange={(event) => {
+                        setTicketNumber(event);
+                      }}
+                    />
                   </div>
                 </div>
                 <div className="row ad-row">

@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "04/21/2021 2:16:48 PM"
+    "x-generation-date": "04/22/2021 5:53:51 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -11650,9 +11650,6 @@
           "Alert": {
             "type": "boolean"
           },
-          "Approved": {
-            "type": "boolean"
-          },
           "ListingRank": {
             "type": "integer"
           },
@@ -11980,73 +11977,79 @@
               }
             }
           },
-          "section": {
-            "required": [
-              "id",
-              "SectionNumber"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "SectionNumber": {
-                "type": "integer"
-              },
-              "SectionName": {
-                "type": "string"
-              },
-              "ManagementAreas": {
-                "type": "array",
-                "items": {
+          "sections": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "SectionNumber"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "SectionNumber": {
+                  "type": "integer"
+                },
+                "SectionName": {
+                  "type": "string"
+                },
+                "ManagementAreas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "Region": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
                   "type": "string"
                 }
-              },
-              "Region": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
               }
             }
           },
-          "management_area": {
-            "required": [
-              "id",
-              "ManagementAreaNumber"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "ManagementAreaNumber": {
-                "type": "integer"
-              },
-              "ManagementAreaName": {
-                "type": "string"
-              },
-              "Section": {
-                "type": "string"
-              },
-              "Region": {
-                "type": "string"
-              },
-              "ProtectedArea": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
+          "management_areas": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "ManagementAreaNumber"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "ManagementAreaNumber": {
+                  "type": "integer"
+                },
+                "ManagementAreaName": {
+                  "type": "string"
+                },
+                "Section": {
+                  "type": "string"
+                },
+                "Region": {
+                  "type": "string"
+                },
+                "ProtectedArea": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -12084,6 +12087,9 @@
               }
             }
           },
+          "ReservationsAffected": {
+            "type": "boolean"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -12105,9 +12111,6 @@
             "type": "integer"
           },
           "Alert": {
-            "type": "boolean"
-          },
-          "Approved": {
             "type": "boolean"
           },
           "ListingRank": {
@@ -12196,17 +12199,26 @@
               "type": "string"
             }
           },
-          "section": {
-            "type": "string"
+          "sections": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
-          "management_area": {
-            "type": "string"
+          "management_areas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "fire_zones": {
             "type": "array",
             "items": {
               "type": "string"
             }
+          },
+          "ReservationsAffected": {
+            "type": "boolean"
           },
           "published_at": {
             "type": "string",
