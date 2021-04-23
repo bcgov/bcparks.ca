@@ -729,6 +729,98 @@
               }
             }
           },
+          "activities": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "ActivityNumber": {
+                  "type": "integer"
+                },
+                "ActivityName": {
+                  "type": "string"
+                },
+                "ActivityCode": {
+                  "type": "string"
+                },
+                "Icon": {
+                  "type": "string"
+                },
+                "IconNA": {
+                  "type": "string"
+                },
+                "Rank": {
+                  "type": "integer"
+                },
+                "Note": {
+                  "type": "string"
+                },
+                "Active": {
+                  "type": "boolean"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "facilities": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "FacilityNumber": {
+                  "type": "integer"
+                },
+                "FacilityName": {
+                  "type": "string"
+                },
+                "FacilityCode": {
+                  "type": "string"
+                },
+                "Icon": {
+                  "type": "string"
+                },
+                "IconNA": {
+                  "type": "string"
+                },
+                "Rank": {
+                  "type": "string"
+                },
+                "Note": {
+                  "type": "string"
+                },
+                "Active": {
+                  "type": "boolean"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -818,6 +910,18 @@
             "type": "boolean"
           },
           "fire_zones": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "activities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "facilities": {
             "type": "array",
             "items": {
               "type": "string"

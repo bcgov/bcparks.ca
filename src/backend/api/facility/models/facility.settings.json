@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "facilities",
+  "info": {
+    "name": "Facility"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "FacilityNumber": {
+      "type": "integer"
+    },
+    "FacilityName": {
+      "type": "string"
+    },
+    "FacilityCode": {
+      "type": "string"
+    },
+    "Icon": {
+      "type": "string"
+    },
+    "IconNA": {
+      "type": "string"
+    },
+    "Rank": {
+      "type": "string"
+    },
+    "Note": {
+      "type": "string"
+    },
+    "Active": {
+      "type": "boolean"
+    }
+  }
+}

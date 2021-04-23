@@ -703,6 +703,18 @@
                   "type": "string"
                 }
               },
+              "activities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "facilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "published_at": {
                 "type": "string"
               },
