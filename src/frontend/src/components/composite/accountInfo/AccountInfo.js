@@ -3,7 +3,7 @@ import "./AccountInfo.css";
 import { useKeycloak } from "@react-keycloak/web";
 import { Button } from "shared-components/build/components/button/Button";
 
-const AccountInfo = ({}) => {
+const AccountInfo = () => {
   const { keycloak } = useKeycloak();
   return (
     <div>
