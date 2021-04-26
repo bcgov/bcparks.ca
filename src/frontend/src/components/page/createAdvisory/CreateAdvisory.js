@@ -5,8 +5,17 @@ import PropTypes from "prop-types";
 import "./CreateAdvisory.css";
 import { Button } from "shared-components/build/components/button/Button";
 import { Input } from "shared-components/build/components/input/Input";
-import { Dropdown } from "shared-components/build/components/dropdown/Dropdown";
-import { TextField, ButtonGroup, Radio, Checkbox } from "@material-ui/core";
+import {
+  TextField,
+  ButtonGroup,
+  Radio,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
 import Header from "../../composite/header/Header";
 import ImageUploader from "react-images-upload";
 import Select from "react-select";
@@ -14,6 +23,8 @@ import moment from "moment";
 import { useKeycloak } from "@react-keycloak/web";
 import { Loader } from "shared-components/build/components/loader/Loader";
 import WarningIcon from "@material-ui/icons/Warning";
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import CloseIcon from "@material-ui/icons/Close";
 
 export default function CreateAdvisory({ page: { setError } }) {
   const [protectedAreaNames, setProtectedAreaNames] = useState([]);
@@ -33,6 +44,8 @@ export default function CreateAdvisory({ page: { setError } }) {
   const [endDate, setEndDate] = useState(new Date());
   const [expiryDate, setExpiryDate] = useState(new Date());
   const [pictures, setPictures] = useState([]);
+  const [expiryInterval, setExpiryInterval] = useState();
+  const [expiryIntervalUnit, setExpiryIntervalUnit] = useState();
   const [links, setLinks] = useState();
   const [notes, setNotes] = useState();
   const [isSafetyRelated, setIsSafetyRelated] = useState(false);
@@ -43,6 +56,10 @@ export default function CreateAdvisory({ page: { setError } }) {
   const [isStatHoliday, setIsStatHoliday] = useState(false);
   const [isAfterHours, setIsAfterHours] = useState(false);
   const [isAfterHourPublish, setIsAfterHourPublish] = useState(false);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [confirmationText, setConfirmationText] = useState(false);
+  const [isSavingDraft, setIsSavingDraft] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const headlineInput = {
     label: "",
@@ -70,8 +87,19 @@ export default function CreateAdvisory({ page: { setError } }) {
     isRequired: false,
   };
 
-  const interval = ["Two", "Three", "Four", "Five"];
-  const intervalUnit = ["Hours", "Days", "Weeks", "Months"];
+  const intervals = [
+    { label: "Two", value: 2 },
+    { label: "Three", value: 3 },
+    { label: "Four", value: 4 },
+    { label: "Five", value: 5 },
+  ];
+
+  const intervalUnits = [
+    { label: "Hours", value: 1 },
+    { label: "Days", value: 2 },
+    { label: "Weeks", value: 3 },
+    { label: "Months", value: 4 },
+  ];
 
   const currentTime = new Date().toISOString().substring(0, 16);
 
@@ -232,27 +260,45 @@ export default function CreateAdvisory({ page: { setError } }) {
     setIsAfterHours,
   ]);
 
+  const closeConfirmation = () => {
+    setIsConfirmationOpen(false);
+    setToDashboard(true);
+  };
+
   const onDrop = (picture) => {
     setPictures([...pictures, picture]);
   };
 
-  const getAdvisoryStatusId = (type) => {
+  const getAdvisoryStatusIdAndText = (type) => {
     let status = {};
+    let confirmationText = "";
     if (type === "submit") {
       status = advisoryStatuses.filter((s) => s.code === "AR");
+      confirmationText = "Your advisory has been sent for review successfully!";
     } else if (type === "draft") {
       status = advisoryStatuses.filter((s) => s.code === "DFT");
+      confirmationText = "Your advisory has been saved successfully!";
     } else if (type === "publish") {
       status = advisoryStatuses.filter((s) => s.code === "PUB");
+      confirmationText = "Your advisory has been published successfully!";
     }
-    return status[0]["id"];
+    return {
+      advisoryStatus: status[0]["id"],
+      confirmationText: confirmationText,
+    };
   };
 
   const saveAdvisory = (type) => {
-    if (type === "submit" && isAfterHourPublish) {
-      type = "publish";
+    if (type === "draft") {
+      setIsSavingDraft(true);
+    } else if (type === "submit") {
+      setIsSubmitting(true);
+      if (isAfterHourPublish) type = "publish";
     }
-    const advisoryStatus = getAdvisoryStatusId(type);
+    const { advisoryStatus, confirmationText } = getAdvisoryStatusIdAndText(
+      type
+    );
+    setConfirmationText(confirmationText);
     let protectedAreaQuery = "";
     locations.forEach((loc, index, array) => {
       protectedAreaQuery += `ORCS_in=${loc}`;
@@ -298,8 +344,9 @@ export default function CreateAdvisory({ page: { setError } }) {
             headers: { Authorization: `Bearer ${keycloak.idToken}` },
           })
           .then(() => {
-            console.log("New advisory added successfully");
-            setToDashboard(true);
+            setIsConfirmationOpen(true);
+            setIsSubmitting(false);
+            setIsSavingDraft(false);
           })
           .catch((error) => {
             console.log("error occurred", error);
@@ -340,7 +387,7 @@ export default function CreateAdvisory({ page: { setError } }) {
           {!isLoading && (
             <form>
               <div className="container-fluid ad-form">
-                <div className="row ad-row">
+                <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Headline
                   </div>
@@ -356,7 +403,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                     />
                   </div>
                 </div>
-                <div className="row ad-row">
+                <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Event type
                   </div>
@@ -369,7 +416,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                     />
                   </div>
                 </div>
-                <div className="row ad-row">
+                <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Access Status
                   </div>
@@ -382,7 +429,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                     />
                   </div>
                 </div>
-                <div className="row ad-row">
+                <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Description
                   </div>
@@ -397,7 +444,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                     />
                   </div>
                 </div>
-                <div className="row ad-row">
+                <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Location
                   </div>
@@ -413,7 +460,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                     />
                   </div>
                 </div>
-                <div className="row ad-row">
+                <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Urgency level
                   </div>
@@ -440,7 +487,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                     </ButtonGroup>
                   </div>
                 </div>
-                <div className="row ad-row">
+                <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Safety related
                   </div>
@@ -454,13 +501,13 @@ export default function CreateAdvisory({ page: { setError } }) {
                     />
                   </div>
                 </div>
-                <div className="row ad-row">
+                <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Effective date
                   </div>
                   <div className="col-lg-8 col-md-8 col-sm-12">
                     <div className="ad-field field-bg-blue">
-                      <div className="row ad-row ">
+                      <div className="row">
                         <div className="col-lg-6 col-md-12 col-sm-12 pr0">
                           <div className="ad-flex">
                             <div className="p10 col-lg-2 col-md-3 col-sm-12">
@@ -485,16 +532,27 @@ export default function CreateAdvisory({ page: { setError } }) {
                               Duration
                             </div>
                             <div className="p10 col-lg-9 col-md-8 col-sm-12 ad-flex ptm3 ad-interval-box">
-                              <Dropdown items={interval} onSelect={() => {}} />
-                              <Dropdown
-                                items={intervalUnit}
-                                onSelect={() => {}}
+                              <Select
+                                options={intervals}
+                                onChange={(e) => {
+                                  setExpiryInterval(e.value);
+                                }}
+                                placeholder="Select"
+                                className="bg-blue f-select ad-interval-select"
+                              />
+                              <Select
+                                options={intervalUnits}
+                                onChange={(e) => {
+                                  setExpiryIntervalUnit(e.value);
+                                }}
+                                placeholder="Select"
+                                className="bg-blue f-select ad-interval-select"
                               />
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="row ad-row">
+                      <div className="row">
                         <div className="col-lg-6 col-md-12 col-sm-12 pr0">
                           <div className="ad-flex">
                             <div className="p10 col-lg-2 col-md-3 col-sm-12">
@@ -535,7 +593,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                     </div>
                   </div>
                 </div>
-                <div className="row ad-row">
+                <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Discover Camping reservation affected
                   </div>
@@ -549,7 +607,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                     />
                   </div>
                 </div>
-                <div className="row ad-row">
+                <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Discover Camping ticket number
                   </div>
@@ -565,7 +623,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                     />
                   </div>
                 </div>
-                <div className="row ad-row">
+                <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Photos
                   </div>
@@ -583,7 +641,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                     />
                   </div>
                 </div>
-                <div className="row ad-row">
+                <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Links
                   </div>
@@ -599,7 +657,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                     />
                   </div>
                 </div>
-                <div className="row ad-row">
+                <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                     Internal notes
                   </div>
@@ -617,7 +675,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                 </div>
                 {(isStatHoliday || isAfterHours) && (
                   <div className="ad-af-hour-box">
-                    <div className="row ad-row">
+                    <div className="row">
                       <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                         <WarningIcon className="warningIcon" />
                       </div>
@@ -631,7 +689,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                         </p>
                       </div>
                     </div>
-                    <div className="row ad-row">
+                    <div className="row">
                       <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                         <Radio
                           checked={isAfterHourPublish}
@@ -650,7 +708,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                         </p>
                       </div>
                     </div>
-                    <div className="row ad-row">
+                    <div className="row">
                       <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                         <Radio
                           checked={!isAfterHourPublish}
@@ -673,15 +731,16 @@ export default function CreateAdvisory({ page: { setError } }) {
                   </div>
                 )}
                 <br />
-                <div className="row ad-row">
+                <div className="row">
                   <div className="col-lg-3 col-md-4"></div>
-                  <div className="col-lg-8 col-md-8 col-sm-12 button-row ad-row ad-btn-group">
+                  <div className="col-lg-8 col-md-8 col-sm-12 button-row ad-btn-group">
                     <Button
                       label="Submit"
                       styling="bcgov-normal-yellow btn"
                       onClick={() => {
                         saveAdvisory("submit");
                       }}
+                      hasLoader={isSubmitting}
                     />
                     <Button
                       label="Save Draft"
@@ -689,6 +748,7 @@ export default function CreateAdvisory({ page: { setError } }) {
                       onClick={() => {
                         saveAdvisory("draft");
                       }}
+                      hasLoader={isSavingDraft}
                     />
                     <Button
                       label="Cancel"
@@ -701,6 +761,46 @@ export default function CreateAdvisory({ page: { setError } }) {
                   </div>
                 </div>
               </div>
+              <Dialog
+                open={isConfirmationOpen}
+                onClose={() => {
+                  setIsConfirmationOpen(false);
+                }}
+                disableBackdropClick
+                disableEscapeKeyDown
+              >
+                <DialogContent>
+                  <DialogTitle id="ad-confirm-title">
+                    <CloseIcon
+                      className="pointer"
+                      onClick={() => {
+                        closeConfirmation();
+                      }}
+                    />
+                  </DialogTitle>
+                  <DialogContentText id="ad-confirm">
+                    <CheckCircleOutlineIcon className="checkIcon" />
+                    <br />
+                    <span>
+                      Thank you! <br />
+                      {confirmationText}
+                      <br />
+                    </span>
+                    The business hours for the web team is Mon - Fri 8.30 am to
+                    4.30 pm.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions className="button-row ad-btn-row ad-btn-group">
+                  <Button
+                    label="Close"
+                    styling="bcgov-normal-white btn"
+                    onClick={() => {
+                      closeConfirmation();
+                    }}
+                  />
+                </DialogActions>
+                <br />
+              </Dialog>
             </form>
           )}
         </div>
