@@ -338,6 +338,7 @@ export default function CreateAdvisory({ page: { setError } }) {
           management_area: [],
           fire_zones: [],
           ReservationsAffected: isReservationAffected,
+          published_at: null,
         };
         apiAxios
           .post(`api/add/public-advisories`, newAdvisory, {
