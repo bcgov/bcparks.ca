@@ -60,7 +60,7 @@ module.exports = {
           { id: advisory.id },
           {
             published_at: null,
-            advisory_status: advisoryStatusMap["INC"],
+            advisory_status: advisoryStatusMap["INA"],
             RemovalDate: new Date(),
             ModifiedBy: "system",
             ModifiedDate: new Date(),
