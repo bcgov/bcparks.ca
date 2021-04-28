@@ -183,7 +183,9 @@ const loadProtectedLandData = async (protectedLandData) => {
       Sites: [...sites],
       ManagementAreas: [...managementAreas],
     });
-  } catch (error) {}
+  } catch (error) {
+    strapi.log.error(error);
+  }
 };
 
 const createApiUser = async () => {
@@ -206,13 +208,17 @@ const createApiUser = async () => {
 };
 
 const createApiToken = async () => {
-  const apiUser = await createApiUser();
-  Promise.resolve(
-    strapi.services["token"].create({
-      Token: process.env.API_TOKEN,
-      User: apiUser,
-    })
-  );
+  try {
+    const apiUser = await createApiUser();
+    Promise.resolve(
+      strapi.services["token"].create({
+        Token: process.env.API_TOKEN,
+        User: apiUser,
+      })
+    );
+  } catch (error) {
+    strapi.log.error(error);
+  }
 };
 
 const loadPublicAdvisory = async () => {
@@ -514,33 +520,41 @@ const findRole = async (role) => {
 
 const loadBusinessHours = async () => {
   strapi.log.info("Loading Business hours..");
-  var jsonData = fs.readFileSync("./data/business-hours.json", "utf8");
-  const data = JSON.parse(jsonData);
-  strapi.services["business-hours"].createOrUpdate(data);
+  try {
+    var jsonData = fs.readFileSync("./data/business-hours.json", "utf8");
+    const data = JSON.parse(jsonData);
+    strapi.services["business-hours"].createOrUpdate(data);
+  } catch (error) {
+    strapi.log.error(error);
+  }
 };
 
 const loadStatutoryHolidays = async () => {
-  strapi.log.info("Setting Empty Statutory Holidays..");
-  const data = JSON.parse({});
-  strapi.services["statutory-holidays"].createOrUpdate(data);
+  try {
+    strapi.log.info("Setting Empty Statutory Holidays..");
+    const data = JSON.parse({});
+    strapi.services["statutory-holidays"].createOrUpdate(data);
+  } catch (error) {
+    strapi.log.error(error);
+  }
 };
 
 const createAdmin = async () => {
-  if (process.env.NODE_ENV === "development") {
-    const params = {
-      username: process.env.ADMIN_USER,
-      password: process.env.ADMIN_PASSWORD,
-      firstname: process.env.ADMIN_FIRST_NAME,
-      lastname: process.env.ADMIN_LAST_NAME,
-      email: process.env.ADMIN_EMAIL,
-      blocked: false,
-      isActive: true,
-    };
-    //Check if any account exists.
-    const admins = await strapi.query("user", "admin").find();
+  try {
+    if (process.env.NODE_ENV === "development") {
+      const params = {
+        username: process.env.ADMIN_USER,
+        password: process.env.ADMIN_PASSWORD,
+        firstname: process.env.ADMIN_FIRST_NAME,
+        lastname: process.env.ADMIN_LAST_NAME,
+        email: process.env.ADMIN_EMAIL,
+        blocked: false,
+        isActive: true,
+      };
+      //Check if any account exists.
+      const admins = await strapi.query("user", "admin").find();
 
-    if (admins.length === 0) {
-      try {
+      if (admins.length === 0) {
         let verifyRole = await strapi
           .query("role", "admin")
           .findOne({ code: "strapi-super-admin" });
@@ -561,13 +575,10 @@ const createAdmin = async () => {
         });
         strapi.log.info("Admin account was successfully created.");
         strapi.log.info(`Email: ${params.email}`);
-      } catch (error) {
-        strapi.log.error(
-          `Couldn't create Admin account during bootstrap: `,
-          error
-        );
       }
     }
+  } catch (error) {
+    strapi.log.error(`Couldn't create Admin account during bootstrap: `, error);
   }
 };
 

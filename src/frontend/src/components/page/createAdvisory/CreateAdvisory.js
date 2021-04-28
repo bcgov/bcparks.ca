@@ -20,6 +20,7 @@ import Header from "../../composite/header/Header";
 import ImageUploader from "react-images-upload";
 import Select from "react-select";
 import moment from "moment";
+import "moment-timezone";
 import { useKeycloak } from "@react-keycloak/web";
 import { Loader } from "shared-components/build/components/loader/Loader";
 import WarningIcon from "@material-ui/icons/Warning";
@@ -41,6 +42,7 @@ export default function CreateAdvisory({ page: { setError } }) {
   const [locations, setLocations] = useState([]);
   const [urgency, setUrgency] = useState();
   const [startDate, setStartDate] = useState(new Date());
+  const [advisoryDate, setAdvisoryDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [expiryDate, setExpiryDate] = useState(new Date());
   const [pictures, setPictures] = useState([]);
@@ -101,7 +103,10 @@ export default function CreateAdvisory({ page: { setError } }) {
     { label: "Months", value: 4 },
   ];
 
-  const currentTime = new Date().toISOString().substring(0, 16);
+  const currentTime = moment()
+    .tz("America/Vancouver")
+    .format()
+    .substring(0, 16);
 
   const calculateStatHoliday = (statData) => {
     for (let hol of statData["province"]["holidays"]) {
@@ -272,6 +277,7 @@ export default function CreateAdvisory({ page: { setError } }) {
   const getAdvisoryStatusIdAndText = (type) => {
     let status = {};
     let confirmationText = "";
+    let published = null;
     if (type === "submit") {
       status = advisoryStatuses.filter((s) => s.code === "AR");
       confirmationText = "Your advisory has been sent for review successfully!";
@@ -281,10 +287,12 @@ export default function CreateAdvisory({ page: { setError } }) {
     } else if (type === "publish") {
       status = advisoryStatuses.filter((s) => s.code === "PUB");
       confirmationText = "Your advisory has been published successfully!";
+      published = moment().tz("America/Vancouver");
     }
     return {
       advisoryStatus: status[0]["id"],
       confirmationText: confirmationText,
+      published: published,
     };
   };
 
@@ -295,9 +303,11 @@ export default function CreateAdvisory({ page: { setError } }) {
       setIsSubmitting(true);
       if (isAfterHourPublish) type = "publish";
     }
-    const { advisoryStatus, confirmationText } = getAdvisoryStatusIdAndText(
-      type
-    );
+    const {
+      advisoryStatus,
+      confirmationText,
+      published,
+    } = getAdvisoryStatusIdAndText(type);
     setConfirmationText(confirmationText);
     let protectedAreaQuery = "";
     locations.forEach((loc, index, array) => {
@@ -324,6 +334,7 @@ export default function CreateAdvisory({ page: { setError } }) {
           SubmittedBy: keycloak.tokenParsed.name,
           CreatedDate: moment().toISOString(),
           CreatedBy: keycloak.tokenParsed.name,
+          AdvisoryDate: advisoryDate,
           EffectiveDate: startDate,
           EndDate: endDate,
           ExpiryDate: expiryDate,
@@ -338,7 +349,7 @@ export default function CreateAdvisory({ page: { setError } }) {
           management_area: [],
           fire_zones: [],
           ReservationsAffected: isReservationAffected,
-          published_at: null,
+          published_at: published,
         };
         apiAxios
           .post(`api/add/public-advisories`, newAdvisory, {
@@ -508,6 +519,27 @@ export default function CreateAdvisory({ page: { setError } }) {
                   </div>
                   <div className="col-lg-8 col-md-8 col-sm-12">
                     <div className="ad-field field-bg-blue">
+                      <div className="row">
+                        <div className="col-lg-12 col-md-12 col-sm-12 pr0">
+                          <div className="ad-flex">
+                            <div className="p10 col-lg-4 col-md-3 col-sm-12">
+                              Advisory date
+                            </div>
+                            <div className="col-lg-7 col-md-9 col-sm-12">
+                              <TextField
+                                id="endDate"
+                                type="datetime-local"
+                                defaultValue={currentTime}
+                                className="react-datepicker-wrapper"
+                                onChange={(e) => {
+                                  setAdvisoryDate(e.target.value);
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-lg-6 col-md-12 col-sm-12 ptm3 pr0"></div>
+                      </div>
                       <div className="row">
                         <div className="col-lg-6 col-md-12 col-sm-12 pr0">
                           <div className="ad-flex">
