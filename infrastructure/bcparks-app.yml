@@ -526,7 +526,7 @@ objects:
   kind: NetworkPolicy
   metadata:
     name: allow-internal-traffic
-    namespace: 61d198-dev
+    namespace: ${OC_NAMESPACE}-${OC_APP}
   spec:
     podSelector: {}
     ingress:
