@@ -1,11 +1,11 @@
 version: "3.4"
 
 services:
-  react-frontend:
-    container_name: bcp-frontend
+  bcp-admin:
+    container_name: bcp-admin
     restart: unless-stopped
     build:
-      context: src/frontend
+      context: src/admin
       args:
         - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
         - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
@@ -28,11 +28,11 @@ services:
     networks:
       - bcp-cms-network
 
-  bcparks-api:
-    container_name: bcparks-api
+  bcp-middleware:
+    container_name: bcp-middleware
     restart: unless-stopped
     build:
-      context: ./src/api/BCParksApi
+      context: src/middleware
       args:
         - ASPNETCORE_ENVIRONMENT=Development
         - API_TOKEN=${API_TOKEN}
@@ -58,13 +58,13 @@ services:
     networks:
       - bcp-cms-network
 
-  strapi:
+  bcp-cms:
     image: strapi/strapi:3.5.3
-    container_name: bcp-strapi
+    container_name: bcp-cms
     restart: unless-stopped
     env_file: .env
     build:
-      context: src/backend
+      context: src/cms
       args:
         - DATABASE_HOST=${DATABASE_HOST}
         - DATABASE_PORT=${DATABASE_PORT}
@@ -77,6 +77,7 @@ services:
         - API_USER_EMAIL=${API_USER_EMAIL}
         - API_USER_PASSWORD=${API_USER_PASSWORD}
         - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
+        - ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET}
     environment:
       DATABASE_HOST: ${DATABASE_HOST}
       DATABASE_PORT: ${DATABASE_PORT}
@@ -89,6 +90,7 @@ services:
       API_USER_EMAIL: ${API_USER_EMAIL}
       API_USER_PASSWORD: ${API_USER_PASSWORD}
       REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
     networks:
       - bcp-cms-network
     depends_on:
@@ -96,11 +98,11 @@ services:
     ports:
       - "1337:1337"
 
-  staging:
+  bcp-staging:
     container_name: bcp-staging
     restart: unless-stopped
     build:
-      context: src/web
+      context: src/staging
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
