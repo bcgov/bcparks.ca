@@ -93,6 +93,9 @@
     },
     "facilities": {
       "collection": "facility"
+    },
+    "FeatureId": {
+      "type": "integer"
     }
   }
 }

@@ -170,6 +170,7 @@ const loadProtectedLandData = async (protectedLandData) => {
       TypeCode: protectedLandData.protectedLandTypeCode,
       Class: protectedLandData.protectedLandClassCode,
       Status: protectedLandData.protectedLandStatusCode,
+      FeatureId: protectedLandData.featureId,
       EstablishedDate: protectedLandData.establishedDate
         ? moment(protectedLandData.establishedDate, "YYYY-MM-DD")
             .tz("UTC")
