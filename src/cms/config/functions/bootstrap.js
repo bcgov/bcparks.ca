@@ -533,7 +533,7 @@ const loadBusinessHours = async () => {
 const loadStatutoryHolidays = async () => {
   try {
     strapi.log.info("Setting Empty Statutory Holidays..");
-    const data = JSON.parse({});
+    const data = JSON.parse("{}");
     strapi.services["statutory-holidays"].createOrUpdate(data);
   } catch (error) {
     strapi.log.error(error);
@@ -641,6 +641,7 @@ const loadData = async () => {
       "park-facility"
     );
     await loadJsonData("urgency", "./data/urgency.json", "urgency");
+    await loadJsonData("link-type", "./data/link-type.json", "link-type");
 
     await loadFireZone();
     await loadPublicAdvisory();

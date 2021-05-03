@@ -93,19 +93,19 @@
 .bcgov-text-input,
 .bcgov-dropdown,
 .react-datepicker-wrapper input {
-  background: #e3eaf8 0% 0% no-repeat padding-box !important;
+  /* background: #e3eaf8 0% 0% no-repeat padding-box !important; */
   opacity: 1 !important;
   color: #234075 !important;
   padding: 10px !important;
-  border: none !important;
+  border: 1px solid hsl(0, 0%, 80%) !important;
   width: 100% !important;
   margin: 0px !important;
-  border-radius: 2px !important;
+  border-radius: 4px !important;
 }
 
 .react-datepicker-wrapper input {
   background: #fff !important;
-  border-radius: 10px !important;
+  border-radius: 4px !important;
   text-align: center !important;
   margin-left: 0 !important;
 }
@@ -127,15 +127,23 @@
 }
 
 .p10 {
-  padding: 10px !important;
+  padding: 10px 0px !important;
 }
 
 .ptm3 {
   padding-top: 3px !important;
 }
 
+.pbm3 {
+  padding-bottom: 3px !important;
+}
+
 .pr0 {
   padding-right: 0px !important;
+}
+
+.ml15 {
+  margin-left: 15px !important;
 }
 
 .txt-center {
@@ -146,11 +154,6 @@
 .bg-blue,
 .bg-blue div {
   background: #e3eaf8 0% 0% no-repeat padding-box !important;
-}
-
-.f-select div {
-  border: none !important;
-  border-radius: 2px !important;
 }
 
 :focus {
