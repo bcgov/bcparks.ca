@@ -10,7 +10,7 @@
     },
     {
       "AdvisoryStatus": "Approval Requested",
-      "Code":"AR"
+      "Code":"ARQ"
     },
     {
       "AdvisoryStatus": "Approved",
