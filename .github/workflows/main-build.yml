@@ -44,7 +44,7 @@ jobs:
             --build-arg REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}} \
             --build-arg REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
             --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
-             --tag $IMAGE \
+            --tag $IMAGE \
             ${CONTEXT}
           docker push $IMAGE
 
