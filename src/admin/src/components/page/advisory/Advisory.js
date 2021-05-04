@@ -31,6 +31,7 @@ import { Loader } from "shared-components/build/components/loader/Loader";
 import WarningIcon from "@material-ui/icons/Warning";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import CloseIcon from "@material-ui/icons/Close";
+import AddIcon from "@material-ui/icons/Add";
 import VisibilityToggle from "../../base/visibilityToggle/VisibilityToggle";
 
 export default function Advisory({ page: { setError } }) {
@@ -43,6 +44,7 @@ export default function Advisory({ page: { setError } }) {
   const [toDashboard, setToDashboard] = useState(false);
   const [headline, setHeadline] = useState();
   const [eventType, setEventType] = useState();
+  const [linkTypes, setLinkTypes] = useState();
   const [accessStatus, setAccessStatus] = useState();
   const [description, setDescription] = useState();
   const [locations, setLocations] = useState([]);
@@ -61,6 +63,7 @@ export default function Advisory({ page: { setError } }) {
   const [displayExpiryDate, setDisplayExpiryDate] = useState(false);
   const [pictures, setPictures] = useState([]);
   const [links, setLinks] = useState();
+  const linksRef = useRef([]);
   const [notes, setNotes] = useState();
   const [isSafetyRelated, setIsSafetyRelated] = useState(false);
   const [isReservationAffected, setIsReservationAffected] = useState(false);
@@ -84,9 +87,15 @@ export default function Advisory({ page: { setError } }) {
     isReadOnly: false,
     isRequired: false,
   };
-  const linksInput = {
+  const linkTitleInput = {
     label: "",
     id: "link",
+    isReadOnly: false,
+    isRequired: false,
+  };
+  const linkUrlInput = {
+    label: "",
+    id: "url",
     isReadOnly: false,
     isRequired: false,
   };
@@ -216,7 +225,8 @@ export default function Advisory({ page: { setError } }) {
         cmsAxios.get(`/access-statuses?_limit=-1&_sort=AccessStatus`),
         cmsAxios.get(`/urgencies?_limit=-1&_sort=Sequence`),
         cmsAxios.get(`/business-hours`),
-        cmsAxios.get(`/advisory-statuses`),
+        cmsAxios.get(`/advisory-statuses?_limit=-1&_sort=id`),
+        cmsAxios.get(`/link-types?_limit=-1&_sort=id`),
       ])
         .then((res) => {
           const protectedAreaData = res[0].data;
@@ -252,6 +262,14 @@ export default function Advisory({ page: { setError } }) {
             id: s.id,
           }));
           setAdvisoryStatuses([...advisoryStatuses]);
+          const linkTypeData = res[6].data;
+          const linkTypes = linkTypeData.map((lt) => ({
+            label: lt.Type,
+            value: lt.id,
+          }));
+          setLinkTypes([...linkTypes]);
+          linksRef.current = [{ type: "", title: "", url: "" }];
+          setLinks(linksRef.current);
           setIsLoading(false);
         })
         .catch(() => {
@@ -274,6 +292,7 @@ export default function Advisory({ page: { setError } }) {
     initialized,
     setIsLoading,
     setIsAfterHours,
+    setLinks,
   ]);
 
   const closeConfirmation = () => {
@@ -303,6 +322,29 @@ export default function Advisory({ page: { setError } }) {
     }
   };
 
+  const addLink = () => {
+    // setLinks([...links, { type: "", title: "", url: "" }]);
+    linksRef.current = [...linksRef.current, { type: "", title: "", url: "" }];
+    console.log(linksRef.current);
+    setLinks(linksRef.current);
+  };
+
+  const updateLink = (index, field, value) => {
+    const tempLinks = [...linksRef.current];
+    tempLinks[index][field] = value;
+    // setLinks([...tempLinks]);
+    linksRef.current = [...tempLinks];
+    setLinks(linksRef.current);
+  };
+
+  const removeLink = (index) => {
+    let tempLinks = linksRef.current.filter((link, idx) => idx !== index);
+    // setLinks([...tempLinks]);
+    linksRef.current = [...tempLinks];
+    console.log(linksRef.current);
+    setLinks(linksRef.current);
+  };
+
   const calculateExpiryDate = () => {
     setExpiryDate(
       moment(advisoryDateRef.current).add(
@@ -317,7 +359,7 @@ export default function Advisory({ page: { setError } }) {
     let confirmationText = "";
     let published = null;
     if (type === "submit") {
-      status = advisoryStatuses.filter((s) => s.code === "AR");
+      status = advisoryStatuses.filter((s) => s.code === "ARQ");
       confirmationText = "Your advisory has been sent for review successfully!";
     } else if (type === "draft") {
       status = advisoryStatuses.filter((s) => s.code === "DFT");
@@ -729,20 +771,61 @@ export default function Advisory({ page: { setError } }) {
                       />
                     </div>
                   </div>
-                  <div className="row">
+                  <div className="row ">
                     <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                       Links
                     </div>
                     <div className="col-lg-7 col-md-8 col-sm-12">
-                      <Input
-                        input={{
-                          ...linksInput,
-                          styling: "bcgov-editable-white",
+                      {links.map((l, idx) => (
+                        <div key={idx}>
+                          <div className="ad-link-flex">
+                            <Select
+                              options={linkTypes}
+                              onChange={(e) => {
+                                updateLink(idx, "type", e.value);
+                              }}
+                              className="ad-link-select"
+                              placeholder="Select a link type"
+                            />
+                            <div className="ad-link-close">
+                              <CloseIcon
+                                className="pointer"
+                                onClick={() => {
+                                  removeLink(idx);
+                                }}
+                              />
+                            </div>
+                          </div>
+                          <div className="ad-link-group">
+                            <Input
+                              input={{
+                                ...linkTitleInput,
+                                styling: "bcgov-editable-white",
+                              }}
+                              onChange={(e) => {
+                                updateLink(idx, "title", e);
+                              }}
+                            />
+                            <Input
+                              input={{
+                                ...linkUrlInput,
+                                styling: "bcgov-editable-white",
+                              }}
+                              onChange={(e) => {
+                                updateLink(idx, "url", e);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                      <div
+                        className="ad-add-link pointer"
+                        onClick={() => {
+                          addLink();
                         }}
-                        onChange={(event) => {
-                          setLinks(event);
-                        }}
-                      />
+                      >
+                        <AddIcon />
+                      </div>
                     </div>
                   </div>
                   <div className="row">

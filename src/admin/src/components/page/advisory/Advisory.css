@@ -19,8 +19,14 @@
   border-radius: 4px !important;
 }
 
-.ad-flex {
+.ad-flex,
+.ad-link-flex {
   display: flex;
+}
+
+.ad-link-close {
+  padding: 5px !important;
+  padding-left: 25px !important;
 }
 
 .ad-flex-wrap {
@@ -85,8 +91,24 @@
   margin-left: 0px !important;
 }
 
+.ad-link-select {
+  width: 60% !important;
+}
+
+.ad-link-group div,
+.ad-link-select {
+  padding-bottom: 5px !important;
+}
+
 .ad-auto-margin {
   margin: auto !important;
+}
+
+.ad-add-link {
+  border: 1px solid #c1dbee;
+  padding: 5px !important;
+  border-radius: 4px;
+  text-align: center !important;
 }
 
 .MuiRadio-root,
