@@ -20,7 +20,7 @@ function AppRouter() {
             <AdvisoryDashboard page={{ setError }} />
           </Route>
           <Route path="/bcparks/create-advisory">
-            <Advisory page={{ setError }} />
+            <Advisory mode="create" page={{ setError }} />
           </Route>
           <Route path="/bcparks/update-advisory/:id">
             <UpdateAdvisory page={{ setError }} />

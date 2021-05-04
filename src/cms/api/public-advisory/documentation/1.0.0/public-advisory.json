@@ -833,10 +833,10 @@
                 "Title": {
                   "type": "string"
                 },
-                "Type": {
+                "URL": {
                   "type": "string"
                 },
-                "URL": {
+                "Type": {
                   "type": "string"
                 },
                 "published_at": {
@@ -1005,6 +1005,18 @@
           "ReservationsAffected": {
             "type": "boolean"
           },
+          "DisplayAdvisoryDate": {
+            "type": "boolean"
+          },
+          "DisplayEffectiveDate": {
+            "type": "boolean"
+          },
+          "DisplayEndDate": {
+            "type": "boolean"
+          },
+          "DisplayUpdatedDate": {
+            "type": "boolean"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -1133,6 +1145,18 @@
             }
           },
           "ReservationsAffected": {
+            "type": "boolean"
+          },
+          "DisplayAdvisoryDate": {
+            "type": "boolean"
+          },
+          "DisplayEffectiveDate": {
+            "type": "boolean"
+          },
+          "DisplayEndDate": {
+            "type": "boolean"
+          },
+          "DisplayUpdatedDate": {
             "type": "boolean"
           },
           "published_at": {

@@ -34,40 +34,43 @@ import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 import VisibilityToggle from "../../base/visibilityToggle/VisibilityToggle";
 
-export default function Advisory({ page: { setError } }) {
-  const [protectedAreaNames, setProtectedAreaNames] = useState([]);
-  const [eventTypes, setEventTypes] = useState([]);
-  const [accessStatuses, setAccessStatuses] = useState();
-  const [urgencies, setUrgencies] = useState([]);
-  const [advisoryStatuses, setAdvisoryStatuses] = useState([]);
-  const [toError, setToError] = useState(false);
-  const [toDashboard, setToDashboard] = useState(false);
-  const [headline, setHeadline] = useState();
-  const [eventType, setEventType] = useState();
-  const [linkTypes, setLinkTypes] = useState();
-  const [accessStatus, setAccessStatus] = useState();
-  const [description, setDescription] = useState();
+export default function Advisory({ mode, page: { setError } }) {
+  const [protectedAreas, setProtectedAreas] = useState([]);
+  const [regions, setRegions] = useState([]);
+  const [sections, setSections] = useState([]);
+  const [managementAreas, setManagementAreas] = useState([]);
   const [locations, setLocations] = useState([]);
-  const [urgency, setUrgency] = useState();
-  const [startDate, setStartDate] = useState(moment().tz("America/Vancouver"));
+  const [eventTypes, setEventTypes] = useState([]);
+  const [eventType, setEventType] = useState({});
+  const [accessStatuses, setAccessStatuses] = useState();
+  const [accessStatus, setAccessStatus] = useState({});
+  const [urgencies, setUrgencies] = useState([]);
+  const [urgency, setUrgency] = useState({});
+  const [advisoryStatuses, setAdvisoryStatuses] = useState([]);
+  const [advisoryStatus, setAdvisoryStatus] = useState({});
+  const [linkTypes, setLinkTypes] = useState();
+  const [links, setLinks] = useState([]);
+  const [ticketNumber, setTicketNumber] = useState();
+  const [headline, setHeadline] = useState();
+  const [description, setDescription] = useState();
+  const [isSafetyRelated, setIsSafetyRelated] = useState(false);
+  const [isReservationAffected, setIsReservationAffected] = useState(false);
   const [advisoryDate, setAdvisoryDate] = useState(
     moment().tz("America/Vancouver")
   );
+  const [displayAdvisoryDate, setDisplayAdvisoryDate] = useState(false);
+  const [startDate, setStartDate] = useState(moment().tz("America/Vancouver"));
+  const [displayStartDate, setDisplayStartDate] = useState(false);
   const [endDate, setEndDate] = useState(moment().tz("America/Vancouver"));
+  const [displayEndDate, setDisplayEndDate] = useState(false);
   const [expiryDate, setExpiryDate] = useState(
     moment().tz("America/Vancouver")
   );
-  const [displayAdvisoryDate, setDisplayAdvisoryDate] = useState(false);
-  const [displayStartDate, setDisplayStartDate] = useState(false);
-  const [displayEndDate, setDisplayEndDate] = useState(false);
-  const [displayExpiryDate, setDisplayExpiryDate] = useState(false);
+  const [displayUpdatedDate, setDisplayUpdatedDate] = useState(false);
   const [pictures, setPictures] = useState([]);
-  const [links, setLinks] = useState();
-  const linksRef = useRef([]);
   const [notes, setNotes] = useState();
-  const [isSafetyRelated, setIsSafetyRelated] = useState(false);
-  const [isReservationAffected, setIsReservationAffected] = useState(false);
-  const [ticketNumber, setTicketNumber] = useState();
+  const [toError, setToError] = useState(false);
+  const [toDashboard, setToDashboard] = useState(false);
   const { keycloak, initialized } = useKeycloak();
   const [isLoading, setIsLoading] = useState(true);
   const [isStatHoliday, setIsStatHoliday] = useState(false);
@@ -77,6 +80,8 @@ export default function Advisory({ page: { setError } }) {
   const [confirmationText, setConfirmationText] = useState(false);
   const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // const [savedLinks, setSavedLinks] = useState([]);
+  const linksRef = useRef([]);
   const durationUnitRef = useRef("h");
   const durationIntervalRef = useRef(0);
   const advisoryDateRef = useRef(moment().tz("America/Vancouver"));
@@ -86,24 +91,28 @@ export default function Advisory({ page: { setError } }) {
     id: "headline",
     isReadOnly: false,
     isRequired: false,
+    placeholder: "Advisory Headline",
   };
   const linkTitleInput = {
     label: "",
     id: "link",
     isReadOnly: false,
     isRequired: false,
+    placeholder: "Link Title",
   };
   const linkUrlInput = {
     label: "",
     id: "url",
     isReadOnly: false,
     isRequired: false,
+    placeholder: "URL",
   };
   const notesInput = {
     label: "",
     id: "notes",
     isReadOnly: false,
     isRequired: false,
+    placeholder: "Notes",
   };
 
   const ticketNumberInput = {
@@ -111,6 +120,7 @@ export default function Advisory({ page: { setError } }) {
     id: "ticketNumber",
     isReadOnly: false,
     isRequired: false,
+    placeholder: "Discover Camping Ticket Number",
   };
 
   const intervals = [
@@ -225,47 +235,54 @@ export default function Advisory({ page: { setError } }) {
         cmsAxios.get(`/access-statuses?_limit=-1&_sort=AccessStatus`),
         cmsAxios.get(`/urgencies?_limit=-1&_sort=Sequence`),
         cmsAxios.get(`/business-hours`),
-        cmsAxios.get(`/advisory-statuses?_limit=-1&_sort=id`),
+        cmsAxios.get(`/advisory-statuses?_limit=-1&_sort=Code`),
         cmsAxios.get(`/link-types?_limit=-1&_sort=id`),
       ])
         .then((res) => {
           const protectedAreaData = res[0].data;
-          const protectedAreaNames = protectedAreaData.map((p) => ({
+          const protectedAreas = protectedAreaData.map((p) => ({
             label: p.ProtectedAreaName,
             value: p.ORCS,
+            obj: p,
           }));
-          setProtectedAreaNames([...protectedAreaNames]);
+          setProtectedAreas([...protectedAreas]);
           const eventTypeData = res[1].data;
           const eventTypes = eventTypeData.map((et) => ({
             label: et.EventType,
             value: et.id,
+            obj: et,
           }));
           setEventTypes([...eventTypes]);
           const accessStatusData = res[2].data;
           const accessStatuses = accessStatusData.map((a) => ({
             label: a.AccessStatus,
             value: a.id,
+            obj: a,
           }));
           setAccessStatuses([...accessStatuses]);
           const urgencyData = res[3].data;
           const urgencies = urgencyData.map((u) => ({
             label: u.Urgency,
             value: u.id,
+            obj: u,
           }));
           setUrgencies([...urgencies]);
-          setUrgency(urgencyData[0].id);
+          setUrgency(urgencyData[0]);
           setIsAfterHours(calculateAfterHours(res[4].data));
 
           const advisoryStatusData = res[5].data;
           const advisoryStatuses = advisoryStatusData.map((s) => ({
             code: s.Code,
-            id: s.id,
+            label: s.AdvisoryStatus,
+            value: s.id,
+            obj: s,
           }));
           setAdvisoryStatuses([...advisoryStatuses]);
           const linkTypeData = res[6].data;
           const linkTypes = linkTypeData.map((lt) => ({
             label: lt.Type,
             value: lt.id,
+            obj: lt,
           }));
           setLinkTypes([...linkTypes]);
           linksRef.current = [{ type: "", title: "", url: "" }];
@@ -281,7 +298,7 @@ export default function Advisory({ page: { setError } }) {
         });
     }
   }, [
-    setProtectedAreaNames,
+    setProtectedAreas,
     setUrgencies,
     setAdvisoryStatuses,
     setEventTypes,
@@ -323,25 +340,20 @@ export default function Advisory({ page: { setError } }) {
   };
 
   const addLink = () => {
-    // setLinks([...links, { type: "", title: "", url: "" }]);
     linksRef.current = [...linksRef.current, { type: "", title: "", url: "" }];
-    console.log(linksRef.current);
     setLinks(linksRef.current);
   };
 
   const updateLink = (index, field, value) => {
     const tempLinks = [...linksRef.current];
     tempLinks[index][field] = value;
-    // setLinks([...tempLinks]);
     linksRef.current = [...tempLinks];
     setLinks(linksRef.current);
   };
 
   const removeLink = (index) => {
     let tempLinks = linksRef.current.filter((link, idx) => idx !== index);
-    // setLinks([...tempLinks]);
     linksRef.current = [...tempLinks];
-    console.log(linksRef.current);
     setLinks(linksRef.current);
   };
 
@@ -354,7 +366,7 @@ export default function Advisory({ page: { setError } }) {
     );
   };
 
-  const getAdvisoryStatusIdAndText = (type) => {
+  const getAdvisoryFields = (type) => {
     let status = {};
     let confirmationText = "";
     let published = null;
@@ -370,10 +382,44 @@ export default function Advisory({ page: { setError } }) {
       published = moment().tz("America/Vancouver");
     }
     return {
-      advisoryStatus: status[0]["id"],
+      advisoryStatus: status[0]["obj"],
       confirmationText: confirmationText,
       published: published,
     };
+  };
+
+  const isValidLink = (link) => {
+    if (link.title !== "" && link.url !== "") {
+      return true;
+    }
+    return false;
+  };
+
+  const saveLink = async (link) => {
+    const linkRequest = {
+      Title: link.title,
+      URL: link.url,
+      Type: link.type,
+    };
+    const res = await apiAxios
+      .post(`api/add/links`, linkRequest, {
+        headers: { Authorization: `Bearer ${keycloak.idToken}` },
+      })
+      .catch((error) => {
+        console.log("error occurred", error);
+      });
+    return res.data;
+  };
+
+  const saveLinks = async () => {
+    const savedLinks = [];
+    for (let link of links) {
+      if (isValidLink(link)) {
+        const savedLink = await saveLink(link);
+        savedLinks.push(savedLink);
+      }
+    }
+    return savedLinks;
   };
 
   const saveAdvisory = (type) => {
@@ -383,74 +429,52 @@ export default function Advisory({ page: { setError } }) {
       setIsSubmitting(true);
       if (isAfterHourPublish) type = "publish";
     }
-    const {
-      advisoryStatus,
-      confirmationText,
-      published,
-    } = getAdvisoryStatusIdAndText(type);
+    const { advisoryStatus, confirmationText, published } = getAdvisoryFields(
+      type
+    );
     setConfirmationText(confirmationText);
-    let protectedAreaQuery = "";
-    locations.forEach((loc, index, array) => {
-      protectedAreaQuery += `ORCS_in=${loc}`;
-      if (!Object.is(array.length - 1, index)) {
-        protectedAreaQuery += "&";
-      }
-    });
-    Promise.all([
-      cmsAxios.get(`/access-statuses/${accessStatus}`),
-      cmsAxios.get(`/event-types/${eventType}`),
-      cmsAxios.get(`/urgencies/${urgency}`),
-      cmsAxios.get(`/protectedAreas?${protectedAreaQuery}`),
-      cmsAxios.get(`/advisory-statuses/${advisoryStatus}`),
-    ])
-      .then((res) => {
-        const newAdvisory = {
-          Title: headline,
-          Description: description,
-          DCTicketNumber: parseInt(ticketNumber),
-          Alert: isSafetyRelated,
-          Approved: false,
-          Note: notes,
-          SubmittedBy: keycloak.tokenParsed.name,
-          CreatedDate: moment().toISOString(),
-          CreatedBy: keycloak.tokenParsed.name,
-          AdvisoryDate: advisoryDate,
-          EffectiveDate: startDate,
-          EndDate: endDate,
-          ExpiryDate: expiryDate,
-          access_status: res[0].data,
-          event_type: res[1].data,
-          urgency: res[2].data,
-          protected_areas: res[3].data,
-          advisory_status: res[4].data,
-          links: [],
-          regions: [],
-          section: [],
-          management_area: [],
-          fire_zones: [],
-          ReservationsAffected: isReservationAffected,
-          published_at: published,
-        };
-        apiAxios
-          .post(`api/add/public-advisories`, newAdvisory, {
-            headers: { Authorization: `Bearer ${keycloak.idToken}` },
-          })
-          .then(() => {
-            setIsConfirmationOpen(true);
-            setIsSubmitting(false);
-            setIsSavingDraft(false);
-          })
-          .catch((error) => {
-            console.log("error occurred", error);
-          });
-      })
-      .catch(() => {
-        setToError(true);
-        setError({
-          status: 500,
-          message: "Error occurred",
+    Promise.resolve(saveLinks()).then((savedLinks) => {
+      const newAdvisory = {
+        Title: headline,
+        Description: description,
+        DCTicketNumber: parseInt(ticketNumber),
+        Alert: isSafetyRelated,
+        Approved: false,
+        Note: notes,
+        SubmittedBy: keycloak.tokenParsed.name,
+        CreatedDate: moment().toISOString(),
+        CreatedBy: keycloak.tokenParsed.name,
+        AdvisoryDate: advisoryDate,
+        EffectiveDate: startDate,
+        EndDate: endDate,
+        ExpiryDate: expiryDate,
+        access_status: accessStatus,
+        event_type: eventType,
+        urgency: urgency,
+        protected_areas: locations,
+        advisory_status: advisoryStatus,
+        links: savedLinks,
+        regions: [],
+        section: [],
+        management_area: [],
+        fire_zones: [],
+        ReservationsAffected: isReservationAffected,
+        published_at: published,
+      };
+
+      apiAxios
+        .post(`api/add/public-advisories`, newAdvisory, {
+          headers: { Authorization: `Bearer ${keycloak.idToken}` },
+        })
+        .then(() => {
+          setIsConfirmationOpen(true);
+          setIsSubmitting(false);
+          setIsSavingDraft(false);
+        })
+        .catch((error) => {
+          console.log("error occurred", error);
         });
-      });
+    });
   };
 
   if (toDashboard) {
@@ -519,7 +543,7 @@ export default function Advisory({ page: { setError } }) {
                     <div className="col-lg-7 col-md-8 col-sm-12">
                       <Select
                         options={eventTypes}
-                        onChange={(e) => setEventType(e.value)}
+                        onChange={(e) => setEventType(e.obj)}
                         placeholder="Select an event type"
                       />
                     </div>
@@ -531,7 +555,7 @@ export default function Advisory({ page: { setError } }) {
                     <div className="col-lg-7 col-md-8 col-sm-12">
                       <Select
                         options={accessStatuses}
-                        onChange={(e) => setAccessStatus(e.value)}
+                        onChange={(e) => setAccessStatus(e.obj)}
                         placeholder="Select an access status"
                       />
                     </div>
@@ -557,9 +581,9 @@ export default function Advisory({ page: { setError } }) {
                     </div>
                     <div className="col-lg-7 col-md-8 col-sm-12">
                       <Select
-                        options={protectedAreaNames}
+                        options={protectedAreas}
                         onChange={(e) => {
-                          setLocations(e.map((o) => o.value));
+                          setLocations(e.map((o) => o.obj));
                         }}
                         placeholder="Select a Park"
                         isMulti="true"
@@ -581,12 +605,12 @@ export default function Advisory({ page: { setError } }) {
                             key={u.value}
                             label={u.label}
                             styling={
-                              urgency === u.value
+                              urgency === u.obj
                                 ? "bcgov-normal-blue btn"
                                 : "bcgov-normal-white btn"
                             }
                             onClick={() => {
-                              setUrgency(u.value);
+                              setUrgency(u.obj);
                             }}
                           />
                         ))}
@@ -715,13 +739,7 @@ export default function Advisory({ page: { setError } }) {
                                       value={expiryDate}
                                       onChange={setExpiryDate}
                                       format="MMMM DD, yyyy hh:mm A"
-                                      className="react-datepicker-wrapper"
-                                    />
-                                    <VisibilityToggle
-                                      toggle={{
-                                        toggleState: displayExpiryDate,
-                                        setToggleState: setDisplayExpiryDate,
-                                      }}
+                                      className="react-datepicker-wrapper mr40"
                                     />
                                   </div>
                                 </div>
@@ -776,18 +794,19 @@ export default function Advisory({ page: { setError } }) {
                       Links
                     </div>
                     <div className="col-lg-7 col-md-8 col-sm-12">
-                      {links.map((l, idx) => (
+                      {linksRef.current.map((l, idx) => (
                         <div key={idx}>
                           <div className="ad-link-flex">
                             <Select
                               options={linkTypes}
                               onChange={(e) => {
-                                updateLink(idx, "type", e.value);
+                                updateLink(idx, "type", e.obj);
                               }}
+                              value={linkTypes.filter((o) => o.obj === l.type)}
                               className="ad-link-select"
                               placeholder="Select a link type"
                             />
-                            <div className="ad-link-close">
+                            <div className="ad-link-close ad-add-link">
                               <CloseIcon
                                 className="pointer"
                                 onClick={() => {
@@ -801,6 +820,7 @@ export default function Advisory({ page: { setError } }) {
                               input={{
                                 ...linkTitleInput,
                                 styling: "bcgov-editable-white",
+                                value: l.title,
                               }}
                               onChange={(e) => {
                                 updateLink(idx, "title", e);
@@ -810,6 +830,7 @@ export default function Advisory({ page: { setError } }) {
                               input={{
                                 ...linkUrlInput,
                                 styling: "bcgov-editable-white",
+                                value: l.url,
                               }}
                               onChange={(e) => {
                                 updateLink(idx, "url", e);
@@ -844,6 +865,20 @@ export default function Advisory({ page: { setError } }) {
                       />
                     </div>
                   </div>
+                  {mode === "update" && (
+                    <div className="row">
+                      <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                        Advisory status
+                      </div>
+                      <div className="col-lg-7 col-md-8 col-sm-12">
+                        <Select
+                          options={advisoryStatuses}
+                          onChange={(e) => setAdvisoryStatus(e.obj)}
+                          placeholder="Select an advisory status"
+                        />
+                      </div>
+                    </div>
+                  )}
                   {(isStatHoliday || isAfterHours) && (
                     <div className="ad-af-hour-box">
                       <div className="row">
@@ -983,6 +1018,7 @@ export default function Advisory({ page: { setError } }) {
 }
 
 Advisory.propTypes = {
+  mode: PropTypes.string.isRequired,
   page: PropTypes.shape({
     setError: PropTypes.func.isRequired,
   }).isRequired,
