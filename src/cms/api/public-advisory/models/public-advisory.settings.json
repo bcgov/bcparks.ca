@@ -106,6 +106,18 @@
     },
     "ReservationsAffected": {
       "type": "boolean"
+    },
+    "DisplayAdvisoryDate": {
+      "type": "boolean"
+    },
+    "DisplayEffectiveDate": {
+      "type": "boolean"
+    },
+    "DisplayEndDate": {
+      "type": "boolean"
+    },
+    "DisplayUpdatedDate": {
+      "type": "boolean"
     }
   }
 }

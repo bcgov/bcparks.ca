@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Home from "../components/page/home/Home";
 import Error from "../components/page/error/Error";
 import AdvisoryDashboard from "../components/page/advisoryDashboard/AdvisoryDashboard";
-import CreateAdvisory from "../components/page/createAdvisory/CreateAdvisory";
+import Advisory from "../components/page/advisory/Advisory";
 import UpdateAdvisory from "../components/page/updateAdvisory/UpdateAdvisory";
 
 function AppRouter() {
@@ -20,7 +20,7 @@ function AppRouter() {
             <AdvisoryDashboard page={{ setError }} />
           </Route>
           <Route path="/bcparks/create-advisory">
-            <CreateAdvisory page={{ setError }} />
+            <Advisory mode="create" page={{ setError }} />
           </Route>
           <Route path="/bcparks/update-advisory/:id">
             <UpdateAdvisory page={{ setError }} />

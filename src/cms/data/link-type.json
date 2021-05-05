@@ -1,0 +1,16 @@
+{
+  "link-type": [
+    {
+      "Type": "Director's Order"
+    },
+    {
+      "Type": "Map"
+    },
+    {
+      "Type": "Evacuation"
+    },
+    {
+      "Type": "Information Bulletin"
+    }
+  ]
+}

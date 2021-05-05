@@ -118,6 +118,10 @@ const loadEventType = async () => {
   loadUtils.loadJson("event-type", "./data/event-type.json", "event-type");
 };
 
+const loadLinkType = async () => {
+  loadUtils.loadJson("link-type", "./data/link-type.json", "link-type");
+};
+
 const loadFacility = async () => {
   loadUtils.loadJson("facility", "./data/park-facility.json", "park-facility");
 };
@@ -285,7 +289,7 @@ const loadBusinessHours = async () => {
 const loadStatutoryHolidays = async () => {
   try {
     strapi.log.info("Setting Empty Statutory Holidays..");
-    const data = JSON.parse({});
+    const data = JSON.parse("{}");
     strapi.services["statutory-holidays"].createOrUpdate(data);
   } catch (error) {
     strapi.log.error(error);
@@ -301,6 +305,7 @@ module.exports = {
   loadAdvisoryStatus,
   loadAssetType,
   loadEventType,
+  loadLinkType,
   loadFacility,
   loadFireCentre,
   loadFireZone,
