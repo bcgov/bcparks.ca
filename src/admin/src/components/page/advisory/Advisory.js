@@ -39,6 +39,7 @@ export default function Advisory({ mode, page: { setError } }) {
   const [regions, setRegions] = useState([]);
   const [sections, setSections] = useState([]);
   const [managementAreas, setManagementAreas] = useState([]);
+  const [locationOptions, setLocationOptions] = useState([]);
   const [locations, setLocations] = useState([]);
   const [eventTypes, setEventTypes] = useState([]);
   const [eventType, setEventType] = useState({});
@@ -80,7 +81,6 @@ export default function Advisory({ mode, page: { setError } }) {
   const [confirmationText, setConfirmationText] = useState(false);
   const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [savedLinks, setSavedLinks] = useState([]);
   const linksRef = useRef([]);
   const durationUnitRef = useRef("h");
   const durationIntervalRef = useRef(0);
@@ -231,6 +231,9 @@ export default function Advisory({ mode, page: { setError } }) {
     } else {
       Promise.all([
         cmsAxios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
+        cmsAxios.get(`/regions?_limit=-1&_sort=RegionName`),
+        cmsAxios.get(`/sections?_limit=-1&_sort=SectionName`),
+        cmsAxios.get(`/managementAreas?_limit=-1&_sort=ManagementAreaName`),
         cmsAxios.get(`/event-types?_limit=-1&_sort=EventType`),
         cmsAxios.get(`/access-statuses?_limit=-1&_sort=AccessStatus`),
         cmsAxios.get(`/urgencies?_limit=-1&_sort=Sequence`),
@@ -243,24 +246,55 @@ export default function Advisory({ mode, page: { setError } }) {
           const protectedAreas = protectedAreaData.map((p) => ({
             label: p.ProtectedAreaName,
             value: p.ORCS,
+            type: "protectedArea",
             obj: p,
           }));
           setProtectedAreas([...protectedAreas]);
-          const eventTypeData = res[1].data;
+          const regionData = res[1].data;
+          const regions = regionData.map((r) => ({
+            label: r.RegionName,
+            value: r.RegionNumber,
+            type: "region",
+            obj: r,
+          }));
+          setRegions([...regions]);
+          const sectionData = res[2].data;
+          const sections = sectionData.map((s) => ({
+            label: s.SectionName,
+            value: s.SectionNumber,
+            type: "section",
+            obj: s,
+          }));
+          setSections([...sections]);
+          const managementAreaData = res[3].data;
+          const managementAreas = managementAreaData.map((m) => ({
+            label: m.ManagementAreaName,
+            value: m.ManagementAreaNumber,
+            type: "managementArea",
+            obj: m,
+          }));
+          setManagementAreas([...managementAreas]);
+          const eventTypeData = res[4].data;
           const eventTypes = eventTypeData.map((et) => ({
             label: et.EventType,
             value: et.id,
             obj: et,
           }));
+          setLocationOptions([
+            ...protectedAreas,
+            ...managementAreas,
+            ...sections,
+            ...regions,
+          ]);
           setEventTypes([...eventTypes]);
-          const accessStatusData = res[2].data;
+          const accessStatusData = res[5].data;
           const accessStatuses = accessStatusData.map((a) => ({
             label: a.AccessStatus,
             value: a.id,
             obj: a,
           }));
           setAccessStatuses([...accessStatuses]);
-          const urgencyData = res[3].data;
+          const urgencyData = res[6].data;
           const urgencies = urgencyData.map((u) => ({
             label: u.Urgency,
             value: u.id,
@@ -268,9 +302,9 @@ export default function Advisory({ mode, page: { setError } }) {
           }));
           setUrgencies([...urgencies]);
           setUrgency(urgencyData[0]);
-          setIsAfterHours(calculateAfterHours(res[4].data));
+          setIsAfterHours(calculateAfterHours(res[7].data));
 
-          const advisoryStatusData = res[5].data;
+          const advisoryStatusData = res[8].data;
           const advisoryStatuses = advisoryStatusData.map((s) => ({
             code: s.Code,
             label: s.AdvisoryStatus,
@@ -278,7 +312,7 @@ export default function Advisory({ mode, page: { setError } }) {
             obj: s,
           }));
           setAdvisoryStatuses([...advisoryStatuses]);
-          const linkTypeData = res[6].data;
+          const linkTypeData = res[9].data;
           const linkTypes = linkTypeData.map((lt) => ({
             label: lt.Type,
             value: lt.id,
@@ -299,6 +333,10 @@ export default function Advisory({ mode, page: { setError } }) {
     }
   }, [
     setProtectedAreas,
+    setRegions,
+    setSections,
+    setManagementAreas,
+    setLocationOptions,
     setUrgencies,
     setAdvisoryStatuses,
     setEventTypes,
@@ -382,9 +420,33 @@ export default function Advisory({ mode, page: { setError } }) {
       published = moment().tz("America/Vancouver");
     }
     return {
-      advisoryStatus: status[0]["obj"],
+      selAdvisoryStatus: status[0]["obj"],
       confirmationText: confirmationText,
       published: published,
+    };
+  };
+
+  const getLocationAreas = () => {
+    const selProtectedAreas = [];
+    const selRegions = [];
+    const selSections = [];
+    const selManagementAreas = [];
+    locations.forEach((l) => {
+      if (l.type === "protectedArea") {
+        selProtectedAreas.push(l.obj);
+      } else if (l.type === "region") {
+        selRegions.push(l.obj);
+      } else if (l.type === "section") {
+        selSections.push(l.obj);
+      } else if (l.type === "managementArea") {
+        selManagementAreas.push(l.obj);
+      }
+    });
+    return {
+      selProtectedAreas,
+      selRegions,
+      selSections,
+      selManagementAreas,
     };
   };
 
@@ -429,17 +491,24 @@ export default function Advisory({ mode, page: { setError } }) {
       setIsSubmitting(true);
       if (isAfterHourPublish) type = "publish";
     }
-    const { advisoryStatus, confirmationText, published } = getAdvisoryFields(
-      type
-    );
+    const {
+      selAdvisoryStatus,
+      confirmationText,
+      published,
+    } = getAdvisoryFields(type);
     setConfirmationText(confirmationText);
+    const {
+      selProtectedAreas,
+      selRegions,
+      selSections,
+      selManagementAreas,
+    } = getLocationAreas();
     Promise.resolve(saveLinks()).then((savedLinks) => {
       const newAdvisory = {
         Title: headline,
         Description: description,
         DCTicketNumber: parseInt(ticketNumber),
         Alert: isSafetyRelated,
-        Approved: false,
         Note: notes,
         SubmittedBy: keycloak.tokenParsed.name,
         CreatedDate: moment().toISOString(),
@@ -451,14 +520,16 @@ export default function Advisory({ mode, page: { setError } }) {
         access_status: accessStatus,
         event_type: eventType,
         urgency: urgency,
-        protected_areas: locations,
-        advisory_status: advisoryStatus,
+        protected_areas: selProtectedAreas,
+        advisory_status: selAdvisoryStatus,
         links: savedLinks,
-        regions: [],
-        section: [],
-        management_area: [],
-        fire_zones: [],
+        regions: selRegions,
+        sections: selSections,
+        management_areas: selManagementAreas,
         ReservationsAffected: isReservationAffected,
+        DisplayAdvisoryDate: displayAdvisoryDate,
+        DisplayEffectiveDate: displayStartDate,
+        DisplayEndDate: displayEndDate,
         published_at: published,
       };
 
@@ -581,9 +652,9 @@ export default function Advisory({ mode, page: { setError } }) {
                     </div>
                     <div className="col-lg-7 col-md-8 col-sm-12">
                       <Select
-                        options={protectedAreas}
+                        options={locationOptions}
                         onChange={(e) => {
-                          setLocations(e.map((o) => o.obj));
+                          setLocations(e);
                         }}
                         placeholder="Select a Park"
                         isMulti="true"
