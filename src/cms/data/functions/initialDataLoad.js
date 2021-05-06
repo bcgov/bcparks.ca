@@ -21,16 +21,21 @@ const loadData = async () => {
     await permission.createApiToken();
     await otherData.loadBusinessHours();
     await otherData.loadStatutoryHolidays();
+
     await otherData.loadAccessStatus();
     await otherData.loadAdvisoryStatus();
     await otherData.loadEventType();
     await otherData.loadLinkType();
-    await otherData.loadFireCentre();
+
     await otherData.loadActivity();
     await otherData.loadFacility();
     await otherData.loadUrgency();
 
+    await otherData.loadFireCentre();
     await otherData.loadFireZone();
+    await otherData.loadFireCentreZoneXref();
+    await otherData.loadFireBanProhibition();
+
     await otherData.loadPublicAdvisory();
     await otherData.loadParkActivityXref();
     await otherData.loadParkFacilityXref();
