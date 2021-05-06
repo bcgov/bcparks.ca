@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "fire_centres",
   "info": {
-    "name": "FireCentre"
+    "name": "FireCentre",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -15,6 +16,10 @@
     },
     "FireCentreName": {
       "type": "string"
+    },
+    "fire_zones": {
+      "collection": "fire-zone",
+      "via": "fire_centre"
     }
   }
 }

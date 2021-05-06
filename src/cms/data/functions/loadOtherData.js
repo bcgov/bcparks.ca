@@ -1,4 +1,5 @@
 "use strict";
+const axios = require("axios");
 const fs = require("fs");
 const moment = require("moment");
 const loadUtils = require("./loadUtils");
@@ -131,19 +132,61 @@ const loadFireCentre = async () => {
 };
 
 const loadFireZone = async () => {
-  const currentData = await strapi.services["fire-zone"].find();
-  if (currentData.length == 0) {
-    strapi.log.info("loading fire zone...");
-    var jsonData = fs.readFileSync("./data/fire-zone.json", "utf8");
-    const dataSeed = JSON.parse(jsonData)["fire-zone"];
-    dataSeed.forEach(async (data) => {
-      data.fire_centre = await strapi.services["fire-centre"].findOne({
-        FireCentreNumber: data.FireCentreNumber,
+  loadUtils.loadJson("fire-zone", "./data/fire-zone.json", "fire-zone");
+};
+
+const loadFireBanProhibition = async () => {
+  const WILDFIRE_BANS_PROHIBITIONS_API_ENDPOINT =
+    "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/British_Columbia_Bans_and_Prohibition_Areas/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields";
+
+  strapi.log.info("Loading Fire Bans and Prohibitions data..");
+  await strapi.services["fire-ban-prohibition"].delete();
+
+  axios
+    .get(WILDFIRE_BANS_PROHIBITIONS_API_ENDPOINT)
+    .then((response) => {
+      const { features } = response.data;
+      features.forEach(async (feature) => {
+        const {
+          attributes: {
+            TYPE,
+            ACCESS_PROHIBITION_DESCRIPTION,
+            ACCESS_STATUS_EFFECTIVE_DATE,
+            BULLETIN_URL,
+            FIRE_CENTRE_NAME,
+            FIRE_ZONE_NAME,
+          },
+        } = feature;
+
+        let fireCentre = null;
+        if (FIRE_CENTRE_NAME) {
+          fireCentre = await strapi.services["fire-centre"].findOne({
+            FireCentreName_contains: FIRE_CENTRE_NAME,
+          });
+        }
+
+        let fireZone = null;
+        if (FIRE_ZONE_NAME) {
+          fireZone = await strapi.services["fire-zone"].findOne({
+            FireZoneName_contains: FIRE_ZONE_NAME,
+          });
+        }
+
+        const prohibition = {
+          Type: TYPE,
+          ProhibitionDescription: ACCESS_PROHIBITION_DESCRIPTION,
+          EffectiveDate: ACCESS_STATUS_EFFECTIVE_DATE,
+          BulletinURL: BULLETIN_URL,
+          fire_centre: fireCentre,
+          fire_zone: fireZone,
+        };
+
+        strapi.services["fire-ban-prohibition"].create(prohibition);
       });
-      strapi.services["fire-zone"].create(data);
+    })
+    .catch((error) => {
+      strapi.log.error(error);
     });
-    strapi.log.info("loading fire zone completed...");
-  }
 };
 
 const loadUrgency = async () => {
@@ -151,6 +194,43 @@ const loadUrgency = async () => {
 };
 
 // xref
+const loadFireCentreZoneXref = async () => {
+  strapi.log.info("loading fire center -> zone xref...");
+  var jsonData = fs.readFileSync("./data/fire-zone.json", "utf8");
+  const dataSeed = JSON.parse(jsonData)["fire-zone"];
+
+  const fireZoneXref = Object.entries(
+    dataSeed.reduce((acc, { FireCentreNumber, FireZoneNumber }) => {
+      acc[FireCentreNumber] = [
+        ...(acc[FireCentreNumber] || []),
+        { FireZoneNumber },
+      ];
+      return acc;
+    }, {})
+  ).map(([key, value]) => ({ FireCentreNumber: key, FireZoneNumber: value }));
+
+  for (const xref of fireZoneXref) {
+    const fireCentre = await strapi.services["fire-centre"].findOne({
+      FireCentreNumber: xref.FireCentreNumber,
+    });
+    if (fireCentre) {
+      let fireZones = [];
+      for (const item of xref.FireZoneNumber) {
+        const fireZone = await strapi.services["fire-zone"].findOne({
+          FireZoneNumber: item.FireZoneNumber,
+        });
+        fireZones = [...fireZones, fireZone];
+      }
+
+      if (fireZones.length > 0) {
+        fireCentre.fire_zones = fireZones;
+        strapi.query("fire-centre").update({ id: fireCentre.id }, fireCentre);
+      }
+    }
+  }
+  strapi.log.info("loading fire center -> zone xref completed...");
+};
+
 const loadParkActivityXref = async () => {
   strapi.log.info("loading park activity xref...");
   var jsonData = fs.readFileSync("./data/park-activity-xref.json", "utf8");
@@ -309,6 +389,8 @@ module.exports = {
   loadFacility,
   loadFireCentre,
   loadFireZone,
+  loadFireCentreZoneXref,
+  loadFireBanProhibition,
   loadUrgency,
   loadParkActivityXref,
   loadParkFacilityXref,
