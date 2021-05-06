@@ -1,9 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "fire_zones",
+  "collectionName": "fire_ban_prohibitions",
   "info": {
-    "name": "FireZone",
-    "description": ""
+    "name": "FireBanProhibition"
   },
   "options": {
     "increments": true,
@@ -11,18 +10,23 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "FireZoneNumber": {
-      "type": "integer"
-    },
-    "FireZoneName": {
+    "Type": {
       "type": "string"
     },
-    "HeadquartersCityName": {
+    "ProhibitionDescription": {
+      "type": "string"
+    },
+    "EffectiveDate": {
+      "type": "datetime"
+    },
+    "BulletinURL": {
       "type": "string"
     },
     "fire_centre": {
-      "via": "fire_zones",
       "model": "fire-centre"
+    },
+    "fire_zone": {
+      "model": "fire-zone"
     }
   }
 }

@@ -525,11 +525,30 @@
           "Title": {
             "type": "string"
           },
-          "Type": {
-            "type": "string"
-          },
           "URL": {
             "type": "string"
+          },
+          "Type": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "Type": {
+                "type": "string"
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
           "published_at": {
             "type": "string",
@@ -542,10 +561,10 @@
           "Title": {
             "type": "string"
           },
-          "Type": {
+          "URL": {
             "type": "string"
           },
-          "URL": {
+          "Type": {
             "type": "string"
           },
           "published_at": {

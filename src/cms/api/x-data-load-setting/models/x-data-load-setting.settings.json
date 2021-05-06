@@ -1,8 +1,9 @@
 {
   "kind": "collectionType",
-  "collectionName": "data_load_settings",
+  "collectionName": "x_data_load_settings",
   "info": {
-    "name": "DataLoadSetting"
+    "name": "xDataLoadSetting",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -11,6 +12,10 @@
   },
   "attributes": {
     "model": {
+      "type": "string",
+      "unique": true
+    },
+    "loaderFunction": {
       "type": "string"
     },
     "reload": {
@@ -18,6 +23,9 @@
     },
     "purge": {
       "type": "boolean"
+    },
+    "notes": {
+      "type": "string"
     }
   }
 }
