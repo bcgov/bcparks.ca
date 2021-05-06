@@ -1,14 +1,14 @@
 name: Build Test Branch
 on:
   push:
-    branches: [prod]
+    branches: [test]
   workflow_dispatch:
-    branches: [prod]
+    branches: [test]
 
 jobs:
   build-frontend:
     runs-on: ubuntu-20.04
-    environment: Production
+    environment: Test
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -50,7 +50,7 @@ jobs:
 
   build-api:
     runs-on: ubuntu-20.04
-    environment: Production
+    environment: Test
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -93,7 +93,7 @@ jobs:
  
   build-cms:
     runs-on: ubuntu-20.04
-    environment: Production
+    environment: Test
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -137,7 +137,7 @@ jobs:
 
   build-staging:
     runs-on: ubuntu-20.04
-    environment: Production
+    environment: Test
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
