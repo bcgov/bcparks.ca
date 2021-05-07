@@ -91,49 +91,73 @@ jobs:
   #         docker push $IMAGE
 
  
-  # build-cms:
-  #   runs-on: ubuntu-20.04
-  #   environment: Tools
-  #   steps:
-  #     - name: Git Checkout
-  #       uses: actions/checkout@v2
+  build-cms:
+    runs-on: ubuntu-20.04
+    environment: Tools
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v2
 
-  #     - name: Login to RedHat
-  #       uses: docker/login-action@v1
-  #       with:
-  #         registry: ${{secrets.REDHAT_REPO}}
-  #         username: ${{secrets.REDHAT_REPO_USER}}
-  #         password: ${{secrets.REDHAT_REPO_AUTH}}
+      - name: Login to RedHat
+        uses: docker/login-action@v1
+        with:
+          registry: ${{secrets.REDHAT_REPO}}
+          username: ${{secrets.REDHAT_REPO_USER}}
+          password: ${{secrets.REDHAT_REPO_AUTH}}
 
-  #     - name: Login to OpenShift
-  #       uses: docker/login-action@v1
-  #       with:
-  #         registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-  #         username: ${{secrets.OPENSHIFT_SA_USERNAME}}
-  #         password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+      - name: Login to OpenShift
+        uses: docker/login-action@v1
+        with:
+          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
 
-  #     - name: Build and push
-  #       env:
-  #         COMPOSE_DOCKER_CLI_BUILD: 1
-  #         DOCKER_BUILDKIT: 1
-  #         CONTEXT: ./src/cms
-  #         IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:${{secrets.OC_APP}}
-  #       run: |  
-  #         docker build \
-  #           --build-arg DATABASE_HOST=${{secrets.DATABASE_HOST}} \
-  #           --build-arg DATABASE_PORT=${{secrets.DATABASE_PORT}} \
-  #           --build-arg DATABASE_NAME=${{secrets.DATABASE_NAME}} \
-  #           --build-arg DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} \
-  #           --build-arg DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} \
-  #           --build-arg DATABASE_SSL=${{secrets.DATABASE_SSL}} \
-  #           --build-arg API_TOKEN=${{secrets.API_TOKEN}} \
-  #           --build-arg API_USER_NAME=${{secrets.API_USER_NAME}} \
-  #           --build-arg API_USER_EMAIL=${{secrets.API_USER_EMAIL}} \
-  #           --build-arg API_USER_PASSWORD=${{secrets.API_USER_PASSWORD}} \
-  #           --build-arg REACT_APP_CMS_BASE_URL=${{secrets.REACT_APP_CMS_BASE_URL}} \
-  #           --tag $IMAGE \
-  #           ${CONTEXT}
-  #         docker push $IMAGE
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v2.4.0
+
+      # - name: Build and push
+      #   env:
+      #     COMPOSE_DOCKER_CLI_BUILD: 1
+      #     DOCKER_BUILDKIT: 1
+      #     CONTEXT: ./src/cms
+      #     IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:${{secrets.OC_APP}}
+      #   run: |  
+      #     docker build \
+      #       --build-arg DATABASE_HOST=${{secrets.DATABASE_HOST}} \
+      #       --build-arg DATABASE_PORT=${{secrets.DATABASE_PORT}} \
+      #       --build-arg DATABASE_NAME=${{secrets.DATABASE_NAME}} \
+      #       --build-arg DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} \
+      #       --build-arg DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} \
+      #       --build-arg DATABASE_SSL=${{secrets.DATABASE_SSL}} \
+      #       --build-arg API_TOKEN=${{secrets.API_TOKEN}} \
+      #       --build-arg API_USER_NAME=${{secrets.API_USER_NAME}} \
+      #       --build-arg API_USER_EMAIL=${{secrets.API_USER_EMAIL}} \
+      #       --build-arg API_USER_PASSWORD=${{secrets.API_USER_PASSWORD}} \
+      #       --build-arg REACT_APP_CMS_BASE_URL=${{secrets.REACT_APP_CMS_BASE_URL}} \
+      #       --tag $IMAGE \
+      #       ${CONTEXT}
+      #     docker push $IMAGE
+      - name: Build and push
+        uses: docker/build-push-action@v2.4.0
+        with:
+          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+          context: ./src/cms
+          push: true
+          tags: ${{secrets.OC_APP}}
+          build-args:
+            - DATABASE_HOST: ${{secrets.DATABASE_HOST}}
+            - DATABASE_PORT: ${{secrets.DATABASE_PORT}}
+            - DATABASE_NAME: ${{secrets.DATABASE_NAME}}
+            - DATABASE_USERNAME: ${{secrets.DATABASE_USERNAME}}
+            - DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
+            - DATABASE_SSL: ${{secrets.DATABASE_SSL}}
+            - API_TOKEN: ${{secrets.API_TOKEN}}
+            - API_USER_NAME: ${{secrets.API_USER_NAME}}
+            - API_USER_EMAIL: ${{secrets.API_USER_EMAIL}}
+            - API_USER_PASSWORD: ${{secrets.API_USER_PASSWORD}}
+            - REACT_APP_CMS_BASE_URL: ${{secrets.REACT_APP_CMS_BASE_URL}}
 
   build-staging:
     runs-on: ubuntu-20.04
@@ -156,17 +180,12 @@ jobs:
           username: ${{secrets.REDHAT_REPO_USER}}
           password: ${{secrets.REDHAT_REPO_AUTH}}
 
-      - name: Build Image 
+      - name: Build and push
         uses: docker/build-push-action@v2.4.0
         with:
+          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
           context: ./src/staging
           push: true
-          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/staging:${{secrets.OC_APP}}
-
-      - name: Push Image to Openshift
-        uses: julioarruda/pushimagetoregistry@v1
-        with:
-          acr-tokenname: ${{secrets.OPENSHIFT_SA_USERNAME}}
-          acr-token: ${{secrets.OPENSHIFT_SA_PASSWORD}}
-          acr-account: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-          acr-imagename: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/staging:${{secrets.OC_APP}}
+          tags: ${{secrets.OC_APP}}
