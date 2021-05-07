@@ -13,7 +13,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v2
 
-      - name: Login to OpenShift
+      - name: Login to OpenShift Container Repository
         uses: docker/login-action@v1
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
@@ -48,7 +48,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v2
 
-      - name: Login to OpenShift
+      - name: Login to OpenShift Container Repository
         uses: docker/login-action@v1
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
@@ -120,7 +120,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v2
 
-      - name: Login to OpenShift
+      - name: Login to OpenShift Container Repository
         uses: docker/login-action@v1
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
