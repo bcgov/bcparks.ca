@@ -8,7 +8,7 @@ on:
 jobs:
   build-frontend:
     runs-on: ubuntu-20.04
-    environment: Main
+    environment: Tools
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -31,7 +31,7 @@ jobs:
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
-          CONTEXT: ./src/frontend
+          CONTEXT: ./src/admin
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:${{secrets.OC_APP}} 
         run: |  
           docker build \
@@ -44,13 +44,13 @@ jobs:
             --build-arg REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}} \
             --build-arg REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
             --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
-             --tag $IMAGE \
+            --tag $IMAGE \
             ${CONTEXT}
           docker push $IMAGE
 
   build-api:
     runs-on: ubuntu-20.04
-    environment: Main
+    environment: Tools
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -73,7 +73,7 @@ jobs:
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
-          CONTEXT: ./src/api/BCParksApi
+          CONTEXT: ./src/middleware
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:${{secrets.OC_APP}}
         run: |  
           docker build \
@@ -93,7 +93,7 @@ jobs:
  
   build-cms:
     runs-on: ubuntu-20.04
-    environment: Main
+    environment: Tools
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -116,7 +116,7 @@ jobs:
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
-          CONTEXT: ./src/backend
+          CONTEXT: ./src/cms
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:${{secrets.OC_APP}}
         run: |  
           docker build \
@@ -137,7 +137,7 @@ jobs:
 
   build-staging:
     runs-on: ubuntu-20.04
-    environment: Main
+    environment: Tools
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
