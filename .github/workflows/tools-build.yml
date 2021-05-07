@@ -127,6 +127,9 @@ jobs:
       #       --tag $IMAGE \
       #       ${CONTEXT}
       #     docker push $IMAGE
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -169,6 +172,9 @@ jobs:
           registry: ${{secrets.REDHAT_REPO}}
           username: ${{secrets.REDHAT_REPO_USER}}
           password: ${{secrets.REDHAT_REPO_AUTH}}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
