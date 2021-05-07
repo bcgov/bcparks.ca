@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { cmsAxios, apiAxios, axios } from "../../../axios_config";
-import { Redirect } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./Advisory.css";
 import { Button } from "shared-components/build/components/button/Button";
@@ -35,21 +35,17 @@ import AddIcon from "@material-ui/icons/Add";
 import VisibilityToggle from "../../base/visibilityToggle/VisibilityToggle";
 
 export default function Advisory({ mode, page: { setError } }) {
-  const [protectedAreas, setProtectedAreas] = useState([]);
-  const [regions, setRegions] = useState([]);
-  const [sections, setSections] = useState([]);
-  const [managementAreas, setManagementAreas] = useState([]);
   const [locationOptions, setLocationOptions] = useState([]);
   const [locations, setLocations] = useState([]);
   const [eventTypes, setEventTypes] = useState([]);
   const [eventType, setEventType] = useState({});
-  const [accessStatuses, setAccessStatuses] = useState();
+  const [accessStatuses, setAccessStatuses] = useState([]);
   const [accessStatus, setAccessStatus] = useState({});
   const [urgencies, setUrgencies] = useState([]);
   const [urgency, setUrgency] = useState({});
   const [advisoryStatuses, setAdvisoryStatuses] = useState([]);
   const [advisoryStatus, setAdvisoryStatus] = useState({});
-  const [linkTypes, setLinkTypes] = useState();
+  const [linkTypes, setLinkTypes] = useState([]);
   const [links, setLinks] = useState([]);
   const [ticketNumber, setTicketNumber] = useState();
   const [headline, setHeadline] = useState();
@@ -67,9 +63,14 @@ export default function Advisory({ mode, page: { setError } }) {
   const [expiryDate, setExpiryDate] = useState(
     moment().tz("America/Vancouver")
   );
+  const [updatedDate, setUpdatedDate] = useState(
+    moment().tz("America/Vancouver")
+  );
   const [displayUpdatedDate, setDisplayUpdatedDate] = useState(false);
   const [pictures, setPictures] = useState([]);
   const [notes, setNotes] = useState();
+  const [submittedBy, setSubmittedBy] = useState();
+  const [listingRank, setListingRank] = useState();
   const [toError, setToError] = useState(false);
   const [toDashboard, setToDashboard] = useState(false);
   const { keycloak, initialized } = useKeycloak();
@@ -85,6 +86,8 @@ export default function Advisory({ mode, page: { setError } }) {
   const durationUnitRef = useRef("h");
   const durationIntervalRef = useRef(0);
   const advisoryDateRef = useRef(moment().tz("America/Vancouver"));
+
+  const { id } = useParams();
 
   const headlineInput = {
     label: "",
@@ -113,6 +116,14 @@ export default function Advisory({ mode, page: { setError } }) {
     isReadOnly: false,
     isRequired: false,
     placeholder: "Notes",
+  };
+
+  const submitterInput = {
+    label: "",
+    id: "submitter",
+    isReadOnly: false,
+    isRequired: false,
+    placeholder: "Advisory Submitted by",
   };
 
   const ticketNumberInput = {
@@ -220,6 +231,197 @@ export default function Advisory({ mode, page: { setError } }) {
   }, [keycloak, initialized, setIsStatHoliday]);
 
   useEffect(() => {
+    if (
+      initialized &&
+      keycloak.authenticated &&
+      mode === "update" &&
+      !isLoading
+    ) {
+      setIsLoading(true);
+      if (parseInt(id)) {
+        cmsAxios
+          .get(`/public-advisories/${id}`)
+          .then((res) => {
+            const advisoryData = res.data;
+            setHeadline(advisoryData.Title);
+            setDescription(advisoryData.Description);
+            setTicketNumber(advisoryData.DCTicketNumber);
+            if (advisoryData.Alert) {
+              setIsSafetyRelated(advisoryData.Alert);
+            }
+            setListingRank(advisoryData.ListingRank);
+            setNotes(advisoryData.Note);
+            setSubmittedBy(advisoryData.SubmittedBy);
+            if (advisoryData.AdvisoryDate) {
+              setAdvisoryDate(
+                moment(advisoryData.AdvisoryDate).tz("America/Vancouver")
+              );
+            }
+            if (advisoryData.EffectiveDate) {
+              setStartDate(
+                moment(advisoryData.EffectiveDate).tz("America/Vancouver")
+              );
+            }
+            if (advisoryData.EndDate) {
+              setEndDate(moment(advisoryData.EndDate).tz("America/Vancouver"));
+            }
+
+            if (advisoryData.ExpiryDate) {
+              setExpiryDate(
+                moment(advisoryData.ExpiryDate).tz("America/Vancouver")
+              );
+            }
+            if (advisoryData.UpdatedDate) {
+              setUpdatedDate(
+                moment(advisoryData.UpdatedDate).tz("America/Vancouver")
+              );
+            }
+            if (advisoryData.access_status) {
+              setAccessStatus(advisoryData.access_status);
+            }
+            if (advisoryData.event_type) {
+              setEventType(advisoryData.event_type);
+            }
+            if (advisoryData.urgency) {
+              setUrgency(advisoryData.urgency);
+            }
+            if (advisoryData.advisory_status) {
+              setAdvisoryStatus(advisoryData.advisory_status);
+            }
+            if (advisoryData.ReservationsAffected) {
+              setIsReservationAffected(advisoryData.ReservationsAffected);
+            }
+            setDisplayAdvisoryDate(
+              advisoryData.DisplayAdvisoryDate
+                ? advisoryData.DisplayAdvisoryDate
+                : false
+            );
+            setDisplayStartDate(
+              advisoryData.DisplayEffectiveDate
+                ? advisoryData.DisplayEffectiveDate
+                : false
+            );
+            setDisplayEndDate(
+              advisoryData.DisplayEndDate ? advisoryData.DisplayEndDate : false
+            );
+            if (advisoryData.DisplayUpdatedDate !== null) {
+              setDisplayUpdatedDate(advisoryData.DisplayUpdatedDate);
+            }
+
+            const selLocations = [];
+            const protectedAreas = advisoryData.protected_areas;
+            const regions = advisoryData.regions;
+            const sections = advisoryData.sections;
+            const managementAreas = advisoryData.management_areas;
+            if (protectedAreas) {
+              protectedAreas.forEach((p) => {
+                selLocations.push(
+                  locationOptions.find(
+                    (l) => l.value === p.ORCS && l.type === "protectedArea"
+                  )
+                );
+              });
+            }
+            if (regions) {
+              regions.forEach((r) => {
+                selLocations.push(
+                  locationOptions.find(
+                    (l) => l.value === r.RegionNumber && l.type === "region"
+                  )
+                );
+              });
+            }
+            if (sections) {
+              sections.forEach((s) => {
+                selLocations.push(
+                  locationOptions.find(
+                    (l) => l.value === s.SectionNumber && l.type === "section"
+                  )
+                );
+              });
+            }
+            if (managementAreas) {
+              managementAreas.forEach((m) => {
+                selLocations.push(
+                  locationOptions.find(
+                    (l) =>
+                      l.value === m.ManagementAreaNumber &&
+                      l.type === "managementArea"
+                  )
+                );
+              });
+            }
+            setLocations([...selLocations]);
+            const links = advisoryData.links;
+            if (links) {
+              links.forEach((l) => {
+                linksRef.current = [
+                  ...linksRef.current,
+                  {
+                    type: l.Type,
+                    title: l.Title,
+                    url: l.URL,
+                    id: l.id,
+                    isModified: false,
+                  },
+                ];
+              });
+            }
+            setLinks(linksRef.current);
+          })
+          .catch((error) => {
+            console.log("error occurred fetching Public Advisory data", error);
+            setToError(true);
+            setError({
+              status: 500,
+              message: "Error fetching advisory",
+            });
+            setIsLoading(false);
+          });
+      } else {
+        setToError(true);
+        setError({
+          status: 400,
+          message: "Advisory Id is not found",
+        });
+      }
+      setIsLoading(false);
+    }
+  }, [
+    id,
+    initialized,
+    keycloak,
+    mode,
+    setHeadline,
+    setDescription,
+    setTicketNumber,
+    setIsSafetyRelated,
+    setListingRank,
+    setSubmittedBy,
+    setEventType,
+    setUrgency,
+    setAdvisoryStatus,
+    setAdvisoryDate,
+    setUpdatedDate,
+    setStartDate,
+    setEndDate,
+    setExpiryDate,
+    setAccessStatus,
+    setIsReservationAffected,
+    setDisplayAdvisoryDate,
+    setDisplayStartDate,
+    setDisplayEndDate,
+    setDisplayUpdatedDate,
+    setNotes,
+    isLoading,
+    eventTypes,
+    setToError,
+    setError,
+    locationOptions,
+    setLocations,
+  ]);
+
+  useEffect(() => {
     if (!initialized) {
       setIsLoading(true);
     } else if (!keycloak.authenticated) {
@@ -249,7 +451,6 @@ export default function Advisory({ mode, page: { setError } }) {
             type: "protectedArea",
             obj: p,
           }));
-          setProtectedAreas([...protectedAreas]);
           const regionData = res[1].data;
           const regions = regionData.map((r) => ({
             label: r.RegionName,
@@ -257,7 +458,6 @@ export default function Advisory({ mode, page: { setError } }) {
             type: "region",
             obj: r,
           }));
-          setRegions([...regions]);
           const sectionData = res[2].data;
           const sections = sectionData.map((s) => ({
             label: s.SectionName,
@@ -265,7 +465,6 @@ export default function Advisory({ mode, page: { setError } }) {
             type: "section",
             obj: s,
           }));
-          setSections([...sections]);
           const managementAreaData = res[3].data;
           const managementAreas = managementAreaData.map((m) => ({
             label: m.ManagementAreaName,
@@ -273,7 +472,6 @@ export default function Advisory({ mode, page: { setError } }) {
             type: "managementArea",
             obj: m,
           }));
-          setManagementAreas([...managementAreas]);
           const eventTypeData = res[4].data;
           const eventTypes = eventTypeData.map((et) => ({
             label: et.EventType,
@@ -301,9 +499,10 @@ export default function Advisory({ mode, page: { setError } }) {
             obj: u,
           }));
           setUrgencies([...urgencies]);
-          setUrgency(urgencyData[0]);
+          if (mode === "create") {
+            setUrgency(urgencyData[0]);
+          }
           setIsAfterHours(calculateAfterHours(res[7].data));
-
           const advisoryStatusData = res[8].data;
           const advisoryStatuses = advisoryStatusData.map((s) => ({
             code: s.Code,
@@ -319,7 +518,7 @@ export default function Advisory({ mode, page: { setError } }) {
             obj: lt,
           }));
           setLinkTypes([...linkTypes]);
-          linksRef.current = [{ type: "", title: "", url: "" }];
+          // linksRef.current = [{ type: "", title: "", url: "" }];
           setLinks(linksRef.current);
           setIsLoading(false);
         })
@@ -329,17 +528,16 @@ export default function Advisory({ mode, page: { setError } }) {
             status: 500,
             message: "Error occurred",
           });
+          setIsLoading(false);
         });
     }
   }, [
-    setProtectedAreas,
-    setRegions,
-    setSections,
-    setManagementAreas,
     setLocationOptions,
     setUrgencies,
     setAdvisoryStatuses,
+    setAccessStatuses,
     setEventTypes,
+    setLinkTypes,
     setUrgency,
     setToError,
     setError,
@@ -348,6 +546,7 @@ export default function Advisory({ mode, page: { setError } }) {
     setIsLoading,
     setIsAfterHours,
     setLinks,
+    mode,
   ]);
 
   const closeConfirmation = () => {
@@ -385,6 +584,7 @@ export default function Advisory({ mode, page: { setError } }) {
   const updateLink = (index, field, value) => {
     const tempLinks = [...linksRef.current];
     tempLinks[index][field] = value;
+    tempLinks[index].isModified = true;
     linksRef.current = [...tempLinks];
     setLinks(linksRef.current);
   };
@@ -451,13 +651,13 @@ export default function Advisory({ mode, page: { setError } }) {
   };
 
   const isValidLink = (link) => {
-    if (link.title !== "" && link.url !== "") {
+    if (link.title !== "" && link.url !== "" && link.isModified) {
       return true;
     }
     return false;
   };
 
-  const saveLink = async (link) => {
+  const createLink = async (link) => {
     const linkRequest = {
       Title: link.title,
       URL: link.url,
@@ -469,6 +669,32 @@ export default function Advisory({ mode, page: { setError } }) {
       })
       .catch((error) => {
         console.log("error occurred", error);
+        setToError(true);
+        setError({
+          status: 500,
+          message: "Could not process advisory update",
+        });
+      });
+    return res.data;
+  };
+
+  const saveLink = async (link, id) => {
+    const linkRequest = {
+      Title: link.title,
+      URL: link.url,
+      Type: link.type,
+    };
+    const res = await apiAxios
+      .put(`api/update/links/${id}`, linkRequest, {
+        headers: { Authorization: `Bearer ${keycloak.idToken}` },
+      })
+      .catch((error) => {
+        console.log("error occurred", error);
+        setToError(true);
+        setError({
+          status: 500,
+          message: "Could not process advisory update",
+        });
       });
     return res.data;
   };
@@ -477,8 +703,13 @@ export default function Advisory({ mode, page: { setError } }) {
     const savedLinks = [];
     for (let link of links) {
       if (isValidLink(link)) {
-        const savedLink = await saveLink(link);
-        savedLinks.push(savedLink);
+        if (parseInt(link.id) > 0) {
+          const savedLink = await saveLink(link, link.id);
+          savedLinks.push(savedLink);
+        } else {
+          const savedLink = await createLink(link);
+          savedLinks.push(savedLink);
+        }
       }
     }
     return savedLinks;
@@ -510,7 +741,7 @@ export default function Advisory({ mode, page: { setError } }) {
         DCTicketNumber: parseInt(ticketNumber),
         Alert: isSafetyRelated,
         Note: notes,
-        SubmittedBy: keycloak.tokenParsed.name,
+        SubmittedBy: submittedBy,
         CreatedDate: moment().toISOString(),
         CreatedBy: keycloak.tokenParsed.name,
         AdvisoryDate: advisoryDate,
@@ -544,6 +775,82 @@ export default function Advisory({ mode, page: { setError } }) {
         })
         .catch((error) => {
           console.log("error occurred", error);
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Could not process advisory update",
+          });
+        });
+    });
+  };
+
+  const updateAdvisory = () => {
+    const code = advisoryStatus.Code;
+    let confirmationText = "";
+    let published = null;
+    setIsSubmitting(true);
+    if (code === "DFT") {
+      confirmationText = "Your advisory has been saved successfully!";
+    } else if (isAfterHourPublish || code === "PUB") {
+      confirmationText = "Your advisory has been published successfully!";
+      published = moment().tz("America/Vancouver");
+    } else {
+      confirmationText = "Your advisory has been sent for review successfully!";
+    }
+    setConfirmationText(confirmationText);
+    const {
+      selProtectedAreas,
+      selRegions,
+      selSections,
+      selManagementAreas,
+    } = getLocationAreas();
+    Promise.resolve(saveLinks()).then((savedLinks) => {
+      const updatedLinks = savedLinks ? savedLinks : links;
+      const updatedAdvisory = {
+        Title: headline,
+        Description: description,
+        DCTicketNumber: parseInt(ticketNumber),
+        Alert: isSafetyRelated,
+        Note: notes,
+        SubmittedBy: submittedBy,
+        CreatedDate: moment().toISOString(),
+        CreatedBy: keycloak.tokenParsed.name,
+        AdvisoryDate: advisoryDate,
+        EffectiveDate: startDate,
+        EndDate: endDate,
+        ExpiryDate: expiryDate,
+        access_status: accessStatus,
+        event_type: eventType,
+        urgency: urgency,
+        protected_areas: selProtectedAreas,
+        advisory_status: advisoryStatus,
+        links: updatedLinks,
+        regions: selRegions,
+        sections: selSections,
+        management_areas: selManagementAreas,
+        ReservationsAffected: isReservationAffected,
+        DisplayAdvisoryDate: displayAdvisoryDate,
+        DisplayEffectiveDate: displayStartDate,
+        DisplayEndDate: displayEndDate,
+        published_at: published,
+      };
+
+      apiAxios
+        .put(`api/update/public-advisories/${id}`, updatedAdvisory, {
+          headers: { Authorization: `Bearer ${keycloak.idToken}` },
+        })
+        .then(() => {
+          setIsConfirmationOpen(true);
+          setIsSubmitting(false);
+          setIsSavingDraft(false);
+        })
+        .catch((error) => {
+          console.log("error occurred", error);
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Could not process advisory update",
+          });
         });
     });
   };
@@ -583,6 +890,7 @@ export default function Advisory({ mode, page: { setError } }) {
                       <Input
                         input={{
                           ...ticketNumberInput,
+                          value: ticketNumber,
                           styling: "bcgov-editable-white",
                         }}
                         onChange={(event) => {
@@ -599,6 +907,7 @@ export default function Advisory({ mode, page: { setError } }) {
                       <Input
                         input={{
                           ...headlineInput,
+                          value: headline,
                           styling: "bcgov-editable-white",
                         }}
                         onChange={(event) => {
@@ -614,6 +923,9 @@ export default function Advisory({ mode, page: { setError } }) {
                     <div className="col-lg-7 col-md-8 col-sm-12">
                       <Select
                         options={eventTypes}
+                        value={eventTypes.filter(
+                          (e) => e.obj.id === eventType.id
+                        )}
                         onChange={(e) => setEventType(e.obj)}
                         placeholder="Select an event type"
                       />
@@ -626,6 +938,9 @@ export default function Advisory({ mode, page: { setError } }) {
                     <div className="col-lg-7 col-md-8 col-sm-12">
                       <Select
                         options={accessStatuses}
+                        value={accessStatuses.filter(
+                          (a) => a.obj.id === accessStatus.id
+                        )}
                         onChange={(e) => setAccessStatus(e.obj)}
                         placeholder="Select an access status"
                       />
@@ -640,6 +955,7 @@ export default function Advisory({ mode, page: { setError } }) {
                         className="bcgov-text-input"
                         id="description"
                         rows="2"
+                        value={description}
                         onChange={(event) => {
                           setDescription(event.target.value);
                         }}
@@ -653,6 +969,7 @@ export default function Advisory({ mode, page: { setError } }) {
                     <div className="col-lg-7 col-md-8 col-sm-12">
                       <Select
                         options={locationOptions}
+                        value={locations}
                         onChange={(e) => {
                           setLocations(e);
                         }}
@@ -676,7 +993,7 @@ export default function Advisory({ mode, page: { setError } }) {
                             key={u.value}
                             label={u.label}
                             styling={
-                              urgency === u.obj
+                              urgency.id === u.obj.id
                                 ? "bcgov-normal-blue btn"
                                 : "bcgov-normal-white btn"
                             }
@@ -797,7 +1114,33 @@ export default function Advisory({ mode, page: { setError } }) {
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            </div>{" "}
+                            {mode === "update" && (
+                              <div className="row">
+                                <div className="col-lg-12 col-md-12 col-sm-12 plr0">
+                                  <div className="ad-flex">
+                                    <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
+                                      Updated date
+                                    </div>
+                                    <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
+                                      <KeyboardDateTimePicker
+                                        id="updatedDate"
+                                        value={updatedDate}
+                                        onChange={setUpdatedDate}
+                                        format="MMMM DD, yyyy hh:mm A"
+                                        className="react-datepicker-wrapper"
+                                      />
+                                      <VisibilityToggle
+                                        toggle={{
+                                          toggleState: displayUpdatedDate,
+                                          setToggleState: setDisplayUpdatedDate,
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                             <div className="row">
                               <div className="col-lg-12 col-md-12 col-sm-12 plr0">
                                 <div className="ad-flex">
@@ -871,9 +1214,11 @@ export default function Advisory({ mode, page: { setError } }) {
                             <Select
                               options={linkTypes}
                               onChange={(e) => {
-                                updateLink(idx, "type", e.obj);
+                                updateLink(idx, "type", e.obj.id);
                               }}
-                              value={linkTypes.filter((o) => o.obj === l.type)}
+                              value={linkTypes.filter(
+                                (o) => o.obj.id === l.type
+                              )}
                               className="ad-link-select"
                               placeholder="Select a link type"
                             />
@@ -928,6 +1273,7 @@ export default function Advisory({ mode, page: { setError } }) {
                       <Input
                         input={{
                           ...notesInput,
+                          value: notes,
                           styling: "bcgov-editable-white",
                         }}
                         onChange={(event) => {
@@ -936,6 +1282,24 @@ export default function Advisory({ mode, page: { setError } }) {
                       />
                     </div>
                   </div>
+                  <div className="row">
+                    <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                      Submitted By
+                    </div>
+                    <div className="col-lg-7 col-md-8 col-sm-12">
+                      <Input
+                        input={{
+                          ...submitterInput,
+                          value: submittedBy,
+                          styling: "bcgov-editable-white",
+                        }}
+                        onChange={(event) => {
+                          setSubmittedBy(event);
+                        }}
+                      />
+                    </div>
+                  </div>
+
                   {mode === "update" && (
                     <div className="row">
                       <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
@@ -944,6 +1308,9 @@ export default function Advisory({ mode, page: { setError } }) {
                       <div className="col-lg-7 col-md-8 col-sm-12">
                         <Select
                           options={advisoryStatuses}
+                          value={advisoryStatuses.filter(
+                            (a) => a.obj.id === advisoryStatus.id
+                          )}
                           onChange={(e) => setAdvisoryStatus(e.obj)}
                           placeholder="Select an advisory status"
                         />
@@ -967,7 +1334,7 @@ export default function Advisory({ mode, page: { setError } }) {
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+                        <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                           <Radio
                             checked={isAfterHourPublish}
                             onChange={() => {
@@ -978,7 +1345,7 @@ export default function Advisory({ mode, page: { setError } }) {
                             inputProps={{ "aria-label": "Publish immediately" }}
                           />
                         </div>
-                        <div className="col-lg-9 col-md-8 col-sm-12">
+                        <div className="col-lg-8 col-md-8 col-sm-12">
                           <p>
                             Advisory is urgent/safety-related. Publish
                             immediately.
@@ -986,7 +1353,7 @@ export default function Advisory({ mode, page: { setError } }) {
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+                        <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
                           <Radio
                             checked={!isAfterHourPublish}
                             onChange={() => {
@@ -999,7 +1366,7 @@ export default function Advisory({ mode, page: { setError } }) {
                             }}
                           />
                         </div>
-                        <div className="col-lg-9 col-md-8 col-sm-12">
+                        <div className="col-lg-8 col-md-8 col-sm-12">
                           <p>
                             Advisory is not urgent. Submit for web team review.
                           </p>
@@ -1009,24 +1376,41 @@ export default function Advisory({ mode, page: { setError } }) {
                   )}
                   <br />
                   <div className="row">
-                    <div className="col-lg-4 col-md-4"></div>
+                    <div className="col-lg-3 col-md-4"></div>
                     <div className="col-lg-8 col-md-8 col-sm-12 button-row ad-btn-group">
-                      <Button
-                        label="Submit"
-                        styling="bcgov-normal-yellow btn"
-                        onClick={() => {
-                          saveAdvisory("submit");
-                        }}
-                        hasLoader={isSubmitting}
-                      />
-                      <Button
-                        label="Save Draft"
-                        styling="bcgov-normal-light btn"
-                        onClick={() => {
-                          saveAdvisory("draft");
-                        }}
-                        hasLoader={isSavingDraft}
-                      />
+                      {mode === "create" && (
+                        <>
+                          <Button
+                            label="Submit"
+                            styling="bcgov-normal-yellow btn"
+                            onClick={() => {
+                              saveAdvisory("submit");
+                            }}
+                            hasLoader={isSubmitting}
+                          />
+
+                          <Button
+                            label="Save Draft"
+                            styling="bcgov-normal-light btn"
+                            onClick={() => {
+                              saveAdvisory("draft");
+                            }}
+                            hasLoader={isSavingDraft}
+                          />
+                        </>
+                      )}
+                      {mode === "update" && (
+                        <>
+                          <Button
+                            label="Update"
+                            styling="bcgov-normal-yellow btn"
+                            onClick={() => {
+                              updateAdvisory();
+                            }}
+                            hasLoader={isSubmitting}
+                          />
+                        </>
+                      )}
                       <Button
                         label="Cancel"
                         styling="bcgov-normal-light btn"
