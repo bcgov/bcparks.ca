@@ -247,7 +247,6 @@ export default function AdvisoryDashboard({ page: { setError } }) {
   };
 
   useEffect(() => {
-    console.log("use effect called");
     if (!initialized) {
       setIsLoading(true);
     } else if (!keycloak.authenticated) {
