@@ -330,10 +330,26 @@ objects:
         restartPolicy: Always
         volumes:
           - name: ${DB_POD}-data
-            emptyDir: {}
+            persistentVolumeClaim:
+              claimName: '${DB_POD}-pvc'
           - name: ${DB_POD}-run
             emptyDir: {}
   status: {}
+
+#   DB Storage
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: '${DB_POD}-pvc'
+      annotations:
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName": netapp-block-standard
+      resources:
+        requests:
+          storage: '2Gi'
+
 #   DB Service
 - apiVersion: v1
   kind: Service

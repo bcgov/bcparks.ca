@@ -31,7 +31,7 @@ jobs:
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
-          CONTEXT: ./src/frontend
+          CONTEXT: ./src/admin
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:${{secrets.OC_APP}} 
         run: |  
           docker build \
@@ -44,7 +44,7 @@ jobs:
             --build-arg REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}} \
             --build-arg REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
             --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
-             --tag $IMAGE \
+            --tag $IMAGE \
             ${CONTEXT}
           docker push $IMAGE
 
@@ -73,7 +73,7 @@ jobs:
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
-          CONTEXT: ./src/api/BCParksApi
+          CONTEXT: ./src/middleware
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:${{secrets.OC_APP}}
         run: |  
           docker build \
@@ -116,7 +116,7 @@ jobs:
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
-          CONTEXT: ./src/backend
+          CONTEXT: ./src/cms
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:${{secrets.OC_APP}}
         run: |  
           docker build \
@@ -159,6 +159,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2.4.0
         with:
-          context: ./src/web
+          context: ./src/staging
           push: true
           tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/staging:${{secrets.OC_APP}}
