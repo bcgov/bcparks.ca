@@ -120,13 +120,6 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v2
 
-      - name: Login to RedHat
-        uses: docker/login-action@v1
-        with:
-          registry: ${{secrets.REDHAT_REPO}}
-          username: ${{secrets.REDHAT_REPO_USER}}
-          password: ${{secrets.REDHAT_REPO_AUTH}}
-
       - name: Login to OpenShift Container Repository
         uses: docker/login-action@v1
         with:
