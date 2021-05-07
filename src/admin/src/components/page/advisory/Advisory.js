@@ -246,7 +246,9 @@ export default function Advisory({ mode, page: { setError } }) {
             setHeadline(advisoryData.Title);
             setDescription(advisoryData.Description);
             setTicketNumber(advisoryData.DCTicketNumber);
-            setIsSafetyRelated(advisoryData.Alert);
+            if (advisoryData.Alert) {
+              setIsSafetyRelated(advisoryData.Alert);
+            }
             setListingRank(advisoryData.ListingRank);
             setNotes(advisoryData.Note);
             setSubmittedBy(advisoryData.SubmittedBy);
@@ -286,10 +288,22 @@ export default function Advisory({ mode, page: { setError } }) {
             if (advisoryData.advisory_status) {
               setAdvisoryStatus(advisoryData.advisory_status);
             }
-            setIsReservationAffected(advisoryData.ReservationsAffected);
-            setDisplayAdvisoryDate(advisoryData.DisplayAdvisoryDate);
-            setDisplayStartDate(advisoryData.DisplayEffectiveDate);
-            setDisplayEndDate(advisoryData.DisplayEndDate);
+            if (advisoryData.ReservationsAffected) {
+              setIsReservationAffected(advisoryData.ReservationsAffected);
+            }
+            setDisplayAdvisoryDate(
+              advisoryData.DisplayAdvisoryDate
+                ? advisoryData.DisplayAdvisoryDate
+                : false
+            );
+            setDisplayStartDate(
+              advisoryData.DisplayEffectiveDate
+                ? advisoryData.DisplayEffectiveDate
+                : false
+            );
+            setDisplayEndDate(
+              advisoryData.DisplayEndDate ? advisoryData.DisplayEndDate : false
+            );
             if (advisoryData.DisplayUpdatedDate !== null) {
               setDisplayUpdatedDate(advisoryData.DisplayUpdatedDate);
             }
@@ -299,38 +313,61 @@ export default function Advisory({ mode, page: { setError } }) {
             const regions = advisoryData.regions;
             const sections = advisoryData.sections;
             const managementAreas = advisoryData.management_areas;
-
-            protectedAreas.forEach((p) => {
-              selLocations.push(
-                locationOptions.find(
-                  (l) => l.value === p.ORCS && l.type === "protectedArea"
-                )
-              );
-            });
-            regions.forEach((r) => {
-              selLocations.push(
-                locationOptions.find(
-                  (l) => l.value === r.RegionNumber && l.type === "region"
-                )
-              );
-            });
-            sections.forEach((s) => {
-              selLocations.push(
-                locationOptions.find(
-                  (l) => l.value === s.SectionNumber && l.type === "section"
-                )
-              );
-            });
-            managementAreas.forEach((m) => {
-              selLocations.push(
-                locationOptions.find(
-                  (l) =>
-                    l.value === m.ManagementAreaNumber &&
-                    l.type === "managementArea"
-                )
-              );
-            });
+            if (protectedAreas) {
+              protectedAreas.forEach((p) => {
+                selLocations.push(
+                  locationOptions.find(
+                    (l) => l.value === p.ORCS && l.type === "protectedArea"
+                  )
+                );
+              });
+            }
+            if (regions) {
+              regions.forEach((r) => {
+                selLocations.push(
+                  locationOptions.find(
+                    (l) => l.value === r.RegionNumber && l.type === "region"
+                  )
+                );
+              });
+            }
+            if (sections) {
+              sections.forEach((s) => {
+                selLocations.push(
+                  locationOptions.find(
+                    (l) => l.value === s.SectionNumber && l.type === "section"
+                  )
+                );
+              });
+            }
+            if (managementAreas) {
+              managementAreas.forEach((m) => {
+                selLocations.push(
+                  locationOptions.find(
+                    (l) =>
+                      l.value === m.ManagementAreaNumber &&
+                      l.type === "managementArea"
+                  )
+                );
+              });
+            }
             setLocations([...selLocations]);
+            const links = advisoryData.links;
+            if (links) {
+              links.forEach((l) => {
+                linksRef.current = [
+                  ...linksRef.current,
+                  {
+                    type: l.Type,
+                    title: l.Title,
+                    url: l.URL,
+                    id: l.id,
+                    isModified: false,
+                  },
+                ];
+              });
+            }
+            setLinks(linksRef.current);
           })
           .catch((error) => {
             console.log("error occurred fetching Public Advisory data", error);
@@ -547,6 +584,7 @@ export default function Advisory({ mode, page: { setError } }) {
   const updateLink = (index, field, value) => {
     const tempLinks = [...linksRef.current];
     tempLinks[index][field] = value;
+    tempLinks[index].isModified = true;
     linksRef.current = [...tempLinks];
     setLinks(linksRef.current);
   };
@@ -613,13 +651,13 @@ export default function Advisory({ mode, page: { setError } }) {
   };
 
   const isValidLink = (link) => {
-    if (link.title !== "" && link.url !== "") {
+    if (link.title !== "" && link.url !== "" && link.isModified) {
       return true;
     }
     return false;
   };
 
-  const saveLink = async (link) => {
+  const createLink = async (link) => {
     const linkRequest = {
       Title: link.title,
       URL: link.url,
@@ -631,6 +669,32 @@ export default function Advisory({ mode, page: { setError } }) {
       })
       .catch((error) => {
         console.log("error occurred", error);
+        setToError(true);
+        setError({
+          status: 500,
+          message: "Could not process advisory update",
+        });
+      });
+    return res.data;
+  };
+
+  const saveLink = async (link, id) => {
+    const linkRequest = {
+      Title: link.title,
+      URL: link.url,
+      Type: link.type,
+    };
+    const res = await apiAxios
+      .put(`api/update/links/${id}`, linkRequest, {
+        headers: { Authorization: `Bearer ${keycloak.idToken}` },
+      })
+      .catch((error) => {
+        console.log("error occurred", error);
+        setToError(true);
+        setError({
+          status: 500,
+          message: "Could not process advisory update",
+        });
       });
     return res.data;
   };
@@ -639,8 +703,13 @@ export default function Advisory({ mode, page: { setError } }) {
     const savedLinks = [];
     for (let link of links) {
       if (isValidLink(link)) {
-        const savedLink = await saveLink(link);
-        savedLinks.push(savedLink);
+        if (parseInt(link.id) > 0) {
+          const savedLink = await saveLink(link, link.id);
+          savedLinks.push(savedLink);
+        } else {
+          const savedLink = await createLink(link);
+          savedLinks.push(savedLink);
+        }
       }
     }
     return savedLinks;
@@ -706,11 +775,85 @@ export default function Advisory({ mode, page: { setError } }) {
         })
         .catch((error) => {
           console.log("error occurred", error);
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Could not process advisory update",
+          });
         });
     });
   };
 
-  const updateAdvisory = () => {};
+  const updateAdvisory = () => {
+    const code = advisoryStatus.Code;
+    let confirmationText = "";
+    let published = null;
+    setIsSubmitting(true);
+    if (code === "DFT") {
+      confirmationText = "Your advisory has been saved successfully!";
+    } else if (isAfterHourPublish || code === "PUB") {
+      confirmationText = "Your advisory has been published successfully!";
+      published = moment().tz("America/Vancouver");
+    } else {
+      confirmationText = "Your advisory has been sent for review successfully!";
+    }
+    setConfirmationText(confirmationText);
+    const {
+      selProtectedAreas,
+      selRegions,
+      selSections,
+      selManagementAreas,
+    } = getLocationAreas();
+    Promise.resolve(saveLinks()).then((savedLinks) => {
+      const updatedLinks = savedLinks ? savedLinks : links;
+      const updatedAdvisory = {
+        Title: headline,
+        Description: description,
+        DCTicketNumber: parseInt(ticketNumber),
+        Alert: isSafetyRelated,
+        Note: notes,
+        SubmittedBy: submittedBy,
+        CreatedDate: moment().toISOString(),
+        CreatedBy: keycloak.tokenParsed.name,
+        AdvisoryDate: advisoryDate,
+        EffectiveDate: startDate,
+        EndDate: endDate,
+        ExpiryDate: expiryDate,
+        access_status: accessStatus,
+        event_type: eventType,
+        urgency: urgency,
+        protected_areas: selProtectedAreas,
+        advisory_status: advisoryStatus,
+        links: updatedLinks,
+        regions: selRegions,
+        sections: selSections,
+        management_areas: selManagementAreas,
+        ReservationsAffected: isReservationAffected,
+        DisplayAdvisoryDate: displayAdvisoryDate,
+        DisplayEffectiveDate: displayStartDate,
+        DisplayEndDate: displayEndDate,
+        published_at: published,
+      };
+
+      apiAxios
+        .put(`api/update/public-advisories/${id}`, updatedAdvisory, {
+          headers: { Authorization: `Bearer ${keycloak.idToken}` },
+        })
+        .then(() => {
+          setIsConfirmationOpen(true);
+          setIsSubmitting(false);
+          setIsSavingDraft(false);
+        })
+        .catch((error) => {
+          console.log("error occurred", error);
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Could not process advisory update",
+          });
+        });
+    });
+  };
 
   if (toDashboard) {
     return <Redirect to="/bcparks/advisory-dash" />;
