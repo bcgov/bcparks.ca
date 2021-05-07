@@ -82,6 +82,21 @@ objects:
                 value: "${WEB_SCHEMA}://${FRONTEND_URL}${URL_STUB}"
               - name: PUBLIC_URL
                 value: "${WEB_SCHEMA}://${FRONTEND_URL}${URL_STUB}"
+              - name: REACT_APP_KEYCLOAK_AUTH_URL
+                valueFrom:
+                  secretKeyRef:
+                    key: REACT_APP_KEYCLOAK_AUTH_URL
+                    name: bcparks-secrets
+              - name: REACT_APP_KEYCLOAK_REALM
+                valueFrom:
+                  secretKeyRef:
+                    key: REACT_APP_KEYCLOAK_REALM
+                    name: bcparks-secrets
+              - name: REACT_APP_KEYCLOAK_CLIENT_ID
+                valueFrom:
+                  secretKeyRef:
+                    key: REACT_APP_KEYCLOAK_CLIENT_ID
+                    name: bcparks-secrets
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/frontend:${OC_APP}
             name: ${FRONTEND_POD}
@@ -184,20 +199,23 @@ objects:
               - name: DATABASE_NAME
                 valueFrom:
                   secretKeyRef:
-                    key: DATABASE_USERNAME
-                    name: ${DB_POD}-secrets
+                    key: DATABASE_NAME
+                    name: bcparks-secrets
               - name: DATABASE_USERNAME
                 valueFrom:
                   secretKeyRef:
                     key: DATABASE_USERNAME
-                    name: ${DB_POD}-secrets
+                    name: bcparks-secrets
               - name: DATABASE_PASSWORD
                 valueFrom:
                   secretKeyRef:
                     key: DATABASE_PASSWORD
-                    name: ${DB_POD}-secrets
+                    name: bcparks-secrets
               - name: DATABASE_SSL
-                value: ${DB_SSL}
+                valueFrom:
+                  secretKeyRef:
+                    key: DATABASE_SSL
+                    name: bcparks-secrets
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/strapi:${OC_APP}
             name: ${CMS_POD}
@@ -283,22 +301,22 @@ objects:
                 valueFrom:
                   secretKeyRef:
                     key: DATABASE_PASSWORD
-                    name: ${DB_POD}-secrets
+                    name: bcparks-secrets
               - name: POSTGRESQL_USER
                 valueFrom:
                   secretKeyRef:
                     key: DATABASE_USERNAME
-                    name: ${DB_POD}-secrets
+                    name: bcparks-secrets
               - name: POSTGRESQL_PASSWORD
                 valueFrom:
                   secretKeyRef:
                     key: DATABASE_PASSWORD
-                    name: ${DB_POD}-secrets
+                    name: bcparks-secrets
               - name: POSTGRESQL_DATABASE
                 valueFrom:
                   secretKeyRef:
-                    key: DATABASE_USERNAME
-                    name: ${DB_POD}-secrets
+                    key: DATABASE_NAME
+                    name: bcparks-secrets
             image: >-
               image-registry.openshift-image-registry.svc:5000/openshift/postgresql:12
             imagePullPolicy: IfNotPresent
@@ -330,26 +348,10 @@ objects:
         restartPolicy: Always
         volumes:
           - name: ${DB_POD}-data
-            persistentVolumeClaim:
-              claimName: '${DB_POD}-pvc'
+            emptyDir: {}
           - name: ${DB_POD}-run
             emptyDir: {}
   status: {}
-
-#   DB Storage
-  - apiVersion: v1
-    kind: PersistentVolumeClaim
-    metadata:
-      name: '${DB_POD}-pvc'
-      annotations:
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      storageClassName": netapp-block-standard
-      resources:
-        requests:
-          storage: '2Gi'
-
 #   DB Service
 - apiVersion: v1
   kind: Service
