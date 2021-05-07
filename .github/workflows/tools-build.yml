@@ -146,18 +146,18 @@ jobs:
           context: ./src/cms
           push: true
           tags: ${{secrets.OC_APP}}
-          build-args:
-            - DATABASE_HOST: ${{secrets.DATABASE_HOST}}
-            - DATABASE_PORT: ${{secrets.DATABASE_PORT}}
-            - DATABASE_NAME: ${{secrets.DATABASE_NAME}}
-            - DATABASE_USERNAME: ${{secrets.DATABASE_USERNAME}}
-            - DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
-            - DATABASE_SSL: ${{secrets.DATABASE_SSL}}
-            - API_TOKEN: ${{secrets.API_TOKEN}}
-            - API_USER_NAME: ${{secrets.API_USER_NAME}}
-            - API_USER_EMAIL: ${{secrets.API_USER_EMAIL}}
-            - API_USER_PASSWORD: ${{secrets.API_USER_PASSWORD}}
-            - REACT_APP_CMS_BASE_URL: ${{secrets.REACT_APP_CMS_BASE_URL}}
+          build-args: |
+            DATABASE_HOST=${{secrets.DATABASE_HOST}}
+            DATABASE_PORT=${{secrets.DATABASE_PORT}}
+            DATABASE_NAME=${{secrets.DATABASE_NAME}}
+            DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}}
+            DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}}
+            DATABASE_SSL=${{secrets.DATABASE_SSL}}
+            API_TOKEN=${{secrets.API_TOKEN}}
+            API_USER_NAME=${{secrets.API_USER_NAME}}
+            API_USER_EMAIL=${{secrets.API_USER_EMAIL}}
+            API_USER_PASSWORD=${{secrets.API_USER_PASSWORD}}
+            REACT_APP_CMS_BASE_URL=${{secrets.REACT_APP_CMS_BASE_URL}}
 
   build-staging:
     runs-on: ubuntu-20.04
