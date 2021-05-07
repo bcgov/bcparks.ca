@@ -137,9 +137,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2.4.0
         with:
-          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
-          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
           context: ./src/cms
           push: true
           tags: ${{secrets.OC_APP}}
@@ -179,10 +176,6 @@ jobs:
 
       - name: Build and push
         uses: docker/build-push-action@v2.4.0
-        with:
-          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
-          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
           context: ./src/staging
           push: true
           tags: ${{secrets.OC_APP}}
