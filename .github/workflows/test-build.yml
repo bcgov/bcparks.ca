@@ -90,7 +90,6 @@ jobs:
             ${CONTEXT}
           docker push $IMAGE
 
- 
   build-cms:
     runs-on: ubuntu-20.04
     environment: Test
