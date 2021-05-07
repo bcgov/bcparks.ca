@@ -128,8 +128,13 @@ jobs:
           password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
 
       - name: Build and push
-        uses: docker/build-push-action@v2.4.0
-        with:
-          context: ./src/staging
-          push: true
-          tags: ${{secrets.OC_APP}}
+        env:
+          COMPOSE_DOCKER_CLI_BUILD: 1
+          DOCKER_BUILDKIT: 1
+          CONTEXT: ./src/staging
+          IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/staging:${{secrets.OC_APP}}
+        run: |  
+          docker build \
+            --tag $IMAGE \
+            ${CONTEXT}
+          docker push $IMAGE
