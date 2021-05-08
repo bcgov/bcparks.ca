@@ -92,22 +92,22 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         <div className="advisory-status">
           <Tooltip title={rowData.advisory_status.AdvisoryStatus}>
             <span>
-              {rowData.advisory_status.Code == "DFT" && (
+              {rowData.advisory_status.Code === "DFT" && (
                 <EditIcon className="draftIcon" />
               )}
-              {rowData.advisory_status.Code == "INA" && (
+              {rowData.advisory_status.Code === "INA" && (
                 <WatchLaterIcon className="inactiveIcon" />
               )}
-              {rowData.advisory_status.Code == "ACT" && (
+              {rowData.advisory_status.Code === "ACT" && (
                 <CheckCircleIcon className="activeIcon" />
               )}
-              {rowData.advisory_status.Code == "APR" && (
+              {rowData.advisory_status.Code === "APR" && (
                 <ThumbUpIcon className="approvedIcon" />
               )}
-              {rowData.advisory_status.Code == "ARQ" && (
+              {rowData.advisory_status.Code === "ARQ" && (
                 <InfoIcon className="approvalRequestedIcon" />
               )}
-              {rowData.advisory_status.Code == "PUB" && (
+              {rowData.advisory_status.Code === "PUB" && (
                 <PublishIcon className="publishedIcon" />
               )}
             </span>
@@ -346,7 +346,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
               options={parkNames}
               onChange={(e) => setSelectedParkId(e.value)}
               placeholder="Select a Park..."
-              className="bg-blue f-select"
+              className="bcgov-select"
             />
           </div>
           <br />
