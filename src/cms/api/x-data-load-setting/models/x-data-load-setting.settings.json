@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "x_data_load_settings",
+  "info": {
+    "name": "xDataLoadSetting",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "model": {
+      "type": "string",
+      "unique": true
+    },
+    "loaderFunction": {
+      "type": "string"
+    },
+    "reload": {
+      "type": "boolean"
+    },
+    "purge": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "fire_ban_prohibitions",
+  "info": {
+    "name": "FireBanProhibition"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Type": {
+      "type": "string"
+    },
+    "ProhibitionDescription": {
+      "type": "string"
+    },
+    "EffectiveDate": {
+      "type": "datetime"
+    },
+    "BulletinURL": {
+      "type": "string"
+    },
+    "fire_centre": {
+      "model": "fire-centre"
+    },
+    "fire_zone": {
+      "model": "fire-zone"
+    }
+  }
+}

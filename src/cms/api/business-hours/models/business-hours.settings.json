@@ -1,0 +1,49 @@
+{
+  "kind": "singleType",
+  "collectionName": "business_hours",
+  "info": {
+    "name": "BusinessHours"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "StartTime": {
+      "type": "time",
+      "required": true
+    },
+    "EndTime": {
+      "type": "time",
+      "required": true
+    },
+    "Monday": {
+      "type": "boolean",
+      "required": true
+    },
+    "Tuesday": {
+      "type": "boolean"
+    },
+    "Wednesday": {
+      "type": "boolean",
+      "required": true
+    },
+    "Thursday": {
+      "type": "boolean",
+      "required": true
+    },
+    "Friday": {
+      "type": "boolean",
+      "required": true
+    },
+    "Saturday": {
+      "type": "boolean",
+      "required": true
+    },
+    "Sunday": {
+      "type": "boolean",
+      "required": true
+    }
+  }
+}

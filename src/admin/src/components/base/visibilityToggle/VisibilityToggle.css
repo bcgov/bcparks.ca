@@ -1,0 +1,13 @@
+.visibilityIcon {
+  color: #234075 !important;
+}
+
+.MuiToggleButton-root {
+  padding: 8px !important;
+  border: none !important;
+  /* padding-right: 0px !important; */
+}
+
+.MuiToggleButton-root.Mui-selected {
+  background-color: transparent !important;
+}

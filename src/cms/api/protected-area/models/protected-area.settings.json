@@ -1,0 +1,101 @@
+{
+  "kind": "collectionType",
+  "collectionName": "protected_areas",
+  "info": {
+    "name": "ProtectedArea",
+    "description": "Protected Area"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "ORCS": {
+      "type": "integer",
+      "unique": true,
+      "required": true
+    },
+    "ProtectedAreaName": {
+      "type": "string"
+    },
+    "TotalArea": {
+      "type": "decimal"
+    },
+    "UplandArea": {
+      "type": "decimal"
+    },
+    "MarineArea": {
+      "type": "decimal"
+    },
+    "MarineProtectedArea": {
+      "type": "string",
+      "maxLength": 1,
+      "minLength": 1,
+      "regex": "[Y,N]"
+    },
+    "Type": {
+      "type": "string"
+    },
+    "Class": {
+      "type": "string"
+    },
+    "EstablishedDate": {
+      "type": "date"
+    },
+    "RepealedDate": {
+      "type": "date"
+    },
+    "Status": {
+      "type": "string"
+    },
+    "URL": {
+      "type": "string"
+    },
+    "TypeCode": {
+      "type": "enumeration",
+      "enum": [
+        "PK",
+        "PA",
+        "RA",
+        "ER",
+        "CS"
+      ]
+    },
+    "Latitude": {
+      "type": "string"
+    },
+    "Longitude": {
+      "type": "string"
+    },
+    "MapZoom": {
+      "type": "string"
+    },
+    "Sites": {
+      "collection": "site",
+      "via": "ProtectedArea"
+    },
+    "ManagementAreas": {
+      "collection": "management-area",
+      "via": "ProtectedArea"
+    },
+    "DayUsePass": {
+      "type": "boolean"
+    },
+    "FogZone": {
+      "type": "boolean"
+    },
+    "fire_zones": {
+      "collection": "fire-zone"
+    },
+    "activities": {
+      "collection": "activity"
+    },
+    "facilities": {
+      "collection": "facility"
+    },
+    "FeatureId": {
+      "type": "integer"
+    }
+  }
+}

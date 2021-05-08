@@ -1,12 +1,22 @@
 # BC Parks CMS
 
+[![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999)](<Redirect-URL>)
 
 ## Summary 
 A data driven progressive mobile web site that provides potential BC Park visitors with information on provincial parks, conservation areas, and ecological reserves.  Content on these pages includes descriptions, activies, amentities, park status, etc.
 
 ## HOW TO USE
-The production application can be accessed here: 
-http://localhost:3000
+The production application can be accessed here: TBD
+
+Development Environment:
+| Name       | URL                                                            | Notes         |
+|------------|----------------------------------------------------------------|---------------|
+| Frontend   | http://web-61d198-test.apps.silver.devops.gov.bc.ca/           |               |
+| .NET API   | http://api-61d198-test.apps.silver.devops.gov.bc.ca/swagger    | (Still a WIP) |
+| Gatsby     | http://staging-61d198-test.apps.silver.devops.gov.bc.ca/       |               |
+| Strapi     | http://cms-61d198-test.apps.silver.devops.gov.bc.ca/           |               |
+
+
 
 ## HOW TO RUN
 

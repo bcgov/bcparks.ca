@@ -1,42 +1,42 @@
 version: "3.4"
 
 services:
-  react-frontend:
-    container_name: bcp-frontend
+  bcp-admin:
+    container_name: bcp-admin
     restart: unless-stopped
     build:
-      context: src/frontend
+      context: src/admin
       args:
+        - API_TOKEN=${API_TOKEN}
         - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
         - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
         - REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL}
         - REACT_APP_KEYCLOAK_AUTH_URL=${REACT_APP_KEYCLOAK_AUTH_URL}
         - REACT_APP_KEYCLOAK_REALM=${REACT_APP_KEYCLOAK_REALM}
         - REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
-        - API_TOKEN=${API_TOKEN}
     env_file: .env
     environment:
+      API_TOKEN: ${API_TOKEN}
       REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
       REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
       REACT_APP_FRONTEND_BASE_URL: ${REACT_APP_FRONTEND_BASE_URL}
       REACT_APP_KEYCLOAK_AUTH_URL: ${REACT_APP_KEYCLOAK_AUTH_URL}
       REACT_APP_KEYCLOAK_REALM: ${REACT_APP_KEYCLOAK_REALM}
       REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
-      API_TOKEN: ${API_TOKEN}
     ports:
       - "8080:3000"
     networks:
       - bcp-cms-network
 
-  bcparks-api:
-    container_name: bcparks-api
+  bcp-middleware:
+    container_name: bcp-middleware
     restart: unless-stopped
     build:
-      context: ./src/api/BCParksApi
+      context: src/middleware
       args:
-        - ASPNETCORE_ENVIRONMENT=Development
-        - API_TOKEN=${API_TOKEN}
         - ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET}
+        - API_TOKEN=${API_TOKEN}
+        - ASPNETCORE_ENVIRONMENT=Development
         - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
         - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
         - REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL}
@@ -45,8 +45,8 @@ services:
         - REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
     env_file: .env
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      ASPNETCORE_ENVIRONMENT: Development
       REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
       REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
       REACT_APP_FRONTEND_BASE_URL: ${REACT_APP_FRONTEND_BASE_URL}
@@ -58,36 +58,48 @@ services:
     networks:
       - bcp-cms-network
 
-  strapi:
-    image: strapi/strapi:3.5.3
-    container_name: bcp-strapi
+  bcp-cms:
+    # image: strapi/strapi:3.5.3
+    container_name: bcp-cms
     restart: unless-stopped
     env_file: .env
     build:
-      context: src/backend
+      context: src/cms
       args:
-        - DATABASE_HOST=${DATABASE_HOST}
-        - DATABASE_PORT=${DATABASE_PORT}
-        - DATABASE_NAME=${DATABASE_NAME}
-        - DATABASE_USERNAME=${DATABASE_USERNAME}
-        - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-        - DATABASE_SSL=${DATABASE_SSL}
+        - ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET}
+        - ADMIN_USER=${ADMIN_USER}
+        - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+        - ADMIN_FIRST_NAME=${ADMIN_FIRST_NAME}
+        - ADMIN_LAST_NAME=${ADMIN_LAST_NAME}
+        - ADMIN_EMAIL=${ADMIN_EMAIL}
         - API_TOKEN=${API_TOKEN}
         - API_USER_NAME=${API_USER_NAME}
         - API_USER_EMAIL=${API_USER_EMAIL}
         - API_USER_PASSWORD=${API_USER_PASSWORD}
+        - DATABASE_HOST=${DATABASE_HOST}
+        - DATABASE_NAME=${DATABASE_NAME}
+        - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+        - DATABASE_PORT=${DATABASE_PORT}
+        - DATABASE_SSL=${DATABASE_SSL}
+        - DATABASE_USERNAME=${DATABASE_USERNAME}
         - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
     environment:
-      DATABASE_HOST: ${DATABASE_HOST}
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      DATABASE_SSL: ${DATABASE_SSL}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      ADMIN_FIRST_NAME: ${ADMIN_FIRST_NAME}
+      ADMIN_LAST_NAME: ${ADMIN_LAST_NAME}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
       API_TOKEN: ${API_TOKEN}
       API_USER_NAME: ${API_USER_NAME}
       API_USER_EMAIL: ${API_USER_EMAIL}
       API_USER_PASSWORD: ${API_USER_PASSWORD}
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_SSL: ${DATABASE_SSL}
       REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
     networks:
       - bcp-cms-network
@@ -96,11 +108,11 @@ services:
     ports:
       - "1337:1337"
 
-  staging:
+  bcp-staging:
     container_name: bcp-staging
     restart: unless-stopped
     build:
-      context: src/web
+      context: src/staging
       dockerfile: Dockerfile
     ports:
       - "8000:8000"

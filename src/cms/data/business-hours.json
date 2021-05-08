@@ -1,0 +1,11 @@
+{
+    "StartTime": "08:30:00",
+    "EndTime": "16:30:00",
+    "Monday": true,
+    "Tuesday": true,
+    "Wednesday": true,
+    "Thursday": true,
+    "Friday": true,
+    "Saturday": false,
+    "Sunday": false
+}

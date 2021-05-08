@@ -1,0 +1,28 @@
+{"advisory-status":
+  [
+    {
+      "AdvisoryStatus": "Inactive",
+      "Code":"INA"
+    },
+    {
+      "AdvisoryStatus": "Draft",
+      "Code":"DFT"
+    },
+    {
+      "AdvisoryStatus": "Approval Requested",
+      "Code":"ARQ"
+    },
+    {
+      "AdvisoryStatus": "Approved",
+      "Code":"APR"
+    },
+    {
+      "AdvisoryStatus": "Active",
+      "Code":"ACT"
+    },
+    {
+      "AdvisoryStatus": "Published",
+      "Code":"PUB"
+    }
+  ]
+}

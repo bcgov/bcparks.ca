@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/statutory-holidays",
+      "handler": "statutory-holidays.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/statutory-holidays",
+      "handler": "statutory-holidays.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/statutory-holidays",
+      "handler": "statutory-holidays.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
