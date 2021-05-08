@@ -13,14 +13,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v2
 
-      - name: Login to RedHat
-        uses: docker/login-action@v1
-        with: 
-          registry: ${{secrets.REDHAT_REPO}}
-          username: ${{secrets.REDHAT_REPO_USER}}
-          password: ${{secrets.REDHAT_REPO_AUTH}}
-
-      - name: Login to OpenShift
+      - name: Login to OpenShift Container Repository
         uses: docker/login-action@v1
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
@@ -31,7 +24,7 @@ jobs:
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
-          CONTEXT: ./src/frontend
+          CONTEXT: ./src/admin
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:${{secrets.OC_APP}} 
         run: |  
           docker build \
@@ -44,7 +37,7 @@ jobs:
             --build-arg REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}} \
             --build-arg REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
             --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
-             --tag $IMAGE \
+            --tag $IMAGE \
             ${CONTEXT}
           docker push $IMAGE
 
@@ -55,14 +48,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v2
 
-      - name: Login to RedHat
-        uses: docker/login-action@v1
-        with:
-          registry: ${{secrets.REDHAT_REPO}}
-          username: ${{secrets.REDHAT_REPO_USER}}
-          password: ${{secrets.REDHAT_REPO_AUTH}}
-
-      - name: Login to OpenShift
+      - name: Login to OpenShift Container Repository
         uses: docker/login-action@v1
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
@@ -73,7 +59,7 @@ jobs:
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
-          CONTEXT: ./src/api/BCParksApi
+          CONTEXT: ./src/middleware
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:${{secrets.OC_APP}}
         run: |  
           docker build \
@@ -97,14 +83,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v2
 
-      - name: Login to RedHat
-        uses: docker/login-action@v1
-        with:
-          registry: ${{secrets.REDHAT_REPO}}
-          username: ${{secrets.REDHAT_REPO_USER}}
-          password: ${{secrets.REDHAT_REPO_AUTH}}
-
-      - name: Login to OpenShift
+      - name: Login to OpenShift Container Repository
         uses: docker/login-action@v1
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
@@ -115,7 +94,7 @@ jobs:
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
-          CONTEXT: ./src/backend
+          CONTEXT: ./src/cms
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:${{secrets.OC_APP}}
         run: |  
           docker build \
@@ -141,23 +120,21 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v2
 
-      - name: Login to OpenShift
+      - name: Login to OpenShift Container Repository
         uses: docker/login-action@v1
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_SA_USERNAME}}
           password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
-    
-      - name: Login to RedHat
-        uses: docker/login-action@v1
-        with:
-          registry: ${{secrets.REDHAT_REPO}}
-          username: ${{secrets.REDHAT_REPO_USER}}
-          password: ${{secrets.REDHAT_REPO_AUTH}}
 
       - name: Build and push
-        uses: docker/build-push-action@v2.4.0
-        with:
-          context: ./src/staging
-          push: true
-          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/staging:${{secrets.OC_APP}}
+        env:
+          COMPOSE_DOCKER_CLI_BUILD: 1
+          DOCKER_BUILDKIT: 1
+          CONTEXT: ./src/staging
+          IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/staging:${{secrets.OC_APP}}
+        run: |  
+          docker build \
+            --tag $IMAGE \
+            ${CONTEXT}
+          docker push $IMAGE
