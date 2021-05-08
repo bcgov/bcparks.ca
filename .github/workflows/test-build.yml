@@ -90,7 +90,6 @@ jobs:
             ${CONTEXT}
           docker push $IMAGE
 
- 
   build-cms:
     runs-on: ubuntu-20.04
     environment: Test
@@ -159,6 +158,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2.4.0
         with:
-          context: ./src/web
+          context: ./src/staging
           push: true
           tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/staging:${{secrets.OC_APP}}

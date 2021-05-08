@@ -8,11 +8,7 @@ on:
 jobs:
   build-frontend:
     runs-on: ubuntu-20.04
-<<<<<<< HEAD
-    environment: Main
-=======
     environment: Production
->>>>>>> main
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -54,11 +50,7 @@ jobs:
 
   build-api:
     runs-on: ubuntu-20.04
-<<<<<<< HEAD
-    environment: Main
-=======
     environment: Production
->>>>>>> main
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -101,11 +93,7 @@ jobs:
  
   build-cms:
     runs-on: ubuntu-20.04
-<<<<<<< HEAD
-    environment: Main
-=======
     environment: Production
->>>>>>> main
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -149,11 +137,7 @@ jobs:
 
   build-staging:
     runs-on: ubuntu-20.04
-<<<<<<< HEAD
-    environment: Main
-=======
     environment: Production
->>>>>>> main
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
