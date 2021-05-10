@@ -5,89 +5,77 @@ const moment = require("moment");
 const loadUtils = require("./loadUtils");
 
 const loadPublicAdvisory = async () => {
-  const modelName = "public-advisory";
-  const loadSetting = await loadUtils.getLoadSettings(modelName);
+  try {
+    const modelName = "public-advisory";
+    const loadSetting = await loadUtils.getLoadSettings(modelName);
 
-  if (loadSetting && loadSetting.purge)
-    await strapi.services[modelName].delete();
+    if (loadSetting && loadSetting.purge)
+      await strapi.services[modelName].delete();
 
-  if (loadSetting && !loadSetting.reload) return;
+    if (loadSetting && !loadSetting.reload) return;
 
-  const currentData = await strapi.services[modelName].find();
-  if (currentData.length === 0) {
-    strapi.log.info(`loading ${modelName}...`);
-    var jsonData = fs.readFileSync("./data/public-advisory.json", "utf8");
-    const dataSeed = JSON.parse(jsonData)[modelName];
+    const currentData = await strapi.services[modelName].find();
+    if (currentData.length === 0) {
+      strapi.log.info(`loading ${modelName}...`);
 
-    var jsonData = fs.readFileSync("./data/public-advisory-xref.json", "utf8");
-    const dataXref = JSON.parse(jsonData);
+      const accessStatuses = await strapi.query("access-status").find();
+      const advisoryStatuses = await strapi.query("advisory-status").find();
+      const eventTypes = await strapi.query("event-type").find();
+      const urgencies = await strapi.query("urgency").find();
 
-    dataSeed.map(async (data) => {
-      const orcsXref = await dataXref["public-advisory-xref"].filter(
-        (x) => x.AdvisoryNumber == data.AdvisoryNumber
+      var jsonData = fs.readFileSync("./data/public-advisory.json", "utf8");
+      const dataSeed = JSON.parse(jsonData)[modelName];
+
+      var jsonData = fs.readFileSync(
+        "./data/public-advisory-xref.json",
+        "utf8"
       );
+      const dataXref = JSON.parse(jsonData);
 
-      let orcs = [];
-      await Promise.all(
-        orcsXref.map(async (o) => {
-          const orc = await strapi
-            .query("protected-area")
-            .find({ ORCS: o.ORCS });
-          orcs = [...orcs, ...orc];
-        })
-      );
-      data.protected_areas = orcs;
+      dataSeed.map(async (data) => {
+        const orcsXref = await dataXref["public-advisory-xref"].filter(
+          (x) => x.AdvisoryNumber == data.AdvisoryNumber
+        );
 
-      data.access_status = await strapi
-        .query("access-status")
-        .findOne({ AccessStatus: data.AccessStatus });
+        let orcs = [];
+        await Promise.all(
+          orcsXref.map(async (o) => {
+            const orc = await strapi
+              .query("protected-area")
+              .find({ ORCS: o.ORCS });
+            orcs = [...orcs, ...orc];
+          })
+        );
+        data.ProtectedAreas = orcs;
 
-      data.advisory_status = await strapi
-        .query("advisory-status")
-        .findOne({ AdvisoryStatus: data.AdvisoryStatus });
+        data.AccessStatus = accessStatuses.find(
+          (d) => d.AccessStatus === data.AccessStatus
+        );
+        data.AdvisoryStatus = advisoryStatuses.find(
+          (d) => d.AdvisoryStatus === data.AdvisoryStatus
+        );
+        data.EventType = eventTypes.find((d) => d.EventType === data.EventType);
+        data.Urgency = urgencies.find((d) => d.Urgency === data.Urgency);
 
-      data.event_type = await strapi
-        .query("event-type")
-        .findOne({ EventType: data.EventType });
-
-      data.urgency = await strapi
-        .query("urgency")
-        .findOne({ Urgency: data.Urgency });
-
-      data.DCTicketNumber = +data.DCTicketNumber;
-      data.ListingRank = +data.ListingRank;
-      data.Latitude = +data.Latitude;
-      data.Longitude = +data.Longitude;
-      data.MapZoom = +data.MapZoom;
-      data.AdvisoryDate = data.AdvisoryDate
-        ? moment(data.AdvisoryDate, "YYYY-MM-DD").tz("UTC").format()
-        : null;
-      data.EffectiveDate = data.EffectiveDate
-        ? moment(data.EffectiveDate, "YYYY-MM-DD").tz("UTC").format()
-        : null;
-      data.EndDate = data.EndDate
-        ? moment(data.EndDate, "YYYY-MM-DD").tz("UTC").format()
-        : null;
-      data.ExpiryDate = data.ExpiryDate
-        ? moment(data.ExpiryDate, "YYYY-MM-DD").tz("UTC").format()
-        : null;
-      data.RemovalDate = data.RemovalDate
-        ? moment(data.RemovalDate, "YYYY-MM-DD").tz("UTC").format()
-        : null;
-      data.UpdatedDate = data.UpdatedDate
-        ? moment(data.UpdatedDate, "YYYY-MM-DD").tz("UTC").format()
-        : null;
-      data.DisplayAdvisoryDate = data.DisplayAdvisoryDate
-        ? moment(data.DisplayAdvisoryDate, "YYYY-MM-DD").tz("UTC").format()
-        : null;
-      data.CreatedDate = data.CreatedDate
-        ? moment(data.CreatedDate, "YYYY-MM-DD").tz("UTC").format()
-        : null;
-      data.ModifiedDate = data.ModifiedDate
-        ? moment(data.ModifiedDate, "YYYY-MM-DD").tz("UTC").format()
-        : null;
-      await strapi.services[modelName].create(data);
-    });
+        data.DCTicketNumber = +data.DCTicketNumber;
+        data.ListingRank = +data.ListingRank;
+        data.Latitude = +data.Latitude;
+        data.Longitude = +data.Longitude;
+        data.MapZoom = +data.MapZoom;
+        data.AdvisoryDate = loadUtils.formatDate(data.AdvisoryDate);
+        data.EffectiveDate = loadUtils.formatDate(data.EffectiveDate);
+        data.EndDate = loadUtils.formatDate(data.EndDate);
+        data.ExpiryDate = loadUtils.formatDate(data.ExpiryDate);
+        data.RemovalDate = loadUtils.formatDate(data.RemovalDate);
+        data.UpdatedDate = loadUtils.formatDate(data.UpdatedDate);
+        data.CreatedDate = loadUtils.formatDate(data.CreatedDate);
+        data.ModifiedDate = loadUtils.formatDate(data.ModifiedDate);
+        await strapi.services[modelName].create(data);
+      });
+      strapi.log.info(`loading completed ${modelName}...`);
+    }
+  } catch (error) {
+    strapi.log.error(error);
   }
 };
 
@@ -223,7 +211,7 @@ const loadFireCentreZoneXref = async () => {
       }
 
       if (fireZones.length > 0) {
-        fireCentre.fire_zones = fireZones;
+        fireCentre.FireZones = fireZones;
         strapi.query("fire-centre").update({ id: fireCentre.id }, fireCentre);
       }
     }
@@ -257,7 +245,7 @@ const loadParkActivityXref = async () => {
       }
 
       if (activities.length > 0) {
-        protectedArea.activities = activities;
+        protectedArea.Activities = activities;
         strapi
           .query("protected-area")
           .update({ id: protectedArea.id }, protectedArea);
@@ -292,7 +280,7 @@ const loadParkFacilityXref = async () => {
       }
 
       if (facilities.length > 0) {
-        protectedArea.facilities = facilities;
+        protectedArea.Facilities = facilities;
         strapi
           .query("protected-area")
           .update({ id: protectedArea.id }, protectedArea);
@@ -327,7 +315,7 @@ const loadParkFireZoneXref = async () => {
       }
 
       if (fireZones.length > 0) {
-        protectedArea.fire_zones = fireZones;
+        protectedArea.FireZones = fireZones;
         strapi
           .query("protected-area")
           .update({ id: protectedArea.id }, protectedArea);

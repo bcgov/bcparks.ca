@@ -74,34 +74,34 @@
     "ModifiedBy": {
       "type": "string"
     },
-    "access_status": {
+    "AccessStatus": {
       "model": "access-status"
     },
-    "event_type": {
+    "EventType": {
       "model": "event-type"
     },
-    "urgency": {
+    "Urgency": {
       "model": "urgency"
     },
-    "protected_areas": {
+    "ProtectedAreas": {
       "collection": "protected-area"
     },
-    "advisory_status": {
+    "AdvisoryStatus": {
       "model": "advisory-status"
     },
-    "links": {
+    "Links": {
       "collection": "link"
     },
-    "regions": {
+    "Regions": {
       "collection": "region"
     },
-    "sections": {
+    "Sections": {
       "collection": "section"
     },
-    "management_areas": {
+    "ManagementAreas": {
       "collection": "management-area"
     },
-    "fire_zones": {
+    "FireZones": {
       "collection": "fire-zone"
     },
     "ReservationsAffected": {

@@ -538,6 +538,9 @@
           "AccessStatus": {
             "type": "string"
           },
+          "Precedence": {
+            "type": "integer"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -548,6 +551,9 @@
         "properties": {
           "AccessStatus": {
             "type": "string"
+          },
+          "Precedence": {
+            "type": "integer"
           },
           "published_at": {
             "type": "string",
