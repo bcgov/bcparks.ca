@@ -49,14 +49,14 @@ export default function AdvisoryDashboard({ page: { setError } }) {
 
   const columns = [
     {
-      field: "urgency.Urgency",
+      field: "Urgency.Urgency",
       title: "U",
       headerStyle: {
         width: 10,
       },
       cellStyle: (e, rowData) => {
-        if (rowData.urgency !== null) {
-          switch (rowData.urgency.Urgency.toLowerCase()) {
+        if (rowData.Urgency !== null) {
+          switch (rowData.Urgency.Urgency.toLowerCase()) {
             case "low":
               return {
                 borderLeft: "8px solid #06f542",
@@ -83,31 +83,31 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       },
     },
     {
-      field: "advisory_status.AdvisoryStatus",
+      field: "AdvisoryStatus.AdvisoryStatus",
       title: "Status",
       cellStyle: {
         textAlign: "center",
       },
       render: (rowData) => (
         <div className="advisory-status">
-          <Tooltip title={rowData.advisory_status.AdvisoryStatus}>
+          <Tooltip title={rowData.AdvisoryStatus.AdvisoryStatus}>
             <span>
-              {rowData.advisory_status.Code == "DFT" && (
+              {rowData.AdvisoryStatus.Code === "DFT" && (
                 <EditIcon className="draftIcon" />
               )}
-              {rowData.advisory_status.Code == "INA" && (
+              {rowData.AdvisoryStatus.Code === "INA" && (
                 <WatchLaterIcon className="inactiveIcon" />
               )}
-              {rowData.advisory_status.Code == "ACT" && (
+              {rowData.AdvisoryStatus.Code === "ACT" && (
                 <CheckCircleIcon className="activeIcon" />
               )}
-              {rowData.advisory_status.Code == "APR" && (
+              {rowData.AdvisoryStatus.Code === "APR" && (
                 <ThumbUpIcon className="approvedIcon" />
               )}
-              {rowData.advisory_status.Code == "ARQ" && (
+              {rowData.AdvisoryStatus.Code === "ARQ" && (
                 <InfoIcon className="approvalRequestedIcon" />
               )}
-              {rowData.advisory_status.Code == "PUB" && (
+              {rowData.AdvisoryStatus.Code === "PUB" && (
                 <PublishIcon className="publishedIcon" />
               )}
             </span>
@@ -129,7 +129,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       headerStyle: { width: 400 },
       cellStyle: { width: 400 },
     },
-    { field: "event_type.EventType", title: "Event Type" },
+    { field: "EventType.EventType", title: "Event Type" },
     {
       field: "EffectiveDate",
       title: "Start Date",
@@ -166,15 +166,15 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       },
     },
     {
-      field: "protected_areas",
+      field: "ProtectedAreas",
       title: "Associated Park(s)",
       headerStyle: { width: 400 },
       cellStyle: { width: 400 },
       render: (rowData) => {
-        if (rowData.protected_areas != null) {
-          const parks = rowData.protected_areas
-            .map((p) => p.ProtectedAreaName)
-            .join(", ");
+        if (rowData.ProtectedAreas != null) {
+          const parks = rowData.ProtectedAreas.map(
+            (p) => p.ProtectedAreaName
+          ).join(", ");
           return parks;
         }
       },
@@ -346,7 +346,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
               options={parkNames}
               onChange={(e) => setSelectedParkId(e.value)}
               placeholder="Select a Park..."
-              className="bg-blue f-select"
+              className="bcgov-select"
             />
           </div>
           <br />
