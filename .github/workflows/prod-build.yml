@@ -1,14 +1,14 @@
-name: Build Main Branch
+name: Build Tools Branch
 on:
   push:
-    branches: [main]
+    branches: [prod]
   workflow_dispatch:
-    branches: [main]
+    branches: [prod]
 
 jobs:
   build-frontend:
     runs-on: ubuntu-20.04
-    environment: Development
+    environment: Production
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -43,7 +43,7 @@ jobs:
 
   build-api:
     runs-on: ubuntu-20.04
-    environment: Development
+    environment: Production
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -78,7 +78,7 @@ jobs:
 
   build-cms:
     runs-on: ubuntu-20.04
-    environment: Development
+    environment: Production
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -115,7 +115,7 @@ jobs:
 
   build-staging:
     runs-on: ubuntu-20.04
-    environment: Development
+    environment: Production
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
