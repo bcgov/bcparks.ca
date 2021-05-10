@@ -697,19 +697,19 @@
               "FogZone": {
                 "type": "boolean"
               },
-              "fire_zones": {
+              "FireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "activities": {
+              "Activities": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "facilities": {
+              "Facilities": {
                 "type": "array",
                 "items": {
                   "type": "string"

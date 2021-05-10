@@ -13,6 +13,9 @@
   "attributes": {
     "AccessStatus": {
       "type": "string"
+    },
+    "Precedence": {
+      "type": "integer"
     }
   }
 }

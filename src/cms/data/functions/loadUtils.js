@@ -1,5 +1,12 @@
 "use strict";
 const fs = require("fs");
+const moment = require("moment");
+
+const formatDate = (date) => {
+  return moment.isDate(date)
+    ? moment(date, "YYYY-MM-DD").tz("UTC").format()
+    : null;
+};
 
 const getLoadSettings = async (modelName) => {
   let message = {
@@ -55,4 +62,5 @@ const loadJson = async (model, jsonFile, object) => {
 module.exports = {
   loadJson,
   getLoadSettings,
+  formatDate,
 };

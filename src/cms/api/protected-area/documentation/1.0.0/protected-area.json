@@ -695,7 +695,7 @@
           "FogZone": {
             "type": "boolean"
           },
-          "fire_zones": {
+          "FireZones": {
             "type": "array",
             "items": {
               "required": [
@@ -729,7 +729,7 @@
               }
             }
           },
-          "activities": {
+          "Activities": {
             "type": "array",
             "items": {
               "required": [
@@ -775,7 +775,7 @@
               }
             }
           },
-          "facilities": {
+          "Facilities": {
             "type": "array",
             "items": {
               "required": [
@@ -912,19 +912,19 @@
           "FogZone": {
             "type": "boolean"
           },
-          "fire_zones": {
+          "FireZones": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "activities": {
+          "Activities": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "facilities": {
+          "Facilities": {
             "type": "array",
             "items": {
               "type": "string"

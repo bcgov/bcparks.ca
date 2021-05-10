@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "fire_ban_prohibitions",
   "info": {
-    "name": "FireBanProhibition"
+    "name": "FireBanProhibition",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -22,10 +23,10 @@
     "BulletinURL": {
       "type": "string"
     },
-    "fire_centre": {
+    "FireCentre": {
       "model": "fire-centre"
     },
-    "fire_zone": {
+    "FireZone": {
       "model": "fire-zone"
     }
   }

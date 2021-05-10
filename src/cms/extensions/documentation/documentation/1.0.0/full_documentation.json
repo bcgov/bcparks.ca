@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "05/06/2021 6:29:34 PM"
+    "x-generation-date": "05/10/2021 12:06:15 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -13809,6 +13809,9 @@
           "AccessStatus": {
             "type": "string"
           },
+          "Precedence": {
+            "type": "integer"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -13819,6 +13822,9 @@
         "properties": {
           "AccessStatus": {
             "type": "string"
+          },
+          "Precedence": {
+            "type": "integer"
           },
           "published_at": {
             "type": "string",
@@ -14271,7 +14277,7 @@
           "BulletinURL": {
             "type": "string"
           },
-          "fire_centre": {
+          "FireCentre": {
             "required": [
               "id"
             ],
@@ -14285,7 +14291,7 @@
               "FireCentreName": {
                 "type": "string"
               },
-              "fire_zones": {
+              "FireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -14302,7 +14308,7 @@
               }
             }
           },
-          "fire_zone": {
+          "FireZone": {
             "required": [
               "id"
             ],
@@ -14354,10 +14360,10 @@
           "BulletinURL": {
             "type": "string"
           },
-          "fire_centre": {
+          "FireCentre": {
             "type": "string"
           },
-          "fire_zone": {
+          "FireZone": {
             "type": "string"
           },
           "published_at": {
@@ -14386,7 +14392,7 @@
           "FireCentreName": {
             "type": "string"
           },
-          "fire_zones": {
+          "FireZones": {
             "type": "array",
             "items": {
               "required": [
@@ -14434,7 +14440,7 @@
           "FireCentreName": {
             "type": "string"
           },
-          "fire_zones": {
+          "FireZones": {
             "type": "array",
             "items": {
               "type": "string"
@@ -14483,7 +14489,7 @@
               "FireCentreName": {
                 "type": "string"
               },
-              "fire_zones": {
+              "FireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -14801,19 +14807,19 @@
               "FogZone": {
                 "type": "boolean"
               },
-              "fire_zones": {
+              "FireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "activities": {
+              "Activities": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "facilities": {
+              "Facilities": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -15039,7 +15045,7 @@
           "FogZone": {
             "type": "boolean"
           },
-          "fire_zones": {
+          "FireZones": {
             "type": "array",
             "items": {
               "required": [
@@ -15073,7 +15079,7 @@
               }
             }
           },
-          "activities": {
+          "Activities": {
             "type": "array",
             "items": {
               "required": [
@@ -15119,7 +15125,7 @@
               }
             }
           },
-          "facilities": {
+          "Facilities": {
             "type": "array",
             "items": {
               "required": [
@@ -15256,19 +15262,19 @@
           "FogZone": {
             "type": "boolean"
           },
-          "fire_zones": {
+          "FireZones": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "activities": {
+          "Activities": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "facilities": {
+          "Facilities": {
             "type": "array",
             "items": {
               "type": "string"
@@ -15368,7 +15374,7 @@
           "ModifiedBy": {
             "type": "string"
           },
-          "access_status": {
+          "AccessStatus": {
             "required": [
               "id"
             ],
@@ -15378,6 +15384,9 @@
               },
               "AccessStatus": {
                 "type": "string"
+              },
+              "Precedence": {
+                "type": "integer"
               },
               "published_at": {
                 "type": "string"
@@ -15390,7 +15399,7 @@
               }
             }
           },
-          "event_type": {
+          "EventType": {
             "required": [
               "id"
             ],
@@ -15412,7 +15421,7 @@
               }
             }
           },
-          "urgency": {
+          "Urgency": {
             "required": [
               "id"
             ],
@@ -15440,7 +15449,7 @@
               }
             }
           },
-          "protected_areas": {
+          "ProtectedAreas": {
             "type": "array",
             "items": {
               "required": [
@@ -15524,19 +15533,19 @@
                 "FogZone": {
                   "type": "boolean"
                 },
-                "fire_zones": {
+                "FireZones": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
-                "activities": {
+                "Activities": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
-                "facilities": {
+                "Facilities": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -15557,7 +15566,7 @@
               }
             }
           },
-          "advisory_status": {
+          "AdvisoryStatus": {
             "required": [
               "id"
             ],
@@ -15582,7 +15591,7 @@
               }
             }
           },
-          "links": {
+          "Links": {
             "type": "array",
             "items": {
               "required": [
@@ -15613,7 +15622,7 @@
               }
             }
           },
-          "regions": {
+          "Regions": {
             "type": "array",
             "items": {
               "required": [
@@ -15654,7 +15663,7 @@
               }
             }
           },
-          "sections": {
+          "Sections": {
             "type": "array",
             "items": {
               "required": [
@@ -15692,7 +15701,7 @@
               }
             }
           },
-          "management_areas": {
+          "ManagementAreas": {
             "type": "array",
             "items": {
               "required": [
@@ -15730,7 +15739,7 @@
               }
             }
           },
-          "fire_zones": {
+          "FireZones": {
             "type": "array",
             "items": {
               "required": [
@@ -15858,49 +15867,49 @@
           "ModifiedBy": {
             "type": "string"
           },
-          "access_status": {
+          "AccessStatus": {
             "type": "string"
           },
-          "event_type": {
+          "EventType": {
             "type": "string"
           },
-          "urgency": {
+          "Urgency": {
             "type": "string"
           },
-          "protected_areas": {
+          "ProtectedAreas": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "advisory_status": {
+          "AdvisoryStatus": {
             "type": "string"
           },
-          "links": {
+          "Links": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "regions": {
+          "Regions": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "sections": {
+          "Sections": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "management_areas": {
+          "ManagementAreas": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "fire_zones": {
+          "FireZones": {
             "type": "array",
             "items": {
               "type": "string"
@@ -16314,19 +16323,19 @@
               "FogZone": {
                 "type": "boolean"
               },
-              "fire_zones": {
+              "FireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "activities": {
+              "Activities": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "facilities": {
+              "Facilities": {
                 "type": "array",
                 "items": {
                   "type": "string"

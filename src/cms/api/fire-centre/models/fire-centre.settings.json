@@ -17,7 +17,7 @@
     "FireCentreName": {
       "type": "string"
     },
-    "fire_zones": {
+    "FireZones": {
       "collection": "fire-zone",
       "via": "fire_centre"
     }

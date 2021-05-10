@@ -1,25 +1,32 @@
 {"access-status":
  [
 	{
-		"AccessStatus": "Open"
+		"AccessStatus": "Open",
+		"Precedence": 99
 	},
 	{
-		"AccessStatus": "Full closure"
+		"AccessStatus": "Full closure",
+		"Precedence": 1
 	},
 	{
-		"AccessStatus": "Partial closure"
+		"AccessStatus": "Partial closure",
+		"Precedence": 3
 	},
 	{
-		"AccessStatus": "Inaccessible"
+		"AccessStatus": "Inaccessible",
+		"Precedence": 4
 	},
 	{
-		"AccessStatus": "Warning"
+		"AccessStatus": "Warning",
+		"Precedence": 80
 	},
 	{
-		"AccessStatus": "Restricted; permit required"
+		"AccessStatus": "Restricted; permit required",
+		"Precedence": 5
 	},
 	{
-		"AccessStatus": "Closed to the public"
+		"AccessStatus": "Closed to the public",
+		"Precedence": 2
 	}
   ]
 } 
