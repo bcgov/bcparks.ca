@@ -21,7 +21,7 @@
       "type": "string"
     },
     "fire_centre": {
-      "via": "fire_zones",
+      "via": "FireZones",
       "model": "fire-centre"
     }
   }

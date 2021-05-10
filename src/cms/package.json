@@ -9,7 +9,6 @@
     "build": "strapi build",
     "strapi": "strapi"
   },
-  "devDependencies": {},
   "dependencies": {
     "axios": "^0.21.1",
     "knex": "0.21.18",
@@ -21,6 +20,7 @@
     "strapi-plugin-content-type-builder": "3.6.1",
     "strapi-plugin-documentation": "^3.6.1",
     "strapi-plugin-email": "3.6.1",
+    "strapi-plugin-graphql": "^3.6.1",
     "strapi-plugin-upload": "3.6.1",
     "strapi-plugin-users-permissions": "3.6.1",
     "strapi-utils": "3.6.1",

@@ -59,7 +59,7 @@ services:
       - bcp-cms-network
 
   bcp-cms:
-    image: strapi/strapi:3.5.3
+    # image: strapi/strapi:3.5.3
     container_name: bcp-cms
     restart: unless-stopped
     env_file: .env

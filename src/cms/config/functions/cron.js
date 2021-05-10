@@ -29,7 +29,7 @@ module.exports = {
       ].services["public-advisory"].find({
         _publicationState: "preview",
         AdvisoryDate_lte: new Date(),
-        advisory_status: advisoryStatusMap["APR"].id,
+        AdvisoryStatus: advisoryStatusMap["APR"].id,
       });
 
       // publish advisories
@@ -38,7 +38,7 @@ module.exports = {
           { id: advisory.id },
           {
             published_at: advisory.AdvisoryDate,
-            advisory_status: advisoryStatusMap["PUB"],
+            AdvisoryStatus: advisoryStatusMap["PUB"],
             ModifiedBy: "system",
             ModifiedDate: new Date(),
           }
@@ -51,7 +51,7 @@ module.exports = {
       ].find({
         _publicationState: "live",
         ExpiryDate_lte: new Date(),
-        advisory_status: advisoryStatusMap["PUB"].id,
+        AdvisoryStatus: advisoryStatusMap["PUB"].id,
       });
 
       // unpublish advisories
@@ -60,7 +60,7 @@ module.exports = {
           { id: advisory.id },
           {
             published_at: null,
-            advisory_status: advisoryStatusMap["INA"],
+            AdvisoryStatus: advisoryStatusMap["INA"],
             RemovalDate: new Date(),
             ModifiedBy: "system",
             ModifiedDate: new Date(),

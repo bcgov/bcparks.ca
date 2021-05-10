@@ -13,7 +13,7 @@
   "attributes": {
     "model": {
       "type": "string",
-      "unique": true
+      "unique": false
     },
     "loaderFunction": {
       "type": "string"

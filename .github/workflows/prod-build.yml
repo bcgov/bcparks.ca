@@ -1,4 +1,4 @@
-name: Build Main Branch
+name: Build Tools Branch
 on:
   push:
     branches: [prod]
@@ -8,23 +8,12 @@ on:
 jobs:
   build-frontend:
     runs-on: ubuntu-20.04
-<<<<<<< HEAD
-    environment: Main
-=======
     environment: Production
->>>>>>> main
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
 
-      - name: Login to RedHat
-        uses: docker/login-action@v1
-        with: 
-          registry: ${{secrets.REDHAT_REPO}}
-          username: ${{secrets.REDHAT_REPO_USER}}
-          password: ${{secrets.REDHAT_REPO_AUTH}}
-
-      - name: Login to OpenShift
+      - name: Login to OpenShift Container Repository
         uses: docker/login-action@v1
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
@@ -54,23 +43,12 @@ jobs:
 
   build-api:
     runs-on: ubuntu-20.04
-<<<<<<< HEAD
-    environment: Main
-=======
     environment: Production
->>>>>>> main
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
 
-      - name: Login to RedHat
-        uses: docker/login-action@v1
-        with:
-          registry: ${{secrets.REDHAT_REPO}}
-          username: ${{secrets.REDHAT_REPO_USER}}
-          password: ${{secrets.REDHAT_REPO_AUTH}}
-
-      - name: Login to OpenShift
+      - name: Login to OpenShift Container Repository
         uses: docker/login-action@v1
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
@@ -98,26 +76,14 @@ jobs:
             ${CONTEXT}
           docker push $IMAGE
 
- 
   build-cms:
     runs-on: ubuntu-20.04
-<<<<<<< HEAD
-    environment: Main
-=======
     environment: Production
->>>>>>> main
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
 
-      - name: Login to RedHat
-        uses: docker/login-action@v1
-        with:
-          registry: ${{secrets.REDHAT_REPO}}
-          username: ${{secrets.REDHAT_REPO_USER}}
-          password: ${{secrets.REDHAT_REPO_AUTH}}
-
-      - name: Login to OpenShift
+      - name: Login to OpenShift Container Repository
         uses: docker/login-action@v1
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
@@ -149,32 +115,26 @@ jobs:
 
   build-staging:
     runs-on: ubuntu-20.04
-<<<<<<< HEAD
-    environment: Main
-=======
     environment: Production
->>>>>>> main
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
 
-      - name: Login to OpenShift
+      - name: Login to OpenShift Container Repository
         uses: docker/login-action@v1
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_SA_USERNAME}}
           password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
-    
-      - name: Login to RedHat
-        uses: docker/login-action@v1
-        with:
-          registry: ${{secrets.REDHAT_REPO}}
-          username: ${{secrets.REDHAT_REPO_USER}}
-          password: ${{secrets.REDHAT_REPO_AUTH}}
 
       - name: Build and push
-        uses: docker/build-push-action@v2.4.0
-        with:
-          context: ./src/staging
-          push: true
-          tags: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/staging:${{secrets.OC_APP}}
+        env:
+          COMPOSE_DOCKER_CLI_BUILD: 1
+          DOCKER_BUILDKIT: 1
+          CONTEXT: ./src/staging
+          IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/staging:${{secrets.OC_APP}}
+        run: |  
+          docker build \
+            --tag $IMAGE \
+            ${CONTEXT}
+          docker push $IMAGE
