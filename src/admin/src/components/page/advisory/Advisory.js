@@ -43,7 +43,7 @@ export default function Advisory({ mode, page: { setError } }) {
   const [displayStartDate, setDisplayStartDate] = useState(false);
   const [endDate, setEndDate] = useState(moment().tz("America/Vancouver"));
   const [displayEndDate, setDisplayEndDate] = useState(false);
-  const [expiryDate, setExpiryDate] = useState();
+  const [expiryDate, setExpiryDate] = useState(null);
   const [updatedDate, setUpdatedDate] = useState(
     moment().tz("America/Vancouver")
   );
@@ -122,17 +122,17 @@ export default function Advisory({ mode, page: { setError } }) {
                 moment(advisoryData.UpdatedDate).tz("America/Vancouver")
               );
             }
-            if (advisoryData.access_status) {
-              setAccessStatus(advisoryData.access_status);
+            if (advisoryData.AccessStatus) {
+              setAccessStatus(advisoryData.AccessStatus);
             }
-            if (advisoryData.event_type) {
-              setEventType(advisoryData.event_type);
+            if (advisoryData.EventType) {
+              setEventType(advisoryData.EventType);
             }
-            if (advisoryData.urgency) {
-              setUrgency(advisoryData.urgency);
+            if (advisoryData.Urgency) {
+              setUrgency(advisoryData.Urgency);
             }
-            if (advisoryData.advisory_status) {
-              setAdvisoryStatus(advisoryData.advisory_status);
+            if (advisoryData.AdvisoryStatus) {
+              setAdvisoryStatus(advisoryData.AdvisoryStatus);
             }
             if (advisoryData.ReservationsAffected) {
               setIsReservationAffected(advisoryData.ReservationsAffected);
@@ -155,10 +155,10 @@ export default function Advisory({ mode, page: { setError } }) {
             }
 
             const selLocations = [];
-            const protectedAreas = advisoryData.protected_areas;
-            const regions = advisoryData.regions;
-            const sections = advisoryData.sections;
-            const managementAreas = advisoryData.management_areas;
+            const protectedAreas = advisoryData.ProtectedAreas;
+            const regions = advisoryData.Regions;
+            const sections = advisoryData.Sections;
+            const managementAreas = advisoryData.ManagementAreas;
             if (protectedAreas) {
               protectedAreas.forEach((p) => {
                 selLocations.push(
@@ -198,7 +198,7 @@ export default function Advisory({ mode, page: { setError } }) {
               });
             }
             setLocations([...selLocations]);
-            const links = advisoryData.links;
+            const links = advisoryData.Links;
             if (links) {
               links.forEach((l) => {
                 linksRef.current = [
@@ -551,15 +551,15 @@ export default function Advisory({ mode, page: { setError } }) {
         EffectiveDate: startDate,
         EndDate: endDate,
         ExpiryDate: expiryDate,
-        access_status: accessStatus,
-        event_type: eventType,
-        urgency: urgency,
-        protected_areas: selProtectedAreas,
-        advisory_status: selAdvisoryStatus,
-        links: savedLinks,
-        regions: selRegions,
-        sections: selSections,
-        management_areas: selManagementAreas,
+        AccessStatus: accessStatus,
+        EventType: eventType,
+        Urgency: urgency,
+        ProtectedAreas: selProtectedAreas,
+        AdvisoryStatus: selAdvisoryStatus,
+        Links: savedLinks,
+        Regions: selRegions,
+        Sections: selSections,
+        ManagementAreas: selManagementAreas,
         ReservationsAffected: isReservationAffected,
         DisplayAdvisoryDate: displayAdvisoryDate,
         DisplayEffectiveDate: displayStartDate,
@@ -615,15 +615,15 @@ export default function Advisory({ mode, page: { setError } }) {
         EffectiveDate: startDate,
         EndDate: endDate,
         ExpiryDate: expiryDate,
-        access_status: accessStatus,
-        event_type: eventType,
-        urgency: urgency,
-        protected_areas: selProtectedAreas,
-        advisory_status: advisoryStatus,
-        links: updatedLinks,
-        regions: selRegions,
-        sections: selSections,
-        management_areas: selManagementAreas,
+        AccessStatus: accessStatus,
+        EventType: eventType,
+        Urgency: urgency,
+        ProtectedAreas: selProtectedAreas,
+        AdvisoryStatus: advisoryStatus,
+        Links: updatedLinks,
+        Regions: selRegions,
+        Sections: selSections,
+        ManagementAreas: selManagementAreas,
         ReservationsAffected: isReservationAffected,
         DisplayAdvisoryDate: displayAdvisoryDate,
         DisplayEffectiveDate: displayStartDate,
