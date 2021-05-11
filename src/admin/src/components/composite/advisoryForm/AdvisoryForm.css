@@ -93,6 +93,10 @@
   display: table-row !important;
 }
 
+.ad-date-label {
+  min-width: 115px !important;
+}
+
 @media (max-width: 767.98px) {
   .ad-label {
     text-align: left !important;
@@ -104,5 +108,11 @@
   .ad-btn-group button {
     width: 100% !important;
     margin-top: 5px !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .ad-duration-label {
+    min-width: 115px !important;
   }
 }

@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./AdvisoryForm.css";
 import { Button } from "shared-components/build/components/button/Button";
 import {
   TextField,
-  TextareaAutosize,
   ButtonGroup,
   Radio,
   Checkbox,
@@ -13,6 +12,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  FormControl,
+  FormHelperText,
 } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import {
@@ -26,12 +27,22 @@ import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 import VisibilityToggle from "../../base/visibilityToggle/VisibilityToggle";
+import {
+  validateOptionalNumber,
+  validateRequiredText,
+  validateRequiredSelect,
+  validateRequiredDate,
+  validateOptionalDate,
+  validAdvisoryData,
+} from "../../../validators/AdvisoryValidator";
 
 export default function AdvisoryForm({
   mode,
   data: {
     ticketNumber,
     setTicketNumber,
+    listingRank,
+    setListingRank,
     headline,
     setHeadline,
     eventType,
@@ -100,10 +111,52 @@ export default function AdvisoryForm({
     closeConfirmation,
   },
 }) {
+  const [locationError, setLocationError] = useState("");
+  const [eventTypeError, setEventTypeError] = useState("");
+  const [accessStatusError, setAccessStatusError] = useState("");
+  const [urgencyError, setUrgencyError] = useState("");
+  const [advisoryStatusError, setAdvisoryStatusError] = useState("");
+  const [ticketNumberError, setTicketNumberError] = useState("");
+  const [headlineError, setHeadlineError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
+  const [advisoryDateError, setAdvisoryDateError] = useState("");
+  const [startDateError, setStartDateError] = useState("");
+  const [endDateError, setEndDateError] = useState("");
+  const [expiryDateError, setExpiryDateError] = useState("");
+  const [updatedDateError, setUpdatedDateError] = useState("");
+  const [submittedByError, setSubmittedByError] = useState("");
+  const [listingRankError, setListingRankError] = useState("");
+
+  const advisoryData = {
+    listingRank: { value: listingRank, setError: setListingRankError },
+    ticketNumber: { value: ticketNumber, setError: setTicketNumberError },
+    headline: { value: headline, setError: setHeadlineError },
+    eventType: { value: eventType, setError: setEventTypeError },
+    accessStatus: { value: accessStatus, setError: setAccessStatusError },
+    description: { value: description, setError: setDescriptionError },
+    locations: { value: locations, setError: setLocationError },
+    urgency: { value: urgency, setError: setUrgencyError },
+    advisoryDate: { value: advisoryDate, setError: setAdvisoryDateError },
+    startDate: { value: startDate, setError: setStartDateError },
+    endDate: { value: endDate, setError: setEndDateError },
+    expiryDate: { value: expiryDate, setError: setExpiryDateError },
+    updatedDate: { value: updatedDate, setError: setUpdatedDateError },
+    submittedBy: { value: submittedBy, setError: setSubmittedByError },
+    advisoryStatus: {
+      value: advisoryStatus,
+      setError: setAdvisoryStatusError,
+    },
+  };
+
   const headlineInput = {
     id: "headline",
     required: false,
     placeholder: "Advisory Headline",
+  };
+  const descriptionInput = {
+    id: "description",
+    required: true,
+    placeholder: "Description of advisory",
   };
   const linkTitleInput = {
     id: "link",
@@ -133,6 +186,12 @@ export default function AdvisoryForm({
     placeholder: "Discover Camping Ticket Number",
   };
 
+  const listingRankInput = {
+    id: "listing",
+    required: false,
+    placeholder: "Listing Rank",
+  };
+
   const intervals = [
     { label: "Two", value: 2 },
     { label: "Three", value: 3 },
@@ -154,6 +213,27 @@ export default function AdvisoryForm({
         <div className="container-fluid ad-form">
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Listing Rank
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <TextField
+                value={listingRank}
+                onChange={(event) => {
+                  setListingRank(event.target.value);
+                }}
+                className="bcgov-input"
+                variant="outlined"
+                InputProps={{ ...listingRankInput }}
+                error={listingRankError !== ""}
+                helperText={listingRankError}
+                onBlur={() => {
+                  validateOptionalNumber(advisoryData.listingRank);
+                }}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
               DC Ticket Number
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
@@ -165,13 +245,18 @@ export default function AdvisoryForm({
                 className="bcgov-input"
                 variant="outlined"
                 InputProps={{ ...ticketNumberInput }}
-                // error={false}
-                // helperText="Incorrect entry."
+                error={ticketNumberError !== ""}
+                helperText={ticketNumberError}
+                onBlur={() => {
+                  validateOptionalNumber(advisoryData.ticketNumber);
+                }}
               />
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">Headline</div>
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
+              Headline
+            </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               <TextField
                 value={headline}
@@ -181,73 +266,129 @@ export default function AdvisoryForm({
                 className="bcgov-input"
                 variant="outlined"
                 InputProps={{ ...headlineInput }}
+                error={headlineError !== ""}
+                helperText={headlineError}
+                onBlur={() => {
+                  validateRequiredText(advisoryData.headline, "headline");
+                }}
               />
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
               Event type
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
-              <Select
-                options={eventTypes}
-                value={eventTypes.filter((e) => e.obj.id === eventType.id)}
-                onChange={(e) => setEventType(e.obj)}
-                placeholder="Select an event type"
-                className="bcgov-select"
-              />
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  eventTypeError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  options={eventTypes}
+                  value={eventTypes.filter((e) => e.obj.id === eventType.id)}
+                  onChange={(e) => setEventType(e.obj)}
+                  placeholder="Select an event type"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredSelect(
+                      advisoryData.eventType,
+                      "event type"
+                    );
+                  }}
+                />
+                <FormHelperText>{eventTypeError}</FormHelperText>
+              </FormControl>
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
               Access Status
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
-              <Select
-                options={accessStatuses}
-                value={accessStatuses.filter(
-                  (a) => a.obj.id === accessStatus.id
-                )}
-                onChange={(e) => setAccessStatus(e.obj)}
-                placeholder="Select an access status"
-                className="bcgov-select"
-              />
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  accessStatusError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  options={accessStatuses}
+                  value={accessStatuses.filter(
+                    (a) => a.obj.id === accessStatus.id
+                  )}
+                  onChange={(e) => setAccessStatus(e.obj)}
+                  placeholder="Select an access status"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredSelect(
+                      advisoryData.accessStatus,
+                      "access status"
+                    );
+                  }}
+                />
+                <FormHelperText>{accessStatusError}</FormHelperText>
+              </FormControl>
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
               Description
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
-              <TextareaAutosize
-                rowsMin={2}
-                placeholder="Description of advisory"
+              <TextField
                 value={description}
                 onChange={(event) => {
                   setDescription(event.target.value);
                 }}
-                className="bcgov-text-input"
-                id="description"
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">Location</div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <Select
-                options={locationOptions}
-                value={locations}
-                onChange={(e) => {
-                  setLocations(e);
+                multiline
+                rows={2}
+                rowsMax={10}
+                className="bcgov-input"
+                variant="outlined"
+                InputProps={{ ...descriptionInput }}
+                error={descriptionError !== ""}
+                helperText={descriptionError}
+                onBlur={() => {
+                  validateRequiredText(advisoryData.description, "description");
                 }}
-                placeholder="Select a Park"
-                isMulti="true"
-                className="bcgov-select"
               />
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
+              Location
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  locationError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  options={locationOptions}
+                  value={locations}
+                  onChange={(e) => {
+                    setLocations(e);
+                  }}
+                  placeholder="Select a Park"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredSelect(advisoryData.locations, "locations");
+                  }}
+                />
+                <FormHelperText>{locationError}</FormHelperText>
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
               Urgency level
             </div>
             <div className="col-lg-8 col-md-8 col-sm-12">
@@ -274,10 +415,10 @@ export default function AdvisoryForm({
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+            <div className="col-lg-4 col-md-4 col-sm-6 col-6 ad-label">
               Safety related
             </div>
-            <div className="col-lg-8 col-md-8 col-sm-12">
+            <div className="col-lg-8 col-md-8 col-sm-6 col-6">
               <Checkbox
                 checked={isSafetyRelated}
                 onChange={(e) => {
@@ -288,10 +429,10 @@ export default function AdvisoryForm({
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+            <div className="col-lg-4 col-md-4 col-sm-6 col-6 ad-label">
               Reservation affected
             </div>
-            <div className="col-lg-8 col-md-8 col-sm-12">
+            <div className="col-lg-8 col-md-8 col-sm-6 col-6">
               <Checkbox
                 checked={isReservationAffected}
                 onChange={(e) => {
@@ -314,7 +455,7 @@ export default function AdvisoryForm({
                     <div className="row">
                       <div className="col-lg-12 col-md-12 col-sm-12 plr0">
                         <div className="ad-flex">
-                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
+                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label bcgov-required">
                             Advisory date
                           </div>
                           <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
@@ -323,7 +464,16 @@ export default function AdvisoryForm({
                               value={advisoryDate}
                               onChange={handleAdvisoryDateChange}
                               format="MMMM DD, yyyy hh:mm A"
-                              className="react-datepicker-wrapper"
+                              className={`bcgov-datepicker-wrapper ${
+                                advisoryDateError !== ""
+                                  ? "bcgov-datepicker-wrapper-error"
+                                  : ""
+                              }`}
+                              error={advisoryDateError !== ""}
+                              helperText={advisoryDateError}
+                              onBlur={() => {
+                                validateRequiredDate(advisoryData.advisoryDate);
+                              }}
                             />
                             <VisibilityToggle
                               toggle={{
@@ -347,7 +497,16 @@ export default function AdvisoryForm({
                               value={startDate}
                               onChange={setStartDate}
                               format="MMMM DD, yyyy hh:mm A"
-                              className="react-datepicker-wrapper"
+                              className={`bcgov-datepicker-wrapper ${
+                                startDateError !== ""
+                                  ? "bcgov-datepicker-wrapper-error"
+                                  : ""
+                              }`}
+                              error={startDateError !== ""}
+                              helperText={startDateError}
+                              onBlur={() => {
+                                validateOptionalDate(advisoryData.startDate);
+                              }}
                             />
                             <VisibilityToggle
                               toggle={{
@@ -371,7 +530,16 @@ export default function AdvisoryForm({
                               value={endDate}
                               onChange={setEndDate}
                               format="MMMM DD, yyyy hh:mm A"
-                              className="react-datepicker-wrapper"
+                              className={`bcgov-datepicker-wrapper ${
+                                endDateError !== ""
+                                  ? "bcgov-datepicker-wrapper-error"
+                                  : ""
+                              }`}
+                              error={endDateError !== ""}
+                              helperText={endDateError}
+                              onBlur={() => {
+                                validateOptionalDate(advisoryData.endDate);
+                              }}
                             />
                             <VisibilityToggle
                               toggle={{
@@ -396,7 +564,18 @@ export default function AdvisoryForm({
                                 value={updatedDate}
                                 onChange={setUpdatedDate}
                                 format="MMMM DD, yyyy hh:mm A"
-                                className="react-datepicker-wrapper"
+                                className={`bcgov-datepicker-wrapper ${
+                                  updatedDateError !== ""
+                                    ? "bcgov-datepicker-wrapper-error"
+                                    : ""
+                                }`}
+                                error={updatedDateError !== ""}
+                                helperText={updatedDateError}
+                                onBlur={() => {
+                                  validateOptionalDate(
+                                    advisoryData.updatedDate
+                                  );
+                                }}
                               />
                               <VisibilityToggle
                                 toggle={{
@@ -421,7 +600,16 @@ export default function AdvisoryForm({
                               value={expiryDate}
                               onChange={setExpiryDate}
                               format="MMMM DD, yyyy hh:mm A"
-                              className="react-datepicker-wrapper mr40"
+                              className={`bcgov-datepicker-wrapper  mr40 ${
+                                expiryDateError !== ""
+                                  ? "bcgov-datepicker-wrapper-error"
+                                  : ""
+                              }`}
+                              error={expiryDateError !== ""}
+                              helperText={expiryDateError}
+                              onBlur={() => {
+                                validateOptionalDate(advisoryData.expiryDate);
+                              }}
                             />
                           </div>
                         </div>
@@ -430,10 +618,10 @@ export default function AdvisoryForm({
                   </div>
                   <div className="col-lg-4 col-md-12 col-sm-12 plr0 ad-auto-margin">
                     <div className="ad-flex">
-                      <div className="p10 col-lg-4 col-md-3 col-sm-12 ad-date-label">
+                      <div className="p10 col-lg-4 col-md-3 col-sm-12 ad-duration-label">
                         Duration
                       </div>
-                      <div className="p10 ml15 col-lg-8 col-md-6 col-sm-8 ptm3 ad-interval-box">
+                      <div className="p10 ml15 col-lg-8 col-md-6 col-sm-8 col-8 ptm3 ad-interval-box">
                         <Select
                           options={intervals}
                           onChange={handleDurationIntervalChange}
@@ -554,7 +742,7 @@ export default function AdvisoryForm({
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
               Submitted By
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
@@ -566,35 +754,58 @@ export default function AdvisoryForm({
                 className="bcgov-input"
                 variant="outlined"
                 InputProps={{ ...submitterInput }}
+                error={submittedByError !== ""}
+                helperText={submittedByError}
+                onBlur={() => {
+                  validateRequiredText(
+                    advisoryData.submittedBy,
+                    "submitter name"
+                  );
+                }}
               />
             </div>
           </div>
 
           {mode === "update" && (
             <div className="row">
-              <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
                 Advisory status
               </div>
               <div className="col-lg-7 col-md-8 col-sm-12">
-                <Select
-                  options={advisoryStatuses}
-                  value={advisoryStatuses.filter(
-                    (a) => a.obj.id === advisoryStatus.id
-                  )}
-                  onChange={(e) => setAdvisoryStatus(e.obj)}
-                  placeholder="Select an advisory status"
-                  className="bcgov-select"
-                />
+                <FormControl
+                  variant="outlined"
+                  className={`bcgov-select-form ${
+                    locationError !== "" ? "bcgov-select-error" : ""
+                  }`}
+                  error
+                >
+                  <Select
+                    options={advisoryStatuses}
+                    value={advisoryStatuses.filter(
+                      (a) => a.obj.id === advisoryStatus.id
+                    )}
+                    onChange={(e) => setAdvisoryStatus(e.obj)}
+                    placeholder="Select an advisory status"
+                    className="bcgov-select"
+                    onBlur={() => {
+                      validateRequiredSelect(
+                        advisoryData.advisoryStatus,
+                        "advisory status"
+                      );
+                    }}
+                  />
+                  <FormHelperText>{locationError}</FormHelperText>
+                </FormControl>
               </div>
             </div>
           )}
           {(isStatHoliday || isAfterHours) && (
             <div className="ad-af-hour-box">
               <div className="row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                <div className="col-lg-4 col-md-4 col-sm-1 col-1 ad-label">
                   <WarningIcon className="warningIcon" />
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
+                <div className="col-lg-8 col-md-8 col-sm-11 col-11">
                   <p>
                     <b>
                       This is an after-hours advisory. <br />
@@ -605,7 +816,7 @@ export default function AdvisoryForm({
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                <div className="col-lg-4 col-md-4 col-sm-1 col-1 ad-label">
                   <Radio
                     checked={isAfterHourPublish}
                     onChange={() => {
@@ -616,12 +827,12 @@ export default function AdvisoryForm({
                     inputProps={{ "aria-label": "Publish immediately" }}
                   />
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
+                <div className="col-lg-8 col-md-8 col-sm-11 col-11">
                   <p>Advisory is urgent/safety-related. Publish immediately.</p>
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                <div className="col-lg-4 col-md-4 col-sm-1 col-1 ad-label">
                   <Radio
                     checked={!isAfterHourPublish}
                     onChange={() => {
@@ -634,7 +845,7 @@ export default function AdvisoryForm({
                     }}
                   />
                 </div>
-                <div className="col-lg-8 col-md-8 col-sm-12">
+                <div className="col-lg-8 col-md-8 col-sm-11 col-11">
                   <p>Advisory is not urgent. Submit for web team review.</p>
                 </div>
               </div>
@@ -650,7 +861,9 @@ export default function AdvisoryForm({
                     label="Submit"
                     styling="bcgov-normal-yellow btn"
                     onClick={() => {
-                      saveAdvisory("submit");
+                      if (validAdvisoryData(advisoryData)) {
+                        saveAdvisory("submit");
+                      }
                     }}
                     hasLoader={isSubmitting}
                   />
@@ -659,7 +872,9 @@ export default function AdvisoryForm({
                     label="Save Draft"
                     styling="bcgov-normal-light btn"
                     onClick={() => {
-                      saveAdvisory("draft");
+                      if (validAdvisoryData(advisoryData)) {
+                        saveAdvisory("draft");
+                      }
                     }}
                     hasLoader={isSavingDraft}
                   />
@@ -671,7 +886,9 @@ export default function AdvisoryForm({
                     label="Update"
                     styling="bcgov-normal-yellow btn"
                     onClick={() => {
-                      updateAdvisory();
+                      if (validAdvisoryData(advisoryData, "update")) {
+                        updateAdvisory();
+                      }
                     }}
                     hasLoader={isSubmitting}
                   />
@@ -738,6 +955,8 @@ AdvisoryForm.propTypes = {
   data: PropTypes.shape({
     ticketNumber: PropTypes.string,
     setTicketNumber: PropTypes.func.isRequired,
+    listingRank: PropTypes.string,
+    setListingRank: PropTypes.func.isRequired,
     headline: PropTypes.string,
     setHeadline: PropTypes.func.isRequired,
     eventType: PropTypes.object,
