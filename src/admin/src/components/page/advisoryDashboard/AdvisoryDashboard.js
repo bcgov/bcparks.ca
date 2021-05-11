@@ -258,11 +258,13 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     } else {
       let parkIdQuery = "";
       if (selectedParkId > 0) {
-        parkIdQuery = `&protected_areas.id=${selectedParkId}`;
+        parkIdQuery = `&ProtectedAreas.id=${selectedParkId}`;
       }
       Promise.all([
         cmsAxios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
-        cmsAxios.get(`/public-advisories?_sort=updated_at:DESC${parkIdQuery}`),
+        cmsAxios.get(
+          `/public-advisories?_publicationState=preview&_sort=updated_at:DESC${parkIdQuery}`
+        ),
       ])
         .then((res) => {
           const parkNamesData = res[0].data;
