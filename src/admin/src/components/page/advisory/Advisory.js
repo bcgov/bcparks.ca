@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { cmsAxios, apiAxios } from "../../../axios_config";
 import { Redirect, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -43,7 +43,9 @@ export default function Advisory({ mode, page: { setError } }) {
   const [displayStartDate, setDisplayStartDate] = useState(false);
   const [endDate, setEndDate] = useState(moment().tz("America/Vancouver"));
   const [displayEndDate, setDisplayEndDate] = useState(false);
-  const [expiryDate, setExpiryDate] = useState(null);
+  const [expiryDate, setExpiryDate] = useState(
+    moment().tz("America/Vancouver")
+  );
   const [updatedDate, setUpdatedDate] = useState(
     moment().tz("America/Vancouver")
   );
@@ -367,6 +369,7 @@ export default function Advisory({ mode, page: { setError } }) {
             setUrgency(urgencyData[0]);
             setIsLoadingPage(false);
           }
+          setSubmittedBy(keycloak.tokenParsed.name);
           setIsLoadingData(false);
         })
         .catch(() => {
@@ -395,6 +398,7 @@ export default function Advisory({ mode, page: { setError } }) {
     setIsLoadingPage,
     setIsAfterHours,
     setLinks,
+    setSubmittedBy,
     mode,
   ]);
 
@@ -543,6 +547,7 @@ export default function Advisory({ mode, page: { setError } }) {
         Description: description,
         DCTicketNumber: parseInt(ticketNumber),
         Alert: isSafetyRelated,
+        ListingRank: parseInt(listingRank),
         Note: notes,
         SubmittedBy: submittedBy,
         CreatedDate: moment().toISOString(),
@@ -607,6 +612,7 @@ export default function Advisory({ mode, page: { setError } }) {
         Description: description,
         DCTicketNumber: parseInt(ticketNumber),
         Alert: isSafetyRelated,
+        ListingRank: parseInt(listingRank),
         Note: notes,
         SubmittedBy: submittedBy,
         CreatedDate: moment().toISOString(),
@@ -680,6 +686,8 @@ export default function Advisory({ mode, page: { setError } }) {
               data={{
                 ticketNumber,
                 setTicketNumber,
+                listingRank,
+                setListingRank,
                 headline,
                 setHeadline,
                 eventType,
