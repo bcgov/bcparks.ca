@@ -88,7 +88,7 @@ export default function Advisory({ mode, page: { setError } }) {
     ) {
       if (parseInt(id)) {
         cmsAxios
-          .get(`/public-advisories/${id}`)
+          .get(`/public-advisories/${id}?_publicationState=preview`)
           .then((res) => {
             const advisoryData = res.data;
             setHeadline(advisoryData.Title || "");
@@ -97,7 +97,9 @@ export default function Advisory({ mode, page: { setError } }) {
             if (advisoryData.Alert) {
               setIsSafetyRelated(advisoryData.Alert);
             }
-            setListingRank(advisoryData.ListingRank || "");
+            setListingRank(
+              advisoryData.ListingRank ? advisoryData.ListingRank : ""
+            );
             setNotes(advisoryData.Note || "");
             setSubmittedBy(advisoryData.SubmittedBy || "");
             if (advisoryData.AdvisoryDate) {
@@ -523,138 +525,145 @@ export default function Advisory({ mode, page: { setError } }) {
   };
 
   const saveAdvisory = (type) => {
-    if (type === "draft") {
-      setIsSavingDraft(true);
-    } else if (type === "submit") {
-      setIsSubmitting(true);
-      if (isAfterHourPublish) type = "publish";
-    }
-    const {
-      selAdvisoryStatus,
-      confirmationText,
-      published,
-    } = getAdvisoryFields(type, advisoryStatuses);
-    setConfirmationText(confirmationText);
-    const {
-      selProtectedAreas,
-      selRegions,
-      selSections,
-      selManagementAreas,
-    } = getLocationAreas(locations);
-    Promise.resolve(saveLinks()).then((savedLinks) => {
-      const newAdvisory = {
-        Title: headline,
-        Description: description,
-        DCTicketNumber: parseInt(ticketNumber),
-        Alert: isSafetyRelated,
-        ListingRank: parseInt(listingRank),
-        Note: notes,
-        SubmittedBy: submittedBy,
-        CreatedDate: moment().toISOString(),
-        CreatedBy: keycloak.tokenParsed.name,
-        AdvisoryDate: advisoryDate,
-        EffectiveDate: startDate,
-        EndDate: endDate,
-        ExpiryDate: expiryDate,
-        AccessStatus: accessStatus,
-        EventType: eventType,
-        Urgency: urgency,
-        ProtectedAreas: selProtectedAreas,
-        AdvisoryStatus: selAdvisoryStatus,
-        Links: savedLinks,
-        Regions: selRegions,
-        Sections: selSections,
-        ManagementAreas: selManagementAreas,
-        ReservationsAffected: isReservationAffected,
-        DisplayAdvisoryDate: displayAdvisoryDate,
-        DisplayEffectiveDate: displayStartDate,
-        DisplayEndDate: displayEndDate,
-        published_at: published,
-      };
+    try {
+      if (type === "draft") {
+        setIsSavingDraft(true);
+      } else if (type === "submit") {
+        setIsSubmitting(true);
+        if (isAfterHourPublish) type = "publish";
+      }
+      const { selAdvisoryStatus, confirmationText, published } =
+        getAdvisoryFields(type, advisoryStatuses);
+      setConfirmationText(confirmationText);
+      const { selProtectedAreas, selRegions, selSections, selManagementAreas } =
+        getLocationAreas(locations, locationOptions);
+      Promise.resolve(saveLinks()).then((savedLinks) => {
+        const newAdvisory = {
+          Title: headline,
+          Description: description,
+          DCTicketNumber: parseInt(ticketNumber),
+          Alert: isSafetyRelated,
+          ListingRank: parseInt(listingRank),
+          Note: notes,
+          SubmittedBy: submittedBy,
+          CreatedDate: moment().toISOString(),
+          CreatedBy: keycloak.tokenParsed.name,
+          AdvisoryDate: advisoryDate,
+          EffectiveDate: startDate,
+          EndDate: endDate,
+          ExpiryDate: expiryDate,
+          AccessStatus: accessStatus,
+          EventType: eventType,
+          Urgency: urgency,
+          ProtectedAreas: selProtectedAreas,
+          AdvisoryStatus: selAdvisoryStatus,
+          Links: savedLinks,
+          Regions: selRegions,
+          Sections: selSections,
+          ManagementAreas: selManagementAreas,
+          ReservationsAffected: isReservationAffected,
+          DisplayAdvisoryDate: displayAdvisoryDate,
+          DisplayEffectiveDate: displayStartDate,
+          DisplayEndDate: displayEndDate,
+          published_at: published,
+        };
 
-      apiAxios
-        .post(`api/add/public-advisories`, newAdvisory, {
-          headers: { Authorization: `Bearer ${keycloak.idToken}` },
-        })
-        .then(() => {
-          setIsConfirmationOpen(true);
-          setIsSubmitting(false);
-          setIsSavingDraft(false);
-        })
-        .catch((error) => {
-          console.log("error occurred", error);
-          setToError(true);
-          setError({
-            status: 500,
-            message: "Could not process advisory update",
+        apiAxios
+          .post(`api/add/public-advisories`, newAdvisory, {
+            headers: { Authorization: `Bearer ${keycloak.idToken}` },
+          })
+          .then(() => {
+            setIsConfirmationOpen(true);
+            setIsSubmitting(false);
+            setIsSavingDraft(false);
+          })
+          .catch((error) => {
+            console.log("error occurred", error);
+            setToError(true);
+            setError({
+              status: 500,
+              message: "Could not process advisory update",
+            });
           });
-        });
-    });
+      });
+    } catch (error) {
+      console.log("error occurred", error);
+      setToError(true);
+      setError({
+        status: 500,
+        message: "Could not process advisory update",
+      });
+    }
   };
 
   const updateAdvisory = () => {
-    setIsSubmitting(true);
-    const { confirmationText, published } = getUpdateAdvisoryFields(
-      advisoryStatus.Code,
-      isAfterHourPublish
-    );
-    setConfirmationText(confirmationText);
-    const {
-      selProtectedAreas,
-      selRegions,
-      selSections,
-      selManagementAreas,
-    } = getLocationAreas(locations);
-    Promise.resolve(saveLinks()).then((savedLinks) => {
-      const updatedLinks = savedLinks ? savedLinks : links;
-      const updatedAdvisory = {
-        Title: headline,
-        Description: description,
-        DCTicketNumber: parseInt(ticketNumber),
-        Alert: isSafetyRelated,
-        ListingRank: parseInt(listingRank),
-        Note: notes,
-        SubmittedBy: submittedBy,
-        CreatedDate: moment().toISOString(),
-        CreatedBy: keycloak.tokenParsed.name,
-        AdvisoryDate: advisoryDate,
-        EffectiveDate: startDate,
-        EndDate: endDate,
-        ExpiryDate: expiryDate,
-        AccessStatus: accessStatus,
-        EventType: eventType,
-        Urgency: urgency,
-        ProtectedAreas: selProtectedAreas,
-        AdvisoryStatus: advisoryStatus,
-        Links: updatedLinks,
-        Regions: selRegions,
-        Sections: selSections,
-        ManagementAreas: selManagementAreas,
-        ReservationsAffected: isReservationAffected,
-        DisplayAdvisoryDate: displayAdvisoryDate,
-        DisplayEffectiveDate: displayStartDate,
-        DisplayEndDate: displayEndDate,
-        published_at: published,
-      };
+    try {
+      setIsSubmitting(true);
+      const { confirmationText, published } = getUpdateAdvisoryFields(
+        advisoryStatus.Code,
+        isAfterHourPublish
+      );
+      setConfirmationText(confirmationText);
+      const { selProtectedAreas, selRegions, selSections, selManagementAreas } =
+        getLocationAreas(locations, locationOptions);
+      Promise.resolve(saveLinks()).then((savedLinks) => {
+        const updatedLinks = savedLinks ? savedLinks : links;
+        const updatedAdvisory = {
+          Title: headline,
+          Description: description,
+          DCTicketNumber: parseInt(ticketNumber),
+          Alert: isSafetyRelated,
+          ListingRank: parseInt(listingRank),
+          Note: notes,
+          SubmittedBy: submittedBy,
+          CreatedDate: moment().toISOString(),
+          CreatedBy: keycloak.tokenParsed.name,
+          AdvisoryDate: advisoryDate,
+          EffectiveDate: startDate,
+          EndDate: endDate,
+          ExpiryDate: expiryDate,
+          AccessStatus: accessStatus,
+          EventType: eventType,
+          Urgency: urgency,
+          ProtectedAreas: selProtectedAreas,
+          AdvisoryStatus: advisoryStatus,
+          Links: updatedLinks,
+          Regions: selRegions,
+          Sections: selSections,
+          ManagementAreas: selManagementAreas,
+          ReservationsAffected: isReservationAffected,
+          DisplayAdvisoryDate: displayAdvisoryDate,
+          DisplayEffectiveDate: displayStartDate,
+          DisplayEndDate: displayEndDate,
+          published_at: published,
+        };
 
-      apiAxios
-        .put(`api/update/public-advisories/${id}`, updatedAdvisory, {
-          headers: { Authorization: `Bearer ${keycloak.idToken}` },
-        })
-        .then(() => {
-          setIsConfirmationOpen(true);
-          setIsSubmitting(false);
-          setIsSavingDraft(false);
-        })
-        .catch((error) => {
-          console.log("error occurred", error);
-          setToError(true);
-          setError({
-            status: 500,
-            message: "Could not process advisory update",
+        apiAxios
+          .put(`api/update/public-advisories/${id}`, updatedAdvisory, {
+            headers: { Authorization: `Bearer ${keycloak.idToken}` },
+          })
+          .then(() => {
+            setIsConfirmationOpen(true);
+            setIsSubmitting(false);
+            setIsSavingDraft(false);
+          })
+          .catch((error) => {
+            console.log("error occurred", error);
+            setToError(true);
+            setError({
+              status: 500,
+              message: "Could not process advisory update",
+            });
           });
-        });
-    });
+      });
+    } catch (error) {
+      console.log("error occurred", error);
+      setToError(true);
+      setError({
+        status: 500,
+        message: "Could not process advisory update",
+      });
+    }
   };
 
   if (toDashboard) {

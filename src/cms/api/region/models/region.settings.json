@@ -23,9 +23,9 @@
       "via": "Region",
       "collection": "section"
     },
-    "ManagementArea": {
-      "via": "Region",
-      "collection": "management-area"
+    "ManagementAreas": {
+      "collection": "management-area",
+      "via": "Region"
     }
   }
 }

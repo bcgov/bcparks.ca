@@ -577,44 +577,6 @@
               }
             }
           },
-          "Region": {
-            "required": [
-              "id",
-              "RegionNumber"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "RegionNumber": {
-                "type": "integer"
-              },
-              "RegionName": {
-                "type": "string"
-              },
-              "Sections": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "ManagementArea": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "ProtectedArea": {
             "required": [
               "id",
@@ -729,6 +691,44 @@
               }
             }
           },
+          "Region": {
+            "required": [
+              "id",
+              "RegionNumber"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "RegionNumber": {
+                "type": "integer"
+              },
+              "RegionName": {
+                "type": "string"
+              },
+              "Sections": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "ManagementAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -749,10 +749,10 @@
           "Section": {
             "type": "string"
           },
-          "Region": {
+          "ProtectedArea": {
             "type": "string"
           },
-          "ProtectedArea": {
+          "Region": {
             "type": "string"
           },
           "published_at": {

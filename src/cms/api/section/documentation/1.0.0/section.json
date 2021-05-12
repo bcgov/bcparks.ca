@@ -549,10 +549,10 @@
                 "Section": {
                   "type": "string"
                 },
-                "Region": {
+                "ProtectedArea": {
                   "type": "string"
                 },
-                "ProtectedArea": {
+                "Region": {
                   "type": "string"
                 },
                 "published_at": {
@@ -588,7 +588,7 @@
                   "type": "string"
                 }
               },
-              "ManagementArea": {
+              "ManagementAreas": {
                 "type": "array",
                 "items": {
                   "type": "string"

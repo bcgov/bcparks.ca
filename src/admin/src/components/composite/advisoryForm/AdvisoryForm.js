@@ -126,26 +126,49 @@ export default function AdvisoryForm({
   const [updatedDateError, setUpdatedDateError] = useState("");
   const [submittedByError, setSubmittedByError] = useState("");
   const [listingRankError, setListingRankError] = useState("");
+  const [formError, setFormError] = useState("");
 
   const advisoryData = {
     listingRank: { value: listingRank, setError: setListingRankError },
     ticketNumber: { value: ticketNumber, setError: setTicketNumberError },
-    headline: { value: headline, setError: setHeadlineError },
-    eventType: { value: eventType, setError: setEventTypeError },
-    accessStatus: { value: accessStatus, setError: setAccessStatusError },
-    description: { value: description, setError: setDescriptionError },
-    locations: { value: locations, setError: setLocationError },
-    urgency: { value: urgency, setError: setUrgencyError },
+    headline: { value: headline, setError: setHeadlineError, text: "headline" },
+    eventType: {
+      value: eventType,
+      setError: setEventTypeError,
+      text: "event type",
+    },
+    accessStatus: {
+      value: accessStatus,
+      setError: setAccessStatusError,
+      text: "access status",
+    },
+    description: {
+      value: description,
+      setError: setDescriptionError,
+      text: "description",
+    },
+    locations: {
+      value: locations,
+      setError: setLocationError,
+      text: "locations",
+    },
+    urgency: { value: urgency, setError: setUrgencyError, text: "urgency" },
     advisoryDate: { value: advisoryDate, setError: setAdvisoryDateError },
     startDate: { value: startDate, setError: setStartDateError },
     endDate: { value: endDate, setError: setEndDateError },
     expiryDate: { value: expiryDate, setError: setExpiryDateError },
     updatedDate: { value: updatedDate, setError: setUpdatedDateError },
-    submittedBy: { value: submittedBy, setError: setSubmittedByError },
+    submittedBy: {
+      value: submittedBy,
+      setError: setSubmittedByError,
+      text: "submitted by",
+    },
     advisoryStatus: {
       value: advisoryStatus,
       setError: setAdvisoryStatusError,
+      text: "advisory status",
     },
+    formError: setFormError,
   };
 
   const headlineInput = {
@@ -269,7 +292,7 @@ export default function AdvisoryForm({
                 error={headlineError !== ""}
                 helperText={headlineError}
                 onBlur={() => {
-                  validateRequiredText(advisoryData.headline, "headline");
+                  validateRequiredText(advisoryData.headline);
                 }}
               />
             </div>
@@ -293,10 +316,7 @@ export default function AdvisoryForm({
                   placeholder="Select an event type"
                   className="bcgov-select"
                   onBlur={() => {
-                    validateRequiredSelect(
-                      advisoryData.eventType,
-                      "event type"
-                    );
+                    validateRequiredSelect(advisoryData.eventType);
                   }}
                 />
                 <FormHelperText>{eventTypeError}</FormHelperText>
@@ -324,10 +344,7 @@ export default function AdvisoryForm({
                   placeholder="Select an access status"
                   className="bcgov-select"
                   onBlur={() => {
-                    validateRequiredSelect(
-                      advisoryData.accessStatus,
-                      "access status"
-                    );
+                    validateRequiredSelect(advisoryData.accessStatus);
                   }}
                 />
                 <FormHelperText>{accessStatusError}</FormHelperText>
@@ -353,7 +370,7 @@ export default function AdvisoryForm({
                 error={descriptionError !== ""}
                 helperText={descriptionError}
                 onBlur={() => {
-                  validateRequiredText(advisoryData.description, "description");
+                  validateRequiredText(advisoryData.description);
                 }}
               />
             </div>
@@ -380,7 +397,7 @@ export default function AdvisoryForm({
                   isMulti="true"
                   className="bcgov-select"
                   onBlur={() => {
-                    validateRequiredSelect(advisoryData.locations, "locations");
+                    validateRequiredSelect(advisoryData.locations);
                   }}
                 />
                 <FormHelperText>{locationError}</FormHelperText>
@@ -392,26 +409,29 @@ export default function AdvisoryForm({
               Urgency level
             </div>
             <div className="col-lg-8 col-md-8 col-sm-12">
-              <ButtonGroup
-                className="ad-btn-group"
-                color="primary"
-                aria-label="outlined primary button group"
-              >
-                {urgencies.map((u) => (
-                  <Button
-                    key={u.value}
-                    label={u.label}
-                    styling={
-                      urgency.id === u.obj.id
-                        ? "bcgov-normal-blue btn"
-                        : "bcgov-normal-white btn"
-                    }
-                    onClick={() => {
-                      setUrgency(u.obj);
-                    }}
-                  />
-                ))}
-              </ButtonGroup>
+              <FormControl error>
+                <ButtonGroup
+                  className="ad-btn-group"
+                  color="primary"
+                  aria-label="outlined primary button group"
+                >
+                  {urgencies.map((u) => (
+                    <Button
+                      key={u.value}
+                      label={u.label}
+                      styling={
+                        urgency.id === u.obj.id
+                          ? "bcgov-normal-blue btn"
+                          : "bcgov-normal-white btn"
+                      }
+                      onClick={() => {
+                        setUrgency(u.obj);
+                      }}
+                    />
+                  ))}
+                </ButtonGroup>
+                <FormHelperText>{urgencyError}</FormHelperText>
+              </FormControl>
             </div>
           </div>
           <div className="row">
@@ -757,10 +777,7 @@ export default function AdvisoryForm({
                 error={submittedByError !== ""}
                 helperText={submittedByError}
                 onBlur={() => {
-                  validateRequiredText(
-                    advisoryData.submittedBy,
-                    "submitter name"
-                  );
+                  validateRequiredText(advisoryData.submittedBy);
                 }}
               />
             </div>
@@ -775,7 +792,7 @@ export default function AdvisoryForm({
                 <FormControl
                   variant="outlined"
                   className={`bcgov-select-form ${
-                    locationError !== "" ? "bcgov-select-error" : ""
+                    advisoryStatusError !== "" ? "bcgov-select-error" : ""
                   }`}
                   error
                 >
@@ -788,13 +805,10 @@ export default function AdvisoryForm({
                     placeholder="Select an advisory status"
                     className="bcgov-select"
                     onBlur={() => {
-                      validateRequiredSelect(
-                        advisoryData.advisoryStatus,
-                        "advisory status"
-                      );
+                      validateRequiredSelect(advisoryData.advisoryStatus);
                     }}
                   />
-                  <FormHelperText>{locationError}</FormHelperText>
+                  <FormHelperText>{advisoryStatusError}</FormHelperText>
                 </FormControl>
               </div>
             </div>
@@ -853,8 +867,16 @@ export default function AdvisoryForm({
           )}
           <br />
           <div className="row">
-            <div className="col-lg-3 col-md-4"></div>
-            <div className="col-lg-8 col-md-8 col-sm-12 button-row ad-btn-group">
+            <div className="col-lg-4 col-md-4"></div>
+            <div className="col-lg-7 col-md-8 col-sm-12 ad-form-error">
+              <FormControl error>
+                <FormHelperText>{formError}</FormHelperText>
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4"></div>
+            <div className="col-lg-7 col-md-8 col-sm-12 button-row ad-btn-group">
               {mode === "create" && (
                 <>
                   <Button

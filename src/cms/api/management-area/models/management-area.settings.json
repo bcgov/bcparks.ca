@@ -23,13 +23,13 @@
       "model": "section",
       "via": "ManagementAreas"
     },
-    "Region": {
-      "model": "region",
-      "via": "ManagementArea"
-    },
     "ProtectedArea": {
       "via": "ManagementAreas",
       "model": "protected-area"
+    },
+    "Region": {
+      "via": "ManagementAreas",
+      "model": "region"
     }
   }
 }
