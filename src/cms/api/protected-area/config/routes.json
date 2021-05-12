@@ -18,6 +18,14 @@
     },
     {
       "method": "GET",
+      "path": "/protectedAreas/status",
+      "handler": "protected-area.getStatus",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/protectedAreas/:ORCS",
       "handler": "protected-area.findOne",
       "config": {

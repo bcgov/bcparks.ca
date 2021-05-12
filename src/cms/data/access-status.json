@@ -1,32 +1,32 @@
 {"access-status":
- [
-	{
-		"AccessStatus": "Open",
-		"Precedence": 99
-	},
-	{
-		"AccessStatus": "Full closure",
-		"Precedence": 1
-	},
-	{
-		"AccessStatus": "Partial closure",
-		"Precedence": 3
-	},
-	{
-		"AccessStatus": "Inaccessible",
-		"Precedence": 4
-	},
-	{
-		"AccessStatus": "Warning",
-		"Precedence": 80
-	},
-	{
-		"AccessStatus": "Restricted; permit required",
-		"Precedence": 5
-	},
-	{
-		"AccessStatus": "Closed to the public",
-		"Precedence": 2
-	}
-  ]
-} 
+	[
+	   {
+		   "AccessStatus": "Full closure",
+		   "Precedence": 1
+	   },
+	   {
+		   "AccessStatus": "Partial closure",
+		   "Precedence": 2
+	   },
+	   {
+		   "AccessStatus": "Inaccessible",
+		   "Precedence": 3
+	   },
+	   {
+		   "AccessStatus": "Warning",
+		   "Precedence": 4
+	   },
+	   {
+		   "AccessStatus": "Closed to the public",
+		   "Precedence": 5
+	   },
+	   {
+		   "AccessStatus": "Restricted; permit required",
+		   "Precedence": 6
+	   },
+	   {
+		   "AccessStatus": "Open",
+		   "Precedence": 99
+	   }
+	 ]
+   } 
