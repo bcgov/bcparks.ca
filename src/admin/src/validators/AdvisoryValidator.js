@@ -14,19 +14,19 @@ export function validateOptionalNumber(field) {
   return true;
 }
 
-export function validateRequiredText(field, fieldText) {
+export function validateRequiredText(field) {
   field.setError("");
   if (!field.value) {
-    field.setError("Please enter " + fieldText);
+    field.setError("Please enter " + field.text);
     return false;
   }
   return true;
 }
 
-export function validateRequiredSelect(field, fieldText) {
+export function validateRequiredSelect(field) {
   field.setError("");
   if (isEmpty(field.value)) {
-    field.setError("Please select " + fieldText);
+    field.setError("Please select " + field.text);
     return false;
   }
   return true;
@@ -55,12 +55,14 @@ export function validateDate(field) {
 }
 
 export function validAdvisoryData(advisoryData, mode) {
+  advisoryData.formError("");
   const validListingRank = validateOptionalNumber(advisoryData.listingRank);
   const validTicketNumber = validateOptionalNumber(advisoryData.ticketNumber);
   const validHeadline = validateRequiredText(advisoryData.headline);
   const validEventType = validateRequiredSelect(advisoryData.eventType);
   const validAccessStatus = validateRequiredSelect(advisoryData.accessStatus);
   const validDescription = validateRequiredText(advisoryData.description);
+  const validUrgency = validateRequiredSelect(advisoryData.urgency);
   const validLocations = validateRequiredSelect(advisoryData.locations);
   const validAdvisoryDate = validateRequiredDate(advisoryData.advisoryDate);
   const validStartDate = validateOptionalDate(advisoryData.startDate);
@@ -74,6 +76,7 @@ export function validAdvisoryData(advisoryData, mode) {
     validEventType &&
     validAccessStatus &&
     validDescription &&
+    validUrgency &&
     validLocations &&
     validAdvisoryDate &&
     validStartDate &&
@@ -86,6 +89,9 @@ export function validAdvisoryData(advisoryData, mode) {
       advisoryData.advisoryStatus
     );
     validData = validData && validUpdatedDate && validAdvisoryStatus;
+  }
+  if (!validData) {
+    advisoryData.formError("Errors found !!! Please enter valid information");
   }
   return validData;
 }

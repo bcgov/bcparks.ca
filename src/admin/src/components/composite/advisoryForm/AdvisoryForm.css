@@ -96,6 +96,9 @@
 .ad-date-label {
   min-width: 115px !important;
 }
+.ad-form-error {
+  text-align: center !important;
+}
 
 @media (max-width: 767.98px) {
   .ad-label {

@@ -877,7 +877,7 @@
                     "type": "string"
                   }
                 },
-                "ManagementArea": {
+                "ManagementAreas": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -953,10 +953,10 @@
                 "Section": {
                   "type": "string"
                 },
-                "Region": {
+                "ProtectedArea": {
                   "type": "string"
                 },
-                "ProtectedArea": {
+                "Region": {
                   "type": "string"
                 },
                 "published_at": {

@@ -70,7 +70,16 @@ export function getUpdateAdvisoryFields(code, isAfterHourPublish) {
   return { confirmationText, published };
 }
 
-export function getLocationAreas(locations) {
+function addProtectedArea(area, locationOptions, selProtectedAreas) {
+  area.ManagementAreas.forEach((m) => {
+    const protectedArea = locationOptions.find(
+      (l) => l.type === "protectedArea" && l.obj.id === m.ProtectedArea
+    );
+    selProtectedAreas.push(protectedArea.obj);
+  });
+}
+
+export function getLocationAreas(locations, locationOptions) {
   const selProtectedAreas = [];
   const selRegions = [];
   const selSections = [];
@@ -80,10 +89,13 @@ export function getLocationAreas(locations) {
       selProtectedAreas.push(l.obj);
     } else if (l.type === "region") {
       selRegions.push(l.obj);
+      addProtectedArea(l.obj, locationOptions, selProtectedAreas);
     } else if (l.type === "section") {
       selSections.push(l.obj);
+      addProtectedArea(l.obj, locationOptions, selProtectedAreas);
     } else if (l.type === "managementArea") {
       selManagementAreas.push(l.obj);
+      selProtectedAreas.push(l.obj.ProtectedArea);
     }
   });
   return {

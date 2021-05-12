@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "05/10/2021 1:04:19 PM"
+    "x-generation-date": "05/11/2021 5:51:49 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -14687,44 +14687,6 @@
               }
             }
           },
-          "Region": {
-            "required": [
-              "id",
-              "RegionNumber"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "RegionNumber": {
-                "type": "integer"
-              },
-              "RegionName": {
-                "type": "string"
-              },
-              "Sections": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "ManagementArea": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "ProtectedArea": {
             "required": [
               "id",
@@ -14839,6 +14801,44 @@
               }
             }
           },
+          "Region": {
+            "required": [
+              "id",
+              "RegionNumber"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "RegionNumber": {
+                "type": "integer"
+              },
+              "RegionName": {
+                "type": "string"
+              },
+              "Sections": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "ManagementAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -14859,10 +14859,10 @@
           "Section": {
             "type": "string"
           },
-          "Region": {
+          "ProtectedArea": {
             "type": "string"
           },
-          "ProtectedArea": {
+          "Region": {
             "type": "string"
           },
           "published_at": {
@@ -15645,7 +15645,7 @@
                     "type": "string"
                   }
                 },
-                "ManagementArea": {
+                "ManagementAreas": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -15721,10 +15721,10 @@
                 "Section": {
                   "type": "string"
                 },
-                "Region": {
+                "ProtectedArea": {
                   "type": "string"
                 },
-                "ProtectedArea": {
+                "Region": {
                   "type": "string"
                 },
                 "published_at": {
@@ -15995,7 +15995,7 @@
               }
             }
           },
-          "ManagementArea": {
+          "ManagementAreas": {
             "type": "array",
             "items": {
               "required": [
@@ -16015,10 +16015,10 @@
                 "Section": {
                   "type": "string"
                 },
-                "Region": {
+                "ProtectedArea": {
                   "type": "string"
                 },
-                "ProtectedArea": {
+                "Region": {
                   "type": "string"
                 },
                 "published_at": {
@@ -16056,7 +16056,7 @@
               "type": "string"
             }
           },
-          "ManagementArea": {
+          "ManagementAreas": {
             "type": "array",
             "items": {
               "type": "string"
@@ -16109,10 +16109,10 @@
                 "Section": {
                   "type": "string"
                 },
-                "Region": {
+                "ProtectedArea": {
                   "type": "string"
                 },
-                "ProtectedArea": {
+                "Region": {
                   "type": "string"
                 },
                 "published_at": {
@@ -16148,7 +16148,7 @@
                   "type": "string"
                 }
               },
-              "ManagementArea": {
+              "ManagementAreas": {
                 "type": "array",
                 "items": {
                   "type": "string"
