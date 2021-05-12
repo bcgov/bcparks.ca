@@ -41,7 +41,7 @@ export default function Home({ page: { setError } }) {
           <div>
             <p>
               Can't login? Contact the web team at{" "}
-              <a href="parksweb@gov.bc.ca">parksweb@gov.bc.ca</a>.
+              <a href="mailto:parksweb@gov.bc.ca">parksweb@gov.bc.ca</a>.
             </p>
             <p>
               If you are a <b>park operator</b>, please contact your
