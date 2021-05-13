@@ -61,6 +61,25 @@ module.exports = {
     const entity = await strapi.services["protected-area"].findOne({ ORCS });
     return sanitizeEntity(entity, { model: strapi.models["protected-area"] });
   },
+  async getParkNames(ctx) {
+    let entities;
+    if (ctx.query._q) {
+      entities = await strapi.services["protected-area"].search(ctx.query);
+    } else {
+      entities = await strapi.services["protected-area"].find(ctx.query);
+    }
+
+    return entities.map((entity) => {
+      const protectedArea = sanitizeEntity(entity, {
+        model: strapi.models["protected-area"],
+      });
+      let data = {
+        id: protectedArea.id,
+        ProtectedAreaName: protectedArea.ProtectedAreaName,
+      };
+      return data;
+    });
+  },
   async getStatus(ctx) {
     const protectedAreas = await strapi
       .query("protected-area")

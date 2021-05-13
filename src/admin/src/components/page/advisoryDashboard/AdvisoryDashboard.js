@@ -1,6 +1,7 @@
 import React, { useState, useEffect, forwardRef } from "react";
 import { cmsAxios } from "../../../axios_config";
 import { Redirect, Link } from "react-router-dom";
+import { useQuery } from "react-query";
 import PropTypes from "prop-types";
 import styles from "./AdvisoryDashboard.css";
 import { Button } from "shared-components/build/components/button/Button";
@@ -38,16 +39,46 @@ import { useKeycloak } from "@react-keycloak/web";
 import Header from "../../composite/header/Header";
 
 export default function AdvisoryDashboard({ page: { setError } }) {
-  const [isLoading, setIsLoading] = useState(true);
   const [toError, setToError] = useState(false);
   const [toHome, setToHome] = useState(false);
   const [toCreate, setToCreate] = useState(false);
-  const [parkNames, setParkNames] = useState([]);
   const { keycloak, initialized } = useKeycloak();
-  const [rows, setRows] = useState([]);
   const [selectedParkId, setSelectedParkId] = useState(0);
 
-  const columns = [
+  const fetchPublicAdvisory = async ({ queryKey }) => {
+    const [, selectedParkId] = queryKey;
+    let parkIdQuery =
+      selectedParkId > 0 ? `&ProtectedAreas.id=${selectedParkId}` : "";
+
+    const { data } = await cmsAxios.get(
+      `/public-advisories?_publicationState=preview&_sort=updated_at:DESC${parkIdQuery}`
+    );
+    return data;
+  };
+
+  const fetchParkNames = async () => {
+    const { data } = await cmsAxios.get(
+      `/protectedareas/names?_limit=-1&_sort=ProtectedAreaName`
+    );
+
+    const parkNames = data.map((p) => ({
+      label: p.ProtectedAreaName,
+      value: p.id,
+    }));
+
+    return parkNames;
+  };
+
+  const parkNamesQuery = useQuery("fetchParkNames", fetchParkNames, {
+    staleTime: 10000,
+  });
+
+  const publicAdvisoryQuery = useQuery(
+    ["fetchPublicAdvisory", selectedParkId],
+    fetchPublicAdvisory
+  );
+
+  const tableColumns = [
     {
       field: "Urgency.Urgency",
       title: "U",
@@ -120,7 +151,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       title: "Posted Date",
       render: (rowData) => {
         if (rowData.AdvisoryDate)
-          return <Moment format="MMM DD, YYYY">{rowData.AdvisoryDate}</Moment>;
+          return <Moment format="YYYY/MM/DD">{rowData.AdvisoryDate}</Moment>;
       },
     },
     {
@@ -135,7 +166,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       title: "Start Date",
       render: (rowData) => {
         if (rowData.EffectiveDate)
-          return <Moment format="MMM DD, YYYY">{rowData.EffectiveDate}</Moment>;
+          return <Moment format="YYYY/MM/DD">{rowData.EffectiveDate}</Moment>;
       },
     },
     {
@@ -145,15 +176,13 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         if (rowData.EndDate) {
           return (
             <div className="text-nowrap">
-              <Moment format="MMM DD, YYYY">{rowData.EndDate}</Moment>
+              <Moment format="YYYY/MM/DD">{rowData.EndDate}</Moment>
               {rowData.ExpiryDate && (
                 <Tooltip
                   title={
                     <span>
                       Expiry Date:
-                      <Moment format="MMM DD, YYYY">
-                        {rowData.ExpiryDate}
-                      </Moment>
+                      <Moment format="YYYY/MM/DD">{rowData.ExpiryDate}</Moment>
                     </span>
                   }
                 >
@@ -248,61 +277,20 @@ export default function AdvisoryDashboard({ page: { setError } }) {
 
   useEffect(() => {
     if (!initialized) {
-      setIsLoading(true);
     } else if (!keycloak.authenticated) {
       setToError(true);
       setError({
         status: 401,
         message: "Login required",
       });
-    } else {
-      let parkIdQuery = "";
-      if (selectedParkId > 0) {
-        parkIdQuery = `&ProtectedAreas.id=${selectedParkId}`;
-      }
-      Promise.all([
-        cmsAxios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
-        cmsAxios.get(
-          `/public-advisories?_publicationState=preview&_sort=updated_at:DESC${parkIdQuery}`
-        ),
-      ])
-        .then((res) => {
-          const parkNamesData = res[0].data;
-          const publicAdvisoryData = res[1].data;
-          const parkNames = parkNamesData.map((p) => ({
-            label: p.ProtectedAreaName,
-            value: p.id,
-          }));
-          setParkNames(["Select a Park", ...parkNames]);
-          setRows(publicAdvisoryData);
-          setIsLoading(false);
-        })
-        .catch((e) => {
-          console.log(e);
-          setToError(true);
-          setError({
-            status: 500,
-            message: "Error occurred",
-          });
-        });
     }
-  }, [
-    setParkNames,
-    setToError,
-    setIsLoading,
-    setError,
-    setRows,
-    selectedParkId,
-    setToHome,
-    keycloak,
-    initialized,
-  ]);
+  }, [setToError, setError, setToHome, keycloak, initialized]);
 
   if (toHome) {
     return <Redirect to="/bcparks" />;
   }
 
-  if (toError) {
+  if (toError || parkNamesQuery.isError || publicAdvisoryQuery.isError) {
     return <Redirect to="/bcparks/error" />;
   }
 
@@ -318,12 +306,12 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         }}
       />
       <br />
-      {isLoading && (
+      {parkNamesQuery.isLoading && (
         <div className="page-loader">
           <Loader page />
         </div>
       )}
-      {!isLoading && (
+      {!parkNamesQuery.isLoading && (
         <div
           className={styles.AdvisoryDashboard}
           data-testid="AdvisoryDashboard"
@@ -345,10 +333,11 @@ export default function AdvisoryDashboard({ page: { setError } }) {
               </div>
             </div>
             <Select
-              options={parkNames}
-              onChange={(e) => setSelectedParkId(e.value)}
+              options={parkNamesQuery.data}
+              onChange={(e) => setSelectedParkId(e ? e.value : 0)}
               placeholder="Select a Park..."
               className="bcgov-select"
+              isClearable
             />
           </div>
           <br />
@@ -357,8 +346,8 @@ export default function AdvisoryDashboard({ page: { setError } }) {
             <MaterialTable
               options={options}
               icons={tableIcons}
-              columns={columns}
-              data={rows}
+              columns={tableColumns}
+              data={publicAdvisoryQuery.data}
               title=""
               components={{
                 Toolbar: (props) => <div></div>,

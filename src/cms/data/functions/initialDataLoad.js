@@ -46,23 +46,6 @@ const loadData = async () => {
   }
 };
 
-const loadxRefData = async () => {
-  try {
-    await otherData.loadFireCentre();
-    await otherData.loadFireZone();
-    await otherData.loadFireCentreZoneXref();
-    await otherData.loadFireBanProhibition();
-
-    await otherData.loadPublicAdvisory();
-    await otherData.loadParkActivityXref();
-    await otherData.loadParkFacilityXref();
-    await otherData.loadParkFireZoneXref();
-    await otherData.loadParkFogZoneXref();
-  } catch (error) {
-    strapi.log.error(error);
-  }
-};
-
 const seedData = async () => {
   // Load data and set default public roles on first run
   const setupCMS = await isFirstRun();
@@ -71,8 +54,6 @@ const seedData = async () => {
     await permission.setDefaultPermissions();
     await loadData();
   }
-  // temp - reloading data - will be removed on the next commit
-  await loadxRefData();
 };
 
 module.exports = {

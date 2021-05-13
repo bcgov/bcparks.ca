@@ -18,6 +18,14 @@
     },
     {
       "method": "GET",
+      "path": "/protectedAreas/names",
+      "handler": "protected-area.getParkNames",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/protectedAreas/status",
       "handler": "protected-area.getStatus",
       "config": {
