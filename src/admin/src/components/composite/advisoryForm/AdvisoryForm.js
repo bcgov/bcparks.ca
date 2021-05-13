@@ -31,6 +31,7 @@ import {
   validateOptionalNumber,
   validateRequiredText,
   validateRequiredSelect,
+  validateRequiredMultiSelect,
   validateRequiredDate,
   validateOptionalDate,
   validAdvisoryData,
@@ -311,8 +312,8 @@ export default function AdvisoryForm({
               >
                 <Select
                   options={eventTypes}
-                  value={eventTypes.filter((e) => e.obj.id === eventType.id)}
-                  onChange={(e) => setEventType(e.obj)}
+                  value={eventTypes.filter((e) => e.value === eventType)}
+                  onChange={(e) => setEventType(e.value)}
                   placeholder="Select an event type"
                   className="bcgov-select"
                   onBlur={() => {
@@ -337,10 +338,8 @@ export default function AdvisoryForm({
               >
                 <Select
                   options={accessStatuses}
-                  value={accessStatuses.filter(
-                    (a) => a.obj.id === accessStatus.id
-                  )}
-                  onChange={(e) => setAccessStatus(e.obj)}
+                  value={accessStatuses.filter((e) => e.value === accessStatus)}
+                  onChange={(e) => setAccessStatus(e.value)}
                   placeholder="Select an access status"
                   className="bcgov-select"
                   onBlur={() => {
@@ -397,7 +396,7 @@ export default function AdvisoryForm({
                   isMulti="true"
                   className="bcgov-select"
                   onBlur={() => {
-                    validateRequiredSelect(advisoryData.locations);
+                    validateRequiredMultiSelect(advisoryData.locations);
                   }}
                 />
                 <FormHelperText>{locationError}</FormHelperText>
@@ -420,12 +419,12 @@ export default function AdvisoryForm({
                       key={u.value}
                       label={u.label}
                       styling={
-                        urgency.id === u.obj.id
+                        urgency === u.value
                           ? "bcgov-normal-blue btn"
                           : "bcgov-normal-white btn"
                       }
                       onClick={() => {
-                        setUrgency(u.obj);
+                        setUrgency(u.value);
                       }}
                     />
                   ))}
@@ -686,9 +685,9 @@ export default function AdvisoryForm({
                     <Select
                       options={linkTypes}
                       onChange={(e) => {
-                        updateLink(idx, "type", e.obj.id);
+                        updateLink(idx, "type", e.value);
                       }}
-                      value={linkTypes.filter((o) => o.obj.id === l.type)}
+                      value={linkTypes.filter((o) => o.value === l.type)}
                       className="ad-link-select bcgov-select"
                       placeholder="Select a link type"
                     />
@@ -799,9 +798,9 @@ export default function AdvisoryForm({
                   <Select
                     options={advisoryStatuses}
                     value={advisoryStatuses.filter(
-                      (a) => a.obj.id === advisoryStatus.id
+                      (a) => a.value === advisoryStatus
                     )}
-                    onChange={(e) => setAdvisoryStatus(e.obj)}
+                    onChange={(e) => setAdvisoryStatus(e.value)}
                     placeholder="Select an advisory status"
                     className="bcgov-select"
                     onBlur={() => {
@@ -981,10 +980,10 @@ AdvisoryForm.propTypes = {
     setListingRank: PropTypes.func.isRequired,
     headline: PropTypes.string,
     setHeadline: PropTypes.func.isRequired,
-    eventType: PropTypes.object,
+    eventType: PropTypes.number,
     eventTypes: PropTypes.array.isRequired,
     setEventType: PropTypes.func.isRequired,
-    accessStatus: PropTypes.object,
+    accessStatus: PropTypes.number,
     accessStatuses: PropTypes.array.isRequired,
     setAccessStatus: PropTypes.func.isRequired,
     description: PropTypes.string,
@@ -993,7 +992,7 @@ AdvisoryForm.propTypes = {
     locations: PropTypes.array,
     setLocations: PropTypes.func.isRequired,
     urgencies: PropTypes.array.isRequired,
-    urgency: PropTypes.object,
+    urgency: PropTypes.number,
     setUrgency: PropTypes.func.isRequired,
     isSafetyRelated: PropTypes.bool,
     setIsSafetyRelated: PropTypes.func.isRequired,
@@ -1030,7 +1029,7 @@ AdvisoryForm.propTypes = {
     submittedBy: PropTypes.string,
     setSubmittedBy: PropTypes.func.isRequired,
     advisoryStatuses: PropTypes.array.isRequired,
-    advisoryStatus: PropTypes.object,
+    advisoryStatus: PropTypes.number,
     setAdvisoryStatus: PropTypes.func.isRequired,
     isStatHoliday: PropTypes.bool,
     isAfterHours: PropTypes.bool,
