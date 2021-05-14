@@ -49,7 +49,7 @@ export function getAdvisoryFields(type, advisoryStatuses) {
     published = moment().tz("America/Vancouver");
   }
   return {
-    selAdvisoryStatus: status[0]["obj"],
+    selAdvisoryStatus: status[0]["value"],
     confirmationText: confirmationText,
     published: published,
   };
@@ -73,9 +73,9 @@ export function getUpdateAdvisoryFields(code, isAfterHourPublish) {
 function addProtectedArea(area, locationOptions, selProtectedAreas) {
   area.ManagementAreas.forEach((m) => {
     const protectedArea = locationOptions.find(
-      (l) => l.type === "protectedArea" && l.obj.id === m.ProtectedArea
+      (l) => l.type === "protectedArea" && l.value === m.ProtectedArea
     );
-    selProtectedAreas.push(protectedArea.obj);
+    selProtectedAreas.push(protectedArea.value);
   });
 }
 
@@ -86,15 +86,15 @@ export function getLocationAreas(locations, locationOptions) {
   const selManagementAreas = [];
   locations.forEach((l) => {
     if (l.type === "protectedArea") {
-      selProtectedAreas.push(l.obj);
+      selProtectedAreas.push(l.value);
     } else if (l.type === "region") {
-      selRegions.push(l.obj);
+      selRegions.push(l.value);
       addProtectedArea(l.obj, locationOptions, selProtectedAreas);
     } else if (l.type === "section") {
-      selSections.push(l.obj);
+      selSections.push(l.value);
       addProtectedArea(l.obj, locationOptions, selProtectedAreas);
     } else if (l.type === "managementArea") {
-      selManagementAreas.push(l.obj);
+      selManagementAreas.push(l.value);
       selProtectedAreas.push(l.obj.ProtectedArea);
     }
   });

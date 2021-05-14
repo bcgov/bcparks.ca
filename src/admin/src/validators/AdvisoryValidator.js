@@ -25,6 +25,15 @@ export function validateRequiredText(field) {
 
 export function validateRequiredSelect(field) {
   field.setError("");
+  if (!field.value) {
+    field.setError("Please select " + field.text);
+    return false;
+  }
+  return true;
+}
+
+export function validateRequiredMultiSelect(field) {
+  field.setError("");
   if (isEmpty(field.value)) {
     field.setError("Please select " + field.text);
     return false;
@@ -63,7 +72,7 @@ export function validAdvisoryData(advisoryData, mode) {
   const validAccessStatus = validateRequiredSelect(advisoryData.accessStatus);
   const validDescription = validateRequiredText(advisoryData.description);
   const validUrgency = validateRequiredSelect(advisoryData.urgency);
-  const validLocations = validateRequiredSelect(advisoryData.locations);
+  const validLocations = validateRequiredMultiSelect(advisoryData.locations);
   const validAdvisoryDate = validateRequiredDate(advisoryData.advisoryDate);
   const validStartDate = validateOptionalDate(advisoryData.startDate);
   const validEndDate = validateOptionalDate(advisoryData.endDate);

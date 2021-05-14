@@ -21,13 +21,13 @@ export default function Advisory({ mode, page: { setError } }) {
   const [locationOptions, setLocationOptions] = useState([]);
   const [locations, setLocations] = useState([]);
   const [eventTypes, setEventTypes] = useState([]);
-  const [eventType, setEventType] = useState({});
+  const [eventType, setEventType] = useState();
   const [accessStatuses, setAccessStatuses] = useState([]);
-  const [accessStatus, setAccessStatus] = useState({});
+  const [accessStatus, setAccessStatus] = useState();
   const [urgencies, setUrgencies] = useState([]);
-  const [urgency, setUrgency] = useState({});
+  const [urgency, setUrgency] = useState();
   const [advisoryStatuses, setAdvisoryStatuses] = useState([]);
-  const [advisoryStatus, setAdvisoryStatus] = useState({});
+  const [advisoryStatus, setAdvisoryStatus] = useState();
   const [linkTypes, setLinkTypes] = useState([]);
   const [links, setLinks] = useState([]);
   const [ticketNumber, setTicketNumber] = useState("");
@@ -90,6 +90,7 @@ export default function Advisory({ mode, page: { setError } }) {
         cmsAxios
           .get(`/public-advisories/${id}?_publicationState=preview`)
           .then((res) => {
+            linksRef.current = [];
             const advisoryData = res.data;
             setHeadline(advisoryData.Title || "");
             setDescription(advisoryData.Description || "");
@@ -98,7 +99,7 @@ export default function Advisory({ mode, page: { setError } }) {
               setIsSafetyRelated(advisoryData.Alert);
             }
             setListingRank(
-              advisoryData.ListingRank ? advisoryData.ListingRank : ""
+              advisoryData.ListingRank ? "" + advisoryData.ListingRank : ""
             );
             setNotes(advisoryData.Note || "");
             setSubmittedBy(advisoryData.SubmittedBy || "");
@@ -127,16 +128,16 @@ export default function Advisory({ mode, page: { setError } }) {
               );
             }
             if (advisoryData.AccessStatus) {
-              setAccessStatus(advisoryData.AccessStatus);
+              setAccessStatus(advisoryData.AccessStatus.id);
             }
             if (advisoryData.EventType) {
-              setEventType(advisoryData.EventType);
+              setEventType(advisoryData.EventType.id);
             }
             if (advisoryData.Urgency) {
-              setUrgency(advisoryData.Urgency);
+              setUrgency(advisoryData.Urgency.id);
             }
             if (advisoryData.AdvisoryStatus) {
-              setAdvisoryStatus(advisoryData.AdvisoryStatus);
+              setAdvisoryStatus(advisoryData.AdvisoryStatus.id);
             }
             if (advisoryData.ReservationsAffected) {
               setIsReservationAffected(advisoryData.ReservationsAffected);
@@ -167,7 +168,7 @@ export default function Advisory({ mode, page: { setError } }) {
               protectedAreas.forEach((p) => {
                 selLocations.push(
                   locationOptions.find(
-                    (l) => l.value === p.ORCS && l.type === "protectedArea"
+                    (l) => l.value === p.id && l.type === "protectedArea"
                   )
                 );
               });
@@ -176,7 +177,7 @@ export default function Advisory({ mode, page: { setError } }) {
               regions.forEach((r) => {
                 selLocations.push(
                   locationOptions.find(
-                    (l) => l.value === r.RegionNumber && l.type === "region"
+                    (l) => l.value === r.id && l.type === "region"
                   )
                 );
               });
@@ -185,7 +186,7 @@ export default function Advisory({ mode, page: { setError } }) {
               sections.forEach((s) => {
                 selLocations.push(
                   locationOptions.find(
-                    (l) => l.value === s.SectionNumber && l.type === "section"
+                    (l) => l.value === s.id && l.type === "section"
                   )
                 );
               });
@@ -194,9 +195,7 @@ export default function Advisory({ mode, page: { setError } }) {
               managementAreas.forEach((m) => {
                 selLocations.push(
                   locationOptions.find(
-                    (l) =>
-                      l.value === m.ManagementAreaNumber &&
-                      l.type === "managementArea"
+                    (l) => l.value === m.id && l.type === "managementArea"
                   )
                 );
               });
@@ -217,7 +216,7 @@ export default function Advisory({ mode, page: { setError } }) {
                 ];
               });
             }
-            setLinks(linksRef.current);
+            setLinkIds();
           })
           .catch((error) => {
             console.log("error occurred fetching Public Advisory data", error);
@@ -282,7 +281,7 @@ export default function Advisory({ mode, page: { setError } }) {
       });
     } else {
       Promise.all([
-        cmsAxios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
+        cmsAxios.get(`/protectedAreas/names?_limit=-1&_sort=ProtectedAreaName`),
         cmsAxios.get(`/regions?_limit=-1&_sort=RegionName`),
         cmsAxios.get(`/sections?_limit=-1&_sort=SectionName`),
         cmsAxios.get(`/managementAreas?_limit=-1&_sort=ManagementAreaName`),
@@ -297,28 +296,27 @@ export default function Advisory({ mode, page: { setError } }) {
           const protectedAreaData = res[0].data;
           const protectedAreas = protectedAreaData.map((p) => ({
             label: p.ProtectedAreaName,
-            value: p.ORCS,
+            value: p.id,
             type: "protectedArea",
-            obj: p,
           }));
           const regionData = res[1].data;
           const regions = regionData.map((r) => ({
             label: r.RegionName,
-            value: r.RegionNumber,
+            value: r.id,
             type: "region",
             obj: r,
           }));
           const sectionData = res[2].data;
           const sections = sectionData.map((s) => ({
             label: s.SectionName,
-            value: s.SectionNumber,
+            value: s.id,
             type: "section",
             obj: s,
           }));
           const managementAreaData = res[3].data;
           const managementAreas = managementAreaData.map((m) => ({
             label: m.ManagementAreaName,
-            value: m.ManagementAreaNumber,
+            value: m.id,
             type: "managementArea",
             obj: m,
           }));
@@ -326,7 +324,6 @@ export default function Advisory({ mode, page: { setError } }) {
           const eventTypes = eventTypeData.map((et) => ({
             label: et.EventType,
             value: et.id,
-            obj: et,
           }));
           setLocationOptions([
             ...protectedAreas,
@@ -339,14 +336,12 @@ export default function Advisory({ mode, page: { setError } }) {
           const accessStatuses = accessStatusData.map((a) => ({
             label: a.AccessStatus,
             value: a.id,
-            obj: a,
           }));
           setAccessStatuses([...accessStatuses]);
           const urgencyData = res[6].data;
           const urgencies = urgencyData.map((u) => ({
             label: u.Urgency,
             value: u.id,
-            obj: u,
           }));
           setUrgencies([...urgencies]);
 
@@ -356,19 +351,16 @@ export default function Advisory({ mode, page: { setError } }) {
             code: s.Code,
             label: s.AdvisoryStatus,
             value: s.id,
-            obj: s,
           }));
           setAdvisoryStatuses([...advisoryStatuses]);
           const linkTypeData = res[9].data;
           const linkTypes = linkTypeData.map((lt) => ({
             label: lt.Type,
             value: lt.id,
-            obj: lt,
           }));
           setLinkTypes([...linkTypes]);
-          setLinks(linksRef.current);
           if (mode === "create") {
-            setUrgency(urgencyData[0]);
+            setUrgency(urgencyData[0].id);
             setIsLoadingPage(false);
           }
           setSubmittedBy(keycloak.tokenParsed.name);
@@ -431,9 +423,17 @@ export default function Advisory({ mode, page: { setError } }) {
     }
   };
 
+  const setLinkIds = () => {
+    const linkIds = [];
+    linksRef.current.forEach((l) => {
+      linkIds.push(l.id);
+    });
+    setLinks(linkIds);
+  };
+
   const addLink = () => {
-    linksRef.current = [...linksRef.current, { type: {}, title: "", url: "" }];
-    setLinks(linksRef.current);
+    linksRef.current = [...linksRef.current, { title: "", url: "" }];
+    setLinkIds();
   };
 
   const updateLink = (index, field, value) => {
@@ -441,13 +441,13 @@ export default function Advisory({ mode, page: { setError } }) {
     tempLinks[index][field] = value;
     tempLinks[index].isModified = true;
     linksRef.current = [...tempLinks];
-    setLinks(linksRef.current);
+    setLinkIds();
   };
 
   const removeLink = (index) => {
     let tempLinks = linksRef.current.filter((link, idx) => idx !== index);
     linksRef.current = [...tempLinks];
-    setLinks(linksRef.current);
+    setLinkIds();
   };
 
   const calculateExpiryDate = () => {
@@ -510,14 +510,14 @@ export default function Advisory({ mode, page: { setError } }) {
 
   const saveLinks = async () => {
     const savedLinks = [];
-    for (let link of links) {
+    for (let link of linksRef.current) {
       if (isValidLink(link)) {
         if (parseInt(link.id) > 0) {
           const savedLink = await saveLink(link, link.id);
-          savedLinks.push(savedLink);
+          savedLinks.push(savedLink.id);
         } else {
           const savedLink = await createLink(link);
-          savedLinks.push(savedLink);
+          savedLinks.push(savedLink.id);
         }
       }
     }
@@ -607,7 +607,7 @@ export default function Advisory({ mode, page: { setError } }) {
       const { selProtectedAreas, selRegions, selSections, selManagementAreas } =
         getLocationAreas(locations, locationOptions);
       Promise.resolve(saveLinks()).then((savedLinks) => {
-        const updatedLinks = savedLinks ? savedLinks : links;
+        const updatedLinks = savedLinks.length > 0 ? savedLinks : links;
         const updatedAdvisory = {
           Title: headline,
           Description: description,
