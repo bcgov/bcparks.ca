@@ -10,28 +10,28 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "FacilityNumber": {
+    "facilityNumber": {
       "type": "integer"
     },
-    "FacilityName": {
+    "facilityName": {
       "type": "string"
     },
-    "FacilityCode": {
+    "facilityCode": {
       "type": "string"
     },
-    "Icon": {
+    "icon": {
       "type": "string"
     },
-    "IconNA": {
+    "iconNA": {
       "type": "string"
     },
-    "Rank": {
+    "rank": {
       "type": "string"
     },
-    "Note": {
+    "note": {
       "type": "string"
     },
-    "Active": {
+    "active": {
       "type": "boolean"
     }
   }

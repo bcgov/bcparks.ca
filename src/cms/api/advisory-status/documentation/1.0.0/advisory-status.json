@@ -535,10 +535,10 @@
           "id": {
             "type": "string"
           },
-          "AdvisoryStatus": {
+          "advisoryStatus": {
             "type": "string"
           },
-          "Code": {
+          "code": {
             "type": "string"
           },
           "published_at": {
@@ -549,10 +549,10 @@
       },
       "NewAdvisory-status": {
         "properties": {
-          "AdvisoryStatus": {
+          "advisoryStatus": {
             "type": "string"
           },
-          "Code": {
+          "code": {
             "type": "string"
           },
           "published_at": {

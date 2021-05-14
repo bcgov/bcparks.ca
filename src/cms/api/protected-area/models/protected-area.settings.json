@@ -11,48 +11,48 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "ORCS": {
+    "orcs": {
       "type": "integer",
       "unique": true,
       "required": true
     },
-    "ProtectedAreaName": {
+    "protectedAreaName": {
       "type": "string"
     },
-    "TotalArea": {
+    "totalArea": {
       "type": "decimal"
     },
-    "UplandArea": {
+    "uplandArea": {
       "type": "decimal"
     },
-    "MarineArea": {
+    "marineArea": {
       "type": "decimal"
     },
-    "MarineProtectedArea": {
+    "marineProtectedArea": {
       "type": "string",
       "maxLength": 1,
       "minLength": 1,
       "regex": "[Y,N]"
     },
-    "Type": {
+    "type": {
       "type": "string"
     },
-    "Class": {
+    "class": {
       "type": "string"
     },
-    "EstablishedDate": {
+    "establishedDate": {
       "type": "date"
     },
-    "RepealedDate": {
+    "repealedDate": {
       "type": "date"
     },
-    "Status": {
+    "status": {
       "type": "string"
     },
-    "URL": {
+    "url": {
       "type": "string"
     },
-    "TypeCode": {
+    "typeCode": {
       "type": "enumeration",
       "enum": [
         "PK",
@@ -62,40 +62,40 @@
         "CS"
       ]
     },
-    "Latitude": {
+    "latitude": {
       "type": "string"
     },
-    "Longitude": {
+    "longitude": {
       "type": "string"
     },
-    "MapZoom": {
+    "mapZoom": {
       "type": "string"
     },
-    "Sites": {
+    "sites": {
       "collection": "site",
-      "via": "ProtectedArea"
+      "via": "protectedArea"
     },
-    "ManagementAreas": {
-      "collection": "management-area",
-      "via": "ProtectedArea"
-    },
-    "DayUsePass": {
+    "dayUsePass": {
       "type": "boolean"
     },
-    "FogZone": {
+    "fogZone": {
       "type": "boolean"
     },
-    "FireZones": {
+    "fireZones": {
       "collection": "fire-zone"
     },
-    "Activities": {
+    "activities": {
       "collection": "activity"
     },
-    "Facilities": {
+    "facilities": {
       "collection": "facility"
     },
-    "FeatureId": {
+    "featureId": {
       "type": "integer"
+    },
+    "managementAreas": {
+      "via": "protectedArea",
+      "collection": "management-area"
     }
   }
 }

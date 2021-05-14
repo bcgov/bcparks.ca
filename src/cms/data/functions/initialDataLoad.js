@@ -3,6 +3,7 @@
 const permission = require("./loadPermissions");
 const parData = require("./loadPAR");
 const otherData = require("./loadOtherData");
+const publicAdvisory = require("./loadPublicAdvisory");
 
 const isFirstRun = async () => {
   const pluginStore = strapi.store({
@@ -36,7 +37,7 @@ const loadData = async () => {
     await otherData.loadFireCentreZoneXref();
     await otherData.loadFireBanProhibition();
 
-    await otherData.loadPublicAdvisory();
+    await publicAdvisory.loadPublicAdvisory();
     await otherData.loadParkActivityXref();
     await otherData.loadParkFacilityXref();
     await otherData.loadParkFireZoneXref();

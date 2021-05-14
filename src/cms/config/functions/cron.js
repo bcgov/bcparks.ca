@@ -19,17 +19,16 @@ module.exports = {
       ].find();
       const advisoryStatusMap = {};
       advisoryStatus.map((a) => {
-        advisoryStatusMap[a.Code] = a;
+        advisoryStatusMap[a.code] = a;
         return advisoryStatusMap;
       });
-
       // fetch advisories to publish
       const draftAdvisoryToPublish = await strapi.api[
         "public-advisory"
       ].services["public-advisory"].find({
         _publicationState: "preview",
-        AdvisoryDate_lte: new Date(),
-        AdvisoryStatus: advisoryStatusMap["APR"].id,
+        advisoryDate_lte: new Date(),
+        advisoryStatus: advisoryStatusMap["APR"].id,
       });
 
       // publish advisories
@@ -37,10 +36,10 @@ module.exports = {
         await strapi.api["public-advisory"].services["public-advisory"].update(
           { id: advisory.id },
           {
-            published_at: advisory.AdvisoryDate,
-            AdvisoryStatus: advisoryStatusMap["PUB"],
-            ModifiedBy: "system",
-            ModifiedDate: new Date(),
+            published_at: advisory.advisoryDate,
+            advisoryStatus: advisoryStatusMap["PUB"],
+            modifiedBy: "system",
+            modifiedDate: new Date(),
           }
         );
       });
@@ -50,8 +49,8 @@ module.exports = {
         "public-advisory"
       ].find({
         _publicationState: "live",
-        ExpiryDate_lte: new Date(),
-        AdvisoryStatus: advisoryStatusMap["PUB"].id,
+        expiryDate_lte: new Date(),
+        advisoryStatus: advisoryStatusMap["PUB"].id,
       });
 
       // unpublish advisories
@@ -60,10 +59,10 @@ module.exports = {
           { id: advisory.id },
           {
             published_at: null,
-            AdvisoryStatus: advisoryStatusMap["INA"],
-            RemovalDate: new Date(),
-            ModifiedBy: "system",
-            ModifiedDate: new Date(),
+            advisoryStatus: advisoryStatusMap["INA"],
+            removalDate: new Date(),
+            modifiedBy: "system",
+            modifiedDate: new Date(),
           }
         );
       });

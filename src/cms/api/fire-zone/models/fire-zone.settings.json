@@ -11,17 +11,17 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "FireZoneNumber": {
+    "fireZoneNumber": {
       "type": "integer"
     },
-    "FireZoneName": {
+    "fireZoneName": {
       "type": "string"
     },
-    "HeadquartersCityName": {
+    "headquartersCityName": {
       "type": "string"
     },
-    "fire_centre": {
-      "via": "FireZones",
+    "fireCentre": {
+      "via": "fireZones",
       "model": "fire-centre"
     }
   }

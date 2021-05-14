@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/protectedAreas": {
+    "/protected-areas": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -259,7 +259,7 @@
         }
       }
     },
-    "/protectedAreas/count": {
+    "/protected-areas/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -316,7 +316,7 @@
         "parameters": []
       }
     },
-    "/protectedAreas/names": {
+    "/protected-areas/names": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -373,7 +373,7 @@
         "parameters": []
       }
     },
-    "/protectedAreas/status": {
+    "/protected-areas/status": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -430,7 +430,7 @@
         "parameters": []
       }
     },
-    "/protectedAreas/{ORCS}": {
+    "/protected-areas/{orcs}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -486,7 +486,7 @@
         ],
         "parameters": [
           {
-            "name": "ORCS",
+            "name": "orcs",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -563,7 +563,7 @@
         },
         "parameters": [
           {
-            "name": "ORCS",
+            "name": "orcs",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -626,7 +626,7 @@
         ],
         "parameters": [
           {
-            "name": "ORCS",
+            "name": "orcs",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -644,53 +644,53 @@
       "Protected-area": {
         "required": [
           "id",
-          "ORCS"
+          "orcs"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "ORCS": {
+          "orcs": {
             "type": "integer"
           },
-          "ProtectedAreaName": {
+          "protectedAreaName": {
             "type": "string"
           },
-          "TotalArea": {
+          "totalArea": {
             "type": "number"
           },
-          "UplandArea": {
+          "uplandArea": {
             "type": "number"
           },
-          "MarineArea": {
+          "marineArea": {
             "type": "number"
           },
-          "MarineProtectedArea": {
+          "marineProtectedArea": {
             "type": "string",
             "maxLength": 1,
             "minLength": 1
           },
-          "Type": {
+          "type": {
             "type": "string"
           },
-          "Class": {
+          "class": {
             "type": "string"
           },
-          "EstablishedDate": {
+          "establishedDate": {
             "type": "string",
             "format": "date"
           },
-          "RepealedDate": {
+          "repealedDate": {
             "type": "string",
             "format": "date"
           },
-          "Status": {
+          "status": {
             "type": "string"
           },
-          "URL": {
+          "url": {
             "type": "string"
           },
-          "TypeCode": {
+          "typeCode": {
             "type": "string",
             "enum": [
               "PK",
@@ -700,57 +700,57 @@
               "CS"
             ]
           },
-          "Latitude": {
+          "latitude": {
             "type": "string"
           },
-          "Longitude": {
+          "longitude": {
             "type": "string"
           },
-          "MapZoom": {
+          "mapZoom": {
             "type": "string"
           },
-          "Sites": {
+          "sites": {
             "type": "array",
             "items": {
               "required": [
                 "id",
-                "ORCSSiteNumber"
+                "orcsSiteNumber"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "SiteName": {
+                "siteName": {
                   "type": "string"
                 },
-                "SiteNumber": {
+                "siteNumber": {
                   "type": "integer"
                 },
-                "Status": {
+                "status": {
                   "type": "string"
                 },
-                "EstablishedDate": {
+                "establishedDate": {
                   "type": "string"
                 },
-                "RepealedDate": {
+                "repealedDate": {
                   "type": "string"
                 },
-                "URL": {
+                "url": {
                   "type": "string"
                 },
-                "Latitude": {
+                "latitude": {
                   "type": "string"
                 },
-                "Longitude": {
+                "longitude": {
                   "type": "string"
                 },
-                "MapZoom": {
+                "mapZoom": {
                   "type": "string"
                 },
-                "ProtectedArea": {
+                "orcsSiteNumber": {
                   "type": "string"
                 },
-                "ORCSSiteNumber": {
+                "protectedArea": {
                   "type": "string"
                 },
                 "published_at": {
@@ -765,51 +765,13 @@
               }
             }
           },
-          "ManagementAreas": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id",
-                "ManagementAreaNumber"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "ManagementAreaNumber": {
-                  "type": "integer"
-                },
-                "ManagementAreaName": {
-                  "type": "string"
-                },
-                "Section": {
-                  "type": "string"
-                },
-                "ProtectedArea": {
-                  "type": "string"
-                },
-                "Region": {
-                  "type": "string"
-                },
-                "published_at": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "DayUsePass": {
+          "dayUsePass": {
             "type": "boolean"
           },
-          "FogZone": {
+          "fogZone": {
             "type": "boolean"
           },
-          "FireZones": {
+          "fireZones": {
             "type": "array",
             "items": {
               "required": [
@@ -819,16 +781,16 @@
                 "id": {
                   "type": "string"
                 },
-                "FireZoneNumber": {
+                "fireZoneNumber": {
                   "type": "integer"
                 },
-                "FireZoneName": {
+                "fireZoneName": {
                   "type": "string"
                 },
-                "HeadquartersCityName": {
+                "headquartersCityName": {
                   "type": "string"
                 },
-                "fire_centre": {
+                "fireCentre": {
                   "type": "string"
                 },
                 "published_at": {
@@ -843,7 +805,7 @@
               }
             }
           },
-          "Activities": {
+          "activities": {
             "type": "array",
             "items": {
               "required": [
@@ -853,28 +815,28 @@
                 "id": {
                   "type": "string"
                 },
-                "ActivityNumber": {
+                "activityNumber": {
                   "type": "integer"
                 },
-                "ActivityName": {
+                "activityName": {
                   "type": "string"
                 },
-                "ActivityCode": {
+                "activityCode": {
                   "type": "string"
                 },
-                "Icon": {
+                "icon": {
                   "type": "string"
                 },
-                "IconNA": {
+                "iconNA": {
                   "type": "string"
                 },
-                "Rank": {
+                "rank": {
                   "type": "integer"
                 },
-                "Note": {
+                "note": {
                   "type": "string"
                 },
-                "Active": {
+                "active": {
                   "type": "boolean"
                 },
                 "published_at": {
@@ -889,7 +851,7 @@
               }
             }
           },
-          "Facilities": {
+          "facilities": {
             "type": "array",
             "items": {
               "required": [
@@ -899,28 +861,28 @@
                 "id": {
                   "type": "string"
                 },
-                "FacilityNumber": {
+                "facilityNumber": {
                   "type": "integer"
                 },
-                "FacilityName": {
+                "facilityName": {
                   "type": "string"
                 },
-                "FacilityCode": {
+                "facilityCode": {
                   "type": "string"
                 },
-                "Icon": {
+                "icon": {
                   "type": "string"
                 },
-                "IconNA": {
+                "iconNA": {
                   "type": "string"
                 },
-                "Rank": {
+                "rank": {
                   "type": "string"
                 },
-                "Note": {
+                "note": {
                   "type": "string"
                 },
-                "Active": {
+                "active": {
                   "type": "boolean"
                 },
                 "published_at": {
@@ -935,8 +897,46 @@
               }
             }
           },
-          "FeatureId": {
+          "featureId": {
             "type": "integer"
+          },
+          "managementAreas": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "managementAreaNumber"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "managementAreaNumber": {
+                  "type": "integer"
+                },
+                "managementAreaName": {
+                  "type": "string"
+                },
+                "section": {
+                  "type": "string"
+                },
+                "protectedArea": {
+                  "type": "string"
+                },
+                "region": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "published_at": {
             "type": "string",
@@ -946,50 +946,50 @@
       },
       "NewProtected-area": {
         "required": [
-          "ORCS"
+          "orcs"
         ],
         "properties": {
-          "ORCS": {
+          "orcs": {
             "type": "integer"
           },
-          "ProtectedAreaName": {
+          "protectedAreaName": {
             "type": "string"
           },
-          "TotalArea": {
+          "totalArea": {
             "type": "number"
           },
-          "UplandArea": {
+          "uplandArea": {
             "type": "number"
           },
-          "MarineArea": {
+          "marineArea": {
             "type": "number"
           },
-          "MarineProtectedArea": {
+          "marineProtectedArea": {
             "type": "string",
             "maxLength": 1,
             "minLength": 1
           },
-          "Type": {
+          "type": {
             "type": "string"
           },
-          "Class": {
+          "class": {
             "type": "string"
           },
-          "EstablishedDate": {
+          "establishedDate": {
             "type": "string",
             "format": "date"
           },
-          "RepealedDate": {
+          "repealedDate": {
             "type": "string",
             "format": "date"
           },
-          "Status": {
+          "status": {
             "type": "string"
           },
-          "URL": {
+          "url": {
             "type": "string"
           },
-          "TypeCode": {
+          "typeCode": {
             "type": "string",
             "enum": [
               "PK",
@@ -999,53 +999,53 @@
               "CS"
             ]
           },
-          "Latitude": {
+          "latitude": {
             "type": "string"
           },
-          "Longitude": {
+          "longitude": {
             "type": "string"
           },
-          "MapZoom": {
+          "mapZoom": {
             "type": "string"
           },
-          "Sites": {
+          "sites": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "ManagementAreas": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "DayUsePass": {
+          "dayUsePass": {
             "type": "boolean"
           },
-          "FogZone": {
+          "fogZone": {
             "type": "boolean"
           },
-          "FireZones": {
+          "fireZones": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "Activities": {
+          "activities": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "Facilities": {
+          "facilities": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "FeatureId": {
+          "featureId": {
             "type": "integer"
+          },
+          "managementAreas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "published_at": {
             "type": "string",

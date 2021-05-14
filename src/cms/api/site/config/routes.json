@@ -18,7 +18,7 @@
     },
     {
       "method": "GET",
-      "path": "/sites/:ORCSSiteNumber",
+      "path": "/sites/:orcsSiteNumber",
       "handler": "site.findOne",
       "config": {
         "policies": []
@@ -34,7 +34,7 @@
     },
     {
       "method": "PUT",
-      "path": "/sites/:ORCSSiteNumber",
+      "path": "/sites/:orcsSiteNumber",
       "handler": "site.update",
       "config": {
         "policies": []
@@ -42,7 +42,7 @@
     },
     {
       "method": "DELETE",
-      "path": "/sites/:ORCSSiteNumber",
+      "path": "/sites/:orcsSiteNumber",
       "handler": "site.delete",
       "config": {
         "policies": []

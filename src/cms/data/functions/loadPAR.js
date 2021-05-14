@@ -4,11 +4,12 @@ const moment = require("moment");
 const utf8 = require("utf8");
 
 const loadParData = async () => {
+  const PAR_URL = "https://a100.gov.bc.ca/pub/parws/protectedLands";
   const currentProtectedAreas = await strapi.services["protected-area"].find();
   if (currentProtectedAreas.length == 0) {
     strapi.log.info("Loading Protected Areas data..");
     axios
-      .get("https://a100.gov.bc.ca/pub/parws/protectedLands", {
+      .get(PAR_URL, {
         params: {
           protectedLandName: "%",
           protectedLandTypeCodes: "CS,ER,PA,PK,RA",
@@ -31,14 +32,14 @@ const loadParData = async () => {
 const loadRegion = async (area) => {
   const region = await Promise.resolve(
     strapi.services["region"].create({
-      RegionNumber: area.protectedLandRegionNumber,
-      RegionName: area.protectedLandRegionName,
+      regionNumber: area.protectedLandRegionNumber,
+      regionName: area.protectedLandRegionName,
     })
   )
     .catch(() => {
       return Promise.resolve(
         strapi.query("region").findOne({
-          RegionNumber: area.protectedLandRegionNumber,
+          regionNumber: area.protectedLandRegionNumber,
         })
       );
     })
@@ -49,15 +50,15 @@ const loadRegion = async (area) => {
 const loadSection = async (area, region) => {
   const section = await Promise.resolve(
     strapi.services["section"].create({
-      SectionNumber: area.protectedLandSectionNumber,
-      SectionName: area.protectedLandSectionName,
-      Region: region,
+      sectionNumber: area.protectedLandSectionNumber,
+      sectionName: area.protectedLandSectionName,
+      region: region,
     })
   )
     .catch(() => {
       return Promise.resolve(
         strapi.query("section").findOne({
-          SectionNumber: area.protectedLandSectionNumber,
+          sectionNumber: area.protectedLandSectionNumber,
         })
       );
     })
@@ -68,16 +69,16 @@ const loadSection = async (area, region) => {
 const loadManagementArea = async (area, region, section) => {
   const managementArea = await Promise.resolve(
     strapi.services["management-area"].create({
-      ManagementAreaNumber: area.protectedLandManagementAreaNumber,
-      ManagementAreaName: area.protectedLandManagementAreaName,
-      Section: section,
-      Region: region,
+      managementAreaNumber: area.protectedLandManagementAreaNumber,
+      managementAreaName: area.protectedLandManagementAreaName,
+      section: section,
+      region: region,
     })
   )
     .catch(() => {
       return Promise.resolve(
         strapi.query("management-area").findOne({
-          ManagementAreaNumber: area.protectedLandManagementAreaNumber,
+          managementAreaNumber: area.protectedLandManagementAreaNumber,
         })
       );
     })
@@ -103,30 +104,30 @@ const loadManagementAreas = async (managementAreas) => {
 const loadSite = async (site, orcNumber) => {
   const siteObj = await Promise.resolve(
     strapi.services["site"].create({
-      ORCSSiteNumber: orcNumber + "-" + site.protectedLandSiteNumber,
-      SiteNumber: site.protectedLandSiteNumber,
-      SiteName: site.protectedLandSiteName,
-      Status: site.protectedLandSiteStatusCode,
-      EstablishedDate: site.protectedLandSiteEstablishedDate
+      orcsSiteNumber: orcNumber + "-" + site.protectedLandSiteNumber,
+      siteNumber: site.protectedLandSiteNumber,
+      siteName: site.protectedLandSiteName,
+      status: site.protectedLandSiteStatusCode,
+      establishedDate: site.protectedLandSiteEstablishedDate
         ? moment(site.protectedLandSiteEstablishedDate, "YYYY-MM-DD")
             .tz("UTC")
             .format()
         : null,
-      RepealedDate: site.protectedLandSiteCanceledDate
+      repealedDate: site.protectedLandSiteCanceledDate
         ? moment(site.protectedLandSiteCanceledDate, "YYYY-MM-DD")
             .tz("UTC")
             .format()
         : null,
-      URL: "",
-      Latitude: "",
-      Longitude: "",
-      MapZoom: "",
+      url: "",
+      latitude: "",
+      longitude: "",
+      mapZoom: "",
     })
   )
     .catch(() => {
       return Promise.resolve(
         strapi.query("site").findOne({
-          ORCSSiteNumber: orcNumber + "-" + site.protectedLandSiteNumber,
+          orcsSiteNumber: orcNumber + "-" + site.protectedLandSiteNumber,
         })
       );
     })
@@ -150,29 +151,29 @@ const loadProtectedLandData = async (protectedLandData) => {
       protectedLandData.orcNumber
     );
     await strapi.services["protected-area"].create({
-      ORCS: protectedLandData.orcNumber,
-      ProtectedAreaName: utf8.encode(protectedLandData.protectedLandName),
-      TotalArea: protectedLandData.totalArea,
-      UplandArea: protectedLandData.uplandArea,
-      MarineArea: protectedLandData.marineArea,
-      MarineProtectedArea: protectedLandData.marineProtectedAreaInd,
-      Type: protectedLandData.protectedLandTypeDescription,
-      TypeCode: protectedLandData.protectedLandTypeCode,
-      Class: protectedLandData.protectedLandClassCode,
-      Status: protectedLandData.protectedLandStatusCode,
-      FeatureId: protectedLandData.featureId,
-      EstablishedDate: protectedLandData.establishedDate
+      orcs: protectedLandData.orcNumber,
+      protectedAreaName: utf8.encode(protectedLandData.protectedLandName),
+      totalArea: protectedLandData.totalArea,
+      uplandArea: protectedLandData.uplandArea,
+      marineArea: protectedLandData.marineArea,
+      marineProtectedArea: protectedLandData.marineProtectedAreaInd,
+      type: protectedLandData.protectedLandTypeDescription,
+      typeCode: protectedLandData.protectedLandTypeCode,
+      class: protectedLandData.protectedLandClassCode,
+      status: protectedLandData.protectedLandStatusCode,
+      featureId: protectedLandData.featureId,
+      establishedDate: protectedLandData.establishedDate
         ? moment(protectedLandData.establishedDate, "YYYY-MM-DD")
             .tz("UTC")
             .format()
         : null,
-      RepealedDate: null,
-      URL: "",
-      Latitude: "",
-      Longitude: "",
-      MapZoom: "",
-      Sites: [...sites],
-      ManagementAreas: [...managementAreas],
+      repealedDate: null,
+      url: "",
+      latitude: "",
+      longitude: "",
+      mapZoom: "",
+      sites: [...sites],
+      managementAreas: [...managementAreas],
     });
   } catch (error) {
     strapi.log.error(error);

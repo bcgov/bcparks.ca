@@ -2,7 +2,7 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/protectedAreas",
+      "path": "/protected-areas",
       "handler": "protected-area.find",
       "config": {
         "policies": []
@@ -10,7 +10,7 @@
     },
     {
       "method": "GET",
-      "path": "/protectedAreas/count",
+      "path": "/protected-areas/count",
       "handler": "protected-area.count",
       "config": {
         "policies": []
@@ -18,23 +18,23 @@
     },
     {
       "method": "GET",
-      "path": "/protectedAreas/names",
-      "handler": "protected-area.getParkNames",
+      "path": "/protected-areas/names",
+      "handler": "protected-area.names",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/protectedAreas/status",
-      "handler": "protected-area.getStatus",
+      "path": "/protected-areas/status",
+      "handler": "protected-area.status",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/protectedAreas/:ORCS",
+      "path": "/protected-areas/:orcs",
       "handler": "protected-area.findOne",
       "config": {
         "policies": []
@@ -42,7 +42,7 @@
     },
     {
       "method": "POST",
-      "path": "/protectedAreas",
+      "path": "/protected-areas",
       "handler": "protected-area.create",
       "config": {
         "policies": []
@@ -50,7 +50,7 @@
     },
     {
       "method": "PUT",
-      "path": "/protectedAreas/:ORCS",
+      "path": "/protected-areas/:orcs",
       "handler": "protected-area.update",
       "config": {
         "policies": []
@@ -58,7 +58,7 @@
     },
     {
       "method": "DELETE",
-      "path": "/protectedAreas/:ORCS",
+      "path": "/protected-areas/:orcs",
       "handler": "protected-area.delete",
       "config": {
         "policies": []

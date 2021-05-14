@@ -11,112 +11,112 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "AdvisoryNumber": {
+    "advisoryNumber": {
       "type": "integer"
     },
-    "Title": {
+    "title": {
       "type": "string"
     },
-    "Description": {
+    "description": {
       "type": "text"
     },
-    "DCTicketNumber": {
+    "dcTicketNumber": {
       "type": "biginteger"
     },
-    "Alert": {
+    "alert": {
       "type": "boolean"
     },
-    "ListingRank": {
+    "listingRank": {
       "type": "integer"
     },
-    "Note": {
+    "note": {
       "type": "string"
     },
-    "Latitude": {
+    "latitude": {
       "type": "float"
     },
-    "Longitude": {
+    "longitude": {
       "type": "float"
     },
-    "MapZoom": {
+    "mapZoom": {
       "type": "integer"
     },
-    "SubmittedBy": {
+    "submittedBy": {
       "type": "string"
     },
-    "CreatedDate": {
+    "createdDate": {
       "type": "datetime"
     },
-    "CreatedBy": {
+    "createdBy": {
       "type": "string"
     },
-    "AdvisoryDate": {
+    "advisoryDate": {
       "type": "datetime"
     },
-    "EffectiveDate": {
+    "effectiveDate": {
       "type": "datetime"
     },
-    "EndDate": {
+    "endDate": {
       "type": "datetime"
     },
-    "ExpiryDate": {
+    "expiryDate": {
       "type": "datetime"
     },
-    "RemovalDate": {
+    "removalDate": {
       "type": "datetime"
     },
-    "UpdatedDate": {
+    "updatedDate": {
       "type": "datetime"
     },
-    "ModifiedDate": {
+    "modifiedDate": {
       "type": "datetime"
     },
-    "ModifiedBy": {
+    "modifiedBy": {
       "type": "string"
     },
-    "AccessStatus": {
+    "accessStatus": {
       "model": "access-status"
     },
-    "EventType": {
+    "eventType": {
       "model": "event-type"
     },
-    "Urgency": {
+    "urgency": {
       "model": "urgency"
     },
-    "ProtectedAreas": {
+    "protectedAreas": {
       "collection": "protected-area"
     },
-    "AdvisoryStatus": {
+    "advisoryStatus": {
       "model": "advisory-status"
     },
-    "Links": {
+    "links": {
       "collection": "link"
     },
-    "Regions": {
+    "regions": {
       "collection": "region"
     },
-    "Sections": {
+    "sections": {
       "collection": "section"
     },
-    "ManagementAreas": {
+    "managementAreas": {
       "collection": "management-area"
     },
-    "FireZones": {
+    "fireZones": {
       "collection": "fire-zone"
     },
-    "ReservationsAffected": {
+    "reservationsAffected": {
       "type": "boolean"
     },
-    "DisplayAdvisoryDate": {
+    "displayAdvisoryDate": {
       "type": "boolean"
     },
-    "DisplayEffectiveDate": {
+    "displayEffectiveDate": {
       "type": "boolean"
     },
-    "DisplayEndDate": {
+    "displayEndDate": {
       "type": "boolean"
     },
-    "DisplayUpdatedDate": {
+    "displayUpdatedDate": {
       "type": "boolean"
     }
   }
