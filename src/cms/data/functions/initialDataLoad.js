@@ -54,6 +54,8 @@ const seedData = async () => {
     await permission.setDefaultPermissions();
     await loadData();
   }
+  //To be removed in next commit
+  await parData.loadParData();
 };
 
 module.exports = {

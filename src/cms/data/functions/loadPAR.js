@@ -2,6 +2,7 @@
 const axios = require("axios");
 const moment = require("moment");
 const utf8 = require("utf8");
+const fs = require("fs");
 
 const loadParData = async () => {
   const currentProtectedAreas = await strapi.services["protected-area"].find();
@@ -26,6 +27,8 @@ const loadParData = async () => {
         strapi.log.error(error);
       });
   }
+  await loadAdditionalProtectedAreaInfo();
+  await loadAdditionalSiteInfo();
 };
 
 const loadRegion = async (area) => {
@@ -174,6 +177,88 @@ const loadProtectedLandData = async (protectedLandData) => {
       Sites: [...sites],
       ManagementAreas: [...managementAreas],
     });
+  } catch (error) {
+    strapi.log.error(error);
+  }
+};
+
+const loadAdditionalProtectedAreaInfo = async () => {
+  try {
+    strapi.log.info("loading protected area supplementary information...");
+    var jsonData = fs.readFileSync(
+      "./data/protected-area-coordinates.json",
+      "utf8"
+    );
+    const data = JSON.parse(jsonData);
+    data["ProtectedArea"].forEach((p) => {
+      if (p.status === "Active") {
+        strapi.services["protected-area"].update(
+          { ORCS: p.orcs },
+          {
+            URL: p.url,
+            Latitude: p.latitude,
+            Longitude: p.longitude,
+            MapZoom: p.mapZoom,
+            DayUsePass: p.dayUsePass,
+            FogZone: p.fogZone,
+          }
+        );
+      }
+    });
+    strapi.log.info(
+      "loading protected area supplementary information completed..."
+    );
+  } catch (error) {
+    strapi.log.error(error);
+  }
+};
+
+const loadAdditionalSiteInfo = async () => {
+  try {
+    strapi.log.info("loading site supplementary information...");
+    var jsonData = fs.readFileSync("./data/site-coordinates.json", "utf8");
+    const data = JSON.parse(jsonData);
+    data["Site"].forEach((s) => {
+      if (s.status === "Active") {
+        console.log(s.orcs + "-" + s.orcsSiteNumber);
+        strapi.services["site"]
+          .update(
+            { ORCSSiteNumber: s.orcs + "-" + s.orcsSiteNumber },
+            {
+              URL: s.url,
+              Latitude: s.latitude,
+              Longitude: s.longitude,
+              MapZoom: s.mapZoom,
+            }
+          )
+          .catch(async () => {
+            strapi.log.info("creating custom site...");
+            const protectedArea = await Promise.resolve(
+              strapi.query("protected-area").findOne({
+                ORCS: s.orcs,
+              })
+            );
+            strapi.services["site"].create({
+              ORCSSiteNumber: s.orcs + "-" + s.orcsSiteNumber,
+              SiteNumber: s.orcsSiteNumber,
+              SiteName: s.siteName,
+              Status: s.status,
+              EstablishedDate: s.establishedDate
+                ? moment(s.establishedDate, "YYYY-MM-DD").tz("UTC").format()
+                : null,
+              RepealedDate: s.repealedDate
+                ? moment(s.repealedDate, "YYYY-MM-DD").tz("UTC").format()
+                : null,
+              URL: s.url,
+              Latitude: s.latitude,
+              Longitude: s.longitude,
+              MapZoom: s.mapZoom,
+              ProtectedArea: protectedArea,
+            });
+          });
+      }
+    });
+    strapi.log.info("loading site supplementary information completed...");
   } catch (error) {
     strapi.log.error(error);
   }
