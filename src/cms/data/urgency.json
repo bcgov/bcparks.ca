@@ -1,19 +1,19 @@
 {
 	"urgency": [
 		{
-			"Urgency": "Low",
-			"Code": "LO",
-			"Sequence": 1
+			"urgency": "Low",
+			"code": "LO",
+			"sequence": 1
 		},
 		{
-			"Urgency": "Medium",
-			"Code": "MD",
-			"Sequence": 2
+			"urgency": "Medium",
+			"code": "MD",
+			"sequence": 2
 		},
 		{
-			"Urgency": "High",
-			"Code": "HI",
-			"Sequence": 3
+			"urgency": "High",
+			"code": "HI",
+			"sequence": 3
 		}
 	]
 }

@@ -11,22 +11,22 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "Type": {
+    "type": {
       "type": "string"
     },
-    "ProhibitionDescription": {
+    "prohibitionDescription": {
       "type": "string"
     },
-    "EffectiveDate": {
+    "effectiveDate": {
       "type": "datetime"
     },
-    "BulletinURL": {
+    "bulletinURL": {
       "type": "string"
     },
-    "FireCentre": {
+    "fireCentre": {
       "model": "fire-centre"
     },
-    "FireZone": {
+    "fireZone": {
       "model": "fire-zone"
     }
   }

@@ -11,21 +11,21 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "RegionNumber": {
+    "regionNumber": {
       "type": "integer",
       "required": true,
       "unique": true
     },
-    "RegionName": {
+    "regionName": {
       "type": "string"
     },
-    "Sections": {
-      "via": "Region",
-      "collection": "section"
+    "sections": {
+      "collection": "section",
+      "via": "region"
     },
-    "ManagementAreas": {
-      "collection": "management-area",
-      "via": "Region"
+    "managementAreas": {
+      "via": "region",
+      "collection": "management-area"
     }
   }
 }

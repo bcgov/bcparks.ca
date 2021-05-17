@@ -1,28 +1,28 @@
 {"advisory-status":
   [
     {
-      "AdvisoryStatus": "Inactive",
-      "Code":"INA"
+      "advisoryStatus": "Inactive",
+      "code":"INA"
     },
     {
-      "AdvisoryStatus": "Draft",
-      "Code":"DFT"
+      "advisoryStatus": "Draft",
+      "code":"DFT"
     },
     {
-      "AdvisoryStatus": "Approval Requested",
-      "Code":"ARQ"
+      "advisoryStatus": "Approval Requested",
+      "code":"ARQ"
     },
     {
-      "AdvisoryStatus": "Approved",
-      "Code":"APR"
+      "advisoryStatus": "Approved",
+      "code":"APR"
     },
     {
-      "AdvisoryStatus": "Active",
-      "Code":"ACT"
+      "advisoryStatus": "Active",
+      "code":"ACT"
     },
     {
-      "AdvisoryStatus": "Published",
-      "Code":"PUB"
+      "advisoryStatus": "Published",
+      "code":"PUB"
     }
   ]
 }

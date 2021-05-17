@@ -11,21 +11,21 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "SectionNumber": {
+    "sectionNumber": {
       "type": "integer",
       "required": true,
       "unique": true
     },
-    "SectionName": {
+    "sectionName": {
       "type": "string"
     },
-    "ManagementAreas": {
-      "via": "Section",
-      "collection": "management-area"
-    },
-    "Region": {
-      "via": "Sections",
+    "region": {
+      "via": "sections",
       "model": "region"
+    },
+    "managementAreas": {
+      "via": "section",
+      "collection": "management-area"
     }
   }
 }

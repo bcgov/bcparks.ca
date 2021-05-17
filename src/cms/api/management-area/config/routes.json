@@ -2,7 +2,7 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/managementAreas",
+      "path": "/management-areas",
       "handler": "management-area.find",
       "config": {
         "policies": []
@@ -10,7 +10,7 @@
     },
     {
       "method": "GET",
-      "path": "/managementAreas/count",
+      "path": "/management-areas/count",
       "handler": "management-area.count",
       "config": {
         "policies": []
@@ -18,7 +18,7 @@
     },
     {
       "method": "GET",
-      "path": "/managementAreas/:ManagementAreaNumber",
+      "path": "/management-areas/:ManagementAreaNumber",
       "handler": "management-area.findOne",
       "config": {
         "policies": []
@@ -26,7 +26,7 @@
     },
     {
       "method": "POST",
-      "path": "/managementAreas",
+      "path": "/management-areas",
       "handler": "management-area.create",
       "config": {
         "policies": []
@@ -34,7 +34,7 @@
     },
     {
       "method": "PUT",
-      "path": "/managementAreas/:ManagementAreaNumber",
+      "path": "/management-areas/:ManagementAreaNumber",
       "handler": "management-area.update",
       "config": {
         "policies": []
@@ -42,7 +42,7 @@
     },
     {
       "method": "DELETE",
-      "path": "/managementAreas/:ManagementAreaNumber",
+      "path": "/management-areas/:ManagementAreaNumber",
       "handler": "management-area.delete",
       "config": {
         "policies": []

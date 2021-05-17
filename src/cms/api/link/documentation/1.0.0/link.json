@@ -522,13 +522,13 @@
           "id": {
             "type": "string"
           },
-          "Title": {
+          "title": {
             "type": "string"
           },
-          "URL": {
+          "url": {
             "type": "string"
           },
-          "Type": {
+          "type": {
             "required": [
               "id"
             ],
@@ -536,7 +536,7 @@
               "id": {
                 "type": "string"
               },
-              "Type": {
+              "type": {
                 "type": "string"
               },
               "published_at": {
@@ -558,13 +558,13 @@
       },
       "NewLink": {
         "properties": {
-          "Title": {
+          "title": {
             "type": "string"
           },
-          "URL": {
+          "url": {
             "type": "string"
           },
-          "Type": {
+          "type": {
             "type": "string"
           },
           "published_at": {

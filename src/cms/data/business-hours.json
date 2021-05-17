@@ -1,11 +1,11 @@
 {
-    "StartTime": "08:30:00",
-    "EndTime": "16:30:00",
-    "Monday": true,
-    "Tuesday": true,
-    "Wednesday": true,
-    "Thursday": true,
-    "Friday": true,
-    "Saturday": false,
-    "Sunday": false
+    "startTime": "08:30:00",
+    "endTime": "16:30:00",
+    "monday": true,
+    "tuesday": true,
+    "wednesday": true,
+    "thursday": true,
+    "friday": true,
+    "saturday": false,
+    "sunday": false
 }

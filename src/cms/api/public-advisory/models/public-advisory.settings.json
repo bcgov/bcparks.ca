@@ -11,113 +11,113 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "AdvisoryNumber": {
+    "advisoryNumber": {
       "type": "integer"
     },
-    "Title": {
+    "title": {
       "type": "string"
     },
-    "Description": {
+    "description": {
       "type": "text"
     },
-    "DCTicketNumber": {
-      "type": "biginteger"
+    "dcTicketNumber": {
+      "type": "text"
     },
-    "Alert": {
+    "isSafetyRelated": {
       "type": "boolean"
     },
-    "ListingRank": {
+    "listingRank": {
       "type": "integer"
     },
-    "Note": {
-      "type": "string"
+    "note": {
+      "type": "text"
     },
-    "Latitude": {
+    "latitude": {
       "type": "float"
     },
-    "Longitude": {
+    "longitude": {
       "type": "float"
     },
-    "MapZoom": {
+    "mapZoom": {
       "type": "integer"
     },
-    "SubmittedBy": {
+    "submittedBy": {
       "type": "string"
     },
-    "CreatedDate": {
+    "createdDate": {
       "type": "datetime"
     },
-    "CreatedBy": {
+    "createdBy": {
       "type": "string"
     },
-    "AdvisoryDate": {
+    "advisoryDate": {
       "type": "datetime"
     },
-    "EffectiveDate": {
+    "effectiveDate": {
       "type": "datetime"
     },
-    "EndDate": {
+    "endDate": {
       "type": "datetime"
     },
-    "ExpiryDate": {
+    "expiryDate": {
       "type": "datetime"
     },
-    "RemovalDate": {
+    "removalDate": {
       "type": "datetime"
     },
-    "UpdatedDate": {
+    "updatedDate": {
       "type": "datetime"
     },
-    "ModifiedDate": {
+    "modifiedDate": {
       "type": "datetime"
     },
-    "ModifiedBy": {
+    "modifiedBy": {
       "type": "string"
     },
-    "AccessStatus": {
+    "accessStatus": {
       "model": "access-status"
     },
-    "EventType": {
+    "eventType": {
       "model": "event-type"
     },
-    "Urgency": {
+    "urgency": {
       "model": "urgency"
     },
-    "ProtectedAreas": {
-      "collection": "protected-area"
-    },
-    "AdvisoryStatus": {
+    "advisoryStatus": {
       "model": "advisory-status"
     },
-    "Links": {
+    "isReservationsAffected": {
+      "type": "boolean"
+    },
+    "isAdvisoryDateDisplayed": {
+      "type": "boolean"
+    },
+    "isEffectiveDateDisplayed": {
+      "type": "boolean"
+    },
+    "isEndDateDisplayed": {
+      "type": "boolean"
+    },
+    "isUpdatedDateDisplayed": {
+      "type": "boolean"
+    },
+    "protectedAreas": {
+      "collection": "protected-area"
+    },
+    "links": {
       "collection": "link"
     },
-    "Regions": {
+    "regions": {
       "collection": "region"
     },
-    "Sections": {
+    "sections": {
       "collection": "section"
     },
-    "ManagementAreas": {
+    "managementAreas": {
       "collection": "management-area"
     },
-    "FireZones": {
+    "fireZones": {
       "collection": "fire-zone"
-    },
-    "ReservationsAffected": {
-      "type": "boolean"
-    },
-    "DisplayAdvisoryDate": {
-      "type": "boolean"
-    },
-    "DisplayEffectiveDate": {
-      "type": "boolean"
-    },
-    "DisplayEndDate": {
-      "type": "boolean"
-    },
-    "DisplayUpdatedDate": {
-      "type": "boolean"
     }
   }
 }
