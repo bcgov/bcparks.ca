@@ -517,43 +517,43 @@
       "Region": {
         "required": [
           "id",
-          "RegionNumber"
+          "regionNumber"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "RegionNumber": {
+          "regionNumber": {
             "type": "integer"
           },
-          "RegionName": {
+          "regionName": {
             "type": "string"
           },
-          "Sections": {
+          "sections": {
             "type": "array",
             "items": {
               "required": [
                 "id",
-                "SectionNumber"
+                "sectionNumber"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "SectionNumber": {
+                "sectionNumber": {
                   "type": "integer"
                 },
-                "SectionName": {
+                "sectionName": {
                   "type": "string"
                 },
-                "ManagementAreas": {
+                "region": {
+                  "type": "string"
+                },
+                "managementAreas": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
-                },
-                "Region": {
-                  "type": "string"
                 },
                 "published_at": {
                   "type": "string"
@@ -567,30 +567,30 @@
               }
             }
           },
-          "ManagementAreas": {
+          "managementAreas": {
             "type": "array",
             "items": {
               "required": [
                 "id",
-                "ManagementAreaNumber"
+                "managementAreaNumber"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "ManagementAreaNumber": {
+                "managementAreaNumber": {
                   "type": "integer"
                 },
-                "ManagementAreaName": {
+                "managementAreaName": {
                   "type": "string"
                 },
-                "Section": {
+                "section": {
                   "type": "string"
                 },
-                "ProtectedArea": {
+                "protectedArea": {
                   "type": "string"
                 },
-                "Region": {
+                "region": {
                   "type": "string"
                 },
                 "published_at": {
@@ -613,22 +613,22 @@
       },
       "NewRegion": {
         "required": [
-          "RegionNumber"
+          "regionNumber"
         ],
         "properties": {
-          "RegionNumber": {
+          "regionNumber": {
             "type": "integer"
           },
-          "RegionName": {
+          "regionName": {
             "type": "string"
           },
-          "Sections": {
+          "sections": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "ManagementAreas": {
+          "managementAreas": {
             "type": "array",
             "items": {
               "type": "string"

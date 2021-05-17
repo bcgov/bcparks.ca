@@ -3,6 +3,7 @@
 const permission = require("./loadPermissions");
 const parData = require("./loadPAR");
 const otherData = require("./loadOtherData");
+const publicAdvisory = require("./loadPublicAdvisory");
 
 const isFirstRun = async () => {
   const pluginStore = strapi.store({
@@ -18,7 +19,6 @@ const isFirstRun = async () => {
 const loadData = async () => {
   try {
     await parData.loadParData();
-    await permission.createApiToken();
     await otherData.loadBusinessHours();
     await otherData.loadStatutoryHolidays();
 
@@ -36,7 +36,7 @@ const loadData = async () => {
     await otherData.loadFireCentreZoneXref();
     await otherData.loadFireBanProhibition();
 
-    await otherData.loadPublicAdvisory();
+    await publicAdvisory.loadPublicAdvisory();
     await otherData.loadParkActivityXref();
     await otherData.loadParkFacilityXref();
     await otherData.loadParkFireZoneXref();

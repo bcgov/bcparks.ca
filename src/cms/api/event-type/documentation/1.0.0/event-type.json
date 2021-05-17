@@ -535,7 +535,7 @@
           "id": {
             "type": "string"
           },
-          "EventType": {
+          "eventType": {
             "type": "string"
           },
           "published_at": {
@@ -546,7 +546,7 @@
       },
       "NewEvent-type": {
         "properties": {
-          "EventType": {
+          "eventType": {
             "type": "string"
           },
           "published_at": {
