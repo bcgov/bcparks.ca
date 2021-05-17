@@ -544,13 +544,13 @@
             "type": "string"
           },
           "latitude": {
-            "type": "string"
+            "type": "number"
           },
           "longitude": {
-            "type": "string"
+            "type": "number"
           },
           "mapZoom": {
-            "type": "string"
+            "type": "integer"
           },
           "orcsSiteNumber": {
             "type": "string"
@@ -611,27 +611,30 @@
                 ]
               },
               "latitude": {
-                "type": "string"
+                "type": "number"
               },
               "longitude": {
-                "type": "string"
+                "type": "number"
               },
               "mapZoom": {
-                "type": "string"
+                "type": "integer"
               },
-              "sites": {
+              "isDayUsePass": {
+                "type": "boolean"
+              },
+              "isFogZone": {
+                "type": "boolean"
+              },
+              "featureId": {
+                "type": "integer"
+              },
+              "managementAreas": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "dayUsePass": {
-                "type": "boolean"
-              },
-              "fogZone": {
-                "type": "boolean"
-              },
-              "fireZones": {
+              "sites": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -649,10 +652,7 @@
                   "type": "string"
                 }
               },
-              "featureId": {
-                "type": "integer"
-              },
-              "managementAreas": {
+              "fireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -701,13 +701,13 @@
             "type": "string"
           },
           "latitude": {
-            "type": "string"
+            "type": "number"
           },
           "longitude": {
-            "type": "string"
+            "type": "number"
           },
           "mapZoom": {
-            "type": "string"
+            "type": "integer"
           },
           "orcsSiteNumber": {
             "type": "string"

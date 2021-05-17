@@ -30,13 +30,13 @@
       "type": "string"
     },
     "latitude": {
-      "type": "string"
+      "type": "float"
     },
     "longitude": {
-      "type": "string"
+      "type": "float"
     },
     "mapZoom": {
-      "type": "string"
+      "type": "integer"
     },
     "orcsSiteNumber": {
       "type": "string",

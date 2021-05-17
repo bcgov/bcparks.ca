@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "05/14/2021 1:06:21 PM"
+    "x-generation-date": "05/17/2021 11:00:56 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -13981,7 +13981,7 @@
           "note": {
             "type": "string"
           },
-          "active": {
+          "isActive": {
             "type": "boolean"
           },
           "published_at": {
@@ -14013,7 +14013,7 @@
           "note": {
             "type": "string"
           },
-          "active": {
+          "isActive": {
             "type": "boolean"
           },
           "published_at": {
@@ -14277,7 +14277,7 @@
           "note": {
             "type": "string"
           },
-          "active": {
+          "isActive": {
             "type": "boolean"
           },
           "published_at": {
@@ -14309,7 +14309,7 @@
           "note": {
             "type": "string"
           },
-          "active": {
+          "isActive": {
             "type": "boolean"
           },
           "published_at": {
@@ -14811,27 +14811,30 @@
                 ]
               },
               "latitude": {
-                "type": "string"
+                "type": "number"
               },
               "longitude": {
-                "type": "string"
+                "type": "number"
               },
               "mapZoom": {
-                "type": "string"
+                "type": "integer"
               },
-              "sites": {
+              "isDayUsePass": {
+                "type": "boolean"
+              },
+              "isFogZone": {
+                "type": "boolean"
+              },
+              "featureId": {
+                "type": "integer"
+              },
+              "managementAreas": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "dayUsePass": {
-                "type": "boolean"
-              },
-              "fogZone": {
-                "type": "boolean"
-              },
-              "fireZones": {
+              "sites": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -14849,10 +14852,7 @@
                   "type": "string"
                 }
               },
-              "featureId": {
-                "type": "integer"
-              },
-              "managementAreas": {
+              "fireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -15005,13 +15005,60 @@
             ]
           },
           "latitude": {
-            "type": "string"
+            "type": "number"
           },
           "longitude": {
-            "type": "string"
+            "type": "number"
           },
           "mapZoom": {
-            "type": "string"
+            "type": "integer"
+          },
+          "isDayUsePass": {
+            "type": "boolean"
+          },
+          "isFogZone": {
+            "type": "boolean"
+          },
+          "featureId": {
+            "type": "integer"
+          },
+          "managementAreas": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "managementAreaNumber"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "managementAreaNumber": {
+                  "type": "integer"
+                },
+                "managementAreaName": {
+                  "type": "string"
+                },
+                "section": {
+                  "type": "string"
+                },
+                "protectedArea": {
+                  "type": "string"
+                },
+                "region": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "sites": {
             "type": "array",
@@ -15043,58 +15090,18 @@
                   "type": "string"
                 },
                 "latitude": {
-                  "type": "string"
+                  "type": "number"
                 },
                 "longitude": {
-                  "type": "string"
+                  "type": "number"
                 },
                 "mapZoom": {
-                  "type": "string"
+                  "type": "integer"
                 },
                 "orcsSiteNumber": {
                   "type": "string"
                 },
                 "protectedArea": {
-                  "type": "string"
-                },
-                "published_at": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "dayUsePass": {
-            "type": "boolean"
-          },
-          "fogZone": {
-            "type": "boolean"
-          },
-          "fireZones": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "fireZoneNumber": {
-                  "type": "integer"
-                },
-                "fireZoneName": {
-                  "type": "string"
-                },
-                "headquartersCityName": {
-                  "type": "string"
-                },
-                "fireCentre": {
                   "type": "string"
                 },
                 "published_at": {
@@ -15140,7 +15147,7 @@
                 "note": {
                   "type": "string"
                 },
-                "active": {
+                "isActive": {
                   "type": "boolean"
                 },
                 "published_at": {
@@ -15186,7 +15193,7 @@
                 "note": {
                   "type": "string"
                 },
-                "active": {
+                "isActive": {
                   "type": "boolean"
                 },
                 "published_at": {
@@ -15201,33 +15208,26 @@
               }
             }
           },
-          "featureId": {
-            "type": "integer"
-          },
-          "managementAreas": {
+          "fireZones": {
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "managementAreaNumber"
+                "id"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "managementAreaNumber": {
+                "fireZoneNumber": {
                   "type": "integer"
                 },
-                "managementAreaName": {
+                "fireZoneName": {
                   "type": "string"
                 },
-                "section": {
+                "headquartersCityName": {
                   "type": "string"
                 },
-                "protectedArea": {
-                  "type": "string"
-                },
-                "region": {
+                "fireCentre": {
                   "type": "string"
                 },
                 "published_at": {
@@ -15304,27 +15304,30 @@
             ]
           },
           "latitude": {
-            "type": "string"
+            "type": "number"
           },
           "longitude": {
-            "type": "string"
+            "type": "number"
           },
           "mapZoom": {
-            "type": "string"
+            "type": "integer"
           },
-          "sites": {
+          "isDayUsePass": {
+            "type": "boolean"
+          },
+          "isFogZone": {
+            "type": "boolean"
+          },
+          "featureId": {
+            "type": "integer"
+          },
+          "managementAreas": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "dayUsePass": {
-            "type": "boolean"
-          },
-          "fogZone": {
-            "type": "boolean"
-          },
-          "fireZones": {
+          "sites": {
             "type": "array",
             "items": {
               "type": "string"
@@ -15342,10 +15345,7 @@
               "type": "string"
             }
           },
-          "featureId": {
-            "type": "integer"
-          },
-          "managementAreas": {
+          "fireZones": {
             "type": "array",
             "items": {
               "type": "string"
@@ -15381,9 +15381,9 @@
             "type": "string"
           },
           "dcTicketNumber": {
-            "type": "integer"
+            "type": "string"
           },
-          "alert": {
+          "isSafetyRelated": {
             "type": "boolean"
           },
           "listingRank": {
@@ -15517,6 +15517,46 @@
               }
             }
           },
+          "advisoryStatus": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "advisoryStatus": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "isReservationsAffected": {
+            "type": "boolean"
+          },
+          "isAdvisoryDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEffectiveDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEndDateDisplayed": {
+            "type": "boolean"
+          },
+          "isUpdatedDateDisplayed": {
+            "type": "boolean"
+          },
           "protectedAreas": {
             "type": "array",
             "items": {
@@ -15575,27 +15615,30 @@
                   ]
                 },
                 "latitude": {
-                  "type": "string"
+                  "type": "number"
                 },
                 "longitude": {
-                  "type": "string"
+                  "type": "number"
                 },
                 "mapZoom": {
-                  "type": "string"
+                  "type": "integer"
                 },
-                "sites": {
+                "isDayUsePass": {
+                  "type": "boolean"
+                },
+                "isFogZone": {
+                  "type": "boolean"
+                },
+                "featureId": {
+                  "type": "integer"
+                },
+                "managementAreas": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
-                "dayUsePass": {
-                  "type": "boolean"
-                },
-                "fogZone": {
-                  "type": "boolean"
-                },
-                "fireZones": {
+                "sites": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -15613,10 +15656,7 @@
                     "type": "string"
                   }
                 },
-                "featureId": {
-                  "type": "integer"
-                },
-                "managementAreas": {
+                "fireZones": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -15631,31 +15671,6 @@
                 "updated_by": {
                   "type": "string"
                 }
-              }
-            }
-          },
-          "advisoryStatus": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "advisoryStatus": {
-                "type": "string"
-              },
-              "code": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
               }
             }
           },
@@ -15841,21 +15856,6 @@
               }
             }
           },
-          "reservationsAffected": {
-            "type": "boolean"
-          },
-          "displayAdvisoryDate": {
-            "type": "boolean"
-          },
-          "displayEffectiveDate": {
-            "type": "boolean"
-          },
-          "displayEndDate": {
-            "type": "boolean"
-          },
-          "displayUpdatedDate": {
-            "type": "boolean"
-          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -15874,9 +15874,9 @@
             "type": "string"
           },
           "dcTicketNumber": {
-            "type": "integer"
+            "type": "string"
           },
-          "alert": {
+          "isSafetyRelated": {
             "type": "boolean"
           },
           "listingRank": {
@@ -15944,14 +15944,29 @@
           "urgency": {
             "type": "string"
           },
+          "advisoryStatus": {
+            "type": "string"
+          },
+          "isReservationsAffected": {
+            "type": "boolean"
+          },
+          "isAdvisoryDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEffectiveDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEndDateDisplayed": {
+            "type": "boolean"
+          },
+          "isUpdatedDateDisplayed": {
+            "type": "boolean"
+          },
           "protectedAreas": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          },
-          "advisoryStatus": {
-            "type": "string"
           },
           "links": {
             "type": "array",
@@ -15982,21 +15997,6 @@
             "items": {
               "type": "string"
             }
-          },
-          "reservationsAffected": {
-            "type": "boolean"
-          },
-          "displayAdvisoryDate": {
-            "type": "boolean"
-          },
-          "displayEffectiveDate": {
-            "type": "boolean"
-          },
-          "displayEndDate": {
-            "type": "boolean"
-          },
-          "displayUpdatedDate": {
-            "type": "boolean"
           },
           "published_at": {
             "type": "string",
@@ -16301,13 +16301,13 @@
             "type": "string"
           },
           "latitude": {
-            "type": "string"
+            "type": "number"
           },
           "longitude": {
-            "type": "string"
+            "type": "number"
           },
           "mapZoom": {
-            "type": "string"
+            "type": "integer"
           },
           "orcsSiteNumber": {
             "type": "string"
@@ -16368,27 +16368,30 @@
                 ]
               },
               "latitude": {
-                "type": "string"
+                "type": "number"
               },
               "longitude": {
-                "type": "string"
+                "type": "number"
               },
               "mapZoom": {
-                "type": "string"
+                "type": "integer"
               },
-              "sites": {
+              "isDayUsePass": {
+                "type": "boolean"
+              },
+              "isFogZone": {
+                "type": "boolean"
+              },
+              "featureId": {
+                "type": "integer"
+              },
+              "managementAreas": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "dayUsePass": {
-                "type": "boolean"
-              },
-              "fogZone": {
-                "type": "boolean"
-              },
-              "fireZones": {
+              "sites": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -16406,10 +16409,7 @@
                   "type": "string"
                 }
               },
-              "featureId": {
-                "type": "integer"
-              },
-              "managementAreas": {
+              "fireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -16458,13 +16458,13 @@
             "type": "string"
           },
           "latitude": {
-            "type": "string"
+            "type": "number"
           },
           "longitude": {
-            "type": "string"
+            "type": "number"
           },
           "mapZoom": {
-            "type": "string"
+            "type": "integer"
           },
           "orcsSiteNumber": {
             "type": "string"

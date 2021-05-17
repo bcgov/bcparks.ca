@@ -1,6 +1,6 @@
 "use strict";
 const { sanitizeEntity } = require("strapi-utils");
-const custom = require("../custom/protected-area-custom");
+const custom = require("../functions/protected-area-custom");
 
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#core-controllers)

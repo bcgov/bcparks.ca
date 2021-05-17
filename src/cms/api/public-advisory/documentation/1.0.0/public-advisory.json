@@ -545,9 +545,9 @@
             "type": "string"
           },
           "dcTicketNumber": {
-            "type": "integer"
+            "type": "string"
           },
-          "alert": {
+          "isSafetyRelated": {
             "type": "boolean"
           },
           "listingRank": {
@@ -681,6 +681,46 @@
               }
             }
           },
+          "advisoryStatus": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "advisoryStatus": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "isReservationsAffected": {
+            "type": "boolean"
+          },
+          "isAdvisoryDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEffectiveDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEndDateDisplayed": {
+            "type": "boolean"
+          },
+          "isUpdatedDateDisplayed": {
+            "type": "boolean"
+          },
           "protectedAreas": {
             "type": "array",
             "items": {
@@ -739,27 +779,30 @@
                   ]
                 },
                 "latitude": {
-                  "type": "string"
+                  "type": "number"
                 },
                 "longitude": {
-                  "type": "string"
+                  "type": "number"
                 },
                 "mapZoom": {
-                  "type": "string"
+                  "type": "integer"
                 },
-                "sites": {
+                "isDayUsePass": {
+                  "type": "boolean"
+                },
+                "isFogZone": {
+                  "type": "boolean"
+                },
+                "featureId": {
+                  "type": "integer"
+                },
+                "managementAreas": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
-                "dayUsePass": {
-                  "type": "boolean"
-                },
-                "fogZone": {
-                  "type": "boolean"
-                },
-                "fireZones": {
+                "sites": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -777,10 +820,7 @@
                     "type": "string"
                   }
                 },
-                "featureId": {
-                  "type": "integer"
-                },
-                "managementAreas": {
+                "fireZones": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -795,31 +835,6 @@
                 "updated_by": {
                   "type": "string"
                 }
-              }
-            }
-          },
-          "advisoryStatus": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "advisoryStatus": {
-                "type": "string"
-              },
-              "code": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
               }
             }
           },
@@ -1005,21 +1020,6 @@
               }
             }
           },
-          "reservationsAffected": {
-            "type": "boolean"
-          },
-          "displayAdvisoryDate": {
-            "type": "boolean"
-          },
-          "displayEffectiveDate": {
-            "type": "boolean"
-          },
-          "displayEndDate": {
-            "type": "boolean"
-          },
-          "displayUpdatedDate": {
-            "type": "boolean"
-          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -1038,9 +1038,9 @@
             "type": "string"
           },
           "dcTicketNumber": {
-            "type": "integer"
+            "type": "string"
           },
-          "alert": {
+          "isSafetyRelated": {
             "type": "boolean"
           },
           "listingRank": {
@@ -1108,14 +1108,29 @@
           "urgency": {
             "type": "string"
           },
+          "advisoryStatus": {
+            "type": "string"
+          },
+          "isReservationsAffected": {
+            "type": "boolean"
+          },
+          "isAdvisoryDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEffectiveDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEndDateDisplayed": {
+            "type": "boolean"
+          },
+          "isUpdatedDateDisplayed": {
+            "type": "boolean"
+          },
           "protectedAreas": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          },
-          "advisoryStatus": {
-            "type": "string"
           },
           "links": {
             "type": "array",
@@ -1146,21 +1161,6 @@
             "items": {
               "type": "string"
             }
-          },
-          "reservationsAffected": {
-            "type": "boolean"
-          },
-          "displayAdvisoryDate": {
-            "type": "boolean"
-          },
-          "displayEffectiveDate": {
-            "type": "boolean"
-          },
-          "displayEndDate": {
-            "type": "boolean"
-          },
-          "displayUpdatedDate": {
-            "type": "boolean"
           },
           "published_at": {
             "type": "string",

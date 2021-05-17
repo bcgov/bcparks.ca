@@ -119,9 +119,9 @@ const loadSite = async (site, orcNumber) => {
             .format()
         : null,
       url: "",
-      latitude: "",
-      longitude: "",
-      mapZoom: "",
+      latitude: null,
+      longitude: null,
+      mapZoom: null,
     })
   )
     .catch(() => {
@@ -169,9 +169,9 @@ const loadProtectedLandData = async (protectedLandData) => {
         : null,
       repealedDate: null,
       url: "",
-      latitude: "",
-      longitude: "",
-      mapZoom: "",
+      latitude: null,
+      longitude: null,
+      mapZoom: null,
       sites: [...sites],
       managementAreas: [...managementAreas],
     });

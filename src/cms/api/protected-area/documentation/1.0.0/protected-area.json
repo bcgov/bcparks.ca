@@ -701,13 +701,60 @@
             ]
           },
           "latitude": {
-            "type": "string"
+            "type": "number"
           },
           "longitude": {
-            "type": "string"
+            "type": "number"
           },
           "mapZoom": {
-            "type": "string"
+            "type": "integer"
+          },
+          "isDayUsePass": {
+            "type": "boolean"
+          },
+          "isFogZone": {
+            "type": "boolean"
+          },
+          "featureId": {
+            "type": "integer"
+          },
+          "managementAreas": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "managementAreaNumber"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "managementAreaNumber": {
+                  "type": "integer"
+                },
+                "managementAreaName": {
+                  "type": "string"
+                },
+                "section": {
+                  "type": "string"
+                },
+                "protectedArea": {
+                  "type": "string"
+                },
+                "region": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "sites": {
             "type": "array",
@@ -739,58 +786,18 @@
                   "type": "string"
                 },
                 "latitude": {
-                  "type": "string"
+                  "type": "number"
                 },
                 "longitude": {
-                  "type": "string"
+                  "type": "number"
                 },
                 "mapZoom": {
-                  "type": "string"
+                  "type": "integer"
                 },
                 "orcsSiteNumber": {
                   "type": "string"
                 },
                 "protectedArea": {
-                  "type": "string"
-                },
-                "published_at": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "dayUsePass": {
-            "type": "boolean"
-          },
-          "fogZone": {
-            "type": "boolean"
-          },
-          "fireZones": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "fireZoneNumber": {
-                  "type": "integer"
-                },
-                "fireZoneName": {
-                  "type": "string"
-                },
-                "headquartersCityName": {
-                  "type": "string"
-                },
-                "fireCentre": {
                   "type": "string"
                 },
                 "published_at": {
@@ -836,7 +843,7 @@
                 "note": {
                   "type": "string"
                 },
-                "active": {
+                "isActive": {
                   "type": "boolean"
                 },
                 "published_at": {
@@ -882,7 +889,7 @@
                 "note": {
                   "type": "string"
                 },
-                "active": {
+                "isActive": {
                   "type": "boolean"
                 },
                 "published_at": {
@@ -897,33 +904,26 @@
               }
             }
           },
-          "featureId": {
-            "type": "integer"
-          },
-          "managementAreas": {
+          "fireZones": {
             "type": "array",
             "items": {
               "required": [
-                "id",
-                "managementAreaNumber"
+                "id"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "managementAreaNumber": {
+                "fireZoneNumber": {
                   "type": "integer"
                 },
-                "managementAreaName": {
+                "fireZoneName": {
                   "type": "string"
                 },
-                "section": {
+                "headquartersCityName": {
                   "type": "string"
                 },
-                "protectedArea": {
-                  "type": "string"
-                },
-                "region": {
+                "fireCentre": {
                   "type": "string"
                 },
                 "published_at": {
@@ -1000,27 +1000,30 @@
             ]
           },
           "latitude": {
-            "type": "string"
+            "type": "number"
           },
           "longitude": {
-            "type": "string"
+            "type": "number"
           },
           "mapZoom": {
-            "type": "string"
+            "type": "integer"
           },
-          "sites": {
+          "isDayUsePass": {
+            "type": "boolean"
+          },
+          "isFogZone": {
+            "type": "boolean"
+          },
+          "featureId": {
+            "type": "integer"
+          },
+          "managementAreas": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "dayUsePass": {
-            "type": "boolean"
-          },
-          "fogZone": {
-            "type": "boolean"
-          },
-          "fireZones": {
+          "sites": {
             "type": "array",
             "items": {
               "type": "string"
@@ -1038,10 +1041,7 @@
               "type": "string"
             }
           },
-          "featureId": {
-            "type": "integer"
-          },
-          "managementAreas": {
+          "fireZones": {
             "type": "array",
             "items": {
               "type": "string"

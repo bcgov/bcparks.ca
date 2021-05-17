@@ -32,7 +32,7 @@
     "note": {
       "type": "string"
     },
-    "active": {
+    "isActive": {
       "type": "boolean"
     }
   }

@@ -19,7 +19,6 @@ const isFirstRun = async () => {
 const loadData = async () => {
   try {
     await parData.loadParData();
-    await permission.createApiToken();
     await otherData.loadBusinessHours();
     await otherData.loadStatutoryHolidays();
 

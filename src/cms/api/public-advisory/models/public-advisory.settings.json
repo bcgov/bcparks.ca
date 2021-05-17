@@ -21,16 +21,16 @@
       "type": "text"
     },
     "dcTicketNumber": {
-      "type": "biginteger"
+      "type": "text"
     },
-    "alert": {
+    "isSafetyRelated": {
       "type": "boolean"
     },
     "listingRank": {
       "type": "integer"
     },
     "note": {
-      "type": "string"
+      "type": "text"
     },
     "latitude": {
       "type": "float"
@@ -83,11 +83,26 @@
     "urgency": {
       "model": "urgency"
     },
-    "protectedAreas": {
-      "collection": "protected-area"
-    },
     "advisoryStatus": {
       "model": "advisory-status"
+    },
+    "isReservationsAffected": {
+      "type": "boolean"
+    },
+    "isAdvisoryDateDisplayed": {
+      "type": "boolean"
+    },
+    "isEffectiveDateDisplayed": {
+      "type": "boolean"
+    },
+    "isEndDateDisplayed": {
+      "type": "boolean"
+    },
+    "isUpdatedDateDisplayed": {
+      "type": "boolean"
+    },
+    "protectedAreas": {
+      "collection": "protected-area"
     },
     "links": {
       "collection": "link"
@@ -103,21 +118,6 @@
     },
     "fireZones": {
       "collection": "fire-zone"
-    },
-    "reservationsAffected": {
-      "type": "boolean"
-    },
-    "displayAdvisoryDate": {
-      "type": "boolean"
-    },
-    "displayEffectiveDate": {
-      "type": "boolean"
-    },
-    "displayEndDate": {
-      "type": "boolean"
-    },
-    "displayUpdatedDate": {
-      "type": "boolean"
     }
   }
 }

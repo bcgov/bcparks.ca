@@ -198,7 +198,7 @@ const loadParkFacilityXref = async () => {
       let facilities = [];
       for (const item of xref.facilityId) {
         const facility = await strapi.services["facility"].findOne({
-          FacilityNumber: item.facilityId,
+          facilityNumber: item.facilityId,
         });
         facilities = [...facilities, facility];
       }
@@ -257,7 +257,7 @@ const loadParkFogZoneXref = async () => {
       orcs: data.orcs,
     });
     if (protectedArea) {
-      protectedArea.fogZone = data.fogZone === "Y" ? true : false;
+      protectedArea.isFogZone = data.fogZone === "Y" ? true : false;
 
       strapi
         .query("protected-area")

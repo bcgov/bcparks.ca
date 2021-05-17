@@ -55,7 +55,7 @@ const loadPublicAdvisory = async () => {
         data.eventType = eventTypes.find((d) => d.eventType === data.eventType);
         data.urgency = urgencies.find((d) => d.urgency === data.urgency);
 
-        data.dcTicketNumber = +data.dcTicketNumber;
+        data.dcTicketNumber = data.dcTicketNumber;
         data.listingRank = +data.listingRank;
         data.latitude = +data.latitude;
         data.longitude = +data.longitude;
