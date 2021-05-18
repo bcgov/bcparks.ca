@@ -25,6 +25,7 @@ parameters:
   value: strapi
 - name: CMS_URL
   required: true
+  value: cms
 - name: API_POD
   required: true
   value: api
