@@ -164,8 +164,8 @@ jobs:
         run: |
           oc process -f infrastructure/bcparks-app.yml \
             -p NAME=bcparks \
-            -p OC_NAMESPACE=61d198 \
-            -p OC_APP=dev \
+            -p OC_NAMESPACE=${{secrets.OPENSHIFT_LICENSE_PLATE}} \
+            -p OC_APP=${{secrets.OC_APP}} \
             -p FRONTEND_POD=web \
             -p FRONTEND_URL=web \
             -p CMS_POD=strapi \
