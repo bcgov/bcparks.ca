@@ -354,7 +354,7 @@ objects:
           - name: ${DB_POD}-run
             emptyDir: {}
   status: {}
-#   Document Manager (backend) Persistent Volume Claim
+#   Database Persistent Volume Claim
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
