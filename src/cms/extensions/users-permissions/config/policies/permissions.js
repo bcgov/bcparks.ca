@@ -22,13 +22,13 @@ module.exports = async (ctx, next) => {
         // find the token entry that match the token from the request
         const [token] = await strapi
           .query("token")
-          .find({ Token: ctx.request.query.token });
+          .find({ token: ctx.request.query.token });
 
         if (!token) {
           throw new Error(`Invalid token: This token doesn't exist`);
         } else {
-          if (token.User && typeof token.Token === "string") {
-            id = token.User.id;
+          if (token.user && typeof token.token === "string") {
+            id = token.user.id;
           }
           isAdmin = false;
         }

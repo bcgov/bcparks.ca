@@ -281,8 +281,7 @@ const loadBusinessHours = async () => {
 const loadStatutoryHolidays = async () => {
   try {
     strapi.log.info("Setting Empty Statutory Holidays..");
-    const data = JSON.parse("{}");
-    strapi.services["statutory-holidays"].createOrUpdate(data);
+    strapi.services["statutory-holidays"].createOrUpdate("{}");
   } catch (error) {
     strapi.log.error(error);
   }

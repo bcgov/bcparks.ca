@@ -8,7 +8,6 @@ export function validateOptionalNumber(field) {
   field.setError("");
   if (field.value && isNaN(field.value)) {
     field.setError("Please enter a valid number");
-    console.log(field);
     return false;
   }
   return true;
