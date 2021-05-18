@@ -171,7 +171,7 @@ jobs:
             -p CMS_POD=strapi \
             -p CMS_URL=web \
             -p API_POD=api \
-            -p API_URL=api \      
+            -p API_URL=api \
             -p DB_POD=db \
             -p STAGING_POD=staging \
             -n ${{secrets.OPENSHIFT_LICENSE_PLATE}}-${{secrets.OC_APP}} | oc apply -n ${{secrets.OPENSHIFT_LICENSE_PLATE}}-${{secrets.OC_APP}} -f -
