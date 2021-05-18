@@ -1,0 +1,121 @@
+.button-row {
+  text-align: center !important;
+  align-items: center !important;
+}
+
+.ad-label {
+  text-align: right;
+  font-weight: bold;
+  color: #234075 !important;
+  vertical-align: middle !important;
+}
+
+.ad-btn-group .bcgov-button {
+  margin-right: 5px !important;
+}
+
+.ad-field {
+  padding: 10px;
+  border-radius: 4px !important;
+}
+
+.ad-flex,
+.ad-link-flex {
+  display: flex;
+}
+
+.ad-link-close {
+  margin-left: auto !important;
+  margin-bottom: 5px !important;
+}
+
+.ad-flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+.ad-flex-date {
+  display: flex;
+}
+
+#ad-confirm {
+  text-align: center !important;
+  line-height: 30px !important;
+  color: #234075 !important;
+}
+
+#ad-confirm span {
+  font-weight: bold;
+}
+
+.ad-interval-box .fa-chevron-down {
+  top: 15px !important;
+  right: 0px !important;
+}
+
+.row {
+  padding: 5px 0px;
+}
+
+.ad-af-hour-box {
+  margin-top: 10px !important;
+}
+
+.ad-af-hour-box p {
+  margin-bottom: 0px !important;
+}
+
+.ad-interval-select {
+  width: 100% !important;
+  margin-left: 0px !important;
+}
+
+.ad-link-select {
+  width: 60% !important;
+}
+
+.ad-link-group div,
+.ad-link-select {
+  padding-bottom: 5px !important;
+}
+
+.ad-auto-margin {
+  margin: auto !important;
+}
+
+.ad-add-link {
+  border: 1px solid #c1dbee;
+  padding: 5px !important;
+  border-radius: 4px;
+  text-align: center !important;
+}
+
+.ad-btn-row {
+  display: table-row !important;
+}
+
+.ad-date-label {
+  min-width: 115px !important;
+}
+.ad-form-error {
+  text-align: center !important;
+}
+
+@media (max-width: 767.98px) {
+  .ad-label {
+    text-align: left !important;
+  }
+  .ad-flex,
+  .ad-btn-group {
+    display: block !important;
+  }
+  .ad-btn-group button {
+    width: 100% !important;
+    margin-top: 5px !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .ad-duration-label {
+    min-width: 115px !important;
+  }
+}

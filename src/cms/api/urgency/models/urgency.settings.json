@@ -11,13 +11,13 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "Urgency": {
+    "urgency": {
       "type": "string"
     },
-    "Code": {
+    "code": {
       "type": "string"
     },
-    "Sequence": {
+    "sequence": {
       "type": "integer"
     }
   }

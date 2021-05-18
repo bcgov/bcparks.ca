@@ -25,6 +25,7 @@ parameters:
   value: strapi
 - name: CMS_URL
   required: true
+  value: cms
 - name: API_POD
   required: true
   value: api
@@ -48,6 +49,7 @@ parameters:
 - name: URL_STUB
   value: "-61d198-dev.apps.silver.devops.gov.bc.ca"
   required: false
+
 objects:
 ### Frontend
 #   Deployment Config
@@ -348,10 +350,28 @@ objects:
         restartPolicy: Always
         volumes:
           - name: ${DB_POD}-data
-            emptyDir: {}
+            persistentVolumeClaim:
+              claimName: '${DB_POD}-data'
           - name: ${DB_POD}-run
             emptyDir: {}
   status: {}
+#   Database Persistent Volume Claim
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: ${DB_POD}-data
+    namespace: ${OC_NAMESPACE}-${OC_APP}
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 4Gi
+  status:
+    accessModes:
+      - ReadWriteOnce
+    capacity:
+      storage: 4Gi
 #   DB Service
 - apiVersion: v1
   kind: Service

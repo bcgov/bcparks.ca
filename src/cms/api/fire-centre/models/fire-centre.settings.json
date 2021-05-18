@@ -11,15 +11,15 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "FireCentreNumber": {
+    "fireCentreNumber": {
       "type": "integer"
     },
-    "FireCentreName": {
+    "fireCentreName": {
       "type": "string"
     },
-    "fire_zones": {
+    "fireZones": {
       "collection": "fire-zone",
-      "via": "fire_centre"
+      "via": "fireCentre"
     }
   }
 }

@@ -11,25 +11,25 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "ManagementAreaNumber": {
+    "managementAreaNumber": {
       "type": "integer",
       "unique": true,
       "required": true
     },
-    "ManagementAreaName": {
+    "managementAreaName": {
       "type": "string"
     },
-    "Section": {
+    "section": {
       "model": "section",
-      "via": "ManagementAreas"
+      "via": "managementAreas"
     },
-    "Region": {
-      "model": "region",
-      "via": "ManagementArea"
-    },
-    "ProtectedArea": {
-      "via": "ManagementAreas",
+    "protectedArea": {
+      "via": "managementAreas",
       "model": "protected-area"
+    },
+    "region": {
+      "via": "managementAreas",
+      "model": "region"
     }
   }
 }

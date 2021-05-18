@@ -535,8 +535,11 @@
           "id": {
             "type": "string"
           },
-          "AccessStatus": {
+          "accessStatus": {
             "type": "string"
+          },
+          "precedence": {
+            "type": "integer"
           },
           "published_at": {
             "type": "string",
@@ -546,8 +549,11 @@
       },
       "NewAccess-status": {
         "properties": {
-          "AccessStatus": {
+          "accessStatus": {
             "type": "string"
+          },
+          "precedence": {
+            "type": "integer"
           },
           "published_at": {
             "type": "string",

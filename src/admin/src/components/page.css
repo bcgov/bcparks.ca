@@ -21,6 +21,32 @@
   justify-content: space-between;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
+.fileContainer {
+  box-shadow: none !important;
+}
+
+.fileContainer .deleteImage {
+  background: #234075 !important;
+  font-size: 12px !important;
+  line-height: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.warningIcon {
+  color: #e3a82b !important;
+}
+
+.checkIcon {
+  color: #02d58d !important;
+  width: 2em !important;
+  height: 2em !important;
+}
+
 .bcgov-normal-blue {
   color: white !important;
   font-weight: 700 !important;
@@ -89,11 +115,7 @@
   border-radius: 5px !important;
 }
 
-.bcgov-editable-white,
-.bcgov-text-input,
-.bcgov-dropdown,
-.react-datepicker-wrapper input {
-  /* background: #e3eaf8 0% 0% no-repeat padding-box !important; */
+.bcgov-datepicker-wrapper input {
   opacity: 1 !important;
   color: #234075 !important;
   padding: 10px !important;
@@ -101,16 +123,72 @@
   width: 100% !important;
   margin: 0px !important;
   border-radius: 4px !important;
-}
-
-.react-datepicker-wrapper input {
   background: #fff !important;
-  border-radius: 4px !important;
   text-align: center !important;
-  margin-left: 0 !important;
 }
 
-.react-datepicker-wrapper {
+.MuiOutlinedInput-multiline {
+  padding: 0px !important;
+}
+
+.MuiInputBase-input {
+  padding: 10px !important;
+  color: #234075 !important;
+}
+
+.MuiInputBase-input::placeholder {
+  color: #000000 !important;
+}
+
+.bcgov-datepicker-wrapper input:hover,
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #adadad !important;
+}
+
+.div-btn:focus,
+.bcgov-datepicker-wrapper input:focus {
+  border: 2px solid #2684ff !important;
+}
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #2684ff !important;
+}
+
+.MuiSelect-root {
+  color: #234075 !important;
+}
+
+.MuiIconButton-root:hover {
+  background-color: #2340751a !important;
+}
+
+.MuiDialogTitle-root {
+  text-align: right !important;
+  margin-top: -10px !important;
+  padding: 0px !important;
+  color: #234075 !important;
+}
+
+.bcgov-select [class*="-MenuList"] [class*="-option"],
+[class*="-singleValue"] {
+  color: #234075 !important;
+}
+
+.bcgov-select [class*="-placeholder"] {
+  color: #9b9b9b !important;
+}
+
+.MuiRadio-root,
+.MuiCheckbox-root,
+.MuiIconButton-root {
+  color: inherit !important;
+  padding: 0px !important;
+}
+
+.bcgov-input {
+  width: 100% !important;
+}
+
+.bcgov-datepicker-wrapper {
   width: 100% !important;
 }
 
@@ -124,6 +202,10 @@
 .bcgov-dropdown {
   width: 100% !important;
   padding: 8px 25px 8px 15px !important;
+}
+
+.bcgov-select-form {
+  width: 100% !important;
 }
 
 .p10 {
@@ -148,6 +230,10 @@
 
 .mr40 {
   margin-right: 40px !important;
+}
+
+.mrm10 {
+  margin-right: -10px !important;
 }
 
 .txt-center {
@@ -175,6 +261,18 @@
 .MuiInput-underline:before,
 .MuiInput-underline:after {
   border: none !important;
+}
+
+.bcgov-required::after {
+  content: "*";
+  margin-left: 2px !important;
+  margin-right: -10px !important;
+  color: red !important;
+}
+
+.bcgov-datepicker-wrapper-error input,
+.bcgov-select-error [class*="-control"] {
+  border-color: red !important;
 }
 
 @media (max-width: 575.98px) {

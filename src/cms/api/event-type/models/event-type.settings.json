@@ -10,7 +10,7 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "EventType": {
+    "eventType": {
       "type": "string"
     }
   }

@@ -1,5 +1,6 @@
 "use strict";
 const { sanitizeEntity } = require("strapi-utils");
+const custom = require("../functions/protected-area-custom");
 
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#core-controllers)
@@ -8,8 +9,14 @@ const { sanitizeEntity } = require("strapi-utils");
 
 module.exports = {
   async findOne(ctx) {
-    const { ORCS } = ctx.params;
-    const entity = await strapi.services["protected-area"].findOne({ ORCS });
+    const { orcs } = ctx.params;
+    const entity = await strapi.services["protected-area"].findOne({ orcs });
     return sanitizeEntity(entity, { model: strapi.models["protected-area"] });
+  },
+  async names(ctx) {
+    return custom.getProtecteAreaNames(ctx);
+  },
+  async status(ctx) {
+    return custom.getProtecteAreaStatus(ctx);
   },
 };

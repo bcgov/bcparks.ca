@@ -535,78 +535,78 @@
           "id": {
             "type": "string"
           },
-          "AdvisoryNumber": {
+          "advisoryNumber": {
             "type": "integer"
           },
-          "Title": {
+          "title": {
             "type": "string"
           },
-          "Description": {
+          "description": {
             "type": "string"
           },
-          "DCTicketNumber": {
-            "type": "integer"
+          "dcTicketNumber": {
+            "type": "string"
           },
-          "Alert": {
+          "isSafetyRelated": {
             "type": "boolean"
           },
-          "ListingRank": {
+          "listingRank": {
             "type": "integer"
           },
-          "Note": {
+          "note": {
             "type": "string"
           },
-          "Latitude": {
+          "latitude": {
             "type": "number"
           },
-          "Longitude": {
+          "longitude": {
             "type": "number"
           },
-          "MapZoom": {
+          "mapZoom": {
             "type": "integer"
           },
-          "SubmittedBy": {
+          "submittedBy": {
             "type": "string"
           },
-          "CreatedDate": {
+          "createdDate": {
             "type": "string",
             "format": "date-time"
           },
-          "CreatedBy": {
+          "createdBy": {
             "type": "string"
           },
-          "AdvisoryDate": {
+          "advisoryDate": {
             "type": "string",
             "format": "date-time"
           },
-          "EffectiveDate": {
+          "effectiveDate": {
             "type": "string",
             "format": "date-time"
           },
-          "EndDate": {
+          "endDate": {
             "type": "string",
             "format": "date-time"
           },
-          "ExpiryDate": {
+          "expiryDate": {
             "type": "string",
             "format": "date-time"
           },
-          "RemovalDate": {
+          "removalDate": {
             "type": "string",
             "format": "date-time"
           },
-          "UpdatedDate": {
+          "updatedDate": {
             "type": "string",
             "format": "date-time"
           },
-          "ModifiedDate": {
+          "modifiedDate": {
             "type": "string",
             "format": "date-time"
           },
-          "ModifiedBy": {
+          "modifiedBy": {
             "type": "string"
           },
-          "access_status": {
+          "accessStatus": {
             "required": [
               "id"
             ],
@@ -614,8 +614,11 @@
               "id": {
                 "type": "string"
               },
-              "AccessStatus": {
+              "accessStatus": {
                 "type": "string"
+              },
+              "precedence": {
+                "type": "integer"
               },
               "published_at": {
                 "type": "string"
@@ -628,7 +631,7 @@
               }
             }
           },
-          "event_type": {
+          "eventType": {
             "required": [
               "id"
             ],
@@ -636,7 +639,7 @@
               "id": {
                 "type": "string"
               },
-              "EventType": {
+              "eventType": {
                 "type": "string"
               },
               "published_at": {
@@ -658,13 +661,13 @@
               "id": {
                 "type": "string"
               },
-              "Urgency": {
+              "urgency": {
                 "type": "string"
               },
-              "Code": {
+              "code": {
                 "type": "string"
               },
-              "Sequence": {
+              "sequence": {
                 "type": "integer"
               },
               "published_at": {
@@ -678,54 +681,94 @@
               }
             }
           },
-          "protected_areas": {
+          "advisoryStatus": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "advisoryStatus": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "isReservationsAffected": {
+            "type": "boolean"
+          },
+          "isAdvisoryDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEffectiveDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEndDateDisplayed": {
+            "type": "boolean"
+          },
+          "isUpdatedDateDisplayed": {
+            "type": "boolean"
+          },
+          "protectedAreas": {
             "type": "array",
             "items": {
               "required": [
                 "id",
-                "ORCS"
+                "orcs"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "ORCS": {
+                "orcs": {
                   "type": "integer"
                 },
-                "ProtectedAreaName": {
+                "protectedAreaName": {
                   "type": "string"
                 },
-                "TotalArea": {
+                "totalArea": {
                   "type": "number"
                 },
-                "UplandArea": {
+                "uplandArea": {
                   "type": "number"
                 },
-                "MarineArea": {
+                "marineArea": {
                   "type": "number"
                 },
-                "MarineProtectedArea": {
+                "marineProtectedArea": {
                   "type": "string"
                 },
-                "Type": {
+                "type": {
                   "type": "string"
                 },
-                "Class": {
+                "class": {
                   "type": "string"
                 },
-                "EstablishedDate": {
+                "establishedDate": {
                   "type": "string"
                 },
-                "RepealedDate": {
+                "repealedDate": {
                   "type": "string"
                 },
-                "Status": {
+                "status": {
                   "type": "string"
                 },
-                "URL": {
+                "url": {
                   "type": "string"
                 },
-                "TypeCode": {
+                "typeCode": {
                   "type": "string",
                   "enum": [
                     "PK",
@@ -735,34 +778,31 @@
                     "CS"
                   ]
                 },
-                "Latitude": {
-                  "type": "string"
+                "latitude": {
+                  "type": "number"
                 },
-                "Longitude": {
-                  "type": "string"
+                "longitude": {
+                  "type": "number"
                 },
-                "MapZoom": {
-                  "type": "string"
+                "mapZoom": {
+                  "type": "integer"
                 },
-                "Sites": {
+                "isDayUsePass": {
+                  "type": "boolean"
+                },
+                "isFogZone": {
+                  "type": "boolean"
+                },
+                "featureId": {
+                  "type": "integer"
+                },
+                "managementAreas": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
-                "ManagementAreas": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "DayUsePass": {
-                  "type": "boolean"
-                },
-                "FogZone": {
-                  "type": "boolean"
-                },
-                "fire_zones": {
+                "sites": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -780,8 +820,11 @@
                     "type": "string"
                   }
                 },
-                "FeatureId": {
-                  "type": "integer"
+                "fireZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "published_at": {
                   "type": "string"
@@ -795,31 +838,6 @@
               }
             }
           },
-          "advisory_status": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "AdvisoryStatus": {
-                "type": "string"
-              },
-              "Code": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "links": {
             "type": "array",
             "items": {
@@ -830,13 +848,13 @@
                 "id": {
                   "type": "string"
                 },
-                "Title": {
+                "title": {
                   "type": "string"
                 },
-                "URL": {
+                "url": {
                   "type": "string"
                 },
-                "Type": {
+                "type": {
                   "type": "string"
                 },
                 "published_at": {
@@ -856,25 +874,25 @@
             "items": {
               "required": [
                 "id",
-                "RegionNumber"
+                "regionNumber"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "RegionNumber": {
+                "regionNumber": {
                   "type": "integer"
                 },
-                "RegionName": {
+                "regionName": {
                   "type": "string"
                 },
-                "Sections": {
+                "sections": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
-                "ManagementArea": {
+                "managementAreas": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -897,27 +915,27 @@
             "items": {
               "required": [
                 "id",
-                "SectionNumber"
+                "sectionNumber"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "SectionNumber": {
+                "sectionNumber": {
                   "type": "integer"
                 },
-                "SectionName": {
+                "sectionName": {
                   "type": "string"
                 },
-                "ManagementAreas": {
+                "region": {
+                  "type": "string"
+                },
+                "managementAreas": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
-                "Region": {
-                  "type": "string"
-                },
                 "published_at": {
                   "type": "string"
                 },
@@ -930,30 +948,30 @@
               }
             }
           },
-          "management_areas": {
+          "managementAreas": {
             "type": "array",
             "items": {
               "required": [
                 "id",
-                "ManagementAreaNumber"
+                "managementAreaNumber"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
-                "ManagementAreaNumber": {
+                "managementAreaNumber": {
                   "type": "integer"
                 },
-                "ManagementAreaName": {
+                "managementAreaName": {
                   "type": "string"
                 },
-                "Section": {
+                "section": {
                   "type": "string"
                 },
-                "Region": {
+                "protectedArea": {
                   "type": "string"
                 },
-                "ProtectedArea": {
+                "region": {
                   "type": "string"
                 },
                 "published_at": {
@@ -968,7 +986,7 @@
               }
             }
           },
-          "fire_zones": {
+          "fireZones": {
             "type": "array",
             "items": {
               "required": [
@@ -978,16 +996,16 @@
                 "id": {
                   "type": "string"
                 },
-                "FireZoneNumber": {
+                "fireZoneNumber": {
                   "type": "integer"
                 },
-                "FireZoneName": {
+                "fireZoneName": {
                   "type": "string"
                 },
-                "HeadquartersCityName": {
+                "headquartersCityName": {
                   "type": "string"
                 },
-                "fire_centre": {
+                "fireCentre": {
                   "type": "string"
                 },
                 "published_at": {
@@ -1001,21 +1019,6 @@
                 }
               }
             }
-          },
-          "ReservationsAffected": {
-            "type": "boolean"
-          },
-          "DisplayAdvisoryDate": {
-            "type": "boolean"
-          },
-          "DisplayEffectiveDate": {
-            "type": "boolean"
-          },
-          "DisplayEndDate": {
-            "type": "boolean"
-          },
-          "DisplayUpdatedDate": {
-            "type": "boolean"
           },
           "published_at": {
             "type": "string",
@@ -1025,94 +1028,109 @@
       },
       "NewPublic-advisory": {
         "properties": {
-          "AdvisoryNumber": {
+          "advisoryNumber": {
             "type": "integer"
           },
-          "Title": {
+          "title": {
             "type": "string"
           },
-          "Description": {
+          "description": {
             "type": "string"
           },
-          "DCTicketNumber": {
-            "type": "integer"
+          "dcTicketNumber": {
+            "type": "string"
           },
-          "Alert": {
+          "isSafetyRelated": {
             "type": "boolean"
           },
-          "ListingRank": {
+          "listingRank": {
             "type": "integer"
           },
-          "Note": {
+          "note": {
             "type": "string"
           },
-          "Latitude": {
+          "latitude": {
             "type": "number"
           },
-          "Longitude": {
+          "longitude": {
             "type": "number"
           },
-          "MapZoom": {
+          "mapZoom": {
             "type": "integer"
           },
-          "SubmittedBy": {
+          "submittedBy": {
             "type": "string"
           },
-          "CreatedDate": {
+          "createdDate": {
             "type": "string",
             "format": "date-time"
           },
-          "CreatedBy": {
+          "createdBy": {
             "type": "string"
           },
-          "AdvisoryDate": {
+          "advisoryDate": {
             "type": "string",
             "format": "date-time"
           },
-          "EffectiveDate": {
+          "effectiveDate": {
             "type": "string",
             "format": "date-time"
           },
-          "EndDate": {
+          "endDate": {
             "type": "string",
             "format": "date-time"
           },
-          "ExpiryDate": {
+          "expiryDate": {
             "type": "string",
             "format": "date-time"
           },
-          "RemovalDate": {
+          "removalDate": {
             "type": "string",
             "format": "date-time"
           },
-          "UpdatedDate": {
+          "updatedDate": {
             "type": "string",
             "format": "date-time"
           },
-          "ModifiedDate": {
+          "modifiedDate": {
             "type": "string",
             "format": "date-time"
           },
-          "ModifiedBy": {
+          "modifiedBy": {
             "type": "string"
           },
-          "access_status": {
+          "accessStatus": {
             "type": "string"
           },
-          "event_type": {
+          "eventType": {
             "type": "string"
           },
           "urgency": {
             "type": "string"
           },
-          "protected_areas": {
+          "advisoryStatus": {
+            "type": "string"
+          },
+          "isReservationsAffected": {
+            "type": "boolean"
+          },
+          "isAdvisoryDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEffectiveDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEndDateDisplayed": {
+            "type": "boolean"
+          },
+          "isUpdatedDateDisplayed": {
+            "type": "boolean"
+          },
+          "protectedAreas": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          },
-          "advisory_status": {
-            "type": "string"
           },
           "links": {
             "type": "array",
@@ -1132,32 +1150,17 @@
               "type": "string"
             }
           },
-          "management_areas": {
+          "managementAreas": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "fire_zones": {
+          "fireZones": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          },
-          "ReservationsAffected": {
-            "type": "boolean"
-          },
-          "DisplayAdvisoryDate": {
-            "type": "boolean"
-          },
-          "DisplayEffectiveDate": {
-            "type": "boolean"
-          },
-          "DisplayEndDate": {
-            "type": "boolean"
-          },
-          "DisplayUpdatedDate": {
-            "type": "boolean"
           },
           "published_at": {
             "type": "string",

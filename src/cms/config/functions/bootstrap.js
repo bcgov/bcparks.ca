@@ -12,5 +12,5 @@ const initialDataLoad = require("../../data/functions/initialDataLoad");
 
 module.exports = async () => {
   // Load seed data first run
-  initialDataLoad.seedData();
+  await initialDataLoad.seedData();
 };

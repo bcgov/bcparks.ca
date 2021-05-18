@@ -24,8 +24,8 @@ const createApiToken = async () => {
     const apiUser = await createApiUser();
     Promise.resolve(
       strapi.services["token"].create({
-        Token: process.env.API_TOKEN,
-        User: apiUser,
+        token: process.env.API_TOKEN,
+        user: apiUser,
       })
     );
   } catch (error) {
@@ -40,13 +40,11 @@ const findRole = async (role) => {
   return result;
 };
 
-const setDefaultPermissions = async () => {
+const setAuthPermissions = async () => {
   const authRole = await findRole("authenticated");
-
   const authPermissions = await strapi
     .query("permission", "users-permissions")
-    .find({ type: "application", role: authRole.id });
-
+    .find({ type: "application", role: authRole.id, _limit: -1 });
   await Promise.all(
     authPermissions.map((p) =>
       strapi
@@ -54,17 +52,18 @@ const setDefaultPermissions = async () => {
         .update({ id: p.id }, { enabled: true })
     )
   );
+};
 
+const setPublicPermissions = async () => {
   const publicRole = await findRole("public");
-
   const publicPermissions = await strapi
     .query("permission", "users-permissions")
     .find({
       type: "application",
       role: publicRole.id,
-      action_in: ["find", "findone"],
+      action_in: ["find", "findone", "names"],
+      _limit: -1,
     });
-
   await Promise.all(
     publicPermissions.map((p) =>
       strapi
@@ -72,6 +71,11 @@ const setDefaultPermissions = async () => {
         .update({ id: p.id }, { enabled: true })
     )
   );
+};
+
+const setDefaultPermissions = async () => {
+  await setAuthPermissions();
+  await setPublicPermissions();
 };
 
 const createAdmin = async () => {

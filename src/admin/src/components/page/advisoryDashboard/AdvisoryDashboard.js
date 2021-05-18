@@ -1,6 +1,7 @@
 import React, { useState, useEffect, forwardRef } from "react";
 import { cmsAxios } from "../../../axios_config";
 import { Redirect, Link } from "react-router-dom";
+import { useQuery } from "react-query";
 import PropTypes from "prop-types";
 import styles from "./AdvisoryDashboard.css";
 import { Button } from "shared-components/build/components/button/Button";
@@ -38,25 +39,56 @@ import { useKeycloak } from "@react-keycloak/web";
 import Header from "../../composite/header/Header";
 
 export default function AdvisoryDashboard({ page: { setError } }) {
-  const [isLoading, setIsLoading] = useState(true);
   const [toError, setToError] = useState(false);
   const [toHome, setToHome] = useState(false);
   const [toCreate, setToCreate] = useState(false);
-  const [parkNames, setParkNames] = useState([]);
   const { keycloak, initialized } = useKeycloak();
-  const [rows, setRows] = useState([]);
   const [selectedParkId, setSelectedParkId] = useState(0);
 
-  const columns = [
+  const fetchPublicAdvisory = async ({ queryKey }) => {
+    const [, selectedParkId] = queryKey;
+    let parkIdQuery =
+      selectedParkId > 0 ? `&protectedAreas.id=${selectedParkId}` : "";
+
+    const { data } = await cmsAxios.get(
+      `/public-advisories?_publicationState=preview&_sort=updated_at:DESC${parkIdQuery}`
+    );
+    return data;
+  };
+
+  const fetchParkNames = async () => {
+    const { data } = await cmsAxios.get(
+      `/protected-areas/names?_limit=-1&_sort=protectedAreaName`
+    );
+
+    const parkNames = data.map((p) => ({
+      label: p.ProtectedAreaName,
+      value: p.id,
+    }));
+
+    return parkNames;
+  };
+
+  const parkNamesQuery = useQuery("fetchParkNames", fetchParkNames, {
+    staleTime: 10000,
+  });
+
+  const publicAdvisoryQuery = useQuery(
+    ["fetchPublicAdvisory", selectedParkId],
+    fetchPublicAdvisory
+  );
+
+  const tableColumns = [
     {
-      field: "urgency.Urgency",
+      field: "urgency.urgency",
       title: "U",
       headerStyle: {
         width: 10,
       },
       cellStyle: (e, rowData) => {
+        console.log(rowData);
         if (rowData.urgency !== null) {
-          switch (rowData.urgency.Urgency.toLowerCase()) {
+          switch (rowData.urgency.urgency.toLowerCase()) {
             case "low":
               return {
                 borderLeft: "8px solid #06f542",
@@ -83,31 +115,31 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       },
     },
     {
-      field: "advisory_status.AdvisoryStatus",
+      field: "advisoryStatus.advisoryStatus",
       title: "Status",
       cellStyle: {
         textAlign: "center",
       },
       render: (rowData) => (
         <div className="advisory-status">
-          <Tooltip title={rowData.advisory_status.AdvisoryStatus}>
+          <Tooltip title={rowData.advisoryStatus.advisoryStatus}>
             <span>
-              {rowData.advisory_status.Code == "DFT" && (
+              {rowData.advisoryStatus.code === "DFT" && (
                 <EditIcon className="draftIcon" />
               )}
-              {rowData.advisory_status.Code == "INA" && (
+              {rowData.advisoryStatus.code === "INA" && (
                 <WatchLaterIcon className="inactiveIcon" />
               )}
-              {rowData.advisory_status.Code == "ACT" && (
+              {rowData.advisoryStatus.code === "ACT" && (
                 <CheckCircleIcon className="activeIcon" />
               )}
-              {rowData.advisory_status.Code == "APR" && (
+              {rowData.advisoryStatus.code === "APR" && (
                 <ThumbUpIcon className="approvedIcon" />
               )}
-              {rowData.advisory_status.Code == "ARQ" && (
+              {rowData.advisoryStatus.code === "ARQ" && (
                 <InfoIcon className="approvalRequestedIcon" />
               )}
-              {rowData.advisory_status.Code == "PUB" && (
+              {rowData.advisoryStatus.code === "PUB" && (
                 <PublishIcon className="publishedIcon" />
               )}
             </span>
@@ -116,44 +148,42 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       ),
     },
     {
-      field: "AdvisoryDate",
+      field: "advisoryDate",
       title: "Posted Date",
       render: (rowData) => {
-        if (rowData.AdvisoryDate)
-          return <Moment format="MMM DD, YYYY">{rowData.AdvisoryDate}</Moment>;
+        if (rowData.advisoryDate)
+          return <Moment format="YYYY/MM/DD">{rowData.advisoryDate}</Moment>;
       },
     },
     {
-      field: "Title",
+      field: "title",
       title: "Headline",
       headerStyle: { width: 400 },
       cellStyle: { width: 400 },
     },
-    { field: "event_type.EventType", title: "Event Type" },
+    { field: "eventType.eventType", title: "Event Type" },
     {
-      field: "EffectiveDate",
+      field: "effectiveDate",
       title: "Start Date",
       render: (rowData) => {
-        if (rowData.EffectiveDate)
-          return <Moment format="MMM DD, YYYY">{rowData.EffectiveDate}</Moment>;
+        if (rowData.effectiveDate)
+          return <Moment format="YYYY/MM/DD">{rowData.effectiveDate}</Moment>;
       },
     },
     {
-      field: "EndDate",
+      field: "endDate",
       title: "End Date",
       render: (rowData) => {
-        if (rowData.EndDate) {
+        if (rowData.endDate) {
           return (
             <div className="text-nowrap">
-              <Moment format="MMM DD, YYYY">{rowData.EndDate}</Moment>
-              {rowData.ExpiryDate && (
+              <Moment format="YYYY/MM/DD">{rowData.endDate}</Moment>
+              {rowData.expiryDate && (
                 <Tooltip
                   title={
                     <span>
                       Expiry Date:
-                      <Moment format="MMM DD, YYYY">
-                        {rowData.ExpiryDate}
-                      </Moment>
+                      <Moment format="YYYY/MM/DD">{rowData.expiryDate}</Moment>
                     </span>
                   }
                 >
@@ -166,14 +196,14 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       },
     },
     {
-      field: "protected_areas",
+      field: "protectedAreas",
       title: "Associated Park(s)",
       headerStyle: { width: 400 },
       cellStyle: { width: 400 },
       render: (rowData) => {
-        if (rowData.protected_areas != null) {
-          const parks = rowData.protected_areas
-            .map((p) => p.ProtectedAreaName)
+        if (rowData.protectedAreas != null) {
+          const parks = rowData.protectedAreas
+            .map((p) => p.protectedAreaName)
             .join(", ");
           return parks;
         }
@@ -248,59 +278,20 @@ export default function AdvisoryDashboard({ page: { setError } }) {
 
   useEffect(() => {
     if (!initialized) {
-      setIsLoading(true);
     } else if (!keycloak.authenticated) {
       setToError(true);
       setError({
         status: 401,
         message: "Login required",
       });
-    } else {
-      let parkIdQuery = "";
-      if (selectedParkId > 0) {
-        parkIdQuery = `&protected_areas.id=${selectedParkId}`;
-      }
-      Promise.all([
-        cmsAxios.get(`/protectedAreas?_limit=-1&_sort=ProtectedAreaName`),
-        cmsAxios.get(`/public-advisories?_sort=updated_at:DESC${parkIdQuery}`),
-      ])
-        .then((res) => {
-          const parkNamesData = res[0].data;
-          const publicAdvisoryData = res[1].data;
-          const parkNames = parkNamesData.map((p) => ({
-            label: p.ProtectedAreaName,
-            value: p.id,
-          }));
-          setParkNames(["Select a Park", ...parkNames]);
-          setRows(publicAdvisoryData);
-          setIsLoading(false);
-        })
-        .catch((e) => {
-          console.log(e);
-          setToError(true);
-          setError({
-            status: 500,
-            message: "Error occurred",
-          });
-        });
     }
-  }, [
-    setParkNames,
-    setToError,
-    setIsLoading,
-    setError,
-    setRows,
-    selectedParkId,
-    setToHome,
-    keycloak,
-    initialized,
-  ]);
+  }, [setToError, setError, setToHome, keycloak, initialized]);
 
   if (toHome) {
     return <Redirect to="/bcparks" />;
   }
 
-  if (toError) {
+  if (toError || parkNamesQuery.isError || publicAdvisoryQuery.isError) {
     return <Redirect to="/bcparks/error" />;
   }
 
@@ -316,12 +307,12 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         }}
       />
       <br />
-      {isLoading && (
+      {parkNamesQuery.isLoading && (
         <div className="page-loader">
           <Loader page />
         </div>
       )}
-      {!isLoading && (
+      {!parkNamesQuery.isLoading && (
         <div
           className={styles.AdvisoryDashboard}
           data-testid="AdvisoryDashboard"
@@ -343,10 +334,11 @@ export default function AdvisoryDashboard({ page: { setError } }) {
               </div>
             </div>
             <Select
-              options={parkNames}
-              onChange={(e) => setSelectedParkId(e.value)}
+              options={parkNamesQuery.data}
+              onChange={(e) => setSelectedParkId(e ? e.value : 0)}
               placeholder="Select a Park..."
-              className="bg-blue f-select"
+              className="bcgov-select"
+              isClearable
             />
           </div>
           <br />
@@ -355,8 +347,8 @@ export default function AdvisoryDashboard({ page: { setError } }) {
             <MaterialTable
               options={options}
               icons={tableIcons}
-              columns={columns}
-              data={rows}
+              columns={tableColumns}
+              data={publicAdvisoryQuery.data}
               title=""
               components={{
                 Toolbar: (props) => <div></div>,

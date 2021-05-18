@@ -10,7 +10,7 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "Data": {
+    "data": {
       "type": "json"
     }
   }

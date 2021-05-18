@@ -11,10 +11,10 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "AdvisoryStatus": {
+    "advisoryStatus": {
       "type": "string"
     },
-    "Code": {
+    "code": {
       "type": "string"
     }
   }
