@@ -162,8 +162,7 @@ jobs:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
         run: |
-          echo PR_NUMBER=$PR_NUMBER
-          oc process -f infrastructure/prime-app-template.yml \
+          oc process -f infrastructure/bcparks-app.yml \
             -p NAME=bcparks \
             -p OC_NAMESPACE=61d198 \
             -p OC_APP=dev \
