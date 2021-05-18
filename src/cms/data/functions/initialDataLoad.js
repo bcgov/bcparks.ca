@@ -1,7 +1,7 @@
 "use strict";
 
 const permission = require("./loadPermissions");
-const parData = require("./loadPAR");
+const parData = require("./loadPar");
 const otherData = require("./loadOtherData");
 const publicAdvisory = require("./loadPublicAdvisory");
 
@@ -46,13 +46,26 @@ const loadData = async () => {
   }
 };
 
+const loadAdditionalData = async () => {
+  try {
+    await parData.loadAdditionalParData();
+  } catch (error) {
+    strapi.log.error(error);
+  }
+};
+
 const seedData = async () => {
   // Load data and set default public roles on first run
   const setupCMS = await isFirstRun();
   if (setupCMS) {
     await permission.createAdmin();
+    await permission.createApiToken();
     await permission.setDefaultPermissions();
-    await loadData();
+    Promise.resolve(await loadData()).then(async () => {
+      Promise.resolve(await loadAdditionalData()).then(() => {
+        strapi.log.info("------Data load completed------");
+      });
+    });
   }
 };
 

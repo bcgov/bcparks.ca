@@ -92,78 +92,80 @@ export default function Advisory({ mode, page: { setError } }) {
           .then((res) => {
             linksRef.current = [];
             const advisoryData = res.data;
-            setHeadline(advisoryData.Title || "");
-            setDescription(advisoryData.Description || "");
-            setTicketNumber(advisoryData.DCTicketNumber || "");
-            if (advisoryData.Alert) {
-              setIsSafetyRelated(advisoryData.Alert);
+            setHeadline(advisoryData.title || "");
+            setDescription(advisoryData.description || "");
+            setTicketNumber(advisoryData.dcTicketNumber || "");
+            if (advisoryData.isSafetyRelated) {
+              setIsSafetyRelated(advisoryData.isSafetyRelated);
             }
             setListingRank(
-              advisoryData.ListingRank ? "" + advisoryData.ListingRank : ""
+              advisoryData.listingRank ? "" + advisoryData.listingRank : ""
             );
-            setNotes(advisoryData.Note || "");
-            setSubmittedBy(advisoryData.SubmittedBy || "");
-            if (advisoryData.AdvisoryDate) {
+            setNotes(advisoryData.note || "");
+            setSubmittedBy(advisoryData.submittedBy || "");
+            if (advisoryData.advisoryDate) {
               setAdvisoryDate(
-                moment(advisoryData.AdvisoryDate).tz("America/Vancouver")
+                moment(advisoryData.advisoryDate).tz("America/Vancouver")
               );
             }
-            if (advisoryData.EffectiveDate) {
+            if (advisoryData.effectiveDate) {
               setStartDate(
-                moment(advisoryData.EffectiveDate).tz("America/Vancouver")
+                moment(advisoryData.effectiveDate).tz("America/Vancouver")
               );
             }
-            if (advisoryData.EndDate) {
-              setEndDate(moment(advisoryData.EndDate).tz("America/Vancouver"));
+            if (advisoryData.endDate) {
+              setEndDate(moment(advisoryData.endDate).tz("America/Vancouver"));
             }
 
-            if (advisoryData.ExpiryDate) {
+            if (advisoryData.expiryDate) {
               setExpiryDate(
-                moment(advisoryData.ExpiryDate).tz("America/Vancouver")
+                moment(advisoryData.expiryDate).tz("America/Vancouver")
               );
             }
-            if (advisoryData.UpdatedDate) {
+            if (advisoryData.updatedDate) {
               setUpdatedDate(
-                moment(advisoryData.UpdatedDate).tz("America/Vancouver")
+                moment(advisoryData.updatedDate).tz("America/Vancouver")
               );
             }
-            if (advisoryData.AccessStatus) {
-              setAccessStatus(advisoryData.AccessStatus.id);
+            if (advisoryData.accessStatus) {
+              setAccessStatus(advisoryData.accessStatus.id);
             }
-            if (advisoryData.EventType) {
-              setEventType(advisoryData.EventType.id);
+            if (advisoryData.eventType) {
+              setEventType(advisoryData.eventType.id);
             }
-            if (advisoryData.Urgency) {
-              setUrgency(advisoryData.Urgency.id);
+            if (advisoryData.urgency) {
+              setUrgency(advisoryData.urgency.id);
             }
-            if (advisoryData.AdvisoryStatus) {
-              setAdvisoryStatus(advisoryData.AdvisoryStatus.id);
+            if (advisoryData.advisoryStatus) {
+              setAdvisoryStatus(advisoryData.advisoryStatus.id);
             }
-            if (advisoryData.ReservationsAffected) {
-              setIsReservationAffected(advisoryData.ReservationsAffected);
+            if (advisoryData.isReservationsAffected) {
+              setIsReservationAffected(advisoryData.isReservationsAffected);
             }
             setDisplayAdvisoryDate(
-              advisoryData.DisplayAdvisoryDate
-                ? advisoryData.DisplayAdvisoryDate
+              advisoryData.isAdvisoryDateDisplayed
+                ? advisoryData.isAdvisoryDateDisplayed
                 : false
             );
             setDisplayStartDate(
-              advisoryData.DisplayEffectiveDate
-                ? advisoryData.DisplayEffectiveDate
+              advisoryData.isEffectiveDateDisplayed
+                ? advisoryData.isEffectiveDateDisplayed
                 : false
             );
             setDisplayEndDate(
-              advisoryData.DisplayEndDate ? advisoryData.DisplayEndDate : false
+              advisoryData.isEndDateDisplayed
+                ? advisoryData.isEndDateDisplayed
+                : false
             );
-            if (advisoryData.DisplayUpdatedDate !== null) {
-              setDisplayUpdatedDate(advisoryData.DisplayUpdatedDate);
+            if (advisoryData.isUpdatedDateDisplayed !== null) {
+              setDisplayUpdatedDate(advisoryData.isUpdatedDateDisplayed);
             }
 
             const selLocations = [];
-            const protectedAreas = advisoryData.ProtectedAreas;
-            const regions = advisoryData.Regions;
-            const sections = advisoryData.Sections;
-            const managementAreas = advisoryData.ManagementAreas;
+            const protectedAreas = advisoryData.protectedAreas;
+            const regions = advisoryData.regions;
+            const sections = advisoryData.sections;
+            const managementAreas = advisoryData.managementAreas;
             if (protectedAreas) {
               protectedAreas.forEach((p) => {
                 selLocations.push(
@@ -201,15 +203,15 @@ export default function Advisory({ mode, page: { setError } }) {
               });
             }
             setLocations([...selLocations]);
-            const links = advisoryData.Links;
+            const links = advisoryData.links;
             if (links) {
               links.forEach((l) => {
                 linksRef.current = [
                   ...linksRef.current,
                   {
-                    type: l.Type,
-                    title: l.Title || "",
-                    url: l.URL || "",
+                    type: l.type,
+                    title: l.title || "",
+                    url: l.url || "",
                     id: l.id,
                     isModified: false,
                   },
@@ -281,48 +283,50 @@ export default function Advisory({ mode, page: { setError } }) {
       });
     } else {
       Promise.all([
-        cmsAxios.get(`/protectedAreas/names?_limit=-1&_sort=ProtectedAreaName`),
-        cmsAxios.get(`/regions?_limit=-1&_sort=RegionName`),
-        cmsAxios.get(`/sections?_limit=-1&_sort=SectionName`),
-        cmsAxios.get(`/managementAreas?_limit=-1&_sort=ManagementAreaName`),
-        cmsAxios.get(`/event-types?_limit=-1&_sort=EventType`),
-        cmsAxios.get(`/access-statuses?_limit=-1&_sort=AccessStatus`),
-        cmsAxios.get(`/urgencies?_limit=-1&_sort=Sequence`),
+        cmsAxios.get(
+          `/protected-areas/names?_limit=-1&_sort=protectedAreaName`
+        ),
+        cmsAxios.get(`/regions?_limit=-1&_sort=regionName`),
+        cmsAxios.get(`/sections?_limit=-1&_sort=sectionName`),
+        cmsAxios.get(`/management-areas?_limit=-1&_sort=managementAreaName`),
+        cmsAxios.get(`/event-types?_limit=-1&_sort=eventType`),
+        cmsAxios.get(`/access-statuses?_limit=-1&_sort=accessStatus`),
+        cmsAxios.get(`/urgencies?_limit=-1&_sort=sequence`),
         cmsAxios.get(`/business-hours`),
-        cmsAxios.get(`/advisory-statuses?_limit=-1&_sort=Code`),
+        cmsAxios.get(`/advisory-statuses?_limit=-1&_sort=code`),
         cmsAxios.get(`/link-types?_limit=-1&_sort=id`),
       ])
         .then((res) => {
           const protectedAreaData = res[0].data;
           const protectedAreas = protectedAreaData.map((p) => ({
-            label: p.ProtectedAreaName,
+            label: p.protectedAreaName,
             value: p.id,
             type: "protectedArea",
           }));
           const regionData = res[1].data;
           const regions = regionData.map((r) => ({
-            label: r.RegionName,
+            label: r.regionName,
             value: r.id,
             type: "region",
             obj: r,
           }));
           const sectionData = res[2].data;
           const sections = sectionData.map((s) => ({
-            label: s.SectionName,
+            label: s.sectionName,
             value: s.id,
             type: "section",
             obj: s,
           }));
           const managementAreaData = res[3].data;
           const managementAreas = managementAreaData.map((m) => ({
-            label: m.ManagementAreaName,
+            label: m.managementAreaName,
             value: m.id,
             type: "managementArea",
             obj: m,
           }));
           const eventTypeData = res[4].data;
           const eventTypes = eventTypeData.map((et) => ({
-            label: et.EventType,
+            label: et.eventType,
             value: et.id,
           }));
           setLocationOptions([
@@ -334,13 +338,13 @@ export default function Advisory({ mode, page: { setError } }) {
           setEventTypes([...eventTypes]);
           const accessStatusData = res[5].data;
           const accessStatuses = accessStatusData.map((a) => ({
-            label: a.AccessStatus,
+            label: a.accessStatus,
             value: a.id,
           }));
           setAccessStatuses([...accessStatuses]);
           const urgencyData = res[6].data;
           const urgencies = urgencyData.map((u) => ({
-            label: u.Urgency,
+            label: u.urgency,
             value: u.id,
           }));
           setUrgencies([...urgencies]);
@@ -348,14 +352,14 @@ export default function Advisory({ mode, page: { setError } }) {
           setIsAfterHours(calculateAfterHours(res[7].data));
           const advisoryStatusData = res[8].data;
           const advisoryStatuses = advisoryStatusData.map((s) => ({
-            code: s.Code,
-            label: s.AdvisoryStatus,
+            code: s.code,
+            label: s.advisoryStatus,
             value: s.id,
           }));
           setAdvisoryStatuses([...advisoryStatuses]);
           const linkTypeData = res[9].data;
           const linkTypes = linkTypeData.map((lt) => ({
-            label: lt.Type,
+            label: lt.type,
             value: lt.id,
           }));
           setLinkTypes([...linkTypes]);
@@ -468,9 +472,9 @@ export default function Advisory({ mode, page: { setError } }) {
 
   const createLink = async (link) => {
     const linkRequest = {
-      Title: link.title,
-      URL: link.url,
-      Type: link.type,
+      title: link.title,
+      url: link.url,
+      type: link.type,
     };
     const res = await apiAxios
       .post(`api/add/links`, linkRequest, {
@@ -489,9 +493,9 @@ export default function Advisory({ mode, page: { setError } }) {
 
   const saveLink = async (link, id) => {
     const linkRequest = {
-      Title: link.title,
-      URL: link.url,
-      Type: link.type,
+      title: link.title,
+      url: link.url,
+      type: link.type,
     };
     const res = await apiAxios
       .put(`api/update/links/${id}`, linkRequest, {
@@ -539,33 +543,34 @@ export default function Advisory({ mode, page: { setError } }) {
         getLocationAreas(locations, locationOptions);
       Promise.resolve(saveLinks()).then((savedLinks) => {
         const newAdvisory = {
-          Title: headline,
-          Description: description,
-          DCTicketNumber: parseInt(ticketNumber),
-          Alert: isSafetyRelated,
-          ListingRank: parseInt(listingRank),
-          Note: notes,
-          SubmittedBy: submittedBy,
-          CreatedDate: moment().toISOString(),
-          CreatedBy: keycloak.tokenParsed.name,
-          AdvisoryDate: advisoryDate,
-          EffectiveDate: startDate,
-          EndDate: endDate,
-          ExpiryDate: expiryDate,
-          AccessStatus: accessStatus,
-          EventType: eventType,
-          Urgency: urgency,
-          ProtectedAreas: selProtectedAreas,
-          AdvisoryStatus: selAdvisoryStatus,
-          Links: savedLinks,
-          Regions: selRegions,
-          Sections: selSections,
-          ManagementAreas: selManagementAreas,
-          ReservationsAffected: isReservationAffected,
-          DisplayAdvisoryDate: displayAdvisoryDate,
-          DisplayEffectiveDate: displayStartDate,
-          DisplayEndDate: displayEndDate,
+          title: headline,
+          description: description,
+          dcTicketNumber: ticketNumber,
+          isSafetyRelated: isSafetyRelated,
+          listingRank: parseInt(listingRank),
+          note: notes,
+          submittedBy: submittedBy,
+          createdDate: moment().toISOString(),
+          createdBy: keycloak.tokenParsed.name,
+          advisoryDate: advisoryDate,
+          effectiveDate: startDate,
+          endDate: endDate,
+          expiryDate: expiryDate,
+          accessStatus: accessStatus,
+          eventType: eventType,
+          urgency: urgency,
+          protectedAreas: selProtectedAreas,
+          advisoryStatus: selAdvisoryStatus,
+          links: savedLinks,
+          regions: selRegions,
+          sections: selSections,
+          managementAreas: selManagementAreas,
+          isReservationsAffected: isReservationAffected,
+          isAdvisoryDateDisplayed: displayAdvisoryDate,
+          isEffectiveDateDisplayed: displayStartDate,
+          isEndDateDisplayed: displayEndDate,
           published_at: published,
+          created_by: keycloak.tokenParsed.name,
         };
 
         apiAxios
@@ -607,35 +612,39 @@ export default function Advisory({ mode, page: { setError } }) {
       const { selProtectedAreas, selRegions, selSections, selManagementAreas } =
         getLocationAreas(locations, locationOptions);
       Promise.resolve(saveLinks()).then((savedLinks) => {
-        const updatedLinks = savedLinks.length > 0 ? savedLinks : links;
+        const updatedLinks =
+          savedLinks.length > 0 ? [...links, ...savedLinks] : links;
         const updatedAdvisory = {
-          Title: headline,
-          Description: description,
-          DCTicketNumber: parseInt(ticketNumber),
-          Alert: isSafetyRelated,
-          ListingRank: parseInt(listingRank),
-          Note: notes,
-          SubmittedBy: submittedBy,
-          CreatedDate: moment().toISOString(),
-          CreatedBy: keycloak.tokenParsed.name,
-          AdvisoryDate: advisoryDate,
-          EffectiveDate: startDate,
-          EndDate: endDate,
-          ExpiryDate: expiryDate,
-          AccessStatus: accessStatus,
-          EventType: eventType,
-          Urgency: urgency,
-          ProtectedAreas: selProtectedAreas,
-          AdvisoryStatus: advisoryStatus,
-          Links: updatedLinks,
-          Regions: selRegions,
-          Sections: selSections,
-          ManagementAreas: selManagementAreas,
-          ReservationsAffected: isReservationAffected,
-          DisplayAdvisoryDate: displayAdvisoryDate,
-          DisplayEffectiveDate: displayStartDate,
-          DisplayEndDate: displayEndDate,
+          title: headline,
+          description: description,
+          dcTicketNumber: ticketNumber,
+          isSafetyRelated: isSafetyRelated,
+          listingRank: parseInt(listingRank),
+          note: notes,
+          submittedBy: submittedBy,
+          updatedDate: updatedDate,
+          modifiedDate: moment().toISOString(),
+          modifiedBy: keycloak.tokenParsed.name,
+          advisoryDate: advisoryDate,
+          effectiveDate: startDate,
+          endDate: endDate,
+          expiryDate: expiryDate,
+          accessStatus: accessStatus,
+          eventType: eventType,
+          urgency: urgency,
+          protectedAreas: selProtectedAreas,
+          advisoryStatus: advisoryStatus,
+          links: updatedLinks,
+          regions: selRegions,
+          sections: selSections,
+          managementAreas: selManagementAreas,
+          isReservationsAffected: isReservationAffected,
+          isAdvisoryDateDisplayed: displayAdvisoryDate,
+          isEffectiveDateDisplayed: displayStartDate,
+          isEndDateDisplayed: displayEndDate,
+          isUpdatedDateDisplayed: displayUpdatedDate,
           published_at: published,
+          updated_by: keycloak.tokenParsed.name,
         };
 
         apiAxios

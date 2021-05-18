@@ -5,11 +5,11 @@ export function calculateAfterHours(businessHours) {
   const currentDate = moment().format("YYYY-MM-DD");
   const currentDay = moment().format("dddd");
   const businessStartTime = moment(
-    currentDate + " " + businessHours["StartTime"]
+    currentDate + " " + businessHours["startTime"]
   );
-  const businessEndTime = moment(currentDate + " " + businessHours["EndTime"]);
+  const businessEndTime = moment(currentDate + " " + businessHours["endTime"]);
   const businessHour = moment().isBetween(businessStartTime, businessEndTime);
-  if (!businessHours[currentDay] || !businessHour) {
+  if (!businessHours[currentDay.toLowerCase()] || !businessHour) {
     return true;
   }
   return false;
@@ -71,9 +71,9 @@ export function getUpdateAdvisoryFields(code, isAfterHourPublish) {
 }
 
 function addProtectedArea(area, locationOptions, selProtectedAreas) {
-  area.ManagementAreas.forEach((m) => {
+  area.managementAreas.forEach((m) => {
     const protectedArea = locationOptions.find(
-      (l) => l.type === "protectedArea" && l.value === m.ProtectedArea
+      (l) => l.type === "protectedArea" && l.value === m.protectedArea
     );
     selProtectedAreas.push(protectedArea.value);
   });
@@ -95,7 +95,7 @@ export function getLocationAreas(locations, locationOptions) {
       addProtectedArea(l.obj, locationOptions, selProtectedAreas);
     } else if (l.type === "managementArea") {
       selManagementAreas.push(l.value);
-      selProtectedAreas.push(l.obj.ProtectedArea);
+      selProtectedAreas.push(l.obj.protectedArea.id);
     }
   });
   return {
@@ -111,7 +111,7 @@ export function calculateIsStatHoliday(setIsStatHoliday, token) {
     cmsAxios
       .get(`/statutory-holidays`)
       .then((res) => {
-        const statData = res.data.Data;
+        const statData = res.data.data;
         if (
           Object.keys(statData).length === 0 ||
           !isLatestStatutoryHolidayList(statData)
@@ -126,7 +126,7 @@ export function calculateIsStatHoliday(setIsStatHoliday, token) {
         axios
           .get(process.env.REACT_APP_STAT_HOLIDAY_API)
           .then((res) => {
-            const statInfo = { Data: res.data };
+            const statInfo = { data: res.data };
             setIsStatHoliday(calculateStatHoliday(res.data));
             // Write Statutory Data to CMS cache
             apiAxios

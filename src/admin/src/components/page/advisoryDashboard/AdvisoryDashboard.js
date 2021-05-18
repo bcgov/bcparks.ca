@@ -48,7 +48,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
   const fetchPublicAdvisory = async ({ queryKey }) => {
     const [, selectedParkId] = queryKey;
     let parkIdQuery =
-      selectedParkId > 0 ? `&ProtectedAreas.id=${selectedParkId}` : "";
+      selectedParkId > 0 ? `&protectedAreas.id=${selectedParkId}` : "";
 
     const { data } = await cmsAxios.get(
       `/public-advisories?_publicationState=preview&_sort=updated_at:DESC${parkIdQuery}`
@@ -58,7 +58,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
 
   const fetchParkNames = async () => {
     const { data } = await cmsAxios.get(
-      `/protectedareas/names?_limit=-1&_sort=ProtectedAreaName`
+      `/protected-areas/names?_limit=-1&_sort=protectedAreaName`
     );
 
     const parkNames = data.map((p) => ({
@@ -80,14 +80,15 @@ export default function AdvisoryDashboard({ page: { setError } }) {
 
   const tableColumns = [
     {
-      field: "Urgency.Urgency",
+      field: "urgency.urgency",
       title: "U",
       headerStyle: {
         width: 10,
       },
       cellStyle: (e, rowData) => {
-        if (rowData.Urgency !== null) {
-          switch (rowData.Urgency.Urgency.toLowerCase()) {
+        console.log(rowData);
+        if (rowData.urgency !== null) {
+          switch (rowData.urgency.urgency.toLowerCase()) {
             case "low":
               return {
                 borderLeft: "8px solid #06f542",
@@ -114,31 +115,31 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       },
     },
     {
-      field: "AdvisoryStatus.AdvisoryStatus",
+      field: "advisoryStatus.advisoryStatus",
       title: "Status",
       cellStyle: {
         textAlign: "center",
       },
       render: (rowData) => (
         <div className="advisory-status">
-          <Tooltip title={rowData.AdvisoryStatus.AdvisoryStatus}>
+          <Tooltip title={rowData.advisoryStatus.advisoryStatus}>
             <span>
-              {rowData.AdvisoryStatus.Code === "DFT" && (
+              {rowData.advisoryStatus.code === "DFT" && (
                 <EditIcon className="draftIcon" />
               )}
-              {rowData.AdvisoryStatus.Code === "INA" && (
+              {rowData.advisoryStatus.code === "INA" && (
                 <WatchLaterIcon className="inactiveIcon" />
               )}
-              {rowData.AdvisoryStatus.Code === "ACT" && (
+              {rowData.advisoryStatus.code === "ACT" && (
                 <CheckCircleIcon className="activeIcon" />
               )}
-              {rowData.AdvisoryStatus.Code === "APR" && (
+              {rowData.advisoryStatus.code === "APR" && (
                 <ThumbUpIcon className="approvedIcon" />
               )}
-              {rowData.AdvisoryStatus.Code === "ARQ" && (
+              {rowData.advisoryStatus.code === "ARQ" && (
                 <InfoIcon className="approvalRequestedIcon" />
               )}
-              {rowData.AdvisoryStatus.Code === "PUB" && (
+              {rowData.advisoryStatus.code === "PUB" && (
                 <PublishIcon className="publishedIcon" />
               )}
             </span>
@@ -147,42 +148,42 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       ),
     },
     {
-      field: "AdvisoryDate",
+      field: "advisoryDate",
       title: "Posted Date",
       render: (rowData) => {
-        if (rowData.AdvisoryDate)
-          return <Moment format="YYYY/MM/DD">{rowData.AdvisoryDate}</Moment>;
+        if (rowData.advisoryDate)
+          return <Moment format="YYYY/MM/DD">{rowData.advisoryDate}</Moment>;
       },
     },
     {
-      field: "Title",
+      field: "title",
       title: "Headline",
       headerStyle: { width: 400 },
       cellStyle: { width: 400 },
     },
-    { field: "EventType.EventType", title: "Event Type" },
+    { field: "eventType.eventType", title: "Event Type" },
     {
-      field: "EffectiveDate",
+      field: "effectiveDate",
       title: "Start Date",
       render: (rowData) => {
-        if (rowData.EffectiveDate)
-          return <Moment format="YYYY/MM/DD">{rowData.EffectiveDate}</Moment>;
+        if (rowData.effectiveDate)
+          return <Moment format="YYYY/MM/DD">{rowData.effectiveDate}</Moment>;
       },
     },
     {
-      field: "EndDate",
+      field: "endDate",
       title: "End Date",
       render: (rowData) => {
-        if (rowData.EndDate) {
+        if (rowData.endDate) {
           return (
             <div className="text-nowrap">
-              <Moment format="YYYY/MM/DD">{rowData.EndDate}</Moment>
-              {rowData.ExpiryDate && (
+              <Moment format="YYYY/MM/DD">{rowData.endDate}</Moment>
+              {rowData.expiryDate && (
                 <Tooltip
                   title={
                     <span>
                       Expiry Date:
-                      <Moment format="YYYY/MM/DD">{rowData.ExpiryDate}</Moment>
+                      <Moment format="YYYY/MM/DD">{rowData.expiryDate}</Moment>
                     </span>
                   }
                 >
@@ -195,15 +196,15 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       },
     },
     {
-      field: "ProtectedAreas",
+      field: "protectedAreas",
       title: "Associated Park(s)",
       headerStyle: { width: 400 },
       cellStyle: { width: 400 },
       render: (rowData) => {
-        if (rowData.ProtectedAreas != null) {
-          const parks = rowData.ProtectedAreas.map(
-            (p) => p.ProtectedAreaName
-          ).join(", ");
+        if (rowData.protectedAreas != null) {
+          const parks = rowData.protectedAreas
+            .map((p) => p.protectedAreaName)
+            .join(", ");
           return parks;
         }
       },
