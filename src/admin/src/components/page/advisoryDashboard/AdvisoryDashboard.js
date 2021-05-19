@@ -50,9 +50,32 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     let parkIdQuery =
       selectedParkId > 0 ? `&protectedAreas.id=${selectedParkId}` : "";
 
-    const { data } = await cmsAxios.get(
-      `/public-advisories?_publicationState=preview&_sort=updated_at:DESC${parkIdQuery}`
-    );
+    const response = await Promise.all([
+      cmsAxios.get(`/management-areas?_limit=-1&_sort=managementAreaName`),
+      cmsAxios.get(
+        `/public-advisories?_publicationState=preview&_sort=updated_at:DESC${parkIdQuery}`
+      ),
+    ]);
+
+    const managementAreas = response[0].data;
+    const publicAdvisories = response[1].data;
+
+    const regionParksCount = managementAreas.reduce((region, item) => {
+      region[item.region.id] = (region[item.region.id] || 0) + 1;
+      return region;
+    }, {});
+
+    const data = publicAdvisories.map((publicAdvisory) => {
+      let regionsWithParkCount = [];
+      if (publicAdvisory.regions.length > 0) {
+        publicAdvisory.regions.forEach((region) => {
+          region.count = regionParksCount[region.id];
+          regionsWithParkCount = [...regionsWithParkCount, region];
+        });
+        publicAdvisory.regions = regionsWithParkCount;
+      }
+      return publicAdvisory;
+    });
     return data;
   };
 
@@ -62,20 +85,37 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     );
 
     const parkNames = data.map((p) => ({
-      label: p.ProtectedAreaName,
+      label: p.protectedAreaName,
       value: p.id,
     }));
 
     return parkNames;
   };
 
+  const fetchManagementArea = async () => {
+    const { data } = await cmsAxios.get("/management-areas?_limit=-1");
+    return data;
+  };
+
+  const managementAreaQuery = useQuery(
+    "fetchManagementArea",
+    fetchManagementArea,
+    {
+      staleTime: 10000,
+    }
+  );
+
+  const isManagementAreaQueryLoaded = managementAreaQuery.isSuccess;
   const parkNamesQuery = useQuery("fetchParkNames", fetchParkNames, {
     staleTime: 10000,
   });
 
   const publicAdvisoryQuery = useQuery(
     ["fetchPublicAdvisory", selectedParkId],
-    fetchPublicAdvisory
+    fetchPublicAdvisory,
+    {
+      enabled: !!isManagementAreaQueryLoaded,
+    }
   );
 
   const tableColumns = [
@@ -86,7 +126,6 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         width: 10,
       },
       cellStyle: (e, rowData) => {
-        console.log(rowData);
         if (rowData.urgency !== null) {
           switch (rowData.urgency.urgency.toLowerCase()) {
             case "low":
@@ -201,10 +240,27 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       headerStyle: { width: 400 },
       cellStyle: { width: 400 },
       render: (rowData) => {
-        if (rowData.protectedAreas != null) {
-          const parks = rowData.protectedAreas
+        const displayCount = 3;
+        const regionsCount = rowData.regions.length;
+        if (regionsCount > 0) {
+          let regions = rowData.regions
+            .slice(0, displayCount)
+            .map((p) => `${p.regionName} (${p.count} parks)`)
+            .join(", ");
+          if (regionsCount > displayCount) {
+            regions = `${regions}... +${regionsCount - displayCount} more`;
+          }
+          return regions;
+        }
+        const parksCount = rowData.protectedAreas.length;
+        if (parksCount > 0) {
+          let parks = rowData.protectedAreas
+            .slice(0, displayCount)
             .map((p) => p.protectedAreaName)
             .join(", ");
+          if (parksCount > displayCount) {
+            parks = `${parks} ... +${parksCount - displayCount} more`;
+          }
           return parks;
         }
       },
