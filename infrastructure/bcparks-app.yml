@@ -22,7 +22,7 @@ parameters:
   required: true
 - name: CMS_POD
   required: true
-  value: strapi
+  value: cms
 - name: CMS_URL
   required: true
   value: cms

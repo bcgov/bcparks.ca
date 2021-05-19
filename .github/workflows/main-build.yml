@@ -168,8 +168,8 @@ jobs:
             -p OC_APP=${{secrets.OC_APP}} \
             -p FRONTEND_POD=web \
             -p FRONTEND_URL=web \
-            -p CMS_POD=strapi \
-            -p CMS_URL=web \
+            -p CMS_POD=cms \
+            -p CMS_URL=cms \
             -p API_POD=api \
             -p API_URL=api \
             -p DB_POD=db \
