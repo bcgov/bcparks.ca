@@ -259,7 +259,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
             .map((p) => p.protectedAreaName)
             .join(", ");
           if (parksCount > displayCount) {
-            parks = `${parks} ... +${parksCount - displayCount} more`;
+            parks = `${parks}... (${parksCount} parks)`;
           }
           return parks;
         }
