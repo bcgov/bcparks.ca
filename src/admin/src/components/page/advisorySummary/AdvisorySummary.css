@@ -1,0 +1,22 @@
+.launchIcon,
+.copyIcon {
+  width: 20px !important;
+  height: 20px !important;
+  margin-top: -2px !important;
+  color: #234075 !important;
+}
+
+.launchIcon:hover,
+.copyIcon:hover,
+.ad-anchor:hover {
+  color: #0592d3 !important;
+}
+
+.ad-anchor {
+  text-decoration: none !important;
+  color: #234075 !important;
+}
+
+.copyIcon {
+  cursor: pointer !important;
+}

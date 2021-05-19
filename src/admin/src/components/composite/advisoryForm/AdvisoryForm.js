@@ -7,11 +7,6 @@ import {
   ButtonGroup,
   Radio,
   Checkbox,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   FormControl,
   FormHelperText,
 } from "@material-ui/core";
@@ -23,7 +18,6 @@ import {
 import ImageUploader from "react-images-upload";
 import Select from "react-select";
 import WarningIcon from "@material-ui/icons/Warning";
-import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 import VisibilityToggle from "../../base/visibilityToggle/VisibilityToggle";
@@ -106,10 +100,6 @@ export default function AdvisoryForm({
     isSavingDraft,
     updateAdvisory,
     setToDashboard,
-    isConfirmationOpen,
-    setIsConfirmationOpen,
-    confirmationText,
-    closeConfirmation,
   },
 }) {
   const [locationError, setLocationError] = useState("");
@@ -926,46 +916,6 @@ export default function AdvisoryForm({
             </div>
           </div>
         </div>
-        <Dialog
-          open={isConfirmationOpen}
-          onClose={() => {
-            setIsConfirmationOpen(false);
-          }}
-          disableBackdropClick
-          disableEscapeKeyDown
-        >
-          <DialogContent>
-            <DialogTitle id="ad-confirm-title">
-              <CloseIcon
-                className="pointer"
-                onClick={() => {
-                  closeConfirmation();
-                }}
-              />
-            </DialogTitle>
-            <DialogContentText id="ad-confirm">
-              <CheckCircleOutlineIcon className="checkIcon" />
-              <br />
-              <span>
-                Thank you! <br />
-                {confirmationText}
-                <br />
-              </span>
-              The business hours for the web team is Mon - Fri 8.30 am to 4.30
-              pm.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions className="button-row ad-btn-row ad-btn-group">
-            <Button
-              label="Close"
-              styling="bcgov-normal-white btn"
-              onClick={() => {
-                closeConfirmation();
-              }}
-            />
-          </DialogActions>
-          <br />
-        </Dialog>
       </form>
     </MuiPickersUtilsProvider>
   );
@@ -1040,9 +990,5 @@ AdvisoryForm.propTypes = {
     isSavingDraft: PropTypes.bool,
     updateAdvisory: PropTypes.func.isRequired,
     setToDashboard: PropTypes.func.isRequired,
-    isConfirmationOpen: PropTypes.bool,
-    setIsConfirmationOpen: PropTypes.func.isRequired,
-    confirmationText: PropTypes.string,
-    closeConfirmation: PropTypes.func.isRequired,
   }).isRequired,
 };

@@ -86,7 +86,6 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         width: 10,
       },
       cellStyle: (e, rowData) => {
-        console.log(rowData);
         if (rowData.urgency !== null) {
           switch (rowData.urgency.urgency.toLowerCase()) {
             case "low":
