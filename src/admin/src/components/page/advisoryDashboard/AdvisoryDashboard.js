@@ -245,7 +245,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         if (regionsCount > 0) {
           let regions = rowData.regions
             .slice(0, displayCount)
-            .map((p) => `${p.regionName} (${p.count} parks)`)
+            .map((p) => `${p.regionName} Region (${p.count} parks)`)
             .join(", ");
           if (regionsCount > displayCount) {
             regions = `${regions}... +${regionsCount - displayCount} more`;
@@ -259,7 +259,8 @@ export default function AdvisoryDashboard({ page: { setError } }) {
             .map((p) => p.protectedAreaName)
             .join(", ");
           if (parksCount > displayCount) {
-            parks = `${parks}... (${parksCount} parks)`;
+            // parks = `${parks}... (${parksCount} parks)`;
+            parks = `${parks}... +${parksCount - displayCount} more`;
           }
           return parks;
         }
