@@ -16,10 +16,6 @@
     },
     "activityType": {
       "model": "activity-type"
-    },
-    "protectedArea": {
-      "via": "activity",
-      "model": "protected-area"
     }
   }
 }

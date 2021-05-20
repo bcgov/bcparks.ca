@@ -812,65 +812,6 @@
               }
             }
           },
-          "activity": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "isActivityOpen": {
-                "type": "boolean"
-              },
-              "activityType": {
-                "type": "string"
-              },
-              "protectedArea": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "facilities": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "isFacilityOpen": {
-                  "type": "boolean"
-                },
-                "facilityType": {
-                  "type": "string"
-                },
-                "protectedArea": {
-                  "type": "string"
-                },
-                "published_at": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "fireZones": {
             "type": "array",
             "items": {
@@ -905,7 +846,7 @@
               }
             }
           },
-          "park_activity": {
+          "parkActivity": {
             "required": [
               "id"
             ],
@@ -922,10 +863,10 @@
               "isActive": {
                 "type": "boolean"
               },
-              "protected_area": {
+              "activityType": {
                 "type": "string"
               },
-              "activity_type": {
+              "protectedArea": {
                 "type": "string"
               },
               "published_at": {
@@ -1064,22 +1005,13 @@
               "type": "string"
             }
           },
-          "activity": {
-            "type": "string"
-          },
-          "facilities": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
           "fireZones": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "park_activity": {
+          "parkActivity": {
             "type": "string"
           },
           "parkFacility": {

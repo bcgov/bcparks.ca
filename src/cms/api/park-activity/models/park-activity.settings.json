@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "park_activities",
   "info": {
-    "name": "ParkActivity"
+    "name": "ParkActivity",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -19,12 +20,12 @@
     "isActive": {
       "type": "boolean"
     },
-    "protected_area": {
-      "model": "protected-area",
-      "via": "park_activity"
-    },
-    "activity_type": {
+    "activityType": {
       "model": "activity-type"
+    },
+    "protectedArea": {
+      "via": "parkActivity",
+      "model": "protected-area"
     }
   }
 }
