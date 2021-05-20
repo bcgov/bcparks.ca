@@ -88,14 +88,16 @@
       "via": "protectedArea",
       "collection": "site"
     },
-    "activities": {
-      "collection": "activity"
-    },
-    "facilities": {
-      "collection": "facility"
-    },
     "fireZones": {
       "collection": "fire-zone"
+    },
+    "parkActivity": {
+      "via": "protectedArea",
+      "model": "park-activity"
+    },
+    "parkFacility": {
+      "via": "protectedArea",
+      "model": "park-facility"
     }
   }
 }

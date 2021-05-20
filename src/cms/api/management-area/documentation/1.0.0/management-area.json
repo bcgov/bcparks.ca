@@ -662,23 +662,17 @@
                   "type": "string"
                 }
               },
-              "activities": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "facilities": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "fireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
+              },
+              "parkActivity": {
+                "type": "string"
+              },
+              "parkFacility": {
+                "type": "string"
               },
               "published_at": {
                 "type": "string"

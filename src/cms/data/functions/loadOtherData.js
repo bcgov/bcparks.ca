@@ -11,8 +11,8 @@ const loadAccessStatus = async () => {
   );
 };
 
-const loadActivity = async () => {
-  loadUtils.loadJson("activity", "./data/park-activity.json", "park-activity");
+const loadActivityType = async () => {
+  loadUtils.loadJson("activity-type", "./data/park-activity.json", "park-activity");
 };
 
 const loadAdvisoryStatus = async () => {
@@ -35,8 +35,8 @@ const loadLinkType = async () => {
   loadUtils.loadJson("link-type", "./data/link-type.json", "link-type");
 };
 
-const loadFacility = async () => {
-  loadUtils.loadJson("facility", "./data/park-facility.json", "park-facility");
+const loadFacilityType = async () => {
+  loadUtils.loadJson("facility-type", "./data/park-facility.json", "park-facility");
 };
 
 const loadFireCentre = async () => {
@@ -291,12 +291,12 @@ module.exports = {
   loadBusinessHours,
   loadStatutoryHolidays,
   loadAccessStatus,
-  loadActivity,
+  loadActivityType,
   loadAdvisoryStatus,
   loadAssetType,
   loadEventType,
   loadLinkType,
-  loadFacility,
+  loadFacilityType,
   loadFireCentre,
   loadFireZone,
   loadFireCentreZoneXref,

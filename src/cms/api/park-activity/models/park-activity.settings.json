@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "activities",
+  "collectionName": "park_activities",
   "info": {
-    "name": "Activity",
+    "name": "ParkActivity",
     "description": ""
   },
   "options": {
@@ -11,11 +11,21 @@
     "draftAndPublish": true
   },
   "attributes": {
+    "description": {
+      "type": "string"
+    },
     "isActivityOpen": {
+      "type": "boolean"
+    },
+    "isActive": {
       "type": "boolean"
     },
     "activityType": {
       "model": "activity-type"
+    },
+    "protectedArea": {
+      "via": "parkActivity",
+      "model": "protected-area"
     }
   }
 }

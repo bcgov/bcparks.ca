@@ -27,8 +27,8 @@ const loadData = async () => {
     await otherData.loadEventType();
     await otherData.loadLinkType();
 
-    await otherData.loadActivity();
-    await otherData.loadFacility();
+    await otherData.loadActivityType();
+    await otherData.loadFacilityType();
     await otherData.loadUrgency();
 
     await otherData.loadFireCentre();
@@ -37,8 +37,9 @@ const loadData = async () => {
     await otherData.loadFireBanProhibition();
 
     await publicAdvisory.loadPublicAdvisory();
-    await otherData.loadParkActivityXref();
-    await otherData.loadParkFacilityXref();
+    // comment out temporarily
+    // await otherData.loadParkActivityXref();
+    // await otherData.loadParkFacilityXref();
     await otherData.loadParkFireZoneXref();
     await otherData.loadParkFogZoneXref();
   } catch (error) {
