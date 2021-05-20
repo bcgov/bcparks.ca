@@ -14,6 +14,7 @@ import { Button } from "shared-components/build/components/button/Button";
 
 export default function AdvisorySummary({ page: { setError } }) {
   const [isLoadingPage, setIsLoadingPage] = useState(true);
+  const [isPublished, setIsPublished] = useState(false);
   const [toError, setToError] = useState(false);
   const [advisory, setAdvisory] = useState({});
   const [pageUrls, setPageUrls] = useState("");
@@ -22,6 +23,7 @@ export default function AdvisorySummary({ page: { setError } }) {
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const { id } = useParams();
   const { confirmationText } = useLocation();
+  const { ClipboardItem } = window;
 
   useEffect(() => {
     if (!initialized) {
@@ -40,11 +42,19 @@ export default function AdvisorySummary({ page: { setError } }) {
             const advisoryData = res.data;
             setAdvisory(advisoryData);
             const pageUrlInfo = [];
+            const isAdvisoryPublished =
+              advisoryData.advisoryStatus.code === "PUB";
             advisoryData.protectedAreas.map((p) => {
-              return pageUrlInfo.push(p.url);
+              const url = isAdvisoryPublished
+                ? p.url
+                : p.url.replace("bcparks", "test.bcparks");
+              return pageUrlInfo.push(
+                "<a href='" + url + "'>" + p.protectedAreaName + "</a>"
+              );
             });
-            const pageUrlText = pageUrlInfo.join("\n");
+            const pageUrlText = pageUrlInfo.join("<br/>");
             setPageUrls(pageUrlText);
+            setIsPublished(isAdvisoryPublished);
             setIsLoadingPage(false);
           })
           .catch((error) => {
@@ -74,6 +84,7 @@ export default function AdvisorySummary({ page: { setError } }) {
     setIsLoadingPage,
     setAdvisory,
     setPageUrls,
+    setIsPublished,
   ]);
 
   const handleOpenSnackBar = () => {
@@ -204,7 +215,10 @@ export default function AdvisorySummary({ page: { setError } }) {
                   <FileCopyOutlinedIcon
                     className="copyIcon"
                     onClick={() => {
-                      navigator.clipboard.writeText(pageUrls);
+                      const type = "text/html";
+                      const blob = new Blob([pageUrls], { type });
+                      let data = [new ClipboardItem({ [type]: blob })];
+                      navigator.clipboard.write(data);
                       handleOpenSnackBar();
                     }}
                   />
@@ -213,7 +227,11 @@ export default function AdvisorySummary({ page: { setError } }) {
                   {advisory.protectedAreas.map((p) => (
                     <div key={p.id}>
                       <a
-                        href={p.url}
+                        href={
+                          isPublished
+                            ? p.url
+                            : p.url.replace("bcparks", "test.bcparks")
+                        }
                         rel="noreferrer"
                         target="_blank"
                         className="ad-anchor"
