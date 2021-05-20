@@ -20,8 +20,8 @@
       "type": "boolean"
     },
     "protectedArea": {
-      "model": "protected-area",
-      "via": "parkFacility"
+      "via": "parkFacility",
+      "model": "protected-area"
     },
     "facilityType": {
       "model": "facility-type"

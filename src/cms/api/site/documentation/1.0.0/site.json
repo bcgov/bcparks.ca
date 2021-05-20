@@ -640,22 +640,13 @@
                   "type": "string"
                 }
               },
-              "activity": {
-                "type": "string"
-              },
-              "facilities": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "fireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "park_activity": {
+              "parkActivity": {
                 "type": "string"
               },
               "parkFacility": {

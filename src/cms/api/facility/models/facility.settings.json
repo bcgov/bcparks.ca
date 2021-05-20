@@ -16,10 +16,6 @@
     },
     "facilityType": {
       "model": "facility-type"
-    },
-    "protectedArea": {
-      "via": "facilities",
-      "model": "protected-area"
     }
   }
 }
