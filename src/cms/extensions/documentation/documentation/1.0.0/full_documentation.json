@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "05/20/2021 6:03:50 PM"
+    "x-generation-date": "05/20/2021 6:28:27 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -16882,7 +16882,7 @@
           "id": {
             "type": "string"
           },
-          "Description": {
+          "description": {
             "type": "string"
           },
           "isFacilityOpen": {
@@ -17050,7 +17050,7 @@
       },
       "NewPark-facility": {
         "properties": {
-          "Description": {
+          "description": {
             "type": "string"
           },
           "isFacilityOpen": {
@@ -17324,7 +17324,7 @@
               "id": {
                 "type": "string"
               },
-              "Description": {
+              "description": {
                 "type": "string"
               },
               "isFacilityOpen": {
