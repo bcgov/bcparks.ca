@@ -27,8 +27,8 @@ const loadData = async () => {
     await otherData.loadEventType();
     await otherData.loadLinkType();
 
-    await otherData.loadActivity();
-    await otherData.loadFacility();
+    await otherData.loadActivityType();
+    await otherData.loadFacilityType();
     await otherData.loadUrgency();
 
     await otherData.loadFireCentre();

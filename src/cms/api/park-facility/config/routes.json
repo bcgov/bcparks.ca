@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/park-facilities",
+      "handler": "park-facility.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/park-facilities/count",
+      "handler": "park-facility.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/park-facilities/:id",
+      "handler": "park-facility.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/park-facilities",
+      "handler": "park-facility.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/park-facilities/:id",
+      "handler": "park-facility.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/park-facilities/:id",
+      "handler": "park-facility.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
