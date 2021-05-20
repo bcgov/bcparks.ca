@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_activities",
+  "info": {
+    "name": "ParkActivity"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "description": {
+      "type": "string"
+    },
+    "isActivityOpen": {
+      "type": "boolean"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "protected_area": {
+      "model": "protected-area",
+      "via": "park_activity"
+    },
+    "activity_type": {
+      "model": "activity-type"
+    }
+  }
+}

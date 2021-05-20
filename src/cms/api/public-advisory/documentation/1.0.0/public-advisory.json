@@ -808,11 +808,8 @@
                     "type": "string"
                   }
                 },
-                "activities": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "activity": {
+                  "type": "string"
                 },
                 "facilities": {
                   "type": "array",
@@ -825,6 +822,12 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "park_activity": {
+                  "type": "string"
+                },
+                "parkFacility": {
+                  "type": "string"
                 },
                 "published_at": {
                   "type": "string"

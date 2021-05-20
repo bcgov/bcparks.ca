@@ -11,29 +11,15 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "activityNumber": {
-      "type": "integer"
-    },
-    "activityName": {
-      "type": "string"
-    },
-    "activityCode": {
-      "type": "string"
-    },
-    "icon": {
-      "type": "string"
-    },
-    "iconNA": {
-      "type": "string"
-    },
-    "rank": {
-      "type": "integer"
-    },
-    "note": {
-      "type": "string"
-    },
-    "isActive": {
+    "isActivityOpen": {
       "type": "boolean"
+    },
+    "activityType": {
+      "model": "activity-type"
+    },
+    "protectedArea": {
+      "via": "activity",
+      "model": "protected-area"
     }
   }
 }
