@@ -11,6 +11,9 @@
     "draftAndPublish": true
   },
   "attributes": {
+    "name": {
+      "type": "string"
+    },
     "description": {
       "type": "string"
     },
@@ -20,12 +23,16 @@
     "isActive": {
       "type": "boolean"
     },
+    "protectedArea": {
+      "model": "protected-area",
+      "via": "parkActivities"
+    },
+    "site": {
+      "model": "site",
+      "via": "parkActivities"
+    },
     "activityType": {
       "model": "activity-type"
-    },
-    "protectedArea": {
-      "via": "parkActivity",
-      "model": "protected-area"
     }
   }
 }

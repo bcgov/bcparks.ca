@@ -11,6 +11,9 @@
     "draftAndPublish": true
   },
   "attributes": {
+    "name": {
+      "type": "string"
+    },
     "description": {
       "type": "string"
     },
@@ -21,8 +24,12 @@
       "type": "boolean"
     },
     "protectedArea": {
-      "via": "parkFacility",
-      "model": "protected-area"
+      "model": "protected-area",
+      "via": "parkFacilities"
+    },
+    "site": {
+      "model": "site",
+      "via": "parkFacilities"
     },
     "facilityType": {
       "model": "facility-type"
