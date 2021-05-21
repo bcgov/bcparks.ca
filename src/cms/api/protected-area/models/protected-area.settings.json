@@ -91,13 +91,13 @@
     "fireZones": {
       "collection": "fire-zone"
     },
-    "parkActivity": {
+    "parkActivities": {
       "via": "protectedArea",
-      "model": "park-activity"
+      "collection": "park-activity"
     },
-    "parkFacility": {
+    "parkFacilities": {
       "via": "protectedArea",
-      "model": "park-facility"
+      "collection": "park-facility"
     }
   }
 }
