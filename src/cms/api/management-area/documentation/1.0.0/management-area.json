@@ -668,11 +668,17 @@
                   "type": "string"
                 }
               },
-              "parkActivity": {
-                "type": "string"
+              "parkActivities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
-              "parkFacility": {
-                "type": "string"
+              "parkFacilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "published_at": {
                 "type": "string"

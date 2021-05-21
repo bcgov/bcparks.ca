@@ -37,11 +37,12 @@ const loadData = async () => {
     await otherData.loadFireBanProhibition();
 
     await publicAdvisory.loadPublicAdvisory();
-    // comment out temporarily
-    // await otherData.loadParkActivityXref();
-    // await otherData.loadParkFacilityXref();
-    await otherData.loadParkFireZoneXref();
-    await otherData.loadParkFogZoneXref();
+
+    // await not required for the data loads below
+    otherData.loadParkActivity();
+    otherData.loadParkFacility();
+    otherData.loadParkFireZoneXref();
+    otherData.loadParkFogZoneXref();
   } catch (error) {
     strapi.log.error(error);
   }
