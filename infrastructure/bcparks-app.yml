@@ -220,6 +220,56 @@ objects:
                   secretKeyRef:
                     key: DATABASE_SSL
                     name: bcparks-secrets
+              - name: ADMIN_EMAIL
+                valueFrom:
+                  secretKeyRef:
+                    key: ADMIN_EMAIL
+                    name: bcparks-secrets
+              - name: ADMIN_FIRST_NAME
+                valueFrom:
+                  secretKeyRef:
+                    key: ADMIN_FIRST_NAME
+                    name: bcparks-secrets
+              - name: ADMIN_JWT_SECRET
+                valueFrom:
+                  secretKeyRef:
+                    key: ADMIN_JWT_SECRET
+                    name: bcparks-secrets
+              - name: ADMIN_LAST_NAME
+                valueFrom:
+                  secretKeyRef:
+                    key: ADMIN_LAST_NAME
+                    name: bcparks-secrets
+              - name: ADMIN_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    key: ADMIN_PASSWORD
+                    name: bcparks-secrets
+              - name: ADMIN_USER
+                valueFrom:
+                  secretKeyRef:
+                    key: ADMIN_USER
+                    name: bcparks-secrets
+              - name: API_TOKEN
+                valueFrom:
+                  secretKeyRef:
+                    key: API_TOKEN
+                    name: bcparks-secrets
+              - name: API_USER_EMAIL
+                valueFrom:
+                  secretKeyRef:
+                    key: API_USER_EMAIL
+                    name: bcparks-secrets
+              - name: API_USER_NAME
+                valueFrom:
+                  secretKeyRef:
+                    key: API_USER_NAME
+                    name: bcparks-secrets       
+              - name: API_USER_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    key: API_USER_PASSWORD
+                    name: bcparks-secrets       
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/strapi:${OC_APP}
             name: ${CMS_POD}
