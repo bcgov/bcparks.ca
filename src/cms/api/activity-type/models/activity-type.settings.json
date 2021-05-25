@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "activities",
+  "collectionName": "activity_types",
   "info": {
-    "name": "Activity",
+    "name": "ActivityType",
     "description": ""
   },
   "options": {

@@ -27,8 +27,8 @@ const loadData = async () => {
     await otherData.loadEventType();
     await otherData.loadLinkType();
 
-    await otherData.loadActivity();
-    await otherData.loadFacility();
+    await otherData.loadActivityType();
+    await otherData.loadFacilityType();
     await otherData.loadUrgency();
 
     await otherData.loadFireCentre();
@@ -37,10 +37,12 @@ const loadData = async () => {
     await otherData.loadFireBanProhibition();
 
     await publicAdvisory.loadPublicAdvisory();
-    await otherData.loadParkActivityXref();
-    await otherData.loadParkFacilityXref();
-    await otherData.loadParkFireZoneXref();
-    await otherData.loadParkFogZoneXref();
+
+    // await not required for the data loads below
+    otherData.loadParkActivity();
+    otherData.loadParkFacility();
+    otherData.loadParkFireZoneXref();
+    otherData.loadParkFogZoneXref();
   } catch (error) {
     strapi.log.error(error);
   }
