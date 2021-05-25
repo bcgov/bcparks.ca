@@ -166,9 +166,9 @@ objects:
       weight: 100
     port:
       targetPort: npm
-    tls:
-        insecureEdgeTerminationPolicy: Redirect
-        termination: edge
+    # tls:
+    #     insecureEdgeTerminationPolicy: Redirect
+    #     termination: edge
 
 ### CMS
 - apiVersion: apps.openshift.io/v1
@@ -323,9 +323,9 @@ objects:
       weight: 100
     port:
       targetPort: 1337
-    tls:
-        insecureEdgeTerminationPolicy: Redirect
-        termination: edge
+    # tls:
+    #     insecureEdgeTerminationPolicy: Redirect
+    #     termination: edge
 
 ### Database
 - apiVersion: apps.openshift.io/v1
@@ -528,9 +528,9 @@ objects:
       weight: 100
     port:
       targetPort: ${STAGING_POD}
-    tls:
-      insecureEdgeTerminationPolicy: Redirect
-      termination: edge
+    # tls:
+    #   insecureEdgeTerminationPolicy: Redirect
+    #   termination: edge
 
 ### API
 - apiVersion: apps.openshift.io/v1
@@ -614,9 +614,10 @@ objects:
       weight: 100
     port:
       targetPort: ${API_POD}
-    tls:
-      insecureEdgeTerminationPolicy: Redirect
-      termination: edge
+    # tls:
+    #   insecureEdgeTerminationPolicy: Redirect
+    #   termination: edge
+    
 ### Network Policy
 - apiVersion: networking.k8s.io/v1
   kind: NetworkPolicy
