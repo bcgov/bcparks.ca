@@ -174,4 +174,5 @@ jobs:
             -p API_URL=api \
             -p DB_POD=db \
             -p STAGING_POD=staging \
+            -p WEB_SCHEMA=http \
             -n ${{secrets.OPENSHIFT_LICENSE_PLATE}}-${{secrets.OC_APP}} | oc apply -n ${{secrets.OPENSHIFT_LICENSE_PLATE}}-${{secrets.OC_APP}} -f -
