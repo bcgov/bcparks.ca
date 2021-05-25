@@ -21,11 +21,18 @@ export default function Error({ page: { error } }) {
       </div>
     );
   } else if (error.status === 403) {
-    if (error.message === "BCSC login failed") {
+    if (error.message === "Login failed") {
       errorContent = (
         <div>
           <h1>Login failed</h1>
           <p>Unable to login, please try again later.</p>
+        </div>
+      );
+    } else if (error.message === "Unauthorized") {
+      errorContent = (
+        <div>
+          <h1>You do not have permission to access this page</h1>
+          <p>Please contact the administrator for access</p>
         </div>
       );
     } else {
