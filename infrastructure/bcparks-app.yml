@@ -45,7 +45,7 @@ parameters:
 - name: DB_SSL
   value: "false"
 - name: WEB_SCHEMA
-  value: https
+  value: http
 - name: URL_STUB
   value: "-61d198-dev.apps.silver.devops.gov.bc.ca"
   required: false
