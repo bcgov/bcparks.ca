@@ -266,10 +266,10 @@ objects:
                     key: API_USER_NAME
                     name: bcparks-secrets       
               - name: API_USER_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      key: API_USER_PASSWORD
-                      name: bcparks-secrets       
+                valueFrom:
+                  secretKeyRef:
+                    key: API_USER_PASSWORD
+                    name: bcparks-secrets       
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/strapi:${OC_APP}
             name: ${CMS_POD}
