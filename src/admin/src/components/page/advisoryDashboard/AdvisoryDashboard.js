@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef } from "react";
+import React, { useState, forwardRef } from "react";
 import { cmsAxios } from "../../../axios_config";
 import { Redirect, Link } from "react-router-dom";
 import { useQuery } from "react-query";
@@ -35,14 +35,10 @@ import EditIcon from "@material-ui/icons/Edit";
 import InfoIcon from "@material-ui/icons/Info";
 import PublishIcon from "@material-ui/icons/Publish";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
-import { useKeycloak } from "@react-keycloak/web";
 import Header from "../../composite/header/Header";
 
 export default function AdvisoryDashboard({ page: { setError } }) {
-  const [toError, setToError] = useState(false);
-  const [toHome, setToHome] = useState(false);
   const [toCreate, setToCreate] = useState(false);
-  const { keycloak, initialized } = useKeycloak();
   const [selectedParkId, setSelectedParkId] = useState(0);
 
   const fetchPublicAdvisory = async ({ queryKey }) => {
@@ -332,22 +328,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
   };
 
-  useEffect(() => {
-    if (!initialized) {
-    } else if (!keycloak.authenticated) {
-      setToError(true);
-      setError({
-        status: 401,
-        message: "Login required",
-      });
-    }
-  }, [setToError, setError, setToHome, keycloak, initialized]);
-
-  if (toHome) {
-    return <Redirect to="/bcparks" />;
-  }
-
-  if (toError || parkNamesQuery.isError || publicAdvisoryQuery.isError) {
+  if (parkNamesQuery.isError || publicAdvisoryQuery.isError) {
     return <Redirect to="/bcparks/error" />;
   }
 
