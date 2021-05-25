@@ -195,6 +195,9 @@ objects:
           name: ${CMS_POD}
       spec:
         containers:
+          envFrom:
+          - secretRef:
+              name: bcparks-secrets
           - env:
               - name: DATABASE_HOST
                 value: ${DB_POD}
