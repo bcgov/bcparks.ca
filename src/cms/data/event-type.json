@@ -1,184 +1,184 @@
 {"event-type": 
   [
 	{
-	  "EventType": "Access restricted"
+	  "eventType": "Access restricted"
 	},
 	{
-	  "EventType": "Avalanche"
+	  "eventType": "Avalanche"
 	},
 	{
-	  "EventType": "Avalanche hazard"
+	  "eventType": "Avalanche hazard"
 	},
 	{
-	  "EventType": "Boil water notice"
+	  "eventType": "Boil water notice"
 	},
 	{
-	  "EventType": "Campfires"
+	  "eventType": "Campfires"
 	},
 	{
-	  "EventType": "Campground capacity"
+	  "eventType": "Campground capacity"
 	},
 	{
-	  "EventType": "Campground closure"
+	  "eventType": "Campground closure"
 	},
 	{
-	  "EventType": "Campground expansion"
+	  "eventType": "Campground expansion"
 	},
 	{
-	  "EventType": "Construction"
+	  "eventType": "Construction"
 	},
 	{
-	  "EventType": "Cultural"
+	  "eventType": "Cultural"
 	},
 	{
-	  "EventType": "Day-use passes"
+	  "eventType": "Day-use passes"
 	},
 	{
-	  "EventType": "Dock closure"
+	  "eventType": "Dock closure"
 	},
 	{
-	  "EventType": "Ecosystem protection"
+	  "eventType": "Ecosystem protection"
 	},
 	{
-	  "EventType": "Ecosystem restoration project"
+	  "eventType": "Ecosystem restoration project"
 	},
 	{
-	  "EventType": "Event"
+	  "eventType": "Event"
 	},
 	{
-	  "EventType": "Facilities unavailable"
+	  "eventType": "Facilities unavailable"
 	},
 	{
-	  "EventType": "Facility closure"
+	  "eventType": "Facility closure"
 	},
 	{
-	  "EventType": "Facility out of service"
+	  "eventType": "Facility out of service"
 	},
 	{
-	  "EventType": "Flood"
+	  "eventType": "Flood"
 	},
 	{
-	  "EventType": "Flood damage"
+	  "eventType": "Flood damage"
 	},
 	{
-	  "EventType": "Freshet"
+	  "eventType": "Freshet"
 	},
 	{
-	  "EventType": "Gate closure"
+	  "eventType": "Gate closure"
 	},
 	{
-	  "EventType": "Hazard conditions"
+	  "eventType": "Hazard conditions"
 	},
 	{
-	  "EventType": "Hazard facility"
+	  "eventType": "Hazard facility"
 	},
 	{
-	  "EventType": "Hazard trees"
+	  "eventType": "Hazard trees"
 	},
 	{
-	  "EventType": "Hours of operation"
+	  "eventType": "Hours of operation"
 	},
 	{
-	  "EventType": "Icy Conditions"
+	  "eventType": "Icy Conditions"
 	},
 	{
-	  "EventType": "Landslide"
+	  "eventType": "Landslide"
 	},
 	{
-	  "EventType": "Off-Road Vehicles"
+	  "eventType": "Off-Road Vehicles"
 	},
 	{
-	  "EventType": "Pandemic"
+	  "eventType": "Pandemic"
 	},
 	{
-	  "EventType": "Park access"
+	  "eventType": "Park access"
 	},
 	{
-	  "EventType": "Park closure"
+	  "eventType": "Park closure"
 	},
 	{
-	  "EventType": "Park opening"
+	  "eventType": "Park opening"
 	},
 	{
-	  "EventType": "Parking"
+	  "eventType": "Parking"
 	},
 	{
-	  "EventType": "Parking lot access"
+	  "eventType": "Parking lot access"
 	},
 	{
-	  "EventType": "Pets"
+	  "eventType": "Pets"
 	},
 	{
-	  "EventType": "Prescribed burn"
+	  "eventType": "Prescribed burn"
 	},
 	{
-	  "EventType": "Public safety"
+	  "eventType": "Public safety"
 	},
 	{
-	  "EventType": "Reservations"
+	  "eventType": "Reservations"
 	},
 	{
-	  "EventType": "Road closure"
+	  "eventType": "Road closure"
 	},
 	{
-	  "EventType": "Road conditions"
+	  "eventType": "Road conditions"
 	},
 	{
-	  "EventType": "Road hazards"
+	  "eventType": "Road hazards"
 	},
 	{
-	  "EventType": "Road inaccessible"
+	  "eventType": "Road inaccessible"
 	},
 	{
-	  "EventType": "Scheduled closure"
+	  "eventType": "Scheduled closure"
 	},
 	{
-	  "EventType": "Spring conditions"
+	  "eventType": "Spring conditions"
 	},
 	{
-	  "EventType": "Storm damage"
+	  "eventType": "Storm damage"
 	},
 	{
-	  "EventType": "Trail closure"
+	  "eventType": "Trail closure"
 	},
 	{
-	  "EventType": "Trail construction"
+	  "eventType": "Trail construction"
 	},
 	{
-	  "EventType": "Trail maintenance"
+	  "eventType": "Trail maintenance"
 	},
 	{
-	  "EventType": "Tsunami"
+	  "eventType": "Tsunami"
 	},
 	{
-	  "EventType": "Volunteer"
+	  "eventType": "Volunteer"
 	},
 	{
-	  "EventType": "Weather"
+	  "eventType": "Weather"
 	},
 	{
-	  "EventType": "Wildfire"
+	  "eventType": "Wildfire"
 	},
 	{
-	  "EventType": "Wildfire damage"
+	  "eventType": "Wildfire damage"
 	},
 	{
-	  "EventType": "Wildfire fuel management"
+	  "eventType": "Wildfire fuel management"
 	},
 	{
-	  "EventType": "Wildfire nearby"
+	  "eventType": "Wildfire nearby"
 	},
 	{
-	  "EventType": "Wildlife"
+	  "eventType": "Wildlife"
 	},
 	{
-	  "EventType": "Wildlife protection"
+	  "eventType": "Wildlife protection"
 	},
 	{
-	  "EventType": "Windstorm damage"
+	  "eventType": "Windstorm damage"
 	},
 	{
-	  "EventType": "Winter conditions"
+	  "eventType": "Winter conditions"
 	}
   ]
 }

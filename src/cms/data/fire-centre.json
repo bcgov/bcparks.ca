@@ -1,8 +1,8 @@
 {"fire-centre":[
-{"FireCentreNumber":"161","FireCentreName":"Southeast Fire Centre"},
-{"FireCentreNumber":"162","FireCentreName":"Kamloops Fire Centre"},
-{"FireCentreNumber":"163","FireCentreName":"Cariboo Fire Centre"},
-{"FireCentreNumber":"164","FireCentreName":"Coastal Fire Centre"},
-{"FireCentreNumber":"165","FireCentreName":"Prince George Fire Centre"},
-{"FireCentreNumber":"166","FireCentreName":"Northwest Fire Centre"}
+{"fireCentreNumber":"161","fireCentreName":"Southeast Fire Centre"},
+{"fireCentreNumber":"162","fireCentreName":"Kamloops Fire Centre"},
+{"fireCentreNumber":"163","fireCentreName":"Cariboo Fire Centre"},
+{"fireCentreNumber":"164","fireCentreName":"Coastal Fire Centre"},
+{"fireCentreNumber":"165","fireCentreName":"Prince George Fire Centre"},
+{"fireCentreNumber":"166","fireCentreName":"Northwest Fire Centre"}
 ]}

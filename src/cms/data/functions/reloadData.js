@@ -2,8 +2,9 @@
 "use strict";
 
 const permission = require("./loadPermissions");
-const parData = require("./loadPAR");
+const parData = require("./loadPar");
 const otherData = require("./loadOtherData");
+const publicAdvisory = require("./loadPublicAdvisory");
 
 const reloadData = (loaderFunction) => {
   if (loaderFunction) {

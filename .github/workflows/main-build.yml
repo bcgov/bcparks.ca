@@ -138,3 +138,40 @@ jobs:
             --tag $IMAGE \
             ${CONTEXT}
           docker push $IMAGE
+
+  apply-oc-template:
+    runs-on: ubuntu-20.04
+    environment: Development
+    steps:
+      - name: "Use the OpenShift template"
+        uses: actions/checkout@v2
+
+      - name: Install OC
+        uses: redhat-actions/oc-installer@v1
+
+      - name: Authenticate and set context
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{secrets.OPENSHIFT_SERVER_URL}}
+          openshift_token: ${{secrets.OPENSHIFT_SERVICE_TOKEN}}
+          namespace: ${{secrets.OPENSHIFT_LICENSE_PLATE}}-${{secrets.OC_APP}}
+
+      - name: "Process template"
+        id: oc
+        env:
+          COMPOSE_DOCKER_CLI_BUILD: 1
+          DOCKER_BUILDKIT: 1
+        run: |
+          oc process -f infrastructure/bcparks-app.yml \
+            -p NAME=bcparks \
+            -p OC_NAMESPACE=${{secrets.OPENSHIFT_LICENSE_PLATE}} \
+            -p OC_APP=${{secrets.OC_APP}} \
+            -p FRONTEND_POD=web \
+            -p FRONTEND_URL=web \
+            -p CMS_POD=cms \
+            -p CMS_URL=cms \
+            -p API_POD=api \
+            -p API_URL=api \
+            -p DB_POD=db \
+            -p STAGING_POD=staging \
+            -n ${{secrets.OPENSHIFT_LICENSE_PLATE}}-${{secrets.OC_APP}} | oc apply -n ${{secrets.OPENSHIFT_LICENSE_PLATE}}-${{secrets.OC_APP}} -f -

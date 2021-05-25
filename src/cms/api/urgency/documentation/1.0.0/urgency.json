@@ -522,13 +522,13 @@
           "id": {
             "type": "string"
           },
-          "Urgency": {
+          "urgency": {
             "type": "string"
           },
-          "Code": {
+          "code": {
             "type": "string"
           },
-          "Sequence": {
+          "sequence": {
             "type": "integer"
           },
           "published_at": {
@@ -539,13 +539,13 @@
       },
       "NewUrgency": {
         "properties": {
-          "Urgency": {
+          "urgency": {
             "type": "string"
           },
-          "Code": {
+          "code": {
             "type": "string"
           },
-          "Sequence": {
+          "sequence": {
             "type": "integer"
           },
           "published_at": {

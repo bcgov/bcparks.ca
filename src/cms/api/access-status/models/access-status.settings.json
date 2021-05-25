@@ -11,8 +11,11 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "AccessStatus": {
+    "accessStatus": {
       "type": "string"
+    },
+    "precedence": {
+      "type": "integer"
     }
   }
 }

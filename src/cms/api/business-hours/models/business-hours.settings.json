@@ -10,38 +10,38 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "StartTime": {
+    "startTime": {
       "type": "time",
       "required": true
     },
-    "EndTime": {
+    "endTime": {
       "type": "time",
       "required": true
     },
-    "Monday": {
+    "monday": {
       "type": "boolean",
       "required": true
     },
-    "Tuesday": {
+    "tuesday": {
       "type": "boolean"
     },
-    "Wednesday": {
+    "wednesday": {
       "type": "boolean",
       "required": true
     },
-    "Thursday": {
+    "thursday": {
       "type": "boolean",
       "required": true
     },
-    "Friday": {
+    "friday": {
       "type": "boolean",
       "required": true
     },
-    "Saturday": {
+    "saturday": {
       "type": "boolean",
       "required": true
     },
-    "Sunday": {
+    "sunday": {
       "type": "boolean",
       "required": true
     }

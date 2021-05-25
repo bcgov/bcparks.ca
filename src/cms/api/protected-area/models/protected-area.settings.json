@@ -11,48 +11,48 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "ORCS": {
+    "orcs": {
       "type": "integer",
       "unique": true,
       "required": true
     },
-    "ProtectedAreaName": {
+    "protectedAreaName": {
       "type": "string"
     },
-    "TotalArea": {
+    "totalArea": {
       "type": "decimal"
     },
-    "UplandArea": {
+    "uplandArea": {
       "type": "decimal"
     },
-    "MarineArea": {
+    "marineArea": {
       "type": "decimal"
     },
-    "MarineProtectedArea": {
+    "marineProtectedArea": {
       "type": "string",
       "maxLength": 1,
       "minLength": 1,
       "regex": "[Y,N]"
     },
-    "Type": {
+    "type": {
       "type": "string"
     },
-    "Class": {
+    "class": {
       "type": "string"
     },
-    "EstablishedDate": {
+    "establishedDate": {
       "type": "date"
     },
-    "RepealedDate": {
+    "repealedDate": {
       "type": "date"
     },
-    "Status": {
+    "status": {
       "type": "string"
     },
-    "URL": {
+    "url": {
       "type": "string"
     },
-    "TypeCode": {
+    "typeCode": {
       "type": "enumeration",
       "enum": [
         "PK",
@@ -62,31 +62,31 @@
         "CS"
       ]
     },
-    "Latitude": {
-      "type": "string"
+    "latitude": {
+      "type": "float"
     },
-    "Longitude": {
-      "type": "string"
+    "longitude": {
+      "type": "float"
     },
-    "MapZoom": {
-      "type": "string"
+    "mapZoom": {
+      "type": "integer"
     },
-    "Sites": {
-      "collection": "site",
-      "via": "ProtectedArea"
-    },
-    "ManagementAreas": {
-      "collection": "management-area",
-      "via": "ProtectedArea"
-    },
-    "DayUsePass": {
+    "isDayUsePass": {
       "type": "boolean"
     },
-    "FogZone": {
+    "isFogZone": {
       "type": "boolean"
     },
-    "fire_zones": {
-      "collection": "fire-zone"
+    "featureId": {
+      "type": "integer"
+    },
+    "managementAreas": {
+      "via": "protectedArea",
+      "collection": "management-area"
+    },
+    "sites": {
+      "via": "protectedArea",
+      "collection": "site"
     },
     "activities": {
       "collection": "activity"
@@ -94,8 +94,8 @@
     "facilities": {
       "collection": "facility"
     },
-    "FeatureId": {
-      "type": "integer"
+    "fireZones": {
+      "collection": "fire-zone"
     }
   }
 }

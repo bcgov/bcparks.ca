@@ -10,13 +10,13 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "AssetTypeNumber": {
+    "assetTypeNumber": {
       "type": "integer"
     },
-    "AssetType": {
+    "assetType": {
       "type": "string"
     },
-    "AssetCategory": {
+    "assetCategory": {
       "type": "string"
     }
   }

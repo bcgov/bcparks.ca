@@ -9,12 +9,14 @@ A data driven progressive mobile web site that provides potential BC Park visito
 The production application can be accessed here: TBD
 
 Development Environment:
-| Name       | URL                                                            | Notes         |
-|------------|----------------------------------------------------------------|---------------|
-| Frontend   | http://web-61d198-test.apps.silver.devops.gov.bc.ca/           |               |
-| .NET API   | http://api-61d198-test.apps.silver.devops.gov.bc.ca/swagger    | (Still a WIP) |
-| Gatsby     | http://staging-61d198-test.apps.silver.devops.gov.bc.ca/       |               |
-| Strapi     | http://cms-61d198-test.apps.silver.devops.gov.bc.ca/           |               |
+| Name       | URL                                                              | Notes         |
+|------------|------------------------------------------------------------------|---------------|
+| Frontend   | http://web-61d198-dev.apps.silver.devops.gov.bc.ca/              |               |
+| .NET API   | http://api-61d198-dev.apps.silver.devops.gov.bc.ca/swagger       | WIP           |
+| Gatsby     | http://staging-61d198-dev.apps.silver.devops.gov.bc.ca/          |               |
+| CMS        | http://cms-61d198-dev.apps.silver.devops.gov.bc.ca/              |               |
+| API Doc    | http://cms-61d198-dev.apps.silver.devops.gov.bc.ca/documentation |               |
+| GraphQl    | http://cms-61d198-dev.apps.silver.devops.gov.bc.ca/graphql       |               |
 
 
 

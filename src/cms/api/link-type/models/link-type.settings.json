@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "link_types",
   "info": {
-    "name": "LinkType"
+    "name": "LinkType",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -10,7 +11,7 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "Type": {
+    "type": {
       "type": "string"
     }
   }

@@ -1,8 +1,9 @@
 "use strict";
 
 const permission = require("./loadPermissions");
-const parData = require("./loadPAR");
+const parData = require("./loadPar");
 const otherData = require("./loadOtherData");
+const publicAdvisory = require("./loadPublicAdvisory");
 
 const isFirstRun = async () => {
   const pluginStore = strapi.store({
@@ -18,7 +19,6 @@ const isFirstRun = async () => {
 const loadData = async () => {
   try {
     await parData.loadParData();
-    await permission.createApiToken();
     await otherData.loadBusinessHours();
     await otherData.loadStatutoryHolidays();
 
@@ -36,11 +36,19 @@ const loadData = async () => {
     await otherData.loadFireCentreZoneXref();
     await otherData.loadFireBanProhibition();
 
-    await otherData.loadPublicAdvisory();
+    await publicAdvisory.loadPublicAdvisory();
     await otherData.loadParkActivityXref();
     await otherData.loadParkFacilityXref();
     await otherData.loadParkFireZoneXref();
     await otherData.loadParkFogZoneXref();
+  } catch (error) {
+    strapi.log.error(error);
+  }
+};
+
+const loadAdditionalData = async () => {
+  try {
+    await parData.loadAdditionalParData();
   } catch (error) {
     strapi.log.error(error);
   }
@@ -51,8 +59,13 @@ const seedData = async () => {
   const setupCMS = await isFirstRun();
   if (setupCMS) {
     await permission.createAdmin();
+    await permission.createApiToken();
     await permission.setDefaultPermissions();
-    await loadData();
+    Promise.resolve(await loadData()).then(async () => {
+      Promise.resolve(await loadAdditionalData()).then(() => {
+        strapi.log.info("------Data load completed------");
+      });
+    });
   }
 };
 

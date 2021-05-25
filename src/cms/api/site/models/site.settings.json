@@ -11,41 +11,41 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "SiteName": {
+    "siteName": {
       "type": "string"
     },
-    "SiteNumber": {
+    "siteNumber": {
       "type": "integer"
     },
-    "Status": {
+    "status": {
       "type": "string"
     },
-    "EstablishedDate": {
+    "establishedDate": {
       "type": "date"
     },
-    "RepealedDate": {
+    "repealedDate": {
       "type": "date"
     },
-    "URL": {
+    "url": {
       "type": "string"
     },
-    "Latitude": {
-      "type": "string"
+    "latitude": {
+      "type": "float"
     },
-    "Longitude": {
-      "type": "string"
+    "longitude": {
+      "type": "float"
     },
-    "MapZoom": {
-      "type": "string"
+    "mapZoom": {
+      "type": "integer"
     },
-    "ProtectedArea": {
-      "via": "Sites",
-      "model": "protected-area"
-    },
-    "ORCSSiteNumber": {
+    "orcsSiteNumber": {
       "type": "string",
       "unique": true,
       "required": true
+    },
+    "protectedArea": {
+      "via": "sites",
+      "model": "protected-area"
     }
   }
 }
