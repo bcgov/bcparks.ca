@@ -259,7 +259,6 @@ export default function AdvisoryDashboard({ page: { setError } }) {
             .map((p) => p.protectedAreaName)
             .join(", ");
           if (parksCount > displayCount) {
-            // parks = `${parks}... (${parksCount} parks)`;
             parks = `${parks}... +${parksCount - displayCount} more`;
           }
           return parks;
@@ -283,7 +282,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         paddingRight: "10px",
       },
       render: (rowData) => (
-        <Link to={`update-advisory/${rowData.id}`}>
+        <Link to={`advisory-summary/${rowData.id}`}>
           <IconButton>
             <MoreVertIcon />
           </IconButton>

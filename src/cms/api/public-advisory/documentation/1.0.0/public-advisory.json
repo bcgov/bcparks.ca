@@ -808,19 +808,19 @@
                     "type": "string"
                   }
                 },
-                "activities": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "facilities": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "fireZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "parkActivities": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "parkFacilities": {
                   "type": "array",
                   "items": {
                     "type": "string"
