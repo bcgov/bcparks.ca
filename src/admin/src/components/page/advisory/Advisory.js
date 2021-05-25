@@ -62,7 +62,7 @@ export default function Advisory({ mode, page: { setError } }) {
   const [isStatHoliday, setIsStatHoliday] = useState(false);
   const [isAfterHours, setIsAfterHours] = useState(false);
   const [isAfterHourPublish, setIsAfterHourPublish] = useState(false);
-  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [isConfirmation, setIsConfirmation] = useState(false);
   const [confirmationText, setConfirmationText] = useState("");
   const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -70,6 +70,7 @@ export default function Advisory({ mode, page: { setError } }) {
   const durationUnitRef = useRef("h");
   const durationIntervalRef = useRef(0);
   const advisoryDateRef = useRef(moment().tz("America/Vancouver"));
+  const [advisoryId, setAdvisoryId] = useState();
 
   const { id } = useParams();
 
@@ -219,6 +220,7 @@ export default function Advisory({ mode, page: { setError } }) {
               });
             }
             setLinkIds();
+            setIsLoadingPage(false);
           })
           .catch((error) => {
             console.log("error occurred fetching Public Advisory data", error);
@@ -235,8 +237,8 @@ export default function Advisory({ mode, page: { setError } }) {
           status: 400,
           message: "Advisory Id is not found",
         });
+        setIsLoadingPage(false);
       }
-      setIsLoadingPage(false);
     }
   }, [
     id,
@@ -399,11 +401,6 @@ export default function Advisory({ mode, page: { setError } }) {
     setSubmittedBy,
     mode,
   ]);
-
-  const closeConfirmation = () => {
-    setIsConfirmationOpen(false);
-    setToDashboard(true);
-  };
 
   const onDrop = (picture) => {
     setPictures([...pictures, picture]);
@@ -577,10 +574,11 @@ export default function Advisory({ mode, page: { setError } }) {
           .post(`api/add/public-advisories`, newAdvisory, {
             headers: { Authorization: `Bearer ${keycloak.idToken}` },
           })
-          .then(() => {
-            setIsConfirmationOpen(true);
+          .then((res) => {
+            setAdvisoryId(res.data.id);
             setIsSubmitting(false);
             setIsSavingDraft(false);
+            setIsConfirmation(true);
           })
           .catch((error) => {
             console.log("error occurred", error);
@@ -651,10 +649,11 @@ export default function Advisory({ mode, page: { setError } }) {
           .put(`api/update/public-advisories/${id}`, updatedAdvisory, {
             headers: { Authorization: `Bearer ${keycloak.idToken}` },
           })
-          .then(() => {
-            setIsConfirmationOpen(true);
+          .then((res) => {
+            setAdvisoryId(res.data.id);
             setIsSubmitting(false);
             setIsSavingDraft(false);
+            setIsConfirmation(true);
           })
           .catch((error) => {
             console.log("error occurred", error);
@@ -681,6 +680,17 @@ export default function Advisory({ mode, page: { setError } }) {
 
   if (toError) {
     return <Redirect to="/bcparks/error" />;
+  }
+
+  if (isConfirmation) {
+    return (
+      <Redirect
+        to={{
+          pathname: `/bcparks/advisory-summary/${advisoryId}`,
+          confirmationText: confirmationText,
+        }}
+      />
+    );
   }
 
   return (
@@ -768,10 +778,6 @@ export default function Advisory({ mode, page: { setError } }) {
                 isSavingDraft,
                 updateAdvisory,
                 setToDashboard,
-                isConfirmationOpen,
-                setIsConfirmationOpen,
-                confirmationText,
-                closeConfirmation,
               }}
             />
           )}

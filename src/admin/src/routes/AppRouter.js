@@ -4,6 +4,7 @@ import Home from "../components/page/home/Home";
 import Error from "../components/page/error/Error";
 import AdvisoryDashboard from "../components/page/advisoryDashboard/AdvisoryDashboard";
 import Advisory from "../components/page/advisory/Advisory";
+import AdvisorySummary from "../components/page/advisorySummary/AdvisorySummary";
 
 function AppRouter() {
   const [error, setError] = useState({});
@@ -23,6 +24,9 @@ function AppRouter() {
           </Route>
           <Route path="/bcparks/update-advisory/:id">
             <Advisory mode="update" page={{ setError }} />
+          </Route>
+          <Route path="/bcparks/advisory-summary/:id">
+            <AdvisorySummary page={{ setError }} />
           </Route>
           <Route path="/bcparks/error">
             <Error page={{ error }} />
