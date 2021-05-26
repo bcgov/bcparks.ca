@@ -12,7 +12,7 @@
     \"Enrich\": [ \"FromLogContext\", \"WithMachineName\", \"WithThreadId\", \"WithExceptionDetails\" ]
   },
   \"Jwt\": {
-    \"Authority\": \"$REACT_APP_KEYCLOAK_AUTH_URL\",
+    \"Authority\": \"$REACT_APP_KEYCLOAK_AUTH_URL/realms/$REACT_APP_KEYCLOAK_REALM\",
     \"Audience\": \"$REACT_APP_KEYCLOAK_CLIENT_ID\"
   },
   \"CmsUrl\": \"$REACT_APP_CMS_BASE_URL\",
