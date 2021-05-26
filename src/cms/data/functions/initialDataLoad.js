@@ -46,35 +46,35 @@ const loadData = async () => {
   }
 };
 
-const rewriteData = async () => {
-  try {
-    await Promise.all([
-      strapi.services["protected-area"].delete(),
-      strapi.services["section"].delete(),
-      strapi.services["management-area"].delete(),
-      strapi.services["region"].delete(),
-      strapi.services["site"].delete(),
-      strapi.services["public-advisory"].delete(),
-      strapi.services["access-status"].delete(),
-      strapi.services["event-type"].delete(),
-      strapi.services["public-advisory-event"].delete(),
-      strapi.services["fire-ban-prohibition"].delete(),
-      strapi.services["fire-centre"].delete(),
-      strapi.services["fire-zone"].delete(),
-      strapi.services["activity-type"].delete(),
-      strapi.services["park-activity"].delete(),
-      strapi.services["facility-type"].delete(),
-      strapi.services["park-facility"].delete(),
-      strapi.services["advisory-status"].delete(),
-      strapi.services["link-type"].delete(),
-      strapi.services["urgency"].delete(),
-    ]).then(() => {
-      loadData();
-    });
-  } catch (error) {
-    strapi.log.error(error);
-  }
-};
+// const rewriteData = async () => {
+//   try {
+//     await Promise.all([
+//       strapi.services["protected-area"].delete(),
+//       strapi.services["section"].delete(),
+//       strapi.services["management-area"].delete(),
+//       strapi.services["region"].delete(),
+//       strapi.services["site"].delete(),
+//       strapi.services["public-advisory"].delete(),
+//       strapi.services["access-status"].delete(),
+//       strapi.services["event-type"].delete(),
+//       strapi.services["public-advisory-event"].delete(),
+//       strapi.services["fire-ban-prohibition"].delete(),
+//       strapi.services["fire-centre"].delete(),
+//       strapi.services["fire-zone"].delete(),
+//       strapi.services["activity-type"].delete(),
+//       strapi.services["park-activity"].delete(),
+//       strapi.services["facility-type"].delete(),
+//       strapi.services["park-facility"].delete(),
+//       strapi.services["advisory-status"].delete(),
+//       strapi.services["link-type"].delete(),
+//       strapi.services["urgency"].delete(),
+//     ]).then(() => {
+//       loadData();
+//     });
+//   } catch (error) {
+//     strapi.log.error(error);
+//   }
+// };
 
 const seedData = async () => {
   // Load data and set default public roles on first run
@@ -86,7 +86,7 @@ const seedData = async () => {
     await loadData();
     strapi.log.info("------Data load completed------");
   }
-  rewriteData();
+  await loadData();
 };
 
 module.exports = {
