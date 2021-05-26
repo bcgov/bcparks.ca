@@ -5,9 +5,11 @@ import Error from "../components/page/error/Error";
 import AdvisoryDashboard from "../components/page/advisoryDashboard/AdvisoryDashboard";
 import Advisory from "../components/page/advisory/Advisory";
 import AdvisorySummary from "../components/page/advisorySummary/AdvisorySummary";
+import { PrivateRoute } from "../utils/PrivateRoute";
 
 function AppRouter() {
   const [error, setError] = useState({});
+
   return (
     <div>
       <BrowserRouter>
@@ -16,18 +18,30 @@ function AppRouter() {
           <Route exact path="/bcparks">
             <Home page={{ setError }} />
           </Route>
-          <Route path="/bcparks/advisory-dash">
-            <AdvisoryDashboard page={{ setError }} />
-          </Route>
-          <Route path="/bcparks/create-advisory">
-            <Advisory mode="create" page={{ setError }} />
-          </Route>
-          <Route path="/bcparks/update-advisory/:id">
-            <Advisory mode="update" page={{ setError }} />
-          </Route>
-          <Route path="/bcparks/advisory-summary/:id">
-            <AdvisorySummary page={{ setError }} />
-          </Route>
+          <PrivateRoute
+            roles={["test-role"]}
+            path="/bcparks/advisory-dash"
+            component={AdvisoryDashboard}
+            props={{ page: { setError } }}
+          />
+          <PrivateRoute
+            roles={["test-role"]}
+            path="/bcparks/create-advisory"
+            component={Advisory}
+            props={{ mode: "create", page: { setError } }}
+          />
+          <PrivateRoute
+            roles={["test-role"]}
+            path="/bcparks/update-advisory/:id"
+            component={Advisory}
+            props={{ mode: "update", page: { setError } }}
+          />
+          <PrivateRoute
+            roles={["test-role"]}
+            path="/bcparks/advisory-summary/:id"
+            component={AdvisorySummary}
+            props={{ page: { setError } }}
+          />
           <Route path="/bcparks/error">
             <Error page={{ error }} />
           </Route>

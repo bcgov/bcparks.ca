@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_activities",
+  "info": {
+    "name": "ParkActivity",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "isActivityOpen": {
+      "type": "boolean"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "protectedArea": {
+      "model": "protected-area",
+      "via": "parkActivities"
+    },
+    "site": {
+      "model": "site",
+      "via": "parkActivities"
+    },
+    "activityType": {
+      "model": "activity-type"
+    }
+  }
+}

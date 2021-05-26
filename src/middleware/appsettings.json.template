@@ -12,10 +12,10 @@
     \"Enrich\": [ \"FromLogContext\", \"WithMachineName\", \"WithThreadId\", \"WithExceptionDetails\" ]
   },
   \"Jwt\": {
-    \"Authority\": \"{$REACT_APP_KEYCLOAK_AUTH_URL}\",
-    \"Audience\": \"${REACT_APP_KEYCLOAK_CLIENT_ID}\"
+    \"Authority\": \"$REACT_APP_KEYCLOAK_AUTH_URL\",
+    \"Audience\": \"$REACT_APP_KEYCLOAK_CLIENT_ID\"
   },
-  \"CmsUrl\": \"${REACT_APP_CMS_BASE_URL}\",
-  \"ApiToken\":\"${API_TOKEN}\",
-  \"StaffAppUrl\": \"${REACT_APP_FRONTEND_BASE_URL}\"
+  \"CmsUrl\": \"$REACT_APP_CMS_BASE_URL\",
+  \"ApiToken\":\"$API_TOKEN\",
+  \"StaffAppUrl\": \"$REACT_APP_FRONTEND_BASE_URL\"
 }

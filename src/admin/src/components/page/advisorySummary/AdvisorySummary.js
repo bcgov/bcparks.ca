@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, useLocation, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useKeycloak } from "@react-keycloak/web";
 import { cmsAxios } from "../../../axios_config";
 import "./AdvisorySummary.css";
 import Header from "../../composite/header/Header";
@@ -14,66 +13,65 @@ import { Button } from "shared-components/build/components/button/Button";
 
 export default function AdvisorySummary({ page: { setError } }) {
   const [isLoadingPage, setIsLoadingPage] = useState(true);
+  const [isPublished, setIsPublished] = useState(false);
   const [toError, setToError] = useState(false);
   const [advisory, setAdvisory] = useState({});
   const [pageUrls, setPageUrls] = useState("");
   const [toDashboard, setToDashboard] = useState(false);
-  const { keycloak, initialized } = useKeycloak();
+  const [toUpdate, setToUpdate] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const { id } = useParams();
   const { confirmationText } = useLocation();
+  const { ClipboardItem } = window;
 
   useEffect(() => {
-    if (!initialized) {
-      setIsLoadingPage(true);
-    } else if (!keycloak.authenticated) {
+    if (parseInt(id)) {
+      cmsAxios
+        .get(`/public-advisories/${id}?_publicationState=preview`)
+        .then((res) => {
+          const advisoryData = res.data;
+          setAdvisory(advisoryData);
+          const pageUrlInfo = [];
+          const isAdvisoryPublished =
+            advisoryData.advisoryStatus.code === "PUB";
+          advisoryData.protectedAreas.map((p) => {
+            const url = isAdvisoryPublished
+              ? p.url
+              : p.url.replace("bcparks", "test.bcparks");
+            return pageUrlInfo.push(
+              "<a href='" + url + "'>" + p.protectedAreaName + "</a>"
+            );
+          });
+          const pageUrlText = pageUrlInfo.join("<br/>");
+          setPageUrls(pageUrlText);
+          setIsPublished(isAdvisoryPublished);
+          setIsLoadingPage(false);
+        })
+        .catch((error) => {
+          console.log("error occurred fetching Public Advisory data", error);
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Error fetching advisory",
+          });
+          setIsLoadingPage(false);
+        });
+    } else {
       setToError(true);
       setError({
-        status: 401,
-        message: "Login required",
+        status: 400,
+        message: "Advisory Id is not found",
       });
-    } else {
-      if (parseInt(id)) {
-        cmsAxios
-          .get(`/public-advisories/${id}?_publicationState=preview`)
-          .then((res) => {
-            const advisoryData = res.data;
-            setAdvisory(advisoryData);
-            const pageUrlInfo = [];
-            advisoryData.protectedAreas.map((p) => {
-              return pageUrlInfo.push(p.url);
-            });
-            const pageUrlText = pageUrlInfo.join("\n");
-            setPageUrls(pageUrlText);
-            setIsLoadingPage(false);
-          })
-          .catch((error) => {
-            console.log("error occurred fetching Public Advisory data", error);
-            setToError(true);
-            setError({
-              status: 500,
-              message: "Error fetching advisory",
-            });
-            setIsLoadingPage(false);
-          });
-      } else {
-        setToError(true);
-        setError({
-          status: 400,
-          message: "Advisory Id is not found",
-        });
-        setIsLoadingPage(false);
-      }
+      setIsLoadingPage(false);
     }
   }, [
     id,
-    initialized,
-    keycloak,
     setError,
     setToError,
     setIsLoadingPage,
     setAdvisory,
     setPageUrls,
+    setIsPublished,
   ]);
 
   const handleOpenSnackBar = () => {
@@ -90,6 +88,10 @@ export default function AdvisorySummary({ page: { setError } }) {
 
   if (toDashboard) {
     return <Redirect to="/bcparks/advisory-dash" />;
+  }
+
+  if (toUpdate) {
+    return <Redirect to={`/bcparks/update-advisory/${id}`} />;
   }
 
   if (toError) {
@@ -113,11 +115,12 @@ export default function AdvisorySummary({ page: { setError } }) {
           )}
           {!isLoadingPage && (
             <div className="container-fluid">
-              <Alert severity="success">
-                {confirmationText ||
-                  "Your advisory has been updated successfully!"}
-              </Alert>
-              <br />
+              {confirmationText && (
+                <>
+                  <Alert severity="success">{confirmationText}</Alert>
+                  <br />
+                </>
+              )}
               <div className="row">
                 <div className="col-lg-5 col-md-6 col-12 ad-label">
                   Headline
@@ -132,36 +135,46 @@ export default function AdvisorySummary({ page: { setError } }) {
                   {advisory.description}
                 </div>
               </div>
-              <div className="row">
-                <div className="col-lg-5 col-md-6 col-12 ad-label">
-                  Access Status
+              {advisory.accessStatus && (
+                <div className="row">
+                  <div className="col-lg-5 col-md-6 col-12 ad-label">
+                    Access Status
+                  </div>
+                  <div className="col-lg-7 col-md-6 col-12">
+                    {advisory.accessStatus.accessStatus}
+                  </div>
                 </div>
-                <div className="col-lg-7 col-md-6 col-12">
-                  {advisory.accessStatus.accessStatus}
+              )}
+              {advisory.eventType && (
+                <div className="row">
+                  <div className="col-lg-5 col-md-6 col-12 ad-label">
+                    Event Type
+                  </div>
+                  <div className="col-lg-7 col-md-6 col-12">
+                    {advisory.eventType.eventType}
+                  </div>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-5 col-md-6 col-12 ad-label">
-                  Event Type
+              )}
+              {advisory.urgency && (
+                <div className="row">
+                  <div className="col-lg-5 col-md-6 col-12 ad-label">
+                    Urgency
+                  </div>
+                  <div className="col-lg-7 col-md-6 col-12">
+                    {advisory.urgency.urgency}
+                  </div>
                 </div>
-                <div className="col-lg-7 col-md-6 col-12">
-                  {advisory.eventType.eventType}
+              )}
+              {advisory.advisoryStatus && (
+                <div className="row">
+                  <div className="col-lg-5 col-md-6 col-12 ad-label">
+                    Advisory Status
+                  </div>
+                  <div className="col-lg-7 col-md-6 col-12">
+                    {advisory.advisoryStatus.advisoryStatus}
+                  </div>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-5 col-md-6 col-12 ad-label">Urgency</div>
-                <div className="col-lg-7 col-md-6 col-12">
-                  {advisory.urgency.urgency}
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-5 col-md-6 col-12 ad-label">
-                  Advisory Status
-                </div>
-                <div className="col-lg-7 col-md-6 col-12">
-                  {advisory.advisoryStatus.advisoryStatus}
-                </div>
-              </div>
+              )}
               {advisory.regions.length > 0 && (
                 <div className="row">
                   <div className="col-lg-5 col-md-6 col-12 ad-label">
@@ -204,7 +217,10 @@ export default function AdvisorySummary({ page: { setError } }) {
                   <FileCopyOutlinedIcon
                     className="copyIcon"
                     onClick={() => {
-                      navigator.clipboard.writeText(pageUrls);
+                      const type = "text/html";
+                      const blob = new Blob([pageUrls], { type });
+                      let data = [new ClipboardItem({ [type]: blob })];
+                      navigator.clipboard.write(data);
                       handleOpenSnackBar();
                     }}
                   />
@@ -213,7 +229,11 @@ export default function AdvisorySummary({ page: { setError } }) {
                   {advisory.protectedAreas.map((p) => (
                     <div key={p.id}>
                       <a
-                        href={p.url}
+                        href={
+                          isPublished
+                            ? p.url
+                            : p.url.replace("bcparks", "test.bcparks")
+                        }
                         rel="noreferrer"
                         target="_blank"
                         className="ad-anchor"
@@ -226,11 +246,19 @@ export default function AdvisorySummary({ page: { setError } }) {
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-12 col-md-12 col-sm-12 button-row">
+                <div className="col-lg-3 col-md-4"></div>
+                <div className="col-lg-7 col-md-8 col-sm-12 button-row ad-btn-group">
                   <br />
                   <Button
-                    label="Back to Dashboard"
-                    styling="bcgov-normal-blue btn"
+                    label="Edit"
+                    styling="bcgov-normal-yellow btn"
+                    onClick={() => {
+                      setToUpdate(true);
+                    }}
+                  />
+                  <Button
+                    label="Back"
+                    styling="bcgov-normal-white btn"
                     onClick={() => {
                       setToDashboard(true);
                     }}

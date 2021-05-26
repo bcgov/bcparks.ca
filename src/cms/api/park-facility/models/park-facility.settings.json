@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_facilities",
+  "info": {
+    "name": "ParkFacility",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "isFacilityOpen": {
+      "type": "boolean"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "protectedArea": {
+      "model": "protected-area",
+      "via": "parkFacilities"
+    },
+    "site": {
+      "model": "site",
+      "via": "parkFacilities"
+    },
+    "facilityType": {
+      "model": "facility-type"
+    }
+  }
+}
