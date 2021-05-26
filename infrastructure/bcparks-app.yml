@@ -271,6 +271,26 @@ objects:
               - name: DB_HOST
                 value: ${DB_POD}
               # PostgreSQL environment variables
+              - name: PGPASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    key: DATABASE_PASSWORD
+                    name: bcparks-secrets
+              - name: POSTGRESQL_USER
+                valueFrom:
+                  secretKeyRef:
+                    key: DATABASE_USERNAME
+                    name: bcparks-secrets
+              - name: POSTGRESQL_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    key: DATABASE_PASSWORD
+                    name: bcparks-secrets
+              - name: POSTGRESQL_DATABASE
+                valueFrom:
+                  secretKeyRef:
+                    key: DATABASE_NAME
+                    name: bcparks-secrets
             image: >-
               image-registry.openshift-image-registry.svc:5000/openshift/postgresql:12
             imagePullPolicy: IfNotPresent
