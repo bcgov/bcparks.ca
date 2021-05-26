@@ -105,6 +105,9 @@ objects:
             ports:
               - containerPort: 3000
               - containerPort: 8080
+            envFrom:
+              - secretRef:
+                  name: bcparks-secrets
             resources:
               limits:
                 cpu: 2500m
@@ -166,9 +169,9 @@ objects:
       weight: 100
     port:
       targetPort: npm
-    # tls:
-    #     insecureEdgeTerminationPolicy: Redirect
-    #     termination: edge
+    tls:
+        insecureEdgeTerminationPolicy: Allow
+        termination: edge
 
 ### CMS
 - apiVersion: apps.openshift.io/v1
@@ -323,9 +326,9 @@ objects:
       weight: 100
     port:
       targetPort: 1337
-    # tls:
-    #     insecureEdgeTerminationPolicy: Redirect
-    #     termination: edge
+    tls:
+        insecureEdgeTerminationPolicy: Allow
+        termination: edge
 
 ### Database
 - apiVersion: apps.openshift.io/v1
@@ -400,6 +403,9 @@ objects:
                 name: ${DB_POD}-data
               - mountPath: /var/run/postgresql
                 name: ${DB_POD}-run
+            envFrom:
+              - secretRef:
+                  name: bcparks-secrets
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         volumes:
@@ -480,6 +486,9 @@ objects:
             name: ${STAGING_POD}
             ports:
               - containerPort: 8000
+            envFrom:
+              - secretRef:
+                  name: bcparks-secrets
     triggers:
       - type: ConfigChange
       - type: ImageChange
@@ -528,9 +537,9 @@ objects:
       weight: 100
     port:
       targetPort: ${STAGING_POD}
-    # tls:
-    #   insecureEdgeTerminationPolicy: Redirect
-    #   termination: edge
+    tls:
+      insecureEdgeTerminationPolicy: Allow
+      termination: edge
 
 ### API
 - apiVersion: apps.openshift.io/v1
@@ -565,6 +574,9 @@ objects:
             name: ${API_POD}
             ports:
               - containerPort: 5000
+            envFrom:
+              - secretRef:
+                  name: bcparks-secrets        
     triggers:
       - type: ConfigChange
       - type: ImageChange
@@ -614,9 +626,9 @@ objects:
       weight: 100
     port:
       targetPort: ${API_POD}
-    # tls:
-    #   insecureEdgeTerminationPolicy: Redirect
-    #   termination: edge
+    tls:
+      insecureEdgeTerminationPolicy: Allow
+      termination: edge
     
 ### Network Policy
 - apiVersion: networking.k8s.io/v1

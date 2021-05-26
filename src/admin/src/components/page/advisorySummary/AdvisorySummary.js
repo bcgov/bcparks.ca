@@ -135,36 +135,46 @@ export default function AdvisorySummary({ page: { setError } }) {
                   {advisory.description}
                 </div>
               </div>
-              <div className="row">
-                <div className="col-lg-5 col-md-6 col-12 ad-label">
-                  Access Status
+              {advisory.accessStatus && (
+                <div className="row">
+                  <div className="col-lg-5 col-md-6 col-12 ad-label">
+                    Access Status
+                  </div>
+                  <div className="col-lg-7 col-md-6 col-12">
+                    {advisory.accessStatus.accessStatus}
+                  </div>
                 </div>
-                <div className="col-lg-7 col-md-6 col-12">
-                  {advisory.accessStatus.accessStatus}
+              )}
+              {advisory.eventType && (
+                <div className="row">
+                  <div className="col-lg-5 col-md-6 col-12 ad-label">
+                    Event Type
+                  </div>
+                  <div className="col-lg-7 col-md-6 col-12">
+                    {advisory.eventType.eventType}
+                  </div>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-5 col-md-6 col-12 ad-label">
-                  Event Type
+              )}
+              {advisory.urgency && (
+                <div className="row">
+                  <div className="col-lg-5 col-md-6 col-12 ad-label">
+                    Urgency
+                  </div>
+                  <div className="col-lg-7 col-md-6 col-12">
+                    {advisory.urgency.urgency}
+                  </div>
                 </div>
-                <div className="col-lg-7 col-md-6 col-12">
-                  {advisory.eventType.eventType}
+              )}
+              {advisory.advisoryStatus && (
+                <div className="row">
+                  <div className="col-lg-5 col-md-6 col-12 ad-label">
+                    Advisory Status
+                  </div>
+                  <div className="col-lg-7 col-md-6 col-12">
+                    {advisory.advisoryStatus.advisoryStatus}
+                  </div>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-5 col-md-6 col-12 ad-label">Urgency</div>
-                <div className="col-lg-7 col-md-6 col-12">
-                  {advisory.urgency.urgency}
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-5 col-md-6 col-12 ad-label">
-                  Advisory Status
-                </div>
-                <div className="col-lg-7 col-md-6 col-12">
-                  {advisory.advisoryStatus.advisoryStatus}
-                </div>
-              </div>
+              )}
               {advisory.regions.length > 0 && (
                 <div className="row">
                   <div className="col-lg-5 col-md-6 col-12 ad-label">
