@@ -40,7 +40,7 @@ const loadData = async () => {
         otherData.loadFireCentreZoneXref(),
         otherData.loadParkFireZoneXref(),
         otherData.loadParkFogZoneXref(),
-        parData.loadAdditionalParData,
+        // parData.loadAdditionalParData,
       ]).then(() => {
         strapi.log.info("------Data load completed------");
       });
@@ -88,7 +88,7 @@ const seedData = async () => {
     await permission.setDefaultPermissions();
     await loadData();
   }
-  rewriteData();
+  await rewriteData();
 };
 
 module.exports = {
