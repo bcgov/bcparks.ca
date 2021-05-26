@@ -130,7 +130,9 @@ namespace BCParksApi
             });
 
             app.UseRouting();
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins(_configuration["StaffAppUrl"]));
+            //To be reverted
+            //app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins(_configuration["StaffAppUrl"]));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
             app.UseAuthentication();
             app.UseAuthorization();
 

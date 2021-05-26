@@ -55,8 +55,7 @@ const loadAdditionalData = async () => {
 const seedData = async () => {
   // Load data and set default public roles on first run
   const setupCMS = await isFirstRun();
-  // To be reverted
-  if (true) {
+  if (setupCMS) {
     await permission.createAdmin();
     await permission.createApiToken();
     await permission.setDefaultPermissions();
