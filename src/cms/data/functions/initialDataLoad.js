@@ -18,31 +18,27 @@ const isFirstRun = async () => {
 
 const loadData = async () => {
   try {
-    await parData.loadParData();
-    await otherData.loadBusinessHours();
-    await otherData.loadStatutoryHolidays();
-
-    await otherData.loadAccessStatus();
-    await otherData.loadAdvisoryStatus();
-    await otherData.loadEventType();
-    await otherData.loadLinkType();
-
-    await otherData.loadActivityType();
-    await otherData.loadFacilityType();
-    await otherData.loadUrgency();
-
-    await otherData.loadFireCentre();
-    await otherData.loadFireZone();
-    await otherData.loadFireCentreZoneXref();
-    await otherData.loadFireBanProhibition();
-
-    await publicAdvisory.loadPublicAdvisory();
-
-    // await not required for the data loads below
-    otherData.loadParkActivity();
-    otherData.loadParkFacility();
-    otherData.loadParkFireZoneXref();
-    otherData.loadParkFogZoneXref();
+    await Promise.all([
+      parData.loadParData(),
+      otherData.loadBusinessHours(),
+      otherData.loadStatutoryHolidays(),
+      otherData.loadAccessStatus(),
+      otherData.loadAdvisoryStatus(),
+      otherData.loadEventType(),
+      otherData.loadLinkType(),
+      otherData.loadActivityType(),
+      otherData.loadFacilityType(),
+      otherData.loadUrgency(),
+      otherData.loadFireCentre(),
+      otherData.loadFireZone(),
+      otherData.loadFireCentreZoneXref(),
+      otherData.loadFireBanProhibition(),
+      publicAdvisory.loadPublicAdvisory(),
+      otherData.loadParkActivity(),
+      otherData.loadParkFacility(),
+      otherData.loadParkFireZoneXref(),
+      otherData.loadParkFogZoneXref(),
+    ]);
   } catch (error) {
     strapi.log.error(error);
   }
@@ -59,15 +55,14 @@ const loadAdditionalData = async () => {
 const seedData = async () => {
   // Load data and set default public roles on first run
   const setupCMS = await isFirstRun();
-  if (setupCMS) {
+  // To be reverted
+  if (true) {
     await permission.createAdmin();
     await permission.createApiToken();
     await permission.setDefaultPermissions();
-    Promise.resolve(await loadData()).then(async () => {
-      Promise.resolve(await loadAdditionalData()).then(() => {
-        strapi.log.info("------Data load completed------");
-      });
-    });
+    await loadData();
+    await loadAdditionalData();
+    strapi.log.info("------Data load completed------");
   }
 };
 
