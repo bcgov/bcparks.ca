@@ -31,15 +31,19 @@ const loadData = async () => {
       otherData.loadUrgency(),
       otherData.loadFireCentre(),
       otherData.loadFireZone(),
-      otherData.loadFireCentreZoneXref(),
       otherData.loadFireBanProhibition(),
       publicAdvisory.loadPublicAdvisory(),
       otherData.loadParkActivity(),
       otherData.loadParkFacility(),
-      otherData.loadParkFireZoneXref(),
-      otherData.loadParkFogZoneXref(),
-    ]).then(() => {
-      parData.loadAdditionalParData;
+    ]).then(async () => {
+      await Promise.all([
+        otherData.loadFireCentreZoneXref(),
+        otherData.loadParkFireZoneXref(),
+        otherData.loadParkFogZoneXref(),
+        parData.loadAdditionalParData,
+      ]).then(() => {
+        strapi.log.info("------Data load completed------");
+      });
     });
   } catch (error) {
     strapi.log.error(error);
@@ -67,8 +71,8 @@ const rewriteData = async () => {
       strapi.services["advisory-status"].delete(),
       strapi.services["link-type"].delete(),
       strapi.services["urgency"].delete(),
-    ]).then(() => {
-      loadData();
+    ]).then(async () => {
+      await loadData();
     });
   } catch (error) {
     strapi.log.error(error);
@@ -83,7 +87,6 @@ const seedData = async () => {
     await permission.createApiToken();
     await permission.setDefaultPermissions();
     await loadData();
-    strapi.log.info("------Data load completed------");
   }
   rewriteData();
 };

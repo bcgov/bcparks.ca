@@ -16,12 +16,12 @@ module.exports = ({ env }) => ({
       options: {
         pool: {
           min: 0,
-          max: 20,
+          max: 30,
           idleTimeoutMillis: 50000,
           createTimeoutMillis: 50000,
           acquireTimeoutMillis: 50000,
-          reapIntervalMillis: 30000,
-          createRetryIntervalMillis: 30000,
+          reapIntervalMillis: 10000,
+          createRetryIntervalMillis: 1000,
           propagateCreateError: false,
         },
       },
