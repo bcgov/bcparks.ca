@@ -141,7 +141,7 @@ jobs:
 
   apply-oc-template:
     runs-on: ubuntu-20.04
-    environment: Development
+    environment: Tools
     steps:
       - name: "Use the OpenShift template"
         uses: actions/checkout@v2
