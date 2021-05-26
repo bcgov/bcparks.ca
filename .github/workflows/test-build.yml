@@ -2,8 +2,8 @@ name: Build Test Branch
 on:
   push:
     branches: [test]
-  # workflow_dispatch:
-  #   branches: [test]
+  workflow_dispatch:
+    branches: [test]
 
 jobs:
   build-frontend:
