@@ -8,12 +8,14 @@
 module.exports = {
   lifecycles: {
     async beforeCreate(data) {
-      data.name = "unassigned";
-      if (data.activityType) {
-        const activityType = await strapi.services["activity-type"].findOne({
-          id: data.activityType,
-        });
-        data.name = activityType.activityName;
+      if (typeof data.activityType !== "object") {
+        data.name = "unassigned";
+        if (data.activityType) {
+          const activityType = await strapi.services["activity-type"].findOne({
+            id: data.activityType,
+          });
+          data.name = activityType.activityName;
+        }
       }
     },
     async beforeUpdate(params, data) {
