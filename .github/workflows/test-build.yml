@@ -168,11 +168,12 @@ jobs:
             -p OC_APP=${{secrets.OC_APP}} \
             -p FRONTEND_POD=web \
             -p FRONTEND_URL=web \
-            -p CMS_POD=strapi \
-            -p CMS_URL=web \
+            -p CMS_POD=cms \
+            -p CMS_URL=cms \
             -p API_POD=api \
             -p API_URL=api \
             -p DB_POD=db \
             -p STAGING_POD=staging \
-            -p WEB_SCHEMA=http \
+            -p WEB_SCHEMA=https \
+            -p URL_STUB="-61d198-${{secrets.OC_APP}}.apps.silver.devops.gov.bc.ca" \
             -n ${{secrets.OPENSHIFT_LICENSE_PLATE}}-${{secrets.OC_APP}} | oc apply -n ${{secrets.OPENSHIFT_LICENSE_PLATE}}-${{secrets.OC_APP}} -f -

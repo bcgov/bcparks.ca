@@ -7,27 +7,29 @@ const fs = require("fs");
 const loadParData = async () => {
   const PAR_URL = "https://a100.gov.bc.ca/pub/parws/protectedLands";
   const currentProtectedAreas = await strapi.services["protected-area"].find();
+  const promises = [];
   if (currentProtectedAreas.length == 0) {
     strapi.log.info("Loading Protected Areas data..");
-    axios
+    const response = await axios
       .get(PAR_URL, {
         params: {
           protectedLandName: "%",
           protectedLandTypeCodes: "CS,ER,PA,PK,RA",
         },
       })
-      .then((response) => {
-        const protectedAreas = response.data.data;
-        return Promise.resolve(
-          protectedAreas.forEach((protectedArea) => {
-            loadProtectedLandData(protectedArea);
-          })
-        );
-      })
       .catch((error) => {
         strapi.log.error(error);
       });
+    if (response.data) {
+      const protectedAreas = response.data.data;
+      strapi.log.info(`Retrieved ${protectedAreas.length} records from PAR`);
+      protectedAreas.forEach((protectedArea) => {
+        const response = loadProtectedLandData(protectedArea);
+        promises.push(response);
+      });
+    }
   }
+  return promises;
 };
 
 const loadAdditionalParData = async () => {
@@ -156,7 +158,7 @@ const loadProtectedLandData = async (protectedLandData) => {
       protectedLandData.sites,
       protectedLandData.orcNumber
     );
-    await strapi.services["protected-area"].create({
+    const protectedArea = await strapi.services["protected-area"].create({
       orcs: protectedLandData.orcNumber,
       protectedAreaName: utf8.encode(protectedLandData.protectedLandName),
       totalArea: protectedLandData.totalArea,
@@ -181,6 +183,7 @@ const loadProtectedLandData = async (protectedLandData) => {
       sites: [...sites],
       managementAreas: [...managementAreas],
     });
+    return protectedArea;
   } catch (error) {
     strapi.log.error(error);
   }
@@ -194,30 +197,30 @@ const loadAdditionalProtectedAreaInfo = async () => {
       "utf8"
     );
     const data = JSON.parse(jsonData);
-    Promise.resolve(
-      data["protectedArea"].forEach(async (p) => {
-        if (p.status === "Active") {
-          const protectedArea = {
-            url: p.url,
-            dayUsePass: p.dayUsePass,
-            fogZone: p.fogZone,
-          };
-          if (p.latitude !== "") {
-            protectedArea.latitude = p.latitude;
-          }
-          if (p.longitude !== "") {
-            protectedArea.longitude = p.longitude;
-          }
-          if (p.mapZoom !== "") {
-            protectedArea.mapZoom = p.mapZoom;
-          }
-          await strapi.services["protected-area"].update(
-            { orcs: p.orcs },
-            protectedArea
-          );
+
+    for await (const p of data["protectedArea"]) {
+      if (p.status === "Active") {
+        const protectedArea = {
+          url: p.url,
+          dayUsePass: p.dayUsePass,
+          fogZone: p.fogZone,
+        };
+        if (p.latitude !== "") {
+          protectedArea.latitude = p.latitude;
         }
-      })
-    );
+        if (p.longitude !== "") {
+          protectedArea.longitude = p.longitude;
+        }
+        if (p.mapZoom !== "") {
+          protectedArea.mapZoom = p.mapZoom;
+        }
+        await strapi.services["protected-area"].update(
+          { orcs: p.orcs },
+          protectedArea
+        );
+      }
+    }
+
     strapi.log.info(
       "loading protected area supplementary information completed..."
     );
@@ -231,50 +234,48 @@ const loadAdditionalSiteInfo = async () => {
     strapi.log.info("loading site supplementary information...");
     var jsonData = fs.readFileSync("./data/site-coordinates.json", "utf8");
     const data = JSON.parse(jsonData);
-    Promise.resolve(
-      data["site"].forEach(async (s) => {
-        if (s.status === "Active") {
-          const site = { url: s.url };
-          if (s.latitude !== "") {
-            site.latitude = s.latitude;
-          }
-          if (s.longitude !== "") {
-            site.longitude = s.longitude;
-          }
-          if (s.mapZoom !== "") {
-            site.mapZoom = s.mapZoom;
-          }
-          await strapi.services["site"]
-            .update({ orcsSiteNumber: s.orcs + "-" + s.orcsSiteNumber }, site)
-            .catch(async () => {
-              strapi.log.info("creating custom site...");
-              const protectedArea = await Promise.resolve(
-                strapi.query("protected-area").findOne({
-                  orcs: s.orcs,
-                })
-              );
-              await strapi.services["site"]
-                .create({
-                  ...site,
-                  orcsSiteNumber: s.orcs + "-" + s.orcsSiteNumber,
-                  siteNumber: s.orcsSiteNumber,
-                  siteName: s.siteName,
-                  status: s.status,
-                  establishedDate: s.establishedDate
-                    ? moment(s.establishedDate, "YYYY-MM-DD").tz("UTC").format()
-                    : null,
-                  repealedDate: s.repealedDate
-                    ? moment(s.repealedDate, "YYYY-MM-DD").tz("UTC").format()
-                    : null,
-                  protectedArea: protectedArea,
-                })
-                .catch((error) => {
-                  strapi.log.error("error creating custom site", error);
-                });
-            });
+    for await (const s of data["site"]) {
+      if (s.status === "Active") {
+        const site = { url: s.url };
+        if (s.latitude !== "") {
+          site.latitude = s.latitude;
         }
-      })
-    );
+        if (s.longitude !== "") {
+          site.longitude = s.longitude;
+        }
+        if (s.mapZoom !== "") {
+          site.mapZoom = s.mapZoom;
+        }
+        await strapi.services["site"]
+          .update({ orcsSiteNumber: s.orcs + "-" + s.orcsSiteNumber }, site)
+          .catch(async () => {
+            strapi.log.info("creating custom site...");
+            const protectedArea = await Promise.resolve(
+              strapi.query("protected-area").findOne({
+                orcs: s.orcs,
+              })
+            );
+            await strapi.services["site"]
+              .create({
+                ...site,
+                orcsSiteNumber: s.orcs + "-" + s.orcsSiteNumber,
+                siteNumber: s.orcsSiteNumber,
+                siteName: s.siteName,
+                status: s.status,
+                establishedDate: s.establishedDate
+                  ? moment(s.establishedDate, "YYYY-MM-DD").tz("UTC").format()
+                  : null,
+                repealedDate: s.repealedDate
+                  ? moment(s.repealedDate, "YYYY-MM-DD").tz("UTC").format()
+                  : null,
+                protectedArea: protectedArea,
+              })
+              .catch((error) => {
+                strapi.log.error("error creating custom site", error);
+              });
+          });
+      }
+    }
     strapi.log.info("loading site supplementary information completed...");
   } catch (error) {
     strapi.log.error(error);

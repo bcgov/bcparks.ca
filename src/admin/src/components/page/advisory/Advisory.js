@@ -75,18 +75,13 @@ export default function Advisory({ mode, page: { setError } }) {
   const { id } = useParams();
 
   useEffect(() => {
-    if (initialized && keycloak.authenticated) {
+    if (initialized && keycloak) {
       calculateIsStatHoliday(setIsStatHoliday, keycloak.idToken);
     }
   }, [keycloak, initialized, setIsStatHoliday]);
 
   useEffect(() => {
-    if (
-      initialized &&
-      keycloak.authenticated &&
-      mode === "update" &&
-      !isLoadingData
-    ) {
+    if (mode === "update" && !isLoadingData) {
       if (parseInt(id)) {
         cmsAxios
           .get(`/public-advisories/${id}?_publicationState=preview`)
@@ -242,8 +237,6 @@ export default function Advisory({ mode, page: { setError } }) {
     }
   }, [
     id,
-    initialized,
-    keycloak,
     mode,
     setHeadline,
     setDescription,
@@ -275,15 +268,7 @@ export default function Advisory({ mode, page: { setError } }) {
   ]);
 
   useEffect(() => {
-    if (!initialized) {
-      setIsLoadingPage(true);
-    } else if (!keycloak.authenticated) {
-      setToError(true);
-      setError({
-        status: 401,
-        message: "Login required",
-      });
-    } else {
+    if (initialized && keycloak) {
       Promise.all([
         cmsAxios.get(
           `/protected-areas/names?_limit=-1&_sort=protectedAreaName`
