@@ -81,9 +81,11 @@ const rewriteData = async () => {
       strapi.services["advisory-status"].delete(),
       strapi.services["link-type"].delete(),
       strapi.services["urgency"].delete(),
-    ]).then(async () => {
-      const response = await loadData();
-      return response;
+    ]).then(() => {
+      strapi.log.info("---------Removing all data completed---------");
+      Promise.resolve(loadData()).then(() => {
+        return true;
+      });
     });
   } catch (error) {
     strapi.log.error(error);
@@ -102,8 +104,9 @@ const seedData = async () => {
     ]).then(() => {
       return true;
     });
+  } else {
+    await rewriteData();
   }
-  await rewriteData();
 };
 
 module.exports = {
