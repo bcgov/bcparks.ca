@@ -23,32 +23,27 @@ const loadData = async () => {
       parData.loadParData(),
       otherData.loadBusinessHours(),
       otherData.loadStatutoryHolidays(),
-    ]).then((response) => {
-      Promise.all(response[0]).then(() => {
-        Promise.all([
-          otherData.loadAccessStatus(),
-          otherData.loadAdvisoryStatus(),
-          otherData.loadEventType(),
-          otherData.loadLinkType(),
-          otherData.loadActivityType(),
-          otherData.loadFacilityType(),
-          otherData.loadUrgency(),
-          otherData.loadFireCentre(),
-          otherData.loadFireZone(),
-          otherData.loadFireBanProhibition(),
-        ]).then(() => {
-          Promise.all([
-            parData.loadAdditionalParData(),
-            otherData.loadFireCentreZoneXref(),
-            otherData.loadParkFireZoneXref(),
-            otherData.loadParkFogZoneXref(),
-            otherData.loadParkActivity(),
-            otherData.loadParkFacility(),
-            publicAdvisory.loadPublicAdvisory(),
-          ]).then(() => {
-            strapi.log.info("------Data load completed------");
-          });
-        });
+      otherData.loadAccessStatus(),
+      otherData.loadAdvisoryStatus(),
+      otherData.loadEventType(),
+      otherData.loadLinkType(),
+      otherData.loadActivityType(),
+      otherData.loadFacilityType(),
+      otherData.loadUrgency(),
+      otherData.loadFireCentre(),
+      otherData.loadFireZone(),
+      otherData.loadFireBanProhibition(),
+    ]).then(() => {
+      Promise.all([
+        parData.loadAdditionalParData(),
+        otherData.loadFireCentreZoneXref(),
+        otherData.loadParkFireZoneXref(),
+        otherData.loadParkFogZoneXref(),
+        otherData.loadParkActivity(),
+        otherData.loadParkFacility(),
+        publicAdvisory.loadPublicAdvisory(),
+      ]).then(() => {
+        strapi.log.info("------Data load completed------");
       });
     });
   } catch (error) {

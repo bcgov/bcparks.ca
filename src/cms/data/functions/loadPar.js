@@ -7,7 +7,6 @@ const fs = require("fs");
 const loadParData = async () => {
   const PAR_URL = "https://a100.gov.bc.ca/pub/parws/protectedLands";
   const currentProtectedAreas = await strapi.services["protected-area"].find();
-  const promises = [];
   if (currentProtectedAreas.length == 0) {
     strapi.log.info("Loading Protected Areas data..");
     const response = await axios
@@ -21,15 +20,15 @@ const loadParData = async () => {
         strapi.log.error(error);
       });
     if (response.data) {
-      const protectedAreas = response.data.data;
+      const protectedAreas = [...response.data.data];
       strapi.log.info(`Retrieved ${protectedAreas.length} records from PAR`);
-      protectedAreas.forEach((protectedArea) => {
-        const response = loadProtectedLandData(protectedArea);
-        promises.push(response);
-      });
+      for (const protectedArea of protectedAreas) {
+        await loadProtectedLandData(protectedArea).then((res) => {
+          return res;
+        });
+      }
     }
   }
-  return promises;
 };
 
 const loadAdditionalParData = async () => {
@@ -38,59 +37,44 @@ const loadAdditionalParData = async () => {
 };
 
 const loadRegion = async (area) => {
-  const region = await Promise.resolve(
-    strapi.services["region"].create({
+  let region = await strapi.query("region").findOne({
+    regionNumber: area.protectedLandRegionNumber,
+  });
+  if (!region) {
+    region = await strapi.services["region"].create({
       regionNumber: area.protectedLandRegionNumber,
       regionName: area.protectedLandRegionName,
-    })
-  )
-    .catch(() => {
-      return Promise.resolve(
-        strapi.query("region").findOne({
-          regionNumber: area.protectedLandRegionNumber,
-        })
-      );
-    })
-    .finally(() => {});
+    });
+  }
   return region;
 };
 
 const loadSection = async (area, region) => {
-  const section = await Promise.resolve(
-    strapi.services["section"].create({
+  let section = await strapi.query("section").findOne({
+    sectionNumber: area.protectedLandSectionNumber,
+  });
+  if (!section) {
+    section = await strapi.services["section"].create({
       sectionNumber: area.protectedLandSectionNumber,
       sectionName: area.protectedLandSectionName,
       region: region,
-    })
-  )
-    .catch(() => {
-      return Promise.resolve(
-        strapi.query("section").findOne({
-          sectionNumber: area.protectedLandSectionNumber,
-        })
-      );
-    })
-    .finally(() => {});
+    });
+  }
   return section;
 };
 
 const loadManagementArea = async (area, region, section) => {
-  const managementArea = await Promise.resolve(
-    strapi.services["management-area"].create({
+  let managementArea = await strapi.query("management-area").findOne({
+    managementAreaNumber: area.protectedLandManagementAreaNumber,
+  });
+  if (!managementArea) {
+    managementArea = await strapi.services["management-area"].create({
       managementAreaNumber: area.protectedLandManagementAreaNumber,
       managementAreaName: area.protectedLandManagementAreaName,
       section: section,
       region: region,
-    })
-  )
-    .catch(() => {
-      return Promise.resolve(
-        strapi.query("management-area").findOne({
-          managementAreaNumber: area.protectedLandManagementAreaNumber,
-        })
-      );
-    })
-    .finally(() => {});
+    });
+  }
   return managementArea;
 };
 
@@ -102,16 +86,21 @@ const loadManagementAreaWithRelations = async (area) => {
 };
 
 const loadManagementAreas = async (managementAreas) => {
-  const promises = managementAreas.map((area) =>
-    loadManagementAreaWithRelations(area)
+  const promises = managementAreas.map(
+    async (area) => await loadManagementAreaWithRelations(area)
   );
-  const managementAreasObj = await Promise.all(promises);
+  const managementAreasObj = await Promise.all(promises).then((res) => {
+    return res;
+  });
   return managementAreasObj;
 };
 
 const loadSite = async (site, orcNumber) => {
-  const siteObj = await Promise.resolve(
-    strapi.services["site"].create({
+  let siteObj = await strapi.query("site").findOne({
+    orcsSiteNumber: orcNumber + "-" + site.protectedLandSiteNumber,
+  });
+  if (!siteObj) {
+    siteObj = await strapi.services["site"].create({
       orcsSiteNumber: orcNumber + "-" + site.protectedLandSiteNumber,
       siteNumber: site.protectedLandSiteNumber,
       siteName: site.protectedLandSiteName,
@@ -130,35 +119,26 @@ const loadSite = async (site, orcNumber) => {
       latitude: null,
       longitude: null,
       mapZoom: null,
-    })
-  )
-    .catch(() => {
-      return Promise.resolve(
-        strapi.query("site").findOne({
-          orcsSiteNumber: orcNumber + "-" + site.protectedLandSiteNumber,
-        })
-      );
-    })
-    .finally(() => {});
+    });
+  }
   return siteObj;
 };
 
 const loadSites = async (sites, orcNumber) => {
-  const promises = sites.map((site) => loadSite(site, orcNumber));
-  const sitesObj = await Promise.all(promises);
+  const promises = sites.map(async (site) => await loadSite(site, orcNumber));
+  const sitesObj = await Promise.all(promises).then((res) => {
+    return res;
+  });
   return sitesObj;
 };
 
-const loadProtectedLandData = async (protectedLandData) => {
-  try {
-    const managementAreas = await loadManagementAreas(
-      protectedLandData.managementAreas
-    );
-    const sites = await loadSites(
-      protectedLandData.sites,
-      protectedLandData.orcNumber
-    );
-    const protectedArea = await strapi.services["protected-area"].create({
+const saveProtectedLandData = async (
+  protectedLandData,
+  managementAreas,
+  sites
+) => {
+  const protectedArea = await strapi.services["protected-area"]
+    .create({
       orcs: protectedLandData.orcNumber,
       protectedAreaName: utf8.encode(protectedLandData.protectedLandName),
       totalArea: protectedLandData.totalArea,
@@ -180,10 +160,27 @@ const loadProtectedLandData = async (protectedLandData) => {
       latitude: null,
       longitude: null,
       mapZoom: null,
-      sites: [...sites],
-      managementAreas: [...managementAreas],
+      sites: sites,
+      managementAreas: managementAreas,
+    })
+    .then((res) => {
+      return res;
     });
-    return protectedArea;
+  return protectedArea;
+};
+
+const loadProtectedLandData = async (protectedLandData) => {
+  try {
+    await Promise.all([
+      loadManagementAreas(protectedLandData.managementAreas),
+      loadSites(protectedLandData.sites, protectedLandData.orcNumber),
+    ]).then(async (response) => {
+      return await saveProtectedLandData(
+        protectedLandData,
+        response[0],
+        response[1]
+      );
+    });
   } catch (error) {
     strapi.log.error(error);
   }
