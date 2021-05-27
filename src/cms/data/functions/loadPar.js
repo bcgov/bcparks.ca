@@ -7,28 +7,29 @@ const fs = require("fs");
 const loadParData = async () => {
   const PAR_URL = "https://a100.gov.bc.ca/pub/parws/protectedLands";
   const currentProtectedAreas = await strapi.services["protected-area"].find();
+  const promises = [];
   if (currentProtectedAreas.length == 0) {
     strapi.log.info("Loading Protected Areas data..");
-    axios
+    const response = await axios
       .get(PAR_URL, {
         params: {
           protectedLandName: "%",
           protectedLandTypeCodes: "CS,ER,PA,PK,RA",
         },
       })
-      .then((response) => {
-        const protectedAreas = response.data.data;
-        strapi.log.info(`Retrieved ${protectedAreas.length} records from PAR`);
-        return Promise.resolve(
-          protectedAreas.forEach((protectedArea) => {
-            loadProtectedLandData(protectedArea);
-          })
-        );
-      })
       .catch((error) => {
         strapi.log.error(error);
       });
+    if (response.data) {
+      const protectedAreas = response.data.data;
+      strapi.log.info(`Retrieved ${protectedAreas.length} records from PAR`);
+      protectedAreas.forEach((protectedArea) => {
+        const response = loadProtectedLandData(protectedArea);
+        promises.push(response);
+      });
+    }
   }
+  return promises;
 };
 
 const loadAdditionalParData = async () => {
@@ -157,7 +158,7 @@ const loadProtectedLandData = async (protectedLandData) => {
       protectedLandData.sites,
       protectedLandData.orcNumber
     );
-    await strapi.services["protected-area"].create({
+    const protectedArea = await strapi.services["protected-area"].create({
       orcs: protectedLandData.orcNumber,
       protectedAreaName: utf8.encode(protectedLandData.protectedLandName),
       totalArea: protectedLandData.totalArea,
@@ -182,6 +183,7 @@ const loadProtectedLandData = async (protectedLandData) => {
       sites: [...sites],
       managementAreas: [...managementAreas],
     });
+    return protectedArea;
   } catch (error) {
     strapi.log.error(error);
   }
