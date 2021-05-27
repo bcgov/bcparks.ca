@@ -99,8 +99,6 @@ const seedData = async () => {
     ]).then(() => {
       return true;
     });
-  } else {
-    await rewriteData();
   }
 };
 
