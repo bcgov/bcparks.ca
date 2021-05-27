@@ -1,3 +1,3 @@
 module.exports = {
-  timeout: 30000,
+  timeout: 50000,
 };
