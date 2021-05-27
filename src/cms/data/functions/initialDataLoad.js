@@ -18,45 +18,38 @@ const isFirstRun = async () => {
 
 const loadData = async () => {
   try {
-    strapi.log.info("------Initial Data load begins------");
+    strapi.log.info("------Data load begins------");
     Promise.all([
       parData.loadParData(),
       otherData.loadBusinessHours(),
       otherData.loadStatutoryHolidays(),
-      otherData.loadAccessStatus(),
-      otherData.loadAdvisoryStatus(),
-      otherData.loadEventType(),
-      otherData.loadLinkType(),
-      otherData.loadActivityType(),
-      otherData.loadFacilityType(),
-      otherData.loadUrgency(),
-      otherData.loadFireCentre(),
-      otherData.loadFireZone(),
-      otherData.loadFireBanProhibition(),
-      publicAdvisory.loadPublicAdvisory(),
     ]).then((response) => {
-      Promise.all(response[0]).then(async () => {
-        strapi.log.info("------Initial Data load completed------");
-        await loadAdditionalData();
+      Promise.all(response[0]).then(() => {
+        Promise.all([
+          otherData.loadAccessStatus(),
+          otherData.loadAdvisoryStatus(),
+          otherData.loadEventType(),
+          otherData.loadLinkType(),
+          otherData.loadActivityType(),
+          otherData.loadFacilityType(),
+          otherData.loadUrgency(),
+          otherData.loadFireCentre(),
+          otherData.loadFireZone(),
+          otherData.loadFireBanProhibition(),
+        ]).then(() => {
+          Promise.all([
+            parData.loadAdditionalParData(),
+            otherData.loadFireCentreZoneXref(),
+            otherData.loadParkFireZoneXref(),
+            otherData.loadParkFogZoneXref(),
+            otherData.loadParkActivity(),
+            otherData.loadParkFacility(),
+            publicAdvisory.loadPublicAdvisory(),
+          ]).then(() => {
+            strapi.log.info("------Data load completed------");
+          });
+        });
       });
-    });
-  } catch (error) {
-    strapi.log.error(error);
-  }
-};
-
-const loadAdditionalData = async () => {
-  try {
-    strapi.log.info("------Additional Data load begins------");
-    Promise.all([
-      parData.loadAdditionalParData(),
-      otherData.loadFireCentreZoneXref(),
-      otherData.loadParkFireZoneXref(),
-      otherData.loadParkFogZoneXref(),
-      otherData.loadParkActivity(),
-      otherData.loadParkFacility(),
-    ]).then(() => {
-      strapi.log.info("------Additional Data load completed------");
     });
   } catch (error) {
     strapi.log.error(error);
@@ -89,6 +82,7 @@ const rewriteData = async () => {
       strapi.services["link-type"].delete(),
       strapi.services["urgency"].delete(),
     ]).then(() => {
+      strapi.log.info("---------Removing all data completed---------");
       Promise.resolve(loadData()).then(() => {
         return true;
       });
@@ -110,8 +104,9 @@ const seedData = async () => {
     ]).then(() => {
       return true;
     });
+  } else {
+    await rewriteData();
   }
-  await rewriteData();
 };
 
 module.exports = {
