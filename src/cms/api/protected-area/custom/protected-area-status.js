@@ -3,10 +3,79 @@ const _ = require("lodash");
 
 const { sanitizeEntity } = require("strapi-utils");
 
-class ProctectedAreaStatus 
-
 const getCampfireFacility = (facilities) => {
   return facilities.some((f) => f.facilityName.toLowerCase() === "campfires");
+};
+
+const getParkActivity = async () => {
+  const parkActivityQuery = {
+    _limit: -1,
+    isActive: true,
+  };
+  const parkActivityData = await strapi
+    .query("park-activity")
+    .find(parkActivityQuery);
+
+  const parkActivities = parkActivityData.map((m) => {
+    if (m.protectedArea && m.protectedArea.orcs) {
+      return {
+        orcs: m.protectedArea.orcs,
+        activityNumber: m.activityType.activityNumber,
+        activityName: m.activityType.activityName,
+        isActivityOpen: m.isActivityOpen,
+      };
+    }
+  });
+
+  return Object.entries(
+    parkActivities.reduce((acc, parkActiviy) => {
+      if (parkActiviy) {
+        const { activityNumber, activityName, isActivityOpen, isActive } =
+          parkActiviy;
+        acc[parkActiviy.orcs] = [
+          ...(acc[parkActiviy.orcs] || []),
+          { activityNumber, activityName, isActivityOpen, isActive },
+        ];
+      }
+      return acc;
+    }, {})
+  ).map(([key, value]) => ({ orcs: key, parkActivities: value }));
+};
+
+const getParkFacility = async () => {
+  const parkFaciltyQuery = {
+    _limit: -1,
+    isActive: true,
+  };
+
+  const parkFacilityData = await strapi
+    .query("park-facility")
+    .find(parkFaciltyQuery);
+
+  const parkFacilities = parkFacilityData.map((m) => {
+    if (m.protectedArea && m.protectedArea.orcs && m.facilityType) {
+      return {
+        orcs: m.protectedArea.orcs,
+        facilityNumber: m.facilityType.facilityNumber,
+        facilityName: m.facilityType.facilityName,
+        isFacilityOpen: m.isFacilityOpen,
+      };
+    }
+  });
+
+  return Object.entries(
+    parkFacilities.reduce((acc, parkFacility) => {
+      if (parkFacility) {
+        const { facilityNumber, facilityName, isFacilityOpen, isActive } =
+          parkFacility;
+        acc[parkFacility.orcs] = [
+          ...(acc[parkFacility.orcs] || []),
+          { facilityNumber, facilityName, isFacilityOpen, isActive },
+        ];
+      }
+      return acc;
+    }, {})
+  ).map(([key, value]) => ({ orcs: key, parkFacilities: value }));
 };
 
 const getPublicAdvisory = (publishedAdvisories, orcs) => {
@@ -25,14 +94,15 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
   };
 
   filteredByOrcs.map((p) => {
-    const data = {};
-    data.advisoryNumber = p.advisoryNumber;
-    data.advisoryTitle = p.title;
-    data.effectiveDate = p.effectiveDate;
-    data.eventType = p.eventType ? p.eventType.eventType : null;
-    data.accessStatus = p.accessStatus ? p.accessStatus.accessStatus : null;
-    data.precedence = p.accessStatus ? p.accessStatus.precedence : null;
-    data.reservationsAffected = p.reservationsAffected;
+    const data = {
+      advisoryNumber: p.advisoryNumber,
+      advisoryTitle: p.title,
+      effectiveDate: p.effectiveDate,
+      eventType: p.eventType ? p.eventType.eventType : null,
+      accessStatus: p.accessStatus ? p.accessStatus.accessStatus : null,
+      precedence: p.accessStatus ? p.accessStatus.precedence : null,
+      reservationsAffected: p.reservationsAffected,
+    };
     publicAdvisories = [...publicAdvisories, data];
   });
 
@@ -46,12 +116,14 @@ const getPublishedPublicAdvisories = async () => {
   const publicAdvisoryQuery = {
     _publicationState: "live",
     _sort: "id",
+    _limit: -1,
   };
 
   return await strapi.query("public-advisory").find(publicAdvisoryQuery);
 };
 
-const getProtecteAreaNames = async (ctx) => {
+// custom route for park status view
+const getProtecteAreaStatus = async (ctx) => {
   let entities;
   if (ctx.query._q) {
     entities = await strapi.services["protected-area"].search(ctx.query);
@@ -59,29 +131,17 @@ const getProtecteAreaNames = async (ctx) => {
     entities = await strapi.services["protected-area"].find(ctx.query);
   }
 
-  return entities.map((entity) => {
-    const { id, protectedAreaName } = sanitizeEntity(entity, {
-      model: strapi.models["protected-area"],
-    });
-
-    return { id, protectedAreaName };
-  });
-};
-
-const getProtecteAreaStatus = async (ctx) => {
-  const protectedAreas = await strapi
-    .query("protected-area")
-    .find({ _limit: -1, _sort: "id" });
-
   const regions = await strapi.query("region").find();
   const sections = await strapi.query("section").find();
   const fireCentres = await strapi.query("fire-centre").find();
 
   const publicAdvisories = await getPublishedPublicAdvisories();
+  const parkActivitiesData = await getParkActivity();
+  const parkFacilitiesData = await getParkFacility();
 
   const hasCampfireBans = false;
 
-  return protectedAreas.map((protectedArea) => {
+  return entities.map((protectedArea) => {
     let publicAdvisory = getPublicAdvisory(
       publicAdvisories,
       protectedArea.orcs
@@ -112,7 +172,13 @@ const getProtecteAreaStatus = async (ctx) => {
           .fireCentreName;
     }
 
-    const parkStatus = {
+    const [{ parkActivities } = { parkActivities: [] }] =
+      parkActivitiesData.filter((p) => +p.orcs === protectedArea.orcs);
+
+    const [{ parkFacilities } = { parkFacilities: [] }] =
+      parkFacilitiesData.filter((p) => +p.orcs === protectedArea.orcs);
+
+    return {
       orcsPrimary: protectedArea.orcs,
       orcsSecondary: null,
       protectedLandsName: protectedArea.protectedAreaName,
@@ -120,20 +186,22 @@ const getProtecteAreaStatus = async (ctx) => {
       protectedLandsCode: protectedArea.typeCode,
       accessStatus: publicAdvisory.accessStatus,
       accessDetails: publicAdvisory.advisoryTitle,
-      reservationsAffectedInd: publicAdvisory.reservationsAffected,
+      isReservationsAffected: publicAdvisory.reservationsAffected,
       eventType: publicAdvisory.eventType,
-      facilitiesCampfiresInd: getCampfireFacility(protectedArea.facilities),
-      campfireBanInd: hasCampfireBans,
+      //facilitiesCampfiresInd: getCampfireFacility(protectedArea.facilities),
+      hasCampfireBan: hasCampfireBans,
       accessStatusEffectiveDate: protectedArea.fffectiveDate,
       accessStatusRescindedDate: null,
       campfireBanEffectiveDate: null,
       campfireBanRescindedDate: null,
       fireCentreName: fireCentreName,
       fireZoneName: fireZoneName,
-      fogZoneInd: protectedArea.fogZone,
+      isFogZone: protectedArea.isFogZone,
       parkRegionName: regionName,
       parkSectionName: sectionName,
       parkManagementAreaName: managementAreaName,
+      parkActivities: parkActivities,
+      parkFacilities: parkFacilities,
       orderUrl: null,
       mapUrl: null,
       informationBulletinUrl: null,
@@ -142,12 +210,9 @@ const getProtecteAreaStatus = async (ctx) => {
       pepRegionName: null,
       updated_at: protectedArea.updated_at,
     };
-
-    return parkStatus;
   });
 };
 
 module.exports = {
   getProtecteAreaStatus,
-  getProtecteAreaNames,
 };
