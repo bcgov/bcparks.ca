@@ -5,4 +5,25 @@
  * to customize this model
  */
 
-module.exports = {};
+module.exports = {
+  lifecycles: {
+    async beforeCreate(data) {
+      data.name = "unassigned";
+      if (data.facilityType) {
+        const facilityType = await strapi.services["facility-type"].findOne({
+          id: data.facilityType,
+        });
+        data.name = facilityType.facilityName;
+      }
+    },
+    async beforeUpdate(params, data) {
+      data.name = "unassigned";
+      if (data.facilityType) {
+        const facilityType = await strapi.services["facility-type"].findOne({
+          id: data.facilityType,
+        });
+        data.name = facilityType.facilityName;
+      }
+    },
+  },
+};
