@@ -16,10 +16,10 @@ const isFirstRun = async () => {
   return !initHasRun;
 };
 
-const loadData = async () => {
+const loadData = () => {
   try {
     strapi.log.info("------Data load begins------");
-    await Promise.all([
+    Promise.all([
       parData.loadParData(),
       otherData.loadBusinessHours(),
       otherData.loadStatutoryHolidays(),
@@ -34,14 +34,14 @@ const loadData = async () => {
       otherData.loadFireZone(),
       otherData.loadFireBanProhibition(),
       publicAdvisory.loadPublicAdvisory(),
-    ]).then(async () => {
-      await Promise.all([
+    ]).then(() => {
+      Promise.all([
         otherData.loadFireCentreZoneXref(),
         otherData.loadParkFireZoneXref(),
         otherData.loadParkFogZoneXref(),
         otherData.loadParkActivity(),
         otherData.loadParkFacility(),
-        parData.loadAdditionalParData,
+        parData.loadAdditionalParData(),
       ]).then(() => {
         strapi.log.info("------Data load completed------");
       });
@@ -51,10 +51,10 @@ const loadData = async () => {
   }
 };
 
-const rewriteData = async () => {
+const rewriteData = () => {
   try {
     strapi.log.info("---------Removing all data---------");
-    await Promise.all([
+    Promise.all([
       strapi.services["protected-area"].delete(),
       strapi.services["section"].delete(),
       strapi.services["management-area"].delete(),
@@ -73,8 +73,8 @@ const rewriteData = async () => {
       strapi.services["advisory-status"].delete(),
       strapi.services["link-type"].delete(),
       strapi.services["urgency"].delete(),
-    ]).then(async () => {
-      await loadData();
+    ]).then(() => {
+      loadData();
     });
   } catch (error) {
     strapi.log.error(error);
@@ -88,9 +88,9 @@ const seedData = async () => {
     await permission.createAdmin();
     await permission.createApiToken();
     await permission.setDefaultPermissions();
-    await loadData();
+    loadData();
   }
-  await rewriteData();
+  rewriteData();
 };
 
 module.exports = {
