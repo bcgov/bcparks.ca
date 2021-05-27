@@ -19,25 +19,25 @@ function AppRouter() {
             <Home page={{ setError }} />
           </Route>
           <PrivateRoute
-            roles={["test-role"]}
+            roles={["manage-account"]}
             path="/bcparks/advisory-dash"
             component={AdvisoryDashboard}
             props={{ page: { setError } }}
           />
           <PrivateRoute
-            roles={["test-role"]}
+            roles={["manage-account"]}
             path="/bcparks/create-advisory"
             component={Advisory}
             props={{ mode: "create", page: { setError } }}
           />
           <PrivateRoute
-            roles={["test-role"]}
+            roles={["manage-account"]}
             path="/bcparks/update-advisory/:id"
             component={Advisory}
             props={{ mode: "update", page: { setError } }}
           />
           <PrivateRoute
-            roles={["test-role"]}
+            roles={["manage-account"]}
             path="/bcparks/advisory-summary/:id"
             component={AdvisorySummary}
             props={{ page: { setError } }}

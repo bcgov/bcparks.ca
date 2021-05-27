@@ -752,7 +752,7 @@ export default function AdvisoryForm({
               />
             </div>
           </div>
-          {AuthorizedFunction(["test-role"]) && (
+          {AuthorizedFunction(["manage-account"]) && (
             <div className="row">
               <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
                 Submitted By
