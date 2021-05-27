@@ -20,8 +20,8 @@ const loadParData = async () => {
         const protectedAreas = response.data.data;
         strapi.log.info(`Retrieved ${protectedAreas.length} records from PAR`);
         return Promise.resolve(
-          protectedAreas.forEach(async (protectedArea) => {
-            await loadProtectedLandData(protectedArea);
+          protectedAreas.forEach((protectedArea) => {
+            loadProtectedLandData(protectedArea);
           })
         );
       })
