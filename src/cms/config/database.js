@@ -13,18 +13,7 @@ module.exports = ({ env }) => ({
         ssl: env.bool("DATABASE_SSL"),
         timezone: "UTC",
       },
-      options: {
-        pool: {
-          min: 0,
-          max: 100,
-          idleTimeoutMillis: 50000,
-          createTimeoutMillis: 50000,
-          acquireTimeoutMillis: 50000,
-          reapIntervalMillis: 10000,
-          createRetryIntervalMillis: 1000,
-          propagateCreateError: false,
-        },
-      },
+      options: {},
     },
   },
 });
