@@ -84,27 +84,15 @@ objects:
                 value: "${WEB_SCHEMA}://${FRONTEND_URL}${URL_STUB}"
               - name: PUBLIC_URL
                 value: "${WEB_SCHEMA}://${FRONTEND_URL}${URL_STUB}"
-              - name: REACT_APP_KEYCLOAK_AUTH_URL
-                valueFrom:
-                  secretKeyRef:
-                    key: REACT_APP_KEYCLOAK_AUTH_URL
-                    name: bcparks-secrets
-              - name: REACT_APP_KEYCLOAK_REALM
-                valueFrom:
-                  secretKeyRef:
-                    key: REACT_APP_KEYCLOAK_REALM
-                    name: bcparks-secrets
-              - name: REACT_APP_KEYCLOAK_CLIENT_ID
-                valueFrom:
-                  secretKeyRef:
-                    key: REACT_APP_KEYCLOAK_CLIENT_ID
-                    name: bcparks-secrets
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/frontend:${OC_APP}
             name: ${FRONTEND_POD}
             ports:
               - containerPort: 3000
               - containerPort: 8080
+            envFrom:
+              - secretRef:
+                  name: bcparks-secrets
             resources:
               limits:
                 cpu: 2500m
@@ -167,7 +155,7 @@ objects:
     port:
       targetPort: npm
     tls:
-        insecureEdgeTerminationPolicy: Redirect
+        insecureEdgeTerminationPolicy: Allow
         termination: edge
 
 ### CMS
@@ -199,82 +187,15 @@ objects:
               - name: DATABASE_HOST
                 value: ${DB_POD}
               - name: DATABASE_PORT
-                value: ${DB_PORT}
-              - name: DATABASE_NAME
-                valueFrom:
-                  secretKeyRef:
-                    key: DATABASE_NAME
-                    name: bcparks-secrets
-              - name: DATABASE_USERNAME
-                valueFrom:
-                  secretKeyRef:
-                    key: DATABASE_USERNAME
-                    name: bcparks-secrets
-              - name: DATABASE_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    key: DATABASE_PASSWORD
-                    name: bcparks-secrets
-              - name: DATABASE_SSL
-                valueFrom:
-                  secretKeyRef:
-                    key: DATABASE_SSL
-                    name: bcparks-secrets
-              - name: ADMIN_EMAIL
-                valueFrom:
-                  secretKeyRef:
-                    key: ADMIN_EMAIL
-                    name: bcparks-secrets
-              - name: ADMIN_FIRST_NAME
-                valueFrom:
-                  secretKeyRef:
-                    key: ADMIN_FIRST_NAME
-                    name: bcparks-secrets
-              - name: ADMIN_JWT_SECRET
-                valueFrom:
-                  secretKeyRef:
-                    key: ADMIN_JWT_SECRET
-                    name: bcparks-secrets
-              - name: ADMIN_LAST_NAME
-                valueFrom:
-                  secretKeyRef:
-                    key: ADMIN_LAST_NAME
-                    name: bcparks-secrets
-              - name: ADMIN_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    key: ADMIN_PASSWORD
-                    name: bcparks-secrets
-              - name: ADMIN_USER
-                valueFrom:
-                  secretKeyRef:
-                    key: ADMIN_USER
-                    name: bcparks-secrets
-              - name: API_TOKEN
-                valueFrom:
-                  secretKeyRef:
-                    key: API_TOKEN
-                    name: bcparks-secrets
-              - name: API_USER_EMAIL
-                valueFrom:
-                  secretKeyRef:
-                    key: API_USER_EMAIL
-                    name: bcparks-secrets
-              - name: API_USER_NAME
-                valueFrom:
-                  secretKeyRef:
-                    key: API_USER_NAME
-                    name: bcparks-secrets       
-              - name: API_USER_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    key: API_USER_PASSWORD
-                    name: bcparks-secrets       
+                value: ${DB_PORT}    
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/strapi:${OC_APP}
             name: ${CMS_POD}
             ports:
               - containerPort: 1337
+            envFrom:
+              - secretRef:
+                  name: bcparks-secrets
     triggers:
       - type: ConfigChange
       - type: ImageChange
@@ -324,7 +245,7 @@ objects:
     port:
       targetPort: 1337
     tls:
-        insecureEdgeTerminationPolicy: Redirect
+        insecureEdgeTerminationPolicy: Allow
         termination: edge
 
 ### Database
@@ -400,6 +321,9 @@ objects:
                 name: ${DB_POD}-data
               - mountPath: /var/run/postgresql
                 name: ${DB_POD}-run
+            envFrom:
+              - secretRef:
+                  name: bcparks-secrets
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         volumes:
@@ -480,6 +404,9 @@ objects:
             name: ${STAGING_POD}
             ports:
               - containerPort: 8000
+            envFrom:
+              - secretRef:
+                  name: bcparks-secrets
     triggers:
       - type: ConfigChange
       - type: ImageChange
@@ -529,7 +456,7 @@ objects:
     port:
       targetPort: ${STAGING_POD}
     tls:
-      insecureEdgeTerminationPolicy: Redirect
+      insecureEdgeTerminationPolicy: Allow
       termination: edge
 
 ### API
@@ -565,6 +492,9 @@ objects:
             name: ${API_POD}
             ports:
               - containerPort: 5000
+            envFrom:
+              - secretRef:
+                  name: bcparks-secrets        
     triggers:
       - type: ConfigChange
       - type: ImageChange
@@ -615,8 +545,9 @@ objects:
     port:
       targetPort: ${API_POD}
     tls:
-      insecureEdgeTerminationPolicy: Redirect
+      insecureEdgeTerminationPolicy: Allow
       termination: edge
+    
 ### Network Policy
 - apiVersion: networking.k8s.io/v1
   kind: NetworkPolicy

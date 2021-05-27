@@ -31,6 +31,8 @@ import {
   validAdvisoryData,
 } from "../../../validators/AdvisoryValidator";
 
+import AuthorizedFunction from "../../../utils/AuthorizedFunction";
+
 export default function AdvisoryForm({
   mode,
   data: {
@@ -750,27 +752,29 @@ export default function AdvisoryForm({
               />
             </div>
           </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
-              Submitted By
+          {AuthorizedFunction(["test-role"]) && (
+            <div className="row">
+              <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
+                Submitted By
+              </div>
+              <div className="col-lg-7 col-md-8 col-sm-12">
+                <TextField
+                  value={submittedBy}
+                  onChange={(event) => {
+                    setSubmittedBy(event.target.value);
+                  }}
+                  className="bcgov-input"
+                  variant="outlined"
+                  InputProps={{ ...submitterInput }}
+                  error={submittedByError !== ""}
+                  helperText={submittedByError}
+                  onBlur={() => {
+                    validateRequiredText(advisoryData.submittedBy);
+                  }}
+                />
+              </div>
             </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <TextField
-                value={submittedBy}
-                onChange={(event) => {
-                  setSubmittedBy(event.target.value);
-                }}
-                className="bcgov-input"
-                variant="outlined"
-                InputProps={{ ...submitterInput }}
-                error={submittedByError !== ""}
-                helperText={submittedByError}
-                onBlur={() => {
-                  validateRequiredText(advisoryData.submittedBy);
-                }}
-              />
-            </div>
-          </div>
+          )}
 
           {mode === "update" && (
             <div className="row">

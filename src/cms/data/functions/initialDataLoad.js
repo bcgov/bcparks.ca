@@ -18,31 +18,28 @@ const isFirstRun = async () => {
 
 const loadData = async () => {
   try {
-    await parData.loadParData();
-    await otherData.loadBusinessHours();
-    await otherData.loadStatutoryHolidays();
-
-    await otherData.loadAccessStatus();
-    await otherData.loadAdvisoryStatus();
-    await otherData.loadEventType();
-    await otherData.loadLinkType();
-
-    await otherData.loadActivityType();
-    await otherData.loadFacilityType();
-    await otherData.loadUrgency();
-
-    await otherData.loadFireCentre();
-    await otherData.loadFireZone();
-    await otherData.loadFireCentreZoneXref();
-    await otherData.loadFireBanProhibition();
-
-    await publicAdvisory.loadPublicAdvisory();
-
-    // await not required for the data loads below
-    otherData.loadParkActivity();
-    otherData.loadParkFacility();
-    otherData.loadParkFireZoneXref();
-    otherData.loadParkFogZoneXref();
+    strapi.log.info("------Initial Data load begins------");
+    Promise.all([
+      parData.loadParData(),
+      otherData.loadBusinessHours(),
+      otherData.loadStatutoryHolidays(),
+      otherData.loadAccessStatus(),
+      otherData.loadAdvisoryStatus(),
+      otherData.loadEventType(),
+      otherData.loadLinkType(),
+      otherData.loadActivityType(),
+      otherData.loadFacilityType(),
+      otherData.loadUrgency(),
+      otherData.loadFireCentre(),
+      otherData.loadFireZone(),
+      otherData.loadFireBanProhibition(),
+      publicAdvisory.loadPublicAdvisory(),
+    ]).then((response) => {
+      Promise.all(response[0]).then(async () => {
+        strapi.log.info("------Initial Data load completed------");
+        await loadAdditionalData();
+      });
+    });
   } catch (error) {
     strapi.log.error(error);
   }
@@ -50,7 +47,52 @@ const loadData = async () => {
 
 const loadAdditionalData = async () => {
   try {
-    await parData.loadAdditionalParData();
+    strapi.log.info("------Additional Data load begins------");
+    Promise.all([
+      parData.loadAdditionalParData(),
+      otherData.loadFireCentreZoneXref(),
+      otherData.loadParkFireZoneXref(),
+      otherData.loadParkFogZoneXref(),
+      otherData.loadParkActivity(),
+      otherData.loadParkFacility(),
+    ]).then(() => {
+      strapi.log.info("------Additional Data load completed------");
+    });
+  } catch (error) {
+    strapi.log.error(error);
+  }
+};
+
+/**
+ * *********** This method is only for testing purposes **************
+ */
+const rewriteData = async () => {
+  try {
+    strapi.log.info("---------Removing all data---------");
+    Promise.all([
+      strapi.services["protected-area"].delete(),
+      strapi.services["section"].delete(),
+      strapi.services["management-area"].delete(),
+      strapi.services["region"].delete(),
+      strapi.services["site"].delete(),
+      strapi.services["public-advisory"].delete(),
+      strapi.services["access-status"].delete(),
+      strapi.services["event-type"].delete(),
+      strapi.services["fire-ban-prohibition"].delete(),
+      strapi.services["fire-centre"].delete(),
+      strapi.services["fire-zone"].delete(),
+      strapi.services["activity-type"].delete(),
+      strapi.services["park-activity"].delete(),
+      strapi.services["facility-type"].delete(),
+      strapi.services["park-facility"].delete(),
+      strapi.services["advisory-status"].delete(),
+      strapi.services["link-type"].delete(),
+      strapi.services["urgency"].delete(),
+    ]).then(() => {
+      Promise.resolve(loadData()).then(() => {
+        return true;
+      });
+    });
   } catch (error) {
     strapi.log.error(error);
   }
@@ -60,15 +102,16 @@ const seedData = async () => {
   // Load data and set default public roles on first run
   const setupCMS = await isFirstRun();
   if (setupCMS) {
-    await permission.createAdmin();
-    await permission.createApiToken();
-    await permission.setDefaultPermissions();
-    Promise.resolve(await loadData()).then(async () => {
-      Promise.resolve(await loadAdditionalData()).then(() => {
-        strapi.log.info("------Data load completed------");
-      });
+    Promise.all([
+      permission.createAdmin(),
+      permission.createApiToken(),
+      permission.setDefaultPermissions(),
+      loadData(),
+    ]).then(() => {
+      return true;
     });
   }
+  await rewriteData();
 };
 
 module.exports = {
