@@ -53,8 +53,8 @@ RUN npm run build
 COPY . ./
 
 USER 0
-RUN dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
-    dnf install -y postgresql13
+RUN yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
+    yum install -y postgresql13
 RUN cat ./config/server_template.js | envsubst > ./config/server.js && \
     chmod 766 ./config/server.js && \
     cat ./config/server.js
