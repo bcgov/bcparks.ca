@@ -193,6 +193,9 @@ objects:
             name: ${CMS_POD}
             ports:
               - containerPort: 1337
+            envFrom:
+              - secretRef:
+                  name: bcparks-secrets
     triggers:
       - type: ConfigChange
       - type: ImageChange

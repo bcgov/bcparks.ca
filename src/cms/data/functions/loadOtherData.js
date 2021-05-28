@@ -170,13 +170,25 @@ const loadParkActivity = async () => {
       const protectedArea = await strapi.services["protected-area"].findOne({
         orcs: data.orcs,
       });
+      let protectedAreaId = null;
+      if (protectedArea) protectedAreaId = protectedArea.id;
+
+      const site = await strapi.services["site"].findOne({
+        siteNumber: data.siteNumber,
+      });
+      let siteId = null;
+      if (site) siteId = site.id;
+
       const activityType = await strapi.services["activity-type"].findOne({
         activityNumber: data.activityId,
       });
+      let activityTypeId = null;
+      if (activityType) activityTypeId = activityType.id;
+
       const parkActivity = {
-        name: activityType.activityName,
-        protectedArea: protectedArea,
-        activityType: activityType,
+        protectedArea: protectedAreaId,
+        site: siteId,
+        activityType: activityTypeId,
         isActivityOpen: data.available === "Y" ? true : false,
         isActive: true,
       };
@@ -205,13 +217,25 @@ const loadParkFacility = async () => {
       const protectedArea = await strapi.services["protected-area"].findOne({
         orcs: data.orcs,
       });
+      let protectedAreaId = null;
+      if (protectedArea) protectedAreaId = protectedArea.id;
+
+      const site = await strapi.services["site"].findOne({
+        siteNumber: data.siteNumber,
+      });
+      let siteId = null;
+      if (site) siteId = site.id;
+
       const facilityType = await strapi.services["facility-type"].findOne({
         facilityNumber: data.facilityId,
       });
+      let facilityTypeId = null;
+      if (facilityType) facilityTypeId = facilityType.id;
+
       const parkFacility = {
-        name: facilityType ? facilityType.facilityName : null,
-        protectedArea: protectedArea,
-        facilityType: facilityType,
+        protectedArea: protectedAreaId,
+        site: siteId,
+        facilityType: facilityTypeId,
         isFacilityOpen: data.available === "Y" ? true : false,
         isActive: true,
       };
