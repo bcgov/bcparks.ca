@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Home from "../components/page/home/Home";
 import Error from "../components/page/error/Error";
+import About from "../components/page/about/About";
 import AdvisoryDashboard from "../components/page/advisoryDashboard/AdvisoryDashboard";
 import Advisory from "../components/page/advisory/Advisory";
 import AdvisorySummary from "../components/page/advisorySummary/AdvisorySummary";
@@ -17,6 +18,9 @@ function AppRouter() {
           <Redirect exact from="/" to="/bcparks" />
           <Route exact path="/bcparks">
             <Home page={{ setError }} />
+          </Route>
+          <Route exact path="/bcparks/about">
+            <About />
           </Route>
           <PrivateRoute
             roles={["manage-account"]}

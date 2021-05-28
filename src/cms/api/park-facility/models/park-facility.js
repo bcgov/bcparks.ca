@@ -5,27 +5,42 @@
  * to customize this model
  */
 
+const updateName = async (data) => {
+  data.name = ":";
+  if (data.protectedArea) {
+    const { orcs = { orcs: "" } } = await strapi.services[
+      "protected-area"
+    ].findOne({
+      id: data.protectedArea,
+    });
+    data.name = orcs;
+  }
+  if (data.site) {
+    const { siteNumber = { siteNumber: null } } = await strapi.services[
+      "site"
+    ].findOne({
+      id: data.site,
+    });
+    if (siteNumber) data.name += `-${siteNumber}`;
+  }
+
+  data.name += ":";
+  if (data.facilityType) {
+    const { facilityName } = await strapi.services["facility-type"].findOne({
+      id: data.facilityType,
+    });
+    data.name += facilityName;
+  }
+  return data;
+};
+
 module.exports = {
   lifecycles: {
     async beforeCreate(data) {
-      if (typeof data.facilityType !== "object") {
-        data.name = "unassigned";
-        if (data.facilityType) {
-          const facilityType = await strapi.services["facility-type"].findOne({
-            id: data.facilityType,
-          });
-          data.name = facilityType.facilityName;
-        }
-      }
+      data = await updateName(data);
     },
     async beforeUpdate(params, data) {
-      data.name = "unassigned";
-      if (data.facilityType) {
-        const facilityType = await strapi.services["facility-type"].findOne({
-          id: data.facilityType,
-        });
-        data.name = facilityType.facilityName;
-      }
+      data = await updateName(data);
     },
   },
 };

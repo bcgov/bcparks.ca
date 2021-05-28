@@ -20,21 +20,40 @@ const getParkActivity = async () => {
     if (m.protectedArea && m.protectedArea.orcs) {
       return {
         orcs: m.protectedArea.orcs,
-        activityNumber: m.activityType.activityNumber,
-        activityName: m.activityType.activityName,
-        isActivityOpen: m.isActivityOpen,
+        facilityNumber: m.activityType.facilityNumber,
+        facilityName: m.activityType.facilityName,
+        facilityCode: m.activityType.facilityCode,
+        isFacilityOpen: m.isFacilityOpen,
+        icon: m.activityType.icon,
+        iconNA: m.activityType.iconNA,
+        rank: m.activityType.rank,
       };
     }
   });
 
   return Object.entries(
-    parkActivities.reduce((acc, parkActiviy) => {
-      if (parkActiviy) {
-        const { activityNumber, activityName, isActivityOpen, isActive } =
-          parkActiviy;
-        acc[parkActiviy.orcs] = [
-          ...(acc[parkActiviy.orcs] || []),
-          { activityNumber, activityName, isActivityOpen, isActive },
+    parkActivities.reduce((acc, parkActivity) => {
+      if (parkActivity) {
+        const {
+          activityNumber,
+          activityName,
+          activityCode,
+          isActivityOpen,
+          icon,
+          iconNA,
+          rank,
+        } = parkActivity;
+        acc[parkActivity.orcs] = [
+          ...(acc[parkActivity.orcs] || []),
+          {
+            activityNumber,
+            activityName,
+            activityCode,
+            isActivityOpen,
+            icon,
+            iconNA,
+            rank,
+          },
         ];
       }
       return acc;
@@ -43,14 +62,14 @@ const getParkActivity = async () => {
 };
 
 const getParkFacility = async () => {
-  const parkFaciltyQuery = {
+  const parkFacilityQuery = {
     _limit: -1,
     isActive: true,
   };
 
   const parkFacilityData = await strapi
     .query("park-facility")
-    .find(parkFaciltyQuery);
+    .find(parkFacilityQuery);
 
   const parkFacilities = parkFacilityData.map((m) => {
     if (m.protectedArea && m.protectedArea.orcs && m.facilityType) {
@@ -58,7 +77,11 @@ const getParkFacility = async () => {
         orcs: m.protectedArea.orcs,
         facilityNumber: m.facilityType.facilityNumber,
         facilityName: m.facilityType.facilityName,
+        facilityCode: m.facilityType.facilityCode,
         isFacilityOpen: m.isFacilityOpen,
+        icon: m.facilityType.icon,
+        iconNA: m.facilityType.iconNA,
+        rank: m.facilityType.rank,
       };
     }
   });
@@ -66,11 +89,26 @@ const getParkFacility = async () => {
   return Object.entries(
     parkFacilities.reduce((acc, parkFacility) => {
       if (parkFacility) {
-        const { facilityNumber, facilityName, isFacilityOpen, isActive } =
-          parkFacility;
+        const {
+          facilityNumber,
+          facilityName,
+          facilityCode,
+          isFacilityOpen,
+          icon,
+          iconNA,
+          rank,
+        } = parkFacility;
         acc[parkFacility.orcs] = [
           ...(acc[parkFacility.orcs] || []),
-          { facilityNumber, facilityName, isFacilityOpen, isActive },
+          {
+            facilityNumber,
+            facilityName,
+            facilityCode,
+            isFacilityOpen,
+            icon,
+            iconNA,
+            rank,
+          },
         ];
       }
       return acc;
