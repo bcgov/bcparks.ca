@@ -7,29 +7,28 @@ const fs = require("fs");
 const loadParData = async () => {
   const PAR_URL = "https://a100.gov.bc.ca/pub/parws/protectedLands";
   const currentProtectedAreas = await strapi.services["protected-area"].find();
-  // To be reverted
-  // if (currentProtectedAreas.length == 0) {
-  strapi.log.info("Loading Protected Areas data..");
-  const response = await axios
-    .get(PAR_URL, {
-      params: {
-        protectedLandName: "%",
-        protectedLandTypeCodes: "CS,ER,PA,PK,RA",
-      },
-    })
-    .catch((error) => {
-      strapi.log.error(error);
-    });
-  if (response.data) {
-    const protectedAreas = [...response.data.data];
-    strapi.log.info(`Retrieved ${protectedAreas.length} records from PAR`);
-    for (const protectedArea of protectedAreas) {
-      await loadProtectedLandData(protectedArea).then((res) => {
-        return res;
+  if (currentProtectedAreas.length == 0) {
+    strapi.log.info("Loading Protected Areas data..");
+    const response = await axios
+      .get(PAR_URL, {
+        params: {
+          protectedLandName: "%",
+          protectedLandTypeCodes: "CS,ER,PA,PK,RA",
+        },
+      })
+      .catch((error) => {
+        strapi.log.error(error);
       });
+    if (response.data) {
+      const protectedAreas = [...response.data.data];
+      strapi.log.info(`Retrieved ${protectedAreas.length} records from PAR`);
+      for (const protectedArea of protectedAreas) {
+        await loadProtectedLandData(protectedArea).then((res) => {
+          return res;
+        });
+      }
     }
   }
-  // }
 };
 
 const loadAdditionalParData = async () => {
