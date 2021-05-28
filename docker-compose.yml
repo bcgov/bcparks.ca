@@ -27,6 +27,8 @@ services:
       REACT_APP_STAT_HOLIDAY_API: ${REACT_APP_STAT_HOLIDAY_API}
     ports:
       - "8080:3000"
+    depends_on:
+      - bcp-cms
     networks:
       - bcp-cms-network
 
