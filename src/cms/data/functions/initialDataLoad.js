@@ -90,8 +90,7 @@ const rewriteData = async () => {
 const seedData = async () => {
   // Load data and set default public roles on first run
   const setupCMS = await isFirstRun();
-  // To be reverted
-  if (true) {
+  if (setupCMS) {
     Promise.all([
       permission.createAdmin(),
       permission.createApiToken(),
