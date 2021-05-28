@@ -157,28 +157,30 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       },
       render: (rowData) => (
         <div className="advisory-status">
-          <Tooltip title={rowData.advisoryStatus.advisoryStatus}>
-            <span>
-              {rowData.advisoryStatus.code === "DFT" && (
-                <EditIcon className="draftIcon" />
-              )}
-              {rowData.advisoryStatus.code === "INA" && (
-                <WatchLaterIcon className="inactiveIcon" />
-              )}
-              {rowData.advisoryStatus.code === "ACT" && (
-                <CheckCircleIcon className="activeIcon" />
-              )}
-              {rowData.advisoryStatus.code === "APR" && (
-                <ThumbUpIcon className="approvedIcon" />
-              )}
-              {rowData.advisoryStatus.code === "ARQ" && (
-                <InfoIcon className="approvalRequestedIcon" />
-              )}
-              {rowData.advisoryStatus.code === "PUB" && (
-                <PublishIcon className="publishedIcon" />
-              )}
-            </span>
-          </Tooltip>
+          {rowData.advisoryStatus && (
+            <Tooltip title={rowData.advisoryStatus.advisoryStatus}>
+              <span>
+                {rowData.advisoryStatus.code === "DFT" && (
+                  <EditIcon className="draftIcon" />
+                )}
+                {rowData.advisoryStatus.code === "INA" && (
+                  <WatchLaterIcon className="inactiveIcon" />
+                )}
+                {rowData.advisoryStatus.code === "ACT" && (
+                  <CheckCircleIcon className="activeIcon" />
+                )}
+                {rowData.advisoryStatus.code === "APR" && (
+                  <ThumbUpIcon className="approvedIcon" />
+                )}
+                {rowData.advisoryStatus.code === "ARQ" && (
+                  <InfoIcon className="approvalRequestedIcon" />
+                )}
+                {rowData.advisoryStatus.code === "PUB" && (
+                  <PublishIcon className="publishedIcon" />
+                )}
+              </span>
+            </Tooltip>
+          )}
         </div>
       ),
     },
