@@ -25,8 +25,8 @@ jobs:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
           CONTEXT: ./src/admin
-          IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:${{secrets.OC_APP}} 
-        run: |  
+          IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:${{secrets.OC_APP}}
+        run: |
           docker build \
             --build-arg API_TOKEN=${{secrets.API_TOKEN}} \
             --build-arg ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}} \
@@ -37,6 +37,7 @@ jobs:
             --build-arg REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}} \
             --build-arg REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
             --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
+            --build-arg REACT_APP_STAT_HOLIDAY_API=${{secrets.REACT_APP_STAT_HOLIDAY_API}} \
             --tag $IMAGE \
             ${CONTEXT}
           docker push $IMAGE
@@ -61,7 +62,7 @@ jobs:
           DOCKER_BUILDKIT: 1
           CONTEXT: ./src/middleware
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:${{secrets.OC_APP}}
-        run: |  
+        run: |
           docker build \
             --build-arg API_TOKEN=${{secrets.API_TOKEN}} \
             --build-arg ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}} \
@@ -72,6 +73,7 @@ jobs:
             --build-arg REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}} \
             --build-arg REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
             --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
+            --build-arg REACT_APP_STAT_HOLIDAY_API=${{secrets.REACT_APP_STAT_HOLIDAY_API}} \
             --tag $IMAGE \
             ${CONTEXT}
           docker push $IMAGE
@@ -96,7 +98,7 @@ jobs:
           DOCKER_BUILDKIT: 1
           CONTEXT: ./src/cms
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:${{secrets.OC_APP}}
-        run: |  
+        run: |
           docker build \
             --build-arg DATABASE_HOST=${{secrets.DATABASE_HOST}} \
             --build-arg DATABASE_PORT=${{secrets.DATABASE_PORT}} \
@@ -133,7 +135,7 @@ jobs:
           DOCKER_BUILDKIT: 1
           CONTEXT: ./src/staging
           IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/staging:${{secrets.OC_APP}}
-        run: |  
+        run: |
           docker build \
             --tag $IMAGE \
             ${CONTEXT}
