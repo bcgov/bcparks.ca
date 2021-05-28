@@ -3,14 +3,19 @@
 
 from dags.utils import transform_par_to_proct_land 
 
-def writetoafile(fname):
-    with open(fname, 'w') as fp:
-        fp.write('Hello\n')
-
 
 def test_transform_par():
     data = {
-        "sites": [],
+        "sites": [
+            {
+                "protectedLandSiteCanceledDate": None,
+                "protectedLandSiteName": "Refuge Bay Site",
+                "protectedLandSiteStatusCode": "A",
+                "protectedLandSiteEstablishedDate": "1996-04-30",
+                "protectedLandSiteNumber": 3,
+                "protectedLandSiteStatusDescription": "Active"
+            }
+        ],
         "protectedLandStatusCode": "A",
         "establishedDate": "2005-03-22",
         "protectedLandTypeDescription": "Protected Area",
@@ -58,21 +63,29 @@ def test_transform_par():
         "latitude": None,
         "longitude": None,
         "mapZoom": None,
-        "sites": [],
+        "sites": [
+            {
+                "orcsSiteNumber": "481-3",
+                "siteNumber": 7,
+                "siteName": "Refuge Bay Site",
+                "status": "A",
+                "establishedDate": "1996-04-30",
+                "repealedDate": None,
+                "url": "",
+                "latitude": None,
+                "longitude": None,
+                "mapZoom": None
+            }
+        ],
         "managementAreas": [
             {
-                "protectedLandManagementAreaNumber": "16",
-                "protectedLandManagementAreaName": "Lakelse Douglas Channel",
-                "protectedLandSectionNumber": "13",
-                "protectedLandRegionName": "North Coast Skeena",
-                "protectedLandRegionNumber": "7",
-                "protectedLandSectionName": "Skeena West"
+                "managementAreaNumber": 16,
+                "managementAreaName": "Lakelse Douglas Channel",
+                "section": { "sectionNumber": 13, "sectionName": "Skeena West" },
+                "region": { "regionNumber": 7, "regionName": "North Coast Skeena" },
             }
         ],
     }
 
-    assert result == control
+    assert sorted(result) == sorted(control)
 
-
-def test_transform_null():
-    assert 1 == 1

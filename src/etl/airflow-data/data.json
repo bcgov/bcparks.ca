@@ -1,6 +1,8 @@
 {
     "base_url_data": {
         "par": "https://a100.gov.bc.ca/pub/parws",
-        "bcgn": "https://apps.gov.bc.ca/pub/bcgnws"
+        "bcgn": "https://apps.gov.bc.ca/pub/bcgnws",
+        "strapi": "http://10.10.2.80:1337",
+        "token": "MYqcUAOLoCKbJxJSNGc4MDwM1ObhWr5X78YHN"
     }
 }

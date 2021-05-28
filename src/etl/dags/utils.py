@@ -10,10 +10,13 @@ from airflow.models import Variable
 base_url = Variable.get("base_url_data", deserialize_json=True)
 par_api_url_base = base_url["par"]
 bcgn_api_url_base = base_url["bcgn"]
+strapi_base = base_url["strapi"]
+token = base_url["token"]
 
 headers = {
     'Content-Type': 'application/json'
 }
+
 
 ### task pythons
 def _get_data_from_par(task_instance):
@@ -76,10 +79,64 @@ def _transform_data_bcgn(task_instance):
 
 
 def _dump_data(task_instance):
-    api_url = ''
-    data = task_instance.xcom_pull(task_ids='etl_transform_data')
-    
-    return None
+    api_url = f'{strapi_base}/protected-areas?token={token}'
+    data = task_instance.xcom_pull(task_ids='etl_transform_data_par')
+
+    index = 0
+    for pro_land in data:
+        try:
+            # check object relationships
+            # sites
+            index_count = 0
+            for site in pro_land["sites"]:
+                pro_land["sites"][index_count] = get_or_create_site(site)
+                index_count = index_count + 1
+
+            # managementAreas
+            index_count = 0
+            for mArea in pro_land["managementAreas"]:
+                pro_land["managementAreas"][index_count] = get_or_create_mgmt_area(mArea)
+                index_count = index_count + 1
+
+            pro_area = get_protected_area_from_strapi(pro_land["orcs"])
+
+            if pro_area == None:
+                #rectified_payload = python_to_proper_json_string(pro_land)
+                response = requests.post(api_url, json=pro_land, headers=headers)
+
+                if response.status_code == 200:
+                    data = response.json()
+
+                    print(f'Record with id: {data["id"]} successfully created!')
+                else:
+                    print(pro_land)
+                    print(f'dump data: Unplanned status code returned - {response.status_code}')
+            else:
+                print('Protected area already exist in strapi')
+
+        except:
+            # del widgets_screen1[7:8]
+            # TODO: write error into airflow
+            print('Error invoking webservice')
+            raise
+
+def get_or_create_site(site):
+    newSite = get_site_from_strapi(site["orcsSiteNumber"])
+
+    if newSite == None:
+        #create new site
+        newSite = create_site_in_strapi(site)
+
+    return newSite
+
+def get_or_create_mgmt_area(mArea):
+    newMArea = get_mgmt_area_from_strapi(mArea["managementAreaNumber"])
+
+    if newMArea == None:
+        #create new mgmt area
+        newMArea = create_mgmt_area_in_strapi(mArea)
+
+    return newMArea
 
 ### Transform
 def transform_par_to_proct_land(pro_land):
@@ -100,12 +157,166 @@ def transform_par_to_proct_land(pro_land):
         "latitude": None,
         "longitude": None,
         "mapZoom": None,
-        "sites": pro_land["sites"],
-        "managementAreas": pro_land["managementAreas"]
+        "sites": transform_par_sites(pro_land["orcNumber"], pro_land["sites"]),
+        "managementAreas": transform_par_mgmtAreas(pro_land["managementAreas"])
     }
 
     return json
 
+def transform_par_sites(orcsNumber, sites):
+    json = []
+
+    for site in sites:
+        result = transform_par_site(orcsNumber, site)
+        json.append(result) 
+
+    return json
+
+def transform_par_site(orcsNumber, site):
+    orcsSiteNumber = "{}-{}".format(orcsNumber, site["protectedLandSiteNumber"])
+
+    json = {
+        "orcsSiteNumber": orcsSiteNumber,
+        "siteNumber": site["protectedLandSiteNumber"],
+        "siteName": site["protectedLandSiteName"],
+        "status": site["protectedLandSiteStatusCode"],
+        "establishedDate": site["protectedLandSiteEstablishedDate"],
+        "repealedDate": site["protectedLandSiteCanceledDate"],
+        "url": "",
+        "latitude": None,
+        "longitude": None,
+        "mapZoom": None
+    }
+
+    return json
+
+
+def transform_par_mgmtAreas(areas):
+    json = []
+
+    for area in areas:
+        result = transform_par_mgmtArea(area)
+        json.append(result) 
+
+    return json
+
+def transform_par_mgmtArea(area):
+    return {
+        "managementAreaNumber": int(area["protectedLandManagementAreaNumber"]),
+        "managementAreaName": area["protectedLandManagementAreaName"],
+        "section": transform_par_section(int(area["protectedLandSectionNumber"]), area["protectedLandSectionName"]),
+        "region": transform_par_region(int(area["protectedLandRegionNumber"]), area["protectedLandRegionName"])
+    }
+
+def transform_par_section(number, name):
+    return {
+        "sectionNumber": number,
+        "sectionName": name
+    }
+
+def transform_par_region(number, name):
+    return {
+        "regionNumber": number,
+        "regionName": name
+    }
+
+def create_site_in_strapi(site):
+    api_url = f"{strapi_base}/sites?token={token}"
+    result = None
+
+    try:
+        response = requests.post(api_url, json=site, headers=headers)
+
+        if response.status_code == 200:
+            result = response.json()
+
+            print(f'Record with id: {data["id"]} successfully created!')
+        else:
+            print(f'create site: Unplanned status code returned - {response.status_code}')
+
+        return result
+
+    except:
+        print('Error invoking webservice')
+        raise
+
+def create_mgmt_area_in_strapi(mArea):
+    api_url = f"{strapi_base}/management-areas?token={token}"
+    result = None
+
+    try:
+        response = requests.post(api_url, json=mArea, headers=headers)
+
+        if response.status_code == 200:
+            result = response.json()
+
+            print(f'Record with id: {data["id"]} successfully created!')
+        else:
+            print(f'create mgmt: Unplanned status code returned - {response.status_code}')
+
+        return result
+
+    except:
+        print('Error invoking webservice')
+        raise
+
+def get_protected_area_from_strapi(orcs):
+    api_url = f"{strapi_base}/protected-areas?orcs={orcs}"
+    
+    try:
+        response = requests.get(api_url, headers=headers)
+        
+        if response.status_code == 200:
+            data = response.json()
+
+            if len(data) == 0:
+                return None
+            else:
+                return data[0]
+        else:
+            print(f'Unable to get protected area with code {response.status_code}')
+    except:
+        print(f'Error invoking webservice - {api_url}')
+        raise
+
+def get_site_from_strapi(orcsSiteNumber):
+    api_url = f"{strapi_base}/sites?orcsSiteNumber={orcsSiteNumber}"
+    
+    try:
+        response = requests.get(api_url, headers=headers)
+        
+        if response.status_code == 200:
+            data = response.json()
+
+            if len(data) == 0:
+                return None
+            else:
+                return data[0]
+        else:
+            print(f'Unable to get site with code {response.status_code}')
+    except:
+        print(f'Error invoking webservice - {api_url}')
+        raise
+
+def get_mgmt_area_from_strapi(mAreaNumber):
+    api_url = f"{strapi_base}/management-areas?managementAreaNumber={mAreaNumber}"
+    
+    try:
+        response = requests.get(api_url, headers=headers)
+        
+        if response.status_code == 200:
+            data = response.json()
+
+            if len(data) == 0:
+                return None
+            else:
+                return data[0]
+        else:
+            print(f'url: ==== {api_url}')
+            print(f'Unable to get mgmt area with code {response.status_code}')
+    except:
+        print(f'Error invoking webservice - {api_url}')
+        raise
 
 
 ### misc
@@ -118,4 +329,4 @@ def validate_data():
 
 
 if __name__ == "__main__":
-    _get_data_from_par(None)
+    pass

@@ -1,63 +1,6 @@
 version: "3.4"
 
 services:
-  bcp-admin:
-    container_name: bcp-admin
-    restart: unless-stopped
-    build:
-      context: src/admin
-      args:
-        - API_TOKEN=${API_TOKEN}
-        - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
-        - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
-        - REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL}
-        - REACT_APP_KEYCLOAK_AUTH_URL=${REACT_APP_KEYCLOAK_AUTH_URL}
-        - REACT_APP_KEYCLOAK_REALM=${REACT_APP_KEYCLOAK_REALM}
-        - REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
-    env_file: .env
-    environment:
-      API_TOKEN: ${API_TOKEN}
-      REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
-      REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
-      REACT_APP_FRONTEND_BASE_URL: ${REACT_APP_FRONTEND_BASE_URL}
-      REACT_APP_KEYCLOAK_AUTH_URL: ${REACT_APP_KEYCLOAK_AUTH_URL}
-      REACT_APP_KEYCLOAK_REALM: ${REACT_APP_KEYCLOAK_REALM}
-      REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
-    ports:
-      - "8080:3000"
-    networks:
-      - bcp-cms-network
-
-  bcp-middleware:
-    container_name: bcp-middleware
-    restart: unless-stopped
-    build:
-      context: src/middleware
-      args:
-        - ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET}
-        - API_TOKEN=${API_TOKEN}
-        - ASPNETCORE_ENVIRONMENT=Development
-        - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
-        - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
-        - REACT_APP_FRONTEND_BASE_URL=${REACT_APP_FRONTEND_BASE_URL}
-        - REACT_APP_KEYCLOAK_AUTH_URL=${REACT_APP_KEYCLOAK_AUTH_URL}
-        - REACT_APP_KEYCLOAK_REALM=${REACT_APP_KEYCLOAK_REALM}
-        - REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
-    env_file: .env
-    environment:
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      ASPNETCORE_ENVIRONMENT: Development
-      REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
-      REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
-      REACT_APP_FRONTEND_BASE_URL: ${REACT_APP_FRONTEND_BASE_URL}
-      REACT_APP_KEYCLOAK_AUTH_URL: ${REACT_APP_KEYCLOAK_AUTH_URL}
-      REACT_APP_KEYCLOAK_REALM: ${REACT_APP_KEYCLOAK_REALM}
-      REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
-    ports:
-      - "5000:5000"
-    networks:
-      - bcp-cms-network
-
   bcp-cms:
     # image: strapi/strapi:3.5.3
     container_name: bcp-cms
@@ -107,17 +50,6 @@ services:
       - postgres
     ports:
       - "1337:1337"
-
-  bcp-staging:
-    container_name: bcp-staging
-    restart: unless-stopped
-    build:
-      context: src/staging
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
-    networks:
-      - bcp-cms-network
 
   postgres:
     image: postgres:13.2

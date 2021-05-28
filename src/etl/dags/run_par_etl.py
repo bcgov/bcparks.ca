@@ -40,12 +40,12 @@ with DAG(
         )
        
         transform_task = PythonOperator(
-            task_id="etl_transform_data",
+            task_id="etl_transform_data_par",
             python_callable=_transform_data_par
         )
         
         dump_task = PythonOperator(
-            task_id="etl_dump",
+            task_id="etl_dump_par",
             python_callable=_dump_data
         )
 
