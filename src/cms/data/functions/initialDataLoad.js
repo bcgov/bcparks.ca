@@ -19,7 +19,7 @@ const isFirstRun = async () => {
 const loadData = async () => {
   try {
     strapi.log.info("------Data load begins------");
-    Promise.all([
+    return Promise.all([
       parData.loadParData(),
       otherData.loadBusinessHours(),
       otherData.loadStatutoryHolidays(),
@@ -33,8 +33,8 @@ const loadData = async () => {
       otherData.loadFireCentre(),
       otherData.loadFireZone(),
       otherData.loadFireBanProhibition(),
-    ]).then(() => {
-      Promise.all([
+    ]).then(async () => {
+      return Promise.all([
         parData.loadAdditionalParData(),
         otherData.loadFireCentreZoneXref(),
         otherData.loadParkFireZoneXref(),
@@ -44,10 +44,12 @@ const loadData = async () => {
         publicAdvisory.loadPublicAdvisory(),
       ]).then(() => {
         strapi.log.info("------Data load completed------");
+        return true;
       });
     });
   } catch (error) {
     strapi.log.error(error);
+    return false;
   }
 };
 
@@ -91,14 +93,11 @@ const seedData = async () => {
   // Load data and set default public roles on first run
   const setupCMS = await isFirstRun();
   if (setupCMS) {
-    Promise.all([
-      permission.createAdmin(),
-      permission.createApiToken(),
-      permission.setDefaultPermissions(),
-      loadData(),
-    ]).then(() => {
-      return true;
-    });
+    const isAdminCreated = await permission.createAdmin();
+    const isTokenCreated = await permission.createApiToken();
+    const isPermissionsSet = await permission.setDefaultPermissions();
+    const isDataLoaded = await loadData();
+    return isAdminCreated && isTokenCreated && isPermissionsSet && isDataLoaded;
   }
 };
 

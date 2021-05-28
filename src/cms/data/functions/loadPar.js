@@ -21,7 +21,9 @@ const loadParData = async () => {
       });
     if (response.data) {
       const protectedAreas = [...response.data.data];
-      strapi.log.info(`Retrieved ${protectedAreas.length} records from PAR`);
+      strapi.log.info(
+        `Retrieved ${protectedAreas.length} records from PAR. Loading into cms...`
+      );
       for (const protectedArea of protectedAreas) {
         await loadProtectedLandData(protectedArea).then((res) => {
           return res;
@@ -258,7 +260,7 @@ const loadAdditionalSiteInfo = async () => {
                 orcsSiteNumber: s.orcs + "-" + s.orcsSiteNumber,
                 siteNumber: s.orcsSiteNumber,
                 siteName: s.siteName,
-                status: s.status,
+                status: s.status[0],
                 establishedDate: s.establishedDate
                   ? moment(s.establishedDate, "YYYY-MM-DD").tz("UTC").format()
                   : null,
