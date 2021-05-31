@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import json
+#import json
 import requests
 
 from airflow.models import Variable
@@ -19,21 +19,26 @@ headers = {
 
 
 ### task pythons
-def _get_data_from_par(task_instance):
-    api_url = f"{par_api_url_base}/protectedLands?protectedLandName=%25&protectedLandTypeCodes=CS,ER,PA,PK,RA"
+def _get_data_from_par():
+    api_url = f"{par_api_url_base}/protectedLands?protectedLandName=%25\
+            &protectedLandTypeCodes=CS,ER,PA,PK,RA"
+
+    result = None
 
     try:
         response = requests.get(api_url, headers=headers)
-        
+
         if response.status_code == 200:
-            # convert json to Python object 
+            # convert json to Python object
             data = response.json()
 
             if 'data' in data:
-                return data["data"]
+                result = data["data"]
             else:
                 #TODO: write to aitflow
                 print('data does not conform to expectations!')
+
+        return result
     except:
     # del widgets_screen1[7:8]
         # TODO: write error into airflow
@@ -42,21 +47,26 @@ def _get_data_from_par(task_instance):
 
 
 
-def _get_data_from_bcgn(task_instance):
-    api_url = f"{bcgn_api_url_base}//names/search?outputFormat=json&name=Victoria&exactSpelling=0"
+def _get_data_from_bcgn():
+    api_url = f"{bcgn_api_url_base}//names/search?outputFormat=\
+            json&name=Victoria&exactSpelling=0"
+
+    result = None
 
     try:
         response = requests.get(api_url, headers=headers)
-        
+
         if response.status_code == 200:
-            # convert json to Python object 
+            # convert json to Python object
             data = response.json()
 
             if 'data' in data:
-                return data["data"]
+                result = data["data"]
             else:
                 #TODO: write to aitflow
                 print('data does not conform to expectations!')
+
+        return result
     except:
     # del widgets_screen1[7:8]
         # TODO: write error into airflow
@@ -75,14 +85,19 @@ def _transform_data_par(task_instance):
     return json
 
 def _transform_data_bcgn(task_instance):
-    pass
+    data = task_instance.xcom_pull(task_ids='etl_get_data_from_bcgn')
 
+    json = []
+
+    for pro_land in data:
+        json.append(transform_par_to_proct_land(pro_land))
+
+    return json
 
 def _dump_data(task_instance):
     api_url = f'{strapi_base}/protected-areas?token={token}'
     data = task_instance.xcom_pull(task_ids='etl_transform_data_par')
 
-    index = 0
     for pro_land in data:
         try:
             # check object relationships
@@ -100,7 +115,7 @@ def _dump_data(task_instance):
 
             pro_area = get_protected_area_from_strapi(pro_land["orcs"])
 
-            if pro_area == None:
+            if pro_area is None:
                 #rectified_payload = python_to_proper_json_string(pro_land)
                 response = requests.post(api_url, json=pro_land, headers=headers)
 
@@ -122,7 +137,7 @@ def _dump_data(task_instance):
 def get_or_create_site(site):
     newSite = get_site_from_strapi(site["orcsSiteNumber"])
 
-    if newSite == None:
+    if newSite is None:
         #create new site
         newSite = create_site_in_strapi(site)
 
@@ -131,7 +146,7 @@ def get_or_create_site(site):
 def get_or_create_mgmt_area(mArea):
     newMArea = get_mgmt_area_from_strapi(mArea["managementAreaNumber"])
 
-    if newMArea == None:
+    if newMArea is None:
         #create new mgmt area
         newMArea = create_mgmt_area_in_strapi(mArea)
 
@@ -141,7 +156,7 @@ def get_or_create_mgmt_area(mArea):
 def get_or_create_section(section):
     newSection = get_section_from_strapi(section["sectionNumber"])
 
-    if newSection == None:
+    if newSection is None:
         #create new mgmt area
         newSection = create_section_in_strapi(section)
 
@@ -151,7 +166,7 @@ def get_or_create_section(section):
 def get_or_create_region(region):
     newRegion = get_region_from_strapi(region["regionNumber"])
 
-    if newRegion == None:
+    if newRegion is None:
         #create new mgmt area
         newRegion = create_region_in_strapi(region)
 
@@ -188,7 +203,7 @@ def transform_par_sites(orcsNumber, sites):
 
     for site in sites:
         result = transform_par_site(orcsNumber, site)
-        json.append(result) 
+        json.append(result)
 
     return json
 
@@ -216,7 +231,7 @@ def transform_par_mgmtAreas(areas):
 
     for area in areas:
         result = transform_par_mgmtArea(area)
-        json.append(result) 
+        json.append(result)
 
     return json
 
@@ -224,8 +239,10 @@ def transform_par_mgmtArea(area):
     return {
         "managementAreaNumber": int(area["protectedLandManagementAreaNumber"]),
         "managementAreaName": area["protectedLandManagementAreaName"],
-        "section": transform_par_section(int(area["protectedLandSectionNumber"]), area["protectedLandSectionName"]),
-        "region": transform_par_region(int(area["protectedLandRegionNumber"]), area["protectedLandRegionName"])
+        "section": transform_par_section(int(area["protectedLandSectionNumber"]), \
+                                         area["protectedLandSectionName"]),
+        "region": transform_par_region(int(area["protectedLandRegionNumber"]), \
+                                       area["protectedLandRegionName"])
     }
 
 def transform_par_section(number, name):
@@ -331,17 +348,18 @@ def create_mgmt_area_in_strapi(mArea):
 
 def get_protected_area_from_strapi(orcs):
     api_url = f"{strapi_base}/protected-areas?orcs={orcs}"
-    
+
     try:
         response = requests.get(api_url, headers=headers)
-        
+
         if response.status_code == 200:
             data = response.json()
 
-            if len(data) == 0:
-                return None
-            else:
-                return data[0]
+            result = None
+            if len(data) > 0:
+                result = data[0]
+
+            return result
         else:
             print(f'Unable to get protected area with code {response.status_code}')
     except:
@@ -350,10 +368,10 @@ def get_protected_area_from_strapi(orcs):
 
 def get_site_from_strapi(orcsSiteNumber):
     api_url = f"{strapi_base}/sites?orcsSiteNumber={orcsSiteNumber}"
-    
+
     try:
         response = requests.get(api_url, headers=headers)
-        
+
         if response.status_code == 200:
             data = response.json()
 
@@ -369,10 +387,10 @@ def get_site_from_strapi(orcsSiteNumber):
 
 def get_mgmt_area_from_strapi(mAreaNumber):
     api_url = f"{strapi_base}/management-areas?managementAreaNumber={mAreaNumber}"
-    
+
     try:
         response = requests.get(api_url, headers=headers)
-        
+
         if response.status_code == 200:
             data = response.json()
 
@@ -389,10 +407,10 @@ def get_mgmt_area_from_strapi(mAreaNumber):
 
 def get_region_from_strapi(regionNumber):
     api_url = f"{strapi_base}/regions?regionNumber={regionNumber}"
-    
+
     try:
         response = requests.get(api_url, headers=headers)
-        
+
         if response.status_code == 200:
             data = response.json()
 
@@ -409,10 +427,10 @@ def get_region_from_strapi(regionNumber):
 
 def get_section_from_strapi(sectionNumber):
     api_url = f"{strapi_base}/sections?sectionNumber={sectionNumber}"
-    
+
     try:
         response = requests.get(api_url, headers=headers)
-        
+
         if response.status_code == 200:
             data = response.json()
 

@@ -1,16 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import json
-import requests
-
+from datetime import timedelta
 from airflow import DAG
-from airflow.models import Variable
-from datetime import datetime, timedelta
 from airflow.utils.dates import days_ago
-from airflow.operators.bash import BashOperator
-from airflow.operators.python import PythonOperator, BranchPythonOperator
-from airflow.providers.http.operators.http import SimpleHttpOperator
+from airflow.operators.python import PythonOperator
 
 from utils import _get_data_from_par, _transform_data_par, _dump_data
 
@@ -34,21 +28,20 @@ with DAG(
         catchup=False
     ) as dag:
 
-        get_data_task = PythonOperator(
-            task_id="etl_get_data_from_par",
-            python_callable=_get_data_from_par
-        )
-       
-        transform_task = PythonOperator(
-            task_id="etl_transform_data_par",
-            python_callable=_transform_data_par
-        )
-        
-        dump_task = PythonOperator(
-            task_id="etl_dump_par",
-            python_callable=_dump_data
-        )
+    get_data_task = PythonOperator(
+        task_id="etl_get_data_from_par",
+        python_callable=_get_data_from_par
+    )
 
+    transform_task = PythonOperator(
+        task_id="etl_transform_data_par",
+        python_callable=_transform_data_par
+    )
 
-        # set task order/hierarchy
-        get_data_task >> transform_task >> dump_task
+    dump_task = PythonOperator(
+        task_id="etl_dump_par",
+        python_callable=_dump_data
+    )
+
+    # set task order/hierarchy
+    get_data_task >> transform_task >> dump_task
