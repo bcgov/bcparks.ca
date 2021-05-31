@@ -1,0 +1,33 @@
+{"park-name-type":[
+    {
+      "nameTypeId": 1,
+      "nameType": "Legal",
+      "description": "Official legal name with Unicode characters; check against legal names in BCGNIS and notify if there is a discrepancy. We should not automatically update this from BCGNIS because our copy might be more accurate."
+    },
+    {
+      "nameTypeId": 2,
+      "nameType": "Escaped",
+      "description": "Official legal name with HTML-escaped Unicode characters"
+    },
+    {
+      "nameTypeId": 3,
+      "nameType": "Phonetic",
+      "description": "English phonetically spelled name; possibly drawn from BCGNIS"
+    },
+    {
+      "nameTypeId": 4,
+      "nameType": "Basic",
+      "description": "Name spelled using basic ASCII character set"
+    },
+    {
+      "nameTypeId": 5,
+      "nameType": "Alias",
+      "description": "Alternate spelling to enhance searchability; such as with no spaces and no punctuation"
+    },
+    {
+      "nameTypeId": 6,
+      "nameType": "Historic",
+      "description": "Historical name that is no longer official, but the area may still be known by this name; these can be drawn from BCGNIS"
+    }
+  ]
+}

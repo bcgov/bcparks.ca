@@ -29,6 +29,7 @@ const loadData = async () => {
       otherData.loadLinkType(),
       otherData.loadActivityType(),
       otherData.loadFacilityType(),
+      otherData.loadParkNameType(),
       otherData.loadUrgency(),
       otherData.loadFireCentre(),
       otherData.loadFireZone(),
@@ -41,6 +42,7 @@ const loadData = async () => {
         otherData.loadParkFogZoneXref(),
         otherData.loadParkActivity(),
         otherData.loadParkFacility(),
+        otherData.loadParkName(),
         publicAdvisory.loadPublicAdvisory(),
       ]).then(() => {
         strapi.log.info("------Data load completed------");
@@ -75,6 +77,8 @@ const rewriteData = async () => {
       strapi.services["park-activity"].delete(),
       strapi.services["facility-type"].delete(),
       strapi.services["park-facility"].delete(),
+      strapi.services["park-name-type"].delete(),
+      strapi.services["park-name"].delete(),
       strapi.services["advisory-status"].delete(),
       strapi.services["link-type"].delete(),
       strapi.services["urgency"].delete(),
