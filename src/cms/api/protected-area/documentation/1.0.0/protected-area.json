@@ -944,6 +944,43 @@
               }
             }
           },
+          "parkNames": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "parkName": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "parkNameType": {
+                  "type": "string"
+                },
+                "protectedArea": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -1048,6 +1085,12 @@
             }
           },
           "parkFacilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "parkNames": {
             "type": "array",
             "items": {
               "type": "string"
