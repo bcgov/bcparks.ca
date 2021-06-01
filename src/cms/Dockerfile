@@ -58,7 +58,8 @@ RUN yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x
 RUN cat ./config/server_template.js | envsubst > ./config/server.js && \
     chmod 766 ./config/server.js && \
     cat ./config/server.js && \
-    chmod +x ./entrypoint.sh 
+    chmod +x ./entrypoint.sh && \
+    chown -R 1007770000:1007770000 .
 USER 1007770000
 # start app
 # CMD [ "npm", "start" ]
