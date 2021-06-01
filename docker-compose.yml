@@ -3,6 +3,7 @@ version: "3.4"
 services:
   bcp-admin:
     container_name: bcp-admin
+    image: bcp-admin
     restart: unless-stopped
     build:
       context: src/admin
@@ -34,6 +35,7 @@ services:
 
   bcp-middleware:
     container_name: bcp-middleware
+    image: bcp-middleware
     restart: unless-stopped
     build:
       context: src/middleware
@@ -67,6 +69,7 @@ services:
   bcp-cms:
     # image: strapi/strapi:3.5.3
     container_name: bcp-cms
+    image: bcp-cms
     restart: unless-stopped
     env_file: .env
     build:
@@ -116,6 +119,7 @@ services:
 
   bcp-staging:
     container_name: bcp-staging
+    image: bcp-staging
     restart: unless-stopped
     build:
       context: src/staging
