@@ -6,7 +6,8 @@ on:
     branches: [tools]
 
 jobs:
-  build-frontend:
+  build-images:
+    name: "Build Images"
     runs-on: ubuntu-20.04
     environment: Tools
     steps:
@@ -20,131 +21,41 @@ jobs:
           username: ${{secrets.OPENSHIFT_SA_USERNAME}}
           password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
 
-      - name: Build and push
+      - name: Build images
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
-          CONTEXT: ./src/admin
-          IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:${{secrets.OC_APP}} 
         run: |  
-          docker build \
-            --build-arg API_TOKEN=${{secrets.API_TOKEN}} \
+          docker-compose build --parallel \
             --build-arg ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}} \
-            --build-arg ASPNETCORE_ENVIRONMENT=${{secrets.ASPNETCORE_ENVIRONMENT}} \
-            --build-arg REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}} \
-            --build-arg REACT_APP_CMS_BASE_URL=${{secrets.REACT_APP_CMS_BASE_URL}} \
-            --build-arg REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}} \
-            --build-arg REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}} \
-            --build-arg REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
-            --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
-            --tag $IMAGE \
-            ${CONTEXT}
-          docker push $IMAGE
-
-  build-api:
-    runs-on: ubuntu-20.04
-    environment: Tools
-    steps:
-      - name: Git Checkout
-        uses: actions/checkout@v2
-
-      - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v1
-        with:
-          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
-          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
-
-      - name: Build and push
-        env:
-          COMPOSE_DOCKER_CLI_BUILD: 1
-          DOCKER_BUILDKIT: 1
-          CONTEXT: ./src/middleware
-          IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:${{secrets.OC_APP}}
-        run: |  
-          docker build \
             --build-arg API_TOKEN=${{secrets.API_TOKEN}} \
-            --build-arg ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}} \
+            --build-arg API_USER_NAME=${{secrets.API_USER_NAME}} \
+            --build-arg API_USER_EMAIL=${{secrets.API_USER_EMAIL}} \
+            --build-arg API_USER_PASSWORD=${{secrets.API_USER_PASSWORD}} \
             --build-arg ASPNETCORE_ENVIRONMENT=${{secrets.ASPNETCORE_ENVIRONMENT}} \
-            --build-arg REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}} \
-            --build-arg REACT_APP_CMS_BASE_URL=${{secrets.REACT_APP_CMS_BASE_URL}} \
-            --build-arg REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}} \
-            --build-arg REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}} \
-            --build-arg REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
-            --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
-            --tag $IMAGE \
-            ${CONTEXT}
-          docker push $IMAGE
-
-  build-cms:
-    runs-on: ubuntu-20.04
-    environment: Tools
-    steps:
-      - name: Git Checkout
-        uses: actions/checkout@v2
-
-      - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v1
-        with:
-          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
-          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
-
-      - name: Build and push
-        env:
-          COMPOSE_DOCKER_CLI_BUILD: 1
-          DOCKER_BUILDKIT: 1
-          CONTEXT: ./src/cms
-          IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:${{secrets.OC_APP}}
-        run: |  
-          docker build \
             --build-arg DATABASE_HOST=${{secrets.DATABASE_HOST}} \
             --build-arg DATABASE_PORT=${{secrets.DATABASE_PORT}} \
             --build-arg DATABASE_NAME=${{secrets.DATABASE_NAME}} \
             --build-arg DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} \
             --build-arg DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} \
             --build-arg DATABASE_SSL=${{secrets.DATABASE_SSL}} \
-            --build-arg API_TOKEN=${{secrets.API_TOKEN}} \
-            --build-arg API_USER_NAME=${{secrets.API_USER_NAME}} \
-            --build-arg API_USER_EMAIL=${{secrets.API_USER_EMAIL}} \
-            --build-arg API_USER_PASSWORD=${{secrets.API_USER_PASSWORD}} \
             --build-arg REACT_APP_CMS_BASE_URL=${{secrets.REACT_APP_CMS_BASE_URL}} \
-            --tag $IMAGE \
-            ${CONTEXT}
-          docker push $IMAGE
+            --build-arg REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}} \
+            --build-arg REACT_APP_FRONTEND_BASE_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}} \
+            --build-arg REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}} \
+            --build-arg REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
+            --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
+            --build-arg REACT_APP_STAT_HOLIDAY_API=${{secrets.REACT_APP_STAT_HOLIDAY_API}}
 
-  build-staging:
-    runs-on: ubuntu-20.04
-    environment: Tools
-    steps:
-      - name: Git Checkout
-        uses: actions/checkout@v2
-
-      - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v1
-        with:
-          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
-          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
-
-      - name: Build and push
+      - name: Test images
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
-          CONTEXT: ./src/staging
-          IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/staging:${{secrets.OC_APP}}
-        run: |  
-          docker build \
-            --tag $IMAGE \
-            ${CONTEXT}
-          docker push $IMAGE
-
-  apply-oc-template:
-    runs-on: ubuntu-20.04
-    environment: Tools
-    steps:
-      - name: "Use the OpenShift template"
-        uses: actions/checkout@v2
+        run: |
+          docker image ls
+          docker-compose up -d
+          docker ps 
+          docker-compose down -v
 
       - name: Install OC
         uses: redhat-actions/oc-installer@v1
@@ -162,17 +73,27 @@ jobs:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
         run: |
+          docker image ls
+          docker image tag bcp-admin ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:${{secrets.OC_APP}}
+          docker image push ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:${{secrets.OC_APP}}
+          docker image tag bcp-middleware ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:${{secrets.OC_APP}}
+          docker image push ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/api:${{secrets.OC_APP}}
+          docker image tag bcp-cms ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:${{secrets.OC_APP}}
+          docker image push ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/strapi:${{secrets.OC_APP}}
+          docker image tag bcp-staging ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/staging:${{secrets.OC_APP}}
+          docker image push ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/staging:${{secrets.OC_APP}}
           oc process -f infrastructure/bcparks-app.yml \
             -p NAME=bcparks \
             -p OC_NAMESPACE=${{secrets.OPENSHIFT_LICENSE_PLATE}} \
             -p OC_APP=${{secrets.OC_APP}} \
             -p FRONTEND_POD=web \
             -p FRONTEND_URL=web \
-            -p CMS_POD=strapi \
-            -p CMS_URL=web \
+            -p CMS_POD=cms \
+            -p CMS_URL=cms \
             -p API_POD=api \
             -p API_URL=api \
             -p DB_POD=db \
             -p STAGING_POD=staging \
             -p WEB_SCHEMA=https \
+            -p URL_STUB="-61d198-${{secrets.OC_APP}}.apps.silver.devops.gov.bc.ca" \
             -n ${{secrets.OPENSHIFT_LICENSE_PLATE}}-${{secrets.OC_APP}} | oc apply -n ${{secrets.OPENSHIFT_LICENSE_PLATE}}-${{secrets.OC_APP}} -f -

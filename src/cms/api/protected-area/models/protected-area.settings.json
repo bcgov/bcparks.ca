@@ -98,6 +98,10 @@
     "parkFacilities": {
       "via": "protectedArea",
       "collection": "park-facility"
+    },
+    "parkNames": {
+      "via": "protectedArea",
+      "collection": "park-name"
     }
   }
 }
