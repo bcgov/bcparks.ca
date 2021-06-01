@@ -9,7 +9,7 @@ jobs:
   build-images:
     runs-on: ubuntu-20.04
     environment: Development
-    steps:
+     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
 
@@ -20,13 +20,11 @@ jobs:
           username: ${{secrets.OPENSHIFT_SA_USERNAME}}
           password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
 
-      - name: Build and push
+      - name: Build images
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
-          CONTEXT: ./src/admin
-          IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/frontend:${{secrets.OC_APP}}
-        run: |
+        run: |  
           docker-compose build --parallel \
             --build-arg ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}} \
             --build-arg API_TOKEN=${{secrets.API_TOKEN}} \
