@@ -24,8 +24,8 @@
       "type": "boolean"
     },
     "protectedArea": {
-      "model": "protected-area",
-      "via": "parkActivities"
+      "via": "parkActivities",
+      "model": "protected-area"
     },
     "site": {
       "model": "site",

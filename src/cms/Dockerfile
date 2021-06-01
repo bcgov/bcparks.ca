@@ -50,18 +50,16 @@ RUN npm install --silent
 RUN npm run build
 
 # add app
-COPY . ./
+COPY --chown=1007770000:1007770000 . ./
 
 USER 0
 RUN yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
     yum install -y postgresql13
 RUN cat ./config/server_template.js | envsubst > ./config/server.js && \
     chmod 766 ./config/server.js && \
-    cat ./config/server.js
-
-RUN chmod -R 777 /opt/app-root/src/ && \
-    chown -R 1007770000 /opt/app-root/src/
+    cat ./config/server.js && \
+    chmod +x ./entrypoint.sh 
 USER 1007770000
 # start app
 # CMD [ "npm", "start" ]
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
