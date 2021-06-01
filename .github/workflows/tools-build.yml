@@ -50,7 +50,7 @@ jobs:
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
-        run:
+        run: |
           docker image ls
           docker-compose up -d
           docker ps 
