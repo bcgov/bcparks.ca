@@ -6,7 +6,8 @@ on:
     branches: [tools]
 
 jobs:
-  build-containers:
+  build-images:
+    name: "Build Images"
     runs-on: ubuntu-20.04
     environment: Tools
     steps:
@@ -46,7 +47,16 @@ jobs:
             --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
             --build-arg REACT_APP_STAT_HOLIDAY_API=${{secrets.REACT_APP_STAT_HOLIDAY_API}}
 
-      - name: Test images
+  test-images:
+    name: "Test Images"
+    runs-on: ubuntu-20.04
+    environment: Tools
+    needs: build-images
+    steps:
+      - name: "Git Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Test Docker"
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
           DOCKER_BUILDKIT: 1
@@ -56,10 +66,26 @@ jobs:
           docker ps 
           docker-compose down -v
 
-      - name: Install OC
+  push-images:
+    name: "Push Images and Template"
+    runs-on: ubuntu-20.04
+    environment: Tools
+    needs: test-images
+    steps:
+      - name: "Install OC"
         uses: redhat-actions/oc-installer@v1
 
-      - name: Authenticate and set context
+      - name: "Git Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Login to OpenShift Container Repository"
+        uses: docker/login-action@v1
+        with:
+          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+
+      - name: "Authenticate and set context"
         uses: redhat-actions/oc-login@v1
         with:
           openshift_server_url: ${{secrets.OPENSHIFT_SERVER_URL}}

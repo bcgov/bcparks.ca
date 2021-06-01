@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 jobs:
-  build-frontend:
+  build-images:
     runs-on: ubuntu-20.04
     environment: Development
     steps:
