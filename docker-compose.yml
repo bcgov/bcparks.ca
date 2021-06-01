@@ -3,6 +3,7 @@ version: "3.4"
 services:
   bcp-admin:
     container_name: bcp-admin
+    image: bcp-admin
     restart: unless-stopped
     build:
       context: src/admin
@@ -15,7 +16,6 @@ services:
         - REACT_APP_KEYCLOAK_REALM=${REACT_APP_KEYCLOAK_REALM}
         - REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
         - REACT_APP_STAT_HOLIDAY_API=${REACT_APP_STAT_HOLIDAY_API}
-    env_file: .env
     environment:
       API_TOKEN: ${API_TOKEN}
       REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
@@ -34,6 +34,7 @@ services:
 
   bcp-middleware:
     container_name: bcp-middleware
+    image: bcp-middleware
     restart: unless-stopped
     build:
       context: src/middleware
@@ -48,7 +49,6 @@ services:
         - REACT_APP_KEYCLOAK_REALM=${REACT_APP_KEYCLOAK_REALM}
         - REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
         - REACT_APP_STAT_HOLIDAY_API=${REACT_APP_STAT_HOLIDAY_API}
-    env_file: .env
     environment:
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
       ASPNETCORE_ENVIRONMENT: Development
@@ -67,8 +67,8 @@ services:
   bcp-cms:
     # image: strapi/strapi:3.5.3
     container_name: bcp-cms
+    image: bcp-cms
     restart: unless-stopped
-    env_file: .env
     build:
       context: src/cms
       args:
@@ -116,6 +116,7 @@ services:
 
   bcp-staging:
     container_name: bcp-staging
+    image: bcp-staging
     restart: unless-stopped
     build:
       context: src/staging
