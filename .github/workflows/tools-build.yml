@@ -56,12 +56,6 @@ jobs:
           docker ps 
           docker-compose down -v
 
-      - name: Build images
-        env:
-          COMPOSE_DOCKER_CLI_BUILD: 1
-          DOCKER_BUILDKIT: 1
-        run:
-
       - name: Install OC
         uses: redhat-actions/oc-installer@v1
 
