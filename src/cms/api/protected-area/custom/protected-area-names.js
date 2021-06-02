@@ -34,15 +34,18 @@ const getProtecteAreaNames = async (ctx) => {
   }
 
   return entities.map((entity) => {
-    const { id, protectedAreaName, orcs } = sanitizeEntity(entity, {
-      model: strapi.models["protected-area"],
-    });
+    const { id, orcs, type, typeCode, protectedAreaName } = sanitizeEntity(
+      entity,
+      {
+        model: strapi.models["protected-area"],
+      }
+    );
     const parkNamesFilter = parkNamesData.filter((x) => x.orcs == orcs);
 
     const parkNames =
       parkNamesFilter.length !== 0 ? parkNamesFilter[0].parkNames : [];
 
-    return { id, orcs, protectedAreaName, parkNames };
+    return { id, orcs, type, typeCode, protectedAreaName, parkNames };
   });
 };
 
