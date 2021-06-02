@@ -1,12 +1,12 @@
 import React, { useState, forwardRef } from "react";
 import { cmsAxios } from "../../../axios_config";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { useQuery } from "react-query";
 import PropTypes from "prop-types";
 import styles from "./AdvisoryDashboard.css";
 import { Button } from "shared-components/build/components/button/Button";
 import MaterialTable from "material-table";
-import Select from "react-select";
+import AsyncSelect from "react-select/async";
 import Moment from "react-moment";
 import { Loader } from "shared-components/build/components/loader/Loader";
 import IconButton from "@material-ui/core/IconButton";
@@ -38,6 +38,7 @@ import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import Header from "../../composite/header/Header";
 
 export default function AdvisoryDashboard({ page: { setError } }) {
+  let history = useHistory();
   const [toCreate, setToCreate] = useState(false);
   const [selectedParkId, setSelectedParkId] = useState(0);
 
@@ -45,7 +46,6 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     const [, selectedParkId] = queryKey;
     let parkIdQuery =
       selectedParkId > 0 ? `&protectedAreas.id=${selectedParkId}` : "";
-
     const response = await Promise.all([
       cmsAxios.get(`/management-areas?_limit=-1&_sort=managementAreaName`),
       cmsAxios.get(
@@ -75,9 +75,13 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     return data;
   };
 
-  const fetchParkNames = async () => {
+  const fetchParkNames = async (inputValue) => {
+    const searchOption = inputValue
+      ? `&protectedAreaName_contains=${inputValue}`
+      : "";
+
     const { data } = await cmsAxios.get(
-      `/protected-areas/names?_limit=-1&_sort=protectedAreaName`
+      `/protected-areas/names?_limit=20&_sort=protectedAreaName${searchOption}`
     );
 
     const parkNames = data.map((p) => ({
@@ -280,11 +284,9 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         paddingRight: "10px",
       },
       render: (rowData) => (
-        <Link to={`advisory-summary/${rowData.id}`}>
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
-        </Link>
+        <IconButton>
+          <MoreVertIcon />
+        </IconButton>
       ),
     },
   ];
@@ -372,8 +374,10 @@ export default function AdvisoryDashboard({ page: { setError } }) {
                 />
               </div>
             </div>
-            <Select
-              options={parkNamesQuery.data}
+            <AsyncSelect
+              cacheOptions
+              defaultOptions
+              loadOptions={fetchParkNames}
               onChange={(e) => setSelectedParkId(e ? e.value : 0)}
               placeholder="Select a Park..."
               className="bcgov-select"
@@ -389,6 +393,9 @@ export default function AdvisoryDashboard({ page: { setError } }) {
               columns={tableColumns}
               data={publicAdvisoryQuery.data}
               title=""
+              onRowClick={(event, rowData) => {
+                history.push(`advisory-summary/${rowData.id}`);
+              }}
               components={{
                 Toolbar: (props) => <div></div>,
               }}
