@@ -314,7 +314,7 @@ const loadParkFireZoneXref = async () => {
       }
 
       if (fireZones.length > 0) {
-        protectedArea.FireZones = fireZones;
+        protectedArea.fireZones = fireZones;
         await strapi
           .query("protected-area")
           .update({ id: protectedArea.id }, protectedArea);
