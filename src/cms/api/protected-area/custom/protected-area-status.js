@@ -231,7 +231,7 @@ const getProtecteAreaStatus = async (ctx) => {
       hasCampfireBan: protectedArea.hasCampfireBan,
       campfireBanEffectiveDate: null,
       campfireBanRescindedDate: null,
-      accessStatusEffectiveDate: protectedArea.fffectiveDate,
+      accessStatusEffectiveDate: publicAdvisory.effectiveDate,
       accessStatusRescindedDate: null,
       fireCentreName: fireCentreName,
       fireZoneName: fireZoneName,
