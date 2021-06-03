@@ -84,7 +84,7 @@ const loadFireBanProhibition = async () => {
             fireCentreName_contains: fire_centre_name,
           });
         }
-        console.log(fireCentre);
+
         let fireZone = null;
         if (fire_zone_name) {
           fireZone = await strapi.services["fire-zone"].findOne({
