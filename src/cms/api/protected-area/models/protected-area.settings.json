@@ -102,6 +102,12 @@
     "parkNames": {
       "via": "protectedArea",
       "collection": "park-name"
+    },
+    "hasCampfireBan": {
+      "type": "boolean"
+    },
+    "hasSmokingBan": {
+      "type": "boolean"
     }
   }
 }
