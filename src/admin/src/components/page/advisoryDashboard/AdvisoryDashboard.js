@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import styles from "./AdvisoryDashboard.css";
 import { Button } from "shared-components/build/components/button/Button";
 import MaterialTable from "material-table";
-import AsyncSelect from "react-select/async";
+import Select from "react-select";
 import Moment from "react-moment";
 import { Loader } from "shared-components/build/components/loader/Loader";
 import IconButton from "@material-ui/core/IconButton";
@@ -75,16 +75,18 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     return data;
   };
 
-  const fetchParkNames = async (inputValue) => {
-    const searchOption = inputValue
-      ? `&protectedAreaName_contains=${inputValue}`
-      : "";
-
-    const { data } = await cmsAxios.get(
-      `/protected-areas/names?_limit=20&_sort=protectedAreaName${searchOption}`
-    );
-
-    const parkNames = data.map((p) => ({
+  const fetchParkNamesQl = async () => {
+    const { data } = await cmsAxios.post("/graphql", {
+      query: `
+      query {
+        protectedAreas(where:{_limit:-1}, sort: "protectedAreaName:asc"){
+          id
+          protectedAreaName
+        }
+      }
+      `,
+    });
+    const parkNames = data.data.protectedAreas.map((p) => ({
       label: p.protectedAreaName,
       value: p.id,
     }));
@@ -106,8 +108,8 @@ export default function AdvisoryDashboard({ page: { setError } }) {
   );
 
   const isManagementAreaQueryLoaded = managementAreaQuery.isSuccess;
-  const parkNamesQuery = useQuery("fetchParkNames", fetchParkNames, {
-    staleTime: 10000,
+  const parkNamesQuery = useQuery("fetchParkNamesQl", fetchParkNamesQl, {
+    staleTime: 90000,
   });
 
   const publicAdvisoryQuery = useQuery(
@@ -374,10 +376,8 @@ export default function AdvisoryDashboard({ page: { setError } }) {
                 />
               </div>
             </div>
-            <AsyncSelect
-              cacheOptions
-              defaultOptions
-              loadOptions={fetchParkNames}
+            <Select
+              options={parkNamesQuery.data}
               onChange={(e) => setSelectedParkId(e ? e.value : 0)}
               placeholder="Select a Park..."
               className="bcgov-select"
