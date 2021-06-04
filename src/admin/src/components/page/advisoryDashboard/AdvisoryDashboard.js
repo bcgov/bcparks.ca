@@ -79,7 +79,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     const { data } = await cmsAxios.post("/graphql", {
       query: `
       query {
-        protectedAreas(where:{_limit:-1}){
+        protectedAreas(where:{_limit:-1}, sort: "protectedAreaName:asc"){
           id
           protectedAreaName
         }
