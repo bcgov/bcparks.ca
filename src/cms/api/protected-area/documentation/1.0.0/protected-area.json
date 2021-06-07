@@ -846,6 +846,9 @@
                 "fireCentre": {
                   "type": "string"
                 },
+                "protectedArea": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },

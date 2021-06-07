@@ -89,7 +89,8 @@
       "collection": "site"
     },
     "fireZones": {
-      "collection": "fire-zone"
+      "collection": "fire-zone",
+      "via": "protectedArea"
     },
     "parkActivities": {
       "via": "protectedArea",
