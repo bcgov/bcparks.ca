@@ -120,6 +120,7 @@ export default function AdvisoryForm({
     isSavingDraft,
     updateAdvisory,
     setToDashboard,
+    setIsConfirmation,
   },
 }) {
   const [protectedAreaError, setProtectedAreaError] = useState("");
@@ -748,7 +749,7 @@ export default function AdvisoryForm({
                           </div>
                         </div>
                       </div>
-                    </div>{" "}
+                    </div>
                     {mode === "update" && (
                       <div className="row">
                         <div className="col-lg-12 col-md-12 col-sm-12 plr0">
@@ -1061,7 +1062,7 @@ export default function AdvisoryForm({
                 <>
                   <Button
                     label="Submit"
-                    styling="bcgov-normal-yellow btn"
+                    styling="bcgov-normal-blue btn"
                     onClick={() => {
                       if (validAdvisoryData(advisoryData)) {
                         saveAdvisory("submit");
@@ -1080,13 +1081,21 @@ export default function AdvisoryForm({
                     }}
                     hasLoader={isSavingDraft}
                   />
+                  <Button
+                    label="Cancel"
+                    styling="bcgov-normal-light btn"
+                    onClick={() => {
+                      sessionStorage.clear();
+                      setToDashboard(true);
+                    }}
+                  />
                 </>
               )}
               {mode === "update" && (
                 <>
                   <Button
                     label="Update"
-                    styling="bcgov-normal-yellow btn"
+                    styling="bcgov-normal-blue btn"
                     onClick={() => {
                       if (validAdvisoryData(advisoryData, "update")) {
                         updateAdvisory();
@@ -1094,16 +1103,16 @@ export default function AdvisoryForm({
                     }}
                     hasLoader={isSubmitting}
                   />
+                  <Button
+                    label="Cancel"
+                    styling="bcgov-normal-light btn"
+                    onClick={() => {
+                      sessionStorage.clear();
+                      setIsConfirmation(true);
+                    }}
+                  />
                 </>
               )}
-              <Button
-                label="Cancel"
-                styling="bcgov-normal-light btn"
-                onClick={() => {
-                  sessionStorage.clear();
-                  setToDashboard(true);
-                }}
-              />
             </div>
           </div>
         </div>
@@ -1199,5 +1208,6 @@ AdvisoryForm.propTypes = {
     isSavingDraft: PropTypes.bool,
     updateAdvisory: PropTypes.func.isRequired,
     setToDashboard: PropTypes.func.isRequired,
+    setIsConfirmation: PropTypes.func.isRequired,
   }).isRequired,
 };

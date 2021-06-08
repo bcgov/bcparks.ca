@@ -53,6 +53,7 @@ export function validateRequiredLocation(field) {
   if (!valueExists) {
     field.setError("Please select " + field.text);
   }
+  return valueExists;
 }
 
 export function validateOptionalDate(field) {
