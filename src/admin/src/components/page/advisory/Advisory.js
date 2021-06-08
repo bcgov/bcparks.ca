@@ -16,6 +16,7 @@ import {
 import AdvisoryForm from "../../composite/advisoryForm/AdvisoryForm";
 import Header from "../../composite/header/Header";
 import { Loader } from "shared-components/build/components/loader/Loader";
+import { Button } from "shared-components/build/components/button/Button";
 
 export default function Advisory({ mode, page: { setError } }) {
   const [protectedAreas, setProtectedAreas] = useState([]);
@@ -95,6 +96,7 @@ export default function Advisory({ mode, page: { setError } }) {
   useEffect(() => {
     if (mode === "update" && !isLoadingData) {
       if (parseInt(id)) {
+        setAdvisoryId(id);
         cmsAxios
           .get(`/public-advisories/${id}?_publicationState=preview`)
           .then((res) => {
@@ -339,7 +341,7 @@ export default function Advisory({ mode, page: { setError } }) {
           setProtectedAreas([...protectedAreas]);
           const regionData = res[1].data;
           const regions = regionData.map((r) => ({
-            label: r.regionName + "- Region",
+            label: r.regionName + " Region",
             value: r.id,
             type: "region",
             obj: r,
@@ -804,95 +806,107 @@ export default function Advisory({ mode, page: { setError } }) {
             </div>
           )}
           {!isLoadingPage && (
-            <AdvisoryForm
-              mode={mode}
-              data={{
-                ticketNumber,
-                setTicketNumber,
-                listingRank,
-                setListingRank,
-                headline,
-                setHeadline,
-                eventType,
-                eventTypes,
-                setEventType,
-                accessStatus,
-                accessStatuses,
-                setAccessStatus,
-                description,
-                setDescription,
-                protectedAreas,
-                selectedProtectedAreas,
-                setSelectedProtectedAreas,
-                regions,
-                selectedRegions,
-                setSelectedRegions,
-                sections,
-                selectedSections,
-                setSelectedSections,
-                managementAreas,
-                selectedManagementAreas,
-                setSelectedManagementAreas,
-                sites,
-                selectedSites,
-                setSelectedSites,
-                fireCentres,
-                selectedFireCentres,
-                setSelectedFireCentres,
-                fireZones,
-                selectedFireZones,
-                setSelectedFireZones,
-                urgencies,
-                urgency,
-                setUrgency,
-                isSafetyRelated,
-                setIsSafetyRelated,
-                isReservationAffected,
-                setIsReservationAffected,
-                advisoryDate,
-                handleAdvisoryDateChange,
-                displayAdvisoryDate,
-                setDisplayAdvisoryDate,
-                startDate,
-                setStartDate,
-                displayStartDate,
-                setDisplayStartDate,
-                endDate,
-                setEndDate,
-                displayEndDate,
-                setDisplayEndDate,
-                updatedDate,
-                setUpdatedDate,
-                displayUpdatedDate,
-                setDisplayUpdatedDate,
-                expiryDate,
-                setExpiryDate,
-                handleDurationIntervalChange,
-                handleDurationUnitChange,
-                onDrop,
-                linksRef,
-                linkTypes,
-                removeLink,
-                updateLink,
-                addLink,
-                notes,
-                setNotes,
-                submittedBy,
-                setSubmittedBy,
-                advisoryStatuses,
-                advisoryStatus,
-                setAdvisoryStatus,
-                isStatHoliday,
-                isAfterHours,
-                isAfterHourPublish,
-                setIsAfterHourPublish,
-                saveAdvisory,
-                isSubmitting,
-                isSavingDraft,
-                updateAdvisory,
-                setToDashboard,
-              }}
-            />
+            <>
+              <div className="container-fluid">
+                <Button
+                  label="Back"
+                  styling="bcgov-normal-white btn mt10"
+                  onClick={() => {
+                    setToDashboard(true);
+                  }}
+                />
+              </div>
+              <AdvisoryForm
+                mode={mode}
+                data={{
+                  ticketNumber,
+                  setTicketNumber,
+                  listingRank,
+                  setListingRank,
+                  headline,
+                  setHeadline,
+                  eventType,
+                  eventTypes,
+                  setEventType,
+                  accessStatus,
+                  accessStatuses,
+                  setAccessStatus,
+                  description,
+                  setDescription,
+                  protectedAreas,
+                  selectedProtectedAreas,
+                  setSelectedProtectedAreas,
+                  regions,
+                  selectedRegions,
+                  setSelectedRegions,
+                  sections,
+                  selectedSections,
+                  setSelectedSections,
+                  managementAreas,
+                  selectedManagementAreas,
+                  setSelectedManagementAreas,
+                  sites,
+                  selectedSites,
+                  setSelectedSites,
+                  fireCentres,
+                  selectedFireCentres,
+                  setSelectedFireCentres,
+                  fireZones,
+                  selectedFireZones,
+                  setSelectedFireZones,
+                  urgencies,
+                  urgency,
+                  setUrgency,
+                  isSafetyRelated,
+                  setIsSafetyRelated,
+                  isReservationAffected,
+                  setIsReservationAffected,
+                  advisoryDate,
+                  handleAdvisoryDateChange,
+                  displayAdvisoryDate,
+                  setDisplayAdvisoryDate,
+                  startDate,
+                  setStartDate,
+                  displayStartDate,
+                  setDisplayStartDate,
+                  endDate,
+                  setEndDate,
+                  displayEndDate,
+                  setDisplayEndDate,
+                  updatedDate,
+                  setUpdatedDate,
+                  displayUpdatedDate,
+                  setDisplayUpdatedDate,
+                  expiryDate,
+                  setExpiryDate,
+                  handleDurationIntervalChange,
+                  handleDurationUnitChange,
+                  onDrop,
+                  linksRef,
+                  linkTypes,
+                  removeLink,
+                  updateLink,
+                  addLink,
+                  notes,
+                  setNotes,
+                  submittedBy,
+                  setSubmittedBy,
+                  advisoryStatuses,
+                  advisoryStatus,
+                  setAdvisoryStatus,
+                  isStatHoliday,
+                  isAfterHours,
+                  isAfterHourPublish,
+                  setIsAfterHourPublish,
+                  saveAdvisory,
+                  isSubmitting,
+                  isSavingDraft,
+                  updateAdvisory,
+                  setToDashboard,
+                  setIsConfirmation,
+                }}
+              />
+            </>
           )}
         </div>
         <br />
