@@ -23,6 +23,10 @@
     "fireCentre": {
       "via": "fireZones",
       "model": "fire-centre"
+    },
+    "protectedArea": {
+      "via": "fireZones",
+      "model": "protected-area"
     }
   }
 }

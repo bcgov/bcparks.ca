@@ -9,17 +9,30 @@ import { useKeycloak } from "@react-keycloak/web";
 import {
   calculateAfterHours,
   getAdvisoryFields,
-  getLocationAreas,
+  getLocationSelection,
   getUpdateAdvisoryFields,
   calculateIsStatHoliday,
 } from "../../../utils/AdvisoryUtils";
 import AdvisoryForm from "../../composite/advisoryForm/AdvisoryForm";
 import Header from "../../composite/header/Header";
 import { Loader } from "shared-components/build/components/loader/Loader";
+import { Button } from "shared-components/build/components/button/Button";
 
 export default function Advisory({ mode, page: { setError } }) {
-  const [locationOptions, setLocationOptions] = useState([]);
-  const [locations, setLocations] = useState([]);
+  const [protectedAreas, setProtectedAreas] = useState([]);
+  const [selectedProtectedAreas, setSelectedProtectedAreas] = useState([]);
+  const [regions, setRegions] = useState([]);
+  const [selectedRegions, setSelectedRegions] = useState([]);
+  const [sections, setSections] = useState([]);
+  const [selectedSections, setSelectedSections] = useState([]);
+  const [managementAreas, setManagementAreas] = useState([]);
+  const [selectedManagementAreas, setSelectedManagementAreas] = useState([]);
+  const [sites, setSites] = useState([]);
+  const [selectedSites, setSelectedSites] = useState([]);
+  const [fireCentres, setFireCentres] = useState([]);
+  const [selectedFireCentres, setSelectedFireCentres] = useState([]);
+  const [fireZones, setFireZones] = useState([]);
+  const [selectedFireZones, setSelectedFireZones] = useState([]);
   const [eventTypes, setEventTypes] = useState([]);
   const [eventType, setEventType] = useState();
   const [accessStatuses, setAccessStatuses] = useState([]);
@@ -83,6 +96,7 @@ export default function Advisory({ mode, page: { setError } }) {
   useEffect(() => {
     if (mode === "update" && !isLoadingData) {
       if (parseInt(id)) {
+        setAdvisoryId(id);
         cmsAxios
           .get(`/public-advisories/${id}?_publicationState=preview`)
           .then((res) => {
@@ -157,48 +171,67 @@ export default function Advisory({ mode, page: { setError } }) {
               setDisplayUpdatedDate(advisoryData.isUpdatedDateDisplayed);
             }
 
-            const selLocations = [];
-            const protectedAreas = advisoryData.protectedAreas;
-            const regions = advisoryData.regions;
-            const sections = advisoryData.sections;
-            const managementAreas = advisoryData.managementAreas;
-            if (protectedAreas) {
-              protectedAreas.forEach((p) => {
-                selLocations.push(
-                  locationOptions.find(
-                    (l) => l.value === p.id && l.type === "protectedArea"
-                  )
+            const protectedAreaInfo = advisoryData.protectedAreas;
+            const regionInfo = advisoryData.regions;
+            const sectionInfo = advisoryData.sections;
+            const managementAreaInfo = advisoryData.managementAreas;
+            const siteInfo = advisoryData.sites;
+            const fireCentreInfo = advisoryData.fireCentres;
+            const fireZoneInfo = advisoryData.fireZones;
+
+            if (protectedAreaInfo) {
+              const selProtectedAreas = [];
+              protectedAreaInfo.forEach((p) => {
+                selProtectedAreas.push(
+                  protectedAreas.find((l) => l.value === p.id)
                 );
               });
+              setSelectedProtectedAreas([...selProtectedAreas]);
             }
-            if (regions) {
-              regions.forEach((r) => {
-                selLocations.push(
-                  locationOptions.find(
-                    (l) => l.value === r.id && l.type === "region"
-                  )
+            if (regionInfo) {
+              const selRegions = [];
+              regionInfo.forEach((r) => {
+                selRegions.push(regions.find((l) => l.value === r.id));
+              });
+              setSelectedRegions([...selRegions]);
+            }
+            if (sectionInfo) {
+              const selSections = [];
+              sectionInfo.forEach((s) => {
+                selSections.push(sections.find((l) => l.value === s.id));
+              });
+              setSelectedSections([...selSections]);
+            }
+            if (managementAreaInfo) {
+              const selManagementAreas = [];
+              managementAreaInfo.forEach((m) => {
+                selManagementAreas.push(
+                  managementAreas.find((l) => l.value === m.id)
                 );
               });
+              setSelectedManagementAreas([...selManagementAreas]);
             }
-            if (sections) {
-              sections.forEach((s) => {
-                selLocations.push(
-                  locationOptions.find(
-                    (l) => l.value === s.id && l.type === "section"
-                  )
-                );
+            if (siteInfo) {
+              const selSites = [];
+              siteInfo.forEach((s) => {
+                selSites.push(sites.find((l) => l.value === s.id));
               });
+              setSelectedSites([...selSites]);
             }
-            if (managementAreas) {
-              managementAreas.forEach((m) => {
-                selLocations.push(
-                  locationOptions.find(
-                    (l) => l.value === m.id && l.type === "managementArea"
-                  )
-                );
+            if (fireCentreInfo) {
+              const selFireCentres = [];
+              fireCentreInfo.forEach((f) => {
+                selFireCentres.push(fireCentres.find((l) => l.value === f.id));
               });
+              setSelectedFireCentres([...selFireCentres]);
             }
-            setLocations([...selLocations]);
+            if (fireZoneInfo) {
+              const selFireZones = [];
+              fireZoneInfo.forEach((f) => {
+                selFireZones.push(fireZones.find((l) => l.value === f.id));
+              });
+              setSelectedFireZones([...selFireZones]);
+            }
             const links = advisoryData.links;
             if (links) {
               links.forEach((l) => {
@@ -263,8 +296,20 @@ export default function Advisory({ mode, page: { setError } }) {
     eventTypes,
     setToError,
     setError,
-    locationOptions,
-    setLocations,
+    protectedAreas,
+    setSelectedProtectedAreas,
+    regions,
+    setSelectedRegions,
+    sections,
+    setSelectedSections,
+    managementAreas,
+    setSelectedManagementAreas,
+    sites,
+    setSelectedSites,
+    fireCentres,
+    setSelectedFireCentres,
+    fireZones,
+    setSelectedFireZones,
   ]);
 
   useEffect(() => {
@@ -276,8 +321,11 @@ export default function Advisory({ mode, page: { setError } }) {
         cmsAxios.get(`/regions?_limit=-1&_sort=regionName`),
         cmsAxios.get(`/sections?_limit=-1&_sort=sectionName`),
         cmsAxios.get(`/management-areas?_limit=-1&_sort=managementAreaName`),
+        cmsAxios.get(`/sites?_limit=-1&_sort=siteName`),
+        cmsAxios.get(`/fire-centres?_limit=-1&_sort=fireCentreName`),
+        cmsAxios.get(`/fire-zones?_limit=-1&_sort=fireZoneName`),
         cmsAxios.get(`/event-types?_limit=-1&_sort=eventType`),
-        cmsAxios.get(`/access-statuses?_limit=-1&_sort=accessStatus`),
+        cmsAxios.get(`/access-statuses?_limit=-1&_sort=precedence`),
         cmsAxios.get(`/urgencies?_limit=-1&_sort=sequence`),
         cmsAxios.get(`/business-hours`),
         cmsAxios.get(`/advisory-statuses?_limit=-1&_sort=code`),
@@ -290,61 +338,83 @@ export default function Advisory({ mode, page: { setError } }) {
             value: p.id,
             type: "protectedArea",
           }));
+          setProtectedAreas([...protectedAreas]);
           const regionData = res[1].data;
           const regions = regionData.map((r) => ({
-            label: r.regionName,
+            label: r.regionName + " Region",
             value: r.id,
             type: "region",
             obj: r,
           }));
+          setRegions([...regions]);
           const sectionData = res[2].data;
           const sections = sectionData.map((s) => ({
-            label: s.sectionName,
+            label: s.sectionName + " Section",
             value: s.id,
             type: "section",
             obj: s,
           }));
+          setSections([...sections]);
           const managementAreaData = res[3].data;
           const managementAreas = managementAreaData.map((m) => ({
-            label: m.managementAreaName,
+            label: m.managementAreaName + " Management Area",
             value: m.id,
             type: "managementArea",
             obj: m,
           }));
-          const eventTypeData = res[4].data;
+          setManagementAreas([...managementAreas]);
+          const siteData = res[4].data;
+          const sites = siteData.map((s) => ({
+            label: s.siteName,
+            value: s.id,
+            type: "site",
+            obj: s,
+          }));
+          setSites([...sites]);
+          const fireCentreData = res[5].data;
+          const fireCentres = fireCentreData.map((f) => ({
+            label: f.fireCentreName,
+            value: f.id,
+            type: "fireCentre",
+            obj: f,
+          }));
+          setFireCentres([...fireCentres]);
+          const fireZoneData = res[6].data;
+          const fireZones = fireZoneData.map((f) => ({
+            label: f.fireZoneName,
+            value: f.id,
+            type: "fireZone",
+            obj: f,
+          }));
+          setFireZones([...fireZones]);
+          const eventTypeData = res[7].data;
           const eventTypes = eventTypeData.map((et) => ({
             label: et.eventType,
             value: et.id,
           }));
-          setLocationOptions([
-            ...protectedAreas,
-            ...managementAreas,
-            ...sections,
-            ...regions,
-          ]);
+
           setEventTypes([...eventTypes]);
-          const accessStatusData = res[5].data;
+          const accessStatusData = res[8].data;
           const accessStatuses = accessStatusData.map((a) => ({
             label: a.accessStatus,
             value: a.id,
           }));
           setAccessStatuses([...accessStatuses]);
-          const urgencyData = res[6].data;
+          const urgencyData = res[9].data;
           const urgencies = urgencyData.map((u) => ({
             label: u.urgency,
             value: u.id,
           }));
           setUrgencies([...urgencies]);
-
-          setIsAfterHours(calculateAfterHours(res[7].data));
-          const advisoryStatusData = res[8].data;
+          setIsAfterHours(calculateAfterHours(res[10].data));
+          const advisoryStatusData = res[11].data;
           const advisoryStatuses = advisoryStatusData.map((s) => ({
             code: s.code,
             label: s.advisoryStatus,
             value: s.id,
           }));
           setAdvisoryStatuses([...advisoryStatuses]);
-          const linkTypeData = res[9].data;
+          const linkTypeData = res[12].data;
           const linkTypes = linkTypeData.map((lt) => ({
             label: lt.type,
             value: lt.id,
@@ -368,7 +438,13 @@ export default function Advisory({ mode, page: { setError } }) {
         });
     }
   }, [
-    setLocationOptions,
+    setProtectedAreas,
+    setRegions,
+    setSections,
+    setManagementAreas,
+    setSites,
+    setFireCentres,
+    setFireZones,
     setUrgencies,
     setAdvisoryStatuses,
     setAccessStatuses,
@@ -521,8 +597,23 @@ export default function Advisory({ mode, page: { setError } }) {
       const { selAdvisoryStatus, confirmationText, published } =
         getAdvisoryFields(type, advisoryStatuses);
       setConfirmationText(confirmationText);
-      const { selProtectedAreas, selRegions, selSections, selManagementAreas } =
-        getLocationAreas(locations, locationOptions);
+      const {
+        selProtectedAreas,
+        selRegions,
+        selSections,
+        selManagementAreas,
+        selSites,
+        selFireCentres,
+        selFireZones,
+      } = getLocationSelection(
+        selectedProtectedAreas,
+        selectedRegions,
+        selectedSections,
+        selectedManagementAreas,
+        selectedSites,
+        selectedFireCentres,
+        selectedFireZones
+      );
       Promise.resolve(saveLinks()).then((savedLinks) => {
         const newAdvisory = {
           title: headline,
@@ -547,6 +638,9 @@ export default function Advisory({ mode, page: { setError } }) {
           regions: selRegions,
           sections: selSections,
           managementAreas: selManagementAreas,
+          sites: selSites,
+          fireCentres: selFireCentres,
+          fireZones: selFireZones,
           isReservationsAffected: isReservationAffected,
           isAdvisoryDateDisplayed: displayAdvisoryDate,
           isEffectiveDateDisplayed: displayStartDate,
@@ -592,8 +686,23 @@ export default function Advisory({ mode, page: { setError } }) {
         isAfterHourPublish
       );
       setConfirmationText(confirmationText);
-      const { selProtectedAreas, selRegions, selSections, selManagementAreas } =
-        getLocationAreas(locations, locationOptions);
+      const {
+        selProtectedAreas,
+        selRegions,
+        selSections,
+        selManagementAreas,
+        selSites,
+        selFireCentres,
+        selFireZones,
+      } = getLocationSelection(
+        selectedProtectedAreas,
+        selectedRegions,
+        selectedSections,
+        selectedManagementAreas,
+        selectedSites,
+        selectedFireCentres,
+        selectedFireZones
+      );
       Promise.resolve(saveLinks()).then((savedLinks) => {
         const updatedLinks =
           savedLinks.length > 0 ? [...links, ...savedLinks] : links;
@@ -621,6 +730,9 @@ export default function Advisory({ mode, page: { setError } }) {
           regions: selRegions,
           sections: selSections,
           managementAreas: selManagementAreas,
+          sites: selSites,
+          fireCentres: selFireCentres,
+          fireZones: selFireZones,
           isReservationsAffected: isReservationAffected,
           isAdvisoryDateDisplayed: displayAdvisoryDate,
           isEffectiveDateDisplayed: displayStartDate,
@@ -694,77 +806,107 @@ export default function Advisory({ mode, page: { setError } }) {
             </div>
           )}
           {!isLoadingPage && (
-            <AdvisoryForm
-              mode={mode}
-              data={{
-                ticketNumber,
-                setTicketNumber,
-                listingRank,
-                setListingRank,
-                headline,
-                setHeadline,
-                eventType,
-                eventTypes,
-                setEventType,
-                accessStatus,
-                accessStatuses,
-                setAccessStatus,
-                description,
-                setDescription,
-                locationOptions,
-                locations,
-                setLocations,
-                urgencies,
-                urgency,
-                setUrgency,
-                isSafetyRelated,
-                setIsSafetyRelated,
-                isReservationAffected,
-                setIsReservationAffected,
-                advisoryDate,
-                handleAdvisoryDateChange,
-                displayAdvisoryDate,
-                setDisplayAdvisoryDate,
-                startDate,
-                setStartDate,
-                displayStartDate,
-                setDisplayStartDate,
-                endDate,
-                setEndDate,
-                displayEndDate,
-                setDisplayEndDate,
-                updatedDate,
-                setUpdatedDate,
-                displayUpdatedDate,
-                setDisplayUpdatedDate,
-                expiryDate,
-                setExpiryDate,
-                handleDurationIntervalChange,
-                handleDurationUnitChange,
-                onDrop,
-                linksRef,
-                linkTypes,
-                removeLink,
-                updateLink,
-                addLink,
-                notes,
-                setNotes,
-                submittedBy,
-                setSubmittedBy,
-                advisoryStatuses,
-                advisoryStatus,
-                setAdvisoryStatus,
-                isStatHoliday,
-                isAfterHours,
-                isAfterHourPublish,
-                setIsAfterHourPublish,
-                saveAdvisory,
-                isSubmitting,
-                isSavingDraft,
-                updateAdvisory,
-                setToDashboard,
-              }}
-            />
+            <>
+              <div className="container-fluid">
+                <Button
+                  label="Back"
+                  styling="bcgov-normal-white btn mt10"
+                  onClick={() => {
+                    setToDashboard(true);
+                  }}
+                />
+              </div>
+              <AdvisoryForm
+                mode={mode}
+                data={{
+                  ticketNumber,
+                  setTicketNumber,
+                  listingRank,
+                  setListingRank,
+                  headline,
+                  setHeadline,
+                  eventType,
+                  eventTypes,
+                  setEventType,
+                  accessStatus,
+                  accessStatuses,
+                  setAccessStatus,
+                  description,
+                  setDescription,
+                  protectedAreas,
+                  selectedProtectedAreas,
+                  setSelectedProtectedAreas,
+                  regions,
+                  selectedRegions,
+                  setSelectedRegions,
+                  sections,
+                  selectedSections,
+                  setSelectedSections,
+                  managementAreas,
+                  selectedManagementAreas,
+                  setSelectedManagementAreas,
+                  sites,
+                  selectedSites,
+                  setSelectedSites,
+                  fireCentres,
+                  selectedFireCentres,
+                  setSelectedFireCentres,
+                  fireZones,
+                  selectedFireZones,
+                  setSelectedFireZones,
+                  urgencies,
+                  urgency,
+                  setUrgency,
+                  isSafetyRelated,
+                  setIsSafetyRelated,
+                  isReservationAffected,
+                  setIsReservationAffected,
+                  advisoryDate,
+                  handleAdvisoryDateChange,
+                  displayAdvisoryDate,
+                  setDisplayAdvisoryDate,
+                  startDate,
+                  setStartDate,
+                  displayStartDate,
+                  setDisplayStartDate,
+                  endDate,
+                  setEndDate,
+                  displayEndDate,
+                  setDisplayEndDate,
+                  updatedDate,
+                  setUpdatedDate,
+                  displayUpdatedDate,
+                  setDisplayUpdatedDate,
+                  expiryDate,
+                  setExpiryDate,
+                  handleDurationIntervalChange,
+                  handleDurationUnitChange,
+                  onDrop,
+                  linksRef,
+                  linkTypes,
+                  removeLink,
+                  updateLink,
+                  addLink,
+                  notes,
+                  setNotes,
+                  submittedBy,
+                  setSubmittedBy,
+                  advisoryStatuses,
+                  advisoryStatus,
+                  setAdvisoryStatus,
+                  isStatHoliday,
+                  isAfterHours,
+                  isAfterHourPublish,
+                  setIsAfterHourPublish,
+                  saveAdvisory,
+                  isSubmitting,
+                  isSavingDraft,
+                  updateAdvisory,
+                  setToDashboard,
+                  setIsConfirmation,
+                }}
+              />
+            </>
           )}
         </div>
         <br />

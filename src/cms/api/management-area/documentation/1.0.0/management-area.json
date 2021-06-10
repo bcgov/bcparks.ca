@@ -686,6 +686,12 @@
                   "type": "string"
                 }
               },
+              "hasCampfireBan": {
+                "type": "boolean"
+              },
+              "hasSmokingBan": {
+                "type": "boolean"
+              },
               "published_at": {
                 "type": "string"
               },

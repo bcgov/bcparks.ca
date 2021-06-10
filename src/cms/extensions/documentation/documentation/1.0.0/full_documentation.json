@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "06/02/2021 10:10:20 AM"
+    "x-generation-date": "06/04/2021 6:08:46 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -17738,6 +17738,9 @@
               "fireCentre": {
                 "type": "string"
               },
+              "protectedArea": {
+                "type": "string"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -17822,6 +17825,9 @@
                   "type": "string"
                 },
                 "fireCentre": {
+                  "type": "string"
+                },
+                "protectedArea": {
                   "type": "string"
                 },
                 "published_at": {
@@ -17916,6 +17922,132 @@
               }
             }
           },
+          "protectedArea": {
+            "required": [
+              "id",
+              "orcs"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "orcs": {
+                "type": "integer"
+              },
+              "protectedAreaName": {
+                "type": "string"
+              },
+              "totalArea": {
+                "type": "number"
+              },
+              "uplandArea": {
+                "type": "number"
+              },
+              "marineArea": {
+                "type": "number"
+              },
+              "marineProtectedArea": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "class": {
+                "type": "string"
+              },
+              "establishedDate": {
+                "type": "string"
+              },
+              "repealedDate": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "typeCode": {
+                "type": "string",
+                "enum": [
+                  "PK",
+                  "PA",
+                  "RA",
+                  "ER",
+                  "CS"
+                ]
+              },
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              },
+              "mapZoom": {
+                "type": "integer"
+              },
+              "isDayUsePass": {
+                "type": "boolean"
+              },
+              "isFogZone": {
+                "type": "boolean"
+              },
+              "featureId": {
+                "type": "integer"
+              },
+              "managementAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "sites": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fireZones": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "parkActivities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "parkFacilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "parkNames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "hasCampfireBan": {
+                "type": "boolean"
+              },
+              "hasSmokingBan": {
+                "type": "boolean"
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -17934,6 +18066,9 @@
             "type": "string"
           },
           "fireCentre": {
+            "type": "string"
+          },
+          "protectedArea": {
             "type": "string"
           },
           "published_at": {
@@ -18206,6 +18341,12 @@
                   "type": "string"
                 }
               },
+              "hasCampfireBan": {
+                "type": "boolean"
+              },
+              "hasSmokingBan": {
+                "type": "boolean"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -18421,6 +18562,12 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "hasCampfireBan": {
+                "type": "boolean"
+              },
+              "hasSmokingBan": {
+                "type": "boolean"
               },
               "published_at": {
                 "type": "string"
@@ -18710,6 +18857,12 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "hasCampfireBan": {
+                "type": "boolean"
+              },
+              "hasSmokingBan": {
+                "type": "boolean"
               },
               "published_at": {
                 "type": "string"
@@ -19071,6 +19224,12 @@
                   "type": "string"
                 }
               },
+              "hasCampfireBan": {
+                "type": "boolean"
+              },
+              "hasSmokingBan": {
+                "type": "boolean"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -19322,6 +19481,9 @@
                 "fireCentre": {
                   "type": "string"
                 },
+                "protectedArea": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },
@@ -19457,6 +19619,12 @@
               }
             }
           },
+          "hasCampfireBan": {
+            "type": "boolean"
+          },
+          "hasSmokingBan": {
+            "type": "boolean"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -19571,6 +19739,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "hasCampfireBan": {
+            "type": "boolean"
+          },
+          "hasSmokingBan": {
+            "type": "boolean"
           },
           "published_at": {
             "type": "string",
@@ -19889,6 +20063,12 @@
                     "type": "string"
                   }
                 },
+                "hasCampfireBan": {
+                  "type": "boolean"
+                },
+                "hasSmokingBan": {
+                  "type": "boolean"
+                },
                 "published_at": {
                   "type": "string"
                 },
@@ -20071,6 +20251,111 @@
                 "fireCentre": {
                   "type": "string"
                 },
+                "protectedArea": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "sites": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "orcsSiteNumber"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "siteName": {
+                  "type": "string"
+                },
+                "siteNumber": {
+                  "type": "integer"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "establishedDate": {
+                  "type": "string"
+                },
+                "repealedDate": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "latitude": {
+                  "type": "number"
+                },
+                "longitude": {
+                  "type": "number"
+                },
+                "mapZoom": {
+                  "type": "integer"
+                },
+                "orcsSiteNumber": {
+                  "type": "string"
+                },
+                "protectedArea": {
+                  "type": "string"
+                },
+                "parkActivities": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "parkFacilities": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "fireCentres": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "fireCentreNumber": {
+                  "type": "integer"
+                },
+                "fireCentreName": {
+                  "type": "string"
+                },
+                "fireZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "published_at": {
                   "type": "string"
                 },
@@ -20220,6 +20505,18 @@
             }
           },
           "fireZones": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sites": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fireCentres": {
             "type": "array",
             "items": {
               "type": "string"
@@ -20647,6 +20944,12 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "hasCampfireBan": {
+                "type": "boolean"
+              },
+              "hasSmokingBan": {
+                "type": "boolean"
               },
               "published_at": {
                 "type": "string"

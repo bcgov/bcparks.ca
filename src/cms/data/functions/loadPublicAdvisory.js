@@ -1,6 +1,73 @@
 "use strict";
 const fs = require("fs");
 const loadUtils = require("./loadUtils");
+const moment = require("moment");
+
+const savePublicAdvisory = async (
+  modelName,
+  data,
+  dataXref,
+  accessStatuses,
+  advisoryStatuses,
+  eventTypes,
+  urgencies
+) => {
+  try {
+    const orcsXref = await dataXref["public-advisory-xref"].filter(
+      (x) => x.advisoryNumber == data.advisoryNumber
+    );
+    const promises = orcsXref.map(async (o) => {
+      const protectedArea = await strapi
+        .query("protected-area")
+        .findOne({ orcs: o.orcs });
+      return protectedArea.id;
+    });
+    const orcIds = await Promise.all(promises).then((res) => {
+      return [...res];
+    });
+    const publicAdvisory = {
+      advisoryNumber: data.advisoryNumber,
+      title: data.title,
+      description: data.description,
+      dcTicketNumber: data.dcTicketNumber,
+      isSafetyRelated: data.alert ? data.alert === "True" : null,
+      listingRank: +data.listingRank,
+      note: data.note,
+      latitude: +data.latitude,
+      longitude: +data.longitude,
+      mapZoom: +data.mapZoom,
+      submittedBy: data.submittedBy,
+      createdDate: loadUtils.formatDate(data.createdDate),
+      createdBy: data.createdBy,
+      advisoryDate: loadUtils.formatDate(data.advisoryDate),
+      effectiveDate: loadUtils.formatDate(data.effectiveDate),
+      endDate: loadUtils.formatDate(data.endDate),
+      expiryDate: loadUtils.formatDate(data.expiryDate),
+      removalDate: loadUtils.formatDate(data.removalDate),
+      updatedDate: loadUtils.formatDate(data.updatedDate),
+      modifiedDate: loadUtils.formatDate(data.modifiedDate),
+      modifiedBy: data.modifiedBy,
+      accessStatus: accessStatuses.find(
+        (d) => d.accessStatus === data.accessStatus
+      ),
+      eventType: eventTypes.find((d) => d.eventType === data.eventType),
+      urgency: urgencies.find((d) => d.urgency === data.urgency),
+      advisoryStatus: advisoryStatuses.find(
+        (d) => d.advisoryStatus === data.advisoryStatus
+      ),
+      isAdvisoryDateDisplayed: data.displayAdvisoryDate
+        ? data.displayAdvisoryDate === "True"
+        : null,
+      protectedAreas: [...orcIds],
+      published_at: moment().tz("UTC").toISOString(),
+      created_by: "system",
+    };
+    const advisory = await strapi.services[modelName].create(publicAdvisory);
+    return advisory;
+  } catch (error) {
+    strapi.log.error(error);
+  }
+};
 
 const loadPublicAdvisory = async () => {
   try {
@@ -30,45 +97,19 @@ const loadPublicAdvisory = async () => {
       );
       const dataXref = JSON.parse(jsonData);
 
-      dataSeed.map(async (data) => {
-        const orcsXref = await dataXref["public-advisory-xref"].filter(
-          (x) => x.advisoryNumber == data.advisoryNumber
-        );
-
-        let orcs = [];
-        await Promise.all(
-          orcsXref.map(async (o) => {
-            const orc = await strapi
-              .query("protected-area")
-              .find({ orcs: o.orcs });
-            orcs = [...orcs, ...orc];
-          })
-        );
-        data.protectedAreas = orcs;
-
-        data.accessStatus = accessStatuses.find(
-          (d) => d.accessStatus === data.accessStatus
-        );
-        data.advisoryStatus = advisoryStatuses.find(
-          (d) => d.advisoryStatus === data.advisoryStatus
-        );
-        data.eventType = eventTypes.find((d) => d.eventType === data.eventType);
-        data.urgency = urgencies.find((d) => d.urgency === data.urgency);
-
-        data.listingRank = +data.listingRank;
-        data.latitude = +data.latitude;
-        data.longitude = +data.longitude;
-        data.mapZoom = +data.mapZoom;
-        data.advisoryDate = loadUtils.formatDate(data.advisoryDate);
-        data.effectiveDate = loadUtils.formatDate(data.fffectiveDate);
-        data.endDate = loadUtils.formatDate(data.endDate);
-        data.expiryDate = loadUtils.formatDate(data.expiryDate);
-        data.removalDate = loadUtils.formatDate(data.removalDate);
-        data.updatedDate = loadUtils.formatDate(data.updatedDate);
-        data.createdDate = loadUtils.formatDate(data.createdDate);
-        data.modifiedDate = loadUtils.formatDate(data.modifiedDate);
-        await strapi.services[modelName].create(data);
-      });
+      for (const data of dataSeed) {
+        await savePublicAdvisory(
+          modelName,
+          data,
+          dataXref,
+          accessStatuses,
+          advisoryStatuses,
+          eventTypes,
+          urgencies
+        ).then((res) => {
+          return res;
+        });
+      }
       strapi.log.info(`loading completed ${modelName}...`);
     }
   } catch (error) {

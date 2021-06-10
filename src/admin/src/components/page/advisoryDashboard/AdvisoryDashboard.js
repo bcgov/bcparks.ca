@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from "react";
 import { cmsAxios } from "../../../axios_config";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { useQuery } from "react-query";
 import PropTypes from "prop-types";
 import styles from "./AdvisoryDashboard.css";
@@ -36,8 +36,10 @@ import InfoIcon from "@material-ui/icons/Info";
 import PublishIcon from "@material-ui/icons/Publish";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import Header from "../../composite/header/Header";
+import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 
 export default function AdvisoryDashboard({ page: { setError } }) {
+  let history = useHistory();
   const [toCreate, setToCreate] = useState(false);
   const [selectedParkId, setSelectedParkId] = useState(0);
 
@@ -45,7 +47,6 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     const [, selectedParkId] = queryKey;
     let parkIdQuery =
       selectedParkId > 0 ? `&protectedAreas.id=${selectedParkId}` : "";
-
     const response = await Promise.all([
       cmsAxios.get(`/management-areas?_limit=-1&_sort=managementAreaName`),
       cmsAxios.get(
@@ -75,49 +76,34 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     return data;
   };
 
+  const publicAdvisoryQuery = useQuery(
+    ["publicAdvisories", selectedParkId],
+    fetchPublicAdvisory
+  );
+
   const fetchParkNames = async () => {
     const { data } = await cmsAxios.get(
       `/protected-areas/names?_limit=-1&_sort=protectedAreaName`
     );
-
-    const parkNames = data.map((p) => ({
+    return data.map((p) => ({
       label: p.protectedAreaName,
       value: p.id,
     }));
-
-    return parkNames;
   };
 
-  const fetchManagementArea = async () => {
-    const { data } = await cmsAxios.get("/management-areas?_limit=-1");
-    return data;
-  };
-
-  const managementAreaQuery = useQuery(
-    "fetchManagementArea",
-    fetchManagementArea,
-    {
-      staleTime: 10000,
-    }
-  );
-
-  const isManagementAreaQueryLoaded = managementAreaQuery.isSuccess;
-  const parkNamesQuery = useQuery("fetchParkNames", fetchParkNames, {
-    staleTime: 10000,
+  const STALE_TIME_MILLISECONDS = 4 * 60 * 60 * 1000; // 4 hours
+  const parkNamesQuery = useQuery("parkNames", fetchParkNames, {
+    staleTime: STALE_TIME_MILLISECONDS,
   });
-
-  const publicAdvisoryQuery = useQuery(
-    ["fetchPublicAdvisory", selectedParkId],
-    fetchPublicAdvisory,
-    {
-      enabled: !!isManagementAreaQueryLoaded,
-    }
-  );
 
   const tableColumns = [
     {
       field: "urgency.urgency",
-      title: "U",
+      title: (
+        <Tooltip title="Urgency">
+          <WarningRoundedIcon className="warningRoundedIcon" />
+        </Tooltip>
+      ),
       headerStyle: {
         width: 10,
       },
@@ -144,7 +130,13 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       render: (rowData) => {
         return (
           <>
-            <div className="urgency-column"></div>
+            <Tooltip
+              title={
+                rowData.urgency ? rowData.urgency.urgency : "Urgency not set"
+              }
+            >
+              <div className="urgency-column">&nbsp;</div>
+            </Tooltip>
           </>
         );
       },
@@ -280,11 +272,9 @@ export default function AdvisoryDashboard({ page: { setError } }) {
         paddingRight: "10px",
       },
       render: (rowData) => (
-        <Link to={`advisory-summary/${rowData.id}`}>
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
-        </Link>
+        <IconButton>
+          <MoreVertIcon />
+        </IconButton>
       ),
     },
   ];
@@ -389,6 +379,9 @@ export default function AdvisoryDashboard({ page: { setError } }) {
               columns={tableColumns}
               data={publicAdvisoryQuery.data}
               title=""
+              onRowClick={(event, rowData) => {
+                history.push(`advisory-summary/${rowData.id}`);
+              }}
               components={{
                 Toolbar: (props) => <div></div>,
               }}

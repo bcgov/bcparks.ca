@@ -206,6 +206,11 @@
   padding: 10px 0px !important;
 }
 
+.pt10b30 {
+  padding-top: 10px !important;
+  padding-bottom: 30px !important;
+}
+
 .ptm3 {
   padding-top: 3px !important;
 }
@@ -224,6 +229,10 @@
 
 .mr40 {
   margin-right: 40px !important;
+}
+
+.mt10 {
+  margin-top: 10px !important;
 }
 
 .mrm10 {
