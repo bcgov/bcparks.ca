@@ -9,7 +9,7 @@ on:
 jobs:
   build-images:
     runs-on: ubuntu-20.04
-    environment: Development
+    environment: Tools
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -49,7 +49,7 @@ jobs:
 
   test-images:
     runs-on: ubuntu-20.04
-    environment: Development
+    environment: Tools
     needs: [build-images]
       steps:
       - name: Git Checkout
@@ -74,7 +74,7 @@ jobs:
 
   process-template:
     runs-on: ubuntu-20.04
-    environment: Development
+    environment: Tools
     needs: [test-images]
     steps:
       - name: Git Checkout
