@@ -1,5 +1,5 @@
 import moment from "moment";
-import { cmsAxios, apiAxios, axios } from "../axios_config";
+import { apiAxios, axios } from "../axios_config";
 
 export function calculateAfterHours(businessHours) {
   const currentDate = moment().format("YYYY-MM-DD");
@@ -108,8 +108,10 @@ export function getLocationAreas(locations, locationOptions) {
 
 export function calculateIsStatHoliday(setIsStatHoliday, token) {
   Promise.resolve(
-    cmsAxios
-      .get(`/statutory-holidays`)
+    apiAxios
+      .get(`api/get/statutory-holidays`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
         const statData = res.data.data;
         if (

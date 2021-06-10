@@ -35,12 +35,16 @@ export default function AdvisorySummary({ page: { setError } }) {
           const isAdvisoryPublished =
             advisoryData.advisoryStatus.code === "PUB";
           advisoryData.protectedAreas.map((p) => {
-            const url = isAdvisoryPublished
-              ? p.url
-              : p.url.replace("bcparks", "test.bcparks");
-            return pageUrlInfo.push(
-              "<a href='" + url + "'>" + p.protectedAreaName + "</a>"
-            );
+            if (p.url) {
+              const url = isAdvisoryPublished
+                ? p.url
+                : p.url.replace("bcparks", "test.bcparks");
+              return pageUrlInfo.push(
+                "<a href='" + url + "'>" + p.protectedAreaName + "</a>"
+              );
+            } else {
+              return pageUrlInfo.push("<p>" + p.protectedAreaName + "</p>");
+            }
           });
           const pageUrlText = pageUrlInfo.join("<br/>");
           setPageUrls(pageUrlText);
@@ -228,19 +232,22 @@ export default function AdvisorySummary({ page: { setError } }) {
                 <div className="col-lg-7 col-md-6 col-12">
                   {advisory.protectedAreas.map((p) => (
                     <div key={p.id}>
-                      <a
-                        href={
-                          isPublished
-                            ? p.url
-                            : p.url.replace("bcparks", "test.bcparks")
-                        }
-                        rel="noreferrer"
-                        target="_blank"
-                        className="ad-anchor"
-                      >
-                        {p.protectedAreaName}{" "}
-                        <LaunchIcon className="launchIcon" />
-                      </a>
+                      {p.url && (
+                        <a
+                          href={
+                            isPublished
+                              ? p.url
+                              : p.url.replace("bcparks", "test.bcparks")
+                          }
+                          rel="noreferrer"
+                          target="_blank"
+                          className="ad-anchor"
+                        >
+                          {p.protectedAreaName}{" "}
+                          <LaunchIcon className="launchIcon" />
+                        </a>
+                      )}
+                      {!p.url && p.protectedAreaName}
                     </div>
                   ))}
                 </div>
