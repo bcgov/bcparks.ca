@@ -36,6 +36,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import PublishIcon from "@material-ui/icons/Publish";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import Header from "../../composite/header/Header";
+import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 
 export default function AdvisoryDashboard({ page: { setError } }) {
   let history = useHistory();
@@ -75,55 +76,34 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     return data;
   };
 
-  const fetchParkNamesQl = async () => {
-    const { data } = await cmsAxios.post("/graphql", {
-      query: `
-      query {
-        protectedAreas(where:{_limit:-1}, sort: "protectedAreaName:asc"){
-          id
-          protectedAreaName
-        }
-      }
-      `,
-    });
-    const parkNames = data.data.protectedAreas.map((p) => ({
+  const publicAdvisoryQuery = useQuery(
+    ["publicAdvisories", selectedParkId],
+    fetchPublicAdvisory
+  );
+
+  const fetchParkNames = async () => {
+    const { data } = await cmsAxios.get(
+      `/protected-areas/names?_limit=-1&_sort=protectedAreaName`
+    );
+    return data.map((p) => ({
       label: p.protectedAreaName,
       value: p.id,
     }));
-
-    return parkNames;
   };
 
-  const fetchManagementArea = async () => {
-    const { data } = await cmsAxios.get("/management-areas?_limit=-1");
-    return data;
-  };
-
-  const managementAreaQuery = useQuery(
-    "fetchManagementArea",
-    fetchManagementArea,
-    {
-      staleTime: 10000,
-    }
-  );
-
-  const isManagementAreaQueryLoaded = managementAreaQuery.isSuccess;
-  const parkNamesQuery = useQuery("fetchParkNamesQl", fetchParkNamesQl, {
-    staleTime: 90000,
+  const STALE_TIME_MILLISECONDS = 4 * 60 * 60 * 1000; // 4 hours
+  const parkNamesQuery = useQuery("parkNames", fetchParkNames, {
+    staleTime: STALE_TIME_MILLISECONDS,
   });
-
-  const publicAdvisoryQuery = useQuery(
-    ["fetchPublicAdvisory", selectedParkId],
-    fetchPublicAdvisory,
-    {
-      enabled: !!isManagementAreaQueryLoaded,
-    }
-  );
 
   const tableColumns = [
     {
       field: "urgency.urgency",
-      title: "U",
+      title: (
+        <Tooltip title="Urgency">
+          <WarningRoundedIcon className="warningRoundedIcon" />
+        </Tooltip>
+      ),
       headerStyle: {
         width: 10,
       },
@@ -150,7 +130,13 @@ export default function AdvisoryDashboard({ page: { setError } }) {
       render: (rowData) => {
         return (
           <>
-            <div className="urgency-column"></div>
+            <Tooltip
+              title={
+                rowData.urgency ? rowData.urgency.urgency : "Urgency not set"
+              }
+            >
+              <div className="urgency-column">&nbsp;</div>
+            </Tooltip>
           </>
         );
       },
