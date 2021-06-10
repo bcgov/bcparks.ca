@@ -127,4 +127,6 @@
 
 .MuiTableCell-root input {
   background-color:#ededed;
+  padding: 2px !important;
+  margin: 2px 0px 2px 0px !important;
 }
