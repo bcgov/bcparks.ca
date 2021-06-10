@@ -51,7 +51,7 @@ jobs:
     runs-on: ubuntu-20.04
     environment: Tools
     needs: [build-images]
-      steps:
+    steps:
       - name: Git Checkout
         uses: actions/checkout@v2
 
