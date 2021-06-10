@@ -103,11 +103,13 @@
   color:#bdd9ed; 
 }
 
+.warningRoundedIcon {
+  color: gray;
+}
 
 .urgency-column{
   padding-left:10px;
   width:2px;
-
 }
 
 .MuiTable-root {
@@ -121,4 +123,10 @@
 .page-loader {
   padding-top: 2% !important;
   text-align: center !important;
+}
+
+.MuiTableCell-root input {
+  background-color:#ededed;
+  padding: 2px !important;
+  margin: 2px 0px 2px 0px !important;
 }

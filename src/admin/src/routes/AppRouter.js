@@ -7,6 +7,7 @@ import AdvisoryDashboard from "../components/page/advisoryDashboard/AdvisoryDash
 import Advisory from "../components/page/advisory/Advisory";
 import AdvisorySummary from "../components/page/advisorySummary/AdvisorySummary";
 import { PrivateRoute } from "../utils/PrivateRoute";
+import CmsContents from "../components/page/cmsContents/CmsContents";
 
 function AppRouter() {
   const [error, setError] = useState({});
@@ -21,6 +22,9 @@ function AppRouter() {
           </Route>
           <Route exact path="/bcparks/about">
             <About />
+          </Route>
+          <Route exact path="/bcparks/cmscontents">
+            <CmsContents />
           </Route>
           <PrivateRoute
             roles={["manage-account"]}

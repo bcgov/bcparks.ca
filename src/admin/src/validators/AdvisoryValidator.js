@@ -40,6 +40,22 @@ export function validateRequiredMultiSelect(field) {
   return true;
 }
 
+export function validateRequiredLocation(field) {
+  field.setError("");
+  let valueExists = false;
+  if (!isEmpty(field.value)) {
+    field.value.forEach((v) => {
+      if (!isEmpty(v)) {
+        valueExists = true;
+      }
+    });
+  }
+  if (!valueExists) {
+    field.setError("Please select " + field.text);
+  }
+  return valueExists;
+}
+
 export function validateOptionalDate(field) {
   field.setError("");
   if (field.value) {
@@ -71,7 +87,7 @@ export function validAdvisoryData(advisoryData, mode) {
   const validAccessStatus = validateRequiredSelect(advisoryData.accessStatus);
   const validDescription = validateRequiredText(advisoryData.description);
   const validUrgency = validateRequiredSelect(advisoryData.urgency);
-  const validLocations = validateRequiredMultiSelect(advisoryData.locations);
+  const validLocations = validateRequiredLocation(advisoryData.protectedArea);
   const validAdvisoryDate = validateRequiredDate(advisoryData.advisoryDate);
   const validStartDate = validateOptionalDate(advisoryData.startDate);
   const validEndDate = validateOptionalDate(advisoryData.endDate);

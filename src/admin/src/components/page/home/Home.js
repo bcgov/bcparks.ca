@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useKeycloak } from "@react-keycloak/web";
 import { Button } from "shared-components/build/components/button/Button";
@@ -6,7 +7,19 @@ import Header from "../../composite/header/Header";
 import styles from "./Home.css";
 
 export default function Home({ page: { setError } }) {
-  const { keycloak } = useKeycloak();
+  const { initialized, keycloak } = useKeycloak();
+  const [toDashboard, setToDashboard] = useState(false);
+
+  useEffect(() => {
+    if (initialized && keycloak.authenticated) {
+      setToDashboard(true);
+    }
+  }, [initialized, keycloak]);
+
+  if (toDashboard) {
+    return <Redirect to="/bcparks/advisory-dash" />;
+  }
+
   return (
     <main>
       <Header
@@ -31,7 +44,7 @@ export default function Home({ page: { setError } }) {
                         })
                       }
                       label="Login"
-                      styling="bcgov-normal-yellow btn"
+                      styling="bcgov-normal-blue btn"
                     />
                   </div>
                 </div>

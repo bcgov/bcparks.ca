@@ -1,5 +1,5 @@
 import moment from "moment";
-import { cmsAxios, apiAxios, axios } from "../axios_config";
+import { apiAxios, axios } from "../axios_config";
 
 export function calculateAfterHours(businessHours) {
   const currentDate = moment().format("YYYY-MM-DD");
@@ -70,46 +70,71 @@ export function getUpdateAdvisoryFields(code, isAfterHourPublish) {
   return { confirmationText, published };
 }
 
-function addProtectedArea(area, locationOptions, selProtectedAreas) {
-  area.managementAreas.forEach((m) => {
-    const protectedArea = locationOptions.find(
-      (l) => l.type === "protectedArea" && l.value === m.protectedArea
-    );
-    selProtectedAreas.push(protectedArea.value);
+function addProtectedAreas(area, field, selProtectedAreas) {
+  area[field].forEach((f) => {
+    selProtectedAreas.push(f.protectedArea);
   });
 }
 
-export function getLocationAreas(locations, locationOptions) {
+export function getLocationSelection(
+  selectedProtectedAreas,
+  selectedRegions,
+  selectedSections,
+  selectedManagementAreas,
+  selectedSites,
+  selectedFireCentres,
+  selectedFireZones
+) {
   const selProtectedAreas = [];
   const selRegions = [];
   const selSections = [];
   const selManagementAreas = [];
-  locations.forEach((l) => {
-    if (l.type === "protectedArea") {
-      selProtectedAreas.push(l.value);
-    } else if (l.type === "region") {
-      selRegions.push(l.value);
-      addProtectedArea(l.obj, locationOptions, selProtectedAreas);
-    } else if (l.type === "section") {
-      selSections.push(l.value);
-      addProtectedArea(l.obj, locationOptions, selProtectedAreas);
-    } else if (l.type === "managementArea") {
-      selManagementAreas.push(l.value);
-      selProtectedAreas.push(l.obj.protectedArea.id);
-    }
-  });
+  const selSites = [];
+  const selFireCentres = [];
+  const selFireZones = [];
+  setAreaValues(selectedProtectedAreas, selProtectedAreas, null);
+  setAreaValues(selectedRegions, selRegions, selProtectedAreas);
+  setAreaValues(selectedSections, selSections, selProtectedAreas);
+  setAreaValues(selectedManagementAreas, selManagementAreas, selProtectedAreas);
+  setAreaValues(selectedSites, selSites, selProtectedAreas);
+  setAreaValues(selectedFireCentres, selFireCentres, selProtectedAreas);
+  setAreaValues(selectedFireZones, selFireZones, selProtectedAreas);
   return {
     selProtectedAreas,
     selRegions,
     selSections,
     selManagementAreas,
+    selSites,
+    selFireCentres,
+    selFireZones,
   };
 }
 
+const setAreaValues = (areas, selAreas, selProtectedAreas) => {
+  if (areas && areas.length > 0) {
+    areas.forEach((a) => {
+      selAreas.push(a.value);
+      if (
+        a.type === "managementArea" ||
+        a.type === "fireZone" ||
+        a.type === "site"
+      ) {
+        selProtectedAreas.push(a.obj.protectedArea.id);
+      } else if (a.type === "region" || a.type === "section") {
+        addProtectedAreas(a.obj, "managementAreas", selProtectedAreas);
+      } else if (a.type === "fireCentre") {
+        addProtectedAreas(a.obj, "fireZones", selProtectedAreas);
+      }
+    });
+  }
+};
+
 export function calculateIsStatHoliday(setIsStatHoliday, token) {
   Promise.resolve(
-    cmsAxios
-      .get(`/statutory-holidays`)
+    apiAxios
+      .get(`api/get/statutory-holidays`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
         const statData = res.data.data;
         if (

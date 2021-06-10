@@ -3,9 +3,15 @@ const fs = require("fs");
 const moment = require("moment");
 
 const formatDate = (date) => {
-  return moment.isDate(date)
-    ? moment(date, "YYYY-MM-DD").tz("UTC").format()
-    : null;
+  try {
+    if (date) {
+      return moment(date, "YYYY-MM-DD hh:mm:ss A").tz("UTC").format();
+    } else {
+      return null;
+    }
+  } catch (e) {
+    return null;
+  }
 };
 
 const getLoadSettings = async (modelName) => {
