@@ -49,7 +49,7 @@ RUN mkdir -p /frontend/node_modules/.cache && \
 ### Stage 2 - Production environment ###
 ########################################
 COPY . ./
-RUN npm run build --prod
+# RUN npm run build --prod
 
 # FROM registry.access.redhat.com/ubi8/nginx-118 AS runtime
 # USER 0
