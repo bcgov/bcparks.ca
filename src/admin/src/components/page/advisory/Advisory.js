@@ -12,13 +12,31 @@ import {
   getLocationSelection,
   getUpdateAdvisoryFields,
   calculateIsStatHoliday,
-} from "../../../utils/AdvisoryUtils";
+} from "../../../utils/AdvisoryUtil";
 import AdvisoryForm from "../../composite/advisoryForm/AdvisoryForm";
 import Header from "../../composite/header/Header";
 import { Loader } from "shared-components/build/components/loader/Loader";
 import { Button } from "shared-components/build/components/button/Button";
+import {
+  getProtectedAreas,
+  getRegions,
+  getSections,
+  getManagementAreas,
+  getSites,
+  getFireCentres,
+  getFireZones,
+  getEventTypes,
+  getAccessStatuses,
+  getUrgencies,
+  getAdvisoryStatuses,
+  getLinkTypes,
+  getBusinessHours,
+} from "../../../utils/CmsDataUtil";
 
-export default function Advisory({ mode, page: { setError } }) {
+export default function Advisory({
+  mode,
+  page: { setError, cmsData, setCmsData },
+}) {
   const [protectedAreas, setProtectedAreas] = useState([]);
   const [selectedProtectedAreas, setSelectedProtectedAreas] = useState([]);
   const [regions, setRegions] = useState([]);
@@ -89,9 +107,14 @@ export default function Advisory({ mode, page: { setError } }) {
 
   useEffect(() => {
     if (initialized && keycloak) {
-      calculateIsStatHoliday(setIsStatHoliday, keycloak.idToken);
+      calculateIsStatHoliday(
+        setIsStatHoliday,
+        cmsData,
+        setCmsData,
+        keycloak.idToken
+      );
     }
-  }, [keycloak, initialized, setIsStatHoliday]);
+  }, [keycloak, initialized, setIsStatHoliday, cmsData, setCmsData]);
 
   useEffect(() => {
     if (mode === "update" && !isLoadingData) {
@@ -315,31 +338,29 @@ export default function Advisory({ mode, page: { setError } }) {
   useEffect(() => {
     if (initialized && keycloak) {
       Promise.all([
-        cmsAxios.get(
-          `/protected-areas/names?_limit=-1&_sort=protectedAreaName`
-        ),
-        cmsAxios.get(`/regions?_limit=-1&_sort=regionName`),
-        cmsAxios.get(`/sections?_limit=-1&_sort=sectionName`),
-        cmsAxios.get(`/management-areas?_limit=-1&_sort=managementAreaName`),
-        cmsAxios.get(`/sites?_limit=-1&_sort=siteName`),
-        cmsAxios.get(`/fire-centres?_limit=-1&_sort=fireCentreName`),
-        cmsAxios.get(`/fire-zones?_limit=-1&_sort=fireZoneName`),
-        cmsAxios.get(`/event-types?_limit=-1&_sort=eventType`),
-        cmsAxios.get(`/access-statuses?_limit=-1&_sort=precedence`),
-        cmsAxios.get(`/urgencies?_limit=-1&_sort=sequence`),
-        cmsAxios.get(`/business-hours`),
-        cmsAxios.get(`/advisory-statuses?_limit=-1&_sort=code`),
-        cmsAxios.get(`/link-types?_limit=-1&_sort=id`),
+        getProtectedAreas(cmsData, setCmsData),
+        getRegions(cmsData, setCmsData),
+        getSections(cmsData, setCmsData),
+        getManagementAreas(cmsData, setCmsData),
+        getSites(cmsData, setCmsData),
+        getFireCentres(cmsData, setCmsData),
+        getFireZones(cmsData, setCmsData),
+        getEventTypes(cmsData, setCmsData),
+        getAccessStatuses(cmsData, setCmsData),
+        getUrgencies(cmsData, setCmsData),
+        getBusinessHours(cmsData, setCmsData),
+        getAdvisoryStatuses(cmsData, setCmsData),
+        getLinkTypes(cmsData, setCmsData),
       ])
         .then((res) => {
-          const protectedAreaData = res[0].data;
+          const protectedAreaData = res[0];
           const protectedAreas = protectedAreaData.map((p) => ({
             label: p.protectedAreaName,
             value: p.id,
             type: "protectedArea",
           }));
           setProtectedAreas([...protectedAreas]);
-          const regionData = res[1].data;
+          const regionData = res[1];
           const regions = regionData.map((r) => ({
             label: r.regionName + " Region",
             value: r.id,
@@ -347,7 +368,7 @@ export default function Advisory({ mode, page: { setError } }) {
             obj: r,
           }));
           setRegions([...regions]);
-          const sectionData = res[2].data;
+          const sectionData = res[2];
           const sections = sectionData.map((s) => ({
             label: s.sectionName + " Section",
             value: s.id,
@@ -355,7 +376,7 @@ export default function Advisory({ mode, page: { setError } }) {
             obj: s,
           }));
           setSections([...sections]);
-          const managementAreaData = res[3].data;
+          const managementAreaData = res[3];
           const managementAreas = managementAreaData.map((m) => ({
             label: m.managementAreaName + " Management Area",
             value: m.id,
@@ -363,7 +384,7 @@ export default function Advisory({ mode, page: { setError } }) {
             obj: m,
           }));
           setManagementAreas([...managementAreas]);
-          const siteData = res[4].data;
+          const siteData = res[4];
           const sites = siteData.map((s) => ({
             label: s.siteName,
             value: s.id,
@@ -371,7 +392,7 @@ export default function Advisory({ mode, page: { setError } }) {
             obj: s,
           }));
           setSites([...sites]);
-          const fireCentreData = res[5].data;
+          const fireCentreData = res[5];
           const fireCentres = fireCentreData.map((f) => ({
             label: f.fireCentreName,
             value: f.id,
@@ -379,7 +400,7 @@ export default function Advisory({ mode, page: { setError } }) {
             obj: f,
           }));
           setFireCentres([...fireCentres]);
-          const fireZoneData = res[6].data;
+          const fireZoneData = res[6];
           const fireZones = fireZoneData.map((f) => ({
             label: f.fireZoneName,
             value: f.id,
@@ -387,34 +408,34 @@ export default function Advisory({ mode, page: { setError } }) {
             obj: f,
           }));
           setFireZones([...fireZones]);
-          const eventTypeData = res[7].data;
+          const eventTypeData = res[7];
           const eventTypes = eventTypeData.map((et) => ({
             label: et.eventType,
             value: et.id,
           }));
 
           setEventTypes([...eventTypes]);
-          const accessStatusData = res[8].data;
+          const accessStatusData = res[8];
           const accessStatuses = accessStatusData.map((a) => ({
             label: a.accessStatus,
             value: a.id,
           }));
           setAccessStatuses([...accessStatuses]);
-          const urgencyData = res[9].data;
+          const urgencyData = res[9];
           const urgencies = urgencyData.map((u) => ({
             label: u.urgency,
             value: u.id,
           }));
           setUrgencies([...urgencies]);
-          setIsAfterHours(calculateAfterHours(res[10].data));
-          const advisoryStatusData = res[11].data;
+          setIsAfterHours(calculateAfterHours(res[10]));
+          const advisoryStatusData = res[11];
           const advisoryStatuses = advisoryStatusData.map((s) => ({
             code: s.code,
             label: s.advisoryStatus,
             value: s.id,
           }));
           setAdvisoryStatuses([...advisoryStatuses]);
-          const linkTypeData = res[12].data;
+          const linkTypeData = res[12];
           const linkTypes = linkTypeData.map((lt) => ({
             label: lt.type,
             value: lt.id,
@@ -461,6 +482,8 @@ export default function Advisory({ mode, page: { setError } }) {
     setLinks,
     setSubmittedBy,
     mode,
+    cmsData,
+    setCmsData,
   ]);
 
   const onDrop = (picture) => {
@@ -919,5 +942,7 @@ Advisory.propTypes = {
   mode: PropTypes.string.isRequired,
   page: PropTypes.shape({
     setError: PropTypes.func.isRequired,
+    cmsData: PropTypes.object.isRequired,
+    setCmsData: PropTypes.func.isRequired,
   }).isRequired,
 };

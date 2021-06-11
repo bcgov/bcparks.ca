@@ -37,8 +37,14 @@ import PublishIcon from "@material-ui/icons/Publish";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import Header from "../../composite/header/Header";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
+import {
+  getProtectedAreas,
+  getManagementAreas,
+} from "../../../utils/CmsDataUtil";
 
-export default function AdvisoryDashboard({ page: { setError } }) {
+export default function AdvisoryDashboard({
+  page: { setError, cmsData, setCmsData },
+}) {
   let history = useHistory();
   const [toCreate, setToCreate] = useState(false);
   const [selectedParkId, setSelectedParkId] = useState(0);
@@ -48,13 +54,13 @@ export default function AdvisoryDashboard({ page: { setError } }) {
     let parkIdQuery =
       selectedParkId > 0 ? `&protectedAreas.id=${selectedParkId}` : "";
     const response = await Promise.all([
-      cmsAxios.get(`/management-areas?_limit=-1&_sort=managementAreaName`),
+      getManagementAreas(cmsData, setCmsData),
       cmsAxios.get(
         `/public-advisories?_publicationState=preview&_sort=updated_at:DESC${parkIdQuery}`
       ),
     ]);
 
-    const managementAreas = response[0].data;
+    const managementAreas = response[0];
     const publicAdvisories = response[1].data;
 
     const regionParksCount = managementAreas.reduce((region, item) => {
@@ -82,9 +88,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
   );
 
   const fetchParkNames = async () => {
-    const { data } = await cmsAxios.get(
-      `/protected-areas/names?_limit=-1&_sort=protectedAreaName`
-    );
+    const data = await getProtectedAreas(cmsData, setCmsData);
     return data.map((p) => ({
       label: p.protectedAreaName,
       value: p.id,
@@ -396,5 +400,7 @@ export default function AdvisoryDashboard({ page: { setError } }) {
 AdvisoryDashboard.propTypes = {
   page: PropTypes.shape({
     setError: PropTypes.func.isRequired,
+    cmsData: PropTypes.object.isRequired,
+    setCmsData: PropTypes.func.isRequired,
   }).isRequired,
 };

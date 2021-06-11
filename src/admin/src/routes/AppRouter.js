@@ -11,6 +11,7 @@ import CmsContents from "../components/page/cmsContents/CmsContents";
 
 function AppRouter() {
   const [error, setError] = useState({});
+  const [cmsData, setCmsData] = useState({});
 
   return (
     <div>
@@ -30,25 +31,25 @@ function AppRouter() {
             roles={["manage-account"]}
             path="/bcparks/advisory-dash"
             component={AdvisoryDashboard}
-            props={{ page: { setError } }}
+            props={{ page: { setError, cmsData, setCmsData } }}
           />
           <PrivateRoute
             roles={["manage-account"]}
             path="/bcparks/create-advisory"
             component={Advisory}
-            props={{ mode: "create", page: { setError } }}
+            props={{ mode: "create", page: { setError, cmsData, setCmsData } }}
           />
           <PrivateRoute
             roles={["manage-account"]}
             path="/bcparks/update-advisory/:id"
             component={Advisory}
-            props={{ mode: "update", page: { setError } }}
+            props={{ mode: "update", page: { setError, cmsData, setCmsData } }}
           />
           <PrivateRoute
             roles={["manage-account"]}
             path="/bcparks/advisory-summary/:id"
             component={AdvisorySummary}
-            props={{ page: { setError } }}
+            props={{ page: { setError, cmsData, setCmsData } }}
           />
           <Route path="/bcparks/error">
             <Error page={{ error }} />
