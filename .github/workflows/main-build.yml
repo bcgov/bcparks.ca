@@ -86,7 +86,7 @@ jobs:
             -p OC_NAMESPACE=${{secrets.OPENSHIFT_LICENSE_PLATE}} \
             -p OC_APP=${{secrets.OC_APP}} \
             -p FRONTEND_POD=web \
-            -p FRONTEND_URL=web \
+            -p FRONTEND_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}} \
             -p CMS_POD=cms \
             -p CMS_URL=cms \
             -p API_POD=api \
