@@ -78,15 +78,15 @@ objects:
           name: ${FRONTEND_POD}
       spec:
         containers:
+          - envFrom:
+              - secretRef:
+                  name: bcparks-secrets
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/frontend:${OC_APP}
             name: ${FRONTEND_POD}
             ports:
               - containerPort: 3000
               - containerPort: 8080
-            envFrom:
-              - secretRef:
-                  name: bcparks-secrets
             resources:
               limits:
                 cpu: 2500m
