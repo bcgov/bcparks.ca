@@ -81,9 +81,9 @@ objects:
               - name: REACT_APP_API_BASE_URL
                 value: "${WEB_SCHEMA}://${API_URL}${URL_STUB}"
               - name: REACT_APP_FRONTEND_BASE_URL
-                value: "${WEB_SCHEMA}://${FRONTEND_URL}${URL_STUB}"
+                value: "${WEB_SCHEMA}://${FRONTEND_URL}"
               - name: PUBLIC_URL
-                value: "${WEB_SCHEMA}://${FRONTEND_URL}${URL_STUB}"
+                value: "${WEB_SCHEMA}://${FRONTEND_URL}"
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/frontend:${OC_APP}
             name: ${FRONTEND_POD}
