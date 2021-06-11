@@ -77,13 +77,6 @@ objects:
           name: ${FRONTEND_POD}
       spec:
         containers:
-          - env:
-              - name: REACT_APP_API_BASE_URL
-                value: "${WEB_SCHEMA}://${API_URL}${URL_STUB}"
-              - name: REACT_APP_FRONTEND_BASE_URL
-                value: "${WEB_SCHEMA}://${FRONTEND_URL}"
-              - name: PUBLIC_URL
-                value: "${WEB_SCHEMA}://${FRONTEND_URL}"
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/frontend:${OC_APP}
             name: ${FRONTEND_POD}
@@ -121,6 +114,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: nodejs
   spec:
     ports:
       - name: "npm"
@@ -167,6 +161,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: python
   spec:
     completionDeadlineSeconds: 1200
     replicas: 1
@@ -257,6 +252,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: postgresql
   spec:
     replicas: 1
     selector:
@@ -468,6 +464,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: dotnet
   spec:
     completionDeadlineSeconds: 1200
     replicas: 1
