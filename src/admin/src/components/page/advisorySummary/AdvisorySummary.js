@@ -14,8 +14,11 @@ import Chip from "@material-ui/core/Chip";
 import moment from "moment";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
+import { getLinkTypes } from "../../../utils/CmsDataUtil";
 
-export default function AdvisorySummary({ page: { setError } }) {
+export default function AdvisorySummary({
+  page: { setError, cmsData, setCmsData },
+}) {
   const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [isPublished, setIsPublished] = useState(false);
   const [toError, setToError] = useState(false);
@@ -35,11 +38,11 @@ export default function AdvisorySummary({ page: { setError } }) {
     if (parseInt(id)) {
       Promise.all([
         cmsAxios.get(`/public-advisories/${id}?_publicationState=preview`),
-        cmsAxios.get(`/link-types?_limit=-1&_sort=id`),
+        getLinkTypes(cmsData, setCmsData),
       ])
         .then((res) => {
           const advisoryData = res[0].data;
-          advisoryData.linkTypes = res[1].data;
+          advisoryData.linkTypes = res[1];
           setAdvisory(advisoryData);
           const parkUrlInfo = [];
           const siteUrlInfo = [];
@@ -116,6 +119,8 @@ export default function AdvisorySummary({ page: { setError } }) {
     snackPack,
     openSnack,
     snackMessageInfo,
+    cmsData,
+    setCmsData,
   ]);
 
   const handleOpenSnackBar = (message) => {
@@ -580,5 +585,7 @@ export default function AdvisorySummary({ page: { setError } }) {
 AdvisorySummary.propTypes = {
   page: PropTypes.shape({
     setError: PropTypes.func.isRequired,
+    cmsData: PropTypes.object.isRequired,
+    setCmsData: PropTypes.func.isRequired,
   }).isRequired,
 };

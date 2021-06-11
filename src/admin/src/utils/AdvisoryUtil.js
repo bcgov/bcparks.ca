@@ -129,49 +129,64 @@ const setAreaValues = (areas, selAreas, selProtectedAreas) => {
   }
 };
 
-export function calculateIsStatHoliday(setIsStatHoliday, token) {
-  Promise.resolve(
-    apiAxios
-      .get(`api/get/statutory-holidays`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        const statData = res.data.data;
-        if (
-          Object.keys(statData).length === 0 ||
-          !isLatestStatutoryHolidayList(statData)
-        ) {
-          throw new Error("Obsolete Holiday List");
-        }
-        setIsStatHoliday(calculateStatHoliday(statData));
-      })
-      .catch((err) => {
-        console.log(err);
-        // Call Statutory Holiday API if CMS cache is not available
-        axios
-          .get(process.env.REACT_APP_STAT_HOLIDAY_API)
-          .then((res) => {
-            const statInfo = { data: res.data };
-            setIsStatHoliday(calculateStatHoliday(res.data));
-            // Write Statutory Data to CMS cache
-            apiAxios
-              .put(`api/update/statutory-holidays`, statInfo, {
-                headers: { Authorization: `Bearer ${token}` },
-              })
-              .catch((error) => {
-                console.log(
-                  "error occurred writing statutory holidays to cms",
-                  error
-                );
-              });
-          })
-          .catch((error) => {
-            setIsStatHoliday(false);
-            console.log(
-              "error occurred fetching statutory holidays from API",
-              error
-            );
-          });
-      })
-  );
+export function calculateIsStatHoliday(
+  setIsStatHoliday,
+  cmsData,
+  setCmsData,
+  token
+) {
+  if (!cmsData.statutoryHolidays) {
+    Promise.resolve(
+      apiAxios
+        .get(`api/get/statutory-holidays`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          const statData = res.data.data;
+          if (
+            Object.keys(statData).length === 0 ||
+            !isLatestStatutoryHolidayList(statData)
+          ) {
+            throw new Error("Obsolete Holiday List");
+          }
+          const data = cmsData;
+          data.statutoryHolidays = statData;
+          setCmsData(data);
+          setIsStatHoliday(calculateStatHoliday(statData));
+        })
+        .catch((err) => {
+          console.log(err);
+          // Call Statutory Holiday API if CMS cache is not available
+          axios
+            .get(process.env.REACT_APP_STAT_HOLIDAY_API)
+            .then((res) => {
+              const statInfo = { data: res.data };
+              setIsStatHoliday(calculateStatHoliday(res.data));
+              const data = cmsData;
+              data.statutoryHolidays = res.data;
+              setCmsData(data);
+              // Write Statutory Data to CMS cache
+              apiAxios
+                .put(`api/update/statutory-holidays`, statInfo, {
+                  headers: { Authorization: `Bearer ${token}` },
+                })
+                .catch((error) => {
+                  console.log(
+                    "error occurred writing statutory holidays to cms",
+                    error
+                  );
+                });
+            })
+            .catch((error) => {
+              setIsStatHoliday(false);
+              console.log(
+                "error occurred fetching statutory holidays from API",
+                error
+              );
+            });
+        })
+    );
+  } else {
+    setIsStatHoliday(calculateStatHoliday(cmsData.statutoryHolidays));
+  }
 }
