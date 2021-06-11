@@ -20,7 +20,7 @@ ENV REACT_APP_KEYCLOAK_AUTH_URL=${REACT_APP_KEYCLOAK_AUTH_URL}
 ENV REACT_APP_KEYCLOAK_REALM=${REACT_APP_KEYCLOAK_REALM}
 ENV REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
 ENV REACT_APP_STAT_HOLIDAY_API=${REACT_APP_STAT_HOLIDAY_API}
-
+ENV HOST='0.0.0.0'
 # set working directory
 
 
@@ -49,7 +49,7 @@ RUN mkdir -p /frontend/node_modules/.cache && \
 ### Stage 2 - Production environment ###
 ########################################
 COPY . ./
-# RUN npm run build --prod
+RUN npm run build --prod
 
 # FROM registry.access.redhat.com/ubi8/nginx-118 AS runtime
 # USER 0
