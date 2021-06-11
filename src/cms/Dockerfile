@@ -41,11 +41,8 @@ ENV ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET}
 
 # add `/node_modules/.bin` to $PATH
 ENV PATH ./node_modules/.bin:$PATH
-USER 1007770000
 # install app dependencies
 COPY package.json ./
-
-
 RUN npm install --silent
 RUN npm run build
 
@@ -58,7 +55,7 @@ USER 0
 RUN yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
     yum install -y postgresql13
 RUN cat ./config/server_template.js | envsubst > ./config/server.js && \
-    chmod -R 766 . && \
+    chmod ugo+rwx  && \
     cat ./config/server.js && \
     chmod +x ./entrypoint.sh 
 # USER default

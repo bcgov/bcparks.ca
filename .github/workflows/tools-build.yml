@@ -47,11 +47,11 @@ jobs:
             --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
             --build-arg REACT_APP_STAT_HOLIDAY_API=${{secrets.REACT_APP_STAT_HOLIDAY_API}}
 
-  test-images:
-    runs-on: ubuntu-20.04
-    environment: Tools
-    needs: [build-images]
-    steps:
+  # test-images:
+  #   runs-on: ubuntu-20.04
+  #   environment: Tools
+  #   needs: [build-images]
+  #   steps:
       - name: Git Checkout
         uses: actions/checkout@v2
 
@@ -72,11 +72,11 @@ jobs:
           docker ps 
           docker-compose down -v
 
-  process-template:
-    runs-on: ubuntu-20.04
-    environment: Tools
-    needs: [test-images]
-    steps:
+  # process-template:
+  #   runs-on: ubuntu-20.04
+  #   environment: Tools
+  #   needs: [test-images]
+  #   steps:
       - name: Git Checkout
         uses: actions/checkout@v2
 
