@@ -71,7 +71,7 @@ const setPublicPermissions = async () => {
       type: "application",
       controller_nin: ["token", "statutory-holidays", "x-data-load-setting"],
       role: publicRole.id,
-      action_in: ["count", "find", "findone", "names", "status"],
+      action_in: ["count", "find", "findone", "names", "items", "status"],
       _limit: -1,
     });
   await Promise.all(

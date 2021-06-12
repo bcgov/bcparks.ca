@@ -24,7 +24,7 @@ const getParkNames = async () => {
 };
 
 // custom route for park id and name only
-const getProtecteAreaNames = async (ctx) => {
+const getProtectedAreaNames = async (ctx) => {
   const parkNamesData = await getParkNames();
   let entities;
   if (ctx.query._q) {
@@ -49,6 +49,15 @@ const getProtecteAreaNames = async (ctx) => {
   });
 };
 
+// custom route for light weight park details used in client app
+const getProtectedAreaItems = async () => {
+  const entities = await strapi.services["protected-area"].items();
+  return entities.map((entity) => {
+    return sanitizeEntity(entity, { model: strapi.models["protected-area"] });
+  });
+};
+
 module.exports = {
-  getProtecteAreaNames,
+  getProtectedAreaNames,
+  getProtectedAreaItems,
 };

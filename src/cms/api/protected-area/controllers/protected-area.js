@@ -15,9 +15,12 @@ module.exports = {
     return sanitizeEntity(entity, { model: strapi.models["protected-area"] });
   },
   async names(ctx) {
-    return customName.getProtecteAreaNames(ctx);
+    return customName.getProtectedAreaNames(ctx);
+  },
+  async items(ctx) {
+    return customName.getProtectedAreaItems(ctx);
   },
   async status(ctx) {
-    return customStatus.getProtecteAreaStatus(ctx);
+    return customStatus.getProtectedAreaStatus(ctx);
   },
 };
