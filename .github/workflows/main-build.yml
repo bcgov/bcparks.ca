@@ -45,6 +45,7 @@ jobs:
             --build-arg REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
             --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
             --build-arg REACT_APP_STAT_HOLIDAY_API=${{secrets.REACT_APP_STAT_HOLIDAY_API}}
+            --build-arg WEB_SCHEMA=https
 
       - name: Test images
         env:
