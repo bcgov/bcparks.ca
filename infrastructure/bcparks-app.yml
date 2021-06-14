@@ -61,6 +61,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: nodejs
   spec:
     completionDeadlineSeconds: 1200
     replicas: 1
@@ -77,22 +78,15 @@ objects:
           name: ${FRONTEND_POD}
       spec:
         containers:
-          - env:
-              - name: REACT_APP_API_BASE_URL
-                value: "${WEB_SCHEMA}://${API_URL}${URL_STUB}"
-              - name: REACT_APP_FRONTEND_BASE_URL
-                value: "${WEB_SCHEMA}://${FRONTEND_URL}"
-              - name: PUBLIC_URL
-                value: "${WEB_SCHEMA}://${FRONTEND_URL}"
+          - envFrom:
+              - secretRef:
+                  name: bcparks-secrets
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/frontend:${OC_APP}
             name: ${FRONTEND_POD}
             ports:
               - containerPort: 3000
               - containerPort: 8080
-            envFrom:
-              - secretRef:
-                  name: bcparks-secrets
             resources:
               limits:
                 cpu: 2500m
@@ -134,29 +128,29 @@ objects:
         targetPort: 8443
     selector:
       name: ${FRONTEND_POD}
-#   Frontend Route
-- apiVersion: route.openshift.io/v1
-  kind: Route
-  namespace: ${OC_NAMESPACE}-${OC_APP}
-  labels:
-    app: ${FRONTEND_POD}
-    app.kubernetes.io/component: ${NAME}
-    app.kubernetes.io/instance: ${NAME}
-    app.kubernetes.io/part-of: ${NAME}
-  metadata:
-    name: ${FRONTEND_POD}
-    namespace: ${OC_NAMESPACE}-${OC_APP}
-  spec:
-    host: ${FRONTEND_URL}${URL_STUB}
-    to:
-      kind: Service
-      name: ${FRONTEND_POD}
-      weight: 100
-    port:
-      targetPort: npm
-    tls:
-        insecureEdgeTerminationPolicy: Allow
-        termination: edge
+# #   Frontend Route
+# - apiVersion: route.openshift.io/v1
+#   kind: Route
+#   namespace: ${OC_NAMESPACE}-${OC_APP}
+#   labels:
+#     app: ${FRONTEND_POD}
+#     app.kubernetes.io/component: ${NAME}
+#     app.kubernetes.io/instance: ${NAME}
+#     app.kubernetes.io/part-of: ${NAME}
+#   metadata:
+#     name: ${FRONTEND_POD}
+#     namespace: ${OC_NAMESPACE}-${OC_APP}
+#   spec:
+#     host: ${FRONTEND_URL}${URL_STUB}
+#     to:
+#       kind: Service
+#       name: ${FRONTEND_POD}
+#       weight: 100
+#     port:
+#       targetPort: npm
+#     tls:
+#         insecureEdgeTerminationPolicy: Allow
+#         termination: edge
 
 ### CMS
 - apiVersion: apps.openshift.io/v1
@@ -167,6 +161,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: python
   spec:
     completionDeadlineSeconds: 1200
     replicas: 1
@@ -224,29 +219,29 @@ objects:
         targetPort: 1337
     selector:
       name: ${CMS_POD}
-#   CMS Route
-- apiVersion: route.openshift.io/v1
-  kind: Route
-  namespace: ${OC_NAMESPACE}-${OC_APP}
-  labels:
-    app: ${CMS_POD}
-    app.kubernetes.io/component: ${NAME}
-    app.kubernetes.io/instance: ${NAME}
-    app.kubernetes.io/part-of: ${NAME}
-  metadata:
-    name: ${CMS_POD}
-    namespace: ${OC_NAMESPACE}-${OC_APP}
-  spec:
-    host: ${CMS_URL}${URL_STUB}
-    to:
-      kind: Service
-      name: ${CMS_POD}
-      weight: 100
-    port:
-      targetPort: 1337
-    tls:
-        insecureEdgeTerminationPolicy: Allow
-        termination: edge
+# #   CMS Route
+# - apiVersion: route.openshift.io/v1
+#   kind: Route
+#   namespace: ${OC_NAMESPACE}-${OC_APP}
+#   labels:
+#     app: ${CMS_POD}
+#     app.kubernetes.io/component: ${NAME}
+#     app.kubernetes.io/instance: ${NAME}
+#     app.kubernetes.io/part-of: ${NAME}
+#   metadata:
+#     name: ${CMS_POD}
+#     namespace: ${OC_NAMESPACE}-${OC_APP}
+#   spec:
+#     host: ${CMS_URL}${URL_STUB}
+#     to:
+#       kind: Service
+#       name: ${CMS_POD}
+#       weight: 100
+#     port:
+#       targetPort: 1337
+#     tls:
+#         insecureEdgeTerminationPolicy: Allow
+#         termination: edge
 
 ### Database
 - apiVersion: apps.openshift.io/v1
@@ -257,6 +252,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: postgresql
   spec:
     replicas: 1
     selector:
@@ -382,6 +378,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: php
   spec:
     completionDeadlineSeconds: 1200
     replicas: 1
@@ -435,29 +432,29 @@ objects:
         targetPort: 8000
     selector:
       name: ${STAGING_POD}
-#   Staging Route
-- apiVersion: route.openshift.io/v1
-  kind: Route
-  namespace: ${OC_NAMESPACE}-${OC_APP}
-  labels:
-    app: ${STAGING_POD}
-    app.kubernetes.io/component: ${NAME}
-    app.kubernetes.io/instance: ${NAME}
-    app.kubernetes.io/part-of: ${NAME}
-  metadata:
-    name: ${STAGING_POD}
-    namespace: ${OC_NAMESPACE}-${OC_APP}
-  spec:
-    host: ${STAGING_POD}${URL_STUB}
-    to:
-      kind: Service
-      name: staging
-      weight: 100
-    port:
-      targetPort: ${STAGING_POD}
-    tls:
-      insecureEdgeTerminationPolicy: Allow
-      termination: edge
+# #   Staging Route
+# - apiVersion: route.openshift.io/v1
+#   kind: Route
+#   namespace: ${OC_NAMESPACE}-${OC_APP}
+#   labels:
+#     app: ${STAGING_POD}
+#     app.kubernetes.io/component: ${NAME}
+#     app.kubernetes.io/instance: ${NAME}
+#     app.kubernetes.io/part-of: ${NAME}
+#   metadata:
+#     name: ${STAGING_POD}
+#     namespace: ${OC_NAMESPACE}-${OC_APP}
+#   spec:
+#     host: ${STAGING_POD}${URL_STUB}
+#     to:
+#       kind: Service
+#       name: staging
+#       weight: 100
+#     port:
+#       targetPort: ${STAGING_POD}
+#     tls:
+#       insecureEdgeTerminationPolicy: Allow
+#       termination: edge
 
 ### API
 - apiVersion: apps.openshift.io/v1
@@ -468,6 +465,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: dotnet
   spec:
     completionDeadlineSeconds: 1200
     replicas: 1
@@ -524,29 +522,29 @@ objects:
     selector:
       name: ${API_POD}
 
-#   API Route
-- apiVersion: route.openshift.io/v1
-  kind: Route
-  namespace: ${OC_NAMESPACE}-${OC_APP}
-  labels:
-    app: ${API_POD}
-    app.kubernetes.io/component: ${NAME}
-    app.kubernetes.io/instance: ${NAME}
-    app.kubernetes.io/part-of: ${NAME}
-  metadata:
-    name: ${API_POD}
-    namespace: ${OC_NAMESPACE}-${OC_APP}
-  spec:
-    host: ${API_URL}${URL_STUB}
-    to:
-      kind: Service
-      name: ${API_POD}
-      weight: 100
-    port:
-      targetPort: ${API_POD}
-    tls:
-      insecureEdgeTerminationPolicy: Allow
-      termination: edge
+# #   API Route
+# - apiVersion: route.openshift.io/v1
+#   kind: Route
+#   namespace: ${OC_NAMESPACE}-${OC_APP}
+#   labels:
+#     app: ${API_POD}
+#     app.kubernetes.io/component: ${NAME}
+#     app.kubernetes.io/instance: ${NAME}
+#     app.kubernetes.io/part-of: ${NAME}
+#   metadata:
+#     name: ${API_POD}
+#     namespace: ${OC_NAMESPACE}-${OC_APP}
+#   spec:
+#     host: ${API_URL}${URL_STUB}
+#     to:
+#       kind: Service
+#       name: ${API_POD}
+#       weight: 100
+#     port:
+#       targetPort: ${API_POD}
+#     tls:
+#       insecureEdgeTerminationPolicy: Allow
+#       termination: edge
     
 ### Network Policy
 - apiVersion: networking.k8s.io/v1
