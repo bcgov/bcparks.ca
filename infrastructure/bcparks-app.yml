@@ -161,7 +161,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
-      app.openshift.io/runtime: python
+      app.openshift.io/runtime: nodejs
   spec:
     completionDeadlineSeconds: 1200
     replicas: 1
