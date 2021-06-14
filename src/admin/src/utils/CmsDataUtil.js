@@ -5,7 +5,6 @@ export function getProtectedAreas(cmsData, setCmsData) {
     const result = cmsAxios.get(`/protected-areas/items`).then((res) => {
       const data = cmsData;
       data.protectedAreas = res.data;
-      console.log(data);
       setCmsData(data);
       return res.data;
     });
