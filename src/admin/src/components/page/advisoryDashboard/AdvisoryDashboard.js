@@ -56,7 +56,7 @@ export default function AdvisoryDashboard({
     const response = await Promise.all([
       getManagementAreas(cmsData, setCmsData),
       cmsAxios.get(
-        `/public-advisories?_publicationState=preview&_sort=updated_at:DESC${parkIdQuery}`
+        `/public-advisories?_limit=500&_publicationState=preview&_sort=updated_at:DESC${parkIdQuery}`
       ),
     ]);
 
