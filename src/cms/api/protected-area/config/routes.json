@@ -26,6 +26,14 @@
     },
     {
       "method": "GET",
+      "path": "/protected-areas/items",
+      "handler": "protected-area.items",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/protected-areas/status",
       "handler": "protected-area.status",
       "config": {

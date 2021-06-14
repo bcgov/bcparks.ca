@@ -2,14 +2,12 @@ import { cmsAxios } from "../axios_config";
 
 export function getProtectedAreas(cmsData, setCmsData) {
   if (!cmsData.protectedAreas) {
-    const result = cmsAxios
-      .get(`/protected-areas/names?_limit=-1&_sort=protectedAreaName`)
-      .then((res) => {
-        const data = cmsData;
-        data.protectedAreas = res.data;
-        setCmsData(data);
-        return res.data;
-      });
+    const result = cmsAxios.get(`/protected-areas/items`).then((res) => {
+      const data = cmsData;
+      data.protectedAreas = res.data;
+      setCmsData(data);
+      return res.data;
+    });
     return result;
   } else {
     return cmsData.protectedAreas;

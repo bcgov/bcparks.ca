@@ -161,7 +161,7 @@ const getPublishedPublicAdvisories = async () => {
 };
 
 // custom route for park status view
-const getProtecteAreaStatus = async (ctx) => {
+const getProtectedAreaStatus = async (ctx) => {
   let entities;
   if (ctx.query._q) {
     entities = await strapi.services["protected-area"].search(ctx.query);
@@ -253,5 +253,5 @@ const getProtecteAreaStatus = async (ctx) => {
 };
 
 module.exports = {
-  getProtecteAreaStatus,
+  getProtectedAreaStatus,
 };
