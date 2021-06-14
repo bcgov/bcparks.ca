@@ -21,9 +21,6 @@ jobs:
           password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
 
       - name: Build images
-        env:
-          COMPOSE_DOCKER_CLI_BUILD: 1
-          DOCKER_BUILDKIT: 1
         run: |  
           docker-compose build --parallel \
             --build-arg ADMIN_JWT_SECRET=${{secrets.ADMIN_JWT_SECRET}} \
@@ -44,7 +41,7 @@ jobs:
             --build-arg REACT_APP_KEYCLOAK_AUTH_URL=${{secrets.REACT_APP_KEYCLOAK_AUTH_URL}} \
             --build-arg REACT_APP_KEYCLOAK_REALM=${{secrets.REACT_APP_KEYCLOAK_REALM}} \
             --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{secrets.REACT_APP_KEYCLOAK_CLIENT_ID}} \
-            --build-arg REACT_APP_STAT_HOLIDAY_API=${{secrets.REACT_APP_STAT_HOLIDAY_API}}
+            --build-arg REACT_APP_STAT_HOLIDAY_API=${{secrets.REACT_APP_STAT_HOLIDAY_API}} \
             --build-arg WEB_SCHEMA=https
 
       - name: Test images
