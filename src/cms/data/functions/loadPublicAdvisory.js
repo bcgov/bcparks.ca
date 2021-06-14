@@ -72,7 +72,7 @@ const savePublicAdvisory = async (
       isAdvisoryDateDisplayed: data.isAdvisoryDateDisplayed,
       isEffectiveDateDisplayed: data.isEffectiveDateDisplayed,
       isEndDateDisplayed: data.isEndDateDisplayed,
-      isUpdatedDateDisplayed: data.isUpdatedDateDisplayed.advisoryStatus,
+      isUpdatedDateDisplayed: data.isUpdatedDateDisplayed,
       isReservationsAffected: data.isReservationsAffected,
       protectedAreas: [...orcIds],
       sites: [...siteIds],
