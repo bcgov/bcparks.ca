@@ -15,7 +15,7 @@
     \"Authority\": \"$REACT_APP_KEYCLOAK_AUTH_URL/realms/$REACT_APP_KEYCLOAK_REALM\",
     \"Audience\": \"$REACT_APP_KEYCLOAK_CLIENT_ID\"
   },
-  \"CmsUrl\": \"$WEB_SCHEMA://$REACT_APP_CMS_BASE_URL\",
+  \"CmsUrl\": \"$WEB_SCHEMA://$REACT_APP_CMS_BASE_URL/\",
   \"ApiToken\":\"$API_TOKEN\",
   \"StaffAppUrl\": \"$WEB_SCHEMA://$REACT_APP_FRONTEND_BASE_URL\"
 }
