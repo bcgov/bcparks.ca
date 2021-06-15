@@ -123,6 +123,10 @@ services:
     build:
       context: src/staging
       dockerfile: Dockerfile
+      args:
+        - CMS_URL=${REACT_APP_CMS_BASE_URL} 
+    environment:
+      CMS_URL: ${REACT_APP_CMS_BASE_URL} 
     ports:
       - "8000:8000"
     networks:
