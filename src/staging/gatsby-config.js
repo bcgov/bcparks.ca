@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `BC Parks Staging Site`,
+    description: `BC Parks Staging Site`,
+    author: `@bcparks`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -12,6 +12,15 @@ module.exports = {
       options: {
         name: `images`,
         path: `${__dirname}/src/images`,
+      },
+    },
+    {
+      resolve: "gatsby-source-strapi",
+      options: {
+        apiURL: process.env.CMS_URL || "http://localhost:1337",
+        collectionTypes: ["urgency", "protected-area", "public-advisory"],
+        singleTypes: [`business-hours`],
+        queryLimit: 10,
       },
     },
     `gatsby-transformer-sharp`,
@@ -25,7 +34,7 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/bcid-favicon-32x32.png`, // This path is relative to the root of the site.
       },
     },
     `gatsby-plugin-gatsby-cloud`,
