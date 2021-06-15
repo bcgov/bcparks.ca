@@ -6,7 +6,7 @@ from dags.utils import Parks_ETL
 from unittest.mock import patch, MagicMock
 
 var_fakes = {"par": "", "bcgn": "", "strapi": "", "token": ""}
-etl = Parks_ETL(var_fakes)
+etl = Parks_ETL(None, var_fakes)
 
 
 # data
@@ -190,7 +190,7 @@ def test_get_data_from_par():
         mock_request.return_value.status_code = 200
         mock_request.return_value.json.return_value = { "data" : par_data }
 
-        etl = Parks_ETL(var_fakes)
+        etl = Parks_ETL(None, var_fakes)
         result = etl._get_data_from_par()
 
         mock_request.assert_called_once()
@@ -204,7 +204,7 @@ def test_get_data_from_bcgn():
         mock_request.return_value.status_code = 200
         mock_request.return_value.json.return_value = bcgn_data
 
-        etl = Parks_ETL(var_fakes)
+        etl = Parks_ETL(None, var_fakes)
 
         json_str = f'[ {json.dumps(par_data)} ]'
         out_data = json.loads(json_str)

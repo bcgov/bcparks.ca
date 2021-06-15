@@ -12,11 +12,11 @@ headers = {
 
 class Parks_ETL:
 
-    def __init__(self, service_base_url):
-        self.par_api_url_base = service_base_url["par"]
-        self.bcgn_api_url_base = service_base_url["bcgn"]
-        self.strapi_base = service_base_url["strapi"]
-        self.token = service_base_url["token"]
+    def __init__(self, downstream_pw, service_url):
+        self.par_api_url_base = service_url["par"]
+        self.bcgn_api_url_base = service_url["bcgn"]
+        self.strapi_base = service_url["strapi"]
+        self.token = downstream_pw
 
 
     ### task pythons
@@ -44,7 +44,6 @@ class Parks_ETL:
             # TODO: write error into airflow
             print('Error invoking webservice')
             raise
-
 
 
     def _get_data_from_bcgn(self, task_instance):

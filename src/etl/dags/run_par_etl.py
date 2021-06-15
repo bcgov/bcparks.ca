@@ -8,8 +8,10 @@ from airflow.operators.python import PythonOperator
 
 from utils import Parks_ETL
 from airflow.models import Variable
+from airflow.hooks.base_hook import BaseHook
 
-var_args = Variable.get("base_url_data", deserialize_json=True)
+var_args = Variable.get("url_var", deserialize_json=True)
+strapi_pw = BaseHook.get_connection('strapipw').password
 #var_args = {"par": "", "bcgn": "", "strapi": "", "token": ""}
 
 args = {
@@ -32,7 +34,7 @@ with DAG(
         catchup=False
     ) as dag:
 
-    etl = Parks_ETL(var_args)
+    etl = Parks_ETL(strapi_pw, var_args)
 
     get_data_par_task = PythonOperator(
         task_id="etl_get_data_from_par",
