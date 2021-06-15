@@ -2,14 +2,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import React, { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import Error from "../components/page/error/Error";
-
-const isAuthorizedRoute = (keycloak, roles) => {
-  return roles.some((r) => {
-    const realm = keycloak.hasRealmRole(r);
-    const resource = keycloak.hasResourceRole(r);
-    return realm || resource;
-  });
-};
+import { hasRole } from "../utils/AuthenticationUtils";
 
 export function PrivateRoute({ component: Component, roles, props, ...rest }) {
   const { keycloak, initialized } = useKeycloak();
@@ -24,8 +17,8 @@ export function PrivateRoute({ component: Component, roles, props, ...rest }) {
     } else if (!keycloak.authenticated) {
       setToError(true);
     }
-    if (keycloak && initialized && roles) {
-      setIsAuthorized(isAuthorizedRoute(keycloak, roles));
+    if (initialized) {
+      setIsAuthorized(hasRole(initialized, keycloak, roles));
       setIsLoading(false);
     }
   }, [setIsAuthorized, setIsLoading, initialized, keycloak, roles]);

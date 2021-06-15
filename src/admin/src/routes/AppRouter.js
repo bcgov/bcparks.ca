@@ -6,7 +6,7 @@ import About from "../components/page/about/About";
 import AdvisoryDashboard from "../components/page/advisoryDashboard/AdvisoryDashboard";
 import Advisory from "../components/page/advisory/Advisory";
 import AdvisorySummary from "../components/page/advisorySummary/AdvisorySummary";
-import { PrivateRoute } from "../utils/PrivateRoute";
+import { PrivateRoute } from "../auth/PrivateRoute";
 import CmsContents from "../components/page/cmsContents/CmsContents";
 
 function AppRouter() {
@@ -28,25 +28,25 @@ function AppRouter() {
             <CmsContents />
           </Route>
           <PrivateRoute
-            roles={["manage-account"]}
+            roles={["submitter", "approver"]}
             path="/bcparks/advisory-dash"
             component={AdvisoryDashboard}
             props={{ page: { setError, cmsData, setCmsData } }}
           />
           <PrivateRoute
-            roles={["manage-account"]}
+            roles={["submitter", "approver"]}
             path="/bcparks/create-advisory"
             component={Advisory}
             props={{ mode: "create", page: { setError, cmsData, setCmsData } }}
           />
           <PrivateRoute
-            roles={["manage-account"]}
+            roles={["submitter", "approver"]}
             path="/bcparks/update-advisory/:id"
             component={Advisory}
             props={{ mode: "update", page: { setError, cmsData, setCmsData } }}
           />
           <PrivateRoute
-            roles={["manage-account"]}
+            roles={["submitter", "approver"]}
             path="/bcparks/advisory-summary/:id"
             component={AdvisorySummary}
             props={{ page: { setError, cmsData, setCmsData } }}

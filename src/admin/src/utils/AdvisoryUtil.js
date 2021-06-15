@@ -33,41 +33,36 @@ function isLatestStatutoryHolidayList(statData) {
   return true;
 }
 
-export function getAdvisoryFields(type, advisoryStatuses) {
+export function getSubmitterAdvisoryFields(
+  type,
+  advisoryStatuses,
+  setConfirmationText
+) {
   let status = {};
-  let confirmationText = "";
   let published = null;
-  if (type === "submit") {
-    status = advisoryStatuses.filter((s) => s.code === "ARQ");
-    confirmationText = "Your advisory has been sent for review successfully!";
-  } else if (type === "draft") {
+  if (type === "draft") {
     status = advisoryStatuses.filter((s) => s.code === "DFT");
-    confirmationText = "Your advisory has been saved successfully!";
+    setConfirmationText("Your advisory has been saved successfully!");
   } else if (type === "publish") {
     status = advisoryStatuses.filter((s) => s.code === "PUB");
-    confirmationText = "Your advisory has been published successfully!";
-    published = moment().tz("America/Vancouver");
-  }
-  return {
-    selAdvisoryStatus: status[0]["value"],
-    confirmationText: confirmationText,
-    published: published,
-  };
-}
-
-export function getUpdateAdvisoryFields(code, isAfterHourPublish) {
-  let confirmationText = "";
-  let published = null;
-
-  if (code === "DFT") {
-    confirmationText = "Your advisory has been saved successfully!";
-  } else if (isAfterHourPublish || code === "PUB") {
-    confirmationText = "Your advisory has been published successfully!";
+    setConfirmationText("Your advisory has been published successfully!");
     published = moment().tz("America/Vancouver");
   } else {
-    confirmationText = "Your advisory has been sent for review successfully!";
+    status = advisoryStatuses.filter((s) => s.code === "ARQ");
+    setConfirmationText("Your advisory has been sent for review successfully!");
   }
-  return { confirmationText, published };
+  return { status: status[0]["value"], published: published };
+}
+
+export function getApproverAdvisoryFields(code, setConfirmationText) {
+  let published = null;
+  if (code === "PUB") {
+    setConfirmationText("Your advisory has been published successfully!");
+    published = moment().tz("America/Vancouver");
+  } else {
+    setConfirmationText("Your advisory has been saved successfully!");
+  }
+  return published;
 }
 
 function addProtectedAreas(area, field, selProtectedAreas) {
@@ -144,10 +139,11 @@ export function calculateIsStatHoliday(
         .then((res) => {
           const statData = res.data.data;
           if (
+            !statData ||
             Object.keys(statData).length === 0 ||
             !isLatestStatutoryHolidayList(statData)
           ) {
-            throw new Error("Obsolete Holiday List");
+            throw new Error("Obsolete Holiday List. Reloading...");
           }
           const data = cmsData;
           data.statutoryHolidays = statData;
