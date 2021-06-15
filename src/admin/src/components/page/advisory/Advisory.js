@@ -109,6 +109,9 @@ export default function Advisory({
 
   useEffect(() => {
     if (initialized && keycloak) {
+      Promise.resolve(getBusinessHours(cmsData, setCmsData)).then((res) => {
+        setIsAfterHours(calculateAfterHours(res));
+      });
       calculateIsStatHoliday(
         setIsStatHoliday,
         cmsData,
@@ -116,7 +119,14 @@ export default function Advisory({
         keycloak.idToken
       );
     }
-  }, [keycloak, initialized, setIsStatHoliday, cmsData, setCmsData]);
+  }, [
+    keycloak,
+    initialized,
+    setIsStatHoliday,
+    setIsAfterHours,
+    cmsData,
+    setCmsData,
+  ]);
 
   useEffect(() => {
     if (mode === "update" && !isLoadingData) {
@@ -352,7 +362,6 @@ export default function Advisory({
         getEventTypes(cmsData, setCmsData),
         getAccessStatuses(cmsData, setCmsData),
         getUrgencies(cmsData, setCmsData),
-        getBusinessHours(cmsData, setCmsData),
         getAdvisoryStatuses(cmsData, setCmsData),
         getLinkTypes(cmsData, setCmsData),
       ])
@@ -417,7 +426,6 @@ export default function Advisory({
             label: et.eventType,
             value: et.id,
           }));
-
           setEventTypes([...eventTypes]);
           const accessStatusData = res[8];
           const accessStatuses = accessStatusData.map((a) => ({
@@ -431,8 +439,7 @@ export default function Advisory({
             value: u.id,
           }));
           setUrgencies([...urgencies]);
-          setIsAfterHours(calculateAfterHours(res[10]));
-          const advisoryStatusData = res[11];
+          const advisoryStatusData = res[10];
           const restrictedAdvisoryStatusCodes = ["ACT", "INA", "APR"];
           const tempAdvisoryStatuses = advisoryStatusData.map((s) => {
             let result = null;
@@ -455,7 +462,7 @@ export default function Advisory({
             (s) => s !== null
           );
           setAdvisoryStatuses([...advisoryStatuses]);
-          const linkTypeData = res[12];
+          const linkTypeData = res[11];
           const linkTypes = linkTypeData.map((lt) => ({
             label: lt.type,
             value: lt.id,

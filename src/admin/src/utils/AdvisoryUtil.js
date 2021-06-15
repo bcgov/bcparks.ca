@@ -139,10 +139,11 @@ export function calculateIsStatHoliday(
         .then((res) => {
           const statData = res.data.data;
           if (
+            !statData ||
             Object.keys(statData).length === 0 ||
             !isLatestStatutoryHolidayList(statData)
           ) {
-            throw new Error("Obsolete Holiday List");
+            throw new Error("Obsolete Holiday List. Reloading...");
           }
           const data = cmsData;
           data.statutoryHolidays = statData;

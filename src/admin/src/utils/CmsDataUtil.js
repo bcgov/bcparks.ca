@@ -191,15 +191,11 @@ export function getLinkTypes(cmsData, setCmsData) {
 }
 
 export function getBusinessHours(cmsData, setCmsData) {
-  if (!cmsData.businessHours) {
-    const result = cmsAxios.get(`/business-hours`).then((res) => {
-      const data = cmsData;
-      data.businessHours = res.data;
-      setCmsData(data);
-      return res.data;
-    });
-    return result;
-  } else {
-    return cmsData.businessHours;
-  }
+  const result = cmsAxios.get(`/business-hours`).then((res) => {
+    const data = cmsData;
+    data.businessHours = res.data;
+    setCmsData(data);
+    return res.data;
+  });
+  return result;
 }
