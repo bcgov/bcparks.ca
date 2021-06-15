@@ -380,7 +380,20 @@ export default function AdvisoryForm({
               </FormControl>
             </div>
           </div>
-
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-6 col-6 ad-label">
+              Safety related
+            </div>
+            <div className="col-lg-8 col-md-8 col-sm-6 col-6">
+              <Checkbox
+                checked={isSafetyRelated}
+                onChange={(e) => {
+                  setIsSafetyRelated(e.target.checked);
+                }}
+                inputProps={{ "aria-label": "safety related" }}
+              />
+            </div>
+          </div>
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label">Parks</div>
             <div className="col-lg-7 col-md-8 col-sm-12">
@@ -572,21 +585,7 @@ export default function AdvisoryForm({
           </div>
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-6 col-6 ad-label">
-              Safety related
-            </div>
-            <div className="col-lg-8 col-md-8 col-sm-6 col-6">
-              <Checkbox
-                checked={isSafetyRelated}
-                onChange={(e) => {
-                  setIsSafetyRelated(e.target.checked);
-                }}
-                inputProps={{ "aria-label": "safety related" }}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-6 col-6 ad-label">
-              Reservation affected
+              Reservations affected
             </div>
             <div className="col-lg-8 col-md-8 col-sm-6 col-6">
               <Checkbox
