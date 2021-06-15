@@ -62,6 +62,7 @@ class Parks_ETL:
                 if response.status_code == 200:
                     # convert json to Python object
                     data = response.json()
+                    data["orcs"] = orcs
                     result.append(data)
 
                     if indx == 0:
@@ -79,8 +80,8 @@ class Parks_ETL:
         pass
 
 
-    def _get_data_from_bcgw():
-        api_url = f"{bcgn_api_url_base}/names/search?outputFormat=json&name=Victoria&exactSpelling=0"
+    def _get_data_from_bcgw(self):
+        api_url = f"{self.bcgn_api_url_base}/names/search?outputFormat=json&name=Victoria&exactSpelling=0"
 
         result = None
 
@@ -114,18 +115,18 @@ class Parks_ETL:
 
         json = []
 
-        for d in data:
-            json.append(transform_bcgn(d))
+        for item in data:
+            json.append(self.transform_bcgn_data_to_park_names(item))
 
         return json
 
-    def _dump_data_bcgn(task_instance):
-        api_url = f'{strapi_base}/protected-areas?token={token}'
+    def _dump_data_bcgn(self, task_instance):
+        api_url = f'{self.strapi_base}/protected-areas?token={self.token}'
         data = task_instance.xcom_pull(task_ids='etl_transform_data_par')
 
 
-    def _dump_par_data(task_instance):
-        api_url = f'{strapi_base}/protected-areas?token={token}'
+    def _dump_par_data(self, task_instance):
+        api_url = f'{self.strapi_base}/protected-areas?token={self.token}'
         data = task_instance.xcom_pull(task_ids='etl_transform_data_par')
 
         for pro_land in data:
@@ -134,16 +135,16 @@ class Parks_ETL:
                 # sites
                 index_count = 0
                 for site in pro_land["sites"]:
-                    pro_land["sites"][index_count] = get_or_create_site(site)
+                    pro_land["sites"][index_count] = self.get_or_create_site(site)
                     index_count = index_count + 1
 
                 # managementAreas
                 index_count = 0
                 for mArea in pro_land["managementAreas"]:
-                    pro_land["managementAreas"][index_count] = get_or_create_mgmt_area(mArea)
+                    pro_land["managementAreas"][index_count] = self.get_or_create_mgmt_area(mArea)
                     index_count = index_count + 1
 
-                pro_area = get_protected_area_from_strapi(pro_land["orcs"])
+                pro_area = self.get_protected_area_from_strapi(pro_land["orcs"])
 
                 if pro_area is None:
                     #rectified_payload = python_to_proper_json_string(pro_land)
@@ -164,33 +165,33 @@ class Parks_ETL:
                 print('Error invoking webservice')
                 raise
 
-    def _dump_bcgn_data(task_instance):
-        api_url = f'{strapi_base}/protected-areas?token={token}'
+    def _dump_bcgn_data(self, task_instance):
+        api_url = f'{self.strapi_base}/protected-areas?token={self.token}'
         data = task_instance.xcom_pull(task_ids='etl_transform_data_par')
 
 
 
-    def get_or_create_site(site):
-        newSite = get_site_from_strapi(site["orcsSiteNumber"])
+    def get_or_create_site(self, site):
+        newSite = self.get_site_from_strapi(site["orcsSiteNumber"])
 
         if newSite is None:
             #create new site
-            newSite = create_site_in_strapi(site)
+            newSite = self.create_site_in_strapi(site)
 
         return newSite
 
-    def get_or_create_mgmt_area(mArea):
-        newMArea = get_mgmt_area_from_strapi(mArea["managementAreaNumber"])
+    def get_or_create_mgmt_area(self, mArea):
+        newMArea = self.get_mgmt_area_from_strapi(mArea["managementAreaNumber"])
 
         if newMArea is None:
             #create new mgmt area
-            newMArea = create_mgmt_area_in_strapi(mArea)
+            newMArea = self.create_mgmt_area_in_strapi(mArea)
 
         return newMArea
 
 
-    def get_or_create_section(section):
-        newSection = get_section_from_strapi(section["sectionNumber"])
+    def get_or_create_section(self, section):
+        newSection = self.get_section_from_strapi(section["sectionNumber"])
 
         if newSection is None:
             #create new mgmt area
@@ -199,8 +200,8 @@ class Parks_ETL:
         return newSection
 
 
-    def get_or_create_region(region):
-        newRegion = get_region_from_strapi(region["regionNumber"])
+    def get_or_create_region(self, region):
+        newRegion = self.get_region_from_strapi(region["regionNumber"])
 
         if newRegion is None:
             #create new mgmt area
@@ -238,16 +239,15 @@ class Parks_ETL:
     def transform_bcgn_data_to_park_names(self, data):
         result = []
 
-        for feature in data["feature"]:
-            json = {
-                "id": data["orcs"],
-                "parkName": data["properties"]["name"],
-                "source": "Custom",
-                "note": ""
-            }
+        #for feature in data["feature"]:
+        json = {
+            "id": data["orcs"],
+            "parkName": data["feature"]["properties"]["name"],
+            "source": "Custom",
+            "note": ""
+        }
 
-            result.append(json)
-
+        #result.append(json)
         return result
 
     def transform_par_sites(self, orcsNumber, sites):
@@ -310,7 +310,7 @@ class Parks_ETL:
         }
 
     def create_site_in_strapi(self, site):
-        api_url = f"{strapi_base}/sites?token={token}"
+        api_url = f"{self.strapi_base}/sites?token={self.token}"
         result = None
 
         try:
@@ -331,7 +331,7 @@ class Parks_ETL:
 
 
     def create_region_in_strapi(self, region):
-        api_url = f"{strapi_base}/sites?token={token}"
+        api_url = f"{self.strapi_base}/sites?token={self.token}"
         result = None
 
         try:
@@ -352,7 +352,7 @@ class Parks_ETL:
 
 
     def create_section_in_strapi(self, section):
-        api_url = f"{strapi_base}/sites?token={token}"
+        api_url = f"{self.strapi_base}/sites?token={self.token}"
         result = None
 
         try:
@@ -372,16 +372,16 @@ class Parks_ETL:
             raise
 
     def create_mgmt_area_in_strapi(self, mArea):
-        api_url = f"{strapi_base}/management-areas?token={token}"
+        api_url = f"{self.strapi_base}/management-areas?token={self.token}"
         result = None
 
         try:
             # handle depencies - region, sections
             if 'region' in mArea:
-                mArea["region"] = get_or_create_region(mArea["region"])
+                mArea["region"] = self.get_or_create_region(mArea["region"])
 
             if 'section' in mArea:
-                mArea["section"] = get_or_create_section(mArea["section"])
+                mArea["section"] = self.get_or_create_section(mArea["section"])
 
             response = requests.post(api_url, json=mArea, headers=headers)
 
@@ -398,8 +398,8 @@ class Parks_ETL:
             print('Error invoking webservice')
             raise
 
-    def get_protected_area_from_strapi(orcs):
-        api_url = f"{strapi_base}/protected-areas?orcs={orcs}"
+    def get_protected_area_from_strapi(self, orcs):
+        api_url = f"{self.strapi_base}/protected-areas?orcs={orcs}"
 
         try:
             response = requests.get(api_url, headers=headers)
@@ -418,8 +418,8 @@ class Parks_ETL:
             print(f'Error invoking webservice - {api_url}')
             raise
 
-    def get_site_from_strapi(orcsSiteNumber):
-        api_url = f"{strapi_base}/sites?orcsSiteNumber={orcsSiteNumber}"
+    def get_site_from_strapi(self, orcsSiteNumber):
+        api_url = f"{self.strapi_base}/sites?orcsSiteNumber={orcsSiteNumber}"
 
         try:
             response = requests.get(api_url, headers=headers)
@@ -437,8 +437,8 @@ class Parks_ETL:
             print(f'Error invoking webservice - {api_url}')
             raise
 
-    def get_mgmt_area_from_strapi(mAreaNumber):
-        api_url = f"{strapi_base}/management-areas?managementAreaNumber={mAreaNumber}"
+    def get_mgmt_area_from_strapi(self, mAreaNumber):
+        api_url = f"{self.strapi_base}/management-areas?managementAreaNumber={mAreaNumber}"
 
         try:
             response = requests.get(api_url, headers=headers)
@@ -457,8 +457,8 @@ class Parks_ETL:
             raise
 
 
-    def get_region_from_strapi(regionNumber):
-        api_url = f"{strapi_base}/regions?regionNumber={regionNumber}"
+    def get_region_from_strapi(self, regionNumber):
+        api_url = f"{self.strapi_base}/regions?regionNumber={regionNumber}"
 
         try:
             response = requests.get(api_url, headers=headers)
@@ -477,8 +477,8 @@ class Parks_ETL:
             raise
 
 
-    def get_section_from_strapi(sectionNumber):
-        api_url = f"{strapi_base}/sections?sectionNumber={sectionNumber}"
+    def get_section_from_strapi(self, sectionNumber):
+        api_url = f"{self.strapi_base}/sections?sectionNumber={sectionNumber}"
 
         try:
             response = requests.get(api_url, headers=headers)
@@ -497,10 +497,10 @@ class Parks_ETL:
             raise
 
     ### misc
-    def clean_data():
+    def clean_data(self):
         pass
 
-    def validate_data():
+    def validate_data(self):
         pass
 
 
