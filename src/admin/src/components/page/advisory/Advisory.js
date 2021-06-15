@@ -640,6 +640,7 @@ export default function Advisory({
 
   const getAdvisoryFields = (type) => {
     let publishedDate = null;
+    let adStatus = advisoryStatus;
     if (isApprover) {
       setIsSubmitting(true);
       const status = advisoryStatuses.filter((s) => s.value === advisoryStatus);
@@ -660,14 +661,13 @@ export default function Advisory({
         setConfirmationText
       );
       publishedDate = published;
-      setAdvisoryStatus(status);
+      adStatus = status;
     }
-    console.log(advisoryStatus);
-    return publishedDate;
+    return { published: publishedDate, status: adStatus };
   };
   const saveAdvisory = (type) => {
     try {
-      const published = getAdvisoryFields(type);
+      const { published, status } = getAdvisoryFields(type);
       const {
         selProtectedAreas,
         selRegions,
@@ -704,7 +704,7 @@ export default function Advisory({
           eventType: eventType,
           urgency: urgency,
           protectedAreas: selProtectedAreas,
-          advisoryStatus: advisoryStatus,
+          advisoryStatus: status,
           links: savedLinks,
           regions: selRegions,
           sections: selSections,
@@ -751,7 +751,7 @@ export default function Advisory({
 
   const updateAdvisory = (type) => {
     try {
-      const published = getAdvisoryFields(type);
+      const { published, status } = getAdvisoryFields(type);
       const {
         selProtectedAreas,
         selRegions,
@@ -769,7 +769,6 @@ export default function Advisory({
         selectedFireCentres,
         selectedFireZones
       );
-      console.log(advisoryStatus);
       Promise.resolve(saveLinks()).then((savedLinks) => {
         const updatedLinks =
           savedLinks.length > 0 ? [...links, ...savedLinks] : links;
@@ -792,7 +791,7 @@ export default function Advisory({
           eventType: eventType,
           urgency: urgency,
           protectedAreas: selProtectedAreas,
-          advisoryStatus: advisoryStatus,
+          advisoryStatus: status,
           links: updatedLinks,
           regions: selRegions,
           sections: selSections,

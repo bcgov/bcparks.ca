@@ -28,25 +28,25 @@ function AppRouter() {
             <CmsContents />
           </Route>
           <PrivateRoute
-            roles={["submitter"]}
+            roles={["submitter", "approver"]}
             path="/bcparks/advisory-dash"
             component={AdvisoryDashboard}
             props={{ page: { setError, cmsData, setCmsData } }}
           />
           <PrivateRoute
-            roles={["submitter"]}
+            roles={["submitter", "approver"]}
             path="/bcparks/create-advisory"
             component={Advisory}
             props={{ mode: "create", page: { setError, cmsData, setCmsData } }}
           />
           <PrivateRoute
-            roles={["submitter"]}
+            roles={["submitter", "approver"]}
             path="/bcparks/update-advisory/:id"
             component={Advisory}
             props={{ mode: "update", page: { setError, cmsData, setCmsData } }}
           />
           <PrivateRoute
-            roles={["submitter"]}
+            roles={["submitter", "approver"]}
             path="/bcparks/advisory-summary/:id"
             component={AdvisorySummary}
             props={{ page: { setError, cmsData, setCmsData } }}
