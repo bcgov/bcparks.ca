@@ -8,9 +8,9 @@ import "moment-timezone";
 import { useKeycloak } from "@react-keycloak/web";
 import {
   calculateAfterHours,
-  getAdvisoryFields,
+  getApproverAdvisoryFields,
   getLocationSelection,
-  getUpdateAdvisoryFields,
+  getSubmitterAdvisoryFields,
   calculateIsStatHoliday,
 } from "../../../utils/AdvisoryUtil";
 import AdvisoryForm from "../../composite/advisoryForm/AdvisoryForm";
@@ -32,6 +32,7 @@ import {
   getLinkTypes,
   getBusinessHours,
 } from "../../../utils/CmsDataUtil";
+import { hasRole } from "../../../utils/AuthenticationUtils";
 
 export default function Advisory({
   mode,
@@ -102,6 +103,7 @@ export default function Advisory({
   const durationIntervalRef = useRef(0);
   const advisoryDateRef = useRef(moment().tz("America/Vancouver"));
   const [advisoryId, setAdvisoryId] = useState();
+  const [isApprover, setIsApprover] = useState(false);
 
   const { id } = useParams();
 
@@ -337,6 +339,8 @@ export default function Advisory({
 
   useEffect(() => {
     if (initialized && keycloak) {
+      const approver = hasRole(initialized, keycloak, ["approver"]);
+      setIsApprover(approver);
       Promise.all([
         getProtectedAreas(cmsData, setCmsData),
         getRegions(cmsData, setCmsData),
@@ -429,11 +433,27 @@ export default function Advisory({
           setUrgencies([...urgencies]);
           setIsAfterHours(calculateAfterHours(res[10]));
           const advisoryStatusData = res[11];
-          const advisoryStatuses = advisoryStatusData.map((s) => ({
-            code: s.code,
-            label: s.advisoryStatus,
-            value: s.id,
-          }));
+          const restrictedAdvisoryStatusCodes = ["ACT", "INA", "APR"];
+          const tempAdvisoryStatuses = advisoryStatusData.map((s) => {
+            let result = null;
+            if (restrictedAdvisoryStatusCodes.includes(s.code) && approver) {
+              result = {
+                code: s.code,
+                label: s.advisoryStatus,
+                value: s.id,
+              };
+            } else if (!restrictedAdvisoryStatusCodes.includes(s.code)) {
+              result = {
+                code: s.code,
+                label: s.advisoryStatus,
+                value: s.id,
+              };
+            }
+            return result;
+          });
+          const advisoryStatuses = tempAdvisoryStatuses.filter(
+            (s) => s !== null
+          );
           setAdvisoryStatuses([...advisoryStatuses]);
           const linkTypeData = res[12];
           const linkTypes = linkTypeData.map((lt) => ({
@@ -484,7 +504,16 @@ export default function Advisory({
     mode,
     cmsData,
     setCmsData,
+    setIsApprover,
   ]);
+
+  const setToBack = () => {
+    if (mode === "create") {
+      setToDashboard(true);
+    } else {
+      setIsConfirmation(true);
+    }
+  };
 
   const onDrop = (picture) => {
     setPictures([...pictures, picture]);
@@ -609,17 +638,36 @@ export default function Advisory({
     return savedLinks;
   };
 
-  const saveAdvisory = (type) => {
-    try {
+  const getAdvisoryFields = (type) => {
+    let publishedDate = null;
+    if (isApprover) {
+      setIsSubmitting(true);
+      const status = advisoryStatuses.filter((s) => s.value === advisoryStatus);
+      publishedDate = getApproverAdvisoryFields(
+        status[0]["code"],
+        setConfirmationText
+      );
+    } else {
       if (type === "draft") {
         setIsSavingDraft(true);
       } else if (type === "submit") {
         setIsSubmitting(true);
         if (isAfterHourPublish) type = "publish";
       }
-      const { selAdvisoryStatus, confirmationText, published } =
-        getAdvisoryFields(type, advisoryStatuses);
-      setConfirmationText(confirmationText);
+      const { status, published } = getSubmitterAdvisoryFields(
+        type,
+        advisoryStatuses,
+        setConfirmationText
+      );
+      publishedDate = published;
+      setAdvisoryStatus(status);
+    }
+    console.log(advisoryStatus);
+    return publishedDate;
+  };
+  const saveAdvisory = (type) => {
+    try {
+      const published = getAdvisoryFields(type);
       const {
         selProtectedAreas,
         selRegions,
@@ -656,7 +704,7 @@ export default function Advisory({
           eventType: eventType,
           urgency: urgency,
           protectedAreas: selProtectedAreas,
-          advisoryStatus: selAdvisoryStatus,
+          advisoryStatus: advisoryStatus,
           links: savedLinks,
           regions: selRegions,
           sections: selSections,
@@ -701,14 +749,9 @@ export default function Advisory({
     }
   };
 
-  const updateAdvisory = () => {
+  const updateAdvisory = (type) => {
     try {
-      setIsSubmitting(true);
-      const { confirmationText, published } = getUpdateAdvisoryFields(
-        advisoryStatus.Code,
-        isAfterHourPublish
-      );
-      setConfirmationText(confirmationText);
+      const published = getAdvisoryFields(type);
       const {
         selProtectedAreas,
         selRegions,
@@ -726,6 +769,7 @@ export default function Advisory({
         selectedFireCentres,
         selectedFireZones
       );
+      console.log(advisoryStatus);
       Promise.resolve(saveLinks()).then((savedLinks) => {
         const updatedLinks =
           savedLinks.length > 0 ? [...links, ...savedLinks] : links;
@@ -835,7 +879,7 @@ export default function Advisory({
                   label="Back"
                   styling="bcgov-normal-white btn mt10"
                   onClick={() => {
-                    setToDashboard(true);
+                    setToBack();
                   }}
                 />
               </div>
@@ -925,8 +969,7 @@ export default function Advisory({
                   isSubmitting,
                   isSavingDraft,
                   updateAdvisory,
-                  setToDashboard,
-                  setIsConfirmation,
+                  setToBack,
                 }}
               />
             </>
