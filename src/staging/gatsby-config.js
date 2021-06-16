@@ -17,7 +17,7 @@ module.exports = {
     {
       resolve: "gatsby-source-strapi",
       options: {
-        apiURL: process.env.CMS_URL || "http://localhost:1337",
+        apiURL: process.env.REACT_APP_CMS_BASE_URL,
         collectionTypes: ["urgency", "protected-area", "public-advisory"],
         singleTypes: [`business-hours`],
         queryLimit: 10,
