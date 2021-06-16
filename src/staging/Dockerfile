@@ -1,11 +1,9 @@
 # pull official base image
 FROM registry.access.redhat.com/ubi8/nodejs-14
 
-ARG STAGING_URL
-ARG CMS_URL
+ARG REACT_APP_CMS_BASE_URL
 
-ENV STAGING_URL=${STAGING_URL}
-ENV CMS_URL=${CMS_URL}
+ENV REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
 
 # set working directory
 # WORKDIR /web
