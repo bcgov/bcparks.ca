@@ -375,22 +375,28 @@ export default function AdvisoryDashboard({
             />
           </div>
           <br />
-
-          <div className="container-fluid">
-            <MaterialTable
-              options={options}
-              icons={tableIcons}
-              columns={tableColumns}
-              data={publicAdvisoryQuery.data}
-              title=""
-              onRowClick={(event, rowData) => {
-                history.push(`advisory-summary/${rowData.id}`);
-              }}
-              components={{
-                Toolbar: (props) => <div></div>,
-              }}
-            />
-          </div>
+          {publicAdvisoryQuery.isLoading && (
+            <div className="page-loader">
+              <Loader page />
+            </div>
+          )}
+          {!publicAdvisoryQuery.isLoading && (
+            <div className="container-fluid">
+              <MaterialTable
+                options={options}
+                icons={tableIcons}
+                columns={tableColumns}
+                data={publicAdvisoryQuery.data}
+                title=""
+                onRowClick={(event, rowData) => {
+                  history.push(`advisory-summary/${rowData.id}`);
+                }}
+                components={{
+                  Toolbar: (props) => <div></div>,
+                }}
+              />
+            </div>
+          )}
         </div>
       )}
     </main>
