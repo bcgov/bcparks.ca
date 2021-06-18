@@ -808,12 +808,6 @@
                     "type": "string"
                   }
                 },
-                "fireZones": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "parkActivities": {
                   "type": "array",
                   "items": {
@@ -837,6 +831,12 @@
                 },
                 "hasSmokingBan": {
                   "type": "boolean"
+                },
+                "fireZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "published_at": {
                   "type": "string"
@@ -1020,8 +1020,11 @@
                 "fireCentre": {
                   "type": "string"
                 },
-                "protectedArea": {
-                  "type": "string"
+                "protectedAreas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "published_at": {
                   "type": "string"
