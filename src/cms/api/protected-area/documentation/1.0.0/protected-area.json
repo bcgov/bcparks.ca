@@ -881,43 +881,6 @@
               }
             }
           },
-          "fireZones": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "fireZoneNumber": {
-                  "type": "integer"
-                },
-                "fireZoneName": {
-                  "type": "string"
-                },
-                "headquartersCityName": {
-                  "type": "string"
-                },
-                "fireCentre": {
-                  "type": "string"
-                },
-                "protectedArea": {
-                  "type": "string"
-                },
-                "published_at": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "parkActivities": {
             "type": "array",
             "items": {
@@ -1047,6 +1010,46 @@
           "hasSmokingBan": {
             "type": "boolean"
           },
+          "fireZones": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "fireZoneNumber": {
+                  "type": "integer"
+                },
+                "fireZoneName": {
+                  "type": "string"
+                },
+                "headquartersCityName": {
+                  "type": "string"
+                },
+                "fireCentre": {
+                  "type": "string"
+                },
+                "protectedAreas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -1138,12 +1141,6 @@
               "type": "string"
             }
           },
-          "fireZones": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
           "parkActivities": {
             "type": "array",
             "items": {
@@ -1167,6 +1164,12 @@
           },
           "hasSmokingBan": {
             "type": "boolean"
+          },
+          "fireZones": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "published_at": {
             "type": "string",

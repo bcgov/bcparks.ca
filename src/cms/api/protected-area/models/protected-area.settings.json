@@ -88,10 +88,6 @@
       "via": "protectedArea",
       "collection": "site"
     },
-    "fireZones": {
-      "collection": "fire-zone",
-      "via": "protectedArea"
-    },
     "parkActivities": {
       "via": "protectedArea",
       "collection": "park-activity"
@@ -109,6 +105,10 @@
     },
     "hasSmokingBan": {
       "type": "boolean"
+    },
+    "fireZones": {
+      "via": "protectedAreas",
+      "collection": "fire-zone"
     }
   }
 }
