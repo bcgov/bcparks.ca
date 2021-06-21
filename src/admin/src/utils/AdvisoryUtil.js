@@ -65,9 +65,18 @@ export function getApproverAdvisoryFields(code, setConfirmationText) {
   return published;
 }
 
-function addProtectedAreas(area, field, selProtectedAreas) {
+function addProtectedAreasFromArea(area, field, selProtectedAreas, areaList) {
   area[field].forEach((f) => {
-    selProtectedAreas.push(f.protectedArea);
+    const relatedArea = areaList.find((a) => {
+      return a.obj.id === f.id;
+    });
+    addProtectedAreas(relatedArea.obj.protectedAreas, selProtectedAreas);
+  });
+}
+
+function addProtectedAreas(protectedAreas, selProtectedAreas) {
+  protectedAreas.forEach((park) => {
+    selProtectedAreas.push(park.id);
   });
 }
 
@@ -78,7 +87,9 @@ export function getLocationSelection(
   selectedManagementAreas,
   selectedSites,
   selectedFireCentres,
-  selectedFireZones
+  selectedFireZones,
+  managementAreas,
+  fireZones
 ) {
   const selProtectedAreas = [];
   const selRegions = [];
@@ -87,13 +98,33 @@ export function getLocationSelection(
   const selSites = [];
   const selFireCentres = [];
   const selFireZones = [];
-  setAreaValues(selectedProtectedAreas, selProtectedAreas, null);
-  setAreaValues(selectedRegions, selRegions, selProtectedAreas);
-  setAreaValues(selectedSections, selSections, selProtectedAreas);
-  setAreaValues(selectedManagementAreas, selManagementAreas, selProtectedAreas);
-  setAreaValues(selectedSites, selSites, selProtectedAreas);
-  setAreaValues(selectedFireCentres, selFireCentres, selProtectedAreas);
-  setAreaValues(selectedFireZones, selFireZones, selProtectedAreas);
+  setAreaValues(selectedProtectedAreas, selProtectedAreas, null, null);
+  setAreaValues(
+    selectedRegions,
+    selRegions,
+    selProtectedAreas,
+    managementAreas
+  );
+  setAreaValues(
+    selectedSections,
+    selSections,
+    selProtectedAreas,
+    managementAreas
+  );
+  setAreaValues(
+    selectedManagementAreas,
+    selManagementAreas,
+    selProtectedAreas,
+    null
+  );
+  setAreaValues(selectedSites, selSites, selProtectedAreas, null);
+  setAreaValues(
+    selectedFireCentres,
+    selFireCentres,
+    selProtectedAreas,
+    fireZones
+  );
+  setAreaValues(selectedFireZones, selFireZones, selProtectedAreas, null);
   return {
     selProtectedAreas,
     selRegions,
@@ -105,20 +136,28 @@ export function getLocationSelection(
   };
 }
 
-const setAreaValues = (areas, selAreas, selProtectedAreas) => {
+const setAreaValues = (areas, selAreas, selProtectedAreas, areaList) => {
   if (areas && areas.length > 0) {
     areas.forEach((a) => {
       selAreas.push(a.value);
-      if (
-        a.type === "managementArea" ||
-        a.type === "fireZone" ||
-        a.type === "site"
-      ) {
+      if (a.type === "managementArea" || a.type === "fireZone") {
+        addProtectedAreas(a.obj.protectedAreas, selProtectedAreas);
+      } else if (a.type === "site") {
         selProtectedAreas.push(a.obj.protectedArea.id);
       } else if (a.type === "region" || a.type === "section") {
-        addProtectedAreas(a.obj, "managementAreas", selProtectedAreas);
+        addProtectedAreasFromArea(
+          a.obj,
+          "managementAreas",
+          selProtectedAreas,
+          areaList
+        );
       } else if (a.type === "fireCentre") {
-        addProtectedAreas(a.obj, "fireZones", selProtectedAreas);
+        addProtectedAreasFromArea(
+          a.obj,
+          "fireZones",
+          selProtectedAreas,
+          areaList
+        );
       }
     });
   }

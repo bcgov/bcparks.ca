@@ -587,8 +587,11 @@
                 "section": {
                   "type": "string"
                 },
-                "protectedArea": {
-                  "type": "string"
+                "protectedAreas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "region": {
                   "type": "string"

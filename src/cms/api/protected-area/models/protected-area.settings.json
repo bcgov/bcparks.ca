@@ -80,10 +80,6 @@
     "featureId": {
       "type": "integer"
     },
-    "managementAreas": {
-      "via": "protectedArea",
-      "collection": "management-area"
-    },
     "sites": {
       "via": "protectedArea",
       "collection": "site"
@@ -109,6 +105,10 @@
     "fireZones": {
       "via": "protectedAreas",
       "collection": "fire-zone"
+    },
+    "managementAreas": {
+      "via": "protectedAreas",
+      "collection": "management-area"
     }
   }
 }

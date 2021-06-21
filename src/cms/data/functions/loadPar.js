@@ -6,30 +6,28 @@ const fs = require("fs");
 
 const loadParData = async () => {
   const PAR_URL = "https://a100.gov.bc.ca/pub/parws/protectedLands";
-  const currentProtectedAreas = await strapi.services["protected-area"].find();
-  if (currentProtectedAreas.length == 0) {
-    strapi.log.info("Loading Protected Areas data..");
-    const response = await axios
-      .get(PAR_URL, {
-        params: {
-          protectedLandName: "%",
-          protectedLandTypeCodes: "CS,ER,PA,PK,RA",
-        },
-      })
-      .catch((error) => {
-        strapi.log.error(error);
+  strapi.log.info("Loading Protected Areas data..");
+  const response = await axios
+    .get(PAR_URL, {
+      params: {
+        protectedLandName: "%",
+        protectedLandTypeCodes: "CS,ER,PA,PK,RA",
+      },
+    })
+    .catch((error) => {
+      strapi.log.error(error);
+    });
+  if (response.data) {
+    const protectedAreas = [...response.data.data];
+    strapi.log.info(
+      `Retrieved ${protectedAreas.length} records from PAR. Loading into cms...`
+    );
+    for (const protectedArea of protectedAreas) {
+      await loadProtectedLandData(protectedArea).then((res) => {
+        return res;
       });
-    if (response.data) {
-      const protectedAreas = [...response.data.data];
-      strapi.log.info(
-        `Retrieved ${protectedAreas.length} records from PAR. Loading into cms...`
-      );
-      for (const protectedArea of protectedAreas) {
-        await loadProtectedLandData(protectedArea).then((res) => {
-          return res;
-        });
-      }
     }
+    strapi.log.info("PAR data loaded successfully");
   }
 };
 
@@ -139,35 +137,74 @@ const saveProtectedLandData = async (
   managementAreas,
   sites
 ) => {
-  const protectedArea = await strapi.services["protected-area"]
-    .create({
-      orcs: protectedLandData.orcNumber,
-      protectedAreaName: utf8.encode(protectedLandData.protectedLandName),
-      totalArea: protectedLandData.totalArea,
-      uplandArea: protectedLandData.uplandArea,
-      marineArea: protectedLandData.marineArea,
-      marineProtectedArea: protectedLandData.marineProtectedAreaInd,
-      type: protectedLandData.protectedLandTypeDescription,
-      typeCode: protectedLandData.protectedLandTypeCode,
-      class: protectedLandData.protectedLandClassCode,
-      status: protectedLandData.protectedLandStatusCode,
-      featureId: protectedLandData.featureId,
-      establishedDate: protectedLandData.establishedDate
-        ? moment(protectedLandData.establishedDate, "YYYY-MM-DD")
-            .tz("UTC")
-            .format()
-        : null,
-      repealedDate: null,
-      url: "",
-      latitude: null,
-      longitude: null,
-      mapZoom: null,
-      sites: sites,
-      managementAreas: managementAreas,
-    })
-    .then((res) => {
-      return res;
-    });
+  let protectedArea = await strapi.query("protected-area").findOne({
+    orcs: protectedLandData.orcNumber,
+  });
+
+  if (!protectedArea) {
+    protectedArea = await strapi.services["protected-area"]
+      .create({
+        orcs: protectedLandData.orcNumber,
+        protectedAreaName: utf8.encode(protectedLandData.protectedLandName),
+        totalArea: protectedLandData.totalArea,
+        uplandArea: protectedLandData.uplandArea,
+        marineArea: protectedLandData.marineArea,
+        marineProtectedArea: protectedLandData.marineProtectedAreaInd,
+        type: protectedLandData.protectedLandTypeDescription,
+        typeCode: protectedLandData.protectedLandTypeCode,
+        class: protectedLandData.protectedLandClassCode,
+        status: protectedLandData.protectedLandStatusCode,
+        featureId: protectedLandData.featureId,
+        establishedDate: protectedLandData.establishedDate
+          ? moment(protectedLandData.establishedDate, "YYYY-MM-DD")
+              .tz("UTC")
+              .format()
+          : null,
+        repealedDate: null,
+        url: "",
+        latitude: null,
+        longitude: null,
+        mapZoom: null,
+        sites: sites,
+        managementAreas: managementAreas,
+      })
+      .then((res) => {
+        return res;
+      });
+  } else {
+    const id = protectedArea.id;
+    protectedArea = await strapi.services["protected-area"]
+      .update(
+        { id: id },
+        {
+          protectedAreaName: utf8.encode(protectedLandData.protectedLandName),
+          totalArea: protectedLandData.totalArea,
+          uplandArea: protectedLandData.uplandArea,
+          marineArea: protectedLandData.marineArea,
+          marineProtectedArea: protectedLandData.marineProtectedAreaInd,
+          type: protectedLandData.protectedLandTypeDescription,
+          typeCode: protectedLandData.protectedLandTypeCode,
+          class: protectedLandData.protectedLandClassCode,
+          status: protectedLandData.protectedLandStatusCode,
+          featureId: protectedLandData.featureId,
+          establishedDate: protectedLandData.establishedDate
+            ? moment(protectedLandData.establishedDate, "YYYY-MM-DD")
+                .tz("UTC")
+                .format()
+            : null,
+          repealedDate: null,
+          url: "",
+          latitude: null,
+          longitude: null,
+          mapZoom: null,
+          sites: sites,
+          managementAreas: managementAreas,
+        }
+      )
+      .then((res) => {
+        return res;
+      });
+  }
   return protectedArea;
 };
 
