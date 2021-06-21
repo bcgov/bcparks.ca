@@ -29,7 +29,6 @@ import TimerIcon from "@material-ui/icons/Timer";
 import Tooltip from "@material-ui/core/Tooltip";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import WatchLaterIcon from "@material-ui/icons/WatchLater";
 import EditIcon from "@material-ui/icons/Edit";
 import InfoIcon from "@material-ui/icons/Info";
@@ -161,9 +160,6 @@ export default function AdvisoryDashboard({
                 )}
                 {rowData.advisoryStatus.code === "INA" && (
                   <WatchLaterIcon className="inactiveIcon" />
-                )}
-                {rowData.advisoryStatus.code === "ACT" && (
-                  <CheckCircleIcon className="activeIcon" />
                 )}
                 {rowData.advisoryStatus.code === "APR" && (
                   <ThumbUpIcon className="approvedIcon" />

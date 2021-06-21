@@ -24,57 +24,6 @@
   font-weight: bold;
 }
 
-.dft
-{
-  color: rgb(82, 80, 80);
-  padding: 0.1rem 0.4rem;
-  border-radius: 0.3rem;
-  background-color: rgb(199, 201, 197);
-  background-color: rgb(215, 216, 210);
-}
-
-.arq
-{
-  color: rgb(82, 80, 80);
-  padding: 0.1rem 0.4rem;
-  border-radius: 0.3rem;
-  border: 1px solid rgb(199, 199, 194);
-  background-color: rgb(245, 209, 7);
-}
-
-.act
-{
-  color:rgb(241, 97, 13);
-  padding: 0.1rem 0.4rem;
-  border-radius: 0.3rem;
-  border: 1px solid rgb(209, 139, 109);
-  background-color: rgb(245, 209, 192);
-}
-
-.apr{
-  color: green;
-  padding: 0.1rem 0.4rem;
-  border-radius: 0.3rem;
-  border: 1px solid rgb(170, 214, 124);
-  background-color: rgb(230, 248, 212);
-}
-
-.pub
-{
-  color: white;
-  padding: 0.1rem 0.4rem;
-  border-radius: 0.3rem;
-  border: 1px solid #007eff;
-  background-color:#007eff;
-}
-
-.ina
-{
-  padding: 0.1rem 0.4rem;
-  border-radius: 0.3rem;
-  border: 1px solid rgb(46, 48, 45);
-  background-color:white;
-}
 
 .draftIcon
 {
@@ -82,10 +31,6 @@
 }
 
 .approvedIcon
-{
-  color:#4989C5 
-}
-.activeIcon
 {
   color:#4989C5 
 }
