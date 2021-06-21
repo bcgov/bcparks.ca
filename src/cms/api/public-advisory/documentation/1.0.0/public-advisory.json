@@ -796,12 +796,6 @@
                 "featureId": {
                   "type": "integer"
                 },
-                "managementAreas": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "sites": {
                   "type": "array",
                   "items": {
@@ -833,6 +827,12 @@
                   "type": "boolean"
                 },
                 "fireZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "managementAreas": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -980,8 +980,11 @@
                 "section": {
                   "type": "string"
                 },
-                "protectedArea": {
-                  "type": "string"
+                "protectedAreas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "region": {
                   "type": "string"

@@ -690,7 +690,9 @@ export default function Advisory({
         selectedManagementAreas,
         selectedSites,
         selectedFireCentres,
-        selectedFireZones
+        selectedFireZones,
+        managementAreas,
+        fireZones
       );
       Promise.resolve(saveLinks()).then((savedLinks) => {
         const newAdvisory = {
@@ -774,7 +776,9 @@ export default function Advisory({
         selectedManagementAreas,
         selectedSites,
         selectedFireCentres,
-        selectedFireZones
+        selectedFireZones,
+        managementAreas,
+        fireZones
       );
       Promise.resolve(saveLinks()).then((savedLinks) => {
         const updatedLinks =
