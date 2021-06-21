@@ -38,6 +38,9 @@ const savePublicAdvisory = async (
       });
     }
 
+    const advisoryStatus =
+      data.advisoryStatus === "Active" ? "Published" : data.advisoryStatus;
+
     const publicAdvisory = {
       advisoryNumber: data.advisoryNumber,
       title: data.title,
@@ -67,7 +70,7 @@ const savePublicAdvisory = async (
       eventType: eventTypes.find((d) => d.eventType === data.eventType),
       urgency: urgencies.find((d) => d.urgency === data.urgency),
       advisoryStatus: advisoryStatuses.find(
-        (d) => d.advisoryStatus === data.advisoryStatus
+        (d) => d.advisoryStatus === advisoryStatus
       ),
       isAdvisoryDateDisplayed: data.isAdvisoryDateDisplayed,
       isEffectiveDateDisplayed: data.isEffectiveDateDisplayed,
