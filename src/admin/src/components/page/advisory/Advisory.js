@@ -433,6 +433,8 @@ export default function Advisory({
             value: a.id,
           }));
           setAccessStatuses([...accessStatuses]);
+          const accessStatus = accessStatuses.filter((a) => a.label === "Open");
+          setAccessStatus(accessStatus[0].value);
           const urgencyData = res[9];
           const urgencies = urgencyData.map((u) => ({
             label: u.urgency,
@@ -709,7 +711,7 @@ export default function Advisory({
           effectiveDate: startDate,
           endDate: endDate,
           expiryDate: expiryDate,
-          accessStatus: accessStatus,
+          accessStatus: accessStatus ? accessStatus : null,
           eventType: eventType,
           urgency: urgency,
           protectedAreas: selProtectedAreas,
@@ -798,7 +800,7 @@ export default function Advisory({
           effectiveDate: startDate,
           endDate: endDate,
           expiryDate: expiryDate,
-          accessStatus: accessStatus,
+          accessStatus: accessStatus ? accessStatus : null,
           eventType: eventType,
           urgency: urgency,
           protectedAreas: selProtectedAreas,
