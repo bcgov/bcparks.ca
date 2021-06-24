@@ -3,27 +3,26 @@ const _ = require("lodash");
 
 const { sanitizeEntity } = require("strapi-utils");
 
-const getCampfireFacility = (facilities) => {
-  return facilities.some((f) => f.facilityName.toLowerCase() === "campfires");
+const boolToYN = (boolVar) => {
+  return boolVar ? "Y" : "N";
+};
+
+const getHasCampfiresFacility = (parkFacilities) => {
+  return parkFacilities.some((f) => f.name.toLowerCase().includes("campfires"));
 };
 
 const getParkActivity = async () => {
-  const parkActivityQuery = {
-    _limit: -1,
-    isActive: true,
-  };
   const parkActivityData = await strapi
     .query("park-activity")
-    .find(parkActivityQuery);
+    .find({ _limit: -1, isActive: true });
 
   const parkActivities = parkActivityData.map((m) => {
     if (m.protectedArea && m.protectedArea.orcs) {
       return {
         orcs: m.protectedArea.orcs,
-        facilityNumber: m.activityType.facilityNumber,
-        facilityName: m.activityType.facilityName,
-        facilityCode: m.activityType.facilityCode,
-        isFacilityOpen: m.isFacilityOpen,
+        activityName: m.activityType.activityName,
+        activityCode: m.activityType.activityCode,
+        isactivityOpen: m.isactivityOpen,
         icon: m.activityType.icon,
         iconNA: m.activityType.iconNA,
         rank: m.activityType.rank,
@@ -34,25 +33,15 @@ const getParkActivity = async () => {
   return Object.entries(
     parkActivities.reduce((acc, parkActivity) => {
       if (parkActivity) {
-        const {
-          activityNumber,
-          activityName,
-          activityCode,
-          isActivityOpen,
-          icon,
-          iconNA,
-          rank,
-        } = parkActivity;
         acc[parkActivity.orcs] = [
           ...(acc[parkActivity.orcs] || []),
           {
-            activityNumber,
-            activityName,
-            activityCode,
-            isActivityOpen,
-            icon,
-            iconNA,
-            rank,
+            activityName: parkActivity.activityName,
+            activityCode: parkActivity.activityCode,
+            isActivityOpen: parkActivity.isActivityOpen,
+            icon: parkActivity.icon,
+            iconNA: parkActivity.iconNA,
+            rank: parkActivity.rank,
           },
         ];
       }
@@ -62,20 +51,14 @@ const getParkActivity = async () => {
 };
 
 const getParkFacility = async () => {
-  const parkFacilityQuery = {
-    _limit: -1,
-    isActive: true,
-  };
-
   const parkFacilityData = await strapi
     .query("park-facility")
-    .find(parkFacilityQuery);
+    .find({ _limit: -1, isActive: true });
 
   const parkFacilities = parkFacilityData.map((m) => {
     if (m.protectedArea && m.protectedArea.orcs && m.facilityType) {
       return {
         orcs: m.protectedArea.orcs,
-        facilityNumber: m.facilityType.facilityNumber,
         facilityName: m.facilityType.facilityName,
         facilityCode: m.facilityType.facilityCode,
         isFacilityOpen: m.isFacilityOpen,
@@ -89,25 +72,15 @@ const getParkFacility = async () => {
   return Object.entries(
     parkFacilities.reduce((acc, parkFacility) => {
       if (parkFacility) {
-        const {
-          facilityNumber,
-          facilityName,
-          facilityCode,
-          isFacilityOpen,
-          icon,
-          iconNA,
-          rank,
-        } = parkFacility;
         acc[parkFacility.orcs] = [
           ...(acc[parkFacility.orcs] || []),
           {
-            facilityNumber,
-            facilityName,
-            facilityCode,
-            isFacilityOpen,
-            icon,
-            iconNA,
-            rank,
+            facilityName: parkFacility.facilityName,
+            facilityCode: parkFacility.facilityCode,
+            isFacilityOpen: parkFacility.isFacilityOpen,
+            icon: parkFacility.icon,
+            iconNA: parkFacility.iconNA,
+            rank: parkFacility.rank,
           },
         ];
       }
@@ -151,13 +124,11 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
 };
 
 const getPublishedPublicAdvisories = async () => {
-  const publicAdvisoryQuery = {
+  return await strapi.query("public-advisory").find({
     _publicationState: "live",
     _sort: "id",
     _limit: -1,
-  };
-
-  return await strapi.query("public-advisory").find(publicAdvisoryQuery);
+  });
 };
 
 // custom route for park status view
@@ -169,15 +140,20 @@ const getProtectedAreaStatus = async (ctx) => {
     entities = await strapi.services["protected-area"].find(ctx.query);
   }
 
-  const regions = await strapi.query("region").find();
-  const sections = await strapi.query("section").find();
-  const fireCentres = await strapi.query("fire-centre").find();
+  const regions = await strapi.query("region").find({ _limit: -1 });
+  const sections = await strapi.query("section").find({ _limit: -1 });
+  const fireCentres = await strapi.query("fire-centre").find({ _limit: -1 });
+  const linkTypes = await strapi.query("link-type").find({ _limit: -1 });
+  const parq = await strapi.query("protected-area").find({ _limit: 1 });
+  const pars = await strapi.services["protected-area"].find({ _limit: 1 });
+
+  const parkNamesAliasesData = await strapi
+    .query("park-name")
+    .find({ _limit: -1, "parkNameType.nameType": "Alias" });
 
   const publicAdvisories = await getPublishedPublicAdvisories();
   const parkActivitiesData = await getParkActivity();
   const parkFacilitiesData = await getParkFacility();
-
-  const hasCampfireBans = false;
 
   return entities.map((protectedArea) => {
     let publicAdvisory = getPublicAdvisory(
@@ -200,15 +176,14 @@ const getProtectedAreaStatus = async (ctx) => {
       managementAreaName = protectedArea.managementAreas[0].managementAreaName;
     }
 
-    let fireZoneName = null;
-    let fireCentreName = null;
-    if (protectedArea.fireZones.length > 0) {
-      fireZoneName = protectedArea.fireZones[0].fireZoneName;
-      const fireCentreId = protectedArea.fireZones[0].fireCentre;
-      if (fireCentreId)
-        fireCentreName = fireCentres.filter((x) => x.id === fireCentreId)[0]
-          .fireCentreName;
-    }
+    const fireZones = protectedArea.fireZones.map((fireZone) => {
+      return {
+        fireZoneName: fireZone.fireZoneName,
+        headquartersCityName: fireZone.headquartersCityName,
+        fireCentreName: fireCentres.find((f) => f.id === fireZone.fireCentre)
+          .fireCentreName,
+      };
+    });
 
     const [{ parkActivities } = { parkActivities: [] }] =
       parkActivitiesData.filter((p) => +p.orcs === protectedArea.orcs);
@@ -216,26 +191,34 @@ const getProtectedAreaStatus = async (ctx) => {
     const [{ parkFacilities } = { parkFacilities: [] }] =
       parkFacilitiesData.filter((p) => +p.orcs === protectedArea.orcs);
 
+    const parkNamesAliases = parkNamesAliasesData
+      .filter((p) => +p.protectedArea.orcs === protectedArea.orcs)
+      .map((d) => d.parkName);
+
     return {
-      orcsPrimary: protectedArea.orcs,
-      orcsSecondary: null,
-      protectedLandsName: protectedArea.protectedAreaName,
-      protectedLandsDesignation: protectedArea.type,
-      protectedLandsCode: protectedArea.typeCode,
+      orcs: protectedArea.orcs,
+      orcsSiteNumber: null,
+      protectedAreaName: protectedArea.protectedAreaName,
+      protectedAreaNameAliases: parkNamesAliases,
+      type: protectedArea.type,
+      typeCode: protectedArea.typeCode,
       accessStatus: publicAdvisory.accessStatus,
       accessDetails: publicAdvisory.advisoryTitle,
-      isReservationsAffected: publicAdvisory.reservationsAffected,
+      isReservationsAffected: boolToYN(publicAdvisory.reservationsAffected),
       eventType: publicAdvisory.eventType,
-      //facilitiesCampfiresInd: getCampfireFacility(protectedArea.facilities),
-      hasSmokingBan: protectedArea.hasSmokingBan,
-      hasCampfireBan: protectedArea.hasCampfireBan,
+      hasCampfiresFacility: boolToYN(
+        getHasCampfiresFacility(protectedArea.parkFacilities)
+      ),
+      hasCampfireBan: boolToYN(protectedArea.hasCampfireBan),
+      hasSmokingBan: boolToYN(protectedArea.hasSmokingBan),
+      hasCampfireBanOverride: boolToYN(protectedArea.hasCampfireBanOverride),
+      hasSmokingBanOverride: boolToYN(protectedArea.hasSmokingBanOverride),
       campfireBanEffectiveDate: null,
-      campfireBanRescindedDate: null,
+      campfireBanRescindedDate: protectedArea.campfireBanRescindedDate,
       accessStatusEffectiveDate: publicAdvisory.effectiveDate,
-      accessStatusRescindedDate: null,
-      fireCentreName: fireCentreName,
-      fireZoneName: fireZoneName,
-      isFogZone: protectedArea.isFogZone,
+      accessStatusRescindedDate: publicAdvisory.endDate,
+      fireZones: fireZones,
+      isFogZone: boolToYN(protectedArea.isFogZone),
       parkRegionName: regionName,
       parkSectionName: sectionName,
       parkManagementAreaName: managementAreaName,
@@ -244,7 +227,7 @@ const getProtectedAreaStatus = async (ctx) => {
       orderUrl: null,
       mapUrl: null,
       informationBulletinUrl: null,
-      parkWebsiteUrl: null,
+      parkWebsiteUrl: protectedArea.url,
       pepRegionId: null,
       pepRegionName: null,
       updated_at: protectedArea.updated_at,

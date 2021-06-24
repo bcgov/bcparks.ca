@@ -628,19 +628,7 @@
               "featureId": {
                 "type": "integer"
               },
-              "managementAreas": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "sites": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "fireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -669,6 +657,27 @@
               },
               "hasSmokingBan": {
                 "type": "boolean"
+              },
+              "fireZones": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "managementAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "hasCampfireBanOverride": {
+                "type": "boolean"
+              },
+              "hasSmokingBanOverride": {
+                "type": "boolean"
+              },
+              "campfireBanRescindedDate": {
+                "type": "string"
               },
               "published_at": {
                 "type": "string"
