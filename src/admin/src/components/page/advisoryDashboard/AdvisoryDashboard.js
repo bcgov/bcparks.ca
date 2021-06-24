@@ -63,11 +63,18 @@ export default function AdvisoryDashboard({
     const publicAdvisories = response[1].data;
 
     const regionParksCount = managementAreas.reduce((region, item) => {
-      region[item.region.id] = (region[item.region.id] || 0) + 1;
+      region[item.region.id] =
+        (region[item.region.id] || 0) + item.protectedAreas.length;
       return region;
     }, {});
 
     const data = publicAdvisories.map((publicAdvisory) => {
+      publicAdvisory.associatedParks =
+        publicAdvisory.protectedAreas
+          .map((p) => p.protectedAreaName)
+          .join(", ") +
+        publicAdvisory.regions.map((r) => r.regionName).join(", ");
+
       let regionsWithParkCount = [];
       if (publicAdvisory.regions.length > 0) {
         publicAdvisory.regions.forEach((region) => {
@@ -225,7 +232,7 @@ export default function AdvisoryDashboard({
       },
     },
     {
-      field: "protectedAreas",
+      field: "associatedParks",
       title: "Associated Park(s)",
       headerStyle: { width: 400 },
       cellStyle: { width: 400 },
@@ -279,19 +286,6 @@ export default function AdvisoryDashboard({
     },
   ];
 
-  const options = {
-    headerStyle: {
-      backgroundColor: "#e3eaf8",
-      zIndex: 0,
-      padding: "2px",
-      fontWeight: "bolder",
-    },
-    cellStyle: { padding: 2 },
-    rowStyle: {},
-    filtering: true,
-    search: false,
-  };
-
   const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -327,6 +321,8 @@ export default function AdvisoryDashboard({
   if (toCreate) {
     return <Redirect to="/bcparks/create-advisory" />;
   }
+
+  const DEFAULT_PAGE_SIZE = 50;
 
   return (
     <main>
@@ -379,7 +375,28 @@ export default function AdvisoryDashboard({
           {!publicAdvisoryQuery.isLoading && (
             <div className="container-fluid">
               <MaterialTable
-                options={options}
+                key={publicAdvisoryQuery.data.length}
+                options={{
+                  headerStyle: {
+                    backgroundColor: "#e3eaf8",
+                    zIndex: 0,
+                    padding: "2px",
+                    fontWeight: "bolder",
+                  },
+                  cellStyle: { padding: 2 },
+                  filtering: true,
+                  search: false,
+                  pageSize:
+                    publicAdvisoryQuery.data.length > DEFAULT_PAGE_SIZE
+                      ? DEFAULT_PAGE_SIZE
+                      : publicAdvisoryQuery.data.length,
+                  pageSizeOptions: [
+                    25,
+                    50,
+                    100,
+                    { value: publicAdvisoryQuery.data.length, label: "All" },
+                  ],
+                }}
                 icons={tableIcons}
                 columns={tableColumns}
                 data={publicAdvisoryQuery.data}
