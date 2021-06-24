@@ -215,13 +215,32 @@ export default function AdvisorySummary({
                   {advisory.accessStatus && (
                     <div className="row">
                       <div className="col-lg-4 col-md-6 col-12 ad-label">
-                        Access Status
+                        Park Access Status
                       </div>
                       <div className="col-lg-8 col-md-6 col-12">
                         {advisory.accessStatus.accessStatus}
                       </div>
                     </div>
                   )}
+
+                  {advisory.urgency && (
+                    <div className="row">
+                      <div className="col-lg-4 col-md-6 col-12 ad-label">
+                        Urgency Level
+                      </div>
+                      <div className="col-lg-8 col-md-6 col-12">
+                        {advisory.urgency.urgency}
+                      </div>
+                    </div>
+                  )}
+                  <div className="row">
+                    <div className="col-lg-4 col-md-6 col-12 ad-label">
+                      Safety Related
+                    </div>
+                    <div className="col-lg-8 col-md-6 col-12">
+                      {advisory.isSafetyRelated ? "Yes" : "No"}
+                    </div>
+                  </div>
                   <div className="row">
                     <div className="col-lg-4 col-md-6 col-12 ad-label">
                       Description
@@ -230,16 +249,6 @@ export default function AdvisorySummary({
                       {advisory.description}
                     </div>
                   </div>
-                  {advisory.urgency && (
-                    <div className="row">
-                      <div className="col-lg-4 col-md-6 col-12 ad-label">
-                        Urgency
-                      </div>
-                      <div className="col-lg-8 col-md-6 col-12">
-                        {advisory.urgency.urgency}
-                      </div>
-                    </div>
-                  )}
                   {advisory.regions.length > 0 && (
                     <div className="row">
                       <div className="col-lg-4 col-md-6 col-12 ad-label">
@@ -384,17 +393,10 @@ export default function AdvisorySummary({
                       </div>
                     </div>
                   )}
+
                   <div className="row">
                     <div className="col-lg-4 col-md-6 col-12 ad-label">
-                      Safety Related
-                    </div>
-                    <div className="col-lg-8 col-md-6 col-12">
-                      {advisory.isSafetyRelated ? "Yes" : "No"}
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-4 col-md-6 col-12 ad-label">
-                      Reservation Affected
+                      Reservations Affected
                     </div>
                     <div className="col-lg-8 col-md-6 col-12">
                       {advisory.isReservationsAffected ? "Yes" : "No"}

@@ -31,8 +31,15 @@ export default function Error({ page: { error } }) {
     } else if (error.message === "Unauthorized") {
       errorContent = (
         <div>
-          <h1>You do not have permission to access this page</h1>
-          <p>Please contact the administrator for access</p>
+          <h1>BC Parks Staff Portal</h1>
+          <br />
+          <p>
+            Please contact the web team at{" "}
+            <a href="mailto:parksweb@gov.bc.ca?subject=Access%20to%20BC%20Parks%20Staff%20Portal">
+              parksweb@gov.bc.ca
+            </a>{" "}
+            to request access.
+          </p>
         </div>
       );
     } else {
@@ -77,7 +84,9 @@ export default function Error({ page: { error } }) {
       />
       <div className="page" data-testid="Error">
         <div className="content col-md-8">
+          <br />
           {errorContent}
+          <br />
           <div className="buttons">
             <Button
               label="Home"
