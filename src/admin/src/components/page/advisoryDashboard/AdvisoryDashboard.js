@@ -375,6 +375,7 @@ export default function AdvisoryDashboard({
           {!publicAdvisoryQuery.isLoading && (
             <div className="container-fluid">
               <MaterialTable
+                key={publicAdvisoryQuery.data.length}
                 options={{
                   headerStyle: {
                     backgroundColor: "#e3eaf8",
