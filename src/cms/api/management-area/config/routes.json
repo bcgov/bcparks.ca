@@ -18,7 +18,7 @@
     },
     {
       "method": "GET",
-      "path": "/management-areas/:ManagementAreaNumber",
+      "path": "/management-areas/:managementAreaNumber",
       "handler": "management-area.findOne",
       "config": {
         "policies": []
@@ -34,7 +34,7 @@
     },
     {
       "method": "PUT",
-      "path": "/management-areas/:ManagementAreaNumber",
+      "path": "/management-areas/:id",
       "handler": "management-area.update",
       "config": {
         "policies": []
@@ -42,7 +42,7 @@
     },
     {
       "method": "DELETE",
-      "path": "/management-areas/:ManagementAreaNumber",
+      "path": "/management-areas/:id",
       "handler": "management-area.delete",
       "config": {
         "policies": []

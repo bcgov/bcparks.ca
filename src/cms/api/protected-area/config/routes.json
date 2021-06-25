@@ -58,7 +58,7 @@
     },
     {
       "method": "PUT",
-      "path": "/protected-areas/:orcs",
+      "path": "/protected-areas/:id",
       "handler": "protected-area.update",
       "config": {
         "policies": []
@@ -66,7 +66,7 @@
     },
     {
       "method": "DELETE",
-      "path": "/protected-areas/:orcs",
+      "path": "/protected-areas/:id",
       "handler": "protected-area.delete",
       "config": {
         "policies": []

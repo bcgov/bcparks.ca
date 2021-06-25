@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "06/21/2021 2:39:06 PM"
+    "x-generation-date": "06/25/2021 10:19:40 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -7970,7 +7970,7 @@
         "parameters": []
       }
     },
-    "/management-areas/{ManagementAreaNumber}": {
+    "/management-areas/{managementAreaNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -8026,7 +8026,7 @@
         ],
         "parameters": [
           {
-            "name": "ManagementAreaNumber",
+            "name": "managementAreaNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -8036,7 +8036,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/management-areas/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -8103,7 +8105,7 @@
         },
         "parameters": [
           {
-            "name": "ManagementAreaNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -8166,7 +8168,7 @@
         ],
         "parameters": [
           {
-            "name": "ManagementAreaNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -11862,7 +11864,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/protected-areas/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -11929,7 +11933,7 @@
         },
         "parameters": [
           {
-            "name": "orcs",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -11992,7 +11996,7 @@
         ],
         "parameters": [
           {
-            "name": "orcs",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -12839,7 +12843,7 @@
         "parameters": []
       }
     },
-    "/regions/{RegionNumber}": {
+    "/regions/{regionNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -12891,7 +12895,7 @@
         ],
         "parameters": [
           {
-            "name": "RegionNumber",
+            "name": "regionNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -12901,7 +12905,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/regions/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -12964,7 +12970,7 @@
         },
         "parameters": [
           {
-            "name": "RegionNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -13027,7 +13033,7 @@
         ],
         "parameters": [
           {
-            "name": "RegionNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -13350,7 +13356,7 @@
         "parameters": []
       }
     },
-    "/sections/{SectionNumber}": {
+    "/sections/{sectionNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -13402,7 +13408,7 @@
         ],
         "parameters": [
           {
-            "name": "SectionNumber",
+            "name": "sectionNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -13412,7 +13418,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/sections/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -13475,7 +13483,7 @@
         },
         "parameters": [
           {
-            "name": "SectionNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -13538,7 +13546,7 @@
         ],
         "parameters": [
           {
-            "name": "SectionNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -13923,7 +13931,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/sites/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -13986,7 +13996,7 @@
         },
         "parameters": [
           {
-            "name": "orcsSiteNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -14049,7 +14059,7 @@
         ],
         "parameters": [
           {
-            "name": "orcsSiteNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -22188,19 +22198,7 @@
               "featureId": {
                 "type": "integer"
               },
-              "managementAreas": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "sites": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "fireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -22229,6 +22227,18 @@
               },
               "hasSmokingBan": {
                 "type": "boolean"
+              },
+              "fireZones": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "managementAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "published_at": {
                 "type": "string"

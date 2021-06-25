@@ -311,7 +311,7 @@
         "parameters": []
       }
     },
-    "/sections/{SectionNumber}": {
+    "/sections/{sectionNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -363,7 +363,7 @@
         ],
         "parameters": [
           {
-            "name": "SectionNumber",
+            "name": "sectionNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -373,7 +373,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/sections/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -436,7 +438,7 @@
         },
         "parameters": [
           {
-            "name": "SectionNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -499,7 +501,7 @@
         ],
         "parameters": [
           {
-            "name": "SectionNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,

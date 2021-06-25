@@ -311,7 +311,7 @@
         "parameters": []
       }
     },
-    "/regions/{RegionNumber}": {
+    "/regions/{regionNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -363,7 +363,7 @@
         ],
         "parameters": [
           {
-            "name": "RegionNumber",
+            "name": "regionNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -373,7 +373,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/regions/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -436,7 +438,7 @@
         },
         "parameters": [
           {
-            "name": "RegionNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -499,7 +501,7 @@
         ],
         "parameters": [
           {
-            "name": "RegionNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
