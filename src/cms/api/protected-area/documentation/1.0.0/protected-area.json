@@ -553,7 +553,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/protected-areas/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -620,7 +622,7 @@
         },
         "parameters": [
           {
-            "name": "orcs",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -683,7 +685,7 @@
         ],
         "parameters": [
           {
-            "name": "orcs",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,

@@ -373,7 +373,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/sites/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -436,7 +438,7 @@
         },
         "parameters": [
           {
-            "name": "orcsSiteNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -499,7 +501,7 @@
         ],
         "parameters": [
           {
-            "name": "orcsSiteNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -628,19 +630,7 @@
               "featureId": {
                 "type": "integer"
               },
-              "managementAreas": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "sites": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "fireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -669,6 +659,18 @@
               },
               "hasSmokingBan": {
                 "type": "boolean"
+              },
+              "fireZones": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "managementAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "published_at": {
                 "type": "string"
