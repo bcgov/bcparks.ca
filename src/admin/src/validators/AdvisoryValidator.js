@@ -84,7 +84,6 @@ export function validAdvisoryData(advisoryData, validateStatus, mode) {
   const validTicketNumber = validateOptionalNumber(advisoryData.ticketNumber);
   const validHeadline = validateRequiredText(advisoryData.headline);
   const validEventType = validateRequiredSelect(advisoryData.eventType);
-  const validAccessStatus = validateRequiredSelect(advisoryData.accessStatus);
   const validDescription = validateRequiredText(advisoryData.description);
   const validUrgency = validateRequiredSelect(advisoryData.urgency);
   const validLocations = validateRequiredLocation(advisoryData.protectedArea);
@@ -98,7 +97,6 @@ export function validAdvisoryData(advisoryData, validateStatus, mode) {
     validTicketNumber &&
     validHeadline &&
     validEventType &&
-    validAccessStatus &&
     validDescription &&
     validUrgency &&
     validLocations &&
