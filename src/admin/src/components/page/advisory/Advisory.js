@@ -12,6 +12,7 @@ import {
   getLocationSelection,
   getSubmitterAdvisoryFields,
   calculateIsStatHoliday,
+  removeLocations,
 } from "../../../utils/AdvisoryUtil";
 import AdvisoryForm from "../../composite/advisoryForm/AdvisoryForm";
 import Header from "../../composite/header/Header";
@@ -42,16 +43,22 @@ export default function Advisory({
   const [selectedProtectedAreas, setSelectedProtectedAreas] = useState([]);
   const [regions, setRegions] = useState([]);
   const [selectedRegions, setSelectedRegions] = useState([]);
+  const [existingRegions, setExistingRegions] = useState([]);
   const [sections, setSections] = useState([]);
   const [selectedSections, setSelectedSections] = useState([]);
+  const [existingSections, setExistingSections] = useState([]);
   const [managementAreas, setManagementAreas] = useState([]);
   const [selectedManagementAreas, setSelectedManagementAreas] = useState([]);
+  const [existingManagementAreas, setExistingManagementAreas] = useState([]);
   const [sites, setSites] = useState([]);
   const [selectedSites, setSelectedSites] = useState([]);
+  const [existingSites, setExistingSites] = useState([]);
   const [fireCentres, setFireCentres] = useState([]);
   const [selectedFireCentres, setSelectedFireCentres] = useState([]);
+  const [existingFireCentres, setExistingFireCentres] = useState([]);
   const [fireZones, setFireZones] = useState([]);
   const [selectedFireZones, setSelectedFireZones] = useState([]);
+  const [existingFireZones, setExistingFireZones] = useState([]);
   const [eventTypes, setEventTypes] = useState([]);
   const [eventType, setEventType] = useState();
   const [accessStatuses, setAccessStatuses] = useState([]);
@@ -104,6 +111,7 @@ export default function Advisory({
   const advisoryDateRef = useRef(moment().tz("America/Vancouver"));
   const [advisoryId, setAdvisoryId] = useState();
   const [isApprover, setIsApprover] = useState(false);
+  const [formError, setFormError] = useState("");
 
   const { id } = useParams();
 
@@ -229,6 +237,7 @@ export default function Advisory({
                 selRegions.push(regions.find((l) => l.value === r.id));
               });
               setSelectedRegions([...selRegions]);
+              setExistingRegions([...selRegions]);
             }
             if (sectionInfo) {
               const selSections = [];
@@ -236,6 +245,7 @@ export default function Advisory({
                 selSections.push(sections.find((l) => l.value === s.id));
               });
               setSelectedSections([...selSections]);
+              setExistingSections([...selSections]);
             }
             if (managementAreaInfo) {
               const selManagementAreas = [];
@@ -245,6 +255,7 @@ export default function Advisory({
                 );
               });
               setSelectedManagementAreas([...selManagementAreas]);
+              setExistingManagementAreas([...selManagementAreas]);
             }
             if (siteInfo) {
               const selSites = [];
@@ -252,6 +263,7 @@ export default function Advisory({
                 selSites.push(sites.find((l) => l.value === s.id));
               });
               setSelectedSites([...selSites]);
+              setExistingSites([...selSites]);
             }
             if (fireCentreInfo) {
               const selFireCentres = [];
@@ -259,6 +271,7 @@ export default function Advisory({
                 selFireCentres.push(fireCentres.find((l) => l.value === f.id));
               });
               setSelectedFireCentres([...selFireCentres]);
+              setExistingFireCentres([...selFireCentres]);
             }
             if (fireZoneInfo) {
               const selFireZones = [];
@@ -266,6 +279,7 @@ export default function Advisory({
                 selFireZones.push(fireZones.find((l) => l.value === f.id));
               });
               setSelectedFireZones([...selFireZones]);
+              setExistingFireZones([...selFireZones]);
             }
             const links = advisoryData.links;
             if (links) {
@@ -763,6 +777,23 @@ export default function Advisory({
   const updateAdvisory = (type) => {
     try {
       const { published, status } = getAdvisoryFields(type);
+      const updatedProtectedAreas = removeLocations(
+        selectedProtectedAreas,
+        selectedRegions,
+        existingRegions,
+        selectedSections,
+        existingSections,
+        selectedManagementAreas,
+        existingManagementAreas,
+        selectedSites,
+        existingSites,
+        selectedFireCentres,
+        existingFireCentres,
+        selectedFireZones,
+        existingFireZones,
+        managementAreas,
+        fireZones
+      );
       const {
         selProtectedAreas,
         selRegions,
@@ -772,7 +803,7 @@ export default function Advisory({
         selFireCentres,
         selFireZones,
       } = getLocationSelection(
-        selectedProtectedAreas,
+        updatedProtectedAreas,
         selectedRegions,
         selectedSections,
         selectedManagementAreas,
@@ -782,64 +813,72 @@ export default function Advisory({
         managementAreas,
         fireZones
       );
-      Promise.resolve(saveLinks()).then((savedLinks) => {
-        const updatedLinks =
-          savedLinks.length > 0 ? [...links, ...savedLinks] : links;
-        const updatedAdvisory = {
-          title: headline,
-          description: description,
-          dcTicketNumber: ticketNumber,
-          isSafetyRelated: isSafetyRelated,
-          listingRank: parseInt(listingRank),
-          note: notes,
-          submittedBy: submittedBy,
-          updatedDate: updatedDate,
-          modifiedDate: moment().toISOString(),
-          modifiedBy: keycloak.tokenParsed.name,
-          advisoryDate: advisoryDate,
-          effectiveDate: startDate,
-          endDate: endDate,
-          expiryDate: expiryDate,
-          accessStatus: accessStatus ? accessStatus : null,
-          eventType: eventType,
-          urgency: urgency,
-          protectedAreas: selProtectedAreas,
-          advisoryStatus: status,
-          links: updatedLinks,
-          regions: selRegions,
-          sections: selSections,
-          managementAreas: selManagementAreas,
-          sites: selSites,
-          fireCentres: selFireCentres,
-          fireZones: selFireZones,
-          isReservationsAffected: isReservationAffected,
-          isAdvisoryDateDisplayed: displayAdvisoryDate,
-          isEffectiveDateDisplayed: displayStartDate,
-          isEndDateDisplayed: displayEndDate,
-          isUpdatedDateDisplayed: displayUpdatedDate,
-          published_at: published,
-          updated_by: keycloak.tokenParsed.name,
-        };
 
-        apiAxios
-          .put(`api/update/public-advisories/${id}`, updatedAdvisory, {
-            headers: { Authorization: `Bearer ${keycloak.idToken}` },
-          })
-          .then((res) => {
-            setAdvisoryId(res.data.id);
-            setIsSubmitting(false);
-            setIsSavingDraft(false);
-            setIsConfirmation(true);
-          })
-          .catch((error) => {
-            console.log("error occurred", error);
-            setToError(true);
-            setError({
-              status: 500,
-              message: "Could not process advisory update",
+      if (!selProtectedAreas || selProtectedAreas.length === 0) {
+        setSelectedProtectedAreas([]);
+        setIsSubmitting(false);
+        setIsSavingDraft(false);
+        setFormError("Please select at least one Location!!");
+      } else {
+        Promise.resolve(saveLinks()).then((savedLinks) => {
+          const updatedLinks =
+            savedLinks.length > 0 ? [...links, ...savedLinks] : links;
+          const updatedAdvisory = {
+            title: headline,
+            description: description,
+            dcTicketNumber: ticketNumber,
+            isSafetyRelated: isSafetyRelated,
+            listingRank: parseInt(listingRank),
+            note: notes,
+            submittedBy: submittedBy,
+            updatedDate: updatedDate,
+            modifiedDate: moment().toISOString(),
+            modifiedBy: keycloak.tokenParsed.name,
+            advisoryDate: advisoryDate,
+            effectiveDate: startDate,
+            endDate: endDate,
+            expiryDate: expiryDate,
+            accessStatus: accessStatus,
+            eventType: eventType,
+            urgency: urgency,
+            protectedAreas: selProtectedAreas,
+            advisoryStatus: status,
+            links: updatedLinks,
+            regions: selRegions,
+            sections: selSections,
+            managementAreas: selManagementAreas,
+            sites: selSites,
+            fireCentres: selFireCentres,
+            fireZones: selFireZones,
+            isReservationsAffected: isReservationAffected,
+            isAdvisoryDateDisplayed: displayAdvisoryDate,
+            isEffectiveDateDisplayed: displayStartDate,
+            isEndDateDisplayed: displayEndDate,
+            isUpdatedDateDisplayed: displayUpdatedDate,
+            published_at: published,
+            updated_by: keycloak.tokenParsed.name,
+          };
+
+          apiAxios
+            .put(`api/update/public-advisories/${id}`, updatedAdvisory, {
+              headers: { Authorization: `Bearer ${keycloak.idToken}` },
+            })
+            .then((res) => {
+              setAdvisoryId(res.data.id);
+              setIsSubmitting(false);
+              setIsSavingDraft(false);
+              setIsConfirmation(true);
+            })
+            .catch((error) => {
+              console.log("error occurred", error);
+              setToError(true);
+              setError({
+                status: 500,
+                message: "Could not process advisory update",
+              });
             });
-          });
-      });
+        });
+      }
     } catch (error) {
       console.log("error occurred", error);
       setToError(true);
@@ -982,6 +1021,8 @@ export default function Advisory({
                   isSavingDraft,
                   updateAdvisory,
                   setToBack,
+                  formError,
+                  setFormError,
                 }}
               />
             </>
