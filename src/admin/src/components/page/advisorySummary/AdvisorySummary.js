@@ -139,7 +139,14 @@ export default function AdvisorySummary({
   };
 
   if (toDashboard) {
-    return <Redirect to="/bcparks/advisory-dash" />;
+    return (
+      <Redirect
+        to={{
+          pathname: `/bcparks/dashboard`,
+          index: 0,
+        }}
+      />
+    );
   }
 
   if (toUpdate) {

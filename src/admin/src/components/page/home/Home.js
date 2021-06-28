@@ -17,7 +17,14 @@ export default function Home({ page: { setError } }) {
   }, [initialized, keycloak]);
 
   if (toDashboard) {
-    return <Redirect to="/bcparks/advisory-dash" />;
+    return (
+      <Redirect
+        to={{
+          pathname: `/bcparks/dashboard`,
+          index: 0,
+        }}
+      />
+    );
   }
 
   return (
@@ -40,7 +47,7 @@ export default function Home({ page: { setError } }) {
                     <Button
                       onClick={() =>
                         keycloak.login({
-                          redirectUri: `${process.env.REACT_APP_FRONTEND_BASE_URL}/bcparks/advisory-dash`,
+                          redirectUri: `${process.env.REACT_APP_FRONTEND_BASE_URL}/bcparks/dashboard`,
                         })
                       }
                       label="Login"
