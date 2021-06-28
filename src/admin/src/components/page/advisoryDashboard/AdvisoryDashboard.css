@@ -24,7 +24,6 @@
   font-weight: bold;
 }
 
-
 .draftIcon
 {
   color:#4989C5; 
@@ -57,25 +56,8 @@
   width:2px;
 }
 
-.MuiTable-root {
-  width:100% !important;
-}
-
-.MuiTableCell-root {
-  padding: 2px !important;
-}
-
 .page-loader {
   padding-top: 2% !important;
   text-align: center !important;
 }
-
-.MuiTableCell-root input {
-  background-color:#ededed;
-  padding: 2px !important;
-  margin: 2px 0px 2px 0px !important;
-}
-
-.MuiTablePagination-input {
-  padding-right: 5px !important;
-}
+  
