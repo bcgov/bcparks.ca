@@ -373,7 +373,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/sites/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -436,7 +438,7 @@
         },
         "parameters": [
           {
-            "name": "orcsSiteNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -499,7 +501,7 @@
         ],
         "parameters": [
           {
-            "name": "orcsSiteNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -669,15 +671,6 @@
                 "items": {
                   "type": "string"
                 }
-              },
-              "hasCampfireBanOverride": {
-                "type": "boolean"
-              },
-              "hasSmokingBanOverride": {
-                "type": "boolean"
-              },
-              "campfireBanRescindedDate": {
-                "type": "string"
               },
               "published_at": {
                 "type": "string"

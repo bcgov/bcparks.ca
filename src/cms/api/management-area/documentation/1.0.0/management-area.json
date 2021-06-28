@@ -316,7 +316,7 @@
         "parameters": []
       }
     },
-    "/management-areas/{ManagementAreaNumber}": {
+    "/management-areas/{managementAreaNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -372,7 +372,7 @@
         ],
         "parameters": [
           {
-            "name": "ManagementAreaNumber",
+            "name": "managementAreaNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -382,7 +382,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/management-areas/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -449,7 +451,7 @@
         },
         "parameters": [
           {
-            "name": "ManagementAreaNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -512,7 +514,7 @@
         ],
         "parameters": [
           {
-            "name": "ManagementAreaNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -693,15 +695,6 @@
                   "items": {
                     "type": "string"
                   }
-                },
-                "hasCampfireBanOverride": {
-                  "type": "boolean"
-                },
-                "hasSmokingBanOverride": {
-                  "type": "boolean"
-                },
-                "campfireBanRescindedDate": {
-                  "type": "string"
                 },
                 "published_at": {
                   "type": "string"

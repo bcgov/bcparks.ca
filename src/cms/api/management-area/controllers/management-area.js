@@ -8,9 +8,9 @@ const { sanitizeEntity } = require("strapi-utils");
 
 module.exports = {
   async findOne(ctx) {
-    const { ManagementAreaNumber } = ctx.params;
+    const { managementAreaNumber } = ctx.params;
     const entity = await strapi.services["management-area"].findOne({
-      ManagementAreaNumber,
+      managementAreaNumber,
     });
     return sanitizeEntity(entity, { model: strapi.models["management-area"] });
   },

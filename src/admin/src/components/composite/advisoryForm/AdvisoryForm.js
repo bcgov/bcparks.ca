@@ -123,6 +123,8 @@ export default function AdvisoryForm({
     isSavingDraft,
     updateAdvisory,
     setToBack,
+    formError,
+    setFormError,
   },
 }) {
   const [protectedAreaError, setProtectedAreaError] = useState("");
@@ -139,7 +141,6 @@ export default function AdvisoryForm({
   const [updatedDateError, setUpdatedDateError] = useState("");
   const [submittedByError, setSubmittedByError] = useState("");
   const [listingRankError, setListingRankError] = useState("");
-  const [formError, setFormError] = useState("");
 
   const advisoryData = {
     listingRank: { value: listingRank, setError: setListingRankError },
@@ -1253,5 +1254,7 @@ AdvisoryForm.propTypes = {
     isSavingDraft: PropTypes.bool,
     updateAdvisory: PropTypes.func.isRequired,
     setToBack: PropTypes.func.isRequired,
+    formError: PropTypes.string,
+    setFormError: PropTypes.func.isRequired,
   }).isRequired,
 };
