@@ -8,6 +8,7 @@ import Advisory from "../components/page/advisory/Advisory";
 import AdvisorySummary from "../components/page/advisorySummary/AdvisorySummary";
 import { PrivateRoute } from "../auth/PrivateRoute";
 import CmsContents from "../components/page/cmsContents/CmsContents";
+import ParkStatus from "../components/page/parkStatus/ParkStatus";
 
 function AppRouter() {
   const [error, setError] = useState({});
@@ -24,8 +25,11 @@ function AppRouter() {
           <Route exact path="/bcparks/about">
             <About />
           </Route>
-          <Route exact path="/bcparks/cmscontents">
+          <Route exact path="/bcparks/cms-contents">
             <CmsContents />
+          </Route>
+          <Route exact path="/bcparks/park-status">
+            <ParkStatus />
           </Route>
           <PrivateRoute
             roles={["submitter", "approver"]}

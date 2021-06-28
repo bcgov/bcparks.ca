@@ -838,6 +838,15 @@
                     "type": "string"
                   }
                 },
+                "hasCampfireBanOverride": {
+                  "type": "boolean"
+                },
+                "hasSmokingBanOverride": {
+                  "type": "boolean"
+                },
+                "campfireBanRescindedDate": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },
