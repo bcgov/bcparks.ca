@@ -525,13 +525,12 @@ export default function AdvisorySummary({
                                 target="_blank"
                                 className="ad-anchor"
                               >
-                                {
+                                {l.type &&
                                   advisory.linkTypes.filter(
                                     (t) => t.id === l.type
-                                  )[0].type
-                                }{" "}
-                                - {l.title}{" "}
-                                <LaunchIcon className="launchIcon" />
+                                  )[0].type}
+                                {l.type && " - "}
+                                {l.title} <LaunchIcon className="launchIcon" />
                               </a>
                             )}
                           </div>

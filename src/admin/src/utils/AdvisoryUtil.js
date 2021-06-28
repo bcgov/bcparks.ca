@@ -163,6 +163,125 @@ const setAreaValues = (areas, selAreas, selProtectedAreas, areaList) => {
   }
 };
 
+function removeProtectedAreasFromArea(
+  area,
+  field,
+  updatedProtectedAreas,
+  areaList
+) {
+  let parks = updatedProtectedAreas;
+  area[field].forEach((f) => {
+    const relatedArea = areaList.find((a) => {
+      return a.obj.id === f.id;
+    });
+    parks = removeProtectedAreas(relatedArea.obj.protectedAreas, parks);
+  });
+  return parks;
+}
+
+function removeProtectedAreas(protectedAreas, parks) {
+  const parkIds = protectedAreas.map((p) => p.id);
+  parks = parks.filter((p) => !parkIds.includes(p.value));
+  return parks;
+}
+
+const removeAreaValues = (
+  existingAreas,
+  selectedAreas,
+  areaList,
+  updatedProtectedAreas
+) => {
+  if (existingAreas && existingAreas.length > 0) {
+    existingAreas.forEach((a) => {
+      if (!selectedAreas.includes(a)) {
+        if (a.type === "managementArea" || a.type === "fireZone") {
+          updatedProtectedAreas = removeProtectedAreas(
+            a.obj.protectedAreas,
+            updatedProtectedAreas
+          );
+        } else if (a.type === "site") {
+          updatedProtectedAreas = updatedProtectedAreas.filter(
+            (p) => a.obj.protectedArea.id !== p.value
+          );
+        } else if (a.type === "region" || a.type === "section") {
+          updatedProtectedAreas = removeProtectedAreasFromArea(
+            a.obj,
+            "managementAreas",
+            updatedProtectedAreas,
+            areaList
+          );
+        } else if (a.type === "fireCentre") {
+          updatedProtectedAreas = removeProtectedAreasFromArea(
+            a.obj,
+            "fireZones",
+            updatedProtectedAreas,
+            areaList
+          );
+        }
+      }
+    });
+  }
+  return updatedProtectedAreas;
+};
+
+export function removeLocations(
+  selectedProtectedAreas,
+  selectedRegions,
+  existingRegions,
+  selectedSections,
+  existingSections,
+  selectedManagementAreas,
+  existingManagementAreas,
+  selectedSites,
+  existingSites,
+  selectedFireCentres,
+  existingFireCentres,
+  selectedFireZones,
+  existingFireZones,
+  managementAreas,
+  fireZones
+) {
+  let updatedProtectedAreas = selectedProtectedAreas;
+  updatedProtectedAreas = removeAreaValues(
+    existingRegions,
+    selectedRegions,
+    managementAreas,
+    updatedProtectedAreas
+  );
+
+  updatedProtectedAreas = removeAreaValues(
+    existingSections,
+    selectedSections,
+    managementAreas,
+    updatedProtectedAreas
+  );
+  updatedProtectedAreas = removeAreaValues(
+    existingManagementAreas,
+    selectedManagementAreas,
+    null,
+    updatedProtectedAreas
+  );
+  updatedProtectedAreas = removeAreaValues(
+    existingSites,
+    selectedSites,
+    null,
+    updatedProtectedAreas
+  );
+  updatedProtectedAreas = removeAreaValues(
+    existingFireCentres,
+    selectedFireCentres,
+    fireZones,
+    updatedProtectedAreas
+  );
+  updatedProtectedAreas = removeAreaValues(
+    existingFireZones,
+    selectedFireZones,
+    null,
+    updatedProtectedAreas
+  );
+  return updatedProtectedAreas;
+}
+
 export function calculateIsStatHoliday(
   setIsStatHoliday,
   cmsData,
