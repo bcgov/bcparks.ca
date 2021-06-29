@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { cmsAxios } from "../../../axios_config";
 import Moment from "react-moment";
 import Header from "../../composite/header/Header";
@@ -40,7 +41,7 @@ export default function ParkStatus() {
         }}
       />
       <br />
-      <div className="container-fluid">
+      <div id="park-status-container" className="container-fluid">
         <p>{isLoading}</p>
         {isLoading && (
           <div className="page-loader">
@@ -50,9 +51,10 @@ export default function ParkStatus() {
         {!isLoading && (
           <DataTable
             key={data.length}
+            hover
             options={{
               filtering: true,
-              search: false,
+              search: true,
               exportButton: true,
               pageSize:
                 data.length > DEFAULT_PAGE_SIZE
@@ -72,7 +74,15 @@ export default function ParkStatus() {
               { title: "Fire Zones", field: "fireZonesStr" },
               { title: "Fog Zone", field: "isFogZone" },
               { title: "Access Status", field: "accessStatus" },
-              { title: "Access Details", field: "accessDetails" },
+              {
+                title: "Access Details",
+                field: "accessDetails",
+                render: (rowData) => (
+                  <Link to={`advisory-summary/${rowData.publicAdvisoryId}`}>
+                    {rowData.accessDetails}
+                  </Link>
+                ),
+              },
               {
                 title: "Access Status Effective Date",
                 field: "accessStatusEffectiveDate",
@@ -86,7 +96,16 @@ export default function ParkStatus() {
                 },
               },
               { title: "Camping Facility", field: "hasCampfiresFacility" },
+              {
+                title: "Reservation Affected",
+                field: "isReservationsAffected",
+              },
               { title: "Campfire Ban", field: "hasCampfireBan" },
+              {
+                title: "Campfire Ban Override",
+                field: "hasCampfireBanOverride",
+              },
+
               {
                 title: "Campfire Ban Effective Date",
                 field: "campfireBanEffectiveDate",
@@ -100,6 +119,7 @@ export default function ParkStatus() {
                 },
               },
               { title: "Smoking Ban", field: "hasSmokingBan" },
+              { title: "Smoking Ban Override", field: "hasSmokingBanOverride" },
             ]}
             data={data}
             title="Park Status"

@@ -29,7 +29,7 @@ import {
 export default function AdvisoryDashboard({
   page: { setError, cmsData, setCmsData },
 }) {
-  let history = useHistory();
+  const history = useHistory();
   const [toCreate, setToCreate] = useState(false);
   const [selectedParkId, setSelectedParkId] = useState(0);
 
