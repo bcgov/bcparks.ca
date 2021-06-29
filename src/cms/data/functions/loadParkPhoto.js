@@ -5,6 +5,9 @@ const http = require("http");
 const https = require("https");
 
 var Stream = require("stream").Transform;
+const loadUtils = require("./loadUtils");
+
+const rootDir = process.cwd();
 
 var downloadImageToUrl = (url, filename, callback) => {
   var client = http;
@@ -27,8 +30,7 @@ var downloadImageToUrl = (url, filename, callback) => {
     .end();
 };
 
-const loadPhoto = async () => {
-  const rootDir = process.cwd();
+const loadImage = async () => {
   const fileName = "abc.png";
   const filePath = `${rootDir}/data/images/${fileName}`;
   const fileStat = fs.statSync(filePath);
@@ -45,4 +47,41 @@ const loadPhoto = async () => {
       size: fileStat.size,
     },
   });
+};
+
+const loadParkPhoto = async () => {
+  const modelName = "park-photo";
+  const loadSetting = await loadUtils.getLoadSettings(modelName);
+
+  //if (loadSetting && loadSetting.purge)
+  await strapi.services[modelName].delete();
+
+  if (loadSetting && !loadSetting.reload) return;
+
+  const currentData = await strapi.services[modelName].find();
+  if (currentData.length === 0) {
+    strapi.log.info("loading park photo...");
+    var jsonData = fs.readFileSync("./data/park-photos.json", "utf8");
+    const dataSeed = JSON.parse(jsonData)["parkPhotos"];
+
+    for await (const data of dataSeed) {
+      const parkPhoto = {
+        orcs: data.orcs,
+        orcsSiteNumber: data.orcsSiteNumber,
+        title: data.title,
+        caption: data.caption,
+        subject: data.subject,
+        dateTaken: data.dateTaken,
+        photographer: data.photographer,
+        isActive: data.isActive,
+      };
+      await strapi.services["park-photo"].create(parkPhoto);
+      break;
+    }
+    strapi.log.info("loading park photo completed...");
+  }
+};
+
+module.exports = {
+  loadParkPhoto,
 };
