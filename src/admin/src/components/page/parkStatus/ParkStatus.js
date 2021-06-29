@@ -18,7 +18,8 @@ export default function ParkStatus() {
       park.managementAreasStr = park.managementAreas.join(", ");
       park.sectionsStr = park.sections.join(", ");
       park.regionsStr = park.regions.join(", ");
-      park.fireZonesStr = park.fireZones.map((e) => e.fireZoneName).join(", ");
+      park.fireCentresStr = park.fireCentres.join(", ");
+      park.fireZonesStr = park.fireZones.join(", ");
       return park;
     });
 
@@ -68,9 +69,10 @@ export default function ParkStatus() {
               { title: "Type", field: "type" },
               { title: "Code", field: "typeCode" },
               { title: "Park Alias ", field: "protectedAreaNameAliases" },
-              { title: "Management Area", field: "managementAreasStr" },
-              { title: "Section", field: "sectionsStr" },
               { title: "Region", field: "regionsStr" },
+              { title: "Section", field: "sectionsStr" },
+              { title: "Management Area", field: "managementAreasStr" },
+              { title: "Fire Centres", field: "fireCentresStr" },
               { title: "Fire Zones", field: "fireZonesStr" },
               { title: "Fog Zone", field: "isFogZone" },
               { title: "Access Status", field: "accessStatus" },
