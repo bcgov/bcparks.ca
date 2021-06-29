@@ -65,15 +65,20 @@ const loadParkPhoto = async () => {
     const dataSeed = JSON.parse(jsonData)["parkPhotos"];
 
     for await (const data of dataSeed) {
+      console.log(data);
       const parkPhoto = {
         orcs: data.orcs,
         orcsSiteNumber: data.orcsSiteNumber,
         title: data.title,
         caption: data.caption,
         subject: data.subject,
-        dateTaken: data.dateTaken,
+        dateTaken: loadUtils.formatDate(data.dateTaken),
         photographer: data.photographer,
-        isActive: data.isActive,
+        imageUrl: data.image,
+        thumbnailUrl: data.thumbnail,
+        isActive: data.active,
+        image: null,
+        thumbnail: null,
       };
       await strapi.services["park-photo"].create(parkPhoto);
       break;
