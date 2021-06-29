@@ -1,0 +1,12 @@
+.page-loader {
+    padding-top: 2% !important;
+    text-align: center !important;
+}
+
+#park-status-container a {
+    text-decoration: none;
+}
+
+#park-status-container a:hover {
+   text-decoration: underline;
+}

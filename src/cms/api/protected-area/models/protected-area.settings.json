@@ -109,6 +109,15 @@
     "managementAreas": {
       "via": "protectedAreas",
       "collection": "management-area"
+    },
+    "hasCampfireBanOverride": {
+      "type": "boolean"
+    },
+    "hasSmokingBanOverride": {
+      "type": "boolean"
+    },
+    "campfireBanRescindedDate": {
+      "type": "date"
     }
   }
 }
