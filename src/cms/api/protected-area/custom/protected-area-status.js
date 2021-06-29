@@ -18,6 +18,7 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
   let publicAdvisories = [];
 
   const publicAdvisoryDefaultValues = {
+    id: 0,
     advisoryNumber: null,
     advisoryTitle: null,
     effectiveDate: null,
@@ -31,6 +32,7 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
 
   filteredByOrcs.map((p) => {
     const data = {
+      id: p.id,
       advisoryNumber: p.advisoryNumber,
       advisoryTitle: p.title,
       effectiveDate: p.effectiveDate,
@@ -247,6 +249,7 @@ const getProtectedAreaStatus = async (ctx) => {
       parkWebsiteUrl: protectedArea.url,
       pepRegionId: null,
       pepRegionName: null,
+      publicAdvisoryId: publicAdvisory.id,
     };
   });
 };

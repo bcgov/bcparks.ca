@@ -1055,6 +1055,16 @@
               }
             }
           },
+          "hasCampfireBanOverride": {
+            "type": "boolean"
+          },
+          "hasSmokingBanOverride": {
+            "type": "boolean"
+          },
+          "campfireBanRescindedDate": {
+            "type": "string",
+            "format": "date"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -1175,6 +1185,16 @@
             "items": {
               "type": "string"
             }
+          },
+          "hasCampfireBanOverride": {
+            "type": "boolean"
+          },
+          "hasSmokingBanOverride": {
+            "type": "boolean"
+          },
+          "campfireBanRescindedDate": {
+            "type": "string",
+            "format": "date"
           },
           "published_at": {
             "type": "string",

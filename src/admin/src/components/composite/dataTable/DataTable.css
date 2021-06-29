@@ -6,8 +6,6 @@
     padding: 2px !important;
   }
   
-
-  
   .MuiTableCell-root input {
     background-color:#f0f2f5;
     padding: 2px !important;
@@ -21,6 +19,8 @@
 .MuiTableRow-head th {
     background-color: #f0f2f5 !important;
     font-weight: bold;
+    padding: 2px !important;
+    margin: 2px 0px 2px 0px !important;
     z-Index: 0
 }
 
@@ -32,4 +32,8 @@
 .MuiToolbar-gutters h6 {
     font-weight: bold;
     font-size:xx-large;
+}
+
+.MuiTableRow-root:hover { 
+    background: #f6f8fa !important 
 }
