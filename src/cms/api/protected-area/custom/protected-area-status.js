@@ -116,15 +116,21 @@ const getProtectedAreaStatus = async (ctx) => {
       ),
     ];
 
-    const fireZones = protectedArea.fireZones.map((fireZone) => {
-      return {
-        fireZoneName: fireZone.fireZoneName,
-        headquartersCityName: fireZone.headquartersCityName,
-        fireCentreName: fireCentresData.find(
-          (f) => f.id === fireZone.fireCentre
-        ).fireCentreName,
-      };
-    });
+    const fireCentres = [
+      ...new Set(
+        protectedArea.fireZones.map(
+          (fireZone) =>
+            fireCentresData.find((f) => f.id === fireZone.fireCentre)
+              .fireCentreName
+        )
+      ),
+    ];
+
+    const fireZones = [
+      ...new Set(
+        protectedArea.fireZones.map((fireZone) => fireZone.fireZoneName)
+      ),
+    ];
 
     const parkActivities = protectedArea.parkActivities.map((a) => {
       const activity = activityTypesData.find(
@@ -228,6 +234,7 @@ const getProtectedAreaStatus = async (ctx) => {
       campfireBanNote: campfireBanNote,
       accessStatusEffectiveDate: publicAdvisory.effectiveDate,
       accessStatusRescindedDate: publicAdvisory.endDate,
+      fireCentres: fireCentres,
       fireZones: fireZones,
       isFogZone: boolToYN(protectedArea.isFogZone),
       regions: regions,
