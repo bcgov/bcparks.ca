@@ -53,7 +53,7 @@ export default function AdvisorySummary({
             if (p.url) {
               const url = isAdvisoryPublished
                 ? p.url
-                : p.url.replace("bcparks", "test.bcparks");
+                : p.url.replace("bcparks", "wwwt.bcparks");
               return parkUrlInfo.push(
                 "<a href='" + url + "'>" + p.protectedAreaName + "</a>"
               );
@@ -70,7 +70,7 @@ export default function AdvisorySummary({
             if (s.url) {
               const url = isAdvisoryPublished
                 ? s.url
-                : s.url.replace("bcparks", "test.bcparks");
+                : s.url.replace("bcparks", "wwwt.bcparks");
               return siteUrlInfo.push(
                 "<a href='" + url + "'>" + s.siteName + "</a>"
               );
@@ -320,7 +320,7 @@ export default function AdvisorySummary({
                               href={
                                 isPublished
                                   ? p.url
-                                  : p.url.replace("bcparks", "test.bcparks")
+                                  : p.url.replace("bcparks", "wwwt.bcparks")
                               }
                               rel="noreferrer"
                               target="_blank"
@@ -361,7 +361,7 @@ export default function AdvisorySummary({
                                 href={
                                   isPublished
                                     ? s.url
-                                    : s.url.replace("bcparks", "test.bcparks")
+                                    : s.url.replace("bcparks", "wwwt.bcparks")
                                 }
                                 rel="noreferrer"
                                 target="_blank"
