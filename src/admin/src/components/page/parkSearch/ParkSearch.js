@@ -6,7 +6,7 @@ import { Redirect } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
 import Select, { components } from "react-select";
 import { Loader } from "shared-components/build/components/loader/Loader";
-import { List, ListItem, ListItemText, Divider } from "@material-ui/core";
+import { List, ListItem, Divider } from "@material-ui/core";
 import {
   getProtectedAreas,
   getRegions,
@@ -17,7 +17,7 @@ import {
   addProtectedAreasFromArea,
   addProtectedAreas,
 } from "../../../utils/LocationUtil";
-import { isEmpty } from "../../../validators/AdvisoryValidator";
+import { isEmpty } from "../../../utils/AppUtil";
 
 export default function ParkSearch({
   page: { setError, cmsData, setCmsData },
@@ -47,32 +47,36 @@ export default function ParkSearch({
   useEffect(() => {
     if (!isLoading) {
       setParkList([]);
+      let parkList = [];
+      let parkIds = [];
       if (protectedArea > 0) {
         setToDetails(true);
       }
       if (region && !isEmpty(region)) {
-        const parkList = addProtectedAreasFromArea(
+        parkList = addProtectedAreasFromArea(
           region.obj,
           "managementAreas",
-          [],
-          managementAreas
+          parkIds,
+          managementAreas,
+          parkList
         );
         setParkList(parkList);
       }
       if (section && !isEmpty(section)) {
-        const parkList = addProtectedAreasFromArea(
+        parkList = addProtectedAreasFromArea(
           section.obj,
           "managementAreas",
-          [],
-          managementAreas
+          parkIds,
+          managementAreas,
+          parkList
         );
         setParkList(parkList);
       }
       if (managementArea && !isEmpty(managementArea)) {
-        const parkList = addProtectedAreas(
+        parkList = addProtectedAreas(
           managementArea.obj.protectedAreas,
-          [],
-          []
+          parkIds,
+          parkList
         );
         setParkList(parkList);
       }
@@ -142,7 +146,7 @@ export default function ParkSearch({
   }, [cmsData, initialized, keycloak, setCmsData, setError, setIsLoading]);
 
   if (toDetails) {
-    return <Redirect to={`/bcparks/park-details/${protectedArea}`} />;
+    return <Redirect to={`/bcparks/park-info/${protectedArea}`} />;
   }
 
   if (toError) {
@@ -151,7 +155,7 @@ export default function ParkSearch({
 
   return (
     <main>
-      <div className="Advisory" data-testid="Advisory">
+      <div className="ParkSearch" data-testid="ParkSearch">
         <div className="container">
           {isLoading && (
             <div className="page-loader">
@@ -233,7 +237,12 @@ export default function ParkSearch({
                         <Divider />
                         {parkList.map((p) => (
                           <ListItem key={p.id} className="da-list-item">
-                            {p.name}
+                            <a
+                              href={`/bcparks/park-info/${p.id}`}
+                              className="ad-anchor"
+                            >
+                              {p.name}
+                            </a>
                           </ListItem>
                         ))}
                       </List>

@@ -8,6 +8,7 @@ import Box from "@material-ui/core/Box";
 import AdvisoryDashboard from "../advisoryDashboard/AdvisoryDashboard";
 import ParkSearch from "../parkSearch/ParkSearch";
 import Header from "../../composite/header/Header";
+import PrivateElement from "../../../auth/PrivateElement";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -59,7 +60,7 @@ export default function AppDashboard({
           name: "",
         }}
       />
-      <div className="app-container">
+      <div className="app-container" data-testid="AppDashboard">
         <div className="app-tabs">
           <Tabs
             orientation="vertical"
@@ -69,7 +70,9 @@ export default function AppDashboard({
             className="app-tab"
           >
             <Tab label="Advisories" />
-            <Tab label="Activities & Facilities" />
+            {PrivateElement(["approver"]) && (
+              <Tab label="Activities & Facilities" />
+            )}
           </Tabs>
           <TabPanel value={tabIndex} index={0}>
             <AdvisoryDashboard page={{ setError, cmsData, setCmsData }} />

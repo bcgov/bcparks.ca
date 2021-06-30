@@ -2,9 +2,12 @@ export function addProtectedAreasFromArea(
   area,
   field,
   selProtectedAreas,
-  areaList
+  areaList,
+  protectedAreaList
 ) {
-  const protectedAreaList = [];
+  if (!protectedAreaList) {
+    protectedAreaList = [];
+  }
   area[field].forEach((f) => {
     const relatedArea = areaList.find((a) => {
       return a.obj.id === f.id;
@@ -23,6 +26,9 @@ export function addProtectedAreas(
   selProtectedAreas,
   protectedAreaList
 ) {
+  if (!protectedAreaList) {
+    protectedAreaList = [];
+  }
   protectedAreas.forEach((park) => {
     if (!selProtectedAreas.includes(park.id)) {
       selProtectedAreas.push(park.id);

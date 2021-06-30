@@ -6,6 +6,7 @@ import About from "../components/page/about/About";
 import Advisory from "../components/page/advisory/Advisory";
 import AdvisorySummary from "../components/page/advisorySummary/AdvisorySummary";
 import AppDashboard from "../components/page/appDashboard/AppDashboard";
+import ParkInfo from "../components/page/parkInfo/ParkInfo";
 import { PrivateRoute } from "../auth/PrivateRoute";
 import CmsContents from "../components/page/cmsContents/CmsContents";
 import ParkStatus from "../components/page/parkStatus/ParkStatus";
@@ -35,6 +36,12 @@ function AppRouter() {
             roles={["submitter", "approver"]}
             path="/bcparks/dashboard"
             component={AppDashboard}
+            props={{ page: { setError, cmsData, setCmsData } }}
+          />
+          <PrivateRoute
+            roles={["approver"]}
+            path="/bcparks/park-info/:id"
+            component={ParkInfo}
             props={{ page: { setError, cmsData, setCmsData } }}
           />
           <PrivateRoute
