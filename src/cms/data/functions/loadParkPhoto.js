@@ -1,60 +1,61 @@
 const mime = require("mime-types");
 const fs = require("fs");
+const request = require("request");
+const path = require("path");
 
-const http = require("http");
-const https = require("https");
-
-var Stream = require("stream").Transform;
 const loadUtils = require("./loadUtils");
 
 const rootDir = process.cwd();
+const IMAGE_PATH = "\\data\\images";
 
-var downloadImageToUrl = (url, filename, callback) => {
-  var client = http;
-  if (url.toString().indexOf("https") === 0) {
-    client = https;
-  }
+const downloadImage = async (url, dest) => {
+  const file = fs.createWriteStream(dest);
 
-  client
-    .request(url, function (response) {
-      var data = new Stream();
-
-      response.on("data", function (chunk) {
-        data.push(chunk);
-      });
-
-      response.on("end", function () {
-        fs.writeFileSync(filename, data.read());
-      });
+  await new Promise((resolve, reject) => {
+    request({
+      uri: url,
+      gzip: true,
     })
-    .end();
+      .pipe(file)
+      .on("finish", async () => {
+        resolve();
+      })
+      .on("error", (error) => {
+        reject(error);
+      });
+  }).catch((error) => {
+    console.log("error occured - downloadImage", error);
+  });
 };
 
-const loadImage = async () => {
-  const fileName = "abc.png";
-  const filePath = `${rootDir}/data/images/${fileName}`;
-  const fileStat = fs.statSync(filePath);
-  const attachment = await strapi.plugins.upload.services.upload.upload({
-    data: {
-      refId: 3,
-      ref: "restaurant",
-      field: "cover",
-    },
-    files: {
-      path: filePath,
-      name: fileName,
-      type: mime.lookup(filePath),
-      size: fileStat.size,
-    },
-  });
+const loadImage = async (parkId, filepath) => {
+  try {
+    const filename = path.parse(filepath).base;
+    const fileStat = fs.statSync(filepath);
+    const attachment = await strapi.plugins.upload.services.upload.upload({
+      data: {
+        refId: parkId,
+        ref: "park-photo",
+        field: "thumbnail",
+      },
+      files: {
+        path: filepath,
+        name: filename,
+        type: mime.lookup(filepath),
+        size: fileStat.size,
+      },
+    });
+  } catch {
+    console.log("error occured - loadImage");
+  }
 };
 
 const loadParkPhoto = async () => {
   const modelName = "park-photo";
   const loadSetting = await loadUtils.getLoadSettings(modelName);
 
-  //if (loadSetting && loadSetting.purge)
-  await strapi.services[modelName].delete();
+  if (loadSetting && loadSetting.purge)
+    await strapi.services[modelName].delete();
 
   if (loadSetting && !loadSetting.reload) return;
 
@@ -65,7 +66,9 @@ const loadParkPhoto = async () => {
     const dataSeed = JSON.parse(jsonData)["parkPhotos"];
 
     for await (const data of dataSeed) {
-      console.log(data);
+      // temporary - loading partial data
+      if (data.orcs > 5) break;
+
       const parkPhoto = {
         orcs: data.orcs,
         orcsSiteNumber: data.orcsSiteNumber,
@@ -76,13 +79,25 @@ const loadParkPhoto = async () => {
         photographer: data.photographer,
         imageUrl: data.image,
         thumbnailUrl: data.thumbnail,
-        isActive: data.active,
+        isActive: data.active === true ? true : false,
         image: null,
         thumbnail: null,
       };
-      await strapi.services["park-photo"].create(parkPhoto);
-      break;
+      try {
+        const result = await strapi.services["park-photo"].create(parkPhoto);
+
+        const filename = result.thumbnailUrl
+          .replace("https://bcparks.ca/explore/parkpgs/", "")
+          .replace(/\//g, "-");
+        const filepath = `${rootDir}${IMAGE_PATH}\\${filename}`;
+
+        await downloadImage(result.thumbnailUrl, filepath);
+        loadImage(result.id, filepath);
+      } catch {
+        console.log("error occured - loadParkPhoto");
+      }
     }
+
     strapi.log.info("loading park photo completed...");
   }
 };
