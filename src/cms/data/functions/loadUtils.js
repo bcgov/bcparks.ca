@@ -5,7 +5,7 @@ const moment = require("moment");
 const formatDate = (date) => {
   try {
     if (date) {
-      return moment(date, "YYYY-MM-DD hh:mm:ss A").tz("UTC").format();
+      return moment(new Date(date), "YYYY-MM-DD hh:mm:ss A").tz("UTC").format();
     } else {
       return null;
     }

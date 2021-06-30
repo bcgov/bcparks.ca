@@ -4,6 +4,7 @@ const permission = require("./loadPermissions");
 const parData = require("./loadPar");
 const otherData = require("./loadOtherData");
 const publicAdvisory = require("./loadPublicAdvisory");
+const parkPhoto = require("./loadParkPhoto");
 
 const isFirstRun = async () => {
   const pluginStore = strapi.store({
@@ -44,6 +45,7 @@ const loadData = async () => {
         otherData.loadParkFacility(),
         otherData.loadParkName(),
         publicAdvisory.loadPublicAdvisory(),
+        parkPhoto.loadParkPhoto(),
       ]).then(() => {
         strapi.log.info("------Data load completed------");
         return true;
@@ -94,6 +96,7 @@ const rewriteData = async () => {
 };
 
 const seedData = async () => {
+  parkPhoto.loadParkPhoto();
   // Load data and set default public roles on first run
   const setupCMS = await isFirstRun();
   if (setupCMS) {
