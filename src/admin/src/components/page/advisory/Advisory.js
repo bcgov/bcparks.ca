@@ -33,7 +33,7 @@ import {
   getLinkTypes,
   getBusinessHours,
 } from "../../../utils/CmsDataUtil";
-import { hasRole } from "../../../utils/AuthenticationUtils";
+import { hasRole } from "../../../utils/AuthenticationUtil";
 
 export default function Advisory({
   mode,

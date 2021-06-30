@@ -6,6 +6,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 import AdvisoryDashboard from "../advisoryDashboard/AdvisoryDashboard";
+import ParkSearch from "../parkSearch/ParkSearch";
 import Header from "../../composite/header/Header";
 
 function TabPanel(props) {
@@ -74,10 +75,10 @@ export default function AppDashboard({
             <AdvisoryDashboard page={{ setError, cmsData, setCmsData }} />
           </TabPanel>
           <TabPanel value={tabIndex} index={1}>
-            Item Two
+            <ParkSearch page={{ setError, cmsData, setCmsData }} />
           </TabPanel>
         </div>
-      </div>{" "}
+      </div>
     </main>
   );
 }

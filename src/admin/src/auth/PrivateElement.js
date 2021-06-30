@@ -1,5 +1,5 @@
 import { useKeycloak } from "@react-keycloak/web";
-import { hasRole } from "../utils/AuthenticationUtils";
+import { hasRole } from "../utils/AuthenticationUtil";
 
 export default function PrivateElement(roles) {
   const { keycloak, initialized } = useKeycloak();
