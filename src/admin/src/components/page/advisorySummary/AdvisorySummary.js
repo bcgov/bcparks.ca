@@ -26,7 +26,6 @@ export default function AdvisorySummary({
   const [advisory, setAdvisory] = useState({});
   const [parkUrls, setParkUrls] = useState("");
   const [siteUrls, setSiteUrls] = useState("");
-  const [toDashboard, setToDashboard] = useState(false);
   const [toUpdate, setToUpdate] = useState(false);
   const [snackPack, setSnackPack] = useState([]);
   const [openSnack, setOpenSnack] = useState(false);
@@ -138,17 +137,6 @@ export default function AdvisorySummary({
   const handleExitedSnackBar = () => {
     setSnackMessageInfo(undefined);
   };
-
-  if (toDashboard) {
-    return (
-      <Redirect
-        to={{
-          pathname: `/bcparks/dashboard`,
-          index: 0,
-        }}
-      />
-    );
-  }
 
   if (toUpdate) {
     return <Redirect to={`/bcparks/update-advisory/${id}`} />;

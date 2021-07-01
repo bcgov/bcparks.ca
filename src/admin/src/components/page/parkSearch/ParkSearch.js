@@ -105,6 +105,7 @@ export default function ParkSearch({
           const protectedAreas = protectedAreaData.map((p) => ({
             label: p.protectedAreaName,
             value: p.id,
+            orcs: p.orcs,
             type: "protectedArea",
           }));
           setProtectedAreas([...protectedAreas]);
@@ -138,7 +139,7 @@ export default function ParkSearch({
           setToError(true);
           setError({
             status: 500,
-            message: "Error occurred",
+            message: "Error loading park search",
           });
           setIsLoading(false);
         });
@@ -166,14 +167,14 @@ export default function ParkSearch({
             <>
               <form>
                 <div className="container-fluid ad-form">
-                  <div className="row">
+                  <div className="row mt20">
                     <div className="col-lg-6 col-md-8 col-sm-12 ad-auto-margin">
                       <Select
                         options={protectedAreas}
                         value={protectedAreas.filter(
-                          (e) => e.value === protectedArea
+                          (e) => e.orcs === protectedArea
                         )}
-                        onChange={(e) => setProtectedArea(e ? e.value : 0)}
+                        onChange={(e) => setProtectedArea(e ? e.orcs : 0)}
                         placeholder="Find a park by name"
                         className="bcgov-select"
                         onBlur={() => {}}
@@ -236,9 +237,9 @@ export default function ParkSearch({
                         </ListItem>
                         <Divider />
                         {parkList.map((p) => (
-                          <ListItem key={p.id} className="da-list-item">
+                          <ListItem key={p.orcs} className="da-list-item">
                             <a
-                              href={`/bcparks/park-info/${p.id}`}
+                              href={`/bcparks/park-info/${p.orcs}`}
                               className="ad-anchor"
                             >
                               {p.name}

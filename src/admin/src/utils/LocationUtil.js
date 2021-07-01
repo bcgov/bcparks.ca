@@ -32,7 +32,7 @@ export function addProtectedAreas(
   protectedAreas.forEach((park) => {
     if (!selProtectedAreas.includes(park.id)) {
       selProtectedAreas.push(park.id);
-      protectedAreaList.push({ id: park.id, name: park.protectedAreaName });
+      protectedAreaList.push({ orcs: park.orcs, name: park.protectedAreaName });
     }
   });
   return protectedAreaList;

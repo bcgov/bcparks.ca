@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./ParkInfo.css";
-import { Redirect, useParams } from "react-router-dom";
+import { Redirect, useParams, useLocation } from "react-router-dom";
 import { Loader } from "shared-components/build/components/loader/Loader";
 import { useKeycloak } from "@react-keycloak/web";
 import Header from "../../composite/header/Header";
 import { cmsAxios } from "../../../axios_config";
 import { getRegions, getSections } from "../../../utils/CmsDataUtil";
+import { Button } from "shared-components/build/components/button/Button";
+import { a11yProps } from "../../../utils/AppUtil";
+import { Tab, Tabs, AppBar } from "@material-ui/core";
+import TabPanel from "../../base/tabPanel/TabPanel";
 
 export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,6 +19,9 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
   const [protectedArea, setProtectedArea] = useState();
   const { keycloak, initialized } = useKeycloak();
   const { id } = useParams();
+
+  const [tabIndex, setTabIndex] = useState(0);
+  const { index } = useLocation();
 
   // useEffect(() => {
   //   if (!isLoading) {
@@ -30,15 +37,23 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
       ])
         .then((res) => {
           const protectedArea = res[0].data;
-          const managementArea = protectedArea.managementAreas[0];
-          protectedArea.managementAreaName = managementArea.managementAreaName;
-          const region = cmsData.regions.filter(
-            (r) => r.id === managementArea.region
-          );
-          if (region.length > 0) {
-            protectedArea.regionName = region[0].regionName;
+          if (protectedArea.managementAreas.length > 0) {
+            const managementArea = protectedArea.managementAreas[0];
+            protectedArea.managementAreaName =
+              managementArea.managementAreaName;
+            const region = cmsData.regions.filter(
+              (r) => r.id === managementArea.region
+            );
+            if (region.length > 0) {
+              protectedArea.regionName = region[0].regionName;
+            }
+            const section = cmsData.sections.filter(
+              (s) => s.id === managementArea.section
+            );
+            if (section.length > 0) {
+              protectedArea.sectionName = section[0].sectionName;
+            }
           }
-          console.log(region);
           setProtectedArea(protectedArea);
           console.log(res[0].data);
           setIsLoading(false);
@@ -47,12 +62,16 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
           setToError(true);
           setError({
             status: 500,
-            message: "Error occurred",
+            message: "Error fetching park information",
           });
           setIsLoading(false);
         });
     }
-  }, [id, initialized, keycloak, setError, setIsLoading]);
+  }, [cmsData, id, initialized, keycloak, setCmsData, setError, setIsLoading]);
+
+  const handleTabChange = (event, val) => {
+    setTabIndex(val);
+  };
 
   if (toDashboard) {
     return (
@@ -85,13 +104,56 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
             </div>
           )}
           {!isLoading && (
-            <div>
-              <h3>{protectedArea.protectedAreaName}</h3>
-              <p>{protectedArea.managementAreaName} Management Area</p>
-              {protectedArea.regionName && (
-                <p>{protectedArea.regionName} Region</p>
-              )}
-            </div>
+            <>
+              <div className="container-fluid">
+                <Button
+                  label="Back"
+                  styling="bcgov-normal-white btn mt10"
+                  onClick={() => {
+                    setToDashboard(true);
+                  }}
+                />
+              </div>
+              <br />
+              <div className="container-fluid">
+                <div className="">
+                  <h3>{protectedArea.protectedAreaName}</h3>
+                  {protectedArea.regionName && (
+                    <div>{protectedArea.regionName} Region</div>
+                  )}
+                  {protectedArea.sectionName && (
+                    <div>{protectedArea.sectionName} Section</div>
+                  )}
+                  {protectedArea.managementAreaName && (
+                    <div>
+                      {protectedArea.managementAreaName} Management Area
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="park-tabs">
+                <Tabs
+                  value={tabIndex}
+                  onChange={handleTabChange}
+                  aria-label="Park-Info"
+                  className="park-tab"
+                  variant="fullWidth"
+                >
+                  <Tab label="Activities" {...a11yProps(0, "park-info")} />
+                  <Tab label="Facilities" {...a11yProps(1, "park-info")} />
+                </Tabs>
+                <TabPanel
+                  value={tabIndex}
+                  index={0}
+                  label="park-info"
+                ></TabPanel>
+                <TabPanel
+                  value={tabIndex}
+                  index={1}
+                  label="park-info"
+                ></TabPanel>
+              </div>
+            </>
           )}
         </div>
       </div>

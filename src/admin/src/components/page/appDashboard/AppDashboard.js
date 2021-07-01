@@ -4,52 +4,33 @@ import PropTypes from "prop-types";
 import "./AppDashboard.css";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import Box from "@material-ui/core/Box";
 import AdvisoryDashboard from "../advisoryDashboard/AdvisoryDashboard";
 import ParkSearch from "../parkSearch/ParkSearch";
 import Header from "../../composite/header/Header";
 import PrivateElement from "../../../auth/PrivateElement";
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      className="app-tab-content"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`dashboard-${index}`}
-      aria-labelledby={`dashboard-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={2}>
-          <div>{children}</div>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
+import TabPanel from "../../base/tabPanel/TabPanel";
+import { a11yProps } from "../../../utils/AppUtil";
 
 export default function AppDashboard({
   page: { setError, cmsData, setCmsData },
 }) {
   const [tabIndex, setTabIndex] = useState(0);
   const { index } = useLocation();
+  const [tabOrientation, setTabOrientation] = useState("vertical");
 
   useEffect(() => {
     if (index) {
       setTabIndex(index);
     }
-  }, [setTabIndex, index]);
+    const width = window ? window.innerWidth : 0;
+    if (width > 991.98) {
+      setTabOrientation("vertical");
+    } else {
+      setTabOrientation("horizontal");
+    }
+  }, [setTabIndex, setTabOrientation, index]);
 
-  const handleChange = (event, val) => {
+  const handleTabChange = (event, val) => {
     setTabIndex(val);
   };
 
@@ -63,21 +44,25 @@ export default function AppDashboard({
       <div className="app-container" data-testid="AppDashboard">
         <div className="app-tabs">
           <Tabs
-            orientation="vertical"
+            orientation={tabOrientation}
             value={tabIndex}
-            onChange={handleChange}
+            onChange={handleTabChange}
             aria-label="Dashboard"
             className="app-tab"
+            variant="fullWidth"
           >
-            <Tab label="Advisories" />
+            <Tab label="Advisories" {...a11yProps(0, "dashboard-tab")} />
             {PrivateElement(["approver"]) && (
-              <Tab label="Activities & Facilities" />
+              <Tab
+                label="Activities & Facilities"
+                {...a11yProps(1, "dashboard-tab")}
+              />
             )}
           </Tabs>
-          <TabPanel value={tabIndex} index={0}>
+          <TabPanel value={tabIndex} index={0} label="dashboard">
             <AdvisoryDashboard page={{ setError, cmsData, setCmsData }} />
           </TabPanel>
-          <TabPanel value={tabIndex} index={1}>
+          <TabPanel value={tabIndex} index={1} label="dashboard">
             <ParkSearch page={{ setError, cmsData, setCmsData }} />
           </TabPanel>
         </div>

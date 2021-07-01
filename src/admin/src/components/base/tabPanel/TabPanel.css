@@ -1,0 +1,10 @@
+.app-tab-content {
+  min-width: 750px !important;
+  width: 80% !important;
+}
+@media (max-width: 991.98px) {
+  .app-tab-content {
+    min-width: unset !important;
+    width: 100% !important;
+  }
+}
