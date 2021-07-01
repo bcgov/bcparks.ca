@@ -87,7 +87,7 @@ jobs:
             -p FRONTEND_URL=${{secrets.REACT_APP_FRONTEND_BASE_URL}} \
             -p CMS_POD=cms \
             -p CMS_URL=${{secrets.REACT_APP_CMS_BASE_URL}} \
-            -p API_POD=api \
+            -p API_POD=middleware \
             -p API_URL=${{secrets.REACT_APP_API_BASE_URL}} \
             -p DB_POD=db \
             -p STAGING_POD=staging \
