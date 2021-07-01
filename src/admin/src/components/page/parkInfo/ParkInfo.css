@@ -2,6 +2,39 @@
   color: #234075 !important;
 }
 
+.park-tab .MuiTabs-scroller,
+.park-tab .MuiTabs-scrollable {
+  background-color: #f2f2f2 !important;
+}
+
 .park-tab .Mui-selected {
-  background-color: #234075 !important;
+  background-color: #036 !important;
+  color: #fff !important;
+}
+
+.park-tab .MuiTabs-indicator {
+  background-color: transparent !important;
+}
+
+.park-header {
+  background-color: #036 !important;
+  color: #fff !important;
+  min-height: 40px !important;
+  padding-top: 7px !important;
+  border-right: 1px solid #f2f2f2 !important;
+}
+
+.park-content {
+  background-color: #f2f2f2 !important;
+  border-right: 1px solid #fff !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.no-right-border {
+  border-right: none !important;
+}
+
+.park-info-tab-content .MuiBox-root {
+  padding-top: 3px !important;
 }

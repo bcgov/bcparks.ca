@@ -7,7 +7,7 @@ export default function TabPanel(props) {
   const { children, value, label, index, ...other } = props;
   return (
     <div
-      className="app-tab-content"
+      className={`${label}-tab-content`}
       role="tabpanel"
       hidden={value !== index}
       id={`${label}-${index}`}

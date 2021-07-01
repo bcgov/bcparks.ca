@@ -11,15 +11,13 @@
   min-width: 200px !important;
 }
 
-.MuiTabs-scroller,
-.MuiTabs-scrollable {
+.app-tab .MuiTabs-scroller,
+.app-tab .MuiTabs-scrollable {
   padding-top: 50px !important;
   background-color: #f2f2f2 !important;
   width: 100% !important;
 }
 
-.app-container {
-}
 .app-tabs .MuiTab-root {
   max-width: unset !important;
 }
@@ -38,26 +36,11 @@
   background-color: #fff !important;
 }
 
-.app-tab .MuiTabs-indicator,
-.park-tab .MuiTabs-indicator {
+.app-tab .MuiTabs-indicator {
   background-color: transparent !important;
 }
 
-.MuiTab-textColorPrimary {
-  color: #234075 !important;
-}
-.MuiTab-textColorPrimary.Mui-selected {
-  color: #234075 !important;
-}
-
-.MuiTab-textColorSecondary {
-  color: #234075 !important;
-}
-.MuiTab-textColorSecondary.Mui-selected {
-  color: #234075 !important;
-}
-
-.MuiTab-root {
+.app-tab .MuiTab-root {
   text-transform: unset !important;
   font-size: 17px !important;
 }
@@ -71,8 +54,8 @@
   .app-tab {
     width: 100% !important;
   }
-  .MuiTabs-scroller,
-  .MuiTabs-scrollable {
+  .app-tab .MuiTabs-scroller,
+  .app-tab .MuiTabs-scrollable {
     padding: 0px !important;
     padding-top: 30px !important;
   }
