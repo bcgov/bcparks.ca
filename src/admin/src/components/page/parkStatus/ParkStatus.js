@@ -1,24 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { cmsAxios } from "../../../axios_config";
-import Moment from "react-moment";
 import Header from "../../composite/header/Header";
 import DataTable from "../../composite/dataTable/DataTable";
 import { Loader } from "shared-components/build/components/loader/Loader";
 import { useQuery } from "react-query";
 import moment from "moment";
+import { exportPdf } from "../../../utils/ExportPdfUtil";
 import "./ParkStatus.css";
 
-
 export default function ParkStatus() {
+  const formatDate = (date) => {
+    return moment(date).isValid() ? moment(date).format("YYYY-MM-DD") : null;
+  };
+
   const fetchParkStatus = async ({ queryKey }) => {
     const response = await cmsAxios.get(
       `/protected-areas/status?_limit=-1&_sort=protectedAreaName`
     );
-
-    const formatDate = (date) => {
-      return moment(date).isValid() ? moment(date).format("YYYY-MM-DD") : null;
-    };
 
     const data = response.data.map((park) => {
       park.managementAreasStr = park.managementAreas.join(", ");
@@ -67,6 +66,8 @@ export default function ParkStatus() {
               filtering: true,
               search: true,
               exportButton: true,
+              exportPdf: (columns, data) =>
+                exportPdf(columns, data, "BC Parks - Status"),
               pageSize:
                 data.length > DEFAULT_PAGE_SIZE
                   ? DEFAULT_PAGE_SIZE
@@ -74,7 +75,10 @@ export default function ParkStatus() {
               pageSizeOptions: [25, 50, 100],
             }}
             columns={[
-              { title: "ORCS", field: "orcs" },
+              {
+                title: "ORCS",
+                field: "orcs",
+              },
               { title: "Protected Area Name", field: "protectedAreaName" },
               { title: "Type", field: "type" },
               { title: "Code", field: "typeCode", export: false },
