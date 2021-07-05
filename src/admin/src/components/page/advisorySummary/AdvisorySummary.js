@@ -26,7 +26,6 @@ export default function AdvisorySummary({
   const [advisory, setAdvisory] = useState({});
   const [parkUrls, setParkUrls] = useState("");
   const [siteUrls, setSiteUrls] = useState("");
-  const [toDashboard, setToDashboard] = useState(false);
   const [toUpdate, setToUpdate] = useState(false);
   const [snackPack, setSnackPack] = useState([]);
   const [openSnack, setOpenSnack] = useState(false);
