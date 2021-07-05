@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/park-photos",
+      "handler": "park-photo.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/park-photos/count",
+      "handler": "park-photo.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/park-photos/:id",
+      "handler": "park-photo.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/park-photos",
+      "handler": "park-photo.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/park-photos/:id",
+      "handler": "park-photo.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/park-photos/:id",
+      "handler": "park-photo.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
