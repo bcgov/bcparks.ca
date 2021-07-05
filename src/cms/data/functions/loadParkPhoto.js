@@ -66,9 +66,6 @@ const loadParkPhoto = async () => {
     const dataSeed = JSON.parse(jsonData)["parkPhotos"];
 
     for await (const data of dataSeed) {
-      // temporary - loading partial data
-      if (data.orcs > 5) break;
-
       const parkPhoto = {
         orcs: data.orcs,
         orcsSiteNumber: data.orcsSiteNumber,
