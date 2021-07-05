@@ -96,7 +96,6 @@ const rewriteData = async () => {
 };
 
 const seedData = async () => {
-  parkPhoto.loadParkPhoto();
   // Load data and set default public roles on first run
   const setupCMS = await isFirstRun();
   if (setupCMS) {
