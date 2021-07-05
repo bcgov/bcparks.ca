@@ -35,6 +35,7 @@ export function addProtectedAreas(
       protectedAreaList.push({ orcs: park.orcs, name: park.protectedAreaName });
     }
   });
+  protectedAreaList.sort(parkNameCompare);
   return protectedAreaList;
 }
 
@@ -58,4 +59,14 @@ export function removeProtectedAreas(protectedAreas, parks) {
   const parkIds = protectedAreas.map((p) => p.id);
   parks = parks.filter((p) => !parkIds.includes(p.value));
   return parks;
+}
+
+export function parkNameCompare(a, b) {
+  if (a.name < b.name) {
+    return -1;
+  }
+  if (a.name > b.name) {
+    return 1;
+  }
+  return 0;
 }

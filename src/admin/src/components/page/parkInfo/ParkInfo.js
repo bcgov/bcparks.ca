@@ -9,8 +9,8 @@ import { cmsAxios } from "../../../axios_config";
 import { getRegions, getSections } from "../../../utils/CmsDataUtil";
 import { Button } from "shared-components/build/components/button/Button";
 import { a11yProps } from "../../../utils/AppUtil";
-import { Tab, Tabs, Switch } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+import { Tab, Tabs } from "@material-ui/core";
+import SwitchButton from "../../base/switchButton/SwitchButton";
 import TabPanel from "../../base/tabPanel/TabPanel";
 
 export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
@@ -23,60 +23,6 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
 
   const [tabIndex, setTabIndex] = useState(0);
   const { index } = useLocation();
-
-  const ButtonSwitch = withStyles((theme) => ({
-    root: {
-      width: 38,
-      height: 22,
-      padding: 0,
-      margin: theme.spacing(1),
-    },
-    switchBase: {
-      padding: "2px !important",
-      "&$checked": {
-        transform: "translateX(16px)",
-        color: "#036",
-        "& + $track": {
-          backgroundColor: "#036",
-          opacity: 1,
-          border: "none",
-        },
-      },
-      "&$focusVisible $thumb": {
-        color: "#036",
-        border: "6px solid #036",
-      },
-    },
-    thumb: {
-      width: 18,
-      height: 18,
-      color: "#fff",
-    },
-    track: {
-      borderRadius: 26 / 2,
-      border: `1px solid #00000033`,
-      backgroundColor: "#00000033",
-      opacity: 1,
-      transition: theme.transitions.create(["background-color", "border"]),
-    },
-    checked: {},
-    focusVisible: {},
-  }))(({ classes, ...props }) => {
-    return (
-      <Switch
-        focusVisibleClassName={classes.focusVisible}
-        disableRipple
-        classes={{
-          root: classes.root,
-          switchBase: classes.switchBase,
-          thumb: classes.thumb,
-          track: classes.track,
-          checked: classes.checked,
-        }}
-        {...props}
-      />
-    );
-  });
 
   // useEffect(() => {
   //   if (!isLoading) {
@@ -110,7 +56,6 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
             }
           }
           setProtectedArea(protectedArea);
-          console.log(res[0].data);
           setIsLoading(false);
         })
         .catch(() => {
@@ -198,121 +143,125 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
                   <Tab label="Facilities" {...a11yProps(1, "park-info")} />
                 </Tabs>
                 <TabPanel value={tabIndex} index={0} label="park-info">
-                  <div>
-                    <div className="row pt2b2">
-                      <div className="col-lg-3 col-md-12 col-12 park-header">
-                        Activity
-                      </div>
-                      <div className="col-lg-1 col-md-12 col-12 park-header">
-                        Display
-                      </div>
-                      <div className="col-lg-1 col-md-12 col-12 park-header">
-                        Open
-                      </div>
-                      <div className="col-lg-3 col-md-12 col-12 park-header">
-                        Fees
-                      </div>
-                      <div className="col-lg-4 col-md-12 col-12 park-header no-right-border">
-                        Description
-                      </div>
-                    </div>
-                    {protectedArea.parkActivities &&
-                      protectedArea.parkActivities.length > 0 && (
-                        <>
-                          {protectedArea.parkActivities.map((a) => (
-                            <div className="row pt2b2" key={`activity-${a.id}`}>
-                              <div className="col-lg-3 col-md-12 col-12 park-content">
-                                {a.name.split(":")[1]}
-                              </div>
-                              <div className="col-lg-1 col-md-12 col-12 park-content">
-                                <ButtonSwitch
-                                  checked={a.isActive}
-                                  name={`${a.id}-is-active`}
-                                  inputProps={{
-                                    "aria-label": "active activity",
-                                  }}
-                                />
-                              </div>
-                              <div className="col-lg-1 col-md-12 col-12 park-content">
-                                <ButtonSwitch
-                                  checked={a.isActivityOpen}
-                                  name={`${a.id}-is-open`}
-                                  inputProps={{
-                                    "aria-label": "open activity",
-                                  }}
-                                />
-                              </div>
-                              <div className="col-lg-3 col-md-12 col-12 park-content">
-                                Add a fee
-                              </div>
-                              <div className="col-lg-4 col-md-12 col-12 park-content no-right-border">
-                                {a.description}
-                              </div>
+                  {protectedArea.parkActivities &&
+                    protectedArea.parkActivities.length > 0 && (
+                      <div>
+                        <div className="row pt2b2">
+                          <div className="col-lg-3 col-md-12 col-12 park-header">
+                            Activity
+                          </div>
+                          <div className="col-lg-1 col-md-12 col-12 park-header">
+                            Display
+                          </div>
+                          <div className="col-lg-1 col-md-12 col-12 park-header">
+                            Open
+                          </div>
+                          <div className="col-lg-3 col-md-12 col-12 park-header">
+                            Fees
+                          </div>
+                          <div className="col-lg-4 col-md-12 col-12 park-header no-right-border">
+                            Description
+                          </div>
+                        </div>
+                        {protectedArea.parkActivities.map((a) => (
+                          <div className="row pt2b2" key={`activity-${a.id}`}>
+                            <div className="col-lg-3 col-md-12 col-12 park-content">
+                              {a.name.split(":")[1]}
                             </div>
-                          ))}
-                        </>
-                      )}
-                  </div>
+                            <div className="col-lg-1 col-md-12 col-12 park-content">
+                              <SwitchButton
+                                checked={a.isActive}
+                                name={`${a.id}-is-active`}
+                                inputProps={{
+                                  "aria-label": "active activity",
+                                }}
+                                onChange={() => {
+                                  a.isActive = !a.isActive;
+                                }}
+                              />
+                            </div>
+                            <div className="col-lg-1 col-md-12 col-12 park-content">
+                              <SwitchButton
+                                checked={a.isActivityOpen}
+                                name={`${a.id}-is-open`}
+                                inputProps={{
+                                  "aria-label": "open activity",
+                                }}
+                              />
+                            </div>
+                            <div className="col-lg-3 col-md-12 col-12 park-content">
+                              Add a fee
+                            </div>
+                            <div className="col-lg-4 col-md-12 col-12 park-content no-right-border">
+                              {a.description}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  {!protectedArea.parkActivities ||
+                    (protectedArea.parkActivities.length === 0 && (
+                      <div className="park-empty-info">No activities found</div>
+                    ))}
                 </TabPanel>
                 <TabPanel value={tabIndex} index={1} label="park-info">
-                  <div>
-                    <div className="row pt2b2">
-                      <div className="col-lg-3 col-md-12 col-12 park-header">
-                        Facilities
-                      </div>
-                      <div className="col-lg-1 col-md-12 col-12 park-header">
-                        Display
-                      </div>
-                      <div className="col-lg-1 col-md-12 col-12 park-header">
-                        Open
-                      </div>
-                      <div className="col-lg-3 col-md-12 col-12 park-header">
-                        Fees
-                      </div>
-                      <div className="col-lg-4 col-md-12 col-12 park-header no-right-border">
-                        Description
-                      </div>
-                    </div>
-                    {protectedArea.parkFacilities &&
-                      protectedArea.parkFacilities.length > 0 && (
-                        <>
-                          {protectedArea.parkFacilities.map((f) => (
-                            <div
-                              className="row pt2b2"
-                              key={`facilities-${f.id}`}
-                            >
-                              <div className="col-lg-3 col-md-12 col-12 park-content">
-                                {f.name.split(":")[1]}
-                              </div>
-                              <div className="col-lg-1 col-md-12 col-12 park-content">
-                                <ButtonSwitch
-                                  checked={f.isActive}
-                                  name={`facility-${f.id}-is-active`}
-                                  inputProps={{
-                                    "aria-label": "active facility",
-                                  }}
-                                />
-                              </div>
-                              <div className="col-lg-1 col-md-12 col-12 park-content">
-                                <ButtonSwitch
-                                  checked={f.isFacilityOpen}
-                                  name={`facility-${f.id}-is-open`}
-                                  inputProps={{
-                                    "aria-label": "open facility",
-                                  }}
-                                />
-                              </div>
-                              <div className="col-lg-3 col-md-12 col-12 park-content">
-                                Add a fee
-                              </div>
-                              <div className="col-lg-4 col-md-12 col-12 park-content no-right-border">
-                                {f.description}
-                              </div>
+                  {protectedArea.parkFacilities &&
+                    protectedArea.parkFacilities.length > 0 && (
+                      <div>
+                        <div className="row pt2b2">
+                          <div className="col-lg-3 col-md-12 col-12 park-header">
+                            Facilities
+                          </div>
+                          <div className="col-lg-1 col-md-12 col-12 park-header">
+                            Display
+                          </div>
+                          <div className="col-lg-1 col-md-12 col-12 park-header">
+                            Open
+                          </div>
+                          <div className="col-lg-3 col-md-12 col-12 park-header">
+                            Fees
+                          </div>
+                          <div className="col-lg-4 col-md-12 col-12 park-header no-right-border">
+                            Description
+                          </div>
+                        </div>
+                        {protectedArea.parkFacilities.map((f) => (
+                          <div className="row pt2b2" key={`facilities-${f.id}`}>
+                            <div className="col-lg-3 col-md-12 col-12 park-content">
+                              {f.name.split(":")[1]}
                             </div>
-                          ))}
-                        </>
-                      )}
-                  </div>
+                            <div className="col-lg-1 col-md-12 col-12 park-content">
+                              <SwitchButton
+                                checked={f.isActive}
+                                name={`facility-${f.id}-is-active`}
+                                inputProps={{
+                                  "aria-label": "active facility",
+                                }}
+                              />
+                            </div>
+                            <div className="col-lg-1 col-md-12 col-12 park-content">
+                              <SwitchButton
+                                checked={f.isFacilityOpen}
+                                name={`facility-${f.id}-is-open`}
+                                inputProps={{
+                                  "aria-label": "open facility",
+                                }}
+                              />
+                            </div>
+                            <div className="col-lg-3 col-md-12 col-12 park-content">
+                              Add a fee
+                            </div>
+                            <div className="col-lg-4 col-md-12 col-12 park-content no-right-border">
+                              {f.description}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  {!protectedArea.parkFacilities ||
+                    (protectedArea.parkFacilities.length === 0 && (
+                      <div className="park-empty-info">No facilities found</div>
+                    ))}
                 </TabPanel>
               </div>
             </>

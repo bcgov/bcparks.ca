@@ -27,6 +27,8 @@ export default function ParkSearch({
   const [regions, setRegions] = useState([]);
   const [sections, setSections] = useState([]);
   const [managementAreas, setManagementAreas] = useState([]);
+  const [filteredSections, setFilteredSections] = useState([]);
+  const [filteredManagementAreas, setFilteredManagementAreas] = useState([]);
   const [protectedArea, setProtectedArea] = useState(0);
   const [region, setRegion] = useState();
   const [section, setSection] = useState();
@@ -52,7 +54,23 @@ export default function ParkSearch({
       if (protectedArea > 0) {
         setToDetails(true);
       }
-      if (region && !isEmpty(region)) {
+      if (managementArea && !isEmpty(managementArea)) {
+        parkList = addProtectedAreas(
+          managementArea.obj.protectedAreas,
+          parkIds,
+          parkList
+        );
+        setParkList(parkList);
+      } else if (section && !isEmpty(section)) {
+        parkList = addProtectedAreasFromArea(
+          section.obj,
+          "managementAreas",
+          parkIds,
+          managementAreas,
+          parkList
+        );
+        setParkList(parkList);
+      } else if (region && !isEmpty(region)) {
         parkList = addProtectedAreasFromArea(
           region.obj,
           "managementAreas",
@@ -62,23 +80,23 @@ export default function ParkSearch({
         );
         setParkList(parkList);
       }
+      setFilteredSections(sections);
+      setFilteredManagementAreas(managementAreas);
       if (section && !isEmpty(section)) {
-        parkList = addProtectedAreasFromArea(
-          section.obj,
-          "managementAreas",
-          parkIds,
-          managementAreas,
-          parkList
+        const filteredManagementAreas = managementAreas.filter(
+          (m) => m.obj.section.id === section.value
         );
-        setParkList(parkList);
+        setFilteredManagementAreas([...filteredManagementAreas]);
       }
-      if (managementArea && !isEmpty(managementArea)) {
-        parkList = addProtectedAreas(
-          managementArea.obj.protectedAreas,
-          parkIds,
-          parkList
+      if (region && !isEmpty(region)) {
+        const filteredSections = sections.filter(
+          (s) => s.obj.region.id === region.value
         );
-        setParkList(parkList);
+        setFilteredSections([...filteredSections]);
+        const filteredManagementAreas = managementAreas.filter(
+          (m) => m.obj.region.id === region.value
+        );
+        setFilteredManagementAreas([...filteredManagementAreas]);
       }
     }
   }, [
@@ -90,6 +108,9 @@ export default function ParkSearch({
     setParkList,
     section,
     managementArea,
+    sections,
+    setFilteredSections,
+    setFilteredManagementAreas,
   ]);
 
   useEffect(() => {
@@ -124,6 +145,7 @@ export default function ParkSearch({
             type: "section",
             obj: s,
           }));
+          setFilteredSections([...sections]);
           setSections([...sections]);
           const managementAreaData = res[3];
           const managementAreas = managementAreaData.map((m) => ({
@@ -132,6 +154,7 @@ export default function ParkSearch({
             type: "managementArea",
             obj: m,
           }));
+          setFilteredManagementAreas([...managementAreas]);
           setManagementAreas([...managementAreas]);
           setIsLoading(false);
         })
@@ -145,6 +168,24 @@ export default function ParkSearch({
         });
     }
   }, [cmsData, initialized, keycloak, setCmsData, setError, setIsLoading]);
+
+  const filterSection = (event) => {
+    if (event) {
+      const section = sections.filter((s) => s.value === event.obj.section.id);
+      if (section.length > 0) {
+        setSection(section[0]);
+      }
+    }
+  };
+
+  const filterRegion = (event) => {
+    if (event) {
+      const region = regions.filter((r) => r.value === event.obj.region.id);
+      if (region.length > 0) {
+        setRegion(region[0]);
+      }
+    }
+  };
 
   if (toDetails) {
     return <Redirect to={`/bcparks/park-info/${protectedArea}`} />;
@@ -190,6 +231,8 @@ export default function ParkSearch({
                         value={region}
                         onChange={(e) => {
                           setRegion(e);
+                          setSection(null);
+                          setManagementArea(null);
                         }}
                         placeholder="Select the Region"
                         className="bcgov-select"
@@ -200,10 +243,12 @@ export default function ParkSearch({
                   <div className="row">
                     <div className="col-lg-6 col-md-8 col-sm-12 ad-auto-margin">
                       <Select
-                        options={sections}
+                        options={filteredSections}
                         value={section}
                         onChange={(e) => {
                           setSection(e);
+                          setManagementArea(null);
+                          filterRegion(e);
                         }}
                         placeholder="Select the Section"
                         className="bcgov-select"
@@ -214,10 +259,12 @@ export default function ParkSearch({
                   <div className="row">
                     <div className="col-lg-6 col-md-8 col-sm-12 ad-auto-margin">
                       <Select
-                        options={managementAreas}
+                        options={filteredManagementAreas}
                         value={managementArea}
                         onChange={(e) => {
                           setManagementArea(e);
+                          filterSection(e);
+                          filterRegion(e);
                         }}
                         placeholder="Select the Management Area"
                         className="bcgov-select"

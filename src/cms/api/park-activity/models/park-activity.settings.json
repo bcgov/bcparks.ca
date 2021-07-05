@@ -33,6 +33,12 @@
     },
     "activityType": {
       "model": "activity-type"
+    },
+    "modifiedBy": {
+      "type": "string"
+    },
+    "modifiedDate": {
+      "type": "datetime"
     }
   }
 }
