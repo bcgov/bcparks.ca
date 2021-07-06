@@ -290,6 +290,10 @@
   border-color: red !important;
 }
 
+.wrap-text {
+  overflow-wrap: anywhere !important;
+}
+
 @media (max-width: 575.98px) {
   .page {
     flex-direction: column;

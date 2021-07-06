@@ -93,10 +93,12 @@ export default function ParkSearch({
           (s) => s.obj.region.id === region.value
         );
         setFilteredSections([...filteredSections]);
-        const filteredManagementAreas = managementAreas.filter(
-          (m) => m.obj.region.id === region.value
-        );
-        setFilteredManagementAreas([...filteredManagementAreas]);
+        if (!section) {
+          const filteredManagementAreas = managementAreas.filter(
+            (m) => m.obj.region.id === region.value
+          );
+          setFilteredManagementAreas([...filteredManagementAreas]);
+        }
       }
     }
   }, [
