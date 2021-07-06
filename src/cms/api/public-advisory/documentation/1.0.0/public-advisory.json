@@ -1106,6 +1106,12 @@
                     "type": "string"
                   }
                 },
+                "isUnofficialSite": {
+                  "type": "boolean"
+                },
+                "note": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },

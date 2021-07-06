@@ -54,6 +54,12 @@
     "parkFacilities": {
       "via": "site",
       "collection": "park-facility"
+    },
+    "isUnofficialSite": {
+      "type": "boolean"
+    },
+    "note": {
+      "type": "string"
     }
   }
 }
