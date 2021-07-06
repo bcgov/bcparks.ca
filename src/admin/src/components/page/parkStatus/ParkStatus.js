@@ -67,7 +67,7 @@ export default function ParkStatus() {
               search: true,
               exportButton: true,
               exportPdf: (columns, data) =>
-                exportPdf(columns, data, "BC Parks - Status"),
+                exportPdf(columns, data, "Park Status"),
               pageSize:
                 data.length > DEFAULT_PAGE_SIZE
                   ? DEFAULT_PAGE_SIZE
