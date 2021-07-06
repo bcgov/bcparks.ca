@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "06/29/2021 1:53:19 PM"
+    "x-generation-date": "07/06/2021 1:56:32 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -18548,6 +18548,12 @@
                   "type": "string"
                 }
               },
+              "isUnofficialSite": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "string"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -18851,6 +18857,12 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "isUnofficialSite": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "string"
               },
               "published_at": {
                 "type": "string"
@@ -19375,6 +19387,12 @@
           "isActive": {
             "type": "boolean"
           },
+          "imageUrl": {
+            "type": "string"
+          },
+          "thumbnailUrl": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -19407,6 +19425,12 @@
           },
           "isActive": {
             "type": "boolean"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "thumbnailUrl": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -19552,6 +19576,12 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "isUnofficialSite": {
+                  "type": "boolean"
+                },
+                "note": {
+                  "type": "string"
                 },
                 "published_at": {
                   "type": "string"
@@ -20507,6 +20537,12 @@
                     "type": "string"
                   }
                 },
+                "isUnofficialSite": {
+                  "type": "boolean"
+                },
+                "note": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },
@@ -21349,6 +21385,12 @@
               }
             }
           },
+          "isUnofficialSite": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -21406,6 +21448,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "isUnofficialSite": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
