@@ -157,9 +157,12 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
     saveActivity(activityId);
   };
 
-  const saveActivity = (activityId) => {
+  const handleSubmitLoader = (activityId) => {
     const currentActivities = [...submittingActivities, activityId];
     setSubmittingActivities([...currentActivities]);
+  };
+
+  const saveActivity = (activityId) => {
     const activities = parkActivities.filter((d) => d.id === activityId);
     if (activities.length > 0) {
       const activity = activities[0];
@@ -404,6 +407,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
                                               label="Save"
                                               styling="bcgov-normal-blue btn mt10"
                                               onClick={() => {
+                                                handleSubmitLoader(a.id);
                                                 saveActivity(a.id);
                                               }}
                                               hasLoader={submittingActivities.includes(
