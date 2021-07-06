@@ -282,6 +282,11 @@ const loadAdditionalSiteInfo = async () => {
         if (s.mapZoom !== "") {
           site.mapZoom = s.mapZoom;
         }
+        if (s.note.includes("custom")) {
+          site.isUnofficialSite = true;
+        }
+        site.note = s.note;
+
         await strapi.services["site"]
           .update({ orcsSiteNumber: s.orcs + "-" + s.orcsSiteNumber }, site)
           .catch(async () => {
