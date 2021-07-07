@@ -287,12 +287,14 @@ export default function ParkSearch({
                         <Divider />
                         {parkList.map((p) => (
                           <ListItem key={p.orcs} className="da-list-item">
-                            <a
-                              href={`/bcparks/park-info/${p.orcs}`}
-                              className="ad-anchor"
+                            <div
+                              className="ad-anchor pointer"
+                              onClick={() => {
+                                setProtectedArea(p.orcs);
+                              }}
                             >
                               {p.name}
-                            </a>
+                            </div>
                           </ListItem>
                         ))}
                       </List>
