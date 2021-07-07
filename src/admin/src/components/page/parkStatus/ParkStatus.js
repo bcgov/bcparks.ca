@@ -67,7 +67,7 @@ export default function ParkStatus() {
               search: true,
               exportButton: true,
               exportPdf: (columns, data) =>
-                exportPdf(columns, data, "Park Status"),
+                exportPdf(columns, data, "Park Access Status"),
               pageSize:
                 data.length > DEFAULT_PAGE_SIZE
                   ? DEFAULT_PAGE_SIZE
@@ -107,26 +107,25 @@ export default function ParkStatus() {
                 title: "Access Status Effective Date",
                 field: "accessStatusEffectiveDate",
               },
-              { title: "Camping Facility", field: "hasCampfiresFacility" },
+              { title: "Campfire Facility", field: "hasCampfiresFacility" },
               {
-                title: "Reservation Affected",
+                title: "Reservations Affected",
                 field: "isReservationsAffected",
               },
               {
                 title: "Campfire Ban",
                 field: "hasCampfireBan",
               },
+              { title: "Smoking Ban", field: "hasSmokingBan" },
+              {
+                title: "Campfire Ban Effective Date",
+                field: "campfireBanEffectiveDate",
+              },
               {
                 title: "Campfire Ban Override",
                 field: "hasCampfireBanOverride",
                 export: false,
               },
-
-              {
-                title: "Campfire Ban Effective Date",
-                field: "campfireBanEffectiveDate",
-              },
-              { title: "Smoking Ban", field: "hasSmokingBan" },
               {
                 title: "Smoking Ban Override",
                 field: "hasSmokingBanOverride",
@@ -134,7 +133,7 @@ export default function ParkStatus() {
               },
             ]}
             data={data}
-            title="Park Status"
+            title="Park Access Status"
           />
         )}
       </div>
