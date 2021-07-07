@@ -1,5 +1,4 @@
 import React from "react";
-import "./SwitchButton.css";
 import { withStyles } from "@material-ui/core/styles";
 import { Switch } from "@material-ui/core";
 
