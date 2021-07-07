@@ -28,7 +28,7 @@ export function exportPdf(columns, data, reportTitle) {
         doc.setFontSize(40);
         doc.text(reportTitle, 220, 78);
         doc.setFontSize(12);
-        doc.text(`Report Generated on ${today}`, 1466, 92);
+        doc.text(`Report generated on ${today}`, 1466, 92);
       },
     };
 
