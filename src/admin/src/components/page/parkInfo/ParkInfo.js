@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./ParkInfo.css";
-import { Redirect, useParams, useLocation } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import { Loader } from "shared-components/build/components/loader/Loader";
 import { useKeycloak } from "@react-keycloak/web";
 import Header from "../../composite/header/Header";
@@ -31,43 +31,46 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
   const [expandedActivities, setExpandedActivities] = useState([]);
   const [editableActivities, setEditableActivities] = useState([]);
   const [expandedFacilities, setExpandedFacilities] = useState([]);
+  const [editableFacilities, setEditableFacilities] = useState([]);
   const [parkActivities, setParkActivities] = useState([]);
+  const [parkFacilities, setParkFacilities] = useState([]);
   const [submittingActivities, setSubmittingActivities] = useState([]);
+  const [submittingFacilities, setSubmittingFacilities] = useState([]);
+  const [loadParkInfo, setLoadParkInfo] = useState(true);
   const { keycloak, initialized } = useKeycloak();
   const { id } = useParams();
 
   const [tabIndex, setTabIndex] = useState(0);
-  const { index } = useLocation();
 
   useEffect(() => {
-    if (initialized && keycloak) {
+    if (initialized && keycloak && loadParkInfo) {
       Promise.all([
         cmsAxios.get(`/protected-areas/${id}`),
         getRegions(cmsData, setCmsData),
         getSections(cmsData, setCmsData),
       ])
         .then((res) => {
-          const protectedArea = res[0].data;
-          if (protectedArea.managementAreas.length > 0) {
-            const managementArea = protectedArea.managementAreas[0];
-            protectedArea.managementAreaName =
+          const protectedAreaData = res[0].data;
+          if (protectedAreaData.managementAreas.length > 0) {
+            const managementArea = protectedAreaData.managementAreas[0];
+            protectedAreaData.managementAreaName =
               managementArea.managementAreaName;
             const region = cmsData.regions.filter(
               (r) => r.id === managementArea.region
             );
             if (region.length > 0) {
-              protectedArea.regionName = region[0].regionName;
+              protectedAreaData.regionName = region[0].regionName;
             }
             const section = cmsData.sections.filter(
               (s) => s.id === managementArea.section
             );
             if (section.length > 0) {
-              protectedArea.sectionName = section[0].sectionName;
+              protectedAreaData.sectionName = section[0].sectionName;
             }
           }
-          if (protectedArea.parkActivities) {
+          if (protectedAreaData.parkActivities) {
             const activities = [];
-            protectedArea.parkActivities.map((activity) => {
+            protectedAreaData.parkActivities.map((activity) => {
               return activities.push({
                 id: activity.id,
                 description: activity.description,
@@ -81,8 +84,25 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
             });
             setParkActivities([...activities]);
           }
-          setProtectedArea(protectedArea);
+          if (protectedAreaData.parkFacilities) {
+            const facilities = [];
+            protectedAreaData.parkFacilities.map((facility) => {
+              return facilities.push({
+                id: facility.id,
+                description: facility.description,
+                name: facility.name,
+                isFacilityOpen: facility.isFacilityOpen,
+                isActive: facility.isActive,
+                protectedArea: facility.protectedArea,
+                site: facility.site,
+                facilityType: facility.facilityType,
+              });
+            });
+            setParkFacilities([...facilities]);
+          }
+          setProtectedArea(protectedAreaData);
           setIsLoading(false);
+          setLoadParkInfo(false);
         })
         .catch(() => {
           setToError(true);
@@ -93,7 +113,20 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
           setIsLoading(false);
         });
     }
-  }, [cmsData, id, initialized, keycloak, setCmsData, setError, setIsLoading]);
+  }, [
+    cmsData,
+    id,
+    initialized,
+    keycloak,
+    setCmsData,
+    setError,
+    setIsLoading,
+    loadParkInfo,
+    setProtectedArea,
+    setToError,
+    setLoadParkInfo,
+    setParkActivities,
+  ]);
 
   const handleTabChange = (event, val) => {
     setTabIndex(val);
@@ -123,16 +156,16 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
     const unchangedActivity = protectedArea.parkActivities.filter(
       (a) => a.id === activityId
     )[0];
-    console.log(currentActivity, unchangedActivity);
     currentActivity.description = unchangedActivity.description;
-    finishEditActivityDesc(activityId);
+    finishEditActivityDesc(activityId, true);
   };
 
-  const finishEditActivityDesc = (activityId) => {
+  const finishEditActivityDesc = (activityId, expand) => {
     const currentActivities = editableActivities.filter(
       (a) => a !== activityId
     );
     setEditableActivities([...currentActivities]);
+    handleActivityAccordionChange(null, expand, activityId);
   };
   const handleActivityDescriptionChange = (event, activityId) => {
     const currentDescriptions = parkActivities;
@@ -154,15 +187,27 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
       return "";
     });
     setParkActivities([...currentActivities]);
-    saveActivity(activityId);
+    saveActivity(activityId, false);
   };
 
-  const handleSubmitLoader = (activityId) => {
+  const handleActivityOpenChange = (activityId) => {
+    const currentActivities = parkActivities;
+    currentActivities.filter((d) => {
+      if (d.id === activityId) {
+        d.isActivityOpen = !d.isActivityOpen;
+      }
+      return "";
+    });
+    setParkActivities([...currentActivities]);
+    saveActivity(activityId, false);
+  };
+
+  const handleActivitySubmitLoader = (activityId) => {
     const currentActivities = [...submittingActivities, activityId];
     setSubmittingActivities([...currentActivities]);
   };
 
-  const saveActivity = (activityId) => {
+  const saveActivity = (activityId, expand) => {
     const activities = parkActivities.filter((d) => d.id === activityId);
     if (activities.length > 0) {
       const activity = activities[0];
@@ -186,7 +231,8 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
             (a) => a !== activityId
           );
           setSubmittingActivities([...currentActivities]);
-          finishEditActivityDesc(activityId);
+          finishEditActivityDesc(activityId, expand);
+          setLoadParkInfo(true);
         })
         .catch((error) => {
           console.log("error occurred", error);
@@ -194,6 +240,119 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
           setError({
             status: 500,
             message: "Could not update activity",
+          });
+        });
+    }
+  };
+
+  const handleFacilityAccordionChange = (event, isExpanded, facilityId) => {
+    if (isExpanded) {
+      const currentFacilities = [...expandedFacilities, facilityId];
+      setExpandedFacilities([...currentFacilities]);
+    } else {
+      const currentFacilities = expandedFacilities.filter(
+        (f) => f !== facilityId
+      );
+      setExpandedFacilities([...currentFacilities]);
+    }
+  };
+
+  const editFacilityDesc = (facilityId) => {
+    const currentFacilities = [...editableFacilities, facilityId];
+    setEditableFacilities([...currentFacilities]);
+  };
+
+  const cancelEditFacilityDesc = (facilityId) => {
+    const currentFacility = parkFacilities.filter(
+      (f) => f.id === facilityId
+    )[0];
+    const unchangedFacility = protectedArea.parkFacilities.filter(
+      (f) => f.id === facilityId
+    )[0];
+    currentFacility.description = unchangedFacility.description;
+    finishEditFacilityDesc(facilityId, true);
+  };
+
+  const finishEditFacilityDesc = (facilityId, expand) => {
+    const currentFacilities = editableFacilities.filter(
+      (f) => f !== facilityId
+    );
+    setEditableFacilities([...currentFacilities]);
+    handleFacilityAccordionChange(null, expand, facilityId);
+  };
+  const handleFacilityDescriptionChange = (event, facilityId) => {
+    const currentDescriptions = parkFacilities;
+    currentDescriptions.filter((d) => {
+      if (d.id === facilityId) {
+        d.description = event.target.value;
+      }
+      return "";
+    });
+    setParkFacilities([...currentDescriptions]);
+  };
+
+  const handleFacilityDisplayChange = (facilityId) => {
+    const currentFacilities = parkFacilities;
+    currentFacilities.filter((d) => {
+      if (d.id === facilityId) {
+        d.isActive = !d.isActive;
+      }
+      return "";
+    });
+    setParkFacilities([...currentFacilities]);
+    saveFacility(facilityId, false);
+  };
+
+  const handleFacilityOpenChange = (facilityId) => {
+    const currentFacilities = parkFacilities;
+    currentFacilities.filter((d) => {
+      if (d.id === facilityId) {
+        d.isFacilityOpen = !d.isFacilityOpen;
+      }
+      return "";
+    });
+    setParkFacilities([...currentFacilities]);
+    saveFacility(facilityId, false);
+  };
+
+  const handleFacilitySubmitLoader = (facilityId) => {
+    const currentFacilities = [...submittingFacilities, facilityId];
+    setSubmittingFacilities([...currentFacilities]);
+  };
+
+  const saveFacility = (facilityId, expand) => {
+    const facilities = parkFacilities.filter((d) => d.id === facilityId);
+    if (facilities.length > 0) {
+      const facility = facilities[0];
+      const parkFacility = {
+        name: facility.name,
+        description: facility.description,
+        isFacilityOpen: facility.isFacilityOpen,
+        isActive: facility.isActive,
+        modifiedBy: keycloak.tokenParsed.name,
+        modifiedDate: moment().toISOString(),
+        protectedArea: facility.protectedArea,
+        site: facility.site,
+        facilityType: facility.facilityType,
+      };
+      apiAxios
+        .put(`api/update/park-facilities/${facilityId}`, parkFacility, {
+          headers: { Authorization: `Bearer ${keycloak.idToken}` },
+        })
+        .then((res) => {
+          const currentFacilities = submittingFacilities.filter(
+            (f) => f !== facilityId
+          );
+          setSubmittingFacilities([...currentFacilities]);
+          finishEditFacilityDesc(facilityId, expand);
+          setLoadParkInfo(true);
+        })
+        .catch((error) => {
+          console.log("error occurred", error);
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Could not update facility",
           });
         });
     }
@@ -319,6 +478,9 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
                                     inputProps={{
                                       "aria-label": "open activity",
                                     }}
+                                    onChange={() => {
+                                      handleActivityOpenChange(a.id);
+                                    }}
                                   />
                                 </div>
                                 <div className="col-lg-3 col-md-12 col-12 park-content">
@@ -335,6 +497,9 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
                                         );
                                       }}
                                       className="park-desc"
+                                      expanded={expandedActivities.includes(
+                                        a.id
+                                      )}
                                     >
                                       <AccordionSummary
                                         expandIcon={<ExpandMoreIcon />}
@@ -407,8 +572,10 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
                                               label="Save"
                                               styling="bcgov-normal-blue btn mt10"
                                               onClick={() => {
-                                                handleSubmitLoader(a.id);
-                                                saveActivity(a.id);
+                                                handleActivitySubmitLoader(
+                                                  a.id
+                                                );
+                                                saveActivity(a.id, true);
                                               }}
                                               hasLoader={submittingActivities.includes(
                                                 a.id
@@ -453,40 +620,150 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
                               Description
                             </div>
                           </div>
-                          {protectedArea.parkFacilities.map((f) => (
-                            <div
-                              className="row pt2b2"
-                              key={`facilities-${f.id}`}
-                            >
-                              <div className="col-lg-3 col-md-12 col-12 park-content">
-                                {f.name.split(":")[1]}
+                          {protectedArea.parkFacilities.map((f) => {
+                            const facility = parkFacilities.filter(
+                              (fa) => fa.id === f.id
+                            )[0];
+                            return (
+                              <div
+                                className="row pt2b2"
+                                key={`facility-${f.id}`}
+                              >
+                                <div className="col-lg-3 col-md-12 col-12 park-content">
+                                  {f.name.split(":")[1]}
+                                </div>
+                                <div className="col-lg-1 col-md-12 col-12 park-content">
+                                  <SwitchButton
+                                    checked={facility.isActive}
+                                    name={`${f.id}-is-active`}
+                                    inputProps={{
+                                      "aria-label": "active facility",
+                                    }}
+                                    onChange={() => {
+                                      handleFacilityDisplayChange(f.id);
+                                    }}
+                                  />
+                                </div>
+                                <div className="col-lg-1 col-md-12 col-12 park-content">
+                                  <SwitchButton
+                                    checked={facility.isFacilityOpen}
+                                    name={`${f.id}-is-open`}
+                                    inputProps={{
+                                      "aria-label": "open facility",
+                                    }}
+                                    onChange={() => {
+                                      handleFacilityOpenChange(f.id);
+                                    }}
+                                  />
+                                </div>
+                                <div className="col-lg-3 col-md-12 col-12 park-content">
+                                  Add a fee
+                                </div>
+                                <div className="col-lg-4 col-md-12 col-12 park-content no-right-border">
+                                  <div className="wrap-text">
+                                    <Accordion
+                                      onChange={(event, isExpanded) => {
+                                        handleFacilityAccordionChange(
+                                          event,
+                                          isExpanded,
+                                          f.id
+                                        );
+                                      }}
+                                      className="park-desc"
+                                      expanded={expandedFacilities.includes(
+                                        f.id
+                                      )}
+                                    >
+                                      <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="facility-description"
+                                        id="facility-description"
+                                      >
+                                        {!expandedFacilities.includes(f.id) && (
+                                          <div className="">
+                                            {facility.description
+                                              ? facility.description.length <
+                                                100
+                                                ? facility.description
+                                                : facility.description.substring(
+                                                    0,
+                                                    100
+                                                  ) + "..."
+                                              : "No description"}
+                                          </div>
+                                        )}
+                                      </AccordionSummary>
+
+                                      <AccordionDetails className="">
+                                        {!editableFacilities.includes(f.id) && (
+                                          <div>
+                                            {facility.description
+                                              ? facility.description
+                                              : "No description"}
+                                          </div>
+                                        )}
+                                        {editableFacilities.includes(f.id) && (
+                                          <TextField
+                                            multiline
+                                            value={facility.description || ""}
+                                            onChange={(event) => {
+                                              handleFacilityDescriptionChange(
+                                                event,
+                                                f.id
+                                              );
+                                            }}
+                                            className="bcgov-input white-background"
+                                            variant="outlined"
+                                            InputProps={{
+                                              id: `facility-${f.id}-desc`,
+                                              required: false,
+                                              placeholder:
+                                                "Enter facility description",
+                                            }}
+                                          />
+                                        )}
+                                      </AccordionDetails>
+                                      <AccordionActions>
+                                        {!editableFacilities.includes(f.id) && (
+                                          <Button
+                                            label="Edit"
+                                            styling="bcgov-normal-blue btn mt10"
+                                            onClick={() => {
+                                              editFacilityDesc(f.id);
+                                            }}
+                                          />
+                                        )}
+                                        {editableFacilities.includes(f.id) && (
+                                          <>
+                                            <Button
+                                              label="Cancel"
+                                              styling="bcgov-normal-white btn mt10"
+                                              onClick={() => {
+                                                cancelEditFacilityDesc(f.id);
+                                              }}
+                                            />
+                                            <Button
+                                              label="Save"
+                                              styling="bcgov-normal-blue btn mt10"
+                                              onClick={() => {
+                                                handleFacilitySubmitLoader(
+                                                  f.id
+                                                );
+                                                saveFacility(f.id, true);
+                                              }}
+                                              hasLoader={submittingFacilities.includes(
+                                                f.id
+                                              )}
+                                            />
+                                          </>
+                                        )}
+                                      </AccordionActions>
+                                    </Accordion>
+                                  </div>
+                                </div>
                               </div>
-                              <div className="col-lg-1 col-md-12 col-12 park-content">
-                                <SwitchButton
-                                  checked={f.isActive}
-                                  name={`facility-${f.id}-is-active`}
-                                  inputProps={{
-                                    "aria-label": "active facility",
-                                  }}
-                                />
-                              </div>
-                              <div className="col-lg-1 col-md-12 col-12 park-content">
-                                <SwitchButton
-                                  checked={f.isFacilityOpen}
-                                  name={`facility-${f.id}-is-open`}
-                                  inputProps={{
-                                    "aria-label": "open facility",
-                                  }}
-                                />
-                              </div>
-                              <div className="col-lg-3 col-md-12 col-12 park-content">
-                                Add a fee
-                              </div>
-                              <div className="col-lg-4 col-md-12 col-12 park-content no-right-border">
-                                {f.description}
-                              </div>
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       )}
                     {!protectedArea.parkFacilities ||

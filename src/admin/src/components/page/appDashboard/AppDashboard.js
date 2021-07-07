@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./AppDashboard.css";
 import Tabs from "@material-ui/core/Tabs";
