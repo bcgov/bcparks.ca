@@ -1,5 +1,11 @@
 import moment from "moment";
 import { apiAxios, axios } from "../axios_config";
+import {
+  addProtectedAreas,
+  addProtectedAreasFromArea,
+  removeProtectedAreas,
+  removeProtectedAreasFromArea,
+} from "./LocationUtil";
 
 export function calculateAfterHours(businessHours) {
   const currentDate = moment().format("YYYY-MM-DD");
@@ -63,21 +69,6 @@ export function getApproverAdvisoryFields(code, setConfirmationText) {
     setConfirmationText("Your advisory has been saved successfully!");
   }
   return published;
-}
-
-function addProtectedAreasFromArea(area, field, selProtectedAreas, areaList) {
-  area[field].forEach((f) => {
-    const relatedArea = areaList.find((a) => {
-      return a.obj.id === f.id;
-    });
-    addProtectedAreas(relatedArea.obj.protectedAreas, selProtectedAreas);
-  });
-}
-
-function addProtectedAreas(protectedAreas, selProtectedAreas) {
-  protectedAreas.forEach((park) => {
-    selProtectedAreas.push(park.id);
-  });
 }
 
 export function getLocationSelection(
@@ -162,28 +153,6 @@ const setAreaValues = (areas, selAreas, selProtectedAreas, areaList) => {
     });
   }
 };
-
-function removeProtectedAreasFromArea(
-  area,
-  field,
-  updatedProtectedAreas,
-  areaList
-) {
-  let parks = updatedProtectedAreas;
-  area[field].forEach((f) => {
-    const relatedArea = areaList.find((a) => {
-      return a.obj.id === f.id;
-    });
-    parks = removeProtectedAreas(relatedArea.obj.protectedAreas, parks);
-  });
-  return parks;
-}
-
-function removeProtectedAreas(protectedAreas, parks) {
-  const parkIds = protectedAreas.map((p) => p.id);
-  parks = parks.filter((p) => !parkIds.includes(p.value));
-  return parks;
-}
 
 const removeAreaValues = (
   existingAreas,

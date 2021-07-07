@@ -1,0 +1,66 @@
+.app-tabs {
+  flex-grow: 1 !important;
+  display: flex !important;
+  height: 100% !important;
+  min-height: 100vh !important;
+  width: 100% !important;
+}
+.app-tab {
+  color: #234075 !important;
+  width: 20% !important;
+  min-width: 200px !important;
+}
+
+.app-tab .MuiTabs-scroller,
+.app-tab .MuiTabs-scrollable {
+  padding-top: 50px !important;
+  background-color: #f2f2f2 !important;
+  width: 100% !important;
+}
+
+.app-tabs .MuiTab-root {
+  max-width: unset !important;
+}
+.app-tabs .MuiTabs-root {
+  overflow: visible !important;
+}
+
+.app-tab .MuiTab-wrapper {
+  font-weight: bold !important;
+  align-items: unset !important;
+  text-align: right !important;
+  padding-right: 20px !important;
+}
+
+.app-tab .Mui-selected {
+  background-color: #fff !important;
+}
+
+.app-tab .MuiTabs-indicator {
+  background-color: transparent !important;
+}
+
+.app-tab .MuiTab-root {
+  text-transform: unset !important;
+  font-size: 17px !important;
+}
+
+@media (max-width: 991.98px) {
+  .app-tabs {
+    height: unset !important;
+    min-height: unset !important;
+    display: unset !important;
+  }
+  .app-tab {
+    width: 100% !important;
+  }
+  .app-tab .MuiTabs-scroller,
+  .app-tab .MuiTabs-scrollable {
+    padding: 0px !important;
+    padding-top: 30px !important;
+  }
+  .app-tab .MuiTab-wrapper {
+    text-align: center !important;
+    padding-right: 0px !important;
+  }
+}

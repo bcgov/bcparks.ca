@@ -206,6 +206,10 @@
   width: 100% !important;
 }
 
+.pt2b2 {
+  padding: 2px 0px !important;
+}
+
 .p10 {
   padding: 10px 0px !important;
 }
@@ -237,6 +241,10 @@
 
 .mt10 {
   margin-top: 10px !important;
+}
+
+.mt20 {
+  margin-top: 20px !important;
 }
 
 .mrm10 {
@@ -280,6 +288,10 @@
 .bcgov-datepicker-wrapper-error input,
 .bcgov-select-error [class*="-control"] {
   border-color: red !important;
+}
+
+.wrap-text {
+  overflow-wrap: anywhere !important;
 }
 
 @media (max-width: 575.98px) {

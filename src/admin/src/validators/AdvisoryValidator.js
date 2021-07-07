@@ -1,8 +1,5 @@
 import moment from "moment";
-
-export function isEmpty(obj) {
-  return Object.keys(obj).length === 0;
-}
+import { isEmpty } from "../utils/AppUtil";
 
 export function validateOptionalNumber(field) {
   field.setError("");

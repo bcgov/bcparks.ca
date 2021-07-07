@@ -20,7 +20,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import InfoIcon from "@material-ui/icons/Info";
 import PublishIcon from "@material-ui/icons/Publish";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
-import Header from "../../composite/header/Header";
+
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 
 import {
@@ -333,12 +333,7 @@ export default function AdvisoryDashboard({
   const DEFAULT_PAGE_SIZE = 50;
 
   return (
-    <main>
-      <Header
-        header={{
-          name: "",
-        }}
-      />
+    <>
       <br />
       {parkNamesQuery.isLoading && (
         <div className="page-loader">
@@ -407,7 +402,7 @@ export default function AdvisoryDashboard({
           )}
         </div>
       )}
-    </main>
+    </>
   );
 }
 

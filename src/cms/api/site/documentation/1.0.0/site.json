@@ -723,6 +723,12 @@
                 "activityType": {
                   "type": "string"
                 },
+                "modifiedBy": {
+                  "type": "string"
+                },
+                "modifiedDate": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },
@@ -764,6 +770,12 @@
                   "type": "string"
                 },
                 "facilityType": {
+                  "type": "string"
+                },
+                "modifiedBy": {
+                  "type": "string"
+                },
+                "modifiedDate": {
                   "type": "string"
                 },
                 "published_at": {

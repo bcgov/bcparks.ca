@@ -33,7 +33,7 @@ import {
   getLinkTypes,
   getBusinessHours,
 } from "../../../utils/CmsDataUtil";
-import { hasRole } from "../../../utils/AuthenticationUtils";
+import { hasRole } from "../../../utils/AuthenticationUtil";
 
 export default function Advisory({
   mode,
@@ -890,7 +890,14 @@ export default function Advisory({
   };
 
   if (toDashboard) {
-    return <Redirect to="/bcparks/advisory-dash" />;
+    return (
+      <Redirect
+        to={{
+          pathname: `/bcparks/dashboard`,
+          index: 0,
+        }}
+      />
+    );
   }
 
   if (toError) {

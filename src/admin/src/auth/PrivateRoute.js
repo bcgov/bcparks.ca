@@ -2,7 +2,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import React, { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import Error from "../components/page/error/Error";
-import { hasRole } from "../utils/AuthenticationUtils";
+import { hasRole } from "../utils/AuthenticationUtil";
 
 export function PrivateRoute({ component: Component, roles, props, ...rest }) {
   const { keycloak, initialized } = useKeycloak();
