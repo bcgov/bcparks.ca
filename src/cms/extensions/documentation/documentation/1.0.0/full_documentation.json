@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "07/06/2021 5:10:49 PM"
+    "x-generation-date": "07/06/2021 3:31:44 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -20456,6 +20456,12 @@
                   "type": "string"
                 }
               },
+              "isUnofficialSite": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "string"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -20773,6 +20779,12 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "isUnofficialSite": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "string"
               },
               "published_at": {
                 "type": "string"
@@ -21500,6 +21512,12 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "isUnofficialSite": {
+                  "type": "boolean"
+                },
+                "note": {
+                  "type": "string"
                 },
                 "published_at": {
                   "type": "string"
@@ -22467,6 +22485,12 @@
                     "type": "string"
                   }
                 },
+                "isUnofficialSite": {
+                  "type": "boolean"
+                },
+                "note": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },
@@ -23220,6 +23244,12 @@
               }
             }
           },
+          "isUnofficialSite": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -23277,6 +23307,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "isUnofficialSite": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",

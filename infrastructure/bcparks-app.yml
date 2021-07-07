@@ -49,6 +49,8 @@ parameters:
 - name: URL_STUB
   value: "-61d198-dev.apps.silver.devops.gov.bc.ca"
   required: false
+- name: API_HOST_PREFIX
+  value: api
 
 objects:
 ### Frontend
@@ -523,28 +525,28 @@ objects:
       name: ${API_POD}
 
 # #   API Route
-# - apiVersion: route.openshift.io/v1
-#   kind: Route
-#   namespace: ${OC_NAMESPACE}-${OC_APP}
-#   labels:
-#     app: ${API_POD}
-#     app.kubernetes.io/component: ${NAME}
-#     app.kubernetes.io/instance: ${NAME}
-#     app.kubernetes.io/part-of: ${NAME}
-#   metadata:
-#     name: ${API_POD}
-#     namespace: ${OC_NAMESPACE}-${OC_APP}
-#   spec:
-#     host: ${API_URL}${URL_STUB}
-#     to:
-#       kind: Service
-#       name: ${API_POD}
-#       weight: 100
-#     port:
-#       targetPort: ${API_POD}
-#     tls:
-#       insecureEdgeTerminationPolicy: Allow
-#       termination: edge
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  namespace: ${OC_NAMESPACE}-${OC_APP}
+  labels:
+    app: ${API_POD}
+    app.kubernetes.io/component: ${NAME}
+    app.kubernetes.io/instance: ${NAME}
+    app.kubernetes.io/part-of: ${NAME}
+  metadata:
+    name: ${API_POD}-route
+    namespace: ${OC_NAMESPACE}-${OC_APP}
+  spec:
+    host: ${API_HOST_PREFIX}${URL_STUB}
+    to:
+      kind: Service
+      name: ${API_POD}
+      weight: 100
+    port:
+      targetPort: ${API_POD}
+    tls:
+      insecureEdgeTerminationPolicy: Allow
+      termination: edge
     
 ### Network Policy
 - apiVersion: networking.k8s.io/v1

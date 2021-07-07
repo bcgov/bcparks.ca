@@ -18,17 +18,17 @@ export function exportPdf(columns, data, reportTitle) {
       margin: { top: 100 },
       didDrawPage: function (data) {
         doc.addImage(
-          `${process.env.PUBLIC_URL}/images/bcid-logo-rgb-pos.jpg`,
-          "JPEG",
-          36,
-          12,
-          88,
-          88
+          `${process.env.PUBLIC_URL}/images/logo-bcparks-positive.png`,
+          "PNG",
+          50,
+          30,
+          150,
+          50
         );
-        doc.setFontSize(30);
-        doc.text(reportTitle, 130, 64);
-        doc.setFontSize(14);
-        doc.text(`Report Generated On: ${today}`, 130, 80);
+        doc.setFontSize(40);
+        doc.text(reportTitle, 220, 78);
+        doc.setFontSize(12);
+        doc.text(`Report Generated on ${today}`, 1466, 92);
       },
     };
 

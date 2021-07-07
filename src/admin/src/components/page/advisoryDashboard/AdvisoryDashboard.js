@@ -8,9 +8,10 @@ import { Button } from "shared-components/build/components/button/Button";
 import DataTable from "../../composite/dataTable/DataTable";
 import Select from "react-select";
 import Moment from "react-moment";
+import moment from "moment";
 import { Loader } from "shared-components/build/components/loader/Loader";
 import IconButton from "@material-ui/core/IconButton";
-
+import Chip from "@material-ui/core/Chip";
 import TimerIcon from "@material-ui/icons/Timer";
 import Tooltip from "@material-ui/core/Tooltip";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -21,6 +22,7 @@ import PublishIcon from "@material-ui/icons/Publish";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
+
 import {
   getProtectedAreas,
   getManagementAreas,
@@ -30,6 +32,7 @@ export default function AdvisoryDashboard({
   page: { setError, cmsData, setCmsData },
 }) {
   const history = useHistory();
+  const today = moment(new Date()).tz("America/Vancouver").toISOString();
   const [toCreate, setToCreate] = useState(false);
   const [selectedParkId, setSelectedParkId] = useState(0);
 
@@ -54,6 +57,7 @@ export default function AdvisoryDashboard({
     }, {});
 
     const data = publicAdvisories.map((publicAdvisory) => {
+      publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
       publicAdvisory.associatedParks =
         publicAdvisory.protectedAreas
           .map((p) => p.protectedAreaName)
@@ -203,7 +207,7 @@ export default function AdvisoryDashboard({
                 <Tooltip
                   title={
                     <span>
-                      Expiry Date:
+                      This advisory will be removed on{" "}
                       <Moment format="YYYY/MM/DD">{rowData.expiryDate}</Moment>
                     </span>
                   }
@@ -217,6 +221,28 @@ export default function AdvisoryDashboard({
       },
     },
     {
+      field: "expired",
+      title: "Expired",
+      render: (rowData) => {
+        return (
+          <>
+            {rowData.expired === "Y" && (
+              <Tooltip
+                title={
+                  <span>
+                    Expired on{" "}
+                    <Moment format="YYYY/MM/DD">{rowData.expiryDate}</Moment>
+                  </span>
+                }
+              >
+                <Chip size="small" label={rowData.expired} />
+              </Tooltip>
+            )}
+          </>
+        );
+      },
+    },
+    {
       field: "associatedParks",
       title: "Associated Park(s)",
       headerStyle: { width: 400 },
@@ -225,26 +251,51 @@ export default function AdvisoryDashboard({
         const displayCount = 3;
         const regionsCount = rowData.regions.length;
         if (regionsCount > 0) {
-          let regions = rowData.regions
-            .slice(0, displayCount)
-            .map((p) => `${p.regionName} Region (${p.count} parks)`)
-            .join(", ");
-          if (regionsCount > displayCount) {
-            regions = `${regions}... +${regionsCount - displayCount} more`;
-          }
-          return regions;
+          let regions = rowData.regions.slice(0, displayCount);
+          return (
+            <div>
+              {regions.map((p, i) => (
+                <span key={i}>
+                  {p.regionName} region
+                  <Chip
+                    size="small"
+                    variant="outlined"
+                    label={`${p.count} parks`}
+                  />
+                </span>
+              ))}
+              {regionsCount > displayCount && (
+                <Tooltip
+                  title={`plus ${regionsCount - displayCount} more region(s)`}
+                >
+                  <Chip
+                    size="small"
+                    label={`+${regionsCount - displayCount}`}
+                  />
+                </Tooltip>
+              )}
+            </div>
+          );
         }
+
         const parksCount = rowData.protectedAreas.length;
-        if (parksCount > 0) {
-          let parks = rowData.protectedAreas
-            .slice(0, displayCount)
-            .map((p) => p.protectedAreaName)
-            .join(", ");
-          if (parksCount > displayCount) {
-            parks = `${parks}... +${parksCount - displayCount} more`;
-          }
-          return parks;
-        }
+        let protectedAreas = rowData.protectedAreas.slice(0, displayCount);
+
+        return (
+          <div>
+            {protectedAreas.map((p, i) => (
+              <span key={i}>
+                {p.protectedAreaName}
+                {protectedAreas.length - 1 > i && ", "}
+              </span>
+            ))}
+            {parksCount > displayCount && (
+              <Tooltip title={`plus ${parksCount - displayCount} more park(s)`}>
+                <Chip size="small" label={`+${parksCount - displayCount}`} />
+              </Tooltip>
+            )}
+          </div>
+        );
       },
     },
     {

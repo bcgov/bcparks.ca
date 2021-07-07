@@ -28,8 +28,8 @@
       "model": "protected-area"
     },
     "site": {
-      "model": "site",
-      "via": "parkFacilities"
+      "via": "parkFacilities",
+      "model": "site"
     },
     "facilityType": {
       "model": "facility-type"
