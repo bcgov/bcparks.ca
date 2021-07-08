@@ -81,11 +81,9 @@ export default function Advisory({
   const [displayAdvisoryDate, setDisplayAdvisoryDate] = useState(false);
   const [startDate, setStartDate] = useState(moment().tz("America/Vancouver"));
   const [displayStartDate, setDisplayStartDate] = useState(false);
-  const [endDate, setEndDate] = useState(moment().tz("America/Vancouver"));
+  const [endDate, setEndDate] = useState(null);
   const [displayEndDate, setDisplayEndDate] = useState(false);
-  const [expiryDate, setExpiryDate] = useState(
-    moment().tz("America/Vancouver")
-  );
+  const [expiryDate, setExpiryDate] = useState(null);
   const [updatedDate, setUpdatedDate] = useState(
     moment().tz("America/Vancouver")
   );
@@ -113,6 +111,7 @@ export default function Advisory({
   const [advisoryId, setAdvisoryId] = useState();
   const [isApprover, setIsApprover] = useState(false);
   const [formError, setFormError] = useState("");
+  const [defaultLinkType, setDefaultLinkType] = useState();
 
   const { id } = useParams();
 
@@ -413,7 +412,6 @@ export default function Advisory({
           }));
           setManagementAreas([...managementAreas]);
           const siteData = res[4];
-          console.log(siteData);
           const sites = siteData.map((s) => ({
             label: s.protectedArea.protectedAreaName + ": " + s.siteName,
             value: s.id,
@@ -487,8 +485,15 @@ export default function Advisory({
             value: lt.id,
           }));
           setLinkTypes([...linkTypes]);
+          const linkType = linkTypes.filter((l) => l.label === "General");
+          if (linkType.length > 0) {
+            setDefaultLinkType(linkType[0].value);
+          }
           if (mode === "create") {
-            setUrgency(urgencyData[0].id);
+            const defaultUrgency = urgencies.filter((u) => u.label === "Low");
+            if (defaultUrgency.length > 0) {
+              setUrgency(defaultUrgency[0].value);
+            }
             setIsLoadingPage(false);
           }
           setSubmittedBy(keycloak.tokenParsed.name);
@@ -572,7 +577,11 @@ export default function Advisory({
   };
 
   const addLink = () => {
-    linksRef.current = [...linksRef.current, { title: "", url: "" }];
+    console.log(defaultLinkType);
+    linksRef.current = [
+      ...linksRef.current,
+      { title: "", url: "", type: defaultLinkType },
+    ];
     setLinkIds();
   };
 
