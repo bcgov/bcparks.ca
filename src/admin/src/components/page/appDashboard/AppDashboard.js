@@ -6,6 +6,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import AdvisoryDashboard from "../advisoryDashboard/AdvisoryDashboard";
 import ParkSearch from "../parkSearch/ParkSearch";
+import ParkAccessStatus from "../parkAccessStatus/ParkAccessStatus";
 import Header from "../../composite/header/Header";
 import PrivateElement from "../../../auth/PrivateElement";
 import TabPanel from "../../base/tabPanel/TabPanel";
@@ -58,12 +59,19 @@ export default function AppDashboard({
                 {...a11yProps(1, "dashboard-tab")}
               />
             )}
+            <Tab
+              label="Park Access Status"
+              {...a11yProps(2, "dashboard-tab")}
+            />
           </Tabs>
           <TabPanel value={tabIndex} index={0} label="dashboard">
             <AdvisoryDashboard page={{ setError, cmsData, setCmsData }} />
           </TabPanel>
           <TabPanel value={tabIndex} index={1} label="dashboard">
             <ParkSearch page={{ setError, cmsData, setCmsData }} />
+          </TabPanel>
+          <TabPanel value={tabIndex} index={2} label="dashboard">
+            <ParkAccessStatus />
           </TabPanel>
         </div>
       </div>
