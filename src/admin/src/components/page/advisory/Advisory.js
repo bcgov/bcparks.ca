@@ -577,7 +577,6 @@ export default function Advisory({
   };
 
   const addLink = () => {
-    console.log(defaultLinkType);
     linksRef.current = [
       ...linksRef.current,
       { title: "", url: "", type: defaultLinkType },
