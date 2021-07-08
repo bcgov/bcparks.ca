@@ -1,39 +1,39 @@
-.MuiTable-root {
-    width:100% !important;
-  }
-  
-  .MuiTableCell-root {
-    padding: 2px !important;
-  }
-  
-  .MuiTableCell-root input {
-    background-color:#f0f2f5;
-    padding: 2px !important;
-    margin: 2px 0px 2px 0px !important;
-  }
-  
-  .MuiTablePagination-input {
-    padding-right: 5px !important;
-  }
-
-.MuiTableRow-head th {
-    background-color: #f0f2f5 !important;
-    font-weight: bold;
-    padding: 2px !important;
-    margin: 2px 0px 2px 0px !important;
-    z-Index: 0
+.data-table .MuiTable-root {
+  width: 100% !important;
 }
 
-.MuiToolbar-root {
-    padding: 2px;
-    margin:2px;
+.data-table .MuiTableCell-root {
+  padding: 2px !important;
 }
 
-.MuiToolbar-gutters h6 {
-    font-weight: bold;
-    font-size:xx-large;
+.data-table .MuiTableCell-root input {
+  background-color: #f0f2f5;
+  padding: 2px !important;
+  margin: 2px 0px 2px 0px !important;
 }
 
-.MuiTableRow-root:hover { 
-    background: #f6f8fa !important 
+.data-table .MuiTablePagination-input {
+  padding-right: 5px !important;
+}
+
+.data-table .MuiTableRow-head th {
+  background-color: #f0f2f5 !important;
+  font-weight: bold;
+  padding: 2px !important;
+  margin: 2px 0px 2px 0px !important;
+  z-index: 0;
+}
+
+.data-table .MuiToolbar-root {
+  padding: 2px;
+  margin: 2px;
+}
+
+.data-table .MuiToolbar-gutters h6 {
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+.data-table .MuiTableRow-root:hover {
+  background: #f6f8fa !important;
 }

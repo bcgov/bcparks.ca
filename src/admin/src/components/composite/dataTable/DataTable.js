@@ -48,7 +48,7 @@ const tableIcons = {
 
 export default function DataTable(props) {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className="data-table">
       <MaterialTable icons={tableIcons} {...props} />
     </TableContainer>
   );
