@@ -34,6 +34,7 @@ import {
   getBusinessHours,
 } from "../../../utils/CmsDataUtil";
 import { hasRole } from "../../../utils/AuthenticationUtil";
+import { labelCompare } from "../../../utils/AppUtil";
 
 export default function Advisory({
   mode,
@@ -412,12 +413,14 @@ export default function Advisory({
           }));
           setManagementAreas([...managementAreas]);
           const siteData = res[4];
+          console.log(siteData);
           const sites = siteData.map((s) => ({
-            label: s.siteName,
+            label: s.protectedArea.protectedAreaName + ": " + s.siteName,
             value: s.id,
             type: "site",
             obj: s,
           }));
+          sites.sort(labelCompare);
           setSites([...sites]);
           const fireCentreData = res[5];
           const fireCentres = fireCentreData.map((f) => ({
