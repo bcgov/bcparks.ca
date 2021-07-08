@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { cmsAxios } from "../../../axios_config";
-import Header from "../../composite/header/Header";
 import DataTable from "../../composite/dataTable/DataTable";
 import { Loader } from "shared-components/build/components/loader/Loader";
 import { useQuery } from "react-query";

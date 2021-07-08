@@ -56,11 +56,7 @@ export default function CmsContents() {
 
   return (
     <>
-      <Header
-        header={{
-          name: "",
-        }}
-      />
+      <Header />
       <div className="container">
         <h1 className="mt-4 mb-4">CMS Contents</h1>
         <table className="table table-hover table-sm border rounded">

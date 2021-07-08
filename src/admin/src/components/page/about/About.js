@@ -5,11 +5,7 @@ import styles from "./About.css";
 const About = () => {
   return (
     <main>
-      <Header
-        header={{
-          name: "",
-        }}
-      />
+      <Header />
       <div className={styles.Home} data-testid="Home">
         <div className="container hm-container mt-5">
           <h3 className="mb-5">BC Parks Staff Portal</h3>

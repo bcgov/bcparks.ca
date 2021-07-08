@@ -26,14 +26,14 @@ export const goHome = (e, history) => {
   return true;
 };
 
-export default function Header({ header: { name } }) {
+export default function Header() {
   const history = useHistory();
 
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark">
         <div className="container-fluid">
-          <div className="col-md-8">
+          <div className="col-lg-8 col-md-8 col-sm-8">
             <div
               className=" navbar-brand pointer"
               onClick={(e) => goHome(e, history)}
@@ -41,24 +41,26 @@ export default function Header({ header: { name } }) {
               onKeyDown={(e) => goHome(e, history)}
               tabIndex={0}
             >
-              <img
-                className="img-fluid d-md-block"
-                src={`${process.env.PUBLIC_URL}/images/bcid-logo-rev-en.svg`}
-                width="200"
-                alt="B.C. Parks Logo"
-              />
-              <div
-                className="pointer navbar-brand nav-item nav-link"
-                onClick={(e) => goHome(e, history)}
-                role="button"
-                onKeyDown={(e) => goHome(e, history)}
-                tabIndex={0}
-              >
-                {name}
+              <div className="nav-box">
+                <img
+                  className="img-fluid d-md-block"
+                  src={`${process.env.PUBLIC_URL}/images/bcid-logo-rev-en.svg`}
+                  width="200"
+                  alt="B.C. Parks Logo"
+                />
+                <div
+                  className="pointer navbar-brand nav-item nav-link nav-title"
+                  onClick={(e) => goHome(e, history)}
+                  role="button"
+                  onKeyDown={(e) => goHome(e, history)}
+                  tabIndex={0}
+                >
+                  BC Parks Staff Portal
+                </div>
               </div>
             </div>
           </div>
-          <div className="col-md-4">
+          <div className="col-lg-4 col-md-4 col-sm-4">
             <AccountInfo />
           </div>
         </div>
@@ -67,8 +69,4 @@ export default function Header({ header: { name } }) {
   );
 }
 
-Header.propTypes = {
-  header: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-  }).isRequired,
-};
+Header.propTypes = {};

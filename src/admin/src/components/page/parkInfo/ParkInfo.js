@@ -375,11 +375,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
 
   return (
     <main>
-      <Header
-        header={{
-          name: "",
-        }}
-      />
+      <Header />
       <br />
       <div className="ParkInfo" data-testid="ParkInfo">
         <div className="container">

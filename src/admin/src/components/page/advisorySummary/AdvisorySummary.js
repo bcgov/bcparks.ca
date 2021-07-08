@@ -148,11 +148,7 @@ export default function AdvisorySummary({
 
   return (
     <main>
-      <Header
-        header={{
-          name: "",
-        }}
-      />
+      <Header />
       <br />
       <div className="AdvisorySummary" data-testid="AdvisorySummary">
         <div className="container">
@@ -218,7 +214,6 @@ export default function AdvisorySummary({
                       </div>
                     </div>
                   )}
-
                   {advisory.urgency && (
                     <div className="row">
                       <div className="col-lg-4 col-md-6 col-12 ad-label">
@@ -245,68 +240,6 @@ export default function AdvisorySummary({
                       {advisory.description}
                     </div>
                   </div>
-                  {advisory.regions.length > 0 && (
-                    <div className="row">
-                      <div className="col-lg-4 col-md-6 col-12 ad-label">
-                        Associated Region(s)
-                      </div>
-                      <div className="col-lg-8 col-md-6 col-12">
-                        {advisory.regions.map((r) => (
-                          <div key={r.id}>{r.regionName} Region</div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {advisory.sections.length > 0 && (
-                    <div className="row">
-                      <div className="col-lg-4 col-md-6 col-12 ad-label">
-                        Associated Section(s)
-                      </div>
-                      <div className="col-lg-8 col-md-6 col-12">
-                        {advisory.sections.map((s) => (
-                          <div key={s.id}>{s.sectionName} Section</div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {advisory.managementAreas.length > 0 && (
-                    <div className="row">
-                      <div className="col-lg-4 col-md-6 col-12 ad-label">
-                        Associated Management Area(s)
-                      </div>
-                      <div className="col-lg-8 col-md-6 col-12">
-                        {advisory.managementAreas.map((m) => (
-                          <div key={m.id}>
-                            {m.managementAreaName} Management Area
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {advisory.fireCentres.length > 0 && (
-                    <div className="row">
-                      <div className="col-lg-4 col-md-6 col-12 ad-label">
-                        Associated Fire Centre(s)
-                      </div>
-                      <div className="col-lg-8 col-md-6 col-12">
-                        {advisory.fireCentres.map((f) => (
-                          <div key={f.id}>{f.fireCentreName}</div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {advisory.fireZones.length > 0 && (
-                    <div className="row">
-                      <div className="col-lg-4 col-md-6 col-12 ad-label">
-                        Associated Fire Zone(s)
-                      </div>
-                      <div className="col-lg-8 col-md-6 col-12">
-                        {advisory.fireZones.map((f) => (
-                          <div key={f.id}>{f.fireZoneName}</div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                   <div className="row">
                     <div className="col-lg-4 col-md-6 col-12 ad-label">
                       Associated Park(s)
@@ -389,7 +322,68 @@ export default function AdvisorySummary({
                       </div>
                     </div>
                   )}
-
+                  {advisory.regions.length > 0 && (
+                    <div className="row">
+                      <div className="col-lg-4 col-md-6 col-12 ad-label">
+                        Associated Region(s)
+                      </div>
+                      <div className="col-lg-8 col-md-6 col-12">
+                        {advisory.regions.map((r) => (
+                          <div key={r.id}>{r.regionName} Region</div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {advisory.sections.length > 0 && (
+                    <div className="row">
+                      <div className="col-lg-4 col-md-6 col-12 ad-label">
+                        Associated Section(s)
+                      </div>
+                      <div className="col-lg-8 col-md-6 col-12">
+                        {advisory.sections.map((s) => (
+                          <div key={s.id}>{s.sectionName} Section</div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {advisory.managementAreas.length > 0 && (
+                    <div className="row">
+                      <div className="col-lg-4 col-md-6 col-12 ad-label">
+                        Associated Management Area(s)
+                      </div>
+                      <div className="col-lg-8 col-md-6 col-12">
+                        {advisory.managementAreas.map((m) => (
+                          <div key={m.id}>
+                            {m.managementAreaName} Management Area
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {advisory.fireCentres.length > 0 && (
+                    <div className="row">
+                      <div className="col-lg-4 col-md-6 col-12 ad-label">
+                        Associated Fire Centre(s)
+                      </div>
+                      <div className="col-lg-8 col-md-6 col-12">
+                        {advisory.fireCentres.map((f) => (
+                          <div key={f.id}>{f.fireCentreName}</div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {advisory.fireZones.length > 0 && (
+                    <div className="row">
+                      <div className="col-lg-4 col-md-6 col-12 ad-label">
+                        Associated Fire Zone(s)
+                      </div>
+                      <div className="col-lg-8 col-md-6 col-12">
+                        {advisory.fireZones.map((f) => (
+                          <div key={f.id}>{f.fireZoneName}</div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <div className="row">
                     <div className="col-lg-4 col-md-6 col-12 ad-label">
                       Reservations Affected
