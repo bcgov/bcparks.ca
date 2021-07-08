@@ -1,20 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { cmsAxios } from "../../../axios_config";
-import Header from "../../composite/header/Header";
 import DataTable from "../../composite/dataTable/DataTable";
 import { Loader } from "shared-components/build/components/loader/Loader";
 import { useQuery } from "react-query";
 import moment from "moment";
 import { exportPdf } from "../../../utils/ExportPdfUtil";
-import "./ParkStatus.css";
+import "./ParkAccessStatus.css";
 
-export default function ParkStatus() {
+export default function ParkAccessStatus() {
   const formatDate = (date) => {
     return moment(date).isValid() ? moment(date).format("YYYY-MM-DD") : null;
   };
 
-  const fetchParkStatus = async ({ queryKey }) => {
+  const fetchParkAccessStatus = async ({ queryKey }) => {
     const response = await cmsAxios.get(
       `/protected-areas/status?_limit=-1&_sort=protectedAreaName`
     );
@@ -35,17 +34,24 @@ export default function ParkStatus() {
     return data;
   };
 
-  const STALE_TIME_MILLISECONDS = 5 * 60 * 1000; // 5 minutes
-  const { isLoading, data } = useQuery("parkStatus", fetchParkStatus, {
-    staleTime: STALE_TIME_MILLISECONDS,
-  });
+  const STALE_TIME_MILLISECONDS = 10 * 60 * 1000; // 10 minutes
+  const { isLoading, data } = useQuery(
+    "parkAccessStatus",
+    fetchParkAccessStatus,
+    {
+      staleTime: STALE_TIME_MILLISECONDS,
+    }
+  );
 
   const DEFAULT_PAGE_SIZE = 50;
+  const title = "Park Access Status";
+  const exportFilename =
+    title.toLowerCase().replaceAll(" ", "-") +
+    "-" +
+    moment(new Date()).format("YYYYMMDD");
 
   return (
-    <main>
-      <Header />
-      <br />
+    <>
       <div id="park-status-container" className="container-fluid">
         <p>{isLoading}</p>
         {isLoading && (
@@ -61,8 +67,10 @@ export default function ParkStatus() {
               filtering: true,
               search: true,
               exportButton: true,
+              exportAllData: true,
+              exportFileName: exportFilename,
               exportPdf: (columns, data) =>
-                exportPdf(columns, data, "Park Access Status"),
+                exportPdf(columns, data, title, exportFilename),
               pageSize:
                 data.length > DEFAULT_PAGE_SIZE
                   ? DEFAULT_PAGE_SIZE
@@ -76,12 +84,6 @@ export default function ParkStatus() {
               },
               { title: "Protected Area Name", field: "protectedAreaName" },
               { title: "Type", field: "type" },
-              { title: "Code", field: "typeCode", export: false },
-              {
-                title: "Park Alias ",
-                field: "protectedAreaNameAliases",
-                export: false,
-              },
               { title: "Region", field: "regionsStr" },
               { title: "Section", field: "sectionsStr" },
               { title: "Management Area", field: "managementAreasStr" },
@@ -116,26 +118,16 @@ export default function ParkStatus() {
                 title: "Campfire Ban Effective Date",
                 field: "campfireBanEffectiveDate",
               },
-              {
-                title: "Campfire Ban Override",
-                field: "hasCampfireBanOverride",
-                export: false,
-              },
-              {
-                title: "Smoking Ban Override",
-                field: "hasSmokingBanOverride",
-                export: false,
-              },
             ]}
             data={data}
-            title="Park Access Status"
+            title={title}
           />
         )}
       </div>
-    </main>
+    </>
   );
 }
 
-ParkStatus.propTypes = {};
+ParkAccessStatus.propTypes = {};
 
-ParkStatus.defaultProps = {};
+ParkAccessStatus.defaultProps = {};

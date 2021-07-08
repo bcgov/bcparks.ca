@@ -2,12 +2,13 @@ import "jspdf-autotable";
 import moment from "moment";
 const jsPDF = typeof window !== "undefined" ? require("jspdf").jsPDF : null;
 
-export function exportPdf(columns, data, reportTitle) {
+export function exportPdf(columns, data, reportTitle, exportFilename) {
   if (jsPDF !== null) {
     const today = moment(new Date()).format("YYYY-MM-DD");
+
     const content = {
       columns: columns
-        .filter((item) => item.export !== false)
+        .filter((item) => item.export !== false && !item.hidden && item.field)
         .map((item) => {
           return {
             header: item.title,
@@ -39,6 +40,6 @@ export function exportPdf(columns, data, reportTitle) {
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(10);
     doc.autoTable(content);
-    doc.save("bc-park-status.pdf");
+    doc.save(exportFilename);
   }
 }

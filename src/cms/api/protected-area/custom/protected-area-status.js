@@ -55,6 +55,7 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
 const getPublishedPublicAdvisories = async () => {
   return await strapi.services["public-advisory"].find({
     _publicationState: "live",
+    "accessStatus.precedence_lt": 99,
     _sort: "id",
     _limit: -1,
   });
