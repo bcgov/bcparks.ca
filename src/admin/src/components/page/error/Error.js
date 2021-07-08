@@ -77,11 +77,7 @@ export default function Error({ page: { error } }) {
 
   return (
     <main>
-      <Header
-        header={{
-          name: "",
-        }}
-      />
+      <Header />
       <div className="page" data-testid="Error">
         <div className="content col-md-8">
           <br />

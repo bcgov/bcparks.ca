@@ -36,11 +36,7 @@ export default function AppDashboard({
 
   return (
     <main>
-      <Header
-        header={{
-          name: "",
-        }}
-      />
+      <Header />
       <div className="app-container" data-testid="AppDashboard">
         <div className="app-tabs">
           <Tabs

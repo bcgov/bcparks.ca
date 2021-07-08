@@ -29,11 +29,7 @@ export default function Home({ page: { setError } }) {
 
   return (
     <main>
-      <Header
-        header={{
-          name: "",
-        }}
-      />
+      <Header />
       <div className={styles.Home} data-testid="Home">
         <div className="container hm-container">
           <h1>BC Parks Staff Portal</h1>

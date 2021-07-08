@@ -44,12 +44,7 @@ export default function ParkStatus() {
 
   return (
     <main>
-      {" "}
-      <Header
-        header={{
-          name: "",
-        }}
-      />
+      <Header />
       <br />
       <div id="park-status-container" className="container-fluid">
         <p>{isLoading}</p>

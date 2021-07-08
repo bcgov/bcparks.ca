@@ -4,6 +4,10 @@
   padding: 0px !important;
 }
 
+.navbar {
+  min-height: 130px !important;
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -12,9 +16,33 @@
   padding-top: 15px !important;
 }
 
+.nav-box {
+  display: flex !important;
+}
+
+.nav-title {
+  margin-top: auto !important;
+  margin-bottom: -15px !important;
+  font-size: 30px !important;
+  margin-left: 20px !important;
+}
+
 @media (max-width: 575.98px) {
   .navbar > .container-fluid {
     flex-flow: row nowrap !important;
     justify-content: flex-start !important;
+  }
+  .nav-box {
+    display: block !important;
+    text-align: center !important;
+  }
+  .nav-link {
+    padding: 0px !important;
+  }
+  .nav-title {
+    font-size: 20px !important;
+    display: block !important;
+    margin: 0px !important;
+    padding-top: 15px !important;
   }
 }

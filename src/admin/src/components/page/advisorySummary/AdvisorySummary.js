@@ -148,11 +148,7 @@ export default function AdvisorySummary({
 
   return (
     <main>
-      <Header
-        header={{
-          name: "",
-        }}
-      />
+      <Header />
       <br />
       <div className="AdvisorySummary" data-testid="AdvisorySummary">
         <div className="container">
