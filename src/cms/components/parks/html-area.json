@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_parks_html_areas",
+  "info": {
+    "name": "HTML Area",
+    "icon": "align-justify"
+  },
+  "options": {},
+  "attributes": {
+    "HTML": {
+      "type": "richtext"
+    }
+  }
+}

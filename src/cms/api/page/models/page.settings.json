@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "Pages",
+  "info": {
+    "name": "Page"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Slug": {
+      "type": "string"
+    },
+    "Template": {
+      "type": "enumeration",
+      "enum": [
+        "Template1",
+        "Template2"
+      ]
+    },
+    "Content": {
+      "type": "dynamiczone",
+      "components": [
+        "parks.html-area",
+        "parks.image"
+      ]
+    }
+  }
+}
