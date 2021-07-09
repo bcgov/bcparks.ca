@@ -361,6 +361,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
   if (toDashboard) {
     return (
       <Redirect
+        push
         to={{
           pathname: `/bcparks/dashboard`,
           index: 1,
@@ -370,7 +371,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
   }
 
   if (toError) {
-    return <Redirect to="/bcparks/error" />;
+    return <Redirect push to="/bcparks/error" />;
   }
 
   return (
