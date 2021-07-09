@@ -133,7 +133,6 @@ export default function AdvisoryForm({
   const [advisoryStatusError, setAdvisoryStatusError] = useState("");
   const [ticketNumberError, setTicketNumberError] = useState("");
   const [headlineError, setHeadlineError] = useState("");
-  const [descriptionError, setDescriptionError] = useState("");
   const [advisoryDateError, setAdvisoryDateError] = useState("");
   const [startDateError, setStartDateError] = useState("");
   const [endDateError, setEndDateError] = useState("");
@@ -151,11 +150,6 @@ export default function AdvisoryForm({
       setError: setEventTypeError,
       text: "event type",
     },
-    description: {
-      value: description,
-      setError: setDescriptionError,
-      text: "description",
-    },
     protectedArea: {
       value: [
         selectedProtectedAreas,
@@ -167,7 +161,7 @@ export default function AdvisoryForm({
         selectedSites,
       ],
       setError: setProtectedAreaError,
-      text: "at least one location area",
+      text: "at least one affected area",
     },
     urgency: { value: urgency, setError: setUrgencyError, text: "urgency" },
     advisoryDate: { value: advisoryDate, setError: setAdvisoryDateError },
@@ -368,7 +362,7 @@ export default function AdvisoryForm({
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
               Description
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
@@ -383,12 +377,23 @@ export default function AdvisoryForm({
                 className="bcgov-input"
                 variant="outlined"
                 InputProps={{ ...descriptionInput }}
-                error={descriptionError !== ""}
-                helperText={descriptionError}
-                onBlur={() => {
-                  validateRequiredText(advisoryData.description);
-                }}
               />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12  bcgov-required ad-label">
+              Select at least one affected area:
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  protectedAreaError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <FormHelperText>{protectedAreaError}</FormHelperText>
+              </FormControl>
             </div>
           </div>
           <div className="row">
@@ -414,7 +419,6 @@ export default function AdvisoryForm({
                     validateRequiredLocation(advisoryData.protectedArea);
                   }}
                 />
-                <FormHelperText>{protectedAreaError}</FormHelperText>
               </FormControl>
             </div>
           </div>
