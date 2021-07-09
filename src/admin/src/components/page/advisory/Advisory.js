@@ -903,6 +903,7 @@ export default function Advisory({
   if (toDashboard) {
     return (
       <Redirect
+        push
         to={{
           pathname: `/bcparks/dashboard`,
           index: 0,
@@ -912,15 +913,17 @@ export default function Advisory({
   }
 
   if (toError) {
-    return <Redirect to="/bcparks/error" />;
+    return <Redirect push to="/bcparks/error" />;
   }
 
   if (isConfirmation) {
     return (
       <Redirect
+        push
         to={{
           pathname: `/bcparks/advisory-summary/${advisoryId}`,
           confirmationText: confirmationText,
+          index: 0,
         }}
       />
     );

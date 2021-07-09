@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, useLocation, useParams, useHistory } from "react-router-dom";
+import { Redirect, useLocation, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { cmsAxios } from "../../../axios_config";
 import "./AdvisorySummary.css";
@@ -19,19 +19,19 @@ import { getLinkTypes } from "../../../utils/CmsDataUtil";
 export default function AdvisorySummary({
   page: { setError, cmsData, setCmsData },
 }) {
-  const history = useHistory();
   const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [isPublished, setIsPublished] = useState(false);
   const [toError, setToError] = useState(false);
   const [advisory, setAdvisory] = useState({});
   const [parkUrls, setParkUrls] = useState("");
   const [siteUrls, setSiteUrls] = useState("");
+  const [toDashboard, setToDashboard] = useState(false);
   const [toUpdate, setToUpdate] = useState(false);
   const [snackPack, setSnackPack] = useState([]);
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessageInfo, setSnackMessageInfo] = useState(undefined);
   const { id } = useParams();
-  const { confirmationText } = useLocation();
+  const { confirmationText, index } = useLocation();
   const { ClipboardItem } = window;
 
   useEffect(() => {
@@ -138,12 +138,24 @@ export default function AdvisorySummary({
     setSnackMessageInfo(undefined);
   };
 
+  if (toDashboard) {
+    return (
+      <Redirect
+        push
+        to={{
+          pathname: `/bcparks/dashboard`,
+          index: index >= 0 ? index : 0,
+        }}
+      />
+    );
+  }
+
   if (toUpdate) {
-    return <Redirect to={`/bcparks/update-advisory/${id}`} />;
+    return <Redirect push to={`/bcparks/update-advisory/${id}`} />;
   }
 
   if (toError) {
-    return <Redirect to="/bcparks/error" />;
+    return <Redirect push to="/bcparks/error" />;
   }
 
   return (
@@ -167,7 +179,7 @@ export default function AdvisorySummary({
                       label="Back"
                       styling="bcgov-normal-white btn mt10"
                       onClick={() => {
-                        history.goBack();
+                        setToDashboard(true);
                       }}
                     />
                     <Button

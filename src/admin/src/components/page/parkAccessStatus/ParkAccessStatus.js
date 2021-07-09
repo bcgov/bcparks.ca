@@ -95,7 +95,12 @@ export default function ParkAccessStatus() {
                 title: "Access Details",
                 field: "accessDetails",
                 render: (rowData) => (
-                  <Link to={`advisory-summary/${rowData.publicAdvisoryId}`}>
+                  <Link
+                    to={{
+                      pathname: `advisory-summary/${rowData.publicAdvisoryId}`,
+                      index: 2,
+                    }}
+                  >
                     {rowData.accessDetails}
                   </Link>
                 ),
