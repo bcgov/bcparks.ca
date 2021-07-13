@@ -599,7 +599,7 @@ export default function Advisory({
   };
 
   const calculateExpiryDate = () => {
-    setExpiryDate(
+    setEndDate(
       moment(advisoryDateRef.current).add(
         durationIntervalRef.current,
         durationUnitRef.current
@@ -617,7 +617,7 @@ export default function Advisory({
   const createLink = async (link) => {
     const linkRequest = {
       title: link.title,
-      url: link.url,
+      url: link.url.startsWith("http") ? link.url : "https://" + link.url,
       type: link.type,
     };
     const res = await apiAxios
@@ -638,7 +638,7 @@ export default function Advisory({
   const saveLink = async (link, id) => {
     const linkRequest = {
       title: link.title,
-      url: link.url,
+      url: link.url.startsWith("http") ? link.url : "https://" + link.url,
       type: link.type,
     };
     const res = await apiAxios
@@ -719,7 +719,8 @@ export default function Advisory({
         selectedFireCentres,
         selectedFireZones,
         managementAreas,
-        fireZones
+        fireZones,
+        sites
       );
       Promise.resolve(saveLinks()).then((savedLinks) => {
         const newAdvisory = {
@@ -788,7 +789,7 @@ export default function Advisory({
   const updateAdvisory = (type) => {
     try {
       const { published, status } = getAdvisoryFields(type);
-      const updatedProtectedAreas = removeLocations(
+      const { updatedProtectedAreas, updatedSites } = removeLocations(
         selectedProtectedAreas,
         selectedRegions,
         existingRegions,
@@ -803,7 +804,8 @@ export default function Advisory({
         selectedFireZones,
         existingFireZones,
         managementAreas,
-        fireZones
+        fireZones,
+        sites
       );
       const {
         selProtectedAreas,
@@ -818,15 +820,20 @@ export default function Advisory({
         selectedRegions,
         selectedSections,
         selectedManagementAreas,
-        selectedSites,
+        updatedSites,
         selectedFireCentres,
         selectedFireZones,
         managementAreas,
-        fireZones
+        fireZones,
+        sites
       );
 
-      if (!selProtectedAreas || selProtectedAreas.length === 0) {
+      if (
+        (!selProtectedAreas || selProtectedAreas.length === 0) &&
+        (!selSites || selSites.length === 0)
+      ) {
         setSelectedProtectedAreas([]);
+        setSelectedSites([]);
         setIsSubmitting(false);
         setIsSavingDraft(false);
         setFormError("Please select at least one Location!!");

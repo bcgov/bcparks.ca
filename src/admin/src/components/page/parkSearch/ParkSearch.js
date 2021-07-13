@@ -12,12 +12,13 @@ import {
   getRegions,
   getSections,
   getManagementAreas,
+  getSites,
 } from "../../../utils/CmsDataUtil";
 import {
   addProtectedAreasFromArea,
   addProtectedAreas,
 } from "../../../utils/LocationUtil";
-import { isEmpty } from "../../../utils/AppUtil";
+import { isEmpty, labelCompare } from "../../../utils/AppUtil";
 
 export default function ParkSearch({
   page: { setError, cmsData, setCmsData },
@@ -27,6 +28,7 @@ export default function ParkSearch({
   const [regions, setRegions] = useState([]);
   const [sections, setSections] = useState([]);
   const [managementAreas, setManagementAreas] = useState([]);
+  const [sites, setSites] = useState([]);
   const [filteredSections, setFilteredSections] = useState([]);
   const [filteredManagementAreas, setFilteredManagementAreas] = useState([]);
   const [protectedArea, setProtectedArea] = useState(0);
@@ -57,7 +59,9 @@ export default function ParkSearch({
       if (managementArea && !isEmpty(managementArea)) {
         parkList = addProtectedAreas(
           managementArea.obj.protectedAreas,
+          null,
           parkIds,
+          null,
           parkList
         );
         setParkList(parkList);
@@ -66,6 +70,8 @@ export default function ParkSearch({
           section.obj,
           "managementAreas",
           parkIds,
+          null,
+          null,
           managementAreas,
           parkList
         );
@@ -75,6 +81,8 @@ export default function ParkSearch({
           region.obj,
           "managementAreas",
           parkIds,
+          null,
+          null,
           managementAreas,
           parkList
         );
@@ -122,6 +130,7 @@ export default function ParkSearch({
         getRegions(cmsData, setCmsData),
         getSections(cmsData, setCmsData),
         getManagementAreas(cmsData, setCmsData),
+        getSites(cmsData, setCmsData),
       ])
         .then((res) => {
           const protectedAreaData = res[0];
@@ -158,6 +167,15 @@ export default function ParkSearch({
           }));
           setFilteredManagementAreas([...managementAreas]);
           setManagementAreas([...managementAreas]);
+          const siteData = res[4];
+          const sites = siteData.map((s) => ({
+            label: s.protectedArea.protectedAreaName + ": " + s.siteName,
+            value: s.id,
+            type: "site",
+            obj: s,
+          }));
+          sites.sort(labelCompare);
+          setSites([...sites]);
           setIsLoading(false);
         })
         .catch(() => {

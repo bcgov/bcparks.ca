@@ -244,14 +244,16 @@ export default function AdvisorySummary({
                       {advisory.isSafetyRelated ? "Yes" : "No"}
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-lg-4 col-md-6 col-12 ad-label">
-                      Description
+                  {advisory.description && (
+                    <div className="row">
+                      <div className="col-lg-4 col-md-6 col-12 ad-label">
+                        Description
+                      </div>
+                      <div className="col-lg-8 col-md-6 col-12">
+                        {advisory.description}
+                      </div>
                     </div>
-                    <div className="col-lg-8 col-md-6 col-12">
-                      {advisory.description}
-                    </div>
-                  </div>
+                  )}
                   <div className="row">
                     <div className="col-lg-4 col-md-6 col-12 ad-label">
                       Associated Park(s)
