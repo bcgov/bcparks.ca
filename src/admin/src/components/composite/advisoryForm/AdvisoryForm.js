@@ -750,6 +750,8 @@ export default function AdvisoryForm({
                               onBlur={() => {
                                 validateOptionalDate(advisoryData.endDate);
                               }}
+                              minDate={startDate}
+                              minDateMessage="End date should not be before Advisory date"
                             />
                             <VisibilityToggle
                               toggle={{
@@ -820,6 +822,8 @@ export default function AdvisoryForm({
                               onBlur={() => {
                                 validateOptionalDate(advisoryData.expiryDate);
                               }}
+                              minDate={startDate}
+                              minDateMessage="Expiry date should not be before Advisory date"
                             />
                           </div>
                         </div>

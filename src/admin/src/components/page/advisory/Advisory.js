@@ -599,7 +599,7 @@ export default function Advisory({
   };
 
   const calculateExpiryDate = () => {
-    setExpiryDate(
+    setEndDate(
       moment(advisoryDateRef.current).add(
         durationIntervalRef.current,
         durationUnitRef.current
