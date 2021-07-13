@@ -617,7 +617,7 @@ export default function Advisory({
   const createLink = async (link) => {
     const linkRequest = {
       title: link.title,
-      url: link.url,
+      url: link.url.startsWith("http") ? link.url : "https://" + link.url,
       type: link.type,
     };
     const res = await apiAxios
@@ -638,7 +638,7 @@ export default function Advisory({
   const saveLink = async (link, id) => {
     const linkRequest = {
       title: link.title,
-      url: link.url,
+      url: link.url.startsWith("http") ? link.url : "https://" + link.url,
       type: link.type,
     };
     const res = await apiAxios
