@@ -1,9 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "public_advisories",
+  "collectionName": "public_advisory_audits",
   "info": {
-    "name": "PublicAdvisory",
-    "description": ""
+    "name": "PublicAdvisoryAudit"
   },
   "options": {
     "increments": true,
@@ -16,6 +15,9 @@
     },
     "revisionNumber": {
       "type": "integer"
+    },
+    "isLatestRevision": {
+      "type": "boolean"
     },
     "title": {
       "type": "string"
