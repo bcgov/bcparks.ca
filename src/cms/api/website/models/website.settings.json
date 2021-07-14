@@ -14,17 +14,17 @@
     "Name": {
       "type": "string"
     },
-    "Header": {
-      "type": "richtext"
+    "homepage": {
+      "model": "page"
     },
-    "Footer": {
+    "Header": {
       "type": "richtext"
     },
     "Navigation": {
       "type": "richtext"
     },
-    "homepage": {
-      "model": "page"
+    "Footer": {
+      "type": "richtext"
     }
   }
 }

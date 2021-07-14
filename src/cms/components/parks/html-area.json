@@ -2,7 +2,8 @@
   "collectionName": "components_parks_html_areas",
   "info": {
     "name": "HTML Area",
-    "icon": "align-justify"
+    "icon": "align-justify",
+    "description": ""
   },
   "options": {},
   "attributes": {
