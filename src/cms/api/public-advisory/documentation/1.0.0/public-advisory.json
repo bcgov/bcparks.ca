@@ -538,6 +538,9 @@
           "advisoryNumber": {
             "type": "integer"
           },
+          "revisionNumber": {
+            "type": "integer"
+          },
           "title": {
             "type": "string"
           },
@@ -564,6 +567,21 @@
           },
           "mapZoom": {
             "type": "integer"
+          },
+          "isReservationsAffected": {
+            "type": "boolean"
+          },
+          "isAdvisoryDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEffectiveDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEndDateDisplayed": {
+            "type": "boolean"
+          },
+          "isUpdatedDateDisplayed": {
+            "type": "boolean"
           },
           "submittedBy": {
             "type": "string"
@@ -705,21 +723,6 @@
                 "type": "string"
               }
             }
-          },
-          "isReservationsAffected": {
-            "type": "boolean"
-          },
-          "isAdvisoryDateDisplayed": {
-            "type": "boolean"
-          },
-          "isEffectiveDateDisplayed": {
-            "type": "boolean"
-          },
-          "isEndDateDisplayed": {
-            "type": "boolean"
-          },
-          "isUpdatedDateDisplayed": {
-            "type": "boolean"
           },
           "protectedAreas": {
             "type": "array",
@@ -1158,6 +1161,34 @@
               }
             }
           },
+          "standardMessage": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "eventType": {
+                "type": "string"
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -1167,6 +1198,9 @@
       "NewPublic-advisory": {
         "properties": {
           "advisoryNumber": {
+            "type": "integer"
+          },
+          "revisionNumber": {
             "type": "integer"
           },
           "title": {
@@ -1195,6 +1229,21 @@
           },
           "mapZoom": {
             "type": "integer"
+          },
+          "isReservationsAffected": {
+            "type": "boolean"
+          },
+          "isAdvisoryDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEffectiveDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEndDateDisplayed": {
+            "type": "boolean"
+          },
+          "isUpdatedDateDisplayed": {
+            "type": "boolean"
           },
           "submittedBy": {
             "type": "string"
@@ -1249,21 +1298,6 @@
           "advisoryStatus": {
             "type": "string"
           },
-          "isReservationsAffected": {
-            "type": "boolean"
-          },
-          "isAdvisoryDateDisplayed": {
-            "type": "boolean"
-          },
-          "isEffectiveDateDisplayed": {
-            "type": "boolean"
-          },
-          "isEndDateDisplayed": {
-            "type": "boolean"
-          },
-          "isUpdatedDateDisplayed": {
-            "type": "boolean"
-          },
           "protectedAreas": {
             "type": "array",
             "items": {
@@ -1311,6 +1345,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "standardMessage": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
