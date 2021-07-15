@@ -2,78 +2,48 @@
   "routes": [
     {
       "method": "GET",
-<<<<<<< HEAD:src/cms/api/website/config/routes.json
       "path": "/websites",
       "handler": "website.find",
-=======
-      "path": "/park-names",
-      "handler": "park-name.find",
->>>>>>> ef7a23f543c40efd414fd7448de3fc9c171e6a55:src/cms/api/park-name/config/routes.json
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-<<<<<<< HEAD:src/cms/api/website/config/routes.json
       "path": "/websites/count",
       "handler": "website.count",
-=======
-      "path": "/park-names/count",
-      "handler": "park-name.count",
->>>>>>> ef7a23f543c40efd414fd7448de3fc9c171e6a55:src/cms/api/park-name/config/routes.json
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-<<<<<<< HEAD:src/cms/api/website/config/routes.json
       "path": "/websites/:id",
       "handler": "website.findOne",
-=======
-      "path": "/park-names/:id",
-      "handler": "park-name.findOne",
->>>>>>> ef7a23f543c40efd414fd7448de3fc9c171e6a55:src/cms/api/park-name/config/routes.json
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-<<<<<<< HEAD:src/cms/api/website/config/routes.json
       "path": "/websites",
       "handler": "website.create",
-=======
-      "path": "/park-names",
-      "handler": "park-name.create",
->>>>>>> ef7a23f543c40efd414fd7448de3fc9c171e6a55:src/cms/api/park-name/config/routes.json
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-<<<<<<< HEAD:src/cms/api/website/config/routes.json
       "path": "/websites/:id",
       "handler": "website.update",
-=======
-      "path": "/park-names/:id",
-      "handler": "park-name.update",
->>>>>>> ef7a23f543c40efd414fd7448de3fc9c171e6a55:src/cms/api/park-name/config/routes.json
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-<<<<<<< HEAD:src/cms/api/website/config/routes.json
       "path": "/websites/:id",
       "handler": "website.delete",
-=======
-      "path": "/park-names/:id",
-      "handler": "park-name.delete",
->>>>>>> ef7a23f543c40efd414fd7448de3fc9c171e6a55:src/cms/api/park-name/config/routes.json
       "config": {
         "policies": []
       }

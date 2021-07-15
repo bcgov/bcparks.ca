@@ -2,78 +2,48 @@
   "routes": [
     {
       "method": "GET",
-<<<<<<< HEAD:src/cms/api/page/config/routes.json
-      "path": "/pages",
-      "handler": "page.find",
-=======
       "path": "/park-photos",
       "handler": "park-photo.find",
->>>>>>> ef7a23f543c40efd414fd7448de3fc9c171e6a55:src/cms/api/park-photo/config/routes.json
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-<<<<<<< HEAD:src/cms/api/page/config/routes.json
-      "path": "/pages/count",
-      "handler": "page.count",
-=======
       "path": "/park-photos/count",
       "handler": "park-photo.count",
->>>>>>> ef7a23f543c40efd414fd7448de3fc9c171e6a55:src/cms/api/park-photo/config/routes.json
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-<<<<<<< HEAD:src/cms/api/page/config/routes.json
-      "path": "/pages/:id",
-      "handler": "page.findOne",
-=======
       "path": "/park-photos/:id",
       "handler": "park-photo.findOne",
->>>>>>> ef7a23f543c40efd414fd7448de3fc9c171e6a55:src/cms/api/park-photo/config/routes.json
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-<<<<<<< HEAD:src/cms/api/page/config/routes.json
-      "path": "/pages",
-      "handler": "page.create",
-=======
       "path": "/park-photos",
       "handler": "park-photo.create",
->>>>>>> ef7a23f543c40efd414fd7448de3fc9c171e6a55:src/cms/api/park-photo/config/routes.json
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-<<<<<<< HEAD:src/cms/api/page/config/routes.json
-      "path": "/pages/:id",
-      "handler": "page.update",
-=======
       "path": "/park-photos/:id",
       "handler": "park-photo.update",
->>>>>>> ef7a23f543c40efd414fd7448de3fc9c171e6a55:src/cms/api/park-photo/config/routes.json
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-<<<<<<< HEAD:src/cms/api/page/config/routes.json
-      "path": "/pages/:id",
-      "handler": "page.delete",
-=======
       "path": "/park-photos/:id",
       "handler": "park-photo.delete",
->>>>>>> ef7a23f543c40efd414fd7448de3fc9c171e6a55:src/cms/api/park-photo/config/routes.json
       "config": {
         "policies": []
       }
