@@ -141,7 +141,7 @@ export default function Advisory({
       if (parseInt(id)) {
         setAdvisoryId(id);
         cmsAxios
-          .get(`/public-advisories/${id}?_publicationState=preview`)
+          .get(`/public-advisory-audits/${id}?_publicationState=preview`)
           .then((res) => {
             linksRef.current = [];
             const advisoryData = res.data;
@@ -758,7 +758,7 @@ export default function Advisory({
         };
 
         apiAxios
-          .post(`api/add/public-advisories`, newAdvisory, {
+          .post(`api/add/public-advisory-audits`, newAdvisory, {
             headers: { Authorization: `Bearer ${keycloak.idToken}` },
           })
           .then((res) => {
@@ -878,7 +878,7 @@ export default function Advisory({
           };
 
           apiAxios
-            .put(`api/update/public-advisories/${id}`, updatedAdvisory, {
+            .put(`api/update/public-advisory-audits/${id}`, updatedAdvisory, {
               headers: { Authorization: `Bearer ${keycloak.idToken}` },
             })
             .then((res) => {

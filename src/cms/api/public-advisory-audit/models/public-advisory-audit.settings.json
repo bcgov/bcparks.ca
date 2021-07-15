@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "public_advisory_audits",
   "info": {
-    "name": "PublicAdvisoryAudit"
+    "name": "PublicAdvisoryAudit",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -132,6 +133,9 @@
     },
     "standardMessage": {
       "model": "standard-message"
+    },
+    "publishedRevisionNumber": {
+      "type": "integer"
     }
   }
 }
