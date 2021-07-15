@@ -373,7 +373,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/sites/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -436,7 +438,7 @@
         },
         "parameters": [
           {
-            "name": "orcsSiteNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -499,7 +501,7 @@
         ],
         "parameters": [
           {
-            "name": "orcsSiteNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -628,19 +630,7 @@
               "featureId": {
                 "type": "integer"
               },
-              "managementAreas": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "sites": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "fireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -657,6 +647,39 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "parkNames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "hasCampfireBan": {
+                "type": "boolean"
+              },
+              "hasSmokingBan": {
+                "type": "boolean"
+              },
+              "fireZones": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "managementAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "hasCampfireBanOverride": {
+                "type": "boolean"
+              },
+              "hasSmokingBanOverride": {
+                "type": "boolean"
+              },
+              "campfireBanRescindedDate": {
+                "type": "string"
               },
               "published_at": {
                 "type": "string"
@@ -698,6 +721,12 @@
                   "type": "string"
                 },
                 "activityType": {
+                  "type": "string"
+                },
+                "modifiedBy": {
+                  "type": "string"
+                },
+                "modifiedDate": {
                   "type": "string"
                 },
                 "published_at": {
@@ -743,6 +772,12 @@
                 "facilityType": {
                   "type": "string"
                 },
+                "modifiedBy": {
+                  "type": "string"
+                },
+                "modifiedDate": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },
@@ -754,6 +789,12 @@
                 }
               }
             }
+          },
+          "isUnofficialSite": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -812,6 +853,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "isUnofficialSite": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",

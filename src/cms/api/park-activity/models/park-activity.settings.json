@@ -15,7 +15,7 @@
       "type": "string"
     },
     "description": {
-      "type": "string"
+      "type": "text"
     },
     "isActivityOpen": {
       "type": "boolean"
@@ -24,15 +24,21 @@
       "type": "boolean"
     },
     "protectedArea": {
-      "model": "protected-area",
-      "via": "parkActivities"
+      "via": "parkActivities",
+      "model": "protected-area"
     },
     "site": {
-      "model": "site",
-      "via": "parkActivities"
+      "via": "parkActivities",
+      "model": "site"
     },
     "activityType": {
       "model": "activity-type"
+    },
+    "modifiedBy": {
+      "type": "string"
+    },
+    "modifiedDate": {
+      "type": "datetime"
     }
   }
 }

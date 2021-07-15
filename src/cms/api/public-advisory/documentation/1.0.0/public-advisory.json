@@ -796,19 +796,7 @@
                 "featureId": {
                   "type": "integer"
                 },
-                "managementAreas": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "sites": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "fireZones": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -825,6 +813,39 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "parkNames": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "hasCampfireBan": {
+                  "type": "boolean"
+                },
+                "hasSmokingBan": {
+                  "type": "boolean"
+                },
+                "fireZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "managementAreas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "hasCampfireBanOverride": {
+                  "type": "boolean"
+                },
+                "hasSmokingBanOverride": {
+                  "type": "boolean"
+                },
+                "campfireBanRescindedDate": {
+                  "type": "string"
                 },
                 "published_at": {
                   "type": "string"
@@ -968,8 +989,11 @@
                 "section": {
                   "type": "string"
                 },
-                "protectedArea": {
-                  "type": "string"
+                "protectedAreas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "region": {
                   "type": "string"
@@ -1007,6 +1031,120 @@
                 },
                 "fireCentre": {
                   "type": "string"
+                },
+                "protectedAreas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "sites": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "orcsSiteNumber"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "siteName": {
+                  "type": "string"
+                },
+                "siteNumber": {
+                  "type": "integer"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "establishedDate": {
+                  "type": "string"
+                },
+                "repealedDate": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "latitude": {
+                  "type": "number"
+                },
+                "longitude": {
+                  "type": "number"
+                },
+                "mapZoom": {
+                  "type": "integer"
+                },
+                "orcsSiteNumber": {
+                  "type": "string"
+                },
+                "protectedArea": {
+                  "type": "string"
+                },
+                "parkActivities": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "parkFacilities": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "isUnofficialSite": {
+                  "type": "boolean"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "fireCentres": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "fireCentreNumber": {
+                  "type": "integer"
+                },
+                "fireCentreName": {
+                  "type": "string"
+                },
+                "fireZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "published_at": {
                   "type": "string"
@@ -1157,6 +1295,18 @@
             }
           },
           "fireZones": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sites": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fireCentres": {
             "type": "array",
             "items": {
               "type": "string"
