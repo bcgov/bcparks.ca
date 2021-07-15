@@ -111,6 +111,7 @@
 **/exports
 **/*.cache
 **/build
+!**/wysiwyg/admin/src/components/ckeditor5-build-classic/build
 **/.strapi-updater.json
 **/package-lock.json
 **/yarn.lock

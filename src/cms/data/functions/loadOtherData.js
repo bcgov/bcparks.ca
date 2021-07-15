@@ -362,6 +362,22 @@ const loadStatutoryHolidays = async () => {
   }
 };
 
+const loadWebsites = async () => {
+  loadUtils.loadJson(
+    "website",
+    "./data/websites.json",
+    "website"
+  );
+};
+
+const loadPages = async () => {
+  loadUtils.loadJson(
+    "page",
+    "./data/pages.json",
+    "page"
+  );
+};
+
 module.exports = {
   loadBusinessHours,
   loadStatutoryHolidays,
@@ -383,4 +399,6 @@ module.exports = {
   loadParkName,
   loadParkFireZoneXref,
   loadParkFogZoneXref,
+  loadPages,
+  loadWebsites,
 };

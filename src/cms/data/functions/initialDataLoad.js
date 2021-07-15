@@ -35,6 +35,8 @@ const loadData = async () => {
       otherData.loadFireCentre(),
       otherData.loadFireZone(),
       otherData.loadFireBanProhibition(),
+      otherData.loadWebsites(),
+      otherData.loadPages(),
     ]).then(async () => {
       return Promise.all([
         parData.loadAdditionalParData(),
@@ -84,6 +86,8 @@ const rewriteData = async () => {
       strapi.services["advisory-status"].delete(),
       strapi.services["link-type"].delete(),
       strapi.services["urgency"].delete(),
+      strapi.services["website"].delete(),
+      strapi.services["page"].delete(),
     ]).then(() => {
       strapi.log.info("---------Removing all data completed---------");
       Promise.resolve(loadData()).then(() => {

@@ -10,6 +10,10 @@
     "strapi": "strapi"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^29.0.0",
+    "@ckeditor/ckeditor5-react": "^3.0.2",
+    "@ckeditor/ckeditor5-source-editing": "^29.0.0",
+    "@ckeditor/ckeditor5-theme-lark": "^29.0.0",
     "axios": "^0.21.1",
     "knex": "^0.21.19",
     "pg": "^8.5.1",

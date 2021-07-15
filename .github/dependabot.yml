@@ -1,9 +1,0 @@
-version: 2
-updates:
-  # npm dependencies - frontend
-  - package-ecosystem: "npm"
-    directory: "/src/frontend/src"
-    schedule:
-      interval: "weekly"
-      day: "tuesday"
-      time: "18:00"

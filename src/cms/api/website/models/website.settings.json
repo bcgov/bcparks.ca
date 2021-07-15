@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "Websites",
+  "info": {
+    "name": "Website",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "homepage": {
+      "model": "page"
+    },
+    "Header": {
+      "type": "richtext"
+    },
+    "Navigation": {
+      "type": "richtext"
+    },
+    "Footer": {
+      "type": "richtext"
+    }
+  }
+}

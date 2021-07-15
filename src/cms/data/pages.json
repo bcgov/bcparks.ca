@@ -1,0 +1,12 @@
+{"page":
+	[
+		{
+		  "Slug": "/about",
+		  "Template": "Template2"     
+		},
+		{
+		  "Slug": "/home",
+		  "Template": "Template1"
+		}
+	]
+} 
