@@ -3,6 +3,22 @@ const axios = require("axios");
 const fs = require("fs");
 const loadUtils = require("./loadUtils");
 
+const loadWebsites = async () => {
+  loadUtils.loadJson(
+    "website",
+    "./data/websites.json",
+    "website"
+  );
+};
+
+const loadPages = async () => {
+  loadUtils.loadJson(
+    "page",
+    "./data/pages.json",
+    "page"
+  );
+};
+
 const loadAccessStatus = async () => {
   loadUtils.loadJson(
     "access-status",
@@ -314,4 +330,6 @@ module.exports = {
   loadParkFacility,
   loadParkFireZoneXref,
   loadParkFogZoneXref,
+  loadWebsites,
+  loadPages,
 };

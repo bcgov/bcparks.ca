@@ -18,7 +18,9 @@ const isFirstRun = async () => {
 
 const loadData = async () => {
   try {
-    await parData.loadParData();
+    await otherData.loadWebsites();
+    await otherData.loadPages();
+    /*await parData.loadParData();
     await otherData.loadBusinessHours();
     await otherData.loadStatutoryHolidays();
 
@@ -42,7 +44,7 @@ const loadData = async () => {
     otherData.loadParkActivity();
     otherData.loadParkFacility();
     otherData.loadParkFireZoneXref();
-    otherData.loadParkFogZoneXref();
+    otherData.loadParkFogZoneXref();*/
   } catch (error) {
     strapi.log.error(error);
   }
