@@ -8,8 +8,8 @@ const { sanitizeEntity } = require("strapi-utils");
 
 module.exports = {
   async findOne(ctx) {
-    const { SectionNumber } = ctx.params;
-    const entity = await strapi.services.section.findOne({ SectionNumber });
+    const { sectionNumber } = ctx.params;
+    const entity = await strapi.services.section.findOne({ sectionNumber });
     return sanitizeEntity(entity, { model: strapi.models.section });
   },
 };

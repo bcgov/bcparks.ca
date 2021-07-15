@@ -23,9 +23,10 @@
       "model": "section",
       "via": "managementAreas"
     },
-    "protectedArea": {
+    "protectedAreas": {
       "via": "managementAreas",
-      "model": "protected-area"
+      "collection": "protected-area",
+      "dominant": true
     },
     "region": {
       "via": "managementAreas",

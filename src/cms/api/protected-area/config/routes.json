@@ -26,6 +26,14 @@
     },
     {
       "method": "GET",
+      "path": "/protected-areas/items",
+      "handler": "protected-area.items",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/protected-areas/status",
       "handler": "protected-area.status",
       "config": {
@@ -50,7 +58,7 @@
     },
     {
       "method": "PUT",
-      "path": "/protected-areas/:orcs",
+      "path": "/protected-areas/:id",
       "handler": "protected-area.update",
       "config": {
         "policies": []
@@ -58,7 +66,7 @@
     },
     {
       "method": "DELETE",
-      "path": "/protected-areas/:orcs",
+      "path": "/protected-areas/:id",
       "handler": "protected-area.delete",
       "config": {
         "policies": []

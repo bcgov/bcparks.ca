@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_names",
+  "info": {
+    "name": "parkName",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "parkName": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
+    },
+    "parkNameType": {
+      "model": "park-name-type"
+    },
+    "protectedArea": {
+      "via": "parkNames",
+      "model": "protected-area"
+    }
+  }
+}

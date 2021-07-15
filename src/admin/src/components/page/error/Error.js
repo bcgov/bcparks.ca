@@ -21,11 +21,25 @@ export default function Error({ page: { error } }) {
       </div>
     );
   } else if (error.status === 403) {
-    if (error.message === "BCSC login failed") {
+    if (error.message === "Login failed") {
       errorContent = (
         <div>
           <h1>Login failed</h1>
           <p>Unable to login, please try again later.</p>
+        </div>
+      );
+    } else if (error.message === "Unauthorized") {
+      errorContent = (
+        <div>
+          <h1>BC Parks Staff Portal</h1>
+          <br />
+          <p>
+            Please contact the web team at{" "}
+            <a href="mailto:parksweb@gov.bc.ca?subject=Access%20to%20BC%20Parks%20Staff%20Portal">
+              parksweb@gov.bc.ca
+            </a>{" "}
+            to request access.
+          </p>
         </div>
       );
     } else {
@@ -63,14 +77,12 @@ export default function Error({ page: { error } }) {
 
   return (
     <main>
-      <Header
-        header={{
-          name: "",
-        }}
-      />
+      <Header />
       <div className="page" data-testid="Error">
         <div className="content col-md-8">
+          <br />
           {errorContent}
+          <br />
           <div className="buttons">
             <Button
               label="Home"

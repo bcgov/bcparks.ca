@@ -3,6 +3,7 @@ version: "3.4"
 services:
   bcp-admin:
     container_name: bcp-admin
+    image: bcp-admin
     restart: unless-stopped
     build:
       context: src/admin
@@ -14,7 +15,7 @@ services:
         - REACT_APP_KEYCLOAK_AUTH_URL=${REACT_APP_KEYCLOAK_AUTH_URL}
         - REACT_APP_KEYCLOAK_REALM=${REACT_APP_KEYCLOAK_REALM}
         - REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
-    env_file: .env
+        - REACT_APP_STAT_HOLIDAY_API=${REACT_APP_STAT_HOLIDAY_API}
     environment:
       API_TOKEN: ${API_TOKEN}
       REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
@@ -23,13 +24,17 @@ services:
       REACT_APP_KEYCLOAK_AUTH_URL: ${REACT_APP_KEYCLOAK_AUTH_URL}
       REACT_APP_KEYCLOAK_REALM: ${REACT_APP_KEYCLOAK_REALM}
       REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
+      REACT_APP_STAT_HOLIDAY_API: ${REACT_APP_STAT_HOLIDAY_API}
     ports:
       - "8080:3000"
+    depends_on:
+      - bcp-cms
     networks:
       - bcp-cms-network
 
   bcp-middleware:
     container_name: bcp-middleware
+    image: bcp-middleware
     restart: unless-stopped
     build:
       context: src/middleware
@@ -43,7 +48,7 @@ services:
         - REACT_APP_KEYCLOAK_AUTH_URL=${REACT_APP_KEYCLOAK_AUTH_URL}
         - REACT_APP_KEYCLOAK_REALM=${REACT_APP_KEYCLOAK_REALM}
         - REACT_APP_KEYCLOAK_CLIENT_ID=${REACT_APP_KEYCLOAK_CLIENT_ID}
-    env_file: .env
+        - REACT_APP_STAT_HOLIDAY_API=${REACT_APP_STAT_HOLIDAY_API}
     environment:
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
       ASPNETCORE_ENVIRONMENT: Development
@@ -53,6 +58,7 @@ services:
       REACT_APP_KEYCLOAK_AUTH_URL: ${REACT_APP_KEYCLOAK_AUTH_URL}
       REACT_APP_KEYCLOAK_REALM: ${REACT_APP_KEYCLOAK_REALM}
       REACT_APP_KEYCLOAK_CLIENT_ID: ${REACT_APP_KEYCLOAK_CLIENT_ID}
+      REACT_APP_STAT_HOLIDAY_API: ${REACT_APP_STAT_HOLIDAY_API}
     ports:
       - "5000:5000"
     networks:
@@ -61,8 +67,8 @@ services:
   bcp-cms:
     # image: strapi/strapi:3.5.3
     container_name: bcp-cms
+    image: bcp-cms
     restart: unless-stopped
-    env_file: .env
     build:
       context: src/cms
       args:
@@ -83,6 +89,7 @@ services:
         - DATABASE_SSL=${DATABASE_SSL}
         - DATABASE_USERNAME=${DATABASE_USERNAME}
         - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
+        - WEB_SCHEMA=${WEB_SCHEMA}
     environment:
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
       ADMIN_USER: ${ADMIN_USER}
@@ -101,6 +108,7 @@ services:
       DATABASE_USERNAME: ${DATABASE_USERNAME}
       DATABASE_SSL: ${DATABASE_SSL}
       REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL}
+      WEB_SCHEMA: ${WEB_SCHEMA}
     networks:
       - bcp-cms-network
     depends_on:
@@ -110,10 +118,15 @@ services:
 
   bcp-staging:
     container_name: bcp-staging
+    image: bcp-staging
     restart: unless-stopped
     build:
       context: src/staging
       dockerfile: Dockerfile
+      args:
+        - REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL} 
+    environment:
+      REACT_APP_CMS_BASE_URL: ${REACT_APP_CMS_BASE_URL} 
     ports:
       - "8000:8000"
     networks:

@@ -18,8 +18,8 @@
       "type": "string"
     },
     "fireZones": {
-      "collection": "fire-zone",
-      "via": "fireCentre"
+      "via": "fireCentre",
+      "collection": "fire-zone"
     }
   }
 }

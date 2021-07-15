@@ -118,6 +118,12 @@
     },
     "fireZones": {
       "collection": "fire-zone"
+    },
+    "sites": {
+      "collection": "site"
+    },
+    "fireCentres": {
+      "collection": "fire-centre"
     }
   }
 }

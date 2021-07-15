@@ -15,8 +15,9 @@ ARG ADMIN_PASSWORD
 ARG ADMIN_FIRST_NAME
 ARG ADMIN_LAST_NAME
 ARG ADMIN_EMAIL
-ARG REACT_APP_CMS_BASE_URL
 ARG ADMIN_JWT_SECRET
+ARG REACT_APP_CMS_BASE_URL
+ARG WEB_SCHEMA
 
 ENV DATABASE_HOST=${DATABASE_HOST}
 ENV DATABASE_PORT=${DATABASE_PORT}
@@ -35,29 +36,31 @@ ENV ADMIN_LAST_NAME=${ADMIN_LAST_NAME}
 ENV ADMIN_EMAIL=${ADMIN_EMAIL}
 ENV REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
 ENV ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET}
+ENV WEB_SCHEMA=${WEB_SCHEMA}
 
 # set working directory
 # WORKDIR /backend
 
 # add `/node_modules/.bin` to $PATH
 ENV PATH ./node_modules/.bin:$PATH
-USER 1007770000
 # install app dependencies
 COPY package.json ./
-
-
 RUN npm install --silent
 RUN npm run build
 
 # add app
 COPY . ./
-USER 0
-RUN cat ./config/server_template.js | envsubst > ./config/server.js && \
-    chmod 766 ./config/server.js && \
-    cat ./config/server.js
+# COPY --chown=1007770000:1007770000 . ./
+# COPY --chown=default:default . ./
 
-RUN chmod -R 777 /opt/app-root/src/ && \
-    chown -R 1007770000 /opt/app-root/src/
-USER 1007770000
+USER 0
+RUN yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
+    yum install -y postgresql13
+RUN cat ./config/server_template.js | envsubst > ./config/server.js && \
+    chmod -R ugo+rwx . && \
+    cat ./config/server.js && \
+    chmod +x ./entrypoint.sh 
+# USER default
 # start app
-CMD [ "npm", "start" ]
+# CMD [ "npm", "start" ]
+ENTRYPOINT ["./entrypoint.sh"]

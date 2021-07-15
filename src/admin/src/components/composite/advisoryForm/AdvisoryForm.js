@@ -17,19 +17,24 @@ import {
 } from "@material-ui/pickers";
 import ImageUploader from "react-images-upload";
 import Select from "react-select";
+import { withStyles } from "@material-ui/core/styles";
 import WarningIcon from "@material-ui/icons/Warning";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
+import Tooltip from "@material-ui/core/Tooltip";
+import HelpIcon from "@material-ui/icons/Help";
 import VisibilityToggle from "../../base/visibilityToggle/VisibilityToggle";
 import {
   validateOptionalNumber,
   validateRequiredText,
   validateRequiredSelect,
-  validateRequiredMultiSelect,
+  validateRequiredLocation,
   validateRequiredDate,
   validateOptionalDate,
   validAdvisoryData,
 } from "../../../validators/AdvisoryValidator";
+
+import PrivateElement from "../../../auth/PrivateElement";
 
 export default function AdvisoryForm({
   mode,
@@ -48,9 +53,27 @@ export default function AdvisoryForm({
     setAccessStatus,
     description,
     setDescription,
-    locationOptions,
-    locations,
-    setLocations,
+    protectedAreas,
+    selectedProtectedAreas,
+    setSelectedProtectedAreas,
+    regions,
+    selectedRegions,
+    setSelectedRegions,
+    sections,
+    selectedSections,
+    setSelectedSections,
+    managementAreas,
+    selectedManagementAreas,
+    setSelectedManagementAreas,
+    sites,
+    selectedSites,
+    setSelectedSites,
+    fireCentres,
+    selectedFireCentres,
+    setSelectedFireCentres,
+    fireZones,
+    selectedFireZones,
+    setSelectedFireZones,
     urgencies,
     urgency,
     setUrgency,
@@ -99,17 +122,17 @@ export default function AdvisoryForm({
     isSubmitting,
     isSavingDraft,
     updateAdvisory,
-    setToDashboard,
+    setToBack,
+    formError,
+    setFormError,
   },
 }) {
-  const [locationError, setLocationError] = useState("");
+  const [protectedAreaError, setProtectedAreaError] = useState("");
   const [eventTypeError, setEventTypeError] = useState("");
-  const [accessStatusError, setAccessStatusError] = useState("");
   const [urgencyError, setUrgencyError] = useState("");
   const [advisoryStatusError, setAdvisoryStatusError] = useState("");
   const [ticketNumberError, setTicketNumberError] = useState("");
   const [headlineError, setHeadlineError] = useState("");
-  const [descriptionError, setDescriptionError] = useState("");
   const [advisoryDateError, setAdvisoryDateError] = useState("");
   const [startDateError, setStartDateError] = useState("");
   const [endDateError, setEndDateError] = useState("");
@@ -117,7 +140,6 @@ export default function AdvisoryForm({
   const [updatedDateError, setUpdatedDateError] = useState("");
   const [submittedByError, setSubmittedByError] = useState("");
   const [listingRankError, setListingRankError] = useState("");
-  const [formError, setFormError] = useState("");
 
   const advisoryData = {
     listingRank: { value: listingRank, setError: setListingRankError },
@@ -128,20 +150,18 @@ export default function AdvisoryForm({
       setError: setEventTypeError,
       text: "event type",
     },
-    accessStatus: {
-      value: accessStatus,
-      setError: setAccessStatusError,
-      text: "access status",
-    },
-    description: {
-      value: description,
-      setError: setDescriptionError,
-      text: "description",
-    },
-    locations: {
-      value: locations,
-      setError: setLocationError,
-      text: "locations",
+    protectedArea: {
+      value: [
+        selectedProtectedAreas,
+        selectedRegions,
+        selectedSections,
+        selectedManagementAreas,
+        selectedFireCentres,
+        selectedFireZones,
+        selectedSites,
+      ],
+      setError: setProtectedAreaError,
+      text: "at least one affected area",
     },
     urgency: { value: urgency, setError: setUrgencyError, text: "urgency" },
     advisoryDate: { value: advisoryDate, setError: setAdvisoryDateError },
@@ -221,52 +241,19 @@ export default function AdvisoryForm({
     { label: "Months", value: "M" },
   ];
 
+  const LightTooltip = withStyles(() => ({
+    tooltip: {
+      backgroundColor: "#fff",
+      color: "rgba(0, 0, 0, 0.87)",
+      boxShadow: "rgba(0, 0, 0, 0.35) 1px 1px 15px",
+      fontSize: 12,
+    },
+  }))(Tooltip);
+
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <form>
         <div className="container-fluid ad-form">
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Listing Rank
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <TextField
-                value={listingRank}
-                onChange={(event) => {
-                  setListingRank(event.target.value);
-                }}
-                className="bcgov-input"
-                variant="outlined"
-                InputProps={{ ...listingRankInput }}
-                error={listingRankError !== ""}
-                helperText={listingRankError}
-                onBlur={() => {
-                  validateOptionalNumber(advisoryData.listingRank);
-                }}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              DC Ticket Number
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <TextField
-                value={ticketNumber}
-                onChange={(event) => {
-                  setTicketNumber(event.target.value);
-                }}
-                className="bcgov-input"
-                variant="outlined"
-                InputProps={{ ...ticketNumberInput }}
-                error={ticketNumberError !== ""}
-                helperText={ticketNumberError}
-                onBlur={() => {
-                  validateOptionalNumber(advisoryData.ticketNumber);
-                }}
-              />
-            </div>
-          </div>
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
               Headline
@@ -290,7 +277,7 @@ export default function AdvisoryForm({
           </div>
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
-              Event type
+              Event Type
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               <FormControl
@@ -303,99 +290,36 @@ export default function AdvisoryForm({
                 <Select
                   options={eventTypes}
                   value={eventTypes.filter((e) => e.value === eventType)}
-                  onChange={(e) => setEventType(e.value)}
+                  onChange={(e) => setEventType(e ? e.value : 0)}
                   placeholder="Select an event type"
                   className="bcgov-select"
                   onBlur={() => {
                     validateRequiredSelect(advisoryData.eventType);
                   }}
+                  isClearable
                 />
                 <FormHelperText>{eventTypeError}</FormHelperText>
               </FormControl>
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
-              Access Status
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Park Access Status
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${
-                  accessStatusError !== "" ? "bcgov-select-error" : ""
-                }`}
-                error
-              >
-                <Select
-                  options={accessStatuses}
-                  value={accessStatuses.filter((e) => e.value === accessStatus)}
-                  onChange={(e) => setAccessStatus(e.value)}
-                  placeholder="Select an access status"
-                  className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredSelect(advisoryData.accessStatus);
-                  }}
-                />
-                <FormHelperText>{accessStatusError}</FormHelperText>
-              </FormControl>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
-              Description
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <TextField
-                value={description}
-                onChange={(event) => {
-                  setDescription(event.target.value);
-                }}
-                multiline
-                rows={2}
-                rowsMax={10}
-                className="bcgov-input"
-                variant="outlined"
-                InputProps={{ ...descriptionInput }}
-                error={descriptionError !== ""}
-                helperText={descriptionError}
-                onBlur={() => {
-                  validateRequiredText(advisoryData.description);
-                }}
+              <Select
+                options={accessStatuses}
+                value={accessStatuses.filter((e) => e.value === accessStatus)}
+                onChange={(e) => setAccessStatus(e ? e.value : 0)}
+                placeholder="Select an access status"
+                className="bcgov-select"
+                isClearable
               />
             </div>
           </div>
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
-              Location
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${
-                  locationError !== "" ? "bcgov-select-error" : ""
-                }`}
-                error
-              >
-                <Select
-                  options={locationOptions}
-                  value={locations}
-                  onChange={(e) => {
-                    setLocations(e);
-                  }}
-                  placeholder="Select a Park"
-                  isMulti="true"
-                  className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredMultiSelect(advisoryData.locations);
-                  }}
-                />
-                <FormHelperText>{locationError}</FormHelperText>
-              </FormControl>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
-              Urgency level
+              Urgency Level
             </div>
             <div className="col-lg-8 col-md-8 col-sm-12">
               <FormControl error>
@@ -425,7 +349,7 @@ export default function AdvisoryForm({
           </div>
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-6 col-6 ad-label">
-              Safety related
+              Safety Related
             </div>
             <div className="col-lg-8 col-md-8 col-sm-6 col-6">
               <Checkbox
@@ -438,8 +362,235 @@ export default function AdvisoryForm({
             </div>
           </div>
           <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Description
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <TextField
+                value={description}
+                onChange={(event) => {
+                  setDescription(event.target.value);
+                }}
+                multiline
+                rows={2}
+                rowsMax={10}
+                className="bcgov-input"
+                variant="outlined"
+                InputProps={{ ...descriptionInput }}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12  bcgov-required ad-label">
+              Select at least one affected area:
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  protectedAreaError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <FormHelperText>{protectedAreaError}</FormHelperText>
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">Park(s)</div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  protectedAreaError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  options={protectedAreas}
+                  value={selectedProtectedAreas}
+                  onChange={(e) => {
+                    setSelectedProtectedAreas(e);
+                  }}
+                  placeholder="Select a Park"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredLocation(advisoryData.protectedArea);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">Site(s)</div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  protectedAreaError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  options={sites}
+                  value={selectedSites}
+                  onChange={(e) => {
+                    setSelectedSites(e);
+                  }}
+                  placeholder="Select a Site"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredLocation(advisoryData.protectedArea);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Region(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  protectedAreaError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  options={regions}
+                  value={selectedRegions}
+                  onChange={(e) => {
+                    setSelectedRegions(e);
+                  }}
+                  placeholder="Select a Region"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredLocation(advisoryData.protectedArea);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Section(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  protectedAreaError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  options={sections}
+                  value={selectedSections}
+                  onChange={(e) => {
+                    setSelectedSections(e);
+                  }}
+                  placeholder="Select a Section"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredLocation(advisoryData.protectedArea);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Management Area(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  protectedAreaError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  options={managementAreas}
+                  value={selectedManagementAreas}
+                  onChange={(e) => {
+                    setSelectedManagementAreas(e);
+                  }}
+                  placeholder="Select a Management Area"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredLocation(advisoryData.protectedArea);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Fire Centre(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  protectedAreaError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  options={fireCentres}
+                  value={selectedFireCentres}
+                  onChange={(e) => {
+                    setSelectedFireCentres(e);
+                  }}
+                  placeholder="Select a Fire Centre"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredLocation(advisoryData.protectedArea);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Fire Zone(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  protectedAreaError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  options={fireZones}
+                  value={selectedFireZones}
+                  onChange={(e) => {
+                    setSelectedFireZones(e);
+                  }}
+                  placeholder="Select a Fire Zone"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredLocation(advisoryData.protectedArea);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-6 col-6 ad-label">
-              Reservation affected
+              Reservations Affected
             </div>
             <div className="col-lg-8 col-md-8 col-sm-6 col-6">
               <Checkbox
@@ -449,6 +600,56 @@ export default function AdvisoryForm({
                 }}
                 inputProps={{
                   "aria-label": "Discover camping affected",
+                }}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              DC Ticket Number
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <TextField
+                value={ticketNumber}
+                onChange={(event) => {
+                  setTicketNumber(event.target.value);
+                }}
+                className="bcgov-input"
+                variant="outlined"
+                InputProps={{ ...ticketNumberInput }}
+                error={ticketNumberError !== ""}
+                helperText={ticketNumberError}
+                onBlur={() => {
+                  validateOptionalNumber(advisoryData.ticketNumber);
+                }}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Listing Rank{" "}
+              <LightTooltip
+                arrow
+                title="Advisories, by default, are listed by date in descending order. 
+                Listing Rank is a number that is used to override the chronological sort order for advisories. 
+                A higher listing rank number will give the advisory a higher priority in the list."
+              >
+                <HelpIcon className="helpIcon" />
+              </LightTooltip>
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <TextField
+                value={listingRank}
+                onChange={(event) => {
+                  setListingRank(event.target.value);
+                }}
+                className="bcgov-input"
+                variant="outlined"
+                InputProps={{ ...listingRankInput }}
+                error={listingRankError !== ""}
+                helperText={listingRankError}
+                onBlur={() => {
+                  validateOptionalNumber(advisoryData.listingRank);
                 }}
               />
             </div>
@@ -465,7 +666,7 @@ export default function AdvisoryForm({
                       <div className="col-lg-12 col-md-12 col-sm-12 plr0">
                         <div className="ad-flex">
                           <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label bcgov-required">
-                            Advisory date
+                            Advisory Date
                           </div>
                           <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
                             <KeyboardDateTimePicker
@@ -498,7 +699,7 @@ export default function AdvisoryForm({
                       <div className="col-lg-12 col-md-12 col-sm-12 plr0">
                         <div className="ad-flex">
                           <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                            Start date
+                            Start Date
                           </div>
                           <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
                             <KeyboardDateTimePicker
@@ -531,7 +732,7 @@ export default function AdvisoryForm({
                       <div className="col-lg-12 col-md-12 col-sm-12 plr0">
                         <div className="ad-flex">
                           <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                            End date
+                            End Date
                           </div>
                           <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
                             <KeyboardDateTimePicker
@@ -549,6 +750,8 @@ export default function AdvisoryForm({
                               onBlur={() => {
                                 validateOptionalDate(advisoryData.endDate);
                               }}
+                              minDate={startDate}
+                              minDateMessage="End date should not be before Advisory date"
                             />
                             <VisibilityToggle
                               toggle={{
@@ -559,13 +762,13 @@ export default function AdvisoryForm({
                           </div>
                         </div>
                       </div>
-                    </div>{" "}
+                    </div>
                     {mode === "update" && (
                       <div className="row">
                         <div className="col-lg-12 col-md-12 col-sm-12 plr0">
                           <div className="ad-flex">
                             <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                              Updated date
+                              Updated Date
                             </div>
                             <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
                               <KeyboardDateTimePicker
@@ -601,7 +804,7 @@ export default function AdvisoryForm({
                       <div className="col-lg-12 col-md-12 col-sm-12 plr0">
                         <div className="ad-flex">
                           <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                            Expiry date
+                            Expiry Date
                           </div>
                           <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
                             <KeyboardDateTimePicker
@@ -619,6 +822,8 @@ export default function AdvisoryForm({
                               onBlur={() => {
                                 validateOptionalDate(advisoryData.expiryDate);
                               }}
+                              minDate={startDate}
+                              minDateMessage="Expiry date should not be before Advisory date"
                             />
                           </div>
                         </div>
@@ -736,7 +941,7 @@ export default function AdvisoryForm({
           </div>
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Internal notes
+              Internal Notes
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               <TextField
@@ -750,59 +955,62 @@ export default function AdvisoryForm({
               />
             </div>
           </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
-              Submitted By
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <TextField
-                value={submittedBy}
-                onChange={(event) => {
-                  setSubmittedBy(event.target.value);
-                }}
-                className="bcgov-input"
-                variant="outlined"
-                InputProps={{ ...submitterInput }}
-                error={submittedByError !== ""}
-                helperText={submittedByError}
-                onBlur={() => {
-                  validateRequiredText(advisoryData.submittedBy);
-                }}
-              />
-            </div>
-          </div>
-
-          {mode === "update" && (
-            <div className="row">
-              <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
-                Advisory status
-              </div>
-              <div className="col-lg-7 col-md-8 col-sm-12">
-                <FormControl
-                  variant="outlined"
-                  className={`bcgov-select-form ${
-                    advisoryStatusError !== "" ? "bcgov-select-error" : ""
-                  }`}
-                  error
-                >
-                  <Select
-                    options={advisoryStatuses}
-                    value={advisoryStatuses.filter(
-                      (a) => a.value === advisoryStatus
-                    )}
-                    onChange={(e) => setAdvisoryStatus(e.value)}
-                    placeholder="Select an advisory status"
-                    className="bcgov-select"
+          {PrivateElement(["approver"]) && (
+            <>
+              <div className="row">
+                <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
+                  Submitted By
+                </div>
+                <div className="col-lg-7 col-md-8 col-sm-12">
+                  <TextField
+                    value={submittedBy}
+                    onChange={(event) => {
+                      setSubmittedBy(event.target.value);
+                    }}
+                    className="bcgov-input"
+                    variant="outlined"
+                    InputProps={{ ...submitterInput }}
+                    error={submittedByError !== ""}
+                    helperText={submittedByError}
                     onBlur={() => {
-                      validateRequiredSelect(advisoryData.advisoryStatus);
+                      validateRequiredText(advisoryData.submittedBy);
                     }}
                   />
-                  <FormHelperText>{advisoryStatusError}</FormHelperText>
-                </FormControl>
+                </div>
               </div>
-            </div>
+
+              <div className="row">
+                <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
+                  Advisory Status
+                </div>
+                <div className="col-lg-7 col-md-8 col-sm-12">
+                  <FormControl
+                    variant="outlined"
+                    className={`bcgov-select-form ${
+                      advisoryStatusError !== "" ? "bcgov-select-error" : ""
+                    }`}
+                    error
+                  >
+                    <Select
+                      options={advisoryStatuses}
+                      value={advisoryStatuses.filter(
+                        (a) => a.value === advisoryStatus
+                      )}
+                      onChange={(e) => setAdvisoryStatus(e ? e.value : 0)}
+                      placeholder="Select an advisory status"
+                      className="bcgov-select"
+                      onBlur={() => {
+                        validateRequiredSelect(advisoryData.advisoryStatus);
+                      }}
+                      isClearable
+                    />
+                    <FormHelperText>{advisoryStatusError}</FormHelperText>
+                  </FormControl>
+                </div>
+              </div>
+            </>
           )}
-          {(isStatHoliday || isAfterHours) && (
+          {!PrivateElement(["approver"]) && (isStatHoliday || isAfterHours) && (
             <div className="ad-af-hour-box">
               <div className="row">
                 <div className="col-lg-4 col-md-4 col-sm-1 col-1 ad-label">
@@ -866,53 +1074,103 @@ export default function AdvisoryForm({
           <div className="row">
             <div className="col-lg-4 col-md-4"></div>
             <div className="col-lg-7 col-md-8 col-sm-12 button-row ad-btn-group">
-              {mode === "create" && (
+              {!PrivateElement(["approver"]) && (
                 <>
-                  <Button
-                    label="Submit"
-                    styling="bcgov-normal-yellow btn"
-                    onClick={() => {
-                      if (validAdvisoryData(advisoryData)) {
-                        saveAdvisory("submit");
-                      }
-                    }}
-                    hasLoader={isSubmitting}
-                  />
+                  {mode === "create" && (
+                    <>
+                      <Button
+                        label="Submit"
+                        styling="bcgov-normal-blue btn"
+                        onClick={() => {
+                          if (validAdvisoryData(advisoryData, false, mode)) {
+                            saveAdvisory("submit");
+                          }
+                        }}
+                        hasLoader={isSubmitting}
+                      />
+                      <Button
+                        label="Save Draft"
+                        styling="bcgov-normal-light btn"
+                        onClick={() => {
+                          if (validAdvisoryData(advisoryData, false, mode)) {
+                            saveAdvisory("draft");
+                          }
+                        }}
+                        hasLoader={isSavingDraft}
+                      />
+                    </>
+                  )}
+                  {mode === "update" && (
+                    <>
+                      <Button
+                        label="Update"
+                        styling="bcgov-normal-blue btn"
+                        onClick={() => {
+                          if (validAdvisoryData(advisoryData, false, mode)) {
+                            updateAdvisory("submit");
+                          }
+                        }}
+                        hasLoader={isSubmitting}
+                      />
+                      <Button
+                        label="Save Draft"
+                        styling="bcgov-normal-light btn"
+                        onClick={() => {
+                          if (validAdvisoryData(advisoryData, false, mode)) {
+                            updateAdvisory("draft");
+                          }
+                        }}
+                        hasLoader={isSavingDraft}
+                      />
+                    </>
+                  )}
 
                   <Button
-                    label="Save Draft"
+                    label="Cancel"
                     styling="bcgov-normal-light btn"
                     onClick={() => {
-                      if (validAdvisoryData(advisoryData)) {
-                        saveAdvisory("draft");
-                      }
+                      sessionStorage.clear();
+                      setToBack();
                     }}
-                    hasLoader={isSavingDraft}
                   />
                 </>
               )}
-              {mode === "update" && (
+              {PrivateElement(["approver"]) && (
                 <>
+                  {mode === "create" && (
+                    <Button
+                      label="Create"
+                      styling="bcgov-normal-blue btn"
+                      onClick={() => {
+                        if (validAdvisoryData(advisoryData, true, mode)) {
+                          saveAdvisory();
+                        }
+                      }}
+                      hasLoader={isSubmitting}
+                    />
+                  )}
+                  {mode === "update" && (
+                    <Button
+                      label="Update"
+                      styling="bcgov-normal-blue btn"
+                      onClick={() => {
+                        if (validAdvisoryData(advisoryData, true, mode)) {
+                          updateAdvisory();
+                        }
+                      }}
+                      hasLoader={isSubmitting}
+                    />
+                  )}
                   <Button
-                    label="Update"
-                    styling="bcgov-normal-yellow btn"
+                    label="Cancel"
+                    styling="bcgov-normal-light btn"
                     onClick={() => {
-                      if (validAdvisoryData(advisoryData, "update")) {
-                        updateAdvisory();
-                      }
+                      sessionStorage.clear();
+                      setToBack();
                     }}
-                    hasLoader={isSubmitting}
                   />
                 </>
               )}
-              <Button
-                label="Cancel"
-                styling="bcgov-normal-light btn"
-                onClick={() => {
-                  sessionStorage.clear();
-                  setToDashboard(true);
-                }}
-              />
             </div>
           </div>
         </div>
@@ -938,9 +1196,27 @@ AdvisoryForm.propTypes = {
     setAccessStatus: PropTypes.func.isRequired,
     description: PropTypes.string,
     setDescription: PropTypes.func.isRequired,
-    locationOptions: PropTypes.array.isRequired,
-    locations: PropTypes.array,
-    setLocations: PropTypes.func.isRequired,
+    protectedAreas: PropTypes.array.isRequired,
+    selectedProtectedAreas: PropTypes.array,
+    setSelectedProtectedAreas: PropTypes.func.isRequired,
+    regions: PropTypes.array.isRequired,
+    selectedRegions: PropTypes.array,
+    setSelectedRegions: PropTypes.func.isRequired,
+    sections: PropTypes.array.isRequired,
+    selectedSections: PropTypes.array,
+    setSelectedSections: PropTypes.func.isRequired,
+    managementAreas: PropTypes.array.isRequired,
+    selectedManagementAreas: PropTypes.array,
+    setSelectedManagementAreas: PropTypes.func.isRequired,
+    sites: PropTypes.array.isRequired,
+    selectedSites: PropTypes.array,
+    setSelectedSites: PropTypes.func.isRequired,
+    fireCentres: PropTypes.array.isRequired,
+    selectedFireCentres: PropTypes.array,
+    setSelectedFireCentres: PropTypes.func.isRequired,
+    fireZones: PropTypes.array.isRequired,
+    selectedFireZones: PropTypes.array,
+    setSelectedFireZones: PropTypes.func.isRequired,
     urgencies: PropTypes.array.isRequired,
     urgency: PropTypes.number,
     setUrgency: PropTypes.func.isRequired,
@@ -989,6 +1265,8 @@ AdvisoryForm.propTypes = {
     isSubmitting: PropTypes.bool,
     isSavingDraft: PropTypes.bool,
     updateAdvisory: PropTypes.func.isRequired,
-    setToDashboard: PropTypes.func.isRequired,
+    setToBack: PropTypes.func.isRequired,
+    formError: PropTypes.string,
+    setFormError: PropTypes.func.isRequired,
   }).isRequired,
 };

@@ -49,6 +49,8 @@ parameters:
 - name: URL_STUB
   value: "-61d198-dev.apps.silver.devops.gov.bc.ca"
   required: false
+- name: API_HOST_PREFIX
+  value: api
 
 objects:
 ### Frontend
@@ -61,6 +63,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: nodejs
   spec:
     completionDeadlineSeconds: 1200
     replicas: 1
@@ -77,28 +80,9 @@ objects:
           name: ${FRONTEND_POD}
       spec:
         containers:
-          - env:
-              - name: REACT_APP_API_BASE_URL
-                value: "${WEB_SCHEMA}://${API_URL}${URL_STUB}"
-              - name: REACT_APP_FRONTEND_BASE_URL
-                value: "${WEB_SCHEMA}://${FRONTEND_URL}${URL_STUB}"
-              - name: PUBLIC_URL
-                value: "${WEB_SCHEMA}://${FRONTEND_URL}${URL_STUB}"
-              - name: REACT_APP_KEYCLOAK_AUTH_URL
-                valueFrom:
-                  secretKeyRef:
-                    key: REACT_APP_KEYCLOAK_AUTH_URL
-                    name: bcparks-secrets
-              - name: REACT_APP_KEYCLOAK_REALM
-                valueFrom:
-                  secretKeyRef:
-                    key: REACT_APP_KEYCLOAK_REALM
-                    name: bcparks-secrets
-              - name: REACT_APP_KEYCLOAK_CLIENT_ID
-                valueFrom:
-                  secretKeyRef:
-                    key: REACT_APP_KEYCLOAK_CLIENT_ID
-                    name: bcparks-secrets
+          - envFrom:
+              - secretRef:
+                  name: bcparks-secrets
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/frontend:${OC_APP}
             name: ${FRONTEND_POD}
@@ -146,27 +130,29 @@ objects:
         targetPort: 8443
     selector:
       name: ${FRONTEND_POD}
-#   Frontend Route
-- apiVersion: route.openshift.io/v1
-  kind: Route
-  namespace: ${OC_NAMESPACE}-${OC_APP}
-  labels:
-    app: ${FRONTEND_POD}
-    app.kubernetes.io/component: ${NAME}
-    app.kubernetes.io/instance: ${NAME}
-    app.kubernetes.io/part-of: ${NAME}
-  metadata:
-    name: ${FRONTEND_POD}
-    namespace: ${OC_NAMESPACE}-${OC_APP}
-  spec:
-    host: ${FRONTEND_URL}${URL_STUB}
-    to:
-      kind: Service
-      name: ${FRONTEND_POD}
-      weight: 100
-    port:
-      targetPort: npm
-    wildcardPolicy: None
+# #   Frontend Route
+# - apiVersion: route.openshift.io/v1
+#   kind: Route
+#   namespace: ${OC_NAMESPACE}-${OC_APP}
+#   labels:
+#     app: ${FRONTEND_POD}
+#     app.kubernetes.io/component: ${NAME}
+#     app.kubernetes.io/instance: ${NAME}
+#     app.kubernetes.io/part-of: ${NAME}
+#   metadata:
+#     name: ${FRONTEND_POD}
+#     namespace: ${OC_NAMESPACE}-${OC_APP}
+#   spec:
+#     host: ${FRONTEND_URL}${URL_STUB}
+#     to:
+#       kind: Service
+#       name: ${FRONTEND_POD}
+#       weight: 100
+#     port:
+#       targetPort: npm
+#     tls:
+#         insecureEdgeTerminationPolicy: Allow
+#         termination: edge
 
 ### CMS
 - apiVersion: apps.openshift.io/v1
@@ -177,6 +163,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: nodejs
   spec:
     completionDeadlineSeconds: 1200
     replicas: 1
@@ -197,32 +184,15 @@ objects:
               - name: DATABASE_HOST
                 value: ${DB_POD}
               - name: DATABASE_PORT
-                value: ${DB_PORT}
-              - name: DATABASE_NAME
-                valueFrom:
-                  secretKeyRef:
-                    key: DATABASE_NAME
-                    name: bcparks-secrets
-              - name: DATABASE_USERNAME
-                valueFrom:
-                  secretKeyRef:
-                    key: DATABASE_USERNAME
-                    name: bcparks-secrets
-              - name: DATABASE_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    key: DATABASE_PASSWORD
-                    name: bcparks-secrets
-              - name: DATABASE_SSL
-                valueFrom:
-                  secretKeyRef:
-                    key: DATABASE_SSL
-                    name: bcparks-secrets
+                value: ${DB_PORT}    
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/strapi:${OC_APP}
             name: ${CMS_POD}
             ports:
               - containerPort: 1337
+            envFrom:
+              - secretRef:
+                  name: bcparks-secrets
     triggers:
       - type: ConfigChange
       - type: ImageChange
@@ -251,27 +221,29 @@ objects:
         targetPort: 1337
     selector:
       name: ${CMS_POD}
-#   CMS Route
-- apiVersion: route.openshift.io/v1
-  kind: Route
-  namespace: ${OC_NAMESPACE}-${OC_APP}
-  labels:
-    app: ${CMS_POD}
-    app.kubernetes.io/component: ${NAME}
-    app.kubernetes.io/instance: ${NAME}
-    app.kubernetes.io/part-of: ${NAME}
-  metadata:
-    name: ${CMS_POD}
-    namespace: ${OC_NAMESPACE}-${OC_APP}
-  spec:
-    host: ${CMS_URL}${URL_STUB}
-    to:
-      kind: Service
-      name: ${CMS_POD}
-      weight: 100
-    port:
-      targetPort: 1337
-    wildcardPolicy: None
+# #   CMS Route
+# - apiVersion: route.openshift.io/v1
+#   kind: Route
+#   namespace: ${OC_NAMESPACE}-${OC_APP}
+#   labels:
+#     app: ${CMS_POD}
+#     app.kubernetes.io/component: ${NAME}
+#     app.kubernetes.io/instance: ${NAME}
+#     app.kubernetes.io/part-of: ${NAME}
+#   metadata:
+#     name: ${CMS_POD}
+#     namespace: ${OC_NAMESPACE}-${OC_APP}
+#   spec:
+#     host: ${CMS_URL}${URL_STUB}
+#     to:
+#       kind: Service
+#       name: ${CMS_POD}
+#       weight: 100
+#     port:
+#       targetPort: 1337
+#     tls:
+#         insecureEdgeTerminationPolicy: Allow
+#         termination: edge
 
 ### Database
 - apiVersion: apps.openshift.io/v1
@@ -282,6 +254,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: postgresql
   spec:
     replicas: 1
     selector:
@@ -346,6 +319,9 @@ objects:
                 name: ${DB_POD}-data
               - mountPath: /var/run/postgresql
                 name: ${DB_POD}-run
+            envFrom:
+              - secretRef:
+                  name: bcparks-secrets
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         volumes:
@@ -404,6 +380,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: php
   spec:
     completionDeadlineSeconds: 1200
     replicas: 1
@@ -426,6 +403,9 @@ objects:
             name: ${STAGING_POD}
             ports:
               - containerPort: 8000
+            envFrom:
+              - secretRef:
+                  name: bcparks-secrets
     triggers:
       - type: ConfigChange
       - type: ImageChange
@@ -454,27 +434,29 @@ objects:
         targetPort: 8000
     selector:
       name: ${STAGING_POD}
-#   Staging Route
-- apiVersion: route.openshift.io/v1
-  kind: Route
-  namespace: ${OC_NAMESPACE}-${OC_APP}
-  labels:
-    app: ${STAGING_POD}
-    app.kubernetes.io/component: ${NAME}
-    app.kubernetes.io/instance: ${NAME}
-    app.kubernetes.io/part-of: ${NAME}
-  metadata:
-    name: ${STAGING_POD}
-    namespace: ${OC_NAMESPACE}-${OC_APP}
-  spec:
-    host: ${STAGING_POD}${URL_STUB}
-    to:
-      kind: Service
-      name: staging
-      weight: 100
-    port:
-      targetPort: ${STAGING_POD}
-    wildcardPolicy: None
+# #   Staging Route
+# - apiVersion: route.openshift.io/v1
+#   kind: Route
+#   namespace: ${OC_NAMESPACE}-${OC_APP}
+#   labels:
+#     app: ${STAGING_POD}
+#     app.kubernetes.io/component: ${NAME}
+#     app.kubernetes.io/instance: ${NAME}
+#     app.kubernetes.io/part-of: ${NAME}
+#   metadata:
+#     name: ${STAGING_POD}
+#     namespace: ${OC_NAMESPACE}-${OC_APP}
+#   spec:
+#     host: ${STAGING_POD}${URL_STUB}
+#     to:
+#       kind: Service
+#       name: staging
+#       weight: 100
+#     port:
+#       targetPort: ${STAGING_POD}
+#     tls:
+#       insecureEdgeTerminationPolicy: Allow
+#       termination: edge
 
 ### API
 - apiVersion: apps.openshift.io/v1
@@ -485,6 +467,7 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
     labels:
       app.kubernetes.io/part-of: ${NAME}
+      app.openshift.io/runtime: dotnet
   spec:
     completionDeadlineSeconds: 1200
     replicas: 1
@@ -509,6 +492,9 @@ objects:
             name: ${API_POD}
             ports:
               - containerPort: 5000
+            envFrom:
+              - secretRef:
+                  name: bcparks-secrets        
     triggers:
       - type: ConfigChange
       - type: ImageChange
@@ -538,7 +524,7 @@ objects:
     selector:
       name: ${API_POD}
 
-#   API Route
+# #   API Route
 - apiVersion: route.openshift.io/v1
   kind: Route
   namespace: ${OC_NAMESPACE}-${OC_APP}
@@ -548,17 +534,20 @@ objects:
     app.kubernetes.io/instance: ${NAME}
     app.kubernetes.io/part-of: ${NAME}
   metadata:
-    name: ${API_POD}
+    name: ${API_POD}-route
     namespace: ${OC_NAMESPACE}-${OC_APP}
   spec:
-    host: ${API_URL}${URL_STUB}
+    host: ${API_HOST_PREFIX}${URL_STUB}
     to:
       kind: Service
       name: ${API_POD}
       weight: 100
     port:
       targetPort: ${API_POD}
-    wildcardPolicy: None
+    tls:
+      insecureEdgeTerminationPolicy: Allow
+      termination: edge
+    
 ### Network Policy
 - apiVersion: networking.k8s.io/v1
   kind: NetworkPolicy

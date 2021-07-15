@@ -1,0 +1,15 @@
+.park-info-tab-content {
+  width: 100% !important;
+}
+
+.dashboard-tab-content {
+  min-width: 750px !important;
+  width: 80% !important;
+}
+
+@media (max-width: 991.98px) {
+  .dashboard-tab-content {
+    min-width: unset !important;
+    width: 100% !important;
+  }
+}

@@ -6,17 +6,18 @@
 A data driven progressive mobile web site that provides potential BC Park visitors with information on provincial parks, conservation areas, and ecological reserves.  Content on these pages includes descriptions, activies, amentities, park status, etc.
 
 ## HOW TO USE
-The production application can be accessed here: TBD
+The application can be accessed using the links below:
 
-Development Environment:
-| Name       | URL                                                              | Notes         |
-|------------|------------------------------------------------------------------|---------------|
-| Frontend   | http://web-61d198-dev.apps.silver.devops.gov.bc.ca/              |               |
-| .NET API   | http://api-61d198-dev.apps.silver.devops.gov.bc.ca/swagger       | WIP           |
-| Gatsby     | http://staging-61d198-dev.apps.silver.devops.gov.bc.ca/          |               |
-| CMS        | http://cms-61d198-dev.apps.silver.devops.gov.bc.ca/              |               |
-| API Doc    | http://cms-61d198-dev.apps.silver.devops.gov.bc.ca/documentation |               |
-| GraphQl    | http://cms-61d198-dev.apps.silver.devops.gov.bc.ca/graphql       |               |
+Prod | Test | Dev
+--- | --- | ---
+[Staff App](https://staff.bcparks.ca)                  | [Test - Staff App](https://test-staff.bcparks.ca)                  | [Dev - Staff App](https://dev-staff.bcparks.ca)            | 
+[Staging](https://staging.bcparks.ca)                  | [Test - Staging](https://test-staging.bcparks.ca)                  | [Dev - Staging](https://dev-staging.bcparks.ca)          | 
+[CMS](https://cms.bcparks.ca)                          | [Test - CMS](https://test-cms.bcparks.ca)                          | [Dev - CMS](https://dev-cms.bcparks.ca)              | 
+[API Docs](https://cms.bcparks.ca/documentation)       | [Test - API Docs](https://test-cms.bcparks.ca/documentation)       | [Dev - API Docs](https://dev-cms.bcparks.ca/documentation)|
+[Sample API endpoint](https://cms.bcparks.ca/urgencies)| [Test - Sample API Endpoint](https://test-cms.bcparks.ca/urgencies)| [Dev - Sample API Endpoint](https://dev-cms.bcparks.ca/urgencies)
+[GraphQL](https://cms.bcparks.ca/graphql)              | [Test - GraphQL](https://test-cms.bcparks.ca/graphql)              | [Dev - GraphQL](https://dev-cms.bcparks.ca/graphql)      | 
+
+
 
 
 

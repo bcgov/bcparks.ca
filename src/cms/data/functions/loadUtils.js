@@ -3,9 +3,15 @@ const fs = require("fs");
 const moment = require("moment");
 
 const formatDate = (date) => {
-  return moment.isDate(date)
-    ? moment(date, "YYYY-MM-DD").tz("UTC").format()
-    : null;
+  try {
+    if (date) {
+      return moment(new Date(date), "YYYY-MM-DD hh:mm:ss A").tz("UTC").format();
+    } else {
+      return null;
+    }
+  } catch (e) {
+    return null;
+  }
 };
 
 const getLoadSettings = async (modelName) => {
@@ -43,13 +49,13 @@ const loadJson = async (model, jsonFile, object) => {
       var jsonData = fs.readFileSync(jsonFile, "utf8");
       const dataSeed = JSON.parse(jsonData)[object];
 
-      dataSeed.forEach((data) => {
+      dataSeed.forEach(async (data) => {
         const keys = Object.keys(data);
         for (let i = 0; i < keys.length; i++) {
           if (data[keys[i]] === "") data[keys[i]] = null;
         }
 
-        strapi.services[model].create(data);
+        await strapi.services[model].create(data);
       });
       strapi.log.info(`loading ${model} completed...`);
     }
