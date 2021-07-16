@@ -141,37 +141,6 @@ export default function AdvisoryDashboard({
       },
     },
     {
-      field: "revisionNumber",
-      cellStyle: {
-        textAlign: "center",
-      },
-      title: (
-        <Tooltip title="Revision Number">
-          <span>Rev #</span>
-        </Tooltip>
-      ),
-      filtering: false,
-      render: (rowData) => {
-        if (
-          rowData.publishedRevisionNumber &&
-          rowData.publishedRevisionNumber < rowData.revisionNumber
-        )
-          return (
-            <>
-              <Tooltip title="This revision is newer that the published advisory.">
-                <Chip
-                  size="small"
-                  variant="outlined"
-                  icon={<EditIcon className="revisionIcon" />}
-                  label={rowData.revisionNumber}
-                />
-              </Tooltip>
-            </>
-          );
-        else return rowData.revisionNumber;
-      },
-    },
-    {
       field: "advisoryStatus.advisoryStatus",
       title: "Status",
       cellStyle: {
