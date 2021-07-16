@@ -3,7 +3,7 @@ const fs = require("fs");
 const loadUtils = require("./loadUtils");
 const moment = require("moment");
 
-const savePublicAdvisory = async (
+const savePublicAdvisoryAudit = async (
   modelName,
   data,
   dataXref,
@@ -41,9 +41,11 @@ const savePublicAdvisory = async (
     const advisoryStatus =
       data.advisoryStatus === "Active" ? "Published" : data.advisoryStatus;
 
-    const publicAdvisory = {
+    const publicAdvisoryAudit = {
       advisoryNumber: data.advisoryNumber,
       title: data.title,
+      revisionNumber: 1,
+      isLatestRevision: true,
       description: data.description,
       dcTicketNumber: data.dcTicketNumber,
       isSafetyRelated: data.isSafetyRelated,
@@ -83,21 +85,26 @@ const savePublicAdvisory = async (
       created_at: loadUtils.formatDate(data.created_at),
       updated_at: loadUtils.formatDate(data.updated_at),
       created_by: "system",
+      published_at: new Date(),
     };
-    const advisory = await strapi.services[modelName].create(publicAdvisory);
+    const advisory = await strapi.services[modelName].create(
+      publicAdvisoryAudit
+    );
     return advisory;
   } catch (error) {
     strapi.log.error(error);
   }
 };
 
-const loadPublicAdvisory = async () => {
+const loadPublicAdvisoryAudit = async () => {
   try {
-    const modelName = "public-advisory";
+    const modelName = "public-advisory-audit";
     const loadSetting = await loadUtils.getLoadSettings(modelName);
 
-    if (loadSetting && loadSetting.purge)
+    if (loadSetting && loadSetting.purge) {
       await strapi.services[modelName].delete();
+      await strapi.services["public-advisory"].delete();
+    }
 
     if (loadSetting && !loadSetting.reload) return;
 
@@ -111,7 +118,7 @@ const loadPublicAdvisory = async () => {
       const urgencies = await strapi.query("urgency").find();
 
       var jsonData = fs.readFileSync("./data/public-advisory.json", "utf8");
-      const dataSeed = JSON.parse(jsonData)[modelName];
+      const dataSeed = JSON.parse(jsonData)["public-advisory"];
 
       var jsonData = fs.readFileSync(
         "./data/public-advisory-xref.json",
@@ -121,7 +128,7 @@ const loadPublicAdvisory = async () => {
       strapi.log.info(`public advisories to load: ${dataSeed.length}`);
 
       for (const data of dataSeed) {
-        await savePublicAdvisory(
+        await savePublicAdvisoryAudit(
           modelName,
           data,
           dataXref,
@@ -143,5 +150,5 @@ const loadPublicAdvisory = async () => {
 };
 
 module.exports = {
-  loadPublicAdvisory,
+  loadPublicAdvisoryAudit,
 };

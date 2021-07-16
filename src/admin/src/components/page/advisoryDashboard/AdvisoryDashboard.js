@@ -43,7 +43,7 @@ export default function AdvisoryDashboard({
     const response = await Promise.all([
       getManagementAreas(cmsData, setCmsData),
       cmsAxios.get(
-        `/public-advisories?_limit=500&_publicationState=preview&_sort=advisoryDate:DESC${parkIdQuery}`
+        `/public-advisory-audits?_limit=500&_sort=advisoryDate:DESC${parkIdQuery}`
       ),
     ]);
 
@@ -386,7 +386,12 @@ export default function AdvisoryDashboard({
                     publicAdvisoryQuery.data.length > DEFAULT_PAGE_SIZE
                       ? DEFAULT_PAGE_SIZE
                       : publicAdvisoryQuery.data.length,
-                  pageSizeOptions: [25, 50, 100],
+                  pageSizeOptions: [
+                    25,
+                    50,
+                    100,
+                    { value: publicAdvisoryQuery.data.length, label: "All" },
+                  ],
                 }}
                 columns={tableColumns}
                 data={publicAdvisoryQuery.data}

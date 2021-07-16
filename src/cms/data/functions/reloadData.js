@@ -4,7 +4,7 @@
 const permission = require("./loadPermissions");
 const parData = require("./loadPar");
 const otherData = require("./loadOtherData");
-const publicAdvisory = require("./loadPublicAdvisory");
+const publicAdvisoryAudit = require("./loadPublicAdvisoryAudit");
 const parkPhoto = require("./loadParkPhoto");
 
 const reloadData = (loaderFunction) => {

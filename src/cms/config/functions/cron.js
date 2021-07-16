@@ -9,8 +9,13 @@
  *
  * See more details here: https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/configurations.html#cron-tasks
  */
+// AB TODO:
+// disable cron hjob for now
+// need to add audit trail
 
-module.exports = {
+module.exports = {};
+
+module.disabled_exports = {
   "*/5 * * * *": {
     task: async () => {
       // fetch advisory statuses

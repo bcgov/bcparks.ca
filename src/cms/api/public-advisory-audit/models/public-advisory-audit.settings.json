@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "public_advisories",
+  "collectionName": "public_advisory_audits",
   "info": {
-    "name": "PublicAdvisory",
+    "name": "PublicAdvisoryAudit",
     "description": ""
   },
   "options": {
@@ -16,6 +16,9 @@
     },
     "revisionNumber": {
       "type": "integer"
+    },
+    "isLatestRevision": {
+      "type": "boolean"
     },
     "title": {
       "type": "string"
@@ -130,6 +133,9 @@
     },
     "standardMessage": {
       "model": "standard-message"
+    },
+    "publishedRevisionNumber": {
+      "type": "integer"
     }
   }
 }

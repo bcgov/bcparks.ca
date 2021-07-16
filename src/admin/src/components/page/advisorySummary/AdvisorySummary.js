@@ -37,7 +37,7 @@ export default function AdvisorySummary({
   useEffect(() => {
     if (parseInt(id)) {
       Promise.all([
-        cmsAxios.get(`/public-advisories/${id}?_publicationState=preview`),
+        cmsAxios.get(`/public-advisory-audits/${id}?_publicationState=preview`),
         getLinkTypes(cmsData, setCmsData),
       ])
         .then((res) => {

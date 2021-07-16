@@ -24,6 +24,11 @@
   font-weight: bold;
 }
 
+.revisionIcon {
+  color: gray;
+  font-size: 14px;
+}
+
 .draftIcon
 {
   color:#4989C5; 

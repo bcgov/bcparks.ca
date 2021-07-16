@@ -3,7 +3,7 @@
 const permission = require("./loadPermissions");
 const parData = require("./loadPar");
 const otherData = require("./loadOtherData");
-const publicAdvisory = require("./loadPublicAdvisory");
+const publicAdvisoryAudit = require("./loadPublicAdvisoryAudit");
 const parkPhoto = require("./loadParkPhoto");
 
 const isFirstRun = async () => {
@@ -46,7 +46,7 @@ const loadData = async () => {
         otherData.loadParkActivity(),
         otherData.loadParkFacility(),
         otherData.loadParkName(),
-        publicAdvisory.loadPublicAdvisory(),
+        publicAdvisoryAudit.loadPublicAdvisoryAudit(),
         parkPhoto.loadParkPhoto(),
       ]).then(() => {
         strapi.log.info("------Data load completed------");
