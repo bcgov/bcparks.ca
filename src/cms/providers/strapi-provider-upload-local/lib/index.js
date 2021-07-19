@@ -16,13 +16,9 @@ module.exports = {
         throw errors.entityTooLarge();
       }
     };
-    const configPublicPath = strapi.config.get(
-      "middleware.settings.public.path",
-      strapi.config.paths.static
-    );
 
-    const uploadDir = path.resolve(strapi.dir, configPublicPath);
-    const uploadPath = path.join(uploadDir, config.path);
+    const uploadDir = path.resolve("\\" + config.path);
+    console.log(uploadDir);
 
     return {
       upload(file) {
@@ -31,14 +27,14 @@ module.exports = {
         return new Promise((resolve, reject) => {
           // write file in custom folder
           fs.writeFile(
-            path.join(uploadPath, `${file.hash}${file.ext}`),
+            path.join(uploadDir, `${file.hash}${file.ext}`),
             file.buffer,
             (err) => {
               if (err) {
                 return reject(err);
               }
 
-              file.url = path.join(uploadPath, `${file.hash}${file.ext}`);
+              file.url = path.join(uploadDir, `${file.hash}${file.ext}`);
 
               resolve();
             }
@@ -47,7 +43,7 @@ module.exports = {
       },
       delete(file) {
         return new Promise((resolve, reject) => {
-          const filePath = path.join(uploadPath, `${file.hash}${file.ext}`);
+          const filePath = path.join(uploadDir, `${file.hash}${file.ext}`);
 
           if (!fs.existsSync(filePath)) {
             return resolve("File doesn't exist");
