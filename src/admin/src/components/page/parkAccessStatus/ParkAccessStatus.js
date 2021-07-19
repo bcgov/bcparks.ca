@@ -43,7 +43,6 @@ export default function ParkAccessStatus() {
     }
   );
 
-  const DEFAULT_PAGE_SIZE = 50;
   const title = "Park Access Status";
   const exportFilename =
     title.toLowerCase().replaceAll(" ", "-") +
@@ -71,10 +70,7 @@ export default function ParkAccessStatus() {
               exportFileName: exportFilename,
               exportPdf: (columns, data) =>
                 exportPdf(columns, data, title, exportFilename),
-              pageSize:
-                data.length > DEFAULT_PAGE_SIZE
-                  ? DEFAULT_PAGE_SIZE
-                  : data.length,
+              pageSize: 50,
               pageSizeOptions: [25, 50, 100],
             }}
             columns={[

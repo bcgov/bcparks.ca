@@ -35,7 +35,6 @@ export default function AdvisoryDashboard({
   const today = moment(new Date()).tz("America/Vancouver").toISOString();
   const [toCreate, setToCreate] = useState(false);
   const [selectedParkId, setSelectedParkId] = useState(0);
-
   const fetchPublicAdvisory = async ({ queryKey }) => {
     const [, selectedParkId] = queryKey;
     let parkIdQuery =
@@ -72,6 +71,7 @@ export default function AdvisoryDashboard({
         });
         publicAdvisory.regions = regionsWithParkCount;
       }
+
       return publicAdvisory;
     });
     return data;
@@ -330,8 +330,6 @@ export default function AdvisoryDashboard({
     return <Redirect to="/bcparks/create-advisory" />;
   }
 
-  const DEFAULT_PAGE_SIZE = 50;
-
   return (
     <>
       <br />
@@ -382,16 +380,8 @@ export default function AdvisoryDashboard({
                 options={{
                   filtering: true,
                   search: false,
-                  pageSize:
-                    publicAdvisoryQuery.data.length > DEFAULT_PAGE_SIZE
-                      ? DEFAULT_PAGE_SIZE
-                      : publicAdvisoryQuery.data.length,
-                  pageSizeOptions: [
-                    25,
-                    50,
-                    100,
-                    { value: publicAdvisoryQuery.data.length, label: "All" },
-                  ],
+                  pageSize: 50,
+                  pageSizeOptions: [25, 50, 100],
                 }}
                 columns={tableColumns}
                 data={publicAdvisoryQuery.data}
