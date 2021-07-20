@@ -2,7 +2,7 @@ module.exports = ({ env }) => ({
   upload: {
     provider: "local",
     providerOptions: {
-      path: env("MEDIA_FILE_PATH") || "media",
+      path: "media",
       sizeLimit: 1000000,
     },
   },
