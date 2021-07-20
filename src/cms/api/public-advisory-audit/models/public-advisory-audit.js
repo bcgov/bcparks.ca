@@ -47,20 +47,6 @@ const createPublicAdvisoryAudit = async (data) => {
 };
 
 const savePublicAdvisory = async (publicAdvisory) => {
-  if (publicAdvisory.advisoryStatus.code === "INA") {
-    strapi.services["public-advisory"]
-      .delete({
-        advisoryNumber: publicAdvisory.advisoryNumber,
-        _publicationState: "preview",
-      })
-      .catch((error) => {
-        strapi.log.error(
-          `error deleting public-advisory ${publicAdvisory.id}...`,
-          error
-        );
-      });
-    return;
-  }
   if (publicAdvisory.advisoryStatus.code === "PUB") {
     publicAdvisory.published_at = new Date();
     strapi.services["public-advisory"]
@@ -75,33 +61,27 @@ const savePublicAdvisory = async (publicAdvisory) => {
             );
           });
       });
+  } else {
+    strapi.services["public-advisory"]
+      .delete({
+        advisoryNumber: publicAdvisory.advisoryNumber,
+        _publicationState: "preview",
+      })
+      .catch((error) => {
+        strapi.log.error(
+          `error deleting public-advisory ${publicAdvisory.id}...`,
+          error
+        );
+      });
   }
 };
 
 const copyToPublicAdvisory = async (newPublicAdvisory) => {
-  if (!newPublicAdvisory.isLatestRevision) return;
-  if (!newPublicAdvisory.advisoryStatus) return;
-
-  const oldPublicAdvisory = await strapi.services["public-advisory"].findOne({
-    advisoryNumber: newPublicAdvisory.advisoryNumber,
-  });
-
-  // published, update for status PUB & INA
-  const publishedStatuses = ["PUB", "INA"];
-  if (
-    oldPublicAdvisory &&
-    oldPublicAdvisory.advisoryStatus &&
-    publishedStatuses.includes(oldPublicAdvisory.advisoryStatus.code)
-  ) {
+  if (newPublicAdvisory.isLatestRevision && newPublicAdvisory.advisoryStatus) {
+    const publishedStatuses = ["PUB", "INA"];
     if (publishedStatuses.includes(newPublicAdvisory.advisoryStatus.code)) {
       savePublicAdvisory(newPublicAdvisory);
     }
-    return;
-  }
-  // unpublished
-  const unpublishedStatuses = ["PUB"];
-  if (unpublishedStatuses.includes(newPublicAdvisory.advisoryStatus.code)) {
-    savePublicAdvisory(newPublicAdvisory);
   }
 };
 
@@ -120,7 +100,13 @@ module.exports = {
       copyToPublicAdvisory(newPublicAdvisory);
     },
     beforeUpdate: async (id, newPublicAdvisory) => {
+      if (!newPublicAdvisory.published_at) return;
+
       const params = { ...id, _publicationState: "preview" };
+
+      newPublicAdvisory.published_at = new Date();
+      newPublicAdvisory.isLatestRevision = true;
+
       const oldPublicAdvisory = await strapi.services[
         "public-advisory-audit"
       ].findOne(params);
@@ -144,21 +130,23 @@ module.exports = {
           oldPublicAdvisory.isLatestRevision = false;
           await createPublicAdvisoryAudit(oldPublicAdvisory);
 
-          newPublicAdvisory.published_at = new Date();
-          newPublicAdvisory.isLatestRevision = true;
-
           newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
             oldPublicAdvisory.advisoryNumber
           );
 
-          if (newAdvisoryStatus === "PUB") {
-            newPublicAdvisory.publishedRevisionNumber =
-              newPublicAdvisory.revisionNumber;
-          } else {
-            newPublicAdvisory.publishedRevisionNumber =
-              await getPublishedRevisionNumber(
-                oldPublicAdvisory.advisoryNumber
-              );
+          switch (newAdvisoryStatus) {
+            case "PUB":
+              newPublicAdvisory.publishedRevisionNumber =
+                newPublicAdvisory.revisionNumber;
+              break;
+            case "INA":
+              newPublicAdvisory.publishedRevisionNumber = 0;
+              break;
+            default:
+              newPublicAdvisory.publishedRevisionNumber =
+                await getPublishedRevisionNumber(
+                  oldPublicAdvisory.advisoryNumber
+                );
           }
         }
       }

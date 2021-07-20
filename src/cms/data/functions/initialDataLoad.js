@@ -34,7 +34,6 @@ const loadData = async () => {
       otherData.loadUrgency(),
       otherData.loadFireCentre(),
       otherData.loadFireZone(),
-      otherData.loadFireBanProhibition(),
       otherData.loadWebsites(),
       otherData.loadPages(),
     ]).then(async () => {
@@ -42,6 +41,7 @@ const loadData = async () => {
         parData.loadAdditionalParData(),
         otherData.loadFireCentreZoneXref(),
         otherData.loadParkFireZoneXref(),
+        otherData.loadFireBanProhibition(),
         otherData.loadParkFogZoneXref(),
         otherData.loadParkActivity(),
         otherData.loadParkFacility(),

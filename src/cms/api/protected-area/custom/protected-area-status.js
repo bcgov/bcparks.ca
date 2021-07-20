@@ -90,6 +90,7 @@ const getProtectedAreaStatus = async (ctx) => {
   const campfireBanData = await strapi.services["fire-ban-prohibition"].find({
     _limit: -1,
     prohibitionDescription_contains: "campfire",
+    fireCentre_null: false,
   });
 
   const publicAdvisories = await getPublishedPublicAdvisories();
@@ -103,7 +104,9 @@ const getProtectedAreaStatus = async (ctx) => {
     const regions = [
       ...new Set(
         protectedArea.managementAreas.map(
-          (m) => regionsData.find((region) => region.id === m.region).regionName
+          (m) =>
+            regionsData.find((region) => region.id === m.region && m.region)
+              .regionName
         )
       ),
     ];
@@ -112,18 +115,21 @@ const getProtectedAreaStatus = async (ctx) => {
       ...new Set(
         protectedArea.managementAreas.map(
           (m) =>
-            sectionsData.find((section) => section.id === m.section).sectionName
+            sectionsData.find(
+              (section) => section.id === m.section && m.section
+            ).sectionName
         )
       ),
     ];
 
     const fireCentres = [
       ...new Set(
-        protectedArea.fireZones.map(
-          (fireZone) =>
-            fireCentresData.find((f) => f.id === fireZone.fireCentre)
-              .fireCentreName
-        )
+        protectedArea.fireZones.map((fireZone) => {
+          const fireCentre = fireCentresData.find(
+            (f) => f.fireZones.length > 0 && f.id === fireZone.fireCentre
+          );
+          if (fireCentre) return fireCentre.fireCentreName;
+        })
       ),
     ];
 
