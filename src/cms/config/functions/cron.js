@@ -11,7 +11,7 @@
  */
 
 module.exports = {
-  "*/2 * * * *": {
+  "*/5 * * * *": {
     task: async () => {
       // fetch advisory statuses
       const advisoryStatus = await strapi.api["advisory-status"].services[
