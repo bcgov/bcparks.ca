@@ -5,8 +5,7 @@ const path = require("path");
 
 const loadUtils = require("./loadUtils");
 
-const rootDir = process.cwd();
-const IMAGE_PATH = "\\data\\images";
+const IMAGE_PATH = process.env.MEDIA_FILE_PATH;
 
 const downloadImage = async (url, dest) => {
   const file = fs.createWriteStream(dest);
@@ -86,7 +85,7 @@ const loadParkPhoto = async () => {
         const filename = result.thumbnailUrl
           .replace("https://bcparks.ca/explore/parkpgs/", "")
           .replace(/\//g, "-");
-        const filepath = `${rootDir}${IMAGE_PATH}\\${filename}`;
+        const filepath = `\\${IMAGE_PATH}\\${filename}`;
 
         await downloadImage(result.thumbnailUrl, filepath);
         loadImage(result.id, filepath);

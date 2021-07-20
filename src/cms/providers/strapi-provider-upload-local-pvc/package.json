@@ -1,0 +1,26 @@
+{
+  "name": "strapi-provider-upload-local",
+  "version": "3.6.5",
+  "description": "Strapi provider for local media storage with custom path",
+  "directories": {
+    "lib": "./lib"
+  },
+  "main": "./lib",
+  "scripts": {
+    "test": "echo \"No test specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bcgov/bcparks.ca/src/cms"
+  },
+  "keywords": [
+    "strapi",
+    "upload",
+    "provider",
+    "local",
+    "custom",
+    "path"
+  ],
+  "author": "",
+  "license": "ISC"
+}
