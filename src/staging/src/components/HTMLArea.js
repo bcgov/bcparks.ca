@@ -4,8 +4,12 @@ import { useStaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
-export default function Footer({children}) {
-  return (
-    <div  id='footer' dangerouslySetInnerHTML={{ __html: children}}/>
+export default function HTMLArea(props)
+{
+  if (!props.isVisible) {
+    return null;
+  }
+    return (
+    <div dangerouslySetInnerHTML={{ __html: props.children}}/>
   )
 }

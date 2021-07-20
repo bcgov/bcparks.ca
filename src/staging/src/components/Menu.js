@@ -4,8 +4,8 @@ import { useStaticQuery, Link, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
-export default function Footer({children}) {
+export default function Menu({children}) {
   return (
-    <div  id='footer' dangerouslySetInnerHTML={{ __html: children}}/>
+    <div  id='menu' dangerouslySetInnerHTML={{ __html: children}}/>
   )
 }
