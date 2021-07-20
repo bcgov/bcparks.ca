@@ -28,8 +28,7 @@
     "strapi-plugin-upload": "3.6.1",
     "strapi-plugin-users-permissions": "3.6.1",
     "strapi-utils": "3.6.1",
-    "utf8": "^3.0.0",
-    "strapi-provider-upload-local-pvc": "file:providers/strapi-provider-upload-local-pvc"
+    "utf8": "^3.0.0"
   },
   "strapi": {
     "uuid": "4d57707a-8e32-4a4f-b83d-52150fd0f678"
