@@ -66,6 +66,7 @@ const loadFireBanProhibition = async () => {
     .get(WILDFIRE_BANS_PROHIBITIONS_API_ENDPOINT)
     .then(async (response) => {
       const { features } = response.data;
+      if (!features) return;
       features.forEach(async (feature) => {
         const {
           attributes: {
@@ -97,6 +98,7 @@ const loadFireBanProhibition = async () => {
           prohibitionDescription: access_prohibition_description,
           effectiveDate: access_status_effective_date,
           bulletinURL: bulletin_url,
+          fireCentreSource: fire_centre_name,
           fireCentre: fireCentre,
           fireZone: fireZone,
         };
@@ -363,19 +365,11 @@ const loadStatutoryHolidays = async () => {
 };
 
 const loadWebsites = async () => {
-  loadUtils.loadJson(
-    "website",
-    "./data/websites.json",
-    "website"
-  );
+  loadUtils.loadJson("website", "./data/websites.json", "website");
 };
 
 const loadPages = async () => {
-  loadUtils.loadJson(
-    "page",
-    "./data/pages.json",
-    "page"
-  );
+  loadUtils.loadJson("page", "./data/pages.json", "page");
 };
 
 module.exports = {

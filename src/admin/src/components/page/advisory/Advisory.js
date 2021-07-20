@@ -701,7 +701,7 @@ export default function Advisory({
   };
   const saveAdvisory = (type) => {
     try {
-      const { published, status } = getAdvisoryFields(type);
+      const { status } = getAdvisoryFields(type);
       const {
         selProtectedAreas,
         selRegions,
@@ -753,7 +753,8 @@ export default function Advisory({
           isAdvisoryDateDisplayed: displayAdvisoryDate,
           isEffectiveDateDisplayed: displayStartDate,
           isEndDateDisplayed: displayEndDate,
-          published_at: published,
+          published_at: new Date(),
+          isLatestRevision: true,
           created_by: keycloak.tokenParsed.name,
         };
 
@@ -788,7 +789,7 @@ export default function Advisory({
 
   const updateAdvisory = (type) => {
     try {
-      const { published, status } = getAdvisoryFields(type);
+      const { status } = getAdvisoryFields(type);
       const { updatedProtectedAreas, updatedSites } = removeLocations(
         selectedProtectedAreas,
         selectedRegions,
@@ -873,7 +874,8 @@ export default function Advisory({
             isEffectiveDateDisplayed: displayStartDate,
             isEndDateDisplayed: displayEndDate,
             isUpdatedDateDisplayed: displayUpdatedDate,
-            published_at: published,
+            published_at: new Date(),
+            isLatestRevision: true,
             updated_by: keycloak.tokenParsed.name,
           };
 

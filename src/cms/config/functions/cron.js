@@ -9,13 +9,8 @@
  *
  * See more details here: https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/configurations.html#cron-tasks
  */
-// AB TODO:
-// disable cron hjob for now
-// need to add audit trail
 
-module.exports = {};
-
-module.disabled_exports = {
+module.exports = {
   "*/5 * * * *": {
     task: async () => {
       // fetch advisory statuses
@@ -28,31 +23,32 @@ module.disabled_exports = {
           advisoryStatusMap[a.code] = a;
           return advisoryStatusMap;
         });
-        // fetch advisories to publish
-        const draftAdvisoryToPublish = await strapi.api[
-          "public-advisory"
-        ].services["public-advisory"].find({
-          _publicationState: "preview",
+        // fetch advisories to publish - audit table
+        const draftAdvisoryToPublishAudit = await strapi.api[
+          "public-advisory-audit"
+        ].services["public-advisory-audit"].find({
+          _publicationState: "live",
+          isLatestRevision: true,
           advisoryDate_lte: new Date(),
           advisoryStatus: advisoryStatusMap["APR"].id,
         });
 
-        // publish advisories
-        draftAdvisoryToPublish.forEach(async (advisory) => {
-          await strapi.api["public-advisory"].services[
-            "public-advisory"
+        // publish advisories - audit table
+        draftAdvisoryToPublishAudit.forEach(async (advisory) => {
+          await strapi.api["public-advisory-audit"].services[
+            "public-advisory-audit"
           ].update(
             { id: advisory.id },
             {
               published_at: advisory.advisoryDate,
-              advisoryStatus: advisoryStatusMap["PUB"],
+              advisoryStatus: advisoryStatusMap["PUB"].id,
               modifiedBy: "system",
               modifiedDate: new Date(),
             }
           );
         });
 
-        // fetch advisories to unpublish
+        // fetch advisories to unpublish - public advisory table
         const advisoryToUnpublish = await strapi.api[
           "public-advisory"
         ].services["public-advisory"].find({
@@ -61,15 +57,18 @@ module.disabled_exports = {
           advisoryStatus: advisoryStatusMap["PUB"].id,
         });
 
-        // unpublish advisories
+        // unpublish advisories - audit table
         advisoryToUnpublish.forEach(async (advisory) => {
-          await strapi.api["public-advisory"].services[
-            "public-advisory"
+          await strapi.api["public-advisory-audit"].services[
+            "public-advisory-audit"
           ].update(
-            { id: advisory.id },
             {
-              published_at: null,
-              advisoryStatus: advisoryStatusMap["INA"],
+              advisoryNumber: advisory.advisoryNumber,
+              isLatestRevision: true,
+            },
+            {
+              published_at: new Date(),
+              advisoryStatus: advisoryStatusMap["INA"].id,
               removalDate: new Date(),
               modifiedBy: "system",
               modifiedDate: new Date(),
