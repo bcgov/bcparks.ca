@@ -85,7 +85,7 @@ const loadParkPhoto = async () => {
         const filename = result.thumbnailUrl
           .replace("https://bcparks.ca/explore/parkpgs/", "")
           .replace(/\//g, "-");
-        const filepath = `\\${IMAGE_PATH}\\${filename}`;
+        const filepath = `\\${IMAGE_PATH}\\uploads\\${filename}`;
 
         await downloadImage(result.thumbnailUrl, filepath);
         loadImage(result.id, filepath);
