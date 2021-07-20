@@ -73,6 +73,7 @@ services:
       context: src/cms
       args:
         - ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET}
+        - MEDIA_FILE_PATH=${MEDIA_FILE_PATH}
         - ADMIN_USER=${ADMIN_USER}
         - ADMIN_PASSWORD=${ADMIN_PASSWORD}
         - ADMIN_FIRST_NAME=${ADMIN_FIRST_NAME}
@@ -92,6 +93,7 @@ services:
         - WEB_SCHEMA=${WEB_SCHEMA}
     environment:
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      MEDIA_FILE_PATH: ${MEDIA_FILE_PATH}
       ADMIN_USER: ${ADMIN_USER}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       ADMIN_FIRST_NAME: ${ADMIN_FIRST_NAME}
