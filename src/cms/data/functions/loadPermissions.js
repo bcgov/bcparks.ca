@@ -69,7 +69,12 @@ const setPublicPermissions = async () => {
     .query("permission", "users-permissions")
     .find({
       type: "application",
-      controller_nin: ["token", "statutory-holidays", "x-data-load-setting"],
+      controller_nin: [
+        "token",
+        "statutory-holidays",
+        "public-advisory-audit",
+        "x-data-load-setting",
+      ],
       role: publicRole.id,
       action_in: ["count", "find", "findone", "names", "items", "status"],
       _limit: -1,
