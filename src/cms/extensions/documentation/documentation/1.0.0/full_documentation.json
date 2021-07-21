@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "07/16/2021 2:31:17 PM"
+    "x-generation-date": "07/20/2021 11:02:40 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -18672,6 +18672,9 @@
               }
             }
           },
+          "fireCentreSource": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -18697,6 +18700,9 @@
             "type": "string"
           },
           "fireZone": {
+            "type": "string"
+          },
+          "fireCentreSource": {
             "type": "string"
           },
           "published_at": {
