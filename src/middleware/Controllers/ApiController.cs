@@ -38,11 +38,17 @@ namespace BCParksApi.Controllers
             try
             {
                 string url = _configuration["CmsUrl"] + route;
+                var queryString = Request.QueryString;
                 if (param != "")
-                {
-                    url += "?" + param;
-                }
-                url = url + "?token=" + _configuration["ApiToken"];
+                    url += "/" + param;
+
+                if (queryString.ToString() != "")
+                    url += queryString + "&";
+                 else  
+                    url += "?"; 
+                
+                url += "token=" + _configuration["ApiToken"];
+
                 string apiResponse = await ApiHelper.httpClient.GetStringAsync(url);
                 return Ok(JsonConvert.DeserializeObject<object>(apiResponse));
             }
