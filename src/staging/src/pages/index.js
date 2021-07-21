@@ -70,6 +70,8 @@ export default function Home({ data }) {
           <Zone zoneID='Zone1' Content={data.strapiWebsites.homepage.Content[0]} />
           <Zone zoneID='Zone2' Content={data.strapiWebsites.homepage.Content[1]} />
           <Zone zoneID='Zone3' Content={data.strapiWebsites.homepage.Content[2]} />
+          <Zone zoneID='Zone4' Content={data.strapiWebsites.homepage.Content[3]} />
+          <Zone zoneID='Zone5' Content={data.strapiWebsites.homepage.Content[4]} />
       </div>
       <Footer>
         { data.strapiWebsites.Footer}

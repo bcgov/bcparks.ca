@@ -9,6 +9,12 @@ html {
     display:block;
 }
 
+#footer-bottom-menu ul {
+    list-style-type: none;
+    display: flex;
+    margin-top: 10px;
+}
+
   .inner
   {
     max-width: 1594px;
@@ -85,19 +91,22 @@ html {
     text-align: left;
 }
 
+#footer-blank {
+  display:none;
+  position: fixed;
+  bottom: 0;
+}
+
 #footer {
     box-sizing: border-box;
     overflow: visible;
     z-index: 99999;
-    clear: both;
     position: absolute;
-    bottom: 0;
     width: 100%;
-    margin: 80px 0 0 0;
-    padding-top: 0px;
     text-align: center;
-    background-image: none;
-    background-color: transparent;
+    background-color: #036;
+    top: 3890px;
+    height: 387px;
 }
 
 #logo {
@@ -168,6 +177,7 @@ html {
 .park-search img
 {
   margin-top: -181px;
+  width:100%
 }
 
 .park-search div
@@ -241,6 +251,14 @@ html {
 }
 
 #Zone2
+{
+  background-color: rgba(238,241,245,1);
+}
+#Zone4
+{
+  background-color: rgba(238,241,245,1);
+}
+#Zone5
 {
   background-color: rgba(238,241,245,1);
 }

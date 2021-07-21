@@ -6,6 +6,6 @@ import { rhythm } from "../utils/typography"
 
 export default function Header({children}) {
     return (
-    <div id='header' dangerouslySetInnerHTML={{ __html: children}}/>
+    <header id='header' dangerouslySetInnerHTML={{ __html: children}}/>
   )
 }

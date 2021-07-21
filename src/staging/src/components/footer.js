@@ -6,6 +6,6 @@ import { rhythm } from "../utils/typography"
 
 export default function Footer({children}) {
   return (
-    <div  id='footer' dangerouslySetInnerHTML={{ __html: children}}/>
+    <footer id='footer' dangerouslySetInnerHTML={{ __html: children}}/>
   )
 }
