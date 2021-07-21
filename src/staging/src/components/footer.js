@@ -1,17 +1,11 @@
-import * as React from "react"
+import React from "react"
+import { css } from "@emotion/react"
+import { useStaticQuery, Link, graphql } from "gatsby"
 
-const Footer = () => {
+import { rhythm } from "../utils/typography"
+
+export default function Footer({children}) {
   return (
-    <>
-      <footer
-        style={{
-          marginTop: `2rem`,
-        }}
-      >
-        © {new Date().getFullYear()} <a href="https://bcparks.ca">BC Parks</a>
-      </footer>
-    </>
+    <footer id='footer' dangerouslySetInnerHTML={{ __html: children}}/>
   )
 }
-
-export default Footer

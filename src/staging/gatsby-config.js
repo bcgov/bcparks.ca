@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `BC Parks Staging Site`,
@@ -6,6 +10,7 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sass`,
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -18,7 +23,7 @@ module.exports = {
       resolve: "gatsby-source-strapi",
       options: {
         apiURL: process.env.REACT_APP_CMS_BASE_URL,
-        collectionTypes: ["urgency", "protected-area", "public-advisory"],
+        collectionTypes: ["urgency", "protected-area", "public-advisory",`Websites`, `Pages`],
         singleTypes: [`business-hours`],
         queryLimit: 10,
       },
