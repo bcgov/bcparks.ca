@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, useLocation, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
-import { cmsAxios } from "../../../axios_config";
+import { apiAxios } from "../../../axios_config";
+import { useKeycloak } from "@react-keycloak/web";
 import "./AdvisorySummary.css";
 import Header from "../../composite/header/Header";
 import { Loader } from "shared-components/build/components/loader/Loader";
@@ -19,6 +20,7 @@ import { getLinkTypes } from "../../../utils/CmsDataUtil";
 export default function AdvisorySummary({
   page: { setError, cmsData, setCmsData },
 }) {
+  const { keycloak } = useKeycloak();
   const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [isPublished, setIsPublished] = useState(false);
   const [toError, setToError] = useState(false);
@@ -37,7 +39,12 @@ export default function AdvisorySummary({
   useEffect(() => {
     if (parseInt(id)) {
       Promise.all([
-        cmsAxios.get(`/public-advisory-audits/${id}?_publicationState=preview`),
+        apiAxios.get(
+          `api/get/public-advisory-audits/${id}?_publicationState=preview`,
+          {
+            headers: { Authorization: `Bearer ${keycloak.idToken}` },
+          }
+        ),
         getLinkTypes(cmsData, setCmsData),
       ])
         .then((res) => {
@@ -121,6 +128,7 @@ export default function AdvisorySummary({
     snackMessageInfo,
     cmsData,
     setCmsData,
+    keycloak,
   ]);
 
   const handleOpenSnackBar = (message) => {

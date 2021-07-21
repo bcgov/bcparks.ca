@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { cmsAxios, apiAxios } from "../../../axios_config";
+import { apiAxios } from "../../../axios_config";
 import { Redirect, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./Advisory.css";
@@ -140,8 +140,13 @@ export default function Advisory({
     if (mode === "update" && !isLoadingData) {
       if (parseInt(id)) {
         setAdvisoryId(id);
-        cmsAxios
-          .get(`/public-advisory-audits/${id}?_publicationState=preview`)
+        apiAxios
+          .get(
+            `api/get/public-advisory-audits/${id}?_publicationState=preview`,
+            {
+              headers: { Authorization: `Bearer ${keycloak.idToken}` },
+            }
+          )
           .then((res) => {
             linksRef.current = [];
             const advisoryData = res.data;
@@ -359,6 +364,7 @@ export default function Advisory({
     setSelectedFireCentres,
     fireZones,
     setSelectedFireZones,
+    keycloak,
   ]);
 
   useEffect(() => {
