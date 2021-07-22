@@ -24,7 +24,7 @@ const downloadImage = async (url, dest) => {
         reject(error);
       });
   }).catch((error) => {
-    console.log("error occured - downloadImage", error);
+    strapi.log.info("error occured - downloadImage", error);
   });
 };
 
@@ -45,8 +45,14 @@ const loadImage = async (parkId, filepath) => {
         size: fileStat.size,
       },
     });
+    // delete file
+    fs.unlink(filepath, (err) => {
+      if (err) {
+        strapi.log.info(`load image - error deleting ${filepath}`);
+      }
+    });
   } catch {
-    console.log("error occured - loadImage");
+    strapi.log.info("error occured - loadImage");
   }
 };
 
@@ -91,7 +97,7 @@ const loadParkPhoto = async () => {
         await downloadImage(result.thumbnailUrl, filepath);
         loadImage(result.id, filepath);
       } catch {
-        console.log("error occured - loadParkPhoto");
+        strapi.log.info("error occured - loadParkPhoto");
       }
     }
 
