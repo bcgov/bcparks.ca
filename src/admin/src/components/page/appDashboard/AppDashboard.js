@@ -49,26 +49,28 @@ export default function AppDashboard({
             variant="fullWidth"
           >
             <Tab label="Advisories" {...a11yProps(0, "dashboard-tab")} />
+            <Tab
+              label="Park Access Status"
+              {...a11yProps(1, "dashboard-tab")}
+            />
             {PrivateElement(["approver"]) && (
               <Tab
                 label="Activities & Facilities"
-                {...a11yProps(1, "dashboard-tab")}
+                {...a11yProps(2, "dashboard-tab")}
               />
             )}
-            <Tab
-              label="Park Access Status"
-              {...a11yProps(2, "dashboard-tab")}
-            />
           </Tabs>
           <TabPanel value={tabIndex} index={0} label="dashboard">
             <AdvisoryDashboard page={{ setError, cmsData, setCmsData }} />
           </TabPanel>
           <TabPanel value={tabIndex} index={1} label="dashboard">
-            <ParkSearch page={{ setError, cmsData, setCmsData }} />
-          </TabPanel>
-          <TabPanel value={tabIndex} index={2} label="dashboard">
             <ParkAccessStatus />
           </TabPanel>
+          {PrivateElement(["approver"]) && (
+            <TabPanel value={tabIndex} index={2} label="dashboard">
+              <ParkSearch page={{ setError, cmsData, setCmsData }} />
+            </TabPanel>
+          )}
         </div>
       </div>
     </main>
