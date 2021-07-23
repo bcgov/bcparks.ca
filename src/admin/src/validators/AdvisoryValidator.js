@@ -111,7 +111,9 @@ export function validAdvisoryData(advisoryData, validateStatus, mode) {
     validData = validData && validUpdatedDate;
   }
   if (!validData) {
-    advisoryData.formError("Errors found !!! Please enter valid information");
+    advisoryData.formError(
+      "Please enter valid information in all required fields."
+    );
   }
   return validData;
 }
