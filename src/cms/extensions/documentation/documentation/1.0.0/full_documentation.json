@@ -96,9 +96,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Access-status"
-        ],
+        "tags": ["Access-status"],
         "parameters": [
           {
             "name": "_limit",
@@ -288,9 +286,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Access-status"
-        ],
+        "tags": ["Access-status"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -355,9 +351,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Access-status"
-        ],
+        "tags": ["Access-status"],
         "parameters": []
       }
     },
@@ -412,9 +406,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Access-status"
-        ],
+        "tags": ["Access-status"],
         "parameters": [
           {
             "name": "id",
@@ -478,9 +470,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Access-status"
-        ],
+        "tags": ["Access-status"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -552,9 +542,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Access-status"
-        ],
+        "tags": ["Access-status"],
         "parameters": [
           {
             "name": "id",
@@ -620,9 +608,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Activity-type"
-        ],
+        "tags": ["Activity-type"],
         "parameters": [
           {
             "name": "_limit",
@@ -812,9 +798,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Activity-type"
-        ],
+        "tags": ["Activity-type"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -879,9 +863,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Activity-type"
-        ],
+        "tags": ["Activity-type"],
         "parameters": []
       }
     },
@@ -936,9 +918,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Activity-type"
-        ],
+        "tags": ["Activity-type"],
         "parameters": [
           {
             "name": "id",
@@ -1002,9 +982,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Activity-type"
-        ],
+        "tags": ["Activity-type"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -1076,9 +1054,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Activity-type"
-        ],
+        "tags": ["Activity-type"],
         "parameters": [
           {
             "name": "id",
@@ -1143,9 +1119,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Activity"
-        ],
+        "tags": ["Activity"],
         "parameters": [
           {
             "name": "_limit",
@@ -1331,9 +1305,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Activity"
-        ],
+        "tags": ["Activity"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -1398,9 +1370,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Activity"
-        ],
+        "tags": ["Activity"],
         "parameters": []
       }
     },
@@ -1451,9 +1421,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Activity"
-        ],
+        "tags": ["Activity"],
         "parameters": [
           {
             "name": "id",
@@ -1513,9 +1481,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Activity"
-        ],
+        "tags": ["Activity"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -1587,9 +1553,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Activity"
-        ],
+        "tags": ["Activity"],
         "parameters": [
           {
             "name": "id",
@@ -1655,9 +1619,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Advisory-status"
-        ],
+        "tags": ["Advisory-status"],
         "parameters": [
           {
             "name": "_limit",
@@ -1847,9 +1809,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Advisory-status"
-        ],
+        "tags": ["Advisory-status"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -1914,9 +1874,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Advisory-status"
-        ],
+        "tags": ["Advisory-status"],
         "parameters": []
       }
     },
@@ -1971,9 +1929,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Advisory-status"
-        ],
+        "tags": ["Advisory-status"],
         "parameters": [
           {
             "name": "id",
@@ -2037,9 +1993,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Advisory-status"
-        ],
+        "tags": ["Advisory-status"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -2111,9 +2065,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Advisory-status"
-        ],
+        "tags": ["Advisory-status"],
         "parameters": [
           {
             "name": "id",
@@ -2179,9 +2131,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Asset-type"
-        ],
+        "tags": ["Asset-type"],
         "parameters": [
           {
             "name": "_limit",
@@ -2371,9 +2321,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Asset-type"
-        ],
+        "tags": ["Asset-type"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -2438,9 +2386,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Asset-type"
-        ],
+        "tags": ["Asset-type"],
         "parameters": []
       }
     },
@@ -2495,9 +2441,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Asset-type"
-        ],
+        "tags": ["Asset-type"],
         "parameters": [
           {
             "name": "id",
@@ -2561,9 +2505,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Asset-type"
-        ],
+        "tags": ["Asset-type"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -2635,9 +2577,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Asset-type"
-        ],
+        "tags": ["Asset-type"],
         "parameters": [
           {
             "name": "id",
@@ -2703,9 +2643,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Business-hours"
-        ],
+        "tags": ["Business-hours"],
         "parameters": [
           {
             "name": "_limit",
@@ -2895,9 +2833,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Business-hours"
-        ],
+        "tags": ["Business-hours"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -2958,9 +2894,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Business-hours"
-        ],
+        "tags": ["Business-hours"],
         "parameters": []
       }
     },
@@ -3015,9 +2949,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Data-load-setting"
-        ],
+        "tags": ["Data-load-setting"],
         "parameters": [
           {
             "name": "_limit",
@@ -3207,9 +3139,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Data-load-setting"
-        ],
+        "tags": ["Data-load-setting"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -3274,9 +3204,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Data-load-setting"
-        ],
+        "tags": ["Data-load-setting"],
         "parameters": []
       }
     },
@@ -3331,9 +3259,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Data-load-setting"
-        ],
+        "tags": ["Data-load-setting"],
         "parameters": [
           {
             "name": "id",
@@ -3397,9 +3323,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Data-load-setting"
-        ],
+        "tags": ["Data-load-setting"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -3471,9 +3395,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Data-load-setting"
-        ],
+        "tags": ["Data-load-setting"],
         "parameters": [
           {
             "name": "id",
@@ -3539,9 +3461,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Event-type"
-        ],
+        "tags": ["Event-type"],
         "parameters": [
           {
             "name": "_limit",
@@ -3731,9 +3651,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Event-type"
-        ],
+        "tags": ["Event-type"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -3798,9 +3716,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Event-type"
-        ],
+        "tags": ["Event-type"],
         "parameters": []
       }
     },
@@ -3855,9 +3771,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Event-type"
-        ],
+        "tags": ["Event-type"],
         "parameters": [
           {
             "name": "id",
@@ -3921,9 +3835,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Event-type"
-        ],
+        "tags": ["Event-type"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -3995,9 +3907,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Event-type"
-        ],
+        "tags": ["Event-type"],
         "parameters": [
           {
             "name": "id",
@@ -4063,9 +3973,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Facility-type"
-        ],
+        "tags": ["Facility-type"],
         "parameters": [
           {
             "name": "_limit",
@@ -4255,9 +4163,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Facility-type"
-        ],
+        "tags": ["Facility-type"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -4322,9 +4228,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Facility-type"
-        ],
+        "tags": ["Facility-type"],
         "parameters": []
       }
     },
@@ -4379,9 +4283,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Facility-type"
-        ],
+        "tags": ["Facility-type"],
         "parameters": [
           {
             "name": "id",
@@ -4445,9 +4347,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Facility-type"
-        ],
+        "tags": ["Facility-type"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -4519,9 +4419,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Facility-type"
-        ],
+        "tags": ["Facility-type"],
         "parameters": [
           {
             "name": "id",
@@ -4586,9 +4484,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Facility"
-        ],
+        "tags": ["Facility"],
         "parameters": [
           {
             "name": "_limit",
@@ -4774,9 +4670,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Facility"
-        ],
+        "tags": ["Facility"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -4841,9 +4735,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Facility"
-        ],
+        "tags": ["Facility"],
         "parameters": []
       }
     },
@@ -4894,9 +4786,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Facility"
-        ],
+        "tags": ["Facility"],
         "parameters": [
           {
             "name": "id",
@@ -4956,9 +4846,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Facility"
-        ],
+        "tags": ["Facility"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -5030,9 +4918,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Facility"
-        ],
+        "tags": ["Facility"],
         "parameters": [
           {
             "name": "id",
@@ -5098,9 +4984,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-ban-prohibition"
-        ],
+        "tags": ["Fire-ban-prohibition"],
         "parameters": [
           {
             "name": "_limit",
@@ -5290,9 +5174,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-ban-prohibition"
-        ],
+        "tags": ["Fire-ban-prohibition"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -5357,9 +5239,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-ban-prohibition"
-        ],
+        "tags": ["Fire-ban-prohibition"],
         "parameters": []
       }
     },
@@ -5414,9 +5294,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-ban-prohibition"
-        ],
+        "tags": ["Fire-ban-prohibition"],
         "parameters": [
           {
             "name": "id",
@@ -5480,9 +5358,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-ban-prohibition"
-        ],
+        "tags": ["Fire-ban-prohibition"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -5554,9 +5430,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-ban-prohibition"
-        ],
+        "tags": ["Fire-ban-prohibition"],
         "parameters": [
           {
             "name": "id",
@@ -5622,9 +5496,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-centre"
-        ],
+        "tags": ["Fire-centre"],
         "parameters": [
           {
             "name": "_limit",
@@ -5814,9 +5686,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-centre"
-        ],
+        "tags": ["Fire-centre"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -5881,9 +5751,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-centre"
-        ],
+        "tags": ["Fire-centre"],
         "parameters": []
       }
     },
@@ -5938,9 +5806,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-centre"
-        ],
+        "tags": ["Fire-centre"],
         "parameters": [
           {
             "name": "id",
@@ -6004,9 +5870,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-centre"
-        ],
+        "tags": ["Fire-centre"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -6078,9 +5942,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-centre"
-        ],
+        "tags": ["Fire-centre"],
         "parameters": [
           {
             "name": "id",
@@ -6146,9 +6008,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-zone"
-        ],
+        "tags": ["Fire-zone"],
         "parameters": [
           {
             "name": "_limit",
@@ -6338,9 +6198,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-zone"
-        ],
+        "tags": ["Fire-zone"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -6405,9 +6263,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-zone"
-        ],
+        "tags": ["Fire-zone"],
         "parameters": []
       }
     },
@@ -6462,9 +6318,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-zone"
-        ],
+        "tags": ["Fire-zone"],
         "parameters": [
           {
             "name": "id",
@@ -6528,9 +6382,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-zone"
-        ],
+        "tags": ["Fire-zone"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -6602,9 +6454,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Fire-zone"
-        ],
+        "tags": ["Fire-zone"],
         "parameters": [
           {
             "name": "id",
@@ -6670,9 +6520,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Link-type"
-        ],
+        "tags": ["Link-type"],
         "parameters": [
           {
             "name": "_limit",
@@ -6862,9 +6710,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Link-type"
-        ],
+        "tags": ["Link-type"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -6929,9 +6775,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Link-type"
-        ],
+        "tags": ["Link-type"],
         "parameters": []
       }
     },
@@ -6986,9 +6830,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Link-type"
-        ],
+        "tags": ["Link-type"],
         "parameters": [
           {
             "name": "id",
@@ -7052,9 +6894,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Link-type"
-        ],
+        "tags": ["Link-type"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -7126,9 +6966,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Link-type"
-        ],
+        "tags": ["Link-type"],
         "parameters": [
           {
             "name": "id",
@@ -7193,9 +7031,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Link"
-        ],
+        "tags": ["Link"],
         "parameters": [
           {
             "name": "_limit",
@@ -7381,9 +7217,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Link"
-        ],
+        "tags": ["Link"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -7448,9 +7282,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Link"
-        ],
+        "tags": ["Link"],
         "parameters": []
       }
     },
@@ -7501,9 +7333,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Link"
-        ],
+        "tags": ["Link"],
         "parameters": [
           {
             "name": "id",
@@ -7563,9 +7393,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Link"
-        ],
+        "tags": ["Link"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -7637,9 +7465,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Link"
-        ],
+        "tags": ["Link"],
         "parameters": [
           {
             "name": "id",
@@ -7705,9 +7531,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Management-area"
-        ],
+        "tags": ["Management-area"],
         "parameters": [
           {
             "name": "_limit",
@@ -7897,9 +7721,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Management-area"
-        ],
+        "tags": ["Management-area"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -7964,9 +7786,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Management-area"
-        ],
+        "tags": ["Management-area"],
         "parameters": []
       }
     },
@@ -8021,9 +7841,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Management-area"
-        ],
+        "tags": ["Management-area"],
         "parameters": [
           {
             "name": "managementAreaNumber",
@@ -8089,9 +7907,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Management-area"
-        ],
+        "tags": ["Management-area"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -8163,9 +7979,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Management-area"
-        ],
+        "tags": ["Management-area"],
         "parameters": [
           {
             "name": "id",
@@ -8231,9 +8045,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Page-template"
-        ],
+        "tags": ["Page-template"],
         "parameters": [
           {
             "name": "_limit",
@@ -8423,9 +8235,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Page-template"
-        ],
+        "tags": ["Page-template"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -8490,9 +8300,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Page-template"
-        ],
+        "tags": ["Page-template"],
         "parameters": []
       }
     },
@@ -8547,9 +8355,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Page-template"
-        ],
+        "tags": ["Page-template"],
         "parameters": [
           {
             "name": "id",
@@ -8613,9 +8419,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Page-template"
-        ],
+        "tags": ["Page-template"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -8687,9 +8491,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Page-template"
-        ],
+        "tags": ["Page-template"],
         "parameters": [
           {
             "name": "id",
@@ -8754,9 +8556,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Page"
-        ],
+        "tags": ["Page"],
         "parameters": [
           {
             "name": "_limit",
@@ -8942,9 +8742,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Page"
-        ],
+        "tags": ["Page"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -9009,9 +8807,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Page"
-        ],
+        "tags": ["Page"],
         "parameters": []
       }
     },
@@ -9062,9 +8858,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Page"
-        ],
+        "tags": ["Page"],
         "parameters": [
           {
             "name": "id",
@@ -9124,9 +8918,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Page"
-        ],
+        "tags": ["Page"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -9198,9 +8990,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Page"
-        ],
+        "tags": ["Page"],
         "parameters": [
           {
             "name": "id",
@@ -9266,9 +9056,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-activity"
-        ],
+        "tags": ["Park-activity"],
         "parameters": [
           {
             "name": "_limit",
@@ -9458,9 +9246,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-activity"
-        ],
+        "tags": ["Park-activity"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -9525,9 +9311,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-activity"
-        ],
+        "tags": ["Park-activity"],
         "parameters": []
       }
     },
@@ -9582,9 +9366,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-activity"
-        ],
+        "tags": ["Park-activity"],
         "parameters": [
           {
             "name": "id",
@@ -9648,9 +9430,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-activity"
-        ],
+        "tags": ["Park-activity"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -9722,9 +9502,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-activity"
-        ],
+        "tags": ["Park-activity"],
         "parameters": [
           {
             "name": "id",
@@ -9790,9 +9568,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-facility"
-        ],
+        "tags": ["Park-facility"],
         "parameters": [
           {
             "name": "_limit",
@@ -9982,9 +9758,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-facility"
-        ],
+        "tags": ["Park-facility"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -10049,9 +9823,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-facility"
-        ],
+        "tags": ["Park-facility"],
         "parameters": []
       }
     },
@@ -10106,9 +9878,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-facility"
-        ],
+        "tags": ["Park-facility"],
         "parameters": [
           {
             "name": "id",
@@ -10172,9 +9942,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-facility"
-        ],
+        "tags": ["Park-facility"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -10246,9 +10014,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-facility"
-        ],
+        "tags": ["Park-facility"],
         "parameters": [
           {
             "name": "id",
@@ -10314,9 +10080,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-name-type"
-        ],
+        "tags": ["Park-name-type"],
         "parameters": [
           {
             "name": "_limit",
@@ -10506,9 +10270,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-name-type"
-        ],
+        "tags": ["Park-name-type"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -10573,9 +10335,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-name-type"
-        ],
+        "tags": ["Park-name-type"],
         "parameters": []
       }
     },
@@ -10630,9 +10390,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-name-type"
-        ],
+        "tags": ["Park-name-type"],
         "parameters": [
           {
             "name": "id",
@@ -10696,9 +10454,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-name-type"
-        ],
+        "tags": ["Park-name-type"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -10770,9 +10526,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-name-type"
-        ],
+        "tags": ["Park-name-type"],
         "parameters": [
           {
             "name": "id",
@@ -10838,9 +10592,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-name"
-        ],
+        "tags": ["Park-name"],
         "parameters": [
           {
             "name": "_limit",
@@ -11030,9 +10782,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-name"
-        ],
+        "tags": ["Park-name"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -11097,9 +10847,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-name"
-        ],
+        "tags": ["Park-name"],
         "parameters": []
       }
     },
@@ -11154,9 +10902,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-name"
-        ],
+        "tags": ["Park-name"],
         "parameters": [
           {
             "name": "id",
@@ -11220,9 +10966,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-name"
-        ],
+        "tags": ["Park-name"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -11294,9 +11038,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-name"
-        ],
+        "tags": ["Park-name"],
         "parameters": [
           {
             "name": "id",
@@ -11362,9 +11104,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-photo"
-        ],
+        "tags": ["Park-photo"],
         "parameters": [
           {
             "name": "_limit",
@@ -11554,9 +11294,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-photo"
-        ],
+        "tags": ["Park-photo"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -11621,9 +11359,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-photo"
-        ],
+        "tags": ["Park-photo"],
         "parameters": []
       }
     },
@@ -11678,9 +11414,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-photo"
-        ],
+        "tags": ["Park-photo"],
         "parameters": [
           {
             "name": "id",
@@ -11744,9 +11478,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-photo"
-        ],
+        "tags": ["Park-photo"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -11818,9 +11550,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Park-photo"
-        ],
+        "tags": ["Park-photo"],
         "parameters": [
           {
             "name": "id",
@@ -11886,9 +11616,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Protected-area"
-        ],
+        "tags": ["Protected-area"],
         "parameters": [
           {
             "name": "_limit",
@@ -12078,9 +11806,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Protected-area"
-        ],
+        "tags": ["Protected-area"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -12145,9 +11871,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Protected-area"
-        ],
+        "tags": ["Protected-area"],
         "parameters": []
       }
     },
@@ -12202,9 +11926,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Protected-area"
-        ],
+        "tags": ["Protected-area"],
         "parameters": []
       }
     },
@@ -12259,9 +11981,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Protected-area"
-        ],
+        "tags": ["Protected-area"],
         "parameters": []
       }
     },
@@ -12316,9 +12036,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Protected-area"
-        ],
+        "tags": ["Protected-area"],
         "parameters": []
       }
     },
@@ -12373,9 +12091,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Protected-area"
-        ],
+        "tags": ["Protected-area"],
         "parameters": [
           {
             "name": "orcs",
@@ -12441,9 +12157,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Protected-area"
-        ],
+        "tags": ["Protected-area"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -12515,9 +12229,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Protected-area"
-        ],
+        "tags": ["Protected-area"],
         "parameters": [
           {
             "name": "id",
@@ -12583,9 +12295,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Public-advisory-audit"
-        ],
+        "tags": ["Public-advisory-audit"],
         "parameters": [
           {
             "name": "_limit",
@@ -12775,9 +12485,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Public-advisory-audit"
-        ],
+        "tags": ["Public-advisory-audit"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -12842,9 +12550,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Public-advisory-audit"
-        ],
+        "tags": ["Public-advisory-audit"],
         "parameters": []
       }
     },
@@ -12899,9 +12605,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Public-advisory-audit"
-        ],
+        "tags": ["Public-advisory-audit"],
         "parameters": [
           {
             "name": "id",
@@ -12965,9 +12669,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Public-advisory-audit"
-        ],
+        "tags": ["Public-advisory-audit"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -13039,9 +12741,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Public-advisory-audit"
-        ],
+        "tags": ["Public-advisory-audit"],
         "parameters": [
           {
             "name": "id",
@@ -13107,9 +12807,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Public-advisory-audit"
-        ],
+        "tags": ["Public-advisory-audit"],
         "parameters": [
           {
             "name": "advisoryNumber",
@@ -13175,9 +12873,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Public-advisory"
-        ],
+        "tags": ["Public-advisory"],
         "parameters": [
           {
             "name": "_limit",
@@ -13367,9 +13063,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Public-advisory"
-        ],
+        "tags": ["Public-advisory"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -13434,9 +13128,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Public-advisory"
-        ],
+        "tags": ["Public-advisory"],
         "parameters": []
       }
     },
@@ -13491,9 +13183,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Public-advisory"
-        ],
+        "tags": ["Public-advisory"],
         "parameters": [
           {
             "name": "advisoryNumber",
@@ -13559,9 +13249,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Public-advisory"
-        ],
+        "tags": ["Public-advisory"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -13633,9 +13321,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Public-advisory"
-        ],
+        "tags": ["Public-advisory"],
         "parameters": [
           {
             "name": "id",
@@ -13700,9 +13386,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Region"
-        ],
+        "tags": ["Region"],
         "parameters": [
           {
             "name": "_limit",
@@ -13888,9 +13572,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Region"
-        ],
+        "tags": ["Region"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -13955,9 +13637,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Region"
-        ],
+        "tags": ["Region"],
         "parameters": []
       }
     },
@@ -14008,9 +13688,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Region"
-        ],
+        "tags": ["Region"],
         "parameters": [
           {
             "name": "regionNumber",
@@ -14072,9 +13750,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Region"
-        ],
+        "tags": ["Region"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -14146,9 +13822,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Region"
-        ],
+        "tags": ["Region"],
         "parameters": [
           {
             "name": "id",
@@ -14213,9 +13887,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Section"
-        ],
+        "tags": ["Section"],
         "parameters": [
           {
             "name": "_limit",
@@ -14401,9 +14073,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Section"
-        ],
+        "tags": ["Section"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -14468,9 +14138,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Section"
-        ],
+        "tags": ["Section"],
         "parameters": []
       }
     },
@@ -14521,9 +14189,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Section"
-        ],
+        "tags": ["Section"],
         "parameters": [
           {
             "name": "sectionNumber",
@@ -14585,9 +14251,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Section"
-        ],
+        "tags": ["Section"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -14659,9 +14323,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Section"
-        ],
+        "tags": ["Section"],
         "parameters": [
           {
             "name": "id",
@@ -14726,9 +14388,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Site"
-        ],
+        "tags": ["Site"],
         "parameters": [
           {
             "name": "_limit",
@@ -14914,9 +14574,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Site"
-        ],
+        "tags": ["Site"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -14981,9 +14639,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Site"
-        ],
+        "tags": ["Site"],
         "parameters": []
       }
     },
@@ -15034,9 +14690,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Site"
-        ],
+        "tags": ["Site"],
         "parameters": [
           {
             "name": "orcsSiteNumber",
@@ -15098,9 +14752,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Site"
-        ],
+        "tags": ["Site"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -15172,9 +14824,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Site"
-        ],
+        "tags": ["Site"],
         "parameters": [
           {
             "name": "id",
@@ -15240,9 +14890,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Standard-message"
-        ],
+        "tags": ["Standard-message"],
         "parameters": [
           {
             "name": "_limit",
@@ -15432,9 +15080,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Standard-message"
-        ],
+        "tags": ["Standard-message"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -15499,9 +15145,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Standard-message"
-        ],
+        "tags": ["Standard-message"],
         "parameters": []
       }
     },
@@ -15556,9 +15200,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Standard-message"
-        ],
+        "tags": ["Standard-message"],
         "parameters": [
           {
             "name": "id",
@@ -15622,9 +15264,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Standard-message"
-        ],
+        "tags": ["Standard-message"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -15696,9 +15336,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Standard-message"
-        ],
+        "tags": ["Standard-message"],
         "parameters": [
           {
             "name": "id",
@@ -15764,9 +15402,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Statutory-holidays"
-        ],
+        "tags": ["Statutory-holidays"],
         "parameters": [
           {
             "name": "_limit",
@@ -15956,9 +15592,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Statutory-holidays"
-        ],
+        "tags": ["Statutory-holidays"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -16019,9 +15653,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Statutory-holidays"
-        ],
+        "tags": ["Statutory-holidays"],
         "parameters": []
       }
     },
@@ -16075,9 +15707,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Token"
-        ],
+        "tags": ["Token"],
         "parameters": [
           {
             "name": "_limit",
@@ -16263,9 +15893,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Token"
-        ],
+        "tags": ["Token"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -16330,9 +15958,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Token"
-        ],
+        "tags": ["Token"],
         "parameters": []
       }
     },
@@ -16383,9 +16009,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Token"
-        ],
+        "tags": ["Token"],
         "parameters": [
           {
             "name": "id",
@@ -16445,9 +16069,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Token"
-        ],
+        "tags": ["Token"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -16519,9 +16141,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Token"
-        ],
+        "tags": ["Token"],
         "parameters": [
           {
             "name": "id",
@@ -16586,9 +16206,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Urgency"
-        ],
+        "tags": ["Urgency"],
         "parameters": [
           {
             "name": "_limit",
@@ -16774,9 +16392,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Urgency"
-        ],
+        "tags": ["Urgency"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -16841,9 +16457,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Urgency"
-        ],
+        "tags": ["Urgency"],
         "parameters": []
       }
     },
@@ -16894,9 +16508,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Urgency"
-        ],
+        "tags": ["Urgency"],
         "parameters": [
           {
             "name": "id",
@@ -16956,9 +16568,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Urgency"
-        ],
+        "tags": ["Urgency"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -17030,9 +16640,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Urgency"
-        ],
+        "tags": ["Urgency"],
         "parameters": [
           {
             "name": "id",
@@ -17097,9 +16705,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Website"
-        ],
+        "tags": ["Website"],
         "parameters": [
           {
             "name": "_limit",
@@ -17285,9 +16891,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Website"
-        ],
+        "tags": ["Website"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -17352,9 +16956,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Website"
-        ],
+        "tags": ["Website"],
         "parameters": []
       }
     },
@@ -17405,9 +17007,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Website"
-        ],
+        "tags": ["Website"],
         "parameters": [
           {
             "name": "id",
@@ -17467,9 +17067,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Website"
-        ],
+        "tags": ["Website"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -17541,9 +17139,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Website"
-        ],
+        "tags": ["Website"],
         "parameters": [
           {
             "name": "id",
@@ -17609,9 +17205,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "X-data-load-setting"
-        ],
+        "tags": ["X-data-load-setting"],
         "parameters": [
           {
             "name": "_limit",
@@ -17801,9 +17395,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "X-data-load-setting"
-        ],
+        "tags": ["X-data-load-setting"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -17868,9 +17460,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "X-data-load-setting"
-        ],
+        "tags": ["X-data-load-setting"],
         "parameters": []
       }
     },
@@ -17925,9 +17515,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "X-data-load-setting"
-        ],
+        "tags": ["X-data-load-setting"],
         "parameters": [
           {
             "name": "id",
@@ -17991,9 +17579,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "X-data-load-setting"
-        ],
+        "tags": ["X-data-load-setting"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -18065,9 +17651,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "X-data-load-setting"
-        ],
+        "tags": ["X-data-load-setting"],
         "parameters": [
           {
             "name": "id",
@@ -18133,9 +17717,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Email - Email"
-        ],
+        "tags": ["Email - Email"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -18204,9 +17786,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Email - Email"
-        ],
+        "tags": ["Email - Email"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -18275,9 +17855,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Email - Email"
-        ],
+        "tags": ["Email - Email"],
         "parameters": []
       }
     },
@@ -18332,9 +17910,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Upload - File"
-        ],
+        "tags": ["Upload - File"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -18403,9 +17979,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Upload - File"
-        ],
+        "tags": ["Upload - File"],
         "parameters": []
       }
     },
@@ -18460,9 +18034,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Upload - File"
-        ],
+        "tags": ["Upload - File"],
         "parameters": []
       }
     },
@@ -18517,9 +18089,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Upload - File"
-        ],
+        "tags": ["Upload - File"],
         "parameters": [
           {
             "name": "id",
@@ -18583,9 +18153,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Upload - File"
-        ],
+        "tags": ["Upload - File"],
         "parameters": [
           {
             "name": "id",
@@ -18651,9 +18219,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "Upload - File"
-        ],
+        "tags": ["Upload - File"],
         "parameters": [
           {
             "name": "id",
@@ -18715,9 +18281,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - Role"
-        ],
+        "tags": ["UsersPermissions - Role"],
         "parameters": [
           {
             "name": "id",
@@ -18782,9 +18346,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - Role"
-        ],
+        "tags": ["UsersPermissions - Role"],
         "parameters": [
           {
             "name": "_limit",
@@ -18970,9 +18532,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - Role"
-        ],
+        "tags": ["UsersPermissions - Role"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -19033,9 +18593,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - Role"
-        ],
+        "tags": ["UsersPermissions - Role"],
         "parameters": [
           {
             "name": "role",
@@ -19110,9 +18668,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - Role"
-        ],
+        "tags": ["UsersPermissions - Role"],
         "parameters": [
           {
             "name": "role",
@@ -19177,9 +18733,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - User"
-        ],
+        "tags": ["UsersPermissions - User"],
         "parameters": [
           {
             "name": "id",
@@ -19381,9 +18935,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - User"
-        ],
+        "tags": ["UsersPermissions - User"],
         "parameters": []
       }
     },
@@ -19438,9 +18990,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - User"
-        ],
+        "tags": ["UsersPermissions - User"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -19505,9 +19055,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - User"
-        ],
+        "tags": ["UsersPermissions - User"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -19572,9 +19120,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - User"
-        ],
+        "tags": ["UsersPermissions - User"],
         "parameters": [
           {
             "name": "provider",
@@ -19640,9 +19186,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - User"
-        ],
+        "tags": ["UsersPermissions - User"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -19711,9 +19255,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - User"
-        ],
+        "tags": ["UsersPermissions - User"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -19782,9 +19324,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - User"
-        ],
+        "tags": ["UsersPermissions - User"],
         "parameters": []
       }
     },
@@ -19839,9 +19379,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - User"
-        ],
+        "tags": ["UsersPermissions - User"],
         "requestBody": {
           "description": "",
           "required": true,
@@ -19909,9 +19447,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - User"
-        ],
+        "tags": ["UsersPermissions - User"],
         "parameters": [
           {
             "name": "_limit",
@@ -20099,9 +19635,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - User"
-        ],
+        "tags": ["UsersPermissions - User"],
         "parameters": []
       }
     },
@@ -20152,9 +19686,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - User"
-        ],
+        "tags": ["UsersPermissions - User"],
         "parameters": [
           {
             "name": "id",
@@ -20214,9 +19746,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - User"
-        ],
+        "tags": ["UsersPermissions - User"],
         "parameters": [
           {
             "name": "id",
@@ -20291,9 +19821,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "UsersPermissions - User"
-        ],
+        "tags": ["UsersPermissions - User"],
         "parameters": [
           {
             "name": "id",
@@ -20312,9 +19840,7 @@
   "components": {
     "schemas": {
       "Access-status": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -20352,9 +19878,7 @@
         }
       },
       "Activity-type": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -20428,9 +19952,7 @@
         }
       },
       "Activity": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -20504,9 +20026,7 @@
         }
       },
       "Advisory-status": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -20544,9 +20064,7 @@
         }
       },
       "Asset-type": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -20690,9 +20208,7 @@
         }
       },
       "Data-load-setting": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -20736,9 +20252,7 @@
         }
       },
       "Event-type": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -20770,9 +20284,7 @@
         }
       },
       "Facility-type": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -20846,9 +20358,7 @@
         }
       },
       "Facility": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -20922,9 +20432,7 @@
         }
       },
       "Fire-ban-prohibition": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -20943,9 +20451,7 @@
             "type": "string"
           },
           "fireCentre": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -20974,9 +20480,7 @@
             }
           },
           "fireZone": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -21056,9 +20560,7 @@
         }
       },
       "Fire-centre": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -21072,9 +20574,7 @@
           "fireZones": {
             "type": "array",
             "items": {
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -21142,9 +20642,7 @@
         }
       },
       "Fire-zone": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -21159,9 +20657,7 @@
             "type": "string"
           },
           "fireCentre": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -21192,10 +20688,7 @@
           "protectedAreas": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "orcs"
-              ],
+              "required": ["id", "orcs"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -21238,13 +20731,7 @@
                 },
                 "typeCode": {
                   "type": "string",
-                  "enum": [
-                    "PK",
-                    "PA",
-                    "RA",
-                    "ER",
-                    "CS"
-                  ]
+                  "enum": ["PK", "PA", "RA", "ER", "CS"]
                 },
                 "latitude": {
                   "type": "number"
@@ -21366,9 +20853,7 @@
         }
       },
       "Link-type": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -21400,9 +20885,7 @@
         }
       },
       "Link": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -21414,9 +20897,7 @@
             "type": "string"
           },
           "type": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -21465,10 +20946,7 @@
         }
       },
       "Management-area": {
-        "required": [
-          "id",
-          "managementAreaNumber"
-        ],
+        "required": ["id", "managementAreaNumber"],
         "properties": {
           "id": {
             "type": "string"
@@ -21480,10 +20958,7 @@
             "type": "string"
           },
           "section": {
-            "required": [
-              "id",
-              "sectionNumber"
-            ],
+            "required": ["id", "sectionNumber"],
             "properties": {
               "id": {
                 "type": "string"
@@ -21517,10 +20992,7 @@
           "protectedAreas": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "orcs"
-              ],
+              "required": ["id", "orcs"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -21563,13 +21035,7 @@
                 },
                 "typeCode": {
                   "type": "string",
-                  "enum": [
-                    "PK",
-                    "PA",
-                    "RA",
-                    "ER",
-                    "CS"
-                  ]
+                  "enum": ["PK", "PA", "RA", "ER", "CS"]
                 },
                 "latitude": {
                   "type": "number"
@@ -21653,10 +21119,7 @@
             }
           },
           "region": {
-            "required": [
-              "id",
-              "regionNumber"
-            ],
+            "required": ["id", "regionNumber"],
             "properties": {
               "id": {
                 "type": "string"
@@ -21697,9 +21160,7 @@
         }
       },
       "NewManagement-area": {
-        "required": [
-          "managementAreaNumber"
-        ],
+        "required": ["managementAreaNumber"],
         "properties": {
           "managementAreaNumber": {
             "type": "integer"
@@ -21732,9 +21193,7 @@
         }
       },
       "Page-template": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -21748,9 +21207,7 @@
           "pages": {
             "type": "array",
             "items": {
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -21809,9 +21266,7 @@
         }
       },
       "Page": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -21821,10 +21276,7 @@
           },
           "Template": {
             "type": "string",
-            "enum": [
-              "Template1",
-              "Template2"
-            ]
+            "enum": ["Template1", "Template2"]
           },
           "Content": {
             "type": "array",
@@ -21834,10 +21286,7 @@
                   "properties": {
                     "__component": {
                       "type": "string",
-                      "enum": [
-                        "parks.html-area",
-                        "parks.image"
-                      ]
+                      "enum": ["parks.html-area", "parks.image"]
                     },
                     "id": {
                       "type": "string"
@@ -21846,18 +21295,13 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "id"
-                  ]
+                  "required": ["id"]
                 },
                 {
                   "properties": {
                     "__component": {
                       "type": "string",
-                      "enum": [
-                        "parks.html-area",
-                        "parks.image"
-                      ]
+                      "enum": ["parks.html-area", "parks.image"]
                     },
                     "id": {
                       "type": "string"
@@ -21930,9 +21374,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "id"
-                  ]
+                  "required": ["id"]
                 }
               ]
             }
@@ -21950,10 +21392,7 @@
           },
           "Template": {
             "type": "string",
-            "enum": [
-              "Template1",
-              "Template2"
-            ]
+            "enum": ["Template1", "Template2"]
           },
           "Content": {
             "type": "array",
@@ -21963,10 +21402,7 @@
                   "properties": {
                     "__component": {
                       "type": "string",
-                      "enum": [
-                        "parks.html-area",
-                        "parks.image"
-                      ]
+                      "enum": ["parks.html-area", "parks.image"]
                     },
                     "id": {
                       "type": "string"
@@ -21975,18 +21411,13 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "id"
-                  ]
+                  "required": ["id"]
                 },
                 {
                   "properties": {
                     "__component": {
                       "type": "string",
-                      "enum": [
-                        "parks.html-area",
-                        "parks.image"
-                      ]
+                      "enum": ["parks.html-area", "parks.image"]
                     },
                     "id": {
                       "type": "string"
@@ -22059,9 +21490,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "id"
-                  ]
+                  "required": ["id"]
                 }
               ]
             }
@@ -22079,9 +21508,7 @@
         }
       },
       "Park-activity": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -22099,10 +21526,7 @@
             "type": "boolean"
           },
           "protectedArea": {
-            "required": [
-              "id",
-              "orcs"
-            ],
+            "required": ["id", "orcs"],
             "properties": {
               "id": {
                 "type": "string"
@@ -22145,13 +21569,7 @@
               },
               "typeCode": {
                 "type": "string",
-                "enum": [
-                  "PK",
-                  "PA",
-                  "RA",
-                  "ER",
-                  "CS"
-                ]
+                "enum": ["PK", "PA", "RA", "ER", "CS"]
               },
               "latitude": {
                 "type": "number"
@@ -22234,10 +21652,7 @@
             }
           },
           "site": {
-            "required": [
-              "id",
-              "orcsSiteNumber"
-            ],
+            "required": ["id", "orcsSiteNumber"],
             "properties": {
               "id": {
                 "type": "string"
@@ -22305,9 +21720,7 @@
             }
           },
           "activityType": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -22403,9 +21816,7 @@
         }
       },
       "Park-facility": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -22423,10 +21834,7 @@
             "type": "boolean"
           },
           "protectedArea": {
-            "required": [
-              "id",
-              "orcs"
-            ],
+            "required": ["id", "orcs"],
             "properties": {
               "id": {
                 "type": "string"
@@ -22469,13 +21877,7 @@
               },
               "typeCode": {
                 "type": "string",
-                "enum": [
-                  "PK",
-                  "PA",
-                  "RA",
-                  "ER",
-                  "CS"
-                ]
+                "enum": ["PK", "PA", "RA", "ER", "CS"]
               },
               "latitude": {
                 "type": "number"
@@ -22558,10 +21960,7 @@
             }
           },
           "site": {
-            "required": [
-              "id",
-              "orcsSiteNumber"
-            ],
+            "required": ["id", "orcsSiteNumber"],
             "properties": {
               "id": {
                 "type": "string"
@@ -22629,9 +22028,7 @@
             }
           },
           "facilityType": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -22727,9 +22124,7 @@
         }
       },
       "Park-name-type": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -22773,9 +22168,7 @@
         }
       },
       "Park-name": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -22790,9 +22183,7 @@
             "type": "string"
           },
           "parkNameType": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -22818,10 +22209,7 @@
             }
           },
           "protectedArea": {
-            "required": [
-              "id",
-              "orcs"
-            ],
+            "required": ["id", "orcs"],
             "properties": {
               "id": {
                 "type": "string"
@@ -22864,13 +22252,7 @@
               },
               "typeCode": {
                 "type": "string",
-                "enum": [
-                  "PK",
-                  "PA",
-                  "RA",
-                  "ER",
-                  "CS"
-                ]
+                "enum": ["PK", "PA", "RA", "ER", "CS"]
               },
               "latitude": {
                 "type": "number"
@@ -22988,9 +22370,7 @@
         }
       },
       "Park-photo": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -23212,10 +22592,7 @@
         }
       },
       "Protected-area": {
-        "required": [
-          "id",
-          "orcs"
-        ],
+        "required": ["id", "orcs"],
         "properties": {
           "id": {
             "type": "string"
@@ -23262,13 +22639,7 @@
           },
           "typeCode": {
             "type": "string",
-            "enum": [
-              "PK",
-              "PA",
-              "RA",
-              "ER",
-              "CS"
-            ]
+            "enum": ["PK", "PA", "RA", "ER", "CS"]
           },
           "latitude": {
             "type": "number"
@@ -23291,10 +22662,7 @@
           "sites": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "orcsSiteNumber"
-              ],
+              "required": ["id", "orcsSiteNumber"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -23365,9 +22733,7 @@
           "parkActivities": {
             "type": "array",
             "items": {
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -23414,9 +22780,7 @@
           "parkFacilities": {
             "type": "array",
             "items": {
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -23463,9 +22827,7 @@
           "parkNames": {
             "type": "array",
             "items": {
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -23506,9 +22868,7 @@
           "fireZones": {
             "type": "array",
             "items": {
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -23546,10 +22906,7 @@
           "managementAreas": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "managementAreaNumber"
-              ],
+              "required": ["id", "managementAreaNumber"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -23601,9 +22958,7 @@
         }
       },
       "NewProtected-area": {
-        "required": [
-          "orcs"
-        ],
+        "required": ["orcs"],
         "properties": {
           "orcs": {
             "type": "integer"
@@ -23647,13 +23002,7 @@
           },
           "typeCode": {
             "type": "string",
-            "enum": [
-              "PK",
-              "PA",
-              "RA",
-              "ER",
-              "CS"
-            ]
+            "enum": ["PK", "PA", "RA", "ER", "CS"]
           },
           "latitude": {
             "type": "number"
@@ -23738,9 +23087,7 @@
         }
       },
       "Public-advisory-audit": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -23838,9 +23185,7 @@
             "type": "string"
           },
           "accessStatus": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -23863,9 +23208,7 @@
             }
           },
           "eventType": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -23885,9 +23228,7 @@
             }
           },
           "urgency": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -23913,9 +23254,7 @@
             }
           },
           "advisoryStatus": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -23940,10 +23279,7 @@
           "protectedAreas": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "orcs"
-              ],
+              "required": ["id", "orcs"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -23986,13 +23322,7 @@
                 },
                 "typeCode": {
                   "type": "string",
-                  "enum": [
-                    "PK",
-                    "PA",
-                    "RA",
-                    "ER",
-                    "CS"
-                  ]
+                  "enum": ["PK", "PA", "RA", "ER", "CS"]
                 },
                 "latitude": {
                   "type": "number"
@@ -24078,9 +23408,7 @@
           "links": {
             "type": "array",
             "items": {
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -24109,10 +23437,7 @@
           "regions": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "regionNumber"
-              ],
+              "required": ["id", "regionNumber"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -24150,10 +23475,7 @@
           "sections": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "sectionNumber"
-              ],
+              "required": ["id", "sectionNumber"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -24188,10 +23510,7 @@
           "managementAreas": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "managementAreaNumber"
-              ],
+              "required": ["id", "managementAreaNumber"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -24229,9 +23548,7 @@
           "fireZones": {
             "type": "array",
             "items": {
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -24269,10 +23586,7 @@
           "sites": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "orcsSiteNumber"
-              ],
+              "required": ["id", "orcsSiteNumber"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -24343,9 +23657,7 @@
           "fireCentres": {
             "type": "array",
             "items": {
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -24375,9 +23687,7 @@
             }
           },
           "standardMessage": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -24584,9 +23894,7 @@
         }
       },
       "Public-advisory": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -24681,9 +23989,7 @@
             "type": "string"
           },
           "accessStatus": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -24706,9 +24012,7 @@
             }
           },
           "eventType": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -24728,9 +24032,7 @@
             }
           },
           "urgency": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -24756,9 +24058,7 @@
             }
           },
           "advisoryStatus": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -24783,10 +24083,7 @@
           "protectedAreas": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "orcs"
-              ],
+              "required": ["id", "orcs"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -24829,13 +24126,7 @@
                 },
                 "typeCode": {
                   "type": "string",
-                  "enum": [
-                    "PK",
-                    "PA",
-                    "RA",
-                    "ER",
-                    "CS"
-                  ]
+                  "enum": ["PK", "PA", "RA", "ER", "CS"]
                 },
                 "latitude": {
                   "type": "number"
@@ -24921,9 +24212,7 @@
           "links": {
             "type": "array",
             "items": {
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -24952,10 +24241,7 @@
           "regions": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "regionNumber"
-              ],
+              "required": ["id", "regionNumber"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -24993,10 +24279,7 @@
           "sections": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "sectionNumber"
-              ],
+              "required": ["id", "sectionNumber"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -25031,10 +24314,7 @@
           "managementAreas": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "managementAreaNumber"
-              ],
+              "required": ["id", "managementAreaNumber"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -25072,9 +24352,7 @@
           "fireZones": {
             "type": "array",
             "items": {
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -25112,10 +24390,7 @@
           "sites": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "orcsSiteNumber"
-              ],
+              "required": ["id", "orcsSiteNumber"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -25186,9 +24461,7 @@
           "fireCentres": {
             "type": "array",
             "items": {
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -25218,9 +24491,7 @@
             }
           },
           "standardMessage": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -25418,10 +24689,7 @@
         }
       },
       "Region": {
-        "required": [
-          "id",
-          "regionNumber"
-        ],
+        "required": ["id", "regionNumber"],
         "properties": {
           "id": {
             "type": "string"
@@ -25435,10 +24703,7 @@
           "sections": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "sectionNumber"
-              ],
+              "required": ["id", "sectionNumber"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -25473,10 +24738,7 @@
           "managementAreas": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "managementAreaNumber"
-              ],
+              "required": ["id", "managementAreaNumber"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -25518,9 +24780,7 @@
         }
       },
       "NewRegion": {
-        "required": [
-          "regionNumber"
-        ],
+        "required": ["regionNumber"],
         "properties": {
           "regionNumber": {
             "type": "integer"
@@ -25553,10 +24813,7 @@
         }
       },
       "Section": {
-        "required": [
-          "id",
-          "sectionNumber"
-        ],
+        "required": ["id", "sectionNumber"],
         "properties": {
           "id": {
             "type": "string"
@@ -25568,10 +24825,7 @@
             "type": "string"
           },
           "region": {
-            "required": [
-              "id",
-              "regionNumber"
-            ],
+            "required": ["id", "regionNumber"],
             "properties": {
               "id": {
                 "type": "string"
@@ -25608,10 +24862,7 @@
           "managementAreas": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "managementAreaNumber"
-              ],
+              "required": ["id", "managementAreaNumber"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -25653,9 +24904,7 @@
         }
       },
       "NewSection": {
-        "required": [
-          "sectionNumber"
-        ],
+        "required": ["sectionNumber"],
         "properties": {
           "sectionNumber": {
             "type": "integer"
@@ -25685,10 +24934,7 @@
         }
       },
       "Site": {
-        "required": [
-          "id",
-          "orcsSiteNumber"
-        ],
+        "required": ["id", "orcsSiteNumber"],
         "properties": {
           "id": {
             "type": "string"
@@ -25726,10 +24972,7 @@
             "type": "string"
           },
           "protectedArea": {
-            "required": [
-              "id",
-              "orcs"
-            ],
+            "required": ["id", "orcs"],
             "properties": {
               "id": {
                 "type": "string"
@@ -25772,13 +25015,7 @@
               },
               "typeCode": {
                 "type": "string",
-                "enum": [
-                  "PK",
-                  "PA",
-                  "RA",
-                  "ER",
-                  "CS"
-                ]
+                "enum": ["PK", "PA", "RA", "ER", "CS"]
               },
               "latitude": {
                 "type": "number"
@@ -25863,9 +25100,7 @@
           "parkActivities": {
             "type": "array",
             "items": {
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -25912,9 +25147,7 @@
           "parkFacilities": {
             "type": "array",
             "items": {
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -25971,9 +25204,7 @@
         }
       },
       "NewSite": {
-        "required": [
-          "orcsSiteNumber"
-        ],
+        "required": ["orcsSiteNumber"],
         "properties": {
           "siteName": {
             "type": "string"
@@ -26041,9 +25272,7 @@
         }
       },
       "Standard-message": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -26055,9 +25284,7 @@
             "type": "string"
           },
           "eventType": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -26106,9 +25333,7 @@
         }
       },
       "Statutory-holidays": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -26140,10 +25365,7 @@
         }
       },
       "Token": {
-        "required": [
-          "id",
-          "token"
-        ],
+        "required": ["id", "token"],
         "properties": {
           "id": {
             "type": "string"
@@ -26152,11 +25374,7 @@
             "type": "string"
           },
           "user": {
-            "required": [
-              "id",
-              "username",
-              "email"
-            ],
+            "required": ["id", "username", "email"],
             "properties": {
               "id": {
                 "type": "string"
@@ -26203,9 +25421,7 @@
         }
       },
       "NewToken": {
-        "required": [
-          "token"
-        ],
+        "required": ["token"],
         "properties": {
           "token": {
             "type": "string"
@@ -26226,9 +25442,7 @@
         }
       },
       "Urgency": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -26272,9 +25486,7 @@
         }
       },
       "Website": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -26283,9 +25495,7 @@
             "type": "string"
           },
           "homepage": {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "properties": {
               "id": {
                 "type": "string"
@@ -26295,10 +25505,7 @@
               },
               "Template": {
                 "type": "string",
-                "enum": [
-                  "Template1",
-                  "Template2"
-                ]
+                "enum": ["Template1", "Template2"]
               },
               "Content": {
                 "type": "dynamiczone"
@@ -26359,9 +25566,7 @@
         }
       },
       "X-data-load-setting": {
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -26417,10 +25622,7 @@
         }
       },
       "UsersPermissionsRole": {
-        "required": [
-          "id",
-          "name"
-        ],
+        "required": ["id", "name"],
         "properties": {
           "id": {
             "type": "string"
@@ -26438,13 +25640,7 @@
           "permissions": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "type",
-                "controller",
-                "action",
-                "enabled"
-              ],
+              "required": ["id", "type", "controller", "action", "enabled"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -26479,11 +25675,7 @@
           "users": {
             "type": "array",
             "items": {
-              "required": [
-                "id",
-                "username",
-                "email"
-              ],
+              "required": ["id", "username", "email"],
               "properties": {
                 "id": {
                   "type": "string"
@@ -26527,9 +25719,7 @@
         }
       },
       "NewUsersPermissionsRole": {
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "properties": {
           "name": {
             "type": "string",
@@ -26562,11 +25752,7 @@
         }
       },
       "UsersPermissionsUser": {
-        "required": [
-          "id",
-          "username",
-          "email"
-        ],
+        "required": ["id", "username", "email"],
         "properties": {
           "id": {
             "type": "string"
@@ -26591,10 +25777,7 @@
             "default": false
           },
           "role": {
-            "required": [
-              "id",
-              "name"
-            ],
+            "required": ["id", "name"],
             "properties": {
               "id": {
                 "type": "string"
@@ -26631,10 +25814,7 @@
         }
       },
       "NewUsersPermissionsUser": {
-        "required": [
-          "username",
-          "email"
-        ],
+        "required": ["username", "email"],
         "properties": {
           "username": {
             "type": "string",
@@ -26678,10 +25858,7 @@
         }
       },
       "Error": {
-        "required": [
-          "code",
-          "message"
-        ],
+        "required": ["code", "message"],
         "properties": {
           "code": {
             "type": "integer",

@@ -111,6 +111,14 @@ const loadFireBanProhibition = async () => {
     });
 };
 
+const loadStandardMessage = async () => {
+  loadUtils.loadJson(
+    "standard-message",
+    "./data/standard-message.json",
+    "standard-message"
+  );
+};
+
 const loadUrgency = async () => {
   loadUtils.loadJson("urgency", "./data/urgency.json", "urgency");
 };
@@ -386,6 +394,7 @@ module.exports = {
   loadFireZone,
   loadFireCentreZoneXref,
   loadFireBanProhibition,
+  loadStandardMessage,
   loadUrgency,
   loadParkActivity,
   loadParkFacility,

@@ -118,6 +118,10 @@
   }
 }
 
+.multi-line-select-option {
+  white-space: pre-wrap !important;
+}
+
 @media (max-width: 991.98px) {
   .ad-duration-label {
     min-width: 115px !important;
