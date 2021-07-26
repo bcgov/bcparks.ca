@@ -37,7 +37,7 @@ export default function AdvisorySummary({
 
   useEffect(() => {
     if (!isLoadingPage && advisory) {
-      if (advisory.advisoryStatus.advisoryStatus !== "Published") {
+      if (advisory.advisoryStatus.code !== "PUB") {
         Promise.all([
           cmsAxios.get(`/public-advisories/${advisory.advisoryNumber}`),
           getLinkTypes(cmsData, setCmsData),
@@ -45,9 +45,7 @@ export default function AdvisorySummary({
           .then((res) => {
             const advisoryData = res[0].data;
             advisoryData.linkTypes = res[1];
-            setIsCurrentlyPublished(
-              advisoryData.advisoryStatus.advisoryStatus === "Published"
-            );
+            setIsCurrentlyPublished(advisoryData.advisoryStatus.code === "PUB");
             setCurrentAdvisory(advisoryData);
             const parkUrlInfo = [];
             const siteUrlInfo = [];
@@ -85,7 +83,7 @@ export default function AdvisorySummary({
             setCurrentSiteUrls(siteUrlText);
           })
           .catch((error) => {
-            console.log("error occurred fetching Public Advisory data", error);
+            //Do nothing
           });
       }
     }

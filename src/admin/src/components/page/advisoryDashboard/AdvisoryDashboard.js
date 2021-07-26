@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import { cmsAxios, apiAxios } from "../../../axios_config";
+import React, { useState } from "react";
+import { apiAxios } from "../../../axios_config";
 import { Redirect, useHistory } from "react-router-dom";
 import { useQuery } from "react-query";
 import PropTypes from "prop-types";
@@ -28,6 +28,7 @@ import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import {
   getProtectedAreas,
   getManagementAreas,
+  getCurrentPublishedAdvisories,
 } from "../../../utils/CmsDataUtil";
 
 export default function AdvisoryDashboard({
@@ -39,26 +40,9 @@ export default function AdvisoryDashboard({
   const today = moment(new Date()).tz("America/Vancouver").toISOString();
   const [toCreate, setToCreate] = useState(false);
   const [selectedParkId, setSelectedParkId] = useState(0);
-  const publishedAdvisoriesRef = useRef([]);
   const [publishedAdvisories, setPublishedAdvisories] = useState([]);
 
   if (!keycloak && !initialized) setToError(true);
-
-  const calculatePublishedAdvisories = (advisories) => {
-    advisories.forEach((ad) => {
-      if (ad.advisoryStatus.advisoryStatus !== "Published") {
-        cmsAxios.get(`/public-advisories/${ad.advisoryNumber}`).then((res) => {
-          if (res.data.advisoryStatus.advisoryStatus === "Published") {
-            publishedAdvisoriesRef.current = [
-              ...publishedAdvisoriesRef.current,
-              res.data.advisoryNumber,
-            ];
-            setPublishedAdvisories([...publishedAdvisoriesRef.current]);
-          }
-        });
-      }
-    });
-  };
 
   const fetchPublicAdvisory = async ({ queryKey }) => {
     const [, selectedParkId] = queryKey;
@@ -77,7 +61,7 @@ export default function AdvisoryDashboard({
     const managementAreas = response[0];
     const publicAdvisories = response[1].data;
 
-    calculatePublishedAdvisories(publicAdvisories);
+    getCurrentPublishedAdvisories(cmsData, setCmsData, setPublishedAdvisories);
 
     const regionParksCount = managementAreas.reduce((region, item) => {
       region[item.region.id] =

@@ -199,3 +199,33 @@ export function getBusinessHours(cmsData, setCmsData) {
   });
   return result;
 }
+
+export function getCurrentPublishedAdvisories(
+  cmsData,
+  setCmsData,
+  setPublishedAdvisories
+) {
+  let result;
+  if (!cmsData.currentPublishedAdvisories) {
+    const advisoryStatuses = getAdvisoryStatuses(cmsData, setCmsData);
+    const publishedStatus = advisoryStatuses.filter((as) => as.code === "PUB");
+    if (publishedStatus && publishedStatus[0]) {
+      result = cmsAxios
+        .get(`/public-advisories?_advisoryStatus=${publishedStatus[0].id}`)
+        .then((res) => {
+          const data = cmsData;
+          data.currentPublishedAdvisories = res.data;
+          setCmsData(data);
+          return res.data;
+        });
+    }
+  } else {
+    result = cmsData.currentPublishedAdvisories;
+  }
+  let publishedAdvisories = [];
+  result.forEach((ad) => {
+    publishedAdvisories = [...publishedAdvisories, ad.advisoryNumber];
+  });
+  setPublishedAdvisories([...publishedAdvisories]);
+  return result;
+}
