@@ -107,7 +107,6 @@ export default function Advisory({
   const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const linksRef = useRef([]);
-  const descriptionRef = useRef();
   const durationUnitRef = useRef("h");
   const durationIntervalRef = useRef(0);
   const advisoryDateRef = useRef(moment().tz("America/Vancouver"));
@@ -155,7 +154,6 @@ export default function Advisory({
             const advisoryData = res.data;
             setHeadline(advisoryData.title || "");
             setDescription(advisoryData.description || "");
-            descriptionRef.current = advisoryData.description || "";
             setTicketNumber(advisoryData.dcTicketNumber || "");
             if (advisoryData.isSafetyRelated) {
               setIsSafetyRelated(advisoryData.isSafetyRelated);
@@ -502,7 +500,7 @@ export default function Advisory({
           }
           const standardMessageData = res[12];
           const standardMessages = standardMessageData.map((m) => ({
-            label: m.title,
+            label: m.title + "\n" + m.description,
             value: m.id,
             type: "standardMessage",
             obj: m,
@@ -587,13 +585,11 @@ export default function Advisory({
     }
   };
 
-  const handleDescriptionChange = (e) => {
-    descriptionRef.current = e;
-    setDescription(e);
-  };
-
   const handleStandardMessagesChange = (e) => {
-    setDescription(descriptionRef.current + " " + e.obj.description);
+    if (!description.includes(e.obj.description))
+      setDescription(
+        description + (description.length === 0 ? "" : " ") + e.obj.description
+      );
   };
 
   const setLinkIds = () => {
@@ -1004,7 +1000,7 @@ export default function Advisory({
                   accessStatuses,
                   setAccessStatus,
                   description,
-                  handleDescriptionChange,
+                  setDescription,
                   standardMessages,
                   handleStandardMessagesChange,
                   protectedAreas,

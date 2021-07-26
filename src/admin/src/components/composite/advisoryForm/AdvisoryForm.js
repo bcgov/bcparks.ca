@@ -52,7 +52,7 @@ export default function AdvisoryForm({
     accessStatuses,
     setAccessStatus,
     description,
-    handleDescriptionChange,
+    setDescription,
     standardMessages,
     handleStandardMessagesChange,
     protectedAreas,
@@ -370,7 +370,9 @@ export default function AdvisoryForm({
             <div className="col-lg-7 col-md-8 col-sm-12">
               <TextField
                 value={description}
-                onChange={(e) => handleDescriptionChange(e.target.value)}
+                onChange={(event) => {
+                  setDescription(event.target.value);
+                }}
                 multiline
                 rows={2}
                 rowsMax={10}
@@ -381,9 +383,7 @@ export default function AdvisoryForm({
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Standard Message
-            </div>
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">&nbsp;</div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               <FormControl
                 variant="outlined"
@@ -393,10 +393,11 @@ export default function AdvisoryForm({
                 error
               >
                 <Select
+                  value=""
                   options={standardMessages}
                   onChange={handleStandardMessagesChange}
-                  placeholder="Select"
-                  className="ad-interval-select bcgov-select"
+                  placeholder="Add standard message to description"
+                  className="ad-interval-select bcgov-select multi-line-select-option"
                 />
               </FormControl>
             </div>
@@ -1216,7 +1217,7 @@ AdvisoryForm.propTypes = {
     accessStatuses: PropTypes.array.isRequired,
     setAccessStatus: PropTypes.func.isRequired,
     description: PropTypes.string,
-    handleDescriptionChange: PropTypes.func.isRequired,
+    setDescription: PropTypes.func.isRequired,
     handleStandardMessagesChange: PropTypes.func.isRequired,
     protectedAreas: PropTypes.array.isRequired,
     selectedProtectedAreas: PropTypes.array,
