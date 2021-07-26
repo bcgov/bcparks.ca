@@ -7,6 +7,7 @@ import Chip from "@material-ui/core/Chip";
 import moment from "moment";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
+import AdvisoryHistory from "../advisoryHistory/AdvisoryHistory";
 
 export default function AdvisorySummaryView({
   data: { advisory, isPublished, parkUrls, siteUrls, handleOpenSnackBar },
@@ -18,6 +19,12 @@ export default function AdvisorySummaryView({
         <div className="col-lg-4 col-md-6 col-12 ad-label">Advisory Number</div>
         <div className="col-lg-8 col-md-6 col-12">
           {advisory.advisoryNumber}
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-4 col-md-6 col-12 ad-label">Revision Number</div>
+        <div className="col-lg-8 col-md-6 col-12">
+          {advisory.revisionNumber}
         </div>
       </div>
       <div className="row">
@@ -328,6 +335,8 @@ export default function AdvisorySummaryView({
           </div>
         </div>
       )}
+
+      <AdvisoryHistory data={{ advisoryNumber: advisory.advisoryNumber }} />
     </>
   );
 }

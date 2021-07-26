@@ -35,11 +35,13 @@ import {
 } from "../../../validators/AdvisoryValidator";
 
 import PrivateElement from "../../../auth/PrivateElement";
+import AdvisoryHistory from "../advisoryHistory/AdvisoryHistory";
 
 export default function AdvisoryForm({
   mode,
   data: {
     advisoryNumber,
+    revisionNumber,
     ticketNumber,
     setTicketNumber,
     listingRank,
@@ -256,19 +258,34 @@ export default function AdvisoryForm({
       <form>
         <div className="container-fluid ad-form">
           {advisoryNumber && (
-            <div className="row">
-              <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-                Advisory Number
+            <>
+              <div className="row">
+                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                  Advisory Number
+                </div>
+                <div className="col-lg-7 col-md-8 col-sm-12">
+                  <TextField
+                    value={advisoryNumber}
+                    className="bcgov-input ad-disabled"
+                    variant="outlined"
+                    disabled
+                  />
+                </div>
               </div>
-              <div className="col-lg-7 col-md-8 col-sm-12">
-                <TextField
-                  value={advisoryNumber}
-                  className="bcgov-input ad-disabled"
-                  variant="outlined"
-                  disabled
-                />
+              <div className="row">
+                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                  Revision Number
+                </div>
+                <div className="col-lg-7 col-md-8 col-sm-12">
+                  <TextField
+                    value={revisionNumber}
+                    className="bcgov-input ad-disabled"
+                    variant="outlined"
+                    disabled
+                  />
+                </div>
               </div>
-            </div>
+            </>
           )}
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
@@ -1079,6 +1096,7 @@ export default function AdvisoryForm({
             </div>
           )}
           <br />
+          <AdvisoryHistory data={{ advisoryNumber }} />
           <div className="row">
             <div className="col-lg-4 col-md-4"></div>
             <div className="col-lg-7 col-md-8 col-sm-12 ad-form-error">
@@ -1199,6 +1217,7 @@ AdvisoryForm.propTypes = {
   mode: PropTypes.string.isRequired,
   data: PropTypes.shape({
     advisoryNumber: PropTypes.number,
+    revisionNumber: PropTypes.number,
     ticketNumber: PropTypes.string,
     setTicketNumber: PropTypes.func.isRequired,
     listingRank: PropTypes.string,

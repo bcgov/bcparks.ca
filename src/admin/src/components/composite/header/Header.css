@@ -29,6 +29,7 @@
 
 @media (max-width: 575.98px) {
   .navbar > .container-fluid {
+    display: block !important;
     flex-flow: row nowrap !important;
     justify-content: flex-start !important;
   }

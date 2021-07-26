@@ -306,7 +306,7 @@ export default function AdvisorySummary({
                             setShowOriginalAdvisory(false);
                           }}
                         >
-                          View latest updates
+                          View recent update
                         </Link>
                       </div>
                     </div>

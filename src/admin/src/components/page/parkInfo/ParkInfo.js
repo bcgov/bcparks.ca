@@ -364,7 +364,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
         push
         to={{
           pathname: `/bcparks/dashboard`,
-          index: 1,
+          index: 2,
         }}
       />
     );
