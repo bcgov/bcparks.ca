@@ -32,6 +32,7 @@ import {
   getAdvisoryStatuses,
   getLinkTypes,
   getBusinessHours,
+  getStandardMessages,
 } from "../../../utils/CmsDataUtil";
 import { hasRole } from "../../../utils/AuthenticationUtil";
 import { labelCompare } from "../../../utils/AppUtil";
@@ -73,6 +74,7 @@ export default function Advisory({
   const [ticketNumber, setTicketNumber] = useState("");
   const [headline, setHeadline] = useState("");
   const [description, setDescription] = useState("");
+  const [standardMessages, setStandardMessages] = useState([]);
   const [isSafetyRelated, setIsSafetyRelated] = useState(false);
   const [isReservationAffected, setIsReservationAffected] = useState(false);
   const [advisoryDate, setAdvisoryDate] = useState(
@@ -105,6 +107,7 @@ export default function Advisory({
   const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const linksRef = useRef([]);
+  const descriptionRef = useRef();
   const durationUnitRef = useRef("h");
   const durationIntervalRef = useRef(0);
   const advisoryDateRef = useRef(moment().tz("America/Vancouver"));
@@ -152,6 +155,7 @@ export default function Advisory({
             const advisoryData = res.data;
             setHeadline(advisoryData.title || "");
             setDescription(advisoryData.description || "");
+            descriptionRef.current = advisoryData.description || "";
             setTicketNumber(advisoryData.dcTicketNumber || "");
             if (advisoryData.isSafetyRelated) {
               setIsSafetyRelated(advisoryData.isSafetyRelated);
@@ -384,6 +388,7 @@ export default function Advisory({
         getUrgencies(cmsData, setCmsData),
         getAdvisoryStatuses(cmsData, setCmsData),
         getLinkTypes(cmsData, setCmsData),
+        getStandardMessages(cmsData, setCmsData),
       ])
         .then((res) => {
           const protectedAreaData = res[0];
@@ -495,6 +500,14 @@ export default function Advisory({
           if (linkType.length > 0) {
             setDefaultLinkType(linkType[0].value);
           }
+          const standardMessageData = res[12];
+          const standardMessages = standardMessageData.map((m) => ({
+            label: m.title,
+            value: m.id,
+            type: "standardMessage",
+            obj: m,
+          }));
+          setStandardMessages([...standardMessages]);
           if (mode === "create") {
             const defaultUrgency = urgencies.filter((u) => u.label === "Low");
             if (defaultUrgency.length > 0) {
@@ -572,6 +585,15 @@ export default function Advisory({
     if (durationIntervalRef.current > 0) {
       calculateExpiryDate();
     }
+  };
+
+  const handleDescriptionChange = (e) => {
+    descriptionRef.current = e;
+    setDescription(e);
+  };
+
+  const handleStandardMessagesChange = (e) => {
+    setDescription(descriptionRef.current + " " + e.obj.description);
   };
 
   const setLinkIds = () => {
@@ -982,7 +1004,9 @@ export default function Advisory({
                   accessStatuses,
                   setAccessStatus,
                   description,
-                  setDescription,
+                  handleDescriptionChange,
+                  standardMessages,
+                  handleStandardMessagesChange,
                   protectedAreas,
                   selectedProtectedAreas,
                   setSelectedProtectedAreas,

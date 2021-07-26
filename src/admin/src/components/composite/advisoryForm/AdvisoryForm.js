@@ -52,7 +52,9 @@ export default function AdvisoryForm({
     accessStatuses,
     setAccessStatus,
     description,
-    setDescription,
+    handleDescriptionChange,
+    standardMessages,
+    handleStandardMessagesChange,
     protectedAreas,
     selectedProtectedAreas,
     setSelectedProtectedAreas,
@@ -368,9 +370,7 @@ export default function AdvisoryForm({
             <div className="col-lg-7 col-md-8 col-sm-12">
               <TextField
                 value={description}
-                onChange={(event) => {
-                  setDescription(event.target.value);
-                }}
+                onChange={(e) => handleDescriptionChange(e.target.value)}
                 multiline
                 rows={2}
                 rowsMax={10}
@@ -378,6 +378,27 @@ export default function AdvisoryForm({
                 variant="outlined"
                 InputProps={{ ...descriptionInput }}
               />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Standard Message
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  protectedAreaError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  options={standardMessages}
+                  onChange={handleStandardMessagesChange}
+                  placeholder="Select"
+                  className="ad-interval-select bcgov-select"
+                />
+              </FormControl>
             </div>
           </div>
           <div className="row">
@@ -1195,7 +1216,8 @@ AdvisoryForm.propTypes = {
     accessStatuses: PropTypes.array.isRequired,
     setAccessStatus: PropTypes.func.isRequired,
     description: PropTypes.string,
-    setDescription: PropTypes.func.isRequired,
+    handleDescriptionChange: PropTypes.func.isRequired,
+    handleStandardMessagesChange: PropTypes.func.isRequired,
     protectedAreas: PropTypes.array.isRequired,
     selectedProtectedAreas: PropTypes.array,
     setSelectedProtectedAreas: PropTypes.func.isRequired,

@@ -199,3 +199,19 @@ export function getBusinessHours(cmsData, setCmsData) {
   });
   return result;
 }
+
+export function getStandardMessages(cmsData, setCmsData) {
+  if (!cmsData.standardMessages) {
+    const result = cmsAxios
+      .get(`/standard-messages?_limit=-1&_sort=title`)
+      .then((res) => {
+        const data = cmsData;
+        data.standardMessages = res.data;
+        setCmsData(data);
+        return res.data;
+      });
+    return result;
+  } else {
+    return cmsData.standardMessages;
+  }
+}
