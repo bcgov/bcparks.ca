@@ -32,6 +32,7 @@ import {
   getAdvisoryStatuses,
   getLinkTypes,
   getBusinessHours,
+  getStandardMessages,
 } from "../../../utils/CmsDataUtil";
 import { hasRole } from "../../../utils/AuthenticationUtil";
 import { labelCompare } from "../../../utils/AppUtil";
@@ -73,6 +74,7 @@ export default function Advisory({
   const [ticketNumber, setTicketNumber] = useState("");
   const [headline, setHeadline] = useState("");
   const [description, setDescription] = useState("");
+  const [standardMessages, setStandardMessages] = useState([]);
   const [isSafetyRelated, setIsSafetyRelated] = useState(false);
   const [isReservationAffected, setIsReservationAffected] = useState(false);
   const [advisoryDate, setAdvisoryDate] = useState(
@@ -384,6 +386,7 @@ export default function Advisory({
         getUrgencies(cmsData, setCmsData),
         getAdvisoryStatuses(cmsData, setCmsData),
         getLinkTypes(cmsData, setCmsData),
+        getStandardMessages(cmsData, setCmsData),
       ])
         .then((res) => {
           const protectedAreaData = res[0];
@@ -495,6 +498,14 @@ export default function Advisory({
           if (linkType.length > 0) {
             setDefaultLinkType(linkType[0].value);
           }
+          const standardMessageData = res[12];
+          const standardMessages = standardMessageData.map((m) => ({
+            label: m.title + "\n" + m.description,
+            value: m.id,
+            type: "standardMessage",
+            obj: m,
+          }));
+          setStandardMessages([...standardMessages]);
           if (mode === "create") {
             const defaultUrgency = urgencies.filter((u) => u.label === "Low");
             if (defaultUrgency.length > 0) {
@@ -572,6 +583,13 @@ export default function Advisory({
     if (durationIntervalRef.current > 0) {
       calculateExpiryDate();
     }
+  };
+
+  const handleStandardMessagesChange = (e) => {
+    if (!description.includes(e.obj.description))
+      setDescription(
+        description + (description.length === 0 ? "" : " ") + e.obj.description
+      );
   };
 
   const setLinkIds = () => {
@@ -983,6 +1001,8 @@ export default function Advisory({
                   setAccessStatus,
                   description,
                   setDescription,
+                  standardMessages,
+                  handleStandardMessagesChange,
                   protectedAreas,
                   selectedProtectedAreas,
                   setSelectedProtectedAreas,

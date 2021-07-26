@@ -53,6 +53,8 @@ export default function AdvisoryForm({
     setAccessStatus,
     description,
     setDescription,
+    standardMessages,
+    handleStandardMessagesChange,
     protectedAreas,
     selectedProtectedAreas,
     setSelectedProtectedAreas,
@@ -378,6 +380,26 @@ export default function AdvisoryForm({
                 variant="outlined"
                 InputProps={{ ...descriptionInput }}
               />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">&nbsp;</div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  protectedAreaError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  value=""
+                  options={standardMessages}
+                  onChange={handleStandardMessagesChange}
+                  placeholder="Add standard message to description"
+                  className="ad-interval-select bcgov-select multi-line-select-option"
+                />
+              </FormControl>
             </div>
           </div>
           <div className="row">
@@ -1196,6 +1218,7 @@ AdvisoryForm.propTypes = {
     setAccessStatus: PropTypes.func.isRequired,
     description: PropTypes.string,
     setDescription: PropTypes.func.isRequired,
+    handleStandardMessagesChange: PropTypes.func.isRequired,
     protectedAreas: PropTypes.array.isRequired,
     selectedProtectedAreas: PropTypes.array,
     setSelectedProtectedAreas: PropTypes.func.isRequired,
