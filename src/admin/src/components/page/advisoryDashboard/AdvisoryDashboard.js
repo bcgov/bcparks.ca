@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { apiAxios } from "../../../axios_config";
+import React, { useState, useRef } from "react";
+import { cmsAxios, apiAxios } from "../../../axios_config";
 import { Redirect, useHistory } from "react-router-dom";
 import { useQuery } from "react-query";
 import PropTypes from "prop-types";
@@ -21,6 +21,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import InfoIcon from "@material-ui/icons/Info";
 import PublishIcon from "@material-ui/icons/Publish";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import { SvgIcon } from "@material-ui/core";
 
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 
@@ -38,8 +39,26 @@ export default function AdvisoryDashboard({
   const today = moment(new Date()).tz("America/Vancouver").toISOString();
   const [toCreate, setToCreate] = useState(false);
   const [selectedParkId, setSelectedParkId] = useState(0);
+  const publishedAdvisoriesRef = useRef([]);
+  const [publishedAdvisories, setPublishedAdvisories] = useState([]);
 
   if (!keycloak && !initialized) setToError(true);
+
+  const calculatePublishedAdvisories = (advisories) => {
+    advisories.forEach((ad) => {
+      if (ad.advisoryStatus.advisoryStatus !== "Published") {
+        cmsAxios.get(`/public-advisories/${ad.advisoryNumber}`).then((res) => {
+          if (res.data.advisoryStatus.advisoryStatus === "Published") {
+            publishedAdvisoriesRef.current = [
+              ...publishedAdvisoriesRef.current,
+              res.data.advisoryNumber,
+            ];
+            setPublishedAdvisories([...publishedAdvisoriesRef.current]);
+          }
+        });
+      }
+    });
+  };
 
   const fetchPublicAdvisory = async ({ queryKey }) => {
     const [, selectedParkId] = queryKey;
@@ -57,6 +76,8 @@ export default function AdvisoryDashboard({
 
     const managementAreas = response[0];
     const publicAdvisories = response[1].data;
+
+    calculatePublishedAdvisories(publicAdvisories);
 
     const regionParksCount = managementAreas.reduce((region, item) => {
       region[item.region.id] =
@@ -160,20 +181,58 @@ export default function AdvisoryDashboard({
           {rowData.advisoryStatus && (
             <Tooltip title={rowData.advisoryStatus.advisoryStatus}>
               <span>
-                {rowData.advisoryStatus.code === "DFT" && (
-                  <EditIcon className="draftIcon" />
+                {publishedAdvisories.includes(rowData.advisoryNumber) && (
+                  <SvgIcon>
+                    {rowData.advisoryStatus.code !== "PUB" && (
+                      <PublishIcon
+                        className="publishedIcon"
+                        viewBox="5 13 25 5"
+                      />
+                    )}
+                    {rowData.advisoryStatus.code === "DFT" && (
+                      <EditIcon className="draftIcon" viewBox="-16 -5 45 10" />
+                    )}
+                    {rowData.advisoryStatus.code === "INA" && (
+                      <WatchLaterIcon
+                        className="inactiveIcon"
+                        viewBox="-16 -5 45 10"
+                      />
+                    )}
+                    {rowData.advisoryStatus.code === "APR" && (
+                      <ThumbUpIcon
+                        className="approvedIcon"
+                        viewBox="-16 -5 45 10"
+                      />
+                    )}
+                    {rowData.advisoryStatus.code === "ARQ" && (
+                      <InfoIcon
+                        className="approvalRequestedIcon"
+                        viewBox="-16 -5 45 10"
+                      />
+                    )}
+                    {rowData.advisoryStatus.code === "PUB" && (
+                      <PublishIcon className="publishedIcon" />
+                    )}
+                  </SvgIcon>
                 )}
-                {rowData.advisoryStatus.code === "INA" && (
-                  <WatchLaterIcon className="inactiveIcon" />
-                )}
-                {rowData.advisoryStatus.code === "APR" && (
-                  <ThumbUpIcon className="approvedIcon" />
-                )}
-                {rowData.advisoryStatus.code === "ARQ" && (
-                  <InfoIcon className="approvalRequestedIcon" />
-                )}
-                {rowData.advisoryStatus.code === "PUB" && (
-                  <PublishIcon className="publishedIcon" />
+                {!publishedAdvisories.includes(rowData.advisoryNumber) && (
+                  <>
+                    {rowData.advisoryStatus.code === "DFT" && (
+                      <EditIcon className="draftIcon" />
+                    )}
+                    {rowData.advisoryStatus.code === "INA" && (
+                      <WatchLaterIcon className="inactiveIcon" />
+                    )}
+                    {rowData.advisoryStatus.code === "APR" && (
+                      <ThumbUpIcon className="approvedIcon" />
+                    )}
+                    {rowData.advisoryStatus.code === "ARQ" && (
+                      <InfoIcon className="approvalRequestedIcon" />
+                    )}
+                    {rowData.advisoryStatus.code === "PUB" && (
+                      <PublishIcon className="publishedIcon" />
+                    )}
+                  </>
                 )}
               </span>
             </Tooltip>

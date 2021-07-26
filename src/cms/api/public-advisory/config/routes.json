@@ -18,7 +18,7 @@
     },
     {
       "method": "GET",
-      "path": "/public-advisories/:id",
+      "path": "/public-advisories/:advisoryNumber",
       "handler": "public-advisory.findOne",
       "config": {
         "policies": []
