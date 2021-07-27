@@ -41,6 +41,8 @@ export default function Advisory({
   mode,
   page: { setError, cmsData, setCmsData },
 }) {
+  const [advisoryNumber, setAdvisoryNumber] = useState();
+  const [revisionNumber, setRevisionNumber] = useState();
   const [protectedAreas, setProtectedAreas] = useState([]);
   const [selectedProtectedAreas, setSelectedProtectedAreas] = useState([]);
   const [regions, setRegions] = useState([]);
@@ -152,6 +154,8 @@ export default function Advisory({
           .then((res) => {
             linksRef.current = [];
             const advisoryData = res.data;
+            setAdvisoryNumber(advisoryData.advisoryNumber);
+            setRevisionNumber(advisoryData.revisionNumber);
             setHeadline(advisoryData.title || "");
             setDescription(advisoryData.description || "");
             setTicketNumber(advisoryData.dcTicketNumber || "");
@@ -987,6 +991,8 @@ export default function Advisory({
               <AdvisoryForm
                 mode={mode}
                 data={{
+                  advisoryNumber,
+                  revisionNumber,
                   ticketNumber,
                   setTicketNumber,
                   listingRank,

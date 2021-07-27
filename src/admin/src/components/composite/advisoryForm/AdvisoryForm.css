@@ -19,6 +19,10 @@
   border-radius: 4px !important;
 }
 
+.ad-disabled {
+  background-color: #f0f2f5 !important;
+}
+
 .ad-flex,
 .ad-link-flex {
   display: flex;

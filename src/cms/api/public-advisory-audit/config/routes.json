@@ -25,6 +25,14 @@
       }
     },
     {
+      "method": "GET",
+      "path": "/public-advisory-audits/history/:advisoryNumber",
+      "handler": "public-advisory-audit.history",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "POST",
       "path": "/public-advisory-audits",
       "handler": "public-advisory-audit.create",

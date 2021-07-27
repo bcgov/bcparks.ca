@@ -35,3 +35,7 @@
 .ad-wrap-reverse {
   flex-wrap: wrap-reverse !important;
 }
+
+.ad-right {
+  text-align: right !important;
+}

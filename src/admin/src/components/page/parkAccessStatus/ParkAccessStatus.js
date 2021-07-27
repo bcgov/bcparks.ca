@@ -94,7 +94,7 @@ export default function ParkAccessStatus() {
                   <Link
                     to={{
                       pathname: `advisory-summary/${rowData.publicAdvisoryId}`,
-                      index: 2,
+                      index: 1,
                     }}
                   >
                     {rowData.accessDetails}
