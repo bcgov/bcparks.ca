@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { apiAxios } from "../../../axios_config";
+import React, { useState, useEffect, useRef } from "react";
+import { cmsAxios, apiAxios } from "../../../axios_config";
 import { Redirect, useHistory } from "react-router-dom";
 import { useQuery } from "react-query";
 import PropTypes from "prop-types";
@@ -28,7 +28,7 @@ import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import {
   getProtectedAreas,
   getManagementAreas,
-  getCurrentPublishedAdvisories,
+  getAdvisoryStatuses,
 } from "../../../utils/CmsDataUtil";
 
 export default function AdvisoryDashboard({
@@ -41,8 +41,16 @@ export default function AdvisoryDashboard({
   const [toCreate, setToCreate] = useState(false);
   const [selectedParkId, setSelectedParkId] = useState(0);
   const [publishedAdvisories, setPublishedAdvisories] = useState([]);
+  const isMounted = useRef(true);
 
   if (!keycloak && !initialized) setToError(true);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, [isMounted]);
 
   const fetchPublicAdvisory = async ({ queryKey }) => {
     const [, selectedParkId] = queryKey;
@@ -61,7 +69,35 @@ export default function AdvisoryDashboard({
     const managementAreas = response[0];
     const publicAdvisories = response[1].data;
 
-    getCurrentPublishedAdvisories(cmsData, setCmsData, setPublishedAdvisories);
+    const getCurrentPublishedAdvisories = (cmsData, setCmsData) => {
+      const advisoryStatuses = getAdvisoryStatuses(cmsData, setCmsData);
+      if (advisoryStatuses) {
+        const publishedStatus = advisoryStatuses.filter(
+          (as) => as.code === "PUB"
+        );
+        if (publishedStatus && publishedStatus[0]) {
+          cmsAxios
+            .get(
+              `/public-advisories?_advisoryStatus=${publishedStatus[0].id}&_limit=-1`
+            )
+            .then((res) => {
+              const result = res.data;
+              let publishedAdvisories = [];
+              result.forEach((ad) => {
+                publishedAdvisories = [
+                  ...publishedAdvisories,
+                  ad.advisoryNumber,
+                ];
+              });
+              if (isMounted.current) {
+                setPublishedAdvisories([...publishedAdvisories]);
+              }
+            });
+        }
+      }
+    };
+
+    getCurrentPublishedAdvisories(cmsData, setCmsData);
 
     const regionParksCount = managementAreas.reduce((region, item) => {
       region[item.region.id] =

@@ -215,26 +215,3 @@ export function getStandardMessages(cmsData, setCmsData) {
     return cmsData.standardMessages;
   }
 }
-
-export function getCurrentPublishedAdvisories(
-  cmsData,
-  setCmsData,
-  setPublishedAdvisories
-) {
-  const advisoryStatuses = getAdvisoryStatuses(cmsData, setCmsData);
-  const publishedStatus = advisoryStatuses.filter((as) => as.code === "PUB");
-  if (publishedStatus && publishedStatus[0]) {
-    cmsAxios
-      .get(
-        `/public-advisories?_advisoryStatus=${publishedStatus[0].id}&_limit=-1`
-      )
-      .then((res) => {
-        const result = res.data;
-        let publishedAdvisories = [];
-        result.forEach((ad) => {
-          publishedAdvisories = [...publishedAdvisories, ad.advisoryNumber];
-        });
-        setPublishedAdvisories([...publishedAdvisories]);
-      });
-  }
-}
