@@ -57,7 +57,8 @@ export default function AdvisoryForm({
     description,
     setDescription,
     standardMessages,
-    handleStandardMessagesChange,
+    selectedStandardMessages,
+    setSelectedStandardMessages,
     protectedAreas,
     selectedProtectedAreas,
     setSelectedProtectedAreas,
@@ -416,7 +417,9 @@ export default function AdvisoryForm({
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">&nbsp;</div>
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Standard Message(s)
+            </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               <FormControl
                 variant="outlined"
@@ -426,11 +429,14 @@ export default function AdvisoryForm({
                 error
               >
                 <Select
-                  value=""
                   options={standardMessages}
-                  onChange={handleStandardMessagesChange}
-                  placeholder="Add standard message to description"
-                  className="ad-interval-select bcgov-select multi-line-select-option"
+                  value={selectedStandardMessages}
+                  onChange={(e) => {
+                    setSelectedStandardMessages(e);
+                  }}
+                  placeholder="Add standard message"
+                  isMulti="true"
+                  className="bcgov-select"
                 />
               </FormControl>
             </div>
@@ -1254,7 +1260,9 @@ AdvisoryForm.propTypes = {
     setAccessStatus: PropTypes.func.isRequired,
     description: PropTypes.string,
     setDescription: PropTypes.func.isRequired,
-    handleStandardMessagesChange: PropTypes.func.isRequired,
+    standardMessages: PropTypes.array.isRequired,
+    selectedStandardMessages: PropTypes.array,
+    setSelectedStandardMessages: PropTypes.func.isRequired,
     protectedAreas: PropTypes.array.isRequired,
     selectedProtectedAreas: PropTypes.array,
     setSelectedProtectedAreas: PropTypes.func.isRequired,

@@ -131,8 +131,8 @@
     "fireCentres": {
       "collection": "fire-centre"
     },
-    "standardMessage": {
-      "model": "standard-message"
+    "standardMessages": {
+      "collection": "standard-message"
     },
     "publishedRevisionNumber": {
       "type": "integer"
