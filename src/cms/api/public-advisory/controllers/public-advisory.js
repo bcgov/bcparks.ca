@@ -12,6 +12,37 @@ module.exports = {
     const entity = await strapi.services["public-advisory"].findOne({
       advisoryNumber,
     });
+    const { description, standardMessages } = entity;
+    if (standardMessages.length > 0) {
+      entity.description = (
+        description +
+        " " +
+        standardMessages.map((m) => m.description).join(" ")
+      ).trim();
+    }
     return sanitizeEntity(entity, { model: strapi.models["public-advisory"] });
+  },
+  async find(ctx) {
+    let entities;
+    if (ctx.query._q) {
+      entities = await strapi.services["public-advisory"].search(ctx.query);
+    } else {
+      entities = await strapi.services["public-advisory"].find(ctx.query);
+    }
+    return entities.map((entity) => {
+      const publicAdvisory = sanitizeEntity(entity, {
+        model: strapi.models["public-advisory"],
+      });
+      const { description, standardMessages } = publicAdvisory;
+      if (standardMessages.length > 0) {
+        publicAdvisory.description = (
+          description +
+          " " +
+          standardMessages.map((m) => m.description).join(" ")
+        ).trim();
+      }
+
+      return publicAdvisory;
+    });
   },
 };
