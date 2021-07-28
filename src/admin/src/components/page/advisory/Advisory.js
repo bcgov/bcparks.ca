@@ -43,6 +43,8 @@ export default function Advisory({
 }) {
   const [advisoryNumber, setAdvisoryNumber] = useState();
   const [revisionNumber, setRevisionNumber] = useState();
+  const [standardMessages, setStandardMessages] = useState([]);
+  const [selectedStandardMessages, setSelectedStandardMessages] = useState([]);
   const [protectedAreas, setProtectedAreas] = useState([]);
   const [selectedProtectedAreas, setSelectedProtectedAreas] = useState([]);
   const [regions, setRegions] = useState([]);
@@ -76,7 +78,6 @@ export default function Advisory({
   const [ticketNumber, setTicketNumber] = useState("");
   const [headline, setHeadline] = useState("");
   const [description, setDescription] = useState("");
-  const [standardMessages, setStandardMessages] = useState([]);
   const [isSafetyRelated, setIsSafetyRelated] = useState(false);
   const [isReservationAffected, setIsReservationAffected] = useState(false);
   const [advisoryDate, setAdvisoryDate] = useState(
@@ -225,6 +226,7 @@ export default function Advisory({
               setDisplayUpdatedDate(advisoryData.isUpdatedDateDisplayed);
             }
 
+            const standardMessageInfo = advisoryData.standardMessages;
             const protectedAreaInfo = advisoryData.protectedAreas;
             const regionInfo = advisoryData.regions;
             const sectionInfo = advisoryData.sections;
@@ -232,6 +234,16 @@ export default function Advisory({
             const siteInfo = advisoryData.sites;
             const fireCentreInfo = advisoryData.fireCentres;
             const fireZoneInfo = advisoryData.fireZones;
+
+            if (standardMessageInfo) {
+              const selStandardMessages = [];
+              standardMessageInfo.forEach((p) => {
+                selStandardMessages.push(
+                  standardMessages.find((l) => l.value === p.id)
+                );
+              });
+              setSelectedStandardMessages([...selStandardMessages]);
+            }
 
             if (protectedAreaInfo) {
               const selProtectedAreas = [];
@@ -356,6 +368,8 @@ export default function Advisory({
     eventTypes,
     setToError,
     setError,
+    standardMessages,
+    setSelectedStandardMessages,
     protectedAreas,
     setSelectedProtectedAreas,
     regions,
@@ -504,7 +518,7 @@ export default function Advisory({
           }
           const standardMessageData = res[12];
           const standardMessages = standardMessageData.map((m) => ({
-            label: m.title + "\n" + m.description,
+            label: m.description,
             value: m.id,
             type: "standardMessage",
             obj: m,
@@ -531,6 +545,7 @@ export default function Advisory({
         });
     }
   }, [
+    setStandardMessages,
     setProtectedAreas,
     setRegions,
     setSections,
@@ -587,13 +602,6 @@ export default function Advisory({
     if (durationIntervalRef.current > 0) {
       calculateExpiryDate();
     }
-  };
-
-  const handleStandardMessagesChange = (e) => {
-    if (!description.includes(e.obj.description))
-      setDescription(
-        description + (description.length === 0 ? "" : " ") + e.obj.description
-      );
   };
 
   const setLinkIds = () => {
@@ -768,6 +776,7 @@ export default function Advisory({
           accessStatus: accessStatus ? accessStatus : null,
           eventType: eventType,
           urgency: urgency,
+          standardMessages: selectedStandardMessages.map((s) => s.value),
           protectedAreas: selProtectedAreas,
           advisoryStatus: status,
           links: savedLinks,
@@ -888,6 +897,7 @@ export default function Advisory({
             accessStatus: accessStatus,
             eventType: eventType,
             urgency: urgency,
+            standardMessages: selectedStandardMessages.map((s) => s.value),
             protectedAreas: selProtectedAreas,
             advisoryStatus: status,
             links: updatedLinks,
@@ -1008,7 +1018,8 @@ export default function Advisory({
                   description,
                   setDescription,
                   standardMessages,
-                  handleStandardMessagesChange,
+                  selectedStandardMessages,
+                  setSelectedStandardMessages,
                   protectedAreas,
                   selectedProtectedAreas,
                   setSelectedProtectedAreas,
