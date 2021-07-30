@@ -9,6 +9,7 @@ import Footer from "../components/footer"
 import HTMLArea from "../components/HTMLArea"
 import Media from "../components/media"
 import Zone from "../components/zone"
+import "@fortawesome/fontawesome-free/css/all.min.css"
 
 export const query = graphql`
   query {
@@ -17,6 +18,7 @@ export const query = graphql`
       Header
       Name
       Navigation
+      NavigationTest
       id
       homepage {
         id
@@ -44,29 +46,29 @@ export default function Home({ data }) {
   return (
     <div>
       <Header>
-        { data.strapiWebsites.Header}
+        {data.strapiWebsites.Header}
       </Header>
-      <Menu>
-      { data.strapiWebsites.Navigation}
-      </Menu>
-      <div class="alert-banner">
-      <span>Some parks are currently affected by wildfire activity. More details. </span>
-      </div>
-      <div class="park-search">
-      <img src="http://localhost:1337/uploads/ID_4_3984_Valhalla_DBC_44ff0c4d8e.png" />
+      {/* <Menu>
+        {data.strapiWebsites.NavigationTest}
+      </Menu> */}
+      {/* <div className="alert-banner">
+        <p>Some parks are currently affected by wildfire activity. See all advisories.</p>
+      </div> */}
+      {/* <div className="park-search">
+        <img src="http://localhost:1337/uploads/ID_4_3984_Valhalla_DBC_44ff0c4d8e.png" />
       <div><span id="search-title">Welcome to BC Parks</span>
       <span>Plan your next adventure by searching for campsites and day-use areas around B.C.</span>
       <span>
         <input type="search" id="park-search-box" name="park-search-box" value="Search by park name, location, activity …"></input>
-        <svg class="search-icon-center-main">
+        <svg className="search-icon-center-main">
           <ellipse id="search-icon-center-main" rx="34.5" ry="34.5" cx="34.5" cy="34.5">
           </ellipse>
 		    </svg>
       </span>
      
       </div>
-      </div>
-      <div id='main'>      
+      </div> */}
+      <div id="main">      
           <Zone zoneID='Zone1' Content={data.strapiWebsites.homepage.Content[0]} />
           <Zone zoneID='Zone2' Content={data.strapiWebsites.homepage.Content[1]} />
           <Zone zoneID='Zone3' Content={data.strapiWebsites.homepage.Content[2]} />
@@ -74,7 +76,7 @@ export default function Home({ data }) {
           <Zone zoneID='Zone5' Content={data.strapiWebsites.homepage.Content[4]} />
       </div>
       <Footer>
-        { data.strapiWebsites.Footer}
+        {data.strapiWebsites.Footer}
       </Footer>
     </div>
   )
