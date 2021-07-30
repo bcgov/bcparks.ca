@@ -12,13 +12,15 @@ module.exports = {
     const entity = await strapi.services["public-advisory"].findOne({
       advisoryNumber,
     });
-    const { description, standardMessages } = entity;
-    if (standardMessages.length > 0) {
-      entity.description = (
-        description +
-        " " +
-        standardMessages.map((m) => m.description).join(" ")
-      ).trim();
+    if (entity) {
+      const { description = "", standardMessages } = entity;
+      if (standardMessages.length > 0) {
+        entity.description = (
+          description +
+          " " +
+          standardMessages.map((m) => m.description).join(" ")
+        ).trim();
+      }
     }
     return sanitizeEntity(entity, { model: strapi.models["public-advisory"] });
   },
@@ -33,15 +35,16 @@ module.exports = {
       const publicAdvisory = sanitizeEntity(entity, {
         model: strapi.models["public-advisory"],
       });
-      const { description, standardMessages } = publicAdvisory;
-      if (standardMessages.length > 0) {
-        publicAdvisory.description = (
-          description +
-          " " +
-          standardMessages.map((m) => m.description).join(" ")
-        ).trim();
+      if (publicAdvisory) {
+        const { description = "", standardMessages } = publicAdvisory;
+        if (standardMessages.length > 0) {
+          publicAdvisory.description = (
+            description +
+            " " +
+            standardMessages.map((m) => m.description).join(" ")
+          ).trim();
+        }
       }
-
       return publicAdvisory;
     });
   },
