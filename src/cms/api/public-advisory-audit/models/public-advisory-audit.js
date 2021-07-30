@@ -1,5 +1,4 @@
 "use strict";
-const _ = require("lodash");
 const { sanitizeEntity } = require("strapi-utils");
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
