@@ -44,6 +44,7 @@ module.exports = {
               advisoryStatus: advisoryStatusMap["PUB"].id,
               modifiedBy: "system",
               modifiedDate: new Date(),
+              removalDate: null,
             }
           );
         });
