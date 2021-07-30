@@ -20,14 +20,27 @@ export default function AdvisoryHistory({ data: { advisoryNumber } }) {
           const advisoriesHistory = [];
           if (advisories && advisories.length > 0) {
             advisories.forEach((ad) => {
-              if (!ad.modifiedDate && ad.createdDate) {
+              if (ad.modifiedBy && ad.modifiedBy === "system") {
+                const record = {
+                  revisionNumber: ad.revisionNumber,
+                  submitter: ad.modifiedBy,
+                  submittedTime: moment(ad.modifiedDate).format(
+                    "MMMM DD, yyyy hh:mm A"
+                  ),
+                  displayText: "Published by",
+                };
+                if (ad.removalDate) {
+                  record.displayText = "Removed by";
+                }
+                advisoriesHistory.push(record);
+              } else if (!ad.modifiedDate && ad.createdDate) {
                 const record = {
                   revisionNumber: ad.revisionNumber,
                   submitter: ad.submittedBy,
                   submittedTime: moment(ad.createdDate).format(
                     "MMMM DD, yyyy hh:mm A"
                   ),
-                  updated: false,
+                  displayText: "Submitted by",
                 };
                 advisoriesHistory.push(record);
               } else if (ad.modifiedDate) {
@@ -37,7 +50,7 @@ export default function AdvisoryHistory({ data: { advisoryNumber } }) {
                   submittedTime: moment(ad.modifiedDate).format(
                     "MMMM DD, yyyy hh:mm A"
                   ),
-                  updated: true,
+                  displayText: "Updated by",
                 };
                 advisoriesHistory.push(record);
               }
@@ -55,16 +68,9 @@ export default function AdvisoryHistory({ data: { advisoryNumber } }) {
           <div className="col-lg-8 col-md-6 col-12">
             {advisoryHistory.map((ah) => (
               <div key={ah.revisionNumber}>
-                {ah.updated && (
-                  <div>
-                    Updated by {ah.submitter} at {ah.submittedTime}
-                  </div>
-                )}
-                {!ah.updated && (
-                  <div>
-                    Submitted by {ah.submitter} at {ah.submittedTime}
-                  </div>
-                )}
+                <div>
+                  {ah.displayText} {ah.submitter} at {ah.submittedTime}
+                </div>
               </div>
             ))}
           </div>

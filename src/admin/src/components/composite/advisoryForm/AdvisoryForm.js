@@ -1124,7 +1124,6 @@ export default function AdvisoryForm({
             </div>
           )}
           <br />
-          <AdvisoryHistory data={{ advisoryNumber }} />
           <div className="row">
             <div className="col-lg-4 col-md-4"></div>
             <div className="col-lg-7 col-md-8 col-sm-12 ad-form-error">
@@ -1235,6 +1234,9 @@ export default function AdvisoryForm({
               )}
             </div>
           </div>
+          <br />
+          <br />
+          <AdvisoryHistory data={{ advisoryNumber }} />
         </div>
       </form>
     </MuiPickersUtilsProvider>
