@@ -172,6 +172,9 @@ export default function Advisory({
               setAdvisoryDate(
                 moment(advisoryData.advisoryDate).tz("America/Vancouver")
               );
+              advisoryDateRef.current = moment(advisoryData.advisoryDate).tz(
+                "America/Vancouver"
+              );
             }
             if (advisoryData.effectiveDate) {
               setStartDate(
