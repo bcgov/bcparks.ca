@@ -66,8 +66,8 @@ export default function AdvisoryHistory({ data: { advisoryNumber } }) {
         <div className="row">
           <div className="col-lg-4 col-md-6 col-12 ad-label">History</div>
           <div className="col-lg-8 col-md-6 col-12">
-            {advisoryHistory.map((ah) => (
-              <div key={ah.revisionNumber}>
+            {advisoryHistory.map((ah, index) => (
+              <div key={index}>
                 <div>
                   {ah.displayText} {ah.submitter} at {ah.submittedTime}
                 </div>
