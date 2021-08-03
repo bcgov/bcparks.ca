@@ -75,9 +75,10 @@ html {
 
 #main {
   box-sizing: border-box;
-  overflow: hidden;
+  /* overflow: hidden; */
+  overflow: auto;
   z-index: 2;
-  position: absolute;
+  /* position: absolute; */
   /* top: 1020px; */
   width: 100%;
   padding: 0;
@@ -94,13 +95,13 @@ html {
   box-sizing: border-box;
   clear: both;
   z-index: 99999;
-  position: relative;
+  position: absolute;
   width: 100%;
   text-align: center;
   background-color: #036;
   bottom: 0;
   top: 3890px;
-  height: 387px;
+  height: 475px;
 } */
 
 /* #logo {
@@ -225,9 +226,14 @@ p.inner-campsitebook {
 
 /** New stuff!!! */
 
+.container {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
 .home-advisories {
   color: rgba(0,51,102,1);
-  padding-top: 30px;
+  padding-top: 40px;
 }
 
 .home-plan-your-trip {
@@ -254,9 +260,9 @@ p.inner-campsitebook {
 
 .zone-hr > hr {
   margin: 0 36px 10px 36px;
-  height: 3px;
+  height: 2px;
   background-color: rgba(252,186,25,1);
-  width: 50px;
+  width: 35px;
   display: inline-block;
 }
 
@@ -284,6 +290,11 @@ p.inner-campsitebook {
   bottom: unset;
   color: #38598A;
   padding-top: 35px !important;
+}
+
+.card-body-header {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .card-body-header > a {
@@ -324,17 +335,22 @@ p.inner-campsitebook {
 .home-footer .card-body {	
   font-size: 14px;	
 }	
-.split-card-body .card-title, .card-text {	
+.split-card-body .card-title {	
   margin: 0 36px 10px 36px;	
 }
+/* .split-card-body .card-title, .card-text {	
+  margin: 0 36px 10px 36px;	
+} */
 
 .split-card .col-6 {
   background-color: #EEF1F5;
 }
 
-.footer-logo > img {
+.footer-logo > a > img {
   height: 40px;
   width: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .home-footer > p {
@@ -342,12 +358,24 @@ p.inner-campsitebook {
   margin-bottom: 0;
 }
 
+.home-footer {
+  height: 475px;
+  max-width: 100%;
+  background-color: #003366 !important;
+  margin-top: 5px; 
+}
+
 .home-footer a {
   color: #EEF1F5;
+  text-decoration: none;
+}
+
+.footer-body {
+  height: 80%;
 }
 
 .home-footer .footer-body .col {
-  padding: 0 45px;
+  padding: 0 40px;
 }
 
 #home-footer-search {
@@ -356,6 +384,11 @@ p.inner-campsitebook {
 
 .footer-card-footer {
   font-size: 12px;
+}
+
+.footer-search-box {
+  height: 25px;
+  font-size: 12px !important;
 }
 
 .footer-card-footer .nav hr {
@@ -384,7 +417,7 @@ p.inner-campsitebook {
 /* Old styles of mine, haven't reused/looked at yet */
 
 .advisory-button {
-  background-color: #003366;
+  background-color: #003366 !important;
   color: white;
   height: 49px;
   text-align: center;
@@ -396,8 +429,24 @@ p.inner-campsitebook {
   text-align: center;
 }
 
+.advisory > p {
+  margin-bottom: 5px;
+}
+
+.alert-content, .alert {
+  margin-bottom: 0;
+}
+
+.alert-content {
+  font-size: 14px;
+}
+
+.alert-warning {
+  background-color: #FFDD8B !important;
+}
+
 .zone-links {
-  padding: 0 25px 0 25px;
+  padding: 0 20px 0 20px;
   margin-top: 40px;
 }
 
@@ -406,18 +455,18 @@ p.inner-campsitebook {
 }
 
 p.zone-content {
-  margin: 0 36px 0 36px;
+  margin: 0 20px 0 20px;
 }
 
 p.zone-header {
-  margin: 0 36px 0 36px;
+  margin: 0 20px 0 20px;
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
 }
 
 .zone-header-small {
-  margin: 0 36px 0 36px;
+  margin: 0 40px 0 40px;
   font-style: normal;
   font-weight: bold;
   font-size: 20px;
@@ -437,12 +486,17 @@ p.zone-header {
   max-height: 316px;
 }
 
+.card-col-padding:not(:last-child) {
+  margin-bottom: 10px;
+}
+
 .link-img > img {
     height: 219px;
 }
 
 #Zone2 {
   background-color: rgba(238,241,245,1);
+
 }
 #Zone4 {
   background-color: rgba(238,241,245,1);
