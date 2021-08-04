@@ -35,10 +35,13 @@ import {
 } from "../../../validators/AdvisoryValidator";
 
 import PrivateElement from "../../../auth/PrivateElement";
+import AdvisoryHistory from "../advisoryHistory/AdvisoryHistory";
 
 export default function AdvisoryForm({
   mode,
   data: {
+    advisoryNumber,
+    revisionNumber,
     ticketNumber,
     setTicketNumber,
     listingRank,
@@ -53,6 +56,9 @@ export default function AdvisoryForm({
     setAccessStatus,
     description,
     setDescription,
+    standardMessages,
+    selectedStandardMessages,
+    setSelectedStandardMessages,
     protectedAreas,
     selectedProtectedAreas,
     setSelectedProtectedAreas,
@@ -254,6 +260,36 @@ export default function AdvisoryForm({
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <form>
         <div className="container-fluid ad-form">
+          {advisoryNumber && (
+            <>
+              <div className="row">
+                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                  Advisory Number
+                </div>
+                <div className="col-lg-7 col-md-8 col-sm-12">
+                  <TextField
+                    value={advisoryNumber}
+                    className="bcgov-input ad-disabled"
+                    variant="outlined"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+                  Revision Number
+                </div>
+                <div className="col-lg-7 col-md-8 col-sm-12">
+                  <TextField
+                    value={revisionNumber}
+                    className="bcgov-input ad-disabled"
+                    variant="outlined"
+                    disabled
+                  />
+                </div>
+              </div>
+            </>
+          )}
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
               Headline
@@ -378,6 +414,31 @@ export default function AdvisoryForm({
                 variant="outlined"
                 InputProps={{ ...descriptionInput }}
               />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Standard Message(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  protectedAreaError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  options={standardMessages}
+                  value={selectedStandardMessages}
+                  onChange={(e) => {
+                    setSelectedStandardMessages(e);
+                  }}
+                  placeholder="Add standard message"
+                  isMulti="true"
+                  className="bcgov-select"
+                />
+              </FormControl>
             </div>
           </div>
           <div className="row">
@@ -1173,6 +1234,9 @@ export default function AdvisoryForm({
               )}
             </div>
           </div>
+          <br />
+          <br />
+          <AdvisoryHistory data={{ advisoryNumber }} />
         </div>
       </form>
     </MuiPickersUtilsProvider>
@@ -1182,6 +1246,8 @@ export default function AdvisoryForm({
 AdvisoryForm.propTypes = {
   mode: PropTypes.string.isRequired,
   data: PropTypes.shape({
+    advisoryNumber: PropTypes.number,
+    revisionNumber: PropTypes.number,
     ticketNumber: PropTypes.string,
     setTicketNumber: PropTypes.func.isRequired,
     listingRank: PropTypes.string,
@@ -1196,6 +1262,9 @@ AdvisoryForm.propTypes = {
     setAccessStatus: PropTypes.func.isRequired,
     description: PropTypes.string,
     setDescription: PropTypes.func.isRequired,
+    standardMessages: PropTypes.array.isRequired,
+    selectedStandardMessages: PropTypes.array,
+    setSelectedStandardMessages: PropTypes.func.isRequired,
     protectedAreas: PropTypes.array.isRequired,
     selectedProtectedAreas: PropTypes.array,
     setSelectedProtectedAreas: PropTypes.func.isRequired,

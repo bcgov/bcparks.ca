@@ -19,6 +19,10 @@
   border-radius: 4px !important;
 }
 
+.ad-disabled {
+  background-color: #f0f2f5 !important;
+}
+
 .ad-flex,
 .ad-link-flex {
   display: flex;
@@ -112,6 +116,10 @@
     width: 100% !important;
     margin-top: 5px !important;
   }
+}
+
+.multi-line-select-option {
+  white-space: pre-wrap !important;
 }
 
 @media (max-width: 991.98px) {

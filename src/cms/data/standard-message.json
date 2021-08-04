@@ -1,0 +1,16 @@
+{
+	"standard-message": [
+		{
+			"title": "Until further notice",
+			"description": "Until further notice, the day-use area will be closed for maintenance. Please check this page for further updates."
+		},
+        {
+			"title": "Road closures",
+			"description": "This park is currently inaccessible due road closures, please check this page for further updates."
+		},
+		{
+			"title": "Winter Advisory",
+			"description": "Winter warning in effect, please drive carefully."
+		}
+	]
+}

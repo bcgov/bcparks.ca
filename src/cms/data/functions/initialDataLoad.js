@@ -31,6 +31,7 @@ const loadData = async () => {
       otherData.loadActivityType(),
       otherData.loadFacilityType(),
       otherData.loadParkNameType(),
+      otherData.loadStandardMessage(),
       otherData.loadUrgency(),
       otherData.loadFireCentre(),
       otherData.loadFireZone(),

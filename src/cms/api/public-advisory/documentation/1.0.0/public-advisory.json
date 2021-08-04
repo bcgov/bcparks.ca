@@ -316,7 +316,7 @@
         "parameters": []
       }
     },
-    "/public-advisories/{id}": {
+    "/public-advisories/{advisoryNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -372,7 +372,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "advisoryNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -382,7 +382,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/public-advisories/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -1161,31 +1163,34 @@
               }
             }
           },
-          "standardMessage": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "eventType": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
+          "standardMessages": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "eventType": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -1346,8 +1351,11 @@
               "type": "string"
             }
           },
-          "standardMessage": {
-            "type": "string"
+          "standardMessages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "published_at": {
             "type": "string",

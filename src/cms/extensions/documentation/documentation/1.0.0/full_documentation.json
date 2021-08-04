@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "07/20/2021 11:02:40 AM"
+    "x-generation-date": "07/28/2021 9:27:59 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -10986,6 +10986,74 @@
         ]
       }
     },
+    "/public-advisory-audits/history/{advisoryNumber}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Public-advisory-audit"
+        ],
+        "parameters": [
+          {
+            "name": "advisoryNumber",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
     "/public-advisories": {
       "get": {
         "deprecated": false,
@@ -11302,7 +11370,7 @@
         "parameters": []
       }
     },
-    "/public-advisories/{id}": {
+    "/public-advisories/{advisoryNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -11358,7 +11426,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "advisoryNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -11368,7 +11436,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/public-advisories/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -21959,31 +22029,34 @@
               }
             }
           },
-          "standardMessage": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "eventType": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
+          "standardMessages": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "eventType": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -22150,8 +22223,11 @@
               "type": "string"
             }
           },
-          "standardMessage": {
-            "type": "string"
+          "standardMessages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "publishedRevisionNumber": {
             "type": "integer"
@@ -22802,31 +22878,34 @@
               }
             }
           },
-          "standardMessage": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "eventType": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
+          "standardMessages": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "eventType": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -22987,8 +23066,11 @@
               "type": "string"
             }
           },
-          "standardMessage": {
-            "type": "string"
+          "standardMessages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "published_at": {
             "type": "string",
