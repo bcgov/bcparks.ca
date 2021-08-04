@@ -13,9 +13,11 @@ import {
   FormGroup,
   FormControlLabel,
   Divider,
+  Chip,
 } from "@material-ui/core"
 import Select from "react-select"
 import "../styles/search.scss"
+import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined"
 
 const MainSearch = ({ data: { activities, facilities } }) => {
   const [openFilter, setOpenFilter] = useState(false)
@@ -27,6 +29,8 @@ const MainSearch = ({ data: { activities, facilities } }) => {
     ecoReserve: false,
     electricalHookup: false,
   })
+  const [selectedActivities, setSelectedActivities] = useState([])
+  const [selectedFacilities, setSelectedFacilities] = useState([])
 
   const {
     camping,
@@ -36,6 +40,16 @@ const MainSearch = ({ data: { activities, facilities } }) => {
     ecoReserve,
     electricalHookup,
   } = quickSearch
+
+  const activityItems = activities.map(a => ({
+    label: a.activityName,
+    value: a.activityNumber,
+  }))
+
+  const facilityItems = facilities.map(f => ({
+    label: f.facilityName,
+    value: f.facilityNumber,
+  }))
 
   const handleClickOpenFilter = () => {
     setOpenFilter(true)
@@ -52,10 +66,17 @@ const MainSearch = ({ data: { activities, facilities } }) => {
     })
   }
 
-  const activityItems = activities.map(a => ({
-    label: a.activityName,
-    value: a.activityNumber,
-  }))
+  const handleActivityDelete = chipToDelete => () => {
+    setSelectedActivities(chips =>
+      chips.filter(chip => chip.value !== chipToDelete.value)
+    )
+  }
+
+  const handleFacilityDelete = chipToDelete => () => {
+    setSelectedFacilities(chips =>
+      chips.filter(chip => chip.value !== chipToDelete.value)
+    )
+  }
 
   return (
     <div className="park-search-text-container">
@@ -106,7 +127,7 @@ const MainSearch = ({ data: { activities, facilities } }) => {
             </div>
             <div className="row p20t">
               <div className="col-6">
-                <FormGroup column className="p30l">
+                <FormGroup className="p30l">
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -140,7 +161,7 @@ const MainSearch = ({ data: { activities, facilities } }) => {
                 </FormGroup>
               </div>
               <div className="col-6">
-                <FormGroup column className="p30l">
+                <FormGroup className="p30l">
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -174,15 +195,20 @@ const MainSearch = ({ data: { activities, facilities } }) => {
                 </FormGroup>
               </div>
             </div>
-            <Divider />
+            <Divider className="m20t" />
             <div className="row p20t">
               <div className="col-12">
-                <div className="p30l">Activities</div>
+                <div className="p20l park-select-label">Activities</div>
                 <Select
                   id="activities-select"
                   options={activityItems}
-                  value=""
-                  onChange=""
+                  value={selectedActivities}
+                  controlShouldRenderValue={false}
+                  isClearable={false}
+                  isMulti
+                  onChange={e => {
+                    setSelectedActivities(e)
+                  }}
                   className="park-filter-select"
                   variant="outlined"
                   placeholder="Add an activity from this list"
@@ -191,18 +217,63 @@ const MainSearch = ({ data: { activities, facilities } }) => {
                 />
               </div>
             </div>
-            <div className="row">
-              <div className="col-12"></div>
+            <div className="row p20t">
+              <div className="col-12">
+                {selectedActivities.map(a => (
+                  <Chip
+                    key={a.value}
+                    label={a.label}
+                    onDelete={handleActivityDelete(a)}
+                    variant="outlined"
+                    className="park-filter-chip"
+                    deleteIcon={<HighlightOffOutlinedIcon />}
+                  />
+                ))}
+              </div>
             </div>
-            <div className="row">
-              <div className="col-12"></div>
+            <Divider className="m20t" />
+            <div className="row p20t">
+              <div className="col-12">
+                <div className="p20l park-select-label">Facilities</div>
+                <Select
+                  id="facilities-select"
+                  options={facilityItems}
+                  value={selectedFacilities}
+                  controlShouldRenderValue={false}
+                  isClearable={false}
+                  isMulti
+                  onChange={e => {
+                    setSelectedFacilities(e)
+                  }}
+                  className="park-filter-select"
+                  variant="outlined"
+                  placeholder="Add a facility from this list"
+                  styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                  menuPortalTarget={document.body}
+                />
+              </div>
             </div>
+            <div className="row p20t">
+              <div className="col-12">
+                {selectedFacilities.map(f => (
+                  <Chip
+                    key={f.value}
+                    label={f.label}
+                    onDelete={handleFacilityDelete(f)}
+                    variant="outlined"
+                    className="park-filter-chip"
+                    deleteIcon={<HighlightOffOutlinedIcon />}
+                  />
+                ))}
+              </div>
+            </div>
+            <Divider className="m20t" />
           </div>
         </DialogContent>
         <DialogActions>
           <div className="container">
             <div className="row">
-              <div className="col-12">
+              <div className="col-12 p30">
                 <Button
                   variant="contained"
                   onClick={handleCloseFilter}

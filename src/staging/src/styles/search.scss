@@ -1,8 +1,13 @@
 $globalFont: "BCSans,Verdana,Arial,sans serif";
+$colorBlue: #003366;
+$hoverBlue: #2684ff;
+$colorGrey: #eef1f5;
+$colorWhite: #fff;
+$bodyFont: 1rem;
 
 .MuiTypography-root {
   font-family: $globalFont !important;
-  font-size: 20px !important;
+  font-size: $bodyFont !important;
 }
 
 .MuiButton-root {
@@ -37,7 +42,7 @@ $globalFont: "BCSans,Verdana,Arial,sans serif";
     font-family: $globalFont !important;
     font-style: normal;
     font-weight: normal;
-    font-size: 24px;
+    font-size: 1.4rem;
     color: rgba(255, 249, 249, 1);
   }
 
@@ -45,29 +50,29 @@ $globalFont: "BCSans,Verdana,Arial,sans serif";
     font-family: $globalFont !important;
     font-style: normal;
     font-weight: bold;
-    font-size: 34px;
+    font-size: 2rem;
     padding: 30px;
   }
   .search-icon-fab {
     background-color: rgba(252, 186, 25, 1);
     margin-left: -30px !important;
-    margin-top: -11px !important;
-    width: 65px !important;
-    height: 65px !important;
+    margin-top: -9px !important;
+    width: 55px !important;
+    height: 55px !important;
     .search-icon {
       color: rgba(0, 51, 102, 0.8);
-      width: 50px !important;
-      height: 50px !important;
+      width: 40px !important;
+      height: 40px !important;
     }
   }
 
   .park-search-text-box {
     .MuiOutlinedInput-root {
       width: 500px !important;
-      background-color: #fff !important;
+      background-color: $colorWhite !important;
       border: none !important;
       border-radius: 50px !important;
-      font-size: 20px !important;
+      font-size: $bodyFont !important;
       font-family: $globalFont !important;
     }
     .MuiOutlinedInput-input {
@@ -88,7 +93,7 @@ $globalFont: "BCSans,Verdana,Arial,sans serif";
 }
 
 .park-filter-dialog {
-  font-size: 20px !important;
+  font-size: $bodyFont !important;
   font-family: $globalFont !important;
   overflow-y: visible !important;
 
@@ -97,7 +102,7 @@ $globalFont: "BCSans,Verdana,Arial,sans serif";
   }
 
   .MuiPaper-root {
-    color: #003366 !important;
+    color: $colorBlue !important;
   }
   .MuiCheckbox-root {
     color: #38598a !important;
@@ -106,40 +111,63 @@ $globalFont: "BCSans,Verdana,Arial,sans serif";
   }
 
   .MuiCheckbox-root:hover {
-    background-color: #eef1f5 !important;
+    background-color: $colorGrey !important;
   }
 
   .MuiDialog-paperWidthSm {
-    max-width: 700px !important;
-    width: 700px !important;
+    max-width: 600px !important;
+    width: 600px !important;
   }
   .park-filter-text {
     .MuiOutlinedInput-root {
       border-radius: 50px !important;
-      background-color: #eef1f5 !important;
+      background-color: $colorGrey !important;
       font-family: $globalFont !important;
-      font-size: 20px !important;
+      font-size: $bodyFont !important;
     }
 
     .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
-    .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline,
     .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
     .park-filter-select [class*="-control"] {
-      border-color: #38598a !important;
-      border-width: 1px !important;
+      border-color: $hoverBlue !important;
+      border-width: 2px !important;
     }
   }
 
   .park-filter-select [class*="-control"] {
     border-radius: 50px !important;
-    background-color: #eef1f5 !important;
+    background-color: $colorGrey !important;
     font-family: $globalFont !important;
-    font-size: 20px !important;
+    font-size: $bodyFont !important;
   }
   .MuiButton-root {
-    font-size: 20px !important;
+    font-size: $bodyFont !important;
     width: 100% !important;
     border-radius: 50px !important;
+  }
+
+  .park-filter-select [class*="-MenuList"] [class*="-option"],
+  [class*="-singleValue"] {
+    color: $colorBlue !important;
+  }
+
+  .park-filter-select [class*="-placeholder"] {
+    color: #9b9b9b !important;
+  }
+
+  .park-filter-chip {
+    margin: 2px 3px !important;
+  }
+
+  .MuiChip-label {
+    color: $colorBlue !important;
+    font-size: 0.8rem !important;
+    font-family: $globalFont;
+  }
+  .park-select-label {
+    font-size: $bodyFont !important;
+    padding-bottom: 10px !important;
+    font-weight: bold;
   }
 }
 
@@ -158,28 +186,41 @@ $globalFont: "BCSans,Verdana,Arial,sans serif";
 
 .park-search-filter {
   padding-left: 35% !important;
-  color: #fff !important;
-  font-size: 20px !important;
+  color: $colorWhite !important;
+  font-size: $bodyFont !important;
 }
 
 .p20t {
   padding-top: 20px !important;
 }
+
 .p30l {
   padding: 0px 30px !important;
 }
 
+.p20l {
+  padding: 0px 20px !important;
+}
+
+.m20t {
+  margin-top: 20px !important;
+}
+
+.p30 {
+  padding: 20px 30px !important;
+}
+
 .bcgov-normal-blue {
-  color: white !important;
+  color: $colorWhite !important;
   font-weight: 700 !important;
   font-style: normal !important;
-  background-color: #003366 !important;
+  background-color: $colorBlue !important;
   font-family: $globalFont !important;
 }
 
 .bcgov-normal-blue:hover {
-  background-color: rgba(43, 91, 164, 1) !important;
-  color: white !important;
+  background-color: #38598a !important;
+  color: $colorWhite !important;
 }
 
 .bcgov-button {
