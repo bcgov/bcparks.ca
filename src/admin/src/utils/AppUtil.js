@@ -18,3 +18,13 @@ export function labelCompare(a, b) {
   }
   return 0;
 }
+
+export function dateCompare(a, b) {
+  if (a.dateToCompare > b.dateToCompare) {
+    return -1;
+  }
+  if (a.dateToCompare < b.dateToCompare) {
+    return 1;
+  }
+  return 0;
+}
