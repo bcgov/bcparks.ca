@@ -90,6 +90,11 @@ $globalFont: "BCSans,Verdana,Arial,sans serif";
 .park-filter-dialog {
   font-size: 20px !important;
   font-family: $globalFont !important;
+  overflow-y: visible !important;
+
+  .park-filter-dialog-content {
+    overflow-y: visible !important;
+  }
 
   .MuiPaper-root {
     color: #003366 !important;
@@ -118,10 +123,18 @@ $globalFont: "BCSans,Verdana,Arial,sans serif";
 
     .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
     .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline,
-    .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
+    .park-filter-select [class*="-control"] {
       border-color: #38598a !important;
       border-width: 1px !important;
     }
+  }
+
+  .park-filter-select [class*="-control"] {
+    border-radius: 50px !important;
+    background-color: #eef1f5 !important;
+    font-family: $globalFont !important;
+    font-size: 20px !important;
   }
   .MuiButton-root {
     font-size: 20px !important;

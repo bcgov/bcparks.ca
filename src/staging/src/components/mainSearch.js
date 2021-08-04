@@ -89,7 +89,7 @@ const MainSearch = ({ data: { activities, facilities } }) => {
         aria-labelledby="park-filter-dialog"
         className="park-filter-dialog"
       >
-        <DialogContent>
+        <DialogContent className="park-filter-dialog-content">
           <div className="container">
             <div className="row">
               <div className="col-12">
@@ -183,10 +183,11 @@ const MainSearch = ({ data: { activities, facilities } }) => {
                   options={activityItems}
                   value=""
                   onChange=""
-                  isMulti="true"
-                  className=""
+                  className="park-filter-select"
                   variant="outlined"
                   placeholder="Add an activity from this list"
+                  styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                  menuPortalTarget={document.body}
                 />
               </div>
             </div>
