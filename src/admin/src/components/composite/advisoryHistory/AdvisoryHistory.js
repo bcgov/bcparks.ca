@@ -4,6 +4,7 @@ import "./AdvisoryHistory.css";
 import moment from "moment";
 import { apiAxios } from "../../../axios_config";
 import { useKeycloak } from "@react-keycloak/web";
+import { dateCompare } from "../../../utils/AppUtil";
 
 export default function AdvisoryHistory({ data: { advisoryNumber } }) {
   const [advisoryHistory, setAdvisoryHistory] = useState([]);
@@ -28,6 +29,7 @@ export default function AdvisoryHistory({ data: { advisoryNumber } }) {
                     "MMMM DD, yyyy hh:mm A"
                   ),
                   displayText: "Published by",
+                  dateToCompare: moment(ad.modifiedDate).valueOf(),
                 };
                 if (ad.removalDate) {
                   record.displayText = "Removed by";
@@ -41,6 +43,7 @@ export default function AdvisoryHistory({ data: { advisoryNumber } }) {
                     "MMMM DD, yyyy hh:mm A"
                   ),
                   displayText: "Submitted by",
+                  dateToCompare: moment(ad.createdDate).valueOf(),
                 };
                 advisoriesHistory.push(record);
               } else if (ad.modifiedDate) {
@@ -51,10 +54,12 @@ export default function AdvisoryHistory({ data: { advisoryNumber } }) {
                     "MMMM DD, yyyy hh:mm A"
                   ),
                   displayText: "Updated by",
+                  dateToCompare: moment(ad.modifiedDate).valueOf(),
                 };
                 advisoriesHistory.push(record);
               }
             });
+            advisoriesHistory.sort(dateCompare);
             setAdvisoryHistory([...advisoriesHistory]);
           }
         });
