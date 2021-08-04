@@ -1,0 +1,186 @@
+$globalFont: "BCSans,Verdana,Arial,sans serif";
+
+.MuiTypography-root {
+  font-family: $globalFont !important;
+  font-size: 20px !important;
+}
+
+.MuiButton-root {
+  text-transform: none !important;
+  font-family: $globalFont !important;
+}
+
+.park-search {
+  font-family: $globalFont !important;
+  position: absolute;
+  width: 100%;
+  height: 66px;
+  left: 0px;
+  top: 0px;
+  overflow: visible;
+  background-color: rgba(255, 221, 139, 1);
+
+  img {
+    margin-top: -181px;
+    width: 100%;
+  }
+  .park-search-container {
+    position: absolute;
+    overflow: visible;
+    width: 1546px;
+    height: 395px;
+    left: 187px;
+    top: 390px;
+    background-color: rgba(0, 51, 102, 0.8);
+    text-align: center;
+    white-space: nowrap;
+    font-family: $globalFont !important;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    color: rgba(255, 249, 249, 1);
+  }
+
+  #search-title {
+    font-family: $globalFont !important;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 34px;
+    padding: 30px;
+  }
+  .search-icon-fab {
+    background-color: rgba(252, 186, 25, 1);
+    margin-left: -30px !important;
+    margin-top: -11px !important;
+    width: 65px !important;
+    height: 65px !important;
+    .search-icon {
+      color: rgba(0, 51, 102, 0.8);
+      width: 50px !important;
+      height: 50px !important;
+    }
+  }
+
+  .park-search-text-box {
+    .MuiOutlinedInput-root {
+      width: 500px !important;
+      background-color: #fff !important;
+      border: none !important;
+      border-radius: 50px !important;
+      font-size: 20px !important;
+      font-family: $globalFont !important;
+    }
+    .MuiOutlinedInput-input {
+      padding: 10px 20px !important;
+      margin-right: 40px !important;
+    }
+    .MuiOutlinedInput-root:focus {
+      outline: none !important;
+      outline-offset: 1px !important;
+    }
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+      border-color: transparent !important;
+    }
+  }
+  button:focus {
+    outline: unset !important;
+  }
+}
+
+.park-filter-dialog {
+  font-size: 20px !important;
+  font-family: $globalFont !important;
+
+  .MuiPaper-root {
+    color: #003366 !important;
+  }
+  .MuiCheckbox-root {
+    color: #38598a !important;
+    padding: 0px !important;
+    padding-right: 5px !important;
+  }
+
+  .MuiCheckbox-root:hover {
+    background-color: #eef1f5 !important;
+  }
+
+  .MuiDialog-paperWidthSm {
+    max-width: 700px !important;
+    width: 700px !important;
+  }
+  .park-filter-text {
+    .MuiOutlinedInput-root {
+      border-radius: 50px !important;
+      background-color: #eef1f5 !important;
+      font-family: $globalFont !important;
+      font-size: 20px !important;
+    }
+
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
+    .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline,
+    .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+      border-color: #38598a !important;
+      border-width: 1px !important;
+    }
+  }
+  .MuiButton-root {
+    font-size: 20px !important;
+    width: 100% !important;
+    border-radius: 50px !important;
+  }
+}
+
+#park-search-box {
+  height: 47px;
+  width: 548px;
+  border-radius: 25px;
+  border: 0px;
+  display: inline;
+  margin: 40px;
+}
+
+.park-search-text-container {
+  padding-top: 20px !important;
+}
+
+.park-search-filter {
+  padding-left: 35% !important;
+  color: #fff !important;
+  font-size: 20px !important;
+}
+
+.p20t {
+  padding-top: 20px !important;
+}
+.p30l {
+  padding: 0px 30px !important;
+}
+
+.bcgov-normal-blue {
+  color: white !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
+  background-color: #003366 !important;
+  font-family: $globalFont !important;
+}
+
+.bcgov-normal-blue:hover {
+  background-color: rgba(43, 91, 164, 1) !important;
+  color: white !important;
+}
+
+.bcgov-button {
+  min-width: 150px !important;
+  min-height: 40px !important;
+}
+
+@media (max-width: 575.98px) {
+  .bcgov-button {
+    min-width: 0px !important;
+    min-height: 0px !important;
+  }
+}
+
+.bcgov-loader-show {
+  display: inline-block;
+}

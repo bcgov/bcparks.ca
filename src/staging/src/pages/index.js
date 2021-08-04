@@ -38,6 +38,20 @@ export const query = graphql`
         Content
       }
     }
+    allStrapiActivityTypes {
+      totalCount
+      nodes {
+        activityName
+        activityNumber
+      }
+    }
+    allStrapiFacilityTypes {
+      totalCount
+      nodes {
+        facilityName
+        facilityNumber
+      }
+    }
   }
 `
 
@@ -59,7 +73,12 @@ export default function Home({ data }) {
             Plan your next adventure by searching for campsites and day-use
             areas around B.C.
           </span>
-          <MainSearch />
+          <MainSearch
+            data={{
+              activities: data.allStrapiActivityTypes.nodes,
+              facilities: data.allStrapiFacilityTypes.nodes,
+            }}
+          />
         </div>
       </div>
       <div id="main">
