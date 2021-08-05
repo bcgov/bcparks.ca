@@ -231,13 +231,24 @@ $bodyFont: 1rem;
   white-space: nowrap !important;
 }
 
+.bcgov-loader-show {
+  display: inline-block;
+}
+
+#search-results {
+  box-sizing: border-box;
+  overflow: hidden;
+  z-index: 2;
+  position: absolute;
+  top: 200px;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+}
+
 @media (max-width: 575.98px) {
   .bcgov-button {
     min-width: 0px !important;
     min-height: 0px !important;
   }
-}
-
-.bcgov-loader-show {
-  display: inline-block;
 }
