@@ -52,6 +52,34 @@ export const query = graphql`
         facilityNumber
       }
     }
+    allStrapiProtectedArea {
+      nodes {
+        parkActivities {
+          activityType
+          isActive
+          isActivityOpen
+          name
+        }
+        parkFacilities {
+          facilityType
+          isActive
+          isFacilityOpen
+          name
+        }
+        id
+        orcs
+        latitude
+        longitude
+        protectedAreaName
+        parkNames {
+          parkName
+          id
+          parkNameType
+        }
+        status
+        typeCode
+      }
+    }
   }
 `
 
@@ -77,6 +105,7 @@ export default function Home({ data }) {
             data={{
               activities: data.allStrapiActivityTypes.nodes,
               facilities: data.allStrapiFacilityTypes.nodes,
+              protectedAreas: data.allStrapiProtectedArea.nodes,
             }}
           />
         </div>

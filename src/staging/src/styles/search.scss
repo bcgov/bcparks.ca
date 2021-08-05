@@ -115,8 +115,7 @@ $bodyFont: 1rem;
   }
 
   .MuiDialog-paperWidthSm {
-    max-width: 600px !important;
-    width: 600px !important;
+    max-width: 100% !important;
   }
   .park-filter-text {
     .MuiOutlinedInput-root {
@@ -173,7 +172,7 @@ $bodyFont: 1rem;
 
 #park-search-box {
   height: 47px;
-  width: 548px;
+  width: 100%;
   border-radius: 25px;
   border: 0px;
   display: inline;
@@ -226,6 +225,10 @@ $bodyFont: 1rem;
 .bcgov-button {
   min-width: 150px !important;
   min-height: 40px !important;
+}
+
+.no-wrap {
+  white-space: nowrap !important;
 }
 
 @media (max-width: 575.98px) {
