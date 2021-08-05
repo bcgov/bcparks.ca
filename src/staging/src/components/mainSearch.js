@@ -18,12 +18,13 @@ import {
 import Select from "react-select"
 import "../styles/search.scss"
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined"
+import { navigate } from "gatsby"
 
 const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
   const [openFilter, setOpenFilter] = useState(false)
   const [quickSearch, setQuickSearch] = useState({
     camping: false,
-    dogFriendly: false,
+    petFriendly: false,
     wheelchair: false,
     marine: false,
     ecoReserve: false,
@@ -32,11 +33,10 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
   const [selectedActivities, setSelectedActivities] = useState([])
   const [selectedFacilities, setSelectedFacilities] = useState([])
   const [searchText, setSearchText] = useState("")
-  const [searchResults, setSearchResults] = useState([])
 
   const {
     camping,
-    dogFriendly,
+    petFriendly,
     wheelchair,
     marine,
     ecoReserve,
@@ -87,38 +87,74 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
     const activityNames = selectedActivities.map(a => a.label)
     const facilityNames = selectedFacilities.map(f => f.label)
     const campingResults = []
-    const dogResults = []
+    const petResults = []
     const wheelchairResults = []
     const marineResults = []
     const ecoReserveResults = []
     const electricalHookupResults = []
     const quickSearchResults = {
       campingResults: campingResults,
-      dogResults: dogResults,
+      petResults: petResults,
       wheelchairResults: wheelchairResults,
       marineResults: marineResults,
       ecoReserveResults: ecoReserveResults,
       electricalHookupResults: electricalHookupResults,
     }
+    let requiredResults = {
+      text: false,
+      camping: false,
+      petFriendly: false,
+      wheelchair: false,
+      marine: false,
+      ecoReserve: false,
+      electricalHookup: false,
+      activity: false,
+      facility: false,
+    }
 
     protectedAreas.forEach(park => {
       if (searchText) {
+        requiredResults.text = true
         searchParkNames(park, textResults)
         searchActivityText(park, searchText, textResults)
         searchFacilityText(park, searchText, textResults)
       }
       if (!textOnly) {
-        filterQuickSearch(park, quickSearchResults)
+        filterQuickSearch(park, quickSearchResults, requiredResults)
 
         if (activityNames && activityNames.length > 0) {
+          requiredResults.activity = true
           searchParkActivities(park, activityResults, activityNames)
         }
 
         if (facilityNames && facilityNames.length > 0) {
+          requiredResults.facility = true
           searchParkFacilities(park, facilityResults, facilityNames)
         }
       }
     })
+
+    if (
+      (requiredResults.text && (!textResults || textResults.length == 0)) ||
+      (requiredResults.camping &&
+        (!campingResults || campingResults.length == 0)) ||
+      (requiredResults.petFriendly &&
+        (!petResults || petResults.length == 0)) ||
+      (requiredResults.wheelchair &&
+        (!wheelchairResults || wheelchairResults.length == 0)) ||
+      (requiredResults.marine &&
+        (!marineResults || marineResults.length == 0)) ||
+      (requiredResults.ecoReserve &&
+        (!ecoReserveResults || ecoReserveResults.length == 0)) ||
+      (requiredResults.electricalHookup &&
+        (!electricalHookupResults || electricalHookupResults.length == 0)) ||
+      (requiredResults.activity &&
+        (!activityResults || activityResults.length == 0)) ||
+      (requiredResults.facility &&
+        (!facilityResults || facilityResults.length == 0))
+    ) {
+      return []
+    }
 
     let results = []
     let isResultAvailable = false
@@ -137,13 +173,13 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
         groupedQuickSearchResults = [...campingResults]
         isQuickSearchResultAvailable = true
       }
-      if (dogResults.length > 0) {
+      if (petResults.length > 0) {
         if (isQuickSearchResultAvailable) {
           groupedQuickSearchResults = groupedQuickSearchResults.filter(t =>
-            dogResults.includes(t)
+            petResults.includes(t)
           )
         } else {
-          groupedQuickSearchResults = [...dogResults]
+          groupedQuickSearchResults = [...petResults]
           isQuickSearchResultAvailable = true
         }
       }
@@ -219,18 +255,6 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
     return results
   }
 
-  const searchParkText = () => {
-    const textResults = searchParkByCriteria(true)
-    console.log(textResults)
-    setSearchResults([...textResults])
-  }
-
-  const searchParkFilter = () => {
-    const results = searchParkByCriteria(false)
-    console.log(results)
-    setSearchResults([...results])
-  }
-
   const searchParkNames = (park, textResults) => {
     if (park && park.parkNames) {
       park.parkNames.forEach(name => {
@@ -271,49 +295,44 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
     }
   }
 
-  const filterQuickSearch = (park, quickSearchResults) => {
+  const filterQuickSearch = (park, quickSearchResults, requiredResults) => {
     if (camping) {
+      requiredResults.camping = true
       searchActivityText(park, "camping", quickSearchResults.campingResults)
       searchFacilityText(park, "camping", quickSearchResults.campingResults)
     }
-    if (dogFriendly) {
-      searchActivityText(park, "dog", quickSearchResults.dogResults)
-      searchFacilityText(park, "dog", quickSearchResults.dogResults)
+    if (petFriendly) {
+      requiredResults.petFriendly = true
+      searchActivityText(park, "pets on leash", quickSearchResults.petResults)
     }
     if (wheelchair) {
-      searchActivityText(
-        park,
-        "accessible",
-        quickSearchResults.wheelchairResults
-      )
+      requiredResults.wheelchair = true
       searchFacilityText(
         park,
-        "accessible",
+        "accessibility information",
         quickSearchResults.wheelchairResults
       )
     }
     if (marine) {
-      searchActivityText(park, "marine", quickSearchResults.marineResults)
-      searchFacilityText(park, "marine", quickSearchResults.marineResults)
+      requiredResults.marine = true
+      if (
+        park.marineProtectedArea == "Y" &&
+        !quickSearchResults.marineResults.includes(park)
+      ) {
+        quickSearchResults.marineResults.push(park)
+      }
     }
     if (ecoReserve) {
-      searchActivityText(
-        park,
-        "ecological reserve",
-        quickSearchResults.ecoReserveResults
-      )
-      searchFacilityText(
-        park,
-        "ecological reserve",
-        quickSearchResults.ecoReserveResults
-      )
+      requiredResults.ecoReserve = true
+      if (
+        park.typeCode == "ER" &&
+        !quickSearchResults.ecoReserveResults.includes(park)
+      ) {
+        quickSearchResults.ecoReserveResults.push(park)
+      }
     }
     if (electricalHookup) {
-      searchActivityText(
-        park,
-        "electrical hookup",
-        quickSearchResults.electricalHookupResults
-      )
+      requiredResults.electricalHookup = true
       searchFacilityText(
         park,
         "electrical hookup",
@@ -356,6 +375,11 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
     }
   }
 
+  const searchParkFilter = isTextOnly => {
+    const results = searchParkByCriteria(isTextOnly)
+    navigate("/park-search", { state: { searchResults: [...results] } })
+  }
+
   return (
     <div className="park-search-text-container">
       <div className="row">
@@ -371,7 +395,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
             }}
             onKeyPress={ev => {
               if (ev.key === "Enter") {
-                searchParkText()
+                searchParkFilter(true)
                 ev.preventDefault()
               }
             }}
@@ -379,7 +403,9 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
           <Fab
             className="search-icon-fab"
             aria-label="search"
-            onClick={searchParkText}
+            onClick={() => {
+              searchParkFilter(true)
+            }}
           >
             <SearchIcon fontSize="large" className="search-icon" />
           </Fab>
@@ -418,6 +444,13 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
                   onChange={event => {
                     setSearchText(event.target.value)
                   }}
+                  onKeyPress={ev => {
+                    if (ev.key === "Enter") {
+                      handleCloseFilter()
+                      searchParkFilter(false)
+                      ev.preventDefault()
+                    }
+                  }}
                 />
               </div>
             </div>
@@ -438,9 +471,9 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={dogFriendly}
+                        checked={petFriendly}
                         onChange={handleQuickSearchChange}
-                        name="dogFriendly"
+                        name="petFriendly"
                       />
                     }
                     label="Dog friendly"
@@ -580,7 +613,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
                   variant="contained"
                   onClick={() => {
                     handleCloseFilter()
-                    searchParkFilter()
+                    searchParkFilter(false)
                   }}
                   className="bcgov-button bcgov-normal-blue"
                 >

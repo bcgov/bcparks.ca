@@ -78,6 +78,7 @@ export const query = graphql`
         }
         status
         typeCode
+        marineProtectedArea
       }
     }
   }
