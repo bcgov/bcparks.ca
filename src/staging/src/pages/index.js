@@ -38,21 +38,21 @@ export const query = graphql`
         Content
       }
     }
-    allStrapiActivityTypes {
+    allStrapiActivityTypes(sort: { fields: activityName }) {
       totalCount
       nodes {
         activityName
         activityNumber
       }
     }
-    allStrapiFacilityTypes {
+    allStrapiFacilityTypes(sort: { fields: facilityName }) {
       totalCount
       nodes {
         facilityName
         facilityNumber
       }
     }
-    allStrapiProtectedArea {
+    allStrapiProtectedArea(sort: { fields: protectedAreaName }) {
       nodes {
         parkActivities {
           activityType
