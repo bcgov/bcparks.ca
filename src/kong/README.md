@@ -1,9 +1,24 @@
 # KONG API Service Portal Setup
 
+The public API is accessible at https://bcparks.api.gov.bc.ca (PROD) or https://bcparks-api-gov-bc-ca.test.api.gov.bc.ca (TEST) 
+
 Steps to register the Strapi API in with DataBC KONG API Portal
 
 ## API Portal TEST Environment
-1. Log into https://api.gov.bc.ca/
+1. Log into https://api-gov-bc-ca.test.api.gov.bc.ca/ 
+2. Create a namespace called BCParks
+3. Create a service account and note down the client id and cient secret
+4. Download the GWA CLI (refer to https://api-gov-bc-ca.test/docs/platform-api-owner-user-journey)
+5. In command prompt run the following commands
+
+    gwa init -T --api-version=2 --namespace=bcparks --client-id=<ClientID from Step 3> --client-secret=<Client Secret from Step 3>
+    
+    gwa pg public-test.yaml
+
+6. Check the Gateway in the API Service Portal to make sure that the routes have been published
+
+## API Portal PROD Environment
+1. Log into https://api.gov.bc.ca/ 
 2. Create a namespace called BCParks
 3. Create a service account and note down the client id and cient secret
 4. Download the GWA CLI (refer to https://api.gov.bc.ca/docs/platform-api-owner-user-journey)

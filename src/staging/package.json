@@ -6,7 +6,10 @@
   "license": "0BSD",
   "dependencies": {
     "@bcgov/bc-sans": "^1.0.1",
+    "@bcgov/bootstrap-theme": "https://github.com/bcgov/bootstrap-theme/releases/download/v1.1.1/bcgov-bootstrap-theme-1.1.1.tgz",
     "@emotion/react": "^11.1.5",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
     "gatsby": "^3.2.1",
     "gatsby-plugin-emotion": "^6.2.0",
     "gatsby-plugin-gatsby-cloud": "^2.2.0",
@@ -27,6 +30,7 @@
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-icons": "^3.6.1",
+    "react-select": "^4.3.1",
     "react-typography": "^0.16.19",
     "typography": "^0.16.19",
     "typography-theme-kirkham": "^0.16.19"

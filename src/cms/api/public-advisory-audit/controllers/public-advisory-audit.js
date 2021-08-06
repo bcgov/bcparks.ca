@@ -11,7 +11,7 @@ module.exports = {
     const { advisoryNumber } = ctx.params;
     const entities = await strapi.services["public-advisory-audit"].find({
       advisoryNumber_in: [advisoryNumber],
-      _sort: "revisionNumber:desc,modifiedDate:desc",
+      _sort: "revisionNumber:desc",
       _publicationState: "preview",
     });
     return entities.map((entity) =>
