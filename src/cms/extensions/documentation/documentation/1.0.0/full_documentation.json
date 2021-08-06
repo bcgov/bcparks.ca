@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/04/2021 9:14:23 AM"
+    "x-generation-date": "08/06/2021 11:11:24 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -10195,7 +10195,7 @@
         "parameters": []
       }
     },
-    "/protected-areas/statuses": {
+    "/protected-areas/status": {
       "get": {
         "deprecated": false,
         "description": "",
