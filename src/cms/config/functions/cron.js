@@ -62,19 +62,26 @@ module.exports = {
         advisoryToUnpublish.forEach(async (advisory) => {
           await strapi.api["public-advisory-audit"].services[
             "public-advisory-audit"
-          ].update(
-            {
-              advisoryNumber: advisory.advisoryNumber,
-              isLatestRevision: true,
-            },
-            {
-              published_at: new Date(),
-              advisoryStatus: advisoryStatusMap["INA"].id,
-              removalDate: new Date(),
-              modifiedBy: "system",
-              modifiedDate: new Date(),
-            }
-          );
+          ]
+            .update(
+              {
+                advisoryNumber: advisory.advisoryNumber,
+                isLatestRevision: true,
+              },
+              {
+                published_at: new Date(),
+                advisoryStatus: advisoryStatusMap["INA"].id,
+                removalDate: new Date(),
+                modifiedBy: "system",
+                modifiedDate: new Date(),
+              }
+            )
+            .catch((error) => {
+              strapi.log.error(
+                `error updating public-advisory-audit, advisory-number: ${advisory.advisoryNumber}`,
+                error
+              );
+            });
         });
       }
     },
