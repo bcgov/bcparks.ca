@@ -1,136 +1,111 @@
+/**
+  TODO: Refactor/clean up homepage styles once desktop work is underway, pull them into their own stylesheet.
+*/
+
 html {
-  background-color: white;
+    background-color: white;
+    font-family: BCSans,Verdana,Arial,sans serif;
 }
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   border: none;
-  display: block;
+  display:block;
 }
 
-#footer-bottom-menu ul {
+/* #footer-bottom-menu ul {
   list-style-type: none;
   display: flex;
   margin-top: 10px;
-}
+} */
 
 .inner {
-  max-width: 1594px;
+  max-width: 100%;
   width: 100%;
   margin: auto;
   height: 120px;
 }
 
 .line {
-  background-color: rgba(252, 186, 25, 1);
+  background-color: rgba(252,186,25,1);
   height: 2px;
 }
 
 #header {
-  position: absolute;
   width: 100%;
-  height: 120px;
-  left: 0px;
-  top: 0px;
+  padding-top: 5px;
   overflow: visible;
   background-color: #036;
   z-index: 100;
+  height: 67px;
 }
 
-#menu {
+/* #menu {
   position: absolute;
   overflow: visible;
   width: 100%;
   height: 60px;
   top: 121px;
   opacity: 0.85;
-  background-color: rgba(26, 90, 150, 1);
+  background-color: rgba(26,90,150,1);
   z-index: 90;
-}
+} */
 
-#menu ul {
+/* #menu ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
+  padding-left: 10.5%;
+} */
+
+.navbar-nav {
+  flex-direction: unset !important;
 }
 
-#menu ul li {
+/* .home-nav ul li {
   float: left;
-  padding: 15px;
-  color: rgba(242, 242, 242, 1);
+  color: rgba(242,242,242,1);
   text-align: center;
-  font-family: inherit;
   font-style: normal;
   font-weight: normal;
-  font-size: 16px;
-}
-
-#menu ul li + li:before {
-  content: " | ";
-  padding: 0 10px;
-}
-
-#menu ul li a {
-  display: block;
-  padding: 8px;
-  background-color: #dddddd;
-}
+  font-size: 20px;
+  opacity: 0.85;
+} */
 
 #main {
   box-sizing: border-box;
-  overflow: hidden;
+  /* overflow: auto; */
   z-index: 2;
-  position: absolute;
-  top: 1020px;
   width: 100%;
   padding: 0;
   text-align: left;
 }
 
-#footer-blank {
-  display: none;
+/* #footer-blank {
+  display:none;
   position: fixed;
   bottom: 0;
+} */
+
+#bc-parks-logo a img {
+  max-height: 36px;
+  max-width: 121px;
 }
 
-#footer {
-  box-sizing: border-box;
-  overflow: visible;
-  z-index: 99999;
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  background-color: #036;
-  top: 3890px;
-  height: 387px;
-}
+/* p.inner-campsitebook {
+  margin-bottom: unset !important;
+  margin: 10%  0 55%;
+} */
 
-#logo {
-  -ms-flex: 0 1 150px;
-  -webkit-flex: 0 1 150px;
-  flex: 0 1 150px;
-  padding: 20px 0;
-  /* position: relative; */
-}
-
-.searchbox {
+/* .searchbox {
   position: absolute;
   overflow: visible;
   width: 369px;
   height: 35px;
   left: 1349px;
   top: 29px;
-}
-
-.campsitebook {
-  position: absolute;
-  overflow: visible;
-  width: 189px;
-  height: 35px;
-  left: 1349px;
-  top: 77px;
 }
 
 .daypass {
@@ -140,43 +115,433 @@ html {
   height: 35px;
   left: 1547px;
   top: 77px;
-}
+} */
 
 .alert-banner {
-  position: absolute;
+  /* position: absolute;
   width: 100%;
   height: 66px;
   left: 0px;
   top: 181px;
   overflow: visible;
-  background-color: rgba(255, 221, 139, 1);
-  z-index: 40;
+  color: #003366; */
+  background-color: rgba(255,221,139,1);
+  /* z-index: 40;
   text-align: center;
-  padding: 20px;
+  padding: 20px; */
 }
 
-.advisories {
+/* .park-search {
+  position: absolute;
+  width: 100%;
+  height: 66px;
+  left: 0px;
+  top: 0px;
+  overflow: visible;
+  background-color: rgba(255,221,139,1);
+} */
+
+/* .park-search img {
+  margin-top: -181px;
+  width:100%
+} */
+
+/* .park-search div {
+  position: absolute;
+  overflow: visible;
+  width: 1546px;
+  height: 395px;
+  left: 187px;
+  top: 390px;
+  background-color: rgba(0,51,102,1);
+  opacity: 0.8;
   text-align: center;
-  font-family: inherit;
+  white-space: nowrap;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  color: rgba(255,249,249,1);
+} */
+
+/* .park-search div #search-title {  
   font-style: normal;
   font-weight: bold;
-  font-size: 36px;
-  color: rgba(0, 51, 102, 1);
+  font-size: 34px;
+  padding: 30px;
+} */
+
+/* #park-search-box {  
+  height: 47px;
+  width: 548px;
+  border-radius:25px;
+  border:0px;
+  display: inline;
+  margin:40px
+} */
+
+/* .park-search div .search-icon-center-main {  
+  display: inline;
+  height: 69px;
+  width: 69px;
+  fill: rgba(252,186,25,1);
+  margin-left: -70px;
+  position: absolute;
+  margin-top: 30px;
+} */
+
+/** New stuff!!! */
+.container {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
 }
 
-.advisories hr {
-  height: 3px;
-  background-color: rgba(252, 186, 25, 1);
-  width: 50px;
+/** Overrides CKEditor <p> wrapper element that has margin bottom */
+.no-mb {
+  margin-bottom: 0px !important;
+}
+
+#book-campsite {
+  height: 35px;
+  background-color: #FCBA19;
+  border-radius: 40px;
+  width: 189px;
+}
+
+.book-campsite-inner {
+  position: absolute;
+  top: 310px;
+  color: #003366;
+  font-size: 14px;
+}
+
+.book-campsite-nav {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+#book-campsite-logo {
+  transform: scale(0.7);
+}
+
+.zone-cards .card-text {
+  line-height: normal !important;
+}
+
+.footer-left-links {
+    padding-left: 40px !important;
+}
+
+#home-header .nav-item:not(:last-child) {
+  border-bottom: 1px solid white
+}
+
+.home-advisories {
+  color: rgba(0,51,102,1);
+  padding-top: 40px;
+}
+
+.home-plan-your-trip {
+  color: rgba(0,51,102,1);
+  padding-top: 30px;
+  margin-top: 50px;
+  padding-bottom: 40px;
+}
+
+.home-about-bc-parks {
+  color: rgba(0,51,102,1);
+  padding-top: 30px;
+  padding-bottom: 40px;
+}
+
+.home-news, .home-get-involved {
+  color: #38598A;
+  background-color: #EEF1F5;
+}
+
+.split-card-body .zone-hr > hr {
+  margin: 20px 36px 10px 0;
+}
+
+.zone-hr > hr {
+  margin: 15px 36px 10px 20px;
+  height: 2px;
+  background-color: rgba(252,186,25,1);
+  width: 35px;
   display: inline-block;
 }
 
+.card {
+  border: unset;
+}
+
+.link-override {
+  text-decoration: none;
+  color: #38598A;
+}
+
+.grid-card .card-body {
+  font-size: 16px;
+  color: white;
+  background-color: #033366;
+  opacity: 0.7;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 52.5%;
+}
+
+.horizontal-card-body {
+  height: 50%;
+}
+
+.split-card-body {
+  background-color: #EEF1F5; 
+  bottom: unset;
+  color: #38598A;
+  padding-top: 35px !important;
+}
+
+.card-body-header {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.card-body-header > a {
+  font-size: 18px;
+  color: #FCBA19;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/** Temporary fill in for .img-fluid via Bootstrap */
+.card-img > img {
+  height: 316px;
+  max-width: 100%;
+}
+.full-horizontal-img > img {
+  height: 219px;
+  max-width: 400px;
+}
+
+.card-img, .horizontal-card-img, .full-horizontal-img {
+  margin-bottom: unset;
+}
+
+.horizontal-card-img > img {
+  height: 166px;
+  width: 100%
+}
+
+.home-news-card {
+  background-color: #EEF1F5;
+  border: unset !important;
+}
+
+.split-card-body {	
+  background-color: #EEF1F5;	
+  color: #003366;	
+}	
+.home-footer .card-body {	
+  font-size: 14px;	
+}	
+.split-card-body .card-title {	
+  margin: 0 36px 10px 36px;	
+}
+
+.split-card .col-6 {
+  background-color: #EEF1F5;
+}
+
+.footer-logo > a > img {
+  height: 40px;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.home-footer > p {
+  padding: 40px 0 10px 0;
+  margin-bottom: 0;
+}
+
+.home-footer {
+  height: 465px;
+  max-width: 100%;
+  background-color: #003366 !important;
+}
+
+.home-footer a {
+  color: #EEF1F5;
+  text-decoration: none;
+}
+
+.footer-body {
+  height: 77.5%;
+}
+
+.home-footer .footer-body .col {
+  padding: 0 40px;
+}
+
+#home-footer-search {
+  border-radius: 30px;
+}
+
+#home-alert span {
+  font-size: 14px !important;
+}
+
+img.alert-exclamation {
+  transform: scale(0.9);
+}
+
+.footer-search-group {
+  background-color: #38598ACC;
+  height: 30px !important;
+}
+
+.footer-search-group > .input-group-append {
+  height: 30px;
+}
+
+.footer-search-box {
+  font-size: 12px !important;
+  color: #EEF1F5 !important;
+  opacity: 0.5;
+}
+
+.footer-card-footer {
+  font-size: 12px;
+}
+
+.footer-card-footer .nav hr {
+  width: 1px;
+  height: 25px;
+  background-color: #EEF1F5;
+}
+
+.footer-card-footer .nav {
+  border-top: 1px solid #EEF1F5;
+}
+
+.footer-card-footer .nav-item:not(:last-child) {
+  border-right: 1px solid grey;
+}
+
+.footer-card-footer .nav-link {
+  color: grey;
+}
+
+.footer-card-footer > .navbar {
+  border-top: 1px solid white;
+}
+
+.footing-hr {
+    height: 30px;
+}
+
+li.post-separator {
+  margin-top: -15px;
+}
+
+.footing-hr {	
+  height: 1px;	
+  background-color: rgba(252,186,25,1);	
+  width: 30px;	
+  display: inline-block;	
+}
+
+.advisory-button {
+  background-color: #003366 !important;
+  color: white;
+  height: 49px;
+  text-align: center;
+}
+
+.advisory-content {
+  font-size: 16px;
+  color: white;
+  text-align: center;
+}
+
+.advisory > p {
+  margin-bottom: 5px;
+}
+
+.advisory .fa-chevron-circle-right {
+  color: #FCBA19;
+  padding-left: 30px;
+  font-size: 20px;
+}
+
+.alert-content, .alert {
+  margin-bottom: 0 !important;
+}
+
+.alert-content {
+  font-size: 14px;
+}
+
+.alert-warning {
+  background-color: #FFDD8B !important;
+}
+
+.zone-links {
+  padding: 0 20px 0 20px;
+  margin-top: 40px;
+}
+
+.zone-cards {
+  margin-top: 20px;
+}
+
+p.zone-content {
+  margin: 0 20px 0 20px;
+}
+
+p.zone-header {
+  margin: 0 20px 0 20px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.zone-header-small {
+  margin: 0 40px 0 40px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+
+}
+
+.grid-card {
+  border: unset !important;
+  background-color: unset !important;
+}
+
+.padded-link {
+    margin-left: 36px;
+}
+
+.card-col-padding {
+  max-height: 316px;
+}
+
+.card-col-padding:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.link-img > img {
+    height: 219px;
+}
+
 #Zone2 {
-  background-color: rgba(238, 241, 245, 1);
+  background-color: rgba(238,241,245,1);
+
 }
 #Zone4 {
-  background-color: rgba(238, 241, 245, 1);
+  background-color: rgba(238,241,245,1);
 }
 #Zone5 {
-  background-color: rgba(238, 241, 245, 1);
+  background-color: rgba(238,241,245,1);
 }
