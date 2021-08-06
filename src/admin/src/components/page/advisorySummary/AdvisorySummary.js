@@ -292,6 +292,7 @@ export default function AdvisorySummary({
                         parkUrls,
                         siteUrls,
                         handleOpenSnackBar,
+                        isCurrentlyPublished,
                       }}
                     />
                   </div>
