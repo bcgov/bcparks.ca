@@ -1,13 +1,13 @@
+// TODO: Mobile - Fix mobile hamburger bottom menu item stutter on expand
+// TODO: Mobile - Fix mobile hamburger menu expand being cut off by static alert
+// TODO: Mobile - Add search bar to mobile hamburger menu(last item) - CKEditor is preventing the appropriate element structure, could take some time
+// TODO: Mobile - Fix text font-weight issue caused by opacity on card body
+// TODO: Mobile - Fix footer search icon positioning on all mobile breakpoints(does not scale with current implementation)
+
 import React from "react"
-import { css } from "@emotion/react"
-import { Link, graphql } from "gatsby"
-import { rhythm } from "../utils/typography"
-import Layout from "../components/layout"
+import { graphql } from "gatsby"
 import Header from "../components/header"
-import Menu from "../components/menu"
 import Footer from "../components/footer"
-import HTMLArea from "../components/HTMLArea"
-import Media from "../components/media"
 import Zone from "../components/zone"
 
 export const query = graphql`
@@ -17,7 +17,6 @@ export const query = graphql`
       Header
       Name
       Navigation
-      NavigationTest
       id
       homepage {
         id
@@ -42,40 +41,29 @@ export const query = graphql`
 `
 
 export default function Home({ data }) {
+  const zonesContent = data?.strapiWebsites?.homepage?.Content || []
+
   return (
     <div>
       <Header>
         {data.strapiWebsites.Header}
       </Header>
       {/* <Menu>
-        {data.strapiWebsites.NavigationTest}
+        {data.strapiWebsites.Navigation}
       </Menu> */}
-      {/* <div className="alert alert-dismissable alert-warning rounded-0">
-        <button type="button" className="close" data-dismiss="alert">
-          x
-        </button>
-        <p className="alert-content text-center text-dark">Some parks are currently affected by wildfire activity. See all advisories.</p>
-      </div> */}
-      {/* <div className="park-search">
-        <img src="http://localhost:1337/uploads/ID_4_3984_Valhalla_DBC_44ff0c4d8e.png" />
-      <div><span id="search-title">Welcome to BC Parks</span>
-      <span>Plan your next adventure by searching for campsites and day-use areas around B.C.</span>
-      <span>
-        <input type="search" id="park-search-box" name="park-search-box" value="Search by park name, location, activity …"></input>
-        <svg className="search-icon-center-main">
-          <ellipse id="search-icon-center-main" rx="34.5" ry="34.5" cx="34.5" cy="34.5">
-          </ellipse>
-		    </svg>
-      </span>
-     
+      <div className="alert alert-warning alert-dismissable rounded-0" role="alert" id="home-alert">
+        <button type="button" className="close" data-dismiss="alert">×</button>
+        <div className="row">
+          <div className="col-1 pl-0"><img className="alert-exclamation" src="http://localhost:1337/uploads/alert_32px_520c5ebbca.png" alt="exclamation" className="d-inline-flex" /></div>
+          <div className="col-11"><span className="text-center">Some parks are currently affected by wildfire activity. <a href="#" className="alert-link d-inline-flex">See all advisories</a>.</span></div>
+        </div>
       </div>
-      </div> */}
-      <div id="main">      
-          <Zone zoneID='Zone1' Content={data.strapiWebsites.homepage.Content[0]} />
-          <Zone zoneID='Zone2' Content={data.strapiWebsites.homepage.Content[1]} />
-          <Zone zoneID='Zone3' Content={data.strapiWebsites.homepage.Content[2]} />
-          <Zone zoneID='Zone4' Content={data.strapiWebsites.homepage.Content[3]} />
-          <Zone zoneID='Zone5' Content={data.strapiWebsites.homepage.Content[4]} />
+      <div id="main">
+        {zonesContent.map(content => {
+          return (
+            <Zone key={content.id} zoneID={`Zone${content.id}`} Content={content} />  
+          )
+        })}
       </div>
       <Footer>
         {data.strapiWebsites.Footer}
