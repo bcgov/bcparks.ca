@@ -69,6 +69,18 @@ export default function AdvisorySummaryView({
           <div className="col-lg-8 col-md-6 col-12">{advisory.description}</div>
         </div>
       )}
+      {advisory.standardMessages && advisory.standardMessages.length > 0 && (
+        <div className="row">
+          <div className="col-lg-4 col-md-6 col-12 ad-label">
+            Standard Messages
+          </div>
+          <div className="col-lg-8 col-md-6 col-12">
+            {advisory.standardMessages.map((m, index) => (
+              <div key={index}>{m.description}</div>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="row">
         <div className="col-lg-4 col-md-6 col-12 ad-label">
           Associated Park(s)
