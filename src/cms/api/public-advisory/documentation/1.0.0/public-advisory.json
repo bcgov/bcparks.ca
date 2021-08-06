@@ -852,6 +852,36 @@
                 "campfireBanRescindedDate": {
                   "type": "string"
                 },
+                "description": {
+                  "type": "string"
+                },
+                "safetyInfo": {
+                  "type": "string"
+                },
+                "specialNotes": {
+                  "type": "string"
+                },
+                "locationNotes": {
+                  "type": "string"
+                },
+                "parkContact": {
+                  "type": "string"
+                },
+                "reservations": {
+                  "type": "string"
+                },
+                "maps": {
+                  "type": "string"
+                },
+                "natureAndCulture": {
+                  "type": "string"
+                },
+                "footerNotes": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },
