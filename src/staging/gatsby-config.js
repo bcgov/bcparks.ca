@@ -10,8 +10,6 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-sass`,
-    `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -23,8 +21,7 @@ module.exports = {
       resolve: "gatsby-source-strapi",
       options: {
         apiURL: process.env.REACT_APP_CMS_BASE_URL,
-        collectionTypes: ["urgency", "protected-area", "public-advisory",`Websites`, `Pages`],
-        singleTypes: [`business-hours`],
+        collectionTypes: ["protected-area", "public-advisory", "urgency"],
         queryLimit: 10,
       },
     },

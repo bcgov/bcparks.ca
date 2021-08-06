@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { Link } from "gatsby"
 import Layout from "../components/layout"
 
 const PublicAdvisoryPage = ({ data }) => (
@@ -20,23 +20,3 @@ const PublicAdvisoryPage = ({ data }) => (
 )
 
 export default PublicAdvisoryPage
-
-export const query = graphql`
-  {
-    allStrapiPublicAdvisory {
-      edges {
-        node {
-          id
-          title
-          description
-          advisoryStatus {
-            advisoryStatus
-          }
-          eventType {
-            eventType
-          }
-        }
-      }
-    }
-  }
-`

@@ -6,14 +6,18 @@ const ParkPage = ({ data }) => (
   <Layout>
     <h1>Parks</h1>
     <ul>
-      {data.allStrapiProtectedArea.edges.map(document => (
-        <li key={document.node.id}>
+      {data.allStrapiProtectedArea.nodes.map(park => (
+        <li key={park.id}>
           <h2>
-            <a href={`${document.node.url}`}>
-              {document.node.protectedAreaName}
+            <a
+              href={`${park.protectedAreaName
+                .toLowerCase()
+                .replace(/ /g, "-")}`}
+            >
+              {park.protectedAreaName}
             </a>
           </h2>
-          <p>{document.node.protectedAreaName}</p>
+          <p>{park.protectedAreaName}</p>
         </li>
       ))}
     </ul>
@@ -25,14 +29,12 @@ export default ParkPage
 export const query = graphql`
   {
     allStrapiProtectedArea {
-      edges {
-        node {
-          id
-          orcs
-          protectedAreaName
-          typeCode
-          url
-        }
+      nodes {
+        id
+        orcs
+        protectedAreaName
+        typeCode
+        url
       }
     }
   }
