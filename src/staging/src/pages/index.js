@@ -9,7 +9,6 @@ import Footer from "../components/footer"
 import HTMLArea from "../components/HTMLArea"
 import Media from "../components/media"
 import Zone from "../components/zone"
-import "@fortawesome/fontawesome-free/css/all.min.css"
 
 export const query = graphql`
   query {
@@ -51,12 +50,12 @@ export default function Home({ data }) {
       {/* <Menu>
         {data.strapiWebsites.NavigationTest}
       </Menu> */}
-      <div className="alert alert-dismissable alert-warning">
-        <button type="button" class="close" data-dismiss="alert">
+      {/* <div className="alert alert-dismissable alert-warning rounded-0">
+        <button type="button" className="close" data-dismiss="alert">
           x
         </button>
-        <p class="alert-content text-center text-dark">Some parks are currently affected by wildfire activity. See all advisories.</p>
-      </div>
+        <p className="alert-content text-center text-dark">Some parks are currently affected by wildfire activity. See all advisories.</p>
+      </div> */}
       {/* <div className="park-search">
         <img src="http://localhost:1337/uploads/ID_4_3984_Valhalla_DBC_44ff0c4d8e.png" />
       <div><span id="search-title">Welcome to BC Parks</span>
@@ -83,4 +82,4 @@ export default function Home({ data }) {
       </Footer>
     </div>
   )
-        }
+}

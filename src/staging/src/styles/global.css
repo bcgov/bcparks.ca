@@ -1,6 +1,6 @@
 html {
     background-color: white;
-    font-family: BCSans;
+    font-family: BCSans,Verdana,Arial,sans serif;
 }
 * {
   margin: 0;
@@ -30,10 +30,11 @@ html {
 
 #header {
   width: 100%;
-  padding-top: 15px;
+  padding-top: 5px;
   overflow: visible;
   background-color: #036;
   z-index: 100;
+  height: 67px;
 }
 
 #menu {
@@ -67,10 +68,6 @@ html {
   font-weight: normal;
   font-size: 20px;
   opacity: 0.85;
-}
-
-.nav-item:not(:last-child) {
-  border-right: 1px solid white;
 }
 
 #main {
@@ -110,10 +107,6 @@ html {
   flex: 0 1 150px;
   padding: 2% 0 0 2%;
 } */
-
-button.custom-toggler {
-  border: unset;
-}
 
 #bc-parks-logo a img {
   max-height: 36px;
@@ -225,10 +218,33 @@ p.inner-campsitebook {
 }
 
 /** New stuff!!! */
-
 .container {
   padding-left: 20px !important;
   padding-right: 20px !important;
+}
+
+/** Overrides CKEditor <p> wrapper element that has margin bottom */
+.no-mb {
+  margin-bottom: 0px !important;
+}
+
+#book-campsite {
+    height: 35px;
+    background-color: #FCBA19;
+    border-radius: 40px;
+    width: 189px;
+}
+
+.footer-left-links {
+    padding-left: 40px !important;
+}
+
+#home-header .nav-item:not(:last-child) {
+  border-bottom: 1px solid white
+}
+
+.footer-card-footer > .navbar {
+    border-top: 1px solid white;
 }
 
 .home-advisories {
@@ -255,11 +271,11 @@ p.inner-campsitebook {
 }
 
 .split-card-body .zone-hr > hr {
-  margin: 0;
+  margin: 20px 36px 10px 0;
 }
 
 .zone-hr > hr {
-  margin: 0 36px 10px 36px;
+  margin: 15px 36px 10px 20px;
   height: 2px;
   background-color: rgba(252,186,25,1);
   width: 35px;
@@ -268,6 +284,11 @@ p.inner-campsitebook {
 
 .card {
   border: unset;
+}
+
+.link-override {
+  text-decoration: none;
+  color: #38598A;
 }
 
 .card-body {
@@ -311,7 +332,7 @@ p.inner-campsitebook {
 }
 .full-horizontal-img > img {
   height: 219px;
-  max-width: 100%
+  max-width: 375px;
 }
 
 .card-img, .horizontal-card-img, .full-horizontal-img {
@@ -338,9 +359,6 @@ p.inner-campsitebook {
 .split-card-body .card-title {	
   margin: 0 36px 10px 36px;	
 }
-/* .split-card-body .card-title, .card-text {	
-  margin: 0 36px 10px 36px;	
-} */
 
 .split-card .col-6 {
   background-color: #EEF1F5;
@@ -359,10 +377,9 @@ p.inner-campsitebook {
 }
 
 .home-footer {
-  height: 475px;
+  height: 465px;
   max-width: 100%;
   background-color: #003366 !important;
-  margin-top: 5px; 
 }
 
 .home-footer a {
@@ -371,7 +388,7 @@ p.inner-campsitebook {
 }
 
 .footer-body {
-  height: 80%;
+  height: 77.5%;
 }
 
 .home-footer .footer-body .col {
@@ -386,8 +403,16 @@ p.inner-campsitebook {
   font-size: 12px;
 }
 
+.footer-search-group {
+    background-color: #38598ACC;
+    height: 30px !important;
+}
+
+.footer-search-group > .input-group-append {
+  height: 30px;
+}
+
 .footer-search-box {
-  height: 25px;
   font-size: 12px !important;
 }
 
@@ -401,16 +426,18 @@ p.inner-campsitebook {
   border-top: 1px solid #EEF1F5;
 }
 
-.footer-card-footer .nav .nav-item {
-  margin-top: auto;
-  margin-bottom: auto;
+.footing-hr {
+    height: 30px;
 }
 
-.footing-hr > hr {	
-  margin: 0 0 10px 0;	
+li.post-separator {
+  margin-top: -15px;
+}
+
+.footing-hr {	
   height: 1px;	
   background-color: rgba(252,186,25,1);	
-  width: 50px;	
+  width: 30px;	
   display: inline-block;	
 }
 
@@ -433,8 +460,14 @@ p.inner-campsitebook {
   margin-bottom: 5px;
 }
 
+.advisory .fa-chevron-circle-right {
+  color: #FCBA19;
+  padding-left: 30px;
+  font-size: 20px;
+}
+
 .alert-content, .alert {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 
 .alert-content {
