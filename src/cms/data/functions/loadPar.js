@@ -34,6 +34,7 @@ const loadParData = async () => {
 const loadAdditionalParData = async () => {
   await loadAdditionalProtectedAreaInfo();
   await loadAdditionalSiteInfo();
+  await loadParkDetails();
 };
 
 const loadRegion = async (area) => {
@@ -323,7 +324,48 @@ const loadAdditionalSiteInfo = async () => {
   }
 };
 
+const loadParkDetails = async () => {
+  const footerNotes =
+    "We honour their connection to the land and respect the importance of their diverse teachings, traditions and practices within these territories. This park webpage may not adequately represent the full history of this park and the relationship of Indigenous peoples to this land. As such, BC Parks is working in partnership to update information found on our websites to better reflect the history, cultures and connection of Indigenous peoples to the land and to work together to protect these special places.";
+
+  try {
+    strapi.log.info("loading park details");
+    var jsonData = fs.readFileSync("./data/park-details.json", "utf8");
+    const data = JSON.parse(jsonData);
+
+    for await (const p of data["ParkDetails"]) {
+      const protectedArea = {
+        description: p.Description,
+        safetyinfo: p.SafetyInfo,
+        specialnotes: p.SpecialNotes,
+        locationnotes: p.LocationNotes,
+        parkcontact: p.ParkContact,
+        reservations: p.Reservations,
+        maps: p.Maps,
+        natureandculture: p.NatureAndCulture,
+        footerNotes: footerNotes,
+        slug: p.Path.replace(/\/\s*$/, "")
+          .split("/")
+          .pop(),
+      };
+      await strapi.services["protected-area"]
+        .update({ orcs: p.ORCSSite }, protectedArea)
+        .catch((error) => {
+          strapi.log.error(
+            `error load park details: orcs ${p.ORCSSite}`,
+            error
+          );
+        });
+    }
+
+    strapi.log.info("loading park details completed...");
+  } catch (error) {
+    strapi.log.error(error);
+  }
+};
+
 module.exports = {
   loadParData,
   loadAdditionalParData,
+  loadParkDetails,
 };
