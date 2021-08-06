@@ -14,7 +14,11 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
+<<<<<<< HEAD
     "x-generation-date": "08/06/2021 11:11:24 AM"
+=======
+    "x-generation-date": "08/06/2021 9:56:28 AM"
+>>>>>>> main
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -19047,6 +19051,36 @@
                 "campfireBanRescindedDate": {
                   "type": "string"
                 },
+                "description": {
+                  "type": "string"
+                },
+                "safetyInfo": {
+                  "type": "string"
+                },
+                "specialNotes": {
+                  "type": "string"
+                },
+                "locationNotes": {
+                  "type": "string"
+                },
+                "parkContact": {
+                  "type": "string"
+                },
+                "reservations": {
+                  "type": "string"
+                },
+                "maps": {
+                  "type": "string"
+                },
+                "natureAndCulture": {
+                  "type": "string"
+                },
+                "footerNotes": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },
@@ -19370,6 +19404,36 @@
                   "type": "boolean"
                 },
                 "campfireBanRescindedDate": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "safetyInfo": {
+                  "type": "string"
+                },
+                "specialNotes": {
+                  "type": "string"
+                },
+                "locationNotes": {
+                  "type": "string"
+                },
+                "parkContact": {
+                  "type": "string"
+                },
+                "reservations": {
+                  "type": "string"
+                },
+                "maps": {
+                  "type": "string"
+                },
+                "natureAndCulture": {
+                  "type": "string"
+                },
+                "footerNotes": {
+                  "type": "string"
+                },
+                "slug": {
                   "type": "string"
                 },
                 "published_at": {
@@ -19877,6 +19941,36 @@
               "campfireBanRescindedDate": {
                 "type": "string"
               },
+              "description": {
+                "type": "string"
+              },
+              "safetyInfo": {
+                "type": "string"
+              },
+              "specialNotes": {
+                "type": "string"
+              },
+              "locationNotes": {
+                "type": "string"
+              },
+              "parkContact": {
+                "type": "string"
+              },
+              "reservations": {
+                "type": "string"
+              },
+              "maps": {
+                "type": "string"
+              },
+              "natureAndCulture": {
+                "type": "string"
+              },
+              "footerNotes": {
+                "type": "string"
+              },
+              "slug": {
+                "type": "string"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -20199,6 +20293,36 @@
                 "type": "boolean"
               },
               "campfireBanRescindedDate": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "safetyInfo": {
+                "type": "string"
+              },
+              "specialNotes": {
+                "type": "string"
+              },
+              "locationNotes": {
+                "type": "string"
+              },
+              "parkContact": {
+                "type": "string"
+              },
+              "reservations": {
+                "type": "string"
+              },
+              "maps": {
+                "type": "string"
+              },
+              "natureAndCulture": {
+                "type": "string"
+              },
+              "footerNotes": {
+                "type": "string"
+              },
+              "slug": {
                 "type": "string"
               },
               "published_at": {
@@ -20594,6 +20718,36 @@
                 "type": "boolean"
               },
               "campfireBanRescindedDate": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "safetyInfo": {
+                "type": "string"
+              },
+              "specialNotes": {
+                "type": "string"
+              },
+              "locationNotes": {
+                "type": "string"
+              },
+              "parkContact": {
+                "type": "string"
+              },
+              "reservations": {
+                "type": "string"
+              },
+              "maps": {
+                "type": "string"
+              },
+              "natureAndCulture": {
+                "type": "string"
+              },
+              "footerNotes": {
+                "type": "string"
+              },
+              "slug": {
                 "type": "string"
               },
               "published_at": {
@@ -21249,6 +21403,36 @@
             "type": "string",
             "format": "date"
           },
+          "description": {
+            "type": "string"
+          },
+          "safetyInfo": {
+            "type": "string"
+          },
+          "specialNotes": {
+            "type": "string"
+          },
+          "locationNotes": {
+            "type": "string"
+          },
+          "parkContact": {
+            "type": "string"
+          },
+          "reservations": {
+            "type": "string"
+          },
+          "maps": {
+            "type": "string"
+          },
+          "natureAndCulture": {
+            "type": "string"
+          },
+          "footerNotes": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -21379,6 +21563,36 @@
           "campfireBanRescindedDate": {
             "type": "string",
             "format": "date"
+          },
+          "description": {
+            "type": "string"
+          },
+          "safetyInfo": {
+            "type": "string"
+          },
+          "specialNotes": {
+            "type": "string"
+          },
+          "locationNotes": {
+            "type": "string"
+          },
+          "parkContact": {
+            "type": "string"
+          },
+          "reservations": {
+            "type": "string"
+          },
+          "maps": {
+            "type": "string"
+          },
+          "natureAndCulture": {
+            "type": "string"
+          },
+          "footerNotes": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -21716,6 +21930,36 @@
                   "type": "boolean"
                 },
                 "campfireBanRescindedDate": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "safetyInfo": {
+                  "type": "string"
+                },
+                "specialNotes": {
+                  "type": "string"
+                },
+                "locationNotes": {
+                  "type": "string"
+                },
+                "parkContact": {
+                  "type": "string"
+                },
+                "reservations": {
+                  "type": "string"
+                },
+                "maps": {
+                  "type": "string"
+                },
+                "natureAndCulture": {
+                  "type": "string"
+                },
+                "footerNotes": {
+                  "type": "string"
+                },
+                "slug": {
                   "type": "string"
                 },
                 "published_at": {
@@ -22565,6 +22809,36 @@
                   "type": "boolean"
                 },
                 "campfireBanRescindedDate": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "safetyInfo": {
+                  "type": "string"
+                },
+                "specialNotes": {
+                  "type": "string"
+                },
+                "locationNotes": {
+                  "type": "string"
+                },
+                "parkContact": {
+                  "type": "string"
+                },
+                "reservations": {
+                  "type": "string"
+                },
+                "maps": {
+                  "type": "string"
+                },
+                "natureAndCulture": {
+                  "type": "string"
+                },
+                "footerNotes": {
+                  "type": "string"
+                },
+                "slug": {
                   "type": "string"
                 },
                 "published_at": {
@@ -23514,6 +23788,36 @@
                 "type": "boolean"
               },
               "campfireBanRescindedDate": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "safetyInfo": {
+                "type": "string"
+              },
+              "specialNotes": {
+                "type": "string"
+              },
+              "locationNotes": {
+                "type": "string"
+              },
+              "parkContact": {
+                "type": "string"
+              },
+              "reservations": {
+                "type": "string"
+              },
+              "maps": {
+                "type": "string"
+              },
+              "natureAndCulture": {
+                "type": "string"
+              },
+              "footerNotes": {
+                "type": "string"
+              },
+              "slug": {
                 "type": "string"
               },
               "published_at": {
