@@ -8,10 +8,9 @@ exports.onPostBuild = ({ reporter }) => {
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  // Query for markdown nodes to use in creating pages.
   const result = await graphql(`
     {
-      allStrapiProtectedArea(limit: -1) {
+      allStrapiProtectedArea {
         nodes {
           id
           orcs
@@ -26,14 +25,15 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     reporter.panicOnBuild(`Error while running GraphQL query.`)
     return
   }
-  reporter.info(result)
-
-  // parksData.forEach(park => {
-  //   const pageName = park.protectedAreaName.toLowerCase().replace(/ /g, "-")
-  //   createPage({
-  //     path: pageName,
-  //     component: require.resolve(`./src/templates/parkTemplate.js`),
-  //     context: { park },
-  //   })
-  // })
+  result.data.allStrapiProtectedArea.nodes.forEach(park => {
+    const pageName = park.protectedAreaName.toLowerCase().replace(/ /g, "-")
+    console.log(park.orcs)
+    createPage({
+      path: pageName,
+      component: require.resolve(`./src/templates/parkTemplate.js`),
+      context: { orcs: park.orcs, park: park },
+    })
+  })
 }
+
+

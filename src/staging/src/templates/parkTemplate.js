@@ -1,26 +1,59 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
 import ParkActivity from "../components/parkActivity"
 import ParkFacility from "../components/parkFacility"
 import "./parkTemplate.css"
 
-export default function ParkTemplate({ pageContext: { park } }) {
-  const [data, setData] = useState([])
-
-  useEffect(async () => {
-    const result = await fetch(
-      `http://localhost:1337/public-advisories?protectedAreas.orcs=${park.orcs}`
-    )
-    const resultData = await result.json()
-    console.log(resultData)
-
-    setData(resultData)
-  }, [])
+export default function ParkTemplate({ data }) {
+  const park = data.strapiProtectedArea
+  const test = data.allStrapiActivityTypes
+  console.log(test)
 
   return (
     <div>
       <h1>{park.protectedAreaName}</h1>
-      <ParkActivity data={park.parkActivities} />
-      <ParkFacility data={park.parkFacilities} />
+
+      {/* <ParkActivity data={park.parkActivities} />
+      <ParkFacility data={park.parkFacilities} /> */}
     </div>
   )
 }
+
+export const query = graphql`
+  query($orcs: Int) {
+    allStrapiActivityTypes(sort: { fields: activityName }) {
+      totalCount
+      nodes {
+        activityName
+        activityNumber
+      }
+    }
+    allStrapiFacilityTypes(sort: { fields: facilityName }) {
+      totalCount
+      nodes {
+        facilityName
+        facilityNumber
+      }
+    }
+    strapiProtectedArea(orcs: { eq: $orcs }) {
+      protectedAreaName
+      status
+      orcs
+      marineArea
+      type
+      typeCode
+      parkActivities {
+        activityType
+        isActive
+        isActivityOpen
+        name
+      }
+      parkFacilities {
+        facilityType
+        isActive
+        isFacilityOpen
+        name
+      }
+    }
+  }
+`

@@ -216,6 +216,7 @@ const getProtectedAreaStatus = async (ctx) => {
     }
 
     return {
+      id: protectedArea.id,
       orcs: protectedArea.orcs,
       orcsSiteNumber: null,
       protectedAreaName: protectedArea.protectedAreaName,
