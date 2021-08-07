@@ -15,6 +15,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           id
           orcs
           protectedAreaName
+          slug
         }
         totalCount
       }
@@ -26,14 +27,14 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     return
   }
   result.data.allStrapiProtectedArea.nodes.forEach(park => {
-    const pageName = park.protectedAreaName.toLowerCase().replace(/ /g, "-")
-    console.log(park.orcs)
+    const slug = park.slug
+      ? park.slug
+      : park.protectedAreaName.toLowerCase().replace(/ /g, "-")
+    console.log(slug, park.slug)
     createPage({
-      path: pageName,
+      path: slug,
       component: require.resolve(`./src/templates/parkTemplate.js`),
       context: { orcs: park.orcs, park: park },
     })
   })
 }
-
-

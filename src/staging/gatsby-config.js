@@ -31,7 +31,7 @@ module.exports = {
           "activity-types",
           "facility-types",
         ],
-        queryLimit: -1,
+        queryLimit: 100,
       },
     },
     `gatsby-transformer-sharp`,
