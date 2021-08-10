@@ -582,7 +582,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
                   variant="outlined"
                   placeholder="Add an activity from this list"
                   styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                  menuPortalTarget={document.body}
+                  // menuPortalTarget={document.body}
                 />
               </div>
             </div>
@@ -618,7 +618,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
                   variant="outlined"
                   placeholder="Add a facility from this list"
                   styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                  menuPortalTarget={document.body}
+                  // menuPortalTarget={document.body}
                 />
               </div>
             </div>
