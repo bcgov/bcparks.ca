@@ -84,7 +84,7 @@ export const query = graphql`
     }
   }
 `
-
+const cmsUrl =  process.env.REACT_APP_CMS_BASE_URL
 export default function Home({ data }) {
   const zonesContent = data?.strapiWebsites?.homepage?.Content || []
 
@@ -99,7 +99,7 @@ export default function Home({ data }) {
       <div className="alert alert-warning alert-dismissable rounded-0" role="alert" id="home-alert">
         <button type="button" className="close" data-dismiss="alert">×</button>
         <div className="row">
-          <div className="col-1 pl-0"><img className="alert-exclamation" src="http://localhost:1337/uploads/alert_32px_520c5ebbca.png" alt="exclamation" className="d-inline-flex" /></div>
+          <div className="col-1 pl-0"><img className="alert-exclamation" src={`${cmsUrl}/uploads/alert_32px_520c5ebbca.png`} alt="exclamation" className="d-inline-flex" /></div>
           <div className="col-11"><span className="text-center">Some parks are currently affected by wildfire activity. <a href="#" className="alert-link d-inline-flex">See all advisories</a>.</span></div>
         </div>
       </div>
