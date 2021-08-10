@@ -102,6 +102,7 @@ export default function Home({ data }) {
           <div className="col-11"><span className="text-center">Some parks are currently affected by wildfire activity. <a href="#" className="alert-link d-inline-flex">See all advisories</a>.</span></div>
         </div>
       </div>
+      <div class="park-search">
       <MainSearch
             data={{
               activities: data.allStrapiActivityTypes.nodes,
@@ -109,6 +110,7 @@ export default function Home({ data }) {
               protectedAreas: data.allStrapiProtectedArea.nodes,
             }}
       />
+      </div>
       <div id="main">
         {zonesContent.map(content => {
           return (

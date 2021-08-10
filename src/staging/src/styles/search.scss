@@ -17,26 +17,16 @@ $bodyFont: 1rem;
 
 .park-search {
   font-family: $globalFont !important;
-  position: absolute;
   width: 100%;
-  height: 66px;
-  left: 0px;
-  top: 0px;
-  overflow: visible;
-  background-color: rgba(255, 221, 139, 1);
 
   img {
     margin-top: -181px;
     width: 100%;
   }
   .park-search-container {
-    position: absolute;
     overflow: visible;
-    width: 1546px;
-    height: 395px;
-    left: 187px;
-    top: 390px;
-    background-color: rgba(0, 51, 102, 0.8);
+    width: 100%;
+    background-color: rgba(0, 51, 102, 0.8) !important;
     text-align: center;
     white-space: nowrap;
     font-family: $globalFont !important;
@@ -67,8 +57,11 @@ $bodyFont: 1rem;
   }
 
   .park-search-text-box {
+    width: 80% !important;
+
     .MuiOutlinedInput-root {
-      width: 500px !important;
+      width: 100% !important;
+      max-width: 700px !important;
       background-color: $colorWhite !important;
       border: none !important;
       border-radius: 50px !important;
@@ -77,7 +70,7 @@ $bodyFont: 1rem;
     }
     .MuiOutlinedInput-input {
       padding: 10px 20px !important;
-      margin-right: 40px !important;
+      margin-right: 10px !important;
     }
     .MuiOutlinedInput-root:focus {
       outline: none !important;
@@ -184,7 +177,7 @@ $bodyFont: 1rem;
 }
 
 .park-search-filter {
-  padding-left: 35% !important;
+  padding-left: 50px !important;
   color: $colorWhite !important;
   font-size: $bodyFont !important;
 }
@@ -239,7 +232,6 @@ $bodyFont: 1rem;
   box-sizing: border-box;
   overflow: hidden;
   z-index: 2;
-  position: absolute;
   top: 200px;
   width: 100%;
   padding: 0;

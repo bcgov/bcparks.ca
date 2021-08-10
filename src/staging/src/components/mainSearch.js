@@ -415,9 +415,9 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
   }
 
   return (
-    <div className="park-search-text-container">
+    <div className="park-search-container park-search-text-container">
       <div className="row">
-        <div className="col-12">
+        <div className="col-lg-6 col-md-6 col-sm-12">
           <TextField
             id="park-search-text"
             variant="outlined"
