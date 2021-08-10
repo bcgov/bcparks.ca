@@ -253,7 +253,7 @@ $bodyFont: 1rem;
   }
 }
 
-//To be removed
+//Added to hide styles printed on screen
 head {
-  color: white;
+  display: none !important;
 }
