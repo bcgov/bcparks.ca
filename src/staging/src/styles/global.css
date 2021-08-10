@@ -1,24 +1,14 @@
-/**
-  TODO: Refactor/clean up homepage styles once desktop work is underway, pull them into their own stylesheet.
-*/
-
 html {
-    background-color: white;
-    font-family: BCSans,Verdana,Arial,sans serif;
+  background-color: white;
+  font-family: BCSans, Verdana, Arial, sans serif;
 }
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   border: none;
-  display:block;
+  display: block;
 }
-
-/* #footer-bottom-menu ul {
-  list-style-type: none;
-  display: flex;
-  margin-top: 10px;
-} */
 
 .inner {
   max-width: 100%;
@@ -28,7 +18,7 @@ html {
 }
 
 .line {
-  background-color: rgba(252,186,25,1);
+  background-color: rgba(252, 186, 25, 1);
   height: 2px;
 }
 
@@ -41,158 +31,25 @@ html {
   height: 67px;
 }
 
-/* #menu {
-  position: absolute;
-  overflow: visible;
-  width: 100%;
-  height: 60px;
-  top: 121px;
-  opacity: 0.85;
-  background-color: rgba(26,90,150,1);
-  z-index: 90;
-} */
-
-/* #menu ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  padding-left: 10.5%;
-} */
-
 .navbar-nav {
   flex-direction: unset !important;
 }
 
-/* .home-nav ul li {
-  float: left;
-  color: rgba(242,242,242,1);
-  text-align: center;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 20px;
-  opacity: 0.85;
-} */
-
 #main {
   box-sizing: border-box;
-  /* overflow: auto; */
   z-index: 2;
   width: 100%;
   padding: 0;
   text-align: left;
 }
 
-/* #footer-blank {
-  display:none;
-  position: fixed;
-  bottom: 0;
-} */
-
 #bc-parks-logo a img {
   max-height: 36px;
   max-width: 121px;
 }
 
-/* p.inner-campsitebook {
-  margin-bottom: unset !important;
-  margin: 10%  0 55%;
-} */
-
-/* .searchbox {
-  position: absolute;
-  overflow: visible;
-  width: 369px;
-  height: 35px;
-  left: 1349px;
-  top: 29px;
-}
-
-.daypass {
-  overflow: visible;
-  position: absolute;
-  width: 162px;
-  height: 35px;
-  left: 1547px;
-  top: 77px;
-} */
-
 .alert-banner {
-  /* position: absolute;
-  width: 100%;
-  height: 66px;
-  left: 0px;
-  top: 181px;
-  overflow: visible;
-  color: #003366; */
-  background-color: rgba(255,221,139,1);
-  /* z-index: 40;
-  text-align: center;
-  padding: 20px; */
-}
-
-/* .park-search {
-  position: absolute;
-  width: 100%;
-  height: 66px;
-  left: 0px;
-  top: 0px;
-  overflow: visible;
-  background-color: rgba(255,221,139,1);
-} */
-
-/* .park-search img {
-  margin-top: -181px;
-  width:100%
-} */
-
-/* .park-search div {
-  position: absolute;
-  overflow: visible;
-  width: 1546px;
-  height: 395px;
-  left: 187px;
-  top: 390px;
-  background-color: rgba(0,51,102,1);
-  opacity: 0.8;
-  text-align: center;
-  white-space: nowrap;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 20px;
-  color: rgba(255,249,249,1);
-} */
-
-/* .park-search div #search-title {  
-  font-style: normal;
-  font-weight: bold;
-  font-size: 34px;
-  padding: 30px;
-} */
-
-/* #park-search-box {  
-  height: 47px;
-  width: 548px;
-  border-radius:25px;
-  border:0px;
-  display: inline;
-  margin:40px
-} */
-
-/* .park-search div .search-icon-center-main {  
-  display: inline;
-  height: 69px;
-  width: 69px;
-  fill: rgba(252,186,25,1);
-  margin-left: -70px;
-  position: absolute;
-  margin-top: 30px;
-} */
-
-/** New stuff!!! */
-.container {
-  padding-left: 20px !important;
-  padding-right: 20px !important;
+  background-color: rgba(255, 221, 139, 1);
 }
 
 /** Overrides CKEditor <p> wrapper element that has margin bottom */
@@ -202,7 +59,7 @@ html {
 
 #book-campsite {
   height: 35px;
-  background-color: #FCBA19;
+  background-color: #fcba19;
   border-radius: 40px;
   width: 189px;
 }
@@ -228,128 +85,11 @@ html {
 }
 
 .footer-left-links {
-    padding-left: 40px !important;
+  padding-left: 40px !important;
 }
 
 #home-header .nav-item:not(:last-child) {
-  border-bottom: 1px solid white
-}
-
-.home-advisories {
-  color: rgba(0,51,102,1);
-  padding-top: 40px;
-}
-
-.home-plan-your-trip {
-  color: rgba(0,51,102,1);
-  padding-top: 30px;
-  margin-top: 50px;
-  padding-bottom: 40px;
-}
-
-.home-about-bc-parks {
-  color: rgba(0,51,102,1);
-  padding-top: 30px;
-  padding-bottom: 40px;
-}
-
-.home-news, .home-get-involved {
-  color: #38598A;
-  background-color: #EEF1F5;
-}
-
-.split-card-body .zone-hr > hr {
-  margin: 20px 36px 10px 0;
-}
-
-.zone-hr > hr {
-  margin: 15px 36px 10px 20px;
-  height: 2px;
-  background-color: rgba(252,186,25,1);
-  width: 35px;
-  display: inline-block;
-}
-
-.card {
-  border: unset;
-}
-
-.link-override {
-  text-decoration: none;
-  color: #38598A;
-}
-
-.grid-card .card-body {
-  font-size: 16px;
-  color: white;
-  background-color: #033366;
-  opacity: 0.7;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 52.5%;
-}
-
-.horizontal-card-body {
-  height: 50%;
-}
-
-.split-card-body {
-  background-color: #EEF1F5; 
-  bottom: unset;
-  color: #38598A;
-  padding-top: 35px !important;
-}
-
-.card-body-header {
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
-.card-body-header > a {
-  font-size: 18px;
-  color: #FCBA19;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-/** Temporary fill in for .img-fluid via Bootstrap */
-.card-img > img {
-  height: 316px;
-  max-width: 100%;
-}
-.full-horizontal-img > img {
-  height: 219px;
-  max-width: 400px;
-}
-
-.card-img, .horizontal-card-img, .full-horizontal-img {
-  margin-bottom: unset;
-}
-
-.horizontal-card-img > img {
-  height: 166px;
-  width: 100%
-}
-
-.home-news-card {
-  background-color: #EEF1F5;
-  border: unset !important;
-}
-
-.split-card-body {	
-  background-color: #EEF1F5;	
-  color: #003366;	
-}	
-.home-footer .card-body {	
-  font-size: 14px;	
-}	
-.split-card-body .card-title {	
-  margin: 0 36px 10px 36px;	
-}
-
-.split-card .col-6 {
-  background-color: #EEF1F5;
+  border-bottom: 1px solid white;
 }
 
 .footer-logo > a > img {
@@ -371,7 +111,7 @@ html {
 }
 
 .home-footer a {
-  color: #EEF1F5;
+  color: #eef1f5;
   text-decoration: none;
 }
 
@@ -396,7 +136,7 @@ img.alert-exclamation {
 }
 
 .footer-search-group {
-  background-color: #38598ACC;
+  background-color: #38598acc;
   height: 30px !important;
 }
 
@@ -406,7 +146,7 @@ img.alert-exclamation {
 
 .footer-search-box {
   font-size: 12px !important;
-  color: #EEF1F5 !important;
+  color: #eef1f5 !important;
   opacity: 0.5;
 }
 
@@ -417,11 +157,11 @@ img.alert-exclamation {
 .footer-card-footer .nav hr {
   width: 1px;
   height: 25px;
-  background-color: #EEF1F5;
+  background-color: #eef1f5;
 }
 
 .footer-card-footer .nav {
-  border-top: 1px solid #EEF1F5;
+  border-top: 1px solid #eef1f5;
 }
 
 .footer-card-footer .nav-item:not(:last-child) {
@@ -437,44 +177,22 @@ img.alert-exclamation {
 }
 
 .footing-hr {
-    height: 30px;
+  height: 30px;
 }
 
 li.post-separator {
   margin-top: -15px;
 }
 
-.footing-hr {	
-  height: 1px;	
-  background-color: rgba(252,186,25,1);	
-  width: 30px;	
-  display: inline-block;	
+.footing-hr {
+  height: 1px;
+  background-color: rgba(252, 186, 25, 1);
+  width: 30px;
+  display: inline-block;
 }
 
-.advisory-button {
-  background-color: #003366 !important;
-  color: white;
-  height: 49px;
-  text-align: center;
-}
-
-.advisory-content {
-  font-size: 16px;
-  color: white;
-  text-align: center;
-}
-
-.advisory > p {
-  margin-bottom: 5px;
-}
-
-.advisory .fa-chevron-circle-right {
-  color: #FCBA19;
-  padding-left: 30px;
-  font-size: 20px;
-}
-
-.alert-content, .alert {
+.alert-content,
+.alert {
   margin-bottom: 0 !important;
 }
 
@@ -483,65 +201,5 @@ li.post-separator {
 }
 
 .alert-warning {
-  background-color: #FFDD8B !important;
-}
-
-.zone-links {
-  padding: 0 20px 0 20px;
-  margin-top: 40px;
-}
-
-.zone-cards {
-  margin-top: 20px;
-}
-
-p.zone-content {
-  margin: 0 20px 0 20px;
-}
-
-p.zone-header {
-  margin: 0 20px 0 20px;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-}
-
-.zone-header-small {
-  margin: 0 40px 0 40px;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 20px;
-
-}
-
-.grid-card {
-  border: unset !important;
-  background-color: unset !important;
-}
-
-.padded-link {
-    margin-left: 36px;
-}
-
-.card-col-padding {
-  max-height: 316px;
-}
-
-.card-col-padding:not(:last-child) {
-  margin-bottom: 10px;
-}
-
-.link-img > img {
-    height: 219px;
-}
-
-#Zone2 {
-  background-color: rgba(238,241,245,1);
-
-}
-#Zone4 {
-  background-color: rgba(238,241,245,1);
-}
-#Zone5 {
-  background-color: rgba(238,241,245,1);
+  background-color: #ffdd8b !important;
 }
