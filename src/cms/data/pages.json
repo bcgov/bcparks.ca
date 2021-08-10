@@ -2,11 +2,33 @@
 	[
 		{
 		  "Slug": "/about",
-		  "Template": "Template2"     
+		  "Template": "Template2"    
 		},
 		{
 		  "Slug": "/home",
-		  "Template": "Template1"
+		  "Template": "Template1",
+		  "Content": [
+			  {
+				  "__component": "parks.html-area",
+				  "HTML": "<div class=\"home-advisories\" id=\"home-advisories\"><p class=\"zone-header\"><span>Advisories</span></p><div class=\"zone-hr\"><hr></div><p class=\"zone-content\"><span>Updated Monday to Friday from 8:30 am to 4:30 pm, excluding statutory holidays.</span></p><div class=\"zone-links\"><div class=\"advisory\"><p><button class=\"btn btn-primary advisory-button btn-block rounded-0\"> <a> <span class=\"text-white font-weight-bold\">Parks affected by flooding <span class=\"fa fa-chevron-circle-right\"></span> </span> </a> </button></p></div><div class=\"advisory\"><p><button class=\"btn btn-primary advisory-button btn-block rounded-0\"> <a> <span class=\"text-white font-weight-bold\">Parks affected by wildfires <span class=\"fa fa-chevron-circle-right test\"> </span> </span> </a> </button></p></div></div></div>"
+			  },
+			  {
+				"__component": "parks.html-area",
+				"HTML": "<div class=\"home-plan-your-trip\" id=\"home-plan-your-trip\"><p class=\"zone-header\"><span>Plan your trip</span></p><div class=\"zone-hr\"><hr></div><p class=\"zone-content\"><span>There's an adventure waiting for every visitor.</span></p><div class=\"zone-cards container\"><div class=\"row\"><div class=\"col-6 col-md-3 card-col-padding pr-1\" onclick=\"location.href='https://bcparks.ca/reserve'\"><div class=\"card grid-card\"><p class=\"card-img\"><img src=\"http://localhost:1337/uploads/Mask_Group_9_2x_f1773950ca.png\"></p><div class=\"card-body d-flex flex-column\"><h5 class=\"card-body-header my-0\"><a href=\"https:///bcparks.ca/reserve\">Camping information</a></h5><div class=\"mt-auto\"><p class=\"no-mb\"><span class=\"card-text\">Reservation policies and fees.&nbsp;</span></p></div></div></div></div><div class=\"col-6 col-md-3 card-col-padding pl-1\" onclick=\"location.href='https://bcparks.ca/visiting'\"><div class=\"card grid-card\"><p class=\"card-img\"><img src=\"http://localhost:1337/uploads/Mask_Group_10_2x_b449291fc0.png\"></p><div class=\"card-body d-flex flex-column\"><h5 class=\"card-body-header my-0\"><a href=\"https://bcparks.ca/visiting/\">Things to do</a></h5><div class=\"mt-auto\"><p class=\"no-mb\"><span class=\"card-text\">Explore activities and attractions.&nbsp;</span></p></div></div></div></div><div class=\"col-6 col-md-3 card-col-padding pr-1\" onclick=\"location.href='https://bcparks.ca/accessibility'\"><div class=\"card grid-card\"><p class=\"card-img\"><img src=\"http://localhost:1337/uploads/Mask_Group_12_bs_2x_7e2ecb2b40.png\"></p><div class=\"card-body d-flex flex-column\"><h5 class=\"card-body-header my-0\"><a href=\"https://bcparks.ca\/accessibility/\">Accessibility</a></h5><div class=\"mt-auto\"><p class=\"no-mb\"><span class=\"card-text\">Guidelines for a safe and respectful adventure.</span></p></div></div></div></div><div class=\"col-6 col-md-3 card-col-padding pl-1\" onclick=\"location.href='https://bcparks.ca/visiting/responsible-recreation/'\"><div class=\"card grid-card\"><p class=\"card-img\"><img src=\"http://localhost:1337/uploads/Mask_Group_12_2x_f7a17d5dd0.png\"></p><div class=\"card-body d-flex flex-column\"><h5 class=\"card-body-header my-0\"><a href=\"https://bcparks.ca/visiting/responsible-recreation/\">Visit responsibly</a></h5><div class=\"mt-auto\"><p class=\"no-mb\"><span class=\"card-text\">BC Parks are for everyone.</span></p></div></div></div></div></div></div></div>"
+			},
+			{
+				"__component": "parks.html-area",
+				"HTML": "<div class=\"home-about-bc-parks\" id=\"home-about-bc-parks\"><p class=\"zone-header\"><span>About BC Parks</span></p><div class=\"zone-hr\"><hr></div><div class=\"zone-cards container\"><div class=\"row\"><div class=\"col-12 col-md-4 card-col-padding\" onclick=\"location.href='https://bcparks.ca/'\"><div class=\"card grid-card\"><p class=\"horizontal-card-img\"><img src=\"http://localhost:1337/uploads/Mask_Group_15_2x_154e961d39.png\"></p><div class=\"card-body horizontal-card-body d-flex flex-column\"><h5 class=\"card-body-header text-center\"><a class=\"text-light\" href=\"https:\/\/bcparks.ca\/ \">Indigenous relations and reconciliation<\/a><\/h5><\/div><\/div><\/div><div class=\"col-12 col-md-4 card-col-padding\" onclick=\"location.href='https:\/\/bcparks.ca\/visiting\/wildlife-safety\/'\"><div class=\"card grid-card\"><p class=\"horizontal-card-img\"><img src=\"http:\/\/localhost:1337\/uploads\/Group_164_2x_6ac9ab245f.png\"><\/p><div class=\"card-body horizontal-card-body d-flex flex-column\"><h5 class=\"card-body-header text-center\"><a class=\"text-light\">Wildlife viewing and safety<\/a><\/h5><\/div><\/div><\/div><div class=\"col-12 col-md-4 card-col-padding\" onclick=\"location.href='https:\/\/bcparks.ca\/conserve\/'\"><div class=\"card grid-card\"><p class=\"horizontal-card-img\"><img src=\"http:\/\/localhost:1337\/uploads\/Group_165_2x_a523a34867.png\"><\/p><div class=\"card-body horizontal-card-body d-flex flex-column\"><h5 class=\"card-body-header text-center\"><a class=\"text-light\" href=\"https:\/\/bcparks.ca\/conserve\/ \">Conservation<\/a><\/h5><\/div><\/div><\/div><\/div><\/div><\/div>"
+			},
+			{
+				"__component": "parks.html-area",
+				"HTML": "<div class=\"home-news\" id=\"home-news\"><div class=\"card split-card border-0\"><div class=\"row no-gutters\"><div class=\"col-6\"><div class=\"card-body split-card-body\"><h5 class=\"card-title zone-header-small m-0\">Get to know BC Parks</h5><div class=\"zone-hr\"><hr></div><p class=\"card-text\"><a class=\"link-override\" href=\"https://bcparks.ca/news/\">BC Parks blog</a></p></div></div><div class=\"col-6\" onclick=\"location.href='https://bcparks.ca/news/'\"><p class=\"full-horizontal-img\"><img src=\"http://localhost:1337/uploads/Group_14_2x_76ede14ed6.png\"></p></div></div></div></div>"
+			},
+			{
+				"__component": "parks.html-area",
+				"HTML": "<div class=\"home-get-involved\" id=\"home-get-involved\"><div class=\"card split-card border-0\"><div class=\"row no-gutters\"><div class=\"col-6\" onclick=\"location.href='https://bcparks.ca/get-involved/'\"><p class=\"full-horizontal-img\"><img src=\"http://localhost:1337/uploads/Mask_Group_13_2x_c521c6106f.png\"></p></div><div class=\"col-6\"><div class=\"card-body split-card-body\"><h5 class=\"card-title zone-header-small m-0\">Get involved</h5><div class=\"zone-hr\"><hr></div><p class=\"card-text\"><a class=\"link-override\" href=\"https://bcparks.ca/get-involved/\">Volunteering and donations</a></p></div></div></div></div></div>"
+			}
+		  ]
 		}
 	]
 } 

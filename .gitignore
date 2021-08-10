@@ -177,3 +177,4 @@
 **/yarn-error.log*
 
 **/cms/data/images/*
+src/staging/package-lock.json
