@@ -9,6 +9,7 @@ import {
   Checkbox,
   FormControl,
   FormHelperText,
+  Input,
 } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import {
@@ -929,6 +930,22 @@ export default function AdvisoryForm({
                 buttonClassName="bcgov-normal-blue btn"
                 withLabel={false}
                 className="ad-field bg-blue"
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Attach a file
+            </div>
+            <div className="col-lg-8 col-md-8 col-sm-12 ">
+              <Input
+                id="import-button"
+                inputProps={{
+                  accept: ".pdf",
+                }}
+                onChange={() => {}}
+                type="file"
+                className="bcgov-normal-light btn"
               />
             </div>
           </div>
