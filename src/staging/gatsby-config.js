@@ -10,6 +10,7 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -26,12 +27,13 @@ module.exports = {
           "protected-area",
           "park-access-status",
           "public-advisory",
+          "park-photo",
           `Websites`,
           `Pages`,
           "activity-types",
           "facility-types",
         ],
-        queryLimit: 100,
+        queryLimit: -1,
       },
     },
     `gatsby-transformer-sharp`,
@@ -52,5 +54,13 @@ module.exports = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-material-ui`,
+      options: {
+        stylesProvider: {
+          injectFirst: true,
+        },
+      },
+    },
   ],
 }

@@ -325,7 +325,7 @@ const loadAdditionalSiteInfo = async () => {
 };
 
 const loadParkDetails = async () => {
-  const footerNotes =
+  const reconciliationNotes =
     "We honour their connection to the land and respect the importance of their diverse teachings, traditions and practices within these territories. This park webpage may not adequately represent the full history of this park and the relationship of Indigenous peoples to this land. As such, BC Parks is working in partnership to update information found on our websites to better reflect the history, cultures and connection of Indigenous peoples to the land and to work together to protect these special places.";
 
   try {
@@ -335,15 +335,15 @@ const loadParkDetails = async () => {
 
     for await (const p of data["ParkDetails"]) {
       const protectedArea = {
-        description: p.Description,
-        safetyinfo: p.SafetyInfo,
-        specialnotes: p.SpecialNotes,
-        locationnotes: p.LocationNotes,
-        parkcontact: p.ParkContact,
-        reservations: p.Reservations,
+        description: p.Description.replace(/<[^>]*>/g, ""),
+        safetyinfo: p.SafetyInfo.replace(/<[^>]*>/g, ""),
+        specialnotes: p.SpecialNotes.replace(/<[^>]*>/g, ""),
+        locationnotes: p.LocationNotes.replace(/<[^>]*>/g, ""),
+        parkcontact: p.ParkContact.replace(/<[^>]*>/g, ""),
+        reservations: p.Reservations.replace(/<[^>]*>/g, ""),
         maps: p.Maps,
         natureandculture: p.NatureAndCulture,
-        footerNotes: footerNotes,
+        reconciliationNotes: reconciliationNotes,
         slug: p.Path.replace(/\/\s*$/, "")
           .split("/")
           .pop(),

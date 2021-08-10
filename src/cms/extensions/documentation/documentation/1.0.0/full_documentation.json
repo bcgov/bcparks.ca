@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/07/2021 12:26:25 AM"
+    "x-generation-date": "08/09/2021 10:24:51 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -19595,7 +19595,7 @@
                 "natureAndCulture": {
                   "type": "string"
                 },
-                "footerNotes": {
+                "reconciliationNotes": {
                   "type": "string"
                 },
                 "slug": {
@@ -19950,7 +19950,7 @@
                 "natureAndCulture": {
                   "type": "string"
                 },
-                "footerNotes": {
+                "reconciliationNotes": {
                   "type": "string"
                 },
                 "slug": {
@@ -20519,7 +20519,7 @@
               "natureAndCulture": {
                 "type": "string"
               },
-              "footerNotes": {
+              "reconciliationNotes": {
                 "type": "string"
               },
               "slug": {
@@ -20873,7 +20873,7 @@
               "natureAndCulture": {
                 "type": "string"
               },
-              "footerNotes": {
+              "reconciliationNotes": {
                 "type": "string"
               },
               "slug": {
@@ -21298,7 +21298,7 @@
               "natureAndCulture": {
                 "type": "string"
               },
-              "footerNotes": {
+              "reconciliationNotes": {
                 "type": "string"
               },
               "slug": {
@@ -21981,7 +21981,7 @@
           "natureAndCulture": {
             "type": "string"
           },
-          "footerNotes": {
+          "reconciliationNotes": {
             "type": "string"
           },
           "slug": {
@@ -22142,7 +22142,7 @@
           "natureAndCulture": {
             "type": "string"
           },
-          "footerNotes": {
+          "reconciliationNotes": {
             "type": "string"
           },
           "slug": {
@@ -22510,7 +22510,7 @@
                 "natureAndCulture": {
                   "type": "string"
                 },
-                "footerNotes": {
+                "reconciliationNotes": {
                   "type": "string"
                 },
                 "slug": {
@@ -23389,7 +23389,7 @@
                 "natureAndCulture": {
                   "type": "string"
                 },
-                "footerNotes": {
+                "reconciliationNotes": {
                   "type": "string"
                 },
                 "slug": {
@@ -24368,7 +24368,7 @@
               "natureAndCulture": {
                 "type": "string"
               },
-              "footerNotes": {
+              "reconciliationNotes": {
                 "type": "string"
               },
               "slug": {
