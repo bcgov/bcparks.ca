@@ -12,8 +12,8 @@ export default function ParkHeader({ data }) {
   const { advisories, parkAccessStatus, park } = data
   const { hasCampfireBan, hasSmokingBan } = parkAccessStatus
   return (
-    <>
-      <Paper>
+    <div id="park-header">
+      <Paper elevation={0}>
         <Grid container spacing={0}>
           <ParkAccessStatus data={parkAccessStatus.accessStatus} />
           <ParkEvent data={advisories} />
@@ -34,6 +34,6 @@ export default function ParkHeader({ data }) {
           <Accessibility />
         </Grid>
       </Paper>
-    </>
+    </div>
   )
 }

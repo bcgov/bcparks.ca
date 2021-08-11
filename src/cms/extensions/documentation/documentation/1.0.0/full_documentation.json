@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/09/2021 10:24:51 AM"
+    "x-generation-date": "08/11/2021 10:09:51 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -18779,6 +18779,9 @@
           "precedence": {
             "type": "integer"
           },
+          "color": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -18792,6 +18795,9 @@
           },
           "precedence": {
             "type": "integer"
+          },
+          "color": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -22274,6 +22280,9 @@
               "precedence": {
                 "type": "integer"
               },
+              "color": {
+                "type": "string"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -22323,6 +22332,9 @@
               },
               "sequence": {
                 "type": "integer"
+              },
+              "color": {
+                "type": "string"
               },
               "published_at": {
                 "type": "string"
@@ -23153,6 +23165,9 @@
               "precedence": {
                 "type": "integer"
               },
+              "color": {
+                "type": "string"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -23202,6 +23217,9 @@
               },
               "sequence": {
                 "type": "integer"
+              },
+              "color": {
+                "type": "string"
               },
               "published_at": {
                 "type": "string"
@@ -24767,6 +24785,9 @@
           "sequence": {
             "type": "integer"
           },
+          "color": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -24783,6 +24804,9 @@
           },
           "sequence": {
             "type": "integer"
+          },
+          "color": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",

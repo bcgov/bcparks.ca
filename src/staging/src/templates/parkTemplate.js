@@ -81,12 +81,14 @@ export const query = graphql`
       parkActivities {
         activityCode
         activityName
+        description
         icon
         iconNA
         rank
       }
       parkFacilities {
         facilityName
+        description
         icon
         iconNA
         rank
@@ -139,19 +141,38 @@ export const query = graphql`
       filter: { protectedAreas: { elemMatch: { orcs: { eq: $orcs } } } }
     ) {
       nodes {
-        advisoryDate
-        advisoryNumber
+        id
         title
+        description
+        isAdvisoryDateDisplayed
+        isEffectiveDateDisplayed
+        isEndDateDisplayed
+        isReservationsAffected
+        isSafetyRelated
         urgency {
           code
+          color
           sequence
           urgency
         }
-        eventType {
-          eventType
+        protectedAreas {
+          orcs
+          hasCampfireBan
+          hasSmokingBan
         }
-        description
+        accessStatus {
+          color
+          accessStatus
+          precedence
+        }
+        advisoryDate
+        advisoryNumber
+        dcTicketNumber
+        effectiveDate
+        endDate
+        expiryDate
       }
+      totalCount
     }
     allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }) {
       nodes {

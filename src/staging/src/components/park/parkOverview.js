@@ -17,19 +17,20 @@ export default function ParkOverview({ data }) {
     setExpanded(!expanded)
   }
   return (
-    <Paper>
-      <Grid container spacing={3}>
-        <Grid item xs={4}>
-          <Container>
+    <div id="park-overview">
+      <Paper elevation={0}>
+        <Grid container spacing={3}>
+          <Grid item xs={4}>
             <Heading title="Park Overview" />
-            <Typography>{data.description}</Typography>
-          </Container>
+            <Container>
+              <Typography>{data.description.substr(1, 500)}....</Typography>
+            </Container>
+          </Grid>
+          <Grid item xs={8}>
+            <ParkPhoto photos={data.photos} />
+          </Grid>
         </Grid>
-        <Grid item xs={8}>
-          
-          <ParkPhoto photos={data.photos} />
-        </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
+    </div>
   )
 }
