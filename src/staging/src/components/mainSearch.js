@@ -100,6 +100,8 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
       ecoReserveResults: ecoReserveResults,
       electricalHookupResults: electricalHookupResults,
     }
+    // Track required results in each filter criteria.
+    // This data is later used to perform array intersection.
     let requiredResults = {
       text: false,
       camping: false,
@@ -112,6 +114,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
       facility: false,
     }
 
+    // Iterate through each park and filter based on search criteria
     protectedAreas.forEach(park => {
       if (searchText) {
         requiredResults.text = true
@@ -134,6 +137,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
       }
     })
 
+    // Return empty if any of the selected filter criteria has no parks
     if (
       (requiredResults.text && (!textResults || textResults.length == 0)) ||
       (requiredResults.camping &&
@@ -159,20 +163,23 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
     let results = []
     let isResultAvailable = false
 
+    // Consolidate text search results -> 1
     if (textResults.length > 0) {
       results = [...textResults]
       isResultAvailable = true
     }
 
     if (!textOnly) {
-      // Consolidate quick search results
+      // Consolidate quick search results through array intersection (n)
       let groupedQuickSearchResults = []
       let isQuickSearchResultAvailable = false
 
+      // Camping checkbox -> 2
       if (campingResults.length > 0) {
         groupedQuickSearchResults = [...campingResults]
         isQuickSearchResultAvailable = true
       }
+      // Dog friendly checkbox -> 3 = 2 n 3
       if (petResults.length > 0) {
         if (isQuickSearchResultAvailable) {
           groupedQuickSearchResults = groupedQuickSearchResults.filter(t =>
@@ -183,6 +190,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
           isQuickSearchResultAvailable = true
         }
       }
+      // Wheelchair checkbox -> 4 = 3 n 4
       if (wheelchairResults.length > 0) {
         if (isQuickSearchResultAvailable) {
           groupedQuickSearchResults = groupedQuickSearchResults.filter(t =>
@@ -193,6 +201,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
           isQuickSearchResultAvailable = true
         }
       }
+      // Marine area checkbox -> 5 = 4 n 5
       if (marineResults.length > 0) {
         if (isQuickSearchResultAvailable) {
           groupedQuickSearchResults = groupedQuickSearchResults.filter(t =>
@@ -203,6 +212,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
           isQuickSearchResultAvailable = true
         }
       }
+      // Ecological reserve checkbox -> 6 = 5 n 6
       if (ecoReserveResults.length > 0) {
         if (isQuickSearchResultAvailable) {
           groupedQuickSearchResults = groupedQuickSearchResults.filter(t =>
@@ -213,6 +223,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
           isQuickSearchResultAvailable = true
         }
       }
+      // Electrical hookups checkbox -> 7 = 6 n 7
       if (electricalHookupResults.length > 0) {
         if (isQuickSearchResultAvailable) {
           groupedQuickSearchResults = groupedQuickSearchResults.filter(t =>
@@ -224,6 +235,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
         }
       }
 
+      // Consolidate text results and quick search results -> 8 = 1 n 7
       if (groupedQuickSearchResults.length > 0) {
         if (isResultAvailable) {
           results = results.filter(t => groupedQuickSearchResults.includes(t))
@@ -233,7 +245,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
         }
       }
 
-      // Consolidate activity select results
+      // Consolidate activity select results through array intersection -> 9 = 8 n 9
       if (activityResults.length > 0) {
         if (isResultAvailable) {
           results = results.filter(t => activityResults.includes(t))
@@ -242,7 +254,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
           isResultAvailable = true
         }
       }
-      // Consolidate facility select results
+      // Consolidate facility select results through array intersection -> 10 = 9 n 10
       if (facilityResults.length > 0) {
         if (isResultAvailable) {
           results = results.filter(t => facilityResults.includes(t))
@@ -255,6 +267,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
     return results
   }
 
+  // Run text search on park names
   const searchParkNames = (park, textResults) => {
     if (park && park.parkNames) {
       park.parkNames.forEach(name => {
@@ -267,12 +280,15 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
     }
   }
 
+  // Run text search on park activities
   const searchActivityText = (park, keyword, textResults) => {
     if (park && park.parkActivities) {
       park.parkActivities.forEach(activity => {
         const name = activity.name.split(":")[1]
         if (
           name.toLowerCase().includes(keyword.toLowerCase()) &&
+          activity.isActive &&
+          activity.isActivityOpen &&
           !textResults.includes(park)
         ) {
           textResults.push(park)
@@ -281,12 +297,15 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
     }
   }
 
+  // Run text search on park facilities
   const searchFacilityText = (park, keyword, textResults) => {
     if (park && park.parkFacilities) {
       park.parkFacilities.forEach(facility => {
         const name = facility.name.split(":")[1]
         if (
           name.toLowerCase().includes(keyword.toLowerCase()) &&
+          facility.isActive &&
+          facility.isFacilityOpen &&
           !textResults.includes(park)
         ) {
           textResults.push(park)
@@ -295,6 +314,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
     }
   }
 
+  // Filter based on quick search checkbox selections
   const filterQuickSearch = (park, quickSearchResults, requiredResults) => {
     if (camping) {
       requiredResults.camping = true
@@ -341,13 +361,20 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
     }
   }
 
+  // Filter based on park activities dropdown selections
   const searchParkActivities = (park, activityResults, activityNames) => {
     if (park && park.parkActivities) {
+      // Track all selected activities
       let count = 0
       let addedActivity = []
       park.parkActivities.forEach(activity => {
         const name = activity.name.split(":")[1]
-        if (activityNames.includes(name) && !addedActivity.includes(name)) {
+        if (
+          activityNames.includes(name) &&
+          activity.isActive &&
+          activity.isActivityOpen &&
+          !addedActivity.includes(name)
+        ) {
           addedActivity.push(name)
           count++
         }
@@ -358,13 +385,20 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
     }
   }
 
+  // Filter based on park facilities dropdown selections
   const searchParkFacilities = (park, facilityResults, facilityNames) => {
     if (park && park.parkFacilities) {
+      // Track all selected facilities
       let count = 0
       let addedFacility = []
       park.parkFacilities.forEach(facility => {
         const name = facility.name.split(":")[1]
-        if (facilityNames.includes(name) && !addedFacility.includes(name)) {
+        if (
+          facilityNames.includes(name) &&
+          facility.isActive &&
+          facility.isFacilityOpen &&
+          !addedFacility.includes(name)
+        ) {
           addedFacility.push(name)
           count++
         }
@@ -381,9 +415,9 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
   }
 
   return (
-    <div className="park-search-text-container">
+    <div className="park-search-container park-search-text-container">
       <div className="row">
-        <div className="col-12">
+        <div className="col-lg-6 col-md-6 col-sm-12">
           <TextField
             id="park-search-text"
             variant="outlined"
