@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { apiAxios } from "../../../axios_config";
+import { cmsAxios, apiAxios } from "../../../axios_config";
 import { Redirect, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./Advisory.css";
@@ -94,6 +94,7 @@ export default function Advisory({
   );
   const [displayUpdatedDate, setDisplayUpdatedDate] = useState(false);
   const [pictures, setPictures] = useState([]);
+  const [fileAttachments, setFileAttachments] = useState([]);
   const [notes, setNotes] = useState("");
   const [submittedBy, setSubmittedBy] = useState("");
   const [listingRank, setListingRank] = useState("");
@@ -586,7 +587,11 @@ export default function Advisory({
   };
 
   const onDrop = (picture) => {
-    setPictures([...pictures, picture]);
+    setPictures([...picture]);
+  };
+
+  const handleFileCapture = ({ target }) => {
+    setFileAttachments([...target.files]);
   };
 
   const handleDurationIntervalChange = (e) => {
@@ -803,10 +808,35 @@ export default function Advisory({
             headers: { Authorization: `Bearer ${keycloak.idToken}` },
           })
           .then((res) => {
-            setAdvisoryId(res.data.id);
-            setIsSubmitting(false);
-            setIsSavingDraft(false);
-            setIsConfirmation(true);
+            const createdAdvisoryId = res.data.id;
+            setAdvisoryId(createdAdvisoryId);
+            console.log(createdAdvisoryId);
+            console.log(fileAttachments);
+            console.log(pictures);
+            const fileForm = {
+              files: [...fileAttachments],
+              refId: createdAdvisoryId,
+              ref: "public-advisory-audit",
+              field: "files",
+            };
+            apiAxios
+              .post(`api/add/upload/`, fileForm, {
+                headers: { Authorization: `Bearer ${keycloak.idToken}` },
+              })
+              .then((res1) => {
+                console.log(res1);
+                setIsSubmitting(false);
+                setIsSavingDraft(false);
+                setIsConfirmation(true);
+              })
+              .catch((error) => {
+                console.log("error occurred", error);
+                setToError(true);
+                setError({
+                  status: 500,
+                  message: "Could not save attachments",
+                });
+              });
           })
           .catch((error) => {
             console.log("error occurred", error);
@@ -925,10 +955,37 @@ export default function Advisory({
               headers: { Authorization: `Bearer ${keycloak.idToken}` },
             })
             .then((res) => {
-              setAdvisoryId(res.data.id);
-              setIsSubmitting(false);
-              setIsSavingDraft(false);
-              setIsConfirmation(true);
+              const createdAdvisoryId = res.data.id;
+              setAdvisoryId(createdAdvisoryId);
+              console.log(createdAdvisoryId);
+              console.log(fileAttachments);
+              console.log(pictures);
+              const fileForm = new FormData();
+              fileForm.append("refId", createdAdvisoryId);
+              fileForm.append("ref", "public-advisory-audit");
+              fileForm.append("field", "files");
+              fileForm.append("files", fileAttachments[0]);
+
+              cmsAxios
+                .post(`/upload`, fileForm, {
+                  headers: {
+                    "Content-Type": "multipart/form-data",
+                  },
+                })
+                .then((res1) => {
+                  console.log(res1);
+                  setIsSubmitting(false);
+                  setIsSavingDraft(false);
+                  setIsConfirmation(true);
+                })
+                .catch((error) => {
+                  console.log("error occurred", error);
+                  setToError(true);
+                  setError({
+                    status: 500,
+                    message: "Could not save attachments",
+                  });
+                });
             })
             .catch((error) => {
               console.log("error occurred", error);
@@ -1077,6 +1134,8 @@ export default function Advisory({
                   removeLink,
                   updateLink,
                   addLink,
+                  fileAttachments,
+                  handleFileCapture,
                   notes,
                   setNotes,
                   submittedBy,

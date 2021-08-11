@@ -251,6 +251,10 @@
   margin-right: -10px !important;
 }
 
+.mr10 {
+  margin-right: 10px !important;
+}
+
 .txt-center {
   text-align: center !important;
 }
@@ -292,6 +296,10 @@
 
 .wrap-text {
   overflow-wrap: anywhere !important;
+}
+
+.transform-none {
+  text-transform: none !important;
 }
 
 @media (max-width: 575.98px) {

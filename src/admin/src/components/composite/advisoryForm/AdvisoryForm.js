@@ -9,7 +9,7 @@ import {
   Checkbox,
   FormControl,
   FormHelperText,
-  Input,
+  Button as Btn,
 } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import {
@@ -114,6 +114,8 @@ export default function AdvisoryForm({
     removeLink,
     updateLink,
     addLink,
+    fileAttachments,
+    handleFileCapture,
     notes,
     setNotes,
     submittedBy,
@@ -937,16 +939,30 @@ export default function AdvisoryForm({
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
               Attach a file
             </div>
-            <div className="col-lg-8 col-md-8 col-sm-12 ">
-              <Input
-                id="import-button"
-                inputProps={{
-                  accept: ".pdf",
-                }}
-                onChange={() => {}}
-                type="file"
-                className="bcgov-normal-light btn"
+            <div className="col-lg-7 col-md-8 col-sm-12 ad-flex">
+              <TextField
+                value={
+                  fileAttachments.length === 1
+                    ? fileAttachments[0].name
+                    : fileAttachments.length + " files selected"
+                }
+                className="bcgov-input mr10"
+                variant="outlined"
               />
+              <Btn
+                variant="contained"
+                component="label"
+                className="bcgov-normal-blue btn transform-none"
+              >
+                Upload
+                <input
+                  type="file"
+                  accept=".pdf"
+                  multiple
+                  hidden
+                  onChange={handleFileCapture}
+                />
+              </Btn>
             </div>
           </div>
           <div className="row ">
@@ -1336,6 +1352,8 @@ AdvisoryForm.propTypes = {
     removeLink: PropTypes.func.isRequired,
     updateLink: PropTypes.func.isRequired,
     addLink: PropTypes.func.isRequired,
+    fileAttachments: PropTypes.array.isRequired,
+    handleFileCapture: PropTypes.func.isRequired,
     notes: PropTypes.string,
     setNotes: PropTypes.func.isRequired,
     submittedBy: PropTypes.string,
