@@ -1,12 +1,13 @@
 import React from "react"
-import { Divider, Paper } from "@material-ui/core"
+import { Paper, Typography } from "@material-ui/core"
+import Heading from "./heading"
 
 export default function Reconciliation({ data }) {
   return (
     <>
       <Paper>
-        <h1>Reconciliation with Indigenous peoples</h1>
-        <p>{data}</p>
+        <Heading title="Reconciliation with Indigenous peoples" />
+        <Typography>{data}</Typography>
       </Paper>
     </>
   )

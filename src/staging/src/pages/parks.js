@@ -17,7 +17,7 @@ const ParksPage = ({ data }) => (
                     .replace(/ /g, "-")
             }`}
           >
-            {`${document.node.protectedAreaName} - ${document.node.orcs}`}
+            {`${document.node.protectedAreaName}`}
           </a>
         </li>
       ))}

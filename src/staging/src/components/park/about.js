@@ -1,12 +1,13 @@
 import React from "react"
-import { Divider, Paper } from "@material-ui/core"
+import { Paper, Typography } from "@material-ui/core"
+import Heading from "./heading"
 
-export default function ParkStatus({ data }) {
+export default function About({ data }) {
   return (
     <>
       <Paper>
-        <h1>Learn more about this park</h1>
-        <p>{data}</p>
+        <Heading title="Learn more about this park" />
+        <Typography>{data}</Typography>
       </Paper>
     </>
   )

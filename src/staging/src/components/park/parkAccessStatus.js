@@ -1,8 +1,7 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import { Grid, Avatar, Card, CardHeader } from "@material-ui/core"
-import alertIcon from "../../images/park/red-alert.png"
-import { Link } from "gatsby"
+import { Grid, Card, CardHeader, Avatar } from "@material-ui/core"
+import parkStatusIcon from "../../images/park/park-status.png"
 
 const useStyles = makeStyles({
   card: {
@@ -15,12 +14,8 @@ const useStyles = makeStyles({
   },
 })
 
-export default function ParkEvent({ data }) {
+export default function ParkAccessStatus({ data }) {
   const classes = useStyles()
-
-  if (!data) return null
-  const parkEvents = data.nodes.filter(f => f.eventType != null)
-  if (parkEvents.length === 0) return null
 
   return (
     <>
@@ -30,15 +25,11 @@ export default function ParkEvent({ data }) {
             avatar={
               <Avatar
                 variant="square"
-                src={alertIcon}
+                src={parkStatusIcon}
                 aria-label="park access status"
               />
             }
-            title={
-              <Link to="#park-alerts">
-                {`Alerts currently in effect (${parkEvents.length})`}
-              </Link>
-            }
+            title={data}
           />
         </Card>
       </Grid>

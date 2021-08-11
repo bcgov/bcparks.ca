@@ -1,7 +1,8 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import { Grid, Card, CardHeader, Avatar } from "@material-ui/core"
-import accessibilityIcon from "../../images/park/accessibility.png"
+import mapIcon from "../../images/park/map.png"
+import { Link } from "gatsby"
 
 const useStyles = makeStyles({
   card: {
@@ -10,7 +11,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default function Accessibility({ data }) {
+export default function ParkMapHeader({ data }) {
   const classes = useStyles()
 
   return (
@@ -21,11 +22,11 @@ export default function Accessibility({ data }) {
             avatar={
               <Avatar
                 variant="square"
-                src={accessibilityIcon}
-                aria-label="accessibility"
+                src={mapIcon}
+                aria-label="park and activity map"
               />
             }
-            title="Accessibility"
+            title={<Link to="#park-map">Park and Activity Map</Link>}
           />
         </Card>
       </Grid>
