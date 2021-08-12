@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { cmsAxios, apiAxios } from "../../../axios_config";
+import { apiAxios } from "../../../axios_config";
 import { Redirect, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./Advisory.css";

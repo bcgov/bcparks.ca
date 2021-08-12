@@ -942,12 +942,15 @@ export default function AdvisoryForm({
             <div className="col-lg-7 col-md-8 col-sm-12 ad-flex">
               <TextField
                 value={
-                  fileAttachments.length === 1
+                  fileAttachments.length === 0
+                    ? ""
+                    : fileAttachments.length === 1
                     ? fileAttachments[0].name
                     : fileAttachments.length + " files selected"
                 }
                 className="bcgov-input mr10"
                 variant="outlined"
+                placeholder="Select files for upload"
               />
               <Btn
                 variant="contained"
