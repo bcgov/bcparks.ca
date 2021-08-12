@@ -1,15 +1,8 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import {
-  Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  Avatar,
-  Paper,
-} from "@material-ui/core"
+import { Grid, Card, CardHeader, Avatar } from "@material-ui/core"
 import mapIcon from "../../images/park/map.png"
-import Heading from "./heading"
+import { Link } from "gatsby"
 
 const useStyles = makeStyles({
   card: {
@@ -18,29 +11,29 @@ const useStyles = makeStyles({
   },
 })
 
-export default function ParkMapHeader({ data }) {
+export default function ParkMap() {
   const classes = useStyles()
 
   return (
-    <div id="park-map">
-      <Paper elevation={0}>
-        <Grid container item xs={12} sm={6} md={4}>
-          <Card className={classes.card}>
-            <Heading title="Park and Activity Map" />
-            <CardHeader
-              avatar={
-                <Avatar
-                  variant="square"
-                  src={mapIcon}
-                  aria-label="park and activity map"
-                />
-              }
-              title="Park and Activity Map"
-            />
-            <CardContent>Coming Soon</CardContent>
-          </Card>
-        </Grid>
-      </Paper>
-    </div>
+    <>
+      <Grid container item xs={12} sm={6} md={4}>
+        <Card className={classes.card}>
+          <CardHeader
+            avatar={
+              <Avatar
+                variant="square"
+                src={mapIcon}
+                aria-label="park and activity map"
+              />
+            }
+            title={
+              <Link to="#park-map-details-container">
+                Park and Activity Map
+              </Link>
+            }
+          />
+        </Card>
+      </Grid>
+    </>
   )
 }

@@ -31,7 +31,7 @@ export default function PetsOnLeash({ data }) {
                   aria-label="pets on leash"
                 />
               }
-              title={<Link to="#park-activity">Pet on Leash</Link>}
+              title={<Link to="#park-activity-container">Pet on Leash</Link>}
             />
           </Card>
         </Grid>

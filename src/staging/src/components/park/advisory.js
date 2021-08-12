@@ -1,92 +1,51 @@
 import React from "react"
-import {
-  Box,
-  Paper,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Avatar,
-  Container,
-  Divider,
-  Grid,
-  Typography,
-} from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
-import Heading from "./heading"
-
+import { Grid, Avatar, Card, CardHeader } from "@material-ui/core"
+import redAlertIcon from "../../images/park/red-alert-64.png"
 import blueAlertIcon from "../../images/park/blue-alert-64.png"
 import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
-import redAlertIcon from "../../images/park/red-alert-64.png"
+import { Link } from "gatsby"
 
-const useStyles = makeStyles(theme => ({
-  small: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
+const useStyles = makeStyles({
+  card: {
+    border: "none",
+    boxShadow: "none",
+    backgroundColor: "#e1ecf4",
   },
-}))
+  topGrid: {
+    backgroundColor: "#e1ecf4",
+  },
+})
 
 export default function Advisory({ data }) {
   const classes = useStyles()
-  const advisories = data.nodes
+
+  if (!data || data.nodes.length === 0) return null
+  const alertLevels = data.nodes.map(s => s.urgency.sequence)
+  const maxAlertLevel = Math.max(...alertLevels)
+  let alertIcon = blueAlertIcon
+  if (maxAlertLevel === 3) alertIcon = redAlertIcon
+  if (maxAlertLevel === 2) alertIcon = yellowAlertIcon
   return (
-    <div id="park-alerts">
-      <Paper elevation={0}>
-        <Heading title={`Alerts (${advisories.length})`} />
-        {data && (
-          <Container>
-            <Grid container spacing={1}>
-              {advisories.map(advisory => (
-                <Grid key={advisory.id} item xs={12}>
-                  <Paper elevation={0}>
-                    <Accordion>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={advisory.title}
-                        id={advisory.id}
-                      >
-                        <Box mr={1}>
-                          {advisory.urgency.color === "blue" && (
-                            <Avatar
-                              src={blueAlertIcon}
-                              className={classes.small}
-                              width="24"
-                              height="24"
-                            />
-                          )}
-                          {advisory.urgency.color === "yellow" && (
-                            <Avatar
-                              src={yellowAlertIcon}
-                              className={classes.small}
-                              width="24"
-                              height="24"
-                            />
-                          )}
-                          {advisory.urgency.color === "red" && (
-                            <Avatar
-                              src={redAlertIcon}
-                              className={classes.small}
-                              width="24"
-                              height="24"
-                            />
-                          )}
-                        </Box>
-                        <Typography>{advisory.title}</Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <Divider />
-                        <Typography variant="body2" gutterBottom>
-                          {advisory.description}
-                        </Typography>
-                      </AccordionDetails>
-                    </Accordion>
-                  </Paper>
-                </Grid>
-              ))}
-            </Grid>
-          </Container>
-        )}
-      </Paper>
-    </div>
+    <>
+      <Grid item xs={12} sm={6} md={4} className={classes.topGrid}>
+        <Card className={classes.card}>
+          <CardHeader
+            avatar={
+              <Avatar
+                variant="square"
+                src={alertIcon}
+                aria-label="park access status"
+              />
+            }
+            title={
+              <Link to="#park-advisory-details-container">
+                {`Alerts currently in effect (${data.nodes.length})`}
+              </Link>
+            }
+          />
+        </Card>
+      </Grid>
+    </>
   )
 }

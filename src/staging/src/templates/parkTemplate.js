@@ -2,16 +2,18 @@ import React from "react"
 import { graphql } from "gatsby"
 
 import { Helmet } from "react-helmet"
-import { Container, Grid, Typography } from "@material-ui/core"
+import { Container, Grid } from "@material-ui/core"
 import ParkOverview from "../components/park/parkOverview"
-import Accessibility from "../components/park/accessibility"
-import Advisory from "../components/park/advisory"
+import AccessibilityDetails from "../components/park/accessibilityDetails"
+import AdvisoryDetails from "../components/park/advisoryDetails"
 import About from "../components/park/about"
+import CampingDetails from "../components/park/campingDetails"
 import Reconciliation from "../components/park/reconciliation"
 import ParkHeader from "../components/park/parkHeader"
 import ParkActivity from "../components/park/parkActivity"
 import ParkFacility from "../components/park/parkFacility"
-import ParkMap from "../components/park/parkMap"
+import ParkMap from "../components/park/parkMapDetails"
+import MapLocation from "../components/park/mapLocation"
 import "./parkTemplate.css"
 
 export default function ParkTemplate({ data }) {
@@ -39,7 +41,7 @@ export default function ParkTemplate({ data }) {
       <Container maxWidth={false}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Typography variant="h3">{park.protectedAreaName}</Typography>
+            <h1>{park.protectedAreaName}</h1>
           </Grid>
           <Grid item xs={12}>
             <ParkHeader data={parkStatusData} />
@@ -48,16 +50,27 @@ export default function ParkTemplate({ data }) {
             <ParkOverview data={parkOverviewData} />
           </Grid>
           <Grid item xs={12}>
-            <Accessibility data={park.description} />
+            <AccessibilityDetails />
           </Grid>
           <Grid item xs={12}>
-            <Advisory data={advisories} />
+            <AdvisoryDetails data={advisories} />
+          </Grid>
+          <Grid item xs={12}>
+            <CampingDetails
+              data={{
+                parkFacilities: parkAccessStatus.parkFacilities,
+                reservations: park.reservations,
+              }}
+            />
           </Grid>
           <Grid item xs={12}>
             <ParkFacility data={parkAccessStatus.parkFacilities} />
           </Grid>
           <Grid item xs={12}>
             <ParkActivity data={parkAccessStatus.parkActivities} />
+          </Grid>
+          <Grid item xs={12}>
+            <MapLocation />
           </Grid>
           <Grid item xs={12}>
             <ParkMap />
@@ -130,9 +143,7 @@ export const query = graphql`
       thumbnail {
         localFile {
           childImageSharp {
-            fixed(height: 640, width: 1120) {
-              ...GatsbyImageSharpFixed
-            }
+            gatsbyImageData(layout: FIXED)
           }
         }
       }
@@ -165,12 +176,12 @@ export const query = graphql`
           accessStatus
           precedence
         }
-        advisoryDate
+        advisoryDate(formatString: "MMMM DD, YYYY")
         advisoryNumber
         dcTicketNumber
-        effectiveDate
-        endDate
-        expiryDate
+        effectiveDate(formatString: "MMMM DD, YYYY")
+        endDate(formatString: "MMMM DD, YYYY")
+        expiryDate(formatString: "MMMM DD, YYYY")
       }
       totalCount
     }
@@ -181,9 +192,7 @@ export const query = graphql`
         thumbnail {
           localFile {
             childImageSharp {
-              fluid {
-                ...GatsbyImageSharpFluid
-              }
+              gatsbyImageData(layout: CONSTRAINED, width: 800, height: 400)
             }
           }
         }

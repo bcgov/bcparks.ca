@@ -10,6 +10,7 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sass`,
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -25,14 +26,15 @@ module.exports = {
         collectionTypes: [
           "urgency",
           "protected-area",
-          "park-access-status",
           "public-advisory",
+          "park-access-status",
           "park-photo",
           `Websites`,
           `Pages`,
           "activity-types",
           "facility-types",
         ],
+        singleTypes: [`business-hours`],
         queryLimit: -1,
       },
     },
@@ -50,10 +52,6 @@ module.exports = {
         icon: `src/images/bcid-favicon-32x32.png`, // This path is relative to the root of the site.
       },
     },
-    `gatsby-plugin-gatsby-cloud`,
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
     {
       resolve: `gatsby-plugin-material-ui`,
       options: {
@@ -62,5 +60,9 @@ module.exports = {
         },
       },
     },
+    `gatsby-plugin-gatsby-cloud`,
+    // this (optional) plugin enables Progressive Web App + Offline functionality
+    // To learn more, visit: https://gatsby.dev/offline
+    // `gatsby-plugin-offline`,
   ],
 }

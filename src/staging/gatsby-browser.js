@@ -1,4 +1,4 @@
-// import "./src/styles/global.css"
+import "./src/styles/global.css"
 import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css"
 import "jquery/dist/jquery.slim"
 import "bootstrap/dist/js/bootstrap.bundle"

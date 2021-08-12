@@ -4,7 +4,7 @@ import Heading from "./heading"
 
 export default function About({ data }) {
   return (
-    <div id="park-about">
+    <div id="park-about-container">
       <Paper elevation={0}>
         <Heading title="Learn more about this park" />
         <Typography>{data}</Typography>

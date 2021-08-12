@@ -35,7 +35,7 @@ export default function CampfireBan({ data }) {
                   aria-label="camp fire ban"
                 />
               }
-              title={<div>{title.join(" and ")} ban in effect</div>}
+              title={`${title.join(" and ")} ban in effect`}
             />
           </Card>
         </Grid>

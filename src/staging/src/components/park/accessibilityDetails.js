@@ -2,11 +2,11 @@ import React from "react"
 import { Paper, Container } from "@material-ui/core"
 import Heading from "./heading"
 
-export default function Reconciliation({ data }) {
+export default function AccessibilityDetails({ data }) {
   return (
-    <div id="park-reconciliation-container">
+    <div id="accessibility-details-container">
       <Paper elevation={0}>
-        <Heading title="Reconciliation with Indigenous peoples" />
+        <Heading title="Accessibility" />
         <Container>
           <p>{data}</p>
         </Container>

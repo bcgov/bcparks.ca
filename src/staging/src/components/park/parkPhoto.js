@@ -3,7 +3,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles"
 import { Paper, MobileStepper, Button, Typography } from "@material-ui/core"
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft"
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight"
-import Img, { FixedObject } from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 const useStyles = makeStyles({
   root: {
@@ -14,11 +14,10 @@ const useStyles = makeStyles({
 
 export default function ParkPhotos({ photos }) {
   const classes = useStyles()
-  console.log(photos)
   const parkPhotosData = photos.nodes.map(photo => {
     return {
-      label: photo.caption,
-      imgPath: photo.thumbnail.localFile.childImageSharp.fluid,
+      label: photo.caption || "_",
+      image: photo.thumbnail.localFile.childImageSharp.gatsbyImageData,
     }
   })
 
@@ -37,11 +36,11 @@ export default function ParkPhotos({ photos }) {
 
   return (
     <div className={classes.root}>
-      <Paper square elevation={0} className={classes.header}>
-        <Typography>{parkPhotosData[activeStep].label}</Typography>
+      <Paper square elevation={0}>
+        <Typography noWrap>{parkPhotosData[activeStep].label}</Typography>
       </Paper>
-      <Img
-        fluid={parkPhotosData[activeStep].imgPath}
+      <GatsbyImage
+        image={parkPhotosData[activeStep].image}
         alt={parkPhotosData[activeStep].label}
       />
       <MobileStepper

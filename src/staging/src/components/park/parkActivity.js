@@ -1,19 +1,19 @@
 import React from "react"
 import {
+  Box,
   Paper,
   Accordion,
   AccordionSummary,
   AccordionDetails,
   Container,
   Grid,
-  Typography,
 } from "@material-ui/core"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Heading from "./heading"
 
 export default function ParkActivity({ data }) {
   return (
-    <div id="park-activity">
+    <div id="park-activity-container">
       <Paper elevation={0}>
         <Heading title="Activities" />
         {data && (
@@ -28,18 +28,18 @@ export default function ParkActivity({ data }) {
                         aria-controls={activity.activityName}
                         id={index}
                       >
-                        <Typography>
+                        <Box mr={1}>
                           <img
                             src={activity.icon}
                             alt={activity.activityName}
                             width="24"
                             height="24"
-                          ></img>{" "}
-                          {activity.activityName}
-                        </Typography>
+                          />
+                        </Box>
+                        <p>{activity.activityName}</p>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography>{activity.description}</Typography>
+                        <p>{activity.description}</p>
                       </AccordionDetails>
                     </Accordion>
                   </Paper>

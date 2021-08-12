@@ -20,6 +20,9 @@ const useStyles = makeStyles({
 
 export default function ParkAccessStatus({ data }) {
   const classes = useStyles()
+  let parkStatusIcon = yellowStatusIcon
+  if (data.toLowerCase().includes("clos")) parkStatusIcon = redStatusIcon
+  if (data.toLowerCase().includes("open")) parkStatusIcon = blueStatusIcon
 
   return (
     <>

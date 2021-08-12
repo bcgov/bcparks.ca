@@ -5,13 +5,13 @@ import dayUseIcon from "../../images/park/day-use.png"
 import { Link } from "gatsby"
 
 const useStyles = makeStyles({
-  custom: {
+  card: {
     border: "none",
     boxShadow: "none",
   },
 })
 
-export default function DayUse({ data }) {
+export default function DayUseCamping({ data }) {
   const classes = useStyles()
 
   const hasCamping = data.parkFacilities.some(facility =>
@@ -26,7 +26,7 @@ export default function DayUse({ data }) {
     <>
       {(hasCamping || data.isDayUsePass) && (
         <Grid container item xs={12} sm={6} md={4}>
-          <Card className={classes.custom}>
+          <Card className={classes.card}>
             <CardHeader
               avatar={
                 <Avatar
@@ -36,7 +36,7 @@ export default function DayUse({ data }) {
                 />
               }
               title={
-                <Link to="#park-facility">
+                <Link to="#park-facility-container">
                   {title.join(" and ")} offered at this park
                 </Link>
               }

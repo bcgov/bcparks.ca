@@ -2,7 +2,7 @@
 const fetch = require(`node-fetch`)
 
 exports.onPostBuild = ({ reporter }) => {
-  reporter.info(`xxx  page has been built!`)
+  reporter.info(`Pages have been built!`)
 }
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
@@ -23,14 +23,15 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   `)
   // Handle errors
   if (result.errors) {
-    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    reporter.panicOnBuild(
+      `Error while running GraphQL query - node create page.`
+    )
     return
   }
   result.data.allStrapiProtectedArea.nodes.forEach(park => {
     const slug = park.slug
       ? park.slug
       : park.protectedAreaName.toLowerCase().replace(/ /g, "-")
-    console.log(slug, park.slug)
     createPage({
       path: slug,
       component: require.resolve(`./src/templates/parkTemplate.js`),
