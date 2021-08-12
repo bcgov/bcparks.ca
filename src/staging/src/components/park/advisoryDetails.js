@@ -27,7 +27,28 @@ const useStyles = makeStyles(theme => ({
 
 export default function AdvisoryDetails({ data }) {
   const classes = useStyles()
-  const advisories = data.nodes
+  const advisories = data.nodes.map(advisory => {
+    let alertIcon = blueAlertIcon
+    let alertColorCss = ".blue-alert"
+    switch (advisory.urgency.color) {
+      case "blue":
+        alertIcon = blueAlertIcon
+        alertColorCss = "blue-alert"
+        break
+      case "red":
+        alertIcon = redAlertIcon
+        alertColorCss = "red-alert"
+        break
+      case "yellow":
+        alertIcon = yellowAlertIcon
+        alertColorCss = "yellow-alert"
+    }
+    advisory.alertIcon = alertIcon
+    advisory.alertColorCss = alertColorCss
+    return advisory
+  })
+
+  const tempCss = "yellow-alert"
   return (
     <div id="park-advisory-details-container">
       <Paper elevation={0}>
@@ -40,43 +61,25 @@ export default function AdvisoryDetails({ data }) {
                   <Paper elevation={0}>
                     <Accordion>
                       <AccordionSummary
+                        className={advisory.alertColorCss}
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls={advisory.title}
                         id={advisory.id}
                       >
                         <Box mr={1}>
-                          {advisory.urgency.color === "blue" && (
-                            <Avatar
-                              src={blueAlertIcon}
-                              className={classes.small}
-                              width="24"
-                              height="24"
-                            />
-                          )}
-                          {advisory.urgency.color === "yellow" && (
-                            <Avatar
-                              src={yellowAlertIcon}
-                              className={classes.small}
-                              width="24"
-                              height="24"
-                            />
-                          )}
-                          {advisory.urgency.color === "red" && (
-                            <Avatar
-                              src={redAlertIcon}
-                              className={classes.small}
-                              width="24"
-                              height="24"
-                            />
-                          )}
+                          <Avatar
+                            src={advisory.alertIcon}
+                            className={classes.small}
+                            width="24"
+                            height="24"
+                          />
                         </Box>
                         <p>{advisory.title}</p>
                       </AccordionSummary>
                       <AccordionDetails>
                         <div>
-                          <Divider variant="inset" />
+                          <Divider variant="fullWidth" />
                           <p>{advisory.description}</p>
-
                           {advisory.isEffectiveDateDisplayed &&
                             advisory.effectiveDate && (
                               <>

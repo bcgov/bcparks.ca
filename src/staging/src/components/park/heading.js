@@ -5,8 +5,9 @@ import LineBar from "./lineBar"
 export default function Heading({ title }) {
   return (
     <>
-      <Box p={1}>
-        <h2 className="heading">{title}</h2>
+      <Box m={2}>
+        <h2>{title}</h2>
+        <br></br>
         <LineBar />
       </Box>
     </>

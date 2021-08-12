@@ -26,3 +26,15 @@ a:link {
 .MuiTypography-root, .MuiButton-root {
     font-family: BCSans, Verdana, Arial, "sans-serif"  !important;
 }
+
+.yellow-alert {
+    background-color: #fff8e8 !important;
+}
+
+.red-alert {
+    background-color: #fbe9ea !important;
+}
+
+.blue-alert {
+    background-color: #49bed9 !important;
+}

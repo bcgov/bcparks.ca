@@ -40,12 +40,14 @@ export default function CampingDetails({ data }) {
             </Box>
           </Grid>
         </Grid>
-        <Paper elevation={0} b={2}>
-          <Container p={2} className="park-details-shaded">
-            <h3 className="heading">Reservations</h3>
-            {data.reservations}
-          </Container>
-        </Paper>
+        <Container>
+          <Paper elevation={0} b={2} className="park-details-shaded">
+            <Container p={2} className="park-details-shaded">
+              <h3 className="heading">Reservations</h3>
+              {data.reservations}
+            </Container>
+          </Paper>
+        </Container>
         <br></br>
       </Paper>
 

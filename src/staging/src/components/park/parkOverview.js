@@ -2,6 +2,7 @@ import React from "react"
 import { Box, Container, Grid, Paper } from "@material-ui/core"
 import ParkPhoto from "./parkPhoto"
 import Heading from "./heading"
+import HTMLArea from "../HTMLArea"
 
 export default function ParkOverview({ data }) {
   const [expanded, setExpanded] = React.useState(false)
@@ -16,7 +17,7 @@ export default function ParkOverview({ data }) {
           <Grid item xs={12} sm={12} md={4}>
             <Heading title="Park Overview" />
             <Container>
-              <p>{data.description.substr(1, 300)}....</p>
+              <HTMLArea>{data.description.substr(1, 300)}</HTMLArea>
             </Container>
           </Grid>
           <Grid item xs={12} sm={12} md={8}>

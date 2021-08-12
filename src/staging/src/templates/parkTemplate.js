@@ -41,6 +41,7 @@ export default function ParkTemplate({ data }) {
       <Container maxWidth={false}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
+            <br />
             <h1>{park.protectedAreaName}</h1>
           </Grid>
           <Grid item xs={12}>
