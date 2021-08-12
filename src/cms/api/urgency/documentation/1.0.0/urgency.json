@@ -531,6 +531,9 @@
           "sequence": {
             "type": "integer"
           },
+          "color": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -547,6 +550,9 @@
           },
           "sequence": {
             "type": "integer"
+          },
+          "color": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",

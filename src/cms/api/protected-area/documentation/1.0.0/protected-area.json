@@ -1107,7 +1107,7 @@
           "natureAndCulture": {
             "type": "string"
           },
-          "footerNotes": {
+          "reconciliationNotes": {
             "type": "string"
           },
           "slug": {
@@ -1268,7 +1268,7 @@
           "natureAndCulture": {
             "type": "string"
           },
-          "footerNotes": {
+          "reconciliationNotes": {
             "type": "string"
           },
           "slug": {

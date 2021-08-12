@@ -1,0 +1,213 @@
+// TODO: Continue to refine these styles as desktop work gets done - kinda all over the place right now
+
+$colorBlue: #003366;
+$colorGold: #fcba19;
+$colorGrey: #eef1f5;
+$colorWhite: #fff;
+
+.container {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+.advisory-button {
+  background-color: $colorBlue !important;
+  color: $colorWhite;
+  height: 49px;
+  text-align: center;
+}
+
+.advisory-content {
+  font-size: 16px;
+  color: $colorWhite;
+  text-align: center;
+}
+
+.advisory > p {
+  margin-bottom: 5px;
+}
+
+.advisory .fa-chevron-circle-right {
+  color: $colorGold;
+  padding-left: 30px;
+  font-size: 20px;
+}
+
+.zone-links {
+  padding: 0 20px 0 20px;
+  margin-top: 40px;
+}
+
+.zone-cards {
+  margin-top: 20px;
+}
+
+p.zone-content {
+  margin: 0 20px 0 20px;
+}
+
+p.zone-header {
+  margin: 0 20px 0 20px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.zone-header-small {
+  margin: 0 40px 0 40px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.zone-hr > hr {
+  margin: 15px 36px 10px 20px;
+  height: 2px;
+  background-color: $colorGold;
+  width: 35px;
+  display: inline-block;
+}
+
+.card {
+  border: unset;
+}
+
+.link-override {
+  text-decoration: none;
+  color: $colorBlue;
+}
+
+.home-footer .card-body {
+  font-size: 14px;
+}
+
+.grid-card {
+  border: unset !important;
+  background-color: unset !important;
+}
+
+.padded-link {
+  margin-left: 36px;
+}
+
+.card-col-padding {
+  max-height: 316px;
+}
+
+.card-col-padding:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.link-img > img {
+  height: 219px;
+}
+
+.card-img > img {
+  height: 316px;
+  max-width: 100%;
+}
+.full-horizontal-img > img {
+  height: 219px;
+  max-width: 400px;
+}
+
+.card-img,
+.horizontal-card-img,
+.full-horizontal-img {
+  margin-bottom: unset;
+}
+
+.horizontal-card-img > img {
+  height: 166px;
+  width: 100%;
+}
+
+.home-news-card {
+  background-color: $colorWhite;
+  border: unset !important;
+}
+
+.grid-card .card-body {
+  font-size: 16px;
+  color: $colorWhite;
+  background-color: $colorBlue;
+  opacity: 0.7;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 52.5%;
+}
+
+.horizontal-card-body {
+  height: 50%;
+}
+
+.split-card-body {
+  background-color: $colorGrey;
+  bottom: unset;
+  color: $colorBlue;
+  padding-top: 35px !important;
+}
+
+.split-card-body .card-title {
+  margin: 0 36px 10px 36px;
+}
+
+.split-card .col-6 {
+  background-color: $colorGrey;
+}
+
+.card-body-header {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.card-body-header > a {
+  font-size: 18px;
+  color: $colorGold;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.split-card-body {
+  background-color: #eef1f5;
+  color: $colorBlue;
+}
+
+.home-advisories {
+  color: $colorBlue;
+  padding-top: 40px;
+}
+
+.home-plan-your-trip {
+  color: $colorBlue;
+  padding-top: 30px;
+  margin-top: 50px;
+  padding-bottom: 40px;
+}
+
+.home-about-bc-parks {
+  color: $colorBlue;
+  padding-top: 30px;
+  padding-bottom: 40px;
+}
+
+.home-news,
+.home-get-involved {
+  color: $colorBlue;
+  background-color: $colorGrey;
+}
+
+.split-card-body .zone-hr > hr {
+  margin: 20px 36px 10px 0;
+}
+
+#Zone2 {
+  background-color: rgba(238, 241, 245, 1);
+}
+#Zone4 {
+  background-color: rgba(238, 241, 245, 1);
+}
+#Zone5 {
+  background-color: rgba(238, 241, 245, 1);
+}

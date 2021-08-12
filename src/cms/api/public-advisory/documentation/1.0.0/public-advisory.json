@@ -640,6 +640,9 @@
               "precedence": {
                 "type": "integer"
               },
+              "color": {
+                "type": "string"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -689,6 +692,9 @@
               },
               "sequence": {
                 "type": "integer"
+              },
+              "color": {
+                "type": "string"
               },
               "published_at": {
                 "type": "string"
@@ -876,7 +882,7 @@
                 "natureAndCulture": {
                   "type": "string"
                 },
-                "footerNotes": {
+                "reconciliationNotes": {
                   "type": "string"
                 },
                 "slug": {
