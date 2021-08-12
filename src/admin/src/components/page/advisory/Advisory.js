@@ -808,35 +808,7 @@ export default function Advisory({
             headers: { Authorization: `Bearer ${keycloak.idToken}` },
           })
           .then((res) => {
-            const createdAdvisoryId = res.data.id;
-            setAdvisoryId(createdAdvisoryId);
-            console.log(createdAdvisoryId);
-            console.log(fileAttachments);
-            console.log(pictures);
-            const fileForm = {
-              files: [...fileAttachments],
-              refId: createdAdvisoryId,
-              ref: "public-advisory-audit",
-              field: "files",
-            };
-            apiAxios
-              .post(`api/add/upload/`, fileForm, {
-                headers: { Authorization: `Bearer ${keycloak.idToken}` },
-              })
-              .then((res1) => {
-                console.log(res1);
-                setIsSubmitting(false);
-                setIsSavingDraft(false);
-                setIsConfirmation(true);
-              })
-              .catch((error) => {
-                console.log("error occurred", error);
-                setToError(true);
-                setError({
-                  status: 500,
-                  message: "Could not save attachments",
-                });
-              });
+            saveFilesAndImages(res.data.id);
           })
           .catch((error) => {
             console.log("error occurred", error);
@@ -955,37 +927,7 @@ export default function Advisory({
               headers: { Authorization: `Bearer ${keycloak.idToken}` },
             })
             .then((res) => {
-              const createdAdvisoryId = res.data.id;
-              setAdvisoryId(createdAdvisoryId);
-              console.log(createdAdvisoryId);
-              console.log(fileAttachments);
-              console.log(pictures);
-              const fileForm = new FormData();
-              fileForm.append("refId", createdAdvisoryId);
-              fileForm.append("ref", "public-advisory-audit");
-              fileForm.append("field", "files");
-              fileForm.append("files", fileAttachments[0]);
-
-              cmsAxios
-                .post(`/upload`, fileForm, {
-                  headers: {
-                    "Content-Type": "multipart/form-data",
-                  },
-                })
-                .then((res1) => {
-                  console.log(res1);
-                  setIsSubmitting(false);
-                  setIsSavingDraft(false);
-                  setIsConfirmation(true);
-                })
-                .catch((error) => {
-                  console.log("error occurred", error);
-                  setToError(true);
-                  setError({
-                    status: 500,
-                    message: "Could not save attachments",
-                  });
-                });
+              saveFilesAndImages(res.data.id);
             })
             .catch((error) => {
               console.log("error occurred", error);
@@ -1005,6 +947,61 @@ export default function Advisory({
         message: "Could not process advisory update",
       });
     }
+  };
+
+  const saveFilesAndImages = (id) => {
+    setAdvisoryId(id);
+    if (
+      (fileAttachments && fileAttachments.length > 0) ||
+      (pictures && pictures.length > 0)
+    ) {
+      let promises = [];
+      if (fileAttachments && fileAttachments.length > 0) {
+        const filePromises = fileAttachments.map((file) => {
+          return uploadMedia(id, file, "files");
+        });
+        promises = [...promises, ...filePromises];
+      }
+      if (pictures && pictures.length > 0) {
+        const filePromises = pictures.map((file) => {
+          return uploadMedia(id, file, "photos");
+        });
+        promises = [...promises, ...filePromises];
+      }
+      Promise.all(promises)
+        .then(() => {
+          setIsSubmitting(false);
+          setIsSavingDraft(false);
+          setIsConfirmation(true);
+        })
+        .catch((error) => {
+          console.log("error occurred", error);
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Could not save attachments",
+          });
+        });
+    } else {
+      setIsSubmitting(false);
+      setIsSavingDraft(false);
+      setIsConfirmation(true);
+    }
+  };
+
+  const uploadMedia = (id, file, field) => {
+    const fileForm = new FormData();
+    fileForm.append("refId", id);
+    fileForm.append("ref", "public-advisory-audit");
+    fileForm.append("field", field);
+    fileForm.append("files", file);
+
+    return apiAxios.post(`api/upload/upload`, fileForm, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${keycloak.idToken}`,
+      },
+    });
   };
 
   if (toDashboard) {
