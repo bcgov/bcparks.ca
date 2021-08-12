@@ -1,0 +1,28 @@
+body {
+    font-family: BCSans, Verdana, Arial, "sans-serif"  !important;
+    background-color: #f5f5f7;
+}
+
+a {
+    color: #003366;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+.heading {
+    color: #003366;
+}
+
+#park-activity-container .MuiAccordion-root, #park-facility-container .MuiAccordion-root  {
+    background-color: #eef1f5;
+}
+
+.park-details-shaded{
+    background-color: #eef1f5 !important;
+}
+
+.MuiTypography-root, .MuiButton-root {
+    font-family: BCSans, Verdana, Arial, "sans-serif"  !important;
+}

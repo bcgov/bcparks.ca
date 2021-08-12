@@ -16,6 +16,9 @@
     },
     "precedence": {
       "type": "integer"
+    },
+    "color": {
+      "type": "string"
     }
   }
 }

@@ -729,7 +729,7 @@
                 "natureAndCulture": {
                   "type": "string"
                 },
-                "footerNotes": {
+                "reconciliationNotes": {
                   "type": "string"
                 },
                 "slug": {

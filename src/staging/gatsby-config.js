@@ -27,6 +27,8 @@ module.exports = {
           "urgency",
           "protected-area",
           "public-advisory",
+          "park-access-status",
+          "park-photo",
           `Websites`,
           `Pages`,
           "activity-types",
@@ -48,6 +50,14 @@ module.exports = {
         theme_color: `#663399`,
         display: `minimal-ui`,
         icon: `src/images/bcid-favicon-32x32.png`, // This path is relative to the root of the site.
+      },
+    },
+    {
+      resolve: `gatsby-plugin-material-ui`,
+      options: {
+        stylesProvider: {
+          injectFirst: true,
+        },
       },
     },
     `gatsby-plugin-gatsby-cloud`,

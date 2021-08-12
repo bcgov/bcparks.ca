@@ -8,6 +8,13 @@ const loadUtils = require("./loadUtils");
 const rootDir = process.cwd();
 const IMAGE_PATH = "\\data\\images";
 
+const urlExists = async (url) =>
+  await new Promise((resolve, reject) =>
+    request
+      .head(url)
+      .on("response", (res) => resolve(res.statusCode.toString()[0] === "2"))
+  );
+
 const downloadImage = async (url, dest) => {
   const file = fs.createWriteStream(dest);
 
@@ -45,7 +52,7 @@ const loadImage = async (parkId, filepath) => {
         size: fileStat.size,
       },
     });
-    // delete file
+    //delete file
     fs.unlink(filepath, (err) => {
       if (err) {
         strapi.log.info(`load image - error deleting ${filepath}`);
@@ -72,6 +79,14 @@ const loadParkPhoto = async () => {
     const dataSeed = JSON.parse(jsonData)["parkPhotos"];
 
     for await (const data of dataSeed) {
+      if (data.orcs > 100) {
+        break;
+      }
+      const isUrlExists = await urlExists(data.thumbnail);
+      if (!isUrlExists) {
+        break;
+      }
+
       const parkPhoto = {
         orcs: data.orcs,
         orcsSiteNumber: data.orcsSiteNumber,
@@ -86,6 +101,7 @@ const loadParkPhoto = async () => {
         image: null,
         thumbnail: null,
       };
+
       try {
         const result = await strapi.services["park-photo"].create(parkPhoto);
 
