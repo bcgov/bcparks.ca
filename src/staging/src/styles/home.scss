@@ -1,6 +1,7 @@
 // TODO: Continue to refine these styles as desktop work gets done - kinda all over the place right now
 
 $colorBlue: #003366;
+$colorBlue70Opacity: #00336670;
 $colorGold: #fcba19;
 $colorGrey: #eef1f5;
 $colorWhite: #fff;
@@ -44,11 +45,6 @@ $desktopBreakpoint: 576px;
   margin-top: 20px;
   padding-left: 20px;
   padding-right: 20px;
-
-  // @media screen and (min-width: $desktopBreakpoint) {
-  //   padding-left: 20px;
-  //   padding-right: 20px;
-  // }  
 }
 
 .zone-cards .card-text {
@@ -175,8 +171,7 @@ p.zone-header {
 .grid-card .card-body {
   font-size: 16px;
   color: $colorWhite;
-  background-color: $colorBlue;
-  opacity: 0.7;
+  background-color: $colorBlue70Opacity;
   position: absolute;
   bottom: 0;
   width: 100%;

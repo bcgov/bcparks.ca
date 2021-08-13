@@ -171,9 +171,10 @@ footer #home-footer nav {
     opacity: 0.5;
   }
   .footer-search-group {
-    background-color: #7a94a5;
+    background-color: #184775;
     > .form-control {
-      background-color: #7a94a5;
+      opacity: 0.5;
+      background-color: #184775;
     }
   }
 
@@ -201,8 +202,7 @@ img.alert-exclamation {
 
 .footer-search-box {
   font-size: 12px !important;
-  color: #eef1f5 !important;
-  // opacity: 0.5;
+  color: $colorWhite !important;
 }
 
 .footer-card-footer {
