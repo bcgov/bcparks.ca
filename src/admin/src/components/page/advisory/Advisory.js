@@ -118,6 +118,7 @@ export default function Advisory({
   const [isApprover, setIsApprover] = useState(false);
   const [formError, setFormError] = useState("");
   const [defaultLinkType, setDefaultLinkType] = useState();
+  const [mediaLinkType, setMediaLinkType] = useState();
 
   const { id } = useParams();
 
@@ -515,10 +516,19 @@ export default function Advisory({
             label: lt.type,
             value: lt.id,
           }));
-          setLinkTypes([...linkTypes]);
+          const filteredLinkTypes = linkTypes.filter(
+            (l) => l.label !== "File Attachment"
+          );
+          setLinkTypes([...filteredLinkTypes]);
           const linkType = linkTypes.filter((l) => l.label === "General");
           if (linkType.length > 0) {
             setDefaultLinkType(linkType[0].value);
+          }
+          const mediaType = linkTypes.filter(
+            (l) => l.label === "File Attachment"
+          );
+          if (mediaType.length > 0) {
+            setMediaLinkType(mediaType[0].value);
           }
           const standardMessageData = res[12];
           const standardMessages = standardMessageData.map((m) => ({
@@ -713,7 +723,9 @@ export default function Advisory({
         }
       }
     }
-    return savedLinks;
+    const mediaLinks = await saveFilesAndImages();
+    let allLinks = [...savedLinks, ...mediaLinks];
+    return allLinks;
   };
 
   const getAdvisoryFields = (type) => {
@@ -808,7 +820,10 @@ export default function Advisory({
             headers: { Authorization: `Bearer ${keycloak.idToken}` },
           })
           .then((res) => {
-            saveFilesAndImages(res.data.id);
+            setAdvisoryId(res.data.id);
+            setIsSubmitting(false);
+            setIsSavingDraft(false);
+            setIsConfirmation(true);
           })
           .catch((error) => {
             console.log("error occurred", error);
@@ -927,7 +942,10 @@ export default function Advisory({
               headers: { Authorization: `Bearer ${keycloak.idToken}` },
             })
             .then((res) => {
-              saveFilesAndImages(res.data.id);
+              setAdvisoryId(res.data.id);
+              setIsSubmitting(false);
+              setIsSavingDraft(false);
+              setIsConfirmation(true);
             })
             .catch((error) => {
               console.log("error occurred", error);
@@ -949,30 +967,14 @@ export default function Advisory({
     }
   };
 
-  const saveFilesAndImages = (id) => {
-    setAdvisoryId(id);
-    if (
-      (fileAttachments && fileAttachments.length > 0) ||
-      (pictures && pictures.length > 0)
-    ) {
-      let promises = [];
-      if (fileAttachments && fileAttachments.length > 0) {
-        const filePromises = fileAttachments.map((file) => {
-          return uploadMedia(id, file, "files");
-        });
-        promises = [...promises, ...filePromises];
-      }
-      if (pictures && pictures.length > 0) {
-        const filePromises = pictures.map((file) => {
-          return uploadMedia(id, file, "photos");
-        });
-        promises = [...promises, ...filePromises];
-      }
-      Promise.all(promises)
-        .then(() => {
-          setIsSubmitting(false);
-          setIsSavingDraft(false);
-          setIsConfirmation(true);
+  const preSaveMediaLink = async () => {
+    if (mediaLinkType) {
+      const linkRequest = {
+        type: mediaLinkType,
+      };
+      const res = await apiAxios
+        .post(`api/add/links`, linkRequest, {
+          headers: { Authorization: `Bearer ${keycloak.idToken}` },
         })
         .catch((error) => {
           console.log("error occurred", error);
@@ -982,26 +984,95 @@ export default function Advisory({
             message: "Could not save attachments",
           });
         });
+      return res.data.id;
     } else {
-      setIsSubmitting(false);
-      setIsSavingDraft(false);
-      setIsConfirmation(true);
+      setToError(true);
+      setError({
+        status: 500,
+        message: "Could not save attachments",
+      });
     }
   };
 
-  const uploadMedia = (id, file, field) => {
+  const updateMediaLink = async (media, id) => {
+    const linkRequest = {
+      title: media.name,
+      url: process.env.REACT_APP_CMS_BASE_URL + media.url,
+    };
+    const res = await apiAxios
+      .put(`api/update/links/${id}`, linkRequest, {
+        headers: { Authorization: `Bearer ${keycloak.idToken}` },
+      })
+      .catch((error) => {
+        console.log("error occurred", error);
+        setToError(true);
+        setError({
+          status: 500,
+          message: "Could not save attachments",
+        });
+      });
+    return res.data;
+  };
+
+  const saveFilesAndImages = async () => {
+    let filePromises = [];
+    let photoPromises = [];
+    let result = [];
+    if (fileAttachments && fileAttachments.length > 0) {
+      filePromises = fileAttachments.map(async (file) => {
+        return saveMediaAttachment(file);
+      });
+    }
+    if (pictures && pictures.length > 0) {
+      photoPromises = pictures.map(async (file) => {
+        return saveMediaAttachment(file);
+      });
+    }
+    const promises = [...filePromises, ...photoPromises];
+    await Promise.all(promises).then((res) => {
+      result = res;
+    });
+    return result;
+  };
+
+  const saveMediaAttachment = async (file) => {
+    const id = await preSaveMediaLink();
+    const mediaResponse = await uploadMedia(id, file);
+    const updateLinkResponse = await updateMediaLink(mediaResponse, id);
+    return updateLinkResponse.id;
+  };
+
+  const uploadMedia = async (id, file) => {
     const fileForm = new FormData();
     fileForm.append("refId", id);
-    fileForm.append("ref", "public-advisory-audit");
-    fileForm.append("field", field);
+    fileForm.append("ref", "link");
+    fileForm.append("field", "file");
     fileForm.append("files", file);
 
-    return apiAxios.post(`api/upload/upload`, fileForm, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${keycloak.idToken}`,
-      },
-    });
+    const res = await apiAxios
+      .post(`api/upload/upload`, fileForm, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${keycloak.idToken}`,
+        },
+      })
+      .catch((error) => {
+        console.log("error occurred", error);
+        setToError(true);
+        setError({
+          status: 500,
+          message: "Could not save attachments",
+        });
+      });
+    if (res.data.length > 0) {
+      return res.data[0];
+    } else {
+      setToError(true);
+      setError({
+        status: 500,
+        message: "Could not save attachments",
+      });
+    }
   };
 
   if (toDashboard) {
