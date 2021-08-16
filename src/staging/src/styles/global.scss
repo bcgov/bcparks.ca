@@ -1,12 +1,14 @@
 $colorGold: #fcba19;
 $colorWhite: #fff;
+$colorWhiteOpacity: #ffffff90;
 $colorGrey: #eef1f5;
 $colorBlue: #003366;
 $desktopBreakpoint: 480px;
+$globalFont: "BCSans",Verdana,Arial,sans serif;
 
 html {
   background-color: white;
-  font-family: BCSans, Verdana, Arial, sans serif;
+  font-family: $globalFont;
 }
 * {
   margin: 0;
@@ -14,13 +16,6 @@ html {
   box-sizing: border-box;
   border: none;
   display: block;
-}
-
-.inner {
-  max-width: 100%;
-  width: 100%;
-  margin: auto;
-  height: 120px;
 }
 
 /** Override BC-Gov style */
@@ -77,10 +72,6 @@ footer #home-footer nav {
       max-width: unset;
     }
   }
-}
-
-.alert-banner {
-  background-color: rgba(255, 221, 139, 1);
 }
 
 /** Overrides CKEditor <p> wrapper element that has margin bottom */
@@ -168,7 +159,7 @@ footer #home-footer nav {
   }
   .navbar {
     border-top: 1px solid $colorWhite;
-    opacity: 0.5;
+    opacity: 0.65;
   }
   .footer-search-group {
     background-color: #184775;
@@ -196,8 +187,21 @@ footer #home-footer nav {
   font-size: 14px !important;
 }
 
+#home-menu {
+  background-color: #255a8b;
+  > div {
+    padding-left: 6vw;
+  }
+  nav .nav-item  {
+    color: $colorWhite;
+  }
+  .nav-item:not(:last-child) {
+    border-right: 1px solid $colorWhite;
+  }
+}
+
 img.alert-exclamation {
-  transform: scale(0.9);
+  transform: scale(0.8);
 }
 
 .footer-search-box {
@@ -224,7 +228,7 @@ img.alert-exclamation {
 }
 
 .footer-bottom-links {
-  border-top: 1px solid white;
+  border-top: 1px solid #ffffff90;
 }
 
 .footer-nav-links {
