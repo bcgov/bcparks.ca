@@ -417,6 +417,10 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
   return (
     <div className="park-search-container park-search-text-container">
       <div className="row">
+        <div className="col-12 park-search-intro text-center">
+          <h2>Welcome to BC Parks</h2>
+          <p>Plan your next adventure by searching for campsites and day-use areas around B.C.</p>
+        </div>
         <div className="col-lg-6 col-md-6 col-sm-12">
           <TextField
             id="park-search-text"
@@ -582,7 +586,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
                   variant="outlined"
                   placeholder="Add an activity from this list"
                   styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                  menuPortalTarget={document.body}
+                  // menuPortalTarget={document.body}
                 />
               </div>
             </div>
@@ -618,7 +622,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
                   variant="outlined"
                   placeholder="Add a facility from this list"
                   styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                  menuPortalTarget={document.body}
+                  // menuPortalTarget={document.body}
                 />
               </div>
             </div>
