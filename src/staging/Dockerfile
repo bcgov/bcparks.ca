@@ -20,6 +20,7 @@ RUN yum install -y \
     mkdir -p /opt/app-root/src/app/node_modules && \
     mkdir -p /opt/app-root/src/app/site && \
     chmod -R 777 /opt/app-root/src && \
+    chmod -R 777 /opt/app-root/src/public && \
     pip3 install virtualenv 
 
 # install app dependencies
