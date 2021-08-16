@@ -1,7 +1,8 @@
 import React from "react"
 import { graphql } from "gatsby"
+
 import { Helmet } from "react-helmet"
-import { Container, Grid, Toolbar, Divider } from "@material-ui/core"
+import { Container, Grid, Toolbar } from "@material-ui/core"
 import ParkOverview from "../components/park/parkOverview"
 import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
@@ -9,13 +10,11 @@ import About from "../components/park/about"
 import CampingDetails from "../components/park/campingDetails"
 import Reconciliation from "../components/park/reconciliation"
 import ParkHeader from "../components/park/parkHeader"
-import ParkStatus from "../components/park/parkStatus"
 import ParkActivity from "../components/park/parkActivity"
 import ParkFacility from "../components/park/parkFacility"
 import ParkMap from "../components/park/parkMapDetails"
 import MapLocation from "../components/park/mapLocation"
 import ParkMenu from "../components/park/parkMenu"
-
 import "./parkTemplate.css"
 
 export default function ParkTemplate({ data }) {
@@ -35,21 +34,12 @@ export default function ParkTemplate({ data }) {
     photos: photos,
   }
 
-  const randomPhoto =
-    photos.nodes[Math.floor(Math.random() * photos.nodes.length)]
-
   return (
     <>
       <Helmet>
         <title>BC Parks | {park.protectedAreaName}</title>
       </Helmet>
       <Toolbar />
-      <ParkHeader
-        data={{
-          protectedAreaName: park.protectedAreaName,
-          photo: randomPhoto,
-        }}
-      />
       <Container maxWidth={false}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={3}>
@@ -58,10 +48,10 @@ export default function ParkTemplate({ data }) {
           <Grid item xs={12} sm={9}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-                <Divider />
+                <h1>{park.protectedAreaName}</h1>
               </Grid>
               <Grid item xs={12}>
-                <ParkStatus data={parkStatusData} />
+                <ParkHeader data={parkStatusData} />
               </Grid>
               <Grid item xs={12}>
                 <ParkOverview data={parkOverviewData} />
@@ -106,117 +96,3 @@ export default function ParkTemplate({ data }) {
   )
 }
 
-export const query = graphql`
-  query($orcs: Int) {
-    strapiParkAccessStatus(orcs: { eq: $orcs }) {
-      orcs
-      parkActivities {
-        activityCode
-        activityName
-        description
-        icon
-        iconNA
-        rank
-      }
-      parkFacilities {
-        facilityName
-        description
-        icon
-        iconNA
-        rank
-      }
-      accessStatus
-      campfireBanEffectiveDate
-      hasCampfireBan
-      hasCampfiresFacility
-      hasSmokingBan
-      parkWebsiteUrl
-      protectedAreaName
-    }
-    strapiProtectedArea(orcs: { eq: $orcs }) {
-      protectedAreaName
-      description
-      status
-      orcs
-      marineArea
-      type
-      typeCode
-      isDayUsePass
-      reconciliationNotes
-      parkContact
-      reservations
-      maps
-      parkActivities {
-        activityType
-        isActive
-        isActivityOpen
-        name
-      }
-      parkFacilities {
-        facilityType
-        isActive
-        isFacilityOpen
-        name
-      }
-    }
-    strapiParkPhoto(orcs: { eq: $orcs }) {
-      image {
-        localFile {
-          childImageSharp {
-            gatsbyImageData(layout: FULL_WIDTH)
-          }
-        }
-      }
-    }
-    allStrapiPublicAdvisory(
-      filter: { protectedAreas: { elemMatch: { orcs: { eq: $orcs } } } }
-    ) {
-      nodes {
-        id
-        title
-        description
-        isAdvisoryDateDisplayed
-        isEffectiveDateDisplayed
-        isEndDateDisplayed
-        isReservationsAffected
-        isSafetyRelated
-        urgency {
-          code
-          color
-          sequence
-          urgency
-        }
-        protectedAreas {
-          orcs
-          hasCampfireBan
-          hasSmokingBan
-        }
-        accessStatus {
-          color
-          accessStatus
-          precedence
-        }
-        advisoryDate(formatString: "MMMM DD, YYYY")
-        advisoryNumber
-        dcTicketNumber
-        effectiveDate(formatString: "MMMM DD, YYYY")
-        endDate(formatString: "MMMM DD, YYYY")
-        expiryDate(formatString: "MMMM DD, YYYY")
-      }
-      totalCount
-    }
-    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }) {
-      nodes {
-        orcs
-        caption
-        image {
-          localFile {
-            childImageSharp {
-              gatsbyImageData(layout: FULL_WIDTH)
-            }
-          }
-        }
-      }
-    }
-  }
-`

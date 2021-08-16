@@ -18,28 +18,30 @@ export default function CampfireBan({ data }) {
   const classes = useStyles()
   const { hasCampfireBan, hasSmokingBan } = data
 
-  let title = []
-  if (hasCampfireBan === "Y") title.push("Campfire")
-  if (hasSmokingBan === "Y") title.push("Smoking")
+  let fireBans = []
+  let title = ""
+  if (hasCampfireBan === "Y") fireBans.push("Campfire")
+  if (hasSmokingBan === "Y") fireBans.push("Smoking")
+  if (hasCampfireBan === "Y" || hasSmokingBan === "Y")
+    title = `${fireBans.join(" and ")} ban in effect`
+  else return null
 
   return (
     <>
-      {(hasCampfireBan === "Y" || hasSmokingBan === "Y") && (
-        <Grid container item xs={12} sm={6} md={4} className={classes.topGrid}>
-          <Card className={classes.card}>
-            <CardHeader
-              avatar={
-                <Avatar
-                  variant="square"
-                  src={campfireBanIcon}
-                  aria-label="camp fire ban"
-                />
-              }
-              title={`${title.join(" and ")} ban in effect`}
-            />
-          </Card>
-        </Grid>
-      )}
+      <Grid container item xs={12} sm={6} md={4} className={classes.topGrid}>
+        <Card className={classes.card}>
+          <CardHeader
+            avatar={
+              <Avatar
+                variant="square"
+                src={campfireBanIcon}
+                aria-label={title}
+              />
+            }
+            title={title}
+          />
+        </Card>
+      </Grid>
     </>
   )
 }

@@ -11,6 +11,16 @@ a:link {
     text-decoration: none;
 }
 
+:target {
+    margin-top: -200px;
+    padding-top: 200px;
+}
+
+.anchor-link {
+    margin-top: -112px;
+    padding-top: 112px;
+}
+
 .heading {
     color: #003366;
 }
@@ -19,12 +29,42 @@ a:link {
     background-color: #eef1f5;
 }
 
+#park-photo-carousel-container{
+    max-height:300px;
+    overflow: hidden;
+}
+
+#park-header-container {
+    max-height:200px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+#park-header-container h1 {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    z-index: 100;
+}
+
 .park-details-shaded{
     background-color: #eef1f5 !important;
 }
 
 .MuiTypography-root, .MuiButton-root {
     font-family: BCSans, Verdana, Arial, "sans-serif"  !important;
+}
+
+#park-overview-container .MuiButton-root, 
+#park-advisory-details-container .MuiButton-root,
+#park-facility-container .MuiButton-root,
+#park-menu-container .MuiButton-root,
+#park-camping-details-container .MuiButton-root,
+#park-activity-container .MuiButton-root {
+    border:none  !important;
+    outline:none  !important;
 }
 
 .yellow-alert {
@@ -36,5 +76,5 @@ a:link {
 }
 
 .blue-alert {
-    background-color: #49bed9 !important;
+    background-color: #5bc0de !important;
 }

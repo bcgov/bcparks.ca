@@ -1,15 +1,22 @@
 import React from "react"
 import { Paper, Container } from "@material-ui/core"
+import { StaticImage } from "gatsby-plugin-image"
 import Heading from "./heading"
-import mapImage from "../../images/map-placeholder.png"
+import HtmlContent from "./htmlContent"
 
 export default function MapLocation({ data }) {
   return (
-    <div id="park-reconciliation-container">
+    <div id="park-map-container" className="anchor-link">
       <Paper elevation={0}>
-        <Heading title="Maps and Location" />
+        <Heading>Maps and Location</Heading>
         <Container>
-          <img src={mapImage} alt="map place holder" />
+          <StaticImage
+            src="../../images/map-placeholder.png"
+            alt="map"
+            placeholder="blurred"
+            aspectRatio={3 / 2}
+          />
+          <HtmlContent>{data}</HtmlContent>
         </Container>
         <br />
       </Paper>

@@ -1,6 +1,7 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   Box,
+  Button,
   Paper,
   Accordion,
   AccordionSummary,
@@ -13,6 +14,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Heading from "./heading"
+import HtmlContent from "./htmlContent"
 
 import blueAlertIcon from "../../images/park/blue-alert-64.png"
 import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
@@ -27,9 +29,33 @@ const useStyles = makeStyles(theme => ({
 
 export default function AdvisoryDetails({ data }) {
   const classes = useStyles()
-  const advisories = data.nodes.map(advisory => {
-    let alertIcon = blueAlertIcon
-    let alertColorCss = ".blue-alert"
+
+  const advisoryData = data.nodes
+
+  let expandedsInitial = []
+  advisoryData.forEach((advisory, index) => {
+    expandedsInitial[index] = false
+  })
+
+  const [allExpanded, setAllExpanded] = useState(false)
+  const [expandeds, setExpandeds] = useState(expandedsInitial)
+
+  const handleChange = id => (event, isExpanded) => {
+    expandeds[id] = isExpanded
+    setExpandeds([...expandeds])
+  }
+
+  const expandAll = isAllExpanded => {
+    let expandeds = []
+    advisoryData.forEach((advisory, index) => {
+      expandeds[index] = isAllExpanded
+    })
+    setExpandeds(expandeds)
+  }
+
+  const advisories = advisoryData.map(advisory => {
+    let alertIcon
+    let alertColorCss
     switch (advisory.urgency.color) {
       case "blue":
         alertIcon = blueAlertIcon
@@ -42,26 +68,59 @@ export default function AdvisoryDetails({ data }) {
       case "yellow":
         alertIcon = yellowAlertIcon
         alertColorCss = "yellow-alert"
+        break
+      default:
+        alertIcon = blueAlertIcon
+        alertColorCss = ".blue-alert"
     }
     advisory.alertIcon = alertIcon
     advisory.alertColorCss = alertColorCss
     return advisory
   })
 
-  const tempCss = "yellow-alert"
   return (
-    <div id="park-advisory-details-container">
+    <div id="park-advisory-details-container" className="anchor-link">
       <Paper elevation={0}>
-        <Heading title={`Alerts (${advisories.length})`} />
+        <Grid container>
+          <Grid item xs={12} sm={6}>
+            <Heading>{`Alerts (${advisories.length})`}</Heading>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            container
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-end"
+          >
+            <Box m={2}>
+              {advisories.length > 1 && (
+                <Button
+                  color="primary"
+                  onClick={() => {
+                    expandAll(!allExpanded)
+                    setAllExpanded(!allExpanded)
+                  }}
+                >
+                  {allExpanded ? "Collapse all" : "Expand All"}
+                </Button>
+              )}
+            </Box>
+          </Grid>
+        </Grid>
         {data && (
           <Container>
             <Grid container spacing={1}>
-              {advisories.map(advisory => (
+              {advisories.map((advisory, index) => (
                 <Grid key={advisory.id} item xs={12}>
                   <Paper elevation={0}>
-                    <Accordion>
+                    <Accordion
+                      className={advisory.alertColorCss}
+                      expanded={expandeds[index]}
+                      onChange={handleChange(index)}
+                    >
                       <AccordionSummary
-                        className={advisory.alertColorCss}
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls={advisory.title}
                         id={advisory.id}
@@ -79,7 +138,6 @@ export default function AdvisoryDetails({ data }) {
                       <AccordionDetails>
                         <div>
                           <Divider variant="fullWidth" />
-                          <p>{advisory.description}</p>
                           {advisory.isEffectiveDateDisplayed &&
                             advisory.effectiveDate && (
                               <>
@@ -102,6 +160,7 @@ export default function AdvisoryDetails({ data }) {
                                 <p>Posted {advisory.advisoryDate}</p>
                               </>
                             )}
+                          <HtmlContent>{advisory.description}</HtmlContent>
                         </div>
                       </AccordionDetails>
                     </Accordion>

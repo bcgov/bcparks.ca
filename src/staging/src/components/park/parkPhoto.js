@@ -1,13 +1,13 @@
 import React, { useState } from "react"
 import { makeStyles, useTheme } from "@material-ui/core/styles"
-import { Paper, MobileStepper, Button, Typography } from "@material-ui/core"
+import { MobileStepper, Button } from "@material-ui/core"
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft"
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight"
 import { GatsbyImage } from "gatsby-plugin-image"
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 400,
+    maxHeight: 300,
     flexGrow: 1,
   },
 })
@@ -17,7 +17,7 @@ export default function ParkPhotos({ photos }) {
   const parkPhotosData = photos.nodes.map(photo => {
     return {
       label: photo.caption || "_",
-      image: photo.thumbnail.localFile.childImageSharp.gatsbyImageData,
+      image: photo.image.localFile.childImageSharp.gatsbyImageData,
     }
   })
 
@@ -35,14 +35,13 @@ export default function ParkPhotos({ photos }) {
   if (parkPhotosData.length === 0) return null
 
   return (
-    <div className={classes.root}>
-      <Paper square elevation={0}>
-        <Typography noWrap>{parkPhotosData[activeStep].label}</Typography>
-      </Paper>
-      <GatsbyImage
-        image={parkPhotosData[activeStep].image}
-        alt={parkPhotosData[activeStep].label}
-      />
+    <>
+      <div id="park-photo-carousel-container">
+        <GatsbyImage
+          image={parkPhotosData[activeStep].image}
+          alt={parkPhotosData[activeStep].label}
+        />
+      </div>
       <MobileStepper
         variant="dots"
         steps={6}
@@ -68,6 +67,6 @@ export default function ParkPhotos({ photos }) {
           </Button>
         }
       />
-    </div>
+    </>
   )
 }

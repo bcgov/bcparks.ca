@@ -20,12 +20,18 @@ const useStyles = makeStyles({
 export default function Advisory({ data }) {
   const classes = useStyles()
 
-  if (!data || data.nodes.length === 0) return null
-  const alertLevels = data.nodes.map(s => s.urgency.sequence)
-  const maxAlertLevel = Math.max(...alertLevels)
+  const advisories = data.nodes || []
+
   let alertIcon = blueAlertIcon
-  if (maxAlertLevel === 3) alertIcon = redAlertIcon
-  if (maxAlertLevel === 2) alertIcon = yellowAlertIcon
+  let title = "There are no reported alerts for this park"
+  if (data && advisories.length !== 0) {
+    const alertLevels = advisories.map(s => s.urgency.sequence)
+    const maxAlertLevel = Math.max(...alertLevels)
+    if (maxAlertLevel === 3) alertIcon = redAlertIcon
+    if (maxAlertLevel === 2) alertIcon = yellowAlertIcon
+    title = `Alerts currently in effect (${advisories.length})`
+  }
+
   return (
     <>
       <Grid item xs={12} sm={6} md={4} className={classes.topGrid}>
@@ -38,11 +44,7 @@ export default function Advisory({ data }) {
                 aria-label="park access status"
               />
             }
-            title={
-              <Link to="#park-advisory-details-container">
-                {`Alerts currently in effect (${data.nodes.length})`}
-              </Link>
-            }
+            title={<Link to="#park-advisory-details-container">{title}</Link>}
           />
         </Card>
       </Grid>

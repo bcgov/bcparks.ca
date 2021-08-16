@@ -1,39 +1,20 @@
 import React from "react"
-import { Paper, Grid } from "@material-ui/core"
-import ParkAccessStatus from "./parkAccessStatus"
-import Advisory from "./advisory"
-import CampfireBan from "./campfireBan"
-import DayUseCamping from "./dayUseCamping"
-import PetsOnLeash from "./petsOnLeash"
-import ParkMap from "./parkMap"
-import Accessibility from "./accessibility"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 export default function ParkHeader({ data }) {
-  const { advisories, parkAccessStatus, park } = data
-  const { hasCampfireBan, hasSmokingBan } = parkAccessStatus
+  if (!data.photo)
+    return (
+      <>
+        <h1>{data.protectedAreaName}</h1>
+      </>
+    )
+  const image = getImage(data.photo.image.localFile)
   return (
-    <div id="park-header-container">
-      <Paper elevation={0}>
-        <Grid container spacing={0}>
-          <ParkAccessStatus data={parkAccessStatus.accessStatus} />
-          <Advisory data={advisories} />
-          <CampfireBan
-            data={{
-              hasCampfireBan,
-              hasSmokingBan,
-            }}
-          />
-          <DayUseCamping
-            data={{
-              parkFacilities: parkAccessStatus.parkFacilities,
-              isDayUsePass: park.isDayUsePass,
-            }}
-          />
-          <ParkMap />
-          <PetsOnLeash data={parkAccessStatus.parkActivities} />
-          <Accessibility parkFacilities={parkAccessStatus.parkFacilities} />
-        </Grid>
-      </Paper>
-    </div>
+    <>
+      <div id="park-header-container">
+        <h1>{data.protectedAreaName}</h1>
+        <GatsbyImage image={image} alt={data.protectedAreaName} />
+      </div>
+    </>
   )
 }
