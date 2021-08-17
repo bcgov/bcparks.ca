@@ -932,20 +932,26 @@ export default function AdvisoryForm({
                       className="ad-link-select bcgov-select"
                       placeholder="Select a link type"
                     />
-                    <div
-                      className="ad-link-close ad-add-link pointer div-btn "
-                      tabIndex="0"
-                      onClick={() => {
-                        removeLink(idx);
-                      }}
-                      onKeyPress={(e) => {
-                        if (e.key === "Enter") {
-                          removeLink(idx);
-                        }
-                      }}
+                    <LightTooltip
+                      arrow
+                      placement="left"
+                      title="This action will affect the published advisories"
                     >
-                      <CloseIcon />
-                    </div>
+                      <div
+                        className="ad-link-close ad-add-link pointer div-btn "
+                        tabIndex="0"
+                        onClick={() => {
+                          removeLink(idx);
+                        }}
+                        onKeyPress={(e) => {
+                          if (e.key === "Enter") {
+                            removeLink(idx);
+                          }
+                        }}
+                      >
+                        <CloseIcon />
+                      </div>
+                    </LightTooltip>
                   </div>
                   <div className="ad-link-group">
                     <TextField
