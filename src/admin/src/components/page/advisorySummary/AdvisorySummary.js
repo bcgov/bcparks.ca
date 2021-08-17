@@ -292,7 +292,7 @@ export default function AdvisorySummary({
                         parkUrls,
                         siteUrls,
                         handleOpenSnackBar,
-                        isCurrentlyPublished,
+                        showOriginalAdvisory,
                       }}
                     />
                   </div>
@@ -318,6 +318,7 @@ export default function AdvisorySummary({
                         parkUrls: currentParkUrls,
                         siteUrls: currentSiteUrls,
                         handleOpenSnackBar,
+                        showOriginalAdvisory,
                       }}
                     />
                   </div>

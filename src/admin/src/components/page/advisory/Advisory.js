@@ -116,7 +116,6 @@ export default function Advisory({
   const [isApprover, setIsApprover] = useState(false);
   const [formError, setFormError] = useState("");
   const [defaultLinkType, setDefaultLinkType] = useState();
-  const [removedLinks, setRemovedLinks] = useState([]);
 
   const { id } = useParams();
 
@@ -636,10 +635,6 @@ export default function Advisory({
     let tempLinks = linksRef.current.filter((link, idx) => idx !== index);
     linksRef.current = [...tempLinks];
     setLinkIds();
-    let linkToRemove = linksRef.current.filter((link, idx) => idx === index);
-    if (linkToRemove && linkToRemove.length > 0) {
-      setRemovedLinks([...removedLinks, linkToRemove[0].id]);
-    }
   };
 
   const handleFileCapture = (files, index) => {

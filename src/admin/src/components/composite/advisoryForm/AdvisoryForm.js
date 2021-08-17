@@ -112,7 +112,6 @@ export default function AdvisoryForm({
     removeLink,
     updateLink,
     addLink,
-    fileAttachments,
     handleFileCapture,
     notes,
     setNotes,
