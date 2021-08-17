@@ -34,7 +34,6 @@ module.exports = {
           "activity-types",
           "facility-types",
         ],
-        singleTypes: [`business-hours`],
         queryLimit: -1,
       },
     },
