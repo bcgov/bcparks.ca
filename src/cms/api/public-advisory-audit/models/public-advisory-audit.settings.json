@@ -111,7 +111,8 @@
       "collection": "protected-area"
     },
     "links": {
-      "collection": "link"
+      "collection": "link",
+      "via": "publicAdvisoryAudit"
     },
     "regions": {
       "collection": "region"

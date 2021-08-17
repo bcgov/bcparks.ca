@@ -919,6 +919,15 @@
                 "type": {
                   "type": "string"
                 },
+                "file": {
+                  "type": "string"
+                },
+                "publicAdvisoryAudit": {
+                  "type": "string"
+                },
+                "publicAdvisory": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },

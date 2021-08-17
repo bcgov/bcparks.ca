@@ -550,6 +550,411 @@
               }
             }
           },
+          "file": {
+            "required": [
+              "id",
+              "name",
+              "hash",
+              "mime",
+              "size",
+              "url",
+              "provider"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "alternativeText": {
+                "type": "string"
+              },
+              "caption": {
+                "type": "string"
+              },
+              "width": {
+                "type": "integer"
+              },
+              "height": {
+                "type": "integer"
+              },
+              "formats": {
+                "type": "object"
+              },
+              "hash": {
+                "type": "string"
+              },
+              "ext": {
+                "type": "string"
+              },
+              "mime": {
+                "type": "string"
+              },
+              "size": {
+                "type": "number"
+              },
+              "url": {
+                "type": "string"
+              },
+              "previewUrl": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "provider_metadata": {
+                "type": "object"
+              },
+              "related": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "publicAdvisoryAudit": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "advisoryNumber": {
+                "type": "integer"
+              },
+              "revisionNumber": {
+                "type": "integer"
+              },
+              "isLatestRevision": {
+                "type": "boolean"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "dcTicketNumber": {
+                "type": "string"
+              },
+              "isSafetyRelated": {
+                "type": "boolean"
+              },
+              "listingRank": {
+                "type": "integer"
+              },
+              "note": {
+                "type": "string"
+              },
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              },
+              "mapZoom": {
+                "type": "integer"
+              },
+              "isReservationsAffected": {
+                "type": "boolean"
+              },
+              "isAdvisoryDateDisplayed": {
+                "type": "boolean"
+              },
+              "isEffectiveDateDisplayed": {
+                "type": "boolean"
+              },
+              "isEndDateDisplayed": {
+                "type": "boolean"
+              },
+              "isUpdatedDateDisplayed": {
+                "type": "boolean"
+              },
+              "submittedBy": {
+                "type": "string"
+              },
+              "createdDate": {
+                "type": "string"
+              },
+              "createdBy": {
+                "type": "string"
+              },
+              "advisoryDate": {
+                "type": "string"
+              },
+              "effectiveDate": {
+                "type": "string"
+              },
+              "endDate": {
+                "type": "string"
+              },
+              "expiryDate": {
+                "type": "string"
+              },
+              "removalDate": {
+                "type": "string"
+              },
+              "updatedDate": {
+                "type": "string"
+              },
+              "modifiedDate": {
+                "type": "string"
+              },
+              "modifiedBy": {
+                "type": "string"
+              },
+              "accessStatus": {
+                "type": "string"
+              },
+              "eventType": {
+                "type": "string"
+              },
+              "urgency": {
+                "type": "string"
+              },
+              "advisoryStatus": {
+                "type": "string"
+              },
+              "protectedAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "regions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "sections": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "managementAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fireZones": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "sites": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fireCentres": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "standardMessages": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "publishedRevisionNumber": {
+                "type": "integer"
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "publicAdvisory": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "advisoryNumber": {
+                "type": "integer"
+              },
+              "revisionNumber": {
+                "type": "integer"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "dcTicketNumber": {
+                "type": "string"
+              },
+              "isSafetyRelated": {
+                "type": "boolean"
+              },
+              "listingRank": {
+                "type": "integer"
+              },
+              "note": {
+                "type": "string"
+              },
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              },
+              "mapZoom": {
+                "type": "integer"
+              },
+              "isReservationsAffected": {
+                "type": "boolean"
+              },
+              "isAdvisoryDateDisplayed": {
+                "type": "boolean"
+              },
+              "isEffectiveDateDisplayed": {
+                "type": "boolean"
+              },
+              "isEndDateDisplayed": {
+                "type": "boolean"
+              },
+              "isUpdatedDateDisplayed": {
+                "type": "boolean"
+              },
+              "submittedBy": {
+                "type": "string"
+              },
+              "createdDate": {
+                "type": "string"
+              },
+              "createdBy": {
+                "type": "string"
+              },
+              "advisoryDate": {
+                "type": "string"
+              },
+              "effectiveDate": {
+                "type": "string"
+              },
+              "endDate": {
+                "type": "string"
+              },
+              "expiryDate": {
+                "type": "string"
+              },
+              "removalDate": {
+                "type": "string"
+              },
+              "updatedDate": {
+                "type": "string"
+              },
+              "modifiedDate": {
+                "type": "string"
+              },
+              "modifiedBy": {
+                "type": "string"
+              },
+              "accessStatus": {
+                "type": "string"
+              },
+              "eventType": {
+                "type": "string"
+              },
+              "urgency": {
+                "type": "string"
+              },
+              "advisoryStatus": {
+                "type": "string"
+              },
+              "protectedAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "regions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "sections": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "managementAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fireZones": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "sites": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fireCentres": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "standardMessages": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -565,6 +970,12 @@
             "type": "string"
           },
           "type": {
+            "type": "string"
+          },
+          "publicAdvisoryAudit": {
+            "type": "string"
+          },
+          "publicAdvisory": {
             "type": "string"
           },
           "published_at": {
