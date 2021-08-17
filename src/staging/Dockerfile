@@ -19,7 +19,9 @@ RUN yum install -y \
     openssh && \
     mkdir -p /opt/app-root/src/app/node_modules && \
     mkdir -p /opt/app-root/src/app/site && \
+    mkdir -p /opt/app-root/src/public && \
     chmod -R 777 /opt/app-root/src && \
+    chmod -R a+rwx /opt/app-root/src/public && \
     pip3 install virtualenv 
 
 # install app dependencies
