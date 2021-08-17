@@ -16,7 +16,7 @@ export default function AdvisorySummaryView({
     parkUrls,
     siteUrls,
     handleOpenSnackBar,
-    isCurrentlyPublished,
+    showOriginalAdvisory,
   },
 }) {
   const { ClipboardItem } = window;
@@ -76,7 +76,7 @@ export default function AdvisorySummaryView({
           <div className="col-lg-8 col-md-6 col-12">{advisory.description}</div>
         </div>
       )}
-      {isCurrentlyPublished &&
+      {!showOriginalAdvisory &&
         advisory.standardMessages &&
         advisory.standardMessages.length > 0 && (
           <div className="row">
@@ -369,6 +369,6 @@ AdvisorySummaryView.propTypes = {
     parkUrls: PropTypes.string,
     siteUrls: PropTypes.string,
     handleOpenSnackBar: PropTypes.func.isRequired,
-    isCurrentlyPublished: PropTypes.bool,
+    showOriginalAdvisory: PropTypes.bool,
   }).isRequired,
 };
