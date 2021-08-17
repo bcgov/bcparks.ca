@@ -328,6 +328,26 @@ class Parks_ETL:
             print('Error invoking webservice')
             raise
 
+    def update_site_in_strapi(self, id, site):
+        api_url = f"{self.strapi_base}/sites/{id}?token={self.token}"
+        result = None
+
+        try:
+            response = requests.put(api_url, json=site, headers=headers)
+
+            if response.status_code == 200:
+                result = response.json()
+
+                print(f'Record with id: {result["id"]} successfully updated!')
+            else:
+                print(f'create site: Unplanned status code returned - {response.status_code}')
+
+            return result
+
+        except:
+            print('Error invoking webservice')
+            raise
+
 
     def create_region_in_strapi(self, region):
         api_url = f"{self.strapi_base}/sites?token={self.token}"

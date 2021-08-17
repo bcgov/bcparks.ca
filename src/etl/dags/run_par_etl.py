@@ -4,11 +4,13 @@
 from datetime import timedelta
 from airflow import DAG
 from airflow.utils.dates import days_ago
+from airflow.utils.db import provide_session
 from airflow.operators.python import PythonOperator
 
 from utils import Parks_ETL
 from airflow.models import Variable
 from airflow.hooks.base_hook import BaseHook
+from airflow.models import XCom
 
 var_args = Variable.get("url_var", deserialize_json=True)
 strapi_pw = BaseHook.get_connection('strapipw').password
@@ -25,13 +27,20 @@ args = {
     'retry_delay': timedelta(minutes=1)
 }
 
+ETL_PROC_NAME = "bcparks_par_etl"
+
+@provide_session
+def cleanup_xcom(session=None):
+    session.query(XCom).filter(XCom.dag_id == ETL_PROC_NAME).delete()
+
 
 with DAG(
-        "bcparks_par_etl",
+        ETL_PROC_NAME,
         default_args=args,
         description='Run BC-Parks PAR ETL!',
-        schedule_interval=timedelta(minutes=30),
-        catchup=False
+        schedule_interval=timedelta(minutes=5),
+        catchup=False,
+        on_success_callback=cleanup_xcom
     ) as dag:
 
     etl = Parks_ETL(strapi_pw, var_args)
