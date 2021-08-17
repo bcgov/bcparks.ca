@@ -109,7 +109,14 @@ export default function AdvisoryDetails({ data }) {
             </Box>
           </Grid>
         </Grid>
-        {data && (
+        {data.totalCount === 0 && (
+          <Container>
+            <Box p={1}>
+              <p>There are no reported alerts for this park</p>
+            </Box>
+          </Container>
+        )}
+        {data.totalCount > 0 && (
           <Container>
             <Grid container spacing={1}>
               {advisories.map((advisory, index) => (

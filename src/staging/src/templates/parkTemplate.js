@@ -50,10 +50,10 @@ export default function ParkTemplate({ data }) {
           photo: randomPhoto,
         }}
       />
-      <Container maxWidth={false}>
+      <Container id="park-info-container" maxWidth={false}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={3}>
-            <ParkMenu />
+            <ParkMenu data={parkStatusData} />
           </Grid>
           <Grid item xs={12} sm={9}>
             <Grid container spacing={3}>
@@ -170,6 +170,7 @@ export const query = graphql`
     }
     allStrapiPublicAdvisory(
       filter: { protectedAreas: { elemMatch: { orcs: { eq: $orcs } } } }
+      sort: { fields: urgency___sequence, order: DESC }
     ) {
       nodes {
         id

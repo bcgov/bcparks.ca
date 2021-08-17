@@ -53,25 +53,73 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function ParkMenu(props) {
+export default function ParkMenu(props) {
   const { window } = props
+
   const classes = useStyles()
   const theme = useTheme()
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  const data = props.data
+  const alertsCount = props.data.advisories.totalCount
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
   }
 
   const menuItems = [
-    { text: "Park Overview", url: "#park-overview-container" },
-    { text: "Alerts", url: "#park-advisory-details-container" },
-    { text: "Camping", url: "#park-camping-details-container" },
-    { text: "Facilities", url: "#park-facility-container" },
-    { text: "Activities", url: "#park-activity-container" },
-    { text: "Maps and Location", url: "#park-map-container" },
-    { text: "Learn about this park", url: "#park-about-container" },
+    { text: "Park Overview", url: "#park-overview-container", visible: true },
+    {
+      text: `Alerts (${alertsCount})`,
+      url: "#park-advisory-details-container",
+      visible: true,
+    },
+    { text: "Camping", url: "#park-camping-details-container", visible: true },
+    { text: "Facilities", url: "#park-facility-container", visible: true },
+    { text: "Activities", url: "#park-activity-container", visible: true },
+    { text: "Maps and Location", url: "#park-map-container", visible: true },
+    {
+      text: "Learn about this park",
+      url: "#park-about-container",
+      visible: true,
+    },
   ]
+
+  const hasCamping = data.parkAccessStatus.parkFacilities.some(facility =>
+    facility.facilityName.toLowerCase().includes("camping")
+  )
+  if (!hasCamping) menuItems[2].visible = false
+  if (data.parkAccessStatus.parkFacilities.length === 0)
+    menuItems[3].visible = false
+  if (data.parkAccessStatus.parkActivities.length === 0)
+    menuItems[4].visible = false
+
+  const campingFacilities = data.parkAccessStatus.parkFacilities.filter(
+    facility => facility.facilityName.toLowerCase().includes("camping")
+  )
+
+  let campingSubMenuItems = []
+  campingFacilities.forEach(c => {
+    const subMenu = {
+      text: c.facilityName,
+      url: "#park-camping-list-container",
+    }
+    campingSubMenuItems.push(subMenu)
+  })
+
+  const drawerSubItems = (
+    <div className="nested-list">
+      <List>
+        {campingSubMenuItems.map((subMenu, index) => (
+          <ListItem button key={index}>
+            <Link to={subMenu.url}>
+              <ListItemText primary={subMenu.text} />
+            </Link>
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  )
 
   const drawerItems = (
     <div>
@@ -83,13 +131,18 @@ function ParkMenu(props) {
         </Link>
       </Box>
       <List>
-        {menuItems.map((menu, index) => (
-          <ListItem button key={menu.text}>
-            <Link to={menu.url}>
-              <ListItemText primary={menu.text} />
-            </Link>
-          </ListItem>
-        ))}
+        {menuItems
+          .filter(m => m.visible)
+          .map((menu, index) => (
+            <>
+              <ListItem button key={index}>
+                <Link to={menu.url}>
+                  <ListItemText primary={menu.text} />
+                </Link>
+              </ListItem>
+              {menu.text === "Camping" && <>{drawerSubItems}</>}
+            </>
+          ))}
       </List>
     </div>
   )
@@ -132,7 +185,6 @@ function ParkMenu(props) {
               }}
             >
               {drawerItems}
-              <h1>Mobile</h1>
             </Drawer>
           </Hidden>
           <Hidden xsDown implementation="css">
@@ -143,7 +195,6 @@ function ParkMenu(props) {
               variant="permanent"
               open
             >
-              <h1>a3</h1>
               {drawerItems}
             </Drawer>
           </Hidden>
@@ -156,5 +207,3 @@ function ParkMenu(props) {
 ParkMenu.propTypes = {
   window: PropTypes.func,
 }
-
-export default ParkMenu
