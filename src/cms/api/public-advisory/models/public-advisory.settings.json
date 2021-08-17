@@ -108,7 +108,8 @@
       "collection": "protected-area"
     },
     "links": {
-      "collection": "link"
+      "collection": "link",
+      "via": "publicAdvisory"
     },
     "regions": {
       "collection": "region"

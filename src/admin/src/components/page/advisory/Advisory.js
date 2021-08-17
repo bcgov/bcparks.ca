@@ -93,8 +93,6 @@ export default function Advisory({
     moment().tz("America/Vancouver")
   );
   const [displayUpdatedDate, setDisplayUpdatedDate] = useState(false);
-  const [pictures, setPictures] = useState([]);
-  const [fileAttachments, setFileAttachments] = useState([]);
   const [notes, setNotes] = useState("");
   const [submittedBy, setSubmittedBy] = useState("");
   const [listingRank, setListingRank] = useState("");
@@ -118,7 +116,7 @@ export default function Advisory({
   const [isApprover, setIsApprover] = useState(false);
   const [formError, setFormError] = useState("");
   const [defaultLinkType, setDefaultLinkType] = useState();
-  const [mediaLinkType, setMediaLinkType] = useState();
+  const [removedLinks, setRemovedLinks] = useState([]);
 
   const { id } = useParams();
 
@@ -319,7 +317,9 @@ export default function Advisory({
                     title: l.title || "",
                     url: l.url || "",
                     id: l.id,
+                    file: l.file,
                     isModified: false,
+                    isFileModified: false,
                   },
                 ];
               });
@@ -516,20 +516,12 @@ export default function Advisory({
             label: lt.type,
             value: lt.id,
           }));
-          const filteredLinkTypes = linkTypes.filter(
-            (l) => l.label !== "File Attachment"
-          );
-          setLinkTypes([...filteredLinkTypes]);
+          setLinkTypes([...linkTypes]);
           const linkType = linkTypes.filter((l) => l.label === "General");
           if (linkType.length > 0) {
             setDefaultLinkType(linkType[0].value);
           }
-          const mediaType = linkTypes.filter(
-            (l) => l.label === "File Attachment"
-          );
-          if (mediaType.length > 0) {
-            setMediaLinkType(mediaType[0].value);
-          }
+
           const standardMessageData = res[12];
           const standardMessages = standardMessageData.map((m) => ({
             label: m.description,
@@ -596,14 +588,6 @@ export default function Advisory({
     }
   };
 
-  const onDrop = (picture) => {
-    setPictures([...picture]);
-  };
-
-  const handleFileCapture = ({ target }) => {
-    setFileAttachments([...target.files]);
-  };
-
   const handleDurationIntervalChange = (e) => {
     durationIntervalRef.current = e.value;
     calculateExpiryDate();
@@ -625,7 +609,9 @@ export default function Advisory({
   const setLinkIds = () => {
     const linkIds = [];
     linksRef.current.forEach((l) => {
-      linkIds.push(l.id);
+      if (l.id) {
+        linkIds.push(l.id);
+      }
     });
     setLinks(linkIds);
   };
@@ -650,6 +636,18 @@ export default function Advisory({
     let tempLinks = linksRef.current.filter((link, idx) => idx !== index);
     linksRef.current = [...tempLinks];
     setLinkIds();
+    let linkToRemove = linksRef.current.filter((link, idx) => idx === index);
+    if (linkToRemove && linkToRemove.length > 0) {
+      setRemovedLinks([...removedLinks, linkToRemove[0].id]);
+    }
+  };
+
+  const handleFileCapture = (files, index) => {
+    const tempLinks = [...linksRef.current];
+    tempLinks[index]["file"] = files[0];
+    tempLinks[index].isFileModified = true;
+    linksRef.current = [...tempLinks];
+    setLinkIds();
   };
 
   const calculateExpiryDate = () => {
@@ -662,52 +660,66 @@ export default function Advisory({
   };
 
   const isValidLink = (link) => {
-    if (link.title !== "" && link.url !== "" && link.isModified) {
+    if (
+      (link.title !== "" && link.url !== "" && link.isModified) ||
+      (link.file && link.isFileModified)
+    ) {
       return true;
     }
     return false;
   };
 
   const createLink = async (link) => {
-    const linkRequest = {
-      title: link.title,
-      url: link.url.startsWith("http") ? link.url : "https://" + link.url,
-      type: link.type,
-    };
-    const res = await apiAxios
-      .post(`api/add/links`, linkRequest, {
-        headers: { Authorization: `Bearer ${keycloak.idToken}` },
-      })
-      .catch((error) => {
-        console.log("error occurred", error);
-        setToError(true);
-        setError({
-          status: 500,
-          message: "Could not process advisory update",
+    if (link.isFileModified) {
+      const id = await preSaveMediaLink(link);
+      const res = await saveMediaAttachment(id, link);
+      return res;
+    } else {
+      const linkRequest = {
+        title: link.title,
+        url: link.url.startsWith("http") ? link.url : "https://" + link.url,
+        type: link.type,
+      };
+      const res = await apiAxios
+        .post(`api/add/links`, linkRequest, {
+          headers: { Authorization: `Bearer ${keycloak.idToken}` },
+        })
+        .catch((error) => {
+          console.log("error occurred", error);
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Could not process advisory update",
+          });
         });
-      });
-    return res.data;
+      return res.data;
+    }
   };
 
   const saveLink = async (link, id) => {
-    const linkRequest = {
-      title: link.title,
-      url: link.url.startsWith("http") ? link.url : "https://" + link.url,
-      type: link.type,
-    };
-    const res = await apiAxios
-      .put(`api/update/links/${id}`, linkRequest, {
-        headers: { Authorization: `Bearer ${keycloak.idToken}` },
-      })
-      .catch((error) => {
-        console.log("error occurred", error);
-        setToError(true);
-        setError({
-          status: 500,
-          message: "Could not process advisory update",
+    if (link.isFileModified) {
+      const res = await saveMediaAttachment(id, link);
+      return res;
+    } else {
+      const linkRequest = {
+        title: link.title,
+        url: link.url.startsWith("http") ? link.url : "https://" + link.url,
+        type: link.type,
+      };
+      const res = await apiAxios
+        .put(`api/update/links/${id}`, linkRequest, {
+          headers: { Authorization: `Bearer ${keycloak.idToken}` },
+        })
+        .catch((error) => {
+          console.log("error occurred", error);
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Could not process advisory update",
+          });
         });
-      });
-    return res.data;
+      return res.data;
+    }
   };
 
   const saveLinks = async () => {
@@ -723,9 +735,7 @@ export default function Advisory({
         }
       }
     }
-    const mediaLinks = await saveFilesAndImages();
-    let allLinks = [...savedLinks, ...mediaLinks];
-    return allLinks;
+    return savedLinks;
   };
 
   const getAdvisoryFields = (type) => {
@@ -967,36 +977,30 @@ export default function Advisory({
     }
   };
 
-  const preSaveMediaLink = async () => {
-    if (mediaLinkType) {
-      const linkRequest = {
-        type: mediaLinkType,
-      };
-      const res = await apiAxios
-        .post(`api/add/links`, linkRequest, {
-          headers: { Authorization: `Bearer ${keycloak.idToken}` },
-        })
-        .catch((error) => {
-          console.log("error occurred", error);
-          setToError(true);
-          setError({
-            status: 500,
-            message: "Could not save attachments",
-          });
+  const preSaveMediaLink = async (link) => {
+    const linkRequest = {
+      type: link.type,
+      title: link.title,
+    };
+    const res = await apiAxios
+      .post(`api/add/links`, linkRequest, {
+        headers: { Authorization: `Bearer ${keycloak.idToken}` },
+      })
+      .catch((error) => {
+        console.log("error occurred", error);
+        setToError(true);
+        setError({
+          status: 500,
+          message: "Could not save attachments",
         });
-      return res.data.id;
-    } else {
-      setToError(true);
-      setError({
-        status: 500,
-        message: "Could not save attachments",
       });
-    }
+    return res.data.id;
   };
 
-  const updateMediaLink = async (media, id) => {
+  const updateMediaLink = async (media, id, link) => {
     const linkRequest = {
-      title: media.name,
+      title: link.title ? link.title : media.name,
+      type: link.type,
       url: process.env.REACT_APP_CMS_BASE_URL + media.url,
     };
     const res = await apiAxios
@@ -1014,32 +1018,10 @@ export default function Advisory({
     return res.data;
   };
 
-  const saveFilesAndImages = async () => {
-    let filePromises = [];
-    let photoPromises = [];
-    let result = [];
-    if (fileAttachments && fileAttachments.length > 0) {
-      filePromises = fileAttachments.map(async (file) => {
-        return saveMediaAttachment(file);
-      });
-    }
-    if (pictures && pictures.length > 0) {
-      photoPromises = pictures.map(async (file) => {
-        return saveMediaAttachment(file);
-      });
-    }
-    const promises = [...filePromises, ...photoPromises];
-    await Promise.all(promises).then((res) => {
-      result = res;
-    });
-    return result;
-  };
-
-  const saveMediaAttachment = async (file) => {
-    const id = await preSaveMediaLink();
-    const mediaResponse = await uploadMedia(id, file);
-    const updateLinkResponse = await updateMediaLink(mediaResponse, id);
-    return updateLinkResponse.id;
+  const saveMediaAttachment = async (id, link) => {
+    const mediaResponse = await uploadMedia(id, link.file);
+    const updateLinkResponse = await updateMediaLink(mediaResponse, id, link);
+    return updateLinkResponse;
   };
 
   const uploadMedia = async (id, file) => {
@@ -1196,13 +1178,11 @@ export default function Advisory({
                   setExpiryDate,
                   handleDurationIntervalChange,
                   handleDurationUnitChange,
-                  onDrop,
                   linksRef,
                   linkTypes,
                   removeLink,
                   updateLink,
                   addLink,
-                  fileAttachments,
                   handleFileCapture,
                   notes,
                   setNotes,

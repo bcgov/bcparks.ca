@@ -10,19 +10,18 @@ import {
   FormControl,
   FormHelperText,
   Button as Btn,
+  Tooltip,
 } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import {
   KeyboardDateTimePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
-import ImageUploader from "react-images-upload";
 import Select from "react-select";
 import { withStyles } from "@material-ui/core/styles";
 import WarningIcon from "@material-ui/icons/Warning";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
-import Tooltip from "@material-ui/core/Tooltip";
 import HelpIcon from "@material-ui/icons/Help";
 import VisibilityToggle from "../../base/visibilityToggle/VisibilityToggle";
 import {
@@ -108,7 +107,6 @@ export default function AdvisoryForm({
     setExpiryDate,
     handleDurationIntervalChange,
     handleDurationUnitChange,
-    onDrop,
     linksRef,
     linkTypes,
     removeLink,
@@ -899,7 +897,7 @@ export default function AdvisoryForm({
                       <div className="p10 col-lg-4 col-md-3 col-sm-12 ad-duration-label">
                         Duration
                       </div>
-                      <div className="p10 ml15 col-lg-8 col-md-6 col-sm-8 col-8 ptm3 ad-interval-box">
+                      <div className="p10 ml15 col-lg-8 col-md-6 col-sm-8 col-8 pt3 ad-interval-box">
                         <Select
                           options={intervals}
                           onChange={handleDurationIntervalChange}
@@ -917,55 +915,6 @@ export default function AdvisoryForm({
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">Photos</div>
-            <div className="col-lg-8 col-md-8 col-sm-12 ">
-              <ImageUploader
-                withIcon={false}
-                onChange={onDrop}
-                imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-                maxFileSize={5242880}
-                withPreview={true}
-                buttonText="Add a photo"
-                buttonClassName="bcgov-normal-blue btn"
-                withLabel={false}
-                className="ad-field bg-blue"
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Attach a file
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12 ad-flex">
-              <TextField
-                value={
-                  fileAttachments.length === 0
-                    ? ""
-                    : fileAttachments.length === 1
-                    ? fileAttachments[0].name
-                    : fileAttachments.length + " files selected"
-                }
-                className="bcgov-input mr10"
-                variant="outlined"
-                placeholder="Select files for upload"
-              />
-              <Btn
-                variant="contained"
-                component="label"
-                className="bcgov-normal-blue btn transform-none"
-              >
-                Upload
-                <input
-                  type="file"
-                  accept=".pdf"
-                  multiple
-                  hidden
-                  onChange={handleFileCapture}
-                />
-              </Btn>
             </div>
           </div>
           <div className="row ">
@@ -1017,6 +966,29 @@ export default function AdvisoryForm({
                       variant="outlined"
                       InputProps={{ ...linkUrlInput }}
                     />
+                    <div className="ad-flex">
+                      <TextField
+                        value={l.file ? l.file.name : ""}
+                        className="bcgov-input mr10"
+                        variant="outlined"
+                        placeholder="Select files for upload"
+                      />
+                      <Btn
+                        variant="contained"
+                        component="label"
+                        className="bcgov-normal-blue btn transform-none ad-upload-btn"
+                      >
+                        Upload
+                        <input
+                          type="file"
+                          accept=".jpg,.gif,.png,.gif,.pdf"
+                          hidden
+                          onChange={({ target }) => {
+                            handleFileCapture(target.files, idx);
+                          }}
+                        />
+                      </Btn>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -1349,13 +1321,11 @@ AdvisoryForm.propTypes = {
     setExpiryDate: PropTypes.func.isRequired,
     handleDurationIntervalChange: PropTypes.func.isRequired,
     handleDurationUnitChange: PropTypes.func.isRequired,
-    onDrop: PropTypes.func.isRequired,
     linksRef: PropTypes.object.isRequired,
     linkTypes: PropTypes.array.isRequired,
     removeLink: PropTypes.func.isRequired,
     updateLink: PropTypes.func.isRequired,
     addLink: PropTypes.func.isRequired,
-    fileAttachments: PropTypes.array.isRequired,
     handleFileCapture: PropTypes.func.isRequired,
     notes: PropTypes.string,
     setNotes: PropTypes.func.isRequired,
