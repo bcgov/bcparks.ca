@@ -633,13 +633,13 @@ export default function Advisory({
   };
 
   const removeLink = (index) => {
-    let tempLinks = linksRef.current.filter((link, idx) => idx !== index);
-    linksRef.current = [...tempLinks];
-    setLinkIds();
     let linkToRemove = linksRef.current.filter((link, idx) => idx === index);
     if (linkToRemove && linkToRemove.length > 0) {
       setRemovedLinks([...removedLinks, linkToRemove[0].id]);
     }
+    let tempLinks = linksRef.current.filter((link, idx) => idx !== index);
+    linksRef.current = [...tempLinks];
+    setLinkIds();
   };
 
   const handleFileCapture = (files, index) => {
@@ -736,6 +736,31 @@ export default function Advisory({
       }
     }
     return savedLinks;
+  };
+
+  const deleteLinks = async () => {
+    const result = [];
+    for (let id of removedLinks) {
+      const res = deleteLink(id);
+      result.push(res);
+    }
+    return result;
+  };
+
+  const deleteLink = async (id) => {
+    const res = await apiAxios
+      .delete(`api/delete/links/${id}`, {
+        headers: { Authorization: `Bearer ${keycloak.idToken}` },
+      })
+      .catch((error) => {
+        console.log("error occurred", error);
+        setToError(true);
+        setError({
+          status: 500,
+          message: "Could not process advisory update",
+        });
+      });
+    return res.data;
   };
 
   const getAdvisoryFields = (type) => {
@@ -953,9 +978,18 @@ export default function Advisory({
             })
             .then((res) => {
               setAdvisoryId(res.data.id);
-              setIsSubmitting(false);
-              setIsSavingDraft(false);
-              setIsConfirmation(true);
+              Promise.resolve(deleteLinks())
+                .then(() => {
+                  setIsSubmitting(false);
+                  setIsSavingDraft(false);
+                  setIsConfirmation(true);
+                })
+                .catch((error) => {
+                  console.log("error occurred", error);
+                  setIsSubmitting(false);
+                  setIsSavingDraft(false);
+                  setIsConfirmation(true);
+                });
             })
             .catch((error) => {
               console.log("error occurred", error);

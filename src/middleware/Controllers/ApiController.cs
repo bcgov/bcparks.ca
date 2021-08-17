@@ -170,5 +170,27 @@ namespace BCParksApi.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpDelete]
+        [Route("delete/{route}/{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteData(string route, string id)
+        {
+            try
+            {
+                string url = _configuration["CmsUrl"] + route + "/" + id + "?token=" + _configuration["ApiToken"];
+                HttpResponseMessage apiResponse = await ApiHelper.httpClient.DeleteAsync(url);
+                apiResponse.EnsureSuccessStatusCode();
+                string responseBody = await apiResponse.Content.ReadAsStringAsync();
+                return Ok(JsonConvert.DeserializeObject<object>(responseBody));
+            }
+            catch (HttpRequestException e)
+            {
+                _logger.LogError("Message :{0} ", e.Message);
+                return BadRequest();
+            }
+        }
     }
 }
