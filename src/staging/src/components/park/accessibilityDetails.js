@@ -4,9 +4,9 @@ import Heading from "./heading"
 
 export default function AccessibilityDetails({ data }) {
   return (
-    <div id="accessibility-details-container">
+    <div id="accessibility-details-container" className="anchor-link">
       <Paper elevation={0}>
-        <Heading title="Accessibility" />
+        <Heading>Accessibility</Heading>
         <Container>
           <p>{data}</p>
         </Container>

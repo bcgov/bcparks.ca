@@ -43,7 +43,7 @@ const loadImage = async (parkId, filepath) => {
       data: {
         refId: parkId,
         ref: "park-photo",
-        field: "thumbnail",
+        field: "image",
       },
       files: {
         path: filepath,
@@ -104,13 +104,21 @@ const loadParkPhoto = async () => {
 
       try {
         const result = await strapi.services["park-photo"].create(parkPhoto);
+        // thumbnail
+        // const filename = result.thumbnailUrl
+        //   .replace("https://bcparks.ca/explore/parkpgs/", "")
+        //   .replace(/\//g, "-");
+        // const filepath = `${rootDir}${IMAGE_PATH}\\${filename}`;
 
-        const filename = result.thumbnailUrl
+        // await downloadImage(result.thumbnailUrl, filepath);
+        // loadImage(result.id, filepath);
+        //
+        const filename = result.imageUrl
           .replace("https://bcparks.ca/explore/parkpgs/", "")
           .replace(/\//g, "-");
         const filepath = `${rootDir}${IMAGE_PATH}\\${filename}`;
 
-        await downloadImage(result.thumbnailUrl, filepath);
+        await downloadImage(result.imageUrl, filepath);
         loadImage(result.id, filepath);
       } catch {
         strapi.log.info("error occured - loadParkPhoto");

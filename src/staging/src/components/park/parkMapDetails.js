@@ -1,7 +1,6 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import {
-  Grid,
   Card,
   CardHeader,
   CardContent,
@@ -23,9 +22,9 @@ export default function ParkMapDetails({ data }) {
   const classes = useStyles()
 
   return (
-    <div id="park-map-details-container">
+    <div id="park-map-details-container" className="anchor-link">
       <Paper elevation={0}>
-        <Heading title="Park and Activity Map" />
+        <Heading>Park and Activity Map</Heading>
         <Container>
           <Card className={classes.card}>
             <CardHeader

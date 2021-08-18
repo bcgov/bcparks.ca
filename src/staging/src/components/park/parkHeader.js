@@ -1,39 +1,43 @@
 import React from "react"
-import { Paper, Grid } from "@material-ui/core"
-import ParkAccessStatus from "./parkAccessStatus"
-import Advisory from "./advisory"
-import CampfireBan from "./campfireBan"
-import DayUseCamping from "./dayUseCamping"
-import PetsOnLeash from "./petsOnLeash"
-import ParkMap from "./parkMap"
-import Accessibility from "./accessibility"
+import { Grid, Button } from "@material-ui/core"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 export default function ParkHeader({ data }) {
-  const { advisories, parkAccessStatus, park } = data
-  const { hasCampfireBan, hasSmokingBan } = parkAccessStatus
+  let image = null
+  if (data.photo) image = getImage(data.photo.image.localFile)
   return (
-    <div id="park-header-container">
-      <Paper elevation={0}>
-        <Grid container spacing={0}>
-          <ParkAccessStatus data={parkAccessStatus.accessStatus} />
-          <Advisory data={advisories} />
-          <CampfireBan
-            data={{
-              hasCampfireBan,
-              hasSmokingBan,
-            }}
-          />
-          <DayUseCamping
-            data={{
-              parkFacilities: parkAccessStatus.parkFacilities,
-              isDayUsePass: park.isDayUsePass,
-            }}
-          />
-          <ParkMap />
-          <PetsOnLeash data={parkAccessStatus.parkActivities} />
-          <Accessibility parkFacilities={parkAccessStatus.parkFacilities} />
-        </Grid>
-      </Paper>
-    </div>
+    <>
+      <div id="park-header-container">
+        {data.photo && (
+          <div className="park-header-photo">
+            <GatsbyImage image={image} alt={data.protectedAreaName} />
+          </div>
+        )}
+        <div className="park-header">
+          <Grid container spacing={3} className="park-header-title">
+            <Grid item xs={12} sm={6}>
+              <h1>{data.protectedAreaName}</h1>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              spacing={3}
+              container
+              direction="row"
+              alignItems="center"
+              justifyContent="flex-end"
+            >
+              <Button variant="contained" className="yellow-button">
+                Get a daypass
+              </Button>
+              <Button variant="contained" className="blue-button">
+                Book a campsite
+              </Button>
+            </Grid>
+          </Grid>
+        </div>
+      </div>
+    </>
   )
 }

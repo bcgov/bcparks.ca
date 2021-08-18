@@ -4,9 +4,9 @@ import Heading from "./heading"
 
 export default function Reconciliation({ data }) {
   return (
-    <div id="park-reconciliation-container">
+    <div id="park-reconciliation-container" className="anchor-link">
       <Paper elevation={0}>
-        <Heading title="Reconciliation with Indigenous peoples" />
+        <Heading>Reconciliation with Indigenous peoples</Heading>
         <Container>
           <p>{data}</p>
         </Container>
