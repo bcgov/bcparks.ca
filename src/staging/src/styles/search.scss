@@ -128,6 +128,11 @@ $bodyFont: 1rem;
   font-family: $globalFont !important;
   overflow-y: visible !important;
 
+  .MuiTypography-root {
+    font-family: $globalFont !important;
+    font-size: $bodyFont !important;
+  }
+
   .park-filter-dialog-content {
     overflow-y: visible !important;
   }
@@ -176,13 +181,9 @@ $bodyFont: 1rem;
     border-radius: 50px !important;
   }
 
-  .park-filter-select [class*="-MenuList"] [class*="-option"],
-  [class*="-singleValue"] {
-    color: $colorBlue !important;
-  }
-
-  .park-filter-select [class*="-placeholder"] {
+  div[class$="-placeholder"] {
     color: #9b9b9b !important;
+    font-family: $globalFont !important;
   }
 
   .park-filter-chip {
@@ -199,6 +200,13 @@ $bodyFont: 1rem;
     padding-bottom: 10px !important;
     font-weight: bold;
   }
+}
+
+div[class$="-MenuList"] div[class$="-option"],
+div[class$="-singleValue"] {
+  color: $colorBlue !important;
+  font-family: $globalFont !important;
+  font-size: $bodyFont !important;
 }
 
 #park-search-box {

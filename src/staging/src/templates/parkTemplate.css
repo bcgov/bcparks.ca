@@ -1,0 +1,113 @@
+body {
+    font-family: BCSans, Verdana, Arial, "sans-serif"  !important;
+    background-color: #f5f5f7;
+}
+
+a {
+    color: #003366;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+.anchor-link {
+    margin-top: -112px;
+    padding-top: 112px;
+}
+
+.heading {
+    color: #38598a;
+}
+
+#park-activity-container .MuiAccordion-root, #park-facility-container .MuiAccordion-root  {
+    background-color: #eef1f5;
+}
+
+#park-menu-container .MuiListItem-button {
+    padding: 2px;
+}
+
+#park-photo-carousel-container{
+    max-height:300px;
+    overflow: hidden;
+}
+
+#park-header-container {
+    max-height:200px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.park-header {
+    background: rgb(0, 0, 0); 
+    background: rgba(0, 0, 0, 0.2); 
+    color: #f1f1f1;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+
+.park-header-title {
+    position: absolute;
+    color: white;
+    top: 25%;
+    left: 0%;
+    width: 90%;
+    z-index: 100;
+}
+
+.park-status-top-grid {
+    background-color: "#e1ecf4"
+}
+.park-details-shaded {
+    background-color: #eef1f5 !important;
+}
+
+.MuiTypography-root, .MuiButton-root {
+    font-family: BCSans, Verdana, Arial, "sans-serif"  !important;
+}
+
+#park-info-container .MuiButton-root {
+    border:none  !important;
+    outline:none  !important;
+}
+
+.yellow-alert {
+    background-color: #fff3d6 !important;
+}
+
+.red-alert {
+    background-color: #fbe5e6 !important;
+}
+
+.blue-alert {
+    background-color: #eef1f5 !important;
+}
+
+.nested-list, .nested-list .MuiTypography-root{
+    padding-left:20px;
+    font-size:smaller !important;
+    list-style-type: circle !important;
+}
+
+.blue-button {
+    color: #ffffff !important; 
+    background-color: #38598a !important;
+    width: 150px !important;
+    white-space: nowrap;
+    margin: 6px;
+}
+
+.yellow-button {
+    color: #003366 !important;
+    background-color: #fcba19 !important;
+    width: 150px !important;
+    white-space: nowrap;
+}

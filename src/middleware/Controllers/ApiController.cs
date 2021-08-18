@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using BCParksApi.Utils;
@@ -44,9 +45,9 @@ namespace BCParksApi.Controllers
 
                 if (queryString.ToString() != "")
                     url += queryString + "&";
-                 else  
-                    url += "?"; 
-                
+                else
+                    url += "?";
+
                 url += "token=" + _configuration["ApiToken"];
 
                 string apiResponse = await ApiHelper.httpClient.GetStringAsync(url);
@@ -99,6 +100,39 @@ namespace BCParksApi.Controllers
             {
                 string url = _configuration["CmsUrl"] + route + "?token=" + _configuration["ApiToken"];
                 HttpResponseMessage apiResponse = await ApiHelper.httpClient.PostAsync(url, new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json"));
+                apiResponse.EnsureSuccessStatusCode();
+                string responseBody = await apiResponse.Content.ReadAsStringAsync();
+                return Ok(JsonConvert.DeserializeObject<object>(responseBody));
+            }
+            catch (HttpRequestException e)
+            {
+                _logger.LogError("Message :{0} ", e.Message);
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [Route("upload/{route}")]
+        [Consumes("multipart/form-data")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> SaveFile([FromForm(Name = "files")] IFormFile file,
+        [FromForm(Name = "refId")] string refId, [FromForm(Name = "ref")] string refer,
+        [FromForm(Name = "field")] string field, string route)
+        {
+            try
+            {
+                var fileData = new MultipartFormDataContent();
+                fileData.Add(new StringContent(refId), "refId");
+                fileData.Add(new StringContent(refer), "ref");
+                fileData.Add(new StringContent(field), "field");
+                var stream = new StreamContent(file.OpenReadStream());
+                stream.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+                fileData.Add(stream, "files", file.FileName);
+
+                string url = _configuration["CmsUrl"] + route + "?token=" + _configuration["ApiToken"];
+                HttpResponseMessage apiResponse = await ApiHelper.httpClient.PostAsync(url, fileData);
                 apiResponse.EnsureSuccessStatusCode();
                 string responseBody = await apiResponse.Content.ReadAsStringAsync();
                 return Ok(JsonConvert.DeserializeObject<object>(responseBody));

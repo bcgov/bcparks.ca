@@ -104,6 +104,14 @@
   text-align: center !important;
 }
 
+.ad-form .MuiButton-contained {
+  box-shadow: none !important;
+}
+
+.ad-upload-btn {
+  height: 44px !important;
+}
+
 @media (max-width: 767.98px) {
   .ad-label {
     text-align: left !important;

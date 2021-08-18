@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css";
 import "./components/page.css";
 
 

@@ -147,6 +147,7 @@ const getProtectedAreaStatus = async (ctx) => {
         return {
           activityName: activity.activityName,
           activityCode: activity.activityCode,
+          description: a.description,
           icon: activity.icon,
           iconNA: activity.iconNA,
           rank: activity.rank,
@@ -162,6 +163,7 @@ const getProtectedAreaStatus = async (ctx) => {
         return {
           facilityName: facility.facilityName,
           facilityCode: facility.facilityCode,
+          description: a.description,
           icon: facility.icon,
           iconNA: facility.iconNA,
           rank: facility.rank,
@@ -216,6 +218,7 @@ const getProtectedAreaStatus = async (ctx) => {
     }
 
     return {
+      id: protectedArea.id,
       orcs: protectedArea.orcs,
       orcsSiteNumber: null,
       protectedAreaName: protectedArea.protectedAreaName,
