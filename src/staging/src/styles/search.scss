@@ -19,6 +19,11 @@ $bodyFont: 1rem;
   font-family: $globalFont !important;
   width: 100%;
 
+  @media screen and (min-width: 576px) {
+    position: relative;
+    max-height: 742px;
+  }
+
   img {
     height: 440px;
     width: 100%;
@@ -38,6 +43,25 @@ $bodyFont: 1rem;
     font-weight: normal;
     font-size: 1.4rem;
     color: rgba(255, 249, 249, 1);
+
+    @media screen and (min-width: 576px) {
+      top: unset;
+      bottom: 0;
+      transform: translateY(0);
+      width: 50%;
+      height: 100%;
+      clip-path: polygon(0% 0%, 60% 0%, 100% 100%, 0% 100%);
+    }
+  }
+
+  .park-search-container-inner {
+    @media screen and (min-width: 576px) {
+      height: 100%;
+      > div {
+        padding-left: 15%;
+        padding-top: 25%;
+      }
+    }
   }
 
   #search-title {
@@ -83,9 +107,19 @@ $bodyFont: 1rem;
     .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
       border-color: transparent !important;
     }
+
+    @media screen and (min-width: 576px) {
+      width: 135% !important;
+    }
   }
   button:focus {
     outline: unset !important;
+  }
+}
+
+.park-search-text-wrapper {
+  @media screen and (min-width: 576px) {
+    padding-left: 40px !important;
   }
 }
 
@@ -180,11 +214,19 @@ $bodyFont: 1rem;
   padding-top: 20px !important;
 }
 
+.park-search-text {
+  padding-left: 40px !important;
+}
+
 .park-search-filter {
   padding-left: 30px !important;
   color: $colorWhite !important;
   font-size: $bodyFont !important;
   text-decoration: underline !important;
+
+  @media screen and (min-width: 576px) {
+    padding-left: 25px !important;
+  }
 }
 
 .park-search-intro {
@@ -193,6 +235,15 @@ $bodyFont: 1rem;
   > p {
     font-size: 16px;
     white-space: normal;
+  }
+
+  @media screen and (min-width: 576px) {
+    > h2 {
+      font-size: 34px;
+    }
+    > p {
+      font-size: 20px;
+    }
   }
 }
 

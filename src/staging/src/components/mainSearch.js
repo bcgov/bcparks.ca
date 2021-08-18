@@ -416,48 +416,52 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
 
   return (
     <div className="park-search-container park-search-text-container">
-      <div className="row">
-        <div className="col-12 park-search-intro text-center">
-          <h2>Welcome to BC Parks</h2>
-          <p>Plan your next adventure by searching for campsites and day-use areas around B.C.</p>
-        </div>
-        <div className="col-lg-6 col-md-6 col-sm-12">
-          <TextField
-            id="park-search-text"
-            variant="outlined"
-            placeholder="Search by park name, location, activity..."
-            className="park-search-text-box"
-            value={searchText}
-            onChange={event => {
-              setSearchText(event.target.value)
-            }}
-            onKeyPress={ev => {
-              if (ev.key === "Enter") {
-                searchParkFilter(true)
-                ev.preventDefault()
-              }
-            }}
-          />
-          <Fab
-            className="search-icon-fab"
-            aria-label="search"
-            onClick={() => {
-              searchParkFilter(true)
-            }}
-          >
-            <SearchIcon fontSize="large" className="search-icon" />
-          </Fab>
-        </div>
-      </div>
-      <div className="row">
+      <div className="park-search-container-inner row align-items-center">
         <div className="col-12">
-          <Link
-            component="button"
-            className="park-search-filter"
-            onClick={handleClickOpenFilter}
-          >
-            Filters
-          </Link>
+          <div className="row">
+            <div className="col-12 park-search-intro text-center text-sm-left">
+              <h2>Welcome to BC Parks</h2>
+              <p className="pt-sm-3">Plan your next adventure by searching for campsites and day-use areas around B.C.</p>
+            </div>
+            <div className="col-lg-6 col-md-6 col-sm-12 pt-sm-4 park-search-text">
+              <TextField
+                id="park-search-text"
+                variant="outlined"
+                placeholder="Search by park name, location, activity..."
+                className="park-search-text-box"
+                value={searchText}
+                onChange={event => {
+                  setSearchText(event.target.value)
+                }}
+                onKeyPress={ev => {
+                  if (ev.key === "Enter") {
+                    searchParkFilter(true)
+                    ev.preventDefault()
+                  }
+                }}
+              />
+              <Fab
+                className="search-icon-fab"
+                aria-label="search"
+                onClick={() => {
+                  searchParkFilter(true)
+                }}
+              >
+                <SearchIcon fontSize="large" className="search-icon" />
+              </Fab>
+            </div>
+          </div>
+          <div className="row">
+        </div>
+          <div className="col-12 pl-sm-0 pt-sm-3">
+            <Link
+              component="button"
+              className="park-search-filter"
+              onClick={handleClickOpenFilter}
+            >
+              Filters
+            </Link>
+          </div>
         </div>
       </div>
       <Dialog
