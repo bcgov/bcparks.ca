@@ -12,37 +12,6 @@ $desktopBreakpoint: 576px;
   transform: translateY(-50%);
 }
 
-.advisory-button {
-  background-color: $colorBlue !important;
-  color: $colorWhite;
-  height: 49px;
-  text-align: center;
-
-  @media screen and (min-width: $desktopBreakpoint) {
-    height: 90px;
-  }
-}
-
-.advisory-content {
-  font-size: 16px;
-  color: $colorWhite;
-  text-align: center;
-}
-
-.advisory > p {
-  margin-bottom: 5px;
-}
-
-.advisory .fa-chevron-circle-right {
-  color: $colorGold;
-  padding-left: 30px;
-  font-size: 20px;
-
-  @media screen and (min-width: $desktopBreakpoint) {
-    font-size: 25px;
-  }
-}
-
 .zone-links {
   padding: 0 20px 0 20px;
   margin-top: 40px;
@@ -58,11 +27,11 @@ $desktopBreakpoint: 576px;
   line-height: normal !important;
 }
 
-p.zone-content {
+.zone-content {
   margin: 0 20px 0 20px;
 }
 
-p.zone-header {
+.zone-header {
   margin: 0 20px 0 20px;
   font-style: normal;
   font-weight: bold;
@@ -92,7 +61,7 @@ p.zone-header {
   display: inline-block;
 
   @media screen and (min-width: $desktopBreakpoint) {
-    margin: 40px 20px 20px 20px;
+    margin: 35px 20px 20px 20px;
     width: 75px;
   }
 }
@@ -104,10 +73,6 @@ p.zone-header {
 .link-override {
   text-decoration: none;
   color: $colorBlue;
-}
-
-.home-footer .card-body {
-  font-size: 14px;
 }
 
 .grid-card {
@@ -147,6 +112,7 @@ p.zone-header {
     height: 579px;
   }
 }
+
 .full-horizontal-img > img {
   max-height: 219px;
   max-width: 400px;
@@ -190,21 +156,6 @@ p.zone-header {
   height: 50%;
 }
 
-.split-card-body {
-  background-color: $colorGrey;
-  bottom: unset;
-  color: $colorBlue;
-  padding-top: 35px !important;
-}
-
-.split-card-body .card-title {
-  margin: 0 36px 10px 36px;
-}
-
-.split-card .col-6 {
-  background-color: $colorGrey;
-}
-
 .card-body-header {
   margin-top: auto;
   margin-bottom: auto;
@@ -217,14 +168,39 @@ p.zone-header {
   text-decoration: none;
 }
 
-.split-card-body {
-  background-color: $colorGrey;
-  color: $colorBlue;
-}
-
 #home-advisories {
   color: $colorBlue;
   padding-top: 40px;
+
+  .advisory-button {
+    background-color: $colorBlue !important;
+    color: $colorWhite;
+    height: 49px;
+    text-align: center;
+  }
+  .advisory-content {
+    font-size: 16px;
+    color: $colorWhite;
+    text-align: center;
+  }
+  .advisory > p {
+    margin-bottom: 5px;
+  }
+  .advisory .fa-chevron-circle-right {
+    color: $colorGold;
+    padding-left: 30px;
+    font-size: 20px;
+  }
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    .advisory .fa-chevron-circle-right { 
+      font-size: 25px;
+    }
+    .advisory-button {
+      height: 90px;
+    }
+  }
+
 }
 
 #home-plan-your-trip {
@@ -245,24 +221,61 @@ p.zone-header {
   color: $colorBlue;
   background-color: $colorGrey;
 
+  .split-card-body {
+    background-color: $colorGrey;
+    bottom: unset;
+    color: $colorBlue;
+    padding-top: 15% !important;
+  }
+  .split-card-body .card-title {
+    margin: 0 36px 10px 36px;
+  }
+  .split-card .col-6 {
+    background-color: $colorGrey;
+  }
+  .full-horizontal-img > img {
+    max-height: 219px;
+    max-width: 400px;
+  }
+
   @media screen and (min-width: $desktopBreakpoint) {
-    p.fa-chevron-circle-right {
+    .fa-chevron-circle-right {
       font-size: 36px;
       color: $colorGold;
+    }
+    .full-horizontal-img > img {
+      max-width: fit-content;
+      max-height: 432px;
+    }
+    .right-chevron > img {
+      transform: scale(0.5);
+    }
+    .zone-hr, .card-text {
+      padding-top: 15px;
     }
   }
 }
 
 #home-carousel {
   .carousel-indicators {
-    bottom: 50px;
-    > li {
+    bottom: 15%;
+
+    > li, li.active {
       width: 10px;
+      height: 10px;
+      border: 1px;
+      border-radius: 10px;
+      background-color: $colorWhite !important;
+      opacity: unset;
+    }
+    > li.active {
+      background-color: $colorGold !important;
     }
   }
   .carousel-caption {
-    right: 2.5% !important;
-    bottom: 5px;
+    right: 5% !important;
+    bottom: 5% !important;
+    padding-bottom: 0px !important;
     > p {
       padding-bottom: 0px !important;
     }
@@ -272,11 +285,28 @@ p.zone-header {
     .carousel-item img {
       height: auto;
     }
+    .carousel-inner, .carousel-item {
+      max-height: 742px;
+    }
+    .carousel-indicators {
+      margin-right: 5% !important;
+      > li, li.active {
+        height: 15px !important;
+        width: 15px !important;
+        border: 1px;
+        border-radius: 15px;
+        background-color: $colorWhite !important;
+        opacity: unset;
+      }
+      > li.active {
+        background-color: $colorGold !important;
+      }
+    }
   }
 }
 
 .split-card-body .zone-hr > hr {
-  margin: 20px 36px 10px 0;
+  margin: 20px 0px 10px 0;
 }
 
 #Zone2 {

@@ -1,3 +1,5 @@
+// TODO: Fix .park-search-intro text cut off(desktop view)
+
 import React from "react"
 import { graphql } from "gatsby"
 import Header from "../components/header"
@@ -82,8 +84,9 @@ export const query = graphql`
 const cmsUrl =  process.env.GATSBY_REACT_APP_CMS_BASE_URL
 
 export default function Home({ data }) {
-  const zonesContent = data?.strapiWebsites?.homepage?.Content || []
-  const searchCarousel = data?.strapiWebsites?.homepage?.Content[5] || {}
+  // ID 6 === Hero Carousel
+  const zonesContent = data?.strapiWebsites?.homepage?.Content?.filter(c => c.id !== 6) || []
+  const searchCarousel = data?.strapiWebsites?.homepage?.Content?.find(c => c.id === 6) || {}
 
   return (
     <div className="container-fluid px-0">
@@ -102,19 +105,12 @@ export default function Home({ data }) {
               protectedAreas: data.allStrapiProtectedArea.nodes,
             }}
           />
-        <div className="park-search-carousel-mobile">
+        <div className="park-search-carousel">
           <Zone key={6} Content={searchCarousel}  />
         </div>
       </div>
       <div id="main">
-        {zonesContent.map(content => {
-          // Id 6 is hero image carousel
-          if (content.id !== 6) {
-            return (
-              <Zone key={content.id} zoneID={`Zone${content.id}`} Content={content} />  
-            )
-          }
-        })}
+        {zonesContent.map(content => <Zone key={content.id} zoneID={`Zone${content.id}`} Content={content} />)}
       </div>
       <Footer>
         {data.strapiWebsites.Footer}

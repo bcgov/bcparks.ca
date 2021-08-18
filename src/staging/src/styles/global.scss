@@ -3,7 +3,7 @@ $colorWhite: #fff;
 $colorWhiteOpacity: #ffffff90;
 $colorGrey: #eef1f5;
 $colorBlue: #003366;
-$desktopBreakpoint: 480px;
+$desktopBreakpoint: 576px;
 $globalFont: "BCSans",Verdana,Arial,sans serif;
 
 html {
@@ -33,7 +33,9 @@ footer #home-footer nav {
   padding-top: 5px;
   overflow: visible;
   background-color: $colorBlue;
-  z-index: 100;
+  > .navbar {
+    z-index: 1300;
+  }
 
   @media screen and (min-width: $desktopBreakpoint) {
     height: 120px;
@@ -143,6 +145,7 @@ footer #home-footer nav {
 #home-footer {
   max-width: 100%;
   background-color: $colorBlue !important;
+
   > p {
     padding: 40px 0 10px 0;
     margin-bottom: 0;  
@@ -153,6 +156,9 @@ footer #home-footer nav {
   }
   .footer-body {
     height: 77.5%;
+  }
+  .home-footer .card-body {
+    font-size: 14px;
   }
   .footer-body .col {
     padding: 0 40px;
@@ -179,6 +185,9 @@ footer #home-footer nav {
       > .input-group-append {
         height: 30px;
       }
+    }
+    .input-group-text {
+      padding-top: 15px !important;
     }
   }
 }
