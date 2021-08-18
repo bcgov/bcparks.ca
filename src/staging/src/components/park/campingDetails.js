@@ -65,16 +65,11 @@ export default function CampingDetails({ data }) {
           </Grid>
         </Grid>
         <Container>
-          <Paper elevation={0}>
-            <Container className="park-details-shaded">
-              <h3 className="heading">Reservations</h3>
-              <HtmlContent>{data.reservations}</HtmlContent>
-            </Container>
-          </Paper>
+          <Box m={2} p={2} className="park-details-shaded">
+            <h3 className="heading">Reservations</h3>
+            <HtmlContent>{data.reservations}</HtmlContent>
+          </Box>
         </Container>
-      </Paper>
-
-      <Paper elevation={0}>
         {campingFacilities.length > 0 && (
           <div id="park-camping-list-container" className="anchor-link">
             <Container>
@@ -111,13 +106,13 @@ export default function CampingDetails({ data }) {
                       >
                         <AccordionSummary
                           expandIcon={<ExpandMoreIcon />}
-                          aria-controls={facility.activityName}
+                          aria-controls={facility.facilityName}
                           id={index}
                         >
                           <Box mr={1}>
                             <img
                               src={facility.icon}
-                              alt={facility.activityName}
+                              alt={facility.facilityName}
                               width="24"
                               height="24"
                             />

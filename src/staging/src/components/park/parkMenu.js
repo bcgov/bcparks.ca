@@ -18,7 +18,7 @@ import MenuIcon from "@material-ui/icons/Menu"
 import { makeStyles, useTheme } from "@material-ui/core/styles"
 import { Link } from "gatsby"
 
-const drawerWidth = 240
+const drawerWidth = 280
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
       flexShrink: 0,
     },
   },
-  appBar: {
+  appBarNone: {
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
@@ -44,7 +44,13 @@ const useStyles = makeStyles(theme => ({
   },
   // necessary for content to be below app bar
   appBarOffset: theme.mixins.toolbar,
-  drawerPaper: {
+  drawerDesktop: {
+    marginTop: 288,
+    marginLeft: 40,
+    padding: 10,
+    width: drawerWidth,
+  },
+  drawerMobile: {
     width: drawerWidth,
   },
   content: {
@@ -123,13 +129,6 @@ export default function ParkMenu(props) {
 
   const drawerItems = (
     <div>
-      <div className={classes.appBarOffset} />
-      <Divider />
-      <Box m={2}>
-        <Link to="/parks">
-          <h3>Park Info</h3>
-        </Link>
-      </Box>
       <List>
         {menuItems
           .filter(m => m.visible)
@@ -170,6 +169,7 @@ export default function ParkMenu(props) {
         </AppBar>
 
         <nav className={classes.drawer} aria-label="park info menu">
+          {/* Mobile */}
           <Hidden smUp implementation="css">
             <Drawer
               container={container}
@@ -178,7 +178,7 @@ export default function ParkMenu(props) {
               open={mobileOpen}
               onClose={handleDrawerToggle}
               classes={{
-                paper: classes.drawerPaper,
+                paper: classes.drawerMobile,
               }}
               ModalProps={{
                 keepMounted: true, // Better open performance on mobile.
@@ -187,14 +187,21 @@ export default function ParkMenu(props) {
               {drawerItems}
             </Drawer>
           </Hidden>
+          {/* Desktop */}
           <Hidden xsDown implementation="css">
             <Drawer
               classes={{
-                paper: classes.drawerPaper,
+                paper: classes.drawerDesktop,
               }}
               variant="permanent"
               open
             >
+              <Box m={1}>
+                <Link to="/parks">
+                  <h3>Park Info</h3>
+                </Link>
+              </Box>
+              <Divider />
               {drawerItems}
             </Drawer>
           </Hidden>

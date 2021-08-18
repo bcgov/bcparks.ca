@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import { Container, Grid, Toolbar, Divider } from "@material-ui/core"
+import { Container, Grid, Toolbar, CssBaseline } from "@material-ui/core"
 import ParkOverview from "../components/park/parkOverview"
 import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
@@ -15,10 +15,28 @@ import ParkFacility from "../components/park/parkFacility"
 import ParkMap from "../components/park/parkMapDetails"
 import MapLocation from "../components/park/mapLocation"
 import ParkMenu from "../components/park/parkMenu"
+import { makeStyles } from "@material-ui/core/styles"
 
 import "./parkTemplate.css"
 
+const drawerWidth = 320
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex",
+  },
+  appBar: {
+    [theme.breakpoints.up("sm")]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+  },
+  appBarOffset: theme.mixins.toolbar,
+}))
+
 export default function ParkTemplate({ data }) {
+  const classes = useStyles()
+
   const park = data.strapiProtectedArea
   const parkAccessStatus = data.strapiParkAccessStatus
   const advisories = data.allStrapiPublicAdvisory
@@ -50,16 +68,15 @@ export default function ParkTemplate({ data }) {
           photo: randomPhoto,
         }}
       />
+
+      <CssBaseline />
       <Container id="park-info-container" maxWidth={false}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={3}>
             <ParkMenu data={parkStatusData} />
           </Grid>
-          <Grid item xs={12} sm={9}>
+          <Grid item xs={12} sm={9} className={classes.appBar}>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
               <Grid item xs={12}>
                 <ParkStatus data={parkStatusData} />
               </Grid>

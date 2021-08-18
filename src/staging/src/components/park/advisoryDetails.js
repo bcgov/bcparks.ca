@@ -136,6 +136,7 @@ export default function AdvisoryDetails({ data }) {
                           <Avatar
                             src={advisory.alertIcon}
                             className={classes.small}
+                            variant="rounded"
                             width="24"
                             height="24"
                           />
@@ -175,6 +176,7 @@ export default function AdvisoryDetails({ data }) {
                 </Grid>
               ))}
             </Grid>
+            <br />
           </Container>
         )}
       </Paper>

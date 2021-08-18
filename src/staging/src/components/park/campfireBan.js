@@ -19,27 +19,29 @@ export default function CampfireBan({ data }) {
   const { hasCampfireBan, hasSmokingBan } = data
 
   let fireBans = []
-  let title = ""
+  let title = null
   if (hasCampfireBan === "Y") fireBans.push("Campfire")
   if (hasSmokingBan === "Y") fireBans.push("Smoking")
   if (hasCampfireBan === "Y" || hasSmokingBan === "Y")
     title = `${fireBans.join(" and ")} ban in effect`
-  else return null
 
   return (
     <>
       <Grid container item xs={12} sm={6} md={4} className={classes.topGrid}>
         <Card className={classes.card}>
-          <CardHeader
-            avatar={
-              <Avatar
-                variant="square"
-                src={campfireBanIcon}
-                aria-label={title}
-              />
-            }
-            title={title}
-          />
+          {!title && <CardHeader title={title} />}
+          {title && (
+            <CardHeader
+              avatar={
+                <Avatar
+                  variant="square"
+                  src={campfireBanIcon}
+                  aria-label={title}
+                />
+              }
+              title={title}
+            />
+          )}
         </Card>
       </Grid>
     </>
