@@ -1,36 +1,15 @@
-// TODO: Continue to refine these styles as desktop work gets done - kinda all over the place right now
-
 $colorBlue: #003366;
+$colorBlueOpacity: #00336690;
 $colorGold: #fcba19;
 $colorGrey: #eef1f5;
 $colorWhite: #fff;
+$desktopBreakpoint: 576px;
 
-.container {
-  padding-left: 20px !important;
-  padding-right: 20px !important;
-}
-
-.advisory-button {
-  background-color: $colorBlue !important;
-  color: $colorWhite;
-  height: 49px;
-  text-align: center;
-}
-
-.advisory-content {
-  font-size: 16px;
-  color: $colorWhite;
-  text-align: center;
-}
-
-.advisory > p {
-  margin-bottom: 5px;
-}
-
-.advisory .fa-chevron-circle-right {
-  color: $colorGold;
-  padding-left: 30px;
-  font-size: 20px;
+/** Center vertical align in a parent with absolute positioning(grid-card/card-body) */
+.v-align-abs {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .zone-links {
@@ -40,17 +19,27 @@ $colorWhite: #fff;
 
 .zone-cards {
   margin-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-p.zone-content {
+.zone-cards .card-text {
+  line-height: normal !important;
+}
+
+.zone-content {
   margin: 0 20px 0 20px;
 }
 
-p.zone-header {
+.zone-header {
   margin: 0 20px 0 20px;
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    font-size: 36px;
+  }
 }
 
 .zone-header-small {
@@ -58,6 +47,10 @@ p.zone-header {
   font-style: normal;
   font-weight: bold;
   font-size: 20px;
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    font-size: 36px;
+  }
 }
 
 .zone-hr > hr {
@@ -66,6 +59,11 @@ p.zone-header {
   background-color: $colorGold;
   width: 35px;
   display: inline-block;
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    margin: 35px 20px 20px 20px;
+    width: 75px;
+  }
 }
 
 .card {
@@ -77,13 +75,13 @@ p.zone-header {
   color: $colorBlue;
 }
 
-.home-footer .card-body {
-  font-size: 14px;
-}
-
 .grid-card {
   border: unset !important;
   background-color: unset !important;
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    width: fit-content;
+  }
 }
 
 .padded-link {
@@ -92,6 +90,10 @@ p.zone-header {
 
 .card-col-padding {
   max-height: 316px;
+  
+  @media screen and (min-width: $desktopBreakpoint) {
+    max-height: 579px;
+  }
 }
 
 .card-col-padding:not(:last-child) {
@@ -105,10 +107,20 @@ p.zone-header {
 .card-img > img {
   height: 316px;
   max-width: 100%;
+  
+  @media screen and (min-width: $desktopBreakpoint) {
+    height: 579px;
+  }
 }
+
 .full-horizontal-img > img {
-  height: 219px;
+  max-height: 219px;
   max-width: 400px;
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    max-width: fit-content;
+    max-height: 432px;
+  }
 }
 
 .card-img,
@@ -118,43 +130,30 @@ p.zone-header {
 }
 
 .horizontal-card-img > img {
-  height: 166px;
+  max-height: 166px;
   width: 100%;
-}
 
-.home-news-card {
-  background-color: $colorWhite;
-  border: unset !important;
+  @media screen and (min-width: $desktopBreakpoint) {
+    max-height: 379px;
+  }
 }
 
 .grid-card .card-body {
   font-size: 16px;
   color: $colorWhite;
-  background-color: $colorBlue;
-  opacity: 0.7;
+  background-color: $colorBlueOpacity;
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 52.5%;
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    height: 33.3%;
+  }
 }
 
 .horizontal-card-body {
   height: 50%;
-}
-
-.split-card-body {
-  background-color: $colorGrey;
-  bottom: unset;
-  color: $colorBlue;
-  padding-top: 35px !important;
-}
-
-.split-card-body .card-title {
-  margin: 0 36px 10px 36px;
-}
-
-.split-card .col-6 {
-  background-color: $colorGrey;
 }
 
 .card-body-header {
@@ -169,37 +168,145 @@ p.zone-header {
   text-decoration: none;
 }
 
-.split-card-body {
-  background-color: #eef1f5;
-  color: $colorBlue;
-}
-
-.home-advisories {
+#home-advisories {
   color: $colorBlue;
   padding-top: 40px;
+
+  .advisory-button {
+    background-color: $colorBlue !important;
+    color: $colorWhite;
+    height: 49px;
+    text-align: center;
+  }
+  .advisory-content {
+    font-size: 16px;
+    color: $colorWhite;
+    text-align: center;
+  }
+  .advisory > p {
+    margin-bottom: 5px;
+  }
+  .advisory .fa-chevron-circle-right {
+    color: $colorGold;
+    padding-left: 30px;
+    font-size: 20px;
+  }
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    .advisory .fa-chevron-circle-right { 
+      font-size: 25px;
+    }
+    .advisory-button {
+      height: 90px;
+    }
+  }
+
 }
 
-.home-plan-your-trip {
+#home-plan-your-trip {
   color: $colorBlue;
   padding-top: 30px;
   margin-top: 50px;
   padding-bottom: 40px;
 }
 
-.home-about-bc-parks {
+#home-about-bc-parks {
   color: $colorBlue;
   padding-top: 30px;
   padding-bottom: 40px;
 }
 
-.home-news,
-.home-get-involved {
+#home-news,
+#home-get-involved {
   color: $colorBlue;
   background-color: $colorGrey;
+
+  .split-card-body {
+    background-color: $colorGrey;
+    bottom: unset;
+    color: $colorBlue;
+    padding-top: 15% !important;
+  }
+  .split-card-body .card-title {
+    margin: 0 36px 10px 36px;
+  }
+  .split-card .col-6 {
+    background-color: $colorGrey;
+  }
+  .full-horizontal-img > img {
+    max-height: 219px;
+    max-width: 400px;
+  }
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    .fa-chevron-circle-right {
+      font-size: 36px;
+      color: $colorGold;
+    }
+    .full-horizontal-img > img {
+      max-width: fit-content;
+      max-height: 432px;
+    }
+    .right-chevron > img {
+      transform: scale(0.5);
+    }
+    .zone-hr, .card-text {
+      padding-top: 15px;
+    }
+  }
+}
+
+#home-carousel {
+  .carousel-indicators {
+    bottom: 15%;
+
+    > li, li.active {
+      width: 10px;
+      height: 10px;
+      border: 1px;
+      border-radius: 10px;
+      background-color: $colorWhite !important;
+      opacity: unset;
+    }
+    > li.active {
+      background-color: $colorGold !important;
+    }
+  }
+  .carousel-caption {
+    right: 5% !important;
+    bottom: 5% !important;
+    padding-bottom: 0px !important;
+    > p {
+      padding-bottom: 0px !important;
+    }
+  }
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    .carousel-item img {
+      height: auto;
+    }
+    .carousel-inner, .carousel-item {
+      max-height: 742px;
+    }
+    .carousel-indicators {
+      margin-right: 5% !important;
+      > li, li.active {
+        height: 15px !important;
+        width: 15px !important;
+        border: 1px;
+        border-radius: 15px;
+        background-color: $colorWhite !important;
+        opacity: unset;
+      }
+      > li.active {
+        background-color: $colorGold !important;
+      }
+    }
+  }
 }
 
 .split-card-body .zone-hr > hr {
-  margin: 20px 36px 10px 0;
+  margin: 20px 0px 10px 0;
 }
 
 #Zone2 {
