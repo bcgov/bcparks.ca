@@ -44,12 +44,16 @@ export default function ParkPhotos({ photos }) {
       </div>
       <MobileStepper
         variant="dots"
-        steps={6}
+        steps={parkPhotosData.length}
         position="static"
         activeStep={activeStep}
         className={classes.root}
         nextButton={
-          <Button size="small" onClick={handleNext} disabled={activeStep === 5}>
+          <Button
+            size="small"
+            onClick={handleNext}
+            disabled={activeStep === parkPhotosData.length - 1}
+          >
             {theme.direction === "rtl" ? (
               <KeyboardArrowLeft />
             ) : (

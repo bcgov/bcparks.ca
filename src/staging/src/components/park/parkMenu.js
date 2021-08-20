@@ -139,7 +139,7 @@ export default function ParkMenu(props) {
                   <ListItemText primary={menu.text} />
                 </Link>
               </ListItem>
-              {menu.text === "Camping" && <>{drawerSubItems}</>}
+              {menu.text === "Camping" && <div>{drawerSubItems}</div>}
             </>
           ))}
       </List>
