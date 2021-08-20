@@ -1,38 +1,90 @@
 import React, { useState } from "react"
-import Lightbox from "react-image-lightbox"
-import "react-image-lightbox/style.css"
+import { makeStyles, useTheme } from "@material-ui/core/styles"
+import { MobileStepper, Button } from "@material-ui/core"
+import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft"
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight"
+import { GatsbyImage } from "gatsby-plugin-image"
+import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox"
+
+const useStyles = makeStyles({
+  root: {
+    maxHeight: 300,
+    flexGrow: 1,
+  },
+})
 
 export default function ParkPhotoGallery({ photos }) {
-  const [index, setIndex] = useState(0)
-  const [isOpen, setIsOpen] = useState(false)
+  const classes = useStyles()
+  const parkPhotos = photos.nodes.map((photo, index) => {
+    return {
+      index: index,
+      caption: photo.caption || "_",
+      image: photo.image.localFile.childImageSharp.gatsbyImageData,
+    }
+  })
 
-  const handleCloseRequest = () => {
-    setIsOpen(false)
-  }
+  const theme = useTheme()
+  const [activeStep, setActiveStep] = useState(0)
 
   const handleNext = () => {
-    setIndex((index + 1) % images.length)
+    setActiveStep(prevActiveStep => prevActiveStep + 1)
   }
 
-  const handlePrevious = () => {
-    setIndex((index + images.length - 1) % images.length)
+  const handleBack = () => {
+    setActiveStep(prevActiveStep => prevActiveStep - 1)
   }
 
-  const images = photos.nodes
+  if (parkPhotos.length === 0) return null
 
-  //   console.log(images[0].image.localFile.childImageSharp.gatsbyImageData.images.fallback.src)
   return (
     <>
-      <Lightbox
-        mainSrc={
-          images[index].image.localFile.childImageSharp.gatsbyImageData.images
-            .fallback.src
+      <div id="park-photo-carousel-container">
+        <SimpleReactLightbox>
+          <SRLWrapper>
+            <GatsbyImage
+              image={parkPhotos[activeStep].image}
+              alt={parkPhotos[activeStep].caption}
+            />
+            {parkPhotos
+              .filter(f => f.index !== activeStep)
+              .map((photo, index) => (
+                <GatsbyImage
+                  image={photo.image}
+                  alt={photo.caption}
+                  key={index}
+                />
+              ))}
+          </SRLWrapper>
+        </SimpleReactLightbox>
+      </div>
+      <MobileStepper
+        variant="dots"
+        steps={parkPhotos.length}
+        position="static"
+        activeStep={activeStep}
+        className={classes.root}
+        nextButton={
+          <Button
+            size="small"
+            onClick={handleNext}
+            disabled={activeStep === parkPhotos.length - 1}
+          >
+            {theme.direction === "rtl" ? (
+              <KeyboardArrowLeft />
+            ) : (
+              <KeyboardArrowRight />
+            )}
+          </Button>
         }
-        nextSrc={images[(index + 1) % images.length]}
-        prevSrc={images[(index + images.length - 1) % images.length]}
-        onCloseRequest={handleCloseRequest}
-        onMovePrevRequest={handlePrevious}
-        onMoveNextRequest={handleNext}
+        backButton={
+          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+            {theme.direction === "rtl" ? (
+              <KeyboardArrowRight />
+            ) : (
+              <KeyboardArrowLeft />
+            )}
+          </Button>
+        }
       />
     </>
   )

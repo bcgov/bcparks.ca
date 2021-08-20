@@ -15,7 +15,6 @@ import ParkFacility from "../components/park/parkFacility"
 import ParkMap from "../components/park/parkMapDetails"
 import MapLocation from "../components/park/mapLocation"
 import ParkMenu from "../components/park/parkMenu"
-import ScrollToTop from "../components/scrollToTop"
 import { makeStyles } from "@material-ui/core/styles"
 
 import "./parkTemplate.css"
@@ -63,7 +62,6 @@ export default function ParkTemplate({ data }) {
         <title>BC Parks | {park.protectedAreaName}</title>
       </Helmet>
       <Toolbar />
-      <ScrollToTop />
       <ParkHeader
         data={{
           protectedAreaName: park.protectedAreaName,

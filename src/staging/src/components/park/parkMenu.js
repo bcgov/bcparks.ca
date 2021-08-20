@@ -117,11 +117,13 @@ export default function ParkMenu(props) {
     <div className="nested-list">
       <List>
         {campingSubMenuItems.map((subMenu, index) => (
-          <ListItem button key={index}>
-            <Link to={subMenu.url}>
-              <ListItemText primary={subMenu.text} />
-            </Link>
-          </ListItem>
+          <div key={index}>
+            <ListItem button key={index}>
+              <Link to={subMenu.url}>
+                <ListItemText primary={subMenu.text} />
+              </Link>
+            </ListItem>
+          </div>
         ))}
       </List>
     </div>
@@ -133,14 +135,14 @@ export default function ParkMenu(props) {
         {menuItems
           .filter(m => m.visible)
           .map((menu, index) => (
-            <>
+            <div key={index}>
               <ListItem button key={index}>
                 <Link to={menu.url}>
                   <ListItemText primary={menu.text} />
                 </Link>
               </ListItem>
               {menu.text === "Camping" && <div>{drawerSubItems}</div>}
-            </>
+            </div>
           ))}
       </List>
     </div>
