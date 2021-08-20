@@ -25,7 +25,7 @@ export default function Advisory({ data }) {
   let alertIcon = blueAlertIcon
   let title = "There are no reported alerts for this park"
   if (data && advisories.length !== 0) {
-    const alertLevels = advisories.map(s => s.urgency.sequence)
+    const alertLevels = advisories.map(advisory => advisory.urgency.sequence)
     const maxAlertLevel = Math.max(...alertLevels)
     if (maxAlertLevel === 3) alertIcon = redAlertIcon
     if (maxAlertLevel === 2) alertIcon = yellowAlertIcon

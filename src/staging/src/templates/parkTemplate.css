@@ -61,6 +61,7 @@ a:link {
     left: 0%;
     width: 90%;
     z-index: 100;
+    filter: drop-shadow(1px 1px 1px #0f0f0f);
 }
 
 .park-status-top-grid {

@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Container, Collapse, Grid, Paper, IconButton } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import clsx from "clsx"
-import ParkPhoto from "./parkPhoto"
+import ParkPhotoGallery from "./parkPhotoGallery"
 import Heading from "./heading"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 
@@ -56,7 +56,7 @@ export default function ParkOverview({ data }) {
           </Grid>
           {data.photos.nodes.length !== 0 && (
             <Grid item xs={12} sm={12} md={8}>
-              <ParkPhoto photos={data.photos} />
+              <ParkPhotoGallery photos={data.photos} />
             </Grid>
           )}
         </Grid>

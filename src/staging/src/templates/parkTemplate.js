@@ -15,6 +15,7 @@ import ParkFacility from "../components/park/parkFacility"
 import ParkMap from "../components/park/parkMapDetails"
 import MapLocation from "../components/park/mapLocation"
 import ParkMenu from "../components/park/parkMenu"
+import ScrollToTop from "../components/scrollToTop"
 import { makeStyles } from "@material-ui/core/styles"
 
 import "./parkTemplate.css"
@@ -53,7 +54,7 @@ export default function ParkTemplate({ data }) {
     photos: photos,
   }
 
-  const randomPhoto =
+  const bannerPhoto =
     photos.nodes[Math.floor(Math.random() * photos.nodes.length)]
 
   return (
@@ -62,10 +63,11 @@ export default function ParkTemplate({ data }) {
         <title>BC Parks | {park.protectedAreaName}</title>
       </Helmet>
       <Toolbar />
+      <ScrollToTop />
       <ParkHeader
         data={{
           protectedAreaName: park.protectedAreaName,
-          photo: randomPhoto,
+          photo: bannerPhoto,
         }}
       />
 
@@ -223,7 +225,7 @@ export const query = graphql`
       }
       totalCount
     }
-    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }) {
+    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }, limit: 5) {
       nodes {
         orcs
         caption
