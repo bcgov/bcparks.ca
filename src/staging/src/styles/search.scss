@@ -1,9 +1,11 @@
-$globalFont: "BCSans",Verdana,Arial,sans serif;
+$globalFont: "BCSans", Verdana, Arial, sans serif;
 $colorBlue: #003366;
 $hoverBlue: #2684ff;
 $colorGrey: #eef1f5;
 $colorWhite: #fff;
+$colorBlack: #000;
 $bodyFont: 1rem;
+$headingFont: 2rem;
 
 .MuiTypography-root {
   font-family: $globalFont !important;
@@ -18,6 +20,8 @@ $bodyFont: 1rem;
 .park-search {
   font-family: $globalFont !important;
   width: 100%;
+  //To be removed
+  height: 600px !important;
 
   @media screen and (min-width: 576px) {
     position: relative;
@@ -71,19 +75,16 @@ $bodyFont: 1rem;
     font-size: 2rem;
     padding: 30px;
   }
-  .search-icon-fab {
-    background-color: rgba(252, 186, 25, 1);
-    margin-left: -30px !important;
-    margin-top: -9px !important;
-    width: 55px !important;
-    height: 55px !important;
-    .search-icon {
-      color: rgba(0, 51, 102, 0.8);
-      width: 40px !important;
-      height: 40px !important;
+
+  .park-search-text-box {
+    @media screen and (min-width: 576px) {
+      width: 135% !important;
     }
   }
+}
 
+.park-search,
+.search-results-main {
   .park-search-text-box {
     width: 80% !important;
 
@@ -107,13 +108,22 @@ $bodyFont: 1rem;
     .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
       border-color: transparent !important;
     }
-
-    @media screen and (min-width: 576px) {
-      width: 135% !important;
-    }
   }
   button:focus {
     outline: unset !important;
+  }
+
+  .search-icon-fab {
+    background-color: rgba(252, 186, 25, 1);
+    margin-left: -30px !important;
+    margin-top: -9px !important;
+    width: 55px !important;
+    height: 55px !important;
+    .search-icon {
+      color: rgba(0, 51, 102, 0.8);
+      width: 40px !important;
+      height: 40px !important;
+    }
   }
 }
 
@@ -140,6 +150,13 @@ $bodyFont: 1rem;
   .MuiPaper-root {
     color: $colorBlue !important;
   }
+
+  .MuiDialog-paperWidthSm {
+    max-width: 100% !important;
+  }
+}
+.park-filter-dialog,
+.search-results-main {
   .MuiCheckbox-root {
     color: #38598a !important;
     padding: 0px !important;
@@ -150,9 +167,6 @@ $bodyFont: 1rem;
     background-color: $colorGrey !important;
   }
 
-  .MuiDialog-paperWidthSm {
-    max-width: 100% !important;
-  }
   .park-filter-text {
     .MuiOutlinedInput-root {
       border-radius: 50px !important;
@@ -301,14 +315,70 @@ div[class$="-singleValue"] {
   display: inline-block;
 }
 
-#search-results {
-  box-sizing: border-box;
-  overflow: hidden;
-  z-index: 2;
-  top: 200px;
-  width: 100%;
-  padding: 0;
-  text-align: left;
+.flex-display {
+  display: flex !important;
+}
+
+.search-results-main {
+  color: $colorBlue !important;
+  font-family: $globalFont !important;
+
+  #search-results {
+    box-sizing: border-box;
+    overflow: hidden;
+    z-index: 2;
+    top: 200px;
+    width: 100%;
+    padding: 0;
+    text-align: left;
+  }
+  .headline-image {
+    width: 100% !important;
+    object-fit: cover !important;
+    height: 300px !important;
+    object-position: 0% 5%;
+  }
+
+  .headline-text {
+    color: $colorWhite;
+    text-shadow: 5px 5px 10px $colorBlack;
+  }
+  .search-results-container {
+    transform: translateY(-180px);
+  }
+
+  .search-results-list {
+    background-color: $colorWhite !important;
+    margin-top: 40px !important;
+    padding: 30px !important;
+  }
+
+  .search-results-quick-filter {
+    background-color: $colorWhite !important;
+    margin-top: 40px !important;
+    padding: 10px !important;
+
+    .park-filter-select [class*="-control"] {
+      border-radius: 5px !important;
+    }
+
+    .filter-heading {
+      padding-top: 20px;
+      padding-left: 20px;
+    }
+
+    .select-padding {
+      padding-top: 20px !important;
+      padding-left: 20px !important;
+      padding-right: 20px !important;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1600px !important;
+    }
+  }
 }
 
 @media (max-width: 575.98px) {

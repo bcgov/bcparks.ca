@@ -6,7 +6,7 @@ import Header from "../components/header"
 import Footer from "../components/footer"
 import Zone from "../components/zone"
 import Menu from "../components/Menu"
-import MainSearch from "../components/mainSearch"
+import MainSearch from "../components/search/main-search"
 import "../styles/home.scss"
 
 export const query = graphql`
