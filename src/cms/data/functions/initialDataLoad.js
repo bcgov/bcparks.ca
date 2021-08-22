@@ -35,8 +35,8 @@ const loadData = async () => {
       otherData.loadUrgency(),
       otherData.loadFireCentre(),
       otherData.loadFireZone(),
-      otherData.loadWebsites(),
-      otherData.loadPages(),
+      //otherData.loadWebsites(),
+      //otherData.loadPages(),
     ]).then(async () => {
       return Promise.all([
         parData.loadAdditionalParData(),
