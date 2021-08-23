@@ -48,7 +48,8 @@ const loadData = async () => {
         otherData.loadParkFacility(),
         otherData.loadParkName(),
         publicAdvisoryAudit.loadPublicAdvisoryAudit(),
-        parkPhoto.loadParkPhoto(),
+        pageMedia.loadPageMedia(),
+        parkPhoto.loadParkPhoto(),        
       ]).then(() => {
         strapi.log.info("------Data load completed------");
         return true;

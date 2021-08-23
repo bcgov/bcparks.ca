@@ -1,6 +1,5 @@
 "use strict";
 const initialDataLoad = require("../../data/functions/initialDataLoad");
-const additionalDataLoad = require("../../data/functions/additionalDataLoad");
 /**
  * An asynchronous bootstrap function that runs before
  * your application gets started.
@@ -14,5 +13,4 @@ const additionalDataLoad = require("../../data/functions/additionalDataLoad");
 module.exports = async () => {
   // Load seed data first run
   await initialDataLoad.seedData();
-  await additionalDataLoad.seedData();
 };
