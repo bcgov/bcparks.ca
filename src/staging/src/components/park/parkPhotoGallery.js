@@ -4,6 +4,7 @@ import { MobileStepper, Button } from "@material-ui/core"
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft"
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight"
 import { GatsbyImage } from "gatsby-plugin-image"
+import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox"
 
 const useStyles = makeStyles({
   root: {
@@ -12,11 +13,12 @@ const useStyles = makeStyles({
   },
 })
 
-export default function ParkPhotos({ photos }) {
+export default function ParkPhotoGallery({ photos }) {
   const classes = useStyles()
-  const parkPhotosData = photos.nodes.map(photo => {
+  const parkPhotos = photos.nodes.map((photo, index) => {
     return {
-      label: photo.caption || "_",
+      index: index,
+      caption: photo.caption || "_",
       image: photo.image.localFile.childImageSharp.gatsbyImageData,
     }
   })
@@ -32,24 +34,41 @@ export default function ParkPhotos({ photos }) {
     setActiveStep(prevActiveStep => prevActiveStep - 1)
   }
 
-  if (parkPhotosData.length === 0) return null
+  if (parkPhotos.length === 0) return null
 
   return (
     <>
       <div id="park-photo-carousel-container">
-        <GatsbyImage
-          image={parkPhotosData[activeStep].image}
-          alt={parkPhotosData[activeStep].label}
-        />
+        <SimpleReactLightbox>
+          <SRLWrapper>
+            <GatsbyImage
+              image={parkPhotos[activeStep].image}
+              alt={parkPhotos[activeStep].caption}
+            />
+            {parkPhotos
+              .filter(f => f.index !== activeStep)
+              .map((photo, index) => (
+                <GatsbyImage
+                  image={photo.image}
+                  alt={photo.caption}
+                  key={index}
+                />
+              ))}
+          </SRLWrapper>
+        </SimpleReactLightbox>
       </div>
       <MobileStepper
         variant="dots"
-        steps={6}
+        steps={parkPhotos.length}
         position="static"
         activeStep={activeStep}
         className={classes.root}
         nextButton={
-          <Button size="small" onClick={handleNext} disabled={activeStep === 5}>
+          <Button
+            size="small"
+            onClick={handleNext}
+            disabled={activeStep === parkPhotos.length - 1}
+          >
             {theme.direction === "rtl" ? (
               <KeyboardArrowLeft />
             ) : (
