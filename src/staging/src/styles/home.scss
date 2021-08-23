@@ -106,7 +106,7 @@ $desktopBreakpoint: 576px;
 
 .card-img > img {
   height: 316px;
-  max-width: 100%;
+  width: 100%;
   
   @media screen and (min-width: $desktopBreakpoint) {
     height: 579px;
