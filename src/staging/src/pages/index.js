@@ -8,6 +8,7 @@ import Zone from "../components/zone"
 import Menu from "../components/Menu"
 import MainSearch from "../components/mainSearch"
 import "../styles/home.scss"
+import Exclamation from "../images/alert 32px.png"
 
 export const query = graphql`
   query {
@@ -125,14 +126,14 @@ function AdvisoryBar() {
       <div className="alert alert-warning alert-dismissable rounded-0 d-block d-sm-none" role="alert" id="home-alert">
         <button type="button" className="close" data-dismiss="alert">×</button>
         <div className="row">
-          <div className="col-1 pl-0"><img className="alert-exclamation" src={`${cmsUrl}/uploads/alert_32px_520c5ebbca.png`} alt="exclamation" /></div>
+          <div className="col-1 pl-0"><img className="alert-exclamation" src={Exclamation} alt="exclamation" /></div>
           <div className="col-11 align-self-center"><span className="text-center">Some parks are currently affected by wildfire activity. <a href="#" className="alert-link d-inline-flex">See all advisories</a>.</span></div>
         </div>
       </div>
       <div className="alert alert-warning alert-dismissable rounded-0 d-none d-sm-block" role="alert" id="home-alert">
         <button type="button" className="close" data-dismiss="alert">×</button>
         <span className="text-center">
-          <img className="alert-exclamation d-inline-flex pr-4" src={`${cmsUrl}/uploads/alert_32px_520c5ebbca.png`} alt="exclamation" />
+          <img className="alert-exclamation d-inline-flex pr-4" src={Exclamation} alt="exclamation" />
           Some parks are currently affected by wildfire activity. <a href="#" className="alert-link d-inline-flex">See all advisories</a>.
         </span>
       </div>
