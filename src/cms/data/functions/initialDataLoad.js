@@ -5,6 +5,7 @@ const parData = require("./loadPar");
 const otherData = require("./loadOtherData");
 const publicAdvisoryAudit = require("./loadPublicAdvisoryAudit");
 const parkPhoto = require("./loadParkPhoto");
+const pageMedia = require("./loadPageMedia");
 
 const isFirstRun = async () => {
   const pluginStore = strapi.store({
