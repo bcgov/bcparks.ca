@@ -35,8 +35,8 @@ const loadData = async () => {
       otherData.loadUrgency(),
       otherData.loadFireCentre(),
       otherData.loadFireZone(),
-      otherData.loadWebsites(),
-      otherData.loadPages(),
+      //otherData.loadWebsites(),
+      //otherData.loadPages(),
     ]).then(async () => {
       return Promise.all([
         parData.loadAdditionalParData(),
@@ -48,7 +48,8 @@ const loadData = async () => {
         otherData.loadParkFacility(),
         otherData.loadParkName(),
         publicAdvisoryAudit.loadPublicAdvisoryAudit(),
-        parkPhoto.loadParkPhoto(),
+        pageMedia.loadPageMedia(),
+        parkPhoto.loadParkPhoto(),        
       ]).then(() => {
         strapi.log.info("------Data load completed------");
         return true;
