@@ -1,0 +1,31 @@
+.App {
+    font-family: sans-serif;
+  }
+  .scrollspy {
+    color: inherit
+  }
+
+   
+  ul, ul li {
+    list-style: disc !important;
+    color:red !important;
+ 
+  }
+
+  li {
+    margin: 10px;
+    padding: 10px 0;
+  }
+  a {
+    color: white;
+  }
+
+  .isCurrent {
+    font-weight: bold;
+  }
+  
+  .isCurrent a {
+    color: #f1a07a;
+    display: list-item;
+  }
+
