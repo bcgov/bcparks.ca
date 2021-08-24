@@ -168,6 +168,17 @@ $desktopBreakpoint: 576px;
   text-decoration: none;
 }
 
+.underline {
+  text-decoration: underline !important;
+}
+
+#home-alert {
+  color: $colorBlue;
+  a {
+    color: $colorBlue;
+  }
+}
+
 #home-advisories {
   color: $colorBlue;
   padding-top: 40px;
@@ -261,10 +272,10 @@ $desktopBreakpoint: 576px;
     bottom: 15%;
 
     > li, li.active {
-      width: 10px;
-      height: 10px;
+      width: 5px;
+      height: 5px;
       border: 1px;
-      border-radius: 10px;
+      border-radius: 5px;
       background-color: $colorWhite !important;
       opacity: unset;
     }
@@ -273,8 +284,8 @@ $desktopBreakpoint: 576px;
     }
   }
   .carousel-caption {
-    right: 5% !important;
-    bottom: 5% !important;
+    right: 2.5% !important;
+    bottom: 2.5% !important;
     padding-bottom: 0px !important;
     > p {
       padding-bottom: 0px !important;
@@ -289,7 +300,8 @@ $desktopBreakpoint: 576px;
       max-height: 742px;
     }
     .carousel-indicators {
-      margin-right: 5% !important;
+      margin-right: 32px !important;
+      bottom: 75px;
       > li, li.active {
         height: 15px !important;
         width: 15px !important;
@@ -301,6 +313,10 @@ $desktopBreakpoint: 576px;
       > li.active {
         background-color: $colorGold !important;
       }
+    }
+    .carousel-caption {
+      right: 32px !important;
+      bottom: 32px !important;
     }
   }
 }
