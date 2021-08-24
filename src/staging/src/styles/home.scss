@@ -305,6 +305,14 @@ $desktopBreakpoint: 576px;
   }
 }
 
+#carousel-down {
+  @media screen and (min-width: $desktopBreakpoint) { 
+    position: absolute;
+    top: calc(100% - 7.5vh);
+    font-size: 36px;
+  }
+}
+
 .split-card-body .zone-hr > hr {
   margin: 20px 0px 10px 0;
 }
