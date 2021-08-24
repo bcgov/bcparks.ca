@@ -95,7 +95,6 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
       ecoReserve,
       electricalHookup
     )
-    console.log(results)
     navigate("/park-search", {
       state: {
         searchResults: [...results],
@@ -105,6 +104,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
         searchText,
         activityItems,
         facilityItems,
+        protectedAreas,
       },
     })
   }

@@ -11,6 +11,20 @@ const searchParkByCriteria = (
   ecoReserve,
   electricalHookup
 ) => {
+  // Return all parks if no filter criteria is selected
+  if (
+    selectedActivities.length == 0 &&
+    selectedFacilities.length == 0 &&
+    !camping &&
+    !petFriendly &&
+    !wheelchair &&
+    !marine &&
+    !ecoReserve &&
+    !electricalHookup &&
+    searchText.length == 0
+  ) {
+    return protectedAreas
+  }
   const textResults = []
   const activityResults = []
   const facilityResults = []
@@ -44,9 +58,11 @@ const searchParkByCriteria = (
     facility: false,
   }
 
+  let results = []
+
   // Iterate through each park and filter based on search criteria
   protectedAreas.forEach(park => {
-    if (searchText) {
+    if (searchText && searchText.length > 0) {
       requiredResults.text = true
       searchParkNames(park, searchText, textResults)
       searchActivityText(park, searchText, textResults)
@@ -98,7 +114,6 @@ const searchParkByCriteria = (
     return []
   }
 
-  let results = []
   let isResultAvailable = false
 
   // Consolidate text search results -> 1

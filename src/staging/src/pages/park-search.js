@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import Header from "../components/header"
 import Menu from "../components/menu"
 import Footer from "../components/footer"
@@ -15,8 +15,11 @@ import {
   Divider,
   Chip,
   TextField,
+  Link,
   Fab,
+  Switch,
 } from "@material-ui/core"
+import { withStyles } from "@material-ui/core/styles"
 import SearchIcon from "@material-ui/icons/Search"
 import Select from "react-select"
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined"
@@ -46,73 +49,131 @@ export default function Home({ location, data }) {
   const [searchResults, setSearchResults] = useState(
     location.state.searchResults
   )
-
-  const [quickSearch, setQuickSearch] = useState(location.state.quickSearch)
-  const [selectedActivities, setSelectedActivities] = useState(
-    location.state.selectedActivities
-  )
-  const [selectedFacilities, setSelectedFacilities] = useState(
-    location.state.selectedFacilities
-  )
-  const [searchText, setSearchText] = useState(location.state.searchText)
+  const quickSearch = useRef(location.state.quickSearch)
+  const selectedActivities = useRef([...location.state.selectedActivities])
+  const selectedFacilities = useRef([...location.state.selectedFacilities])
+  const [inputText, setInputText] = useState(location.state.searchText)
+  const searchText = useRef(location.state.searchText)
   const activityItems = location.state.activityItems
   const facilityItems = location.state.facilityItems
   const filterSelections = useRef([])
+  const protectedAreas = location.state.protectedAreas
+  const [showOpenParks, setShowOpenParks] = useState(false)
 
-  const {
-    camping,
-    petFriendly,
-    wheelchair,
-    marine,
-    ecoReserve,
-    electricalHookup,
-  } = quickSearch
-
-  const handleQuickSearchChange = event => {
-    setQuickSearch({
-      ...quickSearch,
-      [event.target.name]: event.target.checked,
-    })
+  const handleQuickSearchChange = e => {
+    quickSearch.current = {
+      ...quickSearch.current,
+      [e.target.name]: e.target.checked,
+    }
+    searchParkFilter()
   }
 
-  const handleActivityDelete = chipToDelete => () => {
-    setSelectedActivities(chips =>
-      chips.filter(chip => chip.value !== chipToDelete.value)
+  const handleActivityDelete = chipToDelete => {
+    selectedActivities.current = selectedActivities.current.filter(
+      chip => chip.value !== chipToDelete.value
     )
   }
 
-  const handleFacilityDelete = chipToDelete => () => {
-    setSelectedFacilities(chips =>
-      chips.filter(chip => chip.value !== chipToDelete.value)
+  const handleFacilityDelete = chipToDelete => {
+    selectedFacilities.current = selectedFacilities.current.filter(
+      chip => chip.value !== chipToDelete.value
     )
   }
 
   const handleFilterDelete = chipToDelete => () => {
-    console.log(chipToDelete)
     if (chipToDelete.type === "activity") {
       handleActivityDelete(chipToDelete)
     } else {
       handleFacilityDelete(chipToDelete)
     }
     setFilters()
+    searchParkFilter()
+  }
+
+  const handleRemoveAllChips = () => {
+    selectedActivities.current = []
+    selectedFacilities.current = []
+    setFilters()
+    searchParkFilter()
+  }
+
+  const handleActivityAdd = activity => {
+    selectedActivities.current = [...activity]
+    setFilters()
+    searchParkFilter()
+  }
+
+  const handleFacilityAdd = facility => {
+    selectedFacilities.current = [...facility]
+    setFilters()
+    searchParkFilter()
   }
 
   const setFilters = () => {
     const filters = []
-    selectedActivities.forEach(a => {
+    selectedActivities.current.forEach(a => {
       filters.push({ ...a, type: "activity" })
     })
-    selectedFacilities.forEach(f => {
+    selectedFacilities.current.forEach(f => {
       filters.push({ ...f, type: "facility" })
     })
-    console.log(filters)
     filters.sort(labelCompare)
     filterSelections.current = [...filters]
   }
 
   setFilters()
 
-  const searchParkFilter = () => {}
+  const searchParkFilter = () => {
+    const results = searchParkByCriteria(
+      false,
+      protectedAreas,
+      selectedActivities.current,
+      selectedFacilities.current,
+      searchText.current,
+      quickSearch.current.camping,
+      quickSearch.current.petFriendly,
+      quickSearch.current.wheelchair,
+      quickSearch.current.marine,
+      quickSearch.current.ecoReserve,
+      quickSearch.current.electricalHookup
+    )
+    console.log(results)
+    setSearchResults([...results])
+  }
+
+  const CustomSwitch = withStyles(() => ({
+    root: {
+      width: 36,
+      height: 20,
+      padding: 0,
+      display: "flex",
+    },
+    switchBase: {
+      padding: 2,
+      color: "#fff",
+      "&$checked": {
+        transform: "translateX(16px)",
+        color: "#fff",
+        "& + $track": {
+          opacity: 1,
+          backgroundColor: "#003366",
+          borderColor: "#003366",
+        },
+      },
+    },
+    thumb: {
+      width: 16,
+      height: 16,
+      boxShadow: "none",
+    },
+    track: {
+      border: `1px solid #003366`,
+      borderRadius: 20 / 2,
+      opacity: 1,
+      backgroundColor: "#003366",
+    },
+    checked: {},
+  }))(Switch)
 
   return (
     <>
@@ -136,7 +197,7 @@ export default function Home({ location, data }) {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={camping}
+                          checked={quickSearch.current.camping}
                           onChange={handleQuickSearchChange}
                           name="camping"
                         />
@@ -147,7 +208,7 @@ export default function Home({ location, data }) {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={petFriendly}
+                          checked={quickSearch.current.petFriendly}
                           onChange={handleQuickSearchChange}
                           name="petFriendly"
                         />
@@ -158,7 +219,7 @@ export default function Home({ location, data }) {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={wheelchair}
+                          checked={quickSearch.current.wheelchair}
                           onChange={handleQuickSearchChange}
                           name="wheelchair"
                         />
@@ -169,7 +230,7 @@ export default function Home({ location, data }) {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={marine}
+                          checked={quickSearch.current.marine}
                           onChange={handleQuickSearchChange}
                           name="marine"
                         />
@@ -180,7 +241,7 @@ export default function Home({ location, data }) {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={ecoReserve}
+                          checked={quickSearch.current.ecoReserve}
                           onChange={handleQuickSearchChange}
                           name="ecoReserve"
                         />
@@ -191,7 +252,7 @@ export default function Home({ location, data }) {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={electricalHookup}
+                          checked={quickSearch.current.electricalHookup}
                           onChange={handleQuickSearchChange}
                           name="electricalHookup"
                         />
@@ -205,14 +266,11 @@ export default function Home({ location, data }) {
                   <Select
                     id="activities-select"
                     options={activityItems}
-                    value={selectedActivities}
+                    value={selectedActivities.current}
                     controlShouldRenderValue={false}
                     isClearable={false}
                     isMulti
-                    onChange={e => {
-                      setSelectedActivities(e)
-                      setFilters()
-                    }}
+                    onChange={handleActivityAdd}
                     className="park-filter-select"
                     variant="outlined"
                     placeholder="Activities"
@@ -228,14 +286,11 @@ export default function Home({ location, data }) {
                   <Select
                     id="facilities-select"
                     options={facilityItems}
-                    value={selectedFacilities}
+                    value={selectedFacilities.current}
                     controlShouldRenderValue={false}
                     isClearable={false}
                     isMulti
-                    onChange={e => {
-                      setSelectedFacilities(e)
-                      setFilters()
-                    }}
+                    onChange={handleFacilityAdd}
                     className="park-filter-select"
                     variant="outlined"
                     placeholder="Facilities"
@@ -267,12 +322,13 @@ export default function Home({ location, data }) {
                       variant="outlined"
                       placeholder="Search by park name, location, activity..."
                       className="park-search-text-box"
-                      value={searchText}
+                      value={inputText}
                       onChange={event => {
-                        setSearchText(event.target.value)
+                        setInputText(event.target.value)
                       }}
                       onKeyPress={ev => {
                         if (ev.key === "Enter") {
+                          searchText.current = inputText
                           searchParkFilter(true)
                           ev.preventDefault()
                         }
@@ -282,6 +338,7 @@ export default function Home({ location, data }) {
                       className="search-icon-fab"
                       aria-label="search"
                       onClick={() => {
+                        searchText.current = inputText
                         searchParkFilter(true)
                       }}
                     >
@@ -290,20 +347,87 @@ export default function Home({ location, data }) {
                   </div>
                 </div>
                 <div className="row  p20t">
-                  <div className="col-12">{searchResults.length} results</div>
-                </div>
-                <div className="row p20t">
                   <div className="col-12">
-                    {filterSelections.current.map(f => (
-                      <Chip
-                        key={f.label}
-                        label={f.label}
-                        onDelete={handleFilterDelete(f)}
-                        variant="outlined"
-                        className="park-filter-chip"
-                        deleteIcon={<HighlightOffOutlinedIcon />}
+                    {(selectedActivities.current.length !== 0 ||
+                      selectedFacilities.current.length !== 0 ||
+                      quickSearch.current.camping ||
+                      quickSearch.current.petFriendly ||
+                      quickSearch.current.wheelchair ||
+                      quickSearch.current.marine ||
+                      quickSearch.current.ecoReserve ||
+                      quickSearch.current.electricalHookup ||
+                      searchText.current.length !== 0) && (
+                      <>
+                        {searchResults.length > 0 && (
+                          <>
+                            {searchResults.length} search{" "}
+                            {searchResults.length === 1 && <>result</>}
+                            {searchResults.length !== 1 && <>results</>}{" "}
+                            {searchText.current.length > 0 && (
+                              <>for "{searchText.current}"</>
+                            )}
+                          </>
+                        )}
+                        {searchResults.length === 0 && <>No parks found</>}
+                      </>
+                    )}
+                  </div>
+                </div>
+                {filterSelections.current.length > 0 && (
+                  <>
+                    <div className="row p20t">
+                      <div className="col-12">
+                        {filterSelections.current.map(f => (
+                          <Chip
+                            key={f.label}
+                            label={f.label}
+                            onDelete={handleFilterDelete(f)}
+                            variant="outlined"
+                            className="park-filter-chip"
+                            deleteIcon={<HighlightOffOutlinedIcon />}
+                          />
+                        ))}
+                        <Link
+                          component="button"
+                          variant="inherit"
+                          className="remove-link"
+                          onClick={handleRemoveAllChips}
+                        >
+                          Remove all
+                        </Link>
+                      </div>
+                    </div>
+                    <Divider className="m20t" />
+                  </>
+                )}
+                <div className="row p20t">
+                  <div className="col-lg-8 col-md-8 col-sm-12">
+                    <div className="park-af-list pr7">
+                      <i>Show all</i>
+                    </div>
+                    <div className="park-af-list pr7">
+                      <CustomSwitch
+                        checked={showOpenParks}
+                        onChange={e => {
+                          setShowOpenParks(e.target.checked)
+                        }}
+                        name="showOpenParks"
+                        className="mtm5"
                       />
-                    ))}
+                    </div>
+                    <div className="park-af-list">
+                      <i>Only parks open for public access</i>
+                    </div>
+                  </div>
+                  <div className="col-lg-4 col-md-4 col-sm-12">
+                    <Select
+                      className="park-filter-select"
+                      variant="outlined"
+                      options={[
+                        { value: "ASC", label: "Sort A-Z" },
+                        { value: "DESC", label: "Sort Z-A" },
+                      ]}
+                    />
                   </div>
                 </div>
                 <Divider className="m20t" />
@@ -322,25 +446,35 @@ export default function Home({ location, data }) {
                             <br />
                             <div className="row">
                               <div className="col-6">
-                                <b>Activities: </b>
+                                <div className="park-af-list pr3">
+                                  <b>Activities: </b>
+                                </div>
                                 {r.parkActivities.map((a, index2) => (
-                                  <span key={index2}>
+                                  <div
+                                    key={index2}
+                                    className="park-af-list pr3"
+                                  >
                                     {a.name.split(":")[1]}
                                     {index2 === r.parkActivities.length - 1
                                       ? ""
                                       : ", "}{" "}
-                                  </span>
+                                  </div>
                                 ))}
                               </div>
                               <div className="col-6">
-                                <b>Facilities: </b>
+                                <div className="park-af-list pr3">
+                                  <b>Facilities:</b>
+                                </div>
                                 {r.parkFacilities.map((f, index3) => (
-                                  <span key={index3}>
+                                  <div
+                                    key={index3}
+                                    className="park-af-list pr3"
+                                  >
                                     {f.name.split(":")[1]}
                                     {index3 === r.parkFacilities.length - 1
                                       ? ""
                                       : ", "}{" "}
-                                  </span>
+                                  </div>
                                 ))}
                               </div>
                             </div>

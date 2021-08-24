@@ -17,6 +17,50 @@ $headingFont: 2rem;
   font-family: $globalFont !important;
 }
 
+.park-search,
+.search-results-main {
+  .park-search-text-box {
+    width: 80% !important;
+
+    .MuiOutlinedInput-root {
+      width: 100% !important;
+      max-width: 700px !important;
+      background-color: $colorWhite !important;
+      border: none !important;
+      border-radius: 50px !important;
+      font-size: $bodyFont !important;
+      font-family: $globalFont !important;
+    }
+    .MuiOutlinedInput-input {
+      padding: 10px 20px !important;
+      margin-right: 10px !important;
+    }
+    .MuiOutlinedInput-root:focus {
+      outline: none !important;
+      outline-offset: 1px !important;
+    }
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+      border: 1px solid $colorBlue !important;
+    }
+  }
+  button:focus {
+    outline: unset !important;
+  }
+
+  .search-icon-fab {
+    background-color: rgba(252, 186, 25, 1);
+    margin-left: -30px !important;
+    margin-top: -9px !important;
+    width: 55px !important;
+    height: 55px !important;
+    .search-icon {
+      color: rgba(0, 51, 102, 0.8);
+      width: 40px !important;
+      height: 40px !important;
+    }
+  }
+}
+
 .park-search {
   font-family: $globalFont !important;
   width: 100%;
@@ -83,50 +127,6 @@ $headingFont: 2rem;
   }
 }
 
-.park-search,
-.search-results-main {
-  .park-search-text-box {
-    width: 80% !important;
-
-    .MuiOutlinedInput-root {
-      width: 100% !important;
-      max-width: 700px !important;
-      background-color: $colorWhite !important;
-      border: none !important;
-      border-radius: 50px !important;
-      font-size: $bodyFont !important;
-      font-family: $globalFont !important;
-    }
-    .MuiOutlinedInput-input {
-      padding: 10px 20px !important;
-      margin-right: 10px !important;
-    }
-    .MuiOutlinedInput-root:focus {
-      outline: none !important;
-      outline-offset: 1px !important;
-    }
-    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-      border-color: transparent !important;
-    }
-  }
-  button:focus {
-    outline: unset !important;
-  }
-
-  .search-icon-fab {
-    background-color: rgba(252, 186, 25, 1);
-    margin-left: -30px !important;
-    margin-top: -9px !important;
-    width: 55px !important;
-    height: 55px !important;
-    .search-icon {
-      color: rgba(0, 51, 102, 0.8);
-      width: 40px !important;
-      height: 40px !important;
-    }
-  }
-}
-
 .park-search-text-wrapper {
   @media screen and (min-width: 576px) {
     padding-left: 40px !important;
@@ -152,7 +152,7 @@ $headingFont: 2rem;
   }
 
   .MuiDialog-paperWidthSm {
-    max-width: 100% !important;
+    max-width: 700px !important;
   }
 }
 .park-filter-dialog,
@@ -289,6 +289,18 @@ div[class$="-singleValue"] {
   padding: 20px 30px !important;
 }
 
+.pr3 {
+  padding-right: 3px !important;
+}
+
+.pr7 {
+  padding-right: 15px !important;
+}
+
+.mtm5 {
+  margin-top: 5px !important;
+}
+
 .bcgov-normal-blue {
   color: $colorWhite !important;
   font-weight: 700 !important;
@@ -312,7 +324,11 @@ div[class$="-singleValue"] {
 }
 
 .bcgov-loader-show {
-  display: inline-block;
+  display: inline-block !important;
+}
+
+.park-af-list {
+  display: inline-block !important;
 }
 
 .flex-display {
@@ -353,14 +369,14 @@ div[class$="-singleValue"] {
     padding: 30px !important;
   }
 
+  .park-filter-select [class*="-control"] {
+    border-radius: 5px !important;
+  }
+
   .search-results-quick-filter {
     background-color: $colorWhite !important;
     margin-top: 40px !important;
     padding: 10px !important;
-
-    .park-filter-select [class*="-control"] {
-      border-radius: 5px !important;
-    }
 
     .filter-heading {
       padding-top: 20px;
@@ -372,6 +388,11 @@ div[class$="-singleValue"] {
       padding-left: 20px !important;
       padding-right: 20px !important;
     }
+  }
+
+  .remove-link {
+    display: inline-block !important;
+    padding-left: 20px !important;
   }
 
   @media (min-width: 1200px) {
