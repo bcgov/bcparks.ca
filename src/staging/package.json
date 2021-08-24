@@ -37,6 +37,7 @@
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-icons": "^3.6.1",
+    "react-scrollspy": "^3.4.3",
     "react-select": "^4.3.1",
     "react-typography": "^0.16.19",
     "sass": "^1.37.5",

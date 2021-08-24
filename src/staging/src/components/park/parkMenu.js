@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core"
 import MenuIcon from "@material-ui/icons/Menu"
 import { makeStyles, useTheme } from "@material-ui/core/styles"
+import Scrollspy from "react-scrollspy"
 import { Link } from "gatsby"
 
 const drawerWidth = 280
@@ -74,19 +75,19 @@ export default function ParkMenu(props) {
   }
 
   const menuItems = [
-    { text: "Park Overview", url: "#park-overview-container", visible: true },
+    { text: "Park Overview", url: "park-overview-container", visible: true },
     {
       text: `Alerts (${alertsCount})`,
-      url: "#park-advisory-details-container",
+      url: "park-advisory-details-container",
       visible: true,
     },
-    { text: "Camping", url: "#park-camping-details-container", visible: true },
-    { text: "Facilities", url: "#park-facility-container", visible: true },
-    { text: "Activities", url: "#park-activity-container", visible: true },
-    { text: "Maps and Location", url: "#park-map-container", visible: true },
+    { text: "Camping", url: "park-camping-details-container", visible: true },
+    { text: "Facilities", url: "park-facility-container", visible: true },
+    { text: "Activities", url: "park-activity-container", visible: true },
+    { text: "Maps and Location", url: "park-map-container", visible: true },
     {
       text: "Learn about this park",
-      url: "#park-about-container",
+      url: "park-about-container",
       visible: true,
     },
   ]
@@ -108,18 +109,19 @@ export default function ParkMenu(props) {
   campingFacilities.forEach(c => {
     const subMenu = {
       text: c.facilityName,
-      url: "#park-camping-list-container",
+      url: "park-camping-list-container",
     }
     campingSubMenuItems.push(subMenu)
   })
 
+  const menuFiltered = menuItems.filter(m => m.visible)
   const drawerSubItems = (
     <div className="nested-list">
       <List>
         {campingSubMenuItems.map((subMenu, index) => (
           <div key={index}>
             <ListItem button key={index}>
-              <Link to={subMenu.url}>
+              <Link to={`#${subMenu.url}`}>
                 <ListItemText primary={subMenu.text} />
               </Link>
             </ListItem>
@@ -131,20 +133,18 @@ export default function ParkMenu(props) {
 
   const drawerItems = (
     <div>
-      <List>
-        {menuItems
-          .filter(m => m.visible)
-          .map((menu, index) => (
-            <div key={index}>
-              <ListItem button key={index}>
-                <Link to={menu.url}>
-                  <ListItemText primary={menu.text} />
-                </Link>
-              </ListItem>
-              {menu.text === "Camping" && <div>{drawerSubItems}</div>}
-            </div>
-          ))}
-      </List>
+      <Scrollspy
+        className="scrollspy"
+        items={menuFiltered.map(m => m.url)}
+        currentClassName="isCurrent"
+        offset="90"
+      >
+        {menuFiltered.map((menu, index) => (
+          <li button key={index}>
+            <a href={`#${menu.url}`}>{menu.text}</a>
+          </li>
+        ))}
+      </Scrollspy>
     </div>
   )
 
