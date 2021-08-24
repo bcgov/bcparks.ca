@@ -148,29 +148,6 @@ export default function ParkMenu(props) {
     </div>
   )
 
-  const drawerItems1 = (
-    <div>
-      <List>
-        <Scrollspy
-          className="scrollspy"
-          items={menuFiltered.map(m => m.url)}
-          currentClassName="isCurrent"
-        >
-          {menuFiltered.map((menu, index) => (
-            <div key={index}>
-              <ListItem button key={index}>
-                <Link to={`#${menu.url}`}>
-                  <ListItemText primary={menu.text} />
-                </Link>
-              </ListItem>
-              {menu.text === "Camping" && <div>{drawerSubItems}</div>}
-            </div>
-          ))}
-        </Scrollspy>
-      </List>
-    </div>
-  )
-
   const container =
     window !== undefined ? () => window().document.body : undefined
 
