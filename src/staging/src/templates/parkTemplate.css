@@ -28,6 +28,32 @@ a:link {
     padding: 2px;
 }
 
+
+#park-menu-container ul {
+    list-style: disc !important;
+  }
+
+#park-menu-container li {
+    margin: 5px;
+    padding: 5px 20px;
+  }
+
+#park-menu-container a {
+    color: #38598a;
+  }
+
+#park-menu-container .isCurrent {
+    font-weight: bold;
+  }
+
+#park-menu-container .isCurrent a {
+    font-weight: bold;
+    display: list-item;
+  }
+
+
+
+
 #park-photo-carousel-container{
     max-height:300px;
     overflow: hidden;

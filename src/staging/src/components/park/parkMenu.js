@@ -19,8 +19,6 @@ import { makeStyles, useTheme } from "@material-ui/core/styles"
 import Scrollspy from "react-scrollspy"
 import { Link } from "gatsby"
 
-import "./styles.css"
-
 const drawerWidth = 280
 
 const useStyles = makeStyles(theme => ({
@@ -139,6 +137,7 @@ export default function ParkMenu(props) {
         className="scrollspy"
         items={menuFiltered.map(m => m.url)}
         currentClassName="isCurrent"
+        offset="90"
       >
         {menuFiltered.map((menu, index) => (
           <li button key={index}>
