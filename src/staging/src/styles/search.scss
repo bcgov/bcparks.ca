@@ -15,11 +15,15 @@ $bodyFont: 1rem;
   font-family: $globalFont !important;
 }
 
+.heading-white-space {
+  white-space: normal;
+}
+
 .park-search {
   font-family: $globalFont !important;
   width: 100%;
 
-  @media screen and (min-width: 576px) {
+  @media screen and (min-width: 801px) {
     position: relative;
     max-height: 742px;
   }
@@ -44,18 +48,24 @@ $bodyFont: 1rem;
     font-size: 1.4rem;
     color: rgba(255, 249, 249, 1);
 
-    @media screen and (min-width: 576px) {
+    // Handling for awkward tablet breakpoints
+    @media screen and (min-width: 575px) and (max-width: 800px) {
+      height: 275px;
+      top: 22.5%;
+    }
+
+    @media screen and (min-width: 801px) {
       top: unset;
       bottom: 0;
-      transform: translateY(0);
-      width: 50%;
+      width: 45%;
       height: 100%;
-      clip-path: polygon(0% 0%, 60% 0%, 100% 100%, 0% 100%);
+      transform: skewX(15deg);
+      transform-origin: bottom;
     }
   }
 
   .park-search-container-inner {
-    @media screen and (min-width: 576px) {
+    @media screen and (min-width: 801px) {
       height: 100%;
       > div {
         padding-left: 15%;
@@ -108,8 +118,8 @@ $bodyFont: 1rem;
       border-color: transparent !important;
     }
 
-    @media screen and (min-width: 576px) {
-      width: 135% !important;
+    @media screen and (min-width: 801px) {
+      width: 85% !important;
     }
   }
   button:focus {
@@ -118,7 +128,7 @@ $bodyFont: 1rem;
 }
 
 .park-search-text-wrapper {
-  @media screen and (min-width: 576px) {
+  @media screen and (min-width: 801px) {
     padding-left: 40px !important;
   }
 }
@@ -224,6 +234,11 @@ div[class$="-singleValue"] {
 
 .park-search-text {
   padding-left: 40px !important;
+
+  @media screen and (min-width: 801px) {
+    transform: skewX(-15deg);
+    padding-left: 50px !important;
+  }
 }
 
 .park-search-filter {
@@ -232,8 +247,9 @@ div[class$="-singleValue"] {
   font-size: $bodyFont !important;
   text-decoration: underline !important;
 
-  @media screen and (min-width: 576px) {
+  @media screen and (min-width: 801px) {
     padding-left: 25px !important;
+    transform: skewX(-15deg);
   }
 }
 
@@ -245,7 +261,9 @@ div[class$="-singleValue"] {
     white-space: normal;
   }
 
-  @media screen and (min-width: 576px) {
+  @media screen and (min-width: 801px) {
+    transform: skewX(-15deg);
+    padding-left: 80px !important;
     > h2 {
       font-size: 34px;
     }

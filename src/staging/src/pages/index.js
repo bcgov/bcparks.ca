@@ -1,5 +1,3 @@
-// TODO: Fix .park-search-intro text cut off(desktop view)
-
 import React from "react"
 import { graphql } from "gatsby"
 import Header from "../components/header"
@@ -128,14 +126,14 @@ function AdvisoryBar() {
         <button type="button" className="close" data-dismiss="alert">×</button>
         <div className="row">
           <div className="col-1 pl-0"><img className="alert-exclamation" src={Exclamation} alt="exclamation" /></div>
-          <div className="col-11 align-self-center"><span className="text-center">Some parks are currently affected by wildfire activity. <a href="#" className="alert-link d-inline-flex">See all advisories</a>.</span></div>
+          <div className="col-11 align-self-center"><span className="text-center">Some parks are currently affected by wildfire activity. <a href="#" className="d-inline-flex underline">See all advisories</a>.</span></div>
         </div>
       </div>
       <div className="alert alert-warning alert-dismissable rounded-0 d-none d-sm-block" role="alert" id="home-alert">
         <button type="button" className="close" data-dismiss="alert">×</button>
         <span className="text-center">
           <img className="alert-exclamation d-inline-flex pr-4" src={Exclamation} alt="exclamation" />
-          Some parks are currently affected by wildfire activity. <a href="#" className="alert-link d-inline-flex">See all advisories</a>.
+          Some parks are currently affected by wildfire activity. <a href="#" className="d-inline-flex underline">See all advisories</a>.
         </span>
       </div>
     </>

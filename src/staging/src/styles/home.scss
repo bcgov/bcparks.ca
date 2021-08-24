@@ -270,6 +270,7 @@ $desktopBreakpoint: 576px;
 #home-carousel {
   .carousel-indicators {
     bottom: 15%;
+    justify-content: center;
 
     > li, li.active {
       width: 5px;
@@ -292,7 +293,7 @@ $desktopBreakpoint: 576px;
     }
   }
 
-  @media screen and (min-width: $desktopBreakpoint) {
+  @media screen and (min-width: 801px) {
     .carousel-item img {
       height: auto;
     }
@@ -302,6 +303,7 @@ $desktopBreakpoint: 576px;
     .carousel-indicators {
       margin-right: 32px !important;
       bottom: 75px;
+      justify-content: flex-end;
       > li, li.active {
         height: 15px !important;
         width: 15px !important;
@@ -322,7 +324,7 @@ $desktopBreakpoint: 576px;
 }
 
 #carousel-down {
-  @media screen and (min-width: $desktopBreakpoint) { 
+  @media screen and (min-width: 801px) { 
     position: absolute;
     top: calc(100% - 7.5vh);
     font-size: 36px;
