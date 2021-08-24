@@ -7,6 +7,8 @@ import "../styles/search.scss"
 import {
   searchParkByCriteria,
   labelCompare,
+  sortAsc,
+  sortDesc,
 } from "../components/search/search-util"
 import {
   Checkbox,
@@ -59,6 +61,10 @@ export default function Home({ location, data }) {
   const filterSelections = useRef([])
   const protectedAreas = location.state.protectedAreas
   const [showOpenParks, setShowOpenParks] = useState(false)
+  const sortOption = useRef({
+    value: "ASC",
+    label: "Sort A-Z",
+  })
 
   const handleQuickSearchChange = e => {
     quickSearch.current = {
@@ -137,8 +143,18 @@ export default function Home({ location, data }) {
       quickSearch.current.ecoReserve,
       quickSearch.current.electricalHookup
     )
-    console.log(results)
+
     setSearchResults([...results])
+  }
+
+  const sortParks = () => {
+    if (sortOption.current.value === "ASC") {
+      const sortedResults = searchResults.sort(sortAsc)
+      setSearchResults([...sortedResults])
+    } else {
+      const sortedResults = searchResults.sort(sortDesc)
+      setSearchResults([...sortedResults])
+    }
   }
 
   const CustomSwitch = withStyles(() => ({
@@ -421,12 +437,17 @@ export default function Home({ location, data }) {
                   </div>
                   <div className="col-lg-4 col-md-4 col-sm-12">
                     <Select
+                      value={sortOption.current}
                       className="park-filter-select"
                       variant="outlined"
                       options={[
                         { value: "ASC", label: "Sort A-Z" },
                         { value: "DESC", label: "Sort Z-A" },
                       ]}
+                      onChange={e => {
+                        sortOption.current = e
+                        sortParks()
+                      }}
                     />
                   </div>
                 </div>

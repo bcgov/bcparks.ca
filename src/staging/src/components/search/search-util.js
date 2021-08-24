@@ -189,12 +189,16 @@ const searchParkByCriteria = (
     }
 
     // Consolidate text results and quick search results -> 8 = 1 n 7
-    if (groupedQuickSearchResults.length > 0) {
-      if (isResultAvailable) {
-        results = results.filter(t => groupedQuickSearchResults.includes(t))
+    if (isQuickSearchResultAvailable) {
+      if (groupedQuickSearchResults.length > 0) {
+        if (isResultAvailable) {
+          results = results.filter(t => groupedQuickSearchResults.includes(t))
+        } else {
+          results = [...groupedQuickSearchResults]
+          isResultAvailable = true
+        }
       } else {
-        results = [...groupedQuickSearchResults]
-        isResultAvailable = true
+        return []
       }
     }
 
@@ -382,4 +386,24 @@ const labelCompare = (a, b) => {
   return 0
 }
 
-export { searchParkByCriteria, labelCompare }
+const sortAsc = (a, b) => {
+  if (a.protectedAreaName < b.protectedAreaName) {
+    return -1
+  }
+  if (a.protectedAreaName > b.protectedAreaName) {
+    return 1
+  }
+  return 0
+}
+
+const sortDesc = (a, b) => {
+  if (a.protectedAreaName > b.protectedAreaName) {
+    return -1
+  }
+  if (a.protectedAreaName < b.protectedAreaName) {
+    return 1
+  }
+  return 0
+}
+
+export { searchParkByCriteria, labelCompare, sortAsc, sortDesc }
