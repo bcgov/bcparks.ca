@@ -42,10 +42,6 @@ a:link {
     color: #38598a;
   }
 
-#park-menu-container .isCurrent {
-    font-weight: bold;
-  }
-
 #park-menu-container .isCurrent a {
     font-weight: bold;
     display: list-item;
