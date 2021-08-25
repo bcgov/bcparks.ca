@@ -50,10 +50,7 @@ a:link {
 
 
 
-#park-photo-carousel-container{
-    max-height:300px;
-    overflow: hidden;
-}
+
 
 #park-header-container {
     max-height:200px;
@@ -97,7 +94,7 @@ a:link {
     font-family: BCSans, Verdana, Arial, "sans-serif"  !important;
 }
 
-#park-info-container .MuiButton-root {
+.MuiButton-root {
     border:none  !important;
     outline:none  !important;
 }
