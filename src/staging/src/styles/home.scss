@@ -15,6 +15,15 @@ $desktopBreakpoint: 576px;
 .zone-links {
   padding: 0 20px 0 20px;
   margin-top: 40px;
+  // Normally would use .row gutters but something was causing x overflow, so this will work for now
+  @media screen and (min-width: $desktopBreakpoint) {
+    .advisory:first-child {
+      padding-right: 5px;
+    }
+    .advisory:last-child {
+      padding-left: 5px;
+    }  
+  }
 }
 
 .zone-cards {
@@ -80,7 +89,7 @@ $desktopBreakpoint: 576px;
   background-color: unset !important;
 
   @media screen and (min-width: $desktopBreakpoint) {
-    width: fit-content;
+    width: 100%;
   }
 }
 
@@ -113,9 +122,12 @@ $desktopBreakpoint: 576px;
   }
 }
 
-.full-horizontal-img > img {
-  max-height: 219px;
-  max-width: 400px;
+.full-horizontal-img {
+  height: 100%;
+  > img {
+    height: 100%;
+    max-width: 90vw;
+  }
 
   @media screen and (min-width: $desktopBreakpoint) {
     max-width: fit-content;
@@ -243,10 +255,6 @@ $desktopBreakpoint: 576px;
   }
   .split-card .col-6 {
     background-color: $colorGrey;
-  }
-  .full-horizontal-img > img {
-    max-height: 219px;
-    max-width: 400px;
   }
 
   @media screen and (min-width: $desktopBreakpoint) {

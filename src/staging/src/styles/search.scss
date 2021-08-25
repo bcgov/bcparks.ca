@@ -36,7 +36,7 @@ $bodyFont: 1rem;
     position: absolute;
     top: 16%;
     z-index: 1299;
-    height: 227px;
+    height: auto;
     overflow: visible;
     width: 100%;
     background-color: rgba(0, 51, 102, 0.8) !important;
@@ -229,15 +229,18 @@ div[class$="-singleValue"] {
 }
 
 .park-search-text-container {
-  padding-top: 20px !important;
+  padding: 20px 0 20px 0 !important;
 }
 
 .park-search-text {
-  padding-left: 40px !important;
-
+  @media screen and (min-width: 575.98px) and (max-width: 800px) {
+    padding-left: 20px !important;
+    text-align: left;
+  }
   @media screen and (min-width: 801px) {
     transform: skewX(-15deg);
-    padding-left: 50px !important;
+    padding-left: 25px !important;
+    padding-right: 20px !important;
   }
 }
 
@@ -248,14 +251,13 @@ div[class$="-singleValue"] {
   text-decoration: underline !important;
 
   @media screen and (min-width: 801px) {
-    padding-left: 25px !important;
+    padding-left: 40px !important;
     transform: skewX(-15deg);
   }
 }
 
 .park-search-intro {
-  padding-left: 40px;
-  padding-right: 40px;
+  padding: 0 20px 0 20px !important;
   > p {
     font-size: 16px;
     white-space: normal;
@@ -266,6 +268,7 @@ div[class$="-singleValue"] {
     padding-left: 80px !important;
     > h2 {
       font-size: 34px;
+      padding-right: 20px;
     }
     > p {
       font-size: 20px;
