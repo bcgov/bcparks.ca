@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { graphql } from "gatsby"
 import Header from "../components/header"
 import Menu from "../components/menu"
@@ -21,6 +21,7 @@ import {
   Fab,
   Switch,
 } from "@material-ui/core"
+import Pagination from "@material-ui/lab/Pagination"
 import { withStyles } from "@material-ui/core/styles"
 import SearchIcon from "@material-ui/icons/Search"
 import Select from "react-select"
@@ -48,6 +49,7 @@ export const query = graphql`
 `
 
 export default function Home({ location, data }) {
+  const itemsPerPage = 10
   const [searchResults, setSearchResults] = useState(
     location.state.searchResults
   )
@@ -65,6 +67,10 @@ export default function Home({ location, data }) {
     value: "ASC",
     label: "Sort A-Z",
   })
+  const [numberOfPages, setNumberOfPages] = useState(
+    Math.ceil(location.state.searchResults.length / itemsPerPage)
+  )
+  const [currentPage, setCurrentPage] = useState(1)
 
   const handleQuickSearchChange = e => {
     quickSearch.current = {
@@ -115,6 +121,10 @@ export default function Home({ location, data }) {
     searchParkFilter()
   }
 
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value)
+  }
+
   const setFilters = () => {
     const filters = []
     selectedActivities.current.forEach(a => {
@@ -145,6 +155,8 @@ export default function Home({ location, data }) {
     )
 
     setSearchResults([...results])
+    setNumberOfPages(Math.ceil(results.length / itemsPerPage))
+    setCurrentPage(1)
   }
 
   const sortParks = () => {
@@ -190,6 +202,15 @@ export default function Home({ location, data }) {
     },
     checked: {},
   }))(Switch)
+
+  useEffect(() => {
+    // get data from GitHub api
+    // fetch(`${process.env.GATSBY_REACT_APP_CMS_BASE_URL}`)
+    //   .then(response => response.json()) // parse JSON from request
+    //   .then(resultData => {
+    //     setStarsCount(resultData.stargazers_count)
+    //   }) // set data for the number of stars
+  }, [])
 
   return (
     <>
@@ -331,7 +352,7 @@ export default function Home({ location, data }) {
                     activity or by the amenity or service you require.
                   </div>
                 </div>
-                <div className="row">
+                <div className="row p20t">
                   <div className="col-lg-7 col-md-7 col-sm-12 pt-sm-4 flex-display">
                     <TextField
                       id="park-search-text"
@@ -457,56 +478,84 @@ export default function Home({ location, data }) {
                 </div>
                 {searchResults && searchResults.length > 0 && (
                   <div>
-                    {searchResults.map((r, index1) => (
-                      <div key={index1}>
-                        <div className="row">
-                          <div className="col-lg-8">
-                            <div>
-                              <h2>{r.protectedAreaName}</h2>
-                            </div>
-                            <br />
-                            <div className="row">
-                              <div className="col-6">
-                                <div className="park-af-list pr3">
-                                  <b>Activities: </b>
-                                </div>
-                                {r.parkActivities.map((a, index2) => (
-                                  <div
-                                    key={index2}
-                                    className="park-af-list pr3"
-                                  >
-                                    {a.name.split(":")[1]}
-                                    {index2 === r.parkActivities.length - 1
-                                      ? ""
-                                      : ", "}{" "}
-                                  </div>
-                                ))}
+                    {searchResults
+                      .slice(
+                        (currentPage - 1) * itemsPerPage,
+                        searchResults.length == 1
+                          ? searchResults.length
+                          : currentPage * itemsPerPage >
+                            searchResults.length - 1
+                          ? searchResults.length - 1
+                          : currentPage * itemsPerPage
+                      )
+                      .map((r, index1) => (
+                        <div key={index1}>
+                          <div className="row">
+                            <div className="col-lg-8">
+                              <div>
+                                <h2>{r.protectedAreaName}</h2>
                               </div>
-                              <div className="col-6">
-                                <div className="park-af-list pr3">
-                                  <b>Facilities:</b>
-                                </div>
-                                {r.parkFacilities.map((f, index3) => (
-                                  <div
-                                    key={index3}
-                                    className="park-af-list pr3"
-                                  >
-                                    {f.name.split(":")[1]}
-                                    {index3 === r.parkFacilities.length - 1
-                                      ? ""
-                                      : ", "}{" "}
+                              <br />
+                              <div className="row">
+                                <div className="col-6">
+                                  <div className="park-af-list pr3">
+                                    <b>Activities: </b>
                                   </div>
-                                ))}
+                                  {r.parkActivities.map((a, index2) => (
+                                    <div
+                                      key={index2}
+                                      className="park-af-list pr3"
+                                    >
+                                      {a.name.split(":")[1]}
+                                      {index2 === r.parkActivities.length - 1
+                                        ? ""
+                                        : ", "}{" "}
+                                    </div>
+                                  ))}
+                                </div>
+                                <div className="col-6">
+                                  <div className="park-af-list pr3">
+                                    <b>Facilities:</b>
+                                  </div>
+                                  {r.parkFacilities.map((f, index3) => (
+                                    <div
+                                      key={index3}
+                                      className="park-af-list pr3"
+                                    >
+                                      {f.name.split(":")[1]}
+                                      {index3 === r.parkFacilities.length - 1
+                                        ? ""
+                                        : ", "}{" "}
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
+                              <br />
                             </div>
-                            <br />
+                            <div className="col-lg-4"></div>
                           </div>
-                          <div className="col-lg-4"></div>
+                          <Divider />
+                          <br />
                         </div>
-                        <Divider />
-                        <br />
+                      ))}
+                    <div className="flex-display p20t m20t">
+                      <div className="m-auto">
+                        <Pagination
+                          count={numberOfPages}
+                          page={currentPage}
+                          onChange={handlePageChange}
+                          size="large"
+                          className="large-pagination"
+                        />
+                        <Pagination
+                          count={numberOfPages}
+                          page={currentPage}
+                          onChange={handlePageChange}
+                          size="small"
+                          className="small-pagination"
+                        />
                       </div>
-                    ))}
+                    </div>
                   </div>
                 )}
               </div>

@@ -335,6 +335,10 @@ div[class$="-singleValue"] {
   display: flex !important;
 }
 
+.m-auto {
+  margin: auto !important;
+}
+
 .search-results-main {
   color: $colorBlue !important;
   font-family: $globalFont !important;
@@ -367,6 +371,7 @@ div[class$="-singleValue"] {
     background-color: $colorWhite !important;
     margin-top: 40px !important;
     padding: 30px !important;
+    box-shadow: 0px 0px 5px #c1c2c4;
   }
 
   .park-filter-select [class*="-control"] {
@@ -395,9 +400,40 @@ div[class$="-singleValue"] {
     padding-left: 20px !important;
   }
 
+  .MuiPaginationItem-page {
+    color: $colorBlue;
+  }
+
+  .MuiPaginationItem-page.Mui-selected {
+    background-color: $colorBlue !important;
+    color: $colorWhite !important;
+  }
+
+  .MuiPaginationItem-page.Mui-selected:hover {
+    background-color: #00468b !important;
+  }
+
+  .large-pagination {
+    display: block !important;
+  }
+
+  .small-pagination {
+    display: none !important;
+  }
+
   @media (min-width: 1200px) {
     .container {
       max-width: 1600px !important;
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    .large-pagination {
+      display: none !important;
+    }
+
+    .small-pagination {
+      display: block !important;
     }
   }
 }
