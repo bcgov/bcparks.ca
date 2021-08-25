@@ -4,6 +4,7 @@ $hoverBlue: #2684ff;
 $colorGrey: #eef1f5;
 $colorWhite: #fff;
 $colorBlack: #000;
+$colorTextBlack: #494949;
 $bodyFont: 1rem;
 $headingFont: 2rem;
 
@@ -273,6 +274,10 @@ div[class$="-singleValue"] {
   padding-top: 20px !important;
 }
 
+.p30t {
+  padding-top: 30px !important;
+}
+
 .p30l {
   padding: 0px 30px !important;
 }
@@ -293,8 +298,12 @@ div[class$="-singleValue"] {
   padding-right: 3px !important;
 }
 
-.pr7 {
+.pr15 {
   padding-right: 15px !important;
+}
+
+.pl15 {
+  padding-left: 15px !important;
 }
 
 .mtm5 {
@@ -337,6 +346,10 @@ div[class$="-singleValue"] {
 
 .m-auto {
   margin: auto !important;
+}
+
+.text-black {
+  color: $colorTextBlack !important;
 }
 
 .search-results-main {
@@ -419,6 +432,19 @@ div[class$="-singleValue"] {
 
   .small-pagination {
     display: none !important;
+  }
+
+  .search-result-image {
+    width: inherit !important;
+  }
+
+  .search-result-icon {
+    width: 32px !important;
+    height: 23px !important;
+  }
+
+  .search-result-card {
+    min-height: 300px !important;
   }
 
   @media (min-width: 1200px) {

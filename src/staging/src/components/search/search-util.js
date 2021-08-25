@@ -11,20 +11,6 @@ const searchParkByCriteria = (
   ecoReserve,
   electricalHookup
 ) => {
-  // Return all parks if no filter criteria is selected
-  if (
-    selectedActivities.length == 0 &&
-    selectedFacilities.length == 0 &&
-    !camping &&
-    !petFriendly &&
-    !wheelchair &&
-    !marine &&
-    !ecoReserve &&
-    !electricalHookup &&
-    searchText.length == 0
-  ) {
-    return protectedAreas
-  }
   const textResults = []
   const activityResults = []
   const facilityResults = []
@@ -62,6 +48,13 @@ const searchParkByCriteria = (
 
   // Iterate through each park and filter based on search criteria
   protectedAreas.forEach(park => {
+    park.isOpenToPublic = true
+    park.advisories = ["Wildfire Alert", "Road Closure Alert"]
+    park.parkPhotos = [
+      "/uploads/mt_assiniboine_photos_images_20_d4bfb5f8ec.jpg",
+      "/uploads/mt_assiniboine_photos_images_19_0d09398ed7.jpg",
+    ]
+    park.isDayUsePass = true
     if (searchText && searchText.length > 0) {
       requiredResults.text = true
       searchParkNames(park, searchText, textResults)
@@ -92,6 +85,21 @@ const searchParkByCriteria = (
       }
     }
   })
+
+  // Return all parks if no filter criteria is selected
+  if (
+    selectedActivities.length == 0 &&
+    selectedFacilities.length == 0 &&
+    !camping &&
+    !petFriendly &&
+    !wheelchair &&
+    !marine &&
+    !ecoReserve &&
+    !electricalHookup &&
+    searchText.length == 0
+  ) {
+    return protectedAreas
+  }
 
   // Return empty if any of the selected filter criteria has no parks
   if (

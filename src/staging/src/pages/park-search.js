@@ -153,7 +153,6 @@ export default function Home({ location, data }) {
       quickSearch.current.ecoReserve,
       quickSearch.current.electricalHookup
     )
-
     setSearchResults([...results])
     setNumberOfPages(Math.ceil(results.length / itemsPerPage))
     setCurrentPage(1)
@@ -167,6 +166,7 @@ export default function Home({ location, data }) {
       const sortedResults = searchResults.sort(sortDesc)
       setSearchResults([...sortedResults])
     }
+    setCurrentPage(1)
   }
 
   const CustomSwitch = withStyles(() => ({
@@ -439,10 +439,10 @@ export default function Home({ location, data }) {
                 )}
                 <div className="row p20t">
                   <div className="col-lg-8 col-md-8 col-sm-12">
-                    <div className="park-af-list pr7">
+                    <div className="park-af-list pr15">
                       <i>Show all</i>
                     </div>
-                    <div className="park-af-list pr7">
+                    <div className="park-af-list pr15">
                       <CustomSwitch
                         checked={showOpenParks}
                         onChange={e => {
@@ -485,54 +485,95 @@ export default function Home({ location, data }) {
                           ? searchResults.length
                           : currentPage * itemsPerPage >
                             searchResults.length - 1
-                          ? searchResults.length - 1
+                          ? searchResults.length
                           : currentPage * itemsPerPage
                       )
                       .map((r, index1) => (
                         <div key={index1}>
-                          <div className="row">
+                          <div className="row search-result-card">
                             <div className="col-lg-8">
-                              <div>
-                                <h2>{r.protectedAreaName}</h2>
-                              </div>
-                              <br />
                               <div className="row">
-                                <div className="col-6">
-                                  <div className="park-af-list pr3">
-                                    <b>Activities: </b>
-                                  </div>
-                                  {r.parkActivities.map((a, index2) => (
-                                    <div
-                                      key={index2}
-                                      className="park-af-list pr3"
-                                    >
-                                      {a.name.split(":")[1]}
-                                      {index2 === r.parkActivities.length - 1
-                                        ? ""
-                                        : ", "}{" "}
-                                    </div>
+                                <div className="col-lg-8">
+                                  <h2>{r.protectedAreaName}</h2>
+                                </div>
+                                <div className="col-lg-4 text-black">
+                                  {r.isOpenToPublic && <>Open public access</>}
+                                </div>
+                              </div>
+                              <div className="row text-black p30t">
+                                <div className="col-lg-6">
+                                  {r.advisories.map(a => (
+                                    <div>{a}</div>
                                   ))}
                                 </div>
-                                <div className="col-6">
-                                  <div className="park-af-list pr3">
-                                    <b>Facilities:</b>
-                                  </div>
-                                  {r.parkFacilities.map((f, index3) => (
-                                    <div
-                                      key={index3}
-                                      className="park-af-list pr3"
-                                    >
-                                      {f.name.split(":")[1]}
-                                      {index3 === r.parkFacilities.length - 1
-                                        ? ""
-                                        : ", "}{" "}
+                                <div className="col-lg-6">
+                                  {r.isDayUsePass && (
+                                    <div className="flex-display">
+                                      <img
+                                        className="search-result-icon"
+                                        src={`${process.env.GATSBY_REACT_APP_CMS_BASE_URL}/uploads/camp_32px_713d4b8b90.png`}
+                                      />
+                                      <div className="pl15">
+                                        Day use and camping offered at this park
+                                      </div>
                                     </div>
-                                  ))}
+                                  )}
+                                </div>
+                              </div>
+                              <div className="row p30t">
+                                <div className="col-6">
+                                  {r.parkActivities &&
+                                    r.parkActivities.length > 0 && (
+                                      <>
+                                        <div className="park-af-list pr3">
+                                          <b>Activities: </b>
+                                        </div>
+                                        {r.parkActivities.map((a, index2) => (
+                                          <div
+                                            key={index2}
+                                            className="park-af-list pr3 text-black"
+                                          >
+                                            {a.name.split(":")[1]}
+                                            {index2 ===
+                                            r.parkActivities.length - 1
+                                              ? ""
+                                              : ", "}{" "}
+                                          </div>
+                                        ))}
+                                      </>
+                                    )}
+                                </div>
+                                <div className="col-6">
+                                  {r.parkFacilities &&
+                                    r.parkFacilities.length > 0 && (
+                                      <>
+                                        <div className="park-af-list pr3">
+                                          <b>Facilities:</b>
+                                        </div>
+                                        {r.parkFacilities.map((f, index3) => (
+                                          <div
+                                            key={index3}
+                                            className="park-af-list pr3 text-black"
+                                          >
+                                            {f.name.split(":")[1]}
+                                            {index3 ===
+                                            r.parkFacilities.length - 1
+                                              ? ""
+                                              : ", "}{" "}
+                                          </div>
+                                        ))}{" "}
+                                      </>
+                                    )}
                                 </div>
                               </div>
                               <br />
                             </div>
-                            <div className="col-lg-4"></div>
+                            <div className="col-lg-4 p30t">
+                              <img
+                                className="search-result-image"
+                                src={`${process.env.GATSBY_REACT_APP_CMS_BASE_URL}${r.parkPhotos[0]}`}
+                              />
+                            </div>
                           </div>
                           <Divider />
                           <br />
