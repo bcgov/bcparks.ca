@@ -1,13 +1,9 @@
 import React, { useState } from "react"
 import { Container, Box, Paper, Button } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import clsx from "clsx"
 import ParkPhotoGallery from "./parkPhotoGallery"
 import Heading from "./heading"
 import HtmlContent from "./HtmlContent"
-
-import Typography from "@material-ui/core/Typography"
-import { green } from "@material-ui/core/colors"
 
 const useStyles = makeStyles(theme => ({
   collapsed: {

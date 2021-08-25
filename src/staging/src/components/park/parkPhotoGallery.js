@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { makeStyles, useTheme } from "@material-ui/core/styles"
-import { MobileStepper, Button, Hidden } from "@material-ui/core"
+import { MobileStepper, Button } from "@material-ui/core"
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft"
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight"
 import { GatsbyImage } from "gatsby-plugin-image"
@@ -10,6 +10,7 @@ const useStyles = makeStyles({
   root: {
     maxHeight: 300,
     flexGrow: 1,
+    overflow: "hidden",
   },
   otherPhoto: {
     visibility: "hidden",
@@ -42,7 +43,7 @@ export default function ParkPhotoGallery({ photos }) {
 
   return (
     <>
-      <div id="park-photo-carousel-container">
+      <div id="park-photo-carousel-container" className={classes.root}>
         <SimpleReactLightbox>
           <SRLWrapper>
             <GatsbyImage
@@ -67,7 +68,6 @@ export default function ParkPhotoGallery({ photos }) {
         steps={parkPhotos.length}
         position="static"
         activeStep={activeStep}
-        className={classes.root}
         nextButton={
           <Button
             size="small"
