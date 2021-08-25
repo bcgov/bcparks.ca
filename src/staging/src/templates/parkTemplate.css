@@ -12,8 +12,8 @@ a:link {
 }
 
 .anchor-link {
-    margin-top: -112px;
-    padding-top: 112px;
+    margin-top: -90px;
+    padding-top: 90px;
 }
 
 .heading {
@@ -27,6 +27,28 @@ a:link {
 #park-menu-container .MuiListItem-button {
     padding: 2px;
 }
+
+
+#park-menu-container ul {
+    list-style: disc !important;
+  }
+
+#park-menu-container li {
+    margin: 5px;
+    padding: 5px 20px;
+  }
+
+#park-menu-container a {
+    color: #38598a;
+  }
+
+#park-menu-container .isCurrent a {
+    font-weight: bold;
+    display: list-item;
+  }
+
+
+
 
 #park-photo-carousel-container{
     max-height:300px;
