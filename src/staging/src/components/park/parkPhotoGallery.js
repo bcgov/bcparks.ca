@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { makeStyles, useTheme } from "@material-ui/core/styles"
-import { MobileStepper, Button } from "@material-ui/core"
+import { MobileStepper, Button, Hidden } from "@material-ui/core"
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft"
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight"
 import { GatsbyImage } from "gatsby-plugin-image"
@@ -10,6 +10,10 @@ const useStyles = makeStyles({
   root: {
     maxHeight: 300,
     flexGrow: 1,
+  },
+  otherPhoto: {
+    visibility: "hidden",
+    maxHeight: 1,
   },
 })
 
@@ -49,6 +53,7 @@ export default function ParkPhotoGallery({ photos }) {
               .filter(f => f.index !== activeStep)
               .map((photo, index) => (
                 <GatsbyImage
+                  className={classes.otherPhoto}
                   image={photo.image}
                   alt={photo.caption}
                   key={index}

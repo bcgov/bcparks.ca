@@ -1,23 +1,33 @@
 import React, { useState } from "react"
-import { Container, Collapse, Grid, Paper, IconButton } from "@material-ui/core"
+import { Container, Box, Paper, Button } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import clsx from "clsx"
 import ParkPhotoGallery from "./parkPhotoGallery"
 import Heading from "./heading"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import HtmlContent from "./HtmlContent"
 
-import ShowLessText from "./showLessText"
-import ShowMoreText from "./showMoreText"
+import Typography from "@material-ui/core/Typography"
+import { green } from "@material-ui/core/colors"
 
 const useStyles = makeStyles(theme => ({
-  expand: {
-    transform: "rotate(0deg)",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
+  collapsed: {
+    padding: theme.spacing(1),
+    maxHeight: "460px",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
-  expandOpen: {
-    transform: "rotate(180deg)",
+  expanded: {
+    padding: theme.spacing(1),
+    maxHeight: "auto",
+  },
+  photo: {
+    float: "right",
+    m: 1,
+    p: 1,
+    width: "67%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
   },
 }))
 
@@ -25,48 +35,31 @@ export default function ParkOverview({ data }) {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded)
-  }
-
   return (
     <div id="park-overview-container" className="anchor-link">
       <Paper elevation={0}>
-        <Grid container spacing={3}>
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={data.photos.nodes.length === 0 ? 12 : 4}
+        <div className={expanded ? classes.expanded : classes.collapsed}>
+          <Heading>Park Overview</Heading>
+          <Container>
+            {data.photos.nodes.length !== 0 && (
+              <div className={classes.photo}>
+                <ParkPhotoGallery photos={data.photos} />
+              </div>
+            )}
+            <HtmlContent>{data.description}</HtmlContent>
+          </Container>
+        </div>
+        <Box m={2}>
+          <Button
+            color="primary"
+            href="#park-overview-container"
+            onClick={() => {
+              setExpanded(!expanded)
+            }}
           >
-            <Heading>Park Overview</Heading>
-            <Container>
-              <ShowLessText text={data.description} length={500} />
-              <IconButton
-                className={clsx(classes.expand, {
-                  [classes.expandOpen]: expanded,
-                })}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label="show more"
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-            </Container>
-          </Grid>
-          {data.photos.nodes.length !== 0 && (
-            <Grid item xs={12} sm={12} md={8}>
-              <ParkPhotoGallery photos={data.photos} />
-            </Grid>
-          )}
-        </Grid>
-        <Grid item xs={12}>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <Container>
-              <ShowMoreText text={data.description} length={500} />
-            </Container>
-          </Collapse>
-        </Grid>
+            {expanded ? "Read less" : "Read more"}
+          </Button>
+        </Box>
       </Paper>
     </div>
   )

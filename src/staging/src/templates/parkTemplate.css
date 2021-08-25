@@ -50,10 +50,7 @@ a:link {
 
 
 
-#park-photo-carousel-container{
-    max-height:300px;
-    overflow: hidden;
-}
+
 
 #park-header-container {
     max-height:200px;
@@ -133,4 +130,22 @@ a:link {
     background-color: #fcba19 !important;
     width: 150px !important;
     white-space: nowrap;
+}
+
+#park-photo-carousel-container{
+    max-height:300px;
+    overflow: hidden;
+}
+
+#photo-gallery-container {
+    float: right;
+    width:67%;
+    margin: 4px 0px 10px 10px ;
+    padding: 4px 0px 10px 10px ;
+}
+
+.park-overview-text {
+    max-height:460px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

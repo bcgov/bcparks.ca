@@ -36,6 +36,25 @@ export default function ParkActivity({ data }) {
     setExpandeds(expandeds)
   }
 
+  let numberOfColumns = 3
+  let rowsPerColumn = Math.ceil(data.length / numberOfColumns)
+  let itemsCount = 0
+  let index = 0
+  let activities = []
+  let activityItems = []
+
+  for (const activity of data) {
+    activity.id = ++index
+    activityItems.push(activity)
+    if (activityItems.length >= rowsPerColumn || data.length === index) {
+      itemsCount += activityItems.length
+      activities.push(activityItems)
+      activityItems = []
+      if (--numberOfColumns < 0) numberOfColumns = 1
+      rowsPerColumn = Math.ceil((data.length - itemsCount) / numberOfColumns)
+    }
+  }
+
   return (
     <div id="park-activity-container" className="anchor-link">
       <Paper elevation={0}>
@@ -69,34 +88,38 @@ export default function ParkActivity({ data }) {
         </Grid>
         {data && (
           <Container>
-            <Grid container spacing={3}>
-              {data.map((activity, index) => (
-                <Grid key={index} item xs={12} sm={6} md={4}>
-                  <Paper>
-                    <Accordion
-                      expanded={expandeds[index]}
-                      onChange={handleChange(index)}
-                    >
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={activity.activityName}
-                        id={index}
-                      >
-                        <Box mr={1}>
-                          <img
-                            src={activity.icon}
-                            alt={activity.activityName}
-                            width="24"
-                            height="24"
-                          />
-                        </Box>
-                        <p>{activity.activityName}</p>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <p>{activity.description}</p>
-                      </AccordionDetails>
-                    </Accordion>
-                  </Paper>
+            <Grid container spacing={0}>
+              {activities.map((activityItems, index) => (
+                <Grid key={index} item xs={12} md={4}>
+                  {activityItems.map(activity => (
+                    <Box p={1} key={activity.id}>
+                      <Paper>
+                        <Accordion
+                          expanded={expandeds[activity.id]}
+                          onChange={handleChange(activity.id)}
+                          id={activity.id}
+                        >
+                          <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls={activity.activityName}
+                          >
+                            <Box mr={1}>
+                              <img
+                                src={activity.icon}
+                                alt={activity.activityName}
+                                width="24"
+                                height="24"
+                              />
+                            </Box>
+                            <p>{activity.activityName}</p>
+                          </AccordionSummary>
+                          <AccordionDetails>
+                            <p>{activity.description}</p>
+                          </AccordionDetails>
+                        </Accordion>
+                      </Paper>
+                    </Box>
+                  ))}
                 </Grid>
               ))}
             </Grid>
