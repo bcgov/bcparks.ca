@@ -1,5 +1,5 @@
 import React from "react"
-import { Paper, Grid } from "@material-ui/core"
+import { Grid, Box } from "@material-ui/core"
 import ParkAccessStatus from "./parkAccessStatus"
 import Advisory from "./advisory"
 import CampfireBan from "./campfireBan"
@@ -21,7 +21,7 @@ export default function ParkStatus({ data }) {
   const { hasCampfireBan, hasSmokingBan } = parkAccessStatus
   return (
     <div id="park-status-container" className="anchor-link">
-      <Paper elevation={0}>
+      <Box m={2}>
         <Grid container spacing={0}>
           <Grid container item spacing={0} xs={12} className={classes.topGrid}>
             <ParkAccessStatus data={parkAccessStatus.accessStatus} />
@@ -43,7 +43,7 @@ export default function ParkStatus({ data }) {
           <PetsOnLeash data={parkAccessStatus.parkActivities} />
           <Accessibility parkFacilities={parkAccessStatus.parkFacilities} />
         </Grid>
-      </Paper>
+      </Box>
     </div>
   )
 }

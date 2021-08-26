@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
   // necessary for content to be below app bar
   appBarOffset: theme.mixins.toolbar,
   drawerDesktop: {
-    marginTop: 288,
+    marginTop: 150,
     marginLeft: 40,
     padding: 10,
     width: drawerWidth,
@@ -130,7 +130,6 @@ export default function ParkMenu(props) {
       </List>
     </div>
   )
-
   const drawerItems = (
     <div>
       <Scrollspy
@@ -155,21 +154,22 @@ export default function ParkMenu(props) {
     <div id="park-menu-container">
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              className={classes.menuButton}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap></Typography>
-          </Toolbar>
-        </AppBar>
-
+        <Hidden smUp implementation="css">
+          <AppBar position="fixed" className={classes.appBar}>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                className={classes.menuButton}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" noWrap></Typography>
+            </Toolbar>
+          </AppBar>
+        </Hidden>
         <nav className={classes.drawer} aria-label="park info menu">
           {/* Mobile */}
           <Hidden smUp implementation="css">
@@ -198,12 +198,11 @@ export default function ParkMenu(props) {
               variant="permanent"
               open
             >
-              <Box m={1}>
+              <Box m={1} pb={1}>
                 <Link to="/parks">
                   <h3>Park Info</h3>
                 </Link>
               </Box>
-              <Divider />
               {drawerItems}
             </Drawer>
           </Hidden>

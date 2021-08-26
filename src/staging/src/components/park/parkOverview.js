@@ -10,7 +10,6 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
     maxHeight: "460px",
     overflow: "hidden",
-    textOverflow: "ellipsis",
   },
   expanded: {
     padding: theme.spacing(1),
@@ -18,8 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
   photo: {
     float: "right",
-    m: 1,
-    p: 1,
+    marginLeft: "10px",
     width: "67%",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
@@ -42,7 +40,9 @@ export default function ParkOverview({ data }) {
                 <ParkPhotoGallery photos={data.photos} />
               </div>
             )}
-            <HtmlContent>{data.description}</HtmlContent>
+            <Box component="div" textOverflow="ellipsis">
+              <HtmlContent>{data.description}</HtmlContent>
+            </Box>
           </Container>
         </div>
         <Box m={2}>

@@ -7,7 +7,7 @@ import { GatsbyImage } from "gatsby-plugin-image"
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox"
 
 const useStyles = makeStyles({
-  root: {
+  photoGallery: {
     maxHeight: 300,
     flexGrow: 1,
     overflow: "hidden",
@@ -43,7 +43,7 @@ export default function ParkPhotoGallery({ photos }) {
 
   return (
     <>
-      <div id="park-photo-carousel-container" className={classes.root}>
+      <div id="park-photo-carousel-container" className={classes.photoGallery}>
         <SimpleReactLightbox>
           <SRLWrapper>
             <GatsbyImage

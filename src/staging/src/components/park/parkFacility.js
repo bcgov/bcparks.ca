@@ -11,17 +11,19 @@ import {
 } from "@material-ui/core"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Heading from "./heading"
+const _ = require("lodash")
 
 export default function ParkFacility({ data }) {
+  const facilityData = _.sortBy(data, ["facilityName"], ["asc"])
   let expandedsInitial = []
-  data.forEach((facility, index) => {
+  facilityData.forEach((facility, index) => {
     expandedsInitial[index] = false
   })
 
   const [allExpanded, setAllExpanded] = useState(false)
   const [expandeds, setExpandeds] = useState(expandedsInitial)
 
-  if (data.length === 0) return null
+  if (facilityData.length === 0) return null
 
   const handleChange = id => (event, isExpanded) => {
     expandeds[id] = isExpanded
@@ -30,28 +32,33 @@ export default function ParkFacility({ data }) {
 
   const expandAll = isAllExpanded => {
     let expandeds = []
-    data.forEach((facility, index) => {
+    facilityData.forEach((facility, index) => {
       expandeds[index] = isAllExpanded
     })
     setExpandeds(expandeds)
   }
 
   let numberOfColumns = 3
-  let rowsPerColumn = Math.ceil(data.length / numberOfColumns)
+  let rowsPerColumn = Math.ceil(facilityData.length / numberOfColumns)
   let itemsCount = 0
   let index = 0
   let facilities = []
   let facilityItems = []
 
-  for (const facility of data) {
+  for (const facility of facilityData) {
     facility.id = ++index
     facilityItems.push(facility)
-    if (facilityItems.length >= rowsPerColumn || data.length === index) {
+    if (
+      facilityItems.length >= rowsPerColumn ||
+      facilityData.length === index
+    ) {
       itemsCount += facilityItems.length
       facilities.push(facilityItems)
       facilityItems = []
       if (--numberOfColumns < 0) numberOfColumns = 1
-      rowsPerColumn = Math.ceil((data.length - itemsCount) / numberOfColumns)
+      rowsPerColumn = Math.ceil(
+        (facilityData.length - itemsCount) / numberOfColumns
+      )
     }
   }
 
@@ -72,7 +79,7 @@ export default function ParkFacility({ data }) {
             justifyContent="flex-end"
           >
             <Box m={2}>
-              {data.length > 1 && (
+              {facilityData.length > 1 && (
                 <Button
                   color="primary"
                   onClick={() => {
@@ -86,7 +93,7 @@ export default function ParkFacility({ data }) {
             </Box>
           </Grid>
         </Grid>
-        {data && (
+        {facilityData && (
           <Container>
             <Grid container spacing={0}>
               {facilities.map((facilityItems, index) => (
@@ -95,7 +102,7 @@ export default function ParkFacility({ data }) {
                     <Box p={1} key={facility.id}>
                       <Paper>
                         <Accordion
-                          expanded={expandeds[facility.id]}
+                          expanded={expandeds[facility.id] || false}
                           onChange={handleChange(facility.id)}
                           id={facility.id}
                         >

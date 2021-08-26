@@ -12,16 +12,20 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Heading from "./heading"
 
+const _ = require("lodash")
+
 export default function ParkActivity({ data }) {
+  const activityData = _.sortBy(data, ["activityName"], ["asc"])
   let expandedsInitial = []
-  data.forEach((activity, index) => {
+
+  activityData.forEach((activity, index) => {
     expandedsInitial[index] = false
   })
 
   const [allExpanded, setAllExpanded] = useState(false)
   const [expandeds, setExpandeds] = useState(expandedsInitial)
 
-  if (data.length === 0) return null
+  if (activityData.length === 0) return null
 
   const handleChange = id => (event, isExpanded) => {
     expandeds[id] = isExpanded
@@ -30,28 +34,33 @@ export default function ParkActivity({ data }) {
 
   const expandAll = isAllExpanded => {
     let expandeds = []
-    data.forEach((activity, index) => {
+    activityData.forEach((activity, index) => {
       expandeds[index] = isAllExpanded
     })
     setExpandeds(expandeds)
   }
 
   let numberOfColumns = 3
-  let rowsPerColumn = Math.ceil(data.length / numberOfColumns)
+  let rowsPerColumn = Math.ceil(activityData.length / numberOfColumns)
   let itemsCount = 0
   let index = 0
   let activities = []
   let activityItems = []
 
-  for (const activity of data) {
+  for (const activity of activityData) {
     activity.id = ++index
     activityItems.push(activity)
-    if (activityItems.length >= rowsPerColumn || data.length === index) {
+    if (
+      activityItems.length >= rowsPerColumn ||
+      activityData.length === index
+    ) {
       itemsCount += activityItems.length
       activities.push(activityItems)
       activityItems = []
       if (--numberOfColumns < 0) numberOfColumns = 1
-      rowsPerColumn = Math.ceil((data.length - itemsCount) / numberOfColumns)
+      rowsPerColumn = Math.ceil(
+        (activityData.length - itemsCount) / numberOfColumns
+      )
     }
   }
 
@@ -72,7 +81,7 @@ export default function ParkActivity({ data }) {
             justifyContent="flex-end"
           >
             <Box m={2}>
-              {data.length > 1 && (
+              {activityData.length > 1 && (
                 <Button
                   color="primary"
                   onClick={() => {
@@ -86,7 +95,7 @@ export default function ParkActivity({ data }) {
             </Box>
           </Grid>
         </Grid>
-        {data && (
+        {activityData && (
           <Container>
             <Grid container spacing={0}>
               {activities.map((activityItems, index) => (
@@ -95,7 +104,7 @@ export default function ParkActivity({ data }) {
                     <Box p={1} key={activity.id}>
                       <Paper>
                         <Accordion
-                          expanded={expandeds[activity.id]}
+                          expanded={expandeds[activity.id] || false}
                           onChange={handleChange(activity.id)}
                           id={activity.id}
                         >

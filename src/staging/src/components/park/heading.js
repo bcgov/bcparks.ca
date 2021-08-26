@@ -5,7 +5,7 @@ import LineBar from "./lineBar"
 export default function Heading(props) {
   return (
     <>
-      <Box p={1}>
+      <Box p={2}>
         <h2 className="heading">{props.children}</h2>
         <LineBar />
       </Box>

@@ -131,6 +131,7 @@ export default function CampingDetails({ data }) {
           </div>
         )}
       </Paper>
+      <br />
     </div>
   )
 }

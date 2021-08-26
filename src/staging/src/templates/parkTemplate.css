@@ -4,14 +4,14 @@ body {
 }
 
 a {
-    color: #003366;
+    color: #38598a;
 }
 
 a:link {
     text-decoration: none;
 }
 
-.anchor-link {
+.anchor-linkx {
     margin-top: -90px;
     padding-top: 90px;
 }
@@ -27,7 +27,6 @@ a:link {
 #park-menu-container .MuiListItem-button {
     padding: 2px;
 }
-
 
 #park-menu-container ul {
     list-style: disc !important;
@@ -47,17 +46,14 @@ a:link {
     display: list-item;
   }
 
-
-
-
-
-
 #park-header-container {
+    height: 200px;
     max-height:200px;
     overflow: hidden;
     position: relative;
     text-align: center;
     color: white;
+    background-color:  #38598a;
 }
 
 .park-header {
@@ -69,9 +65,7 @@ a:link {
     left: 0%;
     width: 100%;
     height: 100%;
-    z-index: 100;
 }
-
 
 .park-header-title {
     position: absolute;

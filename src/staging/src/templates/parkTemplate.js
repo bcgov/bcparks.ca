@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import { Container, Grid, Toolbar, CssBaseline } from "@material-ui/core"
+import { Container, Grid, Paper, CssBaseline } from "@material-ui/core"
 import ParkOverview from "../components/park/parkOverview"
 import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
@@ -26,10 +26,13 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
   },
-  appBar: {
+  parkContent: {
+    zIndex: 99,
+    opacity: 1,
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
+      marginTop: "-75px",
     },
   },
   appBarOffset: theme.mixins.toolbar,
@@ -62,7 +65,6 @@ export default function ParkTemplate({ data }) {
       <Helmet>
         <title>BC Parks | {park.protectedAreaName}</title>
       </Helmet>
-      <Toolbar />
       <ScrollToTop />
       <ParkHeader
         data={{
@@ -77,47 +79,49 @@ export default function ParkTemplate({ data }) {
           <Grid item xs={12} sm={3}>
             <ParkMenu data={parkStatusData} />
           </Grid>
-          <Grid item xs={12} sm={9} className={classes.appBar}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <ParkStatus data={parkStatusData} />
+          <Grid item xs={12} sm={9} className={classes.parkContent}>
+            <Paper elevation={1}>
+              <Grid container spacing={0}>
+                <Grid item xs={12}>
+                  <ParkStatus data={parkStatusData} />
+                </Grid>
+                <Grid item xs={12}>
+                  <ParkOverview data={parkOverviewData} />
+                </Grid>
+                <Grid item xs={12}>
+                  <AccessibilityDetails />
+                </Grid>
+                <Grid item xs={12}>
+                  <AdvisoryDetails data={advisories} />
+                </Grid>
+                <Grid item xs={12}>
+                  <CampingDetails
+                    data={{
+                      parkFacilities: parkAccessStatus.parkFacilities,
+                      reservations: park.reservations,
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <ParkFacility data={parkAccessStatus.parkFacilities} />
+                </Grid>
+                <Grid item xs={12}>
+                  <ParkActivity data={parkAccessStatus.parkActivities} />
+                </Grid>
+                <Grid item xs={12}>
+                  <MapLocation data={park.maps} />
+                </Grid>
+                <Grid item xs={12}>
+                  <ParkMap data={park.maps} />
+                </Grid>
+                <Grid item xs={12}>
+                  <About data={park.parkContact} />
+                </Grid>
+                <Grid item xs={12}>
+                  <Reconciliation data={park.reconciliationNotes} />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <ParkOverview data={parkOverviewData} />
-              </Grid>
-              <Grid item xs={12}>
-                <AccessibilityDetails />
-              </Grid>
-              <Grid item xs={12}>
-                <AdvisoryDetails data={advisories} />
-              </Grid>
-              <Grid item xs={12}>
-                <CampingDetails
-                  data={{
-                    parkFacilities: parkAccessStatus.parkFacilities,
-                    reservations: park.reservations,
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <ParkFacility data={parkAccessStatus.parkFacilities} />
-              </Grid>
-              <Grid item xs={12}>
-                <ParkActivity data={parkAccessStatus.parkActivities} />
-              </Grid>
-              <Grid item xs={12}>
-                <MapLocation data={park.maps} />
-              </Grid>
-              <Grid item xs={12}>
-                <ParkMap data={park.maps} />
-              </Grid>
-              <Grid item xs={12}>
-                <About data={park.parkContact} />
-              </Grid>
-              <Grid item xs={12}>
-                <Reconciliation data={park.reconciliationNotes} />
-              </Grid>
-            </Grid>
+            </Paper>
           </Grid>
         </Grid>
       </Container>
