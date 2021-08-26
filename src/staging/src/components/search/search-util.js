@@ -385,30 +385,30 @@ const searchParkFacilities = (park, facilityResults, facilityNames) => {
 }
 
 const labelCompare = (a, b) => {
-  if (a.label < b.label) {
+  if (a.label.toLowerCase() < b.label.toLowerCase()) {
     return -1
   }
-  if (a.label > b.label) {
+  if (a.label.toLowerCase() > b.label.toLowerCase()) {
     return 1
   }
   return 0
 }
 
 const sortAsc = (a, b) => {
-  if (a.protectedAreaName < b.protectedAreaName) {
+  if (a.protectedAreaName.toLowerCase() < b.protectedAreaName.toLowerCase()) {
     return -1
   }
-  if (a.protectedAreaName > b.protectedAreaName) {
+  if (a.protectedAreaName.toLowerCase() > b.protectedAreaName.toLowerCase()) {
     return 1
   }
   return 0
 }
 
 const sortDesc = (a, b) => {
-  if (a.protectedAreaName > b.protectedAreaName) {
+  if (a.protectedAreaName.toLowerCase() > b.protectedAreaName.toLowerCase()) {
     return -1
   }
-  if (a.protectedAreaName < b.protectedAreaName) {
+  if (a.protectedAreaName.toLowerCase() < b.protectedAreaName.toLowerCase()) {
     return 1
   }
   return 0

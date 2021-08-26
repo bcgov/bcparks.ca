@@ -26,6 +26,7 @@ import { withStyles } from "@material-ui/core/styles"
 import SearchIcon from "@material-ui/icons/Search"
 import Select from "react-select"
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined"
+import * as ElasticAppSearch from "@elastic/app-search-javascript"
 
 export const query = graphql`
   query {
@@ -48,8 +49,94 @@ export const query = graphql`
   }
 `
 
+var client = ElasticAppSearch.createClient({
+  searchKey: "search-2r96p8ivi35jk36dv64wwfdf",
+  endpointBase: "http://127.0.0.1:3002",
+  engineName: "parks-information",
+})
+
+var options = {
+  search_fields: {
+    protectedareaname: {},
+    parkactivities: {},
+    parkfacilities: {},
+  },
+  filters: {
+    all: [
+      // { marineprotectedarea: ["N"] },
+      // { parkactivities: ["Canoeing"] },
+      { typecode: ["ER"] },
+      // { parkfacilities: ["Campfires"] },
+    ],
+  },
+  result_fields: {
+    safetyinfo: {
+      raw: {},
+    },
+    hascampfireban: {
+      raw: {},
+    },
+    description: {
+      raw: {},
+    },
+    hassmokingban: {
+      raw: {},
+    },
+    typecode: {
+      raw: {},
+    },
+    protectedareaname: {
+      raw: {},
+    },
+    marineprotectedarea: {
+      raw: {},
+    },
+    slug: {
+      raw: {},
+    },
+    longitude: {
+      raw: {},
+    },
+    orcs: {
+      raw: {},
+    },
+    parkactivities: {
+      raw: {},
+    },
+    url: {
+      raw: {},
+    },
+    parkfacilities: {
+      raw: {},
+    },
+    isdayusepass: {
+      raw: {},
+    },
+    id: {
+      raw: {},
+    },
+  },
+  sort: { protectedareaname: "asc" },
+}
+
+client
+  .search("lake", options)
+  .then(resultList => {
+    console.log(resultList)
+    resultList.results.forEach(result => {
+      // console.log(
+      //   `parkactivities: ${result.getRaw(
+      //     "parkactivities"
+      //   )} protectedareaname: ${result.getRaw("protectedareaname")}`
+      // )
+    })
+  })
+  .catch(error => {
+    console.log(`error: ${error}`)
+  })
+
 export default function Home({ location, data }) {
-  const itemsPerPage = 10
+  const itemsPerPage = 6
   const [searchResults, setSearchResults] = useState(
     location.state.searchResults
   )
