@@ -15,6 +15,15 @@ $desktopBreakpoint: 576px;
 .zone-links {
   padding: 0 20px 0 20px;
   margin-top: 40px;
+  // Normally would use .row gutters but something was causing x overflow, so this will work for now
+  @media screen and (min-width: $desktopBreakpoint) {
+    .advisory:first-child {
+      padding-right: 5px;
+    }
+    .advisory:last-child {
+      padding-left: 5px;
+    }  
+  }
 }
 
 .zone-cards {
@@ -80,7 +89,7 @@ $desktopBreakpoint: 576px;
   background-color: unset !important;
 
   @media screen and (min-width: $desktopBreakpoint) {
-    width: fit-content;
+    width: 100%;
   }
 }
 
@@ -106,16 +115,19 @@ $desktopBreakpoint: 576px;
 
 .card-img > img {
   height: 316px;
-  max-width: 100%;
+  width: 100%;
   
   @media screen and (min-width: $desktopBreakpoint) {
     height: 579px;
   }
 }
 
-.full-horizontal-img > img {
-  max-height: 219px;
-  max-width: 400px;
+.full-horizontal-img {
+  height: 100%;
+  > img {
+    height: 100%;
+    max-width: 90vw;
+  }
 
   @media screen and (min-width: $desktopBreakpoint) {
     max-width: fit-content;
@@ -166,6 +178,17 @@ $desktopBreakpoint: 576px;
   color: $colorGold;
   font-weight: bold;
   text-decoration: none;
+}
+
+.underline {
+  text-decoration: underline !important;
+}
+
+#home-alert {
+  color: $colorBlue;
+  a {
+    color: $colorBlue;
+  }
 }
 
 #home-advisories {
@@ -233,10 +256,6 @@ $desktopBreakpoint: 576px;
   .split-card .col-6 {
     background-color: $colorGrey;
   }
-  .full-horizontal-img > img {
-    max-height: 219px;
-    max-width: 400px;
-  }
 
   @media screen and (min-width: $desktopBreakpoint) {
     .fa-chevron-circle-right {
@@ -259,12 +278,13 @@ $desktopBreakpoint: 576px;
 #home-carousel {
   .carousel-indicators {
     bottom: 15%;
+    justify-content: center;
 
     > li, li.active {
-      width: 10px;
-      height: 10px;
+      width: 5px;
+      height: 5px;
       border: 1px;
-      border-radius: 10px;
+      border-radius: 5px;
       background-color: $colorWhite !important;
       opacity: unset;
     }
@@ -273,15 +293,15 @@ $desktopBreakpoint: 576px;
     }
   }
   .carousel-caption {
-    right: 5% !important;
-    bottom: 5% !important;
+    right: 2.5% !important;
+    bottom: 2.5% !important;
     padding-bottom: 0px !important;
     > p {
       padding-bottom: 0px !important;
     }
   }
 
-  @media screen and (min-width: $desktopBreakpoint) {
+  @media screen and (min-width: 801px) {
     .carousel-item img {
       height: auto;
     }
@@ -289,7 +309,9 @@ $desktopBreakpoint: 576px;
       max-height: 742px;
     }
     .carousel-indicators {
-      margin-right: 5% !important;
+      margin-right: 32px !important;
+      bottom: 75px;
+      justify-content: flex-end;
       > li, li.active {
         height: 15px !important;
         width: 15px !important;
@@ -302,6 +324,18 @@ $desktopBreakpoint: 576px;
         background-color: $colorGold !important;
       }
     }
+    .carousel-caption {
+      right: 32px !important;
+      bottom: 32px !important;
+    }
+  }
+}
+
+#carousel-down {
+  @media screen and (min-width: 801px) { 
+    position: absolute;
+    top: calc(100% - 7.5vh);
+    font-size: 36px;
   }
 }
 
