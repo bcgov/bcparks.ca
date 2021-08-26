@@ -10,6 +10,11 @@ const useStyles = makeStyles({
   root: {
     maxHeight: 300,
     flexGrow: 1,
+    overflow: "hidden",
+  },
+  otherPhoto: {
+    visibility: "hidden",
+    maxHeight: 1,
   },
 })
 
@@ -38,7 +43,7 @@ export default function ParkPhotoGallery({ photos }) {
 
   return (
     <>
-      <div id="park-photo-carousel-container">
+      <div id="park-photo-carousel-container" className={classes.root}>
         <SimpleReactLightbox>
           <SRLWrapper>
             <GatsbyImage
@@ -49,6 +54,7 @@ export default function ParkPhotoGallery({ photos }) {
               .filter(f => f.index !== activeStep)
               .map((photo, index) => (
                 <GatsbyImage
+                  className={classes.otherPhoto}
                   image={photo.image}
                   alt={photo.caption}
                   key={index}
@@ -62,7 +68,6 @@ export default function ParkPhotoGallery({ photos }) {
         steps={parkPhotos.length}
         position="static"
         activeStep={activeStep}
-        className={classes.root}
         nextButton={
           <Button
             size="small"
