@@ -19,9 +19,8 @@ import Select from "react-select"
 import "../../styles/search.scss"
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined"
 import { navigate } from "gatsby"
-import { searchParkByCriteria } from "./search-util"
 
-const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
+const MainSearch = ({ data: { activities, facilities } }) => {
   const [openFilter, setOpenFilter] = useState(false)
   const [quickSearch, setQuickSearch] = useState({
     camping: false,
@@ -81,30 +80,15 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
     )
   }
 
-  const searchParkFilter = isTextOnly => {
-    const results = searchParkByCriteria(
-      isTextOnly,
-      protectedAreas,
-      selectedActivities,
-      selectedFacilities,
-      searchText,
-      camping,
-      petFriendly,
-      wheelchair,
-      marine,
-      ecoReserve,
-      electricalHookup
-    )
+  const searchParkFilter = () => {
     navigate("/park-search", {
       state: {
-        searchResults: [...results],
         quickSearch,
         selectedActivities,
         selectedFacilities,
         searchText,
         activityItems,
         facilityItems,
-        protectedAreas,
       },
     })
   }
@@ -133,7 +117,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
                 }}
                 onKeyPress={ev => {
                   if (ev.key === "Enter") {
-                    searchParkFilter(true)
+                    searchParkFilter()
                     ev.preventDefault()
                   }
                 }}
@@ -142,7 +126,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
                 className="search-icon-fab"
                 aria-label="search"
                 onClick={() => {
-                  searchParkFilter(true)
+                  searchParkFilter()
                 }}
               >
                 <SearchIcon fontSize="large" className="search-icon" />
@@ -186,7 +170,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
                   onKeyPress={ev => {
                     if (ev.key === "Enter") {
                       handleCloseFilter()
-                      searchParkFilter(false)
+                      searchParkFilter()
                       ev.preventDefault()
                     }
                   }}
@@ -354,7 +338,7 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
                   variant="contained"
                   onClick={() => {
                     handleCloseFilter()
-                    searchParkFilter(false)
+                    searchParkFilter()
                   }}
                   className="bcgov-button bcgov-normal-blue"
                 >
