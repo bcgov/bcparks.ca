@@ -69,8 +69,6 @@ $headingFont: 2rem;
 .park-search {
   font-family: $globalFont !important;
   width: 100%;
-  //To be removed
-  height: 600px !important;
 
   @media screen and (min-width: 801px) {
     position: relative;
