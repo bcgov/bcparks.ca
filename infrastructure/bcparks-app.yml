@@ -169,6 +169,13 @@ objects:
     replicas: 1
     selector:
       name: ${CMS_POD}
+      resources:
+        limits:
+          cpu: 2500m
+          memory: 2Gi
+        requests:
+          cpu: 1000m
+          memory: 512Mi      
     strategy:
       type: Recreate
       maxSurge: 50%
@@ -259,6 +266,13 @@ objects:
     replicas: 1
     selector:
       name: ${DB_POD}
+      resources:
+        limits:
+          cpu: 2500m
+          memory: 2Gi
+        requests:
+          cpu: 1000m
+          memory: 512Mi         
     strategy: null
     template:
       metadata:
@@ -386,6 +400,13 @@ objects:
     replicas: 1
     selector:
       name: ${STAGING_POD}
+      resources:
+        limits:
+          cpu: 2500m
+          memory: 2Gi
+        requests:
+          cpu: 1000m
+          memory: 512Mi         
     strategy:
       type: Recreate
       maxSurge: 50%
@@ -473,6 +494,13 @@ objects:
     replicas: 1
     selector:
       name: ${API_POD}
+      resources:
+        limits:
+          cpu: 2500m
+          memory: 2Gi
+        requests:
+          cpu: 1000m
+          memory: 512Mi         
     strategy:
       type: Recreate
       maxSurge: 50%
