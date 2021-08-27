@@ -357,7 +357,6 @@ MainSearch.propTypes = {
   data: PropTypes.shape({
     activities: PropTypes.array.isRequired,
     facilities: PropTypes.array.isRequired,
-    protectedAreas: PropTypes.array.isRequired,
   }),
 }
 
