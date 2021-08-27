@@ -91,10 +91,10 @@ objects:
               - containerPort: 8080
             resources:
               limits:
-                cpu: 2500m
-                memory: 2Gi
-              requests:
                 cpu: 1000m
+                memory: 1Gi
+              requests:
+                cpu: 500m
                 memory: 512Mi
     triggers:
       - type: ConfigChange
@@ -190,10 +190,10 @@ objects:
             name: ${CMS_POD}
             resources:
               limits:
-                cpu: 2500m
-                memory: 2Gi
-              requests:
                 cpu: 1000m
+                memory: 1Gi
+              requests:
+                cpu: 500m
                 memory: 512Mi               
             ports:
               - containerPort: 1337
@@ -314,10 +314,10 @@ objects:
             name: ${DB_POD}
             resources:
               limits:
-                cpu: 2500m
-                memory: 2Gi
-              requests:
                 cpu: 1000m
+                memory: 1Gi
+              requests:
+                cpu: 500m
                 memory: 512Mi            
             ports:
               - containerPort: 5432
@@ -416,10 +416,10 @@ objects:
             name: ${STAGING_POD}
             resources:
               limits:
-                cpu: 2500m
-                memory: 2Gi
-              requests:
                 cpu: 1000m
+                memory: 1Gi
+              requests:
+                cpu: 500m
                 memory: 512Mi            
             ports:
               - containerPort: 8000
@@ -512,10 +512,10 @@ objects:
             name: ${API_POD}
             resources:
               limits:
-                cpu: 2500m
-                memory: 2Gi
-              requests:
                 cpu: 1000m
+                memory: 1Gi
+              requests:
+                cpu: 500m
                 memory: 512Mi            
             ports:
               - containerPort: 5000
