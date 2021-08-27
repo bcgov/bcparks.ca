@@ -303,7 +303,7 @@ objects:
               initialDelaySeconds: 30
               tcpSocket:
                 port: 5432
-              timeoutSeconds: 1
+              timeoutSeconds: 240
             name: ${DB_POD}
             ports:
               - containerPort: 5432
