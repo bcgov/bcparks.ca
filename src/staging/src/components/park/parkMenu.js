@@ -137,10 +137,10 @@ export default function ParkMenu(props) {
         className="scrollspy"
         items={menuFiltered.map(m => m.url)}
         currentClassName="isCurrent"
-        offset="90"
+        offset={"90"}
       >
         {menuFiltered.map((menu, index) => (
-          <li button key={index}>
+          <li key={index}>
             <a href={`#${menu.url}`}>{menu.text}</a>
           </li>
         ))}
