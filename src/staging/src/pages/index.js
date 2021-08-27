@@ -80,7 +80,6 @@ export const query = graphql`
     }
   }
 `
-const cmsUrl =  process.env.GATSBY_REACT_APP_CMS_BASE_URL
 
 export default function Home({ data }) {
   // ID 6 === Hero Carousel
