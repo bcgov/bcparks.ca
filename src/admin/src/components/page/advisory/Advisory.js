@@ -83,7 +83,7 @@ export default function Advisory({
   const [advisoryDate, setAdvisoryDate] = useState(
     moment().tz("America/Vancouver")
   );
-  const [displayAdvisoryDate, setDisplayAdvisoryDate] = useState(false);
+  const [displayAdvisoryDate, setDisplayAdvisoryDate] = useState(true);
   const [startDate, setStartDate] = useState(moment().tz("America/Vancouver"));
   const [displayStartDate, setDisplayStartDate] = useState(false);
   const [endDate, setEndDate] = useState(null);
@@ -523,7 +523,7 @@ export default function Advisory({
 
           const standardMessageData = res[12];
           const standardMessages = standardMessageData.map((m) => ({
-            label: m.description,
+            label: m.title,
             value: m.id,
             type: "standardMessage",
             obj: m,

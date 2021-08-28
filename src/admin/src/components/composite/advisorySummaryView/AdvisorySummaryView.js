@@ -123,8 +123,14 @@ export default function AdvisorySummaryView({
               const type = "text/html";
               const blob = new Blob([parkUrls], { type });
               let data = [new ClipboardItem({ [type]: blob })];
-              navigator.clipboard.write(data);
-              handleOpenSnackBar("Park urls copied to clipboard");
+              navigator.clipboard
+                .write(data)
+                .then(() => {
+                  handleOpenSnackBar("Park urls copied to clipboard");
+                })
+                .catch(() => {
+                  handleOpenSnackBar("Failed to copy to clipboard");
+                });
             }}
           />
         </div>
@@ -163,8 +169,14 @@ export default function AdvisorySummaryView({
                 const type = "text/html";
                 const blob = new Blob([siteUrls], { type });
                 let data = [new ClipboardItem({ [type]: blob })];
-                navigator.clipboard.write(data);
-                handleOpenSnackBar("Site urls copied to clipboard");
+                navigator.clipboard
+                  .write(data)
+                  .then(() => {
+                    handleOpenSnackBar("Site urls copied to clipboard");
+                  })
+                  .catch(() => {
+                    handleOpenSnackBar("Failed to copy to clipboard");
+                  });
               }}
             />
           </div>
