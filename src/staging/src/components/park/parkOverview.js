@@ -7,25 +7,18 @@ import HtmlContent from "./HtmlContent"
 
 const useStyles = makeStyles(theme => ({
   collapsed: {
-    padding: theme.spacing(1),
     maxHeight: "200px",
+    lineHeight: "2em",
     overflow: "hidden",
+    display: "block",
+    textOverflow: "ellipsis",
   },
   expanded: {
-    padding: theme.spacing(1),
     maxHeight: "auto",
-  },
-  photo: {
-    float: "right",
-    marginLeft: "10px",
-    width: "67%",
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
-    },
   },
 }))
 
-export default function ParkOverview({ data }) {
+export default function ParkOverview({ data: parkOverview }) {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
 
@@ -35,7 +28,7 @@ export default function ParkOverview({ data }) {
         <Box className={expanded ? classes.expanded : classes.collapsed}>
           <Heading>Park Overview</Heading>
           <Container>
-            <HtmlContent>{data.description}</HtmlContent>
+            <HtmlContent>{parkOverview}</HtmlContent>
           </Container>
         </Box>
         <Box m={2}>

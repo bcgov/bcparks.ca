@@ -42,7 +42,12 @@ export default function CampingDetails({ data }) {
   }
 
   return (
-    <div id="park-camping-details-container" className="anchor-link">
+    <Grid
+      item
+      xs={12}
+      id="park-camping-details-container"
+      className="anchor-link"
+    >
       <Paper elevation={0}>
         <Grid container>
           <Grid item xs={12} sm={6}>
@@ -58,18 +63,25 @@ export default function CampingDetails({ data }) {
             justifyContent="flex-end"
           >
             <Box m={2}>
-              <Button variant="contained" color="primary">
+              <Button
+                className="blue-button"
+                href="https://discovercamping.ca/"
+              >
                 Book a campsite
               </Button>
             </Box>
           </Grid>
         </Grid>
-        <Container>
-          <Box m={2} p={2} className="park-details-shaded">
-            <h3 className="heading">Reservations</h3>
-            <HtmlContent>{data.reservations}</HtmlContent>
-          </Box>
-        </Container>
+        {data.reservations && (
+          <Container>
+            <Paper className="park-details-shaded">
+              <Box p={2}>
+                <h3 className="heading">Reservations</h3>
+                <HtmlContent>{data.reservations}</HtmlContent>
+              </Box>
+            </Paper>
+          </Container>
+        )}
         {campingFacilities.length > 0 && (
           <div id="park-camping-list-container" className="anchor-link">
             <Container>
@@ -132,6 +144,6 @@ export default function CampingDetails({ data }) {
         )}
       </Paper>
       <br />
-    </div>
+    </Grid>
   )
 }

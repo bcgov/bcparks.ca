@@ -50,13 +50,6 @@ export default function ParkTemplate({ data }) {
     advisories: advisories,
   }
 
-  const parkOverviewData = {
-    description: park.description,
-  }
-
-  const bannerPhoto =
-    photos.nodes[Math.floor(Math.random() * photos.nodes.length)]
-
   return (
     <>
       <Helmet>
@@ -66,7 +59,6 @@ export default function ParkTemplate({ data }) {
       <ParkHeader
         data={{
           protectedAreaName: park.protectedAreaName,
-          photo: bannerPhoto,
         }}
       />
 
@@ -78,50 +70,27 @@ export default function ParkTemplate({ data }) {
           </Grid>
           <Grid item xs={12} sm={9} className={classes.parkContent}>
             <Paper elevation={1}>
-              <Grid container spacing={0}>
-                <Grid item xs={12}>
-                  <ParkStatus data={parkStatusData} />
-                </Grid>
-                <Grid item xs={12}>
-                  <ParkPhotoGallery photos={photos} />
-                </Grid>
-                <Grid item xs={12}>
-                  <ParkOverview data={parkOverviewData} />
-                </Grid>
-                <Grid item xs={12}>
-                  <AccessibilityDetails />
-                </Grid>
-                <Grid item xs={12}>
-                  <AdvisoryDetails data={advisories} />
-                </Grid>
-                <Grid item xs={12}>
-                  <CampingDetails
-                    data={{
-                      parkFacilities: parkAccessStatus.parkFacilities,
-                      reservations: park.reservations,
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <ParkFacility data={parkAccessStatus.parkFacilities} />
-                </Grid>
-                <Grid item xs={12}>
-                  <ParkActivity data={parkAccessStatus.parkActivities} />
-                </Grid>
-                <Grid item xs={12}>
-                  <MapLocation data={park.maps} />
-                </Grid>
-                <Grid item xs={12}>
-                  <ParkMap data={park.maps} />
-                </Grid>
-                <Grid item xs={12}>
-                  <About data={park.parkContact} />
-                </Grid>
-                <Grid item xs={12}>
-                  <Reconciliation data={park.reconciliationNotes} />
-                </Grid>
+              <Grid item container spacing={0}>
+                <ParkStatus data={parkStatusData} />
+                <ParkPhotoGallery photos={photos} />
+                <ParkOverview data={park.description} />
+                <AccessibilityDetails />
+                <AdvisoryDetails data={advisories} />
+                <CampingDetails
+                  data={{
+                    parkFacilities: parkAccessStatus.parkFacilities,
+                    reservations: park.reservations,
+                  }}
+                />
+                <ParkFacility data={parkAccessStatus.parkFacilities} />
+                <ParkActivity data={parkAccessStatus.parkActivities} />
+                <MapLocation data={park.maps} />
+                <ParkMap data={park.maps} />
+                <About data={park.parkContact} />
+                <Reconciliation data={park.reconciliationNotes} />
               </Grid>
             </Paper>
+            <br />
           </Grid>
         </Grid>
       </Container>

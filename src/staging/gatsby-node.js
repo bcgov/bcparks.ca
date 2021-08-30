@@ -10,7 +10,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const result = await graphql(`
     {
-      allStrapiProtectedArea(filter: { orcs: { lt: 50 } }) {
+      allStrapiProtectedArea {
         nodes {
           id
           orcs
@@ -21,7 +21,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       }
     }
   `)
-  // Handle errors
+
   if (result.errors) {
     reporter.panicOnBuild(
       `Error while running GraphQL query - node create page.`
@@ -29,6 +29,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     return
   }
   result.data.allStrapiProtectedArea.nodes.forEach(park => {
+    console.log(park)
     const slug = park.slug
       ? park.slug
       : park.protectedAreaName.toLowerCase().replace(/ /g, "-")

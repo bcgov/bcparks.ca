@@ -40,7 +40,7 @@ export default function ParkFacility({ data }) {
   }
 
   return (
-    <div id="park-facility-container" className="anchor-link">
+    <Grid item xs={12} id="park-facility-container" className="anchor-link">
       <Paper elevation={0}>
         <Grid container>
           <Grid item xs={12} sm={6}>
@@ -105,7 +105,8 @@ export default function ParkFacility({ data }) {
             </Grid>
           </Container>
         )}
+        <br />
       </Paper>
-    </div>
+    </Grid>
   )
 }

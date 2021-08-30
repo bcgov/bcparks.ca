@@ -16,21 +16,19 @@ export default function ParkStatus({ data }) {
   const { advisories, parkAccessStatus } = data
   const { hasCampfireBan, hasSmokingBan } = parkAccessStatus
   return (
-    <div id="park-status-container" className="anchor-link">
+    <Grid item xs={12} id="park-status-container" className="anchor-link">
       <Box m={2}>
-        <Grid container spacing={0}>
-          <Grid container item spacing={0} xs={12} className={classes.topGrid}>
-            <ParkAccessStatus data={parkAccessStatus.accessStatus} />
-            <Advisory data={advisories} />
-            <CampfireBan
-              data={{
-                hasCampfireBan,
-                hasSmokingBan,
-              }}
-            />
-          </Grid>
+        <Grid container item spacing={0} xs={12} className={classes.topGrid}>
+          <ParkAccessStatus data={parkAccessStatus.accessStatus} />
+          <Advisory data={advisories} />
+          <CampfireBan
+            data={{
+              hasCampfireBan,
+              hasSmokingBan,
+            }}
+          />
         </Grid>
       </Box>
-    </div>
+    </Grid>
   )
 }

@@ -21,7 +21,12 @@ export default function ParkHeader({ data }) {
               justifyContent="flex-end"
             >
               <Button className="yellow-button">Get a daypass</Button>
-              <Button className="blue-button">Book a campsite</Button>
+              <Button
+                className="blue-button"
+                href="https://discovercamping.ca/"
+              >
+                Book a campsite
+              </Button>
             </Grid>
           </Grid>
         </div>

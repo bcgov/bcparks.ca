@@ -48,7 +48,7 @@ export default function ParkPhotoGallery({ photos }) {
   }
 
   return (
-    <>
+    <Grid item xs={12}>
       <Box
         m={2}
         id="park-photo-gallery-container"
@@ -87,6 +87,6 @@ export default function ParkPhotoGallery({ photos }) {
           </SRLWrapper>
         </SimpleReactLightbox>
       </Box>
-    </>
+    </Grid>
   )
 }
