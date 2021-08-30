@@ -93,9 +93,9 @@ objects:
               limits:
                 cpu: 1000m
                 memory: 1Gi
-              requests:
-                cpu: 500m
-                memory: 512Mi
+              # requests:
+              #   cpu: 500m
+              #   memory: 512Mi
     triggers:
       - type: ConfigChange
       - type: ImageChange
@@ -192,9 +192,9 @@ objects:
               limits:
                 cpu: 1000m
                 memory: 1Gi
-              requests:
-                cpu: 500m
-                memory: 512Mi               
+              # requests:
+              #   cpu: 500m
+              #   memory: 512Mi               
             ports:
               - containerPort: 1337
             envFrom:
@@ -316,9 +316,9 @@ objects:
               limits:
                 cpu: 1000m
                 memory: 1Gi
-              requests:
-                cpu: 500m
-                memory: 512Mi            
+              # requests:
+              #   cpu: 500m
+              #   memory: 512Mi            
             ports:
               - containerPort: 5432
                 protocol: TCP
@@ -418,9 +418,9 @@ objects:
               limits:
                 cpu: 1000m
                 memory: 1Gi
-              requests:
-                cpu: 500m
-                memory: 512Mi            
+              # requests:
+              #   cpu: 500m
+              #   memory: 512Mi            
             ports:
               - containerPort: 8000
             envFrom:
@@ -514,9 +514,9 @@ objects:
               limits:
                 cpu: 1000m
                 memory: 1Gi
-              requests:
-                cpu: 500m
-                memory: 512Mi            
+              # requests:
+              #   cpu: 500m
+              #   memory: 512Mi            
             ports:
               - containerPort: 5000
             envFrom:
