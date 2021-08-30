@@ -236,23 +236,23 @@ const loadAdditionalProtectedAreaInfo = async () => {
     const data = JSON.parse(jsonData);
 
     for await (const p of data["protectedArea"]) {
-      if (park.status === "Active") {
+      if (p.status === "Active") {
         const protectedArea = {
-          url: park.url,
-          dayUsePass: park.dayUsePass,
-          fogZone: park.fogZone,
+          url: p.url,
+          dayUsePass: p.dayUsePass,
+          fogZone: p.fogZone,
         };
-        if (park.latitude !== "") {
-          protectedArea.latitude = park.latitude;
+        if (p.latitude !== "") {
+          protectedArea.latitude = p.latitude;
         }
-        if (park.longitude !== "") {
-          protectedArea.longitude = park.longitude;
+        if (p.longitude !== "") {
+          protectedArea.longitude = p.longitude;
         }
-        if (park.mapZoom !== "") {
-          protectedArea.mapZoom = park.mapZoom;
+        if (p.mapZoom !== "") {
+          protectedArea.mapZoom = p.mapZoom;
         }
         await strapi.services["protected-area"].update(
-          { orcs: park.orcs },
+          { orcs: p.orcs },
           protectedArea
         );
       }
