@@ -91,11 +91,11 @@ objects:
               - containerPort: 8080
             resources:
               limits:
-                cpu: 2500m
-                memory: 2Gi
-              requests:
                 cpu: 1000m
-                memory: 512Mi
+                memory: 1Gi
+              # requests:
+              #   cpu: 500m
+              #   memory: 512Mi
     triggers:
       - type: ConfigChange
       - type: ImageChange
@@ -168,7 +168,7 @@ objects:
     completionDeadlineSeconds: 1200
     replicas: 1
     selector:
-      name: ${CMS_POD}
+      name: ${CMS_POD} 
     strategy:
       type: Recreate
       maxSurge: 50%
@@ -188,6 +188,13 @@ objects:
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/strapi:${OC_APP}
             name: ${CMS_POD}
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 1Gi
+              requests:
+                cpu: 250m
+                memory: 256Mi               
             ports:
               - containerPort: 1337
             envFrom:
@@ -258,7 +265,7 @@ objects:
   spec:
     replicas: 1
     selector:
-      name: ${DB_POD}
+      name: ${DB_POD}    
     strategy: null
     template:
       metadata:
@@ -303,13 +310,19 @@ objects:
               initialDelaySeconds: 30
               tcpSocket:
                 port: 5432
-              timeoutSeconds: 1
+              timeoutSeconds: 240
             name: ${DB_POD}
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 1Gi
+              # requests:
+              #   cpu: 500m
+              #   memory: 512Mi            
             ports:
               - containerPort: 5432
                 protocol: TCP
                 name: postgresql
-            resources: {}
             securityContext:
               capabilities: {}
               privileged: false
@@ -385,7 +398,7 @@ objects:
     completionDeadlineSeconds: 1200
     replicas: 1
     selector:
-      name: ${STAGING_POD}
+      name: ${STAGING_POD}    
     strategy:
       type: Recreate
       maxSurge: 50%
@@ -401,6 +414,13 @@ objects:
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/staging:${OC_APP}
             name: ${STAGING_POD}
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 2Gi
+              requests:
+                cpu: 250m
+                memory: 256Mi            
             ports:
               - containerPort: 8000
             envFrom:
@@ -472,7 +492,7 @@ objects:
     completionDeadlineSeconds: 1200
     replicas: 1
     selector:
-      name: ${API_POD}
+      name: ${API_POD}  
     strategy:
       type: Recreate
       maxSurge: 50%
@@ -490,6 +510,13 @@ objects:
             image: >-
               image-registry.openshift-image-registry.svc:5000/${OC_NAMESPACE}-tools/api:${OC_APP}
             name: ${API_POD}
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 1Gi
+              requests:
+                cpu: 250m
+                memory: 512Mi            
             ports:
               - containerPort: 5000
             envFrom:

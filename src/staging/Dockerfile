@@ -38,6 +38,7 @@ RUN yum install -y \
 USER 1007770000
 COPY package.json ./
 RUN npm install --unsafe-perm 
+RUN npm install -g mocha
 RUN npm install -g gatsby-cli
 RUN gatsby build
 
