@@ -197,6 +197,9 @@ objects:
                 memory: 256Mi               
             ports:
               - containerPort: 1337
+            volumeMounts:
+              - mountPath: /opt/app-root/src/public/uploads
+                name: ${CMS_POD}-data         
             envFrom:
               - secretRef:
                   name: bcparks-secrets
@@ -211,7 +214,28 @@ objects:
             kind: ImageStreamTag
             namespace: "${OC_NAMESPACE}-tools"
             name: 'strapi:${OC_APP}'
+        volumes:
+        - name: ${CMS_POD}-data
+          persistentVolumeClaim:
+            claimName: '${CMS_POD}-data'     
   status: {}
+  #   cms Persistent Volume Claim
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: ${CMS_POD}-data
+    namespace: ${OC_NAMESPACE}-${OC_APP}
+  spec:
+    accessModes:
+      - ReadWriteMulti
+    resources:
+      requests:
+        storage: 4Gi
+  status:
+    accessModes:
+      - ReadWriteMulti
+    capacity:
+      storage: 10Gi
 #   CMS Service
 - apiVersion: v1
   kind: Service
@@ -322,7 +346,7 @@ objects:
             ports:
               - containerPort: 5432
                 protocol: TCP
-                name: postgresql
+                name: postgresql   
             securityContext:
               capabilities: {}
               privileged: false
