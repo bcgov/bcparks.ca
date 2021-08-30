@@ -20,7 +20,7 @@ args = {
     'owner': 'airflow',
     'depends_on_past': False,
     'start_date': days_ago(0,0,0,0,0),
-    'email': ['dapo.onawole@gmail.com'],
+    'email': ['Robert.Fiddler@gov.bc.ca'],
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
