@@ -29,7 +29,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     return
   }
   result.data.allStrapiProtectedArea.nodes.forEach(park => {
-    console.log(park)
     const slug = park.slug
       ? park.slug
       : park.protectedAreaName.toLowerCase().replace(/ /g, "-")
