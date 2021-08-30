@@ -16,8 +16,7 @@ RUN yum install -y \
 	automake \
 	libtool \
     git \
-    openssh \
-    mocha && \
+    openssh && \
     mkdir -p /opt/app-root/src/app/node_modules && \
     mkdir -p /opt/app-root/src/app/site && \
     mkdir -p /opt/app-root/src/public && \
@@ -31,6 +30,7 @@ RUN yum install -y \
 USER 1007770000
 COPY package.json ./
 RUN npm install --unsafe-perm 
+RUN npm install -g mocha
 RUN npm install -g gatsby-cli
 RUN gatsby build
 
