@@ -16,7 +16,8 @@ RUN yum install -y \
 	automake \
 	libtool \
     git \
-    openssh && \
+    openssh \
+    mocha && \
     mkdir -p /opt/app-root/src/app/node_modules && \
     mkdir -p /opt/app-root/src/app/site && \
     mkdir -p /opt/app-root/src/public && \
