@@ -25,11 +25,12 @@ export default function CampfireBan({ data }) {
   if (hasCampfireBan === "Y" || hasSmokingBan === "Y")
     title = `${fireBans.join(" and ")} ban in effect`
 
+  if (!title) return null
+
   return (
     <>
       <Grid container item xs={12} sm={6} md={4} className={classes.topGrid}>
         <Card className={classes.card}>
-          {!title && <CardHeader title={title} />}
           {title && (
             <CardHeader
               avatar={

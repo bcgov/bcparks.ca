@@ -10,7 +10,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const result = await graphql(`
     {
-      allStrapiProtectedArea(filter: { orcs: { lt: 50 } }) {
+      allStrapiProtectedArea {
         nodes {
           id
           orcs
@@ -21,7 +21,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       }
     }
   `)
-  // Handle errors
+
   if (result.errors) {
     reporter.panicOnBuild(
       `Error while running GraphQL query - node create page.`
