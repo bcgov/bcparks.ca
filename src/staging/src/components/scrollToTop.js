@@ -5,7 +5,7 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp"
 
 const useStyles = makeStyles(theme => ({
   toTop: {
-    zIndex: 2,
+    zIndex: 100,
     position: "fixed",
     bottom: "2vh",
     backgroundColor: "#f6f6f6",

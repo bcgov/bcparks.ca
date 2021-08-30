@@ -44,10 +44,7 @@ export default ParksPage
 
 export const query = graphql`
   {
-    allStrapiProtectedArea(
-      filter: { orcs: { lt: 50 } }
-      sort: { fields: protectedAreaName }
-    ) {
+    allStrapiProtectedArea(sort: { fields: protectedAreaName }) {
       edges {
         node {
           id
