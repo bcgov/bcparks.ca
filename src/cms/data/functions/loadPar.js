@@ -236,23 +236,23 @@ const loadAdditionalProtectedAreaInfo = async () => {
     const data = JSON.parse(jsonData);
 
     for await (const p of data["protectedArea"]) {
-      if (p.status === "Active") {
+      if (park.status === "Active") {
         const protectedArea = {
-          url: p.url,
-          dayUsePass: p.dayUsePass,
-          fogZone: p.fogZone,
+          url: park.url,
+          dayUsePass: park.dayUsePass,
+          fogZone: park.fogZone,
         };
-        if (p.latitude !== "") {
-          protectedArea.latitude = p.latitude;
+        if (park.latitude !== "") {
+          protectedArea.latitude = park.latitude;
         }
-        if (p.longitude !== "") {
-          protectedArea.longitude = p.longitude;
+        if (park.longitude !== "") {
+          protectedArea.longitude = park.longitude;
         }
-        if (p.mapZoom !== "") {
-          protectedArea.mapZoom = p.mapZoom;
+        if (park.mapZoom !== "") {
+          protectedArea.mapZoom = park.mapZoom;
         }
         await strapi.services["protected-area"].update(
-          { orcs: p.orcs },
+          { orcs: park.orcs },
           protectedArea
         );
       }
@@ -333,31 +333,32 @@ const loadParkDetails = async () => {
     var jsonData = fs.readFileSync("./data/park-details.json", "utf8");
     const data = JSON.parse(jsonData);
 
-    for await (const p of data["ParkDetails"]) {
+    for await (const park of data["parkDetails"]) {
       const protectedArea = {
-        description: p.Description,
-        safetyinfo: p.SafetyInfo,
-        specialnotes: p.SpecialNotes,
-        locationnotes: p.LocationNotes,
-        parkcontact: p.ParkContact,
-        reservations: p.Reservations,
-        maps: p.Maps,
-        natureandculture: p.NatureAndCulture,
+        description: park.description,
+        safetyInfo: park.safetyInfo,
+        specialNotes: park.specialNotes,
+        locationNotes: park.locationNotes,
+        parkContact: park.parkContact,
+        reservations: park.reservations,
+        maps: park.maps,
+        natureAndCulture: park.natureAndCulture,
         reconciliationNotes: reconciliationNotes,
-        slug: p.Path.replace(/\/\s*$/, "")
+        purpose: park.purpose,
+        managementPlanning: park.managementPlanning,
+        partnerships: park.partnerships,
+        oldUrl: park.url,
+        slug: park.url
+          .replace(/\/\s*$/, "")
           .split("/")
           .pop(),
       };
       await strapi.services["protected-area"]
-        .update({ orcs: p.ORCSSite }, protectedArea)
+        .update({ orcs: park.orcs }, protectedArea)
         .catch((error) => {
-          strapi.log.error(
-            `error load park details: orcs ${p.ORCSSite}`,
-            error
-          );
+          strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
         });
     }
-
     strapi.log.info("loading park details completed...");
   } catch (error) {
     strapi.log.error(error);
