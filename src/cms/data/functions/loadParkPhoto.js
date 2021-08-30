@@ -79,9 +79,6 @@ const loadParkPhoto = async () => {
     const dataSeed = JSON.parse(jsonData)["parkPhotos"];
 
     for await (const data of dataSeed) {
-      if (data.orcs > 100) {
-        break;
-      }
       const isUrlExists = await urlExists(data.thumbnail);
       if (!isUrlExists) {
         break;
@@ -104,15 +101,7 @@ const loadParkPhoto = async () => {
 
       try {
         const result = await strapi.services["park-photo"].create(parkPhoto);
-        // thumbnail
-        // const filename = result.thumbnailUrl
-        //   .replace("https://bcparks.ca/explore/parkpgs/", "")
-        //   .replace(/\//g, "-");
-        // const filepath = `${rootDir}${IMAGE_PATH}\\${filename}`;
 
-        // await downloadImage(result.thumbnailUrl, filepath);
-        // loadImage(result.id, filepath);
-        //
         const filename = result.imageUrl
           .replace("https://bcparks.ca/explore/parkpgs/", "")
           .replace(/\//g, "-");

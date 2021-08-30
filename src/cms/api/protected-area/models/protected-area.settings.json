@@ -52,6 +52,9 @@
     "url": {
       "type": "string"
     },
+    "oldUrl": {
+      "type": "string"
+    },
     "typeCode": {
       "type": "enumeration",
       "enum": [
@@ -129,7 +132,7 @@
       "type": "text"
     },
     "locationNotes": {
-      "type": "string"
+      "type": "text"
     },
     "parkContact": {
       "type": "text"
@@ -140,7 +143,16 @@
     "maps": {
       "type": "text"
     },
+    "managementPlanning": {
+      "type": "text"
+    },
     "natureAndCulture": {
+      "type": "text"
+    },
+    "partnerships": {
+      "type": "text"
+    },
+    "purpose": {
       "type": "text"
     },
     "reconciliationNotes": {
