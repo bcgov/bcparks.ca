@@ -49,7 +49,7 @@
   .app-tabs {
     height: unset !important;
     min-height: unset !important;
-    display: unset !important;
+    display: block !important;
   }
   .app-tab {
     width: 100% !important;
@@ -62,5 +62,19 @@
   .app-tab .MuiTab-wrapper {
     text-align: center !important;
     padding-right: 0px !important;
+  }
+}
+
+@media (min-width: 991.99px) {
+  .app-tab .MuiTabs-flexContainer {
+    display: inline-block !important;
+  }
+
+  .app-tab .MuiTabs-scroller {
+    white-space: normal !important;
+  }
+
+  .app-tab .MuiButtonBase-root {
+    width: 100% !important;
   }
 }
