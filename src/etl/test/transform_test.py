@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-from dags.utils import Parks_ETL
+from dags.v2.utils import Parks_ETL
 from unittest.mock import patch, MagicMock
 
 var_fakes = {"par": "", "bcgn": "", "strapi": "", "token": ""}
