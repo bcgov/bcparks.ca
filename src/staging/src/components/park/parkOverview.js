@@ -1,14 +1,14 @@
 import React, { useState } from "react"
 import { Container, Box, Paper, Button } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import ParkPhotoGallery from "./parkPhotoGallery"
+
 import Heading from "./heading"
 import HtmlContent from "./HtmlContent"
 
 const useStyles = makeStyles(theme => ({
   collapsed: {
     padding: theme.spacing(1),
-    maxHeight: "460px",
+    maxHeight: "200px",
     overflow: "hidden",
   },
   expanded: {
@@ -32,19 +32,12 @@ export default function ParkOverview({ data }) {
   return (
     <div id="park-overview-container" className="anchor-link">
       <Paper elevation={0}>
-        <div className={expanded ? classes.expanded : classes.collapsed}>
+        <Box className={expanded ? classes.expanded : classes.collapsed}>
           <Heading>Park Overview</Heading>
           <Container>
-            {data.photos.nodes.length !== 0 && (
-              <div className={classes.photo}>
-                <ParkPhotoGallery photos={data.photos} />
-              </div>
-            )}
-            <Box component="div" textOverflow="ellipsis">
-              <HtmlContent>{data.description}</HtmlContent>
-            </Box>
+            <HtmlContent>{data.description}</HtmlContent>
           </Container>
-        </div>
+        </Box>
         <Box m={2}>
           <Button
             color="primary"

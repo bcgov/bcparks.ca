@@ -52,14 +52,11 @@ a:link {
     overflow: hidden;
     position: relative;
     text-align: center;
-    color: white;
-    background-color:  #38598a;
+    color: #38598a;
+    background-color:  white;
 }
 
 .park-header {
-    background: rgb(0, 0, 0); 
-    background: rgba(0, 0, 0, 0.2); 
-    color: #f1f1f1;
     position: absolute;
     top: 0%;
     left: 0%;
@@ -69,12 +66,9 @@ a:link {
 
 .park-header-title {
     position: absolute;
-    color: white;
     top: 25%;
     left: 0%;
     width: 90%;
-    z-index: 100;
-    filter: drop-shadow(1px 1px 1px #0f0f0f);
 }
 
 .park-status-top-grid {
@@ -124,4 +118,9 @@ a:link {
     background-color: #fcba19 !important;
     width: 150px !important;
     white-space: nowrap;
+}
+
+.raw-html-content li {
+    display: list-item !important;
+    margin-left: 16px;
 }

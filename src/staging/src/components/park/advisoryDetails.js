@@ -121,58 +121,56 @@ export default function AdvisoryDetails({ data }) {
             <Grid container spacing={1}>
               {advisories.map((advisory, index) => (
                 <Grid key={advisory.id} item xs={12}>
-                  <Paper elevation={0}>
-                    <Accordion
-                      className={advisory.alertColorCss}
-                      expanded={expandeds[index]}
-                      onChange={handleChange(index)}
+                  <Accordion
+                    className={advisory.alertColorCss}
+                    expanded={expandeds[index]}
+                    onChange={handleChange(index)}
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls={advisory.title}
+                      id={advisory.id}
                     >
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={advisory.title}
-                        id={advisory.id}
-                      >
-                        <Box mr={1}>
-                          <Avatar
-                            src={advisory.alertIcon}
-                            className={classes.small}
-                            variant="rounded"
-                            width="24"
-                            height="24"
-                          />
-                        </Box>
-                        <p>{advisory.title}</p>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <div>
-                          <Divider variant="fullWidth" />
-                          {advisory.isEffectiveDateDisplayed &&
-                            advisory.effectiveDate && (
-                              <>
-                                <br />
-                                <p>
-                                  In effect {advisory.effectiveDate}
-                                  {advisory.isEndDateDisplayed &&
-                                    advisory.endDate && (
-                                      <>
-                                        {" to "}
-                                        {advisory.endDate}
-                                      </>
-                                    )}
-                                </p>
-                              </>
-                            )}
-                          {advisory.isAdvisoryDateDisplayed &&
-                            advisory.advisoryDate && (
-                              <>
-                                <p>Posted {advisory.advisoryDate}</p>
-                              </>
-                            )}
-                          <HtmlContent>{advisory.description}</HtmlContent>
-                        </div>
-                      </AccordionDetails>
-                    </Accordion>
-                  </Paper>
+                      <Box mr={1}>
+                        <Avatar
+                          src={advisory.alertIcon}
+                          className={classes.small}
+                          variant="rounded"
+                          width="24"
+                          height="24"
+                        />
+                      </Box>
+                      <p>{advisory.title}</p>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <div>
+                        <Divider variant="fullWidth" />
+                        {advisory.isEffectiveDateDisplayed &&
+                          advisory.effectiveDate && (
+                            <>
+                              <br />
+                              <p>
+                                In effect {advisory.effectiveDate}
+                                {advisory.isEndDateDisplayed &&
+                                  advisory.endDate && (
+                                    <>
+                                      {" to "}
+                                      {advisory.endDate}
+                                    </>
+                                  )}
+                              </p>
+                            </>
+                          )}
+                        {advisory.isAdvisoryDateDisplayed &&
+                          advisory.advisoryDate && (
+                            <>
+                              <p>Posted {advisory.advisoryDate}</p>
+                            </>
+                          )}
+                        <HtmlContent>{advisory.description}</HtmlContent>
+                      </div>
+                    </AccordionDetails>
+                  </Accordion>
                 </Grid>
               ))}
             </Grid>

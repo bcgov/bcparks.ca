@@ -17,7 +17,6 @@ const _ = require("lodash")
 export default function ParkActivity({ data }) {
   const activityData = _.sortBy(data, ["activityName"], ["asc"])
   let expandedsInitial = []
-
   activityData.forEach((activity, index) => {
     expandedsInitial[index] = false
   })
@@ -38,30 +37,6 @@ export default function ParkActivity({ data }) {
       expandeds[index] = isAllExpanded
     })
     setExpandeds(expandeds)
-  }
-
-  let numberOfColumns = 3
-  let rowsPerColumn = Math.ceil(activityData.length / numberOfColumns)
-  let itemsCount = 0
-  let index = 0
-  let activities = []
-  let activityItems = []
-
-  for (const activity of activityData) {
-    activity.id = ++index
-    activityItems.push(activity)
-    if (
-      activityItems.length >= rowsPerColumn ||
-      activityData.length === index
-    ) {
-      itemsCount += activityItems.length
-      activities.push(activityItems)
-      activityItems = []
-      if (--numberOfColumns < 0) numberOfColumns = 1
-      rowsPerColumn = Math.ceil(
-        (activityData.length - itemsCount) / numberOfColumns
-      )
-    }
   }
 
   return (
@@ -97,38 +72,34 @@ export default function ParkActivity({ data }) {
         </Grid>
         {activityData && (
           <Container>
-            <Grid container spacing={0}>
-              {activities.map((activityItems, index) => (
-                <Grid key={index} item xs={12} md={4}>
-                  {activityItems.map(activity => (
-                    <Box p={1} key={activity.id}>
-                      <Paper>
-                        <Accordion
-                          expanded={expandeds[activity.id] || false}
-                          onChange={handleChange(activity.id)}
-                          id={activity.id}
-                        >
-                          <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls={activity.activityName}
-                          >
-                            <Box mr={1}>
-                              <img
-                                src={activity.icon}
-                                alt={activity.activityName}
-                                width="24"
-                                height="24"
-                              />
-                            </Box>
-                            <p>{activity.activityName}</p>
-                          </AccordionSummary>
-                          <AccordionDetails>
-                            <p>{activity.description}</p>
-                          </AccordionDetails>
-                        </Accordion>
-                      </Paper>
-                    </Box>
-                  ))}
+            <Grid container spacing={1}>
+              {activityData.map((activity, index) => (
+                <Grid key={index} item xs={12}>
+                  <Paper>
+                    <Accordion
+                      expanded={expandeds[index]}
+                      onChange={handleChange(index)}
+                    >
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls={activity.activityName}
+                        id={index}
+                      >
+                        <Box mr={1}>
+                          <img
+                            src={activity.icon}
+                            alt={activity.activityName}
+                            width="24"
+                            height="24"
+                          />
+                        </Box>
+                        <p>{activity.activityName}</p>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <p>{activity.description}</p>
+                      </AccordionDetails>
+                    </Accordion>
+                  </Paper>
                 </Grid>
               ))}
             </Grid>

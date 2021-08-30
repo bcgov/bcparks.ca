@@ -3,10 +3,6 @@ import { Grid, Box } from "@material-ui/core"
 import ParkAccessStatus from "./parkAccessStatus"
 import Advisory from "./advisory"
 import CampfireBan from "./campfireBan"
-import DayUseCamping from "./dayUseCamping"
-import PetsOnLeash from "./petsOnLeash"
-import ParkMap from "./parkMap"
-import Accessibility from "./accessibility"
 import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles({
@@ -17,7 +13,7 @@ const useStyles = makeStyles({
 
 export default function ParkStatus({ data }) {
   const classes = useStyles()
-  const { advisories, parkAccessStatus, park } = data
+  const { advisories, parkAccessStatus } = data
   const { hasCampfireBan, hasSmokingBan } = parkAccessStatus
   return (
     <div id="park-status-container" className="anchor-link">
@@ -33,15 +29,6 @@ export default function ParkStatus({ data }) {
               }}
             />
           </Grid>
-          <DayUseCamping
-            data={{
-              parkFacilities: parkAccessStatus.parkFacilities,
-              isDayUsePass: park.isDayUsePass,
-            }}
-          />
-          <ParkMap />
-          <PetsOnLeash data={parkAccessStatus.parkActivities} />
-          <Accessibility parkFacilities={parkAccessStatus.parkFacilities} />
         </Grid>
       </Box>
     </div>

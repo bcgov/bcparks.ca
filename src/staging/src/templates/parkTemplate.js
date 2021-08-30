@@ -15,6 +15,7 @@ import ParkFacility from "../components/park/parkFacility"
 import ParkMap from "../components/park/parkMapDetails"
 import MapLocation from "../components/park/mapLocation"
 import ParkMenu from "../components/park/parkMenu"
+import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import ScrollToTop from "../components/scrollToTop"
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -27,12 +28,9 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
   },
   parkContent: {
-    zIndex: 99,
-    opacity: 1,
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
-      marginTop: "-75px",
     },
   },
   appBarOffset: theme.mixins.toolbar,
@@ -54,7 +52,6 @@ export default function ParkTemplate({ data }) {
 
   const parkOverviewData = {
     description: park.description,
-    photos: photos,
   }
 
   const bannerPhoto =
@@ -84,6 +81,9 @@ export default function ParkTemplate({ data }) {
               <Grid container spacing={0}>
                 <Grid item xs={12}>
                   <ParkStatus data={parkStatusData} />
+                </Grid>
+                <Grid item xs={12}>
+                  <ParkPhotoGallery photos={photos} />
                 </Grid>
                 <Grid item xs={12}>
                   <ParkOverview data={parkOverviewData} />

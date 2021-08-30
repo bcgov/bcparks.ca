@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
   // necessary for content to be below app bar
   appBarOffset: theme.mixins.toolbar,
   drawerDesktop: {
-    marginTop: 150,
+    marginTop: 224,
     marginLeft: 40,
     padding: 10,
     width: drawerWidth,
@@ -136,7 +136,6 @@ export default function ParkMenu(props) {
         className="scrollspy"
         items={menuFiltered.map(m => m.url)}
         currentClassName="isCurrent"
-        offset={"90"}
       >
         {menuFiltered.map((menu, index) => (
           <li key={index}>
