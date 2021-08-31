@@ -45,4 +45,4 @@ RUN chmod -R 777 . && \
 USER 1007770000
 EXPOSE 8000
 # start app
-CMD ["NODE_OPTIONS=--trace-deprecation", "gatsby", "develop", "-H", "0.0.0.0"]
+CMD ["gatsby", "develop", "-H", "0.0.0.0"]
