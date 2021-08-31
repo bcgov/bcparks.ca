@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import { Container, Grid, Paper, CssBaseline } from "@material-ui/core"
+import { Container, Grid, CssBaseline, Toolbar } from "@material-ui/core"
 import ParkOverview from "../components/park/parkOverview"
 import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
@@ -9,7 +9,6 @@ import About from "../components/park/about"
 import CampingDetails from "../components/park/campingDetails"
 import Reconciliation from "../components/park/reconciliation"
 import ParkHeader from "../components/park/parkHeader"
-import ParkStatus from "../components/park/parkStatus"
 import ParkActivity from "../components/park/parkActivity"
 import ParkFacility from "../components/park/parkFacility"
 import ParkMap from "../components/park/parkMapDetails"
@@ -18,6 +17,8 @@ import ParkMenu from "../components/park/parkMenu"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import ScrollToTop from "../components/scrollToTop"
 import { makeStyles } from "@material-ui/core/styles"
+import Header from "../components/header"
+import Footer from "../components/footer"
 
 import "./parkTemplate.css"
 
@@ -56,44 +57,39 @@ export default function ParkTemplate({ data }) {
         <title>BC Parks | {park.protectedAreaName}</title>
       </Helmet>
       <ScrollToTop />
-      <ParkHeader
-        data={{
-          protectedAreaName: park.protectedAreaName,
-        }}
-      />
-
       <CssBaseline />
+      <Header>{data.strapiWebsites.Header}</Header>
+      <Toolbar />
       <Container id="park-info-container" maxWidth={false}>
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
+          <ParkHeader data={parkStatusData} />
+          <ParkPhotoGallery photos={photos} />
           <Grid item xs={12} sm={3}>
             <ParkMenu data={parkStatusData} />
           </Grid>
           <Grid item xs={12} sm={9} className={classes.parkContent}>
-            <Paper elevation={1}>
-              <Grid item container spacing={0}>
-                <ParkStatus data={parkStatusData} />
-                <ParkPhotoGallery photos={photos} />
-                <ParkOverview data={park.description} />
-                <AccessibilityDetails />
-                <AdvisoryDetails data={advisories} />
-                <CampingDetails
-                  data={{
-                    parkFacilities: parkAccessStatus.parkFacilities,
-                    reservations: park.reservations,
-                  }}
-                />
-                <ParkFacility data={parkAccessStatus.parkFacilities} />
-                <ParkActivity data={parkAccessStatus.parkActivities} />
-                <MapLocation data={park.maps} />
-                <ParkMap data={park.maps} />
-                <About data={park.parkContact} />
-                <Reconciliation data={park.reconciliationNotes} />
-              </Grid>
-            </Paper>
+            <Grid item container spacing={0}>
+              <ParkOverview data={park.description} />
+              <AccessibilityDetails />
+              <AdvisoryDetails data={advisories} />
+              <CampingDetails
+                data={{
+                  parkFacilities: parkAccessStatus.parkFacilities,
+                  reservations: park.reservations,
+                }}
+              />
+              <ParkFacility data={parkAccessStatus.parkFacilities} />
+              <ParkActivity data={parkAccessStatus.parkActivities} />
+              <MapLocation data={park.maps} />
+              <ParkMap data={park.maps} />
+              <About data={park.parkContact} />
+              <Reconciliation data={park.reconciliationNotes} />
+            </Grid>
             <br />
           </Grid>
         </Grid>
       </Container>
+      <Footer>{data.strapiWebsites.Footer}</Footer>
     </>
   )
 }
@@ -208,6 +204,22 @@ export const query = graphql`
               gatsbyImageData(layout: FULL_WIDTH)
             }
           }
+        }
+      }
+    }
+    strapiWebsites(Name: { eq: "BCParks.ca" }) {
+      Footer
+      Header
+      Name
+      Navigation
+      id
+      homepage {
+        id
+        Template
+        Content {
+          id
+          strapi_component
+          HTML
         }
       }
     }

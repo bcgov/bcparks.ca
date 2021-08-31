@@ -1,6 +1,6 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import { Grid, Box } from "@material-ui/core"
+import { Grid, Box, Divider } from "@material-ui/core"
 import { GatsbyImage } from "gatsby-plugin-image"
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox"
 
@@ -9,6 +9,7 @@ const useStyles = makeStyles({
     objectFit: "cover",
     overflow: "hidden",
     height: 280,
+    zIndex: 2,
   },
   smallPhoto: {
     objectFit: "cover",
@@ -26,8 +27,6 @@ export default function ParkPhotoGallery({ photos }) {
       image: photo.image.localFile.childImageSharp.gatsbyImageData,
     }
   })
-
-  if (parkPhotos.length === 0) return null
 
   const srlOptions = {
     settings: {
@@ -47,13 +46,16 @@ export default function ParkPhotoGallery({ photos }) {
     },
   }
 
+  if (parkPhotos.length === 0)
+    return (
+      <Grid item xs={12}>
+        <Divider />
+      </Grid>
+    )
+
   return (
     <Grid item xs={12}>
-      <Box
-        m={2}
-        id="park-photo-gallery-container"
-        className={classes.photoGallery}
-      >
+      <Box id="park-photo-gallery-container" className={classes.photoGallery}>
         <SimpleReactLightbox>
           <SRLWrapper options={srlOptions}>
             <Grid item container spacing={1}>

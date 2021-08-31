@@ -1,8 +1,15 @@
-import React, { useState } from "react"
+import React from "react"
+import { Helmet } from "react-helmet"
+import { graphql } from "gatsby"
+import Header from "../components/header"
+import Menu from "../components/Menu"
+import Footer from "../components/footer"
+import HTMLArea from "../components/HTMLArea"
+
 import {
   Box,
-  Button,
-  Paper,
+  Chip,
+  Container,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -12,13 +19,10 @@ import {
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
-import Heading from "./heading"
-import HtmlContent from "./htmlContent"
-import Spacer from "./spacer"
 
-import blueAlertIcon from "../../images/park/blue-alert-64.png"
-import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
-import redAlertIcon from "../../images/park/red-alert-64.png"
+import blueAlertIcon from "../images/park/blue-alert-64.png"
+import yellowAlertIcon from "../images/park/yellow-alert-64.png"
+import redAlertIcon from "../images/park/red-alert-64.png"
 
 const useStyles = makeStyles(theme => ({
   small: {
@@ -27,31 +31,10 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function AdvisoryDetails({ data }) {
+const PublicAdvisoryPage = ({ data }) => {
   const classes = useStyles()
 
-  const advisoryData = data.nodes
-
-  let expandedsInitial = []
-  advisoryData.forEach((advisory, index) => {
-    expandedsInitial[index] = false
-  })
-
-  const [allExpanded, setAllExpanded] = useState(false)
-  const [expandeds, setExpandeds] = useState(expandedsInitial)
-
-  const handleChange = id => (event, isExpanded) => {
-    expandeds[id] = isExpanded
-    setExpandeds([...expandeds])
-  }
-
-  const expandAll = isAllExpanded => {
-    let expandeds = []
-    advisoryData.forEach((advisory, index) => {
-      expandeds[index] = isAllExpanded
-    })
-    setExpandeds(expandeds)
-  }
+  const advisoryData = data.allStrapiPublicAdvisory.nodes
 
   const advisories = advisoryData.map(advisory => {
     let alertIcon
@@ -79,51 +62,20 @@ export default function AdvisoryDetails({ data }) {
   })
 
   return (
-    <Grid
-      item
-      xs={12}
-      id="park-advisory-details-container"
-      className="anchor-link"
-    >
-      <Paper elevation={0}>
-        <Grid container>
-          <Grid item xs={6}>
-            <Heading>{`Alerts (${advisories.length})`}</Heading>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            container
-            justifyContent="flex-end"
-            alignItems="flex-start"
-          >
-            <Box m={2}>
-              {advisories.length > 1 && (
-                <Button
-                  color="primary"
-                  onClick={() => {
-                    expandAll(!allExpanded)
-                    setAllExpanded(!allExpanded)
-                  }}
-                >
-                  {allExpanded ? "Collapse all" : "Expand All"}
-                </Button>
-              )}
-            </Box>
-          </Grid>
-        </Grid>
-        {data.totalCount === 0 && (
-          <HtmlContent>There are no reported alerts for this park</HtmlContent>
-        )}
-        {data.totalCount > 0 && (
+    <>
+      <Helmet>
+        <title>BC Parks | Public Advisories</title>
+      </Helmet>
+      <Header>{data.strapiWebsites.Header}</Header>
+      <Menu>{data.strapiWebsites.Navigation}</Menu>
+      <Container>
+        <br />
+        <h1>Public Advisories</h1>
+        <Box m={4} p={3}>
           <Grid container spacing={1}>
             {advisories.map((advisory, index) => (
-              <Grid key={advisory.id} item xs={12}>
-                <Accordion
-                  className={advisory.alertColorCss}
-                  expanded={expandeds[index]}
-                  onChange={handleChange(index)}
-                >
+              <Grid item xs={12} key={advisory.id}>
+                <Accordion className={advisory.alertColorCss}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls={advisory.title}
@@ -138,7 +90,17 @@ export default function AdvisoryDetails({ data }) {
                         height="24"
                       />
                     </Box>
-                    <HtmlContent>{advisory.title}</HtmlContent>
+                    <div>
+                      {advisory.protectedAreas.length > 0 &&
+                        advisory.protectedAreas.map((par, index) => (
+                          <Chip
+                            variant="outlined"
+                            key={index}
+                            label={par.protectedAreaName}
+                          />
+                        ))}
+                      <HTMLArea isVisible>{advisory.title}</HTMLArea>
+                    </div>
                   </AccordionSummary>
                   <AccordionDetails>
                     <div>
@@ -164,16 +126,75 @@ export default function AdvisoryDetails({ data }) {
                             <p>Posted {advisory.advisoryDate}</p>
                           </>
                         )}
-                      <HtmlContent>{advisory.description}</HtmlContent>
+                      <HTMLArea isVisible>{advisory.description}</HTMLArea>
                     </div>
                   </AccordionDetails>
                 </Accordion>
               </Grid>
             ))}
+            <Grid item xs={12}></Grid>
           </Grid>
-        )}
-        <Spacer />
-      </Paper>
-    </Grid>
+        </Box>
+      </Container>
+      <Footer>{data.strapiWebsites.Footer}</Footer>
+    </>
   )
 }
+
+export default PublicAdvisoryPage
+
+export const query = graphql`
+  {
+    allStrapiPublicAdvisory(sort: { fields: urgency___sequence, order: DESC }) {
+      nodes {
+        id
+        title
+        description
+        isAdvisoryDateDisplayed
+        isEffectiveDateDisplayed
+        isEndDateDisplayed
+        isReservationsAffected
+        isSafetyRelated
+        urgency {
+          code
+          color
+          sequence
+          urgency
+        }
+        protectedAreas {
+          orcs
+          protectedAreaName
+          hasCampfireBan
+          hasSmokingBan
+        }
+        accessStatus {
+          color
+          accessStatus
+          precedence
+        }
+        advisoryDate(formatString: "MMMM DD, YYYY")
+        advisoryNumber
+        dcTicketNumber
+        effectiveDate(formatString: "MMMM DD, YYYY")
+        endDate(formatString: "MMMM DD, YYYY")
+        expiryDate(formatString: "MMMM DD, YYYY")
+      }
+    }
+    strapiWebsites(Name: { eq: "BCParks.ca" }) {
+      Footer
+      Header
+      Name
+      Navigation
+      id
+      homepage {
+        id
+        Template
+        Content {
+          id
+          strapi_component
+          HTML
+        }
+      }
+    }
+  }
+`
