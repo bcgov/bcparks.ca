@@ -18,7 +18,6 @@ import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import ScrollToTop from "../components/scrollToTop"
 import { makeStyles } from "@material-ui/core/styles"
 import Header from "../components/header"
-import Menu from "../components/menu"
 import Footer from "../components/footer"
 
 import "./parkTemplate.css"
