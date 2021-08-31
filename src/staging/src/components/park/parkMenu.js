@@ -3,12 +3,8 @@ import PropTypes from "prop-types"
 import {
   AppBar,
   CssBaseline,
-  Box,
   Drawer,
   Hidden,
-  List,
-  ListItem,
-  ListItemText,
   Toolbar,
   Typography,
   IconButton,
@@ -16,7 +12,6 @@ import {
 import MenuIcon from "@material-ui/icons/Menu"
 import { makeStyles, useTheme } from "@material-ui/core/styles"
 import Scrollspy from "react-scrollspy"
-import { Link } from "gatsby"
 
 const drawerWidth = 280
 
@@ -45,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   // necessary for content to be below app bar
   appBarOffset: theme.mixins.toolbar,
   drawerDesktop: {
-    marginTop: 520,
+    marginTop: 540,
     marginLeft: 40,
     border: 0,
     padding: 10,

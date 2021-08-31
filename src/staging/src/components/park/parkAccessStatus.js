@@ -1,6 +1,6 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import { Grid, Card, CardHeader, Avatar } from "@material-ui/core"
+import { Card, CardHeader, Avatar } from "@material-ui/core"
 
 import blueStatusIcon from "../../images/park/blue-status-64.png"
 import yellowStatusIcon from "../../images/park/yellow-status-64.png"

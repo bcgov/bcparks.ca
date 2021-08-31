@@ -9,10 +9,11 @@ const useStyles = makeStyles(theme => ({
     position: "fixed",
     bottom: "2vh",
     backgroundColor: "#f6f6f6",
-    color: "#00bfff",
+    opacity: "0.5",
+    color: "#38598a",
     "&:hover, &.Mui-focusVisible": {
       transition: "0.3s",
-      color: "#00ffff",
+      color: "#000000",
       backgroundColor: "#ffffff",
     },
     [theme.breakpoints.up("xs")]: {
