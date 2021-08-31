@@ -390,173 +390,174 @@ export default function Home({ location, data }) {
     <>
       <Header>{data.strapiWebsites.Header}</Header>
       <Menu>{data.strapiWebsites.Navigation}</Menu>
-      <div className="search-results-main container">
-        <div className="search-results-container">
-          <h1 className="headline-text">Find your next adventure</h1>
-          <div className="row no-gutters">
-            <div className="col-lg-3 pr15">
-              <div className="search-results-quick-filter m15t">
-                <div className="row">
-                  <div className="col-12 pr30">
-                    <h4 className="filter-heading p30t">
-                      Search by park name, <br />
-                      location, activity
-                    </h4>
-                    <TextField
-                      id="park-search-text"
-                      variant="outlined"
-                      placeholder="e.g Alice Park"
-                      className="park-search-text-box p10t"
-                      value={inputText}
-                      onChange={event => {
-                        setInputText(event.target.value)
-                      }}
-                      onKeyPress={ev => {
-                        if (ev.key === "Enter") {
-                          setSearchText(inputText)
-                          ev.preventDefault()
-                        }
-                      }}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <SearchIcon className="search-icon" />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </div>
-                </div>
-                <div className="row p20t">
-                  <div className="col-12">
-                    <h4 className="filter-heading p30t">Filter by</h4>
-                    <div className="">
-                      <h4 className="filter-heading p10t">Popular filters</h4>
-                      <FormGroup className="p10l">
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={camping}
-                              onChange={handleQuickSearchChange}
-                              name="camping"
-                            />
+      <div className="search-body">
+        <div className="search-results-main container">
+          <div className="search-results-container">
+            <h1 className="headline-text">Find your next adventure</h1>
+            <div className="row no-gutters">
+              <div className="col-lg-3 pr15">
+                <div className="search-results-quick-filter m15t">
+                  <div className="row">
+                    <div className="col-12 pr30">
+                      <h4 className="filter-heading p30t">
+                        Search by park name, <br />
+                        location, activity
+                      </h4>
+                      <TextField
+                        id="park-search-text"
+                        variant="outlined"
+                        placeholder="e.g Alice Park"
+                        className="park-search-text-box p10t"
+                        value={inputText}
+                        onChange={event => {
+                          setInputText(event.target.value)
+                        }}
+                        onKeyPress={ev => {
+                          if (ev.key === "Enter") {
+                            setSearchText(inputText)
+                            ev.preventDefault()
                           }
-                          label="Camping"
-                          className="no-wrap"
-                        />
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={petFriendly}
-                              onChange={handleQuickSearchChange}
-                              name="petFriendly"
-                            />
-                          }
-                          label="Dog friendly"
-                          className="no-wrap"
-                        />
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={wheelchair}
-                              onChange={handleQuickSearchChange}
-                              name="wheelchair"
-                            />
-                          }
-                          label="Wheelchair accessible"
-                          className="no-wrap"
-                        />
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={marine}
-                              onChange={handleQuickSearchChange}
-                              name="marine"
-                            />
-                          }
-                          label="Marine park"
-                          className="no-wrap"
-                        />
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={ecoReserve}
-                              onChange={handleQuickSearchChange}
-                              name="ecoReserve"
-                            />
-                          }
-                          label="Ecological reserve"
-                          className="no-wrap"
-                        />
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={electricalHookup}
-                              onChange={handleQuickSearchChange}
-                              name="electricalHookup"
-                            />
-                          }
-                          label="Electrical hookups"
-                          className="no-wrap"
-                        />
-                      </FormGroup>
+                        }}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <SearchIcon className="search-icon" />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
                     </div>
                   </div>
-                </div>
-                <div className="select-padding">
-                  <Select
-                    id="activities-select"
-                    options={activityItems}
-                    value={selectedActivities}
-                    controlShouldRenderValue={false}
-                    isClearable={false}
-                    isMulti
-                    onChange={e => {
-                      setSelectedActivities(e)
-                    }}
-                    className="park-filter-select"
-                    variant="outlined"
-                    placeholder="Activities"
-                  />
-                </div>
-
-                <div className="select-padding">
-                  <Select
-                    id="facilities-select"
-                    options={facilityItems}
-                    value={selectedFacilities}
-                    controlShouldRenderValue={false}
-                    isClearable={false}
-                    isMulti
-                    onChange={e => {
-                      setSelectedFacilities(e)
-                    }}
-                    className="park-filter-select"
-                    variant="outlined"
-                    placeholder="Facilities"
-                  />
-                </div>
-                <br />
-                <br />
-              </div>
-            </div>
-            <div className="col-lg-9">
-              <div className="search-results-list container">
-                {filterSelections.length > 0 && (
-                  <>
-                    <div className="row p20t">
-                      <div className="col-12">
-                        {filterSelections.map(f => (
-                          <Chip
-                            key={f.label}
-                            label={f.label}
-                            onDelete={handleFilterDelete(f)}
-                            variant="outlined"
-                            className="park-filter-chip"
-                            deleteIcon={<CloseIcon className="close-icon" />}
+                  <div className="row p20t">
+                    <div className="col-12">
+                      <h4 className="filter-heading p30t">Filter by</h4>
+                      <div className="">
+                        <h4 className="filter-heading p10t">Popular filters</h4>
+                        <FormGroup className="p10l">
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={camping}
+                                onChange={handleQuickSearchChange}
+                                name="camping"
+                              />
+                            }
+                            label="Camping"
+                            className="no-wrap"
                           />
-                        ))}
-                        {/* <Link
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={petFriendly}
+                                onChange={handleQuickSearchChange}
+                                name="petFriendly"
+                              />
+                            }
+                            label="Dog friendly"
+                            className="no-wrap"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={wheelchair}
+                                onChange={handleQuickSearchChange}
+                                name="wheelchair"
+                              />
+                            }
+                            label="Wheelchair accessible"
+                            className="no-wrap"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={marine}
+                                onChange={handleQuickSearchChange}
+                                name="marine"
+                              />
+                            }
+                            label="Marine park"
+                            className="no-wrap"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={ecoReserve}
+                                onChange={handleQuickSearchChange}
+                                name="ecoReserve"
+                              />
+                            }
+                            label="Ecological reserve"
+                            className="no-wrap"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={electricalHookup}
+                                onChange={handleQuickSearchChange}
+                                name="electricalHookup"
+                              />
+                            }
+                            label="Electrical hookups"
+                            className="no-wrap"
+                          />
+                        </FormGroup>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="select-padding">
+                    <Select
+                      id="activities-select"
+                      options={activityItems}
+                      value={selectedActivities}
+                      controlShouldRenderValue={false}
+                      isClearable={false}
+                      isMulti
+                      onChange={e => {
+                        setSelectedActivities(e)
+                      }}
+                      className="park-filter-select"
+                      variant="outlined"
+                      placeholder="Activities"
+                    />
+                  </div>
+
+                  <div className="select-padding">
+                    <Select
+                      id="facilities-select"
+                      options={facilityItems}
+                      value={selectedFacilities}
+                      controlShouldRenderValue={false}
+                      isClearable={false}
+                      isMulti
+                      onChange={e => {
+                        setSelectedFacilities(e)
+                      }}
+                      className="park-filter-select"
+                      variant="outlined"
+                      placeholder="Facilities"
+                    />
+                  </div>
+                  <br />
+                  <br />
+                </div>
+              </div>
+              <div className="col-lg-9">
+                <div className="search-results-list container">
+                  {filterSelections.length > 0 && (
+                    <>
+                      <div className="row p20t">
+                        <div className="col-12">
+                          {filterSelections.map(f => (
+                            <Chip
+                              key={f.label}
+                              label={f.label}
+                              onDelete={handleFilterDelete(f)}
+                              variant="outlined"
+                              className="park-filter-chip"
+                              deleteIcon={<CloseIcon className="close-icon" />}
+                            />
+                          ))}
+                          {/* <Link
                           component="button"
                           variant="inherit"
                           className="remove-link"
@@ -564,13 +565,13 @@ export default function Home({ location, data }) {
                         >
                           Remove all
                         </Link> */}
+                        </div>
                       </div>
-                    </div>
-                  </>
-                )}
-                <div className="row p20t">
-                  <div className="col-lg-8 col-md-8 col-sm-12">
-                    {/* <div className="park-af-list pr15">
+                    </>
+                  )}
+                  <div className="row p20t">
+                    <div className="col-lg-8 col-md-8 col-sm-12">
+                      {/* <div className="park-af-list pr15">
                       <i>Show all</i>
                     </div>
                     <div className="park-af-list pr15">
@@ -586,207 +587,212 @@ export default function Home({ location, data }) {
                     <div className="park-af-list">
                       <i>Only parks open for public access</i>
                     </div> */}
+                    </div>
+                    <div className="col-lg-4 col-md-4 col-sm-12">
+                      <Select
+                        value={sortOption}
+                        className="park-filter-select"
+                        variant="outlined"
+                        options={sortOptions}
+                        onChange={e => {
+                          setSortOption(e)
+                        }}
+                        placeholder="Sort by"
+                      />
+                    </div>
                   </div>
-                  <div className="col-lg-4 col-md-4 col-sm-12">
-                    <Select
-                      value={sortOption}
-                      className="park-filter-select"
-                      variant="outlined"
-                      options={sortOptions}
-                      onChange={e => {
-                        setSortOption(e)
-                      }}
-                      placeholder="Sort by"
-                    />
+                  <div className="row p20t">
+                    <div className="col-12"></div>
                   </div>
-                </div>
-                <div className="row p20t">
-                  <div className="col-12"></div>
-                </div>
-                {!isLoading && (
-                  <>
-                    {searchResults && searchResults.length > 0 && (
-                      <>
-                        {searchResults.map((r, index) => (
-                          <div key={index} className="m20t">
-                            <Card>
-                              <CardContent className="park-card">
-                                <div className="row search-result-card no-gutters">
-                                  <div className="col-12">
-                                    <div className="row">
-                                      <div className="col-lg-5 close-margin park-image-div">
-                                        <img
-                                          className="search-result-image"
-                                          src={`${r.parkPhotos[0]}`}
-                                        />
-                                      </div>
-                                      <div className="col-lg-7 p20t">
-                                        <Link href={`/${r.slug}`}>
-                                          <h2 class="park-heading">
-                                            {r.protectedAreaName}
-                                          </h2>
-                                        </Link>
-                                        <div className="row p30t">
-                                          <div className="col-6">
-                                            {r.parkActivities &&
-                                              r.parkActivities.length > 0 && (
-                                                <>
-                                                  <div>Activities:</div>
-                                                  {r.parkActivities.map(
-                                                    (a, index2) => (
-                                                      <div
-                                                        key={index2}
-                                                        className="park-af-list pr3 text-black"
-                                                      >
-                                                        {a}
-                                                        {index2 ===
-                                                        r.parkActivities
-                                                          .length -
-                                                          1
-                                                          ? ""
-                                                          : ", "}{" "}
-                                                      </div>
-                                                    )
-                                                  )}
-                                                </>
-                                              )}
-                                          </div>
-                                          <div className="col-6 pr15">
-                                            {r.parkFacilities &&
-                                              r.parkFacilities.length > 0 && (
-                                                <>
-                                                  <div>Facilities:</div>
-                                                  {r.parkFacilities.map(
-                                                    (f, index3) => (
-                                                      <div
-                                                        key={index3}
-                                                        className="park-af-list pr3 text-black"
-                                                      >
-                                                        {f}
-                                                        {index3 ===
-                                                        r.parkFacilities
-                                                          .length -
-                                                          1
-                                                          ? ""
-                                                          : ", "}{" "}
-                                                      </div>
-                                                    )
-                                                  )}{" "}
-                                                </>
-                                              )}
+                  {!isLoading && (
+                    <>
+                      {searchResults && searchResults.length > 0 && (
+                        <>
+                          {searchResults.map((r, index) => (
+                            <div key={index} className="m20t">
+                              <Card>
+                                <CardContent className="park-card">
+                                  <div className="row search-result-card no-gutters">
+                                    <div className="col-12">
+                                      <div className="row">
+                                        <div className="col-lg-5 close-margin park-image-div">
+                                          <img
+                                            className="search-result-image"
+                                            src={`${r.parkPhotos[0]}`}
+                                          />
+                                        </div>
+                                        <div className="col-lg-7 p20t">
+                                          <Link href={`/${r.slug}`}>
+                                            <h2 class="park-heading">
+                                              {r.protectedAreaName}
+                                            </h2>
+                                          </Link>
+                                          <div className="row p30t">
+                                            <div className="col-6">
+                                              {r.parkActivities &&
+                                                r.parkActivities.length > 0 && (
+                                                  <>
+                                                    <div>Activities:</div>
+                                                    {r.parkActivities.map(
+                                                      (a, index2) => (
+                                                        <div
+                                                          key={index2}
+                                                          className="park-af-list pr3 text-black"
+                                                        >
+                                                          {a}
+                                                          {index2 ===
+                                                          r.parkActivities
+                                                            .length -
+                                                            1
+                                                            ? ""
+                                                            : ", "}{" "}
+                                                        </div>
+                                                      )
+                                                    )}
+                                                  </>
+                                                )}
+                                            </div>
+                                            <div className="col-6 pr15">
+                                              {r.parkFacilities &&
+                                                r.parkFacilities.length > 0 && (
+                                                  <>
+                                                    <div>Facilities:</div>
+                                                    {r.parkFacilities.map(
+                                                      (f, index3) => (
+                                                        <div
+                                                          key={index3}
+                                                          className="park-af-list pr3 text-black"
+                                                        >
+                                                          {f}
+                                                          {index3 ===
+                                                          r.parkFacilities
+                                                            .length -
+                                                            1
+                                                            ? ""
+                                                            : ", "}{" "}
+                                                        </div>
+                                                      )
+                                                    )}{" "}
+                                                  </>
+                                                )}
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
-                                    </div>
-                                    <Divider />
-                                    <div className="row text-black p30 park-overview">
-                                      <div className="col-lg-4 text-black park-overview-content">
-                                        {r.isOpenToPublic && (
-                                          <div className="flex-display">
-                                            <img
-                                              className="search-result-icon"
-                                              src={blueStatusIcon}
-                                            />
-                                            <div className="pl15">
-                                              Open public access
-                                            </div>
-                                          </div>
-                                        )}
-                                        {!r.isOpenToPublic && (
-                                          <div className="flex-display">
-                                            <img
-                                              className="search-result-icon"
-                                              src={redStatusIcon}
-                                            />
-                                            <div className="pl15">
-                                              Closed public access
-                                            </div>
-                                          </div>
-                                        )}
-                                      </div>
-                                      <div className="col-lg-4 park-overview-content">
-                                        {r.advisories.map((a, index1) => (
-                                          // TODO Display all advisories when Event types are
-                                          // available in elastic search results based on severity
-                                          <>
-                                            {index1 == 0 && (
-                                              <div
-                                                key={index1}
-                                                className="flex-display"
-                                              >
-                                                <img
-                                                  className="search-result-icon"
-                                                  src={redAlertIcon}
-                                                />
-                                                <div className="pl15">
-                                                  {a} (1)
-                                                </div>
+                                      <Divider />
+                                      <div className="row text-black p30 park-overview">
+                                        <div className="col-lg-4 text-black park-overview-content">
+                                          {r.isOpenToPublic && (
+                                            <div className="flex-display">
+                                              <img
+                                                className="search-result-icon"
+                                                src={blueStatusIcon}
+                                              />
+                                              <div className="pl15">
+                                                Open public access
                                               </div>
-                                            )}
-                                          </>
-                                        ))}
-                                      </div>
-                                      <div className="col-lg-4 park-overview-content">
-                                        {r.isDayUsePass && (
-                                          <div className="flex-display">
-                                            <img
-                                              className="search-result-icon"
-                                              src={dayUseIcon}
-                                            />
-                                            <div className="pl15 mtm7">
-                                              Day use and camping <br />
-                                              offered at this park
                                             </div>
-                                          </div>
-                                        )}
+                                          )}
+                                          {!r.isOpenToPublic && (
+                                            <div className="flex-display">
+                                              <img
+                                                className="search-result-icon"
+                                                src={redStatusIcon}
+                                              />
+                                              <div className="pl15">
+                                                Closed public access
+                                              </div>
+                                            </div>
+                                          )}
+                                        </div>
+                                        <div className="col-lg-4 park-overview-content">
+                                          {r.advisories.map((a, index1) => (
+                                            // TODO Display all advisories when Event types are
+                                            // available in elastic search results based on severity
+                                            <>
+                                              {index1 == 0 && (
+                                                <div
+                                                  key={index1}
+                                                  className="flex-display"
+                                                >
+                                                  <img
+                                                    className="search-result-icon"
+                                                    src={redAlertIcon}
+                                                  />
+                                                  <div className="pl15">
+                                                    {a} (1)
+                                                  </div>
+                                                </div>
+                                              )}
+                                            </>
+                                          ))}
+                                        </div>
+                                        <div className="col-lg-4 park-overview-content">
+                                          {r.isDayUsePass && (
+                                            <div className="flex-display">
+                                              <img
+                                                className="search-result-icon"
+                                                src={dayUseIcon}
+                                              />
+                                              <div className="pl15 mtm7">
+                                                Day use and camping <br />
+                                                offered at this park
+                                              </div>
+                                            </div>
+                                          )}
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              </CardContent>
-                            </Card>
+                                </CardContent>
+                              </Card>
+                            </div>
+                          ))}
+                          <div className="small-flex-display p20t">
+                            <div className="small-m-auto">
+                              {searchResults.length > 0 && (
+                                <>
+                                  Showing results{" "}
+                                  {currentPage * itemsPerPage -
+                                    itemsPerPage +
+                                    1}{" "}
+                                  -{" "}
+                                  {currentPage * itemsPerPage > totalResults
+                                    ? totalResults
+                                    : currentPage * itemsPerPage}{" "}
+                                  of {totalResults}
+                                </>
+                              )}
+                              {searchResults.length === 0 && (
+                                <>No parks found</>
+                              )}
+                            </div>
                           </div>
-                        ))}
-                        <div className="small-flex-display p20t">
-                          <div className="small-m-auto">
-                            {searchResults.length > 0 && (
-                              <>
-                                Showing results{" "}
-                                {currentPage * itemsPerPage - itemsPerPage + 1}{" "}
-                                -{" "}
-                                {currentPage * itemsPerPage > totalResults
-                                  ? totalResults
-                                  : currentPage * itemsPerPage}{" "}
-                                of {totalResults}
-                              </>
-                            )}
-                            {searchResults.length === 0 && <>No parks found</>}
+                          <div className="small-flex-display p20t">
+                            <div className="p20t small-m-auto">
+                              <Pagination
+                                count={numberOfPages}
+                                page={currentPage}
+                                onChange={handlePageChange}
+                                size="large"
+                                className="large-pagination"
+                              />
+                              <Pagination
+                                count={numberOfPages}
+                                page={currentPage}
+                                onChange={handlePageChange}
+                                size="small"
+                                className="small-pagination"
+                              />
+                            </div>
                           </div>
-                        </div>
-                        <div className="small-flex-display p20t">
-                          <div className="p20t small-m-auto">
-                            <Pagination
-                              count={numberOfPages}
-                              page={currentPage}
-                              onChange={handlePageChange}
-                              size="large"
-                              className="large-pagination"
-                            />
-                            <Pagination
-                              count={numberOfPages}
-                              page={currentPage}
-                              onChange={handlePageChange}
-                              size="small"
-                              className="small-pagination"
-                            />
-                          </div>
-                        </div>
-                        <br />
-                        <br />
-                      </>
-                    )}
-                  </>
-                )}
+                          <br />
+                          <br />
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>

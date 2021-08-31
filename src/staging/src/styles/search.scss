@@ -18,6 +18,10 @@ $headingFont: 2rem;
   font-family: $globalFont !important;
 }
 
+.search-body {
+  background-color: $colorGrey !important;
+}
+
 .park-search {
   .park-search-text-box {
     width: 80% !important;
