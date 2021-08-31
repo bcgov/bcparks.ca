@@ -16,6 +16,7 @@ import {
   InputAdornment,
   Card,
   CardContent,
+  Link,
 } from "@material-ui/core"
 import Pagination from "@material-ui/lab/Pagination"
 import { withStyles } from "@material-ui/core/styles"
@@ -23,6 +24,13 @@ import SearchIcon from "@material-ui/icons/Search"
 import Select from "react-select"
 import CloseIcon from "@material-ui/icons/Close"
 import * as ElasticAppSearch from "@elastic/app-search-javascript"
+import blueStatusIcon from "../images/park/blue-status-32.png"
+import yellowStatusIcon from "../images/park/yellow-status-32.png"
+import redStatusIcon from "../images/park/red-status-32.png"
+import dayUseIcon from "../images/park/day-use.png"
+import blueAlertIcon from "../images/park/blue-alert-32.png"
+import yellowAlertIcon from "../images/park/yellow-alert-32.png"
+import redAlertIcon from "../images/park/red-alert-32.png"
 
 export const query = graphql`
   query {
@@ -276,15 +284,6 @@ export default function Home({ location, data }) {
         all: filterOptions,
       },
       result_fields: {
-        hascampfireban: {
-          raw: {},
-          snippet: { fallback: true },
-        },
-
-        hassmokingban: {
-          raw: {},
-          snippet: { fallback: true },
-        },
         typecode: {
           raw: {},
           snippet: { fallback: true },
@@ -297,11 +296,6 @@ export default function Home({ location, data }) {
           raw: {},
           snippet: { fallback: true },
         },
-        slug: {
-          raw: {},
-          snippet: { fallback: true },
-        },
-
         parkactivities: {
           raw: {},
           snippet: { fallback: true },
@@ -315,6 +309,22 @@ export default function Home({ location, data }) {
           snippet: { fallback: true },
         },
         isdayusepass: {
+          raw: {},
+          snippet: { fallback: true },
+        },
+        parkadvisories: {
+          raw: {},
+          snippet: { fallback: true },
+        },
+        parkphotos: {
+          raw: {},
+          snippet: { fallback: true },
+        },
+        opentopublic: {
+          raw: {},
+          snippet: { fallback: true },
+        },
+        slug: {
           raw: {},
           snippet: { fallback: true },
         },
@@ -336,13 +346,14 @@ export default function Home({ location, data }) {
         setCurrentPage(resultList.info.meta.page.current)
         const allResults = []
         resultList.results.forEach(result => {
-          console.log(result)
           const park = {}
           park.protectedAreaName = result.data.protectedareaname.raw
-          park.isOpenToPublic = true
-          park.advisories = ["Wildfire Alert", "Road Closure Alert"]
+          park.isOpenToPublic = result.data.opentopublic.raw
+            ? result.data.opentopublic.raw == "true"
+            : true
+          park.advisories = result.data.parkadvisories.raw
           park.isDayUsePass = result.data.isdayusepass.raw
-            ? result.data.isdayusepass.raw
+            ? result.data.isdayusepass.raw == "true"
             : true
           park.parkActivities = result.data.parkactivities.raw
             ? result.data.parkactivities.raw.sort(compare)
@@ -350,10 +361,12 @@ export default function Home({ location, data }) {
           park.parkFacilities = result.data.parkfacilities.raw
             ? result.data.parkfacilities.raw.sort(compare)
             : []
-          park.parkPhotos = [
-            "/uploads/mt_assiniboine_photos_images_20_d4bfb5f8ec.jpg",
-            "/uploads/mt_assiniboine_photos_images_19_0d09398ed7.jpg",
-          ]
+          park.parkPhotos = result.data.parkphotos.raw.map(p => {
+            // TODO Update this based on the elastic search response
+            // If the images are from strapi media library, prepend it with the cms url
+            return p.split('":"')[1].replace('"}', "")
+          })
+          park.slug = result.data.slug.raw
           allResults.push(park)
         })
         setSearchResults([...allResults])
@@ -597,97 +610,137 @@ export default function Home({ location, data }) {
                         {searchResults.map((r, index) => (
                           <div key={index} className="m20t">
                             <Card>
-                              <CardContent>
-                                <div className="row search-result-card">
-                                  <div className="col-lg-8">
+                              <CardContent className="park-card">
+                                <div className="row search-result-card no-gutters">
+                                  <div className="col-12">
                                     <div className="row">
-                                      <div className="col-lg-8">
-                                        <h2>{r.protectedAreaName}</h2>
+                                      <div className="col-lg-5 close-margin park-image-div">
+                                        <img
+                                          className="search-result-image"
+                                          src={`${r.parkPhotos[0]}`}
+                                        />
                                       </div>
-                                      <div className="col-lg-4 text-black">
-                                        {r.isOpenToPublic && (
-                                          <>Open public access</>
-                                        )}
+                                      <div className="col-lg-7 p20t">
+                                        <Link href={`/${r.slug}`}>
+                                          <h2 class="park-heading">
+                                            {r.protectedAreaName}
+                                          </h2>
+                                        </Link>
+                                        <div className="row p30t">
+                                          <div className="col-6">
+                                            {r.parkActivities &&
+                                              r.parkActivities.length > 0 && (
+                                                <>
+                                                  <div>Activities:</div>
+                                                  {r.parkActivities.map(
+                                                    (a, index2) => (
+                                                      <div
+                                                        key={index2}
+                                                        className="park-af-list pr3 text-black"
+                                                      >
+                                                        {a}
+                                                        {index2 ===
+                                                        r.parkActivities
+                                                          .length -
+                                                          1
+                                                          ? ""
+                                                          : ", "}{" "}
+                                                      </div>
+                                                    )
+                                                  )}
+                                                </>
+                                              )}
+                                          </div>
+                                          <div className="col-6 pr15">
+                                            {r.parkFacilities &&
+                                              r.parkFacilities.length > 0 && (
+                                                <>
+                                                  <div>Facilities:</div>
+                                                  {r.parkFacilities.map(
+                                                    (f, index3) => (
+                                                      <div
+                                                        key={index3}
+                                                        className="park-af-list pr3 text-black"
+                                                      >
+                                                        {f}
+                                                        {index3 ===
+                                                        r.parkFacilities
+                                                          .length -
+                                                          1
+                                                          ? ""
+                                                          : ", "}{" "}
+                                                      </div>
+                                                    )
+                                                  )}{" "}
+                                                </>
+                                              )}
+                                          </div>
+                                        </div>
                                       </div>
                                     </div>
-                                    <div className="row text-black p30t">
-                                      <div className="col-lg-6">
+                                    <Divider />
+                                    <div className="row text-black p30 park-overview">
+                                      <div className="col-lg-4 text-black park-overview-content">
+                                        {r.isOpenToPublic && (
+                                          <div className="flex-display">
+                                            <img
+                                              className="search-result-icon"
+                                              src={blueStatusIcon}
+                                            />
+                                            <div className="pl15">
+                                              Open public access
+                                            </div>
+                                          </div>
+                                        )}
+                                        {!r.isOpenToPublic && (
+                                          <div className="flex-display">
+                                            <img
+                                              className="search-result-icon"
+                                              src={redStatusIcon}
+                                            />
+                                            <div className="pl15">
+                                              Closed public access
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                      <div className="col-lg-4 park-overview-content">
                                         {r.advisories.map((a, index1) => (
-                                          <div key={index1}>{a}</div>
+                                          // TODO Display all advisories when Event types are
+                                          // available in elastic search results based on severity
+                                          <>
+                                            {index1 == 0 && (
+                                              <div
+                                                key={index1}
+                                                className="flex-display"
+                                              >
+                                                <img
+                                                  className="search-result-icon"
+                                                  src={redAlertIcon}
+                                                />
+                                                <div className="pl15">
+                                                  {a} (1)
+                                                </div>
+                                              </div>
+                                            )}
+                                          </>
                                         ))}
                                       </div>
-                                      <div className="col-lg-6">
+                                      <div className="col-lg-4 park-overview-content">
                                         {r.isDayUsePass && (
                                           <div className="flex-display">
                                             <img
                                               className="search-result-icon"
-                                              src={`${process.env.GATSBY_CMS_BASE_URL}/uploads/camp_32px_713d4b8b90.png`}
+                                              src={dayUseIcon}
                                             />
-                                            <div className="pl15">
-                                              Day use and camping offered at
-                                              this park
+                                            <div className="pl15 mtm7">
+                                              Day use and camping <br />
+                                              offered at this park
                                             </div>
                                           </div>
                                         )}
                                       </div>
                                     </div>
-                                    <div className="row p30t">
-                                      <div className="col-6">
-                                        {r.parkActivities &&
-                                          r.parkActivities.length > 0 && (
-                                            <>
-                                              <div className="park-af-list pr3">
-                                                <b>Activities: </b>
-                                              </div>
-                                              {r.parkActivities.map(
-                                                (a, index2) => (
-                                                  <div
-                                                    key={index2}
-                                                    className="park-af-list pr3 text-black"
-                                                  >
-                                                    {a}
-                                                    {index2 ===
-                                                    r.parkActivities.length - 1
-                                                      ? ""
-                                                      : ", "}{" "}
-                                                  </div>
-                                                )
-                                              )}
-                                            </>
-                                          )}
-                                      </div>
-                                      <div className="col-6">
-                                        {r.parkFacilities &&
-                                          r.parkFacilities.length > 0 && (
-                                            <>
-                                              <div className="park-af-list pr3">
-                                                <b>Facilities:</b>
-                                              </div>
-                                              {r.parkFacilities.map(
-                                                (f, index3) => (
-                                                  <div
-                                                    key={index3}
-                                                    className="park-af-list pr3 text-black"
-                                                  >
-                                                    {f}
-                                                    {index3 ===
-                                                    r.parkFacilities.length - 1
-                                                      ? ""
-                                                      : ", "}{" "}
-                                                  </div>
-                                                )
-                                              )}{" "}
-                                            </>
-                                          )}
-                                      </div>
-                                    </div>
-                                    <br />
-                                  </div>
-                                  <div className="col-lg-4 p30t">
-                                    <img
-                                      className="search-result-image"
-                                      src={`${process.env.GATSBY_CMS_BASE_URL}${r.parkPhotos[0]}`}
-                                    />
                                   </div>
                                 </div>
                               </CardContent>

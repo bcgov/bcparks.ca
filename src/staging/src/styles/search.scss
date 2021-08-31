@@ -336,6 +336,10 @@ div[class$="-singleValue"] {
   padding-top: 30px !important;
 }
 
+.p30 {
+  padding: 30px !important;
+}
+
 .p30l {
   padding: 0px 30px !important;
 }
@@ -378,6 +382,10 @@ div[class$="-singleValue"] {
 
 .mtm5 {
   margin-top: 5px !important;
+}
+
+.mtm7 {
+  margin-top: -7px !important;
 }
 
 .bcgov-normal-blue {
@@ -445,6 +453,10 @@ div[class$="-singleValue"] {
     color: $colorBlack;
   }
 
+  .park-heading {
+    color: $colorBlue;
+  }
+
   .search-results-list {
     padding: 10px !important;
   }
@@ -464,6 +476,23 @@ div[class$="-singleValue"] {
     }
   }
 
+  .close-margin {
+    padding-left: 0px !important;
+    padding-top: 0px !important;
+    margin-top: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  .park-card {
+    padding: 0px !important;
+    min-height: 430px !important;
+  }
+
+  .park-image-div {
+    height: 330px !important;
+    width: 400px !important;
+  }
+
   .remove-link {
     display: inline-block !important;
     padding-left: 20px !important;
@@ -476,6 +505,15 @@ div[class$="-singleValue"] {
   .MuiPaginationItem-root {
     border-radius: 0px !important;
     background-color: $colorWhite !important;
+  }
+
+  .park-overview {
+    height: 100px !important;
+  }
+
+  .park-overview-content {
+    height: 100% !important;
+    top: 20% !important;
   }
 
   .MuiPaginationItem-page.Mui-selected {
@@ -517,12 +555,15 @@ div[class$="-singleValue"] {
   }
 
   .search-result-image {
-    width: inherit !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    height: 100% !important;
+    object-position: 0% 5%;
   }
 
   .search-result-icon {
     width: 32px !important;
-    height: 23px !important;
+    height: 32px !important;
   }
 
   .search-result-card {
@@ -531,6 +572,7 @@ div[class$="-singleValue"] {
 
   .MuiPaper-elevation1 {
     box-shadow: none !important;
+    border-radius: 10px !important;
   }
 
   @media (min-width: 1200px) {
