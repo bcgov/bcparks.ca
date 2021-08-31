@@ -59,7 +59,7 @@ export default function ParkTemplate({ data }) {
       </Helmet>
       <ScrollToTop />
       <CssBaseline />
-      <Header></Header>
+      <Header>{data.strapiWebsites.Header}</Header>
       <Toolbar />
       <Container id="park-info-container" maxWidth={false}>
         <Grid container spacing={2}>
@@ -89,8 +89,8 @@ export default function ParkTemplate({ data }) {
             <br />
           </Grid>
         </Grid>
-        <Footer></Footer>
       </Container>
+      <Footer>{data.strapiWebsites.Footer}</Footer>
     </>
   )
 }
