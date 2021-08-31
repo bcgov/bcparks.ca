@@ -3,6 +3,7 @@ import { Paper, Container, Grid } from "@material-ui/core"
 import { StaticImage } from "gatsby-plugin-image"
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
+import Spacer from "./spacer"
 
 export default function MapLocation({ data }) {
   return (
@@ -18,10 +19,8 @@ export default function MapLocation({ data }) {
           />
           <HtmlContent>{data}</HtmlContent>
         </Container>
-        <br />
+        <Spacer />
       </Paper>
     </Grid>
   )
 }
-
-

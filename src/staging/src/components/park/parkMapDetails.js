@@ -1,6 +1,7 @@
 import React from "react"
 import { Paper, Container, Grid } from "@material-ui/core"
 import Heading from "./heading"
+import Spacer from "./spacer"
 
 export default function ParkMapDetails({ data }) {
   return (
@@ -8,9 +9,9 @@ export default function ParkMapDetails({ data }) {
       <Paper elevation={0}>
         <Heading>Park and Activity</Heading>
         <Container>
-          <p>TBD</p>
+          <p></p>
         </Container>
-        <br />
+        <Spacer />
       </Paper>
     </Grid>
   )

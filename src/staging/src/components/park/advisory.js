@@ -10,10 +10,6 @@ const useStyles = makeStyles({
   card: {
     border: "none",
     boxShadow: "none",
-    backgroundColor: "#e1ecf4",
-  },
-  topGrid: {
-    backgroundColor: "#e1ecf4",
   },
 })
 
@@ -34,20 +30,18 @@ export default function Advisory({ data }) {
 
   return (
     <>
-      <Grid item xs={12} sm={6} md={4} className={classes.topGrid}>
-        <Card className={classes.card}>
-          <CardHeader
-            avatar={
-              <Avatar
-                variant="square"
-                src={alertIcon}
-                aria-label="park access status"
-              />
-            }
-            title={<Link to="#park-advisory-details-container">{title}</Link>}
-          />
-        </Card>
-      </Grid>
+      <Card className={classes.card}>
+        <CardHeader
+          avatar={
+            <Avatar
+              variant="square"
+              src={alertIcon}
+              aria-label="park access status"
+            />
+          }
+          title={<Link to="#park-advisory-details-container">{title}</Link>}
+        />
+      </Card>
     </>
   )
 }

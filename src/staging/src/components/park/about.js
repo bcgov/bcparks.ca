@@ -2,6 +2,7 @@ import React from "react"
 import { Paper, Container, Grid } from "@material-ui/core"
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
+import Spacer from "./spacer"
 
 export default function About({ data }) {
   return (
@@ -11,6 +12,7 @@ export default function About({ data }) {
         <Container>
           <HtmlContent>{data}</HtmlContent>
         </Container>
+        <Spacer />
       </Paper>
     </Grid>
   )

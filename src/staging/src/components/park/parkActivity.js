@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Heading from "./heading"
+import Spacer from "./spacer"
 
 const _ = require("lodash")
 
@@ -43,17 +44,15 @@ export default function ParkActivity({ data }) {
     <Grid item xs={12} id="park-activity-container" className="anchor-link">
       <Paper elevation={0}>
         <Grid container>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={6}>
             <Heading>Activities</Heading>
           </Grid>
           <Grid
             item
-            xs={12}
-            sm={6}
+            xs={6}
             container
-            direction="row"
-            alignItems="center"
             justifyContent="flex-end"
+            alignItems="flex-start"
           >
             <Box m={2}>
               {activityData.length > 1 && (
@@ -71,41 +70,39 @@ export default function ParkActivity({ data }) {
           </Grid>
         </Grid>
         {activityData && (
-          <Container>
-            <Grid container spacing={1}>
-              {activityData.map((activity, index) => (
-                <Grid key={index} item xs={12}>
-                  <Paper>
-                    <Accordion
-                      expanded={expandeds[index]}
-                      onChange={handleChange(index)}
+          <Grid container spacing={1}>
+            {activityData.map((activity, index) => (
+              <Grid key={index} item xs={12}>
+                <Paper>
+                  <Accordion
+                    expanded={expandeds[index]}
+                    onChange={handleChange(index)}
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls={activity.activityName}
+                      id={index}
                     >
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={activity.activityName}
-                        id={index}
-                      >
-                        <Box mr={1}>
-                          <img
-                            src={activity.icon}
-                            alt={activity.activityName}
-                            width="24"
-                            height="24"
-                          />
-                        </Box>
-                        <p>{activity.activityName}</p>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <p>{activity.description}</p>
-                      </AccordionDetails>
-                    </Accordion>
-                  </Paper>
-                </Grid>
-              ))}
-            </Grid>
-          </Container>
+                      <Box mr={1}>
+                        <img
+                          src={activity.icon}
+                          alt={activity.activityName}
+                          width="24"
+                          height="24"
+                        />
+                      </Box>
+                      <p>{activity.activityName}</p>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <p>{activity.description}</p>
+                    </AccordionDetails>
+                  </Accordion>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
         )}
-        <br />
+        <Spacer />
       </Paper>
     </Grid>
   )

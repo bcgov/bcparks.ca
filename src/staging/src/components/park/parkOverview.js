@@ -1,9 +1,10 @@
 import React, { useState } from "react"
-import { Container, Box, Paper, Button } from "@material-ui/core"
+import { Box, Paper, Link } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 import Heading from "./heading"
 import HtmlContent from "./HtmlContent"
+import Spacer from "./spacer"
 
 const useStyles = makeStyles(theme => ({
   collapsed: {
@@ -16,6 +17,10 @@ const useStyles = makeStyles(theme => ({
   expanded: {
     maxHeight: "auto",
   },
+  link: {
+    textDecoration: "underline",
+    fontWeight: "bold",
+  },
 }))
 
 export default function ParkOverview({ data: parkOverview }) {
@@ -27,21 +32,19 @@ export default function ParkOverview({ data: parkOverview }) {
       <Paper elevation={0}>
         <Box className={expanded ? classes.expanded : classes.collapsed}>
           <Heading>Park Overview</Heading>
-          <Container>
-            <HtmlContent>{parkOverview}</HtmlContent>
-          </Container>
+          <HtmlContent>{parkOverview}</HtmlContent>
         </Box>
-        <Box m={2}>
-          <Button
-            color="primary"
-            href="#park-overview-container"
-            onClick={() => {
-              setExpanded(!expanded)
-            }}
-          >
-            {expanded ? "Read less" : "Read more"}
-          </Button>
-        </Box>
+        <Link
+          component="button"
+          href="#park-overview-container"
+          className={classes.link}
+          onClick={() => {
+            setExpanded(!expanded)
+          }}
+        >
+          {expanded ? "Read less" : "Read more"}
+        </Link>
+        <Spacer />
       </Paper>
     </div>
   )

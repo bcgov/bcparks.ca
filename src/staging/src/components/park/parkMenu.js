@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 import {
   AppBar,
   CssBaseline,
-  Divider,
   Box,
   Drawer,
   Hidden,
@@ -46,8 +45,9 @@ const useStyles = makeStyles(theme => ({
   // necessary for content to be below app bar
   appBarOffset: theme.mixins.toolbar,
   drawerDesktop: {
-    marginTop: 224,
+    marginTop: 520,
     marginLeft: 40,
+    border: 0,
     padding: 10,
     width: drawerWidth,
   },
@@ -76,6 +76,11 @@ export default function ParkMenu(props) {
 
   const menuItems = [
     { text: "Park Overview", url: "park-overview-container", visible: true },
+    {
+      text: "Accessibility",
+      url: "accessibility-details-container",
+      visible: true,
+    },
     {
       text: `Alerts (${alertsCount})`,
       url: "park-advisory-details-container",
@@ -115,21 +120,6 @@ export default function ParkMenu(props) {
   })
 
   const menuFiltered = menuItems.filter(m => m.visible)
-  const drawerSubItems = (
-    <div className="nested-list">
-      <List>
-        {campingSubMenuItems.map((subMenu, index) => (
-          <div key={index}>
-            <ListItem button key={index}>
-              <Link to={`#${subMenu.url}`}>
-                <ListItemText primary={subMenu.text} />
-              </Link>
-            </ListItem>
-          </div>
-        ))}
-      </List>
-    </div>
-  )
   const drawerItems = (
     <div>
       <Scrollspy
@@ -197,11 +187,6 @@ export default function ParkMenu(props) {
               variant="permanent"
               open
             >
-              <Box m={1} pb={1}>
-                <Link to="/parks">
-                  <h3>Park Info</h3>
-                </Link>
-              </Box>
               {drawerItems}
             </Drawer>
           </Hidden>
