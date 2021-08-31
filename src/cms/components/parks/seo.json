@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_parks_seos",
+  "info": {
+    "name": "Seo",
+    "icon": "atlas"
+  },
+  "options": {},
+  "attributes": {
+    "metaTitle": {
+      "type": "string"
+    },
+    "metaDescription": {
+      "type": "string"
+    },
+    "metaKeywords": {
+      "type": "text"
+    }
+  }
+}
