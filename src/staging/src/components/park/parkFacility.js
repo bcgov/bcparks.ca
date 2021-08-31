@@ -91,7 +91,7 @@ export default function ParkFacility({ data }) {
                           height="24"
                         />
                       </Box>
-                      <HtmlContent>{facility.facilityName}</HtmlContent>
+                      <p>{facility.facilityName}</p>
                     </AccordionSummary>
                     <AccordionDetails>
                       <HtmlContent>{facility.description}</HtmlContent>

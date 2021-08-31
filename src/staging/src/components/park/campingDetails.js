@@ -132,7 +132,7 @@ export default function CampingDetails({ data }) {
                       <p>{facility.facilityName}</p>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <p>{facility.description}</p>
+                      <HtmlContent>{facility.description}</HtmlContent>
                     </AccordionDetails>
                   </Accordion>
                 </Grid>
