@@ -40,11 +40,13 @@ const useStyles = makeStyles(theme => ({
   // necessary for content to be below app bar
   appBarOffset: theme.mixins.toolbar,
   drawerDesktop: {
-    marginTop: 540,
+    marginTop: 400,
     marginLeft: 40,
     border: 0,
     padding: 10,
     width: drawerWidth,
+    zIndex: 0,
+    overflow: "hidden",
   },
   drawerMobile: {
     width: drawerWidth,
@@ -52,6 +54,9 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+  },
+  menu: {
+    textDecoration: "none",
   },
 }))
 
@@ -124,7 +129,9 @@ export default function ParkMenu(props) {
       >
         {menuFiltered.map((menu, index) => (
           <li key={index}>
-            <a href={`#${menu.url}`}>{menu.text}</a>
+            <a className={classes.menu} href={`#${menu.url}`}>
+              {menu.text}
+            </a>
           </li>
         ))}
       </Scrollspy>

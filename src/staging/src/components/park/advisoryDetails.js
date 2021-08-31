@@ -114,11 +114,7 @@ export default function AdvisoryDetails({ data }) {
           </Grid>
         </Grid>
         {data.totalCount === 0 && (
-          <Container>
-            <Box p={1}>
-              <p>There are no reported alerts for this park</p>
-            </Box>
-          </Container>
+          <HtmlContent>There are no reported alerts for this park</HtmlContent>
         )}
         {data.totalCount > 0 && (
           <Grid container spacing={1}>
@@ -143,7 +139,7 @@ export default function AdvisoryDetails({ data }) {
                         height="24"
                       />
                     </Box>
-                    <p>{advisory.title}</p>
+                    <HtmlContent>{advisory.title}</HtmlContent>
                   </AccordionSummary>
                   <AccordionDetails>
                     <div>

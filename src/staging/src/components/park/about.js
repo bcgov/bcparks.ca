@@ -9,9 +9,7 @@ export default function About({ data }) {
     <Grid item xs={12} id="park-about-container" className="anchor-link">
       <Paper elevation={0}>
         <Heading>Learn more about this park</Heading>
-        <Container>
-          <HtmlContent>{data}</HtmlContent>
-        </Container>
+        <HtmlContent>{data}</HtmlContent>
         <Spacer />
       </Paper>
     </Grid>

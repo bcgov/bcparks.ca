@@ -17,6 +17,9 @@ import ParkMenu from "../components/park/parkMenu"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import ScrollToTop from "../components/scrollToTop"
 import { makeStyles } from "@material-ui/core/styles"
+import Header from "../components/header"
+import Menu from "../components/menu"
+import Footer from "../components/footer"
 
 import "./parkTemplate.css"
 
@@ -56,6 +59,7 @@ export default function ParkTemplate({ data }) {
       </Helmet>
       <ScrollToTop />
       <CssBaseline />
+      <Header></Header>
       <Toolbar />
       <Container id="park-info-container" maxWidth={false}>
         <Grid container spacing={2}>
@@ -85,6 +89,7 @@ export default function ParkTemplate({ data }) {
             <br />
           </Grid>
         </Grid>
+        <Footer></Footer>
       </Container>
     </>
   )
@@ -200,6 +205,22 @@ export const query = graphql`
               gatsbyImageData(layout: FULL_WIDTH)
             }
           }
+        }
+      }
+    }
+    strapiWebsites(Name: { eq: "BCParks.ca" }) {
+      Footer
+      Header
+      Name
+      Navigation
+      id
+      homepage {
+        id
+        Template
+        Content {
+          id
+          strapi_component
+          HTML
         }
       }
     }

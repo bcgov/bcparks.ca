@@ -9,6 +9,7 @@ const useStyles = makeStyles({
     objectFit: "cover",
     overflow: "hidden",
     height: 280,
+    zIndex: 2,
   },
   smallPhoto: {
     objectFit: "cover",

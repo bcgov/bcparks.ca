@@ -9,7 +9,7 @@ export default function ParkHeader({ data }) {
     <Paper elevation={0} id="park-header-container">
       <Grid item container spacing={2}>
         <Grid item xs={12}>
-          <Box mt={2}>
+          <Box mt={0}>
             <h1>{park.protectedAreaName}</h1>
           </Box>
         </Grid>

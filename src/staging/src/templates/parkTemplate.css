@@ -2,14 +2,6 @@ body {
     font-family: BCSans, Verdana, Arial, "sans-serif"  !important;
 }
 
-a {
-    color: #38598a;
-}
-
-a:link {
-    text-decoration: none;
-}
-
 .anchor-linkx {
     margin-top: -90px;
     padding-top: 90px;
@@ -39,7 +31,6 @@ a:link {
     padding: 0px 0px 0px 8px;
     border-left-color: #38598a;
   }
-
 
 .park-status-top-grid {
     background-color: "#e1ecf4"
@@ -87,6 +78,11 @@ a:link {
     color: #003366 !important;
     background-color: #fcba19 !important;
     width: 150px !important;
+    white-space: nowrap;
+}
+
+.raw-html-content a {
+    display: flex;
     white-space: nowrap;
 }
 

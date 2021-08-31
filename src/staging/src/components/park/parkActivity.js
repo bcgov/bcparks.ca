@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Heading from "./heading"
+import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
 const _ = require("lodash")
@@ -90,10 +91,10 @@ export default function ParkActivity({ data }) {
                           height="24"
                         />
                       </Box>
-                      <p>{activity.activityName}</p>
+                      <HtmlContent>{activity.activityName}</HtmlContent>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <p>{activity.description}</p>
+                      <HtmlContent>{activity.description}</HtmlContent>
                     </AccordionDetails>
                   </Accordion>
                 </Paper>
