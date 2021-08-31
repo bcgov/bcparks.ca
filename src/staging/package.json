@@ -44,7 +44,8 @@
     "sharp": "^0.28.3",
     "simple-react-lightbox": "^3.6.9-0",
     "typography": "^0.16.19",
-    "typography-theme-kirkham": "^0.16.19"
+    "typography-theme-kirkham": "^0.16.19",
+    "got": "^11.8.2"
   },
   "devDependencies": {
     "prettier": "2.2.1"
