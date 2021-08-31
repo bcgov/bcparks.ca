@@ -3,7 +3,7 @@ import { Container, Box, Paper, Button } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 import Heading from "./heading"
-import HtmlContent from "./HtmlContent"
+import HtmlContent from "./htmlContent"
 
 const useStyles = makeStyles(theme => ({
   collapsed: {
