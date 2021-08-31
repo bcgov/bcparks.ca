@@ -176,21 +176,23 @@ const loadParkActivity = async () => {
   if (currentData.length === 0) {
     strapi.log.info("loading park activity...");
     var jsonData = fs.readFileSync("./data/park-activity-xref.json", "utf8");
-    const dataSeed = JSON.parse(jsonData)["park-activity-xref"];
+    const parkActivityData = JSON.parse(jsonData)["parkActivity"];
 
-    for await (const data of dataSeed) {
+    for await (const activity of parkActivityData) {
       const protectedArea = await strapi.services["protected-area"].findOne({
-        orcs: data.orcs,
+        orcs: activity.orcs,
       });
       const protectedAreaId = protectedArea ? protectedArea.id : null;
 
       const site = await strapi.services["site"].findOne({
-        siteNumber: data.siteNumber,
+        siteNumber: activity.orcsSiteNumber,
       });
       const siteId = site ? site.id : null;
 
+      if (!activity.activityNumber) continue;
+
       const activityType = await strapi.services["activity-type"].findOne({
-        activityNumber: data.activityId,
+        activityNumber: activity.activityNumber,
       });
       const activityTypeId = activityType ? activityType.id : null;
 
@@ -198,10 +200,19 @@ const loadParkActivity = async () => {
         protectedArea: protectedAreaId,
         site: siteId,
         activityType: activityTypeId,
-        isActivityOpen: data.available === "Y" ? true : false,
-        isActive: true,
+        description: activity.description,
+        isActivityOpen: activity.isActivityOpen,
+        isActive: activity.isActive,
       };
-      await strapi.services["park-activity"].create(parkActivity);
+      await strapi.services["park-activity"]
+        .create(parkActivity)
+        .catch((error) => {
+          strapi.log.error(
+            `error creating park-activity ${parkActivity.activityNumber}...`,
+            error,
+            parkActivity
+          );
+        });
     }
     strapi.log.info("loading park activity completed...");
   }
@@ -220,21 +231,23 @@ const loadParkFacility = async () => {
   if (currentData.length === 0) {
     strapi.log.info("loading park facility...");
     var jsonData = fs.readFileSync("./data/park-facility-xref.json", "utf8");
-    const dataSeed = JSON.parse(jsonData)["park-facility-xref"];
+    const parkFacilityData = JSON.parse(jsonData)["parkFacility"];
 
-    for await (const data of dataSeed) {
+    for await (const facility of parkFacilityData) {
       const protectedArea = await strapi.services["protected-area"].findOne({
-        orcs: data.orcs,
+        orcs: facility.orcs,
       });
       const protectedAreaId = protectedArea ? protectedArea.id : null;
 
       const site = await strapi.services["site"].findOne({
-        siteNumber: data.siteNumber,
+        siteNumber: facility.orcsSiteNumber,
       });
       const siteId = site ? site.id : null;
 
+      if (!facility.facilityNumber) continue;
+
       const facilityType = await strapi.services["facility-type"].findOne({
-        facilityNumber: data.facilityId,
+        facilityNumber: facility.facilityNumber,
       });
       const facilityTypeId = facilityType ? facilityType.id : null;
 
@@ -242,10 +255,19 @@ const loadParkFacility = async () => {
         protectedArea: protectedAreaId,
         site: siteId,
         facilityType: facilityTypeId,
-        isFacilityOpen: data.available === "Y" ? true : false,
-        isActive: true,
+        description: facility.description,
+        isFacilityOpen: facility.isFacilityOpen,
+        isActive: facility.isActive,
       };
-      await strapi.services["park-facility"].create(parkFacility);
+      await strapi.services["park-facility"]
+        .create(parkFacility)
+        .catch((error) => {
+          strapi.log.error(
+            `error creating park-facility ${parkFacility.facilityNumber}...`,
+            error,
+            parkFacility
+          );
+        });
     }
     strapi.log.info("loading park facility completed...");
   }
