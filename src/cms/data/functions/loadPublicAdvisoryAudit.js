@@ -118,7 +118,7 @@ const loadPublicAdvisoryAudit = async () => {
       const urgencies = await strapi.query("urgency").find();
 
       var jsonData = fs.readFileSync("./data/public-advisory.json", "utf8");
-      const dataSeed = JSON.parse(jsonData)["public-advisory"];
+      const dataSeed = JSON.parse(jsonData)["publicAdvisory"];
 
       var jsonData = fs.readFileSync(
         "./data/public-advisory-xref.json",

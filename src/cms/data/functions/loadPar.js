@@ -365,8 +365,35 @@ const loadParkDetails = async () => {
   }
 };
 
+// load some default value for graphql to load
+const loadParSomeDefaultValues = async () => {
+  strapi.log.info("loading park default values started...");
+  const protectedAreas = await strapi.services["protected-area"].find({
+    _limit: 5,
+  });
+
+  for (const protectedArea of protectedAreas) {
+    strapi.log.info("set default value for", protectedArea.orcs);
+    protectedArea.isDayUsePass =
+      protectedArea.isDayUsePass === true ? true : false;
+    protectedArea.isFogZone = protectedArea.isFogZone === true ? true : false;
+    protectedArea.hasCampfireBan =
+      protectedArea.hasCampfireBan === true ? true : false;
+    protectedArea.hasSmokingBan =
+      protectedArea.hasSmokingBan === true ? true : false;
+
+    await strapi.services["protected-area"]
+      .update({ orcs: protectedArea.orcs }, protectedArea)
+      .catch((error) => {
+        strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
+      });
+  }
+  strapi.log.info("loading park default values completed...");
+};
+
 module.exports = {
   loadParData,
   loadAdditionalParData,
   loadParkDetails,
+  loadParSomeDefaultValues,
 };
