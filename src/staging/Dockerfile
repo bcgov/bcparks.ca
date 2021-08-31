@@ -4,6 +4,7 @@ FROM registry.access.redhat.com/ubi8/nodejs-14
 ARG REACT_APP_CMS_BASE_URL
 
 ENV REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
+ENV VERBOSE=1
 
 # set working directory
 # WORKDIR /web
