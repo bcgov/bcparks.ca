@@ -12,6 +12,7 @@ ENV GATSBY_CMS_BASE_URL=${GATSBY_CMS_BASE_URL}
 ENV GATSBY_ELASTIC_SEARCH_KEY=${GATSBY_ELASTIC_SEARCH_KEY}
 ENV GATSBY_ELASTIC_SEARCH_URL=${GATSBY_ELASTIC_SEARCH_URL}
 ENV GATSBY_ELASTIC_SEARCH_ENGINE=${GATSBY_ELASTIC_SEARCH_ENGINE}
+ENV VERBOSE=1
 
 # set working directory
 # WORKDIR /web
@@ -20,9 +21,9 @@ USER 0
 RUN yum install -y \
     python3-pip \
     python3 \
-	autoconf \
-	automake \
-	libtool \
+    autoconf \
+    automake \
+    libtool \
     git \
     openssh && \
     mkdir -p /opt/app-root/src/app/node_modules && \
@@ -38,13 +39,13 @@ RUN yum install -y \
 USER 1007770000
 COPY package.json ./
 RUN npm install --unsafe-perm 
-RUN npm install -g mocha
+# RUN npm install -g mocha
 RUN npm install -g gatsby-cli
 RUN gatsby build
 
 # add bash to the image
 # RUN apk add --no-cache bash
-    
+
 # add app
 COPY . ./
 USER 0

@@ -333,39 +333,67 @@ const loadParkDetails = async () => {
     var jsonData = fs.readFileSync("./data/park-details.json", "utf8");
     const data = JSON.parse(jsonData);
 
-    for await (const p of data["ParkDetails"]) {
+    for await (const park of data["parkDetails"]) {
       const protectedArea = {
-        description: p.Description,
-        safetyinfo: p.SafetyInfo,
-        specialnotes: p.SpecialNotes,
-        locationnotes: p.LocationNotes,
-        parkcontact: p.ParkContact,
-        reservations: p.Reservations,
-        maps: p.Maps,
-        natureandculture: p.NatureAndCulture,
+        description: park.description,
+        safetyInfo: park.safetyInfo,
+        specialNotes: park.specialNotes,
+        locationNotes: park.locationNotes,
+        parkContact: park.parkContact,
+        reservations: park.reservations,
+        maps: park.maps,
+        natureAndCulture: park.natureAndCulture,
         reconciliationNotes: reconciliationNotes,
-        slug: p.Path.replace(/\/\s*$/, "")
+        purpose: park.purpose,
+        managementPlanning: park.managementPlanning,
+        partnerships: park.partnerships,
+        oldUrl: park.url,
+        slug: park.url
+          .replace(/\/\s*$/, "")
           .split("/")
           .pop(),
       };
       await strapi.services["protected-area"]
-        .update({ orcs: p.ORCSSite }, protectedArea)
+        .update({ orcs: park.orcs }, protectedArea)
         .catch((error) => {
-          strapi.log.error(
-            `error load park details: orcs ${p.ORCSSite}`,
-            error
-          );
+          strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
         });
     }
-
     strapi.log.info("loading park details completed...");
   } catch (error) {
     strapi.log.error(error);
   }
 };
 
+// load some default value for graphql to load
+const loadParSomeDefaultValues = async () => {
+  strapi.log.info("loading park default values started...");
+  const protectedAreas = await strapi.services["protected-area"].find({
+    _limit: 5,
+  });
+
+  for (const protectedArea of protectedAreas) {
+    strapi.log.info("set default value for", protectedArea.orcs);
+    protectedArea.isDayUsePass =
+      protectedArea.isDayUsePass === true ? true : false;
+    protectedArea.isFogZone = protectedArea.isFogZone === true ? true : false;
+    protectedArea.hasCampfireBan =
+      protectedArea.hasCampfireBan === true ? true : false;
+    protectedArea.hasSmokingBan =
+      protectedArea.hasSmokingBan === true ? true : false;
+
+    await strapi.services["protected-area"]
+      .update({ orcs: protectedArea.orcs }, protectedArea)
+      .catch((error) => {
+        strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
+      });
+  }
+  strapi.log.info("loading park default values completed...");
+};
+
 module.exports = {
   loadParData,
   loadAdditionalParData,
   loadParkDetails,
+  loadParSomeDefaultValues,
 };

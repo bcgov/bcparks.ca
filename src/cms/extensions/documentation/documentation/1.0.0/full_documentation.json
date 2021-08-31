@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/30/2021 4:23:19 PM"
+    "x-generation-date": "08/31/2021 1:01:27 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -20989,6 +20989,9 @@
           "isActive": {
             "type": "boolean"
           },
+          "isCamping": {
+            "type": "boolean"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -21019,6 +21022,9 @@
             "type": "string"
           },
           "isActive": {
+            "type": "boolean"
+          },
+          "isCamping": {
             "type": "boolean"
           },
           "published_at": {
@@ -21331,6 +21337,9 @@
           "isActive": {
             "type": "boolean"
           },
+          "isCamping": {
+            "type": "boolean"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -21361,6 +21370,9 @@
             "type": "string"
           },
           "isActive": {
+            "type": "boolean"
+          },
+          "isCamping": {
             "type": "boolean"
           },
           "published_at": {
@@ -21766,6 +21778,9 @@
                 "url": {
                   "type": "string"
                 },
+                "oldUrl": {
+                  "type": "string"
+                },
                 "typeCode": {
                   "type": "string",
                   "enum": [
@@ -21866,7 +21881,16 @@
                 "maps": {
                   "type": "string"
                 },
+                "managementPlanning": {
+                  "type": "string"
+                },
                 "natureAndCulture": {
+                  "type": "string"
+                },
+                "partnerships": {
+                  "type": "string"
+                },
+                "purpose": {
                   "type": "string"
                 },
                 "reconciliationNotes": {
@@ -22532,6 +22556,9 @@
                 "url": {
                   "type": "string"
                 },
+                "oldUrl": {
+                  "type": "string"
+                },
                 "typeCode": {
                   "type": "string",
                   "enum": [
@@ -22632,7 +22659,16 @@
                 "maps": {
                   "type": "string"
                 },
+                "managementPlanning": {
+                  "type": "string"
+                },
                 "natureAndCulture": {
+                  "type": "string"
+                },
+                "partnerships": {
+                  "type": "string"
+                },
+                "purpose": {
                   "type": "string"
                 },
                 "reconciliationNotes": {
@@ -23178,6 +23214,9 @@
               "url": {
                 "type": "string"
               },
+              "oldUrl": {
+                "type": "string"
+              },
               "typeCode": {
                 "type": "string",
                 "enum": [
@@ -23278,7 +23317,16 @@
               "maps": {
                 "type": "string"
               },
+              "managementPlanning": {
+                "type": "string"
+              },
               "natureAndCulture": {
+                "type": "string"
+              },
+              "partnerships": {
+                "type": "string"
+              },
+              "purpose": {
                 "type": "string"
               },
               "reconciliationNotes": {
@@ -23399,6 +23447,9 @@
                 "type": "string"
               },
               "isActive": {
+                "type": "boolean"
+              },
+              "isCamping": {
                 "type": "boolean"
               },
               "published_at": {
@@ -23532,6 +23583,9 @@
               "url": {
                 "type": "string"
               },
+              "oldUrl": {
+                "type": "string"
+              },
               "typeCode": {
                 "type": "string",
                 "enum": [
@@ -23632,7 +23686,16 @@
               "maps": {
                 "type": "string"
               },
+              "managementPlanning": {
+                "type": "string"
+              },
               "natureAndCulture": {
+                "type": "string"
+              },
+              "partnerships": {
+                "type": "string"
+              },
+              "purpose": {
                 "type": "string"
               },
               "reconciliationNotes": {
@@ -23753,6 +23816,9 @@
                 "type": "string"
               },
               "isActive": {
+                "type": "boolean"
+              },
+              "isCamping": {
                 "type": "boolean"
               },
               "published_at": {
@@ -23957,6 +24023,9 @@
               "url": {
                 "type": "string"
               },
+              "oldUrl": {
+                "type": "string"
+              },
               "typeCode": {
                 "type": "string",
                 "enum": [
@@ -24057,7 +24126,16 @@
               "maps": {
                 "type": "string"
               },
+              "managementPlanning": {
+                "type": "string"
+              },
               "natureAndCulture": {
+                "type": "string"
+              },
+              "partnerships": {
+                "type": "string"
+              },
+              "purpose": {
                 "type": "string"
               },
               "reconciliationNotes": {
@@ -24383,6 +24461,9 @@
             "type": "string"
           },
           "url": {
+            "type": "string"
+          },
+          "oldUrl": {
             "type": "string"
           },
           "typeCode": {
@@ -24740,7 +24821,16 @@
           "maps": {
             "type": "string"
           },
+          "managementPlanning": {
+            "type": "string"
+          },
           "natureAndCulture": {
+            "type": "string"
+          },
+          "partnerships": {
+            "type": "string"
+          },
+          "purpose": {
             "type": "string"
           },
           "reconciliationNotes": {
@@ -24798,6 +24888,9 @@
             "type": "string"
           },
           "url": {
+            "type": "string"
+          },
+          "oldUrl": {
             "type": "string"
           },
           "typeCode": {
@@ -24901,7 +24994,16 @@
           "maps": {
             "type": "string"
           },
+          "managementPlanning": {
+            "type": "string"
+          },
           "natureAndCulture": {
+            "type": "string"
+          },
+          "partnerships": {
+            "type": "string"
+          },
+          "purpose": {
             "type": "string"
           },
           "reconciliationNotes": {
@@ -25175,6 +25277,9 @@
                 "url": {
                   "type": "string"
                 },
+                "oldUrl": {
+                  "type": "string"
+                },
                 "typeCode": {
                   "type": "string",
                   "enum": [
@@ -25275,7 +25380,16 @@
                 "maps": {
                   "type": "string"
                 },
+                "managementPlanning": {
+                  "type": "string"
+                },
                 "natureAndCulture": {
+                  "type": "string"
+                },
+                "partnerships": {
+                  "type": "string"
+                },
+                "purpose": {
                   "type": "string"
                 },
                 "reconciliationNotes": {
@@ -26069,6 +26183,9 @@
                 "url": {
                   "type": "string"
                 },
+                "oldUrl": {
+                  "type": "string"
+                },
                 "typeCode": {
                   "type": "string",
                   "enum": [
@@ -26169,7 +26286,16 @@
                 "maps": {
                   "type": "string"
                 },
+                "managementPlanning": {
+                  "type": "string"
+                },
                 "natureAndCulture": {
+                  "type": "string"
+                },
+                "partnerships": {
+                  "type": "string"
+                },
+                "purpose": {
                   "type": "string"
                 },
                 "reconciliationNotes": {
@@ -27057,6 +27183,9 @@
               "url": {
                 "type": "string"
               },
+              "oldUrl": {
+                "type": "string"
+              },
               "typeCode": {
                 "type": "string",
                 "enum": [
@@ -27157,7 +27286,16 @@
               "maps": {
                 "type": "string"
               },
+              "managementPlanning": {
+                "type": "string"
+              },
               "natureAndCulture": {
+                "type": "string"
+              },
+              "partnerships": {
+                "type": "string"
+              },
+              "purpose": {
                 "type": "string"
               },
               "reconciliationNotes": {
@@ -27605,6 +27743,15 @@
           "Name": {
             "type": "string"
           },
+          "Header": {
+            "type": "string"
+          },
+          "Footer": {
+            "type": "string"
+          },
+          "Navigation": {
+            "type": "string"
+          },
           "homepage": {
             "required": [
               "id"
@@ -27637,15 +27784,6 @@
               }
             }
           },
-          "Header": {
-            "type": "string"
-          },
-          "Navigation": {
-            "type": "string"
-          },
-          "Footer": {
-            "type": "string"
-          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -27657,16 +27795,16 @@
           "Name": {
             "type": "string"
           },
-          "homepage": {
+          "Header": {
             "type": "string"
           },
-          "Header": {
+          "Footer": {
             "type": "string"
           },
           "Navigation": {
             "type": "string"
           },
-          "Footer": {
+          "homepage": {
             "type": "string"
           },
           "published_at": {

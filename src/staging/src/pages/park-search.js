@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { graphql } from "gatsby"
 import Header from "../components/header"
-import Menu from "../components/menu"
+import Menu from "../components/Menu"
 import Footer from "../components/footer"
 import "../styles/search.scss"
 import { labelCompare, compare } from "../components/search/search-util"
