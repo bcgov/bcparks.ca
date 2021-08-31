@@ -5,7 +5,7 @@ $colorGrey: #eef1f5;
 $colorWhite: #fff;
 $colorBlack: #000;
 $colorTextBlack: #494949;
-$bodyFont: 1rem;
+$bodyFont: 16px;
 $headingFont: 2rem;
 
 .MuiTypography-root {
@@ -18,8 +18,7 @@ $headingFont: 2rem;
   font-family: $globalFont !important;
 }
 
-.park-search,
-.search-results-main {
+.park-search {
   .park-search-text-box {
     width: 80% !important;
 
@@ -59,6 +58,41 @@ $headingFont: 2rem;
       width: 40px !important;
       height: 40px !important;
     }
+  }
+}
+
+.search-results-main {
+  .park-search-text-box {
+    width: 100% !important;
+
+    .MuiOutlinedInput-root {
+      width: 100% !important;
+      max-width: 700px !important;
+      background-color: $colorWhite !important;
+      border: none !important;
+      border-radius: 5px !important;
+      font-size: $bodyFont !important;
+      font-family: $globalFont !important;
+    }
+    .MuiOutlinedInput-input {
+      padding: 10px 7px !important;
+    }
+    .MuiOutlinedInput-root:focus {
+      outline: none !important;
+      outline-offset: 1px !important;
+    }
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+      border: 1px solid $colorBlue !important;
+    }
+  }
+  button:focus {
+    outline: unset !important;
+  }
+  .park-filter-select [class*="-control"] {
+    border-radius: 50px !important;
+    background-color: $colorWhite !important;
+    font-family: $globalFont !important;
+    font-size: $bodyFont !important;
   }
 }
 
@@ -163,6 +197,13 @@ $headingFont: 2rem;
   .MuiDialog-paperWidthSm {
     max-width: 700px !important;
   }
+
+  .park-filter-select [class*="-control"] {
+    border-radius: 50px !important;
+    background-color: $colorGrey !important;
+    font-family: $globalFont !important;
+    font-size: $bodyFont !important;
+  }
 }
 .park-filter-dialog,
 .search-results-main {
@@ -192,12 +233,6 @@ $headingFont: 2rem;
     }
   }
 
-  .park-filter-select [class*="-control"] {
-    border-radius: 50px !important;
-    background-color: $colorGrey !important;
-    font-family: $globalFont !important;
-    font-size: $bodyFont !important;
-  }
   .MuiButton-root {
     font-size: $bodyFont !important;
     width: 100% !important;
@@ -289,6 +324,10 @@ div[class$="-singleValue"] {
   }
 }
 
+.p10t {
+  padding-top: 10px !important;
+}
+
 .p20t {
   padding-top: 20px !important;
 }
@@ -305,8 +344,16 @@ div[class$="-singleValue"] {
   padding: 0px 20px !important;
 }
 
+.p10l {
+  padding-left: 10px !important;
+}
+
 .m20t {
   margin-top: 20px !important;
+}
+
+.m15t {
+  margin-top: 15px !important;
 }
 
 .p30 {
@@ -319,6 +366,10 @@ div[class$="-singleValue"] {
 
 .pr15 {
   padding-right: 15px !important;
+}
+
+.pr30 {
+  padding-right: 30px !important;
 }
 
 .pl15 {
@@ -374,6 +425,7 @@ div[class$="-singleValue"] {
 .search-results-main {
   color: $colorBlue !important;
   font-family: $globalFont !important;
+  font-size: $bodyFont !important;
 
   #search-results {
     box-sizing: border-box;
@@ -384,26 +436,17 @@ div[class$="-singleValue"] {
     padding: 0;
     text-align: left;
   }
-  .headline-image {
-    width: 100% !important;
-    object-fit: cover !important;
-    height: 300px !important;
-    object-position: 0% 5%;
+
+  .search-results-container {
+    padding-top: 40px !important;
   }
 
   .headline-text {
-    color: $colorWhite;
-    text-shadow: 5px 5px 10px $colorBlack;
-  }
-  .search-results-container {
-    transform: translateY(-180px);
+    color: $colorBlack;
   }
 
   .search-results-list {
-    background-color: $colorWhite !important;
-    margin-top: 40px !important;
-    padding: 30px !important;
-    box-shadow: 0px 0px 5px #c1c2c4;
+    padding: 10px !important;
   }
 
   .park-filter-select [class*="-control"] {
@@ -411,18 +454,12 @@ div[class$="-singleValue"] {
   }
 
   .search-results-quick-filter {
-    background-color: $colorWhite !important;
-    margin-top: 40px !important;
-    padding: 10px !important;
-
     .filter-heading {
-      padding-top: 20px;
-      padding-left: 20px;
+      color: $colorBlack;
     }
 
     .select-padding {
       padding-top: 20px !important;
-      padding-left: 20px !important;
       padding-right: 20px !important;
     }
   }
@@ -436,6 +473,11 @@ div[class$="-singleValue"] {
     color: $colorBlue;
   }
 
+  .MuiPaginationItem-root {
+    border-radius: 0px !important;
+    background-color: $colorWhite !important;
+  }
+
   .MuiPaginationItem-page.Mui-selected {
     background-color: $colorBlue !important;
     color: $colorWhite !important;
@@ -443,6 +485,27 @@ div[class$="-singleValue"] {
 
   .MuiPaginationItem-page.Mui-selected:hover {
     background-color: #00468b !important;
+  }
+
+  .MuiChip-outlined {
+    background-color: $colorWhite !important;
+  }
+
+  .MuiPaginationItem-page.Mui-disabled {
+    opacity: 0.5 !important;
+  }
+
+  .MuiPaginationItem-ellipsis {
+    background-color: transparent !important;
+  }
+
+  .search-icon,
+  .close-icon {
+    color: #00468b !important;
+  }
+
+  .close-icon {
+    width: 17px !important;
   }
 
   .large-pagination {
@@ -466,6 +529,10 @@ div[class$="-singleValue"] {
     min-height: 300px !important;
   }
 
+  .MuiPaper-elevation1 {
+    box-shadow: none !important;
+  }
+
   @media (min-width: 1200px) {
     .container {
       max-width: 1600px !important;
@@ -480,6 +547,22 @@ div[class$="-singleValue"] {
     .small-pagination {
       display: block !important;
     }
+    .small-m-auto {
+      margin: auto !important;
+    }
+    .small-flex-display {
+      display: flex !important;
+    }
+    .search-results-quick-filter {
+      padding-right: 10px !important;
+      padding-left: 10px !important;
+    }
+  }
+}
+
+@media (min-width: 1400px) {
+  .search-results-main {
+    max-width: 1300px;
   }
 }
 

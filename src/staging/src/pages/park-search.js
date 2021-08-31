@@ -12,15 +12,16 @@ import {
   Divider,
   Chip,
   TextField,
-  Link,
-  Fab,
   Switch,
+  InputAdornment,
+  Card,
+  CardContent,
 } from "@material-ui/core"
 import Pagination from "@material-ui/lab/Pagination"
 import { withStyles } from "@material-ui/core/styles"
 import SearchIcon from "@material-ui/icons/Search"
 import Select from "react-select"
-import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined"
+import CloseIcon from "@material-ui/icons/Close"
 import * as ElasticAppSearch from "@elastic/app-search-javascript"
 
 export const query = graphql`
@@ -79,7 +80,7 @@ export default function Home({ location, data }) {
 
   const [filterSelections, setFilterSelections] = useState([])
   const [searchResults, setSearchResults] = useState([])
-  const [showOpenParks, setShowOpenParks] = useState(false)
+  // const [showOpenParks, setShowOpenParks] = useState(false)
   const [numberOfPages, setNumberOfPages] = useState(0)
   const [totalResults, setTotalResults] = useState(0)
 
@@ -89,6 +90,7 @@ export default function Home({ location, data }) {
   const [isLoading, setIsLoading] = useState(true)
 
   const sortOptions = [
+    { value: "rel", label: "Sort by Relevence" },
     { value: "asc", label: "Sort A-Z" },
     { value: "desc", label: "Sort Z-A" },
   ]
@@ -125,15 +127,20 @@ export default function Home({ location, data }) {
   const handleFilterDelete = chipToDelete => () => {
     if (chipToDelete.type === "activity") {
       handleActivityDelete(chipToDelete)
-    } else {
+    } else if (chipToDelete.type === "facility") {
       handleFacilityDelete(chipToDelete)
+    } else {
+      setQuickSearch({
+        ...quickSearch,
+        [chipToDelete.type]: false,
+      })
     }
   }
 
-  const handleRemoveAllChips = () => {
-    setSelectedActivities([])
-    setSelectedFacilities([])
-  }
+  // const handleRemoveAllChips = () => {
+  //   setSelectedActivities([])
+  //   setSelectedFacilities([])
+  // }
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value)
@@ -148,6 +155,24 @@ export default function Home({ location, data }) {
     selectedFacilities.forEach(f => {
       filters.push({ ...f, type: "facility" })
     })
+    if (camping) {
+      filters.push({ label: "Camping", type: "camping" })
+    }
+    if (petFriendly) {
+      filters.push({ label: "Dog Friendly", type: "petFriendly" })
+    }
+    if (wheelchair) {
+      filters.push({ label: "Wheelchair Accessible", type: "wheelchair" })
+    }
+    if (marine) {
+      filters.push({ label: "Marine Park", type: "marine" })
+    }
+    if (ecoReserve) {
+      filters.push({ label: "Ecological reserve", type: "ecoReserve" })
+    }
+    if (electricalHookup) {
+      filters.push({ label: "Electrical Hookup", type: "electricalHookup" })
+    }
     filters.sort(labelCompare)
     setFilterSelections([...filters])
   }
@@ -298,8 +323,10 @@ export default function Home({ location, data }) {
           snippet: { fallback: true },
         },
       },
-      sort: { protectedareaname: sortOption.value },
       page: { size: itemsPerPage, current: resetCurrentPage ? 1 : currentPage },
+    }
+    if (sortOption && sortOption.value && sortOption.value !== "rel") {
+      options.sort = { protectedareaname: sortOption.value }
     }
     client
       .search(searchText, options)
@@ -309,6 +336,7 @@ export default function Home({ location, data }) {
         setCurrentPage(resultList.info.meta.page.current)
         const allResults = []
         resultList.results.forEach(result => {
+          console.log(result)
           const park = {}
           park.protectedAreaName = result.data.protectedareaname.raw
           park.isOpenToPublic = true
@@ -349,88 +377,118 @@ export default function Home({ location, data }) {
     <>
       <Header>{data.strapiWebsites.Header}</Header>
       <Menu>{data.strapiWebsites.Navigation}</Menu>
-      <div className="search-results-main">
-        <div className="search-results-headline">
-          <img
-            className="headline-image"
-            src="http://localhost:1337/uploads/https_bcparks_ca_photos_images_0001_00_VIFC_0003_ad6ecb7fdb.jpg"
-          />
-        </div>
-        <div className="search-results-container container">
-          <h1 className="headline-text">Find your next adventure here.</h1>
-          <div className="row">
-            <div className="col-lg-3">
-              <div className="search-results-quick-filter">
-                <h2 className="filter-heading">Filter by</h2>
-                <div className="p20t">
-                  <FormGroup className="p30l">
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={camping}
-                          onChange={handleQuickSearchChange}
-                          name="camping"
-                        />
-                      }
-                      label="Camping"
-                      className="no-wrap"
+      <div className="search-results-main container">
+        <div className="search-results-container">
+          <h1 className="headline-text">Find your next adventure</h1>
+          <div className="row no-gutters">
+            <div className="col-lg-3 pr15">
+              <div className="search-results-quick-filter m15t">
+                <div className="row">
+                  <div className="col-12 pr30">
+                    <h4 className="filter-heading p30t">
+                      Search by park name, <br />
+                      location, activity
+                    </h4>
+                    <TextField
+                      id="park-search-text"
+                      variant="outlined"
+                      placeholder="e.g Alice Park"
+                      className="park-search-text-box p10t"
+                      value={inputText}
+                      onChange={event => {
+                        setInputText(event.target.value)
+                      }}
+                      onKeyPress={ev => {
+                        if (ev.key === "Enter") {
+                          setSearchText(inputText)
+                          ev.preventDefault()
+                        }
+                      }}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SearchIcon className="search-icon" />
+                          </InputAdornment>
+                        ),
+                      }}
                     />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={petFriendly}
-                          onChange={handleQuickSearchChange}
-                          name="petFriendly"
+                  </div>
+                </div>
+                <div className="row p20t">
+                  <div className="col-12">
+                    <h4 className="filter-heading p30t">Filter by</h4>
+                    <div className="">
+                      <h4 className="filter-heading p10t">Popular filters</h4>
+                      <FormGroup className="p10l">
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={camping}
+                              onChange={handleQuickSearchChange}
+                              name="camping"
+                            />
+                          }
+                          label="Camping"
+                          className="no-wrap"
                         />
-                      }
-                      label="Dog friendly"
-                      className="no-wrap"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={wheelchair}
-                          onChange={handleQuickSearchChange}
-                          name="wheelchair"
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={petFriendly}
+                              onChange={handleQuickSearchChange}
+                              name="petFriendly"
+                            />
+                          }
+                          label="Dog friendly"
+                          className="no-wrap"
                         />
-                      }
-                      label="Wheelchair accessible"
-                      className="no-wrap"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={marine}
-                          onChange={handleQuickSearchChange}
-                          name="marine"
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={wheelchair}
+                              onChange={handleQuickSearchChange}
+                              name="wheelchair"
+                            />
+                          }
+                          label="Wheelchair accessible"
+                          className="no-wrap"
                         />
-                      }
-                      label="Marine park"
-                      className="no-wrap"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={ecoReserve}
-                          onChange={handleQuickSearchChange}
-                          name="ecoReserve"
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={marine}
+                              onChange={handleQuickSearchChange}
+                              name="marine"
+                            />
+                          }
+                          label="Marine park"
+                          className="no-wrap"
                         />
-                      }
-                      label="Ecological reserve"
-                      className="no-wrap"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={electricalHookup}
-                          onChange={handleQuickSearchChange}
-                          name="electricalHookup"
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={ecoReserve}
+                              onChange={handleQuickSearchChange}
+                              name="ecoReserve"
+                            />
+                          }
+                          label="Ecological reserve"
+                          className="no-wrap"
                         />
-                      }
-                      label="Electrical hookups"
-                      className="no-wrap"
-                    />
-                  </FormGroup>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={electricalHookup}
+                              onChange={handleQuickSearchChange}
+                              name="electricalHookup"
+                            />
+                          }
+                          label="Electrical hookups"
+                          className="no-wrap"
+                        />
+                      </FormGroup>
+                    </div>
+                  </div>
                 </div>
                 <div className="select-padding">
                   <Select
@@ -446,11 +504,6 @@ export default function Home({ location, data }) {
                     className="park-filter-select"
                     variant="outlined"
                     placeholder="Activities"
-                    styles={{
-                      menuPortal: base => ({ ...base, zIndex: 9999 }),
-                    }}
-                    menuPortalTarget={document.body}
-                    menuPosition={"fixed"}
                   />
                 </div>
 
@@ -468,11 +521,6 @@ export default function Home({ location, data }) {
                     className="park-filter-select"
                     variant="outlined"
                     placeholder="Facilities"
-                    styles={{
-                      menuPortal: base => ({ ...base, zIndex: 9999 }),
-                    }}
-                    menuPortalTarget={document.body}
-                    menuPosition={"fixed"}
                   />
                 </div>
                 <br />
@@ -481,70 +529,6 @@ export default function Home({ location, data }) {
             </div>
             <div className="col-lg-9">
               <div className="search-results-list container">
-                <div className="row p20t">
-                  <div className="col-12">
-                    If you know the name of the park you want to visit, just
-                    type in the mane and follow the link. If you're seeking new
-                    adventures, use the buttons to search by your favorite
-                    activity or by the amenity or service you require.
-                  </div>
-                </div>
-                <div className="row p20t">
-                  <div className="col-lg-7 col-md-7 col-sm-12 pt-sm-4 flex-display">
-                    <TextField
-                      id="park-search-text"
-                      variant="outlined"
-                      placeholder="Search by park name, location, activity..."
-                      className="park-search-text-box"
-                      value={inputText}
-                      onChange={event => {
-                        setInputText(event.target.value)
-                      }}
-                      onKeyPress={ev => {
-                        if (ev.key === "Enter") {
-                          setSearchText(inputText)
-                          ev.preventDefault()
-                        }
-                      }}
-                    />
-                    <Fab
-                      className="search-icon-fab"
-                      aria-label="search"
-                      onClick={() => {
-                        setSearchText(inputText)
-                      }}
-                    >
-                      <SearchIcon fontSize="large" className="search-icon" />
-                    </Fab>
-                  </div>
-                </div>
-                {!isLoading && (
-                  <div className="row  p20t">
-                    <div className="col-12">
-                      {(selectedActivities.length !== 0 ||
-                        selectedFacilities.length !== 0 ||
-                        quickSearch.camping ||
-                        quickSearch.petFriendly ||
-                        quickSearch.wheelchair ||
-                        quickSearch.marine ||
-                        quickSearch.ecoReserve ||
-                        quickSearch.electricalHookup ||
-                        searchText.length !== 0) && (
-                        <>
-                          {searchResults.length > 0 && (
-                            <>
-                              {totalResults} search{" "}
-                              {totalResults === 1 && <>result</>}
-                              {totalResults !== 1 && <>results</>}{" "}
-                              {searchText.length > 0 && <>for "{searchText}"</>}
-                            </>
-                          )}
-                          {searchResults.length === 0 && <>No parks found</>}
-                        </>
-                      )}
-                    </div>
-                  </div>
-                )}
                 {filterSelections.length > 0 && (
                   <>
                     <div className="row p20t">
@@ -556,25 +540,24 @@ export default function Home({ location, data }) {
                             onDelete={handleFilterDelete(f)}
                             variant="outlined"
                             className="park-filter-chip"
-                            deleteIcon={<HighlightOffOutlinedIcon />}
+                            deleteIcon={<CloseIcon className="close-icon" />}
                           />
                         ))}
-                        <Link
+                        {/* <Link
                           component="button"
                           variant="inherit"
                           className="remove-link"
                           onClick={handleRemoveAllChips}
                         >
                           Remove all
-                        </Link>
+                        </Link> */}
                       </div>
                     </div>
-                    <Divider className="m20t" />
                   </>
                 )}
                 <div className="row p20t">
                   <div className="col-lg-8 col-md-8 col-sm-12">
-                    <div className="park-af-list pr15">
+                    {/* <div className="park-af-list pr15">
                       <i>Show all</i>
                     </div>
                     <div className="park-af-list pr15">
@@ -589,7 +572,7 @@ export default function Home({ location, data }) {
                     </div>
                     <div className="park-af-list">
                       <i>Only parks open for public access</i>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="col-lg-4 col-md-4 col-sm-12">
                     <Select
@@ -600,113 +583,135 @@ export default function Home({ location, data }) {
                       onChange={e => {
                         setSortOption(e)
                       }}
+                      placeholder="Sort by"
                     />
                   </div>
                 </div>
-                <Divider className="m20t" />
                 <div className="row p20t">
                   <div className="col-12"></div>
                 </div>
                 {!isLoading && (
                   <>
                     {searchResults && searchResults.length > 0 && (
-                      <div>
+                      <>
                         {searchResults.map((r, index) => (
-                          <div key={index}>
-                            <div className="row search-result-card">
-                              <div className="col-lg-8">
-                                <div className="row">
+                          <div key={index} className="m20t">
+                            <Card>
+                              <CardContent>
+                                <div className="row search-result-card">
                                   <div className="col-lg-8">
-                                    <h2>{r.protectedAreaName}</h2>
-                                  </div>
-                                  <div className="col-lg-4 text-black">
-                                    {r.isOpenToPublic && (
-                                      <>Open public access</>
-                                    )}
-                                  </div>
-                                </div>
-                                <div className="row text-black p30t">
-                                  <div className="col-lg-6">
-                                    {r.advisories.map((a, index1) => (
-                                      <div key={index1}>{a}</div>
-                                    ))}
-                                  </div>
-                                  <div className="col-lg-6">
-                                    {r.isDayUsePass && (
-                                      <div className="flex-display">
-                                        <img
-                                          className="search-result-icon"
-                                          src={`${process.env.GATSBY_CMS_BASE_URL}/uploads/camp_32px_713d4b8b90.png`}
-                                        />
-                                        <div className="pl15">
-                                          Day use and camping offered at this
-                                          park
-                                        </div>
+                                    <div className="row">
+                                      <div className="col-lg-8">
+                                        <h2>{r.protectedAreaName}</h2>
                                       </div>
-                                    )}
+                                      <div className="col-lg-4 text-black">
+                                        {r.isOpenToPublic && (
+                                          <>Open public access</>
+                                        )}
+                                      </div>
+                                    </div>
+                                    <div className="row text-black p30t">
+                                      <div className="col-lg-6">
+                                        {r.advisories.map((a, index1) => (
+                                          <div key={index1}>{a}</div>
+                                        ))}
+                                      </div>
+                                      <div className="col-lg-6">
+                                        {r.isDayUsePass && (
+                                          <div className="flex-display">
+                                            <img
+                                              className="search-result-icon"
+                                              src={`${process.env.GATSBY_CMS_BASE_URL}/uploads/camp_32px_713d4b8b90.png`}
+                                            />
+                                            <div className="pl15">
+                                              Day use and camping offered at
+                                              this park
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
+                                    <div className="row p30t">
+                                      <div className="col-6">
+                                        {r.parkActivities &&
+                                          r.parkActivities.length > 0 && (
+                                            <>
+                                              <div className="park-af-list pr3">
+                                                <b>Activities: </b>
+                                              </div>
+                                              {r.parkActivities.map(
+                                                (a, index2) => (
+                                                  <div
+                                                    key={index2}
+                                                    className="park-af-list pr3 text-black"
+                                                  >
+                                                    {a}
+                                                    {index2 ===
+                                                    r.parkActivities.length - 1
+                                                      ? ""
+                                                      : ", "}{" "}
+                                                  </div>
+                                                )
+                                              )}
+                                            </>
+                                          )}
+                                      </div>
+                                      <div className="col-6">
+                                        {r.parkFacilities &&
+                                          r.parkFacilities.length > 0 && (
+                                            <>
+                                              <div className="park-af-list pr3">
+                                                <b>Facilities:</b>
+                                              </div>
+                                              {r.parkFacilities.map(
+                                                (f, index3) => (
+                                                  <div
+                                                    key={index3}
+                                                    className="park-af-list pr3 text-black"
+                                                  >
+                                                    {f}
+                                                    {index3 ===
+                                                    r.parkFacilities.length - 1
+                                                      ? ""
+                                                      : ", "}{" "}
+                                                  </div>
+                                                )
+                                              )}{" "}
+                                            </>
+                                          )}
+                                      </div>
+                                    </div>
+                                    <br />
+                                  </div>
+                                  <div className="col-lg-4 p30t">
+                                    <img
+                                      className="search-result-image"
+                                      src={`${process.env.GATSBY_CMS_BASE_URL}${r.parkPhotos[0]}`}
+                                    />
                                   </div>
                                 </div>
-                                <div className="row p30t">
-                                  <div className="col-6">
-                                    {r.parkActivities &&
-                                      r.parkActivities.length > 0 && (
-                                        <>
-                                          <div className="park-af-list pr3">
-                                            <b>Activities: </b>
-                                          </div>
-                                          {r.parkActivities.map((a, index2) => (
-                                            <div
-                                              key={index2}
-                                              className="park-af-list pr3 text-black"
-                                            >
-                                              {a}
-                                              {index2 ===
-                                              r.parkActivities.length - 1
-                                                ? ""
-                                                : ", "}{" "}
-                                            </div>
-                                          ))}
-                                        </>
-                                      )}
-                                  </div>
-                                  <div className="col-6">
-                                    {r.parkFacilities &&
-                                      r.parkFacilities.length > 0 && (
-                                        <>
-                                          <div className="park-af-list pr3">
-                                            <b>Facilities:</b>
-                                          </div>
-                                          {r.parkFacilities.map((f, index3) => (
-                                            <div
-                                              key={index3}
-                                              className="park-af-list pr3 text-black"
-                                            >
-                                              {f}
-                                              {index3 ===
-                                              r.parkFacilities.length - 1
-                                                ? ""
-                                                : ", "}{" "}
-                                            </div>
-                                          ))}{" "}
-                                        </>
-                                      )}
-                                  </div>
-                                </div>
-                                <br />
-                              </div>
-                              <div className="col-lg-4 p30t">
-                                <img
-                                  className="search-result-image"
-                                  src={`${process.env.GATSBY_CMS_BASE_URL}${r.parkPhotos[0]}`}
-                                />
-                              </div>
-                            </div>
-                            <Divider />
-                            <br />
+                              </CardContent>
+                            </Card>
                           </div>
                         ))}
-                        <div className="flex-display p20t m20t">
-                          <div className="m-auto">
+                        <div className="small-flex-display p20t">
+                          <div className="small-m-auto">
+                            {searchResults.length > 0 && (
+                              <>
+                                Showing results{" "}
+                                {currentPage * itemsPerPage - itemsPerPage + 1}{" "}
+                                -{" "}
+                                {currentPage * itemsPerPage > totalResults
+                                  ? totalResults
+                                  : currentPage * itemsPerPage}{" "}
+                                of {totalResults}
+                              </>
+                            )}
+                            {searchResults.length === 0 && <>No parks found</>}
+                          </div>
+                        </div>
+                        <div className="small-flex-display p20t">
+                          <div className="p20t small-m-auto">
                             <Pagination
                               count={numberOfPages}
                               page={currentPage}
@@ -723,7 +728,9 @@ export default function Home({ location, data }) {
                             />
                           </div>
                         </div>
-                      </div>
+                        <br />
+                        <br />
+                      </>
                     )}
                   </>
                 )}
