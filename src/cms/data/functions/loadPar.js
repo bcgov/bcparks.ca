@@ -3,7 +3,6 @@ const axios = require("axios");
 const moment = require("moment");
 const utf8 = require("utf8");
 const fs = require("fs");
-const { loadEventType } = require("./loadOtherData");
 
 const loadParData = async () => {
   const PAR_URL = "https://a100.gov.bc.ca/pub/parws/protectedLands";
