@@ -203,6 +203,10 @@ objects:
             envFrom:
               - secretRef:
                   name: bcparks-secrets
+        volumes:
+          - name: ${CMS_POD}-data
+            persistentVolumeClaim:
+              claimName: '${CMS_POD}-data'     
     triggers:
       - type: ConfigChange
       - type: ImageChange
@@ -214,10 +218,7 @@ objects:
             kind: ImageStreamTag
             namespace: "${OC_NAMESPACE}-tools"
             name: 'strapi:${OC_APP}'
-        volumes:
-        - name: ${CMS_POD}-data
-          persistentVolumeClaim:
-            claimName: '${CMS_POD}-data'     
+
   status: {}
   #   cms Persistent Volume Claim
 - apiVersion: v1
@@ -227,13 +228,13 @@ objects:
     namespace: ${OC_NAMESPACE}-${OC_APP}
   spec:
     accessModes:
-      - ReadWriteMulti
+      - ReadWriteMany
     resources:
       requests:
         storage: 4Gi
   status:
     accessModes:
-      - ReadWriteMulti
+      - ReadWriteMany
     capacity:
       storage: 10Gi
 #   CMS Service
