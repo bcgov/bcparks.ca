@@ -174,45 +174,52 @@ const loadParkActivity = async () => {
 
   const currentData = await strapi.services[modelName].find();
   if (currentData.length === 0) {
-    strapi.log.info("loading park activity...");
-    var jsonData = fs.readFileSync("./data/park-activity-xref.json", "utf8");
-    const parkActivityData = JSON.parse(jsonData)["parkActivity"];
+    try {
+      strapi.log.info("loading park activity...");
+      var jsonData = fs.readFileSync("./data/park-activity-xref.json", "utf8");
+      const parkActivityData = JSON.parse(jsonData)["parkActivity"];
 
-    for await (const activity of parkActivityData) {
-      const protectedArea = await strapi.services["protected-area"].findOne({
-        orcs: activity.orcs,
-      });
-      const protectedAreaId = protectedArea ? protectedArea.id : null;
-
-      const site = await strapi.services["site"].findOne({
-        siteNumber: activity.orcsSiteNumber,
-      });
-      const siteId = site ? site.id : null;
-
-      if (!activity.activityNumber) continue;
-
-      const activityType = await strapi.services["activity-type"].findOne({
-        activityNumber: activity.activityNumber,
-      });
-      const activityTypeId = activityType ? activityType.id : null;
-
-      const parkActivity = {
-        protectedArea: protectedAreaId,
-        site: siteId,
-        activityType: activityTypeId,
-        description: activity.description,
-        isActivityOpen: activity.isActivityOpen,
-        isActive: activity.isActive,
-      };
-      await strapi.services["park-activity"]
-        .create(parkActivity)
-        .catch((error) => {
-          strapi.log.error(
-            `error creating park-activity ${parkActivity.activityNumber}...`,
-            error,
-            parkActivity
-          );
+      for await (const activity of parkActivityData) {
+        const protectedArea = await strapi.services["protected-area"].findOne({
+          orcs: activity.orcs,
         });
+        const protectedAreaId = protectedArea ? protectedArea.id : null;
+
+        let site;
+        if (!isNaN(activity.orcsSiteNumber)) {
+          site = await strapi.services["site"].findOne({
+            siteNumber: activity.orcsSiteNumber,
+          });
+        }
+        const siteId = site ? site.id : null;
+
+        if (!activity.activityNumber) continue;
+
+        const activityType = await strapi.services["activity-type"].findOne({
+          activityNumber: activity.activityNumber,
+        });
+        const activityTypeId = activityType ? activityType.id : null;
+
+        const parkActivity = {
+          protectedArea: protectedAreaId,
+          site: siteId,
+          activityType: activityTypeId,
+          description: activity.description,
+          isActivityOpen: activity.isActivityOpen,
+          isActive: activity.isActive,
+        };
+        await strapi.services["park-activity"]
+          .create(parkActivity)
+          .catch((error) => {
+            strapi.log.error(
+              `error creating park-activity ${parkActivity.activityNumber}...`,
+              error,
+              parkActivity
+            );
+          });
+      }
+    } catch (error) {
+      strapi.log.error(error);
     }
     strapi.log.info("loading park activity completed...");
   }
@@ -229,45 +236,52 @@ const loadParkFacility = async () => {
 
   const currentData = await strapi.services[modelName].find();
   if (currentData.length === 0) {
-    strapi.log.info("loading park facility...");
-    var jsonData = fs.readFileSync("./data/park-facility-xref.json", "utf8");
-    const parkFacilityData = JSON.parse(jsonData)["parkFacility"];
+    try {
+      strapi.log.info("loading park facility...");
+      var jsonData = fs.readFileSync("./data/park-facility-xref.json", "utf8");
+      const parkFacilityData = JSON.parse(jsonData)["parkFacility"];
 
-    for await (const facility of parkFacilityData) {
-      const protectedArea = await strapi.services["protected-area"].findOne({
-        orcs: facility.orcs,
-      });
-      const protectedAreaId = protectedArea ? protectedArea.id : null;
-
-      const site = await strapi.services["site"].findOne({
-        siteNumber: facility.orcsSiteNumber,
-      });
-      const siteId = site ? site.id : null;
-
-      if (!facility.facilityNumber) continue;
-
-      const facilityType = await strapi.services["facility-type"].findOne({
-        facilityNumber: facility.facilityNumber,
-      });
-      const facilityTypeId = facilityType ? facilityType.id : null;
-
-      const parkFacility = {
-        protectedArea: protectedAreaId,
-        site: siteId,
-        facilityType: facilityTypeId,
-        description: facility.description,
-        isFacilityOpen: facility.isFacilityOpen,
-        isActive: facility.isActive,
-      };
-      await strapi.services["park-facility"]
-        .create(parkFacility)
-        .catch((error) => {
-          strapi.log.error(
-            `error creating park-facility ${parkFacility.facilityNumber}...`,
-            error,
-            parkFacility
-          );
+      for await (const facility of parkFacilityData) {
+        const protectedArea = await strapi.services["protected-area"].findOne({
+          orcs: facility.orcs,
         });
+        const protectedAreaId = protectedArea ? protectedArea.id : null;
+
+        let site;
+        if (!isNaN(facility.orcsSiteNumber)) {
+          site = await strapi.services["site"].findOne({
+            siteNumber: facility.orcsSiteNumber,
+          });
+        }
+        const siteId = site ? site.id : null;
+
+        if (!facility.facilityNumber) continue;
+
+        const facilityType = await strapi.services["facility-type"].findOne({
+          facilityNumber: facility.facilityNumber,
+        });
+        const facilityTypeId = facilityType ? facilityType.id : null;
+
+        const parkFacility = {
+          protectedArea: protectedAreaId,
+          site: siteId,
+          facilityType: facilityTypeId,
+          description: facility.description,
+          isFacilityOpen: facility.isFacilityOpen,
+          isActive: facility.isActive,
+        };
+        await strapi.services["park-facility"]
+          .create(parkFacility)
+          .catch((error) => {
+            strapi.log.error(
+              `error creating park-facility ${parkFacility.facilityNumber}...`,
+              error,
+              parkFacility
+            );
+          });
+      }
+    } catch (error) {
+      strapi.log.error(error);
     }
     strapi.log.info("loading park facility completed...");
   }

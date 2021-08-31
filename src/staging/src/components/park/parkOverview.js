@@ -3,7 +3,7 @@ import { Box, Paper, Link } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 import Heading from "./heading"
-import HtmlContent from "./HtmlContent"
+import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
 const useStyles = makeStyles(theme => ({
