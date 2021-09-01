@@ -102,6 +102,8 @@ const PublicAdvisoryPage = ({ data }) => {
                       src={advisory.alertIcon}
                       className={classes.small}
                       variant="circle"
+                      width="24"
+                      height="24"
                     />
                   </Box>
                   <div>
