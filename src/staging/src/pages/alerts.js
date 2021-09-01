@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const PublicAdvisoryPage = ({ data }) => {
+const AlertsPage = ({ data }) => {
   const classes = useStyles()
 
   const advisories = data.allStrapiPublicAdvisory.nodes.map(advisory => {
