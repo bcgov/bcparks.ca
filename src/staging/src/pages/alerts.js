@@ -77,7 +77,7 @@ const AlertsPage = ({ data }) => {
       <Menu>{data.strapiWebsites.Navigation}</Menu>
       <Container>
         <br />
-        <h1>Public Advisories</h1>
+        <h1>Advisories</h1>
         <span>
           Updated Monday to Friday from 8:30 am to 4:30 pm, excluding statutory
           holidays.
