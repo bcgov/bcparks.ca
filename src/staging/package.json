@@ -33,6 +33,7 @@
     "gatsby-theme-material-ui": "^2.0.1",
     "gatsby-transformer-remark": "^3.2.0",
     "gatsby-transformer-sharp": "^3.8.0",
+    "got": "^11.8.2",
     "jquery": "^3.3.1",
     "mocha": "^9.1.1",
     "popper.js": "^1.14.6",
@@ -41,6 +42,7 @@
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-icons": "^3.6.1",
+    "react-material-ui-carousel": "^2.3.1",
     "react-scrollspy": "^3.4.3",
     "react-select": "^4.3.1",
     "react-typography": "^0.16.19",
@@ -48,8 +50,7 @@
     "sharp": "^0.28.3",
     "simple-react-lightbox": "^3.6.9-0",
     "typography": "^0.16.19",
-    "typography-theme-kirkham": "^0.16.19",
-    "got": "^11.8.2"
+    "typography-theme-kirkham": "^0.16.19"
   },
   "devDependencies": {
     "prettier": "2.2.1"
