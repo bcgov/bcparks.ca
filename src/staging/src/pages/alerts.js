@@ -161,7 +161,7 @@ const AlertsPage = ({ data }) => {
   )
 }
 
-export default PublicAdvisoryPage
+export default AlertsPage
 
 export const query = graphql`
   {
