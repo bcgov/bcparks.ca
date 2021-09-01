@@ -4,7 +4,7 @@ import Header from "../components/header"
 import Footer from "../components/footer"
 import Zone from "../components/zone"
 import Menu from "../components/Menu"
-import MainSearch from "../components/mainSearch"
+import MainSearch from "../components/search/main-search"
 import "../styles/home.scss"
 import Exclamation from "../images/alert 32px.png"
 
@@ -80,7 +80,6 @@ export const query = graphql`
     }
   }
 `
-const cmsUrl =  process.env.GATSBY_REACT_APP_CMS_BASE_URL
 
 export default function Home({ data }) {
   // ID 6 === Hero Carousel
@@ -101,7 +100,6 @@ export default function Home({ data }) {
             data={{
               activities: data.allStrapiActivityTypes.nodes,
               facilities: data.allStrapiFacilityTypes.nodes,
-              protectedAreas: data.allStrapiProtectedArea.nodes,
             }}
           />
         <div className="park-search-carousel">
