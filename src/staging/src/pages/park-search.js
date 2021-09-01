@@ -31,6 +31,7 @@ import dayUseIcon from "../images/park/day-use.png"
 import blueAlertIcon from "../images/park/blue-alert-32.png"
 import yellowAlertIcon from "../images/park/yellow-alert-32.png"
 import redAlertIcon from "../images/park/red-alert-32.png"
+import Carousel from "react-material-ui-carousel"
 
 export const query = graphql`
   query {
@@ -616,10 +617,23 @@ export default function Home({ location, data }) {
                                     <div className="col-12">
                                       <div className="row">
                                         <div className="col-lg-5 close-margin park-image-div">
-                                          <img
-                                            className="search-result-image"
-                                            src={`${r.parkPhotos[0]}`}
-                                          />
+                                          <Carousel
+                                            className="park-carousel"
+                                            autoPlay={true}
+                                            indicators={false}
+                                            timeout={400}
+                                            navButtonsAlwaysVisible={true}
+                                          >
+                                            {r.parkPhotos.map((item, index) => {
+                                              return (
+                                                <img
+                                                  key={index}
+                                                  className="search-result-image"
+                                                  src={`${item}`}
+                                                />
+                                              )
+                                            })}
+                                          </Carousel>
                                         </div>
                                         <div className="col-lg-7 p20t">
                                           <Link href={`/${r.slug}`}>
