@@ -34,9 +34,13 @@ const useStyles = makeStyles(theme => ({
   chip: {
     margin: theme.spacing(0.2),
   },
-  postedDate: {
-    color: "#696969",
+  title: {
     fontSize: "0.8rem",
+    fontWeight: "bold",
+  },
+  subTitle: {
+    color: "#696969",
+    fontSize: "0.7rem",
   },
 }))
 
@@ -98,14 +102,24 @@ const PublicAdvisoryPage = ({ data }) => {
                       src={advisory.alertIcon}
                       className={classes.small}
                       variant="circle"
-                      width="24"
-                      height="24"
                     />
                   </Box>
                   <div>
+                    {advisory.eventType && (
+                      <div className={classes.title}>
+                        {advisory.eventType.eventType}
+                      </div>
+                    )}
+                    {advisory.advisoryDate && (
+                      <div className={classes.subTitle}>
+                        {advisory.advisoryDate}
+                      </div>
+                    )}
+
                     {advisory.protectedAreas.length > 0 &&
                       advisory.protectedAreas.map((par, index) => (
                         <Chip
+                          size="small"
                           variant="outlined"
                           component="a"
                           className={classes.chip}
@@ -121,11 +135,6 @@ const PublicAdvisoryPage = ({ data }) => {
                         />
                       ))}
                     <HTMLArea isVisible>{advisory.title}</HTMLArea>
-                    {advisory.advisoryDate && (
-                      <span className={classes.postedDate}>
-                        Posted: {advisory.advisoryDate}
-                      </span>
-                    )}
                   </div>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -146,14 +155,12 @@ const PublicAdvisoryPage = ({ data }) => {
                           </p>
                         </>
                       )}
-
                     <HTMLArea isVisible>{advisory.description}</HTMLArea>
                   </div>
                 </AccordionDetails>
               </Accordion>
             </Grid>
           ))}
-          <Grid item xs={12}></Grid>
         </Grid>
       </Container>
       <Footer>{data.strapiWebsites.Footer}</Footer>
@@ -192,6 +199,9 @@ export const query = graphql`
           color
           accessStatus
           precedence
+        }
+        eventType {
+          eventType
         }
         advisoryDate(formatString: "MMMM DD, YYYY")
         advisoryNumber
