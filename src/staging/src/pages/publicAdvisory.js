@@ -18,12 +18,13 @@ import {
   Grid,
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 
 import blueAlertIcon from "../images/park/blue-alert-64.png"
 import yellowAlertIcon from "../images/park/yellow-alert-64.png"
 import redAlertIcon from "../images/park/red-alert-64.png"
+
+import "../styles/home.scss"
 
 const useStyles = makeStyles(theme => ({
   small: {
@@ -32,6 +33,10 @@ const useStyles = makeStyles(theme => ({
   },
   chip: {
     margin: theme.spacing(0.2),
+  },
+  postedDate: {
+    color: "#696969",
+    fontSize: "0.8rem",
   },
 }))
 
@@ -116,6 +121,11 @@ const PublicAdvisoryPage = ({ data }) => {
                         />
                       ))}
                     <HTMLArea isVisible>{advisory.title}</HTMLArea>
+                    {advisory.advisoryDate && (
+                      <span className={classes.postedDate}>
+                        Posted: {advisory.advisoryDate}
+                      </span>
+                    )}
                   </div>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -136,11 +146,7 @@ const PublicAdvisoryPage = ({ data }) => {
                           </p>
                         </>
                       )}
-                    {advisory.isAdvisoryDateDisplayed && advisory.advisoryDate && (
-                      <>
-                        <p>Posted {advisory.advisoryDate}</p>
-                      </>
-                    )}
+
                     <HTMLArea isVisible>{advisory.description}</HTMLArea>
                   </div>
                 </AccordionDetails>
@@ -159,7 +165,7 @@ export default PublicAdvisoryPage
 
 export const query = graphql`
   {
-    allStrapiPublicAdvisory(sort: { fields: urgency___sequence, order: DESC }) {
+    allStrapiPublicAdvisory(sort: { fields: advisoryDate, order: DESC }) {
       nodes {
         id
         title
