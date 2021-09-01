@@ -68,6 +68,7 @@ export const query = graphql`
         latitude
         longitude
         protectedAreaName
+        slug
         parkNames {
           parkName
           id
@@ -100,6 +101,7 @@ export default function Home({ data }) {
             data={{
               activities: data.allStrapiActivityTypes.nodes,
               facilities: data.allStrapiFacilityTypes.nodes,
+              protectedAreas: data.allStrapiProtectedArea.nodes,
             }}
           />
         <div className="park-search-carousel">

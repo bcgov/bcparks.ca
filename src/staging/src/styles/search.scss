@@ -550,6 +550,31 @@ div[class$="-singleValue"] {
     width: 17px !important;
   }
 
+  .park-carousel,
+  .CarouselItem,
+  .CarouselItem div {
+    height: 100% !important;
+  }
+  .park-carousel [class*="Carousel-prev"] {
+    margin-left: -10px !important;
+  }
+
+  .park-carousel [class*="Carousel-next"] {
+    margin-right: -25px !important;
+  }
+
+  .park-carousel [class*="Carousel-prev"] button {
+    padding-left: 15px !important;
+  }
+
+  .park-carousel [class*="Carousel-next"] button {
+    padding-right: 15px !important;
+  }
+
+  .park-carousel .MuiButtonBase-root {
+    background-color: rgba(48, 48, 48, 0.7) !important;
+  }
+
   .large-pagination {
     display: block !important;
   }

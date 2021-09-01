@@ -4,7 +4,13 @@ import Header from "../components/header"
 import Menu from "../components/Menu"
 import Footer from "../components/footer"
 import "../styles/search.scss"
-import { labelCompare, compare } from "../components/search/search-util"
+import {
+  labelCompare,
+  compare,
+  searchParkByCriteria,
+  sortAsc,
+  sortDesc,
+} from "../components/search/search-util"
 import {
   Checkbox,
   FormGroup,
@@ -31,6 +37,7 @@ import dayUseIcon from "../images/park/day-use.png"
 import blueAlertIcon from "../images/park/blue-alert-32.png"
 import yellowAlertIcon from "../images/park/yellow-alert-32.png"
 import redAlertIcon from "../images/park/red-alert-32.png"
+import Carousel from "react-material-ui-carousel"
 
 export const query = graphql`
   query {
@@ -54,14 +61,16 @@ export const query = graphql`
 `
 
 export default function Home({ location, data }) {
-  const client = ElasticAppSearch.createClient({
-    searchKey: `${process.env.GATSBY_ELASTIC_SEARCH_KEY}`,
-    endpointBase: `${process.env.GATSBY_ELASTIC_SEARCH_URL}`,
-    engineName: `${process.env.GATSBY_ELASTIC_SEARCH_ENGINE}`,
-  })
+  // const client = ElasticAppSearch.createClient({
+  //   searchKey: `${process.env.GATSBY_ELASTIC_SEARCH_KEY}`,
+  //   endpointBase: `${process.env.GATSBY_ELASTIC_SEARCH_URL}`,
+  //   engineName: `${process.env.GATSBY_ELASTIC_SEARCH_ENGINE}`,
+  // })
 
   const activityItems = location.state.activityItems
   const facilityItems = location.state.facilityItems
+
+  const protectedAreas = location.state.protectedAreas
 
   const [quickSearch, setQuickSearch] = useState(
     location.state.quickSearch || {
@@ -223,160 +232,201 @@ export default function Home({ location, data }) {
     setIsLoading(true)
     setFilters()
 
-    const filterOptions = []
+    // const filterOptions = []
 
-    const parkActivitiesFilter = selectedActivities.map(a => ({
-      parkactivities: a.label,
+    // const parkActivitiesFilter = selectedActivities.map(a => ({
+    //   parkactivities: a.label,
+    // }))
+    // const parkFacilitiesFilter = selectedFacilities.map(f => ({
+    //   parkfacilities: f.label,
+    // }))
+
+    // if (camping) {
+    //   filterOptions.push({
+    //     any: [
+    //       { parkactivities: "Marine-Accessible Camping" },
+    //       { parkactivities: "Wilderness Camping" },
+    //       { parkactivities: "Backcountry Camping" },
+    //       { parkactivities: "Group Camping" },
+    //       { parkactivities: "Marine-Accessible Camping" },
+    //       { parkactivities: "RV-Accessible Camping" },
+    //       {
+    //         parkactivities: "Vehicle-Accessible Camping",
+    //       },
+    //       { parkfacilities: "Walk-In Camping" },
+    //       { parkfacilities: "Winter Camping" },
+    //       { parkfacilities: "Wilderness Camping" },
+    //     ],
+    //   })
+    // }
+    // if (petFriendly) {
+    //   parkActivitiesFilter.push({ parkactivities: "Pets on Leash" })
+    // }
+    // if (wheelchair) {
+    //   parkFacilitiesFilter.push({ parkfacilities: "Accessibility Information" })
+    // }
+    // if (electricalHookup) {
+    //   parkFacilitiesFilter.push({ parkfacilities: "Electrical Hookups" })
+    // }
+    // if (marine) {
+    //   filterOptions.push({ all: [{ marineprotectedarea: ["Y"] }] })
+    // }
+    // if (ecoReserve) {
+    //   filterOptions.push({ all: [{ typecode: ["ER"] }] })
+    // }
+
+    // if (parkActivitiesFilter && parkActivitiesFilter.length > 0) {
+    //   filterOptions.push({ all: [...parkActivitiesFilter] })
+    // }
+
+    // if (parkFacilitiesFilter && parkFacilitiesFilter.length > 0) {
+    //   filterOptions.push({ all: [...parkFacilitiesFilter] })
+    // }
+
+    // const options = {
+    //   search_fields: {
+    //     protectedareaname: {},
+    //     parkactivities: {},
+    //     parkfacilities: {},
+    //   },
+    //   filters: {
+    //     all: filterOptions,
+    //   },
+    //   result_fields: {
+    //     typecode: {
+    //       raw: {},
+    //       snippet: { fallback: true },
+    //     },
+    //     protectedareaname: {
+    //       raw: {},
+    //       snippet: { fallback: true },
+    //     },
+    //     marineprotectedarea: {
+    //       raw: {},
+    //       snippet: { fallback: true },
+    //     },
+    //     parkactivities: {
+    //       raw: {},
+    //       snippet: { fallback: true },
+    //     },
+    //     url: {
+    //       raw: {},
+    //       snippet: { fallback: true },
+    //     },
+    //     parkfacilities: {
+    //       raw: {},
+    //       snippet: { fallback: true },
+    //     },
+    //     isdayusepass: {
+    //       raw: {},
+    //       snippet: { fallback: true },
+    //     },
+    //     parkadvisories: {
+    //       raw: {},
+    //       snippet: { fallback: true },
+    //     },
+    //     parkphotos: {
+    //       raw: {},
+    //       snippet: { fallback: true },
+    //     },
+    //     opentopublic: {
+    //       raw: {},
+    //       snippet: { fallback: true },
+    //     },
+    //     slug: {
+    //       raw: {},
+    //       snippet: { fallback: true },
+    //     },
+    //     id: {
+    //       raw: {},
+    //       snippet: { fallback: true },
+    //     },
+    //   },
+    //   page: { size: itemsPerPage, current: resetCurrentPage ? 1 : currentPage },
+    // }
+    // if (sortOption && sortOption.value && sortOption.value !== "rel") {
+    //   options.sort = { protectedareaname: sortOption.value }
+    // }
+
+    const results = searchParkByCriteria(
+      false,
+      protectedAreas,
+      selectedActivities,
+      selectedFacilities,
+      searchText,
+      camping,
+      petFriendly,
+      wheelchair,
+      marine,
+      ecoReserve,
+      electricalHookup
+    )
+    console.log(results)
+    if (sortOption.value === "asc") {
+      results.sort(sortAsc)
+    } else {
+      results.sort(sortDesc)
+    }
+    const allResults = results.map(r => ({
+      protectedAreaName: r.protectedAreaName,
+      isOpenToPublic: true,
+      advisories: ["Wildfire alert"],
+      isDayUsePass: true,
+      parkActivities: r.parkActivities.map(a => a.name.split(":")[1]),
+      parkFacilities: r.parkFacilities.map(a => a.name.split(":")[1]),
+      parkPhotos: [
+        "https://bcparks.ca/explore/parkpgs/strath/photos/images/12.jpg",
+      ],
+      slug: r.slug,
     }))
-    const parkFacilitiesFilter = selectedFacilities.map(f => ({
-      parkfacilities: f.label,
-    }))
-
-    if (camping) {
-      filterOptions.push({
-        any: [
-          { parkactivities: "Marine-Accessible Camping" },
-          { parkactivities: "Wilderness Camping" },
-          { parkactivities: "Backcountry Camping" },
-          { parkactivities: "Group Camping" },
-          { parkactivities: "Marine-Accessible Camping" },
-          { parkactivities: "RV-Accessible Camping" },
-          {
-            parkactivities: "Vehicle-Accessible Camping",
-          },
-          { parkfacilities: "Walk-In Camping" },
-          { parkfacilities: "Winter Camping" },
-          { parkfacilities: "Wilderness Camping" },
-        ],
-      })
+    if (sortOption === "asc") {
+      results.sort(sortAsc)
+    } else {
+      results.sort(sortDesc)
     }
-    if (petFriendly) {
-      parkActivitiesFilter.push({ parkactivities: "Pets on Leash" })
-    }
-    if (wheelchair) {
-      parkFacilitiesFilter.push({ parkfacilities: "Accessibility Information" })
-    }
-    if (electricalHookup) {
-      parkFacilitiesFilter.push({ parkfacilities: "Electrical Hookups" })
-    }
-    if (marine) {
-      filterOptions.push({ all: [{ marineprotectedarea: ["Y"] }] })
-    }
-    if (ecoReserve) {
-      filterOptions.push({ all: [{ typecode: ["ER"] }] })
-    }
-
-    if (parkActivitiesFilter && parkActivitiesFilter.length > 0) {
-      filterOptions.push({ all: [...parkActivitiesFilter] })
-    }
-
-    if (parkFacilitiesFilter && parkFacilitiesFilter.length > 0) {
-      filterOptions.push({ all: [...parkFacilitiesFilter] })
-    }
-
-    const options = {
-      search_fields: {
-        protectedareaname: {},
-        parkactivities: {},
-        parkfacilities: {},
-      },
-      filters: {
-        all: filterOptions,
-      },
-      result_fields: {
-        typecode: {
-          raw: {},
-          snippet: { fallback: true },
-        },
-        protectedareaname: {
-          raw: {},
-          snippet: { fallback: true },
-        },
-        marineprotectedarea: {
-          raw: {},
-          snippet: { fallback: true },
-        },
-        parkactivities: {
-          raw: {},
-          snippet: { fallback: true },
-        },
-        url: {
-          raw: {},
-          snippet: { fallback: true },
-        },
-        parkfacilities: {
-          raw: {},
-          snippet: { fallback: true },
-        },
-        isdayusepass: {
-          raw: {},
-          snippet: { fallback: true },
-        },
-        parkadvisories: {
-          raw: {},
-          snippet: { fallback: true },
-        },
-        parkphotos: {
-          raw: {},
-          snippet: { fallback: true },
-        },
-        opentopublic: {
-          raw: {},
-          snippet: { fallback: true },
-        },
-        slug: {
-          raw: {},
-          snippet: { fallback: true },
-        },
-        id: {
-          raw: {},
-          snippet: { fallback: true },
-        },
-      },
-      page: { size: itemsPerPage, current: resetCurrentPage ? 1 : currentPage },
-    }
-    if (sortOption && sortOption.value && sortOption.value !== "rel") {
-      options.sort = { protectedareaname: sortOption.value }
-    }
-    client
-      .search(searchText, options)
-      .then(resultList => {
-        setTotalResults(resultList.info.meta.page.total_results)
-        setNumberOfPages(resultList.info.meta.page.total_pages)
-        setCurrentPage(resultList.info.meta.page.current)
-        const allResults = []
-        resultList.results.forEach(result => {
-          const park = {}
-          park.protectedAreaName = result.data.protectedareaname.raw
-          park.isOpenToPublic = result.data.opentopublic.raw
-            ? result.data.opentopublic.raw == "true"
-            : true
-          park.advisories = result.data.parkadvisories.raw
-          park.isDayUsePass = result.data.isdayusepass.raw
-            ? result.data.isdayusepass.raw == "true"
-            : true
-          park.parkActivities = result.data.parkactivities.raw
-            ? result.data.parkactivities.raw.sort(compare)
-            : []
-          park.parkFacilities = result.data.parkfacilities.raw
-            ? result.data.parkfacilities.raw.sort(compare)
-            : []
-          park.parkPhotos = result.data.parkphotos.raw.map(p => {
-            // TODO Update this based on the elastic search response
-            // If the images are from strapi media library, prepend it with the cms url
-            return p.split('":"')[1].replace('"}', "")
-          })
-          park.slug = result.data.slug.raw
-          allResults.push(park)
-        })
-        setSearchResults([...allResults])
-        setResetCurrentPage(true)
-        setIsLoading(false)
-      })
-      .catch(error => {
-        console.log(`error: ${error}`)
-        setIsLoading(false)
-      })
+    setSearchResults([...allResults])
+    setTotalResults(allResults.length)
+    setNumberOfPages(Math.ceil(results.length / itemsPerPage))
+    setIsLoading(false)
+    // client
+    //   .search(searchText, options)
+    //   .then(resultList => {
+    //     setTotalResults(resultList.info.meta.page.total_results)
+    //     setNumberOfPages(resultList.info.meta.page.total_pages)
+    //     setCurrentPage(resultList.info.meta.page.current)
+    //     const allResults = []
+    //     resultList.results.forEach(result => {
+    //       const park = {}
+    //       park.protectedAreaName = result.data.protectedareaname.raw
+    //       park.isOpenToPublic = result.data.opentopublic.raw
+    //         ? result.data.opentopublic.raw == "true"
+    //         : true
+    //       park.advisories = result.data.parkadvisories.raw
+    //       park.isDayUsePass = result.data.isdayusepass.raw
+    //         ? result.data.isdayusepass.raw == "true"
+    //         : true
+    //       park.parkActivities = result.data.parkactivities.raw
+    //         ? result.data.parkactivities.raw.sort(compare)
+    //         : []
+    //       park.parkFacilities = result.data.parkfacilities.raw
+    //         ? result.data.parkfacilities.raw.sort(compare)
+    //         : []
+    //       park.parkPhotos = result.data.parkphotos.raw.map(p => {
+    //         // TODO Update this based on the elastic search response
+    //         // If the images are from strapi media library, prepend it with the cms url
+    //         return p.split('":"')[1].replace('"}', "")
+    //       })
+    //       park.slug = result.data.slug.raw
+    //       allResults.push(park)
+    //     })
+    //     setSearchResults([...allResults])
+    //     setResetCurrentPage(true)
+    //     setIsLoading(false)
+    //   })
+    //   .catch(error => {
+    //     console.log(`error: ${error}`)
+    //     setIsLoading(false)
+    //   })
   }, [
     sortOption,
     currentPage,
@@ -608,146 +658,173 @@ export default function Home({ location, data }) {
                     <>
                       {searchResults && searchResults.length > 0 && (
                         <>
-                          {searchResults.map((r, index) => (
-                            <div key={index} className="m20t">
-                              <Card>
-                                <CardContent className="park-card">
-                                  <div className="row search-result-card no-gutters">
-                                    <div className="col-12">
-                                      <div className="row">
-                                        <div className="col-lg-5 close-margin park-image-div">
-                                          <img
-                                            className="search-result-image"
-                                            src={`${r.parkPhotos[0]}`}
-                                          />
-                                        </div>
-                                        <div className="col-lg-7 p20t">
-                                          <Link href={`/${r.slug}`}>
-                                            <h2 class="park-heading">
-                                              {r.protectedAreaName}
-                                            </h2>
-                                          </Link>
-                                          <div className="row p30t">
-                                            <div className="col-6">
-                                              {r.parkActivities &&
-                                                r.parkActivities.length > 0 && (
-                                                  <>
-                                                    <div>Activities:</div>
-                                                    {r.parkActivities.map(
-                                                      (a, index2) => (
-                                                        <div
-                                                          key={index2}
-                                                          className="park-af-list pr3 text-black"
-                                                        >
-                                                          {a}
-                                                          {index2 ===
-                                                          r.parkActivities
-                                                            .length -
-                                                            1
-                                                            ? ""
-                                                            : ", "}{" "}
-                                                        </div>
-                                                      )
-                                                    )}
-                                                  </>
-                                                )}
-                                            </div>
-                                            <div className="col-6 pr15">
-                                              {r.parkFacilities &&
-                                                r.parkFacilities.length > 0 && (
-                                                  <>
-                                                    <div>Facilities:</div>
-                                                    {r.parkFacilities.map(
-                                                      (f, index3) => (
-                                                        <div
-                                                          key={index3}
-                                                          className="park-af-list pr3 text-black"
-                                                        >
-                                                          {f}
-                                                          {index3 ===
-                                                          r.parkFacilities
-                                                            .length -
-                                                            1
-                                                            ? ""
-                                                            : ", "}{" "}
-                                                        </div>
-                                                      )
-                                                    )}{" "}
-                                                  </>
-                                                )}
+                          {searchResults
+                            .slice(
+                              (currentPage - 1) * itemsPerPage,
+                              searchResults.length == 1
+                                ? searchResults.length
+                                : currentPage * itemsPerPage >
+                                  searchResults.length - 1
+                                ? searchResults.length
+                                : currentPage * itemsPerPage
+                            )
+                            .map((r, index) => (
+                              <div key={index} className="m20t">
+                                <Card>
+                                  <CardContent className="park-card">
+                                    <div className="row search-result-card no-gutters">
+                                      <div className="col-12">
+                                        <div className="row">
+                                          <div className="col-lg-5 close-margin park-image-div">
+                                            <Carousel
+                                              className="park-carousel"
+                                              autoPlay={true}
+                                              indicators={false}
+                                              timeout={400}
+                                              navButtonsAlwaysVisible={true}
+                                            >
+                                              {r.parkPhotos.map(
+                                                (item, index) => {
+                                                  return (
+                                                    <img
+                                                      key={index}
+                                                      className="search-result-image"
+                                                      src={`${item}`}
+                                                    />
+                                                  )
+                                                }
+                                              )}
+                                            </Carousel>
+                                          </div>
+                                          <div className="col-lg-7 p20t">
+                                            <Link href={`/${r.slug}`}>
+                                              <h2 class="park-heading">
+                                                {r.protectedAreaName}
+                                              </h2>
+                                            </Link>
+                                            <div className="row p30t">
+                                              <div className="col-6">
+                                                {r.parkActivities &&
+                                                  r.parkActivities.length >
+                                                    0 && (
+                                                    <>
+                                                      <div>Activities:</div>
+                                                      {r.parkActivities.map(
+                                                        (a, index2) => (
+                                                          <div
+                                                            key={index2}
+                                                            className="park-af-list pr3 text-black"
+                                                          >
+                                                            {a}
+                                                            {index2 ===
+                                                            r.parkActivities
+                                                              .length -
+                                                              1
+                                                              ? ""
+                                                              : ", "}{" "}
+                                                          </div>
+                                                        )
+                                                      )}
+                                                    </>
+                                                  )}
+                                              </div>
+                                              <div className="col-6 pr15">
+                                                {r.parkFacilities &&
+                                                  r.parkFacilities.length >
+                                                    0 && (
+                                                    <>
+                                                      <div>Facilities:</div>
+                                                      {r.parkFacilities.map(
+                                                        (f, index3) => (
+                                                          <div
+                                                            key={index3}
+                                                            className="park-af-list pr3 text-black"
+                                                          >
+                                                            {f}
+                                                            {index3 ===
+                                                            r.parkFacilities
+                                                              .length -
+                                                              1
+                                                              ? ""
+                                                              : ", "}{" "}
+                                                          </div>
+                                                        )
+                                                      )}{" "}
+                                                    </>
+                                                  )}
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
-                                      </div>
-                                      <Divider />
-                                      <div className="row text-black p30 park-overview">
-                                        <div className="col-lg-4 text-black park-overview-content">
-                                          {r.isOpenToPublic && (
-                                            <div className="flex-display">
-                                              <img
-                                                className="search-result-icon"
-                                                src={blueStatusIcon}
-                                              />
-                                              <div className="pl15">
-                                                Open public access
-                                              </div>
-                                            </div>
-                                          )}
-                                          {!r.isOpenToPublic && (
-                                            <div className="flex-display">
-                                              <img
-                                                className="search-result-icon"
-                                                src={redStatusIcon}
-                                              />
-                                              <div className="pl15">
-                                                Closed public access
-                                              </div>
-                                            </div>
-                                          )}
-                                        </div>
-                                        <div className="col-lg-4 park-overview-content">
-                                          {r.advisories.map((a, index1) => (
-                                            // TODO Display all advisories when Event types are
-                                            // available in elastic search results based on severity
-                                            <>
-                                              {index1 == 0 && (
-                                                <div
-                                                  key={index1}
-                                                  className="flex-display"
-                                                >
-                                                  <img
-                                                    className="search-result-icon"
-                                                    src={redAlertIcon}
-                                                  />
-                                                  <div className="pl15">
-                                                    {a} (1)
-                                                  </div>
+                                        <Divider />
+                                        <div className="row text-black p30 park-overview">
+                                          <div className="col-lg-4 text-black park-overview-content">
+                                            {r.isOpenToPublic && (
+                                              <div className="flex-display">
+                                                <img
+                                                  className="search-result-icon"
+                                                  src={blueStatusIcon}
+                                                />
+                                                <div className="pl15">
+                                                  Open public access
                                                 </div>
-                                              )}
-                                            </>
-                                          ))}
-                                        </div>
-                                        <div className="col-lg-4 park-overview-content">
-                                          {r.isDayUsePass && (
-                                            <div className="flex-display">
-                                              <img
-                                                className="search-result-icon"
-                                                src={dayUseIcon}
-                                              />
-                                              <div className="pl15 mtm7">
-                                                Day use and camping <br />
-                                                offered at this park
                                               </div>
-                                            </div>
-                                          )}
+                                            )}
+                                            {!r.isOpenToPublic && (
+                                              <div className="flex-display">
+                                                <img
+                                                  className="search-result-icon"
+                                                  src={redStatusIcon}
+                                                />
+                                                <div className="pl15">
+                                                  Closed public access
+                                                </div>
+                                              </div>
+                                            )}
+                                          </div>
+                                          <div className="col-lg-4 park-overview-content">
+                                            {r.advisories.map((a, index1) => (
+                                              // TODO Display all advisories when Event types are
+                                              // available in elastic search results based on severity
+                                              <>
+                                                {index1 == 0 && (
+                                                  <div
+                                                    key={index1}
+                                                    className="flex-display"
+                                                  >
+                                                    <img
+                                                      className="search-result-icon"
+                                                      src={redAlertIcon}
+                                                    />
+                                                    <div className="pl15">
+                                                      {a} (1)
+                                                    </div>
+                                                  </div>
+                                                )}
+                                              </>
+                                            ))}
+                                          </div>
+                                          <div className="col-lg-4 park-overview-content">
+                                            {r.isDayUsePass && (
+                                              <div className="flex-display">
+                                                <img
+                                                  className="search-result-icon"
+                                                  src={dayUseIcon}
+                                                />
+                                                <div className="pl15 mtm7">
+                                                  Day use and camping <br />
+                                                  offered at this park
+                                                </div>
+                                              </div>
+                                            )}
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </CardContent>
-                              </Card>
-                            </div>
-                          ))}
+                                  </CardContent>
+                                </Card>
+                              </div>
+                            ))}
                           <div className="small-flex-display p20t">
                             <div className="small-m-auto">
                               {searchResults.length > 0 && (

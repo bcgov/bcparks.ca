@@ -20,7 +20,7 @@ import "../../styles/search.scss"
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined"
 import { navigate } from "gatsby"
 
-const MainSearch = ({ data: { activities, facilities } }) => {
+const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
   const [openFilter, setOpenFilter] = useState(false)
   const [quickSearch, setQuickSearch] = useState({
     camping: false,
@@ -89,6 +89,7 @@ const MainSearch = ({ data: { activities, facilities } }) => {
         searchText,
         activityItems,
         facilityItems,
+        protectedAreas,
       },
     })
   }
