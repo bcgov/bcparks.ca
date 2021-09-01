@@ -361,7 +361,6 @@ export default function Home({ location, data }) {
       ecoReserve,
       electricalHookup
     )
-    console.log(results)
     if (sortOption.value === "asc") {
       results.sort(sortAsc)
     } else {
@@ -696,7 +695,7 @@ export default function Home({ location, data }) {
                                               )}
                                             </Carousel>
                                           </div>
-                                          <div className="col-lg-7 p20t">
+                                          <div className="col-lg-7 p20t park-content">
                                             <Link href={`/${r.slug}`}>
                                               <h2 class="park-heading">
                                                 {r.protectedAreaName}

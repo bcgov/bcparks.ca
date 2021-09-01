@@ -512,7 +512,7 @@ div[class$="-singleValue"] {
   }
 
   .park-overview {
-    height: 100px !important;
+    min-height: 100px !important;
   }
 
   .park-overview-content {
@@ -627,6 +627,13 @@ div[class$="-singleValue"] {
     .search-results-quick-filter {
       padding-right: 10px !important;
       padding-left: 10px !important;
+    }
+    .park-content {
+      margin: 0px 10px !important;
+    }
+
+    .park-overview-content {
+      margin-top: 5px !important;
     }
   }
 }
