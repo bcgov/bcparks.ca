@@ -89,7 +89,6 @@ export default function ParkTemplate({ data }) {
           </Grid>
         </Grid>
       </Container>
-      <Footer>{data.strapiWebsites.Footer}</Footer>
     </>
   )
 }

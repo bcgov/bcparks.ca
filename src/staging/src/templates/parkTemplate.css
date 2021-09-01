@@ -15,6 +15,10 @@ body {
     background-color: #eef1f5;
 }
 
+#park-menu-container {
+    z-index: 1 !important;
+}
+
 #park-menu-container .MuiListItem-button {
     padding: 2px;
 }
@@ -89,4 +93,8 @@ body {
 .raw-html-content li {
     display: list-item !important;
     margin-left: 16px;
+}
+
+.park-page-footer {
+    z-index: 10 !important;
 }
