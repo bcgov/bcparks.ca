@@ -372,7 +372,6 @@ const loadParkUrl = async () => {
         oldUrl: park.oldUrl,
         slug: park.url.replace("https://bcparks.ca/", "").replace(/\/$/, ""),
       };
-      console.log(protectedArea.slug);
       await strapi.services["protected-area"]
         .update({ orcs: park.orcs }, protectedArea)
         .catch((error) => {
