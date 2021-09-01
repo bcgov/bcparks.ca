@@ -16,6 +16,7 @@ class Parks_ETL:
         self.par_api_url_base = service_url["par"]
         self.bcgn_api_url_base = service_url["bcgn"]
         self.strapi_base = service_url["strapi"]
+        self.bcwfs_api_url_base = service_url["bcwfs"]
         self.token = downstream_pw
 
 
@@ -35,14 +36,11 @@ class Parks_ETL:
                 if 'data' in data:
                     result = data["data"]
                 else:
-                    #TODO: write to aitflow
                     print('data does not conform to expectations!')
 
             return result
-        except:
-        # del widgets_screen1[7:8]
-            # TODO: write error into airflow
-            print('Error invoking webservice')
+        except Exception as e:
+            print('Error invoking webservice', e)
             raise
 
 
@@ -68,10 +66,54 @@ class Parks_ETL:
                         break
 
             return result
-        except:
-        # del widgets_screen1[7:8]
-            # TODO: write error into airflow
-            print('Error invoking webservice')
+        except Exception as e:
+            print('Error invoking webservice', e)
+            raise
+
+    def _get_data_from_bcwfs(self, task_instance):
+        #api_url = f"{self.bcwfs_api_url_base}/?f=json&where=1=1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=OBJECTID ASC&resultOffset=0&resultRecordCount=50&cacheHint=true&quantizationParameters={'mode':'edit'}"
+        api_url = f"{self.bcwfs_api_url_base}?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=OBJECTID%20ASC&resultOffset=0&resultRecordCount=50&cacheHint=true&quantizationParameters=%7B%22mode%22%3A%22edit%22%7D"
+        
+        result = None
+
+        try:
+            response = requests.get(api_url, headers=headers)
+
+            if response.status_code == 200:
+                # convert json to Python object
+                result = response.json()
+
+            return result
+        except Exception as e:
+            print('Error invoking webservice', e)
+            raise
+
+    def _transform_data_bcwfs(self, task_instance):
+        data = task_instance.xcom_pull(task_ids='etl_get_data_from_bcwfs')
+
+        json = []
+
+        for feature in data['features']:
+            json.append(self.transform_bcwfs_feature(feature))
+
+        return json
+
+    def _dump_bcwfs_data(self, task_instance):
+        api_url = f'{self.strapi_base}/protected-areas?token={self.token}'
+        data = task_instance.xcom_pull(task_ids='etl_transform_data_bcwfs')
+
+        try:
+            for feature in data:
+                # persist object
+                response = requests.post(api_url, json=feature, headers=headers)
+
+                if response.status_code == 200:
+                    print(f'Record with id: {data["id"]} successfully created!')
+                else:
+                    print(f'dump data: Unplanned status code returned - {response.status_code}')
+
+        except Exception as e:
+            print('Error invoking webservice', e)
             raise
 
 
@@ -93,10 +135,8 @@ class Parks_ETL:
                 result = data
 
             return result
-        except:
-        # del widgets_screen1[7:8]
-            # TODO: write error into airflow
-            print('Error invoking webservice')
+        except Exception as e:
+            print('Error invoking webservice', e)
             raise
 
     def _transform_data_par(self, task_instance):
@@ -158,16 +198,13 @@ class Parks_ETL:
                 else:
                     print('Protected area already exist in strapi')
 
-            except:
-                # del widgets_screen1[7:8]
-                # TODO: write error into airflow
-                print('Error invoking webservice')
+            except Exception as e:
+                print('Error invoking webservice', e)
                 raise
 
     def _dump_bcgn_data(self, task_instance):
         api_url = f'{self.strapi_base}/protected-areas?token={self.token}'
         data = task_instance.xcom_pull(task_ids='etl_transform_data_par')
-
 
 
     def get_or_create_site(self, site):
@@ -234,11 +271,25 @@ class Parks_ETL:
 
         return json
 
+    def transform_bcwfs_feature(self, feature):
+        attribute = feature["attributes"]
+
+        json = {
+            "id": attribute["PROT_BAP_SYSID"],
+            "type": attribute["TYPE"],
+            "desc": attribute["ACCESS_PROHIBITION_DESCRIPTION"],
+            "date": attribute["ACCESS_STATUS_EFFECTIVE_DATE"],
+            "name": attribute["FIRE_CENTRE_NAME"],
+            "zone": attribute["FIRE_ZONE_NAME"],
+            "url": attribute["BULLETIN_URL"],
+            "area": attribute["FEATURE_AREA_SQM"],
+            "lenght": attribute["FEATURE_LENGTH_M"]
+        }
+
+        return json
 
     def transform_bcgn_data_to_park_names(self, data):
-        result = []
 
-        #for feature in data["feature"]:
         json = {
             "id": data["orcs"],
             "parkName": data["feature"]["properties"]["name"],
@@ -246,8 +297,7 @@ class Parks_ETL:
             "note": ""
         }
 
-        #result.append(json)
-        return result
+        return json
 
     def transform_par_sites(self, orcsNumber, sites):
         json = []
