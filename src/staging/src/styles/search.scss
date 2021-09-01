@@ -54,13 +54,13 @@ $headingFont: 2rem;
   .search-icon-fab {
     background-color: rgba(252, 186, 25, 1);
     margin-left: -30px !important;
-    margin-top: -9px !important;
-    width: 55px !important;
-    height: 55px !important;
+    margin-top: -14px !important;
+    width: 70px !important;
+    height: 70px !important;
     .search-icon {
       color: rgba(0, 51, 102, 0.8);
-      width: 40px !important;
-      height: 40px !important;
+      width: 55px !important;
+      height: 55px !important;
     }
   }
 }
@@ -392,6 +392,10 @@ div[class$="-singleValue"] {
   margin-top: -7px !important;
 }
 
+.mr5 {
+  margin-right: 5px !important;
+}
+
 .bcgov-normal-blue {
   color: $colorWhite !important;
   font-weight: 700 !important;
@@ -461,6 +465,10 @@ div[class$="-singleValue"] {
     color: $colorBlue;
   }
 
+  .text-blue {
+    color: $colorBlue;
+  }
+
   .search-results-list {
     padding: 10px !important;
   }
@@ -489,12 +497,28 @@ div[class$="-singleValue"] {
 
   .park-card {
     padding: 0px !important;
-    min-height: 430px !important;
+    min-height: 350px !important;
   }
 
   .park-image-div {
-    height: 330px !important;
+    height: 380px !important;
     width: 400px !important;
+    padding-right: 0px !important;
+  }
+
+  .park-image-logo-div {
+    background-color: $colorBlue;
+  }
+
+  .search-result-logo-image {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 35% !important;
+  }
+
+  .small-font {
+    font-size: 14px !important;
   }
 
   .remove-link {
@@ -509,10 +533,6 @@ div[class$="-singleValue"] {
   .MuiPaginationItem-root {
     border-radius: 0px !important;
     background-color: $colorWhite !important;
-  }
-
-  .park-overview {
-    height: 100px !important;
   }
 
   .park-overview-content {
@@ -627,6 +647,13 @@ div[class$="-singleValue"] {
     .search-results-quick-filter {
       padding-right: 10px !important;
       padding-left: 10px !important;
+    }
+    .park-content {
+      margin: 0px 10px !important;
+    }
+
+    .park-overview-content {
+      margin-top: 5px !important;
     }
   }
 }

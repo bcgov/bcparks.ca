@@ -24,13 +24,11 @@ import SearchIcon from "@material-ui/icons/Search"
 import Select from "react-select"
 import CloseIcon from "@material-ui/icons/Close"
 import * as ElasticAppSearch from "@elastic/app-search-javascript"
-import blueStatusIcon from "../images/park/blue-status-32.png"
-import yellowStatusIcon from "../images/park/yellow-status-32.png"
-import redStatusIcon from "../images/park/red-status-32.png"
 import dayUseIcon from "../images/park/day-use.png"
 import blueAlertIcon from "../images/park/blue-alert-32.png"
 import yellowAlertIcon from "../images/park/yellow-alert-32.png"
 import redAlertIcon from "../images/park/red-alert-32.png"
+import parksLogo from "../images/Mask_Group_5.png"
 import Carousel from "react-material-ui-carousel"
 
 export const query = graphql`
@@ -616,144 +614,179 @@ export default function Home({ location, data }) {
                                   <div className="row search-result-card no-gutters">
                                     <div className="col-12">
                                       <div className="row">
-                                        <div className="col-lg-5 close-margin park-image-div">
-                                          <Carousel
-                                            className="park-carousel"
-                                            autoPlay={true}
-                                            indicators={false}
-                                            timeout={400}
-                                            navButtonsAlwaysVisible={true}
+                                        {r.parkPhotos &&
+                                          r.parkPhotos.length == 0 && (
+                                            <div className="col-lg-5 close-margin park-image-div park-image-logo-div">
+                                              <img
+                                                key={index}
+                                                className="search-result-logo-image"
+                                                src={parksLogo}
+                                              />
+                                            </div>
+                                          )}
+                                        {r.parkPhotos &&
+                                          r.parkPhotos.length == 1 && (
+                                            <div className="col-lg-5 close-margin park-image-div">
+                                              <img
+                                                key={index}
+                                                className="search-result-image"
+                                                src={r.parkPhotos[0]}
+                                              />
+                                            </div>
+                                          )}
+                                        {r.parkPhotos &&
+                                          r.parkPhotos.length > 1 && (
+                                            <div className="col-lg-5 close-margin park-image-div">
+                                              <Carousel
+                                                className="park-carousel"
+                                                autoPlay={false}
+                                                indicators={false}
+                                                navButtonsAlwaysVisible={true}
+                                                animation="fade"
+                                                timeout={200}
+                                              >
+                                                {r.parkPhotos.map(
+                                                  (item, index) => {
+                                                    return (
+                                                      <img
+                                                        key={index}
+                                                        className="search-result-image"
+                                                        src={`${item}`}
+                                                      />
+                                                    )
+                                                  }
+                                                )}
+                                              </Carousel>
+                                            </div>
+                                          )}
+
+                                        <div className="col-lg-7 p20t park-content">
+                                          <div className="row">
+                                            <div className="col-12 park-overview-content text-blue small-font">
+                                              {r.isOpenToPublic && (
+                                                <>Open public access</>
+                                              )}
+                                              {!r.isOpenToPublic && (
+                                                <>Closed public access</>
+                                              )}
+                                            </div>
+                                          </div>
+                                          <Link
+                                            href={`/${r.slug}`}
+                                            className="p10t"
                                           >
-                                            {r.parkPhotos.map((item, index) => {
-                                              return (
-                                                <img
-                                                  key={index}
-                                                  className="search-result-image"
-                                                  src={`${item}`}
-                                                />
-                                              )
-                                            })}
-                                          </Carousel>
-                                        </div>
-                                        <div className="col-lg-7 p20t">
-                                          <Link href={`/${r.slug}`}>
                                             <h2 class="park-heading">
                                               {r.protectedAreaName}
                                             </h2>
                                           </Link>
-                                          <div className="row p30t">
+                                          <div className="row p20t mr5">
+                                            <div className="col-6">
+                                              {r.advisories.map((a, index1) => (
+                                                // TODO Display all advisories when Event types are
+                                                // available in elastic search results based on severity
+                                                <>
+                                                  {index1 == 0 && (
+                                                    <div
+                                                      key={index1}
+                                                      className="flex-display"
+                                                    >
+                                                      <img
+                                                        className="search-result-icon"
+                                                        src={redAlertIcon}
+                                                      />
+                                                      <div className="pl15 text-blue">
+                                                        {a} (1)
+                                                      </div>
+                                                    </div>
+                                                  )}
+                                                </>
+                                              ))}
+                                            </div>
+                                            <div className="col-6">
+                                              {r.isDayUsePass && (
+                                                <div className="flex-display">
+                                                  <img
+                                                    className="search-result-icon"
+                                                    src={dayUseIcon}
+                                                  />
+                                                  <div className="pl15 mtm7 text-blue">
+                                                    Day use and camping <br />
+                                                    offered at this park
+                                                  </div>
+                                                </div>
+                                              )}
+                                            </div>
+                                          </div>
+                                          <div className="row p30t mr5">
                                             <div className="col-6">
                                               {r.parkActivities &&
                                                 r.parkActivities.length > 0 && (
                                                   <>
-                                                    <div>Activities:</div>
+                                                    <div className="park-af-list pr3">
+                                                      <b>Activities:</b>
+                                                    </div>
                                                     {r.parkActivities.map(
                                                       (a, index2) => (
-                                                        <div
-                                                          key={index2}
-                                                          className="park-af-list pr3 text-black"
-                                                        >
-                                                          {a}
-                                                          {index2 ===
-                                                          r.parkActivities
-                                                            .length -
-                                                            1
-                                                            ? ""
-                                                            : ", "}{" "}
-                                                        </div>
+                                                        <>
+                                                          {index2 < 10 && (
+                                                            <div
+                                                              key={index2}
+                                                              className="park-af-list pr3 text-black"
+                                                            >
+                                                              {a}
+                                                              {index2 === 9
+                                                                ? " ..."
+                                                                : index2 ===
+                                                                  r
+                                                                    .parkActivities
+                                                                    .length -
+                                                                    1
+                                                                ? ""
+                                                                : ", "}
+                                                            </div>
+                                                          )}
+                                                        </>
                                                       )
                                                     )}
+                                                    <br />
                                                   </>
                                                 )}
                                             </div>
-                                            <div className="col-6 pr15">
+                                            <div className="col-6">
                                               {r.parkFacilities &&
                                                 r.parkFacilities.length > 0 && (
                                                   <>
-                                                    <div>Facilities:</div>
+                                                    <div className="park-af-list pr3">
+                                                      <b>Facilities:</b>
+                                                    </div>
                                                     {r.parkFacilities.map(
                                                       (f, index3) => (
-                                                        <div
-                                                          key={index3}
-                                                          className="park-af-list pr3 text-black"
-                                                        >
-                                                          {f}
-                                                          {index3 ===
-                                                          r.parkFacilities
-                                                            .length -
-                                                            1
-                                                            ? ""
-                                                            : ", "}{" "}
-                                                        </div>
+                                                        <>
+                                                          {index3 < 7 && (
+                                                            <div
+                                                              key={index3}
+                                                              className="park-af-list pr3 text-black"
+                                                            >
+                                                              {f}
+                                                              {index3 === 6
+                                                                ? " ..."
+                                                                : index3 ===
+                                                                  r
+                                                                    .parkFacilities
+                                                                    .length -
+                                                                    1
+                                                                ? ""
+                                                                : ", "}
+                                                            </div>
+                                                          )}
+                                                        </>
                                                       )
-                                                    )}{" "}
+                                                    )}
+                                                    <br />
                                                   </>
                                                 )}
                                             </div>
                                           </div>
-                                        </div>
-                                      </div>
-                                      <Divider />
-                                      <div className="row text-black p30 park-overview">
-                                        <div className="col-lg-4 text-black park-overview-content">
-                                          {r.isOpenToPublic && (
-                                            <div className="flex-display">
-                                              <img
-                                                className="search-result-icon"
-                                                src={blueStatusIcon}
-                                              />
-                                              <div className="pl15">
-                                                Open public access
-                                              </div>
-                                            </div>
-                                          )}
-                                          {!r.isOpenToPublic && (
-                                            <div className="flex-display">
-                                              <img
-                                                className="search-result-icon"
-                                                src={redStatusIcon}
-                                              />
-                                              <div className="pl15">
-                                                Closed public access
-                                              </div>
-                                            </div>
-                                          )}
-                                        </div>
-                                        <div className="col-lg-4 park-overview-content">
-                                          {r.advisories.map((a, index1) => (
-                                            // TODO Display all advisories when Event types are
-                                            // available in elastic search results based on severity
-                                            <>
-                                              {index1 == 0 && (
-                                                <div
-                                                  key={index1}
-                                                  className="flex-display"
-                                                >
-                                                  <img
-                                                    className="search-result-icon"
-                                                    src={redAlertIcon}
-                                                  />
-                                                  <div className="pl15">
-                                                    {a} (1)
-                                                  </div>
-                                                </div>
-                                              )}
-                                            </>
-                                          ))}
-                                        </div>
-                                        <div className="col-lg-4 park-overview-content">
-                                          {r.isDayUsePass && (
-                                            <div className="flex-display">
-                                              <img
-                                                className="search-result-icon"
-                                                src={dayUseIcon}
-                                              />
-                                              <div className="pl15 mtm7">
-                                                Day use and camping <br />
-                                                offered at this park
-                                              </div>
-                                            </div>
-                                          )}
                                         </div>
                                       </div>
                                     </div>

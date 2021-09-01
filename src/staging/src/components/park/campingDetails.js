@@ -124,12 +124,12 @@ export default function CampingDetails({ data }) {
                       <Box mr={1}>
                         <img
                           src={facility.icon}
-                          alt={facility.facilityName}
+                          alt={facility.icon ? facility.facilityName : ""}
                           width="24"
                           height="24"
                         />
                       </Box>
-                      <p>{facility.facilityName}</p>
+                      <HtmlContent>{facility.facilityName}</HtmlContent>
                     </AccordionSummary>
                     <AccordionDetails>
                       <HtmlContent>{facility.description}</HtmlContent>

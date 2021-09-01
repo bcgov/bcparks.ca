@@ -18,25 +18,36 @@ import {
   Grid,
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import MoreVertIcon from "@material-ui/icons/MoreVert"
 
 import blueAlertIcon from "../images/park/blue-alert-64.png"
 import yellowAlertIcon from "../images/park/yellow-alert-64.png"
 import redAlertIcon from "../images/park/red-alert-64.png"
+
+import "../styles/home.scss"
 
 const useStyles = makeStyles(theme => ({
   small: {
     width: theme.spacing(3),
     height: theme.spacing(3),
   },
+  chip: {
+    margin: theme.spacing(0.2),
+  },
+  title: {
+    fontSize: "0.8rem",
+    fontWeight: "bold",
+  },
+  subTitle: {
+    color: "#696969",
+    fontSize: "0.7rem",
+  },
 }))
 
 const PublicAdvisoryPage = ({ data }) => {
   const classes = useStyles()
 
-  const advisoryData = data.allStrapiPublicAdvisory.nodes
-
-  const advisories = advisoryData.map(advisory => {
+  const advisories = data.allStrapiPublicAdvisory.nodes.map(advisory => {
     let alertIcon
     let alertColorCss
     switch (advisory.urgency.color) {
@@ -71,70 +82,88 @@ const PublicAdvisoryPage = ({ data }) => {
       <Container>
         <br />
         <h1>Public Advisories</h1>
-        <Box m={4} p={3}>
-          <Grid container spacing={1}>
-            {advisories.map((advisory, index) => (
-              <Grid item xs={12} key={advisory.id}>
-                <Accordion className={advisory.alertColorCss}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls={advisory.title}
-                    id={advisory.id}
-                  >
-                    <Box mr={1}>
-                      <Avatar
-                        src={advisory.alertIcon}
-                        className={classes.small}
-                        variant="rounded"
-                        width="24"
-                        height="24"
-                      />
-                    </Box>
-                    <div>
-                      {advisory.protectedAreas.length > 0 &&
-                        advisory.protectedAreas.map((par, index) => (
-                          <Chip
-                            variant="outlined"
-                            key={index}
-                            label={par.protectedAreaName}
-                          />
-                        ))}
-                      <HTMLArea isVisible>{advisory.title}</HTMLArea>
-                    </div>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <div>
-                      <Divider variant="fullWidth" />
-                      {advisory.isEffectiveDateDisplayed &&
-                        advisory.effectiveDate && (
-                          <>
-                            <br />
-                            <p>
-                              In effect {advisory.effectiveDate}
-                              {advisory.isEndDateDisplayed && advisory.endDate && (
-                                <>
-                                  {" to "}
-                                  {advisory.endDate}
-                                </>
-                              )}
-                            </p>
-                          </>
-                        )}
-                      {advisory.isAdvisoryDateDisplayed &&
-                        advisory.advisoryDate && (
-                          <>
-                            <p>Posted {advisory.advisoryDate}</p>
-                          </>
-                        )}
-                      <HTMLArea isVisible>{advisory.description}</HTMLArea>
-                    </div>
-                  </AccordionDetails>
-                </Accordion>
-              </Grid>
-            ))}
-            <Grid item xs={12}></Grid>
-          </Grid>
-        </Box>
+        <span>
+          Updated Monday to Friday from 8:30 am to 4:30 pm, excluding statutory
+          holidays.
+        </span>
+        <span>There are {advisories.length} advisories in effect.</span>
+        <br />
+        <Grid container spacing={1}>
+          {advisories.map((advisory, index) => (
+            <Grid item xs={12} key={advisory.id}>
+              <Accordion className={advisory.alertColorCss}>
+                <AccordionSummary
+                  expandIcon={<MoreVertIcon />}
+                  aria-controls={advisory.title}
+                  id={advisory.id}
+                >
+                  <Box mr={1}>
+                    <Avatar
+                      src={advisory.alertIcon}
+                      className={classes.small}
+                      variant="circle"
+                      width="24"
+                      height="24"
+                    />
+                  </Box>
+                  <div>
+                    {advisory.eventType && (
+                      <div className={classes.title}>
+                        {advisory.eventType.eventType}
+                      </div>
+                    )}
+                    {advisory.advisoryDate && (
+                      <div className={classes.subTitle}>
+                        {advisory.advisoryDate}
+                      </div>
+                    )}
+
+                    {advisory.protectedAreas.length > 0 &&
+                      advisory.protectedAreas.map((par, index) => (
+                        <Chip
+                          size="small"
+                          variant="outlined"
+                          component="a"
+                          className={classes.chip}
+                          href={`/${
+                            par.slug
+                              ? par.slug
+                              : par.protectedAreaName
+                                  .toLowerCase()
+                                  .replace(/ /g, "-")
+                          }`}
+                          key={index}
+                          label={par.protectedAreaName}
+                        />
+                      ))}
+                    <HTMLArea isVisible>{advisory.title}</HTMLArea>
+                  </div>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div>
+                    <Divider variant="fullWidth" />
+                    {advisory.isEffectiveDateDisplayed &&
+                      advisory.effectiveDate && (
+                        <>
+                          <br />
+                          <p>
+                            In effect {advisory.effectiveDate}
+                            {advisory.isEndDateDisplayed && advisory.endDate && (
+                              <>
+                                {" to "}
+                                {advisory.endDate}
+                              </>
+                            )}
+                          </p>
+                        </>
+                      )}
+                    <HTMLArea isVisible>{advisory.description}</HTMLArea>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+            </Grid>
+          ))}
+        </Grid>
       </Container>
       <Footer>{data.strapiWebsites.Footer}</Footer>
     </>
@@ -145,7 +174,7 @@ export default PublicAdvisoryPage
 
 export const query = graphql`
   {
-    allStrapiPublicAdvisory(sort: { fields: urgency___sequence, order: DESC }) {
+    allStrapiPublicAdvisory(sort: { fields: advisoryDate, order: DESC }) {
       nodes {
         id
         title
@@ -166,11 +195,15 @@ export const query = graphql`
           protectedAreaName
           hasCampfireBan
           hasSmokingBan
+          slug
         }
         accessStatus {
           color
           accessStatus
           precedence
+        }
+        eventType {
+          eventType
         }
         advisoryDate(formatString: "MMMM DD, YYYY")
         advisoryNumber

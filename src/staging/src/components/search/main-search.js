@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
-import SearchIcon from "@material-ui/icons/Search"
 import {
   TextField,
   Fab,
@@ -18,6 +17,7 @@ import {
 import Select from "react-select"
 import "../../styles/search.scss"
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined"
+import SearchIcon from "../../images/BCParks-Search.svg"
 import { navigate } from "gatsby"
 
 const MainSearch = ({ data: { activities, facilities } }) => {
@@ -129,7 +129,7 @@ const MainSearch = ({ data: { activities, facilities } }) => {
                   searchParkFilter()
                 }}
               >
-                <SearchIcon fontSize="large" className="search-icon" />
+                <img src={SearchIcon} className="search-icon" alt="Search" />
               </Fab>
             </div>
           </div>

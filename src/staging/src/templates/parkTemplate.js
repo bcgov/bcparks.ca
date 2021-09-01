@@ -18,7 +18,6 @@ import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import ScrollToTop from "../components/scrollToTop"
 import { makeStyles } from "@material-ui/core/styles"
 import Header from "../components/header"
-import Footer from "../components/footer"
 
 import "./parkTemplate.css"
 
@@ -89,7 +88,6 @@ export default function ParkTemplate({ data }) {
           </Grid>
         </Grid>
       </Container>
-      <Footer>{data.strapiWebsites.Footer}</Footer>
     </>
   )
 }

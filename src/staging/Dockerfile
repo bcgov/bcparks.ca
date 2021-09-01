@@ -21,9 +21,9 @@ USER 0
 RUN yum install -y \
     python3-pip \
     python3 \
-    autoconf \
-    automake \
-    libtool \
+	autoconf \
+	automake \
+	libtool \
     git \
     openssh && \
     mkdir -p /opt/app-root/src/app/node_modules && \
@@ -45,7 +45,7 @@ RUN gatsby build
 
 # add bash to the image
 # RUN apk add --no-cache bash
-
+    
 # add app
 COPY . ./
 USER 0
