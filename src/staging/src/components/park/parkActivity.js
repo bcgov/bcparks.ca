@@ -86,12 +86,12 @@ export default function ParkActivity({ data }) {
                       <Box mr={1}>
                         <img
                           src={activity.icon}
-                          alt={activity.activityName}
+                          alt={activity.icon ? activity.activityName : ""}
                           width="24"
                           height="24"
                         />
                       </Box>
-                      <p>{activity.activityName}</p>
+                      <HtmlContent>{activity.activityName}</HtmlContent>
                     </AccordionSummary>
                     <AccordionDetails>
                       <HtmlContent>{activity.description}</HtmlContent>

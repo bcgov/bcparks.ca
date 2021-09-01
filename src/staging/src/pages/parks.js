@@ -5,6 +5,7 @@ import { Box, Grid, Container } from "@material-ui/core"
 import Header from "../components/header"
 import Menu from "../components/Menu"
 import Footer from "../components/footer"
+import "../styles/home.scss"
 
 const ParksPage = ({ data }) => (
   <>
