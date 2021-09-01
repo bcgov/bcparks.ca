@@ -35,6 +35,8 @@ const loadAdditionalParData = async () => {
   await loadAdditionalProtectedAreaInfo();
   await loadAdditionalSiteInfo();
   await loadParkDetails();
+  await loadParkUrl();
+  await loadParSomeDefaultValues();
 };
 
 const loadRegion = async (area) => {
