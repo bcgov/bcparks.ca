@@ -84,7 +84,7 @@ const cmsUrl =  process.env.GATSBY_REACT_APP_CMS_BASE_URL
 
 export default function Home({ data }) {
   // ID 6 === Hero Carousel
-  const zonesContent = data?.strapiWebsites?.homepage?.Content?.filter(c => c.id !== 6) || []
+  const zonesContent = data?.strapiWebsites?.homepage?.Content?.filter(c => c.id !== 6 && c.strapi_component !== 'parks.seo') || []
   const searchCarousel = data?.strapiWebsites?.homepage?.Content?.find(c => c.id === 6) || {}
 
   return (
