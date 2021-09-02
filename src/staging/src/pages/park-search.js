@@ -654,6 +654,10 @@ export default function Home({ location, data }) {
                   </div>
                   {!isLoading && (
                     <>
+                      {!searchResults ||
+                        (searchResults.length == 0 && (
+                          <div>No parks found</div>
+                        ))}
                       {searchResults && searchResults.length > 0 && (
                         <>
                           {searchResults
