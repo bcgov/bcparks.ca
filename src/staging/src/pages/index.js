@@ -68,6 +68,7 @@ export const query = graphql`
         latitude
         longitude
         protectedAreaName
+        slug
         parkNames {
           parkName
           id

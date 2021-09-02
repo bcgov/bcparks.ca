@@ -114,7 +114,7 @@ $headingFont: 2rem;
 
   @media screen and (min-width: 801px) {
     position: relative;
-    height: 742px;
+    max-height: 742px;
   }
 
   img {
