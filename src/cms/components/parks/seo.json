@@ -2,15 +2,16 @@
   "collectionName": "components_parks_seos",
   "info": {
     "name": "Seo",
-    "icon": "atlas"
+    "icon": "atlas",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "metaTitle": {
-      "type": "string"
+      "type": "text"
     },
     "metaDescription": {
-      "type": "string"
+      "type": "text"
     },
     "metaKeywords": {
       "type": "text"
