@@ -63,10 +63,6 @@ $headingFont: 2rem;
       height: 55px !important;
     }
   }
-
-  .close-icon {
-    width: 17px !important;
-  }
 }
 
 .search-results-main {
@@ -189,10 +185,6 @@ $headingFont: 2rem;
   font-family: $globalFont !important;
   overflow-y: visible !important;
 
-  .MuiChip-label {
-    color: $colorBlue !important;
-  }
-
   .MuiTypography-root {
     font-family: $globalFont !important;
     font-size: $bodyFont !important;
@@ -261,6 +253,7 @@ $headingFont: 2rem;
   }
 
   .MuiChip-label {
+    color: $colorBlue !important;
     font-size: 0.8rem !important;
     font-family: $globalFont;
   }
@@ -304,12 +297,13 @@ div[class$="-singleValue"] {
 }
 
 .park-search-filter {
-  padding-top: 15px !important;
+  padding-left: 30px !important;
   color: $colorWhite !important;
   font-size: $bodyFont !important;
   text-decoration: underline !important;
 
   @media screen and (min-width: 801px) {
+    padding-left: 40px !important;
     transform: skewX(-15deg);
   }
 }
@@ -556,12 +550,7 @@ div[class$="-singleValue"] {
   }
 
   .MuiChip-outlined {
-    background-color: $colorBlue !important;
-    border-radius: 10px !important;
-  }
-
-  .MuiChip-label {
-    color: $colorWhite !important;
+    background-color: $colorWhite !important;
   }
 
   .MuiPaginationItem-page.Mui-disabled {
@@ -572,12 +561,9 @@ div[class$="-singleValue"] {
     background-color: transparent !important;
   }
 
-  .search-icon {
-    color: #00468b !important;
-  }
-
+  .search-icon,
   .close-icon {
-    color: $colorWhite !important;
+    color: #00468b !important;
   }
 
   .close-icon {
