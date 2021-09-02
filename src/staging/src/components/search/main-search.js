@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core"
 import Select from "react-select"
 import "../../styles/search.scss"
-import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined"
+import CloseIcon from "@material-ui/icons/Close"
 import SearchIcon from "../../images/BCParks-Search.svg"
 import { navigate } from "gatsby"
 
@@ -105,7 +105,9 @@ const MainSearch = ({ data: { activities, facilities } }) => {
                 areas around B.C.
               </p>
             </div>
-            <div className="col-12 pt-sm-4 park-search-text">
+          </div>
+          <div className="row no-gutters">
+            <div className="col-10 pt-sm-4 park-search-text">
               <TextField
                 id="park-search-text"
                 variant="outlined"
@@ -131,17 +133,16 @@ const MainSearch = ({ data: { activities, facilities } }) => {
               >
                 <img src={SearchIcon} className="search-icon" alt="Search" />
               </Fab>
+            </div>{" "}
+            <div className="col-2 pl-sm-0 pt-sm-3">
+              <Link
+                component="button"
+                className="park-search-filter"
+                onClick={handleClickOpenFilter}
+              >
+                Filters
+              </Link>
             </div>
-          </div>
-          <div className="row no-gutters"></div>
-          <div className="col-12 pl-sm-0 pt-sm-3">
-            <Link
-              component="button"
-              className="park-search-filter"
-              onClick={handleClickOpenFilter}
-            >
-              Filters
-            </Link>
           </div>
         </div>
       </div>
@@ -156,7 +157,6 @@ const MainSearch = ({ data: { activities, facilities } }) => {
             <div className="row">
               <div className="col-12">
                 <TextField
-                  autoFocus
                   margin="dense"
                   id="park-filter-text"
                   className="park-filter-text"
@@ -285,7 +285,7 @@ const MainSearch = ({ data: { activities, facilities } }) => {
                     onDelete={handleActivityDelete(a)}
                     variant="outlined"
                     className="park-filter-chip"
-                    deleteIcon={<HighlightOffOutlinedIcon />}
+                    deleteIcon={<CloseIcon />}
                   />
                 ))}
               </div>
@@ -322,7 +322,7 @@ const MainSearch = ({ data: { activities, facilities } }) => {
                     onDelete={handleFacilityDelete(f)}
                     variant="outlined"
                     className="park-filter-chip"
-                    deleteIcon={<HighlightOffOutlinedIcon />}
+                    deleteIcon={<CloseIcon className="close-icon" />}
                   />
                 ))}
               </div>

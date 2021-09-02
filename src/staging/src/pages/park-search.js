@@ -9,24 +9,21 @@ import {
   Checkbox,
   FormGroup,
   FormControlLabel,
-  Divider,
   Chip,
   TextField,
-  Switch,
+  // Switch,
   InputAdornment,
   Card,
   CardContent,
   Link,
 } from "@material-ui/core"
 import Pagination from "@material-ui/lab/Pagination"
-import { withStyles } from "@material-ui/core/styles"
+// import { withStyles } from "@material-ui/core/styles"
 import SearchIcon from "@material-ui/icons/Search"
 import Select from "react-select"
 import CloseIcon from "@material-ui/icons/Close"
 import * as ElasticAppSearch from "@elastic/app-search-javascript"
 import dayUseIcon from "../images/park/day-use.png"
-import blueAlertIcon from "../images/park/blue-alert-32.png"
-import yellowAlertIcon from "../images/park/yellow-alert-32.png"
 import redAlertIcon from "../images/park/red-alert-32.png"
 import parksLogo from "../images/Mask_Group_5.png"
 import Carousel from "react-material-ui-carousel"
@@ -184,39 +181,39 @@ export default function Home({ location, data }) {
     setFilterSelections([...filters])
   }
 
-  const CustomSwitch = withStyles(() => ({
-    root: {
-      width: 36,
-      height: 20,
-      padding: 0,
-      display: "flex",
-    },
-    switchBase: {
-      padding: 2,
-      color: "#fff",
-      "&$checked": {
-        transform: "translateX(16px)",
-        color: "#fff",
-        "& + $track": {
-          opacity: 1,
-          backgroundColor: "#003366",
-          borderColor: "#003366",
-        },
-      },
-    },
-    thumb: {
-      width: 16,
-      height: 16,
-      boxShadow: "none",
-    },
-    track: {
-      border: `1px solid #003366`,
-      borderRadius: 20 / 2,
-      opacity: 1,
-      backgroundColor: "#003366",
-    },
-    checked: {},
-  }))(Switch)
+  // const CustomSwitch = withStyles(() => ({
+  //   root: {
+  //     width: 36,
+  //     height: 20,
+  //     padding: 0,
+  //     display: "flex",
+  //   },
+  //   switchBase: {
+  //     padding: 2,
+  //     color: "#fff",
+  //     "&$checked": {
+  //       transform: "translateX(16px)",
+  //       color: "#fff",
+  //       "& + $track": {
+  //         opacity: 1,
+  //         backgroundColor: "#003366",
+  //         borderColor: "#003366",
+  //       },
+  //     },
+  //   },
+  //   thumb: {
+  //     width: 16,
+  //     height: 16,
+  //     boxShadow: "none",
+  //   },
+  //   track: {
+  //     border: `1px solid #003366`,
+  //     borderRadius: 20 / 2,
+  //     opacity: 1,
+  //     backgroundColor: "#003366",
+  //   },
+  //   checked: {},
+  // }))(Switch)
 
   useEffect(() => {
     setIsLoading(true)
@@ -348,11 +345,11 @@ export default function Home({ location, data }) {
           const park = {}
           park.protectedAreaName = result.data.protectedareaname.raw
           park.isOpenToPublic = result.data.opentopublic.raw
-            ? result.data.opentopublic.raw == "true"
+            ? result.data.opentopublic.raw === "true"
             : true
           park.advisories = result.data.parkadvisories.raw
           park.isDayUsePass = result.data.isdayusepass.raw
-            ? result.data.isdayusepass.raw == "true"
+            ? result.data.isdayusepass.raw === "true"
             : true
           park.parkActivities = result.data.parkactivities.raw
             ? result.data.parkactivities.raw.sort(compare)
@@ -605,6 +602,10 @@ export default function Home({ location, data }) {
                   </div>
                   {!isLoading && (
                     <>
+                      {!searchResults ||
+                        (searchResults.length == 0 && (
+                          <div>No parks found</div>
+                        ))}
                       {searchResults && searchResults.length > 0 && (
                         <>
                           {searchResults.map((r, index) => (
@@ -615,9 +616,10 @@ export default function Home({ location, data }) {
                                     <div className="col-12">
                                       <div className="row">
                                         {r.parkPhotos &&
-                                          r.parkPhotos.length == 0 && (
+                                          r.parkPhotos.length === 0 && (
                                             <div className="col-lg-5 close-margin park-image-div park-image-logo-div">
                                               <img
+                                                alt="parks logo"
                                                 key={index}
                                                 className="search-result-logo-image"
                                                 src={parksLogo}
@@ -625,9 +627,10 @@ export default function Home({ location, data }) {
                                             </div>
                                           )}
                                         {r.parkPhotos &&
-                                          r.parkPhotos.length == 1 && (
+                                          r.parkPhotos.length === 1 && (
                                             <div className="col-lg-5 close-margin park-image-div">
                                               <img
+                                                alt="park"
                                                 key={index}
                                                 className="search-result-image"
                                                 src={r.parkPhotos[0]}
@@ -649,6 +652,7 @@ export default function Home({ location, data }) {
                                                   (item, index) => {
                                                     return (
                                                       <img
+                                                        alt="park carousel"
                                                         key={index}
                                                         className="search-result-image"
                                                         src={`${item}`}
@@ -685,12 +689,13 @@ export default function Home({ location, data }) {
                                                 // TODO Display all advisories when Event types are
                                                 // available in elastic search results based on severity
                                                 <>
-                                                  {index1 == 0 && (
+                                                  {index1 === 0 && (
                                                     <div
                                                       key={index1}
                                                       className="flex-display"
                                                     >
                                                       <img
+                                                        alt="alert"
                                                         className="search-result-icon"
                                                         src={redAlertIcon}
                                                       />
@@ -706,6 +711,7 @@ export default function Home({ location, data }) {
                                               {r.isDayUsePass && (
                                                 <div className="flex-display">
                                                   <img
+                                                    alt="day use icon"
                                                     className="search-result-icon"
                                                     src={dayUseIcon}
                                                   />
