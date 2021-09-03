@@ -1,8 +1,0 @@
-<svg id="parking" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
-  <g id="Background">
-    <path id="Path_413" data-name="Path 413" d="M64,4.181A4.179,4.179,0,0,0,59.822,0H4.182A4.182,4.182,0,0,0,0,4.181V59.815A4.185,4.185,0,0,0,4.182,64h55.64A4.182,4.182,0,0,0,64,59.815V4.181Z" fill="#38598a"/>
-  </g>
-  <g id="Parking_1_" transform="translate(16.062 10.831)">
-    <path id="Path_414" data-name="Path 414" d="M88.756,47.8a14.359,14.359,0,0,1,0,28.718L79.515,76.5V90.135H71.234V47.8Zm.129,20.543a6.357,6.357,0,0,0,0-12.714l-9.37-.011V68.339h9.37Z" transform="translate(-71.234 -47.797)" fill="#fff"/>
-  </g>
-</svg>
