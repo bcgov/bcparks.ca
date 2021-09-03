@@ -35,6 +35,8 @@ const loadAdditionalParData = async () => {
   await loadAdditionalProtectedAreaInfo();
   await loadAdditionalSiteInfo();
   await loadParkDetails();
+  await loadParkUrl();
+  await loadParSomeDefaultValues();
 };
 
 const loadRegion = async (area) => {
@@ -333,39 +335,87 @@ const loadParkDetails = async () => {
     var jsonData = fs.readFileSync("./data/park-details.json", "utf8");
     const data = JSON.parse(jsonData);
 
-    for await (const p of data["ParkDetails"]) {
+    for await (const park of data["parkDetails"]) {
       const protectedArea = {
-        description: p.Description,
-        safetyinfo: p.SafetyInfo,
-        specialnotes: p.SpecialNotes,
-        locationnotes: p.LocationNotes,
-        parkcontact: p.ParkContact,
-        reservations: p.Reservations,
-        maps: p.Maps,
-        natureandculture: p.NatureAndCulture,
+        description: park.description,
+        safetyInfo: park.safetyInfo,
+        specialNotes: park.specialNotes,
+        locationNotes: park.locationNotes,
+        parkContact: park.parkContact,
+        reservations: park.reservations,
+        maps: park.maps,
+        natureAndCulture: park.natureAndCulture,
         reconciliationNotes: reconciliationNotes,
-        slug: p.Path.replace(/\/\s*$/, "")
-          .split("/")
-          .pop(),
+        purpose: park.purpose,
+        managementPlanning: park.managementPlanning,
+        partnerships: park.partnerships,
       };
       await strapi.services["protected-area"]
-        .update({ orcs: p.ORCSSite }, protectedArea)
+        .update({ orcs: park.orcs }, protectedArea)
         .catch((error) => {
-          strapi.log.error(
-            `error load park details: orcs ${p.ORCSSite}`,
-            error
-          );
+          strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
         });
     }
-
     strapi.log.info("loading park details completed...");
   } catch (error) {
     strapi.log.error(error);
   }
 };
 
+const loadParkUrl = async () => {
+  try {
+    strapi.log.info("loading park urls");
+    var jsonData = fs.readFileSync("./data/park-urls.json", "utf8");
+    const data = JSON.parse(jsonData);
+
+    for await (const park of data["parkUrls"]) {
+      const protectedArea = {
+        url: park.url,
+        oldUrl: park.oldUrl,
+        slug: park.url.replace("https://bcparks.ca/", "").replace(/\/$/, ""),
+      };
+      await strapi.services["protected-area"]
+        .update({ orcs: park.orcs }, protectedArea)
+        .catch((error) => {
+          strapi.log.error(`error load park urls: orcs ${park.orcs}`, error);
+        });
+    }
+    strapi.log.info("loading park urls completed...");
+  } catch (error) {
+    strapi.log.error(error);
+  }
+};
+
+// load some default value for graphql to load
+const loadParSomeDefaultValues = async () => {
+  strapi.log.info("loading park default values started...");
+  const protectedAreas = await strapi.services["protected-area"].find({
+    _limit: 5,
+  });
+
+  for (const protectedArea of protectedAreas) {
+    strapi.log.info("set default value for", protectedArea.orcs);
+    protectedArea.isDayUsePass =
+      protectedArea.isDayUsePass === true ? true : false;
+    protectedArea.isFogZone = protectedArea.isFogZone === true ? true : false;
+    protectedArea.hasCampfireBan =
+      protectedArea.hasCampfireBan === true ? true : false;
+    protectedArea.hasSmokingBan =
+      protectedArea.hasSmokingBan === true ? true : false;
+
+    await strapi.services["protected-area"]
+      .update({ orcs: protectedArea.orcs }, protectedArea)
+      .catch((error) => {
+        strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
+      });
+  }
+  strapi.log.info("loading park default values completed...");
+};
+
 module.exports = {
   loadParData,
   loadAdditionalParData,
   loadParkDetails,
+  loadParkUrl,
+  loadParSomeDefaultValues,
 };

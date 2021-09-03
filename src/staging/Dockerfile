@@ -4,6 +4,7 @@ FROM registry.access.redhat.com/ubi8/nodejs-14
 ARG REACT_APP_CMS_BASE_URL
 
 ENV REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
+ENV VERBOSE=1
 
 # set working directory
 # WORKDIR /web
@@ -30,6 +31,7 @@ RUN yum install -y \
 USER 1007770000
 COPY package.json ./
 RUN npm install --unsafe-perm 
+# RUN npm install -g mocha
 RUN npm install -g gatsby-cli
 RUN gatsby build
 

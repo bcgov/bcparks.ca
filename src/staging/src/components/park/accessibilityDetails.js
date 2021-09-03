@@ -1,16 +1,23 @@
 import React from "react"
-import { Paper, Container } from "@material-ui/core"
+import { Paper, Container, Grid } from "@material-ui/core"
 import Heading from "./heading"
+import Spacer from "./spacer"
 
 export default function AccessibilityDetails({ data }) {
   return (
-    <div id="accessibility-details-container" className="anchor-link">
+    <Grid
+      item
+      xs={12}
+      id="accessibility-details-container"
+      className="anchor-link"
+    >
       <Paper elevation={0}>
         <Heading>Accessibility</Heading>
         <Container>
           <p>{data}</p>
         </Container>
+        <Spacer />
       </Paper>
-    </div>
+    </Grid>
   )
 }

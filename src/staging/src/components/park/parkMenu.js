@@ -3,13 +3,8 @@ import PropTypes from "prop-types"
 import {
   AppBar,
   CssBaseline,
-  Divider,
-  Box,
   Drawer,
   Hidden,
-  List,
-  ListItem,
-  ListItemText,
   Toolbar,
   Typography,
   IconButton,
@@ -17,7 +12,6 @@ import {
 import MenuIcon from "@material-ui/icons/Menu"
 import { makeStyles, useTheme } from "@material-ui/core/styles"
 import Scrollspy from "react-scrollspy"
-import { Link } from "gatsby"
 
 const drawerWidth = 280
 
@@ -46,10 +40,13 @@ const useStyles = makeStyles(theme => ({
   // necessary for content to be below app bar
   appBarOffset: theme.mixins.toolbar,
   drawerDesktop: {
-    marginTop: 288,
+    marginTop: 400,
     marginLeft: 40,
+    border: 0,
     padding: 10,
     width: drawerWidth,
+    zIndex: 0,
+    overflow: "hidden",
   },
   drawerMobile: {
     width: drawerWidth,
@@ -57,6 +54,9 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+  },
+  menu: {
+    textDecoration: "none",
   },
 }))
 
@@ -76,6 +76,11 @@ export default function ParkMenu(props) {
 
   const menuItems = [
     { text: "Park Overview", url: "park-overview-container", visible: true },
+    {
+      text: "Accessibility",
+      url: "accessibility-details-container",
+      visible: true,
+    },
     {
       text: `Alerts (${alertsCount})`,
       url: "park-advisory-details-container",
@@ -115,33 +120,18 @@ export default function ParkMenu(props) {
   })
 
   const menuFiltered = menuItems.filter(m => m.visible)
-  const drawerSubItems = (
-    <div className="nested-list">
-      <List>
-        {campingSubMenuItems.map((subMenu, index) => (
-          <div key={index}>
-            <ListItem button key={index}>
-              <Link to={`#${subMenu.url}`}>
-                <ListItemText primary={subMenu.text} />
-              </Link>
-            </ListItem>
-          </div>
-        ))}
-      </List>
-    </div>
-  )
-
   const drawerItems = (
     <div>
       <Scrollspy
         className="scrollspy"
         items={menuFiltered.map(m => m.url)}
         currentClassName="isCurrent"
-        offset={"90"}
       >
         {menuFiltered.map((menu, index) => (
           <li key={index}>
-            <a href={`#${menu.url}`}>{menu.text}</a>
+            <a className={classes.menu} href={`#${menu.url}`}>
+              {menu.text}
+            </a>
           </li>
         ))}
       </Scrollspy>
@@ -155,21 +145,22 @@ export default function ParkMenu(props) {
     <div id="park-menu-container">
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              className={classes.menuButton}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap></Typography>
-          </Toolbar>
-        </AppBar>
-
+        <Hidden smUp implementation="css">
+          <AppBar position="fixed" className={classes.appBar}>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                className={classes.menuButton}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" noWrap></Typography>
+            </Toolbar>
+          </AppBar>
+        </Hidden>
         <nav className={classes.drawer} aria-label="park info menu">
           {/* Mobile */}
           <Hidden smUp implementation="css">
@@ -198,12 +189,6 @@ export default function ParkMenu(props) {
               variant="permanent"
               open
             >
-              <Box m={1}>
-                <Link to="/parks">
-                  <h3>Park Info</h3>
-                </Link>
-              </Box>
-              <Divider />
               {drawerItems}
             </Drawer>
           </Hidden>

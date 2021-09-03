@@ -1,46 +1,15 @@
 import React from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  Avatar,
-  Paper,
-  Container,
-} from "@material-ui/core"
-import mapIcon from "../../images/park/map.png"
+import { Paper, Grid } from "@material-ui/core"
 import Heading from "./heading"
-
-const useStyles = makeStyles({
-  card: {
-    border: "none",
-    boxShadow: "none",
-  },
-})
+import Spacer from "./spacer"
 
 export default function ParkMapDetails({ data }) {
-  const classes = useStyles()
-
   return (
-    <div id="park-map-details-container" className="anchor-link">
+    <Grid item xs={12} id="park-map-details-container" className="anchor-link">
       <Paper elevation={0}>
-        <Heading>Park and Activity Map</Heading>
-        <Container>
-          <Card className={classes.card}>
-            <CardHeader
-              avatar={
-                <Avatar
-                  variant="square"
-                  src={mapIcon}
-                  aria-label="park and activity map"
-                />
-              }
-              title="Park and Activity Map"
-            />
-            <CardContent>Coming Soon</CardContent>
-          </Card>
-        </Container>
+        <Heading>Park and Activity</Heading>
+        <Spacer />
       </Paper>
-    </div>
+    </Grid>
   )
 }

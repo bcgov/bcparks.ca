@@ -4,7 +4,7 @@ import Header from "../components/header"
 import Footer from "../components/footer"
 import Zone from "../components/zone"
 import Menu from "../components/Menu"
-import MainSearch from "../components/mainSearch"
+import MainSearch from "../components/search/main-search"
 import "../styles/home.scss"
 import Exclamation from "../images/alert 32px.png"
 
@@ -68,6 +68,7 @@ export const query = graphql`
         latitude
         longitude
         protectedAreaName
+        slug
         parkNames {
           parkName
           id
@@ -80,7 +81,6 @@ export const query = graphql`
     }
   }
 `
-const cmsUrl =  process.env.GATSBY_REACT_APP_CMS_BASE_URL
 
 export default function Home({ data }) {
   // ID 6 === Hero Carousel

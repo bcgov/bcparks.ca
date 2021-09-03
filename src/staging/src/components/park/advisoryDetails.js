@@ -7,7 +7,6 @@ import {
   AccordionSummary,
   AccordionDetails,
   Avatar,
-  Container,
   Divider,
   Grid,
 } from "@material-ui/core"
@@ -15,6 +14,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
+import Spacer from "./spacer"
 
 import blueAlertIcon from "../../images/park/blue-alert-64.png"
 import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
@@ -71,7 +71,7 @@ export default function AdvisoryDetails({ data }) {
         break
       default:
         alertIcon = blueAlertIcon
-        alertColorCss = ".blue-alert"
+        alertColorCss = "blue-alert"
     }
     advisory.alertIcon = alertIcon
     advisory.alertColorCss = alertColorCss
@@ -79,20 +79,23 @@ export default function AdvisoryDetails({ data }) {
   })
 
   return (
-    <div id="park-advisory-details-container" className="anchor-link">
+    <Grid
+      item
+      xs={12}
+      id="park-advisory-details-container"
+      className="anchor-link"
+    >
       <Paper elevation={0}>
         <Grid container>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={6}>
             <Heading>{`Alerts (${advisories.length})`}</Heading>
           </Grid>
           <Grid
             item
-            xs={12}
-            sm={6}
+            xs={6}
             container
-            direction="row"
-            alignItems="center"
             justifyContent="flex-end"
+            alignItems="flex-start"
           >
             <Box m={2}>
               {advisories.length > 1 && (
@@ -110,76 +113,67 @@ export default function AdvisoryDetails({ data }) {
           </Grid>
         </Grid>
         {data.totalCount === 0 && (
-          <Container>
-            <Box p={1}>
-              <p>There are no reported alerts for this park</p>
-            </Box>
-          </Container>
+          <HtmlContent>There are no reported alerts for this park</HtmlContent>
         )}
         {data.totalCount > 0 && (
-          <Container>
-            <Grid container spacing={1}>
-              {advisories.map((advisory, index) => (
-                <Grid key={advisory.id} item xs={12}>
-                  <Paper elevation={0}>
-                    <Accordion
-                      className={advisory.alertColorCss}
-                      expanded={expandeds[index]}
-                      onChange={handleChange(index)}
-                    >
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={advisory.title}
-                        id={advisory.id}
-                      >
-                        <Box mr={1}>
-                          <Avatar
-                            src={advisory.alertIcon}
-                            className={classes.small}
-                            variant="rounded"
-                            width="24"
-                            height="24"
-                          />
-                        </Box>
-                        <p>{advisory.title}</p>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <div>
-                          <Divider variant="fullWidth" />
-                          {advisory.isEffectiveDateDisplayed &&
-                            advisory.effectiveDate && (
-                              <>
-                                <br />
-                                <p>
-                                  In effect {advisory.effectiveDate}
-                                  {advisory.isEndDateDisplayed &&
-                                    advisory.endDate && (
-                                      <>
-                                        {" to "}
-                                        {advisory.endDate}
-                                      </>
-                                    )}
-                                </p>
-                              </>
-                            )}
-                          {advisory.isAdvisoryDateDisplayed &&
-                            advisory.advisoryDate && (
-                              <>
-                                <p>Posted {advisory.advisoryDate}</p>
-                              </>
-                            )}
-                          <HtmlContent>{advisory.description}</HtmlContent>
-                        </div>
-                      </AccordionDetails>
-                    </Accordion>
-                  </Paper>
-                </Grid>
-              ))}
-            </Grid>
-            <br />
-          </Container>
+          <Grid container spacing={1}>
+            {advisories.map((advisory, index) => (
+              <Grid key={advisory.id} item xs={12}>
+                <Accordion
+                  className={advisory.alertColorCss}
+                  expanded={expandeds[index]}
+                  onChange={handleChange(index)}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls={advisory.title}
+                    id={advisory.id}
+                  >
+                    <Box mr={1}>
+                      <Avatar
+                        src={advisory.alertIcon}
+                        className={classes.small}
+                        variant="rounded"
+                        width="24"
+                        height="24"
+                      />
+                    </Box>
+                    <HtmlContent>{advisory.title}</HtmlContent>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div>
+                      <Divider variant="fullWidth" />
+                      {advisory.isEffectiveDateDisplayed &&
+                        advisory.effectiveDate && (
+                          <>
+                            <br />
+                            <p>
+                              In effect {advisory.effectiveDate}
+                              {advisory.isEndDateDisplayed && advisory.endDate && (
+                                <>
+                                  {" to "}
+                                  {advisory.endDate}
+                                </>
+                              )}
+                            </p>
+                          </>
+                        )}
+                      {advisory.isAdvisoryDateDisplayed &&
+                        advisory.advisoryDate && (
+                          <>
+                            <p>Posted {advisory.advisoryDate}</p>
+                          </>
+                        )}
+                      <HtmlContent>{advisory.description}</HtmlContent>
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+              </Grid>
+            ))}
+          </Grid>
         )}
+        <Spacer />
       </Paper>
-    </div>
+    </Grid>
   )
 }

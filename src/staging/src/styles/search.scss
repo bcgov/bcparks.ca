@@ -1,9 +1,12 @@
-$globalFont: "BCSans",Verdana,Arial,sans serif;
+$globalFont: "BCSans", Verdana, Arial, sans serif;
 $colorBlue: #003366;
 $hoverBlue: #2684ff;
 $colorGrey: #eef1f5;
 $colorWhite: #fff;
-$bodyFont: 1rem;
+$colorBlack: #000;
+$colorTextBlack: #494949;
+$bodyFont: 16px;
+$headingFont: 2rem;
 
 .MuiTypography-root {
   font-family: $globalFont !important;
@@ -13,6 +16,88 @@ $bodyFont: 1rem;
 .MuiButton-root {
   text-transform: none !important;
   font-family: $globalFont !important;
+}
+
+.search-body {
+  background-color: $colorGrey !important;
+}
+
+.park-search {
+  .park-search-text-box {
+    width: 80% !important;
+
+    .MuiOutlinedInput-root {
+      width: 100% !important;
+      max-width: 700px !important;
+      background-color: $colorWhite !important;
+      border: none !important;
+      border-radius: 50px !important;
+      font-size: $bodyFont !important;
+      font-family: $globalFont !important;
+    }
+    .MuiOutlinedInput-input {
+      padding: 10px 20px !important;
+      margin-right: 10px !important;
+    }
+    .MuiOutlinedInput-root:focus {
+      outline: none !important;
+      outline-offset: 1px !important;
+    }
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+      border: 1px solid $colorBlue !important;
+    }
+  }
+  button:focus {
+    outline: unset !important;
+  }
+
+  .search-icon-fab {
+    background-color: rgba(252, 186, 25, 1);
+    margin-left: -30px !important;
+    margin-top: -14px !important;
+    width: 70px !important;
+    height: 70px !important;
+    .search-icon {
+      color: rgba(0, 51, 102, 0.8);
+      width: 55px !important;
+      height: 55px !important;
+    }
+  }
+}
+
+.search-results-main {
+  .park-search-text-box {
+    width: 100% !important;
+
+    .MuiOutlinedInput-root {
+      width: 100% !important;
+      max-width: 700px !important;
+      background-color: $colorWhite !important;
+      border: none !important;
+      border-radius: 5px !important;
+      font-size: $bodyFont !important;
+      font-family: $globalFont !important;
+    }
+    .MuiOutlinedInput-input {
+      padding: 10px 7px !important;
+    }
+    .MuiOutlinedInput-root:focus {
+      outline: none !important;
+      outline-offset: 1px !important;
+    }
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+      border: 1px solid $colorBlue !important;
+    }
+  }
+  button:focus {
+    outline: unset !important;
+  }
+  .park-filter-select [class*="-control"] {
+    border-radius: 50px !important;
+    background-color: $colorWhite !important;
+    font-family: $globalFont !important;
+    font-size: $bodyFont !important;
+  }
 }
 
 .heading-white-space {
@@ -81,49 +166,11 @@ $bodyFont: 1rem;
     font-size: 2rem;
     padding: 30px;
   }
-  .search-icon-fab {
-    background-color: rgba(252, 186, 25, 1);
-    margin-left: -30px !important;
-    margin-top: -9px !important;
-    width: 55px !important;
-    height: 55px !important;
-    .search-icon {
-      color: rgba(0, 51, 102, 0.8);
-      width: 40px !important;
-      height: 40px !important;
-    }
-  }
 
   .park-search-text-box {
-    width: 80% !important;
-
-    .MuiOutlinedInput-root {
-      width: 100% !important;
-      max-width: 700px !important;
-      background-color: $colorWhite !important;
-      border: none !important;
-      border-radius: 50px !important;
-      font-size: $bodyFont !important;
-      font-family: $globalFont !important;
-    }
-    .MuiOutlinedInput-input {
-      padding: 10px 20px !important;
-      margin-right: 10px !important;
-    }
-    .MuiOutlinedInput-root:focus {
-      outline: none !important;
-      outline-offset: 1px !important;
-    }
-    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-      border-color: transparent !important;
-    }
-
     @media screen and (min-width: 801px) {
       width: 85% !important;
     }
-  }
-  button:focus {
-    outline: unset !important;
   }
 }
 
@@ -150,6 +197,20 @@ $bodyFont: 1rem;
   .MuiPaper-root {
     color: $colorBlue !important;
   }
+
+  .MuiDialog-paperWidthSm {
+    max-width: 700px !important;
+  }
+
+  .park-filter-select [class*="-control"] {
+    border-radius: 50px !important;
+    background-color: $colorGrey !important;
+    font-family: $globalFont !important;
+    font-size: $bodyFont !important;
+  }
+}
+.park-filter-dialog,
+.search-results-main {
   .MuiCheckbox-root {
     color: #38598a !important;
     padding: 0px !important;
@@ -160,9 +221,6 @@ $bodyFont: 1rem;
     background-color: $colorGrey !important;
   }
 
-  .MuiDialog-paperWidthSm {
-    max-width: 100% !important;
-  }
   .park-filter-text {
     .MuiOutlinedInput-root {
       border-radius: 50px !important;
@@ -179,12 +237,6 @@ $bodyFont: 1rem;
     }
   }
 
-  .park-filter-select [class*="-control"] {
-    border-radius: 50px !important;
-    background-color: $colorGrey !important;
-    font-family: $globalFont !important;
-    font-size: $bodyFont !important;
-  }
   .MuiButton-root {
     font-size: $bodyFont !important;
     width: 100% !important;
@@ -276,8 +328,20 @@ div[class$="-singleValue"] {
   }
 }
 
+.p10t {
+  padding-top: 10px !important;
+}
+
 .p20t {
   padding-top: 20px !important;
+}
+
+.p30t {
+  padding-top: 30px !important;
+}
+
+.p30 {
+  padding: 30px !important;
 }
 
 .p30l {
@@ -288,12 +352,48 @@ div[class$="-singleValue"] {
   padding: 0px 20px !important;
 }
 
+.p10l {
+  padding-left: 10px !important;
+}
+
 .m20t {
   margin-top: 20px !important;
 }
 
+.m15t {
+  margin-top: 15px !important;
+}
+
 .p30 {
   padding: 20px 30px !important;
+}
+
+.pr3 {
+  padding-right: 3px !important;
+}
+
+.pr15 {
+  padding-right: 15px !important;
+}
+
+.pr30 {
+  padding-right: 30px !important;
+}
+
+.pl15 {
+  padding-left: 15px !important;
+}
+
+.mtm5 {
+  margin-top: 5px !important;
+}
+
+.mtm7 {
+  margin-top: -7px !important;
+}
+
+.mr5 {
+  margin-right: 5px !important;
 }
 
 .bcgov-normal-blue {
@@ -319,17 +419,249 @@ div[class$="-singleValue"] {
 }
 
 .bcgov-loader-show {
-  display: inline-block;
+  display: inline-block !important;
 }
 
-#search-results {
-  box-sizing: border-box;
-  overflow: hidden;
-  z-index: 2;
-  top: 200px;
-  width: 100%;
-  padding: 0;
-  text-align: left;
+.park-af-list {
+  display: inline-block !important;
+}
+
+.flex-display {
+  display: flex !important;
+}
+
+.m-auto {
+  margin: auto !important;
+}
+
+.text-black {
+  color: $colorTextBlack !important;
+}
+
+.search-results-main {
+  color: $colorBlue !important;
+  font-family: $globalFont !important;
+  font-size: $bodyFont !important;
+
+  #search-results {
+    box-sizing: border-box;
+    overflow: hidden;
+    z-index: 2;
+    top: 200px;
+    width: 100%;
+    padding: 0;
+    text-align: left;
+  }
+
+  .search-results-container {
+    padding-top: 40px !important;
+  }
+
+  .headline-text {
+    color: $colorBlack;
+  }
+
+  .park-heading {
+    color: $colorBlue;
+  }
+
+  .text-blue {
+    color: $colorBlue;
+  }
+
+  .search-results-list {
+    padding: 10px !important;
+  }
+
+  .park-filter-select [class*="-control"] {
+    border-radius: 5px !important;
+  }
+
+  .search-results-quick-filter {
+    .filter-heading {
+      color: $colorBlack;
+    }
+
+    .select-padding {
+      padding-top: 20px !important;
+      padding-right: 20px !important;
+    }
+  }
+
+  .close-margin {
+    padding-left: 0px !important;
+    padding-top: 0px !important;
+    margin-top: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  .park-card {
+    padding: 0px !important;
+    min-height: 350px !important;
+  }
+
+  .park-image-div {
+    height: 380px !important;
+    width: 400px !important;
+    padding-right: 0px !important;
+  }
+
+  .park-image-logo-div {
+    background-color: $colorBlue;
+  }
+
+  .search-result-logo-image {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 35% !important;
+  }
+
+  .small-font {
+    font-size: 14px !important;
+  }
+
+  .remove-link {
+    display: inline-block !important;
+    padding-left: 20px !important;
+  }
+
+  .MuiPaginationItem-page {
+    color: $colorBlue;
+  }
+
+  .MuiPaginationItem-root {
+    border-radius: 0px !important;
+    background-color: $colorWhite !important;
+  }
+
+  .park-overview-content {
+    height: 100% !important;
+    top: 20% !important;
+  }
+
+  .MuiPaginationItem-page.Mui-selected {
+    background-color: $colorBlue !important;
+    color: $colorWhite !important;
+  }
+
+  .MuiPaginationItem-page.Mui-selected:hover {
+    background-color: #00468b !important;
+  }
+
+  .MuiChip-outlined {
+    background-color: $colorWhite !important;
+  }
+
+  .MuiPaginationItem-page.Mui-disabled {
+    opacity: 0.5 !important;
+  }
+
+  .MuiPaginationItem-ellipsis {
+    background-color: transparent !important;
+  }
+
+  .search-icon,
+  .close-icon {
+    color: #00468b !important;
+  }
+
+  .close-icon {
+    width: 17px !important;
+  }
+
+  .park-carousel,
+  .CarouselItem,
+  .CarouselItem div {
+    height: 100% !important;
+  }
+  .park-carousel [class*="Carousel-prev"] {
+    margin-left: -10px !important;
+  }
+
+  .park-carousel [class*="Carousel-next"] {
+    margin-right: -25px !important;
+  }
+
+  .park-carousel [class*="Carousel-prev"] button {
+    padding-left: 15px !important;
+  }
+
+  .park-carousel [class*="Carousel-next"] button {
+    padding-right: 15px !important;
+  }
+
+  .park-carousel .MuiButtonBase-root {
+    background-color: rgba(48, 48, 48, 0.7) !important;
+  }
+
+  .large-pagination {
+    display: block !important;
+  }
+
+  .small-pagination {
+    display: none !important;
+  }
+
+  .search-result-image {
+    width: 100% !important;
+    object-fit: cover !important;
+    height: 100% !important;
+    object-position: 0% 5%;
+  }
+
+  .search-result-icon {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .search-result-card {
+    min-height: 300px !important;
+  }
+
+  .MuiPaper-elevation1 {
+    box-shadow: none !important;
+    border-radius: 10px !important;
+  }
+
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1600px !important;
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    .large-pagination {
+      display: none !important;
+    }
+
+    .small-pagination {
+      display: block !important;
+    }
+    .small-m-auto {
+      margin: auto !important;
+    }
+    .small-flex-display {
+      display: flex !important;
+    }
+    .search-results-quick-filter {
+      padding-right: 10px !important;
+      padding-left: 10px !important;
+    }
+    .park-content {
+      margin: 0px 10px !important;
+    }
+
+    .park-overview-content {
+      margin-top: 5px !important;
+    }
+  }
+}
+
+@media (min-width: 1400px) {
+  .search-results-main {
+    max-width: 1300px;
+  }
 }
 
 @media (max-width: 575.98px) {

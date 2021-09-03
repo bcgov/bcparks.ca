@@ -1,17 +1,8 @@
 body {
     font-family: BCSans, Verdana, Arial, "sans-serif"  !important;
-    background-color: #f5f5f7;
 }
 
-a {
-    color: #003366;
-}
-
-a:link {
-    text-decoration: none;
-}
-
-.anchor-link {
+.anchor-linkx {
     margin-top: -90px;
     padding-top: 90px;
 }
@@ -24,64 +15,26 @@ a:link {
     background-color: #eef1f5;
 }
 
+#park-menu-container {
+    z-index: 1 !important;
+}
+
 #park-menu-container .MuiListItem-button {
     padding: 2px;
 }
 
-
-#park-menu-container ul {
-    list-style: disc !important;
-  }
-
-#park-menu-container li {
-    margin: 5px;
-    padding: 5px 20px;
-  }
-
 #park-menu-container a {
-    color: #38598a;
+    color: #00008a;
+    padding: 5px 0px 5px 8px;
+    border-left: 3px solid transparent;
   }
 
 #park-menu-container .isCurrent a {
     font-weight: bold;
-    display: list-item;
+    box-sizing: border-box;
+    padding: 0px 0px 0px 8px;
+    border-left-color: #38598a;
   }
-
-
-
-
-
-
-#park-header-container {
-    max-height:200px;
-    overflow: hidden;
-    position: relative;
-    text-align: center;
-    color: white;
-}
-
-.park-header {
-    background: rgb(0, 0, 0); 
-    background: rgba(0, 0, 0, 0.2); 
-    color: #f1f1f1;
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-}
-
-
-.park-header-title {
-    position: absolute;
-    color: white;
-    top: 25%;
-    left: 0%;
-    width: 90%;
-    z-index: 100;
-    filter: drop-shadow(1px 1px 1px #0f0f0f);
-}
 
 .park-status-top-grid {
     background-color: "#e1ecf4"
@@ -94,7 +47,7 @@ a:link {
     font-family: BCSans, Verdana, Arial, "sans-serif"  !important;
 }
 
-.MuiButton-root {
+.MuiButton-root, .MuiLink-root {
     border:none  !important;
     outline:none  !important;
 }
@@ -130,4 +83,18 @@ a:link {
     background-color: #fcba19 !important;
     width: 150px !important;
     white-space: nowrap;
+}
+
+.raw-html-content a {
+    display: flex;
+    white-space: nowrap;
+}
+
+.raw-html-content li {
+    display: list-item !important;
+    margin-left: 16px;
+}
+
+.park-page-footer {
+    z-index: 10 !important;
 }
