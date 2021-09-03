@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16.467" height="16.467" viewBox="0 0 16.467 16.467">
+  <g id="viewpoint" transform="translate(0 0)">
+    <g id="Z_Base_layer_130mm" transform="translate(0 0)">
+      <g id="Group_871" data-name="Group 871">
+        <path id="Path_828" data-name="Path 828" d="M16.461,1.078A1.078,1.078,0,0,0,15.385,0H1.076A1.078,1.078,0,0,0,0,1.078v14.31a1.078,1.078,0,0,0,1.076,1.078H15.391a1.078,1.078,0,0,0,1.076-1.078V1.078Z" fill="#38598a"/>
+        <path id="Path_829" data-name="Path 829" d="M16.461,1.078A1.078,1.078,0,0,0,15.385,0H1.076A1.078,1.078,0,0,0,0,1.078v14.31a1.078,1.078,0,0,0,1.076,1.078H15.391a1.078,1.078,0,0,0,1.076-1.078V1.078Z" fill="#38598a"/>
+      </g>
+    </g>
+    <g id="Viewpoint-2" data-name="Viewpoint" transform="translate(2.772 1.69)">
+      <g id="Group_876" data-name="Group 876">
+        <g id="Group_875" data-name="Group 875">
+          <g id="Group_874" data-name="Group 874">
+            <g id="Group_872" data-name="Group 872" transform="translate(0.694)">
+              <path id="Path_830" data-name="Path 830" d="M62.884,31.868A1.684,1.684,0,1,0,61.2,30.184,1.683,1.683,0,0,0,62.884,31.868Z" transform="translate(-61.2 -28.5)" fill="#fff"/>
+            </g>
+            <path id="Path_831" data-name="Path 831" d="M49.5,43.475h5.384V41.487l-.818.157v-.719l.818.1V40.6h1.435v.429h.563v.493h-.563v3.483H53.758v7.952H49.5Z" transform="translate(-49.5 -39.882)" fill="#fff"/>
+            <g id="Group_873" data-name="Group 873" transform="translate(5.396 5.746)">
+              <path id="Path_832" data-name="Path 832" d="M141.52,129.94a1.02,1.02,0,1,0-1.02-1.02A1.02,1.02,0,0,0,141.52,129.94Z" transform="translate(-140.5 -127.9)" fill="#fff"/>
+            </g>
+            <path id="Path_833" data-name="Path 833" d="M136.6,174.875h2.692v-4.032h3.066V169.9H136.6Z" transform="translate(-131.435 -161.8)" fill="#fff"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

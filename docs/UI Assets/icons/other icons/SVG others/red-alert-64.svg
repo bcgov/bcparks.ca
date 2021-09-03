@@ -1,0 +1,12 @@
+<svg id="red_alert-64" data-name="red alert-64" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="Z_Base_layer_130mm">
+    <g id="Group_824" data-name="Group 824">
+      <path id="Path_765" data-name="Path 765" d="M63.977,4.191A4.191,4.191,0,0,0,59.8,0H4.181A4.191,4.191,0,0,0,0,4.191V59.809A4.191,4.191,0,0,0,4.181,64H59.819A4.191,4.191,0,0,0,64,59.809V4.191Z" fill="#d8292f"/>
+      <path id="Path_766" data-name="Path 766" d="M63.977,4.191A4.191,4.191,0,0,0,59.8,0H4.181A4.191,4.191,0,0,0,0,4.191V59.809A4.191,4.191,0,0,0,4.181,64H59.819A4.191,4.191,0,0,0,64,59.809V4.191Z" fill="#d8292f"/>
+    </g>
+  </g>
+  <g id="warning_black_24dp" transform="translate(5 3)">
+    <path id="Path_886" data-name="Path 886" d="M0,0H54V54H0Z" fill="none"/>
+    <path id="Path_887" data-name="Path 887" d="M1,44.75H50.5L25.75,2ZM28,38H23.5V33.5H28Zm0-9H23.5V20H28Z" transform="translate(1.25 2.5)" fill="#fff"/>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+<svg id="playground" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <g id="Background">
+    <path id="Path_438" data-name="Path 438" d="M16,1.046A1.045,1.045,0,0,0,14.955,0H1.045A1.046,1.046,0,0,0,0,1.046V14.954A1.046,1.046,0,0,0,1.045,16h13.91A1.046,1.046,0,0,0,16,14.954V1.046Z" fill="#38598a"/>
+  </g>
+  <g id="Playground-2" data-name="Playground" transform="translate(0.888 2.566)">
+    <path id="Path_439" data-name="Path 439" d="M25.971,126.84a.721.721,0,0,0,.721-.721h0a.721.721,0,0,0-.721-.721h0a.722.722,0,0,0-.721.721h0a.721.721,0,0,0,.721.721Z" transform="translate(-24.707 -120.86)" fill="#fff"/>
+    <path id="Path_440" data-name="Path 440" d="M185.814,46.73a.72.72,0,0,0,.721-.721h0a.72.72,0,0,0-.721-.72h0a.721.721,0,0,0-.721.72h0a.721.721,0,0,0,.721.721Z" transform="translate(-175.525 -45.289)" fill="#fff"/>
+    <path id="Path_441" data-name="Path 441" d="M21.609,159.75H20.424a5.069,5.069,0,0,0,0,2.947c.032.1.673-.256.673-.256l2.274,1.474.48-.545-2.018-1.409-.544-1.409s.064-.192.16-.064.7,1.249.7,1.249l.449-.224Z" transform="translate(-19.945 -153.266)" fill="#fff"/>
+    <path id="Path_442" data-name="Path 442" d="M214.911,65.733l-.315.192-.384-2.722.544-.672,1.634.48s.769.16.32,1.089-.7,1.409-.7,1.409a3.491,3.491,0,0,0-.128,1.281l.064.7-.448.032a4.932,4.932,0,0,1-.256-1.826c0-1.249,0-2.018,0-2.018h-.328Z" transform="translate(-203.005 -61.554)" fill="#fff"/>
+    <path id="Path_443" data-name="Path 443" d="M128.684,172.871v1.062H128.2v2.345h1.3v-2.33h-.553v-1.121Z" transform="translate(-121.848 -165.603)" fill="#fff"/>
+    <path id="Path_444" data-name="Path 444" d="M63.344,130.64l.437.32,8.817-4,.029-.553Z" transform="translate(-60.665 -121.811)" fill="#fff"/>
+    <path id="Path_445" data-name="Path 445" d="M16.867,213.422l-1.195.522.174.437,1.472-.668Z" transform="translate(-15.672 -203.897)" fill="#fff"/>
+    <path id="Path_446" data-name="Path 446" d="M252.354,110.136l.553-.277.189.408-.859.422A.876.876,0,0,1,252.354,110.136Z" transform="translate(-238.871 -106.201)" fill="#fff"/>
+  </g>
+</svg>

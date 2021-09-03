@@ -1,0 +1,13 @@
+<svg id="picnic-areas" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="Background">
+    <path id="Path_418" data-name="Path 418" d="M64,4.181A4.18,4.18,0,0,0,59.822,0H4.18A4.182,4.182,0,0,0,0,4.181V59.815A4.184,4.184,0,0,0,4.18,64H59.822A4.183,4.183,0,0,0,64,59.815V4.181Z" fill="#38598a"/>
+  </g>
+  <g id="Picnic_Area" transform="translate(7.086 14.201)">
+    <rect id="Rectangle_722" data-name="Rectangle 722" width="30.998" height="3.93" transform="translate(9.959)" fill="#fff"/>
+    <rect id="Rectangle_723" data-name="Rectangle 723" width="9.604" height="3.711" transform="translate(0 11.68)" fill="#fff"/>
+    <rect id="Rectangle_724" data-name="Rectangle 724" width="9.604" height="3.711" transform="translate(40.228 11.68)" fill="#fff"/>
+    <rect id="Rectangle_725" data-name="Rectangle 725" width="49.832" height="3.711" transform="translate(0 17.466)" fill="#fff"/>
+    <path id="Path_419" data-name="Path 419" d="M78.134,85.8H72.9l-9.822,30.127h5.562C68.636,116.25,78.134,85.8,78.134,85.8Z" transform="translate(-55.867 -80.557)" fill="#fff"/>
+    <path id="Path_420" data-name="Path 420" d="M158.441,85.8h5.24l8.455,30.116H166.57Z" transform="translate(-129.783 -80.557)" fill="#fff"/>
+  </g>
+</svg>

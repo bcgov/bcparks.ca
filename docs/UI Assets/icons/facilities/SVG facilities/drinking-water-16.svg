@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16.003" height="16.003" viewBox="0 0 16.003 16.003">
+  <g id="drinking-water" transform="translate(0 0)">
+    <g id="Background" transform="translate(0 0)">
+      <path id="Path_299" data-name="Path 299" d="M16,1.046A1.045,1.045,0,0,0,14.958,0H1.045A1.046,1.046,0,0,0,0,1.046V14.956A1.046,1.046,0,0,0,1.045,16H14.958A1.046,1.046,0,0,0,16,14.956Z" transform="translate(0)" fill="#38598a"/>
+    </g>
+    <g id="Drinking_Water" transform="translate(2.06 1.83)">
+      <path id="Path_300" data-name="Path 300" d="M69.1,171.238c-.194.267-1.042,1.091-1.042,1.551a.966.966,0,0,0,1.042,1.066c.492,0,.983-.182.983-1.077C70.085,172.269,69.1,171.238,69.1,171.238Z" transform="translate(-66.271 -163.366)" fill="#fff"/>
+      <path id="Path_301" data-name="Path 301" d="M40.957,160.053h-3.2l-.64-4.612h-.761l.744,5.366h4.549l.467-5.366h-.756Z" transform="translate(-36.354 -148.464)" fill="#fff"/>
+      <path id="Path_302" data-name="Path 302" d="M81.865,34.579l-1.259,1.26H77.981V34.045H77V32.858h1.909V32.3H74.5v.558h1.937v1.186H75.47v1.794c-1.865,0-3.512.027-3.512,2.567v1.381h1.6c0-.583-.028-1.915.969-1.915H80.6l1.263,1.373Z" transform="translate(-69.98 -32.301)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

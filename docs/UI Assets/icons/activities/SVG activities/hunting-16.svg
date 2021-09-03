@@ -1,0 +1,18 @@
+<svg id="hunting" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <g id="Z_Base_layer_130mm" transform="translate(0 0)">
+    <g id="Group_813" data-name="Group 813">
+      <path id="Path_709" data-name="Path 709" d="M15.994,1.048A1.048,1.048,0,0,0,14.949,0H1.045A1.048,1.048,0,0,0,0,1.048v13.9A1.048,1.048,0,0,0,1.045,16h13.91A1.048,1.048,0,0,0,16,14.952V1.048Z" transform="translate(0)" fill="#fff"/>
+      <path id="Path_710" data-name="Path 710" d="M15.994,1.048A1.048,1.048,0,0,0,14.949,0H1.045A1.048,1.048,0,0,0,0,1.048v13.9A1.048,1.048,0,0,0,1.045,16h13.91A1.048,1.048,0,0,0,16,14.952V1.048Z" transform="translate(0)" fill="#38598a"/>
+    </g>
+  </g>
+  <g id="hunting-2" data-name="hunting" transform="translate(2.341 4.259)">
+    <g id="Group_816" data-name="Group 816">
+      <g id="Group_815" data-name="Group 815">
+        <g id="Group_814" data-name="Group 814">
+          <path id="Path_711" data-name="Path 711" d="M178.43,76.421s-.859-1.583.831-1.83c1.482-.219,1.224,1.589.943,1.774C180.12,76.421,178.43,76.421,178.43,76.421Z" transform="translate(-170.446 -74.573)" fill="#fff"/>
+          <path id="Path_712" data-name="Path 712" d="M41.7,91.7h6.883v1.168h3.189a1.258,1.258,0,0,1,.7,1.027,34.9,34.9,0,0,1,.5,4.5H49.115s.142-3.121.142-3.525c0-.028-1.178.3-1.178.3L45.5,92.593h-1.2l-.448-.556H41.7Z" transform="translate(-41.7 -90.739)" fill="#fff"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

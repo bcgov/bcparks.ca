@@ -1,0 +1,15 @@
+<svg id="sani-station" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="Background">
+    <path id="Path_469" data-name="Path 469" d="M64,4.181A4.18,4.18,0,0,0,59.822,0H4.18A4.182,4.182,0,0,0,0,4.181V59.815A4.184,4.184,0,0,0,4.18,64H59.822A4.183,4.183,0,0,0,64,59.815V4.181Z" fill="#38598a"/>
+  </g>
+  <g id="Sani-station-2" data-name="Sani-station" transform="translate(2.819 3.815)">
+    <path id="Path_470" data-name="Path 470" d="M81.666,46.824H45.36V23.282c0-2.9,2.572-6.447,7.715-6.447H88.416ZM69.137,29.411V22.638H53.717v6.773H69.137Z" transform="translate(-37.901 -16.835)" fill="#fff"/>
+    <path id="Path_471" data-name="Path 471" d="M98.857,131.273a5.585,5.585,0,1,1-5.591,5.587A5.591,5.591,0,0,1,98.857,131.273Z" transform="translate(-75.013 -105.342)" fill="#fff"/>
+    <path id="Path_472" data-name="Path 472" d="M206.78,152.342v-2.85h-5.842l.043,2.85Z" transform="translate(-158.354 -119.432)" fill="#fff"/>
+    <rect id="Rectangle_737" data-name="Rectangle 737" width="1.707" height="8.763" transform="translate(10.115 30.134)" fill="#fff"/>
+    <path id="Path_473" data-name="Path 473" d="M70.806,188.492v10.533c.044,3.4-3.628,6.972-7.844,6.94H19.97c-4.92-.071-7.44-3.332-7.528-6.731V188.492m16.067,10.08v-8.221H15.333v8.221Z" transform="translate(-12.442 -149.595)" fill="#fff"/>
+    <rect id="Rectangle_738" data-name="Rectangle 738" width="1.707" height="3.388" transform="translate(10.115 40.756)" fill="#fff"/>
+    <path id="Path_474" data-name="Path 474" d="M51.079,211.164l2.241,2.241,2.234-2.241Z" transform="translate(-42.324 -167.129)" fill="#fff"/>
+    <rect id="Rectangle_739" data-name="Rectangle 739" width="1.708" height="1.887" transform="translate(10.107 38.901)" fill="#4d5f85"/>
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16.2" height="16.2" viewBox="0 0 16.2 16.2">
+  <g id="sailing" transform="translate(0 0)">
+    <g id="Z_Base_layer_130mm" transform="translate(0 0)">
+      <g id="Group_833" data-name="Group 833" transform="translate(0 0)">
+        <path id="Path_776" data-name="Path 776" d="M16.194,1.061A1.061,1.061,0,0,0,15.136,0H1.058A1.061,1.061,0,0,0,0,1.061V15.139A1.061,1.061,0,0,0,1.058,16.2H15.142A1.061,1.061,0,0,0,16.2,15.139V1.061Z" transform="translate(0 0)" fill="#fff"/>
+        <path id="Path_777" data-name="Path 777" d="M16.194,1.061A1.061,1.061,0,0,0,15.136,0H1.058A1.061,1.061,0,0,0,0,1.061V15.139A1.061,1.061,0,0,0,1.058,16.2H15.142A1.061,1.061,0,0,0,16.2,15.139V1.061Z" transform="translate(0 0)" fill="#38598a"/>
+      </g>
+    </g>
+    <g id="Sail_Boating" transform="translate(1.201 1.891)">
+      <g id="Group_836" data-name="Group 836">
+        <g id="Group_835" data-name="Group 835">
+          <g id="Group_834" data-name="Group 834">
+            <path id="Path_778" data-name="Path 778" d="M29.468,43.694l-8.268-.22L29.626,33.4Z" transform="translate(-21.2 -33.4)" fill="#fff"/>
+            <path id="Path_779" data-name="Path 779" d="M176.6,69.4v8.1l4.83.108Z" transform="translate(-167.637 -67.159)" fill="#fff"/>
+          </g>
+          <path id="Path_780" data-name="Path 780" d="M67.823,224.338c-.855,0-.923-1.438-.923-1.438h9.327a10.953,10.953,0,0,1-1.008,1.472H75.19a1.049,1.049,0,0,1-.946-.589h-.006a1.066,1.066,0,0,1-.946.589,1.049,1.049,0,0,1-.946-.589h-.006a1.058,1.058,0,0,1-1.9,0h-.006a1.049,1.049,0,0,1-.946.589,1.068,1.068,0,0,1-.951-.589h-.006a1.05,1.05,0,0,1-.668.549Z" transform="translate(-64.149 -211.967)" fill="#fff"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

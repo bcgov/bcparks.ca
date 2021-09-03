@@ -1,0 +1,14 @@
+<svg id="picnic-shelter" xmlns="http://www.w3.org/2000/svg" width="31.999" height="31.999" viewBox="0 0 31.999 31.999">
+  <g id="Background">
+    <path id="Path_425" data-name="Path 425" d="M32,2.091A2.09,2.09,0,0,0,29.91,0H2.09A2.091,2.091,0,0,0,0,2.091V29.906A2.092,2.092,0,0,0,2.09,32H29.91A2.091,2.091,0,0,0,32,29.906V2.091Z" fill="#38598a"/>
+  </g>
+  <g id="Picnic_Shelter" transform="translate(2.306 4.132)">
+    <path id="Path_426" data-name="Path 426" d="M34.05,36.469l13.69,7.159v3.606L45.218,46V60.2H41.783V44.382l-7.736-3.664h0l-7.74,3.664V60.2H22.873V46l-2.522,1.237V43.628l13.694-7.159Z" transform="translate(-20.351 -36.469)" fill="#fff"/>
+    <rect id="Rectangle_730" data-name="Rectangle 730" width="7.877" height="0.998" transform="translate(9.778 11.687)" fill="#fff"/>
+    <rect id="Rectangle_731" data-name="Rectangle 731" width="2.441" height="0.944" transform="translate(7.242 14.654)" fill="#fff"/>
+    <rect id="Rectangle_732" data-name="Rectangle 732" width="2.441" height="0.944" transform="translate(17.473 14.654)" fill="#fff"/>
+    <rect id="Rectangle_733" data-name="Rectangle 733" width="12.705" height="0.944" transform="translate(7.226 16.125)" fill="#fff"/>
+    <path id="Path_427" data-name="Path 427" d="M104.545,151.375h-1.333l-2.485,7.633h1.414Z" transform="translate(-91.652 -138.357)" fill="#fff"/>
+    <path id="Path_428" data-name="Path 428" d="M149.117,151.375h1.331l2.151,7.654h-1.416Z" transform="translate(-134.577 -138.357)" fill="#fff"/>
+  </g>
+</svg>

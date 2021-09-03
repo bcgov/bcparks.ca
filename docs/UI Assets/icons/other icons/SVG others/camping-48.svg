@@ -1,0 +1,9 @@
+<svg id="camping-48" xmlns="http://www.w3.org/2000/svg" width="47.999" height="48" viewBox="0 0 47.999 48">
+  <g id="Background">
+    <path id="Path_582" data-name="Path 582" d="M48,3.136A3.134,3.134,0,0,0,44.866,0H3.134A3.136,3.136,0,0,0,0,3.136V44.861A3.138,3.138,0,0,0,3.134,48H44.866A3.136,3.136,0,0,0,48,44.861V3.136Z" fill="#38598a"/>
+  </g>
+  <g id="Tents" transform="translate(4.324 9.938)">
+    <path id="Path_583" data-name="Path 583" d="M25.51,86.624H64.861V82.989h-5.58L45.232,58.617,31.138,82.984H25.51Z" transform="translate(-25.51 -58.617)" fill="#fff"/>
+    <path id="Path_584" data-name="Path 584" d="M111.573,132.773l-6.18,11.8h12.266Z" transform="translate(-91.851 -120.201)" fill="#38598a"/>
+  </g>
+</svg>

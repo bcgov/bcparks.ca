@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <g id="wildlife-viewing" transform="translate(0.493 0)">
+    <g id="Z_Base_layer_130mm" transform="translate(-0.493 0)">
+      <g id="Group_888" data-name="Group 888">
+        <path id="Path_853" data-name="Path 853" d="M31.989,2.1A2.1,2.1,0,0,0,29.9,0H2.09A2.1,2.1,0,0,0,0,2.1V29.9A2.1,2.1,0,0,0,2.09,32H29.91A2.1,2.1,0,0,0,32,29.9V2.1Z" fill="#fff"/>
+        <path id="Path_854" data-name="Path 854" d="M31.989,2.1A2.1,2.1,0,0,0,29.9,0H2.09A2.1,2.1,0,0,0,0,2.1V29.9A2.1,2.1,0,0,0,2.09,32H29.91A2.1,2.1,0,0,0,32,29.9V2.1Z" fill="#38598a"/>
+      </g>
+    </g>
+    <g id="Viewpoint_1" transform="translate(2.507 6.003)">
+      <g id="Group_892" data-name="Group 892">
+        <g id="Group_891" data-name="Group 891">
+          <g id="Group_890" data-name="Group 890">
+            <g id="Group_889" data-name="Group 889">
+              <path id="Path_855" data-name="Path 855" d="M39.133,67.567V58.3h.691v-.634H39.19v-.94h.374v-.884h.578V54.45h-.578V53H34.206v1.575h-.566V55.9h.51v.827h.566v.884h-.566v.623h.5v.884H30.49v1.518L28.1,66.174V69.64h.5l-.442,1.892v1.45h7.918l-.011-1.518-.408-1.88h3.478V67.567" transform="translate(-28.1 -53)" fill="#fff"/>
+              <path id="Path_856" data-name="Path 856" d="M125.075,88.7h.668v.623h.816v.634h-.85v2.265h1.359v1.484h-1.133V95.5h.532v1.269h-.476v.974h1.133v1.484h-1.291v.5H124.2v-.5h-1.3V97.739h1.144v-.974h-.476V95.5h.532v-1.79h-1.133V92.223h1.359V89.957h-.85v-.634h.816V88.7h.782Z" transform="translate(-111.702 -84.656)" fill="#fff"/>
+              <path id="Path_857" data-name="Path 857" d="M149.808,67.567v2.016h3.466l-.419,1.858-.023,1.541h7.941v-1.45l-.442-1.892h.51V66.174l-2.4-5.539V59.117h-4.157v-.884h.51V57.61h-.566v-.884h.566V55.9h.5V54.575h-.566V53h-5.358v1.45H148.8v1.393h.566v.884h.385v.94h-.634V58.3h.691v9.266" transform="translate(-134.207 -53)" fill="#fff"/>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

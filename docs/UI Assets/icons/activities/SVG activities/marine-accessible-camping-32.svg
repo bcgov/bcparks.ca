@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <g id="marine-accessible-camping" transform="translate(0 0)">
+    <g id="Background" transform="translate(0 0)">
+      <path id="Path_732" data-name="Path 732" d="M32.1,2.092A2.094,2.094,0,0,0,30.008,0H2.192A2.094,2.094,0,0,0,.1,2.092V29.908A2.094,2.094,0,0,0,2.192,32H30.008A2.094,2.094,0,0,0,32.1,29.908Z" transform="translate(-0.1)" fill="#38598a"/>
+    </g>
+    <g id="Marine-Accesible_Camping" transform="translate(1.935 1.695)">
+      <path id="Path_733" data-name="Path 733" d="M45.22,15.454a2.018,2.018,0,0,0-1.378-.554H19.111a2.006,2.006,0,0,0-2.011,2V41.63a2.008,2.008,0,0,0,.542,1.378l.011.011L45.22,15.454ZM28.081,41.641h-1.22v.949H44.53v-.949H43.175l-7.468-11.9Zm4.609,0,2.994-4.485,2.858,4.485Z" transform="translate(-17.1 -14.9)" fill="#fff" fill-rule="evenodd"/>
+      <g id="Anchor_1_" transform="translate(2.23 2.117)">
+        <g id="Group_818" data-name="Group 818" transform="translate(5.109 3.323)">
+          <path id="Path_734" data-name="Path 734" d="M82.112,70.984a.51.51,0,0,0,.512-.512v-7.26a.51.51,0,0,0-.512-.512h0a.51.51,0,0,0-.512.512v7.26a.525.525,0,0,0,.512.512Z" transform="translate(-81.6 -62.7)" fill="#38598a"/>
+        </g>
+        <path id="Path_735" data-name="Path 735" d="M69.4,35.412a1.912,1.912,0,1,1,1.912,1.912A1.909,1.909,0,0,1,69.4,35.412Zm1.9.831a.831.831,0,1,0-.831-.831A.835.835,0,0,0,71.3,36.242Z" transform="translate(-65.679 -33.5)" fill="#38598a"/>
+        <path id="Path_736" data-name="Path 736" d="M47.317,97.953a5.716,5.716,0,0,1-10.014,0l-.011-.011-.592.25.4-2.492,1.844,1.536-.592.25.011.011a4.6,4.6,0,0,0,7.943.023l.011-.034-.592-.25L47.568,95.7l.4,2.492-.615-.262Z" transform="translate(-36.7 -88.622)" fill="#38598a"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+<svg id="gatehouse" xmlns="http://www.w3.org/2000/svg" width="15.999" height="15.999" viewBox="0 0 15.999 15.999">
+  <g id="Background" transform="translate(0)">
+    <path id="Path_359" data-name="Path 359" d="M16,1.045A1.045,1.045,0,0,0,14.955,0H1.045A1.045,1.045,0,0,0,0,1.045V14.953A1.046,1.046,0,0,0,1.045,16h13.91A1.046,1.046,0,0,0,16,14.953V1.045Z" transform="translate(0)" fill="#38598a"/>
+  </g>
+  <g id="Shelter" transform="translate(2.384 1.075)">
+    <path id="Path_360" data-name="Path 360" d="M47.695,32.388h4.432V25.927l1.184.316v-.948L47.734,18.98l-5.656,6.315v.948l1.185-.316v6.461Z" transform="translate(-42.078 -18.98)" fill="#fff"/>
+    <rect id="Rectangle_711" data-name="Rectangle 711" width="5.488" height="3.248" transform="translate(2.922 7.146)" fill="#38598a"/>
+    <g id="Group_619" data-name="Group 619" transform="translate(4.179 7.6)">
+      <path id="Path_361" data-name="Path 361" d="M118.389,181.416a.3.3,0,0,1-.6,0v-.926h-.3v.909a.3.3,0,0,1-.6,0v-2.913a.093.093,0,0,0-.094-.062.1.1,0,0,0-.095.066v1.769s.009.167-.233.167c-.261,0-.26-.186-.26-.186V177.93s0-.465.56-.465h1.841s.473.037.473.466v2.308s-.016.13-.237.13c-.249,0-.264-.13-.264-.13v-1.746a.093.093,0,0,0-.1-.069.1.1,0,0,0-.095.079Z" transform="translate(-116.211 -176.087)" fill="#fff"/>
+      <path id="Path_362" data-name="Path 362" d="M131.87,154.356a.6.6,0,1,0-.6-.6A.6.6,0,0,0,131.87,154.356Z" transform="translate(-130.412 -153.147)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="Icon_feather-alert-circle" data-name="Icon feather-alert-circle" transform="translate(-0.435)">
+    <g id="Path_81" data-name="Path 81" transform="translate(-2.565 -3)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M67,35A32,32,0,1,1,35,3,32,32,0,0,1,67,35Z" stroke="none"/>
+      <path d="M 35 9 C 20.66355895996094 9 9 20.66355895996094 9 35.00001525878906 C 9 49.33645629882812 20.66355895996094 61 35 61 C 49.33644104003906 61 61 49.33645629882812 61 35.00001525878906 C 61 20.66355895996094 49.33644104003906 9 35 9 M 35 3 C 52.67311477661133 3 67 17.32690048217773 67 35.00001525878906 C 67 52.67311477661133 52.67311477661133 67 35 67 C 17.32688522338867 67 3 52.67311477661133 3 35.00001525878906 C 3 17.32688522338867 17.32688522338867 3 35 3 Z M 67 35 L 67 35.00001525878906 C 67 35 67 35 67 35 Z" stroke="none" fill="#d8292f"/>
+    </g>
+    <path id="Path_82" data-name="Path 82" d="M18,12V31.8" transform="translate(13.935 4.098)" fill="none" stroke="#d8292f" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+    <path id="Path_83" data-name="Path 83" d="M18,24h0" transform="translate(13.935 24.8)" fill="none" stroke="#d8292f" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+  </g>
+</svg>

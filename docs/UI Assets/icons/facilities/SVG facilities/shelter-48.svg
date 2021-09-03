@@ -1,0 +1,9 @@
+<svg id="shelter" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <g id="Background">
+    <path id="Path_477" data-name="Path 477" d="M48,3.136A3.135,3.135,0,0,0,44.866,0H3.135A3.136,3.136,0,0,0,0,3.136V44.861A3.138,3.138,0,0,0,3.135,48H44.866A3.137,3.137,0,0,0,48,44.861V3.136Z" fill="#38598a"/>
+  </g>
+  <g id="Shelter-2" data-name="Shelter" transform="translate(5.283 4.548)">
+    <path id="Path_478" data-name="Path 478" d="M49.808,65.663H66.446V37.969l2.079.948V36.073L49.958,26.758,31.09,36.073v2.844l2.081-.948V65.663Z" transform="translate(-31.09 -26.758)" fill="#fff"/>
+    <rect id="Rectangle_741" data-name="Rectangle 741" width="29.09" height="24.467" transform="translate(4.362 11.971)" fill="#38598a"/>
+  </g>
+</svg>

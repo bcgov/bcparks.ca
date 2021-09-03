@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="wilderness-camping" transform="translate(0 0)">
+    <g id="Z_Base_layer_130mm" data-name="Z Base layer 130mm" transform="translate(0 0)">
+      <path id="Path_844" data-name="Path 844" d="M64,4.183A4.181,4.181,0,0,0,59.822,0H4.18A4.182,4.182,0,0,0,0,4.183V59.814A4.184,4.184,0,0,0,4.18,64H59.822A4.183,4.183,0,0,0,64,59.813Z" transform="translate(0 0)" fill="#38598a"/>
+      <path id="Path_845" data-name="Path 845" d="M64,4.183A4.181,4.181,0,0,0,59.822,0H4.18A4.182,4.182,0,0,0,0,4.183V59.814A4.184,4.184,0,0,0,4.18,64H59.822A4.183,4.183,0,0,0,64,59.813Z" transform="translate(0 0)" fill="#38598a"/>
+    </g>
+    <g id="Tent" transform="translate(2.812 7.66)">
+      <path id="Mountains" d="M12.573,57.127,32.7,34.241,47.975,45.5l7.467-5.762L68.565,52.925l2.379-2.291V85.09l-58.376.138Z" transform="translate(-12.568 -34.241)" fill="#fff"/>
+      <g id="Tent-2" data-name="Tent" transform="translate(2.451 10.793)">
+        <path id="Path_846" data-name="Path 846" d="M23.524,116.441H77v-4.878H69.416L50.325,78.849,31.172,111.556H23.524Z" transform="translate(-23.524 -78.849)" fill="#38598a"/>
+        <path id="Path_847" data-name="Path 847" d="M114.738,154.778l-7.81,14.913h15.5Z" transform="translate(-87.941 -137.791)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

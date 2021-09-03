@@ -1,0 +1,12 @@
+<svg id="yellow_alert-32" data-name="yellow alert-32" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <g id="Z_Base_layer_130mm">
+    <g id="Group_824" data-name="Group 824">
+      <path id="Path_765" data-name="Path 765" d="M31.989,2.1A2.1,2.1,0,0,0,29.9,0H2.09A2.1,2.1,0,0,0,0,2.1V29.9A2.1,2.1,0,0,0,2.09,32H29.909A2.1,2.1,0,0,0,32,29.9V2.1Z" fill="#fcba19"/>
+      <path id="Path_766" data-name="Path 766" d="M31.989,2.1A2.1,2.1,0,0,0,29.9,0H2.09A2.1,2.1,0,0,0,0,2.1V29.9A2.1,2.1,0,0,0,2.09,32H29.909A2.1,2.1,0,0,0,32,29.9V2.1Z" fill="#fcba19"/>
+    </g>
+  </g>
+  <g id="warning_black_24dp" transform="translate(2.5 1.5)">
+    <path id="Path_886" data-name="Path 886" d="M0,0H27V27H0Z" fill="none"/>
+    <path id="Path_887" data-name="Path 887" d="M1,23.375H25.75L13.375,2ZM14.5,20H12.25V17.75H14.5Zm0-4.5H12.25V11H14.5Z" transform="translate(0.125 0.25)" fill="#fff"/>
+  </g>
+</svg>

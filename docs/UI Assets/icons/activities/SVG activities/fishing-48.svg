@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="47.999" viewBox="0 0 48 47.999">
+  <g id="fishing" transform="translate(0)">
+    <g id="Z_Base_layer_130mm" transform="translate(0 0)">
+      <g id="Group_805" data-name="Group 805" transform="translate(0)">
+        <path id="Path_684" data-name="Path 684" d="M47.983,3.143A3.143,3.143,0,0,0,44.847,0H3.136A3.143,3.143,0,0,0,0,3.143V44.856A3.143,3.143,0,0,0,3.136,48H44.864A3.143,3.143,0,0,0,48,44.856V3.143Z" transform="translate(0)" fill="#fff"/>
+        <path id="Path_685" data-name="Path 685" d="M47.983,3.143A3.143,3.143,0,0,0,44.847,0H3.136A3.143,3.143,0,0,0,0,3.143V44.856A3.143,3.143,0,0,0,3.136,48H44.864A3.143,3.143,0,0,0,48,44.856V3.143Z" transform="translate(0)" fill="#38598a"/>
+      </g>
+    </g>
+    <g id="Fishing-2" data-name="Fishing" transform="translate(6.183 3.976)">
+      <g id="Group_808" data-name="Group 808">
+        <g id="Group_807" data-name="Group 807">
+          <g id="Group_806" data-name="Group 806">
+            <path id="Path_686" data-name="Path 686" d="M221.232,81.7v3.4a1.255,1.255,0,0,1-1.24,1.274A1.287,1.287,0,0,1,218.7,85.1v-.646" transform="translate(-187.842 -71.794)" fill="none" stroke="#fff" stroke-width="6.125"/>
+            <path id="Path_687" data-name="Path 687" d="M42.573,124.916c-1.727.034-3.59-2.039-5.521-2.939-.491-.238-.847.238-.559.544,1.152,1.223,2.371,3.415,2.371,4.265v.051h0v.051c0,.85-1.219,3.041-2.371,4.265-.288.306.068.782.559.561,1.931-.9,3.793-2.956,5.521-2.939h.017a1.316,1.316,0,0,1,.745.119c8.213,6.066,20.711,5.947,28.67-.663-.254-.272-1.033-.442-1.033-1.325,0-.731.694-1.053,1.033-1.325a22.313,22.313,0,0,0-14.174-5.114c-5.165-.17-9.89,2.7-14.648,4.35a1.912,1.912,0,0,1-.61.1" transform="translate(-36.391 -103.967)" fill="#fff"/>
+            <path id="Path_688" data-name="Path 688" d="M215.964,144.433a.867.867,0,1,0-.867-.867A.849.849,0,0,0,215.964,144.433Z" transform="translate(-184.851 -122.43)" fill="#4e6086"/>
+            <path id="Path_689" data-name="Path 689" d="M223.075,61.333a2.166,2.166,0,1,0-2.175-2.158A2.161,2.161,0,0,0,223.075,61.333Z" transform="translate(-189.669 -51.291)" fill="#fff"/>
+            <path id="Path_690" data-name="Path 690" d="M228.536,65.773a1.036,1.036,0,1,0-1.036-1.036A1.041,1.041,0,0,0,228.536,65.773Z" transform="translate(-195.147 -56.853)" fill="#4e6086"/>
+            <line id="Line_166" data-name="Line 166" y2="5.862" transform="translate(33.389)" fill="none" stroke="#fff" stroke-width="6.125"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

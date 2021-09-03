@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <g id="fishing" transform="translate(0 0)">
+    <g id="Z_Base_layer_130mm" transform="translate(0 0)">
+      <g id="Group_805" data-name="Group 805" transform="translate(0)">
+        <path id="Path_684" data-name="Path 684" d="M31.989,2.1A2.1,2.1,0,0,0,29.9,0H2.09A2.1,2.1,0,0,0,0,2.1V29.9A2.1,2.1,0,0,0,2.09,32H29.91A2.1,2.1,0,0,0,32,29.9V2.1Z" transform="translate(0)" fill="#fff"/>
+        <path id="Path_685" data-name="Path 685" d="M31.989,2.1A2.1,2.1,0,0,0,29.9,0H2.09A2.1,2.1,0,0,0,0,2.1V29.9A2.1,2.1,0,0,0,2.09,32H29.91A2.1,2.1,0,0,0,32,29.9V2.1Z" transform="translate(0)" fill="#38598a"/>
+      </g>
+    </g>
+    <g id="Fishing-2" data-name="Fishing" transform="translate(4.121 2.65)">
+      <g id="Group_808" data-name="Group 808">
+        <g id="Group_807" data-name="Group 807">
+          <g id="Group_806" data-name="Group 806">
+            <path id="Path_686" data-name="Path 686" d="M220.387,81.7v2.265a.836.836,0,0,1-.827.849.858.858,0,0,1-.861-.849v-.43" transform="translate(-198.126 -75.097)" fill="none" stroke="#fff" stroke-width="6.125"/>
+            <path id="Path_687" data-name="Path 687" d="M40.513,123.43c-1.152.023-2.394-1.359-3.681-1.959-.327-.159-.565.159-.373.362a6.4,6.4,0,0,1,1.581,2.843v.034h0v.034a6.4,6.4,0,0,1-1.581,2.843c-.192.2.045.521.373.374,1.287-.6,2.529-1.971,3.681-1.959h.011a.877.877,0,0,1,.5.079,16.005,16.005,0,0,0,19.115-.442c-.169-.181-.689-.294-.689-.883,0-.487.463-.7.689-.883a14.879,14.879,0,0,0-9.45-3.409c-3.444-.113-6.594,1.8-9.766,2.9a1.275,1.275,0,0,1-.406.068" transform="translate(-36.391 -109.466)" fill="#fff"/>
+            <path id="Path_688" data-name="Path 688" d="M215.675,143.855a.578.578,0,1,0-.578-.578A.566.566,0,0,0,215.675,143.855Z" transform="translate(-194.931 -129.189)" fill="#4e6086"/>
+            <path id="Path_689" data-name="Path 689" d="M222.35,59.888a1.444,1.444,0,1,0-1.45-1.438A1.44,1.44,0,0,0,222.35,59.888Z" transform="translate(-200.077 -53.195)" fill="#fff"/>
+            <path id="Path_690" data-name="Path 690" d="M228.191,65.082a.691.691,0,1,0-.691-.691A.694.694,0,0,0,228.191,65.082Z" transform="translate(-205.929 -59.136)" fill="#4e6086"/>
+            <line id="Line_166" data-name="Line 166" y2="3.907" transform="translate(22.261)" fill="none" stroke="#fff" stroke-width="6.125"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

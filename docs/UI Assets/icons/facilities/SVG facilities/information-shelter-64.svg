@@ -1,0 +1,13 @@
+<svg id="information-shelter" xmlns="http://www.w3.org/2000/svg" width="63.999" height="64" viewBox="0 0 63.999 64">
+  <g id="Background">
+    <path id="Path_393" data-name="Path 393" d="M64,4.181A4.18,4.18,0,0,0,59.821,0H4.18A4.181,4.181,0,0,0,0,4.181V59.815A4.184,4.184,0,0,0,4.18,64H59.821A4.183,4.183,0,0,0,64,59.815V4.181Z" fill="#38598a"/>
+  </g>
+  <g id="Shelter" transform="translate(7.027 6.048)">
+    <path id="Path_394" data-name="Path 394" d="M56.065,78.662h22.2V41.715l2.774,1.265V39.186L56.264,26.758,31.09,39.186V42.98l2.776-1.265V78.662Z" transform="translate(-31.09 -26.758)" fill="#fff"/>
+    <rect id="Rectangle_715" data-name="Rectangle 715" width="38.849" height="32.542" transform="translate(5.801 16.081)" fill="#38598a"/>
+  </g>
+  <g id="Information" transform="translate(22.705 24.249)">
+    <path id="Path_395" data-name="Path 395" d="M107.237,127.348h5.482v-2.6a1.128,1.128,0,0,1,.837-1.115c.931-.373,5.578-3.348,5.485-7.437-.064-2.826-1.269-9.506-9.574-9.389-6.6.094-8.922,5.672-9.017,9.2h5.577s-.091-3.811,3.628-4,3.81,3.532,3.81,3.532a3.943,3.943,0,0,1-2.138,2.974c-4.251,2.257-4.075,4.4-4.075,4.4Z" transform="translate(-100.451 -106.802)" fill="#fff"/>
+    <rect id="Rectangle_716" data-name="Rectangle 716" width="5.532" height="5.531" transform="translate(6.692 22.623)" fill="#fff"/>
+  </g>
+</svg>
