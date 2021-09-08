@@ -87,9 +87,6 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
         selectedActivities,
         selectedFacilities,
         searchText,
-        activityItems,
-        facilityItems,
-        protectedAreas,
       },
     })
   }

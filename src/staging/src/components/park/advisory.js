@@ -36,6 +36,7 @@ export default function Advisory({ data }) {
             variant="square"
             src={alertIcon}
             aria-label="park access status"
+            className="park-overview-icon"
           />
         }
         title={<Link to="#park-advisory-details-container">{title}</Link>}

@@ -21,14 +21,13 @@ const useStyles = makeStyles(theme => ({
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
-      width: drawerWidth,
+      maxWidth: drawerWidth,
       flexShrink: 0,
     },
   },
   appBarNone: {
     [theme.breakpoints.up("sm")]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
+      width: "100%",
     },
   },
   menuButton: {
@@ -40,16 +39,14 @@ const useStyles = makeStyles(theme => ({
   // necessary for content to be below app bar
   appBarOffset: theme.mixins.toolbar,
   drawerDesktop: {
-    marginTop: 400,
-    marginLeft: 40,
     border: 0,
     padding: 10,
-    width: drawerWidth,
+    maxWidth: drawerWidth,
     zIndex: 0,
-    overflow: "hidden",
+    position: "sticky",
   },
   drawerMobile: {
-    width: drawerWidth,
+    maxWidth: drawerWidth,
   },
   content: {
     flexGrow: 1,
@@ -146,7 +143,7 @@ export default function ParkMenu(props) {
       <div className={classes.root}>
         <CssBaseline />
         <Hidden smUp implementation="css">
-          <AppBar position="fixed" className={classes.appBar}>
+          <AppBar className={classes.appBar}>
             <Toolbar>
               <IconButton
                 color="inherit"

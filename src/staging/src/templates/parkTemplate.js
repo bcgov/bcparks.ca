@@ -30,7 +30,6 @@ const useStyles = makeStyles(theme => ({
   parkContent: {
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
     },
   },
   appBarOffset: theme.mixins.toolbar,
@@ -51,44 +50,46 @@ export default function ParkTemplate({ data }) {
   }
 
   return (
-    <>
+    <div className="grey-background">
       <Helmet>
         <title>BC Parks | {park.protectedAreaName}</title>
       </Helmet>
       <ScrollToTop />
       <CssBaseline />
       <Header>{data.strapiWebsites.Header}</Header>
-      <Toolbar />
-      <Container id="park-info-container" maxWidth={false}>
-        <Grid container spacing={2}>
-          <ParkHeader data={parkStatusData} />
-          <ParkPhotoGallery photos={photos} />
-          <Grid item xs={12} sm={3}>
-            <ParkMenu data={parkStatusData} />
-          </Grid>
-          <Grid item xs={12} sm={9} className={classes.parkContent}>
-            <Grid item container spacing={0}>
-              <ParkOverview data={park.description} />
-              <AccessibilityDetails />
-              <AdvisoryDetails data={advisories} />
-              <CampingDetails
-                data={{
-                  parkFacilities: parkAccessStatus.parkFacilities,
-                  reservations: park.reservations,
-                }}
-              />
-              <ParkFacility data={parkAccessStatus.parkFacilities} />
-              <ParkActivity data={parkAccessStatus.parkActivities} />
-              <MapLocation data={park.maps} />
-              <ParkMap data={park.maps} />
-              <About data={park.parkContact} />
-              <Reconciliation data={park.reconciliationNotes} />
+      <div className="container">
+        <Toolbar />
+        <Container id="park-info-container" maxWidth={false}>
+          <Grid container spacing={2}>
+            <ParkHeader data={parkStatusData} />
+            <ParkPhotoGallery photos={photos} />
+            <Grid item xs={12} sm={3}>
+              <ParkMenu data={parkStatusData} />
             </Grid>
-            <br />
+            <Grid item xs={12} sm={9} className={classes.parkContent}>
+              <Grid item container spacing={0}>
+                <ParkOverview data={park.description} />
+                <AccessibilityDetails />
+                <AdvisoryDetails data={advisories} />
+                <CampingDetails
+                  data={{
+                    parkFacilities: parkAccessStatus.parkFacilities,
+                    reservations: park.reservations,
+                  }}
+                />
+                <ParkFacility data={parkAccessStatus.parkFacilities} />
+                <ParkActivity data={parkAccessStatus.parkActivities} />
+                <MapLocation data={park.maps} />
+                <ParkMap data={park.maps} />
+                <About data={park.parkContact} />
+                <Reconciliation data={park.reconciliationNotes} />
+              </Grid>
+              <br />
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
-    </>
+        </Container>
+      </div>
+    </div>
   )
 }
 
@@ -192,7 +193,7 @@ export const query = graphql`
       }
       totalCount
     }
-    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }, limit: 5) {
+    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }, limit: -1) {
       nodes {
         orcs
         caption

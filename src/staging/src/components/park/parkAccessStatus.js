@@ -10,6 +10,7 @@ const useStyles = makeStyles({
   card: {
     border: "none",
     boxShadow: "none",
+    color: "#00008a",
   },
 })
 
@@ -28,9 +29,10 @@ export default function ParkAccessStatus({ data }) {
               variant="square"
               src={parkStatusIcon}
               aria-label="park access status"
+              className="park-overview-icon"
             />
           }
-          title={data}
+          title={`${data} to public access`}
         />
       </Card>
     </>

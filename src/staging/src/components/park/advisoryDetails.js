@@ -106,7 +106,7 @@ export default function AdvisoryDetails({ data }) {
                     setAllExpanded(!allExpanded)
                   }}
                 >
-                  {allExpanded ? "Collapse all" : "Expand All"}
+                  {allExpanded ? "[collapse all]" : "[expand all]"}
                 </Button>
               )}
             </Box>
@@ -142,7 +142,6 @@ export default function AdvisoryDetails({ data }) {
                   </AccordionSummary>
                   <AccordionDetails>
                     <div>
-                      <Divider variant="fullWidth" />
                       {advisory.isEffectiveDateDisplayed &&
                         advisory.effectiveDate && (
                           <>
@@ -156,6 +155,7 @@ export default function AdvisoryDetails({ data }) {
                                 </>
                               )}
                             </p>
+                            <Divider variant="fullWidth" />
                           </>
                         )}
                       {advisory.isAdvisoryDateDisplayed &&

@@ -10,14 +10,14 @@ export default function ParkHeader({ data }) {
       <Grid item container spacing={2}>
         <Grid item xs={12}>
           <Box mt={0}>
-            <h1>{park.protectedAreaName}</h1>
+            <h1 className="park-heading">{park.protectedAreaName}</h1>
           </Box>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Button className="blue-button">Get a daypass</Button>
           <Button className="yellow-button" href="https://discovercamping.ca/">
             Book a campsite
           </Button>
+          <Button className="blue-button">Get a daypass</Button>
         </Grid>
         <Grid item xs={12} sm={3}>
           <ParkAccessStatus data={parkAccessStatus.accessStatus} />
