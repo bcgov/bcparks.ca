@@ -15,7 +15,6 @@ import {
   Checkbox,
   FormGroup,
   FormControlLabel,
-  Divider,
   Chip,
   TextField,
   Switch,
@@ -55,6 +54,50 @@ export const query = graphql`
         }
       }
     }
+    allStrapiActivityTypes(sort: { fields: activityName }) {
+      totalCount
+      nodes {
+        activityName
+        activityNumber
+      }
+    }
+    allStrapiFacilityTypes(sort: { fields: facilityName }) {
+      totalCount
+      nodes {
+        facilityName
+        facilityNumber
+      }
+    }
+    allStrapiProtectedArea(sort: { fields: protectedAreaName }) {
+      nodes {
+        parkActivities {
+          activityType
+          isActive
+          isActivityOpen
+          name
+        }
+        parkFacilities {
+          facilityType
+          isActive
+          isFacilityOpen
+          name
+        }
+        id
+        orcs
+        latitude
+        longitude
+        protectedAreaName
+        slug
+        parkNames {
+          parkName
+          id
+          parkNameType
+        }
+        status
+        typeCode
+        marineProtectedArea
+      }
+    }
   }
 `
 
@@ -65,33 +108,45 @@ export default function Home({ location, data }) {
   //   engineName: `${process.env.GATSBY_ELASTIC_SEARCH_ENGINE}`,
   // })
 
-  const activityItems = location.state.activityItems
-  const facilityItems = location.state.facilityItems
+  const activityItems = data.allStrapiActivityTypes.nodes.map(a => ({
+    label: a.activityName,
+    value: a.activityNumber,
+  }))
+  const facilityItems = data.allStrapiFacilityTypes.nodes.map(f => ({
+    label: f.facilityName,
+    value: f.facilityNumber,
+  }))
 
-  const protectedAreas = location.state.protectedAreas
+  const protectedAreas = data.allStrapiProtectedArea.nodes
 
   const [quickSearch, setQuickSearch] = useState(
-    location.state.quickSearch || {
-      camping: false,
-      petFriendly: false,
-      wheelchair: false,
-      marine: false,
-      ecoReserve: false,
-      electricalHookup: false,
-    }
+    location.state
+      ? location.state.quickSearch
+      : {
+          camping: false,
+          petFriendly: false,
+          wheelchair: false,
+          marine: false,
+          ecoReserve: false,
+          electricalHookup: false,
+        }
   )
   const [selectedActivities, setSelectedActivities] = useState(
-    location.state.selectedActivities
+    location.state && location.state.selectedActivities
       ? [...location.state.selectedActivities]
       : []
   )
   const [selectedFacilities, setSelectedFacilities] = useState(
-    location.state.selectedFacilities
+    location.state && location.state.selectedFacilities
       ? [...location.state.selectedFacilities]
       : []
   )
-  const [inputText, setInputText] = useState(location.state.searchText || "")
-  const [searchText, setSearchText] = useState(location.state.searchText || "")
+  const [inputText, setInputText] = useState(
+    location.state ? location.state.searchText : ""
+  )
+  const [searchText, setSearchText] = useState(
+    location.state ? location.state.searchText : ""
+  )
 
   const [filterSelections, setFilterSelections] = useState([])
   const [searchResults, setSearchResults] = useState([])

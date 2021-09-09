@@ -63,7 +63,7 @@ export default function ParkActivity({ data }) {
                     setAllExpanded(!allExpanded)
                   }}
                 >
-                  {allExpanded ? "Collapse all" : "Expand All"}
+                  {allExpanded ? "[collapse all]" : "[expand all]"}
                 </Button>
               )}
             </Box>
@@ -83,14 +83,14 @@ export default function ParkActivity({ data }) {
                       aria-controls={activity.activityName}
                       id={index}
                     >
-                      <Box mr={1}>
+                      {/* <Box mr={1}>
                         <img
                           src={activity.icon}
                           alt={activity.icon ? activity.activityName : ""}
                           width="24"
                           height="24"
                         />
-                      </Box>
+                      </Box> */}
                       <HtmlContent>{activity.activityName}</HtmlContent>
                     </AccordionSummary>
                     <AccordionDetails>

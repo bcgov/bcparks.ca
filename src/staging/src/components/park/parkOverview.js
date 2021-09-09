@@ -8,8 +8,7 @@ import Spacer from "./spacer"
 
 const useStyles = makeStyles(theme => ({
   collapsed: {
-    maxHeight: "200px",
-    lineHeight: "2em",
+    maxHeight: "250px",
     overflow: "hidden",
     display: "block",
     textOverflow: "ellipsis",
@@ -17,10 +16,7 @@ const useStyles = makeStyles(theme => ({
   expanded: {
     maxHeight: "auto",
   },
-  link: {
-    textDecoration: "underline",
-    fontWeight: "bold",
-  },
+  link: { color: "#003366" },
 }))
 
 export default function ParkOverview({ data: parkOverview }) {
@@ -42,6 +38,7 @@ export default function ParkOverview({ data: parkOverview }) {
             setExpanded(!expanded)
           }}
         >
+          <br />
           {expanded ? "Read less" : "Read more"}
         </Link>
         <Spacer />
