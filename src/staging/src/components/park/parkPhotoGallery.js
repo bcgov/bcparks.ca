@@ -70,7 +70,7 @@ export default function ParkPhotoGallery({ photos }) {
     )
 
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12} className="park-photo-container">
       <br />
       <Box id="park-photo-gallery-container" className={classes.photoGallery}>
         <SimpleReactLightbox>

@@ -61,9 +61,13 @@ export default function ParkTemplate({ data }) {
         <Toolbar />
         <Container id="park-info-container" maxWidth={false}>
           <Grid container spacing={2}>
-            <ParkHeader data={parkStatusData} />
-            <ParkPhotoGallery photos={photos} />
-            <Grid item xs={12} sm={3}>
+            <Grid xs={12} sm={12}>
+              <ParkHeader data={parkStatusData} />
+            </Grid>
+            <Grid xs={12} sm={12}>
+              <ParkPhotoGallery photos={photos} />
+            </Grid>
+            <Grid item xs={12} sm={3} className="park-menu-root">
               <ParkMenu data={parkStatusData} />
             </Grid>
             <Grid item xs={12} sm={9} className={classes.parkContent}>
@@ -190,6 +194,10 @@ export const query = graphql`
         effectiveDate(formatString: "MMMM DD, YYYY")
         endDate(formatString: "MMMM DD, YYYY")
         expiryDate(formatString: "MMMM DD, YYYY")
+        eventType {
+          eventType
+          id
+        }
       }
       totalCount
     }

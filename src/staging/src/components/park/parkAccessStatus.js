@@ -24,6 +24,7 @@ export default function ParkAccessStatus({ data }) {
     <>
       <Card className={classes.card}>
         <CardHeader
+          className="access-icon"
           avatar={
             <Avatar
               variant="square"

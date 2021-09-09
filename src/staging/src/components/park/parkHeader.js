@@ -7,23 +7,26 @@ export default function ParkHeader({ data }) {
   const { advisories, parkAccessStatus, park } = data
   return (
     <Paper elevation={0} id="park-header-container">
-      <Grid item container spacing={2}>
+      <Grid item container xs={12} sm={12}>
         <Grid item xs={12}>
           <Box mt={0}>
             <h1 className="park-heading">{park.protectedAreaName}</h1>
+            <br />
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={7}>
           <Button className="yellow-button" href="https://discovercamping.ca/">
             Book a campsite
           </Button>
           <Button className="blue-button">Get a daypass</Button>
         </Grid>
-        <Grid item xs={12} sm={3}>
-          <ParkAccessStatus data={parkAccessStatus.accessStatus} />
-        </Grid>
-        <Grid item xs={12} sm={3}>
-          <Advisory data={advisories} />
+        <Grid item xs={12} sm={5} className="park-info-header-flex">
+          <Grid item xs={12} sm={6} className="park-info-header">
+            <ParkAccessStatus data={parkAccessStatus.accessStatus} />
+          </Grid>
+          <Grid item xs={12} sm={6} className="park-info-header">
+            <Advisory data={advisories} />
+          </Grid>
         </Grid>
       </Grid>
     </Paper>

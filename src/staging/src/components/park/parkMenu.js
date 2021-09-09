@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   appBarOffset: theme.mixins.toolbar,
   drawerDesktop: {
     border: 0,
-    padding: 10,
+    padding: 0,
     maxWidth: drawerWidth,
     zIndex: 0,
     position: "sticky",

@@ -26,17 +26,39 @@ body {
   padding: 2px;
 }
 
+.park-info-header a {
+  color: #003366;
+  padding: 0px 0px 0px 8px;
+}
+
+.park-info-header .MuiCardHeader-title {
+  font-size: 14px !important;
+}
+
+.park-info-header-flex {
+  display: flex;
+  margin-top: 5px;
+}
+
 #park-menu-container a {
-  color: #00008a;
+  color: #003366;
   padding: 5px 0px 5px 8px;
   border-left: 3px solid transparent;
+}
+
+#park-header-container a {
+  text-decoration: none;
+}
+
+#park-header-container a:hover {
+  text-decoration: underline;
 }
 
 #park-menu-container .isCurrent a {
   font-weight: bold;
   box-sizing: border-box;
   padding: 0px 0px 0px 8px;
-  border-left-color: #38598a;
+  border-left-color: #003366;
 }
 
 .park-status-top-grid {
@@ -78,7 +100,7 @@ body {
 
 .blue-button {
   color: #ffffff !important;
-  background-color: #38598a !important;
+  background-color: #003366 !important;
   width: 150px !important;
   white-space: nowrap;
   margin: 6px;
@@ -122,6 +144,27 @@ body {
 .park-overview-icon {
   width: 32px;
   height: 32px;
+  border-radius: 2px !important;
+}
+
+#park-facility-container .MuiAccordion-root,
+#park-activity-container .MuiAccordion-root,
+#park-camping-details-container .MuiAccordion-root {
+  background-color: #fff !important;
+  border: 1px solid #1a5a96 !important;
+}
+
+.access-icon {
+  color: #003366;
+  padding: 5px 0px 5px 8px;
+}
+
+.access-icon .MuiCardHeader-title {
+  padding-left: 8px;
+}
+
+#park-header-container .MuiCardHeader-avatar {
+  margin-right: 5px !important;
 }
 
 #park-header-container .MuiCardHeader-root {
@@ -168,4 +211,17 @@ body {
 
 .hide-photo {
   display: none;
+}
+
+#park-photo-gallery-container {
+  margin-right: -5px !important;
+}
+
+.park-photo-container,
+.park-menu-root {
+  padding: 0px !important;
+}
+
+.advisory-content {
+  width: 100%;
 }
