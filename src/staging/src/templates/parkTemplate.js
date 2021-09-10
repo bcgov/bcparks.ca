@@ -1,7 +1,13 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import { Container, Grid, CssBaseline, Toolbar } from "@material-ui/core"
+import {
+  Container,
+  Grid,
+  CssBaseline,
+  Toolbar,
+  Hidden,
+} from "@material-ui/core"
 import ParkOverview from "../components/park/parkOverview"
 import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
@@ -61,11 +67,18 @@ export default function ParkTemplate({ data }) {
         <Toolbar />
         <Container id="park-info-container" maxWidth={false}>
           <Grid container spacing={2}>
-            <Grid xs={12} sm={12}>
+            <Grid item xs={12} sm={12}>
+              <Hidden smUp implementation="css">
+                <ParkPhotoGallery photos={photos} />
+              </Hidden>
+            </Grid>
+            <Grid item xs={12} sm={12}>
               <ParkHeader data={parkStatusData} />
             </Grid>
-            <Grid xs={12} sm={12}>
-              <ParkPhotoGallery photos={photos} />
+            <Grid item xs={12} sm={12}>
+              <Hidden xsDown implementation="css">
+                <ParkPhotoGallery photos={photos} />
+              </Hidden>
             </Grid>
             <Grid item xs={12} sm={3} className="park-menu-root">
               <ParkMenu data={parkStatusData} />
@@ -201,7 +214,7 @@ export const query = graphql`
       }
       totalCount
     }
-    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }, limit: -1) {
+    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }, limit: 3) {
       nodes {
         orcs
         caption

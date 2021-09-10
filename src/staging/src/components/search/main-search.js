@@ -154,7 +154,6 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
             <div className="row">
               <div className="col-12">
                 <TextField
-                  autoFocus
                   margin="dense"
                   id="park-filter-text"
                   className="park-filter-text"

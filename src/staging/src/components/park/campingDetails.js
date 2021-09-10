@@ -23,7 +23,7 @@ export default function CampingDetails({ data }) {
     expandedInitial[index] = false
   })
 
-  const [allExpanded, setAllExpanded] = useState(false)
+  // const [allExpanded, setAllExpanded] = useState(false)
   const [expanded, setExpanded] = useState(expandedInitial)
 
   if (campingFacilities.length === 0) return null
@@ -33,14 +33,14 @@ export default function CampingDetails({ data }) {
     setExpanded([...expanded])
   }
 
-  const expandAll = isAllExpanded => {
-    let expanded = []
-    expanded[0] = isAllExpanded
-    campingFacilities.forEach((camping, index) => {
-      expanded[index + 1] = isAllExpanded
-    })
-    setExpanded(expanded)
-  }
+  // const expandAll = isAllExpanded => {
+  //   let expanded = []
+  //   expanded[0] = isAllExpanded
+  //   campingFacilities.forEach((camping, index) => {
+  //     expanded[index + 1] = isAllExpanded
+  //   })
+  //   setExpanded(expanded)
+  // }
 
   return (
     <Grid
@@ -73,7 +73,7 @@ export default function CampingDetails({ data }) {
         </Grid>
         {campingFacilities.length > 0 && (
           <div id="park-camping-list-container" className="anchor-link">
-            <Grid
+            {/* <Grid
               container
               item
               xs={12}
@@ -95,7 +95,7 @@ export default function CampingDetails({ data }) {
                   </Button>
                 )}
               </Box>
-            </Grid>
+            </Grid> */}
             <Grid container spacing={2}>
               {data.reservations && (
                 <Grid key="reservation" item xs={12}>

@@ -66,11 +66,11 @@ export default function Advisory({ data }) {
             {textMap.length > 0 && (
               <>
                 {textMap.map((text, index) => (
-                  <>
+                  <div key={index}>
                     {index < 2 && (
                       <Link to="#park-advisory-details-container">{text}</Link>
                     )}
-                  </>
+                  </div>
                 ))}
               </>
             )}
