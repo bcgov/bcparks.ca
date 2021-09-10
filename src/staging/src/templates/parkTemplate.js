@@ -1,13 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import {
-  Container,
-  Grid,
-  CssBaseline,
-  Toolbar,
-  Hidden,
-} from "@material-ui/core"
+import { Container, Grid, CssBaseline, Hidden } from "@material-ui/core"
 import ParkOverview from "../components/park/parkOverview"
 import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
@@ -25,7 +19,7 @@ import ScrollToTop from "../components/scrollToTop"
 import { makeStyles } from "@material-ui/core/styles"
 import Header from "../components/header"
 
-import "./parkTemplate.css"
+import "../styles/park-template.scss"
 
 const drawerWidth = 320
 
@@ -62,16 +56,15 @@ export default function ParkTemplate({ data }) {
       </Helmet>
       <ScrollToTop />
       <CssBaseline />
-      <Header>{data.strapiWebsites.Header}</Header>
+      <Header>{data.strapiWebsites.Header}</Header>{" "}
+      <Hidden smUp implementation="css">
+        <Grid item xs={12} sm={12}>
+          <ParkPhotoGallery photos={photos} />
+        </Grid>
+      </Hidden>
       <div className="container">
-        <Toolbar />
         <Container id="park-info-container" maxWidth={false}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={12}>
-              <Hidden smUp implementation="css">
-                <ParkPhotoGallery photos={photos} />
-              </Hidden>
-            </Grid>
             <Grid item xs={12} sm={12}>
               <ParkHeader data={parkStatusData} />
             </Grid>
@@ -214,7 +207,7 @@ export const query = graphql`
       }
       totalCount
     }
-    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }, limit: 3) {
+    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }, limit: -1) {
       nodes {
         orcs
         caption

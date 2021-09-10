@@ -7,6 +7,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Hidden,
 } from "@material-ui/core"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Heading from "./heading"
@@ -50,10 +51,22 @@ export default function CampingDetails({ data }) {
       className="anchor-link"
     >
       <Paper elevation={0}>
+        <Hidden smUp implementation="css">
+          <Grid item xs={12} container>
+            <Button
+              className="yellow-button full-width"
+              href="https://discovercamping.ca/"
+            >
+              Book a campsite
+            </Button>
+          </Grid>
+          <br />
+        </Hidden>
         <Grid container>
           <Grid item xs={6}>
             <Heading>Camping</Heading>
           </Grid>
+
           <Grid
             item
             xs={6}
@@ -61,14 +74,14 @@ export default function CampingDetails({ data }) {
             justifyContent="flex-end"
             alignItems="flex-start"
           >
-            <Box m={1}>
+            <Hidden smDown implementation="css">
               <Button
                 className="yellow-button"
                 href="https://discovercamping.ca/"
               >
                 Book a campsite
               </Button>
-            </Box>
+            </Hidden>
           </Grid>
         </Grid>
         {campingFacilities.length > 0 && (

@@ -8,7 +8,7 @@ import Spacer from "./spacer"
 
 const useStyles = makeStyles(theme => ({
   collapsed: {
-    maxHeight: "250px",
+    maxHeight: "255px",
     overflow: "hidden",
     display: "block",
     textOverflow: "ellipsis",
@@ -28,7 +28,9 @@ export default function ParkOverview({ data: parkOverview }) {
       <Paper elevation={0}>
         <Box className={expanded ? classes.expanded : classes.collapsed}>
           <Heading>Park Overview</Heading>
-          <HtmlContent>{parkOverview}</HtmlContent>
+          <HtmlContent className="park-overview-html">
+            {parkOverview}
+          </HtmlContent>
         </Box>
         <Link
           component="button"
