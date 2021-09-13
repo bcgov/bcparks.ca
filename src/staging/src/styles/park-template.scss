@@ -175,7 +175,12 @@ body {
 #park-camping-details-container .MuiAccordion-root {
   background-color: #fff !important;
   border: 1px solid #1a5a96 !important;
-  padding-bottom: 15px;
+}
+
+#park-info-container .MuiAccordionDetails-root {
+  padding-left: 25px !important;
+  padding-right: 25px !important;
+  padding-bottom: 15px !important;
 }
 
 #park-facility-container .MuiAccordion-root:hover,
@@ -201,8 +206,7 @@ body {
   padding: 0px;
 }
 
-#park-info-container .MuiAccordionSummary-root,
-#park-info-container .MuiAccordionDetails-root {
+#park-info-container .MuiAccordionSummary-root {
   padding: 0px 25px !important;
 }
 
@@ -276,6 +280,14 @@ body {
 
 .ml10 {
   margin-left: 10px !important;
+}
+
+.park-menu-mobile {
+  border: 1px solid #003366;
+  border-radius: 5px;
+  padding: 3px 0px !important;
+  margin-top: 10px !important;
+  color: #003366 !important;
 }
 
 @media (max-width: 575.98px) {

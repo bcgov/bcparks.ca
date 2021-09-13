@@ -11,7 +11,7 @@ import Reconciliation from "../components/park/reconciliation"
 import ParkHeader from "../components/park/parkHeader"
 import ParkActivity from "../components/park/parkActivity"
 import ParkFacility from "../components/park/parkFacility"
-import ParkMap from "../components/park/parkMapDetails"
+import ParkMapDetails from "../components/park/parkMapDetails"
 import MapLocation from "../components/park/mapLocation"
 import ParkMenu from "../components/park/parkMenu"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
@@ -90,7 +90,7 @@ export default function ParkTemplate({ data }) {
                 <ParkFacility data={parkAccessStatus.parkFacilities} />
                 <ParkActivity data={parkAccessStatus.parkActivities} />
                 <MapLocation data={park.maps} />
-                <ParkMap data={park.maps} />
+                <ParkMapDetails data={park.maps} />
                 <About data={park.parkContact} />
                 <Reconciliation data={park.reconciliationNotes} />
               </Grid>
@@ -207,7 +207,7 @@ export const query = graphql`
       }
       totalCount
     }
-    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }, limit: -1) {
+    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }) {
       nodes {
         orcs
         caption

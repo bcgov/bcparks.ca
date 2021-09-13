@@ -88,11 +88,11 @@ export default function ParkMenu(props) {
   const hasCamping = data.parkAccessStatus.parkFacilities.some(facility =>
     facility.facilityName.toLowerCase().includes("camping")
   )
-  if (!hasCamping) menuItems[2].visible = false
+  if (!hasCamping) menuItems[3].visible = false
   if (data.parkAccessStatus.parkFacilities.length === 0)
-    menuItems[3].visible = false
-  if (data.parkAccessStatus.parkActivities.length === 0)
     menuItems[4].visible = false
+  if (data.parkAccessStatus.parkActivities.length === 0)
+    menuItems[5].visible = false
 
   const campingFacilities = data.parkAccessStatus.parkFacilities.filter(
     facility => facility.facilityName.toLowerCase().includes("camping")
@@ -132,42 +132,7 @@ export default function ParkMenu(props) {
   return (
     <div id="park-menu-container">
       <div className={classes.root}>
-        {/* <CssBaseline /> */}
-        {/* <Hidden smUp implementation="css">
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                className={classes.menuButton}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" noWrap></Typography>
-            </Toolbar>
-          </AppBar>
-        </Hidden> */}
         <nav className={classes.drawer} aria-label="park info menu">
-          {/* Mobile */}
-          {/* <Hidden smUp implementation="css">
-            <Drawer
-              container={container}
-              variant="temporary"
-              anchor={theme.direction === "rtl" ? "right" : "left"}
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-              classes={{
-                paper: classes.drawerMobile,
-              }}
-              ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
-              }}
-            >
-              {drawerItems}
-            </Drawer>
-          </Hidden> */}
           {/* Desktop */}
           <Hidden xsDown implementation="css">
             <Drawer
