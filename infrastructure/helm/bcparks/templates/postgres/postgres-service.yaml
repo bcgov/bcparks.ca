@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.postgres.componentName }}
+  labels:
+    component: {{ .Values.postgres.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  type: ClusterIP
+  selector:
+    component: {{ .Values.postgres.componentName }}
+    release: {{ .Release.Name }}
+  ports:
+    - name: {{ .Values.postgres.service.portName }}
+      port: {{ .Values.postgres.service.port }}
