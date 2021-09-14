@@ -28,18 +28,13 @@ args = {
 
 ETL_PROC_NAME = "bcparks_bcwfs_etl"
 
-@provide_session
-def cleanup_xcom(session=None):
-    session.query(XCom).filter(XCom.dag_id == ETL_PROC_NAME).delete()
-
 
 with DAG(
         ETL_PROC_NAME,
         default_args=args,
         description='Run BC-Parks BCWFS ETL!',
-        schedule_interval=timedelta(minutes=20),
-        catchup=False,
-        on_success_callback=cleanup_xcom
+        schedule_interval=timedelta(days=1),
+        catchup=False
     ) as dag:
 
     etl = Parks_ETL(strapi_pw, var_args)

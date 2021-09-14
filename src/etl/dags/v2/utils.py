@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 #import json
 import requests
+from datetime import datetime
 
 # variables
 
@@ -20,7 +21,7 @@ class Parks_ETL:
         self.token = downstream_pw
 
 
-    ### task pythons
+    ### Import PAR functions
     def _get_data_from_par(self):
         api_url = f"{self.par_api_url_base}/protectedLands?protectedLandName=%25&protectedLandTypeCodes=CS,ER,PA,PK,RA"
 
@@ -37,38 +38,166 @@ class Parks_ETL:
                     result = data["data"]
                 else:
                     print('data does not conform to expectations!')
-
+           
             return result
         except Exception as e:
             print('Error invoking webservice', e)
             raise
 
+    def _dump_par_data(self, task_instance):
+        api_url = f'{self.strapi_base}/protected-areas?token={self.token}'
+        data = task_instance.xcom_pull(task_ids='etl_transform_data_par')
+
+        for pro_land in data:
+            try:
+                # check object relationships
+                # sites
+                index_count = 0
+                for site in pro_land["sites"]:
+                    pro_land["sites"][index_count] = self.create_or_update_site(site)
+                    index_count = index_count + 1
+
+                # managementAreas
+                index_count = 0
+                for mArea in pro_land["managementAreas"]:
+                    pro_land["managementAreas"][index_count] = self.create_or_update_mgmt_area(mArea)
+                    index_count = index_count + 1
+
+                pro_area = self.get_protected_area_from_strapi(pro_land["orcs"])
+
+                if pro_area is None:
+                    api_url = f'{self.strapi_base}/protected-areas?token={self.token}'
+                    #rectified_payload = python_to_proper_json_string(pro_land)
+                    response = requests.post(api_url, json=pro_land, headers=headers)
+
+                    if response.status_code == 200:
+                        data = response.json()
+
+                        print(f'Protected Area with id: {data["id"]} and ORCS:{pro_land["orcs"]}  successfully created!')
+                    else:
+                        print(f'dump par data: Unplanned status code returned - {response.status_code}')
+                else:
+                    print(f'Protected area ORCS:{pro_land["orcs"]} already exist in strapi')
+                    api_url = f'{self.strapi_base}/protected-areas/{pro_area["id"]}?token={self.token}'
+                    #rectified_payload = python_to_proper_json_string(pro_land)
+                    #del pro_land["sites"]
+                    #del pro_land["managementAreas"]
+                    response = requests.put(api_url, json=pro_land, headers=headers)
+
+                    if response.status_code == 200:
+                        data = response.json()
+
+                        print(f'Protected Area with id: {data["id"]} and ORCS:{pro_land["orcs"]}  successfully updated!')
+                    else:
+                        print(f'dump par data: Unplanned status code returned - {response.status_code}')
+
+            except Exception as e:
+                print('dump par data: Error invoking webservice', e)
+                raise
+
+    def create_or_update_site(self, site):
+        newSite = self.get_site_from_strapi(site["orcsSiteNumber"])
+
+        if newSite is None:
+            #create new site
+            newSite = self.create_site_in_strapi(site)
+        else:
+            print(f'Site with orcsSiteNumber: {site["orcsSiteNumber"]} already exists')
+            newSite = self.update_site_in_strapi(newSite["id"],site)
+
+        return newSite
+
+    def create_or_update_mgmt_area(self, mArea):
+        newMArea = self.get_mgmt_area_from_strapi(mArea["managementAreaNumber"])
+
+        if newMArea is None:
+            #create new mgmt area
+            newMArea = self.create_mgmt_area_in_strapi(mArea)
+        else:
+            print(f'Management Area with managementAreaNumber: {mArea["managementAreaNumber"]} already exists')
+            newSite = self.update_mgmt_area_in_strapi(newMArea["id"],mArea)
+
+        return newMArea
+
+    def get_or_create_section(self, section):
+        newSection = self.get_section_from_strapi(section["sectionNumber"])
+
+        if newSection is None:
+            #create new section
+            newSection = create_section_in_strapi(section)
+            print(f'Section with sectionNumber: {section["sectionNumber"]} successfully created!')
+        else:
+            print(f'Section with sectionNumber: {section["sectionNumber"]} already exists')
+
+        return newSection
+
+    def get_or_create_region(self, region):
+        newRegion = self.get_region_from_strapi(region["regionNumber"])
+
+        if newRegion is None:
+            #create new region
+            newRegion = create_region_in_strapi(region)
+            print(f'Section with regionNumber: {region["regionNumber"]} successfully created!')
+        else:
+            print(f'Section with regionNumber: {region["regionNumber"]} already exists')
+
+        return newRegion
 
     def _get_data_from_bcgn(self, task_instance):
         data = task_instance.xcom_pull(task_ids='etl_get_data_from_par')
         result = []
-
         try:
             indx = 0
             for pro_land in data:
-                orcs = pro_land["orcNumber"]
+                featureId = pro_land["featureId"]
 
-                api_url = f"{self.bcgn_api_url_base}/names/{orcs}.json"
+                api_url = f"{self.bcgn_api_url_base}/names/{featureId}.json"
                 response = requests.get(api_url, headers=headers)
 
                 if response.status_code == 200:
                     # convert json to Python object
                     data = response.json()
-                    data["orcs"] = orcs
+                    data["orcs"] = pro_land["orcNumber"]
                     result.append(data)
-
-                    if indx == 0:
-                        break
 
             return result
         except Exception as e:
             print('Error invoking webservice', e)
             raise
+
+    def _dump_bcgn_data(self, task_instance):       
+        data = task_instance.xcom_pull(task_ids='etl_transform_data_bcgn')        
+        park_type_legal_id = self.get_park_type_legal_from_strapi()
+
+        for park_name in data:
+            try:                
+                
+                existing_park_name = self.get_park_names_legal_from_strapi(park_name["protectedArea"], park_type_legal_id)
+
+                if existing_park_name is None:
+                    api_url = f'{self.strapi_base}/park-names?token={self.token}'
+                    #rectified_payload = python_to_proper_json_string(pro_land)
+                    response = requests.post(api_url, json=park_name, headers=headers)
+
+                    if response.status_code == 200:
+                        data = response.json()
+                        print(f'Park Name for ORCS:{park_name["orcs"]}  successfully created!')
+                    else:
+                        print(f'_dump_bcgn_data: dump par data: Unplanned status code returned - {response.status_code}  {park_name}')
+                else:
+                    print(f'Park Name for ORCS:{park_name["orcs"]} already exist in strapi')
+                    api_url = f'{self.strapi_base}/park-names/{existing_park_name["id"]}?token={self.token}'
+                    response = requests.put(api_url, json=park_name, headers=headers)
+
+                    if response.status_code == 200:
+                        result = response.json()
+                        print(f'Protected Area with id: {result["id"]} and ORCS:{park_name["orcs"]}  successfully updated!')
+                    else:
+                        print(f'_dump_bcgn_data: Unplanned status code returned - {response.status_code}')
+
+            except Exception as e:
+                print('_dump_bcgn_data: Error invoking webservice', e)
+                raise
 
     def _get_data_from_bcwfs(self, task_instance):
         #api_url = f"{self.bcwfs_api_url_base}/?f=json&where=1=1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=OBJECTID ASC&resultOffset=0&resultRecordCount=50&cacheHint=true&quantizationParameters={'mode':'edit'}"
@@ -88,56 +217,28 @@ class Parks_ETL:
             print('Error invoking webservice', e)
             raise
 
-    def _transform_data_bcwfs(self, task_instance):
-        data = task_instance.xcom_pull(task_ids='etl_get_data_from_bcwfs')
-
-        json = []
-
-        for feature in data['features']:
-            json.append(self.transform_bcwfs_feature(feature))
-
-        return json
-
     def _dump_bcwfs_data(self, task_instance):
-        api_url = f'{self.strapi_base}/protected-areas?token={self.token}'
+        api_url = f'{self.strapi_base}/Fire-Ban-Prohibitions?token={self.token}'
         data = task_instance.xcom_pull(task_ids='etl_transform_data_bcwfs')
-
+        print(f'dump data {data} ')
+        self.delete_fireban_prohibitions_from_strapi()
         try:
             for feature in data:
                 # persist object
+                print(f'dump data: data - {feature}')
                 response = requests.post(api_url, json=feature, headers=headers)
 
                 if response.status_code == 200:
-                    print(f'Record with id: {data["id"]} successfully created!')
+                    result = response.json()
+                    print(f'Record with id: {result["id"]} successfully created!')
                 else:
-                    print(f'dump data: Unplanned status code returned - {response.status_code}')
+                    print(f'_dump_bcwfs_data: Unplanned status code returned - {response.status_code}')
 
         except Exception as e:
-            print('Error invoking webservice', e)
+            print('_dump_bcwfs_data: Error invoking webservice', e)
             raise
-
-
-    def get_entity_from_bcgn(self):
-        pass
-
-
-    def _get_data_from_bcgw(self):
-        api_url = f"{self.bcgn_api_url_base}/names/search?outputFormat=json&name=Victoria&exactSpelling=0"
-
-        result = None
-
-        try:
-            response = requests.get(api_url, headers=headers)
-
-            if response.status_code == 200:
-                # convert json to Python object
-                data = response.json()
-                result = data
-
-            return result
-        except Exception as e:
-            print('Error invoking webservice', e)
-            raise
+ 
+    ### Transform
 
     def _transform_data_par(self, task_instance):
         data = task_instance.xcom_pull(task_ids='etl_get_data_from_par')
@@ -148,105 +249,7 @@ class Parks_ETL:
             json.append(self.transform_par_to_proct_land(pro_land))
 
         return json
-
-    def _transform_data_bcgn(self, task_instance):
-        data = task_instance.xcom_pull(task_ids='etl_get_data_from_bcgn')
-
-        json = []
-
-        for item in data:
-            json.append(self.transform_bcgn_data_to_park_names(item))
-
-        return json
-
-    def _dump_data_bcgn(self, task_instance):
-        api_url = f'{self.strapi_base}/protected-areas?token={self.token}'
-        data = task_instance.xcom_pull(task_ids='etl_transform_data_par')
-
-
-    def _dump_par_data(self, task_instance):
-        api_url = f'{self.strapi_base}/protected-areas?token={self.token}'
-        data = task_instance.xcom_pull(task_ids='etl_transform_data_par')
-
-        for pro_land in data:
-            try:
-                # check object relationships
-                # sites
-                index_count = 0
-                for site in pro_land["sites"]:
-                    pro_land["sites"][index_count] = self.get_or_create_site(site)
-                    index_count = index_count + 1
-
-                # managementAreas
-                index_count = 0
-                for mArea in pro_land["managementAreas"]:
-                    pro_land["managementAreas"][index_count] = self.get_or_create_mgmt_area(mArea)
-                    index_count = index_count + 1
-
-                pro_area = self.get_protected_area_from_strapi(pro_land["orcs"])
-
-                if pro_area is None:
-                    #rectified_payload = python_to_proper_json_string(pro_land)
-                    response = requests.post(api_url, json=pro_land, headers=headers)
-
-                    if response.status_code == 200:
-                        data = response.json()
-
-                        print(f'Record with id: {data["id"]} successfully created!')
-                    else:
-                        print(f'dump data: Unplanned status code returned - {response.status_code}')
-                else:
-                    print('Protected area already exist in strapi')
-
-            except Exception as e:
-                print('Error invoking webservice', e)
-                raise
-
-    def _dump_bcgn_data(self, task_instance):
-        api_url = f'{self.strapi_base}/protected-areas?token={self.token}'
-        data = task_instance.xcom_pull(task_ids='etl_transform_data_par')
-
-
-    def get_or_create_site(self, site):
-        newSite = self.get_site_from_strapi(site["orcsSiteNumber"])
-
-        if newSite is None:
-            #create new site
-            newSite = self.create_site_in_strapi(site)
-
-        return newSite
-
-    def get_or_create_mgmt_area(self, mArea):
-        newMArea = self.get_mgmt_area_from_strapi(mArea["managementAreaNumber"])
-
-        if newMArea is None:
-            #create new mgmt area
-            newMArea = self.create_mgmt_area_in_strapi(mArea)
-
-        return newMArea
-
-
-    def get_or_create_section(self, section):
-        newSection = self.get_section_from_strapi(section["sectionNumber"])
-
-        if newSection is None:
-            #create new mgmt area
-            newSection = create_section_in_strapi(section)
-
-        return newSection
-
-
-    def get_or_create_region(self, region):
-        newRegion = self.get_region_from_strapi(region["regionNumber"])
-
-        if newRegion is None:
-            #create new mgmt area
-            newRegion = create_region_in_strapi(region)
-
-        return newRegion
-
-
-    ### Transform
+    
     def transform_par_to_proct_land(self, pro_land):
         json = {
             "orcs": pro_land["orcNumber"],
@@ -270,35 +273,7 @@ class Parks_ETL:
         }
 
         return json
-
-    def transform_bcwfs_feature(self, feature):
-        attribute = feature["attributes"]
-
-        json = {
-            "id": attribute["PROT_BAP_SYSID"],
-            "type": attribute["TYPE"],
-            "desc": attribute["ACCESS_PROHIBITION_DESCRIPTION"],
-            "date": attribute["ACCESS_STATUS_EFFECTIVE_DATE"],
-            "name": attribute["FIRE_CENTRE_NAME"],
-            "zone": attribute["FIRE_ZONE_NAME"],
-            "url": attribute["BULLETIN_URL"],
-            "area": attribute["FEATURE_AREA_SQM"],
-            "lenght": attribute["FEATURE_LENGTH_M"]
-        }
-
-        return json
-
-    def transform_bcgn_data_to_park_names(self, data):
-
-        json = {
-            "id": data["orcs"],
-            "parkName": data["feature"]["properties"]["name"],
-            "source": "Custom",
-            "note": ""
-        }
-
-        return json
-
+ 
     def transform_par_sites(self, orcsNumber, sites):
         json = []
 
@@ -326,6 +301,15 @@ class Parks_ETL:
 
         return json
 
+    def _transform_data_bcgn(self, task_instance):
+        data = task_instance.xcom_pull(task_ids='etl_get_data_from_bcgn')
+        json = []
+        park_type_legal_id = self.get_park_type_legal_from_strapi()
+
+        for item in data:
+            json.append(self.transform_bcgn_data_to_park_names(item, park_type_legal_id))
+        print(f'_transform_data_bcgn : End Dump {json}')
+        return json
 
     def transform_par_mgmtAreas(self, areas):
         json = []
@@ -357,6 +341,51 @@ class Parks_ETL:
             "regionNumber": number,
             "regionName": name
         }
+  
+    def transform_bcwfs_feature(self, feature):
+        attribute = feature["attributes"]
+        eff_date = str(datetime.fromtimestamp(int(attribute["ACCESS_STATUS_EFFECTIVE_DATE"])/1000))
+        fire_zone_id = self.get_firezone_from_strapi(attribute["FIRE_ZONE_NAME"])
+        fire_center_id = self.get_firecenter_from_strapi(attribute["FIRE_CENTRE_NAME"])
+
+        json = {
+            "type": attribute["TYPE"],
+            "prohibitionDescription": attribute["ACCESS_PROHIBITION_DESCRIPTION"],
+            "effectiveDate": eff_date,
+            "fireCentre": fire_center_id,
+            "fireZone": fire_zone_id,
+            "bulletinURL": attribute["BULLETIN_URL"],
+            "area": attribute["FEATURE_AREA_SQM"],
+            "length": attribute["FEATURE_LENGTH_M"]
+        }
+        return json
+
+    def transform_bcgn_data_to_park_names(self, data, park_type_legal_id):
+
+        pro_area = self.get_protected_area_from_strapi(data["orcs"])
+
+        json = {
+            "orcs": data["orcs"],
+            "parkName": data["feature"]["properties"]["name"],
+            "source": "BCGWNS",
+            "protectedArea": pro_area["id"]
+        }
+        if data["feature"]["properties"]["isOfficial"]== 1:
+            json["parkNameType"] = park_type_legal_id
+        
+        return json
+
+    def _transform_data_bcwfs(self, task_instance):
+        data = task_instance.xcom_pull(task_ids='etl_get_data_from_bcwfs')
+
+        json = []
+
+        for feature in data['features']:
+            json.append(self.transform_bcwfs_feature(feature))
+
+        return json
+
+    ### Create/Update content in Strapi
 
     def create_site_in_strapi(self, site):
         api_url = f"{self.strapi_base}/sites?token={self.token}"
@@ -367,15 +396,14 @@ class Parks_ETL:
 
             if response.status_code == 200:
                 result = response.json()
-
-                print(f'Record with id: {result["id"]} successfully created!')
+                print(f'Site with orcsSiteNumber: {site["orcsSiteNumber"]} successfully created!')
             else:
                 print(f'create site: Unplanned status code returned - {response.status_code}')
 
             return result
 
         except:
-            print('Error invoking webservice')
+            print('create site:Error invoking webservice')
             raise
 
     def update_site_in_strapi(self, id, site):
@@ -386,18 +414,16 @@ class Parks_ETL:
             response = requests.put(api_url, json=site, headers=headers)
 
             if response.status_code == 200:
-                result = response.json()
-
-                print(f'Record with id: {result["id"]} successfully updated!')
+                result = response.json()                
+                print(f'Site with orcsSiteNumber: {site["orcsSiteNumber"]} updated')
             else:
-                print(f'create site: Unplanned status code returned - {response.status_code}')
+                print(f'update site: Unplanned status code returned - {response.status_code}')
 
             return result
 
         except:
-            print('Error invoking webservice')
+            print('update site:Error invoking webservice')
             raise
-
 
     def create_region_in_strapi(self, region):
         api_url = f"{self.strapi_base}/sites?token={self.token}"
@@ -418,7 +444,6 @@ class Parks_ETL:
         except:
             print('Error invoking webservice')
             raise
-
 
     def create_section_in_strapi(self, section):
         api_url = f"{self.strapi_base}/sites?token={self.token}"
@@ -457,7 +482,7 @@ class Parks_ETL:
             if response.status_code == 200:
                 result = response.json()
 
-                print(f'Record with id: {result["id"]} successfully created!')
+                print(f'Management Area with managementAreaNumber: {mArea["managementAreaNumber"]} successfully created!')
             else:
                 print(f'create mgmt: Unplanned status code returned - {response.status_code}')
 
@@ -466,6 +491,30 @@ class Parks_ETL:
         except:
             print('Error invoking webservice')
             raise
+
+    def update_mgmt_area_in_strapi(self, id, mArea):
+        api_url = f"{self.strapi_base}/management-areas/{id}?token={self.token}"
+        result = None
+
+        try:
+            del mArea["region"]
+            del mArea["section"]
+
+            response = requests.put(api_url, json=mArea, headers=headers)
+
+            if response.status_code == 200:
+                result = response.json()                
+                print(f'Management Area with managementAreaNumber: {mArea["managementAreaNumber"]} updated')
+            else:
+                print(f'update Management Area: Unplanned status code returned - {response.status_code}')
+
+            return result
+
+        except:
+            print('update Management Area:Error invoking webservice')
+            raise
+
+    ### Get content from Strapi
 
     def get_protected_area_from_strapi(self, orcs):
         api_url = f"{self.strapi_base}/protected-areas?orcs={orcs}"
@@ -525,7 +574,6 @@ class Parks_ETL:
             print(f'Error invoking webservice - {api_url}')
             raise
 
-
     def get_region_from_strapi(self, regionNumber):
         api_url = f"{self.strapi_base}/regions?regionNumber={regionNumber}"
 
@@ -544,7 +592,6 @@ class Parks_ETL:
         except:
             print(f'Error invoking webservice - {api_url}')
             raise
-
 
     def get_section_from_strapi(self, sectionNumber):
         api_url = f"{self.strapi_base}/sections?sectionNumber={sectionNumber}"
@@ -565,6 +612,95 @@ class Parks_ETL:
             print(f'Error invoking webservice - {api_url}')
             raise
 
+    def get_park_names_legal_from_strapi(self, protectedAreaId, parkNameLegalId):
+        api_url = f"{self.strapi_base}/park-names?protectedArea={protectedAreaId}&parkNameType={parkNameLegalId}"
+        try:
+            response = requests.get(api_url, headers=headers)
+
+            if response.status_code == 200:
+                data = response.json()
+
+                if len(data) == 0:
+                    return None
+                else:
+                    return data[0]
+            else:
+                print(f'get_park_names_legal_from_strapi: Unable to get park names with code {response.status_code}')
+        except:
+            print(f'get_park_names_legal_from_strapi: Error invoking webservice - {api_url}')
+            raise
+    
+    def get_park_type_legal_from_strapi(self):
+        api_url = f"{self.strapi_base}/park-name-types?nameType=Legal"
+        try:
+            response = requests.get(api_url, headers=headers)
+
+            if response.status_code == 200:
+                data = response.json()
+
+                if len(data) == 0:
+                    return None
+                else:
+                    return data[0]["id"]
+            else:
+                print(f'get_park_type_legal_from_strapi: Unable to get park name legal type with code {response.status_code}')
+        except:
+            print(f'get_park_type_legal_from_strapi: Error invoking webservice - {api_url}')
+            raise
+
+    def get_firezone_from_strapi(self, fireZoneName):
+        api_url = f"{self.strapi_base}/Fire-Zones?fireZoneName_contains={fireZoneName}"
+        try:
+            response = requests.get(api_url, headers=headers)
+
+            if response.status_code == 200:
+                data = response.json()
+
+                if len(data) == 0:
+                    return 0
+                else:
+                    return data[0]["id"]
+            else:
+                print(f'get_firezone_from_strapi: Unable to get fire zone with code {response.status_code}')
+        except:
+            print(f'get_firezone_from_strapi: Error invoking webservice - {api_url}')
+            raise
+
+    def get_firecenter_from_strapi(self, fireCenterName):
+        api_url = f"{self.strapi_base}/Fire-Centres?fireCentreName_contains={fireCenterName}"
+        try:
+            response = requests.get(api_url, headers=headers)
+
+            if response.status_code == 200:
+                data = response.json()
+
+                if len(data) == 0:
+                    return 0
+                else:
+                    return data[0]["id"]
+            else:
+                print(f'get_firezone_from_strapi: Unable to get fire zone with code {response.status_code}')
+        except:
+            print(f'get_firezone_from_strapi: Error invoking webservice - {api_url}')
+            raise
+
+    def delete_fireban_prohibitions_from_strapi(self):
+        api_url = f"{self.strapi_base}/Fire-Ban-Prohibitions"
+        try:
+            response = requests.get(api_url, headers=headers)
+
+            if response.status_code == 200:
+                data = response.json()
+
+                for fireban in data:
+                    response = requests.delete(f'{api_url}/{fireban["id"]}?token={self.token}', headers=headers)
+                
+                print(f'delete_fireban_prohibitions_from_strapi: Deleted all Fire Ban Prohibitions')
+            else:
+                print(f'delete_fireban_prohibitions_from_strapi: Unable to get fire zone with code {response.status_code}')
+        except:
+            print(f'delete_fireban_prohibitions_from_strapi: Error invoking webservice - {api_url}')
+            raise
     ### misc
     def clean_data(self):
         pass
