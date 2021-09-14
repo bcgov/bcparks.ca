@@ -1,0 +1,689 @@
+$globalFont: "BCSans", Verdana, Arial, sans serif;
+$colorBlue: #003366;
+$hoverBlue: #2684ff;
+$colorGrey: #eef1f5;
+$colorWhite: #fff;
+$colorBlack: #000;
+$colorTextBlack: #494949;
+$bodyFont: 16px;
+$headingFont: 2rem;
+
+.MuiTypography-root {
+  font-family: $globalFont !important;
+  font-size: $bodyFont !important;
+}
+
+.MuiButton-root {
+  text-transform: none !important;
+  font-family: $globalFont !important;
+}
+
+.search-body {
+  background-color: $colorGrey !important;
+}
+
+.park-search {
+  .park-search-text-box {
+    width: 80% !important;
+
+    .MuiOutlinedInput-root {
+      width: 100% !important;
+      max-width: 700px !important;
+      background-color: $colorWhite !important;
+      border: none !important;
+      border-radius: 50px !important;
+      font-size: $bodyFont !important;
+      font-family: $globalFont !important;
+    }
+    .MuiOutlinedInput-input {
+      padding: 10px 20px !important;
+      margin-right: 10px !important;
+    }
+    .MuiOutlinedInput-root:focus {
+      outline: none !important;
+      outline-offset: 1px !important;
+    }
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+      border: 1px solid $colorBlue !important;
+    }
+  }
+  button:focus {
+    outline: unset !important;
+  }
+
+  .search-icon-fab {
+    background-color: rgba(252, 186, 25, 1);
+    margin-left: -30px !important;
+    margin-top: -14px !important;
+    width: 70px !important;
+    height: 70px !important;
+    .search-icon {
+      color: rgba(0, 51, 102, 0.8);
+      width: 55px !important;
+      height: 55px !important;
+    }
+  }
+}
+
+.search-results-main {
+  .park-search-text-box {
+    width: 100% !important;
+
+    .MuiOutlinedInput-root {
+      width: 100% !important;
+      max-width: 700px !important;
+      background-color: $colorWhite !important;
+      border: none !important;
+      border-radius: 5px !important;
+      font-size: $bodyFont !important;
+      font-family: $globalFont !important;
+    }
+    .MuiOutlinedInput-input {
+      padding: 10px 7px !important;
+    }
+    .MuiOutlinedInput-root:focus {
+      outline: none !important;
+      outline-offset: 1px !important;
+    }
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+      border: 1px solid $colorBlue !important;
+    }
+  }
+  button:focus {
+    outline: unset !important;
+  }
+  .park-filter-select [class*="-control"] {
+    border-radius: 50px !important;
+    background-color: $colorWhite !important;
+    font-family: $globalFont !important;
+    font-size: $bodyFont !important;
+  }
+}
+
+.heading-white-space {
+  white-space: normal;
+}
+
+.park-search {
+  font-family: $globalFont !important;
+  width: 100%;
+
+  @media screen and (min-width: 801px) {
+    position: relative;
+    max-height: 742px;
+  }
+
+  img {
+    height: 440px;
+    width: 100%;
+  }
+  .park-search-container {
+    position: absolute;
+    top: 16%;
+    z-index: 1299;
+    height: auto;
+    overflow: visible;
+    width: 100%;
+    background-color: rgba(0, 51, 102, 0.8) !important;
+    text-align: center;
+    white-space: nowrap;
+    font-family: $globalFont !important;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.4rem;
+    color: rgba(255, 249, 249, 1);
+
+    // Handling for awkward tablet breakpoints
+    @media screen and (min-width: 575px) and (max-width: 800px) {
+      height: 275px;
+      top: 22.5%;
+    }
+
+    @media screen and (min-width: 801px) {
+      top: unset;
+      bottom: 0;
+      width: 45%;
+      height: 100%;
+      transform: skewX(15deg);
+      transform-origin: bottom;
+    }
+  }
+
+  .park-search-container-inner {
+    @media screen and (min-width: 801px) {
+      height: 100%;
+      > div {
+        padding-left: 15%;
+        padding-top: 25%;
+      }
+    }
+  }
+
+  #search-title {
+    font-family: $globalFont !important;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2rem;
+    padding: 30px;
+  }
+
+  .park-search-text-box {
+    @media screen and (min-width: 801px) {
+      width: 85% !important;
+    }
+  }
+}
+
+.park-search-text-wrapper {
+  @media screen and (min-width: 801px) {
+    padding-left: 40px !important;
+  }
+}
+
+.park-filter-dialog {
+  font-size: $bodyFont !important;
+  font-family: $globalFont !important;
+  overflow-y: visible !important;
+
+  .MuiTypography-root {
+    font-family: $globalFont !important;
+    font-size: $bodyFont !important;
+  }
+
+  .park-filter-dialog-content {
+    overflow-y: visible !important;
+  }
+
+  .MuiPaper-root {
+    color: $colorBlue !important;
+  }
+
+  .MuiDialog-paperWidthSm {
+    max-width: 700px !important;
+  }
+
+  .park-filter-select [class*="-control"] {
+    border-radius: 50px !important;
+    background-color: $colorGrey !important;
+    font-family: $globalFont !important;
+    font-size: $bodyFont !important;
+  }
+}
+.park-filter-dialog,
+.search-results-main {
+  .MuiCheckbox-root {
+    color: #38598a !important;
+    padding: 0px !important;
+    padding-right: 5px !important;
+  }
+
+  .MuiCheckbox-root:hover {
+    background-color: $colorGrey !important;
+  }
+
+  .park-filter-text {
+    .MuiOutlinedInput-root {
+      border-radius: 50px !important;
+      background-color: $colorGrey !important;
+      font-family: $globalFont !important;
+      font-size: $bodyFont !important;
+    }
+
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
+    .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
+    .park-filter-select [class*="-control"] {
+      border-color: $hoverBlue !important;
+      border-width: 2px !important;
+    }
+  }
+
+  .MuiButton-root {
+    font-size: $bodyFont !important;
+    width: 100% !important;
+    border-radius: 50px !important;
+  }
+
+  div[class$="-placeholder"] {
+    color: #9b9b9b !important;
+    font-family: $globalFont !important;
+  }
+
+  .park-filter-chip {
+    margin: 2px 3px !important;
+  }
+
+  .MuiChip-label {
+    color: $colorBlue !important;
+    font-size: 0.8rem !important;
+    font-family: $globalFont;
+  }
+  .park-select-label {
+    font-size: $bodyFont !important;
+    padding-bottom: 10px !important;
+    font-weight: bold;
+  }
+}
+
+div[class$="-MenuList"] div[class$="-option"],
+div[class$="-singleValue"] {
+  color: $colorBlue !important;
+  font-family: $globalFont !important;
+  font-size: $bodyFont !important;
+}
+
+#park-search-box {
+  height: 47px;
+  width: 100%;
+  border-radius: 25px;
+  border: 0px;
+  display: inline;
+  margin: 40px;
+}
+
+.park-search-text-container {
+  padding: 20px 0 20px 0 !important;
+}
+
+.park-search-text {
+  @media screen and (min-width: 575.98px) and (max-width: 800px) {
+    padding-left: 20px !important;
+    text-align: left;
+  }
+  @media screen and (min-width: 801px) {
+    transform: skewX(-15deg);
+    padding-left: 25px !important;
+    padding-right: 20px !important;
+  }
+}
+
+.park-search-filter {
+  padding-left: 30px !important;
+  color: $colorWhite !important;
+  font-size: $bodyFont !important;
+  text-decoration: underline !important;
+
+  @media screen and (min-width: 801px) {
+    padding-left: 40px !important;
+    transform: skewX(-15deg);
+  }
+}
+
+.park-search-intro {
+  padding: 0 20px 0 20px !important;
+  > p {
+    font-size: 16px;
+    white-space: normal;
+  }
+
+  @media screen and (min-width: 801px) {
+    transform: skewX(-15deg);
+    padding-left: 80px !important;
+    > h2 {
+      font-size: 34px;
+      padding-right: 20px;
+    }
+    > p {
+      font-size: 20px;
+    }
+  }
+}
+
+.p10t {
+  padding-top: 10px !important;
+}
+
+.p20t {
+  padding-top: 20px !important;
+}
+
+.p30t {
+  padding-top: 30px !important;
+}
+
+.p30 {
+  padding: 30px !important;
+}
+
+.p30l {
+  padding: 0px 30px !important;
+}
+
+.p20l {
+  padding: 0px 20px !important;
+}
+
+.p10l {
+  padding-left: 10px !important;
+}
+
+.m20t {
+  margin-top: 20px !important;
+}
+
+.m15t {
+  margin-top: 15px !important;
+}
+
+.p30 {
+  padding: 20px 30px !important;
+}
+
+.pr3 {
+  padding-right: 3px !important;
+}
+
+.pr15 {
+  padding-right: 15px !important;
+}
+
+.pr30 {
+  padding-right: 30px !important;
+}
+
+.pl15 {
+  padding-left: 15px !important;
+}
+
+.mtm5 {
+  margin-top: 5px !important;
+}
+
+.mtm7 {
+  margin-top: -7px !important;
+}
+
+.mr5 {
+  margin-right: 5px !important;
+}
+
+.bcgov-normal-blue {
+  color: $colorWhite !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
+  background-color: $colorBlue !important;
+  font-family: $globalFont !important;
+}
+
+.bcgov-normal-blue:hover {
+  background-color: #38598a !important;
+  color: $colorWhite !important;
+}
+
+.bcgov-button {
+  min-width: 150px !important;
+  min-height: 40px !important;
+}
+
+.no-wrap {
+  white-space: nowrap !important;
+}
+
+.bcgov-loader-show {
+  display: inline-block !important;
+}
+
+.park-af-list {
+  display: inline-block !important;
+}
+
+.flex-display {
+  display: flex !important;
+}
+
+.m-auto {
+  margin: auto !important;
+}
+
+.text-black {
+  color: $colorTextBlack !important;
+}
+
+.search-results-main {
+  color: $colorBlue !important;
+  font-family: $globalFont !important;
+  font-size: $bodyFont !important;
+
+  #search-results {
+    box-sizing: border-box;
+    overflow: hidden;
+    z-index: 2;
+    top: 200px;
+    width: 100%;
+    padding: 0;
+    text-align: left;
+  }
+
+  .search-results-container {
+    padding-top: 40px !important;
+  }
+
+  .headline-text {
+    color: $colorBlack;
+  }
+
+  .park-heading {
+    color: $colorBlue;
+  }
+
+  .text-blue {
+    color: $colorBlue;
+  }
+
+  .search-results-list {
+    padding: 10px !important;
+  }
+
+  .park-filter-select [class*="-control"] {
+    border-radius: 5px !important;
+  }
+
+  .search-results-quick-filter {
+    .filter-heading {
+      color: $colorBlack;
+    }
+
+    .select-padding {
+      padding-top: 20px !important;
+      padding-right: 20px !important;
+    }
+  }
+
+  .close-margin {
+    padding-left: 0px !important;
+    padding-top: 0px !important;
+    margin-top: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  .park-card {
+    padding: 0px !important;
+    min-height: 350px !important;
+  }
+
+  .park-image-div {
+    height: 380px !important;
+    width: 400px !important;
+    padding-right: 0px !important;
+  }
+
+  .park-image-logo-div {
+    background-color: $colorBlue;
+  }
+
+  .search-result-logo-image {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 35% !important;
+  }
+
+  .small-font {
+    font-size: 14px !important;
+  }
+
+  .remove-link {
+    display: inline-block !important;
+    padding-left: 20px !important;
+  }
+
+  .MuiPaginationItem-page {
+    color: $colorBlue;
+  }
+
+  .MuiPaginationItem-root {
+    border-radius: 0px !important;
+    background-color: $colorWhite !important;
+  }
+
+  .park-overview-content {
+    height: 100% !important;
+    top: 20% !important;
+  }
+
+  .MuiPaginationItem-page.Mui-selected {
+    background-color: $colorBlue !important;
+    color: $colorWhite !important;
+  }
+
+  .MuiPaginationItem-page.Mui-selected:hover {
+    background-color: #00468b !important;
+  }
+
+  .MuiChip-outlined {
+    background-color: $colorBlue !important;
+    border-radius: 10px !important;
+  }
+
+  .MuiChip-label {
+    color: $colorWhite !important;
+  }
+
+  .MuiPaginationItem-page.Mui-disabled {
+    opacity: 0.5 !important;
+  }
+
+  .MuiPaginationItem-ellipsis {
+    background-color: transparent !important;
+  }
+
+  .search-icon {
+    color: #00468b !important;
+  }
+
+  .close-icon {
+    color: $colorWhite !important;
+  }
+
+  .close-icon:hover {
+    color: $colorGrey !important;
+  }
+
+  .close-icon {
+    width: 17px !important;
+  }
+
+  .park-carousel,
+  .CarouselItem,
+  .CarouselItem div {
+    height: 100% !important;
+  }
+  .park-carousel [class*="Carousel-prev"] {
+    margin-left: -10px !important;
+  }
+
+  .park-carousel [class*="Carousel-next"] {
+    margin-right: -25px !important;
+  }
+
+  .park-carousel [class*="Carousel-prev"] button {
+    padding-left: 15px !important;
+  }
+
+  .park-carousel [class*="Carousel-next"] button {
+    padding-right: 15px !important;
+  }
+
+  .park-carousel .MuiButtonBase-root {
+    background-color: rgba(48, 48, 48, 0.7) !important;
+  }
+
+  .large-pagination {
+    display: block !important;
+  }
+
+  .small-pagination {
+    display: none !important;
+  }
+
+  .search-result-image {
+    width: 100% !important;
+    object-fit: cover !important;
+    height: 100% !important;
+    object-position: 0% 5%;
+  }
+
+  .search-result-icon {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .search-result-card {
+    min-height: 300px !important;
+  }
+
+  .MuiPaper-elevation1 {
+    box-shadow: none !important;
+    border-radius: 10px !important;
+  }
+
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1600px !important;
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    .large-pagination {
+      display: none !important;
+    }
+
+    .small-pagination {
+      display: block !important;
+    }
+    .small-m-auto {
+      margin: auto !important;
+    }
+    .small-flex-display {
+      display: flex !important;
+    }
+    .search-results-quick-filter {
+      padding-right: 10px !important;
+      padding-left: 10px !important;
+    }
+    .park-content {
+      margin: 0px 10px !important;
+    }
+
+    .park-overview-content {
+      margin-top: 5px !important;
+    }
+  }
+}
+
+@media (min-width: 1400px) {
+  .search-results-main {
+    max-width: 1300px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .bcgov-button {
+    min-width: 0px !important;
+    min-height: 0px !important;
+  }
+}
+
+//Added to hide styles printed on screen
+head {
+  display: none !important;
+}

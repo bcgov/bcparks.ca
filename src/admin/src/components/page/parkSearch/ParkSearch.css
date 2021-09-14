@@ -1,0 +1,10 @@
+.da-list-header {
+  background-color: #f2f2f2 !important;
+  font-weight: bold;
+}
+
+.da-list-item {
+  padding-bottom: 4px !important;
+  padding-top: 4px !important;
+  border-bottom: 1px solid #f2f2f2 !important;
+}

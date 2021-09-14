@@ -1,8 +1,5 @@
 import moment from "moment";
-
-export function isEmpty(obj) {
-  return Object.keys(obj).length === 0;
-}
+import { isEmpty } from "../utils/AppUtil";
 
 export function validateOptionalNumber(field) {
   field.setError("");
@@ -40,6 +37,22 @@ export function validateRequiredMultiSelect(field) {
   return true;
 }
 
+export function validateRequiredLocation(field) {
+  field.setError("");
+  let valueExists = false;
+  if (!isEmpty(field.value)) {
+    field.value.forEach((v) => {
+      if (!isEmpty(v)) {
+        valueExists = true;
+      }
+    });
+  }
+  if (!valueExists) {
+    field.setError("Please select " + field.text);
+  }
+  return valueExists;
+}
+
 export function validateOptionalDate(field) {
   field.setError("");
   if (field.value) {
@@ -62,16 +75,14 @@ export function validateDate(field) {
   return true;
 }
 
-export function validAdvisoryData(advisoryData, mode) {
+export function validAdvisoryData(advisoryData, validateStatus, mode) {
   advisoryData.formError("");
   const validListingRank = validateOptionalNumber(advisoryData.listingRank);
   const validTicketNumber = validateOptionalNumber(advisoryData.ticketNumber);
   const validHeadline = validateRequiredText(advisoryData.headline);
   const validEventType = validateRequiredSelect(advisoryData.eventType);
-  const validAccessStatus = validateRequiredSelect(advisoryData.accessStatus);
-  const validDescription = validateRequiredText(advisoryData.description);
   const validUrgency = validateRequiredSelect(advisoryData.urgency);
-  const validLocations = validateRequiredMultiSelect(advisoryData.locations);
+  const validLocations = validateRequiredLocation(advisoryData.protectedArea);
   const validAdvisoryDate = validateRequiredDate(advisoryData.advisoryDate);
   const validStartDate = validateOptionalDate(advisoryData.startDate);
   const validEndDate = validateOptionalDate(advisoryData.endDate);
@@ -82,8 +93,6 @@ export function validAdvisoryData(advisoryData, mode) {
     validTicketNumber &&
     validHeadline &&
     validEventType &&
-    validAccessStatus &&
-    validDescription &&
     validUrgency &&
     validLocations &&
     validAdvisoryDate &&
@@ -91,15 +100,20 @@ export function validAdvisoryData(advisoryData, mode) {
     validEndDate &&
     validExpiryDate &&
     validSubmittedBy;
-  if (mode === "update") {
-    const validUpdatedDate = validateOptionalDate(advisoryData.updatedDate);
+  if (validateStatus) {
     const validAdvisoryStatus = validateRequiredSelect(
       advisoryData.advisoryStatus
     );
-    validData = validData && validUpdatedDate && validAdvisoryStatus;
+    validData = validData && validAdvisoryStatus;
+  }
+  if (mode === "update") {
+    const validUpdatedDate = validateOptionalDate(advisoryData.updatedDate);
+    validData = validData && validUpdatedDate;
   }
   if (!validData) {
-    advisoryData.formError("Errors found !!! Please enter valid information");
+    advisoryData.formError(
+      "Please enter valid information in all required fields."
+    );
   }
   return validData;
 }

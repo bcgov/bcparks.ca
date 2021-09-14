@@ -17,10 +17,6 @@
       "code":"APR"
     },
     {
-      "advisoryStatus": "Active",
-      "code":"ACT"
-    },
-    {
       "advisoryStatus": "Published",
       "code":"PUB"
     }

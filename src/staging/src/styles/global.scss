@@ -1,0 +1,299 @@
+$colorGold: #fcba19;
+$colorWhite: #fff;
+$colorWhiteOpacity: #ffffff90;
+$colorGrey: #eef1f5;
+$colorBlue: #003366;
+$desktopBreakpoint: 576px;
+$globalFont: "BCSans",Verdana,Arial,sans serif;
+
+html {
+  background-color: white;
+  font-family: $globalFont;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+  display: block;
+}
+
+/** Override BC-Gov style */
+footer #home-footer nav {
+  border-top: unset;
+}
+
+.line {
+  background-color: $colorGold;
+  height: 2px;
+}
+
+#header {
+  width: 100%;
+  padding-top: 5px;
+  overflow: visible;
+  background-color: $colorBlue;
+  > .navbar {
+    z-index: 1300;
+  }
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    height: 120px;
+  }
+}
+
+#header .navbar {
+  @media screen and (min-width: $desktopBreakpoint) {
+    height: 120px;
+  }
+}
+
+.navbar-nav {
+  flex-direction: unset !important;
+}
+
+#main {
+  box-sizing: border-box;
+  z-index: 2;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+}
+
+#bc-parks-logo {
+  margin-bottom: 0.5rem !important;
+  a img {
+    max-height: 36px;
+    max-width: 121px;
+  }
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    padding-left: 5vw;
+    a img {
+      max-height: unset;
+      max-width: unset;
+    }
+  }
+}
+
+/** Overrides CKEditor <p> wrapper element that has margin bottom */
+.no-mb {
+  margin-bottom: 0px !important;
+}
+
+.book-campsite {
+  height: 35px;
+  background-color: $colorGold;
+  border-radius: 40px;
+  width: 189px;
+}
+
+.book-campsite-inner {
+  color: $colorBlue;
+  font-size: 14px;
+  
+  @media screen and (min-width: $desktopBreakpoint) {
+    top: unset;
+  }
+}
+
+.book-campsite-nav {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.book-campsite-outer {
+  @media screen and (min-width: $desktopBreakpoint) {
+    padding-right: 5vw;
+  }
+}
+
+.book-campsite-logo {
+  transform: scale(0.7);
+}
+
+.footer-left-links {
+  padding-left: 40px !important;
+}
+
+#footer-logo > a > img {
+  height: 40px;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+#home-header {
+  .nav-item:not(:last-child) {
+    border-bottom: 1px solid white;
+  }
+  .header-search-group {
+    background-color: #7a94a5;
+    border-top-left-radius: 50em !important;
+    border-bottom-left-radius: 50em !important;
+    > .form-control {
+      background-color: #7a94a5 !important;
+    }
+  }
+}
+
+#home-footer {
+  max-width: 100%;
+  background-color: $colorBlue !important;
+  font-size: 14px !important;
+
+  > p {
+    padding: 40px 0 10px 0;
+    margin-bottom: 0;  
+  }
+  a {
+    color: $colorGrey;
+    text-decoration: none;
+  }
+  .footer-body {
+    height: 77.5%;
+  }
+  .home-footer .card-body {
+    font-size: 14px;
+  }
+  .footer-body .col {
+    padding: 0 40px;
+  }
+  .navbar {
+    border-top: 1px solid $colorWhite;
+    opacity: 0.65;
+  }
+  .footer-search-group {
+    background-color: #184775;
+    > .form-control {
+      opacity: 0.5;
+      background-color: #184775;
+    }
+  }
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    padding: 0 7.5% 0 7.5%;
+    #footer-social-icons {
+      height: 65px;
+    }
+    .footer-search-group {
+      max-width: 300px;
+      > .input-group-append {
+        height: 30px;
+      }
+    }
+    .input-group-text {
+      padding-top: 15px !important;
+    }
+  }
+}
+
+#home-alert span {
+  font-size: 14px !important;
+}
+
+#home-menu {
+  background-color: #255a8b;
+  > div {
+    padding-left: 6vw;
+  }
+  nav .nav-item  {
+    color: $colorWhite;
+  }
+  .nav-item:not(:last-child) {
+    border-right: 1px solid $colorWhite;
+  }
+}
+
+img.alert-exclamation {
+  transform: scale(0.8);
+}
+
+.footer-search-box {
+  font-size: 12px !important;
+  color: $colorWhite !important;
+}
+
+.footer-card-footer {
+  font-size: 12px;
+}
+
+.footer-card-footer .nav hr {
+  width: 1px;
+  height: 25px;
+  background-color: #eef1f5;
+}
+
+.footer-card-footer .nav {
+  border-top: 1px solid #eef1f5;
+}
+
+.footer-card-footer .nav-item:not(:last-child) {
+  border-right: 1px solid grey;
+}
+
+.footer-bottom-links {
+  border-top: 1px solid #ffffff90;
+}
+
+.footer-nav-links {
+  flex-direction: row;
+}
+
+.footer-nav-links {
+  opacity: 0.5;
+}
+
+.footer-nav-links .nav-item:not(:last-child) {
+border-right: 1px solid grey;
+padding-right: 20px;
+}
+
+.footer-nav-links .nav-item:not(:first-child) {
+padding-left: 20px;
+}
+
+.nav-menu-links .nav-item:not(:last-child) {
+  border-right: 1px solid $colorWhite;
+}
+
+.footer-card-footer .nav-link {
+  color: grey;
+}
+
+.footer-card-footer > .navbar {
+  border-top: 1px solid white;
+}
+
+.footing-hr {
+  height: 30px;
+}
+
+li.post-separator {
+  margin-top: -15px;
+}
+
+.footing-hr {
+  height: 1px;
+  background-color: rgba(252, 186, 25, 1);
+  width: 30px;
+  display: inline-block;
+}
+
+.alert-content,
+.alert {
+  margin-bottom: 0 !important;
+}
+
+.alert-content {
+  font-size: 14px;
+}
+
+.alert-warning {
+  background-color: #ffdd8b !important;
+}

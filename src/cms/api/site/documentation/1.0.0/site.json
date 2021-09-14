@@ -373,7 +373,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/sites/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -436,7 +438,7 @@
         },
         "parameters": [
           {
-            "name": "orcsSiteNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -499,7 +501,7 @@
         ],
         "parameters": [
           {
-            "name": "orcsSiteNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -600,6 +602,9 @@
               "url": {
                 "type": "string"
               },
+              "oldUrl": {
+                "type": "string"
+              },
               "typeCode": {
                 "type": "string",
                 "enum": [
@@ -628,35 +633,95 @@
               "featureId": {
                 "type": "integer"
               },
-              "managementAreas": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "sites": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "activities": {
+              "parkActivities": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "facilities": {
+              "parkFacilities": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
+              },
+              "parkNames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "hasCampfireBan": {
+                "type": "boolean"
+              },
+              "hasSmokingBan": {
+                "type": "boolean"
               },
               "fireZones": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
+              },
+              "managementAreas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "hasCampfireBanOverride": {
+                "type": "boolean"
+              },
+              "hasSmokingBanOverride": {
+                "type": "boolean"
+              },
+              "campfireBanRescindedDate": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "safetyInfo": {
+                "type": "string"
+              },
+              "specialNotes": {
+                "type": "string"
+              },
+              "locationNotes": {
+                "type": "string"
+              },
+              "parkContact": {
+                "type": "string"
+              },
+              "reservations": {
+                "type": "string"
+              },
+              "maps": {
+                "type": "string"
+              },
+              "managementPlanning": {
+                "type": "string"
+              },
+              "natureAndCulture": {
+                "type": "string"
+              },
+              "partnerships": {
+                "type": "string"
+              },
+              "purpose": {
+                "type": "string"
+              },
+              "reconciliationNotes": {
+                "type": "string"
+              },
+              "slug": {
+                "type": "string"
               },
               "published_at": {
                 "type": "string"
@@ -668,6 +733,110 @@
                 "type": "string"
               }
             }
+          },
+          "parkActivities": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "isActivityOpen": {
+                  "type": "boolean"
+                },
+                "isActive": {
+                  "type": "boolean"
+                },
+                "protectedArea": {
+                  "type": "string"
+                },
+                "site": {
+                  "type": "string"
+                },
+                "activityType": {
+                  "type": "string"
+                },
+                "modifiedBy": {
+                  "type": "string"
+                },
+                "modifiedDate": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "parkFacilities": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "isFacilityOpen": {
+                  "type": "boolean"
+                },
+                "isActive": {
+                  "type": "boolean"
+                },
+                "protectedArea": {
+                  "type": "string"
+                },
+                "site": {
+                  "type": "string"
+                },
+                "facilityType": {
+                  "type": "string"
+                },
+                "modifiedBy": {
+                  "type": "string"
+                },
+                "modifiedDate": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "isUnofficialSite": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string"
           },
           "published_at": {
             "type": "string",
@@ -713,6 +882,24 @@
             "type": "string"
           },
           "protectedArea": {
+            "type": "string"
+          },
+          "parkActivities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "parkFacilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isUnofficialSite": {
+            "type": "boolean"
+          },
+          "note": {
             "type": "string"
           },
           "published_at": {

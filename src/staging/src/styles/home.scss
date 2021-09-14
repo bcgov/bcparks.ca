@@ -1,0 +1,354 @@
+$colorBlue: #003366;
+$colorBlueOpacity: #00336690;
+$colorGold: #fcba19;
+$colorGrey: #eef1f5;
+$colorWhite: #fff;
+$desktopBreakpoint: 576px;
+
+/** Center vertical align in a parent with absolute positioning(grid-card/card-body) */
+.v-align-abs {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.zone-links {
+  padding: 0 20px 0 20px;
+  margin-top: 40px;
+  // Normally would use .row gutters but something was causing x overflow, so this will work for now
+  @media screen and (min-width: $desktopBreakpoint) {
+    .advisory:first-child {
+      padding-right: 5px;
+    }
+    .advisory:last-child {
+      padding-left: 5px;
+    }  
+  }
+}
+
+.zone-cards {
+  margin-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.zone-cards .card-text {
+  line-height: normal !important;
+}
+
+.zone-content {
+  margin: 0 20px 0 20px;
+}
+
+.zone-header {
+  margin: 0 20px 0 20px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    font-size: 36px;
+  }
+}
+
+.zone-header-small {
+  margin: 0 40px 0 40px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    font-size: 36px;
+  }
+}
+
+.zone-hr > hr {
+  margin: 15px 36px 10px 20px;
+  height: 2px;
+  background-color: $colorGold;
+  width: 35px;
+  display: inline-block;
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    margin: 35px 20px 20px 20px;
+    width: 75px;
+  }
+}
+
+.card {
+  border: unset;
+}
+
+.link-override {
+  text-decoration: none;
+  color: $colorBlue;
+}
+
+.grid-card {
+  border: unset !important;
+  background-color: unset !important;
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    width: 100%;
+  }
+}
+
+.padded-link {
+  margin-left: 36px;
+}
+
+.card-col-padding {
+  max-height: 316px;
+  
+  @media screen and (min-width: $desktopBreakpoint) {
+    max-height: 579px;
+  }
+}
+
+.card-col-padding:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.link-img > img {
+  height: 219px;
+}
+
+.card-img > img {
+  height: 316px;
+  width: 100%;
+  
+  @media screen and (min-width: $desktopBreakpoint) {
+    height: 579px;
+  }
+}
+
+.full-horizontal-img {
+  height: 100%;
+  > img {
+    height: 100%;
+    max-width: 90vw;
+  }
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    max-width: fit-content;
+    max-height: 432px;
+  }
+}
+
+.card-img,
+.horizontal-card-img,
+.full-horizontal-img {
+  margin-bottom: unset;
+}
+
+.horizontal-card-img > img {
+  max-height: 166px;
+  width: 100%;
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    max-height: 379px;
+  }
+}
+
+.grid-card .card-body {
+  font-size: 16px;
+  color: $colorWhite;
+  background-color: $colorBlueOpacity;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 52.5%;
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    height: 33.3%;
+  }
+}
+
+.horizontal-card-body {
+  height: 50%;
+}
+
+.card-body-header {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.card-body-header > a {
+  font-size: 18px;
+  color: $colorGold;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.underline {
+  text-decoration: underline !important;
+}
+
+#home-alert {
+  color: $colorBlue;
+  a {
+    color: $colorBlue;
+  }
+}
+
+#home-advisories {
+  color: $colorBlue;
+  padding-top: 40px;
+
+  .advisory-button {
+    background-color: $colorBlue !important;
+    color: $colorWhite;
+    height: 49px;
+    text-align: center;
+  }
+  .advisory-content {
+    font-size: 16px;
+    color: $colorWhite;
+    text-align: center;
+  }
+  .advisory > p {
+    margin-bottom: 5px;
+  }
+  .advisory .fa-chevron-circle-right {
+    color: $colorGold;
+    padding-left: 30px;
+    font-size: 20px;
+  }
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    .advisory .fa-chevron-circle-right { 
+      font-size: 25px;
+    }
+    .advisory-button {
+      height: 90px;
+    }
+  }
+
+}
+
+#home-plan-your-trip {
+  color: $colorBlue;
+  padding-top: 30px;
+  margin-top: 50px;
+  padding-bottom: 40px;
+}
+
+#home-about-bc-parks {
+  color: $colorBlue;
+  padding-top: 30px;
+  padding-bottom: 40px;
+}
+
+#home-news,
+#home-get-involved {
+  color: $colorBlue;
+  background-color: $colorGrey;
+
+  .split-card-body {
+    background-color: $colorGrey;
+    bottom: unset;
+    color: $colorBlue;
+    padding-top: 15% !important;
+  }
+  .split-card-body .card-title {
+    margin: 0 36px 10px 36px;
+  }
+  .split-card .col-6 {
+    background-color: $colorGrey;
+  }
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    .fa-chevron-circle-right {
+      font-size: 36px;
+      color: $colorGold;
+    }
+    .full-horizontal-img > img {
+      max-width: fit-content;
+      max-height: 432px;
+    }
+    .right-chevron > img {
+      transform: scale(0.5);
+    }
+    .zone-hr, .card-text {
+      padding-top: 15px;
+    }
+  }
+}
+
+#home-carousel {
+  .carousel-indicators {
+    bottom: 15%;
+    justify-content: center;
+
+    > li, li.active {
+      width: 5px;
+      height: 5px;
+      border: 1px;
+      border-radius: 5px;
+      background-color: $colorWhite !important;
+      opacity: unset;
+    }
+    > li.active {
+      background-color: $colorGold !important;
+    }
+  }
+  .carousel-caption {
+    right: 2.5% !important;
+    bottom: 2.5% !important;
+    padding-bottom: 0px !important;
+    > p {
+      padding-bottom: 0px !important;
+    }
+  }
+
+  @media screen and (min-width: 801px) {
+    .carousel-item img {
+      height: auto;
+    }
+    .carousel-inner, .carousel-item {
+      max-height: 742px;
+    }
+    .carousel-indicators {
+      margin-right: 32px !important;
+      bottom: 75px;
+      justify-content: flex-end;
+      > li, li.active {
+        height: 15px !important;
+        width: 15px !important;
+        border: 1px;
+        border-radius: 15px;
+        background-color: $colorWhite !important;
+        opacity: unset;
+      }
+      > li.active {
+        background-color: $colorGold !important;
+      }
+    }
+    .carousel-caption {
+      right: 32px !important;
+      bottom: 32px !important;
+    }
+  }
+}
+
+#carousel-down {
+  @media screen and (min-width: 801px) { 
+    position: absolute;
+    top: calc(100% - 7.5vh);
+    font-size: 36px;
+  }
+}
+
+.split-card-body .zone-hr > hr {
+  margin: 20px 0px 10px 0;
+}
+
+#Zone2 {
+  background-color: rgba(238, 241, 245, 1);
+}
+#Zone4 {
+  background-color: rgba(238, 241, 245, 1);
+}
+#Zone5 {
+  background-color: rgba(238, 241, 245, 1);
+}

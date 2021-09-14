@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useKeycloak } from "@react-keycloak/web";
 import { Button } from "shared-components/build/components/button/Button";
@@ -6,14 +7,29 @@ import Header from "../../composite/header/Header";
 import styles from "./Home.css";
 
 export default function Home({ page: { setError } }) {
-  const { keycloak } = useKeycloak();
-  return (
-    <main>
-      <Header
-        header={{
-          name: "",
+  const { initialized, keycloak } = useKeycloak();
+  const [toDashboard, setToDashboard] = useState(false);
+
+  useEffect(() => {
+    if (initialized && keycloak.authenticated) {
+      setToDashboard(true);
+    }
+  }, [initialized, keycloak]);
+
+  if (toDashboard) {
+    return (
+      <Redirect
+        to={{
+          pathname: `/bcparks/dashboard`,
+          index: 0,
         }}
       />
+    );
+  }
+
+  return (
+    <main>
+      <Header />
       <div className={styles.Home} data-testid="Home">
         <div className="container hm-container">
           <h1>BC Parks Staff Portal</h1>
@@ -27,11 +43,11 @@ export default function Home({ page: { setError } }) {
                     <Button
                       onClick={() =>
                         keycloak.login({
-                          redirectUri: `${process.env.REACT_APP_FRONTEND_BASE_URL}/bcparks/advisory-dash`,
+                          redirectUri: `${process.env.REACT_APP_FRONTEND_BASE_URL}/bcparks/dashboard`,
                         })
                       }
                       label="Login"
-                      styling="bcgov-normal-yellow btn"
+                      styling="bcgov-normal-blue btn"
                     />
                   </div>
                 </div>

@@ -2,12 +2,19 @@ import React, { useState } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Home from "../components/page/home/Home";
 import Error from "../components/page/error/Error";
-import AdvisoryDashboard from "../components/page/advisoryDashboard/AdvisoryDashboard";
+import About from "../components/page/about/About";
 import Advisory from "../components/page/advisory/Advisory";
 import AdvisorySummary from "../components/page/advisorySummary/AdvisorySummary";
+import AppDashboard from "../components/page/appDashboard/AppDashboard";
+import ParkInfo from "../components/page/parkInfo/ParkInfo";
+import { PrivateRoute } from "../auth/PrivateRoute";
+import CmsContents from "../components/page/cmsContents/CmsContents";
+import ParkAccessStatus from "../components/page/parkAccessStatus/ParkAccessStatus";
 
 function AppRouter() {
   const [error, setError] = useState({});
+  const [cmsData, setCmsData] = useState({});
+
   return (
     <div>
       <BrowserRouter>
@@ -16,18 +23,45 @@ function AppRouter() {
           <Route exact path="/bcparks">
             <Home page={{ setError }} />
           </Route>
-          <Route path="/bcparks/advisory-dash">
-            <AdvisoryDashboard page={{ setError }} />
+          <Route exact path="/bcparks/about">
+            <About />
           </Route>
-          <Route path="/bcparks/create-advisory">
-            <Advisory mode="create" page={{ setError }} />
+          <Route exact path="/bcparks/cms-contents">
+            <CmsContents />
           </Route>
-          <Route path="/bcparks/update-advisory/:id">
-            <Advisory mode="update" page={{ setError }} />
+          <Route exact path="/bcparks/park-access-status">
+            <ParkAccessStatus />
           </Route>
-          <Route path="/bcparks/advisory-summary/:id">
-            <AdvisorySummary page={{ setError }} />
-          </Route>
+          <PrivateRoute
+            roles={["submitter", "approver"]}
+            path="/bcparks/dashboard"
+            component={AppDashboard}
+            props={{ page: { setError, cmsData, setCmsData } }}
+          />
+          <PrivateRoute
+            roles={["approver"]}
+            path="/bcparks/park-info/:id"
+            component={ParkInfo}
+            props={{ page: { setError, cmsData, setCmsData } }}
+          />
+          <PrivateRoute
+            roles={["submitter", "approver"]}
+            path="/bcparks/create-advisory"
+            component={Advisory}
+            props={{ mode: "create", page: { setError, cmsData, setCmsData } }}
+          />
+          <PrivateRoute
+            roles={["submitter", "approver"]}
+            path="/bcparks/update-advisory/:id"
+            component={Advisory}
+            props={{ mode: "update", page: { setError, cmsData, setCmsData } }}
+          />
+          <PrivateRoute
+            roles={["submitter", "approver"]}
+            path="/bcparks/advisory-summary/:id"
+            component={AdvisorySummary}
+            props={{ page: { setError, cmsData, setCmsData } }}
+          />
           <Route path="/bcparks/error">
             <Error page={{ error }} />
           </Route>

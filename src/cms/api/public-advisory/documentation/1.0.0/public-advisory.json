@@ -316,7 +316,7 @@
         "parameters": []
       }
     },
-    "/public-advisories/{id}": {
+    "/public-advisories/{advisoryNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -372,7 +372,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "advisoryNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -382,7 +382,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/public-advisories/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -538,6 +540,9 @@
           "advisoryNumber": {
             "type": "integer"
           },
+          "revisionNumber": {
+            "type": "integer"
+          },
           "title": {
             "type": "string"
           },
@@ -564,6 +569,21 @@
           },
           "mapZoom": {
             "type": "integer"
+          },
+          "isReservationsAffected": {
+            "type": "boolean"
+          },
+          "isAdvisoryDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEffectiveDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEndDateDisplayed": {
+            "type": "boolean"
+          },
+          "isUpdatedDateDisplayed": {
+            "type": "boolean"
           },
           "submittedBy": {
             "type": "string"
@@ -620,6 +640,9 @@
               "precedence": {
                 "type": "integer"
               },
+              "color": {
+                "type": "string"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -670,6 +693,9 @@
               "sequence": {
                 "type": "integer"
               },
+              "color": {
+                "type": "string"
+              },
               "published_at": {
                 "type": "string"
               },
@@ -705,21 +731,6 @@
                 "type": "string"
               }
             }
-          },
-          "isReservationsAffected": {
-            "type": "boolean"
-          },
-          "isAdvisoryDateDisplayed": {
-            "type": "boolean"
-          },
-          "isEffectiveDateDisplayed": {
-            "type": "boolean"
-          },
-          "isEndDateDisplayed": {
-            "type": "boolean"
-          },
-          "isUpdatedDateDisplayed": {
-            "type": "boolean"
           },
           "protectedAreas": {
             "type": "array",
@@ -768,6 +779,9 @@
                 "url": {
                   "type": "string"
                 },
+                "oldUrl": {
+                  "type": "string"
+                },
                 "typeCode": {
                   "type": "string",
                   "enum": [
@@ -796,35 +810,95 @@
                 "featureId": {
                   "type": "integer"
                 },
-                "managementAreas": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "sites": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
-                "activities": {
+                "parkActivities": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
-                "facilities": {
+                "parkFacilities": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
+                },
+                "parkNames": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "hasCampfireBan": {
+                  "type": "boolean"
+                },
+                "hasSmokingBan": {
+                  "type": "boolean"
                 },
                 "fireZones": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
+                },
+                "managementAreas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "hasCampfireBanOverride": {
+                  "type": "boolean"
+                },
+                "hasSmokingBanOverride": {
+                  "type": "boolean"
+                },
+                "campfireBanRescindedDate": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "safetyInfo": {
+                  "type": "string"
+                },
+                "specialNotes": {
+                  "type": "string"
+                },
+                "locationNotes": {
+                  "type": "string"
+                },
+                "parkContact": {
+                  "type": "string"
+                },
+                "reservations": {
+                  "type": "string"
+                },
+                "maps": {
+                  "type": "string"
+                },
+                "managementPlanning": {
+                  "type": "string"
+                },
+                "natureAndCulture": {
+                  "type": "string"
+                },
+                "partnerships": {
+                  "type": "string"
+                },
+                "purpose": {
+                  "type": "string"
+                },
+                "reconciliationNotes": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
                 },
                 "published_at": {
                   "type": "string"
@@ -855,6 +929,15 @@
                   "type": "string"
                 },
                 "type": {
+                  "type": "string"
+                },
+                "file": {
+                  "type": "string"
+                },
+                "publicAdvisoryAudit": {
+                  "type": "string"
+                },
+                "publicAdvisory": {
                   "type": "string"
                 },
                 "published_at": {
@@ -968,8 +1051,11 @@
                 "section": {
                   "type": "string"
                 },
-                "protectedArea": {
-                  "type": "string"
+                "protectedAreas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "region": {
                   "type": "string"
@@ -1008,6 +1094,151 @@
                 "fireCentre": {
                   "type": "string"
                 },
+                "protectedAreas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "sites": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "orcsSiteNumber"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "siteName": {
+                  "type": "string"
+                },
+                "siteNumber": {
+                  "type": "integer"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "establishedDate": {
+                  "type": "string"
+                },
+                "repealedDate": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "latitude": {
+                  "type": "number"
+                },
+                "longitude": {
+                  "type": "number"
+                },
+                "mapZoom": {
+                  "type": "integer"
+                },
+                "orcsSiteNumber": {
+                  "type": "string"
+                },
+                "protectedArea": {
+                  "type": "string"
+                },
+                "parkActivities": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "parkFacilities": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "isUnofficialSite": {
+                  "type": "boolean"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "fireCentres": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "fireCentreNumber": {
+                  "type": "integer"
+                },
+                "fireCentreName": {
+                  "type": "string"
+                },
+                "fireZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "standardMessages": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "eventType": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },
@@ -1029,6 +1260,9 @@
       "NewPublic-advisory": {
         "properties": {
           "advisoryNumber": {
+            "type": "integer"
+          },
+          "revisionNumber": {
             "type": "integer"
           },
           "title": {
@@ -1057,6 +1291,21 @@
           },
           "mapZoom": {
             "type": "integer"
+          },
+          "isReservationsAffected": {
+            "type": "boolean"
+          },
+          "isAdvisoryDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEffectiveDateDisplayed": {
+            "type": "boolean"
+          },
+          "isEndDateDisplayed": {
+            "type": "boolean"
+          },
+          "isUpdatedDateDisplayed": {
+            "type": "boolean"
           },
           "submittedBy": {
             "type": "string"
@@ -1111,21 +1360,6 @@
           "advisoryStatus": {
             "type": "string"
           },
-          "isReservationsAffected": {
-            "type": "boolean"
-          },
-          "isAdvisoryDateDisplayed": {
-            "type": "boolean"
-          },
-          "isEffectiveDateDisplayed": {
-            "type": "boolean"
-          },
-          "isEndDateDisplayed": {
-            "type": "boolean"
-          },
-          "isUpdatedDateDisplayed": {
-            "type": "boolean"
-          },
           "protectedAreas": {
             "type": "array",
             "items": {
@@ -1157,6 +1391,24 @@
             }
           },
           "fireZones": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sites": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fireCentres": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "standardMessages": {
             "type": "array",
             "items": {
               "type": "string"

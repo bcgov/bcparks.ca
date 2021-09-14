@@ -41,6 +41,10 @@
   color: #e3a82b !important;
 }
 
+.helpIcon {
+  color: #234075 !important;
+}
+
 .bcgov-normal-blue {
   color: white !important;
   font-weight: 700 !important;
@@ -202,12 +206,25 @@
   width: 100% !important;
 }
 
+.pt2b2 {
+  padding: 2px 0px !important;
+}
+
 .p10 {
   padding: 10px 0px !important;
 }
 
-.ptm3 {
+.pt10b30 {
+  padding-top: 10px !important;
+  padding-bottom: 30px !important;
+}
+
+.pt3 {
   padding-top: 3px !important;
+}
+
+.mr3 {
+  margin-right: 3px !important;
 }
 
 .pbm3 {
@@ -226,8 +243,20 @@
   margin-right: 40px !important;
 }
 
+.mt10 {
+  margin-top: 10px !important;
+}
+
+.mt20 {
+  margin-top: 20px !important;
+}
+
 .mrm10 {
   margin-right: -10px !important;
+}
+
+.mr10 {
+  margin-right: 10px !important;
 }
 
 .txt-center {
@@ -267,6 +296,14 @@
 .bcgov-datepicker-wrapper-error input,
 .bcgov-select-error [class*="-control"] {
   border-color: red !important;
+}
+
+.wrap-text {
+  overflow-wrap: anywhere !important;
+}
+
+.transform-none {
+  text-transform: none !important;
 }
 
 @media (max-width: 575.98px) {

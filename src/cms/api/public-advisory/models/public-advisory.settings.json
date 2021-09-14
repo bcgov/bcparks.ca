@@ -14,6 +14,9 @@
     "advisoryNumber": {
       "type": "integer"
     },
+    "revisionNumber": {
+      "type": "integer"
+    },
     "title": {
       "type": "string"
     },
@@ -40,6 +43,21 @@
     },
     "mapZoom": {
       "type": "integer"
+    },
+    "isReservationsAffected": {
+      "type": "boolean"
+    },
+    "isAdvisoryDateDisplayed": {
+      "type": "boolean"
+    },
+    "isEffectiveDateDisplayed": {
+      "type": "boolean"
+    },
+    "isEndDateDisplayed": {
+      "type": "boolean"
+    },
+    "isUpdatedDateDisplayed": {
+      "type": "boolean"
     },
     "submittedBy": {
       "type": "string"
@@ -86,26 +104,12 @@
     "advisoryStatus": {
       "model": "advisory-status"
     },
-    "isReservationsAffected": {
-      "type": "boolean"
-    },
-    "isAdvisoryDateDisplayed": {
-      "type": "boolean"
-    },
-    "isEffectiveDateDisplayed": {
-      "type": "boolean"
-    },
-    "isEndDateDisplayed": {
-      "type": "boolean"
-    },
-    "isUpdatedDateDisplayed": {
-      "type": "boolean"
-    },
     "protectedAreas": {
       "collection": "protected-area"
     },
     "links": {
-      "collection": "link"
+      "collection": "link",
+      "via": "publicAdvisory"
     },
     "regions": {
       "collection": "region"
@@ -118,6 +122,15 @@
     },
     "fireZones": {
       "collection": "fire-zone"
+    },
+    "sites": {
+      "collection": "site"
+    },
+    "fireCentres": {
+      "collection": "fire-centre"
+    },
+    "standardMessages": {
+      "collection": "standard-message"
     }
   }
 }

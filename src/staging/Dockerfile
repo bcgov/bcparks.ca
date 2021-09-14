@@ -1,6 +1,11 @@
 # pull official base image
 FROM registry.access.redhat.com/ubi8/nodejs-14
 
+ARG REACT_APP_CMS_BASE_URL
+
+ENV REACT_APP_CMS_BASE_URL=${REACT_APP_CMS_BASE_URL}
+ENV VERBOSE=1
+
 # set working directory
 # WORKDIR /web
 USER 0
@@ -15,14 +20,20 @@ RUN yum install -y \
     openssh && \
     mkdir -p /opt/app-root/src/app/node_modules && \
     mkdir -p /opt/app-root/src/app/site && \
+    mkdir -p /opt/app-root/src/public && \
     chmod -R 777 /opt/app-root/src && \
+    chmod -R a+rwx /opt/app-root/src/public && \
+    setfacl -dRm u:1007770000:rwx /opt/app-root/src/public && \
+    setfacl -dRm u:default:rwx /opt/app-root/src/public && \
     pip3 install virtualenv 
 
 # install app dependencies
 USER 1007770000
 COPY package.json ./
 RUN npm install --unsafe-perm 
+# RUN npm install -g mocha
 RUN npm install -g gatsby-cli
+RUN gatsby build
 
 # add bash to the image
 # RUN apk add --no-cache bash

@@ -52,6 +52,9 @@
     "url": {
       "type": "string"
     },
+    "oldUrl": {
+      "type": "string"
+    },
     "typeCode": {
       "type": "enumeration",
       "enum": [
@@ -80,22 +83,83 @@
     "featureId": {
       "type": "integer"
     },
-    "managementAreas": {
-      "via": "protectedArea",
-      "collection": "management-area"
-    },
     "sites": {
       "via": "protectedArea",
       "collection": "site"
     },
-    "activities": {
-      "collection": "activity"
+    "parkActivities": {
+      "via": "protectedArea",
+      "collection": "park-activity"
     },
-    "facilities": {
-      "collection": "facility"
+    "parkFacilities": {
+      "via": "protectedArea",
+      "collection": "park-facility"
+    },
+    "parkNames": {
+      "via": "protectedArea",
+      "collection": "park-name"
+    },
+    "hasCampfireBan": {
+      "type": "boolean"
+    },
+    "hasSmokingBan": {
+      "type": "boolean"
     },
     "fireZones": {
+      "via": "protectedAreas",
       "collection": "fire-zone"
+    },
+    "managementAreas": {
+      "via": "protectedAreas",
+      "collection": "management-area"
+    },
+    "hasCampfireBanOverride": {
+      "type": "boolean"
+    },
+    "hasSmokingBanOverride": {
+      "type": "boolean"
+    },
+    "campfireBanRescindedDate": {
+      "type": "date"
+    },
+    "description": {
+      "type": "text"
+    },
+    "safetyInfo": {
+      "type": "text"
+    },
+    "specialNotes": {
+      "type": "text"
+    },
+    "locationNotes": {
+      "type": "text"
+    },
+    "parkContact": {
+      "type": "text"
+    },
+    "reservations": {
+      "type": "text"
+    },
+    "maps": {
+      "type": "text"
+    },
+    "managementPlanning": {
+      "type": "text"
+    },
+    "natureAndCulture": {
+      "type": "text"
+    },
+    "partnerships": {
+      "type": "text"
+    },
+    "purpose": {
+      "type": "text"
+    },
+    "reconciliationNotes": {
+      "type": "text"
+    },
+    "slug": {
+      "type": "string"
     }
   }
 }

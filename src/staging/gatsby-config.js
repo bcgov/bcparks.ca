@@ -1,17 +1,40 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `BC Parks Staging Site`,
+    description: `BC Parks Staging Site`,
+    author: `@bcparks`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sass`,
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
         path: `${__dirname}/src/images`,
+      },
+    },
+    {
+      resolve: "gatsby-source-strapi",
+      options: {
+        apiURL: process.env.REACT_APP_CMS_BASE_URL,
+        collectionTypes: [
+          "urgency",
+          "protected-area",
+          "public-advisory",
+          "park-access-status",
+          "park-photo",
+          `Websites`,
+          `Pages`,
+          "activity-types",
+          "facility-types",
+        ],
+        queryLimit: -1,
       },
     },
     `gatsby-transformer-sharp`,
@@ -25,7 +48,15 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/bcid-favicon-32x32.png`, // This path is relative to the root of the site.
+      },
+    },
+    {
+      resolve: `gatsby-plugin-material-ui`,
+      options: {
+        stylesProvider: {
+          injectFirst: true,
+        },
       },
     },
     `gatsby-plugin-gatsby-cloud`,

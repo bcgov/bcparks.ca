@@ -46,6 +46,20 @@
     "protectedArea": {
       "via": "sites",
       "model": "protected-area"
+    },
+    "parkActivities": {
+      "via": "site",
+      "collection": "park-activity"
+    },
+    "parkFacilities": {
+      "via": "site",
+      "collection": "park-facility"
+    },
+    "isUnofficialSite": {
+      "type": "boolean"
+    },
+    "note": {
+      "type": "string"
     }
   }
 }

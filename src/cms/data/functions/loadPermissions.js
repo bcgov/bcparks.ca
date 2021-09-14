@@ -5,31 +5,40 @@ const createApiUser = async () => {
   const password = await strapi.admin.services.auth.hashPassword(
     process.env.API_USER_PASSWORD
   );
+  const params = {
+    username: process.env.API_USER_NAME,
+    email: process.env.API_USER_EMAIL,
+    password: password,
+    provider: "local",
+    confirmed: true,
+    blocked: false,
+    role: authRole,
+  };
   const apiUser = await Promise.resolve(
     strapi.query("user", "users-permissions").create({
-      username: process.env.API_USER_NAME,
-      email: process.env.API_USER_EMAIL,
-      password: password,
-      provider: "local",
-      confirmed: true,
-      blocked: false,
-      role: authRole,
+      ...params,
     })
   );
+  strapi.log.info("API user was successfully created.");
+  strapi.log.info(`Email: ${params.email}`);
   return apiUser;
 };
 
 const createApiToken = async () => {
   try {
     const apiUser = await createApiUser();
-    Promise.resolve(
-      strapi.services["token"].create({
+    return await strapi.services["token"]
+      .create({
         token: process.env.API_TOKEN,
         user: apiUser,
       })
-    );
+      .then(() => {
+        strapi.log.info("API token successfully created.");
+        return true;
+      });
   } catch (error) {
     strapi.log.error(error);
+    return false;
   }
 };
 
@@ -60,8 +69,14 @@ const setPublicPermissions = async () => {
     .query("permission", "users-permissions")
     .find({
       type: "application",
+      controller_nin: [
+        "token",
+        "statutory-holidays",
+        "public-advisory-audit",
+        "x-data-load-setting",
+      ],
       role: publicRole.id,
-      action_in: ["find", "findone", "names"],
+      action_in: ["count", "find", "findone", "names", "items", "status"],
       _limit: -1,
     });
   await Promise.all(
@@ -74,8 +89,15 @@ const setPublicPermissions = async () => {
 };
 
 const setDefaultPermissions = async () => {
-  await setAuthPermissions();
-  await setPublicPermissions();
+  return Promise.all([setAuthPermissions(), setPublicPermissions()])
+    .then(() => {
+      strapi.log.info("Default permissions successfully set.");
+      return true;
+    })
+    .catch((error) => {
+      strapi.log.error(error);
+      return false;
+    });
 };
 
 const createAdmin = async () => {
@@ -114,10 +136,16 @@ const createAdmin = async () => {
         });
         strapi.log.info("Admin account was successfully created.");
         strapi.log.info(`Email: ${params.email}`);
+        return true;
+      } else {
+        return false;
       }
+    } else {
+      return false;
     }
   } catch (error) {
     strapi.log.error(`Couldn't create Admin account during bootstrap: `, error);
+    return false;
   }
 };
 

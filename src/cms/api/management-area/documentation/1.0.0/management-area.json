@@ -316,7 +316,7 @@
         "parameters": []
       }
     },
-    "/management-areas/{ManagementAreaNumber}": {
+    "/management-areas/{managementAreaNumber}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -372,7 +372,7 @@
         ],
         "parameters": [
           {
-            "name": "ManagementAreaNumber",
+            "name": "managementAreaNumber",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -382,7 +382,9 @@
             }
           }
         ]
-      },
+      }
+    },
+    "/management-areas/{id}": {
       "put": {
         "deprecated": false,
         "description": "Update a record",
@@ -449,7 +451,7 @@
         },
         "parameters": [
           {
-            "name": "ManagementAreaNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -512,7 +514,7 @@
         ],
         "parameters": [
           {
-            "name": "ManagementAreaNumber",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
@@ -577,117 +579,183 @@
               }
             }
           },
-          "protectedArea": {
-            "required": [
-              "id",
-              "orcs"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "orcs": {
-                "type": "integer"
-              },
-              "protectedAreaName": {
-                "type": "string"
-              },
-              "totalArea": {
-                "type": "number"
-              },
-              "uplandArea": {
-                "type": "number"
-              },
-              "marineArea": {
-                "type": "number"
-              },
-              "marineProtectedArea": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              },
-              "class": {
-                "type": "string"
-              },
-              "establishedDate": {
-                "type": "string"
-              },
-              "repealedDate": {
-                "type": "string"
-              },
-              "status": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "typeCode": {
-                "type": "string",
-                "enum": [
-                  "PK",
-                  "PA",
-                  "RA",
-                  "ER",
-                  "CS"
-                ]
-              },
-              "latitude": {
-                "type": "number"
-              },
-              "longitude": {
-                "type": "number"
-              },
-              "mapZoom": {
-                "type": "integer"
-              },
-              "isDayUsePass": {
-                "type": "boolean"
-              },
-              "isFogZone": {
-                "type": "boolean"
-              },
-              "featureId": {
-                "type": "integer"
-              },
-              "managementAreas": {
-                "type": "array",
-                "items": {
+          "protectedAreas": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "orcs"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "orcs": {
+                  "type": "integer"
+                },
+                "protectedAreaName": {
+                  "type": "string"
+                },
+                "totalArea": {
+                  "type": "number"
+                },
+                "uplandArea": {
+                  "type": "number"
+                },
+                "marineArea": {
+                  "type": "number"
+                },
+                "marineProtectedArea": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "class": {
+                  "type": "string"
+                },
+                "establishedDate": {
+                  "type": "string"
+                },
+                "repealedDate": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "oldUrl": {
+                  "type": "string"
+                },
+                "typeCode": {
+                  "type": "string",
+                  "enum": [
+                    "PK",
+                    "PA",
+                    "RA",
+                    "ER",
+                    "CS"
+                  ]
+                },
+                "latitude": {
+                  "type": "number"
+                },
+                "longitude": {
+                  "type": "number"
+                },
+                "mapZoom": {
+                  "type": "integer"
+                },
+                "isDayUsePass": {
+                  "type": "boolean"
+                },
+                "isFogZone": {
+                  "type": "boolean"
+                },
+                "featureId": {
+                  "type": "integer"
+                },
+                "sites": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "parkActivities": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "parkFacilities": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "parkNames": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "hasCampfireBan": {
+                  "type": "boolean"
+                },
+                "hasSmokingBan": {
+                  "type": "boolean"
+                },
+                "fireZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "managementAreas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "hasCampfireBanOverride": {
+                  "type": "boolean"
+                },
+                "hasSmokingBanOverride": {
+                  "type": "boolean"
+                },
+                "campfireBanRescindedDate": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "safetyInfo": {
+                  "type": "string"
+                },
+                "specialNotes": {
+                  "type": "string"
+                },
+                "locationNotes": {
+                  "type": "string"
+                },
+                "parkContact": {
+                  "type": "string"
+                },
+                "reservations": {
+                  "type": "string"
+                },
+                "maps": {
+                  "type": "string"
+                },
+                "managementPlanning": {
+                  "type": "string"
+                },
+                "natureAndCulture": {
+                  "type": "string"
+                },
+                "partnerships": {
+                  "type": "string"
+                },
+                "purpose": {
+                  "type": "string"
+                },
+                "reconciliationNotes": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
                   "type": "string"
                 }
-              },
-              "sites": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "activities": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "facilities": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "fireZones": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "published_at": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
               }
             }
           },
@@ -749,8 +817,11 @@
           "section": {
             "type": "string"
           },
-          "protectedArea": {
-            "type": "string"
+          "protectedAreas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "region": {
             "type": "string"

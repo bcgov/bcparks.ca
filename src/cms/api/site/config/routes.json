@@ -34,7 +34,7 @@
     },
     {
       "method": "PUT",
-      "path": "/sites/:orcsSiteNumber",
+      "path": "/sites/:id",
       "handler": "site.update",
       "config": {
         "policies": []
@@ -42,7 +42,7 @@
     },
     {
       "method": "DELETE",
-      "path": "/sites/:orcsSiteNumber",
+      "path": "/sites/:id",
       "handler": "site.delete",
       "config": {
         "policies": []

@@ -28,6 +28,9 @@
     },
     "fireZone": {
       "model": "fire-zone"
+    },
+    "fireCentreSource": {
+      "type": "string"
     }
   }
 }
