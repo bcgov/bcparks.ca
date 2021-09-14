@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import { Container, Grid, CssBaseline, Toolbar } from "@material-ui/core"
+import { Container, Grid, CssBaseline, Hidden } from "@material-ui/core"
 import ParkOverview from "../components/park/parkOverview"
 import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
@@ -11,7 +11,7 @@ import Reconciliation from "../components/park/reconciliation"
 import ParkHeader from "../components/park/parkHeader"
 import ParkActivity from "../components/park/parkActivity"
 import ParkFacility from "../components/park/parkFacility"
-import ParkMap from "../components/park/parkMapDetails"
+import ParkMapDetails from "../components/park/parkMapDetails"
 import MapLocation from "../components/park/mapLocation"
 import ParkMenu from "../components/park/parkMenu"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
@@ -19,7 +19,7 @@ import ScrollToTop from "../components/scrollToTop"
 import { makeStyles } from "@material-ui/core/styles"
 import Header from "../components/header"
 
-import "./parkTemplate.css"
+import "../styles/park-template.scss"
 
 const drawerWidth = 320
 
@@ -56,16 +56,22 @@ export default function ParkTemplate({ data }) {
       </Helmet>
       <ScrollToTop />
       <CssBaseline />
-      <Header>{data.strapiWebsites.Header}</Header>
+      <Header>{data.strapiWebsites.Header}</Header>{" "}
+      <Hidden smUp implementation="css">
+        <Grid item xs={12} sm={12}>
+          <ParkPhotoGallery photos={photos} />
+        </Grid>
+      </Hidden>
       <div className="container">
-        <Toolbar />
         <Container id="park-info-container" maxWidth={false}>
           <Grid container spacing={2}>
-            <Grid xs={12} sm={12}>
+            <Grid item xs={12} sm={12}>
               <ParkHeader data={parkStatusData} />
             </Grid>
-            <Grid xs={12} sm={12}>
-              <ParkPhotoGallery photos={photos} />
+            <Grid item xs={12} sm={12}>
+              <Hidden xsDown implementation="css">
+                <ParkPhotoGallery photos={photos} />
+              </Hidden>
             </Grid>
             <Grid item xs={12} sm={3} className="park-menu-root">
               <ParkMenu data={parkStatusData} />
@@ -84,7 +90,7 @@ export default function ParkTemplate({ data }) {
                 <ParkFacility data={parkAccessStatus.parkFacilities} />
                 <ParkActivity data={parkAccessStatus.parkActivities} />
                 <MapLocation data={park.maps} />
-                <ParkMap data={park.maps} />
+                <ParkMapDetails data={park.maps} />
                 <About data={park.parkContact} />
                 <Reconciliation data={park.reconciliationNotes} />
               </Grid>
@@ -201,7 +207,7 @@ export const query = graphql`
       }
       totalCount
     }
-    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }, limit: -1) {
+    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }) {
       nodes {
         orcs
         caption

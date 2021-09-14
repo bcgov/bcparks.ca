@@ -32,11 +32,13 @@ export default function Advisory({ data }) {
     const advisoryText = []
     const advisoryTextCounts = {}
     highAlertGroup.forEach(advisory => {
-      if (!advisoryText.includes(advisory.eventType.eventType)) {
-        advisoryText.push(advisory.eventType.eventType)
-        advisoryTextCounts[advisory.eventType.eventType] = 1
-      } else {
-        advisoryTextCounts[advisory.eventType.eventType] += 1
+      if (advisory.eventType) {
+        if (!advisoryText.includes(advisory.eventType.eventType)) {
+          advisoryText.push(advisory.eventType.eventType)
+          advisoryTextCounts[advisory.eventType.eventType] = 1
+        } else {
+          advisoryTextCounts[advisory.eventType.eventType] += 1
+        }
       }
     })
 
@@ -66,11 +68,11 @@ export default function Advisory({ data }) {
             {textMap.length > 0 && (
               <>
                 {textMap.map((text, index) => (
-                  <>
+                  <div key={index}>
                     {index < 2 && (
                       <Link to="#park-advisory-details-container">{text}</Link>
                     )}
-                  </>
+                  </div>
                 ))}
               </>
             )}

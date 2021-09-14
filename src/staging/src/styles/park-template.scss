@@ -27,7 +27,7 @@ body {
 }
 
 .park-info-header {
-  padding-left: 5px;
+  padding-left: 15px;
 }
 
 .park-info-header a {
@@ -48,6 +48,10 @@ body {
   color: #003366;
   padding: 5px 0px 5px 8px;
   border-left: 3px solid transparent;
+}
+
+#park-header-container {
+  padding-top: 35px;
 }
 
 #park-header-container a {
@@ -105,21 +109,36 @@ body {
 .blue-button {
   color: #ffffff !important;
   background-color: #003366 !important;
-  width: 150px !important;
+  min-width: 180px !important;
   white-space: nowrap;
-  margin: 6px;
+  height: 50px;
+  font-size: 16px;
 }
 
 .yellow-button {
   color: #003366 !important;
   background-color: #fcba19 !important;
-  width: 150px !important;
+  min-width: 180px !important;
   white-space: nowrap;
+  height: 50px;
+  font-size: 16px;
+}
+
+.blue-button:hover,
+.yellow-button:hover {
+  background-color: transparent !important;
+  border: 2px solid #fcba19 !important;
+  color: #003366 !important;
+  text-decoration: underline;
+}
+
+.raw-html-content {
+  max-width: 100%;
 }
 
 .raw-html-content a {
   display: flex;
-  white-space: nowrap;
+  word-break: break-word !important;
 }
 
 .raw-html-content li {
@@ -158,6 +177,18 @@ body {
   border: 1px solid #1a5a96 !important;
 }
 
+#park-info-container .MuiAccordionDetails-root {
+  padding-left: 25px !important;
+  padding-right: 25px !important;
+  padding-bottom: 15px !important;
+}
+
+#park-facility-container .MuiAccordion-root:hover,
+#park-activity-container .MuiAccordion-root:hover,
+#park-camping-details-container .MuiAccordion-root:hover {
+  border: 1px solid #fcba19 !important;
+}
+
 .access-icon {
   color: #003366;
   padding: 5px 0px 5px 8px;
@@ -175,8 +206,7 @@ body {
   padding: 0px;
 }
 
-#park-info-container .MuiAccordionSummary-root,
-#park-info-container .MuiAccordionDetails-root {
+#park-info-container .MuiAccordionSummary-root {
   padding: 0px 25px !important;
 }
 
@@ -199,7 +229,7 @@ body {
 
 .show-photos-5 {
   text-align: right;
-  margin-top: 220px;
+  margin-top: 340px;
   margin-right: 30px;
   position: absolute;
   z-index: 100;
@@ -235,6 +265,44 @@ body {
   padding: 0px !important;
 }
 
-.advisory-content {
-  width: 100%;
+.advisory-content,
+.full-width {
+  width: 100% !important;
+}
+
+.no-padding {
+  padding: 0px;
+}
+
+.flex-display {
+  display: flex;
+}
+
+.ml10 {
+  margin-left: 10px !important;
+}
+
+.park-menu-mobile {
+  border: 1px solid #003366;
+  border-radius: 5px;
+  padding: 3px 0px !important;
+  margin-top: 10px !important;
+  color: #003366 !important;
+}
+
+@media (max-width: 575.98px) {
+  .park-info-header-flex {
+    display: block !important;
+  }
+  .park-info-header {
+    padding-left: 0px;
+    padding-top: 20px;
+  }
+  .park-overview-html div {
+    float: left !important;
+    margin: 0px !important;
+  }
+  #park-advisory-details-container .MuiButtonBase-root {
+    padding: 0px !important;
+  }
 }

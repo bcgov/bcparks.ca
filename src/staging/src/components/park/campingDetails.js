@@ -7,6 +7,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Hidden,
 } from "@material-ui/core"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Heading from "./heading"
@@ -23,7 +24,7 @@ export default function CampingDetails({ data }) {
     expandedInitial[index] = false
   })
 
-  const [allExpanded, setAllExpanded] = useState(false)
+  // const [allExpanded, setAllExpanded] = useState(false)
   const [expanded, setExpanded] = useState(expandedInitial)
 
   if (campingFacilities.length === 0) return null
@@ -33,14 +34,14 @@ export default function CampingDetails({ data }) {
     setExpanded([...expanded])
   }
 
-  const expandAll = isAllExpanded => {
-    let expanded = []
-    expanded[0] = isAllExpanded
-    campingFacilities.forEach((camping, index) => {
-      expanded[index + 1] = isAllExpanded
-    })
-    setExpanded(expanded)
-  }
+  // const expandAll = isAllExpanded => {
+  //   let expanded = []
+  //   expanded[0] = isAllExpanded
+  //   campingFacilities.forEach((camping, index) => {
+  //     expanded[index + 1] = isAllExpanded
+  //   })
+  //   setExpanded(expanded)
+  // }
 
   return (
     <Grid
@@ -50,10 +51,22 @@ export default function CampingDetails({ data }) {
       className="anchor-link"
     >
       <Paper elevation={0}>
+        <Hidden smUp implementation="css">
+          <Grid item xs={12} container>
+            <Button
+              className="yellow-button full-width"
+              href="https://discovercamping.ca/"
+            >
+              Book a campsite
+            </Button>
+          </Grid>
+          <br />
+        </Hidden>
         <Grid container>
           <Grid item xs={6}>
             <Heading>Camping</Heading>
           </Grid>
+
           <Grid
             item
             xs={6}
@@ -61,19 +74,19 @@ export default function CampingDetails({ data }) {
             justifyContent="flex-end"
             alignItems="flex-start"
           >
-            <Box m={1}>
+            <Hidden smDown implementation="css">
               <Button
                 className="yellow-button"
                 href="https://discovercamping.ca/"
               >
                 Book a campsite
               </Button>
-            </Box>
+            </Hidden>
           </Grid>
         </Grid>
         {campingFacilities.length > 0 && (
           <div id="park-camping-list-container" className="anchor-link">
-            <Grid
+            {/* <Grid
               container
               item
               xs={12}
@@ -95,7 +108,7 @@ export default function CampingDetails({ data }) {
                   </Button>
                 )}
               </Box>
-            </Grid>
+            </Grid> */}
             <Grid container spacing={2}>
               {data.reservations && (
                 <Grid key="reservation" item xs={12}>

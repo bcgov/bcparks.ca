@@ -9,7 +9,7 @@ export default function MapLocation({ data }) {
   return (
     <Grid item xs={12} id="park-map-container" className="anchor-link">
       <Paper elevation={0}>
-        <Heading>Maps and Location</Heading>
+        <Heading>Maps and location</Heading>
         <StaticImage
           src="../../images/map-placeholder.png"
           alt="map"
