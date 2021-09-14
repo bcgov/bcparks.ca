@@ -3,11 +3,11 @@
 const createApiUser = async () => {
   const authRole = await findRole("authenticated");
   const password = await strapi.admin.services.auth.hashPassword(
-    process.env.API_USER_PASSWORD
+    process.env.STRAPI_API_USER_PASSWORD
   );
   const params = {
-    username: process.env.API_USER_NAME,
-    email: process.env.API_USER_EMAIL,
+    username: process.env.STRAPI_API_USER_NAME,
+    email: process.env.STRAPI_API_USER_EMAIL,
     password: password,
     provider: "local",
     confirmed: true,
@@ -29,7 +29,7 @@ const createApiToken = async () => {
     const apiUser = await createApiUser();
     return await strapi.services["token"]
       .create({
-        token: process.env.API_TOKEN,
+        token: process.env.STRAPI_API_TOKEN,
         user: apiUser,
       })
       .then(() => {
@@ -104,11 +104,11 @@ const createAdmin = async () => {
   try {
     if (process.env.NODE_ENV === "development") {
       const params = {
-        username: process.env.ADMIN_USER,
-        password: process.env.ADMIN_PASSWORD,
-        firstname: process.env.ADMIN_FIRST_NAME,
-        lastname: process.env.ADMIN_LAST_NAME,
-        email: process.env.ADMIN_EMAIL,
+        username: process.env.STRAPI_ADMIN_USER,
+        password: process.env.STRAPI_ADMIN_PASSWORD,
+        firstname: process.env.STRAPI_ADMIN_FIRST_NAME,
+        lastname: process.env.STRAPI_ADMIN_LAST_NAME,
+        email: process.env.STRAPI_ADMIN_EMAIL,
         blocked: false,
         isActive: true,
       };
