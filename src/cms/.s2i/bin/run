@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+# Replace Strapi Admin frontend public URL with $STRAPI_EXTERNAL_URL.  This allows image reuse
+find /opt/app-root/src/build -maxdepth 1 -mindepth 1 -name 'main.*.chunk.js' -exec sed -i 's+'"http://localhost:1337"'+'"$STRAPI_EXTERNAL_URL"'+g' {} +
+
+# Execute original s2i run script
+$STI_SCRIPTS_PATH/run

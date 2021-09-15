@@ -1,0 +1,18 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "bcparks_cms_volume_claim" . }}
+  labels:
+    component: {{ .Values.cms.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+  annotations:
+    "helm.sh/resource-policy": keep
+spec:
+  accessModes:
+    - {{ .Values.cms.pvc.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.cms.pvc.size }}
+  storageClassName: {{ .Values.cms.pvc.storageClassName }}

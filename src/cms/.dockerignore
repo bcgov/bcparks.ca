@@ -21,4 +21,6 @@
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
+**/public/uploads/*
+**/!public/uploads/.gitkeep
 README.md

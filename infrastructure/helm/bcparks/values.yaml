@@ -1,0 +1,82 @@
+route:
+  clusterDomain: apps.silver.devops.gov.bc.ca
+
+images:
+  strapi:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/strapi
+    tag: ci-latest
+  postgres:
+    name: image-registry.openshift-image-registry.svc:5000/openshift/postgresql
+    tag: "12"
+  pgbouncer:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/pgbouncer
+    tag: latest
+
+cms:
+  componentName: cms
+
+  imagePullPolicy: Always
+
+  resources:
+    limits:
+      cpu: "1"
+      memory: 500Mi
+    requests:
+      cpu: 500m
+      memory: 250Mi
+
+  env:
+    nodeEnv: development
+    databaseClient: postgres
+    databaseMinConnections: 2
+    databaseMaxConnections: 10    
+
+  service:
+    portName: strapi    
+    port: 1337
+
+  pvc:
+    accessMode: ReadWriteMany
+    storageClassName: netapp-file-standard
+    size: 5Gi
+
+postgres:
+  componentName: postgres
+
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  env:
+
+  service:
+    portName: postgres
+    port: 5432
+
+  pvc:
+    accessMode: ReadWriteOnce
+    storageClassName: netapp-file-standard
+    size: 5Gi
+
+pgbouncer:
+  enabled: false
+
+  componentName: pgbouncer
+
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 200m
+      memory: 250Mi
+
+  env:
+
+  service:
+    portName: pgbouncer
+    port: 5432
