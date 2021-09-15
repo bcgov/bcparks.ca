@@ -7,7 +7,7 @@ module.exports = ({ env }) => ({
   },
   admin: {
     auth: {
-      secret: env("STRAPI_ADMIN_JWT_SECRET"),
+      secret: env("STRAPI_ADMIN_JWT_SECRET", "SomeSuperSecret"),
     },
   },
 });

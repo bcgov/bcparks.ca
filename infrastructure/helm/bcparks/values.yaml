@@ -27,6 +27,7 @@ cms:
 
   env:
     nodeEnv: development
+    databaseClient: postgres
     databaseMinConnections: 2
     databaseMaxConnections: 10    
 

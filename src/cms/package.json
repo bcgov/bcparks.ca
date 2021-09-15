@@ -17,6 +17,7 @@
     "axios": "^0.21.1",
     "knex": "^0.21.19",
     "pg": "^8.5.1",
+    "sqlite3": "^5.0.2",
     "strapi": "3.6.1",
     "strapi-admin": "3.6.1",
     "strapi-connector-bookshelf": "3.6.1",
