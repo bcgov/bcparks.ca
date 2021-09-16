@@ -1,0 +1,37 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "bcparks_staging_volume_claim" . }}-build
+  labels:
+    component: {{ .Values.staging.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+  annotations:
+    "helm.sh/resource-policy": keep
+spec:
+  accessModes:
+    - {{ .Values.staging.pvc.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.staging.pvc.size }}
+  storageClassName: {{ .Values.staging.pvc.storageClassName }}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "bcparks_staging_volume_claim" . }}-cache
+  labels:
+    component: {{ .Values.staging.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+  annotations:
+    "helm.sh/resource-policy": keep
+spec:
+  accessModes:
+    - {{ .Values.staging.pvc.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.staging.pvc.size }}
+  storageClassName: {{ .Values.staging.pvc.storageClassName }}

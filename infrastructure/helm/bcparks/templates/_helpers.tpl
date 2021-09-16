@@ -76,10 +76,18 @@ Gets the suffix of the namespace. (-dev, -tools, ... )
 {{ .Release.Name }}-cms-secret
 {{- end -}}
 
+{{ define "bcparks_cms_external_url" -}}
+https://{{ .Release.Name }}-{{ .Values.cms.componentName }}-{{ .Release.Namespace }}.{{ .Values.route.clusterDomain }}
+{{- end -}}
+
 {{ define "bcparks_postgres_volume_claim" -}}
 {{ .Release.Name }}-postgres
 {{- end -}}
 
 {{ define "bcparks_postgres_secret" -}}
 {{ .Release.Name }}-postgres-secret
+{{- end -}}
+
+{{ define "bcparks_staging_volume_claim" -}}
+{{ .Release.Name }}-staging
 {{- end -}}

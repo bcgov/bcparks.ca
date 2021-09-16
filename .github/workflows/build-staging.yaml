@@ -1,14 +1,14 @@
-name: Build CMS on main branch
+name: Build Staging on main branch
 
 on:
   push:
     branches:
       - main
     paths:
-      - src/cms/**
+      - src/staging/**
 
 env:
-  IMAGE_NAME: strapi
+  IMAGE_NAME: staging
   BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-14:1-43
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
         id: build_image
         uses: redhat-actions/s2i-build@v2
         with:
-          path_context: "src/cms"
+          path_context: "src/staging"
           builder_image: ${{ env.BUILDER_IMAGE }}
           image: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}
       - name: Push Docker image

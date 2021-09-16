@@ -4,12 +4,15 @@ route:
 images:
   strapi:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/strapi
-    tag: ci-latest
+    tag: latest
   postgres:
     name: image-registry.openshift-image-registry.svc:5000/openshift/postgresql
     tag: "12"
   pgbouncer:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/pgbouncer
+    tag: latest
+  staging:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/staging
     tag: latest
 
 cms:
@@ -20,19 +23,19 @@ cms:
   resources:
     limits:
       cpu: "1"
-      memory: 500Mi
+      memory: 1Gi
     requests:
-      cpu: 500m
+      cpu: 250m
       memory: 250Mi
 
   env:
     nodeEnv: development
     databaseClient: postgres
     databaseMinConnections: 2
-    databaseMaxConnections: 10    
+    databaseMaxConnections: 10
 
   service:
-    portName: strapi    
+    portName: strapi
     port: 1337
 
   pvc:
@@ -46,7 +49,7 @@ postgres:
   resources:
     limits:
       cpu: 500m
-      memory: 1Gi
+      memory: 500Mi
     requests:
       cpu: 250m
       memory: 250Mi
@@ -63,20 +66,42 @@ postgres:
     size: 5Gi
 
 pgbouncer:
-  enabled: false
+  enabled: true
 
   componentName: pgbouncer
 
   resources:
     limits:
-      cpu: 500m
-      memory: 500Mi
-    requests:
-      cpu: 200m
+      cpu: 250m
       memory: 250Mi
+    requests:
+      cpu: 100m
+      memory: 50Mi
 
   env:
 
   service:
     portName: pgbouncer
-    port: 5432
+    port: 6432
+
+staging:
+  imagePullPolicy: Always
+
+  componentName: staging
+
+  resources:
+    limits:
+      cpu: 500m
+      memory: 3Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  service:
+    portName: staging
+    port: 8000
+
+  pvc:
+    accessMode: ReadWriteMany
+    storageClassName: netapp-file-standard
+    size: 1Gi

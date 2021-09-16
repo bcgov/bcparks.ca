@@ -3,7 +3,6 @@ apiVersion: apps/v1
 metadata:
   name: {{ .Release.Name }}-{{ .Values.cms.componentName }}
   labels:
-    app.openshift.io/runtime: nodejs
     component: {{ .Values.cms.componentName }}
     release: {{ .Release.Name }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
@@ -28,7 +27,7 @@ spec:
       initContainers:
         - name: wait-for-db
           image: {{ .Values.images.postgres.name }}:{{ .Values.images.postgres.tag }}
-          command: ['sh', '-c', 'until pg_isready -h {{ .Release.Name }}-{{ .Values.postgres.componentName }} -p {{ .Values.postgres.service.port }}; do echo waiting for database; sleep 2; done;']
+          command: ['sh', '-c', 'until pg_isready -h {{ .Release.Name }}-{{ .Values.pgbouncer.componentName }} -p {{ .Values.pgbouncer.service.port }}; do echo waiting for database; sleep 2; done;']
       containers:
         - name: {{ .Values.cms.componentName }}
           resources:
@@ -46,16 +45,16 @@ spec:
             {{- if .Values.cms.env.externalUrl }}
               value: {{ .Values.cms.env.externalUrl }}
             {{- else }}
-              value: https://{{ .Release.Name }}-{{ .Values.cms.componentName }}-{{ .Release.Namespace }}.{{ .Values.route.clusterDomain }}
+              value: {{ template "bcparks_cms_external_url" . }}
             {{- end }}
             - name: NODE_ENV
               value: {{ .Values.cms.env.nodeEnv }}
             - name: DATABASE_CLIENT
               value: {{ .Values.cms.env.databaseClient }}
             - name: DATABASE_HOST
-              value: {{ .Release.Name }}-{{ .Values.postgres.componentName }}
+              value: {{ .Release.Name }}-{{ .Values.pgbouncer.componentName }}
             - name: DATABASE_PORT
-              value: {{ .Values.postgres.service.port | quote }}
+              value: {{ .Values.pgbouncer.service.port | quote }}
             - name: DATABASE_USERNAME
               valueFrom:
                 secretKeyRef:
