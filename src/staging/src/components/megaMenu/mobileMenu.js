@@ -1,10 +1,12 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
+import Slide from "react-reveal/Slide"
 import BCParksLogo from "../../images/bcparks-h-rgb-rev.png"
 
 const MobileMenu = ({ linkStructure }) => {
   let navigationStack = []
+  const [transitionDirection, setTransitionDirection] = useState('right')
 
   const updateMenuList = (menu, direction = 'forward') => {
     let backMenuId = 0
@@ -26,7 +28,7 @@ const MobileMenu = ({ linkStructure }) => {
       : targetMenu?.strapiChildren?.some(pm => pm?.parent === rootMenuId)
     
     setActiveList(
-      <ul className={`mr-auto list-${direction}`} id="link-list">
+      <>
         {targetIsRoot &&
           <li key="Home" className={`nav-item`}>
             <Link className={`nav-link`} to="/">Home</Link>
@@ -34,7 +36,12 @@ const MobileMenu = ({ linkStructure }) => {
         }
         {!targetIsRoot && parentMenu?.strapiChildren?.length && 
           <>
-            <li key="back" className="nav-item" onClick={() => updateMenuList(parentMenu?.strapiChildren, 'back')}>
+            <li key="back" className="nav-item" 
+              onClick={() => {
+                setTransitionDirection('left')
+                updateMenuList(parentMenu?.strapiChildren, 'back')
+              }}
+            >
               <i className="fa fa-chevron-left float-left nav-link" />
               <span className={`nav-link`}> Back</span>
             </li>
@@ -51,7 +58,10 @@ const MobileMenu = ({ linkStructure }) => {
           const listProps = {
             key: fm.title,
             className: `nav-item`,
-            ...(hasChildren && { onClick: () => updateMenuList(fm) })
+            ...(hasChildren && { onClick: () => { 
+              setTransitionDirection('right')  
+              updateMenuList(fm)
+            }})
           }
           return (
             <li {...listProps}>
@@ -69,12 +79,12 @@ const MobileMenu = ({ linkStructure }) => {
             </a>
           </li>
         }
-      </ul>
+      </>
     )
   }
   const [activeList, setActiveList] = useState(state => {
     return (
-      <ul className="mr-auto">
+      <>
         <li key="Home" className={`nav-item`}>
           <Link className={`nav-link`} to="/">Home</Link>
         </li>
@@ -99,9 +109,17 @@ const MobileMenu = ({ linkStructure }) => {
             <button type="button" className={`btn px-4 py-3`} id="book-campsite">Book a campsite</button>
           </a>
         </li>
-      </ul>
+      </>
     )
   })
+
+  const slideProps = {
+    when: true,
+    spy: activeList,
+    mountOnEnter: true,
+    duration: 250,
+    ...(transitionDirection && { [transitionDirection]: true })
+  }
 
   return (
     <nav className={`navbar navbar-dark navbar-expand-lg p-0`} id="mainNav">
@@ -119,12 +137,16 @@ const MobileMenu = ({ linkStructure }) => {
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
-          <div class="close-icon py-1">✖</div>
+          <div className="close-icon py-1">✖</div>
         </button>
       </div>
 
       <div className={`collapse navbar-collapse`} id="menuContent">
-        {activeList}
+        <Slide { ...slideProps }>
+          <ul className="mr-auto" id="link-list">
+            {activeList}
+          </ul>
+        </Slide>
       </div>
     </nav>
   )
