@@ -1,10 +1,21 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
+import { isTablet, withOrientationChange } from "react-device-detect"
 
-const DesktopMenu = ({ linkStructure }) => {
+const DesktopMenu = ({ linkStructure, isLandscape }) => {
   const formattedContent = formatMenuTree(linkStructure)
 
+  /**
+   * Certain top level menu links are designed to dropdown in response to hover on desktop view.
+   * We want to be able to trigger the dropdown of these links without activating the link itself. 
+  */
+  const handleLinkClick = (e, url) => {
+    if(isTablet && isLandscape) {
+      return e.preventDefault()
+    }
+    return navigate(url)
+  }
   const generateMenuItem = ({ strapiChildren, title, url }) => {
     if (!strapiChildren?.length) {
       return (
@@ -18,8 +29,8 @@ const DesktopMenu = ({ linkStructure }) => {
     }
     if (strapiChildren?.length) {
       return (
-        <li key={title}>
-          <Link to={url ?? '/'} className="menu-link menu-bar-link" aria-haspopup="true">{title}</Link>
+        <li key={title} className="menu-bar-list">
+          <a href="/" onClick={e => handleLinkClick(e, url)} className="menu-link menu-bar-link" aria-haspopup="true">{title}</a>
           <ul className="mega-menu mega-menu--multiLevel"> {/** level 1 */}
             <li key={`t${title}`} className="menu-list-header">
               <Link to={url ?? '/'} className="menu-link menu-list-link mega-menu-link">{title}</Link>
@@ -35,7 +46,7 @@ const DesktopMenu = ({ linkStructure }) => {
               } else {
                 listElement = (
                   <li key={`c${c.title}`} className="mega-menu-list">
-                    <Link to={c.url ?? '/'} className="menu-link mega-menu-link" aria-haspopup="true">{c.title}</Link>
+                    <a href="/" onClick={e => handleLinkClick(e, c.url)} className="menu-link mega-menu-link" aria-haspopup="true">{c.title}</a>
                     <ul className="menu menu-list sub-menu-list"> {/** level 2 */}
                       <li key={`sc${c.title}`} className="sub-menu-list-header mega-menu-list">
                         <Link to={c.url ?? '/'} className="sub-menu-link">{c.title}</Link>  
@@ -114,4 +125,4 @@ DesktopMenu.propTypes = {
   }))
 }
 
-export default DesktopMenu
+export default withOrientationChange(DesktopMenu)
