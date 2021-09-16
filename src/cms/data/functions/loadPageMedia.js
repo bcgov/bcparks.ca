@@ -37,14 +37,21 @@ const loadPageMedia = async () => {
   const modelPage = "page";
   const objectPage = "page";
   const jsonPagesFile = "./data/pages.json";  
-  
+
+  // Load the seed data
   var jsonWebSitesData = fs.readFileSync(jsonWebSitesFile, "utf8");
   var jsonPagesData = fs.readFileSync(jsonPagesFile, "utf8");
+
+  // Replace localhost references
+  strapi.log.info(`external URL ...${process.env.STRAPI_EXTERNAL_URL}`);
+  jsonWebSitesData = jsonWebSitesData.replace(/http:\\\/\\\/localhost:1337/gi ,process.env.STRAPI_EXTERNAL_URL);
+  jsonPagesData = jsonPagesData.replace(/http:\\\/\\\/localhost:1337/gi ,process.env.STRAPI_EXTERNAL_URL);
 
   strapi.log.info("loading media files started ...");
   
   files = fs.readdirSync(fullMediaPath)
-    
+  
+  // iterate through media files and upload
   for await (const file of files) {
     var filename = path.parse(file).base;
     var fileStat = fs.statSync(`${fullMediaPath}/${file}`);
@@ -60,9 +67,14 @@ const loadPageMedia = async () => {
     strapi.log.info(`loaded media file ${filename} as ${attachment[0].url}`);
     var filenameWithHash = attachment[0].hash.replace("/uploads/","")+ attachment[0].ext;
     var filenameWithOutHash = new RegExp(filenameWithHash.substr(0, filenameWithHash.length-15) + attachment[0].ext, "gi");
+    
+    //Replace files references with strapi hashed filnames
     jsonWebSitesData = jsonWebSitesData.replace(filenameWithOutHash,`${filenameWithHash}`);
     jsonPagesData = jsonPagesData.replace(filenameWithOutHash,`${filenameWithHash}`);
+
+
   };
+  
   
   strapi.log.info("loading media files completed...");
   loadJson(modelPage,jsonPagesData,objectPage); 
