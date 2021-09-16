@@ -416,6 +416,10 @@ const loadPages = async () => {
   loadUtils.loadJson("page", "./data/pages.json", "page");
 };
 
+const loadMenus = async () => {
+  loadUtils.loadJson("menu", "./data/menus.json", "menu");
+};
+
 module.exports = {
   loadBusinessHours,
   loadStatutoryHolidays,
@@ -440,4 +444,5 @@ module.exports = {
   loadParkFogZoneXref,
   loadPages,
   loadWebsites,
+  loadMenus,
 };
