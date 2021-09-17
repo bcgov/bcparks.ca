@@ -115,7 +115,6 @@
 **/.strapi-updater.json
 **/package-lock.json
 **/yarn.lock
-**/server.js
 
 ############################
 # Documentation
@@ -178,3 +177,6 @@
 
 **/cms/data/images/*
 src/staging/package-lock.json
+
+# Don't ignore .s2i bin
+!**/.s2i/bin/

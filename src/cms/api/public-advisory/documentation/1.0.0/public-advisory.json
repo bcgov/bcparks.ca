@@ -779,9 +779,6 @@
                 "url": {
                   "type": "string"
                 },
-                "oldUrl": {
-                  "type": "string"
-                },
                 "typeCode": {
                   "type": "string",
                   "enum": [
@@ -882,16 +879,7 @@
                 "maps": {
                   "type": "string"
                 },
-                "managementPlanning": {
-                  "type": "string"
-                },
                 "natureAndCulture": {
-                  "type": "string"
-                },
-                "partnerships": {
-                  "type": "string"
-                },
-                "purpose": {
                   "type": "string"
                 },
                 "reconciliationNotes": {

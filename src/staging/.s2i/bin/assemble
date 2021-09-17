@@ -1,0 +1,82 @@
+#!/bin/bash
+
+# Stripped down version of the original s2i assemble script.  Main purpose is to remove
+# the npm build step for staging.
+#
+# Original assemble script:
+# https://github.com/sclorg/s2i-nodejs-container/blob/master/14/s2i/bin/assemble
+
+# Prevent running assemble in builders different than official STI image.
+# The official nodejs:8-onbuild already run npm install and use different
+# application folder.
+[ -d "/usr/src/app" ] && exit 0
+
+set -e
+
+safeLogging () {
+    if [[ $1 =~ http[s]?://.*@.*$ ]]; then
+        echo $1 | sed 's/^.*@/redacted@/'
+    else
+        echo $1
+    fi
+}
+
+shopt -s dotglob
+if [ -d /tmp/artifacts ] && [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
+    echo "---> Restoring previous build artifacts ..."
+    mv -T --verbose /tmp/artifacts/node_modules "${HOME}/node_modules"
+fi
+
+echo "---> Installing application source ..."
+mv /tmp/src/* ./
+
+# Fix source directory permissions
+fix-permissions ./
+
+# Set the DEV_MODE to false by default.
+if [ -z "$DEV_MODE" ]; then
+  export DEV_MODE=false
+fi
+
+# If NODE_ENV is not set by the user, then NODE_ENV is determined by whether
+# the container is run in development mode.
+if [ -z "$NODE_ENV" ]; then
+  if [ "$DEV_MODE" == true ]; then
+    export NODE_ENV=development
+  else
+    export NODE_ENV=production
+  fi
+fi
+
+if [ "$NODE_ENV" != "production" ]; then
+
+	echo "---> Building your Node application from source"
+	npm install
+
+else
+
+	echo "---> Installing all dependencies"
+	NODE_ENV=development npm install
+
+	echo "---> Pruning the development dependencies"
+	npm prune
+
+	# Clear the npm's cache and tmp directories only if they are not a docker volumes
+	NPM_CACHE=$(npm config get cache)
+	if ! mountpoint $NPM_CACHE; then
+		echo "---> Cleaning the npm cache $NPM_CACHE"
+		#As of npm@5 even the 'npm cache clean --force' does not fully remove the cache directory
+		# instead of $NPM_CACHE* use $NPM_CACHE/*.
+		# We do not want to delete .npmrc file.
+		rm -rf "${NPM_CACHE:?}/"
+	fi
+	NPM_TMP=$(npm config get tmp)
+	if ! mountpoint $NPM_TMP; then
+		echo "---> Cleaning the $NPM_TMP/npm-*"
+		rm -rf $NPM_TMP/npm-*
+	fi
+
+fi
+
+# Fix source directory permissions
+fix-permissions ./
