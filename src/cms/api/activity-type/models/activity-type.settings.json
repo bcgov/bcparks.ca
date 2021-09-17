@@ -34,9 +34,6 @@
     },
     "isActive": {
       "type": "boolean"
-    },
-    "isCamping": {
-      "type": "boolean"
     }
   }
 }
