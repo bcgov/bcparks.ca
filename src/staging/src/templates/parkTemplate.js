@@ -18,6 +18,7 @@ import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import ScrollToTop from "../components/scrollToTop"
 import { makeStyles } from "@material-ui/core/styles"
 import Header from "../components/header"
+import Footer from "../components/footer"
 
 import "../styles/park-template.scss"
 
@@ -47,6 +48,13 @@ export default function ParkTemplate({ data }) {
     park: park,
     parkAccessStatus: parkAccessStatus,
     advisories: advisories,
+  }
+
+  const mapData = {
+    maps: park.maps,
+    latitude: park.latitude,
+    longitude: park.longitude,
+    mapZoom: park.mapZoom,
   }
 
   return (
@@ -89,7 +97,7 @@ export default function ParkTemplate({ data }) {
                 />
                 <ParkFacility data={parkAccessStatus.parkFacilities} />
                 <ParkActivity data={parkAccessStatus.parkActivities} />
-                <MapLocation data={park.maps} />
+                <MapLocation data={mapData} />
                 <ParkMapDetails data={park.maps} />
                 <About data={park.parkContact} />
                 <Reconciliation data={park.reconciliationNotes} />
@@ -99,6 +107,7 @@ export default function ParkTemplate({ data }) {
           </Grid>
         </Container>
       </div>
+      <Footer>{data.strapiWebsites.Footer}</Footer>
     </div>
   )
 }
@@ -143,6 +152,9 @@ export const query = graphql`
       parkContact
       reservations
       maps
+      latitude
+      longitude
+      mapZoom
       parkActivities {
         activityType
         isActive
