@@ -4,7 +4,6 @@ apiVersion: apps/v1
 metadata:
   name: {{ .Release.Name }}-{{ .Values.pgbouncer.componentName }}
   labels:
-    app.openshift.io/runtime: nodejs
     component: {{ .Values.pgbouncer.componentName }}
     release: {{ .Release.Name }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
@@ -41,16 +40,16 @@ spec:
               containerPort: {{ .Values.pgbouncer.service.port }}
               protocol: TCP
           env:
-            - name: DB_HOST
+            - name: POSTGRESQL_HOST
               value: {{ .Release.Name }}-{{ .Values.postgres.componentName }}
-            - name: DB_PORT
+            - name: POSTGRESQL_PORT
               value: {{ .Values.postgres.service.port | quote }}
-            - name: DB_USER
+            - name: POSTGRESQL_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: {{ template "bcparks_postgres_secret" . }}
                   key: POSTGRESQL_USER
-            - name: DB_PASSWORD
+            - name: POSTGRESQL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ template "bcparks_postgres_secret" . }}
@@ -60,7 +59,7 @@ spec:
                 secretKeyRef:
                   name: {{ template "bcparks_postgres_secret" . }}
                   key: POSTGRESQL_DATABASE
-            - name: DB_NAME
+            - name: PGBOUNCER_DATABASE
               valueFrom:
                 secretKeyRef:
                   name: {{ template "bcparks_postgres_secret" . }}

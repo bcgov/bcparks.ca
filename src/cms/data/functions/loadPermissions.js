@@ -2,9 +2,9 @@
 
 const STRAPI_API_USER_NAME = process.env.STRAPI_API_USER_NAME || "apiuser";
 const STRAPI_API_USER_PASSWORD =
-  process.env.STRAPI_API_USER_PASSWORD || "api@api.com";
+  process.env.STRAPI_API_USER_PASSWORD || "DummyPassword123";
 const STRAPI_API_USER_EMAIL =
-  process.env.STRAPI_API_USER_EMAIL || "DummyPassword123";
+  process.env.STRAPI_API_USER_EMAIL || "api@api.com";
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN || "somestring";
 const STRAPI_ADMIN_USER = process.env.STRAPI_ADMIN_USER || "admin";
 const STRAPI_ADMIN_PASSWORD = process.env.STRAPI_ADMIN_PASSWORD || "admin123";

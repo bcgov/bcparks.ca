@@ -3,7 +3,6 @@ apiVersion: apps/v1
 metadata:
   name: {{ .Release.Name }}-{{ .Values.postgres.componentName }}
   labels:
-    app.openshift.io/runtime: nodejs
     component: {{ .Values.postgres.componentName }}
     release: {{ .Release.Name }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
