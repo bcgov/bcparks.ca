@@ -37,8 +37,12 @@ spec:
           env:
             - name: GATSBY_TELEMETRY_DISABLED
               value: "1"
-            - name: "REACT_APP_CMS_BASE_URL"
-              value: https://bcparks-cms-61d198-dev.apps.silver.devops.gov.bc.ca
+            - name: REACT_APP_CMS_BASE_URL
+            {{- if .Values.cms.env.externalUrl }}
+              value: {{ .Values.cms.env.externalUrl }}
+            {{- else }}
+              value: {{ template "bcparks_cms_external_url" . }}
+            {{- end }}
             - name: ENABLE_GATSBY_REFRESH_ENDPOINT
               value: "1"
             - name: NODE_ENV

@@ -14,6 +14,9 @@ images:
   staging:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/staging
     tag: latest
+  alpine:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/alpine
+    tag: latest
 
 cms:
   componentName: cms
