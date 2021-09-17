@@ -4,7 +4,7 @@ const request = require("request");
 const path = require("path");
 
 const rootDir = process.cwd();
-const MEDIA_PATH = "/media_uploads";
+const MEDIA_PATH = "media_uploads";
 
 const loadJson = (model, jsonData, object) => {
   try {
@@ -30,7 +30,7 @@ const loadJson = (model, jsonData, object) => {
 };
 
 const loadPageMedia = async () => {
-  const fullMediaPath = rootDir + MEDIA_PATH;
+  const fullMediaPath = rootDir + "/" + MEDIA_PATH;
   const modelWebSite = "website";
   const objectWebsite = "website";
   const jsonWebSitesFile = "./data/websites.json"; 
