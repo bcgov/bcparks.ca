@@ -31,7 +31,10 @@ body {
 
 .park-info-header {
   padding-left: 15px;
-  min-width: 210px;
+}
+
+.park-access {
+  min-width: 210px !important;
 }
 
 .park-info-header a {
@@ -284,6 +287,10 @@ body {
 
 .ml10 {
   margin-left: 10px !important;
+}
+
+.ml-auto {
+  margin-left: auto !important;
 }
 
 .park-menu-mobile {
