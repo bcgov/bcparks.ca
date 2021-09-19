@@ -52,7 +52,7 @@ export default function ParkPhotoGallery({ photos }) {
     return {
       index: index,
       caption: photo.caption || "",
-      image: photo.image.localFile.childImageSharp.gatsbyImageData,
+      image: ((photo.image != null ) ? photo.image.localFile.childImageSharp.gatsbyImageData: null ),
     }
   })
 
