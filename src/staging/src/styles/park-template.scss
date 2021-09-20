@@ -1,3 +1,6 @@
+@import url("https://js.arcgis.com/4.10/esri/css/main.css");
+@import url("https://governmentofbc.maps.arcgis.com/apps/webappviewer/jimu.js/css/jimu-theme.css");
+
 body {
   font-family: BCSans, Verdana, Arial, "sans-serif" !important;
 }
@@ -28,6 +31,10 @@ body {
 
 .park-info-header {
   padding-left: 15px;
+}
+
+.park-access {
+  min-width: 210px !important;
 }
 
 .park-info-header a {
@@ -282,12 +289,24 @@ body {
   margin-left: 10px !important;
 }
 
+.ml-auto {
+  margin-left: auto !important;
+}
+
 .park-menu-mobile {
   border: 1px solid #003366;
   border-radius: 5px;
   padding: 3px 0px !important;
   margin-top: 10px !important;
   color: #003366 !important;
+}
+
+#mapDiv {
+  padding: 0;
+  margin: 0;
+  height: 500px;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
 @media (max-width: 575.98px) {

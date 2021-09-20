@@ -100,10 +100,10 @@ export default function ParkHeader({ data }) {
               lg={5}
               className="park-info-header-flex"
             >
-              <div className="park-info-header">
+              <div className="park-info-header park-access">
                 <ParkAccessStatus data={parkAccessStatus.accessStatus} />
               </div>
-              <div className="park-info-header">
+              <div className="park-info-header ml-auto">
                 <Advisory data={advisories} />
               </div>
             </Grid>
