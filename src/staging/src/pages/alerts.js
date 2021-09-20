@@ -2,7 +2,7 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import Header from "../components/header"
-import Menu from "../components/Menu"
+import Menu from "../components/menu"
 import Footer from "../components/footer"
 import HTMLArea from "../components/HTMLArea"
 

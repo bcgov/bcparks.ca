@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { Box, Grid, Container } from "@material-ui/core"
 import Header from "../components/header"
-import Menu from "../components/Menu"
+import Menu from "../components/menu"
 import Footer from "../components/footer"
 import "../styles/home.scss"
 
