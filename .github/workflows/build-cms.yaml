@@ -9,6 +9,7 @@ on:
 
 env:
   IMAGE_NAME: strapi
+  DEPLOYMENT_NAME: cms
   BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-14:1-43
 
 jobs:
@@ -33,5 +34,17 @@ jobs:
           path_context: "src/cms"
           builder_image: ${{ env.BUILDER_IMAGE }}
           image: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}
+          tags: latest ${{ steps.vars.outputs.sha_short }}
       - name: Push Docker image
-        run: docker push ${{ steps.build_image.outputs.image }}:latest
+        run: |
+          docker push ${{ steps.build_image.outputs.image }}:latest
+          docker push ${{ steps.build_image.outputs.image }}:${{ steps.vars.outputs.sha_short }}
+      - name: Login OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT_SERVICE_TOKEN }}
+      - name: Deploy
+        run: |
+          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev set image deployment/bcparks-${{ env.DEPLOYMENT_NAME }} \
+          ${{ env.DEPLOYMENT_NAME }}=${{ steps.build_image.outputs.image }}:${{ steps.vars.outputs.sha_short }} --record

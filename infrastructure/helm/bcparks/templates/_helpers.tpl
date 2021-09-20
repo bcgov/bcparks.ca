@@ -77,7 +77,7 @@ Gets the suffix of the namespace. (-dev, -tools, ... )
 {{- end -}}
 
 {{ define "bcparks_cms_external_url" -}}
-https://{{ .Release.Name }}-{{ .Values.cms.componentName }}-{{ .Release.Namespace }}.{{ .Values.route.clusterDomain }}
+https://{{ .Release.Name }}-{{ .Values.cms.componentName }}-{{ .Release.Namespace }}.{{ .Values.cluster.domain }}
 {{- end -}}
 
 {{ define "bcparks_postgres_volume_claim" -}}
