@@ -87,9 +87,6 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
         selectedActivities,
         selectedFacilities,
         searchText,
-        activityItems,
-        facilityItems,
-        protectedAreas,
       },
     })
   }
@@ -157,7 +154,6 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
             <div className="row">
               <div className="col-12">
                 <TextField
-                  autoFocus
                   margin="dense"
                   id="park-filter-text"
                   className="park-filter-text"
@@ -272,7 +268,6 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
                   variant="outlined"
                   placeholder="Add an activity from this list"
                   styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                  menuPortalTarget={document.body}
                   menuPosition={"fixed"}
                 />
               </div>
@@ -309,7 +304,6 @@ const MainSearch = ({ data: { activities, facilities, protectedAreas } }) => {
                   variant="outlined"
                   placeholder="Add a facility from this list"
                   styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                  menuPortalTarget={document.body}
                   menuPosition={"fixed"}
                 />
               </div>

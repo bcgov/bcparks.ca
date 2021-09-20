@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
-import { Container, Grid, CssBaseline, Toolbar } from "@material-ui/core"
+import { Container, Grid, CssBaseline, Hidden } from "@material-ui/core"
 import ParkOverview from "../components/park/parkOverview"
 import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
@@ -11,15 +11,16 @@ import Reconciliation from "../components/park/reconciliation"
 import ParkHeader from "../components/park/parkHeader"
 import ParkActivity from "../components/park/parkActivity"
 import ParkFacility from "../components/park/parkFacility"
-import ParkMap from "../components/park/parkMapDetails"
+import ParkMapDetails from "../components/park/parkMapDetails"
 import MapLocation from "../components/park/mapLocation"
 import ParkMenu from "../components/park/parkMenu"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import ScrollToTop from "../components/scrollToTop"
 import { makeStyles } from "@material-ui/core/styles"
 import Header from "../components/header"
+import Footer from "../components/footer"
 
-import "./parkTemplate.css"
+import "../styles/park-template.scss"
 
 const drawerWidth = 320
 
@@ -30,7 +31,6 @@ const useStyles = makeStyles(theme => ({
   parkContent: {
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
     },
   },
   appBarOffset: theme.mixins.toolbar,
@@ -50,45 +50,65 @@ export default function ParkTemplate({ data }) {
     advisories: advisories,
   }
 
+  const mapData = {
+    maps: park.maps,
+    latitude: park.latitude,
+    longitude: park.longitude,
+    mapZoom: park.mapZoom,
+  }
+
   return (
-    <>
+    <div className="grey-background">
       <Helmet>
         <title>BC Parks | {park.protectedAreaName}</title>
       </Helmet>
       <ScrollToTop />
       <CssBaseline />
-      <Header>{data.strapiWebsites.Header}</Header>
-      <Toolbar />
-      <Container id="park-info-container" maxWidth={false}>
-        <Grid container spacing={2}>
-          <ParkHeader data={parkStatusData} />
+      <Header>{data.strapiWebsites.Header}</Header>{" "}
+      <Hidden smUp implementation="css">
+        <Grid item xs={12} sm={12}>
           <ParkPhotoGallery photos={photos} />
-          <Grid item xs={12} sm={3}>
-            <ParkMenu data={parkStatusData} />
-          </Grid>
-          <Grid item xs={12} sm={9} className={classes.parkContent}>
-            <Grid item container spacing={0}>
-              <ParkOverview data={park.description} />
-              <AccessibilityDetails />
-              <AdvisoryDetails data={advisories} />
-              <CampingDetails
-                data={{
-                  parkFacilities: parkAccessStatus.parkFacilities,
-                  reservations: park.reservations,
-                }}
-              />
-              <ParkFacility data={parkAccessStatus.parkFacilities} />
-              <ParkActivity data={parkAccessStatus.parkActivities} />
-              <MapLocation data={park.maps} />
-              <ParkMap data={park.maps} />
-              <About data={park.parkContact} />
-              <Reconciliation data={park.reconciliationNotes} />
-            </Grid>
-            <br />
-          </Grid>
         </Grid>
-      </Container>
-    </>
+      </Hidden>
+      <div className="container">
+        <Container id="park-info-container" maxWidth={false}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12}>
+              <ParkHeader data={parkStatusData} />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Hidden xsDown implementation="css">
+                <ParkPhotoGallery photos={photos} />
+              </Hidden>
+            </Grid>
+            <Grid item xs={12} sm={3} className="park-menu-root">
+              <ParkMenu data={parkStatusData} />
+            </Grid>
+            <Grid item xs={12} sm={9} className={classes.parkContent}>
+              <Grid item container spacing={0}>
+                <ParkOverview data={park.description} />
+                <AccessibilityDetails />
+                <AdvisoryDetails data={advisories} />
+                <CampingDetails
+                  data={{
+                    parkFacilities: parkAccessStatus.parkFacilities,
+                    reservations: park.reservations,
+                  }}
+                />
+                <ParkFacility data={parkAccessStatus.parkFacilities} />
+                <ParkActivity data={parkAccessStatus.parkActivities} />
+                <MapLocation data={mapData} />
+                <ParkMapDetails data={park.maps} />
+                <About data={park.parkContact} />
+                <Reconciliation data={park.reconciliationNotes} />
+              </Grid>
+              <br />
+            </Grid>
+          </Grid>
+        </Container>
+      </div>
+      <Footer>{data.strapiWebsites.Footer}</Footer>
+    </div>
   )
 }
 
@@ -132,6 +152,9 @@ export const query = graphql`
       parkContact
       reservations
       maps
+      latitude
+      longitude
+      mapZoom
       parkActivities {
         activityType
         isActive
@@ -189,10 +212,14 @@ export const query = graphql`
         effectiveDate(formatString: "MMMM DD, YYYY")
         endDate(formatString: "MMMM DD, YYYY")
         expiryDate(formatString: "MMMM DD, YYYY")
+        eventType {
+          eventType
+          id
+        }
       }
       totalCount
     }
-    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }, limit: 5) {
+    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }) {
       nodes {
         orcs
         caption

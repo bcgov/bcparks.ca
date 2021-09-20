@@ -1,0 +1,34 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/search-views",
+      "handler": "search-view.find"
+    },
+    {
+      "method": "GET",
+      "path": "/search-views/count",
+      "handler": "search-view.count"
+    },
+    {
+      "method": "GET",
+      "path": "/search-views/:id",
+      "handler": "search-view.findOne"
+    },
+    {
+      "method": "POST",
+      "path": "/search-views",
+      "handler": "search-view.create"
+    },
+    {
+      "method": "PUT",
+      "path": "/search-views/:id",
+      "handler": "search-view.update"
+    },
+    {
+      "method": "DELETE",
+      "path": "/search-views/:id",
+      "handler": "search-view.delete"
+    }
+  ]
+}

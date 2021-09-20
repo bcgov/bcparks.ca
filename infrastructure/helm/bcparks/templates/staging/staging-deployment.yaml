@@ -1,0 +1,63 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.staging.componentName }}
+  labels:
+    component: {{ .Values.staging.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      component: {{ .Values.staging.componentName }}
+      release: {{ .Release.Name }}
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        component: {{ .Values.staging.componentName }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Values.staging.componentName }}
+          resources:
+{{ toYaml .Values.staging.resources | indent 12 }}
+          image: {{ .Values.images.staging.name }}:{{ .Values.images.staging.tag }}
+          imagePullPolicy: {{ .Values.staging.imagePullPolicy }}
+          ports:
+            - name: {{ .Values.staging.service.portName }}
+              containerPort: {{ .Values.staging.service.port }}
+              protocol: TCP
+          env:
+            - name: GATSBY_TELEMETRY_DISABLED
+              value: "1"
+            - name: REACT_APP_CMS_BASE_URL
+            {{- if .Values.cms.env.externalUrl }}
+              value: {{ .Values.cms.env.externalUrl }}
+            {{- else }}
+              value: {{ template "bcparks_cms_external_url" . }}
+            {{- end }}
+            - name: ENABLE_GATSBY_REFRESH_ENDPOINT
+              value: "1"
+            - name: NODE_ENV
+              value: development
+            - name: NO_COLOR
+              value: "1"
+          volumeMounts:
+            - name: gatsby-build
+              mountPath: /opt/app-root/src/public
+            - name: gatsby-cache
+              mountPath: /opt/app-root/src/.cache
+      volumes:
+        - name: gatsby-build
+          persistentVolumeClaim:
+            claimName: {{ template "bcparks_staging_volume_claim" . }}-build
+        - name: gatsby-cache
+          persistentVolumeClaim:
+            claimName: {{ template "bcparks_staging_volume_claim" . }}-cache

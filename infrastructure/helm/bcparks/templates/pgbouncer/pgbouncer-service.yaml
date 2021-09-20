@@ -1,0 +1,19 @@
+{{- if .Values.pgbouncer.enabled }}
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.pgbouncer.componentName }}
+  labels:
+    component: {{ .Values.pgbouncer.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  type: ClusterIP
+  selector:
+    component: {{ .Values.pgbouncer.componentName }}
+    release: {{ .Release.Name }}
+  ports:
+    - name: {{ .Values.pgbouncer.service.portName }}
+      port: {{ .Values.pgbouncer.service.port }}
+{{- end }}

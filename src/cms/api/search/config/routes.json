@@ -1,0 +1,9 @@
+{
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/search",
+      "handler": "search.generateView"
+    }
+  ]
+}

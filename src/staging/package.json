@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "license": "0BSD",
   "dependencies": {
+    "@arcgis/core": "^4.20.2",
     "@bcgov/bc-sans": "^1.0.1",
     "@bcgov/bootstrap-theme": "https://github.com/bcgov/bootstrap-theme/releases/download/v1.1.1/bcgov-bootstrap-theme-1.1.1.tgz",
     "@elastic/app-search-javascript": "^7.14.0",
@@ -16,7 +17,7 @@
     "@material-ui/styles": "^4.11.4",
     "bootstrap": "~4.3.1",
     "coffee-register": "~2.2.0",
-    "gatsby": "^3.2.1",
+    "gatsby": "^3.13.1",
     "gatsby-image": "^3.11.0",
     "gatsby-plugin-emotion": "^6.2.0",
     "gatsby-plugin-gatsby-cloud": "^2.2.0",
@@ -62,7 +63,7 @@
   ],
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
+    "develop": "gatsby develop -H 0.0.0.0",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
