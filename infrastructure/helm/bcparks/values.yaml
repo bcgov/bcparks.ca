@@ -17,6 +17,9 @@ images:
   alpine:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/alpine
     tag: latest
+  admin:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/admin
+    tag: latest
 
 cms:
   componentName: cms
@@ -112,3 +115,27 @@ staging:
     accessMode: ReadWriteMany
     storageClassName: netapp-file-standard
     size: 1Gi
+
+admin:
+  imagePullPolicy: Always
+
+  componentName: admin
+
+  env:
+    apiBaseUrl: https://api-61d198-dev.apps.silver.devops.gov.bc.ca
+    keycloakAuthUrl: https://dev.oidc.gov.bc.ca/auth
+    keycloakRealm: g7v0xlf4
+    keycloakClientId: account
+    statHolidayApi: https://canada-holidays.ca/api/v1/provinces/BC
+
+  resources:
+    limits:
+      cpu: 150m
+      memory: 250Mi
+    requests:
+      cpu: 50m
+      memory: 50Mi
+
+  service:
+    portName: admin
+    port: 3000

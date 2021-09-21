@@ -5,6 +5,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import { Button } from "shared-components/build/components/button/Button";
 import Header from "../../composite/header/Header";
 import styles from "./Home.css";
+import config from "../../../utils/config";
 
 export default function Home({ page: { setError } }) {
   const { initialized, keycloak } = useKeycloak();
@@ -43,7 +44,7 @@ export default function Home({ page: { setError } }) {
                     <Button
                       onClick={() =>
                         keycloak.login({
-                          redirectUri: `${process.env.REACT_APP_FRONTEND_BASE_URL}/bcparks/dashboard`,
+                          redirectUri: `${config.REACT_APP_FRONTEND_BASE_URL}/bcparks/dashboard`,
                         })
                       }
                       label="Login"

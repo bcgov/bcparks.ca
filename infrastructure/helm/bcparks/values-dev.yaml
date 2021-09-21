@@ -1,3 +1,7 @@
 cms:
   env:
     externalUrl: https://dev-cms.bcparks.ca
+
+admin:
+  env:
+    externalUrl: https://dev-staff.bcparks.ca

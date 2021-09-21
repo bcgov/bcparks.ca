@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import "./Header.css";
 import AccountInfo from "../accountInfo/AccountInfo";
+import config from "../../../utils/config";
 
 export const goHome = (e, history) => {
   e.stopPropagation();
@@ -43,7 +44,7 @@ export default function Header() {
               <div className="nav-box">
                 <img
                   className="img-fluid d-md-block"
-                  src={`${process.env.PUBLIC_URL}/images/bcid-logo-rev-en.svg`}
+                  src={`${config.REACT_APP_FRONTEND_BASE_URL}/images/bcid-logo-rev-en.svg`}
                   width="200"
                   alt="B.C. Parks Logo"
                 />

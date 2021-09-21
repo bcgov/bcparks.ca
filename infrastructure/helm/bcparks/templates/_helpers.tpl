@@ -91,3 +91,7 @@ https://{{ .Release.Name }}-{{ .Values.cms.componentName }}-{{ .Release.Namespac
 {{ define "bcparks_staging_volume_claim" -}}
 {{ .Release.Name }}-staging
 {{- end -}}
+
+{{ define "bcparks_admin_external_url" -}}
+https://{{ .Release.Name }}-{{ .Values.admin.componentName }}-{{ .Release.Namespace }}.{{ .Values.cluster.domain }}
+{{- end -}}

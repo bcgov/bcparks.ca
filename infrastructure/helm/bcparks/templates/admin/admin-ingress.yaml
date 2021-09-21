@@ -1,0 +1,21 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.admin.componentName }}
+  labels:
+    component: {{ .Values.admin.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  host: {{ .Release.Name }}-{{ .Values.admin.componentName }}-{{ .Release.Namespace }}.{{ .Values.cluster.domain }}
+  to:
+    kind: Service
+    name: {{ .Release.Name }}-{{ .Values.admin.componentName }}
+    weight: 100
+  port:
+    targetPort: {{ .Values.admin.service.portName }}
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

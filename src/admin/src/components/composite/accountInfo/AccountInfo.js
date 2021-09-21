@@ -2,6 +2,7 @@ import React from "react";
 import "./AccountInfo.css";
 import { useKeycloak } from "@react-keycloak/web";
 import { Button } from "shared-components/build/components/button/Button";
+import config from "../../../utils/config";
 
 const AccountInfo = () => {
   const { keycloak } = useKeycloak();
@@ -15,7 +16,7 @@ const AccountInfo = () => {
             styling="btn"
             onClick={() => {
               keycloak.logout({
-                redirectUri: `${process.env.REACT_APP_FRONTEND_BASE_URL}/bcparks`,
+                redirectUri: `${config.REACT_APP_FRONTEND_BASE_URL}/bcparks`,
               });
             }}
           />
