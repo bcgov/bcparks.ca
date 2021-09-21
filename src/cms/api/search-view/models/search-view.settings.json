@@ -116,8 +116,23 @@
     "parkactivities": {
       "type": "json"
     },
-    "parkfacilities": {
-      "type": "json"
+    "camping": {
+      "type": "boolean"
+    },
+    "petFriendly": {
+      "type": "boolean"
+    },
+    "wheelchair": {
+      "type": "boolean"
+    },
+    "marine": {
+      "type": "boolean"
+    },
+    "ecoReserve": {
+      "type": "boolean"
+    },
+    "electricalHookup": {
+      "type": "boolean"
     }
   }
 }

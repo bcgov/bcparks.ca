@@ -7,6 +7,7 @@ module.exports = {
     title: `BC Parks Staging Site`,
     description: `BC Parks Staging Site`,
     author: `@bcparks`,
+    apiURL: process.env.REACT_APP_CMS_BASE_URL,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
