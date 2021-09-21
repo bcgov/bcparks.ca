@@ -27,12 +27,6 @@ jobs:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_SA_USERNAME}}
           password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
-      - name: Login to Artifactory
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.ARTIFACTORY_USERNAME }}
-          password: ${{ secrets.ARTIFACTORY_PASSWORD }}
-          registry: ${{ env.ARTIFACTORY_SERVER }}
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
