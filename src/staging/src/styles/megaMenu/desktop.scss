@@ -189,6 +189,7 @@ nav {
         > [aria-haspopup="true"] {
           ~ ul {
             display: flex;
+            // min-height: 400px;
           }
         }
       }
@@ -288,6 +289,12 @@ nav {
       flex: 1;
     }
   }
+  
+  // Hide mobile specific elements
+  .mobile-menu-trigger, .mobile-menu-header, .mobile-menu-back-item {
+    display: none;
+  }
+
 }
 
 // ------------------ ANIMATIONS
