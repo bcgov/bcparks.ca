@@ -33,7 +33,6 @@ module.exports = {
           `Pages`,
           "activity-types",
           "facility-types",
-          "Menus"
         ],
         queryLimit: -1,
       },
