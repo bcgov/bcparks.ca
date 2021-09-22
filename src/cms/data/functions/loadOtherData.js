@@ -416,6 +416,50 @@ const loadPages = async () => {
   loadUtils.loadJson("page", "./data/pages.json", "page");
 };
 
+const loadMenus = async () => {
+  const model = "menu"
+  const object = "menu"
+  try {
+    const currentData = await strapi.services[model].find();
+
+    if (currentData.length == 0) {
+      strapi.log.info(`loading ${model} started...`);
+      var jsonData = fs.readFileSync("./data/menus.json", "utf8");
+      const dataSeed = JSON.parse(jsonData)[object];
+
+      // Add all records first without parent child reference
+      for await(const data of dataSeed) {
+        const menu = { ...data }
+        const keys = Object.keys(menu);
+        for (let i = 0; i < keys.length; i++) {
+          if (menu[keys[i]] === "") menu[keys[i]] = null;
+        }
+        if (menu.children) delete menu.children
+        if (menu.parent) delete menu.parent
+        await strapi.services[model].create(menu);
+      }
+      strapi.log.info(`loading ${model} without references completed...`);
+
+      // Loop through new records and update parent/child references
+      for await(const menu of dataSeed) {
+        if (menu.parent) {
+          const current = await strapi.services[model].findOne({ title: menu.title })
+          const parent = await strapi.services[model].findOne({ title: menu?.parent })
+          if (!current?.parent && parent) {
+            current.parent = parent.id
+            await strapi.query("menu").update({ id: current.id }, current)
+          }
+        }
+      }
+      strapi.log.info(`updating ${model} with references completed...`);
+      strapi.log.info(`loading ${model} completed...`);
+    }
+  } catch (error) {
+    strapi.log.error(`error loading ${model}...`);
+    strapi.log.error(error);
+  }
+};
+
 module.exports = {
   loadBusinessHours,
   loadStatutoryHolidays,
@@ -440,4 +484,5 @@ module.exports = {
   loadParkFogZoneXref,
   loadPages,
   loadWebsites,
+  loadMenus,
 };
