@@ -81,7 +81,7 @@
 **/.idea
 **/nbproject
 **/public/uploads/*
-**/!public/uploads/.gitkeep
+!**/public/uploads/.gitkeep
 
 ############################
 # Node.js
