@@ -1,0 +1,141 @@
+cluster:
+  domain: apps.silver.devops.gov.bc.ca
+
+images:
+  strapi:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/strapi
+    tag: latest
+  postgres:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/postgresql
+    tag: "13"
+  pgbouncer:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/pgbouncer
+    tag: latest
+  staging:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/staging
+    tag: latest
+  alpine:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/alpine
+    tag: latest
+  admin:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/admin
+    tag: latest
+
+cms:
+  componentName: cms
+
+  imagePullPolicy: Always
+
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  env:
+    nodeEnv: development
+    databaseClient: postgres
+    databaseMinConnections: 0
+    databaseMaxConnections: 10
+    databaseIdleTimeout: 30000
+    databaseCreateTimeout: 30000
+    databaseAcquireTimeout: 30000
+
+  service:
+    portName: strapi
+    port: 1337
+
+  pvc:
+    accessMode: ReadWriteMany
+    storageClassName: netapp-file-standard
+    size: 5Gi
+
+postgres:
+  componentName: postgres
+
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  env:
+    maxConnections: 200
+
+  service:
+    portName: postgres
+    port: 5432
+
+  pvc:
+    accessMode: ReadWriteOnce
+    storageClassName: netapp-file-standard
+    size: 5Gi
+
+pgbouncer:
+  enabled: true
+
+  componentName: pgbouncer
+
+  resources:
+    limits:
+      cpu: 250m
+      memory: 250Mi
+    requests:
+      cpu: 100m
+      memory: 50Mi
+
+  env:
+
+  service:
+    portName: pgbouncer
+    port: 6432
+
+staging:
+  imagePullPolicy: Always
+
+  componentName: staging
+
+  resources:
+    limits:
+      cpu: 500m
+      memory: 3Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  service:
+    portName: staging
+    port: 8000
+
+  pvc:
+    accessMode: ReadWriteMany
+    storageClassName: netapp-file-standard
+    size: 1Gi
+
+admin:
+  imagePullPolicy: Always
+
+  componentName: admin
+
+  env:
+    apiBaseUrl: https://api-61d198-dev.apps.silver.devops.gov.bc.ca
+    keycloakAuthUrl: https://dev.oidc.gov.bc.ca/auth
+    keycloakRealm: g7v0xlf4
+    keycloakClientId: account
+    statHolidayApi: https://canada-holidays.ca/api/v1/provinces/BC
+
+  resources:
+    limits:
+      cpu: 150m
+      memory: 250Mi
+    requests:
+      cpu: 50m
+      memory: 50Mi
+
+  service:
+    portName: admin
+    port: 3000

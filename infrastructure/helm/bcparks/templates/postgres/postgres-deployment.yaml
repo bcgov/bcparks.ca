@@ -1,0 +1,67 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.postgres.componentName }}
+  labels:
+    component: {{ .Values.postgres.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      component: {{ .Values.postgres.componentName }}
+      release: {{ .Release.Name }}
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        component: {{ .Values.postgres.componentName }}
+        release: {{ .Release.Name }}
+    spec:      
+      containers:
+        - name: db
+          image: {{ .Values.images.postgres.name }}:{{ .Values.images.postgres.tag }}
+          resources:
+{{ toYaml .Values.postgres.resources | indent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ template "bcparks_postgres_secret" . }}
+          env:
+            - name: POSTGRESQL_MAX_CONNECTIONS
+              value: {{ .Values.postgres.env.maxConnections | quote }}
+          ports:
+            - name: {{ .Values.postgres.service.portName }}              
+              containerPort: {{ .Values.postgres.service.port }}
+              protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - '-c'
+                - exec pg_isready -U "postgres" -h 127.0.0.1 -p {{ .Values.postgres.service.port }}
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - '-c'
+                - exec pg_isready -U "postgres" -h 127.0.0.1 -p {{ .Values.postgres.service.port }}
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 6
+          volumeMounts:
+            - name: db-data
+              mountPath: /var/lib/pgsql/data
+      volumes:
+        - name: db-data
+          persistentVolumeClaim:
+            claimName: {{ template "bcparks_postgres_volume_claim" . }}

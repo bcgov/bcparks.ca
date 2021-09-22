@@ -1,0 +1,67 @@
+{{- if .Values.pgbouncer.enabled }}
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.pgbouncer.componentName }}
+  labels:
+    component: {{ .Values.pgbouncer.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      component: {{ .Values.pgbouncer.componentName }}
+      release: {{ .Release.Name }}
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        component: {{ .Values.pgbouncer.componentName }}
+        release: {{ .Release.Name }}
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: {{ .Values.images.postgres.name }}:{{ .Values.images.postgres.tag }}
+          command: ['sh', '-c', 'until pg_isready -h {{ .Release.Name }}-{{ .Values.postgres.componentName }} -p {{ .Values.postgres.service.port }}; do echo waiting for database; sleep 2; done;']
+      containers:
+        - name: {{ .Values.pgbouncer.componentName }}
+          resources:
+{{ toYaml .Values.pgbouncer.resources | indent 12 }}
+          image: {{ .Values.images.pgbouncer.name }}:{{ .Values.images.pgbouncer.tag }}
+          imagePullPolicy: {{ .Values.pgbouncer.imagePullPolicy }}
+          ports:
+            - name: {{ .Values.pgbouncer.service.portName }}
+              containerPort: {{ .Values.pgbouncer.service.port }}
+              protocol: TCP
+          env:
+            - name: POSTGRESQL_HOST
+              value: {{ .Release.Name }}-{{ .Values.postgres.componentName }}
+            - name: POSTGRESQL_PORT
+              value: {{ .Values.postgres.service.port | quote }}
+            - name: POSTGRESQL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_postgres_secret" . }}
+                  key: POSTGRESQL_USER
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_postgres_secret" . }}
+                  key: POSTGRESQL_PASSWORD
+            - name: POSTGRESQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_postgres_secret" . }}
+                  key: POSTGRESQL_DATABASE
+            - name: PGBOUNCER_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_postgres_secret" . }}
+                  key: POSTGRESQL_DATABASE
+{{- end }}

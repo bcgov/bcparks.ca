@@ -6,6 +6,7 @@ import {
   removeProtectedAreas,
   removeProtectedAreasFromArea,
 } from "./LocationUtil";
+import config from "./config";
 
 export function calculateAfterHours(businessHours) {
   const currentDate = moment().format("YYYY-MM-DD");
@@ -362,7 +363,7 @@ export function calculateIsStatHoliday(
           console.log(err);
           // Call Statutory Holiday API if CMS cache is not available
           axios
-            .get(process.env.REACT_APP_STAT_HOLIDAY_API)
+            .get(config.REACT_APP_STAT_HOLIDAY_API)
             .then((res) => {
               const statInfo = { data: res.data };
               setIsStatHoliday(calculateStatHoliday(res.data));

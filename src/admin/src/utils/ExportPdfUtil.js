@@ -1,5 +1,7 @@
 import "jspdf-autotable";
 import moment from "moment";
+import config from "./config";
+
 const jsPDF = typeof window !== "undefined" ? require("jspdf").jsPDF : null;
 
 export function exportPdf(columns, data, reportTitle, exportFilename) {
@@ -19,7 +21,7 @@ export function exportPdf(columns, data, reportTitle, exportFilename) {
       margin: { top: 100 },
       didDrawPage: function (data) {
         doc.addImage(
-          `${process.env.PUBLIC_URL}/images/logo-bcparks-positive.png`,
+          `${config.REACT_APP_FRONTEND_BASE_URL}/images/logo-bcparks-positive.png`,
           "PNG",
           50,
           30,

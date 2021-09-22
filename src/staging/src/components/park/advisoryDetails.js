@@ -24,6 +24,8 @@ const useStyles = makeStyles(theme => ({
   small: {
     width: theme.spacing(3),
     height: theme.spacing(3),
+    marginTop: 5,
+    marginRight: 5,
   },
 }))
 
@@ -106,7 +108,7 @@ export default function AdvisoryDetails({ data }) {
                     setAllExpanded(!allExpanded)
                   }}
                 >
-                  {allExpanded ? "Collapse all" : "Expand All"}
+                  {allExpanded ? "[collapse all]" : "[expand all]"}
                 </Button>
               )}
             </Box>
@@ -141,8 +143,8 @@ export default function AdvisoryDetails({ data }) {
                     <HtmlContent>{advisory.title}</HtmlContent>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <div>
-                      <Divider variant="fullWidth" />
+                    <div className="advisory-content">
+                      <HtmlContent>{advisory.description}</HtmlContent>
                       {advisory.isEffectiveDateDisplayed &&
                         advisory.effectiveDate && (
                           <>
@@ -161,10 +163,12 @@ export default function AdvisoryDetails({ data }) {
                       {advisory.isAdvisoryDateDisplayed &&
                         advisory.advisoryDate && (
                           <>
+                            <br />
                             <p>Posted {advisory.advisoryDate}</p>
                           </>
                         )}
-                      <HtmlContent>{advisory.description}</HtmlContent>
+                      <br />
+                      <Divider />
                     </div>
                   </AccordionDetails>
                 </Accordion>

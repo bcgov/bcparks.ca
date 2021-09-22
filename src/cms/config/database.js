@@ -1,25 +1,36 @@
 module.exports = ({ env }) => ({
-  defaultConnection: "default",
+  defaultConnection: env("DATABASE_CLIENT", "default"),
   connections: {
     default: {
       connector: "bookshelf",
       settings: {
+        client: "sqlite",
+        timezone: "UTC",
+        filename: env("DATABASE_FILENAME", ".tmp/data.db"),
+      },
+      options: {
+        useNullAsDefault: true,
+      },
+    },
+    postgres: {
+      connector: "bookshelf",
+      settings: {
         client: "postgres",
-        host: env("DATABASE_HOST"),
-        port: env.int("DATABASE_PORT"),
-        database: env("DATABASE_NAME"),
-        username: env("DATABASE_USERNAME"),
-        password: env("DATABASE_PASSWORD"),
-        ssl: env.bool("DATABASE_SSL"),
+        host: env("DATABASE_HOST", "localhost"),
+        port: env.int("DATABASE_PORT", 5432),
+        database: env("DATABASE_NAME", "cms"),
+        username: env("DATABASE_USERNAME", "postgres"),
+        password: env("DATABASE_PASSWORD", "postgres"),
+        ssl: env.bool("DATABASE_SSL", false),
         timezone: "UTC",
       },
       options: {
         pool: {
-          min: 0,
-          max: 95,
-          idleTimeoutMillis: 30000,
-          createTimeoutMillis: 30000,
-          acquireTimeoutMillis: 30000,
+          min: env.int("DATABASE_MIN_CONNECTIONS", 0),
+          max: env.int("DATABASE_MAX_CONNECTIONS", 10),
+          idleTimeoutMillis: env.int("DATABASE_IDLE_TIMEOUT", 30000),
+          createTimeoutMillis: env.int("DATABASE_CREATE_TIMEOUT", 30000),
+          acquireTimeoutMillis: env.int("DATABASE_ACQUIRE_TIMEOUT", 30000),
         },
       },
     },

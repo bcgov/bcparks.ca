@@ -12,7 +12,7 @@ import Reconciliation from "../components/park/reconciliation"
 import ParkHeader from "../components/park/parkHeader"
 import ParkActivity from "../components/park/parkActivity"
 import ParkFacility from "../components/park/parkFacility"
-import ParkMap from "../components/park/parkMapDetails"
+import ParkMapDetails from "../components/park/parkMapDetails"
 import MapLocation from "../components/park/mapLocation"
 import ParkMenu from "../components/park/parkMenu"
 import "./parkTemplate.css"
@@ -80,7 +80,7 @@ export default function ParkTemplate({ data }) {
                 <MapLocation data={park.maps} />
               </Grid>
               <Grid item xs={12}>
-                <ParkMap data={park.maps} />
+                <ParkMapDetails data={park.maps} />
               </Grid>
               <Grid item xs={12}>
                 <About data={park.parkContact} />
@@ -95,4 +95,3 @@ export default function ParkTemplate({ data }) {
     </>
   )
 }
-

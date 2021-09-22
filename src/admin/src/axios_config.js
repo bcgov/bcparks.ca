@@ -1,30 +1,16 @@
 import axios from "axios";
 
+import config from "./utils/config";
+
 // For common config
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const cmsUrl = () => {
-  if (window.REACT_APP_CMS_BASE_URL) {
-    return window.REACT_APP_CMS_BASE_URL;
-  } else if (process.env.REACT_APP_CMS_BASE_URL) {
-    return process.env.REACT_APP_CMS_BASE_URL;
-  }
-};
-
-const apiUrl = () => {
-  if (window.REACT_APP_API_BASE_URL) {
-    return window.REACT_APP_API_BASE_URL;
-  } else if (process.env.REACT_APP_API_BASE_URL) {
-    return process.env.REACT_APP_API_BASE_URL;
-  }
-};
-
 const cmsAxios = axios.create({
-  baseURL: cmsUrl(),
+  baseURL: config.REACT_APP_CMS_BASE_URL,
 });
 
 const apiAxios = axios.create({
-  baseURL: apiUrl(),
+  baseURL: config.REACT_APP_API_BASE_URL,
 });
 
 export { cmsAxios, apiAxios, axios };

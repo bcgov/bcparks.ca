@@ -7,7 +7,7 @@ export default function ParkMapDetails({ data }) {
   return (
     <Grid item xs={12} id="park-map-details-container" className="anchor-link">
       <Paper elevation={0}>
-        <Heading>Park and Activity</Heading>
+        <Heading>Park and activity maps</Heading>
         <Spacer />
       </Paper>
     </Grid>

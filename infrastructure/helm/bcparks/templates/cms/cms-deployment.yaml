@@ -1,0 +1,115 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.cms.componentName }}
+  labels:
+    component: {{ .Values.cms.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      component: {{ .Values.cms.componentName }}
+      release: {{ .Release.Name }}
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        component: {{ .Values.cms.componentName }}
+        release: {{ .Release.Name }}
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: {{ .Values.images.postgres.name }}:{{ .Values.images.postgres.tag }}
+        {{- if .Values.pgbouncer.enabled }}
+          command: ['sh', '-c', 'until pg_isready -h {{ .Release.Name }}-{{ .Values.pgbouncer.componentName }} -p {{ .Values.pgbouncer.service.port }}; do echo waiting for database; sleep 2; done;']
+        {{- else }}
+          command: ['sh', '-c', 'until pg_isready -h {{ .Release.Name }}-{{ .Values.postgres.componentName }} -p {{ .Values.postgres.service.port }}; do echo waiting for database; sleep 2; done;']
+        {{- end }}            
+      containers:
+        - name: {{ .Values.cms.componentName }}
+          resources:
+{{ toYaml .Values.cms.resources | indent 12 }}
+          image: {{ .Values.images.strapi.name }}:{{ .Values.images.strapi.tag }}
+          imagePullPolicy: {{ .Values.cms.imagePullPolicy }}
+          ports:
+            - name: {{ .Values.cms.service.portName }}
+              containerPort: {{ .Values.cms.service.port }}
+              protocol: TCP
+          env:
+            - name: STRAPI_TELEMETRY_DISABLED
+              value: "true"
+            - name: STRAPI_EXTERNAL_URL
+            {{- if .Values.cms.env.externalUrl }}
+              value: {{ .Values.cms.env.externalUrl }}
+            {{- else }}
+              value: {{ template "bcparks_cms_external_url" . }}
+            {{- end }}
+            - name: NODE_ENV
+              value: {{ .Values.cms.env.nodeEnv }}
+            - name: DATABASE_CLIENT
+              value: {{ .Values.cms.env.databaseClient }}
+            - name: DATABASE_HOST
+            {{- if .Values.pgbouncer.enabled }}
+              value: {{ .Release.Name }}-{{ .Values.pgbouncer.componentName }}
+            {{- else }}
+              value: {{ .Release.Name }}-{{ .Values.postgres.componentName }}
+            {{- end }}
+            - name: DATABASE_PORT
+            {{- if .Values.pgbouncer.enabled }}
+              value: {{ .Values.pgbouncer.service.port | quote }}
+            {{- else }}
+              value: {{ .Values.postgres.service.port | quote }}
+            {{- end }}              
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_postgres_secret" . }}
+                  key: POSTGRESQL_USER
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_postgres_secret" . }}
+                  key: POSTGRESQL_PASSWORD
+            - name: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_postgres_secret" . }}
+                  key: POSTGRESQL_DATABASE
+            - name: DATABASE_SSL
+              value: "false"
+            - name: DATABASE_MIN_CONNECTIONS
+              value: {{ .Values.cms.env.databaseMinConnections | quote }}
+            - name: DATABASE_MAX_CONNECTIONS
+              value: {{ .Values.cms.env.databaseMaxConnections | quote }}
+            - name: DATABASE_IDLE_TIMEOUT
+              value: {{ .Values.cms.env.databaseIdleTimeout | quote }}
+            - name: DATABASE_CREATE_TIMEOUT
+              value: {{ .Values.cms.env.databaseCreateTimeout | quote }}
+            - name: DATABASE_ACQUIRE_TIMEOUT
+              value: {{ .Values.cms.env.databaseAcquireTimeout | quote }}
+          envFrom:
+            - secretRef:
+                name: {{ template "bcparks_cms_secret" . }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.cms.service.portName }}
+            initialDelaySeconds: 10
+            timeoutSeconds: 30
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 20
+          volumeMounts:
+            - name: cms-data
+              mountPath: /opt/app-root/src/public/uploads
+      volumes:
+        - name: cms-data
+          persistentVolumeClaim:
+            claimName: {{ template "bcparks_cms_volume_claim" . }}

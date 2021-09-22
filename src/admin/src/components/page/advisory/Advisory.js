@@ -36,6 +36,7 @@ import {
 } from "../../../utils/CmsDataUtil";
 import { hasRole } from "../../../utils/AuthenticationUtil";
 import { labelCompare } from "../../../utils/AppUtil";
+import config from "../../../utils/config";
 
 export default function Advisory({
   mode,
@@ -996,7 +997,7 @@ export default function Advisory({
     const linkRequest = {
       title: link.title ? link.title : media.name,
       type: link.type,
-      url: process.env.REACT_APP_CMS_BASE_URL + media.url,
+      url: config.REACT_APP_CMS_BASE_URL + media.url,
     };
     const res = await apiAxios
       .put(`api/update/links/${id}`, linkRequest, {

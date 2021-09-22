@@ -88,36 +88,37 @@ const searchParkByCriteria = (
 
   // Return all parks if no filter criteria is selected
   if (
-    selectedActivities.length == 0 &&
-    selectedFacilities.length == 0 &&
+    selectedActivities.length === 0 &&
+    selectedFacilities.length === 0 &&
     !camping &&
     !petFriendly &&
     !wheelchair &&
     !marine &&
     !ecoReserve &&
     !electricalHookup &&
-    searchText.length == 0
+    searchText.length === 0
   ) {
     return protectedAreas
   }
 
   // Return empty if any of the selected filter criteria has no parks
   if (
-    (requiredResults.text && (!textResults || textResults.length == 0)) ||
+    (requiredResults.text && (!textResults || textResults.length === 0)) ||
     (requiredResults.camping &&
-      (!campingResults || campingResults.length == 0)) ||
-    (requiredResults.petFriendly && (!petResults || petResults.length == 0)) ||
+      (!campingResults || campingResults.length === 0)) ||
+    (requiredResults.petFriendly && (!petResults || petResults.length === 0)) ||
     (requiredResults.wheelchair &&
-      (!wheelchairResults || wheelchairResults.length == 0)) ||
-    (requiredResults.marine && (!marineResults || marineResults.length == 0)) ||
+      (!wheelchairResults || wheelchairResults.length === 0)) ||
+    (requiredResults.marine &&
+      (!marineResults || marineResults.length === 0)) ||
     (requiredResults.ecoReserve &&
-      (!ecoReserveResults || ecoReserveResults.length == 0)) ||
+      (!ecoReserveResults || ecoReserveResults.length === 0)) ||
     (requiredResults.electricalHookup &&
-      (!electricalHookupResults || electricalHookupResults.length == 0)) ||
+      (!electricalHookupResults || electricalHookupResults.length === 0)) ||
     (requiredResults.activity &&
-      (!activityResults || activityResults.length == 0)) ||
+      (!activityResults || activityResults.length === 0)) ||
     (requiredResults.facility &&
-      (!facilityResults || facilityResults.length == 0))
+      (!facilityResults || facilityResults.length === 0))
   ) {
     return []
   }
@@ -311,7 +312,7 @@ const filterQuickSearch = (
   if (marine) {
     requiredResults.marine = true
     if (
-      park.marineProtectedArea == "Y" &&
+      park.marineProtectedArea === "Y" &&
       !quickSearchResults.marineResults.includes(park)
     ) {
       quickSearchResults.marineResults.push(park)
@@ -320,7 +321,7 @@ const filterQuickSearch = (
   if (ecoReserve) {
     requiredResults.ecoReserve = true
     if (
-      park.typeCode == "ER" &&
+      park.typeCode === "ER" &&
       !quickSearchResults.ecoReserveResults.includes(park)
     ) {
       quickSearchResults.ecoReserveResults.push(park)
@@ -354,7 +355,7 @@ const searchParkActivities = (park, activityResults, activityNames) => {
         count++
       }
     })
-    if (count == activityNames.length && !activityResults.includes(park)) {
+    if (count === activityNames.length && !activityResults.includes(park)) {
       activityResults.push(park)
     }
   }
@@ -378,7 +379,7 @@ const searchParkFacilities = (park, facilityResults, facilityNames) => {
         count++
       }
     })
-    if (count == facilityNames.length && !facilityResults.includes(park)) {
+    if (count === facilityNames.length && !facilityResults.includes(park)) {
       facilityResults.push(park)
     }
   }

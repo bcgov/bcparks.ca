@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+until $(curl --output /dev/null --silent --head --fail $REACT_APP_CMS_BASE_URL); do echo "Waiting for CMS..."; sleep 1; done;
+
+# Execute original s2i run script
+$STI_SCRIPTS_PATH/run
