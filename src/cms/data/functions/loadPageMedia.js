@@ -76,7 +76,6 @@ const loadPageMedia = async () => {
   strapi.log.info("loading media files completed...");
   await loadJson(modelPage,jsonPagesData,objectPage);
   await loadWebsites()
-  // loadJson(modelWebSite,jsonWebSitesData,objectWebsite);
   
 };
 
