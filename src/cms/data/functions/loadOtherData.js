@@ -409,7 +409,27 @@ const loadStatutoryHolidays = async () => {
 };
 
 const loadWebsites = async () => {
-  loadUtils.loadJson("website", "./data/websites.json", "website");
+  try {
+    const currentData = await strapi.services["website"].find();
+    if (currentData.length == 0) {
+      strapi.log.info("loading website started...");
+      const websiteHomepage = await strapi.query("page").findOne({ Slug: "/home" });
+      const websiteJson = fs.readFileSync("./data/websites.json", "utf8");
+      const dataSeed = JSON.parse(websiteJson)["website"];
+
+      dataSeed.forEach(async (data) => {
+        const keys = Object.keys(data);
+        for (let i = 0; i < keys.length; i++) {
+          if (data[keys[i]] === "") data[keys[i]] = null;
+        }
+        data.homepage = websiteHomepage?.id
+        await strapi.services["website"].create(data);
+      });
+      strapi.log.info("loading website completed...");
+    }
+  } catch (error) {
+    strapi.log.error(error);
+  }
 };
 
 const loadPages = async () => {
