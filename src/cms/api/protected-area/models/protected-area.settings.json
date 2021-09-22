@@ -132,7 +132,7 @@
       "type": "text"
     },
     "locationNotes": {
-      "type": "string"
+      "type": "text"
     },
     "parkContact": {
       "type": "text"
@@ -143,17 +143,17 @@
     "maps": {
       "type": "text"
     },
+    "managementPlanning": {
+      "type": "text"
+    },
     "natureAndCulture": {
       "type": "text"
     },
-    "managementPlanning": {
-      "type": "string"
-    },
     "partnerships": {
-      "type": "string"
+      "type": "text"
     },
     "purpose": {
-      "type": "string"
+      "type": "text"
     },
     "reconciliationNotes": {
       "type": "text"

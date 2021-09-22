@@ -26,23 +26,12 @@
     "protectedAreas": {
       "via": "managementAreas",
       "collection": "protected-area",
-      "dominant": true
+      "dominant": true,
+      "collectionName": "pa"
     },
     "region": {
       "via": "managementAreas",
       "model": "region"
-    },
-    "oldUrl": {
-      "type": "string"
-    },
-    "managementPlanning": {
-      "type": "string"
-    },
-    "partnerships": {
-      "type": "string"
-    },
-    "purpose": {
-      "type": "string"
     }
   }
 }

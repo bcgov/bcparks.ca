@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "09/22/2021 4:37:59 PM"
+    "x-generation-date": "09/22/2021 7:30:24 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -20990,10 +20990,10 @@
                 "maps": {
                   "type": "string"
                 },
-                "natureAndCulture": {
+                "managementPlanning": {
                   "type": "string"
                 },
-                "managementPlanning": {
+                "natureAndCulture": {
                   "type": "string"
                 },
                 "partnerships": {
@@ -21058,18 +21058,6 @@
               }
             }
           },
-          "oldUrl": {
-            "type": "string"
-          },
-          "managementPlanning": {
-            "type": "string"
-          },
-          "partnerships": {
-            "type": "string"
-          },
-          "purpose": {
-            "type": "string"
-          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -21097,18 +21085,6 @@
             }
           },
           "region": {
-            "type": "string"
-          },
-          "oldUrl": {
-            "type": "string"
-          },
-          "managementPlanning": {
-            "type": "string"
-          },
-          "partnerships": {
-            "type": "string"
-          },
-          "purpose": {
             "type": "string"
           },
           "published_at": {
@@ -23092,18 +23068,6 @@
                 "region": {
                   "type": "string"
                 },
-                "oldUrl": {
-                  "type": "string"
-                },
-                "managementPlanning": {
-                  "type": "string"
-                },
-                "partnerships": {
-                  "type": "string"
-                },
-                "purpose": {
-                  "type": "string"
-                },
                 "published_at": {
                   "type": "string"
                 },
@@ -23147,10 +23111,10 @@
           "maps": {
             "type": "string"
           },
-          "natureAndCulture": {
+          "managementPlanning": {
             "type": "string"
           },
-          "managementPlanning": {
+          "natureAndCulture": {
             "type": "string"
           },
           "partnerships": {
@@ -23320,10 +23284,10 @@
           "maps": {
             "type": "string"
           },
-          "natureAndCulture": {
+          "managementPlanning": {
             "type": "string"
           },
-          "managementPlanning": {
+          "natureAndCulture": {
             "type": "string"
           },
           "partnerships": {
@@ -23706,10 +23670,10 @@
                 "maps": {
                   "type": "string"
                 },
-                "natureAndCulture": {
+                "managementPlanning": {
                   "type": "string"
                 },
-                "managementPlanning": {
+                "natureAndCulture": {
                   "type": "string"
                 },
                 "partnerships": {
@@ -23882,18 +23846,6 @@
                   }
                 },
                 "region": {
-                  "type": "string"
-                },
-                "oldUrl": {
-                  "type": "string"
-                },
-                "managementPlanning": {
-                  "type": "string"
-                },
-                "partnerships": {
-                  "type": "string"
-                },
-                "purpose": {
                   "type": "string"
                 },
                 "published_at": {
@@ -24636,10 +24588,10 @@
                 "maps": {
                   "type": "string"
                 },
-                "natureAndCulture": {
+                "managementPlanning": {
                   "type": "string"
                 },
-                "managementPlanning": {
+                "natureAndCulture": {
                   "type": "string"
                 },
                 "partnerships": {
@@ -24812,18 +24764,6 @@
                   }
                 },
                 "region": {
-                  "type": "string"
-                },
-                "oldUrl": {
-                  "type": "string"
-                },
-                "managementPlanning": {
-                  "type": "string"
-                },
-                "partnerships": {
-                  "type": "string"
-                },
-                "purpose": {
                   "type": "string"
                 },
                 "published_at": {
@@ -25286,18 +25226,6 @@
                 "region": {
                   "type": "string"
                 },
-                "oldUrl": {
-                  "type": "string"
-                },
-                "managementPlanning": {
-                  "type": "string"
-                },
-                "partnerships": {
-                  "type": "string"
-                },
-                "purpose": {
-                  "type": "string"
-                },
                 "published_at": {
                   "type": "string"
                 },
@@ -25729,18 +25657,6 @@
                   }
                 },
                 "region": {
-                  "type": "string"
-                },
-                "oldUrl": {
-                  "type": "string"
-                },
-                "managementPlanning": {
-                  "type": "string"
-                },
-                "partnerships": {
-                  "type": "string"
-                },
-                "purpose": {
                   "type": "string"
                 },
                 "published_at": {

@@ -729,10 +729,10 @@
                 "maps": {
                   "type": "string"
                 },
-                "natureAndCulture": {
+                "managementPlanning": {
                   "type": "string"
                 },
-                "managementPlanning": {
+                "natureAndCulture": {
                   "type": "string"
                 },
                 "partnerships": {
@@ -797,18 +797,6 @@
               }
             }
           },
-          "oldUrl": {
-            "type": "string"
-          },
-          "managementPlanning": {
-            "type": "string"
-          },
-          "partnerships": {
-            "type": "string"
-          },
-          "purpose": {
-            "type": "string"
-          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -836,18 +824,6 @@
             }
           },
           "region": {
-            "type": "string"
-          },
-          "oldUrl": {
-            "type": "string"
-          },
-          "managementPlanning": {
-            "type": "string"
-          },
-          "partnerships": {
-            "type": "string"
-          },
-          "purpose": {
             "type": "string"
           },
           "published_at": {

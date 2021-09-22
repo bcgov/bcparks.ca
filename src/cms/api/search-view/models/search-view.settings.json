@@ -12,106 +12,106 @@
   },
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "text"
     },
     "orcs": {
-      "type": "string"
+      "type": "text"
     },
     "protectedAreaName": {
-      "type": "string"
+      "type": "text"
     },
     "totalArea": {
-      "type": "string"
+      "type": "text"
     },
     "uplandArea": {
-      "type": "string"
+      "type": "text"
     },
     "marineArea": {
-      "type": "string"
+      "type": "text"
     },
     "marineProtectedArea": {
-      "type": "string"
+      "type": "text"
     },
     "type": {
-      "type": "string"
+      "type": "text"
     },
     "class": {
-      "type": "string"
+      "type": "text"
     },
     "establishedDate": {
-      "type": "string"
+      "type": "text"
     },
     "repealedDate": {
-      "type": "string"
+      "type": "text"
     },
     "status": {
-      "type": "string"
+      "type": "text"
     },
     "url": {
-      "type": "string"
+      "type": "text"
     },
     "typeCode": {
-      "type": "string"
+      "type": "text"
     },
     "latitude": {
-      "type": "string"
+      "type": "text"
     },
     "longitude": {
-      "type": "string"
+      "type": "text"
     },
     "mapZoom": {
-      "type": "string"
+      "type": "text"
     },
     "isDayUsePass": {
-      "type": "string"
+      "type": "text"
     },
     "isFogZone": {
-      "type": "string"
+      "type": "text"
     },
     "featureId": {
-      "type": "string"
+      "type": "text"
     },
     "hasCampfireBan": {
-      "type": "string"
+      "type": "text"
     },
     "hasSmokingBan": {
-      "type": "string"
+      "type": "text"
     },
     "hasCampfireBanOverride": {
-      "type": "string"
+      "type": "text"
     },
     "hasSmokingBanOverride": {
-      "type": "string"
+      "type": "text"
     },
     "campfireBanRescindedDate": {
-      "type": "string"
+      "type": "text"
     },
     "description": {
-      "type": "string"
+      "type": "text"
     },
     "safetyInfo": {
-      "type": "string"
+      "type": "text"
     },
     "specialNotes": {
-      "type": "string"
+      "type": "text"
     },
     "locationNotes": {
-      "type": "string"
+      "type": "text"
     },
     "parkContact": {
-      "type": "string"
+      "type": "text"
     },
     "reservations": {
-      "type": "string"
+      "type": "text"
     },
     "natureAndCulture": {
-      "type": "string"
+      "type": "text"
     },
     "reconciliationNotes": {
-      "type": "string"
+      "type": "text"
     },
     "slug": {
-      "type": "string"
+      "type": "text"
     },
     "parkactivities": {
       "type": "json"

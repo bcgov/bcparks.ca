@@ -48,7 +48,7 @@ module.exports = {
     queryObj['_limit'] = -1;
     console.log("obj.searchText:", obj.searchText);
 
-    if (obj.searchText == '') {
+    if (obj.searchText === '' || obj.searchText === undefined) {
       console.log("Standard searching.");
       console.log("QueryObj:", queryObj);
       // No keyword, so we can use standard property filtering.
@@ -60,7 +60,7 @@ module.exports = {
       // front end to live back-end data.
 
       // TODO Fix the data model work so that these are flagged appropriately based on their park activities.
-      const knex = strapi.connections[strapi.database.defaultConnection];
+      const knex = strapi.connections[strapi.config.database.defaultConnection];
       return await knex('search_view')
                         .where((builder) =>
                           builder.where('protectedAreaName', 'like', `%${obj.searchText}%`)
