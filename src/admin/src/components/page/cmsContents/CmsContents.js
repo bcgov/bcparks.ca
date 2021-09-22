@@ -5,14 +5,7 @@ import Header from "../../composite/header/Header";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ErrorIcon from "@material-ui/icons/Error";
 import CancelRoundedIcon from "@material-ui/icons/CancelRounded";
-
-const cmsUrl = () => {
-  if (window.REACT_APP_CMS_BASE_URL) {
-    return window.REACT_APP_CMS_BASE_URL;
-  } else if (process.env.REACT_APP_CMS_BASE_URL) {
-    return process.env.REACT_APP_CMS_BASE_URL;
-  }
-};
+import config from "../../../utils/config";
 
 const contentTypes = [
   "access-statuses",
@@ -84,10 +77,9 @@ export default function CmsContents() {
                         <ErrorIcon style={{ color: "#dbab0a", fontSize: 14 }} />
                       )}{" "}
                       <a
-                        href={`${cmsUrl()}${row.value.config.url.replace(
-                          "/count",
-                          ""
-                        )}`}
+                        href={`${
+                          config.REACT_APP_CMS_BASE_URL
+                        }${row.value.config.url.replace("/count", "")}`}
                         className="ad-anchor"
                       >
                         {row.value.config.url.split("/", 2)}
