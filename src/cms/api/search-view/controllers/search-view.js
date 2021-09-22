@@ -60,7 +60,7 @@ module.exports = {
       // front end to live back-end data.
 
       // TODO Fix the data model work so that these are flagged appropriately based on their park activities.
-      const knex = strapi.connections.default;
+      const knex = strapi.connections[strapi.database.defaultConnection];
       return await knex('search_view')
                         .where((builder) =>
                           builder.where('protectedAreaName', 'like', `%${obj.searchText}%`)
