@@ -626,6 +626,9 @@
                 "url": {
                   "type": "string"
                 },
+                "oldUrl": {
+                  "type": "string"
+                },
                 "typeCode": {
                   "type": "string",
                   "enum": [
@@ -729,6 +732,15 @@
                 "natureAndCulture": {
                   "type": "string"
                 },
+                "managementPlanning": {
+                  "type": "string"
+                },
+                "partnerships": {
+                  "type": "string"
+                },
+                "purpose": {
+                  "type": "string"
+                },
                 "reconciliationNotes": {
                   "type": "string"
                 },
@@ -785,6 +797,18 @@
               }
             }
           },
+          "oldUrl": {
+            "type": "string"
+          },
+          "managementPlanning": {
+            "type": "string"
+          },
+          "partnerships": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -812,6 +836,18 @@
             }
           },
           "region": {
+            "type": "string"
+          },
+          "oldUrl": {
+            "type": "string"
+          },
+          "managementPlanning": {
+            "type": "string"
+          },
+          "partnerships": {
+            "type": "string"
+          },
+          "purpose": {
             "type": "string"
           },
           "published_at": {

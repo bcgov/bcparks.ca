@@ -29,6 +29,9 @@
     "url": {
       "type": "string"
     },
+    "oldUrl": {
+      "type": "string"
+    },
     "latitude": {
       "type": "float"
     },
@@ -59,6 +62,15 @@
       "type": "boolean"
     },
     "note": {
+      "type": "string"
+    },
+    "managementPlanning": {
+      "type": "string"
+    },
+    "partnerships": {
+      "type": "string"
+    },
+    "purpose": {
       "type": "string"
     }
   }

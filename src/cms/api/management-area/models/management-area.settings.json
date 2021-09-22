@@ -31,6 +31,18 @@
     "region": {
       "via": "managementAreas",
       "model": "region"
+    },
+    "oldUrl": {
+      "type": "string"
+    },
+    "managementPlanning": {
+      "type": "string"
+    },
+    "partnerships": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
     }
   }
 }

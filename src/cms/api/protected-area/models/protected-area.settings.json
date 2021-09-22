@@ -52,6 +52,9 @@
     "url": {
       "type": "string"
     },
+    "oldUrl": {
+      "type": "string"
+    },
     "typeCode": {
       "type": "enumeration",
       "enum": [
@@ -142,6 +145,15 @@
     },
     "natureAndCulture": {
       "type": "text"
+    },
+    "managementPlanning": {
+      "type": "string"
+    },
+    "partnerships": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
     },
     "reconciliationNotes": {
       "type": "text"

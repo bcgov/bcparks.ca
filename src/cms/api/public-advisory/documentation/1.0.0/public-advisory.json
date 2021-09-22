@@ -779,6 +779,9 @@
                 "url": {
                   "type": "string"
                 },
+                "oldUrl": {
+                  "type": "string"
+                },
                 "typeCode": {
                   "type": "string",
                   "enum": [
@@ -880,6 +883,15 @@
                   "type": "string"
                 },
                 "natureAndCulture": {
+                  "type": "string"
+                },
+                "managementPlanning": {
+                  "type": "string"
+                },
+                "partnerships": {
+                  "type": "string"
+                },
+                "purpose": {
                   "type": "string"
                 },
                 "reconciliationNotes": {
@@ -1048,6 +1060,18 @@
                 "region": {
                   "type": "string"
                 },
+                "oldUrl": {
+                  "type": "string"
+                },
+                "managementPlanning": {
+                  "type": "string"
+                },
+                "partnerships": {
+                  "type": "string"
+                },
+                "purpose": {
+                  "type": "string"
+                },
                 "published_at": {
                   "type": "string"
                 },
@@ -1129,6 +1153,9 @@
                 "url": {
                   "type": "string"
                 },
+                "oldUrl": {
+                  "type": "string"
+                },
                 "latitude": {
                   "type": "number"
                 },
@@ -1160,6 +1187,15 @@
                   "type": "boolean"
                 },
                 "note": {
+                  "type": "string"
+                },
+                "managementPlanning": {
+                  "type": "string"
+                },
+                "partnerships": {
+                  "type": "string"
+                },
+                "purpose": {
                   "type": "string"
                 },
                 "published_at": {
