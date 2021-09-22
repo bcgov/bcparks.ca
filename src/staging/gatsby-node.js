@@ -46,7 +46,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
   const parkQuery = `
   {
-    allStrapiProtectedArea(filter: { orcs: { lt: 50 } }) {
+    allStrapiProtectedArea {
       nodes {
         id
         orcs
