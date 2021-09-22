@@ -6,23 +6,20 @@ const path = require("path");
 const rootDir = process.cwd();
 const MEDIA_PATH = "media_uploads";
 
-const loadJson = (model, jsonData, object) => {
+const loadJson = async (model, jsonData, object) => {
   try {
-
       strapi.log.info(`loading ${model} started...`);
       const dataSeed = JSON.parse(jsonData)[object];
 
-      dataSeed.forEach( (data) => {
+      for await (const data of dataSeed) {
         const keys = Object.keys(data);
         for (let i = 0; i < keys.length; i++) {
           if (data[keys[i]] === "") data[keys[i]] = null;
         }
+        await strapi.services[model].create(data);
+      }
 
-        strapi.services[model].create(data);
-        
-      });
       strapi.log.info(`loading ${model} completed...`)
-
   } catch (error) {
     strapi.log.error(`error loading ${model}...`);
     strapi.log.error(error);
