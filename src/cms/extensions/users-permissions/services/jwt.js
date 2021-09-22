@@ -25,15 +25,12 @@ module.exports = {
     if (token && token.indexOf('Bearer ') == 0) {
       tokenString = token.split(' ')[1];
 
-      console.log('Remote JWT verification');
-
       const client = jwksClient({
         structSsl: true, 
         jwksUri: SSO_JWKSURI
       });
 
       const kid = jwt.decode(tokenString, { complete: true }).header.kid;
-      console.log('kid: ', kid);
 
       return new Promise((resolve, reject) => {
         client.getSigningKey(kid, (err, key) =>  {

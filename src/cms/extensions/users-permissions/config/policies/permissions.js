@@ -1,7 +1,7 @@
 const _ = require("lodash");
 
 const KEYCLOAK_AUTH_ROLES = ['submitter', 'approver'];
-const API_USER_EMAIL = process.env.API_USER_EMAIL; // change function to 'fetchuser'
+const STRAPI_API_USER_EMAIL = process.env.STRAPI_API_USER_EMAIL; // change function to 'fetchuser'
 
 module.exports = async (ctx, next) => {
   let role;
