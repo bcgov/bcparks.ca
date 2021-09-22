@@ -1,0 +1,59 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.admin.componentName }}
+  labels:
+    component: {{ .Values.admin.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      component: {{ .Values.admin.componentName }}
+      release: {{ .Release.Name }}
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        component: {{ .Values.admin.componentName }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Values.admin.componentName }}
+          resources:
+{{ toYaml .Values.admin.resources | indent 12 }}
+          image: {{ .Values.images.admin.name }}:{{ .Values.images.admin.tag }}
+          imagePullPolicy: {{ .Values.admin.imagePullPolicy }}
+          ports:
+            - name: {{ .Values.admin.service.portName }}
+              containerPort: {{ .Values.admin.service.port }}
+              protocol: TCP
+          env:
+            - name: REACT_APP_API_BASE_URL
+              value: {{ .Values.admin.env.apiBaseUrl }}
+            - name: REACT_APP_CMS_BASE_URL
+            {{- if .Values.cms.env.externalUrl }}
+              value: {{ .Values.cms.env.externalUrl }}
+            {{- else }}
+              value: {{ template "bcparks_cms_external_url" . }}
+            {{- end }}
+            - name: REACT_APP_FRONTEND_BASE_URL
+            {{- if .Values.cms.env.externalUrl }}
+              value: {{ .Values.admin.env.externalUrl }}
+            {{- else }}
+              value: {{ template "bcparks_admin_external_url" . }}
+            {{- end }}
+            - name: REACT_APP_KEYCLOAK_AUTH_URL
+              value: {{ .Values.admin.env.keycloakAuthUrl }}
+            - name: REACT_APP_KEYCLOAK_REALM
+              value: {{ .Values.admin.env.keycloakRealm }}
+            - name: REACT_APP_KEYCLOAK_CLIENT_ID
+              value: {{ .Values.admin.env.keycloakClientId }}
+            - name: REACT_APP_STAT_HOLIDAY_API
+              value: {{ .Values.admin.env.statHolidayApi }}

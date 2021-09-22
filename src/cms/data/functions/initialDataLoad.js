@@ -20,6 +20,7 @@ const isFirstRun = async () => {
 
 const loadData = async () => {
   try {
+    console.time('initialLoad')
     strapi.log.info("------Data load begins------");
     return Promise.all([
       parData.loadParData(),
@@ -35,7 +36,7 @@ const loadData = async () => {
       otherData.loadStandardMessage(),
       otherData.loadUrgency(),
       otherData.loadFireCentre(),
-      otherData.loadFireZone()
+      otherData.loadFireZone(),
     ]).then(async () => {
       return Promise.all([
         parData.loadAdditionalParData(),
@@ -46,11 +47,13 @@ const loadData = async () => {
         otherData.loadParkActivity(),
         otherData.loadParkFacility(),
         otherData.loadParkName(),
+        otherData.loadMenus(),
         publicAdvisoryAudit.loadPublicAdvisoryAudit(),
         pageMedia.loadPageMedia(),
-        parkPhoto.loadParkPhoto(),        
+        parkPhoto.loadParkPhoto(),
       ]).then(() => {
         strapi.log.info("------Data load completed------");
+        console.timeEnd('initialLoad')
         return true;
       });
     });
@@ -89,6 +92,7 @@ const rewriteData = async () => {
       strapi.services["urgency"].delete(),
       strapi.services["website"].delete(),
       strapi.services["page"].delete(),
+      strapi.services["menu"].delete(),
     ]).then(() => {
       strapi.log.info("---------Removing all data completed---------");
       Promise.resolve(loadData()).then(() => {

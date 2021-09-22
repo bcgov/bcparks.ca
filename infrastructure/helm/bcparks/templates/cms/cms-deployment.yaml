@@ -27,7 +27,11 @@ spec:
       initContainers:
         - name: wait-for-db
           image: {{ .Values.images.postgres.name }}:{{ .Values.images.postgres.tag }}
+        {{- if .Values.pgbouncer.enabled }}
           command: ['sh', '-c', 'until pg_isready -h {{ .Release.Name }}-{{ .Values.pgbouncer.componentName }} -p {{ .Values.pgbouncer.service.port }}; do echo waiting for database; sleep 2; done;']
+        {{- else }}
+          command: ['sh', '-c', 'until pg_isready -h {{ .Release.Name }}-{{ .Values.postgres.componentName }} -p {{ .Values.postgres.service.port }}; do echo waiting for database; sleep 2; done;']
+        {{- end }}            
       containers:
         - name: {{ .Values.cms.componentName }}
           resources:
@@ -52,9 +56,17 @@ spec:
             - name: DATABASE_CLIENT
               value: {{ .Values.cms.env.databaseClient }}
             - name: DATABASE_HOST
+            {{- if .Values.pgbouncer.enabled }}
               value: {{ .Release.Name }}-{{ .Values.pgbouncer.componentName }}
+            {{- else }}
+              value: {{ .Release.Name }}-{{ .Values.postgres.componentName }}
+            {{- end }}
             - name: DATABASE_PORT
+            {{- if .Values.pgbouncer.enabled }}
               value: {{ .Values.pgbouncer.service.port | quote }}
+            {{- else }}
+              value: {{ .Values.postgres.service.port | quote }}
+            {{- end }}              
             - name: DATABASE_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -76,6 +88,12 @@ spec:
               value: {{ .Values.cms.env.databaseMinConnections | quote }}
             - name: DATABASE_MAX_CONNECTIONS
               value: {{ .Values.cms.env.databaseMaxConnections | quote }}
+            - name: DATABASE_IDLE_TIMEOUT
+              value: {{ .Values.cms.env.databaseIdleTimeout | quote }}
+            - name: DATABASE_CREATE_TIMEOUT
+              value: {{ .Values.cms.env.databaseCreateTimeout | quote }}
+            - name: DATABASE_ACQUIRE_TIMEOUT
+              value: {{ .Values.cms.env.databaseAcquireTimeout | quote }}
           envFrom:
             - secretRef:
                 name: {{ template "bcparks_cms_secret" . }}

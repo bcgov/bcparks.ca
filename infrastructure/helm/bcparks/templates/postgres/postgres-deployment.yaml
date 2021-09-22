@@ -29,6 +29,9 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ template "bcparks_postgres_secret" . }}
+          env:
+            - name: POSTGRESQL_MAX_CONNECTIONS
+              value: {{ .Values.postgres.env.maxConnections | quote }}
           ports:
             - name: {{ .Values.postgres.service.portName }}              
               containerPort: {{ .Values.postgres.service.port }}
