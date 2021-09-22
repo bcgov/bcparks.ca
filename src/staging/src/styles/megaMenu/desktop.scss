@@ -5,12 +5,18 @@ $colorGold:                         #fcba19;
 $globalFont:                        "BCSans",Verdana,Arial,sans serif;
 $colorLightBlue:                    rgba(56, 89, 138, 1);
 $hoverLinkColor:                    #1A5A96;
-$menuLinkPadding:                   5px 20px;
+$menuLinkPadding:                   10px 25px;
 $desktopBreakpoint:                 991px;
 $megaMenuMultiLevelColWidth:        100/3 + 0%;
 $mobileMenuBackHeight:              calc(1.4em + 40px);
 $mobileMenuBackOffset:              calc(0px - (1.4em + 40px));
 $mobileMenuWidth:                   100%;
+
+body {
+  background-color: grey;
+  height: 1000px;
+  font-size: 13px;
+}
 
 .bc-parks-logo {
   max-height: 50px;
