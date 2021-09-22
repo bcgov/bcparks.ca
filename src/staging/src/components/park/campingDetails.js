@@ -7,6 +7,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Hidden,
 } from "@material-ui/core"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Heading from "./heading"
@@ -18,28 +19,29 @@ export default function CampingDetails({ data }) {
     facility.facilityName.toLowerCase().includes("camping")
   )
 
-  let expandedsInitial = []
+  let expandedInitial = []
   campingFacilities.forEach((camping, index) => {
-    expandedsInitial[index] = false
+    expandedInitial[index] = false
   })
 
-  const [allExpanded, setAllExpanded] = useState(false)
-  const [expandeds, setExpandeds] = useState(expandedsInitial)
+  // const [allExpanded, setAllExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(expandedInitial)
 
   if (campingFacilities.length === 0) return null
 
   const handleChange = id => (event, isExpanded) => {
-    expandeds[id] = isExpanded
-    setExpandeds([...expandeds])
+    expanded[id] = isExpanded
+    setExpanded([...expanded])
   }
 
-  const expandAll = isAllExpanded => {
-    let expandeds = []
-    campingFacilities.forEach((camping, index) => {
-      expandeds[index] = isAllExpanded
-    })
-    setExpandeds(expandeds)
-  }
+  // const expandAll = isAllExpanded => {
+  //   let expanded = []
+  //   expanded[0] = isAllExpanded
+  //   campingFacilities.forEach((camping, index) => {
+  //     expanded[index + 1] = isAllExpanded
+  //   })
+  //   setExpanded(expanded)
+  // }
 
   return (
     <Grid
@@ -49,10 +51,22 @@ export default function CampingDetails({ data }) {
       className="anchor-link"
     >
       <Paper elevation={0}>
+        <Hidden smUp implementation="css">
+          <Grid item xs={12} container>
+            <Button
+              className="yellow-button full-width"
+              href="https://discovercamping.ca/"
+            >
+              Book a campsite
+            </Button>
+          </Grid>
+          <br />
+        </Hidden>
         <Grid container>
           <Grid item xs={6}>
             <Heading>Camping</Heading>
           </Grid>
+
           <Grid
             item
             xs={6}
@@ -60,33 +74,19 @@ export default function CampingDetails({ data }) {
             justifyContent="flex-end"
             alignItems="flex-start"
           >
-            <Box m={1}>
+            <Hidden smDown implementation="css">
               <Button
                 className="yellow-button"
                 href="https://discovercamping.ca/"
               >
                 Book a campsite
               </Button>
-            </Box>
+            </Hidden>
           </Grid>
         </Grid>
-        {data.reservations && (
-          <Accordion defaultExpanded className="park-details-shaded">
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="reservations"
-              id="panel1a-header"
-            >
-              <h3 className="heading">Reservations</h3>
-            </AccordionSummary>
-            <AccordionDetails>
-              <HtmlContent>{data.reservations}</HtmlContent>
-            </AccordionDetails>
-          </Accordion>
-        )}
         {campingFacilities.length > 0 && (
           <div id="park-camping-list-container" className="anchor-link">
-            <Grid
+            {/* <Grid
               container
               item
               xs={12}
@@ -104,16 +104,36 @@ export default function CampingDetails({ data }) {
                       setAllExpanded(!allExpanded)
                     }}
                   >
-                    {allExpanded ? "Collapse all" : "Expand All"}
+                    {allExpanded ? "[collapse all]" : "[expand all]"}
                   </Button>
                 )}
               </Box>
-            </Grid>
+            </Grid> */}
             <Grid container spacing={2}>
+              {data.reservations && (
+                <Grid key="reservation" item xs={12}>
+                  <Accordion
+                    expanded={expanded[0]}
+                    onChange={handleChange(0)}
+                    className="park-details-shaded"
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="reservations"
+                      id="panel1a-header"
+                    >
+                      <HtmlContent>Reservations</HtmlContent>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <HtmlContent>{data.reservations}</HtmlContent>
+                    </AccordionDetails>
+                  </Accordion>
+                </Grid>
+              )}
               {campingFacilities.map((facility, index) => (
                 <Grid key={index} item xs={12}>
                   <Accordion
-                    expanded={expandeds[index]}
+                    expanded={expanded[index]}
                     onChange={handleChange(index)}
                   >
                     <AccordionSummary
@@ -121,14 +141,14 @@ export default function CampingDetails({ data }) {
                       aria-controls={facility.facilityName}
                       id={index}
                     >
-                      <Box mr={1}>
+                      {/* <Box mr={1}>
                         <img
                           src={facility.icon}
                           alt={facility.icon ? facility.facilityName : ""}
                           width="24"
                           height="24"
                         />
-                      </Box>
+                      </Box> */}
                       <HtmlContent>{facility.facilityName}</HtmlContent>
                     </AccordionSummary>
                     <AccordionDetails>

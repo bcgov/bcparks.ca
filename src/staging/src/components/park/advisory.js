@@ -18,14 +18,33 @@ export default function Advisory({ data }) {
 
   const advisories = data.nodes || []
 
+  let textMap = []
+
   let alertIcon = blueAlertIcon
-  let title = "There are no reported alerts for this park"
   if (data && advisories.length !== 0) {
     const alertLevels = advisories.map(advisory => advisory.urgency.sequence)
     const maxAlertLevel = Math.max(...alertLevels)
     if (maxAlertLevel === 3) alertIcon = redAlertIcon
     if (maxAlertLevel === 2) alertIcon = yellowAlertIcon
-    title = `Alerts currently in effect (${advisories.length})`
+    const highAlertGroup = advisories.filter(
+      advisory => advisory.urgency.sequence === maxAlertLevel
+    )
+    const advisoryText = []
+    const advisoryTextCounts = {}
+    highAlertGroup.forEach(advisory => {
+      if (advisory.eventType) {
+        if (!advisoryText.includes(advisory.eventType.eventType)) {
+          advisoryText.push(advisory.eventType.eventType)
+          advisoryTextCounts[advisory.eventType.eventType] = 1
+        } else {
+          advisoryTextCounts[advisory.eventType.eventType] += 1
+        }
+      }
+    })
+
+    textMap = advisoryText.map(
+      text => text + " (" + advisoryTextCounts[text] + ")"
+    )
   }
 
   return (
@@ -36,9 +55,29 @@ export default function Advisory({ data }) {
             variant="square"
             src={alertIcon}
             aria-label="park access status"
+            className="park-overview-icon"
           />
         }
-        title={<Link to="#park-advisory-details-container">{title}</Link>}
+        title={
+          <>
+            {textMap.length === 0 && (
+              <Link to="#park-advisory-details-container">
+                There are no reported alerts for this park
+              </Link>
+            )}
+            {textMap.length > 0 && (
+              <>
+                {textMap.map((text, index) => (
+                  <div key={index}>
+                    {index < 2 && (
+                      <Link to="#park-advisory-details-container">{text}</Link>
+                    )}
+                  </div>
+                ))}
+              </>
+            )}
+          </>
+        }
       />
     </Card>
   )

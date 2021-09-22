@@ -12,11 +12,12 @@
   },
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "unique": false
     },
     "url": {
       "type": "string",
-      "unique": true
+      "unique": false
     },
     "pageType": {
       "type": "enumeration",

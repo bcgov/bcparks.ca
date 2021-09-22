@@ -1,13 +1,25 @@
 "use strict";
 
+const STRAPI_API_USER_NAME = process.env.STRAPI_API_USER_NAME || "apiuser";
+const STRAPI_API_USER_PASSWORD =
+  process.env.STRAPI_API_USER_PASSWORD || "DummyPassword123";
+const STRAPI_API_USER_EMAIL =
+  process.env.STRAPI_API_USER_EMAIL || "api@api.com";
+const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN || "somestring";
+const STRAPI_ADMIN_USER = process.env.STRAPI_ADMIN_USER || "admin";
+const STRAPI_ADMIN_PASSWORD = process.env.STRAPI_ADMIN_PASSWORD || "admin123";
+const STRAPI_ADMIN_FIRST_NAME = process.env.STRAPI_ADMIN_FIRST_NAME || "Test";
+const STRAPI_ADMIN_LAST_NAME = process.env.STRAPI_ADMIN_LAST_NAME || "Test";
+const STRAPI_ADMIN_EMAIL = process.env.STRAPI_ADMIN_EMAIL || "admin@test.test";
+
 const createApiUser = async () => {
   const authRole = await findRole("authenticated");
   const password = await strapi.admin.services.auth.hashPassword(
-    process.env.API_USER_PASSWORD
+    STRAPI_API_USER_PASSWORD
   );
   const params = {
-    username: process.env.API_USER_NAME,
-    email: process.env.API_USER_EMAIL,
+    username: STRAPI_API_USER_NAME,
+    email: STRAPI_API_USER_EMAIL,
     password: password,
     provider: "local",
     confirmed: true,
@@ -29,7 +41,7 @@ const createApiToken = async () => {
     const apiUser = await createApiUser();
     return await strapi.services["token"]
       .create({
-        token: process.env.API_TOKEN,
+        token: STRAPI_API_TOKEN,
         user: apiUser,
       })
       .then(() => {
@@ -104,11 +116,11 @@ const createAdmin = async () => {
   try {
     if (process.env.NODE_ENV === "development") {
       const params = {
-        username: process.env.ADMIN_USER,
-        password: process.env.ADMIN_PASSWORD,
-        firstname: process.env.ADMIN_FIRST_NAME,
-        lastname: process.env.ADMIN_LAST_NAME,
-        email: process.env.ADMIN_EMAIL,
+        username: STRAPI_ADMIN_USER,
+        password: STRAPI_ADMIN_PASSWORD,
+        firstname: STRAPI_ADMIN_FIRST_NAME,
+        lastname: STRAPI_ADMIN_LAST_NAME,
+        email: STRAPI_ADMIN_EMAIL,
         blocked: false,
         isActive: true,
       };

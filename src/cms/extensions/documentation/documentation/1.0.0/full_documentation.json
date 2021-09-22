@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/31/2021 1:01:27 AM"
+    "x-generation-date": "09/22/2021 9:09:11 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -6634,6 +6634,517 @@
         ]
       }
     },
+    "/menus": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Menu"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Menu"
+        ],
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of results possible",
+            "schema": {
+              "type": "integer"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_sort",
+            "in": "query",
+            "required": false,
+            "description": "Sort according to a specific field.",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_start",
+            "in": "query",
+            "required": false,
+            "description": "Skip a specific number of entries (especially useful for pagination)",
+            "schema": {
+              "type": "integer"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "=",
+            "in": "query",
+            "required": false,
+            "description": "Get entries that matches exactly your input",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_ne",
+            "in": "query",
+            "required": false,
+            "description": "Get records that are not equals to something",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_lt",
+            "in": "query",
+            "required": false,
+            "description": "Get record that are lower than a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_lte",
+            "in": "query",
+            "required": false,
+            "description": "Get records that are lower than or equal to a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_gt",
+            "in": "query",
+            "required": false,
+            "description": "Get records that are greater than a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_gte",
+            "in": "query",
+            "required": false,
+            "description": "Get records that are greater than  or equal a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_contains",
+            "in": "query",
+            "required": false,
+            "description": "Get records that contains a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_containss",
+            "in": "query",
+            "required": false,
+            "description": "Get records that contains (case sensitive) a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_in",
+            "in": "query",
+            "required": false,
+            "description": "Get records that matches any value in the array of values",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_nin",
+            "in": "query",
+            "required": false,
+            "description": "Get records that doesn't match any value in the array of values",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "deprecated": false
+          }
+        ]
+      },
+      "post": {
+        "deprecated": false,
+        "description": "Create a new record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Menu"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Menu"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewMenu"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/menus/count": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Menu"
+        ],
+        "parameters": []
+      }
+    },
+    "/menus/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Menu"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Menu"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "put": {
+        "deprecated": false,
+        "description": "Update a record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Menu"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Menu"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewMenu"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "deprecated": false,
+        "description": "Delete a record",
+        "responses": {
+          "200": {
+            "description": "deletes a single record based on the ID supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Menu"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
     "/pages": {
       "get": {
         "deprecated": false,
@@ -12615,6 +13126,601 @@
             }
           }
         ]
+      }
+    },
+    "/search-views": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Search-view"
+        ],
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of results possible",
+            "schema": {
+              "type": "integer"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_sort",
+            "in": "query",
+            "required": false,
+            "description": "Sort according to a specific field.",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_start",
+            "in": "query",
+            "required": false,
+            "description": "Skip a specific number of entries (especially useful for pagination)",
+            "schema": {
+              "type": "integer"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "=",
+            "in": "query",
+            "required": false,
+            "description": "Get entries that matches exactly your input",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_ne",
+            "in": "query",
+            "required": false,
+            "description": "Get records that are not equals to something",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_lt",
+            "in": "query",
+            "required": false,
+            "description": "Get record that are lower than a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_lte",
+            "in": "query",
+            "required": false,
+            "description": "Get records that are lower than or equal to a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_gt",
+            "in": "query",
+            "required": false,
+            "description": "Get records that are greater than a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_gte",
+            "in": "query",
+            "required": false,
+            "description": "Get records that are greater than  or equal a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_contains",
+            "in": "query",
+            "required": false,
+            "description": "Get records that contains a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_containss",
+            "in": "query",
+            "required": false,
+            "description": "Get records that contains (case sensitive) a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_in",
+            "in": "query",
+            "required": false,
+            "description": "Get records that matches any value in the array of values",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_nin",
+            "in": "query",
+            "required": false,
+            "description": "Get records that doesn't match any value in the array of values",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "deprecated": false
+          }
+        ]
+      },
+      "post": {
+        "deprecated": false,
+        "description": "Create a new record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Search-view"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewSearch-view"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search-views/count": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Search-view"
+        ],
+        "parameters": []
+      }
+    },
+    "/search-views/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Search-view"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "put": {
+        "deprecated": false,
+        "description": "Update a record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Search-view"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewSearch-view"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "deprecated": false,
+        "description": "Delete a record",
+        "responses": {
+          "200": {
+            "description": "deletes a single record based on the ID supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Search-view"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/search": {
+      "post": {
+        "deprecated": false,
+        "description": "Create a new search record",
+        "responses": {
+          "200": {
+            "description": "Retrieve search document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Search"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "foo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/sections": {
@@ -18843,9 +19949,6 @@
           "isActive": {
             "type": "boolean"
           },
-          "isCamping": {
-            "type": "boolean"
-          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -18876,9 +19979,6 @@
             "type": "string"
           },
           "isActive": {
-            "type": "boolean"
-          },
-          "isCamping": {
             "type": "boolean"
           },
           "published_at": {
@@ -19145,9 +20245,6 @@
           "isActive": {
             "type": "boolean"
           },
-          "isCamping": {
-            "type": "boolean"
-          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -19178,9 +20275,6 @@
             "type": "string"
           },
           "isActive": {
-            "type": "boolean"
-          },
-          "isCamping": {
             "type": "boolean"
           },
           "published_at": {
@@ -19510,9 +20604,6 @@
                 "url": {
                   "type": "string"
                 },
-                "oldUrl": {
-                  "type": "string"
-                },
                 "typeCode": {
                   "type": "string",
                   "enum": [
@@ -19613,16 +20704,7 @@
                 "maps": {
                   "type": "string"
                 },
-                "managementPlanning": {
-                  "type": "string"
-                },
                 "natureAndCulture": {
-                  "type": "string"
-                },
-                "partnerships": {
-                  "type": "string"
-                },
-                "purpose": {
                   "type": "string"
                 },
                 "reconciliationNotes": {
@@ -20288,9 +21370,6 @@
                 "url": {
                   "type": "string"
                 },
-                "oldUrl": {
-                  "type": "string"
-                },
                 "typeCode": {
                   "type": "string",
                   "enum": [
@@ -20391,16 +21470,7 @@
                 "maps": {
                   "type": "string"
                 },
-                "managementPlanning": {
-                  "type": "string"
-                },
                 "natureAndCulture": {
-                  "type": "string"
-                },
-                "partnerships": {
-                  "type": "string"
-                },
-                "purpose": {
                   "type": "string"
                 },
                 "reconciliationNotes": {
@@ -20487,6 +21557,194 @@
           },
           "region": {
             "type": "string"
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "created_by": {
+            "type": "string"
+          },
+          "updated_by": {
+            "type": "string"
+          }
+        }
+      },
+      "Menu": {
+        "required": [
+          "id",
+          "order"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "pageType": {
+            "type": "string",
+            "enum": [
+              "Landing",
+              "Unique",
+              "Content",
+              "Form"
+            ]
+          },
+          "order": {
+            "type": "integer"
+          },
+          "parent": {
+            "required": [
+              "id",
+              "order"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "pageType": {
+                "type": "string",
+                "enum": [
+                  "Landing",
+                  "Unique",
+                  "Content",
+                  "Form"
+                ]
+              },
+              "order": {
+                "type": "integer"
+              },
+              "parent": {
+                "type": "string"
+              },
+              "children": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "show": {
+                "type": "boolean"
+              },
+              "published_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "order"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "pageType": {
+                  "type": "string",
+                  "enum": [
+                    "Landing",
+                    "Unique",
+                    "Content",
+                    "Form"
+                  ]
+                },
+                "order": {
+                  "type": "integer"
+                },
+                "parent": {
+                  "type": "string"
+                },
+                "children": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "show": {
+                  "type": "boolean"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "show": {
+            "type": "boolean",
+            "default": false
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "NewMenu": {
+        "required": [
+          "order"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "pageType": {
+            "type": "string",
+            "enum": [
+              "Landing",
+              "Unique",
+              "Content",
+              "Form"
+            ]
+          },
+          "order": {
+            "type": "integer"
+          },
+          "parent": {
+            "type": "string"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "show": {
+            "type": "boolean",
+            "default": false
           },
           "published_at": {
             "type": "string",
@@ -20869,9 +22127,6 @@
               "url": {
                 "type": "string"
               },
-              "oldUrl": {
-                "type": "string"
-              },
               "typeCode": {
                 "type": "string",
                 "enum": [
@@ -20972,16 +22227,7 @@
               "maps": {
                 "type": "string"
               },
-              "managementPlanning": {
-                "type": "string"
-              },
               "natureAndCulture": {
-                "type": "string"
-              },
-              "partnerships": {
-                "type": "string"
-              },
-              "purpose": {
                 "type": "string"
               },
               "reconciliationNotes": {
@@ -21102,9 +22348,6 @@
                 "type": "string"
               },
               "isActive": {
-                "type": "boolean"
-              },
-              "isCamping": {
                 "type": "boolean"
               },
               "published_at": {
@@ -21238,9 +22481,6 @@
               "url": {
                 "type": "string"
               },
-              "oldUrl": {
-                "type": "string"
-              },
               "typeCode": {
                 "type": "string",
                 "enum": [
@@ -21341,16 +22581,7 @@
               "maps": {
                 "type": "string"
               },
-              "managementPlanning": {
-                "type": "string"
-              },
               "natureAndCulture": {
-                "type": "string"
-              },
-              "partnerships": {
-                "type": "string"
-              },
-              "purpose": {
                 "type": "string"
               },
               "reconciliationNotes": {
@@ -21471,9 +22702,6 @@
                 "type": "string"
               },
               "isActive": {
-                "type": "boolean"
-              },
-              "isCamping": {
                 "type": "boolean"
               },
               "published_at": {
@@ -21678,9 +22906,6 @@
               "url": {
                 "type": "string"
               },
-              "oldUrl": {
-                "type": "string"
-              },
               "typeCode": {
                 "type": "string",
                 "enum": [
@@ -21781,16 +23006,7 @@
               "maps": {
                 "type": "string"
               },
-              "managementPlanning": {
-                "type": "string"
-              },
               "natureAndCulture": {
-                "type": "string"
-              },
-              "partnerships": {
-                "type": "string"
-              },
-              "purpose": {
                 "type": "string"
               },
               "reconciliationNotes": {
@@ -22116,9 +23332,6 @@
             "type": "string"
           },
           "url": {
-            "type": "string"
-          },
-          "oldUrl": {
             "type": "string"
           },
           "typeCode": {
@@ -22476,16 +23689,7 @@
           "maps": {
             "type": "string"
           },
-          "managementPlanning": {
-            "type": "string"
-          },
           "natureAndCulture": {
-            "type": "string"
-          },
-          "partnerships": {
-            "type": "string"
-          },
-          "purpose": {
             "type": "string"
           },
           "reconciliationNotes": {
@@ -22543,9 +23747,6 @@
             "type": "string"
           },
           "url": {
-            "type": "string"
-          },
-          "oldUrl": {
             "type": "string"
           },
           "typeCode": {
@@ -22649,16 +23850,7 @@
           "maps": {
             "type": "string"
           },
-          "managementPlanning": {
-            "type": "string"
-          },
           "natureAndCulture": {
-            "type": "string"
-          },
-          "partnerships": {
-            "type": "string"
-          },
-          "purpose": {
             "type": "string"
           },
           "reconciliationNotes": {
@@ -22932,9 +24124,6 @@
                 "url": {
                   "type": "string"
                 },
-                "oldUrl": {
-                  "type": "string"
-                },
                 "typeCode": {
                   "type": "string",
                   "enum": [
@@ -23035,16 +24224,7 @@
                 "maps": {
                   "type": "string"
                 },
-                "managementPlanning": {
-                  "type": "string"
-                },
                 "natureAndCulture": {
-                  "type": "string"
-                },
-                "partnerships": {
-                  "type": "string"
-                },
-                "purpose": {
                   "type": "string"
                 },
                 "reconciliationNotes": {
@@ -23838,9 +25018,6 @@
                 "url": {
                   "type": "string"
                 },
-                "oldUrl": {
-                  "type": "string"
-                },
                 "typeCode": {
                   "type": "string",
                   "enum": [
@@ -23941,16 +25118,7 @@
                 "maps": {
                   "type": "string"
                 },
-                "managementPlanning": {
-                  "type": "string"
-                },
                 "natureAndCulture": {
-                  "type": "string"
-                },
-                "partnerships": {
-                  "type": "string"
-                },
-                "purpose": {
                   "type": "string"
                 },
                 "reconciliationNotes": {
@@ -24620,6 +25788,274 @@
           }
         }
       },
+      "Search-view": {
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "orcs": {
+            "type": "string"
+          },
+          "protectedAreaName": {
+            "type": "string"
+          },
+          "totalArea": {
+            "type": "string"
+          },
+          "uplandArea": {
+            "type": "string"
+          },
+          "marineArea": {
+            "type": "string"
+          },
+          "marineProtectedArea": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "class": {
+            "type": "string"
+          },
+          "establishedDate": {
+            "type": "string"
+          },
+          "repealedDate": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "typeCode": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "string"
+          },
+          "mapZoom": {
+            "type": "string"
+          },
+          "isDayUsePass": {
+            "type": "string"
+          },
+          "isFogZone": {
+            "type": "string"
+          },
+          "featureId": {
+            "type": "string"
+          },
+          "hasCampfireBan": {
+            "type": "string"
+          },
+          "hasSmokingBan": {
+            "type": "string"
+          },
+          "hasCampfireBanOverride": {
+            "type": "string"
+          },
+          "hasSmokingBanOverride": {
+            "type": "string"
+          },
+          "campfireBanRescindedDate": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "safetyInfo": {
+            "type": "string"
+          },
+          "specialNotes": {
+            "type": "string"
+          },
+          "locationNotes": {
+            "type": "string"
+          },
+          "parkContact": {
+            "type": "string"
+          },
+          "reservations": {
+            "type": "string"
+          },
+          "natureAndCulture": {
+            "type": "string"
+          },
+          "reconciliationNotes": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "parkactivities": {
+            "type": "object"
+          },
+          "parkfacilities": {
+            "type": "object"
+          }
+        }
+      },
+      "NewSearch-view": {
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "orcs": {
+            "type": "string"
+          },
+          "protectedAreaName": {
+            "type": "string"
+          },
+          "totalArea": {
+            "type": "string"
+          },
+          "uplandArea": {
+            "type": "string"
+          },
+          "marineArea": {
+            "type": "string"
+          },
+          "marineProtectedArea": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "class": {
+            "type": "string"
+          },
+          "establishedDate": {
+            "type": "string"
+          },
+          "repealedDate": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "typeCode": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "string"
+          },
+          "mapZoom": {
+            "type": "string"
+          },
+          "isDayUsePass": {
+            "type": "string"
+          },
+          "isFogZone": {
+            "type": "string"
+          },
+          "featureId": {
+            "type": "string"
+          },
+          "hasCampfireBan": {
+            "type": "string"
+          },
+          "hasSmokingBan": {
+            "type": "string"
+          },
+          "hasCampfireBanOverride": {
+            "type": "string"
+          },
+          "hasSmokingBanOverride": {
+            "type": "string"
+          },
+          "campfireBanRescindedDate": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "safetyInfo": {
+            "type": "string"
+          },
+          "specialNotes": {
+            "type": "string"
+          },
+          "locationNotes": {
+            "type": "string"
+          },
+          "parkContact": {
+            "type": "string"
+          },
+          "reservations": {
+            "type": "string"
+          },
+          "natureAndCulture": {
+            "type": "string"
+          },
+          "reconciliationNotes": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "parkactivities": {
+            "type": "object"
+          },
+          "parkfacilities": {
+            "type": "object"
+          },
+          "created_by": {
+            "type": "string"
+          },
+          "updated_by": {
+            "type": "string"
+          }
+        }
+      },
+      "Search": {
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "NewSearch": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "created_by": {
+            "type": "string"
+          },
+          "updated_by": {
+            "type": "string"
+          }
+        }
+      },
       "Section": {
         "required": [
           "id",
@@ -24838,9 +26274,6 @@
               "url": {
                 "type": "string"
               },
-              "oldUrl": {
-                "type": "string"
-              },
               "typeCode": {
                 "type": "string",
                 "enum": [
@@ -24941,16 +26374,7 @@
               "maps": {
                 "type": "string"
               },
-              "managementPlanning": {
-                "type": "string"
-              },
               "natureAndCulture": {
-                "type": "string"
-              },
-              "partnerships": {
-                "type": "string"
-              },
-              "purpose": {
                 "type": "string"
               },
               "reconciliationNotes": {
@@ -25398,15 +26822,6 @@
           "Name": {
             "type": "string"
           },
-          "Header": {
-            "type": "string"
-          },
-          "Footer": {
-            "type": "string"
-          },
-          "Navigation": {
-            "type": "string"
-          },
           "homepage": {
             "required": [
               "id"
@@ -25439,6 +26854,15 @@
               }
             }
           },
+          "Header": {
+            "type": "string"
+          },
+          "Footer": {
+            "type": "string"
+          },
+          "Navigation": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -25450,6 +26874,9 @@
           "Name": {
             "type": "string"
           },
+          "homepage": {
+            "type": "string"
+          },
           "Header": {
             "type": "string"
           },
@@ -25457,9 +26884,6 @@
             "type": "string"
           },
           "Navigation": {
-            "type": "string"
-          },
-          "homepage": {
             "type": "string"
           },
           "published_at": {
@@ -25822,10 +27246,16 @@
       "name": "Link"
     },
     {
+      "name": "Menu"
+    },
+    {
       "name": "Page"
     },
     {
       "name": "Region"
+    },
+    {
+      "name": "Search"
     },
     {
       "name": "Section"

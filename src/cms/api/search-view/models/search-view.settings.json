@@ -1,0 +1,123 @@
+{
+  "kind": "collectionType",
+  "collectionName": "search_view",
+  "info": {
+    "name": "SearchView",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "orcs": {
+      "type": "string"
+    },
+    "protectedAreaName": {
+      "type": "string"
+    },
+    "totalArea": {
+      "type": "string"
+    },
+    "uplandArea": {
+      "type": "string"
+    },
+    "marineArea": {
+      "type": "string"
+    },
+    "marineProtectedArea": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "class": {
+      "type": "string"
+    },
+    "establishedDate": {
+      "type": "string"
+    },
+    "repealedDate": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "typeCode": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "string"
+    },
+    "longitude": {
+      "type": "string"
+    },
+    "mapZoom": {
+      "type": "string"
+    },
+    "isDayUsePass": {
+      "type": "string"
+    },
+    "isFogZone": {
+      "type": "string"
+    },
+    "featureId": {
+      "type": "string"
+    },
+    "hasCampfireBan": {
+      "type": "string"
+    },
+    "hasSmokingBan": {
+      "type": "string"
+    },
+    "hasCampfireBanOverride": {
+      "type": "string"
+    },
+    "hasSmokingBanOverride": {
+      "type": "string"
+    },
+    "campfireBanRescindedDate": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "safetyInfo": {
+      "type": "string"
+    },
+    "specialNotes": {
+      "type": "string"
+    },
+    "locationNotes": {
+      "type": "string"
+    },
+    "parkContact": {
+      "type": "string"
+    },
+    "reservations": {
+      "type": "string"
+    },
+    "natureAndCulture": {
+      "type": "string"
+    },
+    "reconciliationNotes": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "parkactivities": {
+      "type": "json"
+    },
+    "parkfacilities": {
+      "type": "json"
+    }
+  }
+}

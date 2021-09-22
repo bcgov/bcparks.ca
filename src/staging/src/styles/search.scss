@@ -550,7 +550,12 @@ div[class$="-singleValue"] {
   }
 
   .MuiChip-outlined {
-    background-color: $colorWhite !important;
+    background-color: $colorBlue !important;
+    border-radius: 10px !important;
+  }
+
+  .MuiChip-label {
+    color: $colorWhite !important;
   }
 
   .MuiPaginationItem-page.Mui-disabled {
@@ -561,9 +566,16 @@ div[class$="-singleValue"] {
     background-color: transparent !important;
   }
 
-  .search-icon,
-  .close-icon {
+  .search-icon {
     color: #00468b !important;
+  }
+
+  .close-icon {
+    color: $colorWhite !important;
+  }
+
+  .close-icon:hover {
+    color: $colorGrey !important;
   }
 
   .close-icon {
