@@ -29,8 +29,6 @@ const loadJson = async (model, jsonData, object) => {
 
 const loadPageMedia = async () => {
   const fullMediaPath = rootDir + "/" + MEDIA_PATH;
-  const modelWebSite = "website";
-  const objectWebsite = "website";
   const jsonWebSitesFile = "./data/websites.json"; 
   const modelPage = "page";
   const objectPage = "page";
@@ -69,8 +67,6 @@ const loadPageMedia = async () => {
     //Replace files references with strapi hashed filnames
     jsonWebSitesData = jsonWebSitesData.replace(filenameWithOutHash,`${filenameWithHash}`);
     jsonPagesData = jsonPagesData.replace(filenameWithOutHash,`${filenameWithHash}`);
-
-
   };
   
   strapi.log.info("loading media files completed...");
