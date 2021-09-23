@@ -50,9 +50,9 @@ module.exports = ({ env }) => ({
         pool: {
           min: env.int("DATABASE_MIN_CONNECTIONS", 2),
           max: env.int("DATABASE_MAX_CONNECTIONS", 10),
-          idleTimeoutMillis: 30000,
-          createTimeoutMillis: 30000,
-          acquireTimeoutMillis: 30000,
+          idleTimeoutMillis: env.int("DATABASE_IDLE_TIMEOUT", 30000),
+          createTimeoutMillis: env.int("DATABASE_CREATE_TIMEOUT", 30000),
+          acquireTimeoutMillis: env.int("DATABASE_ACQUIRE_TIMEOUT", 30000),
         },
       },
     },
