@@ -1,10 +1,9 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Grid,
   Button,
   Box,
   Paper,
-  Hidden,
   Collapse,
   List,
   ListItem,
@@ -18,43 +17,19 @@ import ExpandMore from "@material-ui/icons/ExpandMore"
 import { navigate } from "gatsby"
 
 export default function ParkHeader({ data }) {
-  const { advisories, parkAccessStatus, park } = data
+  const { advisories, parkAccessStatus, park, menu } = data
 
-  const items = [
-    { text: "Park Overview", url: "park-overview-container", visible: false },
-    {
-      text: "Accessibility",
-      url: "accessibility-details-container",
-      visible: true,
-    },
-    {
-      text: `Alerts`,
-      url: "park-advisory-details-container",
-      visible: true,
-    },
-    { text: "Camping", url: "park-camping-details-container", visible: true },
-    { text: "Facilities", url: "park-facility-container", visible: true },
-    { text: "Activities", url: "park-activity-container", visible: true },
-    { text: "Maps and Location", url: "park-map-container", visible: true },
-    {
-      text: "Learn about this park",
-      url: "park-about-container",
-      visible: true,
-    },
-  ]
-  const hasCamping = data.parkAccessStatus.parkFacilities.some(facility =>
-    facility.facilityName.toLowerCase().includes("camping")
-  )
-  if (!hasCamping) items[3].visible = false
-  if (data.parkAccessStatus.parkFacilities.length === 0)
-    items[4].visible = false
-  if (data.parkAccessStatus.parkActivities.length === 0)
-    items[5].visible = false
-
-  const [menuItems, setMenuItems] = useState([...items])
+  const [menuItems, setMenuItems] = useState([...menu])
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
+
+  useEffect(() => {
+    const mobileMenu = menuItems
+    mobileMenu[0].visible = false
+    setMenuItems([...mobileMenu])
+    return
+  }, [])
 
   const handleMenuClick = () => {
     setOpenMenu(!openMenu)
@@ -78,9 +53,9 @@ export default function ParkHeader({ data }) {
             <h1 className="park-heading">{park.protectedAreaName}</h1>
           </Box>
         </Grid>
-        <Hidden smDown implementation="css">
+        <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
           <div className="flex-display p10t">
-            <Grid item xs={12} sm={12} md={7} lg={7}>
+            <Grid item xs={12} sm={12} md={12} lg={7}>
               <Button
                 className="yellow-button"
                 href="https://discovercamping.ca/"
@@ -96,21 +71,21 @@ export default function ParkHeader({ data }) {
               item
               xs={12}
               sm={12}
-              md={5}
+              md={12}
               lg={5}
               className="park-info-header-flex"
             >
               <div className="park-info-header park-access">
                 <ParkAccessStatus data={parkAccessStatus.accessStatus} />
               </div>
-              <div className="park-info-header ml-auto">
+              <div className="park-info-header ml-auto park-access">
                 <Advisory data={advisories} />
               </div>
             </Grid>
           </div>
-        </Hidden>
-        <Hidden smUp implementation="css">
-          <Grid item xs={12} sm={12} className="park-info-header-flex">
+        </div>
+        <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
+          <Grid item xs={12} sm={12} md={12} className="park-info-header-flex">
             <div className="park-info-header">
               <ParkAccessStatus data={parkAccessStatus.accessStatus} />
             </div>
@@ -164,7 +139,7 @@ export default function ParkHeader({ data }) {
               </Collapse>
             </List>
           </Grid>
-        </Hidden>
+        </div>
       </div>
     </Paper>
   )

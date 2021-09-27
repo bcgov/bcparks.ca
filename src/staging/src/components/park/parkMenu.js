@@ -1,10 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Drawer, Hidden } from "@material-ui/core"
+import { Drawer } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import Scrollspy from "react-scrollspy"
 
-const drawerWidth = 280
+const drawerWidth = 230
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,92 +48,16 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function ParkMenu(props) {
-  // const { window } = props
-
   const classes = useStyles()
-  // const theme = useTheme()
-  // const [mobileOpen, setMobileOpen] = useState(false)
 
   const data = props.data
-  const alertsCount = props.data.advisories.totalCount
-
-  // const handleDrawerToggle = () => {
-  //   setMobileOpen(!mobileOpen)
-  // }
-
-  const menuItems = [
-    { text: "Park Overview", url: "park-overview-container", visible: true },
-    {
-      text: "Accessibility",
-      url: "accessibility-details-container",
-      visible: true,
-    },
-    {
-      text: `Alerts (${alertsCount})`,
-      url: "park-advisory-details-container",
-      visible: true,
-    },
-    { text: "Camping", url: "park-camping-details-container", visible: true },
-    { text: "Facilities", url: "park-facility-container", visible: true },
-    { text: "Activities", url: "park-activity-container", visible: true },
-    { text: "Maps and Location", url: "park-map-container", visible: true },
-    {
-      text: "Learn about this park",
-      url: "park-about-container",
-      visible: true,
-    },
-  ]
-
-  const hasCamping = data.parkAccessStatus.parkFacilities.some(facility =>
-    facility.facilityName.toLowerCase().includes("camping")
-  )
-  if (!hasCamping) menuItems[3].visible = false
-  if (data.parkAccessStatus.parkFacilities.length === 0)
-    menuItems[4].visible = false
-  if (data.parkAccessStatus.parkActivities.length === 0)
-    menuItems[5].visible = false
-
-  const campingFacilities = data.parkAccessStatus.parkFacilities.filter(
-    facility => facility.facilityName.toLowerCase().includes("camping")
-  )
-
-  let campingSubMenuItems = []
-  campingFacilities.forEach(c => {
-    const subMenu = {
-      text: c.facilityName,
-      url: "park-camping-list-container",
-    }
-    campingSubMenuItems.push(subMenu)
-  })
-
-  const menuFiltered = menuItems.filter(m => m.visible)
-  const drawerItems = (
-    <div>
-      <Scrollspy
-        className="scrollspy"
-        items={menuFiltered.map(m => m.url)}
-        currentClassName="isCurrent"
-      >
-        {menuFiltered.map((menu, index) => (
-          <li key={index}>
-            <a className={classes.menu} href={`#${menu.url}`}>
-              {menu.text}
-            </a>
-          </li>
-        ))}
-      </Scrollspy>
-    </div>
-  )
-
-  // const container =
-  //   window !== undefined ? () => window().document.body : undefined
 
   return (
     <div id="park-menu-container">
       <div className={classes.root}>
         <nav className={classes.drawer} aria-label="park info menu">
           {/* Desktop */}
-          <Hidden xsDown implementation="css">
+          <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
             <Drawer
               classes={{
                 paper: classes.drawerDesktop,
@@ -142,9 +65,25 @@ export default function ParkMenu(props) {
               variant="permanent"
               open
             >
-              {drawerItems}
+              <ul>
+                {data.menu.map((menu, index) => (
+                  <div key={index}>
+                    {menu.visible && (
+                      <li
+                        className={
+                          data.activeSection === index ? "isCurrent" : ""
+                        }
+                      >
+                        <a className={classes.menu} href={`#${menu.url}`}>
+                          {menu.text}
+                        </a>
+                      </li>
+                    )}
+                  </div>
+                ))}
+              </ul>
             </Drawer>
-          </Hidden>
+          </div>
         </nav>
       </div>
     </div>
