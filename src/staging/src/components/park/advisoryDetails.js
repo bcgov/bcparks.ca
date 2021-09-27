@@ -81,12 +81,7 @@ export default function AdvisoryDetails({ data }) {
   })
 
   return (
-    <Grid
-      item
-      xs={12}
-      id="park-advisory-details-container"
-      className="anchor-link"
-    >
+    <Grid xs={12} id="park-advisory-details-container" className="anchor-link">
       <Paper elevation={0}>
         <Grid container>
           <Grid item xs={6}>

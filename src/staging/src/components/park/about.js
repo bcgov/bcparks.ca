@@ -6,12 +6,16 @@ import Spacer from "./spacer"
 
 export default function About({ data }) {
   return (
-    <Grid item xs={12} id="park-about-container" className="anchor-link">
-      <Paper elevation={0}>
-        <Heading>Learn more about this park</Heading>
-        <HtmlContent>{data}</HtmlContent>
-        <Spacer />
-      </Paper>
-    </Grid>
+    <>
+      {data && (
+        <Grid item xs={12} id="park-about-container" className="anchor-link">
+          <Paper elevation={0}>
+            <Heading>Learn more about this park</Heading>
+            <HtmlContent>{data}</HtmlContent>
+            <Spacer />
+          </Paper>
+        </Grid>
+      )}
+    </>
   )
 }

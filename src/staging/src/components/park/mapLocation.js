@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from "react"
 import { Paper, Grid } from "@material-ui/core"
 import Heading from "./heading"
-import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 import MapView from "@arcgis/core/views/MapView"
 import WebMap from "@arcgis/core/WebMap"
@@ -35,7 +34,6 @@ export default function MapLocation({ data }) {
       <Paper elevation={0}>
         <Heading>Maps and location</Heading>
         <div id="mapDiv" ref={mapRef}></div>
-        <HtmlContent>{data.maps}</HtmlContent>
         <Spacer />
       </Paper>
     </Grid>
