@@ -103,6 +103,20 @@ async function createPageSlugs(type, query, { graphql, actions, reporter }) {
         component: require.resolve(`./src/templates/staticGeneral1.js`),
         context: { page },
       })
+  })
+}
+
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+  if (stage === "build-html" || stage === "develop-html") {
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /@arcgis/,
+            use: loaders.null(),
+          },
+        ],
+      },
     })
   }
 }
