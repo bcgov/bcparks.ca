@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { graphql } from "gatsby"
-import Header from "../components/header"
-import Menu from "../components/menu"
 import Footer from "../components/footer"
+import MegaMenu from "../components/MegaMenu"
 import "../styles/search.scss"
 import {
   labelCompare,
@@ -98,6 +97,29 @@ export const query = graphql`
         marineProtectedArea
       }
     }
+    allStrapiMenus(
+      sort: {fields: order, order: ASC}
+      filter: {show: {eq: true}}
+    ) {
+      nodes {
+        strapiId
+        title
+        url
+        order
+        id
+        strapiChildren {
+          id
+          title
+          url
+          order
+          parent
+        }
+        strapiParent {
+          id
+          title
+        }
+      }
+    }
   }
 `
 
@@ -107,6 +129,8 @@ export default function Home({ location, data }) {
   //   endpointBase: `${process.env.GATSBY_ELASTIC_SEARCH_URL}`,
   //   engineName: `${process.env.GATSBY_ELASTIC_SEARCH_ENGINE}`,
   // })
+
+  const menuContent = data?.allStrapiMenus?.nodes || []
 
   const activityItems = data.allStrapiActivityTypes.nodes.map(a => ({
     label: a.activityName,
@@ -492,8 +516,7 @@ export default function Home({ location, data }) {
 
   return (
     <>
-      <Header>{data.strapiWebsites.Header}</Header>
-      <Menu>{data.strapiWebsites.Navigation}</Menu>
+      <MegaMenu content={menuContent} />
       <div className="search-body">
         <div className="search-results-main container">
           <div className="search-results-container">

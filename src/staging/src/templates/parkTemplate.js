@@ -44,6 +44,8 @@ export default function ParkTemplate({ data }) {
   const advisories = data.allStrapiPublicAdvisory
   const photos = data.allStrapiParkPhoto
 
+  const menuContent = data?.allStrapiMenus?.nodes || []
+
   const parkStatusData = {
     park: park,
     parkAccessStatus: parkAccessStatus,
@@ -62,9 +64,9 @@ export default function ParkTemplate({ data }) {
       <Helmet>
         <title>BC Parks | {park.protectedAreaName}</title>
       </Helmet>
+      <Header mode="internal" content={menuContent} />
       <ScrollToTop />
       <CssBaseline />
-      <Header>{data.strapiWebsites.Header}</Header>{" "}
       <Hidden smUp implementation="css">
         <Grid item xs={12} sm={12}>
           <ParkPhotoGallery photos={photos} />
@@ -245,6 +247,29 @@ export const query = graphql`
           id
           strapi_component
           HTML
+        }
+      }
+    }
+    allStrapiMenus(
+      sort: {fields: order, order: ASC}
+      filter: {show: {eq: true}}
+    ) {
+      nodes {
+        strapiId
+        title
+        url
+        order
+        id
+        strapiChildren {
+          id
+          title
+          url
+          order
+          parent
+        }
+        strapiParent {
+          id
+          title
         }
       }
     }

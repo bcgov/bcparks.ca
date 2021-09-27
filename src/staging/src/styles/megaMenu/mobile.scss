@@ -1,0 +1,95 @@
+$colorBlue:       #003366;
+$colorGold:       rgba(252, 186, 25, 1);
+$colorLinkBlue:   rgb(46, 106, 176);
+$colorGrey:       rgba(216, 216, 216, 0.375);
+
+body {
+  font-family: "BCSans",Verdana,Arial,sans serif;
+}
+
+#mainNav {
+  background-color: $colorBlue;
+  height: 100%;
+
+  .nav-wrapper {
+    width: 100%;
+    padding: 1rem 1rem;
+    button {
+      margin-left: auto !important;
+    }
+    .navbar-toggler-icon {
+      font-size: 15px;
+    }
+    .navbar-toggler.collapsed {
+      .close-icon {
+        display: none;
+      }
+    }
+    .navbar-toggler:not(.collapsed) {
+      .navbar-toggler-icon {
+        display: inline;
+      }
+    }
+  }
+  .logo {
+    width: 150px;
+    max-height: 150px;
+  }
+  ul {
+    .nav-item {
+      padding: 10px 10px;
+      i {
+        padding-top: 5px;
+      }
+      i.fa-chevron-left {
+        padding-top: 10px;
+      }
+    }
+    .nav-item:not(:last-child) {
+      border-bottom: 1px solid lightgrey;
+    }
+    .book-campsite-item {
+      padding-top: 60px;
+      padding-bottom: 35px;
+    }
+    .nav-link {
+      text-decoration: none;
+      color: black;
+    }
+    .nav-header {
+      border-left: 10px solid $colorGold;
+      background-color: $colorGrey;
+      padding: 10px 0;
+      a {
+        color: $colorLinkBlue;
+        font-size: 18px;
+        font-weight: 700;
+      }
+    }
+  }
+
+  #book-campsite {
+    background-color: $colorGold;
+  }
+
+  #menuContent {
+    background-color: white;
+    z-index: 1300;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+  }
+}
+
+// ------------------ ANIMATIONS
+
+@keyframes flyout {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}

@@ -1,0 +1,341 @@
+$colorLight:                        #ffffff;
+$colorDark:                         #2a2a2a;
+$colorBlue:                         #003366;
+$colorGold:                         #fcba19;
+$globalFont:                        "BCSans",Verdana,Arial,sans serif;
+$colorLightBlue:                    rgba(56, 89, 138, 1);
+$hoverLinkColor:                    #1A5A96;
+$menuLinkPadding:                   5px 10px;
+$tabletBreakpoint:                  767px;
+$megaMenuMultiLevelColWidth:        100/3 + 0%;
+$mobileMenuBackHeight:              calc(1.4em + 40px);
+$mobileMenuBackOffset:              calc(0px - (1.4em + 40px));
+$mobileMenuWidth:                   100%;
+
+.bc-parks-logo {
+  max-height: 66px;
+  max-width: 199px;
+}
+
+#desktopNav {
+  background-color: $colorBlue;
+  height: 100px;
+}
+
+nav {
+   ul, li {
+     list-style: none;
+     padding: 0;
+     margin: 0;
+  } 
+  a {
+    display: block;
+    text-decoration: none;
+  }
+}
+
+.book-campsite-btn {
+  background-color: $colorGold;
+  color: black;
+  font-size: 13px;
+  padding: 10px 20px;
+  &:hover {
+    background-color: $colorLight;
+    text-decoration: underline;
+    outline: 1px solid $colorGold;
+  }
+}
+
+.menu-bar {
+  background: $colorLightBlue;
+  display: flex;
+  height: 65px;
+}
+
+.menu-bar-link {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 130px;
+}
+
+.menu-list-link {
+  &:hover &:not(.menu-list-header-link) {
+    border-left: 5px solid $colorGold;
+  }
+}
+
+.menu-link {
+  padding: 10px 10px;
+  background: $colorLightBlue;
+  color: white;
+  font-size: 16px;
+  transition: background .2s, color .2s;
+  position: relative;
+  z-index: 1;
+  line-height: normal;
+}
+
+.sub-menu-list {
+  padding-top: 20px;
+}
+
+.sub-menu-link {
+  padding: 10px 20px;
+  background: $colorLight;
+  color: black;
+  transition: background .2s, color .2s;
+  position: relative;
+  z-index: 1;
+}
+
+.sub-menu-list-header,.menu-list-header {
+  padding-bottom: 5px;
+  .sub-menu-link,.menu-link {
+    color: $colorLightBlue;
+    font-size: 18px;
+  }
+}
+
+.mega-menu-header {
+  font-size: 1.2em;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: black;
+}
+
+.mega-menu-link {
+  background-color: $colorLight;
+  color: black;
+  padding-left: 15px;
+  margin-left: 25px;
+  border-left: 5px solid transparent;
+
+  &[aria-haspopup="true"] {
+    padding-right: 40px;
+    &:after {
+      content: "";
+      background-image: url('../../images/chevron-right.svg');
+      background-size: 14px;
+      width: 14px;
+      height: 14px;
+      font-size: 12px;
+      position: absolute;
+      right: 10px;
+      top:50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  &:hover {
+    &:not(.menu-list-header-link) {
+      background-color: lightgrey;
+      border-left: 5px solid $colorGold;
+    }
+  }
+}
+
+.mega-menu-list {
+  &:not(.sub-menu-list > .mega-menu-list) {
+    border-right: 2px solid lightgray;
+  }
+}
+
+.mega-menu {
+  background: $colorLight;
+  z-index: 10;
+  padding: 20px 0;
+}
+
+.mega-menu--multiLevel {
+  flex-direction: column;
+  min-height: 450px;
+  z-index: 1300;
+  :last-child {
+    flex-grow: 1;
+  }
+}
+
+.menu-bar {
+  > li {
+    &:hover {
+      border-bottom: 2px solid $colorGold;
+    }
+  }
+}
+
+.menu-list-header-link {
+  color: $colorBlue !important;
+}
+
+
+// ------------------ MEDIA QUERIES
+
+@media all and (min-width: $tabletBreakpoint + 1px) {
+  // Desktop/tablet
+  
+  .nav {
+    background: $colorLight;
+    > nav {
+      margin: 0 auto;
+    }
+  }
+  
+  .menu {
+    [aria-haspopup="true"] {
+      ~ ul {
+        display: none;
+      }
+    }
+  }
+  
+  .menu-bar {
+    position: relative;
+    > li {
+      > [aria-haspopup="true"] {
+        &:hover {
+          ~ ul {
+            display: flex;
+            transform-origin: top;
+            animation: dropdown .2s ease-out;
+          }
+        }
+        // FUNCTIONALITY: Keep mega menu open
+        ~ ul {
+          &:hover {
+            display: flex;
+          }
+        }
+      }
+
+      &:hover {
+        > [aria-haspopup="true"] {
+          ~ ul {
+            display: flex;
+          }
+        }
+      }
+      
+      // STYLING: Hover/Active state
+      > [aria-haspopup="true"]:focus,
+      &:focus-within > [aria-haspopup="true"],
+      &:hover > a {
+        background: $colorLight;
+        color: $hoverLinkColor;
+      }
+    }
+  }
+  
+  .mega-menu {
+    // LAYOUT: Mega menu
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    // FUNCTIONALITY: Keep mega menu open
+    &:hover {
+      display: flex;
+    }
+    a {
+      &:hover {
+        color: black;
+      }
+    }
+  }
+ 
+  
+  .mega-menu--multiLevel {
+    // LAYOUT: Multi level columns
+    > li {
+      width: $megaMenuMultiLevelColWidth;
+      > [aria-haspopup="true"] {
+        ~ ul {
+          left: $megaMenuMultiLevelColWidth;
+          width: $megaMenuMultiLevelColWidth;
+          ul {
+            width: 100%;
+            left: 100%;
+          }
+        }
+      }
+    }
+    
+    li {
+      // FUNCTIONALITY: Opening flyouts
+      &:hover {
+        > [aria-haspopup="true"] {
+          ~ ul {
+            display: block;
+            transform-origin: left;
+            animation: flyout .2s ease-out;
+          }
+        }
+      }
+      
+      // FUNCTIONALITY: Keeping flyouts open
+      &:focus-within {
+        > [aria-haspopup="true"] {
+          ~ ul {
+            display: block;
+          }
+        }
+      }
+      
+      // STYLING: Flyout link active states
+      &:hover, &:focus-within {
+        > [aria-haspopup="true"], > a {
+          color: black;
+        }
+      }
+    }
+    [aria-haspopup="true"] {
+      ~ ul, & {
+        // FUNCTIONALITY: Keeping flyouts open
+        &:hover {
+          display: block;
+        }
+      }
+      // LAYOUT: Flyouts
+      ~ ul {
+        position: absolute;
+        top: 0;
+        height: 100%;
+      }
+    }
+  }
+  
+  
+  // STYLING: Flat mega menu columns
+  .mega-menu--flat {
+    > * {
+      flex: 1;
+    }
+  }
+}
+
+// ------------------ ANIMATIONS
+
+@keyframes dropdown {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes flyout {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}

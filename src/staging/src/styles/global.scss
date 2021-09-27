@@ -42,12 +42,6 @@ footer #home-footer nav {
   }
 }
 
-#header .navbar {
-  @media screen and (min-width: $desktopBreakpoint) {
-    height: 120px;
-  }
-}
-
 .navbar-nav {
   flex-direction: unset !important;
 }
