@@ -83,9 +83,8 @@ export const query = graphql`
 `
 
 export default function Home({ data }) {
-  // ID 6 === Hero Carousel
-  const zonesContent = data?.strapiWebsites?.homepage?.Content?.filter(c => c.id !== 6 && c.strapi_component !== 'parks.seo') || []
-  const searchCarousel = data?.strapiWebsites?.homepage?.Content?.find(c => c.id === 6) || {}
+  const zonesContent = data?.strapiWebsites?.homepage?.Content?.filter(c =>  c.strapi_component === 'parks.html-area' && !c.HTML.includes('carousel')) || []
+  const searchCarousel = data?.strapiWebsites?.homepage?.Content?.find(c => c.strapi_component === 'parks.html-area' && c.HTML.includes('carousel')) || {}
 
   return (
     <div className="container-fluid px-0">
