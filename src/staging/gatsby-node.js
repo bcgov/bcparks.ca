@@ -103,7 +103,8 @@ async function createPageSlugs(type, query, { graphql, actions, reporter }) {
         component: require.resolve(`./src/templates/staticGeneral1.js`),
         context: { page },
       })
-  })
+    })
+  }
 }
 
 exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
