@@ -1,8 +1,13 @@
 @import url("https://js.arcgis.com/4.10/esri/css/main.css");
-@import url("https://governmentofbc.maps.arcgis.com/apps/webappviewer/jimu.js/css/jimu-theme.css");
+// @import url("https://governmentofbc.maps.arcgis.com/apps/webappviewer/jimu.js/css/jimu-theme.css");
 
 body {
   font-family: BCSans, Verdana, Arial, "sans-serif" !important;
+}
+
+.parks-container {
+  max-width: 1300px !important;
+  font-size: 15px;
 }
 
 .anchor-linkx {
@@ -23,6 +28,11 @@ body {
   z-index: 1 !important;
   position: sticky !important;
   top: 1rem !important;
+  padding-bottom: 20px !important;
+
+  .MuiPaper-root {
+    background-color: transparent !important;
+  }
 }
 
 #park-menu-container .MuiListItem-button {
@@ -31,10 +41,6 @@ body {
 
 .park-info-header {
   padding-left: 15px;
-}
-
-.park-access {
-  min-width: 210px !important;
 }
 
 .park-info-header a {
@@ -215,6 +221,7 @@ body {
 
 #park-info-container .MuiAccordionSummary-root {
   padding: 0px 25px !important;
+  font-size: 16px !important;
 }
 
 #park-info-container .MuiAccordionSummary-root {
@@ -223,6 +230,10 @@ body {
 
 #park-info-container .MuiPaper-elevation1 {
   box-shadow: unset !important;
+}
+
+#park-info-container .MuiLink-root {
+  color: #1a5a96 !important;
 }
 
 .show-photos {
@@ -309,7 +320,20 @@ body {
   margin-bottom: 15px;
 }
 
-@media (max-width: 575.98px) {
+.breadcrumb-text {
+  color: #313132 !important;
+}
+
+.MuiBreadcrumbs-separator {
+  color: #313132 !important;
+  font-size: 20px !important;
+}
+
+.park-access {
+  min-width: 210px !important;
+}
+
+@media (max-width: 954.98px) {
   .park-info-header-flex {
     display: block !important;
   }

@@ -5,19 +5,22 @@ import Spacer from "./spacer"
 
 export default function AccessibilityDetails({ data }) {
   return (
-    <Grid
-      item
-      xs={12}
-      id="accessibility-details-container"
-      className="anchor-link"
-    >
-      <Paper elevation={0}>
-        <Heading>Accessibility</Heading>
-        <Container>
-          <p>{data}</p>
-        </Container>
-        <Spacer />
-      </Paper>
-    </Grid>
+    <>
+      {data && (
+        <Grid
+          xs={12}
+          id="accessibility-details-container"
+          className="anchor-link"
+        >
+          <Paper elevation={0}>
+            <Heading>Accessibility</Heading>
+            <Container>
+              <p>{data}</p>
+            </Container>
+            <Spacer />
+          </Paper>
+        </Grid>
+      )}
+    </>
   )
 }

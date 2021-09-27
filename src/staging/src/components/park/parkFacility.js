@@ -5,6 +5,7 @@ import {
   AccordionSummary,
   AccordionDetails,
   Grid,
+  Box,
 } from "@material-ui/core"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Heading from "./heading"
@@ -81,15 +82,17 @@ export default function ParkFacility({ data }) {
                       aria-controls={facility.activityName}
                       id={index}
                     >
-                      {/* <Box mr={1}>
+                      <Box mr={1}>
                         <img
                           src={facility.icon}
                           alt={facility.icon ? facility.facilityName : ""}
-                          width="24"
-                          height="24"
+                          width="48"
+                          height="48"
                         />
-                      </Box> */}
-                      <HtmlContent>{facility.facilityName}</HtmlContent>
+                      </Box>
+                      <HtmlContent className="pl15 p10t">
+                        {facility.facilityName}
+                      </HtmlContent>
                     </AccordionSummary>
                     <AccordionDetails>
                       <HtmlContent>{facility.description}</HtmlContent>

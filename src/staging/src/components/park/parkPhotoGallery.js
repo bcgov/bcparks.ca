@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import { Button, Grid, Box, Divider, Hidden } from "@material-ui/core"
+import { Button, Grid, Box, Divider } from "@material-ui/core"
 import { GatsbyImage } from "gatsby-plugin-image"
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox"
 import PhotoLibraryOutlinedIcon from "@material-ui/icons/PhotoLibraryOutlined"
@@ -52,7 +52,10 @@ export default function ParkPhotoGallery({ photos }) {
     return {
       index: index,
       caption: photo.caption || "",
-      image: ((photo.image != null ) ? photo.image.localFile.childImageSharp.gatsbyImageData: null ),
+      image:
+        photo.image != null
+          ? photo.image.localFile.childImageSharp.gatsbyImageData
+          : null,
     }
   })
 
@@ -80,7 +83,7 @@ export default function ParkPhotoGallery({ photos }) {
 
   return (
     <>
-      <Hidden smDown implementation="css">
+      <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
         {parkPhotos.length === 0 && (
           <Grid item xs={12}>
             <br />
@@ -251,8 +254,8 @@ export default function ParkPhotoGallery({ photos }) {
             <br />
           </Grid>
         )}
-      </Hidden>
-      <Hidden smUp implementation="css">
+      </div>
+      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
         {parkPhotos.length > 0 && (
           <Grid
             item
@@ -309,7 +312,7 @@ export default function ParkPhotoGallery({ photos }) {
             <br />
           </Grid>
         )}
-      </Hidden>
+      </div>
     </>
   )
 }

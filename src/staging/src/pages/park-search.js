@@ -816,7 +816,7 @@ export default function Home({ location, data }) {
                                               href={`/${r.slug}`}
                                               className="p10t"
                                             >
-                                              <h2 class="park-heading">
+                                              <h2 className="park-heading">
                                                 {r.protectedAreaName}
                                               </h2>
                                             </Link>
