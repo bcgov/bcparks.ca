@@ -8,7 +8,7 @@ import Spacer from "./spacer"
 
 const useStyles = makeStyles(theme => ({
   collapsed: {
-    maxHeight: "253px",
+    maxHeight: "263px",
     overflow: "hidden",
     display: "block",
     textOverflow: "ellipsis",

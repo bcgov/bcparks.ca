@@ -53,7 +53,7 @@ export default function ParkHeader({ data }) {
             <h1 className="park-heading">{park.protectedAreaName}</h1>
           </Box>
         </Grid>
-        <div class="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+        <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
           <div className="flex-display p10t">
             <Grid item xs={12} sm={12} md={12} lg={7}>
               <Button
@@ -84,7 +84,7 @@ export default function ParkHeader({ data }) {
             </Grid>
           </div>
         </div>
-        <div class="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
+        <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
           <Grid item xs={12} sm={12} md={12} className="park-info-header-flex">
             <div className="park-info-header">
               <ParkAccessStatus data={parkAccessStatus.accessStatus} />

@@ -83,7 +83,7 @@ export default function ParkPhotoGallery({ photos }) {
 
   return (
     <>
-      <div class="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+      <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
         {parkPhotos.length === 0 && (
           <Grid item xs={12}>
             <br />
@@ -255,7 +255,7 @@ export default function ParkPhotoGallery({ photos }) {
           </Grid>
         )}
       </div>
-      <div class="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
+      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
         {parkPhotos.length > 0 && (
           <Grid
             item

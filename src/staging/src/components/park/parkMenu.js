@@ -57,7 +57,7 @@ export default function ParkMenu(props) {
       <div className={classes.root}>
         <nav className={classes.drawer} aria-label="park info menu">
           {/* Desktop */}
-          <div class="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+          <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
             <Drawer
               classes={{
                 paper: classes.drawerDesktop,
