@@ -408,13 +408,13 @@ const loadStatutoryHolidays = async () => {
   }
 };
 
-const loadWebsites = async () => {
+const loadWebsites = async (formattedJson) => {
   try {
     const currentData = await strapi.services["website"].find();
     if (currentData.length == 0) {
       strapi.log.info("loading website started...");
       const websiteHomepage = await strapi.query("page").findOne({ Slug: "/home" });
-      const websiteJson = fs.readFileSync("./data/websites.json", "utf8");
+      const websiteJson = formattedJson
       const dataSeed = JSON.parse(websiteJson)["website"];
 
       dataSeed.forEach(async (data) => {

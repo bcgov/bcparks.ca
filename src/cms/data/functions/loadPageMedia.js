@@ -1,6 +1,5 @@
 const mime = require("mime-types");
 const fs = require("fs");
-const request = require("request");
 const path = require("path");
 const { loadWebsites } = require("./loadOtherData")
 
@@ -70,8 +69,10 @@ const loadPageMedia = async () => {
   };
   
   strapi.log.info("loading media files completed...");
+  // Create page records
   await loadJson(modelPage,jsonPagesData,objectPage);
-  await loadWebsites()
+  // Create website records
+  await loadWebsites(jsonWebSitesData);
   
 };
 
