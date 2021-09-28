@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $colorLight:                        #ffffff;
 $colorDark:                         #2a2a2a;
 $colorBlue:                         #003366;
@@ -7,7 +9,7 @@ $colorLightBlue:                    rgba(56, 89, 138, 1);
 $hoverLinkColor:                    #1A5A96;
 $menuLinkPadding:                   5px 10px;
 $tabletBreakpoint:                  767px;
-$megaMenuMultiLevelColWidth:        100/3 + 0%;
+$megaMenuMultiLevelColWidth:        math.div(100, 3) + 0%;
 $mobileMenuBackHeight:              calc(1.4em + 40px);
 $mobileMenuBackOffset:              calc(0px - (1.4em + 40px));
 $mobileMenuWidth:                   100%;
