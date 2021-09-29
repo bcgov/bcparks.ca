@@ -1,9 +1,4 @@
 import React from "react"
-import { css } from "@emotion/react"
-import { useStaticQuery, Link, graphql } from "gatsby"
-import {StaticImage} from "gatsby-plugin-image"
-
-import { rhythm } from "../utils/typography"
 
 export default function Media(props)
 {
@@ -11,6 +6,6 @@ export default function Media(props)
     return null;
   }
     return (
-    <img src={props.url} />
+    <img src={props.url} alt="Example" />
   )
 }

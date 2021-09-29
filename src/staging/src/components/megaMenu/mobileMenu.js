@@ -31,14 +31,17 @@ const MobileMenu = ({ linkStructure }) => {
       <>
         {!targetIsRoot && parentMenu?.strapiChildren?.length && 
           <>
-            <li key="back" className="nav-item" 
-              onClick={() => {
-                setTransitionDirection('left')
-                updateMenuList(parentMenu?.strapiChildren, 'back')
-              }}
-            >
-              <i className="fa fa-chevron-left float-left nav-link" />
-              <span className={`nav-link`}> Back</span>
+            <li key="back" className="nav-item">
+              <div role="menuitem" tabIndex="-1"
+                 onClick={() => {
+                  setTransitionDirection('left')
+                  updateMenuList(parentMenu?.strapiChildren, 'back')
+                }}
+                onKeyPress={e => e.preventDefault()}
+              >
+                <i className="fa fa-chevron-left float-left nav-link" />
+                <span className={`nav-link`}> Back</span>
+              </div>
             </li>
             <li key={`${menu.title}-header`} className="nav-header">
               <Link className="nav-link" to={direction === 'forward' ? menu?.url ?? '/' : parentMenu?.url ?? '/' }>{direction === 'forward' ? menu.title : parentMenu.title}</Link>
@@ -100,7 +103,7 @@ const MobileMenu = ({ linkStructure }) => {
           )
         })}
         <li className={`text-center nav-item book-campsite-item`}>
-          <a href="https://www.discovercamping.ca" rel="noopener noreferrer nofollow" target="_blank">
+          <a href="https://www.discovercamping.ca" rel="noreferrer" target="_blank">
             <button type="button" className={`btn px-4 py-3`} id="book-campsite">Book a campsite</button>
           </a>
         </li>
@@ -157,7 +160,7 @@ const sortMenu = (menu, direction) => {
 MobileMenu.propTypes = {
   linkStructure: PropTypes.arrayOf(PropTypes.shape({
     order: PropTypes.number.isRequired,
-    strapiChildren: PropTypes.array.isRequired,
+    strapiChildren: PropTypes.array,
     strapiParent: PropTypes.shape({
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired

@@ -32,7 +32,7 @@ const DesktopMenu = ({ linkStructure }) => {
     if (strapiChildren?.length) {
       return (
         <li key={title}>
-          <a href={url} onClick={e => handleLinkClick(e, url)} className="menu-link menu-bar-link" aria-haspopup="true">{title}</a>
+          <a href={url} onClick={e => handleLinkClick(e, url)} className="menu-link menu-bar-link" data-haspopup="true">{title}</a>
           <ul className="mega-menu mega-menu--multiLevel"> {/** level 1 */}
             <li key={`t${title}`} className="menu-list-header">
               <Link to={url ?? '/'} className="menu-link menu-list-link mega-menu-link menu-list-header-link">{title}</Link>
@@ -48,7 +48,7 @@ const DesktopMenu = ({ linkStructure }) => {
               } else {
                 listElement = (
                   <li key={`c${c.title}`} className="mega-menu-list">
-                    <a href="/" onClick={e => handleLinkClick(e, c.url)} className="menu-link mega-menu-link" aria-haspopup="true">{c.title}</a>
+                    <a href="/" onClick={e => handleLinkClick(e, c.url)} className="menu-link mega-menu-link" data-haspopup="true">{c.title}</a>
                     <ul className="menu menu-list sub-menu-list"> {/** level 2 */}
                       <li key={`sc${c.title}`} className="sub-menu-list-header mega-menu-list">
                         <Link to={c.url ?? '/'} className="sub-menu-link">{c.title}</Link>  
@@ -99,7 +99,7 @@ const DesktopMenu = ({ linkStructure }) => {
         <Link to="/">
           <img className="bc-parks-logo" src={BCParksLogo} alt="BC Parks logo" />
         </Link>
-        <a href="https://www.discovercamping.ca" target="_blank" className="btn book-campsite-btn">Book a campsite</a>
+        <a href="https://www.discovercamping.ca" rel="noreferrer" target="_blank" className="btn book-campsite-btn">Book a campsite</a>
       </nav>
       <div id="desktopNavMenu">
         <nav>
@@ -117,7 +117,7 @@ const DesktopMenu = ({ linkStructure }) => {
 DesktopMenu.propTypes = {
   linkStructure: PropTypes.arrayOf(PropTypes.shape({
     order: PropTypes.number.isRequired,
-    strapiChildren: PropTypes.array.isRequired,
+    strapiChildren: PropTypes.array,
     strapiParent: PropTypes.shape({
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired
