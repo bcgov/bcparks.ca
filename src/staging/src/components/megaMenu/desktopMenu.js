@@ -21,12 +21,12 @@ const DesktopMenu = ({ linkStructure }) => {
   const generateMenuItem = ({ strapiChildren, title, url }) => {
     if (!strapiChildren?.length) {
       return (
-        <>
-        <li key={title}>
+        <React.Fragment key={`f${title}`}>
+          <li key={title}>
             <Link to={url ?? '/'} className="menu-link menu-bar-link">{title}</Link>
-        </li>
-        <li className="empty"></li>
-        </>
+          </li>
+          <li key="empty" className="empty"></li>
+        </React.Fragment>
       )
     }
     if (strapiChildren?.length) {
@@ -117,7 +117,6 @@ const DesktopMenu = ({ linkStructure }) => {
 DesktopMenu.propTypes = {
   linkStructure: PropTypes.arrayOf(PropTypes.shape({
     order: PropTypes.number.isRequired,
-    pageType: PropTypes.string.isRequired,
     strapiChildren: PropTypes.array.isRequired,
     strapiParent: PropTypes.shape({
       id: PropTypes.number.isRequired,

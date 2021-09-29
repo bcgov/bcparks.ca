@@ -21,7 +21,6 @@ const MegaMenu = ({ content }) => {
 MegaMenu.propTypes = {
   content: PropTypes.arrayOf(PropTypes.shape({
     order: PropTypes.number.isRequired,
-    pageType: PropTypes.string.isRequired,
     strapiChildren: PropTypes.array.isRequired,
     strapiParent: PropTypes.shape({
       id: PropTypes.number.isRequired,
