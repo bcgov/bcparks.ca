@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, useLocation, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
-import { cmsAxios, apiAxios } from "../../../axios_config";
+import { cmsAxios } from "../../../axios_config";
 import { useKeycloak } from "@react-keycloak/web";
 import "./AdvisorySummary.css";
 import Header from "../../composite/header/Header";
@@ -102,10 +102,10 @@ export default function AdvisorySummary({
   useEffect(() => {
     if (parseInt(id)) {
       Promise.all([
-        apiAxios.get(
-          `api/get/public-advisory-audits/${id}?_publicationState=preview`,
+        cmsAxios.get(
+          `public-advisory-audits/${id}?_publicationState=preview`,
           {
-            headers: { Authorization: `Bearer ${keycloak.idToken}` },
+            headers: { Authorization: `Bearer ${keycloak.token}` },
           }
         ),
         getLinkTypes(cmsData, setCmsData),

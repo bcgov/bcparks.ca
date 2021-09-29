@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./AdvisoryHistory.css";
 import moment from "moment";
-import { apiAxios } from "../../../axios_config";
+import { cmsAxios } from "../../../axios_config";
 import { useKeycloak } from "@react-keycloak/web";
 import { dateCompare } from "../../../utils/AppUtil";
 
@@ -12,9 +12,9 @@ export default function AdvisoryHistory({ data: { advisoryNumber } }) {
 
   useEffect(() => {
     if (initialized && keycloak && advisoryNumber) {
-      apiAxios
-        .get(`api/getId/public-advisory-audits/history/${advisoryNumber}`, {
-          headers: { Authorization: `Bearer ${keycloak.idToken}` },
+      cmsAxios
+        .get(`public-advisory-audits/history/${advisoryNumber}`, {
+          headers: { Authorization: `Bearer ${keycloak.token}` },
         })
         .then((res) => {
           const advisories = res.data;
