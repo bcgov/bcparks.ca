@@ -71,13 +71,14 @@ const PublicAdvisoryPage = ({ data }) => {
     advisory.alertColorCss = alertColorCss
     return advisory
   })
+  const menuContent = data?.allStrapiMenus?.nodes || []
 
   return (
     <>
       <Helmet>
         <title>BC Parks | Public Advisories</title>
       </Helmet>
-      <Header>{data.strapiWebsites.Header}</Header>
+      <Header mode="internal" content={menuContent} />
       <Menu>{data.strapiWebsites.Navigation}</Menu>
       <Container>
         <br />
@@ -226,6 +227,29 @@ export const query = graphql`
           id
           strapi_component
           HTML
+        }
+      }
+    }
+    allStrapiMenus(
+      sort: {fields: order, order: ASC}
+      filter: {show: {eq: true}}
+    ) {
+      nodes {
+        strapiId
+        title
+        url
+        order
+        id
+        strapiChildren {
+          id
+          title
+          url
+          order
+          parent
+        }
+        strapiParent {
+          id
+          title
         }
       }
     }

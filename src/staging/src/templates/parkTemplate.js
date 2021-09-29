@@ -52,6 +52,7 @@ export default function ParkTemplate({ data }) {
   const advisories = data.allStrapiPublicAdvisory
   const photos = data.allStrapiParkPhoto
 
+  const menuContent = data?.allStrapiMenus?.nodes || []
   const alertsCount = advisories.totalCount
 
   const hasCamping = parkAccessStatus.parkFacilities.some(facility =>
@@ -164,10 +165,10 @@ export default function ParkTemplate({ data }) {
       <Helmet>
         <title>BC Parks | {park.protectedAreaName}</title>
       </Helmet>
+      <Header mode="internal" content={menuContent} />
       <ScrollToTop />
       <CssBaseline />
-      <Header>{data.strapiWebsites.Header}</Header>
-
+      
       <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
         <Grid item xs={12} sm={12}>
           <ParkPhotoGallery photos={photos} />
@@ -412,6 +413,29 @@ export const query = graphql`
           id
           strapi_component
           HTML
+        }
+      }
+    }
+    allStrapiMenus(
+      sort: {fields: order, order: ASC}
+      filter: {show: {eq: true}}
+    ) {
+      nodes {
+        strapiId
+        title
+        url
+        order
+        id
+        strapiChildren {
+          id
+          title
+          url
+          order
+          parent
+        }
+        strapiParent {
+          id
+          title
         }
       }
     }
