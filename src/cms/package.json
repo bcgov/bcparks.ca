@@ -15,6 +15,7 @@
     "@ckeditor/ckeditor5-source-editing": "^29.0.0",
     "@ckeditor/ckeditor5-theme-lark": "^29.0.0",
     "axios": "^0.21.1",
+    "jwks-rsa": "^2.0.4",
     "knex": "^0.21.19",
     "pg": "^8.5.1",
     "sqlite3": "^5.0.2",

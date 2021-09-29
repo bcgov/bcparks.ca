@@ -1,5 +1,8 @@
 const _ = require("lodash");
 
+const KEYCLOAK_AUTH_ROLES = ['submitter', 'approver'];
+const API_USER_EMAIL = process.env.STRAPI_API_USER_EMAIL; // change function to 'fetchuser'
+
 module.exports = async (ctx, next) => {
   let role;
 
@@ -17,6 +20,8 @@ module.exports = async (ctx, next) => {
       // init `id` and `isAdmin` outside of validation blocks
       let id;
       let isAdmin;
+      let tokenType;
+      let decodedToken;
 
       if (ctx.request.query && ctx.request.query.token) {
         // find the token entry that match the token from the request
@@ -39,23 +44,52 @@ module.exports = async (ctx, next) => {
         ctx.request.header &&
         ctx.request.header.authorization
       ) {
-        // use the current system with JWT in the header
-        const decrypted = await strapi.plugins[
+        // get information if token is keycloak type
+        decodedToken = await strapi.plugins[
           "users-permissions"
-        ].services.jwt.getToken(ctx);
-
-        id = decrypted.id;
-        isAdmin = decrypted.isAdmin || false;
+        ].services.jwt.getKCToken(ctx); 
+        if (decodedToken) {
+          tokenType = 'keycloak';
+        } else {
+          // get information if token is strapi type
+          decodedToken = await strapi.plugins[
+            "users-permissions"
+          ].services.jwt.getToken(ctx);
+          if (decodedToken) {
+            tokenType = 'strapi';
+          }
+        }
       }
 
-      // this is the line that already exist in the code
-      if (id === undefined) {
-        throw new Error("Invalid token: Token did not contain required fields");
+      if (decodedToken) {
+        if (tokenType === 'keycloak') {
+          // fetch authenticated user using keycloak creds
+          if (decodedToken.resource_access && decodedToken.resource_access.account && decodedToken.resource_access.account.roles) {
+            const roles = decodedToken.resource_access.account.roles;
+            const roleMatch = roles.some(e => KEYCLOAK_AUTH_ROLES.includes(e));
+            if (roleMatch) {
+              ctx.state.user = await strapi.plugins[
+                "users-permissions"
+              ].services.user.fetch({email: API_USER_EMAIL});
+            } else {
+              throw new Error("Invalid token: User role does not have access permissions");
+            }
+          } else {
+            throw new Error("Invalid token: Token did not contain required fields");
+          }
+        } else {
+          id = decodedToken.id;
+          isAdmin = decodedToken.isAdmin || false;
+          if (id === undefined) {
+            throw new Error("Invalid token: Token did not contain required fields");
+          }
+          // fetch authenticated user
+          ctx.state.user = await strapi.plugins[
+            "users-permissions"
+          ].services.user.fetchAuthenticatedUser(id); 
+        }
       }
-      // fetch authenticated user
-      ctx.state.user = await strapi.plugins[
-        "users-permissions"
-      ].services.user.fetchAuthenticatedUser(id);
+      
     } catch (err) {
       return handleErrors(ctx, err, "unauthorized");
     }
