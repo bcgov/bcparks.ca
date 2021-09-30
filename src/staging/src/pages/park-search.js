@@ -98,8 +98,8 @@ export const query = graphql`
       }
     }
     allStrapiMenus(
-      sort: {fields: order, order: ASC}
-      filter: {show: {eq: true}}
+      sort: { fields: order, order: ASC }
+      filter: { show: { eq: true } }
     ) {
       nodes {
         strapiId
@@ -143,18 +143,14 @@ export default function Home({ location, data }) {
 
   const protectedAreas = data.allStrapiProtectedArea.nodes
 
-  const [quickSearch, setQuickSearch] = useState(
-    location.state
-      ? location.state.quickSearch
-      : {
-          camping: false,
-          petFriendly: false,
-          wheelchair: false,
-          marine: false,
-          ecoReserve: false,
-          electricalHookup: false,
-        }
-  )
+  const [quickSearch, setQuickSearch] = useState({
+    camping: false,
+    petFriendly: false,
+    wheelchair: false,
+    marine: false,
+    ecoReserve: false,
+    electricalHookup: false,
+  })
   const [selectedActivities, setSelectedActivities] = useState(
     location.state && location.state.selectedActivities
       ? [...location.state.selectedActivities]
@@ -189,7 +185,10 @@ export default function Home({ location, data }) {
     { value: "desc", label: "Sort Z-A" },
   ]
 
-  const [sortOption, setSortOption] = useState(sortOptions[0])
+  console.log(location.state)
+  const [sortOption, setSortOption] = useState(
+    location.state ? location.state.sortOption : sortOptions[0]
+  )
 
   const {
     camping,
@@ -674,9 +673,9 @@ export default function Home({ location, data }) {
                     <>
                       <div className="row p20t">
                         <div className="col-12">
-                          {filterSelections.map(f => (
+                          {filterSelections.map((f, index) => (
                             <Chip
-                              key={f.label}
+                              key={index}
                               label={f.label}
                               onDelete={handleFilterDelete(f)}
                               variant="outlined"

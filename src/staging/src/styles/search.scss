@@ -1,10 +1,12 @@
 $globalFont: "BCSans", Verdana, Arial, sans serif;
 $colorBlue: #003366;
+$colorLightBlue: #1a5a96;
 $hoverBlue: #2684ff;
 $colorGrey: #eef1f5;
 $colorWhite: #fff;
 $colorBlack: #000;
 $colorTextBlack: #494949;
+$colorYellow: rgba(252, 186, 25, 1);
 $bodyFont: 16px;
 $headingFont: 2rem;
 
@@ -34,6 +36,7 @@ $headingFont: 2rem;
       border-radius: 50px !important;
       font-size: $bodyFont !important;
       font-family: $globalFont !important;
+      height: 50px;
     }
     .MuiOutlinedInput-input {
       padding: 10px 20px !important;
@@ -54,7 +57,7 @@ $headingFont: 2rem;
   .search-icon-fab {
     background-color: rgba(252, 186, 25, 1);
     margin-left: -30px !important;
-    margin-top: -14px !important;
+    margin-top: -10px !important;
     width: 70px !important;
     height: 70px !important;
     .search-icon {
@@ -180,12 +183,41 @@ $headingFont: 2rem;
   }
 }
 
+.yellow-divider {
+  background-color: $colorYellow;
+  height: 3px;
+}
+
+.grey-divider-light {
+  background-color: $colorGrey;
+}
+
+.grey-divider {
+  height: 3px;
+  background-color: $colorGrey;
+}
+
 .park-filter-dialog {
   font-size: $bodyFont !important;
   font-family: $globalFont !important;
   overflow-y: visible !important;
 
-  .MuiTypography-root {
+  .park-filter-title {
+    color: $colorTextBlack;
+  }
+
+  .park-filter-options {
+    background-color: $colorWhite !important;
+    border-radius: 5px;
+  }
+
+  .park-filter-option-label {
+    padding: 19px !important;
+    height: 60px !important;
+    color: $colorBlue !important;
+  }
+
+  .park-filter-dialog-content .MuiTypography-root {
     font-family: $globalFont !important;
     font-size: $bodyFont !important;
   }
@@ -195,38 +227,56 @@ $headingFont: 2rem;
   }
 
   .MuiPaper-root {
-    color: $colorBlue !important;
+    //color: $colorBlue !important;
   }
 
   .MuiDialog-paperWidthSm {
-    max-width: 700px !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    border-radius: 0px !important;
+    background-color: $colorGrey !important;
   }
 
   .park-filter-select [class*="-control"] {
-    border-radius: 50px !important;
-    background-color: $colorGrey !important;
+    border-radius: 5px !important;
+    background-color: $colorWhite !important;
     font-family: $globalFont !important;
     font-size: $bodyFont !important;
+  }
+
+  .bcgov-button {
+    height: 50px;
+  }
+
+  .search-icon {
+    color: #00468b !important;
   }
 }
 .park-filter-dialog,
 .search-results-main {
   .MuiCheckbox-root {
-    color: #38598a !important;
+    color: $colorBlue !important;
     padding: 0px !important;
-    padding-right: 5px !important;
+    padding-right: 10px !important;
   }
 
   .MuiCheckbox-root:hover {
     background-color: $colorGrey !important;
   }
 
+  .no-filters-text {
+    font-style: italic;
+    text-align: center;
+    padding: 15px;
+  }
+
   .park-filter-text {
     .MuiOutlinedInput-root {
-      border-radius: 50px !important;
-      background-color: $colorGrey !important;
+      border-radius: 5px !important;
+      background-color: $colorWhite !important;
       font-family: $globalFont !important;
       font-size: $bodyFont !important;
+      height: 50px;
     }
 
     .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
@@ -240,12 +290,26 @@ $headingFont: 2rem;
   .MuiButton-root {
     font-size: $bodyFont !important;
     width: 100% !important;
-    border-radius: 50px !important;
+    border-radius: 5px !important;
   }
 
   div[class$="-placeholder"] {
     color: #9b9b9b !important;
     font-family: $globalFont !important;
+  }
+
+  .park-filter-chip-list-container {
+    padding: 10px 20px !important;
+  }
+
+  .park-filter-chip-list {
+    border: none !important;
+    padding-right: 10px;
+    margin-top: -5px;
+  }
+
+  .close-icon-blue {
+    color: $colorBlue;
   }
 
   .park-filter-chip {
@@ -328,6 +392,13 @@ div[class$="-singleValue"] {
   }
 }
 
+.pb20 {
+  padding-bottom: 20px;
+}
+
+.p20 {
+  padding: 20px !important;
+}
 .p10t {
   padding-top: 10px !important;
 }
@@ -385,7 +456,7 @@ div[class$="-singleValue"] {
 }
 
 .mtm5 {
-  margin-top: 5px !important;
+  margin-top: -5px !important;
 }
 
 .mtm7 {
@@ -396,17 +467,40 @@ div[class$="-singleValue"] {
   margin-right: 5px !important;
 }
 
+.mr10 {
+  margin-right: 10px !important;
+}
+
+.mt8 {
+  margin-top: 8px !important;
+}
+
 .bcgov-normal-blue {
   color: $colorWhite !important;
-  font-weight: 700 !important;
   font-style: normal !important;
   background-color: $colorBlue !important;
   font-family: $globalFont !important;
+  box-shadow: unset !important;
 }
 
 .bcgov-normal-blue:hover {
-  background-color: #38598a !important;
+  background-color: $colorBlue !important;
   color: $colorWhite !important;
+}
+
+.bcgov-normal-transparent {
+  color: $colorBlue !important;
+  font-style: normal !important;
+  background-color: transparent !important;
+  border: 1px solid $colorBlue !important;
+  font-family: $globalFont !important;
+  box-shadow: unset !important;
+}
+
+.bcgov-normal-transparent:hover {
+  border-width: 1px !important;
+  border-style: solid !important;
+  background-color: $colorWhite !important;
 }
 
 .bcgov-button {
@@ -426,8 +520,17 @@ div[class$="-singleValue"] {
   display: inline-block !important;
 }
 
-.flex-display {
+.flex-display,
+.flex-display-list {
   display: flex !important;
+}
+
+.ml-auto {
+  margin-left: auto !important;
+}
+
+.pointer {
+  cursor: pointer !important;
 }
 
 .m-auto {
@@ -680,6 +783,9 @@ div[class$="-singleValue"] {
   .bcgov-button {
     min-width: 0px !important;
     min-height: 0px !important;
+  }
+  .flex-display-list {
+    display: block !important;
   }
 }
 
