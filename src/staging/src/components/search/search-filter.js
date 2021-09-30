@@ -119,7 +119,7 @@ const SearchFilter = ({
   }
 
   const searchParkFilter = () => {
-    navigate("/park-search", {
+    navigate("/explore", {
       state: {
         selectedActivities,
         selectedFacilities,

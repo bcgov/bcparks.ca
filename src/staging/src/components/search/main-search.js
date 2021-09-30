@@ -33,7 +33,7 @@ const MainSearch = ({ data: { activities, facilities } }) => {
   }
 
   const searchParkFilter = () => {
-    navigate("/park-search", {
+    navigate("/explore", {
       state: {
         quickSearch,
         selectedActivities,

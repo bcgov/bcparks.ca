@@ -5,7 +5,6 @@ import MegaMenu from "../components/megaMenu"
 import "../styles/search.scss"
 import {
   labelCompare,
-  // compare,
   searchParkByCriteria,
   sortAsc,
   sortDesc,
@@ -16,24 +15,23 @@ import {
   FormControlLabel,
   Chip,
   TextField,
-  // Switch,
   InputAdornment,
   Card,
   CardContent,
   Link,
+  Breadcrumbs,
 } from "@material-ui/core"
 import Pagination from "@material-ui/lab/Pagination"
-// import { withStyles } from "@material-ui/core/styles"
 import SearchIcon from "@material-ui/icons/Search"
 import Select from "react-select"
 import CloseIcon from "@material-ui/icons/Close"
-// import * as ElasticAppSearch from "@elastic/app-search-javascript"
 import dayUseIcon from "../images/park/day-use.png"
 // import blueAlertIcon from "../images/park/blue-alert-32.png"
 // import yellowAlertIcon from "../images/park/yellow-alert-32.png"
 import redAlertIcon from "../images/park/red-alert-32.png"
 import parksLogo from "../images/Mask_Group_5.png"
 import Carousel from "react-material-ui-carousel"
+import Spacer from "../components/park/spacer"
 
 export const query = graphql`
   query {
@@ -123,13 +121,7 @@ export const query = graphql`
   }
 `
 
-export default function Home({ location, data }) {
-  // const client = ElasticAppSearch.createClient({
-  //   searchKey: `${process.env.GATSBY_ELASTIC_SEARCH_KEY}`,
-  //   endpointBase: `${process.env.GATSBY_ELASTIC_SEARCH_URL}`,
-  //   engineName: `${process.env.GATSBY_ELASTIC_SEARCH_ENGINE}`,
-  // })
-
+export default function Explore({ location, data }) {
   const menuContent = data?.allStrapiMenus?.nodes || []
 
   const activityItems = data.allStrapiActivityTypes.nodes.map(a => ({
@@ -162,15 +154,14 @@ export default function Home({ location, data }) {
       : []
   )
   const [inputText, setInputText] = useState(
-    location.state ? location.state.searchText : ""
+    location.state && location.state.searchText ? location.state.searchText : ""
   )
   const [searchText, setSearchText] = useState(
-    location.state ? location.state.searchText : ""
+    location.state && location.state.searchText ? location.state.searchText : ""
   )
 
   const [filterSelections, setFilterSelections] = useState([])
   const [searchResults, setSearchResults] = useState([])
-  // const [showOpenParks, setShowOpenParks] = useState(false)
   const [numberOfPages, setNumberOfPages] = useState(0)
   const [totalResults, setTotalResults] = useState(0)
 
@@ -185,10 +176,20 @@ export default function Home({ location, data }) {
     { value: "desc", label: "Sort Z-A" },
   ]
 
-  console.log(location.state)
   const [sortOption, setSortOption] = useState(
-    location.state ? location.state.sortOption : sortOptions[0]
+    location.state && location.state.sortOption
+      ? location.state.sortOption
+      : sortOptions[0]
   )
+
+  const breadcrumbs = [
+    <Link key="1" href="/">
+      Home
+    </Link>,
+    <div key="2" className="breadcrumb-text">
+      Find a Park
+    </div>,
+  ]
 
   const {
     camping,
@@ -230,11 +231,6 @@ export default function Home({ location, data }) {
     }
   }
 
-  // const handleRemoveAllChips = () => {
-  //   setSelectedActivities([])
-  //   setSelectedFacilities([])
-  // }
-
   const handlePageChange = (event, value) => {
     setCurrentPage(value)
     setResetCurrentPage(false)
@@ -270,159 +266,9 @@ export default function Home({ location, data }) {
     setFilterSelections([...filters])
   }
 
-  // const CustomSwitch = withStyles(() => ({
-  //   root: {
-  //     width: 36,
-  //     height: 20,
-  //     padding: 0,
-  //     display: "flex",
-  //   },
-  //   switchBase: {
-  //     padding: 2,
-  //     color: "#fff",
-  //     "&$checked": {
-  //       transform: "translateX(16px)",
-  //       color: "#fff",
-  //       "& + $track": {
-  //         opacity: 1,
-  //         backgroundColor: "#003366",
-  //         borderColor: "#003366",
-  //       },
-  //     },
-  //   },
-  //   thumb: {
-  //     width: 16,
-  //     height: 16,
-  //     boxShadow: "none",
-  //   },
-  //   track: {
-  //     border: `1px solid #003366`,
-  //     borderRadius: 20 / 2,
-  //     opacity: 1,
-  //     backgroundColor: "#003366",
-  //   },
-  //   checked: {},
-  // }))(Switch)
-
   useEffect(() => {
     setIsLoading(true)
     setFilters()
-
-    // const filterOptions = []
-
-    // const parkActivitiesFilter = selectedActivities.map(a => ({
-    //   parkactivities: a.label,
-    // }))
-    // const parkFacilitiesFilter = selectedFacilities.map(f => ({
-    //   parkfacilities: f.label,
-    // }))
-
-    // if (camping) {
-    //   filterOptions.push({
-    //     any: [
-    //       { parkactivities: "Marine-Accessible Camping" },
-    //       { parkactivities: "Wilderness Camping" },
-    //       { parkactivities: "Backcountry Camping" },
-    //       { parkactivities: "Group Camping" },
-    //       { parkactivities: "Marine-Accessible Camping" },
-    //       { parkactivities: "RV-Accessible Camping" },
-    //       {
-    //         parkactivities: "Vehicle-Accessible Camping",
-    //       },
-    //       { parkfacilities: "Walk-In Camping" },
-    //       { parkfacilities: "Winter Camping" },
-    //       { parkfacilities: "Wilderness Camping" },
-    //     ],
-    //   })
-    // }
-    // if (petFriendly) {
-    //   parkActivitiesFilter.push({ parkactivities: "Pets on Leash" })
-    // }
-    // if (wheelchair) {
-    //   parkFacilitiesFilter.push({ parkfacilities: "Accessibility Information" })
-    // }
-    // if (electricalHookup) {
-    //   parkFacilitiesFilter.push({ parkfacilities: "Electrical Hookups" })
-    // }
-    // if (marine) {
-    //   filterOptions.push({ all: [{ marineprotectedarea: ["Y"] }] })
-    // }
-    // if (ecoReserve) {
-    //   filterOptions.push({ all: [{ typecode: ["ER"] }] })
-    // }
-
-    // if (parkActivitiesFilter && parkActivitiesFilter.length > 0) {
-    //   filterOptions.push({ all: [...parkActivitiesFilter] })
-    // }
-
-    // if (parkFacilitiesFilter && parkFacilitiesFilter.length > 0) {
-    //   filterOptions.push({ all: [...parkFacilitiesFilter] })
-    // }
-
-    // const options = {
-    //   search_fields: {
-    //     protectedareaname: {},
-    //     parkactivities: {},
-    //     parkfacilities: {},
-    //   },
-    //   filters: {
-    //     all: filterOptions,
-    //   },
-    //   result_fields: {
-    //     typecode: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     protectedareaname: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     marineprotectedarea: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     parkactivities: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     url: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     parkfacilities: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     isdayusepass: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     parkadvisories: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     parkphotos: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     opentopublic: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     slug: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     id: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //   },
-    //   page: { size: itemsPerPage, current: resetCurrentPage ? 1 : currentPage },
-    // }
-    // if (sortOption && sortOption.value && sortOption.value !== "rel") {
-    //   options.sort = { protectedareaname: sortOption.value }
-    // }
 
     const results = searchParkByCriteria(
       false,
@@ -464,45 +310,6 @@ export default function Home({ location, data }) {
     setTotalResults(allResults.length)
     setNumberOfPages(Math.ceil(results.length / itemsPerPage))
     setIsLoading(false)
-    // client
-    //   .search(searchText, options)
-    //   .then(resultList => {
-    //     setTotalResults(resultList.info.meta.page.total_results)
-    //     setNumberOfPages(resultList.info.meta.page.total_pages)
-    //     setCurrentPage(resultList.info.meta.page.current)
-    //     const allResults = []
-    //     resultList.results.forEach(result => {
-    //       const park = {}
-    //       park.protectedAreaName = result.data.protectedareaname.raw
-    //       park.isOpenToPublic = result.data.opentopublic.raw
-    //         ? result.data.opentopublic.raw == "true"
-    //         : true
-    //       park.advisories = result.data.parkadvisories.raw
-    //       park.isDayUsePass = result.data.isdayusepass.raw
-    //         ? result.data.isdayusepass.raw == "true"
-    //         : true
-    //       park.parkActivities = result.data.parkactivities.raw
-    //         ? result.data.parkactivities.raw.sort(compare)
-    //         : []
-    //       park.parkFacilities = result.data.parkfacilities.raw
-    //         ? result.data.parkfacilities.raw.sort(compare)
-    //         : []
-    //       park.parkPhotos = result.data.parkphotos.raw.map(p => {
-    //         // TODO Update this based on the elastic search response
-    //         // If the images are from strapi media library, prepend it with the cms url
-    //         return p.split('":"')[1].replace('"}', "")
-    //       })
-    //       park.slug = result.data.slug.raw
-    //       allResults.push(park)
-    //     })
-    //     setSearchResults([...allResults])
-    //     setResetCurrentPage(true)
-    //     setIsLoading(false)
-    //   })
-    //   .catch(error => {
-    //     console.log(`error: ${error}`)
-    //     setIsLoading(false)
-    //   })
   }, [
     sortOption,
     currentPage,
@@ -518,8 +325,11 @@ export default function Home({ location, data }) {
       <MegaMenu content={menuContent} />
       <div className="search-body">
         <div className="search-results-main container">
-          <div className="search-results-container">
-            <h1 className="headline-text">Find your next adventure</h1>
+          <div className="search-results-container container">
+            <Breadcrumbs separator="›" aria-label="breadcrumb" className="p40t">
+              {breadcrumbs}
+            </Breadcrumbs>
+            <h1 className="headline-text p40t">Find your next adventure</h1>
             <div className="row no-gutters">
               <div className="col-lg-3 pr15">
                 <div className="search-results-quick-filter m15t">
