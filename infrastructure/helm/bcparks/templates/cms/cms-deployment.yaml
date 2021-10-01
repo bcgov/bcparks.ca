@@ -42,17 +42,21 @@ spec:
             - name: {{ .Values.cms.service.portName }}
               containerPort: {{ .Values.cms.service.port }}
               protocol: TCP
-          env:
+          env:            
+            - name: NODE_ENV
+              value: {{ .Values.cms.env.nodeEnv }}
             - name: STRAPI_TELEMETRY_DISABLED
               value: "true"
+            - name: STRAPI_SSO_AUTH_URL
+              value: {{ .Values.cluster.ssoAuthUrl }}
+            - name: STRAPI_SSO_REALM
+              value: {{ .Values.cluster.ssoRealm }}
             - name: STRAPI_EXTERNAL_URL
             {{- if .Values.cms.env.externalUrl }}
               value: {{ .Values.cms.env.externalUrl }}
             {{- else }}
               value: {{ template "bcparks_cms_external_url" . }}
             {{- end }}
-            - name: NODE_ENV
-              value: {{ .Values.cms.env.nodeEnv }}
             - name: DATABASE_CLIENT
               value: {{ .Values.cms.env.databaseClient }}
             - name: DATABASE_HOST

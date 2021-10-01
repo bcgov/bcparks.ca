@@ -1,3 +1,10 @@
+cluster:
+  ssoAuthUrl: https://oidc.gov.bc.ca/auth
+
 cms:
   env:
     externalUrl: https://cms.bcparks.ca
+
+admin:
+  env:
+    externalUrl: https://staff.bcparks.ca

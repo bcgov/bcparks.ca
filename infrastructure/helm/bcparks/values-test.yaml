@@ -1,3 +1,6 @@
+cluster:
+  ssoAuthUrl: https://test.oidc.gov.bc.ca/auth
+
 cms:
   env:
     externalUrl: https://test-cms.bcparks.ca
@@ -13,3 +16,4 @@ images:
     tag: bb08566
   admin:
     tag: bb08566
+    

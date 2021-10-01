@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { cmsAxios, apiAxios } from "../../../axios_config";
+import { cmsAxios } from "../../../axios_config";
 import { Redirect, useHistory } from "react-router-dom";
 import { useQuery } from "react-query";
 import PropTypes from "prop-types";
@@ -58,10 +58,10 @@ export default function AdvisoryDashboard({
       selectedParkId > 0 ? `&protectedAreas.id=${selectedParkId}` : "";
     const response = await Promise.all([
       getManagementAreas(cmsData, setCmsData),
-      apiAxios.get(
-        `api/get/public-advisory-audits?_limit=500&_sort=advisoryDate:DESC${parkIdQuery}`,
+      cmsAxios.get(
+        `public-advisory-audits?_limit=500&_sort=advisoryDate:DESC${parkIdQuery}`,
         {
-          headers: { Authorization: `Bearer ${keycloak.idToken}` },
+          headers: { Authorization: `Bearer ${keycloak.token}` },
         }
       ),
     ]);

@@ -1,7 +1,7 @@
 const _ = require("lodash");
 
 const KEYCLOAK_AUTH_ROLES = ['submitter', 'approver'];
-const API_USER_EMAIL = process.env.STRAPI_API_USER_EMAIL; // change function to 'fetchuser'
+const API_USER_EMAIL = process.env.STRAPI_API_USER_EMAIL;
 
 module.exports = async (ctx, next) => {
   let role;
@@ -64,9 +64,14 @@ module.exports = async (ctx, next) => {
       if (decodedToken) {
         if (tokenType === 'keycloak') {
           // fetch authenticated user using keycloak creds
-          if (decodedToken.resource_access && decodedToken.resource_access.account && decodedToken.resource_access.account.roles) {
-            const roles = decodedToken.resource_access.account.roles;
+          if (decodedToken.realm_access && decodedToken.realm_access.roles) {
+            const roles = decodedToken.realm_access.roles;
             const roleMatch = roles.some(e => KEYCLOAK_AUTH_ROLES.includes(e));
+
+            if(!API_USER_EMAIL) {
+              throw new Error("API_USER_EMAIL value not set");
+            }
+
             if (roleMatch) {
               ctx.state.user = await strapi.plugins[
                 "users-permissions"

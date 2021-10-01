@@ -9,8 +9,4 @@ const cmsAxios = axios.create({
   baseURL: config.REACT_APP_CMS_BASE_URL,
 });
 
-const apiAxios = axios.create({
-  baseURL: config.REACT_APP_API_BASE_URL,
-});
-
-export { cmsAxios, apiAxios, axios };
+export { cmsAxios, axios };
