@@ -131,8 +131,11 @@ const SearchFilter = ({
         onClose={handleCloseFilter}
         aria-labelledby="park-filter-dialog"
         className="park-filter-dialog"
+        fullScreen
+        fullWidth
+        scroll="paper"
       >
-        <DialogTitle className="park-filter-title">
+        <DialogTitle className="park-filter-title d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
           <div className="container">
             <div className="row">
               <div className="col-12 p30t">
@@ -142,7 +145,7 @@ const SearchFilter = ({
           </div>
         </DialogTitle>
         <DialogContent className="park-filter-dialog-content">
-          <div className="container">
+          <div className="container p10">
             <div className="row no-gutters">
               <div className="col-lg-7 col-md-12 col-sm-12">
                 <TextField
@@ -193,10 +196,10 @@ const SearchFilter = ({
                   Cancel
                 </Button>
               </div>
-              <div className="p10t col-lg-4 col-md-4 col-sm-12 d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
+              <div className="p10t col-12 d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
                 <Select
                   value={sortOption}
-                  className="park-filter-select"
+                  className="park-filter-select h50p"
                   variant="outlined"
                   options={sortOptions}
                   onChange={e => {
@@ -209,7 +212,7 @@ const SearchFilter = ({
             <div className="row p20t">
               <div className="col-lg-4 col-md-12 col-sm-12 pb20">
                 <div className="park-filter-options">
-                  <div className="park-filter-option-label flex-display">
+                  <div className="park-filter-option-label p20 flex-display">
                     <div className="text-black">
                       <b>Selected Filters</b>
                     </div>
@@ -270,7 +273,7 @@ const SearchFilter = ({
                     <div className="park-filter-options">
                       <div className="park-filter-option-label flex-display">
                         <div
-                          className="flex-display pointer full-width"
+                          className="flex-display pointer full-width p20"
                           onClick={() => {
                             handleShowFilterClick(0)
                           }}
@@ -285,7 +288,7 @@ const SearchFilter = ({
                           </div>
                         </div>
                         <Link
-                          className="ml-auto pointer"
+                          className="ml-auto pointer p20"
                           onClick={() => {
                             setSelectedActivities([])
                           }}
@@ -301,7 +304,7 @@ const SearchFilter = ({
                         unmountOnExit
                         className="p20"
                       >
-                        <div className="flex-display-list">
+                        <div className="row container">
                           <div className="col-lg-6 col-md-12 col-sm-12">
                             {activityItems
                               .slice(0, Math.ceil(activityItems.length / 2))
@@ -387,7 +390,7 @@ const SearchFilter = ({
                     <div className="park-filter-options">
                       <div className="park-filter-option-label flex-display">
                         <div
-                          className="flex-display pointer full-width"
+                          className="flex-display pointer full-width p20"
                           onClick={() => {
                             handleShowFilterClick(1)
                           }}
@@ -402,7 +405,7 @@ const SearchFilter = ({
                           </div>
                         </div>
                         <Link
-                          className="ml-auto pointer"
+                          className="ml-auto pointer p20"
                           onClick={() => {
                             setSelectedFacilities([])
                           }}
@@ -418,7 +421,7 @@ const SearchFilter = ({
                         unmountOnExit
                         className="p20"
                       >
-                        <div className="flex-display-list">
+                        <div className="row container">
                           <div className="col-lg-6 col-md-12 col-sm-12">
                             {facilityItems
                               .slice(0, Math.ceil(facilityItems.length / 2))
@@ -501,35 +504,31 @@ const SearchFilter = ({
                 </div>
               </div>
             </div>
-            <br />
-            <br />
           </div>
         </DialogContent>
-        <DialogActions className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-          <div className="container p30">
-            <div className="row">
-              <div className="col-lg-3 col-md-8 col-sm-8 mt8">
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    searchParkFilter()
-                  }}
-                  className="bcgov-button bcgov-normal-blue"
-                >
-                  Search
-                </Button>
-              </div>
-              <div className="col-lg-2 col-md-8 col-sm-4 mt8">
-                <Button
-                  variant="outlined"
-                  onClick={() => {
-                    handleCloseFilter()
-                  }}
-                  className="bcgov-button bcgov-normal-transparent"
-                >
-                  Cancel
-                </Button>
-              </div>
+        <DialogActions className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none p20 container">
+          <div className="row">
+            <div className="col-12 mt8">
+              <Button
+                variant="contained"
+                onClick={() => {
+                  searchParkFilter()
+                }}
+                className="bcgov-button bcgov-normal-blue"
+              >
+                Search
+              </Button>
+            </div>
+            <div className="col-12 mt8">
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  handleCloseFilter()
+                }}
+                className="bcgov-button bcgov-normal-transparent"
+              >
+                Cancel
+              </Button>
             </div>
           </div>
         </DialogActions>

@@ -198,8 +198,7 @@ $headingFont: 2rem;
 }
 
 .divider-div {
-  padding: 0px !important;
-  padding-left: 30px !important;
+  padding: 0px 25px !important;
 }
 
 .grey-divider {
@@ -224,7 +223,6 @@ $headingFont: 2rem;
 .park-filter-dialog {
   font-size: $bodyFont !important;
   font-family: $globalFont !important;
-  overflow-y: visible !important;
 
   .park-filter-title {
     color: $colorTextBlack;
@@ -236,7 +234,6 @@ $headingFont: 2rem;
   }
 
   .park-filter-option-label {
-    padding: 19px !important;
     height: 60px !important;
     color: $colorBlue !important;
   }
@@ -247,7 +244,7 @@ $headingFont: 2rem;
   }
 
   .park-filter-dialog-content {
-    overflow-y: visible !important;
+    padding: 10px !important;
   }
 
   .MuiPaper-root {
@@ -255,8 +252,6 @@ $headingFont: 2rem;
   }
 
   .MuiDialog-paperWidthSm {
-    min-width: 100% !important;
-    min-height: 100% !important;
     border-radius: 0px !important;
     background-color: $colorGrey !important;
   }
@@ -436,6 +431,11 @@ div[class$="-singleValue"] {
 .p20 {
   padding: 20px !important;
 }
+
+.p25 {
+  padding: 25px !important;
+}
+
 .p10t {
   padding-top: 10px !important;
 }
@@ -456,11 +456,15 @@ div[class$="-singleValue"] {
   padding: 30px !important;
 }
 
-.p30l {
+.p30lr {
   padding: 0px 30px !important;
 }
 
-.p20l {
+.p0 {
+  padding: 0px !important;
+}
+
+.p20lr {
   padding: 0px 20px !important;
 }
 
@@ -472,12 +476,20 @@ div[class$="-singleValue"] {
   padding-left: 15px !important;
 }
 
+.p20l {
+  padding-left: 20px !important;
+}
+
 .m20t {
   margin-top: 20px !important;
 }
 
 .m15t {
   margin-top: 15px !important;
+}
+
+.m10t {
+  margin-top: 10px !important;
 }
 
 .p30 {
@@ -521,7 +533,9 @@ div[class$="-singleValue"] {
 }
 
 .h50p,
-.h50p .MuiInputBase-root {
+.h50p .MuiInputBase-root,
+.h50p [class*="-control"],
+.h50p button {
   height: 50px !important;
 }
 
@@ -625,6 +639,112 @@ div[class$="-singleValue"] {
   }
 }
 
+.link {
+  color: $colorLightBlue !important;
+}
+
+.link-white {
+  color: $colorWhite !important;
+}
+
+.link-white:hover,
+.link:hover {
+  cursor: pointer !important;
+}
+
+.background-blue {
+  background-color: $colorBlue;
+}
+
+.park-quick-view-dialog .MuiDialogContent-root {
+  padding: 0px !important;
+}
+
+.park-image-div {
+  height: 370px !important;
+  width: 400px !important;
+  padding-right: 0px !important;
+}
+
+.park-image-div-mobile {
+  height: 300px !important;
+  width: 100% !important;
+  padding-right: 0px !important;
+}
+
+.park-image-logo-div {
+  background-color: $colorBlue;
+}
+
+.search-result-logo-image {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-top: 35% !important;
+}
+
+.park-quick-view-dialog-content {
+  overflow-x: hidden !important;
+
+  .park-carousel-mobile [class*="Carousel-prev"] {
+    margin-left: -20px !important;
+  }
+}
+
+.park-carousel,
+.park-carousel-mobile,
+.CarouselItem,
+.CarouselItem div {
+  height: 100% !important;
+}
+.park-carousel [class*="Carousel-prev"],
+.park-carousel-mobile [class*="Carousel-prev"] {
+  margin-left: -10px !important;
+}
+
+.park-carousel [class*="Carousel-next"] {
+  margin-right: -25px !important;
+}
+
+.park-carousel-mobile [class*="Carousel-next"] {
+  margin-right: -10px !important;
+}
+
+.park-carousel [class*="Carousel-prev"] button,
+.park-carousel-mobile [class*="Carousel-prev"] button {
+  padding-left: 15px !important;
+}
+
+.park-carousel [class*="Carousel-next"] button,
+.park-carousel-mobile [class*="Carousel-next"] button {
+  padding-right: 15px !important;
+}
+
+.park-carousel .MuiButtonBase-root,
+.park-carousel-mobile .MuiButtonBase-root {
+  background-color: rgba(48, 48, 48, 0.7) !important;
+}
+
+.search-result-image {
+  width: 100% !important;
+  object-fit: cover !important;
+  height: 100% !important;
+  object-position: 0% 5%;
+}
+
+.search-result-icon {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.search-result-card {
+  min-height: 300px !important;
+}
+
+.park-heading-text {
+  color: $colorBlue;
+}
+
 .search-results-main {
   color: $colorBlue !important;
   font-family: $globalFont !important;
@@ -650,10 +770,6 @@ div[class$="-singleValue"] {
 
   .headline-text {
     color: $colorBlack;
-  }
-
-  .park-heading-text {
-    color: $colorBlue;
   }
 
   .text-blue {
@@ -691,27 +807,10 @@ div[class$="-singleValue"] {
     min-height: 350px !important;
   }
 
-  .park-image-div {
+  .park-card-desktop {
     height: 370px !important;
-    width: 400px !important;
-    padding-right: 0px !important;
-  }
-
-  .park-image-div-mobile {
-    height: 300px !important;
-    width: 100% !important;
-    padding-right: 0px !important;
-  }
-
-  .park-image-logo-div {
-    background-color: $colorBlue;
-  }
-
-  .search-result-logo-image {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    margin-top: 35% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
   }
 
   .small-font {
@@ -783,40 +882,6 @@ div[class$="-singleValue"] {
     width: 17px !important;
   }
 
-  .park-carousel,
-  .park-carousel-mobile,
-  .CarouselItem,
-  .CarouselItem div {
-    height: 100% !important;
-  }
-  .park-carousel [class*="Carousel-prev"],
-  .park-carousel-mobile [class*="Carousel-prev"] {
-    margin-left: -10px !important;
-  }
-
-  .park-carousel [class*="Carousel-next"] {
-    margin-right: -25px !important;
-  }
-
-  .park-carousel-mobile [class*="Carousel-next"] {
-    margin-right: -10px !important;
-  }
-
-  .park-carousel [class*="Carousel-prev"] button,
-  .park-carousel-mobile [class*="Carousel-prev"] button {
-    padding-left: 15px !important;
-  }
-
-  .park-carousel [class*="Carousel-next"] button,
-  .park-carousel-mobile [class*="Carousel-next"] button {
-    padding-right: 15px !important;
-  }
-
-  .park-carousel .MuiButtonBase-root,
-  .park-carousel-mobile .MuiButtonBase-root {
-    background-color: rgba(48, 48, 48, 0.7) !important;
-  }
-
   .large-pagination {
     display: block !important;
   }
@@ -825,25 +890,14 @@ div[class$="-singleValue"] {
     display: none !important;
   }
 
-  .search-result-image {
-    width: 100% !important;
-    object-fit: cover !important;
-    height: 100% !important;
-    object-position: 0% 5%;
-  }
-
-  .search-result-icon {
-    width: 32px !important;
-    height: 32px !important;
-  }
-
-  .search-result-card {
-    min-height: 300px !important;
-  }
-
   .MuiPaper-elevation1 {
     box-shadow: none !important;
     border-radius: 10px !important;
+  }
+
+  .park-quick-link {
+    font-size: 14px !important;
+    padding: 0px !important;
   }
 
   @media (min-width: 1200px) {
