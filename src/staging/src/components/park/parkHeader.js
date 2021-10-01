@@ -114,6 +114,7 @@ export default function ParkHeader({ data }) {
               </div>
             </Grid>
           )}
+          {park.isDayUsePass !== "true" && <div className="p10t"></div>}
           {/* Mobile */}
           <Grid item xs={12} className="park-menu-mobile">
             <List

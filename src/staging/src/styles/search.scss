@@ -192,9 +192,33 @@ $headingFont: 2rem;
   background-color: $colorGrey;
 }
 
+.vertical-divider {
+  height: 100%;
+  background-color: $colorGrey;
+}
+
+.divider-div {
+  padding: 0px !important;
+  padding-left: 30px !important;
+}
+
 .grey-divider {
   height: 3px;
   background-color: $colorGrey;
+}
+
+.filter-options-container {
+  .MuiTypography-root {
+    color: $colorTextBlack;
+  }
+  .MuiIconButton-root .MuiSvgIcon-root {
+    font-size: 30px;
+    color: $colorTextBlack;
+  }
+
+  .Mui-checked .MuiSvgIcon-root {
+    color: $colorLightBlue !important;
+  }
 }
 
 .park-filter-dialog {
@@ -314,6 +338,15 @@ $headingFont: 2rem;
 
   .park-filter-chip {
     margin: 2px 3px !important;
+    min-width: 130px;
+
+    .MuiChip-label {
+      text-align: left !important;
+    }
+
+    .MuiChip-deleteIcon {
+      margin-left: auto !important;
+    }
   }
 
   .MuiChip-label {
@@ -396,6 +429,10 @@ div[class$="-singleValue"] {
   padding-bottom: 20px;
 }
 
+.p10 {
+  padding: 10px !important;
+}
+
 .p20 {
   padding: 20px !important;
 }
@@ -429,6 +466,10 @@ div[class$="-singleValue"] {
 
 .p10l {
   padding-left: 10px !important;
+}
+
+.p15l {
+  padding-left: 15px !important;
 }
 
 .m20t {
@@ -479,6 +520,11 @@ div[class$="-singleValue"] {
   margin-top: 8px !important;
 }
 
+.h50p,
+.h50p .MuiInputBase-root {
+  height: 50px !important;
+}
+
 .bcgov-normal-blue {
   color: $colorWhite !important;
   font-style: normal !important;
@@ -488,6 +534,19 @@ div[class$="-singleValue"] {
 }
 
 .bcgov-normal-blue:hover {
+  background-color: $colorBlue !important;
+  color: $colorWhite !important;
+}
+
+.bcgov-normal-white {
+  color: $colorBlue !important;
+  font-style: normal !important;
+  background-color: $colorWhite !important;
+  font-family: $globalFont !important;
+  box-shadow: unset !important;
+}
+
+.bcgov-normal-white:hover {
   background-color: $colorBlue !important;
   color: $colorWhite !important;
 }
@@ -537,6 +596,11 @@ div[class$="-singleValue"] {
   cursor: pointer !important;
 }
 
+.align-center {
+  text-align: center;
+  vertical-align: middle;
+}
+
 .m-auto {
   margin: auto !important;
 }
@@ -545,10 +609,30 @@ div[class$="-singleValue"] {
   color: $colorTextBlack !important;
 }
 
+.text-green {
+  color: green;
+}
+
+.text-red {
+  color: red;
+}
+
+.text-light-blue {
+  color: $colorLightBlue !important;
+
+  .MuiTypography-root {
+    color: $colorLightBlue !important;
+  }
+}
+
 .search-results-main {
   color: $colorBlue !important;
   font-family: $globalFont !important;
   font-size: $bodyFont !important;
+
+  .park-search-text-box-container {
+    padding-right: 20px;
+  }
 
   #search-results {
     box-sizing: border-box;
@@ -568,7 +652,7 @@ div[class$="-singleValue"] {
     color: $colorBlack;
   }
 
-  .park-heading {
+  .park-heading-text {
     color: $colorBlue;
   }
 
@@ -577,7 +661,7 @@ div[class$="-singleValue"] {
   }
 
   .search-results-list {
-    padding: 10px !important;
+    padding: 0px !important;
   }
 
   .park-filter-select [class*="-control"] {
@@ -608,8 +692,14 @@ div[class$="-singleValue"] {
   }
 
   .park-image-div {
-    height: 380px !important;
+    height: 370px !important;
     width: 400px !important;
+    padding-right: 0px !important;
+  }
+
+  .park-image-div-mobile {
+    height: 300px !important;
+    width: 100% !important;
     padding-right: 0px !important;
   }
 
@@ -640,6 +730,10 @@ div[class$="-singleValue"] {
   .MuiPaginationItem-root {
     border-radius: 0px !important;
     background-color: $colorWhite !important;
+  }
+
+  .park-content-mobile {
+    padding: 0px 30px;
   }
 
   .park-overview-content {
@@ -690,11 +784,13 @@ div[class$="-singleValue"] {
   }
 
   .park-carousel,
+  .park-carousel-mobile,
   .CarouselItem,
   .CarouselItem div {
     height: 100% !important;
   }
-  .park-carousel [class*="Carousel-prev"] {
+  .park-carousel [class*="Carousel-prev"],
+  .park-carousel-mobile [class*="Carousel-prev"] {
     margin-left: -10px !important;
   }
 
@@ -702,15 +798,22 @@ div[class$="-singleValue"] {
     margin-right: -25px !important;
   }
 
-  .park-carousel [class*="Carousel-prev"] button {
+  .park-carousel-mobile [class*="Carousel-next"] {
+    margin-right: -10px !important;
+  }
+
+  .park-carousel [class*="Carousel-prev"] button,
+  .park-carousel-mobile [class*="Carousel-prev"] button {
     padding-left: 15px !important;
   }
 
-  .park-carousel [class*="Carousel-next"] button {
+  .park-carousel [class*="Carousel-next"] button,
+  .park-carousel-mobile [class*="Carousel-next"] button {
     padding-right: 15px !important;
   }
 
-  .park-carousel .MuiButtonBase-root {
+  .park-carousel .MuiButtonBase-root,
+  .park-carousel-mobile .MuiButtonBase-root {
     background-color: rgba(48, 48, 48, 0.7) !important;
   }
 
@@ -790,6 +893,19 @@ div[class$="-singleValue"] {
   }
   .flex-display-list {
     display: block !important;
+  }
+
+  .sm-p10 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .search-results-main .search-results-list {
+    padding: 0px 10px !important;
+  }
+
+  .w50 {
+    width: 50% !important;
   }
 }
 

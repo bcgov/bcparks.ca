@@ -7,6 +7,15 @@ import { navigate } from "gatsby"
 import SearchFilter from "./search-filter"
 
 const MainSearch = ({ data: { activities, facilities } }) => {
+  const activityItems = activities.map(a => ({
+    label: a.activityName,
+    value: a.activityNumber,
+  }))
+
+  const facilityItems = facilities.map(f => ({
+    label: f.facilityName,
+    value: f.facilityNumber,
+  }))
   const [openFilter, setOpenFilter] = useState(false)
   const [quickSearch, setQuickSearch] = useState({
     camping: false,
@@ -98,8 +107,8 @@ const MainSearch = ({ data: { activities, facilities } }) => {
       </div>
       <SearchFilter
         data={{
-          activities,
-          facilities,
+          activityItems,
+          facilityItems,
           openFilter,
           setOpenFilter,
           quickSearch,

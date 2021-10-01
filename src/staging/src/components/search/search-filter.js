@@ -28,8 +28,8 @@ import { labelCompare } from "./search-util"
 
 const SearchFilter = ({
   data: {
-    activities,
-    facilities,
+    activityItems,
+    facilityItems,
     openFilter,
     setOpenFilter,
     selectedActivities,
@@ -45,16 +45,6 @@ const SearchFilter = ({
 }) => {
   const [showFilters, setShowFilter] = useState([false, false])
   const [filterSelections, setFilterSelections] = useState([])
-
-  const activityItems = activities.map(a => ({
-    label: a.activityName,
-    value: a.activityNumber,
-  }))
-
-  const facilityItems = facilities.map(f => ({
-    label: f.facilityName,
-    value: f.facilityNumber,
-  }))
 
   const handleCloseFilter = () => {
     setOpenFilter(false)
@@ -127,6 +117,7 @@ const SearchFilter = ({
         sortOption,
       },
     })
+    setOpenFilter(false)
   }
 
   useEffect(() => {
@@ -233,7 +224,7 @@ const SearchFilter = ({
                     </Link>
                   </div>
                   <Divider className="grey-divider" />
-                  {filterSelections.length == 0 && (
+                  {filterSelections.length === 0 && (
                     <div className="no-filters-text">
                       No search filters selected
                     </div>
@@ -315,15 +306,11 @@ const SearchFilter = ({
                             {activityItems
                               .slice(0, Math.ceil(activityItems.length / 2))
                               .map((a, index) => (
-                                <FormGroup className="pr30" key={index}>
+                                <FormGroup
+                                  className="pr30 filter-options-container"
+                                  key={index}
+                                >
                                   <FormControlLabel
-                                    className={
-                                      selectedActivities.filter(
-                                        act => act.value === a.value
-                                      ).length === 1
-                                        ? "text-light-blue"
-                                        : ""
-                                    }
                                     control={
                                       <Checkbox
                                         checked={
@@ -340,7 +327,13 @@ const SearchFilter = ({
                                       />
                                     }
                                     label={a.label}
-                                    className="no-wrap"
+                                    className={
+                                      selectedActivities.filter(
+                                        act => act.value === a.value
+                                      ).length === 1
+                                        ? "text-light-blue no-wrap"
+                                        : "no-wrap"
+                                    }
                                   />
                                 </FormGroup>
                               ))}
@@ -352,7 +345,10 @@ const SearchFilter = ({
                                 activityItems.length
                               )
                               .map((a, index) => (
-                                <FormGroup key={index}>
+                                <FormGroup
+                                  key={index}
+                                  className="filter-options-container"
+                                >
                                   <FormControlLabel
                                     control={
                                       <Checkbox
@@ -370,7 +366,13 @@ const SearchFilter = ({
                                       />
                                     }
                                     label={a.label}
-                                    className="no-wrap"
+                                    className={
+                                      selectedActivities.filter(
+                                        act => act.value === a.value
+                                      ).length === 1
+                                        ? "text-light-blue no-wrap"
+                                        : "no-wrap"
+                                    }
                                   />
                                 </FormGroup>
                               ))}
@@ -421,7 +423,10 @@ const SearchFilter = ({
                             {facilityItems
                               .slice(0, Math.ceil(facilityItems.length / 2))
                               .map((f, index) => (
-                                <FormGroup className="pr30" key={index}>
+                                <FormGroup
+                                  className="pr30 filter-options-container"
+                                  key={index}
+                                >
                                   <FormControlLabel
                                     control={
                                       <Checkbox
@@ -439,7 +444,13 @@ const SearchFilter = ({
                                       />
                                     }
                                     label={f.label}
-                                    className="no-wrap"
+                                    className={
+                                      selectedFacilities.filter(
+                                        fa => fa.value === f.value
+                                      ).length === 1
+                                        ? "text-light-blue no-wrap"
+                                        : "no-wrap"
+                                    }
                                   />
                                 </FormGroup>
                               ))}
@@ -451,7 +462,10 @@ const SearchFilter = ({
                                 facilityItems.length
                               )
                               .map((f, index) => (
-                                <FormGroup key={index}>
+                                <FormGroup
+                                  key={index}
+                                  className="filter-options-container"
+                                >
                                   <FormControlLabel
                                     control={
                                       <Checkbox
@@ -469,7 +483,13 @@ const SearchFilter = ({
                                       />
                                     }
                                     label={f.label}
-                                    className="no-wrap"
+                                    className={
+                                      selectedFacilities.filter(
+                                        fa => fa.value === f.value
+                                      ).length === 1
+                                        ? "text-light-blue no-wrap"
+                                        : "no-wrap"
+                                    }
                                   />
                                 </FormGroup>
                               ))}
@@ -520,8 +540,8 @@ const SearchFilter = ({
 
 SearchFilter.propTypes = {
   data: PropTypes.shape({
-    activities: PropTypes.array.isRequired,
-    facilities: PropTypes.array.isRequired,
+    activityItems: PropTypes.array.isRequired,
+    facilityItems: PropTypes.array.isRequired,
     openFilter: PropTypes.bool.isRequired,
     setOpenFilter: PropTypes.func.isRequired,
     selectedActivities: PropTypes.array.isRequired,

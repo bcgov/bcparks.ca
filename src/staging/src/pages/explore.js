@@ -20,6 +20,8 @@ import {
   CardContent,
   Link,
   Breadcrumbs,
+  Button,
+  Divider,
 } from "@material-ui/core"
 import Pagination from "@material-ui/lab/Pagination"
 import SearchIcon from "@material-ui/icons/Search"
@@ -31,7 +33,7 @@ import dayUseIcon from "../images/park/day-use.png"
 import redAlertIcon from "../images/park/red-alert-32.png"
 import parksLogo from "../images/Mask_Group_5.png"
 import Carousel from "react-material-ui-carousel"
-import Spacer from "../components/park/spacer"
+import SearchFilter from "../components/search/search-filter"
 
 export const query = graphql`
   query {
@@ -167,8 +169,9 @@ export default function Explore({ location, data }) {
 
   const itemsPerPage = 6
   const [currentPage, setCurrentPage] = useState(1)
-  const [resetCurrentPage, setResetCurrentPage] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
+
+  const [openFilter, setOpenFilter] = useState(false)
 
   const sortOptions = [
     { value: "rel", label: "Sort by Relevence" },
@@ -233,7 +236,10 @@ export default function Explore({ location, data }) {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value)
-    setResetCurrentPage(false)
+  }
+
+  const handleClickOpenFilter = () => {
+    setOpenFilter(true)
   }
 
   const setFilters = () => {
@@ -325,17 +331,27 @@ export default function Explore({ location, data }) {
       <MegaMenu content={menuContent} />
       <div className="search-body">
         <div className="search-results-main container">
-          <div className="search-results-container container">
-            <Breadcrumbs separator="›" aria-label="breadcrumb" className="p40t">
+          <div className="search-results-container">
+            <Breadcrumbs
+              separator="›"
+              aria-label="breadcrumb"
+              className="p40t sm-p10"
+            >
               {breadcrumbs}
             </Breadcrumbs>
-            <h1 className="headline-text p40t">Find your next adventure</h1>
             <div className="row no-gutters">
-              <div className="col-lg-3 pr15">
+              <div className="col-12">
+                <h1 className="headline-text p40t sm-p10">
+                  Find your next adventure
+                </h1>
+              </div>
+            </div>
+            <div className="row no-gutters">
+              <div className="col-lg-3 col-md-12 col-sm-12">
                 <div className="search-results-quick-filter m15t">
-                  <div className="row">
-                    <div className="col-12 pr30">
-                      <h4 className="filter-heading p30t">
+                  <div className="row no-gutters">
+                    <div className="col-12 park-search-text-box-container d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+                      <h4 className="filter-heading pr30 p10t sm-p10">
                         Search by park name, <br />
                         location, activity
                       </h4>
@@ -343,7 +359,35 @@ export default function Explore({ location, data }) {
                         id="park-search-text"
                         variant="outlined"
                         placeholder="e.g Alice Park"
-                        className="park-search-text-box p10t"
+                        className="park-search-text-box p10t h50p"
+                        value={inputText}
+                        onChange={event => {
+                          setInputText(event.target.value)
+                        }}
+                        onKeyPress={ev => {
+                          if (ev.key === "Enter") {
+                            setSearchText(inputText)
+                            ev.preventDefault()
+                          }
+                        }}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <SearchIcon className="search-icon" />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </div>
+                    <div className="col-12  d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
+                      <h4 className="filter-heading p30t ">
+                        Search by park name, location, activity
+                      </h4>
+                      <TextField
+                        id="park-search-text"
+                        variant="outlined"
+                        placeholder="e.g Alice Park"
+                        className="park-search-text-box p10t h50p"
                         value={inputText}
                         onChange={event => {
                           setInputText(event.target.value)
@@ -364,12 +408,12 @@ export default function Explore({ location, data }) {
                       />
                     </div>
                   </div>
-                  <div className="row p20t">
+                  <div className="row p20t no-gutters d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
                     <div className="col-12">
                       <h4 className="filter-heading p30t">Filter by</h4>
                       <div className="">
                         <h4 className="filter-heading p10t">Popular filters</h4>
-                        <FormGroup className="p10l">
+                        <FormGroup className="p10l filter-options-container">
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -379,7 +423,9 @@ export default function Explore({ location, data }) {
                               />
                             }
                             label="Camping"
-                            className="no-wrap"
+                            className={
+                              camping ? "text-light-blue no-wrap" : "no-wrap"
+                            }
                           />
                           <FormControlLabel
                             control={
@@ -390,7 +436,11 @@ export default function Explore({ location, data }) {
                               />
                             }
                             label="Dog friendly"
-                            className="no-wrap"
+                            className={
+                              petFriendly
+                                ? "text-light-blue no-wrap"
+                                : "no-wrap"
+                            }
                           />
                           <FormControlLabel
                             control={
@@ -401,7 +451,9 @@ export default function Explore({ location, data }) {
                               />
                             }
                             label="Wheelchair accessible"
-                            className="no-wrap"
+                            className={
+                              wheelchair ? "text-light-blue no-wrap" : "no-wrap"
+                            }
                           />
                           <FormControlLabel
                             control={
@@ -412,7 +464,9 @@ export default function Explore({ location, data }) {
                               />
                             }
                             label="Marine park"
-                            className="no-wrap"
+                            className={
+                              marine ? "text-light-blue no-wrap" : "no-wrap"
+                            }
                           />
                           <FormControlLabel
                             control={
@@ -423,7 +477,9 @@ export default function Explore({ location, data }) {
                               />
                             }
                             label="Ecological reserve"
-                            className="no-wrap"
+                            className={
+                              ecoReserve ? "text-light-blue no-wrap" : "no-wrap"
+                            }
                           />
                           <FormControlLabel
                             control={
@@ -434,13 +490,17 @@ export default function Explore({ location, data }) {
                               />
                             }
                             label="Electrical hookups"
-                            className="no-wrap"
+                            className={
+                              electricalHookup
+                                ? "text-light-blue no-wrap"
+                                : "no-wrap"
+                            }
                           />
                         </FormGroup>
                       </div>
                     </div>
                   </div>
-                  <div className="select-padding">
+                  <div className="select-padding d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
                     <Select
                       id="activities-select"
                       options={activityItems}
@@ -451,13 +511,13 @@ export default function Explore({ location, data }) {
                       onChange={e => {
                         setSelectedActivities(e)
                       }}
-                      className="park-filter-select"
+                      className="park-filter-select h50p"
                       variant="outlined"
                       placeholder="Activities"
                     />
                   </div>
 
-                  <div className="select-padding">
+                  <div className="select-padding d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
                     <Select
                       id="facilities-select"
                       options={facilityItems}
@@ -468,20 +528,20 @@ export default function Explore({ location, data }) {
                       onChange={e => {
                         setSelectedFacilities(e)
                       }}
-                      className="park-filter-select"
+                      className="park-filter-select h50p"
                       variant="outlined"
                       placeholder="Facilities"
                     />
+                    <br />
+                    <br />
                   </div>
-                  <br />
-                  <br />
                 </div>
               </div>
-              <div className="col-lg-9">
+              <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-list container">
                   {filterSelections.length > 0 && (
                     <>
-                      <div className="row p20t">
+                      <div className="row p20t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
                         <div className="col-12">
                           {filterSelections.map((f, index) => (
                             <Chip
@@ -493,41 +553,26 @@ export default function Explore({ location, data }) {
                               deleteIcon={<CloseIcon className="close-icon" />}
                             />
                           ))}
-                          {/* <Link
-                          component="button"
-                          variant="inherit"
-                          className="remove-link"
-                          onClick={handleRemoveAllChips}
-                        >
-                          Remove all
-                        </Link> */}
                         </div>
                       </div>
                     </>
                   )}
-                  <div className="row p20t">
-                    <div className="col-lg-8 col-md-8 col-sm-12">
-                      {/* <div className="park-af-list pr15">
-                      <i>Show all</i>
+                  <div className="row p30t no-gutters">
+                    <div className="col-lg-8 col-md-6 col-sm-6 col-xs-6 w50 pr3">
+                      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
+                        <Button
+                          variant="outlined"
+                          onClick={handleClickOpenFilter}
+                          className="bcgov-button bcgov-normal-white"
+                        >
+                          Filter
+                        </Button>
+                      </div>
                     </div>
-                    <div className="park-af-list pr15">
-                      <CustomSwitch
-                        checked={showOpenParks}
-                        onChange={e => {
-                          setShowOpenParks(e.target.checked)
-                        }}
-                        name="showOpenParks"
-                        className="mtm5"
-                      />
-                    </div>
-                    <div className="park-af-list">
-                      <i>Only parks open for public access</i>
-                    </div> */}
-                    </div>
-                    <div className="col-lg-4 col-md-4 col-sm-12">
+                    <div className="col-lg-4 col-md-6 col-sm-6 col-xs-6 w50">
                       <Select
                         value={sortOption}
-                        className="park-filter-select"
+                        className="park-filter-select h50p"
                         variant="outlined"
                         options={sortOptions}
                         onChange={e => {
@@ -536,9 +581,6 @@ export default function Explore({ location, data }) {
                         placeholder="Sort by"
                       />
                     </div>
-                  </div>
-                  <div className="row p20t">
-                    <div className="col-12"></div>
                   </div>
                   {!isLoading && (
                     <>
@@ -556,7 +598,7 @@ export default function Explore({ location, data }) {
                             )
                             .map((r, index) => (
                               <div key={index} className="m20t">
-                                <Card>
+                                <Card className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
                                   <CardContent className="park-card">
                                     <div className="row search-result-card no-gutters">
                                       <div className="col-12">
@@ -614,10 +656,14 @@ export default function Explore({ location, data }) {
                                             <div className="row">
                                               <div className="col-12 park-overview-content text-blue small-font">
                                                 {r.isOpenToPublic && (
-                                                  <>Open public access</>
+                                                  <div className="text-green">
+                                                    Open to public access
+                                                  </div>
                                                 )}
                                                 {!r.isOpenToPublic && (
-                                                  <>Closed public access</>
+                                                  <div className="text-red">
+                                                    Closed public access
+                                                  </div>
                                                 )}
                                               </div>
                                             </div>
@@ -625,22 +671,22 @@ export default function Explore({ location, data }) {
                                               href={`/${r.slug}`}
                                               className="p10t"
                                             >
-                                              <h2 className="park-heading">
+                                              <h3 className="park-heading-text">
                                                 {r.protectedAreaName}
-                                              </h2>
+                                              </h3>
                                             </Link>
-                                            <div className="row p20t mr5">
+                                            <div className="row p10t mr5">
                                               <div className="col-6">
                                                 {r.advisories.map(
                                                   (a, index1) => (
                                                     // TODO Display all advisories when Event types are
                                                     // available in elastic search results based on severity
-                                                    <>
+                                                    <div
+                                                      key={index1}
+                                                      className="flex-display"
+                                                    >
                                                       {index1 === 0 && (
-                                                        <div
-                                                          key={index1}
-                                                          className="flex-display"
-                                                        >
+                                                        <>
                                                           <img
                                                             alt=""
                                                             className="search-result-icon"
@@ -649,9 +695,9 @@ export default function Explore({ location, data }) {
                                                           <div className="pl15 text-blue">
                                                             {a} (1)
                                                           </div>
-                                                        </div>
+                                                        </>
                                                       )}
-                                                    </>
+                                                    </div>
                                                   )
                                                 )}
                                               </div>
@@ -671,7 +717,7 @@ export default function Explore({ location, data }) {
                                                 )}
                                               </div>
                                             </div>
-                                            <div className="row p30t mr5">
+                                            <div className="row p10t mr5">
                                               <div className="col-6">
                                                 {r.parkActivities &&
                                                   r.parkActivities.length >
@@ -682,12 +728,12 @@ export default function Explore({ location, data }) {
                                                       </div>
                                                       {r.parkActivities.map(
                                                         (a, index2) => (
-                                                          <>
+                                                          <div
+                                                            key={index2}
+                                                            className="park-af-list pr3 text-black"
+                                                          >
                                                             {index2 < 10 && (
-                                                              <div
-                                                                key={index2}
-                                                                className="park-af-list pr3 text-black"
-                                                              >
+                                                              <>
                                                                 {a}
                                                                 {index2 === 9
                                                                   ? " ..."
@@ -698,9 +744,9 @@ export default function Explore({ location, data }) {
                                                                       1
                                                                   ? ""
                                                                   : ", "}
-                                                              </div>
+                                                              </>
                                                             )}
-                                                          </>
+                                                          </div>
                                                         )
                                                       )}
                                                       <br />
@@ -717,14 +763,14 @@ export default function Explore({ location, data }) {
                                                       </div>
                                                       {r.parkFacilities.map(
                                                         (f, index3) => (
-                                                          <>
-                                                            {index3 < 7 && (
-                                                              <div
-                                                                key={index3}
-                                                                className="park-af-list pr3 text-black"
-                                                              >
+                                                          <div
+                                                            key={index3}
+                                                            className="park-af-list pr3 text-black"
+                                                          >
+                                                            {index3 < 5 && (
+                                                              <>
                                                                 {f}
-                                                                {index3 === 6
+                                                                {index3 === 4
                                                                   ? " ..."
                                                                   : index3 ===
                                                                     r
@@ -733,9 +779,9 @@ export default function Explore({ location, data }) {
                                                                       1
                                                                   ? ""
                                                                   : ", "}
-                                                              </div>
+                                                              </>
                                                             )}
-                                                          </>
+                                                          </div>
                                                         )
                                                       )}
                                                       <br />
@@ -743,6 +789,107 @@ export default function Explore({ location, data }) {
                                                   )}
                                               </div>
                                             </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </CardContent>
+                                </Card>
+                                <Card className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
+                                  <CardContent className="park-card">
+                                    <div className="row search-result-card no-gutters">
+                                      <div className="col-12">
+                                        <div className="row">
+                                          {r.parkPhotos &&
+                                            r.parkPhotos.length === 0 && (
+                                              <div className="col-12 close-margin park-image-div-mobile park-image-logo-div">
+                                                <img
+                                                  alt="logo"
+                                                  key={index}
+                                                  className="search-result-logo-image"
+                                                  src={parksLogo}
+                                                />
+                                              </div>
+                                            )}
+                                          {r.parkPhotos &&
+                                            r.parkPhotos.length === 1 && (
+                                              <div className="col-12 close-margin park-image-div-mobile">
+                                                <img
+                                                  alt="park"
+                                                  key={index}
+                                                  className="search-result-image"
+                                                  src={r.parkPhotos[0]}
+                                                />
+                                              </div>
+                                            )}
+                                          {r.parkPhotos &&
+                                            r.parkPhotos.length > 1 && (
+                                              <div className="col-12 close-margin park-image-div-mobile">
+                                                <Carousel
+                                                  className="park-carousel-mobile"
+                                                  autoPlay={false}
+                                                  indicators={false}
+                                                  navButtonsAlwaysVisible={true}
+                                                  animation="fade"
+                                                  timeout={200}
+                                                >
+                                                  {r.parkPhotos.map(
+                                                    (item, index) => {
+                                                      return (
+                                                        <img
+                                                          alt="park carousel"
+                                                          key={index}
+                                                          className="search-result-image"
+                                                          src={`${item}`}
+                                                        />
+                                                      )
+                                                    }
+                                                  )}
+                                                </Carousel>
+                                              </div>
+                                            )}
+
+                                          <div className="col-12 p20t park-content-mobile">
+                                            <div className="row">
+                                              <div className="col-12 park-overview-content text-blue small-font">
+                                                {r.isOpenToPublic && (
+                                                  <div className="text-green">
+                                                    Open to public access
+                                                  </div>
+                                                )}
+                                                {!r.isOpenToPublic && (
+                                                  <div className="text-red">
+                                                    Closed public access
+                                                  </div>
+                                                )}
+                                              </div>
+                                            </div>
+                                            <Link
+                                              href={`/${r.slug}`}
+                                              className="p10t"
+                                            >
+                                              <h3 className="park-heading-text">
+                                                {r.protectedAreaName}
+                                              </h3>
+                                            </Link>
+                                          </div>
+                                        </div>
+                                        <div className="row flex-display p20">
+                                          <div className="col-5 align-center p15l">
+                                            <Link href={`/${r.slug}`}>
+                                              Visit Park Page
+                                            </Link>
+                                          </div>
+                                          <div className="col-2 divider-div align-center">
+                                            <Divider
+                                              orientation="vertical"
+                                              className="vertical-divider align-center"
+                                            />
+                                          </div>
+                                          <div className="col-5 align-center">
+                                            <Link href={`/${r.slug}`}>
+                                              Quick View
+                                            </Link>
                                           </div>
                                         </div>
                                       </div>
@@ -801,6 +948,25 @@ export default function Explore({ location, data }) {
           </div>
         </div>
       </div>
+      <SearchFilter
+        data={{
+          activityItems,
+          facilityItems,
+          openFilter,
+          setOpenFilter,
+          quickSearch,
+          setQuickSearch,
+          selectedActivities,
+          setSelectedActivities,
+          selectedFacilities,
+          setSelectedFacilities,
+          searchText,
+          setSearchText,
+          sortOption,
+          setSortOption,
+          sortOptions,
+        }}
+      />
       <Footer>{data.strapiWebsites.Footer}</Footer>
     </>
   )
