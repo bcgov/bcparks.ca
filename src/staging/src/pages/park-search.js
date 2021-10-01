@@ -264,7 +264,6 @@ export default function Home({ location, data }) {
       parkPhotos: [
         "https://bcparks.ca/explore/parkpgs/strath/photos/images/13.jpg",
       ],
-      parkActivities: r.parkActivities.map(a => a.name.split(":")[1]),
       slug: r.slug,
     }))
     if (sortOption === "asc") {
