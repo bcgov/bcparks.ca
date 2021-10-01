@@ -35,8 +35,15 @@ import redAlertIcon from "../images/park/red-alert-32.png"
 import parksLogo from "../images/Mask_Group_5.png"
 import Carousel from "react-material-ui-carousel"
 
+const axios = require("axios");
+
 export const query = graphql`
   query {
+    site {
+      siteMetadata {
+        apiURL
+      }
+    }
     strapiWebsites(Name: { eq: "BCParks.ca" }) {
       Footer
       Header
@@ -271,187 +278,14 @@ export default function Home({ location, data }) {
     setFilterSelections([...filters])
   }
 
-  // const CustomSwitch = withStyles(() => ({
-  //   root: {
-  //     width: 36,
-  //     height: 20,
-  //     padding: 0,
-  //     display: "flex",
-  //   },
-  //   switchBase: {
-  //     padding: 2,
-  //     color: "#fff",
-  //     "&$checked": {
-  //       transform: "translateX(16px)",
-  //       color: "#fff",
-  //       "& + $track": {
-  //         opacity: 1,
-  //         backgroundColor: "#003366",
-  //         borderColor: "#003366",
-  //       },
-  //     },
-  //   },
-  //   thumb: {
-  //     width: 16,
-  //     height: 16,
-  //     boxShadow: "none",
-  //   },
-  //   track: {
-  //     border: `1px solid #003366`,
-  //     borderRadius: 20 / 2,
-  //     opacity: 1,
-  //     backgroundColor: "#003366",
-  //   },
-  //   checked: {},
-  // }))(Switch)
-
-  useEffect(() => {
-    setIsLoading(true)
-    setFilters()
-
-    // const filterOptions = []
-
-    // const parkActivitiesFilter = selectedActivities.map(a => ({
-    //   parkactivities: a.label,
-    // }))
-    // const parkFacilitiesFilter = selectedFacilities.map(f => ({
-    //   parkfacilities: f.label,
-    // }))
-
-    // if (camping) {
-    //   filterOptions.push({
-    //     any: [
-    //       { parkactivities: "Marine-Accessible Camping" },
-    //       { parkactivities: "Wilderness Camping" },
-    //       { parkactivities: "Backcountry Camping" },
-    //       { parkactivities: "Group Camping" },
-    //       { parkactivities: "Marine-Accessible Camping" },
-    //       { parkactivities: "RV-Accessible Camping" },
-    //       {
-    //         parkactivities: "Vehicle-Accessible Camping",
-    //       },
-    //       { parkfacilities: "Walk-In Camping" },
-    //       { parkfacilities: "Winter Camping" },
-    //       { parkfacilities: "Wilderness Camping" },
-    //     ],
-    //   })
-    // }
-    // if (petFriendly) {
-    //   parkActivitiesFilter.push({ parkactivities: "Pets on Leash" })
-    // }
-    // if (wheelchair) {
-    //   parkFacilitiesFilter.push({ parkfacilities: "Accessibility Information" })
-    // }
-    // if (electricalHookup) {
-    //   parkFacilitiesFilter.push({ parkfacilities: "Electrical Hookups" })
-    // }
-    // if (marine) {
-    //   filterOptions.push({ all: [{ marineprotectedarea: ["Y"] }] })
-    // }
-    // if (ecoReserve) {
-    //   filterOptions.push({ all: [{ typecode: ["ER"] }] })
-    // }
-
-    // if (parkActivitiesFilter && parkActivitiesFilter.length > 0) {
-    //   filterOptions.push({ all: [...parkActivitiesFilter] })
-    // }
-
-    // if (parkFacilitiesFilter && parkFacilitiesFilter.length > 0) {
-    //   filterOptions.push({ all: [...parkFacilitiesFilter] })
-    // }
-
-    // const options = {
-    //   search_fields: {
-    //     protectedareaname: {},
-    //     parkactivities: {},
-    //     parkfacilities: {},
-    //   },
-    //   filters: {
-    //     all: filterOptions,
-    //   },
-    //   result_fields: {
-    //     typecode: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     protectedareaname: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     marineprotectedarea: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     parkactivities: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     url: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     parkfacilities: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     isdayusepass: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     parkadvisories: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     parkphotos: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     opentopublic: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     slug: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //     id: {
-    //       raw: {},
-    //       snippet: { fallback: true },
-    //     },
-    //   },
-    //   page: { size: itemsPerPage, current: resetCurrentPage ? 1 : currentPage },
-    // }
-    // if (sortOption && sortOption.value && sortOption.value !== "rel") {
-    //   options.sort = { protectedareaname: sortOption.value }
-    // }
-
-    const results = searchParkByCriteria(
-      false,
-      protectedAreas,
-      selectedActivities,
-      selectedFacilities,
-      searchText,
-      quickSearch.camping,
-      quickSearch.petFriendly,
-      quickSearch.wheelchair,
-      quickSearch.marine,
-      quickSearch.ecoReserve,
-      quickSearch.electricalHookup
-    )
-    if (sortOption.value === "asc") {
-      results.sort(sortAsc)
-    } else {
-      results.sort(sortDesc)
-    }
+  function processResults(results) {
+    console.log("DATA:", results);
     const allResults = results.map(r => ({
       protectedAreaName: r.protectedAreaName,
       isOpenToPublic: true,
       advisories: ["Wildfire alert"],
       isDayUsePass: true,
-      parkActivities: r.parkActivities.map(a => a.name.split(":")[1]),
-      parkFacilities: r.parkFacilities.map(a => a.name.split(":")[1]),
       parkPhotos: [
-        "https://bcparks.ca/explore/parkpgs/strath/photos/images/12.jpg",
         "https://bcparks.ca/explore/parkpgs/strath/photos/images/13.jpg",
       ],
       slug: r.slug,
@@ -465,45 +299,50 @@ export default function Home({ location, data }) {
     setTotalResults(allResults.length)
     setNumberOfPages(Math.ceil(results.length / itemsPerPage))
     setIsLoading(false)
-    // client
-    //   .search(searchText, options)
-    //   .then(resultList => {
-    //     setTotalResults(resultList.info.meta.page.total_results)
-    //     setNumberOfPages(resultList.info.meta.page.total_pages)
-    //     setCurrentPage(resultList.info.meta.page.current)
-    //     const allResults = []
-    //     resultList.results.forEach(result => {
-    //       const park = {}
-    //       park.protectedAreaName = result.data.protectedareaname.raw
-    //       park.isOpenToPublic = result.data.opentopublic.raw
-    //         ? result.data.opentopublic.raw == "true"
-    //         : true
-    //       park.advisories = result.data.parkadvisories.raw
-    //       park.isDayUsePass = result.data.isdayusepass.raw
-    //         ? result.data.isdayusepass.raw == "true"
-    //         : true
-    //       park.parkActivities = result.data.parkactivities.raw
-    //         ? result.data.parkactivities.raw.sort(compare)
-    //         : []
-    //       park.parkFacilities = result.data.parkfacilities.raw
-    //         ? result.data.parkfacilities.raw.sort(compare)
-    //         : []
-    //       park.parkPhotos = result.data.parkphotos.raw.map(p => {
-    //         // TODO Update this based on the elastic search response
-    //         // If the images are from strapi media library, prepend it with the cms url
-    //         return p.split('":"')[1].replace('"}', "")
-    //       })
-    //       park.slug = result.data.slug.raw
-    //       allResults.push(park)
-    //     })
-    //     setSearchResults([...allResults])
-    //     setResetCurrentPage(true)
-    //     setIsLoading(false)
-    //   })
-    //   .catch(error => {
-    //     console.log(`error: ${error}`)
-    //     setIsLoading(false)
-    //   })
+  }
+
+  useEffect(() => {
+    setIsLoading(true)
+    setFilters()
+
+    // TODO: Execute live search here.
+    const dataSet = 0; // Live search: 0, Strapi search: 1
+
+    if (dataSet === 0) {
+      let postBody = {
+        selectedActivities: selectedActivities,
+        selectedFacilities: selectedFacilities,
+        searchText: searchText,
+        camping: quickSearch.camping,
+        petFriendly: quickSearch.petFriendly,
+        wheelchair: quickSearch.wheelchair,
+        marine: quickSearch.marine,
+        ecoReserve: quickSearch.ecoReserve,
+        electricalHookup: quickSearch.electricalHookup
+      };
+
+      axios.post(`${data.site.siteMetadata.apiURL}/search-views`, postBody)
+      .then(function (data) {
+        let results = data.data;
+        processResults(results);
+      });
+    } else {
+      const resultsStrapi = searchParkByCriteria(
+        false,
+        protectedAreas,
+        selectedActivities,
+        selectedFacilities,
+        searchText,
+        quickSearch.camping,
+        quickSearch.petFriendly,
+        quickSearch.wheelchair,
+        quickSearch.marine,
+        quickSearch.ecoReserve,
+        quickSearch.electricalHookup
+      )
+      processResults(resultsStrapi);
+    }
+
   }, [
     sortOption,
     currentPage,
@@ -864,14 +703,14 @@ export default function Home({ location, data }) {
                                             </div>
                                             <div className="row p30t mr5">
                                               <div className="col-6">
-                                                {r.parkActivities &&
-                                                  r.parkActivities.length >
+                                                {r.parkactivities &&
+                                                  r.parkactivities.length >
                                                     0 && (
                                                     <>
                                                       <div className="park-af-list pr3">
                                                         <b>Activities:</b>
                                                       </div>
-                                                      {r.parkActivities.map(
+                                                      {r.parkactivities.map(
                                                         (a, index2) => (
                                                           <>
                                                             {index2 < 10 && (
@@ -884,7 +723,7 @@ export default function Home({ location, data }) {
                                                                   ? " ..."
                                                                   : index2 ===
                                                                     r
-                                                                      .parkActivities
+                                                                      .parkactivities
                                                                       .length -
                                                                       1
                                                                   ? ""
@@ -899,14 +738,14 @@ export default function Home({ location, data }) {
                                                   )}
                                               </div>
                                               <div className="col-6">
-                                                {r.parkFacilities &&
-                                                  r.parkFacilities.length >
+                                                {r.parkfacilities &&
+                                                  r.parkfacilities.length >
                                                     0 && (
                                                     <>
                                                       <div className="park-af-list pr3">
                                                         <b>Facilities:</b>
                                                       </div>
-                                                      {r.parkFacilities.map(
+                                                      {r.parkfacilities.map(
                                                         (f, index3) => (
                                                           <>
                                                             {index3 < 7 && (
@@ -919,7 +758,7 @@ export default function Home({ location, data }) {
                                                                   ? " ..."
                                                                   : index3 ===
                                                                     r
-                                                                      .parkFacilities
+                                                                      .parkfacilities
                                                                       .length -
                                                                       1
                                                                   ? ""
