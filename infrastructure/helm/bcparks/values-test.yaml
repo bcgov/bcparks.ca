@@ -8,3 +8,12 @@ cms:
 admin:
   env:
     externalUrl: https://test-staff.bcparks.ca
+
+images:
+  strapi:
+    tag: 3b52f8a
+  staging:
+    tag: bb08566
+  admin:
+    tag: bb08566
+    
