@@ -20,6 +20,9 @@ images:
   admin:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/admin
     tag: latest
+  mariadb:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/mariadb
+    tag: 10.5-utf8
 
 cms:
   componentName: cms
@@ -36,7 +39,6 @@ cms:
 
   env:
     nodeEnv: development
-    databaseClient: postgres
     databaseMinConnections: 0
     databaseMaxConnections: 10
     databaseIdleTimeout: 30000
@@ -54,6 +56,8 @@ cms:
 
 postgres:
   componentName: postgres
+
+  enabled: false
 
   resources:
     limits:
@@ -76,7 +80,7 @@ postgres:
     size: 5Gi
 
 pgbouncer:
-  enabled: true
+  enabled: false
 
   componentName: pgbouncer
 
@@ -93,6 +97,30 @@ pgbouncer:
   service:
     portName: pgbouncer
     port: 6432
+
+mariadb:
+  componentName: mariadb
+
+  enabled: true
+
+  imagePullPolicy: Always
+
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  service:
+    portName: mariadb
+    port: 3306
+
+  pvc:
+    accessMode: ReadWriteOnce
+    storageClassName: netapp-file-standard
+    size: 5Gi
 
 staging:
   imagePullPolicy: Always
