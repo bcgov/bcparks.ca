@@ -1,5 +1,8 @@
 cluster:
   domain: apps.silver.devops.gov.bc.ca
+  ssoAuthUrl: https://dev.oidc.gov.bc.ca/auth
+  ssoRealm: g7v0xlf4
+  ssoClientId: staff-portal
 
 images:
   strapi:
@@ -150,10 +153,7 @@ admin:
   componentName: admin
 
   env:
-    apiBaseUrl: https://api-61d198-dev.apps.silver.devops.gov.bc.ca
-    keycloakAuthUrl: https://dev.oidc.gov.bc.ca/auth
-    keycloakRealm: g7v0xlf4
-    keycloakClientId: account
+    externalUrl: https://dev-staff.bcparks.ca
     statHolidayApi: https://canada-holidays.ca/api/v1/provinces/BC
 
   resources:

@@ -35,8 +35,6 @@ spec:
               containerPort: {{ .Values.admin.service.port }}
               protocol: TCP
           env:
-            - name: REACT_APP_API_BASE_URL
-              value: {{ .Values.admin.env.apiBaseUrl }}
             - name: REACT_APP_CMS_BASE_URL
             {{- if .Values.cms.env.externalUrl }}
               value: {{ .Values.cms.env.externalUrl }}
@@ -50,10 +48,10 @@ spec:
               value: {{ template "bcparks_admin_external_url" . }}
             {{- end }}
             - name: REACT_APP_KEYCLOAK_AUTH_URL
-              value: {{ .Values.admin.env.keycloakAuthUrl }}
+              value: {{ .Values.cluster.ssoAuthUrl }}
             - name: REACT_APP_KEYCLOAK_REALM
-              value: {{ .Values.admin.env.keycloakRealm }}
+              value: {{ .Values.cluster.ssoRealm }}
             - name: REACT_APP_KEYCLOAK_CLIENT_ID
-              value: {{ .Values.admin.env.keycloakClientId }}
+              value: {{ .Values.cluster.ssoClientId }}
             - name: REACT_APP_STAT_HOLIDAY_API
               value: {{ .Values.admin.env.statHolidayApi }}

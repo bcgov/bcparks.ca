@@ -9,9 +9,8 @@
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const jwksClient = require('jwks-rsa');
-const permissions = require('../config/policies/permissions');
-const AUTH_URL = process.env.AUTH_URL || 'https://dev.oidc.gov.bc.ca/auth';
-const REALM = process.env.REALM || 'g7v0xlf4';
+const AUTH_URL = process.env.STRAPI_SSO_AUTH_URL || 'https://dev.oidc.gov.bc.ca/auth';
+const REALM = process.env.STRAPI_SSO_REALM || 'g7v0xlf4';
 
 const SSO_ISSUER = AUTH_URL + '/realms/' + REALM;
 const SSO_JWKSURI = SSO_ISSUER + '/protocol/openid-connect/certs';
