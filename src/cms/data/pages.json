@@ -1,18 +1,18 @@
-{"page":
-	[
+{
+	"page": [
 		{
-		  "Slug": "/about",
-		  "Template": "Template2"    
+			"Slug": "/about",
+			"Template": "Template2"
 		},
 		{
-		  "Slug": "/home",
-		  "Template": "Template1",
-		  "Content": [
-			  {
-				  "__component": "parks.html-area",
-				  "HTML": "<div class=\"home-advisories text-sm-center\" id=\"home-advisories\"><p class=\"zone-header\"><span>Advisories<\/span><\/p><div class=\"zone-hr\"><hr><\/div><p class=\"zone-content\"><span>Updated Monday to Friday from 8:30 am to 4:30 pm, excluding statutory holidays.<\/span><\/p><div class=\"zone-links row no-gutters\"><div class=\"advisory col-12 col-sm-6\"><p><button class=\"btn btn-primary advisory-button btn-block rounded-0 shadow\"> <a> <span class=\"text-white font-weight-bold\">Parks affected by flooding <span class=\"fa fa-chevron-circle-right\"><\/span> <\/span> <\/a> <\/button><\/p><\/div><div class=\"advisory col-12 col-sm-6\"><p><button class=\"btn btn-primary advisory-button btn-block rounded-0 shadow\"> <a> <span class=\"text-white font-weight-bold\">Parks affected by wildfires <span class=\"fa fa-chevron-circle-right test\"> <\/span> <\/span> <\/a> <\/button><\/p><\/div><\/div><\/div>"
-			  },
-			  {
+			"Slug": "/home",
+			"Template": "Template1",
+			"Content": [
+				{
+					"__component": "parks.html-area",
+					"HTML":"<div class=\"home-advisories text-sm-center\" id=\"home-advisories\"><p class=\"zone-header\"><span>Advisories</span></p><div class=\"zone-hr\"><hr></div><p class=\"zone-content\"><span>Updated Monday to Friday from 8:30 am to 4:30 pm, excluding statutory holidays.</span></p><div class=\"zone-links row no-gutters\"><div class=\"advisory col-12 col-sm-4\"><p><button class=\"btn btn-primary advisory-button btn-block shadow\" onclick=\"location.href='/alerts?type=floods'\"> <span class=\"text-white\">Parks affected by flooding <span class=\"fa fa-chevron-circle-right test\"> </span> </span> </button></p></div><div class=\"advisory col-12 col-sm-4\"><p><button class=\"btn btn-primary advisory-button btn-block shadow\" onclick=\"location.href='/alerts?type=wildfires'\"> <a> <span class=\"text-white\">Parks affected by wildfires <span class=\"fa fa-chevron-circle-right test\"> </span> </span> </a> </button></p></div><div class=\"advisory col-12 col-sm-4\"><p><button class=\"btn btn-light all-advisory-button btn-block shadow\" onclick=\"location.href='/alerts'\"> <span class=\"text-primary font-weight-bold\">See all advisories </span> </button>&nbsp;</p></div></div></div>"
+				},
+				{
 					"__component": "parks.html-area",
 					"HTML": "<div class=\"home-plan-your-trip text-sm-center\" id=\"home-plan-your-trip\"><p class=\"zone-header\"><span>Plan your trip<\/span><\/p><div class=\"zone-hr\"><hr><\/div><p class=\"zone-content\"><span>There's an adventure waiting for every visitor.<\/span><\/p><div class=\"zone-cards\"><div class=\"row\"><div class=\"col-6 col-md-3 card-col-padding pr-1 pr-sm-3\" onclick=\"location.href='https:\/\/bcparks.ca\/reserve'\"><div class=\"card grid-card\"><p class=\"card-img shadow\"><img src=\"http:\/\/localhost:1337\/uploads\/Mask_Group_9_2x.png\"><\/p><div class=\"card-body d-flex flex-column d-block d-sm-none\"><h5 class=\"card-body-header my-0\"><a href=\"https:\/\/bcparks.ca\/reserve\">Camping information<\/a><\/h5><div class=\"mt-auto\"><p class=\"no-mb\"><span class=\"card-text\">Reservation policies and fees.<\/span><\/p><\/div><\/div><div class=\"card-body d-none d-sm-block\"><div class=\"v-align-abs\"><h5 class=\"card-body-header my-0\"><a href=\"https:\/\/bcparks.ca\/reserve\">Camping information<\/a><\/h5><p class=\"no-mb pt-3\"><span class=\"card-text\">Reservation policies and fees.<\/span><\/p><\/div><\/div><\/div><\/div><div class=\"col-6 col-md-3 card-col-padding pl-1 pl-sm-0 pr-sm-3\" onclick=\"location.href='https:\/\/bcparks.ca\/visiting'\"><div class=\"card grid-card\"><p class=\"card-img shadow\"><img src=\"http:\/\/localhost:1337\/uploads\/Mask_Group_10_2x.png\"><\/p><div class=\"card-body d-flex flex-column d-block d-sm-none\"><h5 class=\"card-body-header my-0\"><a href=\"https:\/\/bcparks.ca\/visiting\/\">Things to do<\/a><\/h5><div class=\"mt-auto\"><p class=\"no-mb\"><span class=\"card-text\">Explore activities and attractions.<\/span><\/p><\/div><\/div><div class=\"card-body d-none d-sm-block\"><div class=\"v-align-abs\"><h5 class=\"card-body-header my-0\"><a href=\"https:\/\/bcparks.ca\/visiting\/\">Things to do<\/a><\/h5><p class=\"no-mb pt-3\"><span class=\"card-text\">Explore activities and attractions.<\/span><\/p><\/div><\/div><\/div><\/div><div class=\"col-6 col-md-3 card-col-padding pr-1 pl-sm-0 pr-sm-3\" onclick=\"location.href='https:\/\/bcparks.ca\/accessibility'\"><div class=\"card grid-card\"><p class=\"card-img shadow\"><img src=\"http:\/\/localhost:1337\/uploads\/Mask_Group_12_bs_2x.png\"><\/p><div class=\"card-body d-flex flex-column d-block d-sm-none\"><h5 class=\"card-body-header my-0\"><a href=\"https:\/\/bcparks.ca\/accessibility\/\">Accessibility<\/a><\/h5><div class=\"mt-auto\"><p class=\"no-mb\"><span class=\"card-text\">BC Parks are for everyone.<\/span><\/p><\/div><\/div><div class=\"card-body d-none d-sm-block\"><div class=\"v-align-abs\"><h5 class=\"card-body-header my-0\"><a href=\"https:\/\/bcparks.ca\/accessibility\/\">Accessibility<\/a><\/h5><p class=\"no-mb pt-3\"><span class=\"card-text\">BC Parks are for everyone.<\/span><\/p><\/div><\/div><\/div><\/div><div class=\"col-6 col-md-3 card-col-padding pl-1 pl-sm-0\" onclick=\"location.href='https:\/\/bcparks.ca\/visiting\/responsible-recreation\/'\"><div class=\"card grid-card\"><p class=\"card-img shadow\"><img src=\"http:\/\/localhost:1337\/uploads\/Mask_Group_12_2x.png\"><\/p><div class=\"card-body d-flex flex-column d-block d-sm-none\"><h5 class=\"card-body-header my-0\"><a href=\"https:\/\/bcparks.ca\/visiting\/responsible-recreation\/\">Visit responsibly<\/a><\/h5><div class=\"mt-auto\"><p class=\"no-mb\"><span class=\"card-text\">Guidelines for a safe and respectful adventure.<\/span><\/p><\/div><\/div><div class=\"card-body d-none d-sm-block\"><div class=\"v-align-abs\"><h5 class=\"card-body-header my-0\"><a href=\"https:\/\/bcparks.ca\/visiting\/responsible-recreation\/\">Visit responsibly<\/a><\/h5><p class=\"no-mb pt-3\"><span class=\"card-text\">Guidelines for a safe and respectful adventure.<\/span><\/p><\/div><\/div><\/div><\/div><\/div><\/div><\/div>"
 				},
@@ -32,7 +32,7 @@
 					"__component": "parks.html-area",
 					"HTML": "<div class=\"carousel slide\" id=\"home-carousel\" data-ride=\"carousel\"><ol class=\"carousel-indicators\"><li class=\"active\" data-target=\"#home-carousel\" data-slide-to=\"0\">&nbsp;<\/li><li data-target=\"#home-carousel\" data-slide-to=\"1\">&nbsp;<\/li><li data-target=\"#home-carousel\" data-slide-to=\"2\">&nbsp;<\/li><\/ol><div class=\"carousel-inner\"><div class=\"carousel-item active\"><p class=\"mb-0\"><img src=\"http:\/\/localhost:1337\/uploads\/carousel_1.jpg\" alt=\"First slide\"><\/p><div class=\"carousel-caption text-right\"><p class=\"mb-0\">Test Photo #1<\/p><p class=\"mb-0\">Photo by 1<\/p><\/div><\/div><div class=\"carousel-item\"><p class=\"mb-0\"><img src=\"http:\/\/localhost:1337\/uploads\/carousel_2.jpg\" alt=\"Second slide\"><\/p><div class=\"carousel-caption text-right\"><p class=\"mb-0\">Test Photo #2<\/p><p class=\"mb-0\">Photo by 2<\/p><\/div><\/div><div class=\"carousel-item\"><p class=\"mb-0\"><img src=\"http:\/\/localhost:1337\/uploads\/carousel_3.jpg\" alt=\"Second slide\"><\/p><div class=\"carousel-caption text-right\"><p class=\"mb-0\">Test Photo #3<\/p><p class=\"mb-0\">Photo by 3<\/p><\/div><\/div><\/div><\/div>"
 				}
-		  ]
+			]
 		}
 	]
-} 
+}
