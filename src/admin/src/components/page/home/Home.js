@@ -45,6 +45,7 @@ export default function Home({ page: { setError } }) {
                       onClick={() =>
                         keycloak.login({
                           redirectUri: `${config.REACT_APP_FRONTEND_BASE_URL}/bcparks/dashboard`,
+                          idpHint: 'idir'
                         })
                       }
                       label="Login"

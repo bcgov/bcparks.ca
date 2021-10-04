@@ -38,8 +38,15 @@ import parksLogo from "../images/Mask_Group_5.png"
 import Carousel from "react-material-ui-carousel"
 import SearchFilter from "../components/search/search-filter"
 
+const axios = require("axios")
+
 export const query = graphql`
   query {
+    site {
+      siteMetadata {
+        apiURL
+      }
+    }
     strapiWebsites(Name: { eq: "BCParks.ca" }) {
       Footer
       Header
@@ -285,50 +292,90 @@ export default function Explore({ location, data }) {
     setFilterSelections([...filters])
   }
 
-  useEffect(() => {
-    setIsLoading(true)
-    setFilters()
-
-    const results = searchParkByCriteria(
-      false,
-      protectedAreas,
-      selectedActivities,
-      selectedFacilities,
-      searchText,
-      quickSearch.camping,
-      quickSearch.petFriendly,
-      quickSearch.wheelchair,
-      quickSearch.marine,
-      quickSearch.ecoReserve,
-      quickSearch.electricalHookup
-    )
-    if (sortOption.value === "asc") {
-      results.sort(sortAsc)
-    } else {
-      results.sort(sortDesc)
-    }
-    const allResults = results.map(r => ({
-      protectedAreaName: r.protectedAreaName,
-      isOpenToPublic: true,
-      advisories: ["Wildfire alert"],
-      isDayUsePass: true,
-      parkActivities: r.parkActivities.map(a => a.name.split(":")[1]),
-      parkFacilities: r.parkFacilities.map(a => a.name.split(":")[1]),
-      parkPhotos: [
-        "https://bcparks.ca/explore/parkpgs/strath/photos/images/12.jpg",
-        "https://bcparks.ca/explore/parkpgs/strath/photos/images/13.jpg",
-      ],
-      slug: r.slug,
-    }))
+  function processResults(results, dataSet) {
+    const allResults = results.map(r => {
+      if (dataSet === 0) {
+        return {
+          protectedAreaName: r.protectedAreaName,
+          isOpenToPublic: true,
+          advisories: ["Wildfire alert"],
+          isDayUsePass: true,
+          parkActivities: [],
+          parkFacilities: [],
+          parkPhotos: [
+            "https://bcparks.ca/explore/parkpgs/strath/photos/images/12.jpg",
+            "https://bcparks.ca/explore/parkpgs/strath/photos/images/13.jpg",
+          ],
+          slug: r.slug,
+        }
+      }
+      return {
+        protectedAreaName: r.protectedAreaName,
+        isOpenToPublic: true,
+        advisories: ["Wildfire alert"],
+        isDayUsePass: true,
+        parkActivities: r.parkActivities.map(a => a.name.split(":")[1]),
+        parkFacilities: r.parkFacilities.map(a => a.name.split(":")[1]),
+        parkPhotos: [
+          "https://bcparks.ca/explore/parkpgs/strath/photos/images/12.jpg",
+          "https://bcparks.ca/explore/parkpgs/strath/photos/images/13.jpg",
+        ],
+        slug: r.slug,
+      }
+    })
     if (sortOption === "asc") {
-      results.sort(sortAsc)
+      allResults.sort(sortAsc)
     } else {
-      results.sort(sortDesc)
+      allResults.sort(sortDesc)
     }
     setSearchResults([...allResults])
     setTotalResults(allResults.length)
     setNumberOfPages(Math.ceil(results.length / itemsPerPage))
     setIsLoading(false)
+  }
+
+  useEffect(() => {
+    setIsLoading(true)
+    setFilters()
+
+    // TODO: Execute live search here.
+    const dataSet = 1 // Live search: 0, Strapi search: 1
+
+    if (dataSet === 0) {
+      let postBody = {
+        selectedActivities: selectedActivities,
+        selectedFacilities: selectedFacilities,
+        searchText: searchText,
+        camping: quickSearch.camping,
+        petFriendly: quickSearch.petFriendly,
+        wheelchair: quickSearch.wheelchair,
+        marine: quickSearch.marine,
+        ecoReserve: quickSearch.ecoReserve,
+        electricalHookup: quickSearch.electricalHookup,
+      }
+
+      axios
+        .post(`${data.site.siteMetadata.apiURL}/search-views`, postBody)
+        .then(function (data) {
+          let results = data.data
+          processResults(results, dataSet)
+        })
+    } else {
+      const resultsStrapi = searchParkByCriteria(
+        false,
+        protectedAreas,
+        selectedActivities,
+        selectedFacilities,
+        searchText,
+        quickSearch.camping,
+        quickSearch.petFriendly,
+        quickSearch.wheelchair,
+        quickSearch.marine,
+        quickSearch.ecoReserve,
+        quickSearch.electricalHookup
+      )
+      processResults(resultsStrapi, dataSet)
+    }
   }, [
     sortOption,
     currentPage,

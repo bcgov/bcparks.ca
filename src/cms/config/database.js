@@ -34,5 +34,27 @@ module.exports = ({ env }) => ({
         },
       },
     },
+    mysql: {
+      connector: "bookshelf",
+      settings: {
+        client: "mysql",
+        host: env("DATABASE_HOST", "localhost"),
+        port: env.int("DATABASE_PORT", 3306),
+        database: env("DATABASE_NAME", "cms"),
+        username: env("DATABASE_USERNAME", "root"),
+        password: env("DATABASE_PASSWORD", "root"),
+        ssl: env.bool("DATABASE_SSL", false),
+        timezone: "UTC",
+      },
+      options: {
+        pool: {
+          min: env.int("DATABASE_MIN_CONNECTIONS", 2),
+          max: env.int("DATABASE_MAX_CONNECTIONS", 10),
+          idleTimeoutMillis: env.int("DATABASE_IDLE_TIMEOUT", 30000),
+          createTimeoutMillis: env.int("DATABASE_CREATE_TIMEOUT", 30000),
+          acquireTimeoutMillis: env.int("DATABASE_ACQUIRE_TIMEOUT", 30000),
+        },
+      },
+    },
   },
 });
