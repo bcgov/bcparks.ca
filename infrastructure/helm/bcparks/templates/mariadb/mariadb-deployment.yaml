@@ -1,17 +1,17 @@
-{{- if .Values.postgres.enabled }}
+{{- if .Values.mariadb.enabled }}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: {{ .Release.Name }}-{{ .Values.postgres.componentName }}
+  name: {{ .Release.Name }}-{{ .Values.mariadb.componentName }}
   labels:
-    component: {{ .Values.postgres.componentName }}
+    component: {{ .Values.mariadb.componentName }}
     release: {{ .Release.Name }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     heritage: {{ .Release.Service }}
 spec:
   selector:
     matchLabels:
-      component: {{ .Values.postgres.componentName }}
+      component: {{ .Values.mariadb.componentName }}
       release: {{ .Release.Name }}
   replicas: 1
   strategy:
@@ -19,30 +19,28 @@ spec:
   template:
     metadata:
       labels:
-        component: {{ .Values.postgres.componentName }}
+        component: {{ .Values.mariadb.componentName }}
         release: {{ .Release.Name }}
     spec:      
       containers:
         - name: db
-          image: {{ .Values.images.postgres.name }}:{{ .Values.images.postgres.tag }}
+          image: {{ .Values.images.mariadb.name }}:{{ .Values.images.mariadb.tag }}
+          imagePullPolicy: {{ .Values.mariadb.imagePullPolicy }}
           resources:
-{{ toYaml .Values.postgres.resources | indent 12 }}
+{{ toYaml .Values.mariadb.resources | indent 12 }}
           envFrom:
             - secretRef:
-                name: {{ template "bcparks_postgres_secret" . }}
-          env:
-            - name: POSTGRESQL_MAX_CONNECTIONS
-              value: {{ .Values.postgres.env.maxConnections | quote }}
+                name: {{ template "bcparks_mariadb_secret" . }}
           ports:
-            - name: {{ .Values.postgres.service.portName }}              
-              containerPort: {{ .Values.postgres.service.port }}
+            - name: {{ .Values.mariadb.service.portName }}              
+              containerPort: {{ .Values.mariadb.service.port }}
               protocol: TCP
           readinessProbe:
             exec:
               command:
                 - /bin/sh
                 - '-c'
-                - exec pg_isready -U "postgres" -h 127.0.0.1 -p {{ .Values.postgres.service.port }}
+                - exec mysqladmin ping
             initialDelaySeconds: 5
             timeoutSeconds: 5
             periodSeconds: 10
@@ -53,7 +51,7 @@ spec:
               command:
                 - /bin/sh
                 - '-c'
-                - exec pg_isready -U "postgres" -h 127.0.0.1 -p {{ .Values.postgres.service.port }}
+                - exec mysqladmin ping
             initialDelaySeconds: 30
             timeoutSeconds: 5
             periodSeconds: 10
@@ -61,9 +59,9 @@ spec:
             failureThreshold: 6
           volumeMounts:
             - name: db-data
-              mountPath: /var/lib/pgsql/data
+              mountPath: /var/lib/mysql/data
       volumes:
         - name: db-data
           persistentVolumeClaim:
-            claimName: {{ template "bcparks_postgres_volume_claim" . }}
+            claimName: {{ template "bcparks_mariadb_volume_claim" . }}
 {{- end }}
