@@ -26,6 +26,8 @@ import redAlertIcon from "../images/park/red-alert-64.png"
 
 import "../styles/home.scss"
 
+const isBrowser = typeof window !== undefined;
+
 const useStyles = makeStyles(theme => ({
   small: {
     width: theme.spacing(3),
@@ -72,13 +74,18 @@ const getFloods = (advisories) => {
 
 const PublicAdvisoryPage = ({ data }) => {
 
-  const thisUrl = new URLSearchParams(window.location.search);
-  const params = Object.fromEntries(thisUrl.entries());
+  let params;
+  let thisUrl;
 
   const classes = useStyles()
   let advisories = [];
   let pageTitle = 'Public Advisories';
   let advisoryType = "";
+
+  if (isBrowser) {
+    thisUrl = new URLSearchParams(window.location.search);
+    params = Object.fromEntries(thisUrl.entries());
+  }
 
   if (params && params.type) {
     switch (params.type) {
