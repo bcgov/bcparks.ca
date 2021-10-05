@@ -257,7 +257,7 @@ export default function ParkPhotoGallery({ photos }) {
         )}
       </div>
       <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-        {parkPhotos.length == 0 && <Spacer />}
+        {parkPhotos.length === 0 && <Spacer />}
         {parkPhotos.length > 0 && (
           <Grid
             item
