@@ -26,6 +26,9 @@ images:
   mariadb:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/mariadb
     tag: 10.5-utf8
+  public:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/public
+    tag: latest
 
 cms:
   componentName: cms
@@ -41,7 +44,7 @@ cms:
       memory: 250Mi
 
   env:
-    nodeEnv: development
+    nodeEnv: production
     databaseMinConnections: 0
     databaseMaxConnections: 10
     databaseIdleTimeout: 30000
@@ -126,6 +129,8 @@ mariadb:
     size: 5Gi
 
 staging:
+  enabled: false
+
   imagePullPolicy: Always
 
   componentName: staging
@@ -166,4 +171,21 @@ admin:
 
   service:
     portName: admin
+    port: 3000
+
+public:
+  imagePullPolicy: Always
+
+  componentName: public
+
+  resources:
+    limits:
+      cpu: 150m
+      memory: 250Mi
+    requests:
+      cpu: 50m
+      memory: 50Mi
+
+  service:
+    portName: public
     port: 3000

@@ -2,9 +2,51 @@ cluster:
   ssoAuthUrl: https://oidc.gov.bc.ca/auth
 
 cms:
+  resources:
+    limits:
+      cpu: "2"
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
   env:
     externalUrl: https://cms.bcparks.ca
 
 admin:
   env:
     externalUrl: https://staff.bcparks.ca
+
+postgres:
+  resources:
+    limits:
+      cpu: "1"
+      memory: 4Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  pvc:
+    size: 20Gi
+
+mariadb:
+  resources:
+    limits:
+      cpu: "1"
+      memory: 4Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+      
+  pvc:
+    size: 20Gi
+
+images:
+  strapi:
+    tag: prod
+  staging:
+    tag: prod
+  admin:
+    tag: prod
+  public:
+    tag: prod
