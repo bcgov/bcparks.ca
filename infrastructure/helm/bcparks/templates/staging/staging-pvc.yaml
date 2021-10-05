@@ -1,3 +1,4 @@
+{{- if .Values.staging.enabled }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -35,3 +36,4 @@ spec:
     requests:
       storage: {{ .Values.staging.pvc.size }}
   storageClassName: {{ .Values.staging.pvc.storageClassName }}
+{{- end }}

@@ -2,6 +2,14 @@ cluster:
   ssoAuthUrl: https://test.oidc.gov.bc.ca/auth
 
 cms:
+  resources:
+    limits:
+      cpu: "2"
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
   env:
     externalUrl: https://test-cms.bcparks.ca
 
@@ -9,11 +17,35 @@ admin:
   env:
     externalUrl: https://test-staff.bcparks.ca
 
+postgres:
+  resources:
+    limits:
+      cpu: "1"
+      memory: 4Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+  pvc:
+    size: 20Gi
+
+mariadb:
+  resources:
+    limits:
+      cpu: "1"
+      memory: 4Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+  pvc:
+    size: 20Gi
+
 images:
   strapi:
-    tag: 3b52f8a
+    tag: test
   staging:
-    tag: bb08566
+    tag: test
   admin:
-    tag: bb08566
+    tag: test
+  public:
+    tag: test
     
