@@ -4,7 +4,7 @@ import { TextField, Fab, Link } from "@material-ui/core"
 import "../../styles/search.scss"
 import SearchIcon from "@material-ui/icons/Search"
 import { navigate } from "gatsby"
-import SearchFilter from "./search-filter"
+import SearchFilter from "./searchFilter"
 
 const MainSearch = ({ data: { activities, facilities } }) => {
   const activityItems = activities.map(a => ({

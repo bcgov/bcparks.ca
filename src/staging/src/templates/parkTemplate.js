@@ -27,7 +27,7 @@ import Header from "../components/header"
 import Footer from "../components/footer"
 import useScrollSpy from "react-use-scrollspy"
 
-import "../styles/park-template.scss"
+import "../styles/parks.scss"
 import Spacer from "../components/park/spacer"
 
 const drawerWidth = 230

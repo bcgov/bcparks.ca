@@ -8,7 +8,7 @@ import {
   searchParkByCriteria,
   sortAsc,
   sortDesc,
-} from "../components/search/search-util"
+} from "../components/search/searchUtil"
 import {
   Checkbox,
   FormGroup,
@@ -36,7 +36,7 @@ import dayUseIcon from "../images/park/day-use.png"
 import redAlertIcon from "../images/park/red-alert-32.png"
 import parksLogo from "../images/Mask_Group_5.png"
 import Carousel from "react-material-ui-carousel"
-import SearchFilter from "../components/search/search-filter"
+import SearchFilter from "../components/search/searchFilter"
 
 const axios = require("axios")
 

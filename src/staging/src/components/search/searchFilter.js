@@ -24,7 +24,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore"
 import Select from "react-select"
 import { navigate } from "gatsby"
 
-import { labelCompare } from "./search-util"
+import { labelCompare } from "./searchUtil"
 
 const SearchFilter = ({
   data: {
@@ -222,6 +222,7 @@ const SearchFilter = ({
                         setSelectedActivities([])
                         setSelectedFacilities([])
                       }}
+                      tabIndex="0"
                     >
                       Reset all
                     </Link>
@@ -277,6 +278,11 @@ const SearchFilter = ({
                           onClick={() => {
                             handleShowFilterClick(0)
                           }}
+                          tabIndex="0"
+                          role="button"
+                          onKeyPress={() => {
+                            handleShowFilterClick(0)
+                          }}
                         >
                           {showFilters[0] ? (
                             <ExpandLess fontSize="large" className="mtm5" />
@@ -292,6 +298,7 @@ const SearchFilter = ({
                           onClick={() => {
                             setSelectedActivities([])
                           }}
+                          tabIndex="0"
                         >
                           Reset
                         </Link>
@@ -394,6 +401,11 @@ const SearchFilter = ({
                           onClick={() => {
                             handleShowFilterClick(1)
                           }}
+                          tabIndex="0"
+                          role="button"
+                          onKeyPress={() => {
+                            handleShowFilterClick(1)
+                          }}
                         >
                           {showFilters[1] ? (
                             <ExpandLess fontSize="large" className="mtm5" />
@@ -409,6 +421,7 @@ const SearchFilter = ({
                           onClick={() => {
                             setSelectedFacilities([])
                           }}
+                          tabIndex="0"
                         >
                           Reset
                         </Link>
