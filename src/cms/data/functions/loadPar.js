@@ -241,8 +241,8 @@ const loadAdditionalProtectedAreaInfo = async () => {
       if (p.status === "Active") {
         const protectedArea = {
           url: p.url,
-          dayUsePass: p.dayUsePass,
-          fogZone: p.fogZone,
+          isDayUsePass: p.dayUsePass,
+          isFogZone: p.fogZone,
         };
         if (p.latitude !== "") {
           protectedArea.latitude = p.latitude;

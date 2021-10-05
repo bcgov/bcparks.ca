@@ -323,7 +323,7 @@ export default function Explore({ location, data }) {
         slug: r.slug,
       }
     })
-    if (sortOption === "asc") {
+    if (sortOption.value === "asc") {
       allResults.sort(sortAsc)
     } else {
       allResults.sort(sortDesc)
@@ -645,7 +645,7 @@ export default function Explore({ location, data }) {
                   {!isLoading && (
                     <>
                       {!searchResults ||
-                        (searchResults.length == 0 && (
+                        (searchResults.length === 0 && (
                           <div className="container p30 align-center">
                             No parks found
                             <br />
