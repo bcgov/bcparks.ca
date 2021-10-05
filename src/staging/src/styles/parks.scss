@@ -93,11 +93,12 @@ body {
 .MuiButton-root {
   font-family: BCSans, Verdana, Arial, "sans-serif" !important;
 }
-
-.MuiButton-root,
-.MuiLink-root {
-  border: none !important;
-  outline: none !important;
+.parks-container {
+  .MuiButton-root,
+  .MuiLink-root {
+    border: none !important;
+    outline: none !important;
+  }
 }
 
 .yellow-alert {

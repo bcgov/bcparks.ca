@@ -114,44 +114,40 @@ const setDefaultPermissions = async () => {
 
 const createAdmin = async () => {
   try {
-    if (process.env.NODE_ENV === "development") {
-      const params = {
-        username: STRAPI_ADMIN_USER,
-        password: STRAPI_ADMIN_PASSWORD,
-        firstname: STRAPI_ADMIN_FIRST_NAME,
-        lastname: STRAPI_ADMIN_LAST_NAME,
-        email: STRAPI_ADMIN_EMAIL,
-        blocked: false,
-        isActive: true,
-      };
-      //Check if any account exists.
-      const admins = await strapi.query("user", "admin").find();
+    const params = {
+      username: STRAPI_ADMIN_USER,
+      password: STRAPI_ADMIN_PASSWORD,
+      firstname: STRAPI_ADMIN_FIRST_NAME,
+      lastname: STRAPI_ADMIN_LAST_NAME,
+      email: STRAPI_ADMIN_EMAIL,
+      blocked: false,
+      isActive: true,
+    };
+    //Check if any account exists.
+    const admins = await strapi.query("user", "admin").find();
 
-      if (admins.length === 0) {
-        let verifyRole = await strapi
-          .query("role", "admin")
-          .findOne({ code: "strapi-super-admin" });
-        if (!verifyRole) {
-          verifyRole = await strapi.query("role", "admin").create({
-            name: "Super Admin",
-            code: "strapi-super-admin",
-            description:
-              "Super Admins can access and manage all features and settings.",
-          });
-        }
-        params.roles = [verifyRole.id];
-        params.password = await strapi.admin.services.auth.hashPassword(
-          params.password
-        );
-        await strapi.query("user", "admin").create({
-          ...params,
+    if (admins.length === 0) {
+      let verifyRole = await strapi
+        .query("role", "admin")
+        .findOne({ code: "strapi-super-admin" });
+      if (!verifyRole) {
+        verifyRole = await strapi.query("role", "admin").create({
+          name: "Super Admin",
+          code: "strapi-super-admin",
+          description:
+            "Super Admins can access and manage all features and settings.",
         });
-        strapi.log.info("Admin account was successfully created.");
-        strapi.log.info(`Email: ${params.email}`);
-        return true;
-      } else {
-        return false;
       }
+      params.roles = [verifyRole.id];
+      params.password = await strapi.admin.services.auth.hashPassword(
+        params.password
+      );
+      await strapi.query("user", "admin").create({
+        ...params,
+      });
+      strapi.log.info("Admin account was successfully created.");
+      strapi.log.info(`Email: ${params.email}`);
+      return true;
     } else {
       return false;
     }

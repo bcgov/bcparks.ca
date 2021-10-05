@@ -1,3 +1,4 @@
+{{- if .Values.postgres.enabled }}
 kind: Service
 apiVersion: v1
 metadata:
@@ -15,3 +16,4 @@ spec:
   ports:
     - name: {{ .Values.postgres.service.portName }}
       port: {{ .Values.postgres.service.port }}
+{{- end }}

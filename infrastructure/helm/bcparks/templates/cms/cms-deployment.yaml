@@ -25,13 +25,22 @@ spec:
         release: {{ .Release.Name }}
     spec:
       initContainers:
-        - name: wait-for-db
+        {{- if .Values.mariadb.enabled }}
+        - name: wait-for-mariadb
+          image: {{ .Values.images.mariadb.name }}:{{ .Values.images.mariadb.tag }}        
+          command: ['sh', '-c', 'until mysqladmin ping -h {{ template "bcparks_mariadb_fullname" . }} -u root -p"$MYSQL_ROOT_PASSWORD"; do echo waiting for database; sleep 2; done;']
+          envFrom:
+            - secretRef:
+                name: {{ template "bcparks_mariadb_secret" . }}
+        {{- else }}
+        - name: wait-for-postgres
           image: {{ .Values.images.postgres.name }}:{{ .Values.images.postgres.tag }}
         {{- if .Values.pgbouncer.enabled }}
-          command: ['sh', '-c', 'until pg_isready -h {{ .Release.Name }}-{{ .Values.pgbouncer.componentName }} -p {{ .Values.pgbouncer.service.port }}; do echo waiting for database; sleep 2; done;']
+          command: ['sh', '-c', 'until pg_isready -h {{ template "bcparks_pgbouncer_fullname" . }} -p {{ .Values.pgbouncer.service.port }}; do echo waiting for database; sleep 2; done;']
         {{- else }}
-          command: ['sh', '-c', 'until pg_isready -h {{ .Release.Name }}-{{ .Values.postgres.componentName }} -p {{ .Values.postgres.service.port }}; do echo waiting for database; sleep 2; done;']
-        {{- end }}            
+          command: ['sh', '-c', 'until pg_isready -h {{ template "bcparks_postgres_fullname" . }} -p {{ .Values.postgres.service.port }}; do echo waiting for database; sleep 2; done;']
+        {{- end }}
+        {{- end }}
       containers:
         - name: {{ .Values.cms.componentName }}
           resources:
@@ -58,34 +67,59 @@ spec:
               value: {{ template "bcparks_cms_external_url" . }}
             {{- end }}
             - name: DATABASE_CLIENT
-              value: {{ .Values.cms.env.databaseClient }}
+              value: {{ ternary "mysql" "postgres" .Values.mariadb.enabled }}
             - name: DATABASE_HOST
-            {{- if .Values.pgbouncer.enabled }}
-              value: {{ .Release.Name }}-{{ .Values.pgbouncer.componentName }}
+            {{- if .Values.mariadb.enabled }}
+              value: {{ template "bcparks_mariadb_fullname" . }} 
+            {{- else if .Values.pgbouncer.enabled }}
+              value: {{ template "bcparks_pgbouncer_fullname" . }} 
             {{- else }}
-              value: {{ .Release.Name }}-{{ .Values.postgres.componentName }}
+              value: {{ template "bcparks_postgres_fullname" . }}
             {{- end }}
             - name: DATABASE_PORT
-            {{- if .Values.pgbouncer.enabled }}
+            {{- if .Values.mariadb.enabled }}
+              value: {{ .Values.mariadb.service.port | quote }}
+            {{- else if .Values.pgbouncer.enabled }}
               value: {{ .Values.pgbouncer.service.port | quote }}
             {{- else }}
               value: {{ .Values.postgres.service.port | quote }}
             {{- end }}              
             - name: DATABASE_USERNAME
+            {{- if .Values.mariadb.enabled }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_mariadb_secret" . }}
+                  key: MYSQL_USER
+            {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: {{ template "bcparks_postgres_secret" . }}
                   key: POSTGRESQL_USER
+            {{- end }}
             - name: DATABASE_PASSWORD
+            {{- if .Values.mariadb.enabled }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_mariadb_secret" . }}
+                  key: MYSQL_PASSWORD
+            {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: {{ template "bcparks_postgres_secret" . }}
                   key: POSTGRESQL_PASSWORD
+            {{- end }}
             - name: DATABASE_NAME
+            {{- if .Values.mariadb.enabled }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_mariadb_secret" . }}
+                  key: MYSQL_DATABASE
+            {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: {{ template "bcparks_postgres_secret" . }}
                   key: POSTGRESQL_DATABASE
+            {{- end }}
             - name: DATABASE_SSL
               value: "false"
             - name: DATABASE_MIN_CONNECTIONS
@@ -98,6 +132,14 @@ spec:
               value: {{ .Values.cms.env.databaseCreateTimeout | quote }}
             - name: DATABASE_ACQUIRE_TIMEOUT
               value: {{ .Values.cms.env.databaseAcquireTimeout | quote }}
+            - name: STRAPI_SMTP_HOST
+              value: {{ .Values.cms.env.smtpHost }}
+            - name: STRAPI_SMTP_PORT
+              value: {{ .Values.cms.env.smtpPort | quote }}
+            - name: STRAPI_SMTP_FROM
+              value: {{ .Values.cms.env.smtpFrom }}
+            - name: STRAPI_SMTP_REPLY_TO
+              value: {{ .Values.cms.env.smtpReplyTo }}
           envFrom:
             - secretRef:
                 name: {{ template "bcparks_cms_secret" . }}

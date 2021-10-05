@@ -27,7 +27,7 @@ import Header from "../components/header"
 import Footer from "../components/footer"
 import useScrollSpy from "react-use-scrollspy"
 
-import "../styles/park-template.scss"
+import "../styles/parks.scss"
 import Spacer from "../components/park/spacer"
 
 const drawerWidth = 230
@@ -152,7 +152,7 @@ export default function ParkTemplate({ data }) {
     <Link key="1" href="/">
       Home
     </Link>,
-    <Link key="2" href="/park-search">
+    <Link key="2" href="/explore">
       Find a Park
     </Link>,
     <div key="3" className="breadcrumb-text">
@@ -168,7 +168,7 @@ export default function ParkTemplate({ data }) {
       <Header mode="internal" content={menuContent} />
       <ScrollToTop />
       <CssBaseline />
-      
+
       <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
         <Grid item xs={12} sm={12}>
           <ParkPhotoGallery photos={photos} />
@@ -233,6 +233,7 @@ export default function ParkTemplate({ data }) {
                       data={{
                         parkFacilities: parkAccessStatus.parkFacilities,
                         reservations: park.reservations,
+                        isDayUsePass: park.isDayUsePass,
                       }}
                     />
                   </div>
@@ -417,8 +418,8 @@ export const query = graphql`
       }
     }
     allStrapiMenus(
-      sort: {fields: order, order: ASC}
-      filter: {show: {eq: true}}
+      sort: { fields: order, order: ASC }
+      filter: { show: { eq: true } }
     ) {
       nodes {
         strapiId

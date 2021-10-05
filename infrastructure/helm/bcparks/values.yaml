@@ -23,6 +23,12 @@ images:
   admin:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/admin
     tag: latest
+  mariadb:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/mariadb
+    tag: 10.5-utf8
+  public:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/public
+    tag: latest
 
 cms:
   componentName: cms
@@ -38,14 +44,16 @@ cms:
       memory: 250Mi
 
   env:
-    nodeEnv: development
-    externalUrl: https://dev-cms.bcparks.ca
-    databaseClient: postgres
+    nodeEnv: production
     databaseMinConnections: 0
     databaseMaxConnections: 10
     databaseIdleTimeout: 30000
     databaseCreateTimeout: 30000
     databaseAcquireTimeout: 30000
+    smtpHost: apps.smtp.gov.bc.ca
+    smtpPort: 25
+    smtpFrom: noreply@gov.bc.ca
+    smtpReplyTo: noreply@gov.bc.ca
 
   service:
     portName: strapi
@@ -58,6 +66,8 @@ cms:
 
 postgres:
   componentName: postgres
+
+  enabled: false
 
   resources:
     limits:
@@ -80,7 +90,7 @@ postgres:
     size: 5Gi
 
 pgbouncer:
-  enabled: true
+  enabled: false
 
   componentName: pgbouncer
 
@@ -98,7 +108,33 @@ pgbouncer:
     portName: pgbouncer
     port: 6432
 
+mariadb:
+  componentName: mariadb
+
+  enabled: true
+
+  imagePullPolicy: Always
+
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  service:
+    portName: mariadb
+    port: 3306
+
+  pvc:
+    accessMode: ReadWriteOnce
+    storageClassName: netapp-file-standard
+    size: 5Gi
+
 staging:
+  enabled: false
+
   imagePullPolicy: Always
 
   componentName: staging
@@ -139,4 +175,21 @@ admin:
 
   service:
     portName: admin
+    port: 3000
+
+public:
+  imagePullPolicy: Always
+
+  componentName: public
+
+  resources:
+    limits:
+      cpu: 150m
+      memory: 250Mi
+    requests:
+      cpu: 50m
+      memory: 50Mi
+
+  service:
+    portName: public
     port: 3000
