@@ -132,6 +132,14 @@ spec:
               value: {{ .Values.cms.env.databaseCreateTimeout | quote }}
             - name: DATABASE_ACQUIRE_TIMEOUT
               value: {{ .Values.cms.env.databaseAcquireTimeout | quote }}
+            - name: STRAPI_SMTP_HOST
+              value: {{ .Values.cms.env.smtpHost }}
+            - name: STRAPI_SMTP_PORT
+              value: {{ .Values.cms.env.smtpPort | quote }}
+            - name: STRAPI_SMTP_FROM
+              value: {{ .Values.cms.env.smtpFrom }}
+            - name: STRAPI_SMTP_REPLY_TO
+              value: {{ .Values.cms.env.smtpReplyTo }}
           envFrom:
             - secretRef:
                 name: {{ template "bcparks_cms_secret" . }}

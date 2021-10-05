@@ -50,6 +50,10 @@ cms:
     databaseIdleTimeout: 30000
     databaseCreateTimeout: 30000
     databaseAcquireTimeout: 30000
+    smtpHost: apps.smtp.gov.bc.ca
+    smtpPort: 25
+    smtpFrom: noreply@gov.bc.ca
+    smtpReplyTo: noreply@gov.bc.ca
 
   service:
     portName: strapi
