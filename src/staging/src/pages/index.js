@@ -150,7 +150,7 @@ function AdvisoryBar() {
         <button type="button" className="close" data-dismiss="alert">×</button>
         <span className="text-center">
           <img className="alert-exclamation d-inline-flex pr-4" src={Exclamation} alt="exclamation" />
-          Some parks are currently affected by wildfire activity. <a href="/alerts" className="d-inline-flex underline">See all advisories</a>
+          Some parks are currently affected by wildfire activity. <a href="/" className="d-inline-flex underline">See all advisories</a>.
         </span>
       </div>
     </>

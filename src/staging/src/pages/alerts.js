@@ -44,62 +44,10 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const getWildfires = (advisories) => {
-  let advisoryList = [];
-  for (let advisory of advisories) {
-    if (advisory.eventType && advisory.eventType.eventType) {
-      let e = advisory.eventType.eventType;
-      if (e === 'Wildfire' || e === 'Wildfire damage' || e === 'Wildfire nearby') {
-        advisoryList.push(advisory);
-      }
-    }
-  }
-  return (advisoryList);
-}
-
-const getFloods = (advisories) => {
-  let advisoryList = [];
-  for (let advisory of advisories) {
-    if (advisory.eventType && advisory.eventType.eventType) {
-      let e = advisory.eventType.eventType;
-      if (e === 'Flood' || e === 'Flood damage') {
-        advisoryList.push(advisory);
-      }
-    }
-  }
-  return (advisoryList);
-}
-
 const PublicAdvisoryPage = ({ data }) => {
-
-  const thisUrl = new URLSearchParams(window.location.search);
-  const params = Object.fromEntries(thisUrl.entries());
-
   const classes = useStyles()
-  let advisories = [];
-  let pageTitle = 'Public Advisories';
-  let advisoryType = "";
 
-  if (params && params.type) {
-    switch (params.type) {
-      case 'wildfires':
-        advisories = getWildfires(data.allStrapiPublicAdvisory.nodes);
-        pageTitle = 'Public Advisories | Wildfires';
-        advisoryType = 'wildfire ';
-        break;
-      case 'floods':
-        advisories = getFloods(data.allStrapiPublicAdvisory.nodes);
-        pageTitle = 'Public Advisories | Flooding';
-        advisoryType = 'flood ';
-        break;
-      default:
-        advisories = data.allStrapiPublicAdvisory.nodes;
-    }
-  } else {
-    advisories = data.allStrapiPublicAdvisory.nodes;
-  }
-
-  advisories.map(advisory => {
+  const advisories = data.allStrapiPublicAdvisory.nodes.map(advisory => {
     let alertIcon
     let alertColorCss
     switch (advisory.urgency.color) {
@@ -134,12 +82,12 @@ const PublicAdvisoryPage = ({ data }) => {
       <Menu>{data.strapiWebsites.Navigation}</Menu>
       <Container>
         <br />
-        <h1>{pageTitle}</h1>
+        <h1>Public Advisories</h1>
         <span>
           Updated Monday to Friday from 8:30 am to 4:30 pm, excluding statutory
           holidays.
         </span>
-        <span>There are {advisories.length} {advisoryType}advisories in effect.</span>
+        <span>There are {advisories.length} advisories in effect.</span>
         <br />
         <Grid container spacing={1}>
           {advisories.map((advisory, index) => (
@@ -178,12 +126,13 @@ const PublicAdvisoryPage = ({ data }) => {
                           variant="outlined"
                           component="a"
                           className={classes.chip}
-                          href={`/${par.slug
-                            ? par.slug
-                            : par.protectedAreaName
-                              .toLowerCase()
-                              .replace(/ /g, "-")
-                            }`}
+                          href={`/${
+                            par.slug
+                              ? par.slug
+                              : par.protectedAreaName
+                                  .toLowerCase()
+                                  .replace(/ /g, "-")
+                          }`}
                           key={index}
                           label={par.protectedAreaName}
                         />
@@ -306,4 +255,3 @@ export const query = graphql`
     }
   }
 `
-

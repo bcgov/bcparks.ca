@@ -201,15 +201,6 @@ $desktopBreakpoint: 576px;
     height: 49px;
     text-align: center;
   }
-  .all-advisory-button {
-    background-color: $colorWhite !important;
-    color: $colorBlue;
-    height: 49px;
-    text-align: center;
-    border: 2px solid $colorBlue;
-    border-radius: 5px;
-  }
-
   .advisory-content {
     font-size: 16px;
     color: $colorWhite;
@@ -229,9 +220,6 @@ $desktopBreakpoint: 576px;
       font-size: 25px;
     }
     .advisory-button {
-      height: 90px;
-    }
-    .all-advisory-button {
       height: 90px;
     }
   }
