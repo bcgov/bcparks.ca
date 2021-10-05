@@ -47,7 +47,7 @@ export default function MapLocation({ data }) {
       })
       view.ui.add(fullscreen, "top-left")
     }
-  }, [])
+  }, [data.latitude, data.longitude, data.mapZoom])
 
   return (
     <Grid item xs={12} id="park-map-container" className="anchor-link">

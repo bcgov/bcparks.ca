@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import PropTypes from "prop-types"
 import {
   TextField,
@@ -96,7 +96,7 @@ const SearchFilter = ({
     }
   }
 
-  const setFilters = () => {
+  const setFilters = useCallback(() => {
     const filters = []
     selectedActivities.forEach(a => {
       filters.push({ ...a, type: "activity" })
@@ -106,7 +106,7 @@ const SearchFilter = ({
     })
     filters.sort(labelCompare)
     setFilterSelections([...filters])
-  }
+  }, [selectedActivities, selectedFacilities])
 
   const searchParkFilter = () => {
     navigate("/explore", {
@@ -122,7 +122,7 @@ const SearchFilter = ({
 
   useEffect(() => {
     setFilters()
-  }, [searchText, selectedActivities, selectedFacilities])
+  }, [searchText, selectedActivities, selectedFacilities, setFilters])
 
   return (
     <div className="">

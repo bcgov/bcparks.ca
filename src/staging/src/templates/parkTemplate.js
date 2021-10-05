@@ -233,6 +233,7 @@ export default function ParkTemplate({ data }) {
                       data={{
                         parkFacilities: parkAccessStatus.parkFacilities,
                         reservations: park.reservations,
+                        isDayUsePass: park.isDayUsePass,
                       }}
                     />
                   </div>

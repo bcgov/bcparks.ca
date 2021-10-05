@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { graphql } from "gatsby"
 import Footer from "../components/footer"
 import MegaMenu from "../components/megaMenu"
@@ -262,7 +262,7 @@ export default function Explore({ location, data }) {
     setOpenQuickView(false)
   }
 
-  const setFilters = () => {
+  const setFilters = useCallback(() => {
     const filters = []
     selectedActivities.forEach(a => {
       filters.push({ ...a, type: "activity" })
@@ -290,49 +290,61 @@ export default function Explore({ location, data }) {
     }
     filters.sort(labelCompare)
     setFilterSelections([...filters])
-  }
+  }, [
+    camping,
+    ecoReserve,
+    electricalHookup,
+    marine,
+    petFriendly,
+    selectedActivities,
+    selectedFacilities,
+    wheelchair,
+  ])
 
-  function processResults(results, dataSet) {
-    const allResults = results.map(r => {
-      if (dataSet === 0) {
+  const processResults = useCallback(
+    (results, dataSet) => {
+      const allResults = results.map(r => {
+        if (dataSet === 0) {
+          return {
+            protectedAreaName: r.protectedAreaName,
+            isOpenToPublic: true,
+            advisories: ["Wildfire alert"],
+            isDayUsePass: true,
+            parkActivities: [],
+            parkFacilities: [],
+            parkPhotos: [
+              "https://bcparks.ca/explore/parkpgs/strath/photos/images/12.jpg",
+              "https://bcparks.ca/explore/parkpgs/strath/photos/images/13.jpg",
+            ],
+            slug: r.slug,
+          }
+        }
         return {
           protectedAreaName: r.protectedAreaName,
           isOpenToPublic: true,
           advisories: ["Wildfire alert"],
           isDayUsePass: true,
-          parkActivities: [],
-          parkFacilities: [],
+          parkActivities: r.parkActivities.map(a => a.name.split(":")[1]),
+          parkFacilities: r.parkFacilities.map(a => a.name.split(":")[1]),
           parkPhotos: [
             "https://bcparks.ca/explore/parkpgs/strath/photos/images/12.jpg",
             "https://bcparks.ca/explore/parkpgs/strath/photos/images/13.jpg",
           ],
           slug: r.slug,
         }
+      })
+      if (sortOption.value === "asc") {
+        allResults.sort(sortAsc)
+      } else {
+        allResults.sort(sortDesc)
       }
-      return {
-        protectedAreaName: r.protectedAreaName,
-        isOpenToPublic: true,
-        advisories: ["Wildfire alert"],
-        isDayUsePass: true,
-        parkActivities: r.parkActivities.map(a => a.name.split(":")[1]),
-        parkFacilities: r.parkFacilities.map(a => a.name.split(":")[1]),
-        parkPhotos: [
-          "https://bcparks.ca/explore/parkpgs/strath/photos/images/12.jpg",
-          "https://bcparks.ca/explore/parkpgs/strath/photos/images/13.jpg",
-        ],
-        slug: r.slug,
-      }
-    })
-    if (sortOption.value === "asc") {
-      allResults.sort(sortAsc)
-    } else {
-      allResults.sort(sortDesc)
-    }
-    setSearchResults([...allResults])
-    setTotalResults(allResults.length)
-    setNumberOfPages(Math.ceil(results.length / itemsPerPage))
-    setIsLoading(false)
-  }
+      setSearchResults([...allResults])
+      setTotalResults(allResults.length)
+      setNumberOfPages(Math.ceil(results.length / itemsPerPage))
+      setIsLoading(false)
+    },
+    [sortOption]
+  )
 
   useEffect(() => {
     setIsLoading(true)
@@ -384,6 +396,9 @@ export default function Explore({ location, data }) {
     selectedFacilities,
     quickSearch,
     protectedAreas,
+    data.site.siteMetadata.apiURL,
+    processResults,
+    setFilters,
   ])
 
   return (
