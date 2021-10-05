@@ -116,3 +116,7 @@ https://{{ .Release.Name }}-{{ .Values.cms.componentName }}-{{ .Release.Namespac
 {{ define "bcparks_admin_external_url" -}}
 https://{{ .Release.Name }}-{{ .Values.admin.componentName }}-{{ .Release.Namespace }}.{{ .Values.cluster.domain }}
 {{- end -}}
+
+{{ define "bcparks_public_external_url" -}}
+https://{{ .Release.Name }}-{{ .Values.public.componentName }}-{{ .Release.Namespace }}.{{ .Values.cluster.domain }}
+{{- end -}}
