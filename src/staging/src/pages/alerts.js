@@ -72,13 +72,18 @@ const getFloods = (advisories) => {
 
 const PublicAdvisoryPage = ({ data }) => {
 
-  const thisUrl = new URLSearchParams(window.location.search);
-  const params = Object.fromEntries(thisUrl.entries());
+  let params;
+  let thisUrl;
 
   const classes = useStyles()
   let advisories = [];
   let pageTitle = 'Public Advisories';
   let advisoryType = "";
+
+  if (typeof window !== "undefined" && window.document) {
+    thisUrl = new URLSearchParams(window.location.search);
+    params = Object.fromEntries(thisUrl.entries());
+  }
 
   if (params && params.type) {
     switch (params.type) {
