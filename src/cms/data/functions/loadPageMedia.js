@@ -44,10 +44,18 @@ const loadPageMedia = async () => {
   var jsonPagesData = fs.readFileSync(jsonPagesFile, "utf8");
 
   // Replace localhost references with objectstore URL
-  strapi.log.info(`Objectstore URL ...${objectStoreURL}`);
-
-  jsonWebSitesData = jsonWebSitesData.replace(/http:\\\/\\\/localhost:1337\\\/uploads/gi ,objectStoreURL);
-  jsonPagesData = jsonPagesData.replace(/http:\\\/\\\/localhost:1337\\\/uploads/gi ,objectStoreURL);
+  if (process.env.NODE_ENV=="production")
+  {
+    strapi.log.info(`Objectstore URL ...${objectStoreURL}`);
+    jsonWebSitesData = jsonWebSitesData.replace(/http:\\\/\\\/localhost:1337\\\/uploads/gi ,objectStoreURL);
+    jsonPagesData = jsonPagesData.replace(/http:\\\/\\\/localhost:1337\\\/uploads/gi ,objectStoreURL);
+  }
+  else
+  {
+    strapi.log.info(`external URL ...${process.env.STRAPI_EXTERNAL_URL}`);
+    jsonWebSitesData = jsonWebSitesData.replace(/http:\\\/\\\/localhost:1337/gi ,process.env.STRAPI_EXTERNAL_URL);
+    jsonPagesData = jsonPagesData.replace(/http:\\\/\\\/localhost:1337/gi ,process.env.STRAPI_EXTERNAL_URL);
+  }
 
   strapi.log.info("loading media files started ...");
   
