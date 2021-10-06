@@ -254,6 +254,8 @@ $headingFont: 2rem;
   .MuiDialog-paperWidthSm {
     border-radius: 0px !important;
     background-color: $colorGrey !important;
+    width: 1000px !important;
+    max-width: 1000px !important;
   }
 
   .park-filter-select [class*="-control"] {
@@ -654,6 +656,10 @@ div[class$="-singleValue"] {
 
 .background-blue {
   background-color: $colorBlue;
+}
+
+.park-quick-view-dialog .MuiPaper-elevation24 {
+  box-shadow: unset !important;
 }
 
 .park-quick-view-dialog .MuiDialogContent-root {

@@ -131,8 +131,6 @@ const SearchFilter = ({
         onClose={handleCloseFilter}
         aria-labelledby="park-filter-dialog"
         className="park-filter-dialog"
-        fullScreen
-        fullWidth
         scroll="paper"
       >
         <DialogTitle className="park-filter-title d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
