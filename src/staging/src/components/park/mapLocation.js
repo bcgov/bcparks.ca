@@ -32,6 +32,7 @@ export default function MapLocation({ data }) {
 
       const scaleBar = new ScaleBar({
         view: view,
+        unit: "metric",
       })
       view.ui.add(scaleBar, {
         position: "bottom-left",
