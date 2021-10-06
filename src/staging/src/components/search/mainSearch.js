@@ -81,10 +81,7 @@ const MainSearch = ({ data: { activities, facilities } }) => {
               />
               <Button
                   variant="contained"
-                  onClick={() => {
-                    handleClickOpenFilter()
-                    searchParkFilter()
-                  }}
+                  onClick={searchParkFilter}
                   className="bcgov-normal-gold mobile-search-element-height"
               >
                 Search
