@@ -26,6 +26,10 @@
         "parks.html-area",
         "parks.image"
       ]
+    },
+    "website": {
+      "via": "pages",
+      "model": "website"
     }
   }
 }

@@ -204,6 +204,41 @@ footer #home-footer nav {
   }
 }
 
+#indigenous-relations {
+  .small-text{
+    font-size: 0.8rem;
+  }
+  .text-block{
+    margin-top: 40px;
+  }  
+  .indigenous-image {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+  .indigenous-dropdown {
+    margin-top: 20px;
+    padding: 20px;
+    margin-left: 35px;
+    background-color: $colorWhite !important;
+    color: $colorBlue;
+    border: 2px solid $colorBlue;
+    border-radius: 5px;
+    height: 100%;
+    width: 60%;
+    text-align: left;
+  }
+  .indigenous-card {
+    padding: 10px;
+    background-color: $colorWhite !important;
+    border: 2px solid $colorBlue;
+    border-radius: 5px;
+    height: 300px;
+  }
+  .indigenous-card-label{
+    color: $colorBlue;
+  }
+}
+
 img.alert-exclamation {
   transform: scale(0.8);
 }

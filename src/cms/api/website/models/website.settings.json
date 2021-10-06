@@ -25,6 +25,10 @@
     },
     "Footer": {
       "type": "richtext"
+    },
+    "pages": {
+      "collection": "page",
+      "via": "website"
     }
   }
 }

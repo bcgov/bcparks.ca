@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "indigenous_dropdowns",
+  "info": {
+    "name": "IndigenousDropdown"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "Content": {
+      "type": "richtext"
+    }
+  }
+}
