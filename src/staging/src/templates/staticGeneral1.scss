@@ -9,6 +9,13 @@ $desktopBreakpoint: 576px;
   background-color: aliceblue;
 }
 
+.content-width-override {
+  max-width: 1320px !important;
+}
+.max-width-override {
+  max-width: 1920px !important;
+}
+
 #main {
   .mainCol {
     @media screen and (max-width: $desktopBreakpoint) {
