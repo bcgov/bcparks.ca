@@ -159,7 +159,7 @@ const PublicAdvisoryPage = ({ data }) => {
                     <Avatar
                       src={advisory.alertIcon}
                       className={classes.small}
-                      variant="circle"
+                      variant="circular"
                       width="24"
                       height="24"
                     />

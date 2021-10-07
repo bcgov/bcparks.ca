@@ -1,29 +1,32 @@
 $colorBlue: #003366;
-$colorBlueOpacity: #00336690;
+$colorBlueOpacity: rgba(0, 51, 102, 0.8);
 $colorGold: #fcba19;
 $colorGrey: #eef1f5;
 $colorWhite: #fff;
-$desktopBreakpoint: 576px;
+$desktopBreakpoint: 992px;
+$tabletBreakpoint: 768px;
+
+#main {
+  padding-bottom: 40px;
+  overflow-x: hidden;
+}
 
 /** Center vertical align in a parent with absolute positioning(grid-card/card-body) */
 .v-align-abs {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+  > p {
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
 }
 
 .zone-links {
   padding: 0 20px 0 20px;
-  margin-top: 40px;
-  // Normally would use .row gutters but something was causing x overflow, so this will work for now
-  @media screen and (min-width: $desktopBreakpoint) {
-    .advisory:first-child {
-      padding-right: 5px;
-    }
-    .advisory:last-child {
-      padding-left: 5px;
-    }  
-  }
+  margin-top: 20px;
 }
 
 .zone-cards {
@@ -55,10 +58,11 @@ $desktopBreakpoint: 576px;
   margin: 0 40px 0 40px;
   font-style: normal;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
+  color: $colorBlue !important;
 
   @media screen and (min-width: $desktopBreakpoint) {
-    font-size: 36px;
+    font-size: 26px;
   }
 }
 
@@ -66,12 +70,11 @@ $desktopBreakpoint: 576px;
   margin: 15px 36px 10px 20px;
   height: 2px;
   background-color: $colorGold;
-  width: 35px;
+  width: 75px;
   display: inline-block;
 
   @media screen and (min-width: $desktopBreakpoint) {
-    margin: 35px 20px 20px 20px;
-    width: 75px;
+    margin: 20px;
   }
 }
 
@@ -81,7 +84,7 @@ $desktopBreakpoint: 576px;
 
 .link-override {
   text-decoration: none;
-  color: $colorBlue;
+  color: $colorBlue !important;
 }
 
 .grid-card {
@@ -93,6 +96,7 @@ $desktopBreakpoint: 576px;
   }
 }
 
+
 .padded-link {
   margin-left: 36px;
 }
@@ -101,12 +105,12 @@ $desktopBreakpoint: 576px;
   max-height: 316px;
   
   @media screen and (min-width: $desktopBreakpoint) {
-    max-height: 579px;
+    max-height: 440px;
   }
 }
 
 .card-col-padding:not(:last-child) {
-  margin-bottom: 10px;
+  margin-bottom: 16px;
 }
 
 .link-img > img {
@@ -116,9 +120,11 @@ $desktopBreakpoint: 576px;
 .card-img > img {
   height: 316px;
   width: 100%;
+  object-fit: cover;
   
   @media screen and (min-width: $desktopBreakpoint) {
-    height: 579px;
+    height: 440px;
+    object-fit: cover;
   }
 }
 
@@ -126,12 +132,19 @@ $desktopBreakpoint: 576px;
   height: 100%;
   > img {
     height: 100%;
-    max-width: 90vw;
+  }
+
+  @media screen and (max-width: $desktopBreakpoint - 1px) {
+    > img {
+      max-width: 50vw;
+    }
   }
 
   @media screen and (min-width: $desktopBreakpoint) {
-    max-width: fit-content;
-    max-height: 432px;
+    > img {
+      width: 100%;
+    }
+    max-height: 330px;
   }
 }
 
@@ -146,7 +159,7 @@ $desktopBreakpoint: 576px;
   width: 100%;
 
   @media screen and (min-width: $desktopBreakpoint) {
-    max-height: 379px;
+    max-height: 245px;
   }
 }
 
@@ -160,12 +173,37 @@ $desktopBreakpoint: 576px;
   height: 52.5%;
 
   @media screen and (min-width: $desktopBreakpoint) {
-    height: 33.3%;
+    height: 30%;
+  }
+  @media screen and (max-width: 414px) {
+    font-size: 15px;
+    padding: 16px;
+  }
+}
+
+.card-body:hover {
+  background-color: $colorGold;
+  > .v-align-abs {
+    color: $colorBlue;
+    .card-body-header > a {
+      color: $colorBlue !important;
+    }
+  }
+  > .card-body-header > a {
+    color: $colorBlue !important;
   }
 }
 
 .horizontal-card-body {
   height: 50%;
+  &:hover {
+    a {
+      color: $colorBlue !important;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .card-body-header {
@@ -174,10 +212,17 @@ $desktopBreakpoint: 576px;
 }
 
 .card-body-header > a {
-  font-size: 18px;
+  font-size: 16px;
   color: $colorGold;
   font-weight: bold;
   text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @media screen and (max-width: 414px) {
+    font-size: 15px;
+  }
 }
 
 .underline {
@@ -201,6 +246,13 @@ $desktopBreakpoint: 576px;
     height: 49px;
     text-align: center;
   }
+  .advisory-button:hover {
+    background-color: transparent !important;
+    border: 2px solid $colorBlue;
+    a > span {
+      color: $colorBlue !important;
+    }
+  }
   .all-advisory-button {
     background-color: $colorWhite !important;
     color: $colorBlue;
@@ -214,6 +266,8 @@ $desktopBreakpoint: 576px;
     font-size: 16px;
     color: $colorWhite;
     text-align: center;
+    border: 2px solid $colorBlue;
+    border-radius: 5px;
   }
   .advisory > p {
     margin-bottom: 5px;
@@ -225,14 +279,24 @@ $desktopBreakpoint: 576px;
   }
 
   @media screen and (min-width: $desktopBreakpoint) {
-    .advisory .fa-chevron-circle-right { 
-      font-size: 25px;
-    }
     .advisory-button {
-      height: 90px;
+      height: 55px;
     }
     .all-advisory-button {
-      height: 90px;
+      height: 55px;
+    }
+  }
+  @media screen and (min-width: 376px) and (max-width: 990px) {
+    .zone-links {
+      padding: 0 17% !important;
+    }
+  }
+  @media screen and (max-width: 473px) {
+    .zone-links span {
+      font-size: 15px;
+    }
+    .all-advisory-button {
+      height:55px;
     }
   }
 
@@ -260,7 +324,6 @@ $desktopBreakpoint: 576px;
     background-color: $colorGrey;
     bottom: unset;
     color: $colorBlue;
-    padding-top: 15% !important;
   }
   .split-card-body .card-title {
     margin: 0 36px 10px 36px;
@@ -268,14 +331,27 @@ $desktopBreakpoint: 576px;
   .split-card .col-6 {
     background-color: $colorGrey;
   }
+  .split-card:hover {
+    > div > div {
+      background-color: $colorGold;
+      > div {
+        background-color: $colorGold;
+      }
+    }
+    .zone-hr > hr {
+      color: $colorBlue !important;
+    }
+  }
+
+  .fa-chevron-circle-right {
+    font-size: 24px;
+  }
 
   @media screen and (min-width: $desktopBreakpoint) {
     .fa-chevron-circle-right {
-      font-size: 36px;
-      color: $colorGold;
+      color: $colorBlue;
     }
     .full-horizontal-img > img {
-      max-width: fit-content;
       max-height: 432px;
     }
     .right-chevron > img {
@@ -289,7 +365,7 @@ $desktopBreakpoint: 576px;
 
 #home-carousel {
   .carousel-indicators {
-    bottom: 15%;
+    bottom: 10% !important;
     justify-content: center;
 
     > li, li.active {
@@ -305,11 +381,9 @@ $desktopBreakpoint: 576px;
     }
   }
   .carousel-caption {
-    right: 2.5% !important;
-    bottom: 2.5% !important;
-    padding-bottom: 0px !important;
     > p {
       padding-bottom: 0px !important;
+      font-size: 8px;
     }
   }
 
@@ -318,7 +392,7 @@ $desktopBreakpoint: 576px;
       height: auto;
     }
     .carousel-inner, .carousel-item {
-      max-height: 742px;
+      max-height: 600px;
     }
     .carousel-indicators {
       margin-right: 32px !important;
@@ -343,7 +417,16 @@ $desktopBreakpoint: 576px;
   }
 }
 
+.content-width-override {
+  max-width: 1320px !important;
+}
+.max-width-override {
+  max-width: 1920px !important;
+}
+
 #carousel-down {
+  z-index: 1299;
+  
   @media screen and (min-width: 801px) { 
     position: absolute;
     top: calc(100% - 7.5vh);
@@ -363,4 +446,9 @@ $desktopBreakpoint: 576px;
 }
 #Zone5 {
   background-color: rgba(238, 241, 245, 1);
+}
+
+.main {
+
+  padding-bottom: 40px;
 }

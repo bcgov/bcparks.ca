@@ -8,10 +8,10 @@ import DesktopMegaMenu from "./megaMenu/desktopMenu.js"
 const MegaMenu = ({ content }) => {
   return (
     <div className="nav-container">
-      <div className="nav d-none d-md-block">
+      <div className="d-none d-md-block">
         <DesktopMegaMenu linkStructure={content} />
       </div>
-      <div className="nav d-block d-md-none">
+      <div className="d-block d-md-none">
         <MobileMegaMenu linkStructure={content} />
       </div>
     </div>
