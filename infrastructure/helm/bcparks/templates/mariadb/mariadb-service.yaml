@@ -1,0 +1,19 @@
+{{- if .Values.mariadb.enabled }}
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.mariadb.componentName }}
+  labels:
+    component: {{ .Values.mariadb.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  type: ClusterIP
+  selector:
+    component: {{ .Values.mariadb.componentName }}
+    release: {{ .Release.Name }}
+  ports:
+    - name: {{ .Values.mariadb.service.portName }}
+      port: {{ .Values.mariadb.service.port }}
+{{- end }}

@@ -1,3 +1,4 @@
+{{- if .Values.postgres.enabled }}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -65,3 +66,4 @@ spec:
         - name: db-data
           persistentVolumeClaim:
             claimName: {{ template "bcparks_postgres_volume_claim" . }}
+{{- end }}

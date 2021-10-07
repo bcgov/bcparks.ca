@@ -5,7 +5,7 @@ import { Redirect, useParams } from "react-router-dom";
 import { Loader } from "shared-components/build/components/loader/Loader";
 import { useKeycloak } from "@react-keycloak/web";
 import Header from "../../composite/header/Header";
-import { cmsAxios, apiAxios } from "../../../axios_config";
+import { cmsAxios } from "../../../axios_config";
 import { getRegions, getSections } from "../../../utils/CmsDataUtil";
 import { Button } from "shared-components/build/components/button/Button";
 import { a11yProps } from "../../../utils/AppUtil";
@@ -222,9 +222,9 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
         site: activity.site,
         activityType: activity.activityType,
       };
-      apiAxios
-        .put(`api/update/park-activities/${activityId}`, parkActivity, {
-          headers: { Authorization: `Bearer ${keycloak.idToken}` },
+      cmsAxios
+        .put(`park-activities/${activityId}`, parkActivity, {
+          headers: { Authorization: `Bearer ${keycloak.token}` },
         })
         .then((res) => {
           const currentActivities = submittingActivities.filter(
@@ -335,9 +335,9 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
         site: facility.site,
         facilityType: facility.facilityType,
       };
-      apiAxios
-        .put(`api/update/park-facilities/${facilityId}`, parkFacility, {
-          headers: { Authorization: `Bearer ${keycloak.idToken}` },
+      cmsAxios
+        .put(`park-facilities/${facilityId}`, parkFacility, {
+          headers: { Authorization: `Bearer ${keycloak.token}` },
         })
         .then((res) => {
           const currentFacilities = submittingFacilities.filter(

@@ -7,7 +7,6 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Hidden,
 } from "@material-ui/core"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Heading from "./heading"
@@ -51,17 +50,19 @@ export default function CampingDetails({ data }) {
       className="anchor-link"
     >
       <Paper elevation={0}>
-        <Hidden smUp implementation="css">
+        <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
           <Grid item xs={12} container>
-            <Button
-              className="yellow-button full-width"
-              href="https://discovercamping.ca/"
-            >
-              Book a campsite
-            </Button>
+            {data.isDayUsePass === "true" && (
+              <Button
+                className="yellow-button full-width"
+                href="https://discovercamping.ca/"
+              >
+                Book a campsite
+              </Button>
+            )}
           </Grid>
           <br />
-        </Hidden>
+        </div>
         <Grid container>
           <Grid item xs={6}>
             <Heading>Camping</Heading>
@@ -74,14 +75,16 @@ export default function CampingDetails({ data }) {
             justifyContent="flex-end"
             alignItems="flex-start"
           >
-            <Hidden smDown implementation="css">
-              <Button
-                className="yellow-button"
-                href="https://discovercamping.ca/"
-              >
-                Book a campsite
-              </Button>
-            </Hidden>
+            <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+              {data.isDayUsePass === "true" && (
+                <Button
+                  className="yellow-button"
+                  href="https://discovercamping.ca/"
+                >
+                  Book a campsite
+                </Button>
+              )}
+            </div>
           </Grid>
         </Grid>
         {campingFacilities.length > 0 && (
@@ -141,15 +144,17 @@ export default function CampingDetails({ data }) {
                       aria-controls={facility.facilityName}
                       id={index}
                     >
-                      {/* <Box mr={1}>
+                      <Box mr={1}>
                         <img
                           src={facility.icon}
                           alt={facility.icon ? facility.facilityName : ""}
-                          width="24"
-                          height="24"
+                          width="48"
+                          height="48"
                         />
-                      </Box> */}
-                      <HtmlContent>{facility.facilityName}</HtmlContent>
+                      </Box>
+                      <HtmlContent className="pl15 p10t">
+                        {facility.facilityName}
+                      </HtmlContent>
                     </AccordionSummary>
                     <AccordionDetails>
                       <HtmlContent>{facility.description}</HtmlContent>

@@ -1,0 +1,19 @@
+:3000 {
+    # try_files {path} /
+
+    header /public/page-data/* Cache-Control "public, max-age=0, must-revalidate"
+    header /static/* Cache-Control "public, max-age=31536000, immutable"
+    header /page-data/app-data.json Cache-Control "public, max-age=0, must-revalidate"
+
+    encode gzip
+
+    root * /usr/share/caddy
+
+    file_server
+
+    log {
+        output stdout
+        format console
+    }
+}
+

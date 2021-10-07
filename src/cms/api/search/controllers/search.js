@@ -33,6 +33,15 @@ module.exports = {
         }
       })
       entities[i].parkfacilities = [ ...new Set(parkFacilityNames)];
+
+      // TODO: Defaults until we have proper data
+      entities[i].camping = false;
+      entities[i].petFriendly = false;
+      entities[i].wheelchair = false;
+      entities[i].marine = false;
+      entities[i].ecoReserve = false;
+      entities[i].electricalHookup = false;
+
       // Insert into new collection
       strapi.query("search-view").create(entities[i])
     }

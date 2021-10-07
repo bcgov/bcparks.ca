@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { apiAxios } from "../../../axios_config";
+import { cmsAxios } from "../../../axios_config";
 import { Redirect, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./Advisory.css";
@@ -129,7 +129,7 @@ export default function Advisory({
         setIsStatHoliday,
         cmsData,
         setCmsData,
-        keycloak.idToken
+        keycloak.token
       );
     }
   }, [
@@ -145,11 +145,11 @@ export default function Advisory({
     if (mode === "update" && !isLoadingData) {
       if (parseInt(id)) {
         setAdvisoryId(id);
-        apiAxios
+        cmsAxios
           .get(
-            `api/get/public-advisory-audits/${id}?_publicationState=preview`,
+            `public-advisory-audits/${id}?_publicationState=preview`,
             {
-              headers: { Authorization: `Bearer ${keycloak.idToken}` },
+              headers: { Authorization: `Bearer ${keycloak.token}` },
             }
           )
           .then((res) => {
@@ -676,9 +676,9 @@ export default function Advisory({
         url: link.url.startsWith("http") ? link.url : "https://" + link.url,
         type: link.type,
       };
-      const res = await apiAxios
-        .post(`api/add/links`, linkRequest, {
-          headers: { Authorization: `Bearer ${keycloak.idToken}` },
+      const res = await cmsAxios
+        .post(`links`, linkRequest, {
+          headers: { Authorization: `Bearer ${keycloak.token}` },
         })
         .catch((error) => {
           console.log("error occurred", error);
@@ -702,9 +702,9 @@ export default function Advisory({
         url: link.url.startsWith("http") ? link.url : "https://" + link.url,
         type: link.type,
       };
-      const res = await apiAxios
-        .put(`api/update/links/${id}`, linkRequest, {
-          headers: { Authorization: `Bearer ${keycloak.idToken}` },
+      const res = await cmsAxios
+        .put(`links/${id}`, linkRequest, {
+          headers: { Authorization: `Bearer ${keycloak.token}` },
         })
         .catch((error) => {
           console.log("error occurred", error);
@@ -821,9 +821,9 @@ export default function Advisory({
           created_by: keycloak.tokenParsed.name,
         };
 
-        apiAxios
-          .post(`api/add/public-advisory-audits`, newAdvisory, {
-            headers: { Authorization: `Bearer ${keycloak.idToken}` },
+        cmsAxios
+          .post(`public-advisory-audits`, newAdvisory, {
+            headers: { Authorization: `Bearer ${keycloak.token}` },
           })
           .then((res) => {
             setAdvisoryId(res.data.id);
@@ -943,9 +943,9 @@ export default function Advisory({
             updated_by: keycloak.tokenParsed.name,
           };
 
-          apiAxios
-            .put(`api/update/public-advisory-audits/${id}`, updatedAdvisory, {
-              headers: { Authorization: `Bearer ${keycloak.idToken}` },
+          cmsAxios
+            .put(`public-advisory-audits/${id}`, updatedAdvisory, {
+              headers: { Authorization: `Bearer ${keycloak.token}` },
             })
             .then((res) => {
               setAdvisoryId(res.data.id);
@@ -978,9 +978,9 @@ export default function Advisory({
       type: link.type,
       title: link.title,
     };
-    const res = await apiAxios
-      .post(`api/add/links`, linkRequest, {
-        headers: { Authorization: `Bearer ${keycloak.idToken}` },
+    const res = await cmsAxios
+      .post(`links`, linkRequest, {
+        headers: { Authorization: `Bearer ${keycloak.token}` },
       })
       .catch((error) => {
         console.log("error occurred", error);
@@ -999,9 +999,9 @@ export default function Advisory({
       type: link.type,
       url: config.REACT_APP_CMS_BASE_URL + media.url,
     };
-    const res = await apiAxios
-      .put(`api/update/links/${id}`, linkRequest, {
-        headers: { Authorization: `Bearer ${keycloak.idToken}` },
+    const res = await cmsAxios
+      .put(`links/${id}`, linkRequest, {
+        headers: { Authorization: `Bearer ${keycloak.token}` },
       })
       .catch((error) => {
         console.log("error occurred", error);
@@ -1027,11 +1027,11 @@ export default function Advisory({
     fileForm.append("field", "file");
     fileForm.append("files", file);
 
-    const res = await apiAxios
-      .post(`api/upload/upload`, fileForm, {
+    const res = await cmsAxios
+      .post(`upload`, fileForm, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${keycloak.idToken}`,
+          Authorization: `Bearer ${keycloak.token}`,
         },
       })
       .catch((error) => {

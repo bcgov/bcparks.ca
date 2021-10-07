@@ -32,15 +32,25 @@ const loadPageMedia = async () => {
   const modelPage = "page";
   const objectPage = "page";
   const jsonPagesFile = "./data/pages.json";  
+  const objectStoreURL = "https://"+ process.env.S3_ENDPOINT + "/" + process.env.S3_BUCKET
 
   // Load the seed data
   var jsonWebSitesData = fs.readFileSync(jsonWebSitesFile, "utf8");
   var jsonPagesData = fs.readFileSync(jsonPagesFile, "utf8");
 
-  // Replace localhost references
-  strapi.log.info(`external URL ...${process.env.STRAPI_EXTERNAL_URL}`);
-  jsonWebSitesData = jsonWebSitesData.replace(/http:\\\/\\\/localhost:1337/gi ,process.env.STRAPI_EXTERNAL_URL);
-  jsonPagesData = jsonPagesData.replace(/http:\\\/\\\/localhost:1337/gi ,process.env.STRAPI_EXTERNAL_URL);
+  // Replace localhost references with objectstore URL
+  if (process.env.NODE_ENV=="production")
+  {
+    strapi.log.info(`Objectstore URL ...${objectStoreURL}`);
+    jsonWebSitesData = jsonWebSitesData.replace(/http:\\\/\\\/localhost:1337\\\/uploads/gi ,objectStoreURL);
+    jsonPagesData = jsonPagesData.replace(/http:\\\/\\\/localhost:1337\\\/uploads/gi ,objectStoreURL);
+  }
+  else
+  {
+    strapi.log.info(`external URL ...${process.env.STRAPI_EXTERNAL_URL}`);
+    jsonWebSitesData = jsonWebSitesData.replace(/http:\\\/\\\/localhost:1337/gi ,process.env.STRAPI_EXTERNAL_URL);
+    jsonPagesData = jsonPagesData.replace(/http:\\\/\\\/localhost:1337/gi ,process.env.STRAPI_EXTERNAL_URL);
+  }
 
   strapi.log.info("loading media files started ...");
   

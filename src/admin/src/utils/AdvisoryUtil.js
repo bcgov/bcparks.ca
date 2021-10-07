@@ -1,5 +1,5 @@
 import moment from "moment";
-import { apiAxios, axios } from "../axios_config";
+import { cmsAxios, axios } from "../axios_config";
 import {
   addProtectedAreas,
   addProtectedAreasFromArea,
@@ -341,8 +341,8 @@ export function calculateIsStatHoliday(
 ) {
   if (!cmsData.statutoryHolidays) {
     Promise.resolve(
-      apiAxios
-        .get(`api/get/statutory-holidays`, {
+      cmsAxios
+        .get(`statutory-holidays`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
@@ -371,8 +371,8 @@ export function calculateIsStatHoliday(
               data.statutoryHolidays = res.data;
               setCmsData(data);
               // Write Statutory Data to CMS cache
-              apiAxios
-                .put(`api/update/statutory-holidays`, statInfo, {
+              cmsAxios
+                .put(`statutory-holidays`, statInfo, {
                   headers: { Authorization: `Bearer ${token}` },
                 })
                 .catch((error) => {

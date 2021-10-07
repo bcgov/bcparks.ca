@@ -1,9 +1,5 @@
 #!/bin/sh
 
-if [ -n "$REACT_APP_API_BASE_URL" ]; then  
-  echo "window.REACT_APP_API_BASE_URL = \"$REACT_APP_API_BASE_URL\";" >> $APP_ROOT/js/env.js
-fi
-
 if [ -n "$REACT_APP_CMS_BASE_URL" ]; then  
   echo "window.REACT_APP_CMS_BASE_URL = \"$REACT_APP_CMS_BASE_URL\";" >> $APP_ROOT/js/env.js
 fi

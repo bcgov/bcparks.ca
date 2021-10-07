@@ -26,7 +26,8 @@
     "protectedAreas": {
       "via": "managementAreas",
       "collection": "protected-area",
-      "dominant": true
+      "dominant": true,
+      "collectionName": "pa"
     },
     "region": {
       "via": "managementAreas",
