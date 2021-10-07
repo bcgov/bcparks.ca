@@ -9653,7 +9653,7 @@
       "url": "https://bcparks.ca/explore/parkpgs/strath/",
       "latitude": "49.640943",
       "longitude": "-125.723",
-      "mapZoom": "10",
+      "mapZoom": "8",
       "fogZone": false,
       "dayUsePass": false,
       "status": "Active"
@@ -11369,7 +11369,7 @@
       "url": "https://bcparks.ca/explore/cnsrvncy/zumtela-bay/",
       "latitude": "54.58138",
       "longitude": "-130.370901",
-      "mapZoom": "10",
+      "mapZoom": "12",
       "fogZone": false,
       "dayUsePass": false,
       "status": "Active"
