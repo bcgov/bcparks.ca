@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_operations",
+  "info": {
+    "name": "ParkOperation"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "orcs": {
+      "type": "integer"
+    },
+    "orcsSiteNumber": {
+      "type": "integer"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "hasReservations": {
+      "type": "boolean"
+    }
+  }
+}

@@ -52,7 +52,7 @@ export default function CampingDetails({ data }) {
       <Paper elevation={0}>
         <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
           <Grid item xs={12} container>
-            {data.isDayUsePass === "true" && (
+            {data.hasReservations && (
               <Button
                 className="yellow-button full-width"
                 href="https://discovercamping.ca/"
@@ -76,7 +76,7 @@ export default function CampingDetails({ data }) {
             alignItems="flex-start"
           >
             <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-              {data.isDayUsePass === "true" && (
+              {data.hasReservations && (
                 <Button
                   className="yellow-button"
                   href="https://discovercamping.ca/"

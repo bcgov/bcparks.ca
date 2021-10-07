@@ -51,6 +51,9 @@ export default function ParkTemplate({ data }) {
   const parkAccessStatus = data.strapiParkAccessStatus
   const advisories = data.allStrapiPublicAdvisory
   const photos = data.allStrapiParkPhoto
+  const parkOperation = data.strapiParkOperation
+    ? data.strapiParkOperation
+    : { hasReservations: false }
 
   const menuContent = data?.allStrapiMenus?.nodes || []
   const alertsCount = advisories.totalCount
@@ -140,6 +143,7 @@ export default function ParkTemplate({ data }) {
     advisories: advisories,
     menu: menuItems,
     activeSection: activeSection,
+    parkOperation: parkOperation,
   }
 
   const mapData = {
@@ -233,7 +237,8 @@ export default function ParkTemplate({ data }) {
                       data={{
                         parkFacilities: parkAccessStatus.parkFacilities,
                         reservations: park.reservations,
-                        isDayUsePass: park.isDayUsePass,
+                        hasDayUsePass: park.hasDayUsePass,
+                        hasReservations: parkOperation.hasReservations,
                       }}
                     />
                   </div>
@@ -316,7 +321,7 @@ export const query = graphql`
       marineArea
       type
       typeCode
-      isDayUsePass
+      hasDayUsePass
       reconciliationNotes
       parkContact
       reservations
@@ -345,6 +350,10 @@ export const query = graphql`
           }
         }
       }
+    }
+    strapiParkOperation(orcs: { eq: $orcs }) {
+      orcs
+      hasReservations
     }
     allStrapiPublicAdvisory(
       filter: { protectedAreas: { elemMatch: { orcs: { eq: $orcs } } } }
