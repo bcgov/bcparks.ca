@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react"
 import { graphql } from "gatsby"
+import axios  from "axios";
 import Footer from "../components/footer"
 import MegaMenu from "../components/megaMenu"
 import "../styles/search.scss"
@@ -37,8 +38,6 @@ import redAlertIcon from "../images/park/red-alert-32.png"
 import parksLogo from "../images/Mask_Group_5.png"
 import Carousel from "react-material-ui-carousel"
 import SearchFilter from "../components/search/searchFilter"
-
-const axios = require("axios")
 
 export const query = graphql`
   query {
