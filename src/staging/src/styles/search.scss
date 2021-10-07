@@ -5,10 +5,14 @@ $hoverBlue: #2684ff;
 $colorGrey: #eef1f5;
 $colorWhite: #fff;
 $colorBlack: #000;
+$colorGold: #fcba19;
 $colorTextBlack: #494949;
 $colorYellow: rgba(252, 186, 25, 1);
 $bodyFont: 16px;
 $headingFont: 2rem;
+
+$mediumBreakpoint: 991.98px;
+$largeStart: 992px;
 
 .MuiTypography-root {
   font-family: $globalFont !important;
@@ -27,13 +31,18 @@ $headingFont: 2rem;
 .park-search {
   .park-search-text-box {
     width: 80% !important;
+    @media screen and (max-width: $mediumBreakpoint) {
+      width: 100% !important;
+      .MuiOutlinedInput-adornedStart {
+        height: 100%;
+      }
+    }
 
     .MuiOutlinedInput-root {
       width: 100% !important;
       max-width: 700px !important;
       background-color: $colorWhite !important;
       border: none !important;
-      border-radius: 50px !important;
       font-size: $bodyFont !important;
       font-family: $globalFont !important;
       height: 50px;
@@ -41,6 +50,10 @@ $headingFont: 2rem;
     .MuiOutlinedInput-input {
       padding: 10px 20px !important;
       margin-right: 10px !important;
+
+      @media screen and (max-width: $mediumBreakpoint) {
+        padding: 0 !important;
+      }
     }
     .MuiOutlinedInput-root:focus {
       outline: none !important;
@@ -62,8 +75,7 @@ $headingFont: 2rem;
     height: 70px !important;
     .search-icon {
       color: rgba(0, 51, 102, 0.8);
-      width: 55px !important;
-      height: 55px !important;
+      font-size: 32px;
     }
   }
 }
@@ -107,13 +119,25 @@ $headingFont: 2rem;
   white-space: normal;
 }
 
+.park-search-container-wrapper {
+  overflow-x: hidden;
+}
+
 .park-search {
   font-family: $globalFont !important;
   width: 100%;
 
-  @media screen and (min-width: 801px) {
+  @media screen and (min-width: $largeStart) {
     position: relative;
     max-height: 742px;
+  }
+
+  @media screen and (max-width: $mediumBreakpoint) { 
+    height: 550px;
+    img {
+      height: 550px !important;
+      object-fit: cover;
+    }
   }
 
   img {
@@ -122,12 +146,9 @@ $headingFont: 2rem;
   }
   .park-search-container {
     position: absolute;
-    top: 16%;
     z-index: 1299;
-    height: auto;
     overflow: visible;
     width: 100%;
-    background-color: rgba(0, 51, 102, 0.8) !important;
     text-align: center;
     white-space: nowrap;
     font-family: $globalFont !important;
@@ -136,28 +157,53 @@ $headingFont: 2rem;
     font-size: 1.4rem;
     color: rgba(255, 249, 249, 1);
 
-    // Handling for awkward tablet breakpoints
-    @media screen and (min-width: 575px) and (max-width: 800px) {
-      height: 275px;
-      top: 22.5%;
+    .mobile-search-element-height {
+      height: 50px;
     }
 
-    @media screen and (min-width: 801px) {
-      top: unset;
+    @media screen and (max-width: 991.97px) {
+      height: inherit;
+      top: unset !important;
+    }
+
+    @media screen and (max-width: $mediumBreakpoint) {
+      h2 {
+        font-size: 37px;
+      }
+      button > span {
+        font-size: 14px;
+      }
+      .mobile-filter {
+        border: 1px solid $colorWhite !important;
+        width: 100%;
+      }
+      .mobile-search-element-height {
+        height: 53px !important;
+      }
+    }
+
+    @media screen and (min-width: 376px) and (max-width: 991.97px) {
+      .park-search-group {
+        padding: 0 17%;
+      }
+    }
+
+    @media screen and (min-width: $largeStart) {
+      background: url("../images/u149.svg");
       bottom: 0;
-      width: 45%;
+      top: unset;
+      width: 47.5%;
       height: 100%;
-      transform: skewX(15deg);
+      transform: skewX(20deg);
       transform-origin: bottom;
     }
   }
 
   .park-search-container-inner {
-    @media screen and (min-width: 801px) {
+    @media screen and (min-width: $largeStart) {
       height: 100%;
       > div {
         padding-left: 15%;
-        padding-top: 25%;
       }
     }
   }
@@ -171,14 +217,14 @@ $headingFont: 2rem;
   }
 
   .park-search-text-box {
-    @media screen and (min-width: 801px) {
-      width: 85% !important;
+    @media screen and (min-width: $largeStart) {
+      width: 70% !important;
     }
   }
 }
 
 .park-search-text-wrapper {
-  @media screen and (min-width: 801px) {
+  @media screen and (min-width: $largeStart) {
     padding-left: 40px !important;
   }
 }
@@ -378,27 +424,15 @@ div[class$="-singleValue"] {
   padding: 20px 0 20px 0 !important;
 }
 
-.park-search-text {
-  @media screen and (min-width: 575.98px) and (max-width: 800px) {
-    padding-left: 20px !important;
-    text-align: left;
-  }
-  @media screen and (min-width: 801px) {
-    transform: skewX(-15deg);
-    padding-left: 25px !important;
-    padding-right: 20px !important;
-  }
-}
-
 .park-search-filter {
   padding-left: 30px !important;
   color: $colorWhite !important;
   font-size: $bodyFont !important;
   text-decoration: underline !important;
 
-  @media screen and (min-width: 801px) {
+  @media screen and (min-width: $largeStart) {
     padding-left: 40px !important;
-    transform: skewX(-15deg);
+    transform: skewX(-20deg);
   }
 }
 
@@ -409,15 +443,12 @@ div[class$="-singleValue"] {
     white-space: normal;
   }
 
-  @media screen and (min-width: 801px) {
-    transform: skewX(-15deg);
+  @media screen and (min-width: $largeStart) {
+    transform: skewX(-20deg);
     padding-left: 80px !important;
     > h2 {
-      font-size: 34px;
+      font-size: 24px;
       padding-right: 20px;
-    }
-    > p {
-      font-size: 20px;
     }
   }
 }
@@ -546,6 +577,10 @@ div[class$="-singleValue"] {
   font-style: normal !important;
   background-color: $colorBlue !important;
   font-family: $globalFont !important;
+
+  @media screen and (max-width: $mediumBreakpoint) {
+    font-weight: normal !important;
+  }
   box-shadow: unset !important;
 }
 
@@ -567,6 +602,9 @@ div[class$="-singleValue"] {
   color: $colorWhite !important;
 }
 
+.bcgov-normal-gold {
+  background-color: $colorGold !important;
+}
 .bcgov-normal-transparent {
   color: $colorBlue !important;
   font-style: normal !important;
@@ -583,8 +621,7 @@ div[class$="-singleValue"] {
 }
 
 .bcgov-button {
-  min-width: 150px !important;
-  min-height: 40px !important;
+  height: 39px;
 }
 
 .no-wrap {
