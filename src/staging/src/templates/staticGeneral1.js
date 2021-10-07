@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 import Header from "../components/header"
 import Footer from "../components/footer"
 import Zone from "../components/zone"
@@ -14,7 +14,7 @@ export default function StaticGeneral1Template({ data, pageContext }) {
 
   return (
     <>
-      <SEO title={meta.metaTitle} description={meta.description} keywords={meta.metaKeywords} />
+      <Seo title={meta.metaTitle} description={meta.description} keywords={meta.metaKeywords} />
       <CssBaseline />
       <Container id="content" className="max-width-override" fixed disableGutters>
         <Header mode="internal" content={menuContent} />
