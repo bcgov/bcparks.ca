@@ -103,7 +103,7 @@ const loadParkPhoto = async () => {
         const result = await strapi.services["park-photo"].create(parkPhoto);
 
         const filename = result.imageUrl
-          .replace("https://bcparks.ca/explore/parkpgs/", "")
+          .replace("https://bcparks.ca/photos/", "")
           .replace(/\//g, "-");
         const filepath = `${rootDir}${IMAGE_PATH}\\${filename}`;
 
