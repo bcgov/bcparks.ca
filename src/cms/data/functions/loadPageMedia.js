@@ -1,28 +1,25 @@
 const mime = require("mime-types");
 const fs = require("fs");
-const request = require("request");
 const path = require("path");
+const { loadWebsites } = require("./loadOtherData")
 
 const rootDir = process.cwd();
 const MEDIA_PATH = "media_uploads";
 
-const loadJson = (model, jsonData, object) => {
+const loadJson = async (model, jsonData, object) => {
   try {
-
       strapi.log.info(`loading ${model} started...`);
       const dataSeed = JSON.parse(jsonData)[object];
 
-      dataSeed.forEach( (data) => {
+      for await (const data of dataSeed) {
         const keys = Object.keys(data);
         for (let i = 0; i < keys.length; i++) {
           if (data[keys[i]] === "") data[keys[i]] = null;
         }
+        await strapi.services[model].create(data);
+      }
 
-        strapi.services[model].create(data);
-        
-      });
       strapi.log.info(`loading ${model} completed...`)
-
   } catch (error) {
     strapi.log.error(`error loading ${model}...`);
     strapi.log.error(error);
@@ -31,8 +28,6 @@ const loadJson = (model, jsonData, object) => {
 
 const loadPageMedia = async () => {
   const fullMediaPath = rootDir + "/" + MEDIA_PATH;
-  const modelWebSite = "website";
-  const objectWebsite = "website";
   const jsonWebSitesFile = "./data/websites.json"; 
   const modelPage = "page";
   const objectPage = "page";
@@ -81,14 +76,13 @@ const loadPageMedia = async () => {
     //Replace files references with strapi hashed filnames
     jsonWebSitesData = jsonWebSitesData.replace(filenameWithOutHash,`${filenameWithHash}`);
     jsonPagesData = jsonPagesData.replace(filenameWithOutHash,`${filenameWithHash}`);
-
-
   };
   
-  
   strapi.log.info("loading media files completed...");
-  loadJson(modelPage,jsonPagesData,objectPage); 
-  loadJson(modelWebSite,jsonWebSitesData,objectWebsite);
+  // Create page records
+  await loadJson(modelPage,jsonPagesData,objectPage);
+  // Create website records
+  await loadWebsites(jsonWebSitesData);
   
 };
 
