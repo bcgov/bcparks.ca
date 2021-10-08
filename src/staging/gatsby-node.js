@@ -23,7 +23,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   }
 
   type StrapiProtectedArea implements Node {
-    isDayUsePass: String
+    hasDayUsePass: String
     parkContact: String
   }
 
@@ -39,7 +39,6 @@ exports.createSchemaCustomization = ({ actions }) => {
   `
   createTypes(typeDefs)
 }
-
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions

@@ -308,7 +308,8 @@ export default function Explore({ location, data }) {
             protectedAreaName: r.protectedAreaName,
             isOpenToPublic: true,
             advisories: ["Wildfire alert"],
-            isDayUsePass: true,
+            hasDayUsePass: true,
+            hasReservations: true,
             parkActivities: [],
             parkFacilities: [],
             parkPhotos: [
@@ -322,7 +323,8 @@ export default function Explore({ location, data }) {
           protectedAreaName: r.protectedAreaName,
           isOpenToPublic: true,
           advisories: ["Wildfire alert"],
-          isDayUsePass: true,
+          hasDayUsePass: true,
+          hasReservations: true,
           parkActivities: r.parkActivities.map(a => a.name.split(":")[1]),
           parkFacilities: r.parkFacilities.map(a => a.name.split(":")[1]),
           parkPhotos: [
@@ -783,19 +785,21 @@ export default function Explore({ location, data }) {
                                                 )}
                                               </div>
                                               <div className="col-6">
-                                                {r.isDayUsePass && (
-                                                  <div className="flex-display">
-                                                    <img
-                                                      alt=""
-                                                      className="search-result-icon"
-                                                      src={dayUseIcon}
-                                                    />
-                                                    <div className="pl15 mtm7 text-blue">
-                                                      Day use and camping <br />
-                                                      offered at this park
+                                                {r.hasDayUsePass &&
+                                                  r.hasReservations && (
+                                                    <div className="flex-display">
+                                                      <img
+                                                        alt=""
+                                                        className="search-result-icon"
+                                                        src={dayUseIcon}
+                                                      />
+                                                      <div className="pl15 mtm7 text-blue">
+                                                        Day use and camping{" "}
+                                                        <br />
+                                                        offered at this park
+                                                      </div>
                                                     </div>
-                                                  </div>
-                                                )}
+                                                  )}
                                               </div>
                                             </div>
                                             <div className="row p10t mr5">
@@ -1098,19 +1102,21 @@ export default function Explore({ location, data }) {
                                                 )}
                                               </div>
                                               <div className="col-12 p20t">
-                                                {r.isDayUsePass && (
-                                                  <div className="flex-display">
-                                                    <img
-                                                      alt=""
-                                                      className="search-result-icon"
-                                                      src={dayUseIcon}
-                                                    />
-                                                    <div className="pl15 mtm7 text-blue">
-                                                      Day use and camping <br />
-                                                      offered at this park
+                                                {r.hasDayUsePass &&
+                                                  r.hasReservations && (
+                                                    <div className="flex-display">
+                                                      <img
+                                                        alt=""
+                                                        className="search-result-icon"
+                                                        src={dayUseIcon}
+                                                      />
+                                                      <div className="pl15 mtm7 text-blue">
+                                                        Day use and camping{" "}
+                                                        <br />
+                                                        offered at this park
+                                                      </div>
                                                     </div>
-                                                  </div>
-                                                )}
+                                                  )}
                                               </div>
                                             </div>
                                             <div className="row p20t mr5">

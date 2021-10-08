@@ -20,7 +20,7 @@ const isFirstRun = async () => {
 
 const loadData = async () => {
   try {
-    console.time('initialLoad')
+    console.time("initialLoad");
     strapi.log.info("------Data load begins------");
     return Promise.all([
       parData.loadParData(),
@@ -37,6 +37,7 @@ const loadData = async () => {
       otherData.loadUrgency(),
       otherData.loadFireCentre(),
       otherData.loadFireZone(),
+      otherData.loadParkOperation(),
     ]).then(async () => {
       return Promise.all([
         parData.loadAdditionalParData(),
@@ -53,7 +54,7 @@ const loadData = async () => {
         parkPhoto.loadParkPhoto(),
       ]).then(() => {
         strapi.log.info("------Data load completed------");
-        console.timeEnd('initialLoad')
+        console.timeEnd("initialLoad");
         return true;
       });
     });

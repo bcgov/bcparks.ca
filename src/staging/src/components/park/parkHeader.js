@@ -17,7 +17,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore"
 import { navigate } from "gatsby"
 
 export default function ParkHeader({ data }) {
-  const { advisories, parkAccessStatus, park, menu } = data
+  const { advisories, parkAccessStatus, park, menu, parkOperation } = data
 
   const menuItems = useRef([...menu])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -53,19 +53,28 @@ export default function ParkHeader({ data }) {
         <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
           <div className="flex-display p10t">
             <Grid item xs={12} sm={12} md={12} lg={7}>
-              {park.isDayUsePass === "true" && (
-                <>
+              <>
+                {parkOperation.hasReservations && (
                   <Button
                     className="yellow-button"
                     href="https://discovercamping.ca/"
                   >
                     Book a campsite
                   </Button>
-                  <Button className="blue-button ml10" href="#">
+                )}
+                {park.hasDayUsePass === "true" && (
+                  <Button
+                    className={
+                      parkOperation.hasReservations
+                        ? "blue-button ml10"
+                        : "blue-button"
+                    }
+                    href="#"
+                  >
                     Get a daypass
                   </Button>
-                </>
-              )}
+                )}
+              </>
             </Grid>
 
             <Grid
@@ -94,8 +103,9 @@ export default function ParkHeader({ data }) {
               <Advisory data={advisories} />
             </div>
           </Grid>
-          {park.isDayUsePass === "true" && (
-            <Grid item xs={12}>
+
+          <Grid item xs={12}>
+            {parkOperation.hasReservations && (
               <div className="p20t">
                 <Button
                   className="yellow-button full-width"
@@ -104,14 +114,19 @@ export default function ParkHeader({ data }) {
                   Book a campsite
                 </Button>
               </div>
+            )}
+            {park.hasDayUsePass === "true" && (
               <div className="p10t">
                 <Button className="blue-button full-width" href="#">
                   Get a daypass
                 </Button>
               </div>
-            </Grid>
+            )}
+          </Grid>
+
+          {park.hasDayUsePass !== "true" && !parkOperation.hasReservations && (
+            <div className="p10t"></div>
           )}
-          {park.isDayUsePass !== "true" && <div className="p10t"></div>}
           {/* Mobile */}
           <Grid item xs={12} className="park-menu-mobile">
             <List

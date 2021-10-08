@@ -19,12 +19,12 @@ export default function DayUseCamping({ data }) {
   )
 
   let title = []
-  if (data.isDayUsePass) title.push("Day Use")
+  if (data.hasDayUsePass) title.push("Day Use")
   if (hasCamping) title.push("Camping")
 
   return (
     <>
-      {(hasCamping || data.isDayUsePass) && (
+      {(hasCamping || data.hasDayUsePass) && (
         <Grid container item xs={12} sm={6} md={4}>
           <Card className={classes.card}>
             <CardHeader
