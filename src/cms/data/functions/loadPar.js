@@ -241,7 +241,7 @@ const loadAdditionalProtectedAreaInfo = async () => {
       if (p.status === "Active") {
         const protectedArea = {
           url: p.url,
-          isDayUsePass: p.dayUsePass,
+          hasDayUsePass: p.dayUsePass,
           isFogZone: p.fogZone,
         };
         if (p.latitude !== "") {
@@ -395,8 +395,8 @@ const loadParSomeDefaultValues = async () => {
 
   for (const protectedArea of protectedAreas) {
     strapi.log.info("set default value for", protectedArea.orcs);
-    protectedArea.isDayUsePass =
-      protectedArea.isDayUsePass === true ? true : false;
+    protectedArea.hasDayUsePass =
+      protectedArea.hasDayUsePass === true ? true : false;
     protectedArea.isFogZone = protectedArea.isFogZone === true ? true : false;
     protectedArea.hasCampfireBan =
       protectedArea.hasCampfireBan === true ? true : false;

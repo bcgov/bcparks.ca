@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "Pages",
   "info": {
-    "name": "Page"
+    "name": "Page",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -17,14 +18,16 @@
       "type": "enumeration",
       "enum": [
         "Template1",
-        "Template2"
+        "Template2",
+        "StaticGeneral1"
       ]
     },
     "Content": {
       "type": "dynamiczone",
       "components": [
         "parks.html-area",
-        "parks.image"
+        "parks.image",
+        "parks.seo"
       ]
     },
     "website": {

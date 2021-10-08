@@ -54,7 +54,8 @@ const searchParkByCriteria = (
       "/uploads/mt_assiniboine_photos_images_20_d4bfb5f8ec.jpg",
       "/uploads/mt_assiniboine_photos_images_19_0d09398ed7.jpg",
     ]
-    park.isDayUsePass = true
+    park.hasDayUsePass = true
+    park.hasReservations = true
     if (searchText && searchText.length > 0) {
       requiredResults.text = true
       searchParkNames(park, searchText, textResults)

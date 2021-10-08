@@ -1,8 +1,7 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
-import { TextField, Fab, Link } from "@material-ui/core"
+import { TextField, Button, Link, InputAdornment } from "@material-ui/core"
 import "../../styles/search.scss"
-import SearchIcon from "@material-ui/icons/Search"
 import { navigate } from "gatsby"
 import SearchFilter from "./searchFilter"
 
@@ -53,8 +52,8 @@ const MainSearch = ({ data: { activities, facilities } }) => {
     })
   }
 
-  return (
-    <div className="park-search-container park-search-text-container">
+  const renderDesktop = () => {
+    return (
       <div className="park-search-container-inner row align-items-center w-100 no-gutters">
         <div className="col-12">
           <div className="row no-gutters">
@@ -64,13 +63,11 @@ const MainSearch = ({ data: { activities, facilities } }) => {
                 Plan your next adventure by searching for campsites and day-use
                 areas around B.C.
               </p>
-            </div>
-            <div className="col-12 pt-sm-4 park-search-text">
               <TextField
                 id="park-search-text"
                 variant="outlined"
-                placeholder="Search by name or location"
-                className="park-search-text-box"
+                placeholder="Search by park name, location, activity..."
+                className="park-search-text-box pr-2"
                 value={searchText}
                 onChange={event => {
                   setSearchText(event.target.value)
@@ -82,15 +79,13 @@ const MainSearch = ({ data: { activities, facilities } }) => {
                   }
                 }}
               />
-              <Fab
-                className="search-icon-fab"
-                aria-label="search"
-                onClick={() => {
-                  searchParkFilter()
-                }}
+              <Button
+                  variant="contained"
+                  onClick={searchParkFilter}
+                  className="bcgov-normal-gold mobile-search-element-height"
               >
-                <SearchIcon className="search-icon" alt="Search" />
-              </Fab>
+                Search
+              </Button>
             </div>
           </div>
           <div className="row no-gutters"></div>
@@ -104,6 +99,100 @@ const MainSearch = ({ data: { activities, facilities } }) => {
             </Link>
           </div>
         </div>
+      </div>
+    )
+  }
+
+  const renderMobile = () => {
+    return (
+      <div className="row align-items-center w-100 no-gutters park-search-group">
+        <div className="col-12">
+          <div className="row no-gutters px-3">
+            <div className="col-12 text-center">
+              <h2 className="heading-white-space">Plan your next adventure</h2>
+            </div>
+          </div>
+          <div className="row no-gutters pb-2 px-3">
+            <div className="col-9 pr-1">
+              <TextField
+                  id="park-search-text"
+                  variant="outlined"
+                  placeholder="Search by park name, location, activity..."
+                  className="park-search-text-box mobile-search-element-height"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <i className="fas fa-search"></i>
+                      </InputAdornment>
+                    )
+                  }}
+                  value={searchText}
+                  onChange={event => {
+                    setSearchText(event.target.value)
+                  }}
+                  onKeyPress={ev => {
+                    if (ev.key === "Enter") {
+                      searchParkFilter()
+                      ev.preventDefault()
+                    }
+                  }}
+                />
+            </div>
+            <div className="col-3">
+              <Button
+                  variant="outlined"
+                  onClick={handleClickOpenFilter}
+                  className="bg-transparent rounded text-light mobile-filter mobile-search-element-height"
+              >
+                Filters
+              </Button>
+            </div>
+          </div>
+          <div className="row no-gutters pb-2 px-3">
+            <div className="col-12">
+              <Button
+                  variant="contained"
+                  fullWidth
+                  onClick={() => {
+                    handleClickOpenFilter()
+                    searchParkFilter()
+                  }}
+                  className="bcgov-normal-blue mobile-search-element-height"
+              >
+                Search
+              </Button>
+            </div>
+          </div>
+          <div className="row no-gutters px-3">
+            <div className="col-12">
+              <Button
+                  variant="contained"
+                  href="https://www.discovercamping.ca/"
+                  target="_blank"
+                  rel="norefferer"
+                  fullWidth
+                  onClick={() => {
+                    handleClickOpenFilter()
+                    searchParkFilter()
+                  }}
+                  className="bcgov-normal-gold mobile-search-element-height"
+              >
+                Book a campsite
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="park-search-container park-search-text-container">
+      <div className="d-none d-lg-block v-align-abs">
+        {renderDesktop()}
+      </div>
+      <div className="d-block d-lg-none v-align-abs">
+        {renderMobile()}
       </div>
       <SearchFilter
         data={{
