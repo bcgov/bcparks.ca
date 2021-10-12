@@ -1,13 +1,17 @@
 @import url("https://js.arcgis.com/4.10/esri/css/main.css");
 // @import url("https://governmentofbc.maps.arcgis.com/apps/webappviewer/jimu.js/css/jimu-theme.css");
 
+$mediumBreakpoint: 991.98px;
+
 body {
   font-family: BCSans, Verdana, Arial, "sans-serif" !important;
 }
 
 .parks-container {
-  max-width: 1300px !important;
+  //Added 50px extra to compensate padding
+  max-width: 1370px !important;
   font-size: 15px;
+  padding: 0px !important;
 }
 
 .anchor-linkx {
@@ -64,7 +68,7 @@ body {
 }
 
 #park-header-container {
-  padding-top: 35px;
+  padding-top: 20px;
 }
 
 #park-header-container a {
@@ -220,6 +224,10 @@ body {
   padding: 0px;
 }
 
+#park-info-container {
+  padding: 0px 25px !important;
+}
+
 #park-info-container .MuiAccordionSummary-root {
   padding: 0px 25px !important;
   font-size: 16px !important;
@@ -273,10 +281,6 @@ body {
 
 .hide-photo {
   display: none;
-}
-
-#park-photo-gallery-container {
-  margin-right: -5px !important;
 }
 
 .park-photo-container,
@@ -334,7 +338,7 @@ body {
   min-width: 210px !important;
 }
 
-@media (max-width: 954.98px) {
+@media (max-width: $mediumBreakpoint) {
   .park-info-header-flex {
     display: block !important;
   }
