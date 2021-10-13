@@ -1,0 +1,129 @@
+$colorWhite: #fff;
+$colorBluePrimary: #003366;
+$colorGoldPrimary: #FCBA19;
+$colorText: #313132;
+$colorLink: #1A5A96;
+$colorNav: #38598A;
+$colorBorder: #96b3cf;
+$colorBackground: #F2F2F2;
+$colorComponent: #606060;
+
+.content {
+  padding-top: 20px;
+  padding-bottom: 35px;
+
+  .card {
+    border-color: $colorLink !important;
+    border-width: 1px !important;
+  
+    .card-img-wrapper {
+      > img {
+        height: 200px;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+    .card-title {
+      color: $colorLink;
+    }
+    .card-body {
+      padding: 0;
+    }
+    .card-body:hover {
+      background-color: $colorWhite !important;
+    }
+  }
+}
+a:hover {
+  color: $colorGoldPrimary;
+}
+.MuiBreadcrumbs-separator {
+  color: $colorGoldPrimary !important;
+}
+.content-zone {
+  padding: 40px 0 0 0;
+
+  .content-zone-intro {
+    .content-zone-header {
+      font-size: 24px;
+      color: $colorText;
+      font-weight: bold;
+      margin-bottom: 0;
+      padding-bottom: 20px;
+    }
+  }
+  .hero-img-wrapper {
+    > img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+
+      @media screen and (min-width: 416px) and (max-width: 768px) {
+        height: 375px !important;
+      }
+      @media screen and (max-width: 415px) {
+        height: 250px !important;
+      }
+    }
+  }
+  .hero-credit {
+    @media screen and (max-width: 415px) {
+      font-size: 12.8px !important;
+    }
+  }
+  .accordion-section {
+    h5 {
+      margin-bottom: 0;
+    }
+    .card-header {
+      background-color: $colorWhite;
+      border: 1px solid $colorLink;
+    }
+    .card-body {
+      padding: 20px;
+      color: $colorLink;
+    }
+    .collapse-toggle {
+      color: $colorLink;
+      &:focus {
+        outline: unset !important;
+      }
+    }
+    li {
+      display: list-item;
+      list-style: "- ";
+      margin-left: 10px;
+    }
+    .collapse-toggle[aria-expanded="true"] {
+      &.fa-chevron-down {
+        transform: rotate(180deg) !important;
+      }
+    }
+  }
+  .content-zone-header {
+    font-size: 24px;
+    color: $colorLink;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+  .content-zone-hr {
+    > hr {
+      margin-top: 5px;
+      height: 1px;
+      background-color: $colorGoldPrimary;
+      width: 75px;
+      display: inline-block;
+    }
+  }
+  .small-text {
+    @media screen and (max-width: 750px) {
+      margin-bottom: 40px !important;
+    }
+  }
+}
+
+#footer {
+  .card-body:hover {
+    background-color: unset !important;
+  }
+}

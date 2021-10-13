@@ -9,7 +9,7 @@ export default function Zone(props)
   }
     return (
     <div>
-      <div id={props.zoneID}>
+      <div id={props.zoneID} className={props.className}>
           <HTMLArea isVisible={props.Content.strapi_component === 'parks.html-area' ? true : false}>
             {props.Content.HTML}
           </HTMLArea>
