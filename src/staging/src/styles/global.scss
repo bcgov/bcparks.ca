@@ -40,10 +40,6 @@ footer #home-footer nav {
   > .navbar {
     z-index: 1300;
   }
-
-  @media screen and (min-width: $desktopBreakpoint) {
-    height: 120px;
-  }
 }
 
 .navbar-nav {
@@ -124,6 +120,9 @@ footer #home-footer nav {
     margin-left: 0;
     margin-right: 0;
   }
+}
+#footer {
+  overflow-x: hidden;
 }
 
 #home-header {

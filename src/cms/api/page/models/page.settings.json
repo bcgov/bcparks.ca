@@ -17,9 +17,8 @@
     "Template": {
       "type": "enumeration",
       "enum": [
-        "Template1",
-        "Template2",
-        "StaticGeneral1"
+        "staticLanding1",
+        "staticContent1"
       ]
     },
     "Content": {

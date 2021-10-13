@@ -1,0 +1,108 @@
+$colorBlue: #003366;
+$colorBlueOpacity: #00336690;
+$colorGold: #fcba19;
+$colorGrey: #eef1f5;
+$colorWhite: #fff;
+$desktopBreakpoint: 576px;
+
+#content {
+  background-color: aliceblue;
+}
+
+.content-width-override {
+  max-width: 1320px !important;
+}
+.max-width-override {
+  max-width: 1920px !important;
+}
+
+#main {
+  .mainCol {
+    @media screen and (max-width: $desktopBreakpoint) {
+      padding: 0 20px 0 20px;
+    }
+    padding: 6vh 0 6vh 0;
+    h2,h3 {
+      color: $colorBlue;
+    }
+  }
+  .mainContent {
+    background-color: $colorWhite;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%) !important;
+    h2 {
+      padding-top: 40px;
+    }
+    .icon-links {
+      img {
+        height: 26px;
+      }
+      a {
+        display: flex;
+        img {
+          padding-right: 5px;
+        }
+      }
+    }
+    .bullet-links {
+      li {
+        display: list-item;
+        list-style: square;
+        color: $colorGold;
+        margin-left: 20px;
+      }
+    }
+    .sub-bullet-links {
+      padding: 0 0 20px 20px;
+    }
+    .zone-hr > hr {
+      margin: 15px 0 10px 0;
+      height: 2px;
+      background-color: $colorGold;
+      width: 35px;
+      display: inline-block;
+    
+      @media screen and (min-width: $desktopBreakpoint) {
+        margin: 35px 20px 20px 0;
+        width: 75px;
+      }
+    }
+  }
+
+  .sideBarContainerWrapper{
+    @media screen and (max-width: $desktopBreakpoint) {
+      margin: 40px 0 40px 0;
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+  }
+
+  .sideBarContainer {
+    background-color: $colorWhite;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%) !important;
+    padding: 20px;
+    h3 {
+      padding-top: 20px;
+    }
+    p {
+      display: list-item;
+      list-style: square;
+      margin-left: 20px;
+      margin-bottom: 5px;
+      a {
+        display: inline-flex;
+      }
+    }
+    p::marker {
+      color: $colorGold;
+      font-size: 20px;
+      margin-right: 5px !important;
+    }
+  }
+  [class*='news_top'] {
+    padding-top: 20px;
+    p {
+      list-style: none !important;
+      margin-left: 0 !important;
+    }
+  }
+}
