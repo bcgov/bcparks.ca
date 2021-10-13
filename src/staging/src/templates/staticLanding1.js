@@ -8,53 +8,53 @@ import { Container, CssBaseline } from "@material-ui/core"
 import "../styles/staticLanding1.scss"
 
 export default function StaticLanding1({ data, pageContext }) {
-// const queryData = useStaticQuery(graphql`
-// {
-//   strapiWebsites(Name: { eq: "BCParks.ca" }) {
-//     Footer
-//     Header
-//     Name
-//     Navigation
-//     id
-//     homepage {
-//       id
-//       Template
-//       Content {
-//         id
-//         strapi_component
-//         HTML
-//       }
-//     }
-//   }
-//   allStrapiMenus(
-//     sort: { fields: order, order: ASC }
-//     filter: { show: { eq: true } }
-//   ) {
-//     nodes {
-//       strapiId
-//       title
-//       url
-//       order
-//       id
-//       strapiChildren {
-//         id
-//         title
-//         url
-//         order
-//         parent
-//       }
-//       strapiParent {
-//         id
-//         title
-//       }
-//     }
-//   }
-// }
-// `)
+  const queryData = useStaticQuery(graphql`
+  {
+    strapiWebsites(Name: { eq: "BCParks.ca" }) {
+      Footer
+      Header
+      Name
+      Navigation
+      id
+      homepage {
+        id
+        Template
+        Content {
+          id
+          strapi_component
+          HTML
+        }
+      }
+    }
+    allStrapiMenus(
+      sort: { fields: order, order: ASC }
+      filter: { show: { eq: true } }
+    ) {
+      nodes {
+        strapiId
+        title
+        url
+        order
+        id
+        strapiChildren {
+          id
+          title
+          url
+          order
+          parent
+        }
+        strapiParent {
+          id
+          title
+        }
+      }
+    }
+  }
+  `)
 
   const zonesContent = pageContext?.page?.Content?.filter(c => Boolean(c.HTML))
   const meta = pageContext?.page?.Content.find(c => Boolean(c.metaTitle)) || {}
-  const menuContent = []
+  const menuContent = queryData?.allStrapiMenus?.nodes || []
 
   return (
     <>
@@ -70,7 +70,7 @@ export default function StaticLanding1({ data, pageContext }) {
       </Container>
       <Container className="max-width-override" fixed disableGutters>
         <Footer>
-          {data.strapiWebsites.Footer}
+          {queryData.strapiWebsites.Footer}
         </Footer>
       </Container>
     </>

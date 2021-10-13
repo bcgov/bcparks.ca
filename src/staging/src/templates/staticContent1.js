@@ -9,77 +9,77 @@ import { Container, Breadcrumbs } from "@material-ui/core"
 import "../styles/staticContent1.scss"
 
 export default function StaticContent1({ pageContext }) {
-    const queryData = useStaticQuery(graphql`
-    {
-      strapiWebsites(Name: { eq: "BCParks.ca" }) {
-        Footer
-        Header
-        Name
-        Navigation
+  const queryData = useStaticQuery(graphql`
+  {
+    strapiWebsites(Name: { eq: "BCParks.ca" }) {
+      Footer
+      Header
+      Name
+      Navigation
+      id
+      homepage {
         id
-        homepage {
+        Template
+        Content {
           id
-          Template
-          Content {
-            id
-            strapi_component
-            HTML
-          }
+          strapi_component
+          HTML
         }
       }
-      allStrapiMenus(
-        sort: {fields: order, order: ASC}
-        filter: {show: {eq: true}}
-      ) {
-        nodes {
-          strapiId
+    }
+    allStrapiMenus(
+      sort: {fields: order, order: ASC}
+      filter: {show: {eq: true}}
+    ) {
+      nodes {
+        strapiId
+        title
+        url
+        order
+        id
+        strapiChildren {
+          id
           title
           url
           order
+          parent
+        }
+        strapiParent {
           id
-          strapiChildren {
-            id
-            title
-            url
-            order
-            parent
-          }
-          strapiParent {
-            id
-            title
-          }
+          title
         }
       }
-    }`)
+    }
+  }`)
 
-    const zonesContent = pageContext?.page?.Content?.filter(c => Boolean(c.strapi_component === 'parks.html-area'))
-    const meta = pageContext?.page?.Content.find(c => Boolean(c.strapi_component === 'parks.seo')) || {}
-    const menuContent = queryData?.allStrapiMenus?.nodes || []
+  const zonesContent = pageContext?.page?.Content?.filter(c => Boolean(c.strapi_component === 'parks.html-area'))
+  const meta = pageContext?.page?.Content.find(c => Boolean(c.strapi_component === 'parks.seo')) || {}
+  const menuContent = queryData?.allStrapiMenus?.nodes || []
 
-    return (
-        <>
-          <Seo title={meta.metaTitle} description={meta.description} keywords={meta.metaKeywords} />
-          <Container id="header" className="max-width-override" fixed disableGutters>
-            <Header mode="internal" content={menuContent} />
-          </Container>
-          <Container id="indigenous-relations" className="content-width-override content" fixed>
-            <Breadcrumbs
-              separator="›"
-              aria-label="breadcrumb"
-            >
-              {renderBreadcrumbs(menuContent, pageContext?.page)}
-            </Breadcrumbs>
-            <div className="zone">
-                {zonesContent.map(content => <Zone className="content-zone" key={content.id} zoneID={`Zone${content.id}`} Content={content} />)}
-            </div>
-          </Container>
-          <Container className="max-width-override" fixed disableGutters>
-            <Footer>
-              {queryData.strapiWebsites.Footer}
-            </Footer>
-          </Container>
-        </>
-    )
+  return (
+      <>
+        <Seo title={meta.metaTitle} description={meta.description} keywords={meta.metaKeywords} />
+        <Container id="header" className="max-width-override" fixed disableGutters>
+          <Header mode="internal" content={menuContent} />
+        </Container>
+        <Container id="indigenous-relations" className="content-width-override content" fixed>
+          <Breadcrumbs
+            separator="›"
+            aria-label="breadcrumb"
+          >
+            {renderBreadcrumbs(menuContent, pageContext?.page)}
+          </Breadcrumbs>
+          <div className="zone">
+              {zonesContent.map(content => <Zone className="content-zone" key={content.id} zoneID={`Zone${content.id}`} Content={content} />)}
+          </div>
+        </Container>
+        <Container className="max-width-override" fixed disableGutters>
+          <Footer>
+            {queryData.strapiWebsites.Footer}
+          </Footer>
+        </Container>
+      </>
+  )
 }
 
 function renderBreadcrumbs(menuContent, pageContext) {
