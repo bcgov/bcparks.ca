@@ -131,8 +131,7 @@ export default function Home({ data }) {
               }}
             />
           <div className="park-search-carousel">
-            <Zone key={6} Content={searchCarousel}  />
-            <div className="col-12 d-none d-lg-block text-center text-white" id="carousel-down"><i className="fa fa-chevron-down"></i></div>
+            <Zone key={6} Content={searchCarousel} />
           </div>
         </div>
       </Container>
