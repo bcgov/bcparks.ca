@@ -158,6 +158,7 @@ $tabletBreakpoint: 768px;
 .horizontal-card-img > img {
   max-height: 166px;
   width: 100%;
+  object-fit: cover;
 
   @media screen and (min-width: $desktopBreakpoint) {
     max-height: 245px;
