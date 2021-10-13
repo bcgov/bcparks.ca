@@ -102,12 +102,14 @@ const DesktopMenu = ({ linkStructure }) => {
         <a href="https://www.discovercamping.ca" rel="noreferrer" target="_blank" className="btn book-campsite-btn">Book a campsite</a>
       </nav>
       <div id="desktopNavMenu">
-        <nav>
-          <ul className="menu menu-bar justify-content-center">
-            {formattedContent.map(fc => {
-              return generateMenuItem(fc)
-            })}
-          </ul>
+        <nav className="desktopNavWrapper">
+          <div className="list-wrapper">
+            <ul className="menu menu-bar justify-content-center mx-auto">
+              {formattedContent.map(fc => {
+                return generateMenuItem(fc)
+              })}
+            </ul>
+          </div>
         </nav>
       </div>
     </>
