@@ -1,16 +1,60 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, useStaticQuery } from "gatsby"
 import Seo from "../components/seo"
 import Header from "../components/header"
 import Footer from "../components/footer"
 import Zone from "../components/zone"
 import { Container, CssBaseline } from "@material-ui/core"
-import "./staticGeneral1.scss"
+import "../styles/staticLanding1.scss"
 
-export default function StaticGeneral1Template({ data, pageContext }) {
+export default function StaticLanding1({ data, pageContext }) {
+// const queryData = useStaticQuery(graphql`
+// {
+//   strapiWebsites(Name: { eq: "BCParks.ca" }) {
+//     Footer
+//     Header
+//     Name
+//     Navigation
+//     id
+//     homepage {
+//       id
+//       Template
+//       Content {
+//         id
+//         strapi_component
+//         HTML
+//       }
+//     }
+//   }
+//   allStrapiMenus(
+//     sort: { fields: order, order: ASC }
+//     filter: { show: { eq: true } }
+//   ) {
+//     nodes {
+//       strapiId
+//       title
+//       url
+//       order
+//       id
+//       strapiChildren {
+//         id
+//         title
+//         url
+//         order
+//         parent
+//       }
+//       strapiParent {
+//         id
+//         title
+//       }
+//     }
+//   }
+// }
+// `)
+
   const zonesContent = pageContext?.page?.Content?.filter(c => Boolean(c.HTML))
   const meta = pageContext?.page?.Content.find(c => Boolean(c.metaTitle)) || {}
-  const menuContent = data?.allStrapiMenus?.nodes || []
+  const menuContent = []
 
   return (
     <>
@@ -32,47 +76,3 @@ export default function StaticGeneral1Template({ data, pageContext }) {
     </>
   )
 }
-
-export const query = graphql`
-  query {
-    strapiWebsites(Name: { eq: "BCParks.ca" }) {
-      Footer
-      Header
-      Name
-      Navigation
-      id
-      homepage {
-        id
-        Template
-        Content {
-          id
-          strapi_component
-          HTML
-        }
-      }
-    }
-    allStrapiMenus(
-      sort: { fields: order, order: ASC }
-      filter: { show: { eq: true } }
-    ) {
-      nodes {
-        strapiId
-        title
-        url
-        order
-        id
-        strapiChildren {
-          id
-          title
-          url
-          order
-          parent
-        }
-        strapiParent {
-          id
-          title
-        }
-      }
-    }
-  }
-`
