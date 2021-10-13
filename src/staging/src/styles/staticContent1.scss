@@ -116,6 +116,7 @@ a:hover {
     }
   }
   .small-text {
+    font-size: 0.8rem;
     @media screen and (max-width: 750px) {
       margin-bottom: 40px !important;
     }
