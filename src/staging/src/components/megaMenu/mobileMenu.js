@@ -125,6 +125,7 @@ const MobileMenu = ({ linkStructure }) => {
         <a className="navbar-brand" href="/">
           <img src={BCParksLogo} className="logo" alt="BC Parks logo" />
         </a>
+        <a href="https://www.discovercamping.ca" rel="noreferrer" target="_blank" className="btn book-campsite-btn mr-2">Book a campsite</a>
         <button
           className={`navbar-toggler border-0 float-right collapsed`}
           type="button"
