@@ -5,7 +5,6 @@ import { GatsbyImage } from "gatsby-plugin-image"
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox"
 import PhotoLibraryOutlinedIcon from "@material-ui/icons/PhotoLibraryOutlined"
 import { useLightbox } from "simple-react-lightbox"
-import Spacer from "./spacer"
 
 const ShowPhotos = ({ text, setShowPhotos }) => {
   const { openLightbox } = useLightbox()
@@ -257,7 +256,7 @@ export default function ParkPhotoGallery({ photos }) {
         )}
       </div>
       <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-        {parkPhotos.length === 0 && <Spacer />}
+        {parkPhotos.length === 0 && <div className="p20t"></div>}
         {parkPhotos.length > 0 && (
           <Grid
             item
@@ -276,7 +275,7 @@ export default function ParkPhotoGallery({ photos }) {
               <SimpleReactLightbox>
                 <SRLWrapper options={srlOptions}>
                   <Grid item container spacing={1}>
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={12}>
                       <GatsbyImage
                         className={classes.bigPhoto}
                         image={parkPhotos[0].image}

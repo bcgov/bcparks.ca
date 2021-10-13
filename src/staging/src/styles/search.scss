@@ -132,7 +132,7 @@ $largeStart: 992px;
     max-height: 742px;
   }
 
-  @media screen and (max-width: $mediumBreakpoint) { 
+  @media screen and (max-width: $mediumBreakpoint) {
     height: 550px;
     img {
       height: 550px !important;
@@ -161,7 +161,7 @@ $largeStart: 992px;
       height: 50px;
     }
 
-    @media screen and (max-width: 991.97px) {
+    @media screen and (max-width: $mediumBreakpoint) {
       height: inherit;
       top: unset !important;
     }
@@ -182,7 +182,7 @@ $largeStart: 992px;
       }
     }
 
-    @media screen and (min-width: 376px) and (max-width: 991.97px) {
+    @media screen and (min-width: 376px) and (max-width: $mediumBreakpoint) {
       .park-search-group {
         padding: 0 17%;
       }
@@ -509,7 +509,8 @@ div[class$="-singleValue"] {
   padding-left: 15px !important;
 }
 
-.p20l {
+.p20l,
+.p20l-filter {
   padding-left: 20px !important;
 }
 
@@ -525,12 +526,16 @@ div[class$="-singleValue"] {
   margin-top: 10px !important;
 }
 
-.p30 {
+.p2030 {
   padding: 20px 30px !important;
 }
 
 .pr3 {
   padding-right: 3px !important;
+}
+
+.pr10 {
+  padding-right: 10px !important;
 }
 
 .pr15 {
@@ -976,10 +981,16 @@ div[class$="-singleValue"] {
     }
   }
 }
-
-@media (min-width: 1400px) {
+@media (min-width: 1350px) {
   .search-results-main {
-    max-width: 1300px;
+    // Added 30px extra to compensate padding
+    max-width: 1350px !important;
+  }
+}
+
+@media (max-width: $mediumBreakpoint) {
+  .p20l-filter {
+    padding-left: 0px !important;
   }
 }
 
