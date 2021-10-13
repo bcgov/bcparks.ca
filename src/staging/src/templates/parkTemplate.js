@@ -28,7 +28,6 @@ import Footer from "../components/footer"
 import useScrollSpy from "react-use-scrollspy"
 
 import "../styles/parks.scss"
-import Spacer from "../components/park/spacer"
 
 const drawerWidth = 230
 
@@ -182,9 +181,7 @@ export default function ParkTemplate({ data }) {
         <Container id="park-info-container" maxWidth={false}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
-              <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                <Spacer />
-              </div>
+              <div className="p30t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none" />
               <Breadcrumbs
                 separator="›"
                 aria-label="breadcrumb"
@@ -201,7 +198,14 @@ export default function ParkTemplate({ data }) {
                 <ParkPhotoGallery photos={photos} />
               </div>
             </Grid>
-            <Grid item xs={12} sm={12} md={3} lg={3} className="park-menu-root">
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={3}
+              lg={3}
+              className="park-menu-root d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none"
+            >
               <ParkMenu data={parkStatusData} />
             </Grid>
             <Grid

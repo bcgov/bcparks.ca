@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react"
 import { graphql } from "gatsby"
-import axios  from "axios";
+import axios from "axios"
 import Footer from "../components/footer"
 import MegaMenu from "../components/megaMenu"
 import "../styles/search.scss"
@@ -184,6 +184,8 @@ export default function Explore({ location, data }) {
 
   const [openQuickView, setOpenQuickView] = useState(false)
 
+  const [filteredResults, setFilteredResults] = useState(false)
+
   const sortOptions = [
     { value: "rel", label: "Sort by Relevence" },
     { value: "asc", label: "Sort A-Z" },
@@ -260,6 +262,37 @@ export default function Explore({ location, data }) {
   const handleCloseQuickView = () => {
     setOpenQuickView(false)
   }
+
+  const isFilteredResult = useCallback(() => {
+    let filtered = false
+    if (
+      camping ||
+      petFriendly ||
+      wheelchair ||
+      marine ||
+      ecoReserve ||
+      electricalHookup
+    ) {
+      filtered = true
+    }
+    if (selectedActivities.length > 0 || selectedFacilities.length > 0) {
+      filtered = true
+    }
+    if (searchText && searchText !== "") {
+      filtered = true
+    }
+    return filtered
+  }, [
+    camping,
+    ecoReserve,
+    electricalHookup,
+    marine,
+    petFriendly,
+    selectedActivities,
+    selectedFacilities,
+    wheelchair,
+    searchText,
+  ])
 
   const setFilters = useCallback(() => {
     const filters = []
@@ -350,7 +383,7 @@ export default function Explore({ location, data }) {
   useEffect(() => {
     setIsLoading(true)
     setFilters()
-
+    setFilteredResults(isFilteredResult())
     // TODO: Execute live search here.
     const dataSet = 1 // Live search: 0, Strapi search: 1
 
@@ -400,6 +433,8 @@ export default function Explore({ location, data }) {
     data.site.siteMetadata.apiURL,
     processResults,
     setFilters,
+    isFilteredResult,
+    filteredResults,
   ])
 
   return (
@@ -411,31 +446,71 @@ export default function Explore({ location, data }) {
             <Breadcrumbs
               separator="›"
               aria-label="breadcrumb"
-              className="p40t sm-p10"
+              className="p10t sm-p10"
             >
               {breadcrumbs}
             </Breadcrumbs>
             <div className="row no-gutters">
               <div className="col-12">
                 <h1 className="headline-text p40t sm-p10">
-                  Find your next adventure
+                  {!filteredResults && <>Find your next adventure</>}
+                  {filteredResults && (
+                    <>
+                      {searchResults.length}{" "}
+                      {searchResults.length === 1
+                        ? " result found"
+                        : " results found"}
+                    </>
+                  )}
                 </h1>
               </div>
             </div>
             <div className="row no-gutters">
               <div className="col-lg-3 col-md-12 col-sm-12">
-                <div className="search-results-quick-filter m15t">
+                <div className="search-results-quick-filter m15t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
                   <div className="row no-gutters">
-                    <div className="col-12 park-search-text-box-container d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+                    <div className="col-12 park-search-text-box-container ">
                       <h4 className="filter-heading pr30 p10t sm-p10">
                         Search by park name, <br />
                         location, activity
                       </h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-9 col-md-12 col-sm-12">
+                <div className="search-results-list container">
+                  {filterSelections.length > 0 && (
+                    <>
+                      <div className="row p20t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+                        <div className="col-12">
+                          {filterSelections.map((f, index) => (
+                            <Chip
+                              key={index}
+                              label={f.label}
+                              onDelete={handleFilterDelete(f)}
+                              variant="outlined"
+                              className="park-filter-chip"
+                              deleteIcon={<CloseIcon className="close-icon" />}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="row p20t no-gutters">
+              <div className="col-lg-3 col-md-12 col-sm-12">
+                <div className="search-results-quick-filter">
+                  <div className="row no-gutters">
+                    <div className="col-12 park-search-text-box-container d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
                       <TextField
                         id="park-search-text"
                         variant="outlined"
                         placeholder="e.g Alice Park"
-                        className="park-search-text-box m10t h50p"
+                        className="park-search-text-box h50p"
                         value={inputText}
                         onChange={event => {
                           setInputText(event.target.value)
@@ -455,8 +530,14 @@ export default function Explore({ location, data }) {
                         }}
                       />
                     </div>
-                    <div className="col-12  d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-                      <h4 className="filter-heading p30t ">
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-9 col-md-12 col-sm-12">
+                <div className="search-results-quick-filter d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
+                  <div className="row no-gutters">
+                    <div className="col-12 pb20">
+                      <h4 className="filter-heading">
                         Search by park name, location, activity
                       </h4>
                       <TextField
@@ -484,6 +565,39 @@ export default function Explore({ location, data }) {
                       />
                     </div>
                   </div>
+                </div>
+                <div className="search-results-list container">
+                  <div className="row no-gutters">
+                    <div className="col-lg-8 col-md-6 col-sm-6 col-xs-6 w50 pr10">
+                      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
+                        <Button
+                          variant="outlined"
+                          onClick={handleClickOpenFilter}
+                          className="bcgov-button bcgov-normal-white h50p"
+                        >
+                          Filter
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="col-lg-4 col-md-6 col-sm-6 col-xs-6 w50">
+                      <Select
+                        value={sortOption}
+                        className="park-filter-select h50p"
+                        variant="outlined"
+                        options={sortOptions}
+                        onChange={e => {
+                          setSortOption(e)
+                        }}
+                        placeholder="Sort by"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row no-gutters">
+              <div className="col-lg-3 col-md-12 col-sm-12">
+                <div className="search-results-quick-filter m15t">
                   <div className="row p20t no-gutters d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
                     <div className="col-12">
                       <h4 className="filter-heading p30t">Filter by</h4>
@@ -615,54 +729,11 @@ export default function Explore({ location, data }) {
               </div>
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-list container">
-                  {filterSelections.length > 0 && (
-                    <>
-                      <div className="row p20t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                        <div className="col-12">
-                          {filterSelections.map((f, index) => (
-                            <Chip
-                              key={index}
-                              label={f.label}
-                              onDelete={handleFilterDelete(f)}
-                              variant="outlined"
-                              className="park-filter-chip"
-                              deleteIcon={<CloseIcon className="close-icon" />}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </>
-                  )}
-                  <div className="row p30t no-gutters">
-                    <div className="col-lg-8 col-md-6 col-sm-6 col-xs-6 w50 pr3">
-                      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-                        <Button
-                          variant="outlined"
-                          onClick={handleClickOpenFilter}
-                          className="bcgov-button bcgov-normal-white h50p"
-                        >
-                          Filter
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="col-lg-4 col-md-6 col-sm-6 col-xs-6 w50">
-                      <Select
-                        value={sortOption}
-                        className="park-filter-select h50p"
-                        variant="outlined"
-                        options={sortOptions}
-                        onChange={e => {
-                          setSortOption(e)
-                        }}
-                        placeholder="Sort by"
-                      />
-                    </div>
-                  </div>
                   {!isLoading && (
                     <>
                       {!searchResults ||
                         (searchResults.length === 0 && (
-                          <div className="container p30 align-center">
+                          <div className="container p2030 align-center">
                             No parks found
                             <br />
                           </div>
@@ -1051,7 +1122,7 @@ export default function Explore({ location, data }) {
                                               </div>
                                             )}
 
-                                          <div className="col-12 park-content-mobile p30 container">
+                                          <div className="col-12 park-content-mobile p2030 container">
                                             <div className="row">
                                               <div className="col-12 park-overview-content text-blue small-font">
                                                 {r.isOpenToPublic && (
@@ -1231,7 +1302,7 @@ export default function Explore({ location, data }) {
                             <div className="small-m-auto">
                               {searchResults.length > 0 && (
                                 <>
-                                  Showing results{" "}
+                                  Showing{" "}
                                   {currentPage * itemsPerPage -
                                     itemsPerPage +
                                     1}{" "}

@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 import {
   TextField,
   Dialog,
-  DialogTitle,
   DialogContent,
   DialogActions,
   Button,
@@ -125,7 +124,7 @@ const SearchFilter = ({
   }, [searchText, selectedActivities, selectedFacilities, setFilters])
 
   return (
-    <div className="">
+    <div>
       <Dialog
         open={openFilter}
         onClose={handleCloseFilter}
@@ -133,15 +132,6 @@ const SearchFilter = ({
         className="park-filter-dialog"
         scroll="paper"
       >
-        <DialogTitle className="park-filter-title d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-          <div className="container">
-            <div className="row">
-              <div className="col-12 p30t">
-                <h1>Plan your next adventure</h1>
-              </div>
-            </div>
-          </div>
-        </DialogTitle>
         <DialogContent className="park-filter-dialog-content">
           <div className="container p10">
             <div className="row no-gutters">
@@ -207,7 +197,7 @@ const SearchFilter = ({
                 />
               </div>
             </div>
-            <div className="row p20t">
+            <div className="row p20t no-gutters">
               <div className="col-lg-4 col-md-12 col-sm-12 pb20">
                 <div className="park-filter-options">
                   <div className="park-filter-option-label p20 flex-display">
@@ -266,7 +256,7 @@ const SearchFilter = ({
                   </div>
                 </div>
               </div>
-              <div className="col-lg-8 col-md-12 col-sm-12">
+              <div className="p20l-filter col-lg-8 col-md-12 col-sm-12">
                 <div className="row">
                   <div className="col-12">
                     <div className="park-filter-options">
