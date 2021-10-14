@@ -42,7 +42,6 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions
   const parkQuery = `
   {
     allStrapiProtectedArea {
@@ -58,7 +57,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   `
   const staticQuery = `
   {
-    allStrapiPages(filter: {Template: {eq: "StaticGeneral1"}}) {
+    allStrapiPages(filter: {Slug: {nin: ["/home", "/alerts", "/explore"]}}) {
       totalCount
       nodes {
         id
@@ -99,7 +98,7 @@ async function createPageSlugs(type, query, { graphql, actions, reporter }) {
     result.data.allStrapiPages.nodes.forEach(page => {
       actions.createPage({
         path: page.Slug,
-        component: require.resolve(`./src/templates/staticGeneral1.js`),
+        component: require.resolve(`./src/templates/${page.Template}.js`),
         context: { page },
       })
     })
