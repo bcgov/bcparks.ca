@@ -27,7 +27,7 @@ jobs:
           oc -n ${{ env.TOOLS_NAMESPACE }} tag public:${{ env.ENVIRONMENT }} public:${{ env.ENVIRONMENT }}-backup-$(date +%s)
           oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi:${{ env.ENVIRONMENT }} strapi:${{ env.ENVIRONMENT }}-backup-$(date +%s)
 
-      - name: Tag Test images
+      - name: Tag Prod images
         run: |
           oc -n ${{ env.TOOLS_NAMESPACE }} tag admin:test admin:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder:test public-builder:${{ env.ENVIRONMENT }}
