@@ -27,6 +27,12 @@ jobs:
           oc -n ${{ env.TOOLS_NAMESPACE }} tag public:${{ env.ENVIRONMENT }} public:${{ env.ENVIRONMENT }}-backup-$(date +%s)
           oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi:${{ env.ENVIRONMENT }} strapi:${{ env.ENVIRONMENT }}-backup-$(date +%s)
 
+      - name: Tag Test images
+        run: |
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin:test admin:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder:test public-builder:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi:test strapi:${{ env.ENVIRONMENT }}
+
       - name: Trigger Gatsby static build workflow
         uses: peter-evans/repository-dispatch@v1
         with:
