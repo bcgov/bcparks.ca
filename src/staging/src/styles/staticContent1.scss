@@ -99,6 +99,10 @@ a:hover {
         transform: rotate(180deg) !important;
       }
     }
+    .card:hover {
+      border: 1px solid $colorGoldPrimary !important;
+      cursor: pointer;
+    }
   }
   .content-zone-header {
     font-size: 24px;
