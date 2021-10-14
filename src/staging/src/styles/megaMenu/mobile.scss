@@ -10,13 +10,23 @@ body {
 #mainNav {
   background-color: $colorBlue;
   height: 100%;
+  
+  .book-campsite-btn {
+    align-self: center;
+    margin-left: auto;
+    @media screen and (max-width: 750px) {
+      padding: 5px 10px !important;
+    }
+  }
+
+  .navbar-brand {
+    align-self: center;
+  }
 
   .nav-wrapper {
     width: 100%;
     padding: 1rem 1rem;
-    button {
-      margin-left: auto !important;
-    }
+    
     .navbar-toggler-icon {
       font-size: 15px;
     }
@@ -32,8 +42,8 @@ body {
     }
   }
   .logo {
-    width: 150px;
-    max-height: 150px;
+    width: 100px;
+    max-height: 100px;
   }
   ul {
     .nav-item {

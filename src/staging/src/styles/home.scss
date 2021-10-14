@@ -78,17 +78,12 @@ $tabletBreakpoint: 768px;
   }
 }
 
-.card {
-  border: unset;
-}
-
 .link-override {
   text-decoration: none;
   color: $colorBlue !important;
 }
 
 .grid-card {
-  border: unset !important;
   background-color: unset !important;
 
   @media screen and (min-width: $desktopBreakpoint) {
@@ -96,6 +91,18 @@ $tabletBreakpoint: 768px;
   }
 }
 
+.round-bl {
+  border-bottom-left-radius: 0.25rem;
+}
+.round-tl {
+  border-top-left-radius: 0.25rem;
+}
+.round-tr {
+  border-top-right-radius: 0.25rem;
+}
+.round-br {
+  border-bottom-right-radius: 0.25rem;
+}
 
 .padded-link {
   margin-left: 36px;
@@ -132,6 +139,7 @@ $tabletBreakpoint: 768px;
   height: 100%;
   > img {
     height: 100%;
+    object-fit: cover;
   }
 
   @media screen and (max-width: $desktopBreakpoint - 1px) {
@@ -157,6 +165,7 @@ $tabletBreakpoint: 768px;
 .horizontal-card-img > img {
   max-height: 166px;
   width: 100%;
+  object-fit: cover;
 
   @media screen and (min-width: $desktopBreakpoint) {
     max-height: 245px;

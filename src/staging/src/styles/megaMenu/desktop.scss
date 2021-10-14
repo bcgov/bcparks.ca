@@ -48,10 +48,16 @@ nav {
   }
 }
 
+.list-wrapper {
+  background: $colorLightBlue;
+}
+
 .menu-bar {
   background: $colorLightBlue;
+  max-width: 1320px;
   display: flex;
-  height: 65px;
+  height: auto;
+  min-height: 65px;
 }
 
 .menu-bar-link {
@@ -59,7 +65,6 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 130px;
 }
 
 .menu-list-link {
@@ -69,10 +74,10 @@ nav {
 }
 
 .menu-link {
-  padding: 10px 10px;
+  padding: 10px 20px;
   background: $colorLightBlue;
   color: white;
-  font-size: 16px;
+  font-size: 14px;
   transition: background .2s, color .2s;
   position: relative;
   z-index: 1;
@@ -80,7 +85,7 @@ nav {
 }
 
 .sub-menu-list {
-  padding-top: 20px;
+  padding-top: 20px !important;
 }
 
 .sub-menu-link {
@@ -147,7 +152,7 @@ nav {
 .mega-menu {
   background: $colorLight;
   z-index: 10;
-  padding: 20px 0;
+  padding: 20px 0 !important;
 }
 
 .mega-menu--multiLevel {

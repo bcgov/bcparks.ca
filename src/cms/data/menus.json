@@ -2,7 +2,7 @@
   "menu": [
     {
       "title": "Home",
-      "url": "/home",
+      "url": "/",
       "pageType": "Landing",
       "order": 1,
       "parent": null,
