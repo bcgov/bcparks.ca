@@ -57,6 +57,9 @@ const MainSearch = ({ data: { activities, facilities } }) => {
       <div className="park-search-container-inner row align-items-center w-100 no-gutters">
         <div className="col-12">
           <div className="row no-gutters">
+            <div className="col-0">
+            </div>
+            <div className="col ml-auto park-search-container-inner-align">
             <div className="col-12 park-search-intro text-center text-sm-left">
               <h2 className="heading-white-space">Welcome to BC Parks</h2>
               <p className="pt-sm-3">
@@ -87,8 +90,13 @@ const MainSearch = ({ data: { activities, facilities } }) => {
                 Search
               </Button>
             </div>
+            </div>
           </div>
           <div className="row no-gutters"></div>
+          <div className="row no-gutters">
+          <div className="col-0">
+            </div>
+            <div className="col ml-auto park-search-container-inner-align">
           <div className="col-12 pl-sm-0 pt-sm-3">
             <Link
               component="button"
@@ -97,6 +105,8 @@ const MainSearch = ({ data: { activities, facilities } }) => {
             >
               Filters
             </Link>
+          </div>
+          </div>
           </div>
         </div>
       </div>

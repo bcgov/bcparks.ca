@@ -156,6 +156,12 @@ $tabletBreakpoint: 768px;
   }
 }
 
+#home-news,#home-get-involved {
+  .card {
+    border: unset;
+  }
+}
+
 .card-img,
 .horizontal-card-img,
 .full-horizontal-img {

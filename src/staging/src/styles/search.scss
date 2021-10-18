@@ -208,6 +208,12 @@ $largeStart: 992px;
     }
   }
 
+  .park-search-container-inner-align{
+    @media screen and (min-width: $largeStart) {
+      max-width: 500px;
+    }
+  }
+
   #search-title {
     font-family: $globalFont !important;
     font-style: normal;

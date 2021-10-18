@@ -122,6 +122,7 @@ footer #home-footer nav {
   }
 }
 #footer {
+  background-color: $colorBlue !important;
   overflow-x: hidden;
 }
 
@@ -140,8 +141,8 @@ footer #home-footer nav {
 }
 
 #home-footer {
-  max-width: 100%;
   background-color: $colorBlue !important;
+  max-width: 1320px;
   font-size: 14px !important;
 
   > p {
@@ -174,7 +175,9 @@ footer #home-footer nav {
   }
 
   @media screen and (min-width: $desktopBreakpoint) {
-    padding: 0 7.5% 0 7.5%;
+    padding: 0 2.5%;
+    margin-right: auto;
+    margin-left: auto;
     #footer-social-icons {
       height: 65px;
     }

@@ -27,15 +27,6 @@ export const query = graphql`
         }
       }
     }
-    allStrapiPages {
-      totalCount
-      nodes {
-        id
-        Slug
-        Template
-        Content
-      }
-    }
     allStrapiActivityTypes(sort: { fields: activityName }) {
       totalCount
       nodes {
