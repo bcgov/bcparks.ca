@@ -54,6 +54,14 @@ export default function ParkTemplate({ data }) {
     ? data.strapiParkOperation
     : { hasReservations: false }
 
+    // Determine if activity/facility types are active globally and compare to flags on dependent nodes(parkAcccessStatus.parkFacilities/parkActivities)
+  const allStrapiActivityTypes = data.allStrapiActivityTypes.nodes
+  const allStrapiFacilityTypes = data.allStrapiFacilityTypes.nodes
+  const filterActiveActivityFacilityTypes = (node, nodeProperty = '', typeCollection) => {
+    const globalSetting = typeCollection?.find(tc => tc.isActive && tc[nodeProperty] === node[nodeProperty]) ?? {}
+    return globalSetting[nodeProperty] === node[nodeProperty]
+  }
+
   const menuContent = data?.allStrapiMenus?.nodes || []
   const alertsCount = advisories.totalCount
 
@@ -239,7 +247,9 @@ export default function ParkTemplate({ data }) {
                   <div ref={campingRef} className="full-width">
                     <CampingDetails
                       data={{
-                        parkFacilities: parkAccessStatus.parkFacilities,
+                        parkFacilities: parkAccessStatus.parkFacilities.filter(pf => {
+                          return filterActiveActivityFacilityTypes(pf, 'facilityName', allStrapiFacilityTypes)
+                        }),
                         reservations: park.reservations,
                         hasDayUsePass: park.hasDayUsePass,
                         hasReservations: parkOperation.hasReservations,
@@ -249,12 +259,16 @@ export default function ParkTemplate({ data }) {
                 )}
                 {menuItems[4].visible && (
                   <div ref={facilityRef} className="full-width">
-                    <ParkFacility data={parkAccessStatus.parkFacilities} />
+                    <ParkFacility data={parkAccessStatus.parkFacilities.filter(pf => {
+                      return filterActiveActivityFacilityTypes(pf, 'facilityName', allStrapiFacilityTypes)
+                    })} />
                   </div>
                 )}
                 {menuItems[5].visible && (
                   <div ref={activityRef} className="full-width">
-                    <ParkActivity data={parkAccessStatus.parkActivities} />
+                    <ParkActivity data={parkAccessStatus.parkActivities.filter(pa => {
+                      return filterActiveActivityFacilityTypes(pa, 'activityName', allStrapiActivityTypes)
+                    })} />
                   </div>
                 )}
                 {menuItems[6].visible && (
@@ -451,6 +465,18 @@ export const query = graphql`
           id
           title
         }
+      }
+    }
+    allStrapiActivityTypes {
+      nodes {
+        activityName
+        isActive
+      }
+    }
+    allStrapiFacilityTypes {
+      nodes {
+        facilityName
+        isActive
       }
     }
   }
