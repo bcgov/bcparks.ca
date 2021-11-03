@@ -1,7 +1,7 @@
 _format_version: "1.1"
 services:
   - name: BCPARKS
-    host: cms.61d198-prod.svc
+    host: bcparks-cms.61d198-prod.svc
     protocol: http
     port: 1337
     routes:
