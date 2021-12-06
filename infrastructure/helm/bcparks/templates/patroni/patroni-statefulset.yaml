@@ -1,0 +1,144 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: {{ template "bcparks_patroni_fullname" . }}
+    cluster-name: {{ template "bcparks_patroni_fullname" . }}
+  name: {{ template "bcparks_patroni_fullname" . }}
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: {{ .Values.patroni.replicas }}
+  selector:
+    matchLabels:
+      statefulset: {{ template "bcparks_patroni_fullname" . }}
+  serviceName: {{ template "bcparks_patroni_fullname" . }}
+  template:
+    metadata:
+      labels:        
+        component: {{ .Values.patroni.componentName }}
+        release: {{ .Release.Name }}
+        app: {{ template "bcparks_patroni_fullname" . }}
+        statefulset: {{ template "bcparks_patroni_fullname" . }}
+        cluster-name: {{ template "bcparks_patroni_fullname" . }}
+        app.kubernetes.io/name: patroni
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: statefulset
+                    operator: In
+                    values:
+                      - {{ template "bcparks_patroni_fullname" . }}
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+        - env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+            - name: PATRONI_KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: PATRONI_KUBERNETES_LABELS
+              value: '{"cluster-name": "{{ template "bcparks_patroni_fullname" . }}", "app.kubernetes.io/name": "patroni"}'
+            - name: PATRONI_SUPERUSER_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: superuser-username
+                  name: {{ template "bcparks_patroni_fullname" . }}-secret
+            - name: PATRONI_SUPERUSER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: superuser-password
+                  name: {{ template "bcparks_patroni_fullname" . }}-secret
+            - name: PATRONI_REPLICATION_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: replication-username
+                  name: {{ template "bcparks_patroni_fullname" . }}-secret
+            - name: PATRONI_REPLICATION_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: replication-password
+                  name: {{ template "bcparks_patroni_fullname" . }}-secret
+            - name: APP_USER
+              valueFrom:
+                secretKeyRef:
+                  key: app-db-username
+                  name: {{ template "bcparks_patroni_fullname" . }}-secret
+            - name: APP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: app-db-password
+                  name: {{ template "bcparks_patroni_fullname" . }}-secret
+            - name: APP_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: app-db-name
+                  name: {{ template "bcparks_patroni_fullname" . }}-secret
+            - name: PATRONI_SCOPE
+              value: {{ template "bcparks_patroni_fullname" . }}
+            - name: PATRONI_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: PATRONI_LOG_LEVEL
+              value: WARNING
+            - name: PATRONI_POSTGRESQL_DATA_DIR
+              value: /home/postgres/pgdata/pgroot/data
+            - name: PATRONI_POSTGRESQL_PGPASS
+              value: /tmp/pgpass
+            - name: PATRONI_POSTGRESQL_LISTEN
+              value: 0.0.0.0:5432
+            - name: PATRONI_RESTAPI_LISTEN
+              value: 0.0.0.0:8008
+          image: {{ .Values.images.patroni.name }}:{{ .Values.images.patroni.tag }}
+          imagePullPolicy: Always
+          name: postgresql
+          ports:
+            - containerPort: 8008
+              protocol: TCP
+            - containerPort: 5432
+              protocol: TCP
+          resources:
+{{ toYaml .Values.patroni.resources | indent 12 }}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 4
+            exec:
+              command:
+                - /usr/share/scripts/patroni/health_check.sh
+          volumeMounts:
+            - mountPath: /home/postgres/pgdata
+              name: postgresql
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccountName: {{ template "bcparks_patroni_fullname" . }}
+      terminationGracePeriodSeconds: 0
+  updateStrategy:
+    type: RollingUpdate
+  volumeClaimTemplates:
+    - metadata:
+        annotations:
+          volume.beta.kubernetes.io/storage-class: {{ .Values.patroni.pvc.storageClassName }}
+        labels:
+          app: {{ template "bcparks_patroni_fullname" . }}
+        name: postgresql
+      spec:
+        storageClassName: {{ .Values.patroni.pvc.storageClassName }}
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.patroni.pvc.size }}

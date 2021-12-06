@@ -38,7 +38,7 @@ spec:
         {{- if .Values.pgbouncer.enabled }}
           command: ['sh', '-c', 'until pg_isready -h {{ template "bcparks_pgbouncer_fullname" . }} -p {{ .Values.pgbouncer.service.port }}; do echo waiting for database; sleep 2; done;']
         {{- else }}
-          command: ['sh', '-c', 'until pg_isready -h {{ template "bcparks_postgres_fullname" . }} -p {{ .Values.postgres.service.port }}; do echo waiting for database; sleep 2; done;']
+          command: ['sh', '-c', 'until pg_isready -h {{ template "bcparks_patroni_fullname" . }} -p {{ .Values.patroni.service.port }}; do echo waiting for database; sleep 2; done;']
         {{- end }}
         {{- end }}
       containers:
@@ -74,7 +74,7 @@ spec:
             {{- else if .Values.pgbouncer.enabled }}
               value: {{ template "bcparks_pgbouncer_fullname" . }} 
             {{- else }}
-              value: {{ template "bcparks_postgres_fullname" . }}
+              value: {{ template "bcparks_patroni_fullname" . }}
             {{- end }}
             - name: DATABASE_PORT
             {{- if .Values.mariadb.enabled }}
@@ -82,7 +82,7 @@ spec:
             {{- else if .Values.pgbouncer.enabled }}
               value: {{ .Values.pgbouncer.service.port | quote }}
             {{- else }}
-              value: {{ .Values.postgres.service.port | quote }}
+              value: {{ .Values.patroni.service.port | quote }}
             {{- end }}              
             - name: DATABASE_USERNAME
             {{- if .Values.mariadb.enabled }}
@@ -93,8 +93,8 @@ spec:
             {{- else }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "bcparks_postgres_secret" . }}
-                  key: POSTGRESQL_USER
+                  name: {{ template "bcparks_patroni_secret" . }}
+                  key: app-db-username
             {{- end }}
             - name: DATABASE_PASSWORD
             {{- if .Values.mariadb.enabled }}
@@ -105,8 +105,8 @@ spec:
             {{- else }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "bcparks_postgres_secret" . }}
-                  key: POSTGRESQL_PASSWORD
+                  name: {{ template "bcparks_patroni_secret" . }}
+                  key: app-db-password
             {{- end }}
             - name: DATABASE_NAME
             {{- if .Values.mariadb.enabled }}
@@ -117,8 +117,8 @@ spec:
             {{- else }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "bcparks_postgres_secret" . }}
-                  key: POSTGRESQL_DATABASE
+                  name: {{ template "bcparks_patroni_secret" . }}
+                  key: app-db-name
             {{- end }}
             - name: DATABASE_SSL
               value: "false"
@@ -154,10 +154,14 @@ spec:
             periodSeconds: 5
             successThreshold: 1
             failureThreshold: 20
+        {{- if .Values.cms.pvc.enabled }}
           volumeMounts:
             - name: cms-data
               mountPath: /opt/app-root/src/public/uploads
+        {{- end }}
+    {{- if .Values.cms.pvc.enabled }}
       volumes:
         - name: cms-data
           persistentVolumeClaim:
             claimName: {{ template "bcparks_cms_volume_claim" . }}
+    {{- end }}

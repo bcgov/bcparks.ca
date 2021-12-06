@@ -29,6 +29,9 @@ images:
   public:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/public
     tag: latest
+  patroni:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/patroni-postgres
+    tag: 12.4-latest
 
 cms:
   componentName: cms
@@ -60,6 +63,7 @@ cms:
     port: 1337
 
   pvc:
+    enabled: false
     accessMode: ReadWriteMany
     storageClassName: netapp-file-standard
     size: 5Gi
@@ -89,8 +93,34 @@ postgres:
     storageClassName: netapp-file-standard
     size: 5Gi
 
+patroni:
+  componentName: patroni
+
+  enabled: true
+
+  replicas: 3
+
+  databaseName: cms
+
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  service:
+    portName: patroni-leader
+    port: 5432
+
+  pvc:
+    accessMode: ReadWriteOnce
+    storageClassName: netapp-block-standard
+    size: 1Gi
+
 pgbouncer:
-  enabled: false
+  enabled: true
 
   componentName: pgbouncer
 
@@ -111,7 +141,7 @@ pgbouncer:
 mariadb:
   componentName: mariadb
 
-  enabled: true
+  enabled: false
 
   imagePullPolicy: Always
 

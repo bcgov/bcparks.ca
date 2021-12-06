@@ -1,6 +1,16 @@
 cluster:
   ssoAuthUrl: https://oidc.gov.bc.ca/auth
 
+images:
+  strapi:
+    tag: prod
+  staging:
+    tag: prod
+  admin:
+    tag: prod
+  public:
+    tag: prod
+
 cms:
   resources:
     limits:
@@ -37,16 +47,18 @@ mariadb:
     requests:
       cpu: 250m
       memory: 250Mi
-      
+
   pvc:
     size: 20Gi
 
-images:
-  strapi:
-    tag: prod
-  staging:
-    tag: prod
-  admin:
-    tag: prod
-  public:
-    tag: prod
+patroni:
+  resources:
+    limits:
+      cpu: "1"
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  pvc:
+    size: 10Gi

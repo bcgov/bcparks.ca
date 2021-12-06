@@ -1,4 +1,4 @@
-{{- if and .Values.postgres.enabled .Values.pgbouncer.enabled }}
+{{- if .Values.pgbouncer.enabled }}
 kind: Service
 apiVersion: v1
 metadata:

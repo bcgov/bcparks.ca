@@ -1,0 +1,23 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ template "bcparks_patroni_fullname" . }}
+  labels:
+    component: {{ .Values.patroni.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+    cluster-name: {{ template "bcparks_patroni_fullname" . }}
+    app: {{ template "bcparks_patroni_fullname" . }}
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: patroni
+    component: {{ .Values.patroni.componentName }}
+    release: {{ .Release.Name }}
+    role: master
+    cluster-name: {{ template "bcparks_patroni_fullname" . }}
+  ports:
+    - port: {{ .Values.patroni.service.port }}
+      protocol: TCP
+      targetPort: {{ .Values.patroni.service.port }}
