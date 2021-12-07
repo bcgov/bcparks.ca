@@ -32,6 +32,9 @@ images:
   patroni:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/patroni-postgres
     tag: 12.4-latest
+  backup:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/backup-container
+    tag: postgres-latest
 
 cms:
   componentName: cms
@@ -223,3 +226,43 @@ public:
   service:
     portName: public
     port: 3000
+
+backup:
+  componentName: postgres-backup
+
+  # Disabled by default.  Overriden for TEST and PROD
+  enabled: false
+
+  pvc:
+    accessMode: ReadWriteOnce
+    storageClassName: netapp-file-backup
+    size: 1Gi
+
+  schedule: "0 9 * * *"
+
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 2
+  backoffLimit: 0
+
+  backupStrategy: "rolling"
+  backupDir: "/backups/"
+
+  retention:
+    numBackups: 5
+    dailyBackups: 7
+    weeklyBackups: 4
+    monthlyBackups: 1
+
+  enironment:
+    friendlyName: "bcparks.ca CMS Postgres Backup [dev]"
+    name: "61d198-dev"
+
+  tableSchema: "public"
+
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi

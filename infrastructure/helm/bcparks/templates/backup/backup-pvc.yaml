@@ -1,0 +1,20 @@
+{{- if .Values.backup.enabled }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "bcparks_postgres_backup_fullname" . }}
+  labels:
+    component: {{ .Values.backup.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+  annotations:
+    "helm.sh/resource-policy": keep
+spec:
+  accessModes:
+    - {{ .Values.backup.pvc.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.backup.pvc.size }}
+  storageClassName: {{ .Values.backup.pvc.storageClassName }}
+{{- end }}

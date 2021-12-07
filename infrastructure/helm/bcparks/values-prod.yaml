@@ -62,3 +62,13 @@ patroni:
 
   pvc:
     size: 10Gi
+
+backup:
+  enabled: true
+
+  pvc:
+    size: 10Gi
+
+  enironment:
+    friendlyName: bcparks.ca CMS Postgres Backup [prod]
+    name: 61d198-prod

@@ -100,6 +100,10 @@ https://{{ .Release.Name }}-{{ .Values.cms.componentName }}-{{ .Release.Namespac
 {{ .Release.Name }}-{{ .Values.patroni.componentName }}-secret
 {{- end -}}
 
+{{ define "bcparks_postgres_backup_fullname" -}}
+{{ .Release.Name }}-{{ .Values.backup.componentName }}
+{{- end -}}
+
 {{ define "bcparks_pgbouncer_fullname" -}}
 {{ .Release.Name }}-{{ .Values.pgbouncer.componentName }}
 {{- end -}}
