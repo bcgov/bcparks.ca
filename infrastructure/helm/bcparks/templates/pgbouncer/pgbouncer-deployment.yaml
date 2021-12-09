@@ -1,4 +1,4 @@
-{{- if and .Values.postgres.enabled .Values.pgbouncer.enabled }}
+{{- if .Values.pgbouncer.enabled }}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -28,7 +28,7 @@ spec:
       initContainers:
         - name: wait-for-db
           image: {{ .Values.images.postgres.name }}:{{ .Values.images.postgres.tag }}
-          command: ['sh', '-c', 'until pg_isready -h {{ .Release.Name }}-{{ .Values.postgres.componentName }} -p {{ .Values.postgres.service.port }}; do echo waiting for database; sleep 2; done;']
+          command: ['sh', '-c', 'until pg_isready -h {{ template "bcparks_patroni_fullname" . }} -p {{ .Values.patroni.service.port }}; do echo waiting for database; sleep 2; done;']
       containers:
         - name: {{ .Values.pgbouncer.componentName }}
           resources:
@@ -41,27 +41,27 @@ spec:
               protocol: TCP
           env:
             - name: POSTGRESQL_HOST
-              value: {{ .Release.Name }}-{{ .Values.postgres.componentName }}
+              value: {{ template "bcparks_patroni_fullname" . }}
             - name: POSTGRESQL_PORT
-              value: {{ .Values.postgres.service.port | quote }}
+              value: {{ .Values.patroni.service.port | quote }}
             - name: POSTGRESQL_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "bcparks_postgres_secret" . }}
-                  key: POSTGRESQL_USER
+                  name: {{ template "bcparks_patroni_secret" . }}
+                  key: app-db-username
             - name: POSTGRESQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "bcparks_postgres_secret" . }}
-                  key: POSTGRESQL_PASSWORD
+                  name: {{ template "bcparks_patroni_secret" . }}
+                  key: app-db-password
             - name: POSTGRESQL_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "bcparks_postgres_secret" . }}
-                  key: POSTGRESQL_DATABASE
+                  name: {{ template "bcparks_patroni_secret" . }}
+                  key: app-db-name
             - name: PGBOUNCER_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "bcparks_postgres_secret" . }}
-                  key: POSTGRESQL_DATABASE
+                  name: {{ template "bcparks_patroni_secret" . }}
+                  key: app-db-name
 {{- end }}

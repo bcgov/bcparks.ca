@@ -1,0 +1,120 @@
+{{- if .Values.backup.enabled }}
+kind: "CronJob"
+apiVersion: "batch/v1beta1"
+metadata:
+  name: {{ template "bcparks_postgres_backup_fullname" . }}
+  labels:
+    template: {{ template "bcparks_postgres_backup_fullname" . }}-cronjob
+    cronjob: {{ template "bcparks_postgres_backup_fullname" . }}
+spec:
+  schedule: {{ .Values.backup.schedule }}
+  concurrencyPolicy: "Forbid"
+  successfulJobsHistoryLimit: {{ .Values.backup.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.backup.failedJobsHistoryLimit }}
+  jobTemplate:
+    metadata:
+      labels:
+        template: {{ template "bcparks_postgres_backup_fullname" . }}-job
+        cronjob: {{ template "bcparks_postgres_backup_fullname" . }}
+    spec:
+      backoffLimit: {{ .Values.backup.backoffLimit }}
+      template:
+        metadata:
+          labels:
+            template: {{ template "bcparks_postgres_backup_fullname" . }}-job
+            cronjob: {{ template "bcparks_postgres_backup_fullname" . }}
+        spec:
+          containers:
+            - name: {{ template "bcparks_postgres_backup_fullname" . }}-cronjob
+              image: {{ .Values.images.backup.name }}:{{ .Values.images.backup.tag }}
+              resources:
+{{ toYaml .Values.backup.resources | indent 16 }}
+              command:
+                - "/bin/bash"
+                - "-c"
+                - "/backup.sh -1"
+              volumeMounts:
+                - mountPath: {{ .Values.backup.backupDir }}
+                  name: "backup"
+                - name: {{ template "bcparks_postgres_backup_fullname" . }}-config-volume
+                  mountPath: /backup.conf
+                  subPath: backup.conf
+              env:
+                - name: BACKUP_DIR
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ template "bcparks_postgres_backup_fullname" . }}-config
+                      key: BACKUP_DIR
+                - name: BACKUP_STRATEGY
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ template "bcparks_postgres_backup_fullname" . }}-config
+                      key: BACKUP_STRATEGY
+                - name: NUM_BACKUPS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ template "bcparks_postgres_backup_fullname" . }}-config
+                      key: RETENTION.NUM_BACKUPS
+                      optional: true
+                - name: DAILY_BACKUPS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ template "bcparks_postgres_backup_fullname" . }}-config
+                      key: RETENTION.DAILY_BACKUPS
+                      optional: true
+                - name: WEEKLY_BACKUPS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ template "bcparks_postgres_backup_fullname" . }}-config
+                      key: RETENTION.WEEKLY_BACKUPS
+                      optional: true
+                - name: MONTHLY_BACKUPS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ template "bcparks_postgres_backup_fullname" . }}-config
+                      key: RETENTION.MONTHLY_BACKUPS
+                      optional: true
+                - name: DATABASE_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ template "bcparks_patroni_fullname" . }}-secret
+                      key: app-db-username
+                - name: DATABASE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ template "bcparks_patroni_fullname" . }}-secret
+                      key: app-db-password
+                - name: ENVIRONMENT_FRIENDLY_NAME
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ template "bcparks_postgres_backup_fullname" . }}-config
+                      key: ENVIRONMENT_FRIENDLY_NAME
+                      optional: true
+                - name: ENVIRONMENT_NAME
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ template "bcparks_postgres_backup_fullname" . }}-config
+                      key: ENVIRONMENT_NAME
+                      optional: true
+                - name: TABLE_SCHEMA
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ template "bcparks_postgres_backup_fullname" . }}-config
+                      key: TABLE_SCHEMA
+                      optional: true
+          volumes:
+            - name: backup
+              persistentVolumeClaim:
+                claimName: {{ template "bcparks_postgres_backup_fullname" . }}
+            - name: {{ template "bcparks_postgres_backup_fullname" . }}-config-volume
+              configMap:
+                name: {{ template "bcparks_postgres_backup_fullname" . }}-config
+                items:
+                  - key: backup.conf
+                    path: backup.conf
+                defaultMode: 420
+          restartPolicy: "Never"
+          terminationGracePeriodSeconds: 30
+          activeDeadlineSeconds: 1600
+          dnsPolicy: "ClusterFirst"
+{{- end }}

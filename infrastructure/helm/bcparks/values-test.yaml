@@ -1,6 +1,16 @@
 cluster:
   ssoAuthUrl: https://test.oidc.gov.bc.ca/auth
 
+images:
+  strapi:
+    tag: test
+  staging:
+    tag: test
+  admin:
+    tag: test
+  public:
+    tag: test
+
 cms:
   resources:
     limits:
@@ -39,13 +49,24 @@ mariadb:
   pvc:
     size: 20Gi
 
-images:
-  strapi:
-    tag: test
-  staging:
-    tag: test
-  admin:
-    tag: test
-  public:
-    tag: test
-    
+patroni:
+  resources:
+    limits:
+      cpu: "1"
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  pvc:
+    size: 10Gi
+
+backup:
+  enabled: true
+
+  pvc:
+    size: 10Gi
+
+  enironment:
+    friendlyName: bcparks.ca CMS Postgres Backup [test]
+    name: 61d198-test

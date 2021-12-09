@@ -1,0 +1,29 @@
+{{- if .Values.backup.enabled }}
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ template "bcparks_postgres_backup_fullname" . }}-config
+  labels:
+    component: {{ .Values.backup.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+    template: {{ template "bcparks_postgres_backup_fullname" . }}-config-template
+    cronjob: {{ template "bcparks_postgres_backup_fullname" . }}
+  annotations:
+    "helm.sh/hook": "pre-install"
+    "helm.sh/hook-delete-policy": "before-hook-creation"
+    "helm.sh/hook-weight": "0"
+data:
+  backup.conf: |
+    postgres={{ template "bcparks_patroni_fullname" . }}:{{ .Values.patroni.service.port }}/{{ .Values.patroni.databaseName }}
+  BACKUP_STRATEGY: {{ .Values.backup.backupStrategy }}
+  BACKUP_DIR: {{ .Values.backup.backupDir }}
+  RETENTION.NUM_BACKUPS: {{ .Values.backup.retention.numBackups | quote }}
+  RETENTION.DAILY_BACKUPS: {{ .Values.backup.retention.dailyBackups | quote}}
+  RETENTION.WEEKLY_BACKUPS: {{ .Values.backup.retention.weeklyBackups | quote}}
+  RETENTION.MONTHLY_BACKUPS: {{ .Values.backup.retention.monthlyBackups | quote}}
+  ENVIRONMENT_FRIENDLY_NAME: {{ .Values.backup.enironment.friendlyName }}
+  ENVIRONMENT_NAME: {{ .Values.backup.enironment.name }}
+  TABLE_SCHEMA: {{ .Values.backup.tableSchema }}
+{{- end }}

@@ -1,3 +1,4 @@
+{{- if .Values.cms.pvc.enabled }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -16,3 +17,4 @@ spec:
     requests:
       storage: {{ .Values.cms.pvc.size }}
   storageClassName: {{ .Values.cms.pvc.storageClassName }}
+{{- end }}

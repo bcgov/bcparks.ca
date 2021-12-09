@@ -92,6 +92,18 @@ https://{{ .Release.Name }}-{{ .Values.cms.componentName }}-{{ .Release.Namespac
 {{ .Release.Name }}-postgres-secret
 {{- end -}}
 
+{{ define "bcparks_patroni_fullname" -}}
+{{ .Release.Name }}-{{ .Values.patroni.componentName }}
+{{- end -}}
+
+{{ define "bcparks_patroni_secret" -}}
+{{ .Release.Name }}-{{ .Values.patroni.componentName }}-secret
+{{- end -}}
+
+{{ define "bcparks_postgres_backup_fullname" -}}
+{{ .Release.Name }}-{{ .Values.backup.componentName }}
+{{- end -}}
+
 {{ define "bcparks_pgbouncer_fullname" -}}
 {{ .Release.Name }}-{{ .Values.pgbouncer.componentName }}
 {{- end -}}
@@ -107,7 +119,6 @@ https://{{ .Release.Name }}-{{ .Values.cms.componentName }}-{{ .Release.Namespac
 {{ define "bcparks_mariadb_secret" -}}
 {{ .Release.Name }}-mariadb-secret
 {{- end -}}
-
 
 {{ define "bcparks_staging_volume_claim" -}}
 {{ .Release.Name }}-staging
