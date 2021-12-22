@@ -29,7 +29,7 @@ const MainSearch = ({ data: { activities, facilities } }) => {
   const [searchText, setSearchText] = useState("")
 
   const sortOptions = [
-    { value: "rel", label: "Sort by Relevence" },
+    { value: "rel", label: "Sort by Relevance" },
     { value: "asc", label: "Sort A-Z" },
     { value: "desc", label: "Sort Z-A" },
   ]
