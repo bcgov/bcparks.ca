@@ -370,12 +370,14 @@ const PublicAdvisoryPage = ({ data }) => {
   }, [isParksFilter, isTypesFilter, isKeywordFilter, searchText])
 
   useEffect(() => {
-    if (pageIndex > 1) {
+
+    if(!isNewFilter){
       let q = getApiQuery(advisoryType);
       setIsDataOld(true);
       getAdvisories(q);
     }
   }, [pageIndex, advisoryType, getApiQuery, getAdvisories]);
+
   // Get total advisory count of this type
   // only has to happen once, when type changes, page reloads
   getAdvisoryTotalCount();
