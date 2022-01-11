@@ -4,14 +4,16 @@ $colorWhiteOpacity: #ffffff90;
 $colorGrey: #eef1f5;
 $colorBlue: #003366;
 $desktopBreakpoint: 576px;
-$globalFont: "BCSans",Verdana,Arial,sans serif;
+$globalFont: "BCSans", Verdana, Arial, sans serif;
 
 html {
   background-color: white;
   font-family: $globalFont !important;
 }
 
-head,script,style {
+head,
+script,
+style {
   display: none !important;
 }
 
@@ -78,7 +80,7 @@ footer #home-footer nav {
 .book-campsite-inner {
   color: $colorBlue;
   font-size: 14px;
-  
+
   @media screen and (min-width: $desktopBreakpoint) {
     top: unset;
   }
@@ -140,7 +142,7 @@ footer #home-footer nav {
 
   > p {
     padding: 40px 0 10px 0;
-    margin-bottom: 0;  
+    margin-bottom: 0;
   }
   a {
     color: $colorGrey;
@@ -195,7 +197,7 @@ footer #home-footer nav {
   > div {
     padding-left: 6vw;
   }
-  nav .nav-item  {
+  nav .nav-item {
     color: $colorWhite;
   }
   .nav-item:not(:last-child) {
@@ -243,12 +245,12 @@ img.alert-exclamation {
 }
 
 .footer-nav-links .nav-item:not(:last-child) {
-border-right: 1px solid grey;
-padding-right: 20px;
+  border-right: 1px solid grey;
+  padding-right: 20px;
 }
 
 .footer-nav-links .nav-item:not(:first-child) {
-padding-left: 20px;
+  padding-left: 20px;
 }
 
 .nav-menu-links .nav-item:not(:last-child) {
@@ -289,4 +291,8 @@ li.post-separator {
 
 .alert-warning {
   background-color: #ffdd8b !important;
+}
+
+.hidden {
+  display: none;
 }
