@@ -438,7 +438,7 @@ export default function Explore({ location, data }) {
   ])
 
   return (
-    <>
+    <> 
       <MegaMenu content={menuContent} />
       <div className="search-body">
         <div className="search-results-main container">
