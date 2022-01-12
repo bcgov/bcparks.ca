@@ -397,7 +397,6 @@ export default function Explore({ location, data }) {
     setNumberOfPages,
     setSearchResults,
     setTotalResults,
-    totalResults,
   ])
 
   return (
