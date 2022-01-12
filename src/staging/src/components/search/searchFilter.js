@@ -23,8 +23,6 @@ import ExpandMore from "@material-ui/icons/ExpandMore"
 import Select from "react-select"
 import { navigate } from "gatsby"
 
-import { labelCompare } from "./searchUtil"
-
 const SearchFilter = ({
   data: {
     activityItems,
@@ -103,7 +101,7 @@ const SearchFilter = ({
     selectedFacilities.forEach(f => {
       filters.push({ ...f, type: "facility" })
     })
-    filters.sort(labelCompare)
+    filters.sort((a, b) => a.label.localeCompare(b.label))
     setFilterSelections([...filters])
   }, [selectedActivities, selectedFacilities])
 
