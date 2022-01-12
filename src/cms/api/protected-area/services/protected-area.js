@@ -173,13 +173,13 @@ module.exports = {
           );
           builder.orWhere(
             knex.raw(
-              `to_tsvector('english', park_activities.description) @@ websearch_to_tsquery('english', ?)`,
+              `setweight(to_tsvector('english', park_activities.description), 'D') @@ websearch_to_tsquery('english', ?)`,
               [searchText]
             )
           );
           builder.orWhere(
             knex.raw(
-              `to_tsvector('english', park_facilities.description) @@ websearch_to_tsquery('english', ?)`,
+              `setweight(to_tsvector('english', park_facilities.description), 'D') @@ websearch_to_tsquery('english', ?)`,
               [searchText]
             )
           );
@@ -213,8 +213,8 @@ module.exports = {
         query.select(
           knex.raw(
             `ts_rank(protected_areas.search_text, websearch_to_tsquery('english', ?)) +
-             coalesce(max(ts_rank(to_tsvector('english', park_activities.description), websearch_to_tsquery('english', ?))), 0) +
-             coalesce(max(ts_rank(to_tsvector('english', park_facilities.description), websearch_to_tsquery('english', ?))), 0)
+             coalesce(max(ts_rank(setweight(to_tsvector('english', park_activities.description), 'D'), websearch_to_tsquery('english', ?))), 0) +
+             coalesce(max(ts_rank(setweight(to_tsvector('english', park_facilities.description), 'D'), websearch_to_tsquery('english', ?))), 0)
              AS search_rank`,
             [searchText, searchText, searchText]
           )
@@ -294,13 +294,13 @@ module.exports = {
         );
         builder.orWhere(
           knex.raw(
-            `to_tsvector('english', park_activities.description) @@ websearch_to_tsquery('english', ?)`,
+            `setweight(to_tsvector('english', park_activities.description), 'D') @@ websearch_to_tsquery('english', ?)`,
             [searchText]
           )
         );
         builder.orWhere(
           knex.raw(
-            `to_tsvector('english', park_facilities.description) @@ websearch_to_tsquery('english', ?)`,
+            `setweight(to_tsvector('english', park_facilities.description), 'D') @@ websearch_to_tsquery('english', ?)`,
             [searchText]
           )
         );
