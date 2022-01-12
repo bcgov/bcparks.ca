@@ -1,94 +1,99 @@
 name: Build Public on main branch
 
 on:
-    repository_dispatch:
-        types: [build-public]
+  repository_dispatch:
+    types: [build-public]
+  workflow_dispatch:
+    inputs:
+      buildEnv:
+        description: "Rebuild public for which environment? (dev, test, prod)"
+        required: true
 
 env:
-    IMAGE_NAME: public
-    BUILDER_IMAGE_NAME: public-builder
-    DEPLOYMENT_NAME: public
+  IMAGE_NAME: public
+  BUILDER_IMAGE_NAME: public-builder
+  DEPLOYMENT_NAME: public
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Set vars
-              id: vars
-              run: |
-                  echo "::set-output name=registry_image::${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}"
-                  echo "::set-output name=registry_builder_image::${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.BUILDER_IMAGE_NAME }}"
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set vars
+        id: vars
+        run: |
+          echo "::set-output name=registry_image::${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}"
+          echo "::set-output name=registry_builder_image::${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.BUILDER_IMAGE_NAME }}"
 
-            - name: Set env based on client_payload
-              run: |
-                  if [[ "${{ github.event.client_payload.env }}" == "test" ]]; then
-                      echo "ENV_SUFFIX=test" >> $GITHUB_ENV
-                      echo "IMAGE_TAG=test" >> $GITHUB_ENV
-                      echo "REACT_APP_CMS_BASE_URL=https://bcparks-api-gov-bc-ca.test.api.gov.bc.ca" >> $GITHUB_ENV
-                  elif [[ "${{ github.event.client_payload.env }}" == "prod" ]]; then
-                      echo "ENV_SUFFIX=prod" >> $GITHUB_ENV
-                      echo "IMAGE_TAG=prod" >> $GITHUB_ENV
-                      echo "REACT_APP_CMS_BASE_URL=https://bcparks.api.gov.bc.ca" >> $GITHUB_ENV
-                  else
-                      echo "ENV_SUFFIX=dev" >> $GITHUB_ENV
-                      echo "IMAGE_TAG=latest" >> $GITHUB_ENV
-                      echo "REACT_APP_CMS_BASE_URL=https://dev-cms.bcparks.ca" >> $GITHUB_ENV
-                  fi
+      - name: Set env based on client_payload
+        run: |
+          if [[ "${{ github.event.client_payload.env }}" == "test" || "${{ github.event.inputs.buildEnv }}" == "test" ]]; then
+              echo "ENV_SUFFIX=test" >> $GITHUB_ENV
+              echo "IMAGE_TAG=test" >> $GITHUB_ENV
+              echo "REACT_APP_CMS_BASE_URL=https://test-cms.bcparks.ca" >> $GITHUB_ENV
+          elif [[ "${{ github.event.client_payload.env }}" == "prod" ]]; then
+              echo "ENV_SUFFIX=prod" >> $GITHUB_ENV
+              echo "IMAGE_TAG=prod" >> $GITHUB_ENV
+              echo "REACT_APP_CMS_BASE_URL=https://cms.bcparks.ca" >> $GITHUB_ENV
+          else
+              echo "ENV_SUFFIX=dev" >> $GITHUB_ENV
+              echo "IMAGE_TAG=latest" >> $GITHUB_ENV
+              echo "REACT_APP_CMS_BASE_URL=https://dev-cms.bcparks.ca" >> $GITHUB_ENV
+          fi
 
-            - name: Login to OpenShift Container Repository
-              uses: docker/login-action@v1
-              with:
-                  registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-                  username: ${{secrets.OPENSHIFT_SA_USERNAME}}
-                  password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+      - name: Login to OpenShift Container Repository
+        uses: docker/login-action@v1
+        with:
+          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
 
-            - name: Setup Node
-              uses: actions/setup-node@v2
-              with:
-                  node-version: '14'
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
 
-            - run: mkdir -p gatsby/public && mkdir gatsby/.cache
+      - run: mkdir -p gatsby/public && mkdir gatsby/.cache
 
-            - name: Cache Gatsby Cache Folder
-              uses: actions/cache@v2
-              id: gatsby-cache-folder
-              with:
-                  path: gatsby/.cache
-                  key: ${{ runner.os }}-cache-gatsby-${{ env.ENV_SUFFIX }}
-                  restore-keys: |
-                      ${{ runner.os }}-cache-gatsby-${{ env.ENV_SUFFIX }}
+      - name: Cache Gatsby Cache Folder
+        uses: actions/cache@v2
+        id: gatsby-cache-folder
+        with:
+          path: gatsby/.cache
+          key: ${{ runner.os }}-cache-gatsby-${{ env.ENV_SUFFIX }}
+          restore-keys: |
+            ${{ runner.os }}-cache-gatsby-${{ env.ENV_SUFFIX }}
 
-            - name: Cache Gatsby Public Folder
-              uses: actions/cache@v2
-              id: gatsby-public-folder
-              with:
-                  path: gatsby/public
-                  key: ${{ runner.os }}-public-gatsby-${{ env.ENV_SUFFIX }}
-                  restore-keys: |
-                      ${{ runner.os }}-public-gatsby-${{ env.ENV_SUFFIX }}
+      - name: Cache Gatsby Public Folder
+        uses: actions/cache@v2
+        id: gatsby-public-folder
+        with:
+          path: gatsby/public
+          key: ${{ runner.os }}-public-gatsby-${{ env.ENV_SUFFIX }}
+          restore-keys: |
+            ${{ runner.os }}-public-gatsby-${{ env.ENV_SUFFIX }}
 
-            - name: Build static
-              run: |
-                  # Run the builder image as container since you can't directly copy file from an image
-                  docker run -d -t --name builder ${{ steps.vars.outputs.registry_builder_image }}:${{ env.IMAGE_TAG }}
+      - name: Build static
+        run: |
+          # Run the builder image as container since you can't directly copy file from an image
+          docker run -d -t --name builder ${{ steps.vars.outputs.registry_builder_image }}:${{ env.IMAGE_TAG }}
 
-                  # Copy Gatsby source and packages to local.  Tried to just do the build in the container, but ran into some weird issues with the build
-                  docker cp builder:/gatsby/. gatsby
+          # Copy Gatsby source and packages to local.  Tried to just do the build in the container, but ran into some weird issues with the build
+          docker cp builder:/gatsby/. gatsby
 
-                  cd gatsby && npm run build
+          cd gatsby && npm run build
 
-            - name: Build and push public image
-              run: |
-                  docker build -t ${{ steps.vars.outputs.registry_image }}:${{ env.IMAGE_TAG }} .
-                  docker push ${{ steps.vars.outputs.registry_image }}:${{ env.IMAGE_TAG }}
-              working-directory: gatsby
+      - name: Build and push public image
+        run: |
+          docker build -t ${{ steps.vars.outputs.registry_image }}:${{ env.IMAGE_TAG }} .
+          docker push ${{ steps.vars.outputs.registry_image }}:${{ env.IMAGE_TAG }}
+        working-directory: gatsby
 
-            - name: Login OpenShift
-              uses: redhat-actions/oc-login@v1
-              with:
-                  openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
-                  openshift_token: ${{ secrets.OPENSHIFT_SERVICE_TOKEN }}
+      - name: Login OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT_SERVICE_TOKEN }}
 
-            - name: Trigger rollout
-              run: |
-                  oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-${{ env.ENV_SUFFIX }} rollout restart deployment bcparks-${{ env.DEPLOYMENT_NAME }}
+      - name: Trigger rollout
+        run: |
+          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-${{ env.ENV_SUFFIX }} rollout restart deployment bcparks-${{ env.DEPLOYMENT_NAME }}

@@ -1,0 +1,133 @@
+name: Build dev on main branch push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-cms:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: strapi
+      BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-14:1-43
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v2
+
+      - name: Set env
+        run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Login to OpenShift Container Repository
+        uses: docker/login-action@v1
+        with:
+          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+
+      - name: s2i Build
+        id: build_image
+        uses: redhat-actions/s2i-build@v2
+        with:
+          path_context: "src/cms"
+          builder_image: ${{ env.BUILDER_IMAGE }}
+          image: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}
+          tags: latest ${{ env.SHORT_SHA }}
+
+      - name: Push Docker image
+        run: docker push --all-tags ${{ steps.build_image.outputs.image }}
+
+  build-admin:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: admin
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v2
+
+      - name: Set env
+        run: |
+          echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
+
+      - name: Login to OpenShift Container Repository
+        uses: docker/login-action@v1
+        with:
+          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: npm build
+        run: |
+          npm install
+          npm run build
+        working-directory: src/admin
+
+      - name: Docker build
+        run: |
+          docker build -t ${{ env.IMAGE_NAME }} .
+          docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:latest
+          docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:${{ env.SHORT_SHA }}
+        working-directory: src/admin
+
+      - name: Push Docker image
+        run: docker push --all-tags ${{ env.REGISTRY_IMAGE }}
+
+  build-public-builder:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: public-builder
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v2
+
+      - name: Set env
+        run: |
+          echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
+
+      - name: Login to OpenShift Container Repository
+        uses: docker/login-action@v1
+        with:
+          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+
+      - name: Build and push builder image
+        run: |
+          docker build -t ${{ env.IMAGE_NAME }} -f Builder.Dockerfile .
+          docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:latest
+          docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:${{ env.SHORT_SHA }}
+        working-directory: src/staging
+
+      - name: Push Docker image
+        run: docker push --all-tags ${{ env.REGISTRY_IMAGE }}
+
+      - name: Trigger Gatsby static build workflow
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          event-type: build-public
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build-cms, build-admin]
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v2
+
+      - name: Login OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT_SERVICE_TOKEN }}
+
+      - name: Trigger rollout
+        run: |
+          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment bcparks-admin
+          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment bcparks-cms
