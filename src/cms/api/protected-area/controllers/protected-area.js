@@ -10,6 +10,9 @@ const customStatus = require("../custom/protected-area-status");
 module.exports = {
   async find(ctx) {
     let entities;
+    // if _q is present in the query params, trigger search mode
+    // which has some custom filters and ordering, and returns
+    // extra data in the response
     if (typeof ctx.query._q !== "undefined") {
       const filters = parseSearchFilters(ctx.query);
       const ordering = parseSearchOrdering(ctx.query);
@@ -28,6 +31,9 @@ module.exports = {
     );
   },
   async count(ctx) {
+    // if _q is present in the query params, trigger search mode
+    // which has some custom filters and ordering, and returns
+    // extra data in the response
     if (typeof ctx.query._q !== "undefined") {
       const filters = parseSearchFilters(ctx.query);
       return await strapi.services["protected-area"].countSearch({

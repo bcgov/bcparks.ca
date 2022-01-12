@@ -38,6 +38,15 @@ module.exports = {
     }
     return entities;
   },
+  /*
+   * Park search handling
+   *
+   * Protected area search is used for the main parks search page on the frontend.
+   * It uses some complex filters and Postgres full text search to achieve this.
+   * 
+   * Full text indexes and the search_text column are created automatically during
+   * bootstrap.
+   */
   async search({
     searchText,
     typeCode,
@@ -59,6 +68,10 @@ module.exports = {
         query.where("accessStatus", "ILIKE", "%open%");
       })
       .fetch();
+
+    // Check park access status. If the park has any advisories
+    // with access status set and not equal to "open" then it is closed.
+    // TODO: will likely be replaced with the access status text.
     let isOpenToPublicSelect;
     if (openAccessStatus) {
       isOpenToPublicSelect = knex.raw(
@@ -78,10 +91,15 @@ module.exports = {
       query
         .select(
           "protected_areas.*",
+          // Include all advisories, filtering out nulls caused by joins.
+          // In future this can be replaced with a count
           knex.raw(
             'array_remove(array_agg(DISTINCT ?? ORDER BY ??), NULL) AS "advisories"',
             ["public_advisories.title", "public_advisories.title"]
           ),
+          // Include all active park photos. Photo ordering hasn't been implemented
+          // yet, so order is indeterminate. We do check that the photo is active.
+          // TODO: could likely be done as a join instead of subquery
           knex.raw(
             `array(
               SELECT "thumbnailUrl"
@@ -90,6 +108,8 @@ module.exports = {
                   AND park_photos."isActive" = TRUE
             ) AS "parkPhotos"`
           ),
+          // Check all associated park operations rows, and set hasReservations
+          // if any are true
           knex.raw(
             'bool_or(park_operations."hasReservations") AS "hasReservations"'
           ),
@@ -138,6 +158,9 @@ module.exports = {
       }
 
       if (searchText) {
+        // Run a full text match on our indexed search text column
+        // and the description columns of park_activities and park_facilities
+        // Any match here counts.
         query.where((builder) => {
           builder.where(
             knex.raw(
@@ -161,11 +184,15 @@ module.exports = {
       }
 
       if (activityTypeIds.length > 0) {
+        // check if the aggregated array of all activity type ids for the park
+        // contains ALL of the activity type ids we're searching for
         query.havingRaw('array_agg(park_activities."activityType") @> ?', [
           activityTypeIds,
         ]);
       }
       if (facilityTypeIds.length > 0) {
+        // check if the aggregated array of all facility type ids for the park
+        // contains ALL of the facility type ids we're searching for
         query.havingRaw('array_agg(park_facilities."facilityType") @> ?', [
           facilityTypeIds,
         ]);
@@ -176,6 +203,10 @@ module.exports = {
       } else if (sortCol === "protectedAreaName" && !sortDesc) {
         query.orderBy("protectedAreaName", "ASC");
       } else if (sortCol === "rank" && sortDesc && searchText) {
+        // if we're sorting by relevance, add a rank column to the query
+        // and sort by it. Rank is combined from the search_text on protected_areas
+        // (which is a generated column that combines a few fields with weights)
+        // and the park activities and facilities descriptions.
         query.select(
           knex.raw(
             `ts_rank(protected_areas.search_text, websearch_to_tsquery('english', ?)) +
@@ -197,6 +228,15 @@ module.exports = {
 
     return await results.fetchAll();
   },
+    /*
+   * Park search count handling
+   *
+   * Protected area search is used for the main parks search page on the frontend.
+   * Counting is a bit simpler than data retrieval so we use different queries.
+   * 
+   * Full text indexes and the search_text column are created automatically during
+   * bootstrap.
+   */
   async countSearch({
     searchText,
     typeCode,
@@ -236,6 +276,9 @@ module.exports = {
     }
 
     if (searchText) {
+      // Run a full text match on our indexed search text column
+      // and the description columns of park_activities and park_facilities.
+      // Any match here counts.
       query.where((builder) => {
         builder.where(
           knex.raw(
@@ -259,11 +302,15 @@ module.exports = {
     }
 
     if (activityTypeIds.length > 0) {
+      // check if the aggregated array of all activity type ids for the park
+      // contains ALL of the activity type ids we're searching for
       query.havingRaw('array_agg(park_activities."activityType") @> ?', [
         activityTypeIds,
       ]);
     }
     if (facilityTypeIds.length > 0) {
+      // check if the aggregated array of all facility type ids for the park
+      // contains ALL of the facility type ids we're searching for
       query.havingRaw('array_agg(park_facilities."facilityType") @> ?', [
         facilityTypeIds,
       ]);
