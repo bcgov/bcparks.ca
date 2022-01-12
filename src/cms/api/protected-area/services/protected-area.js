@@ -147,6 +147,9 @@ module.exports = {
         )
         .groupBy("protected_areas.id");
 
+      // Only include published parks
+      query.whereNotNull("protected_areas.published_at");
+
       if (typeCode) {
         query.where("protected_areas.typeCode", typeCode);
       }
@@ -264,6 +267,9 @@ module.exports = {
         "facility_types.id"
       )
       .groupBy("protected_areas.id");
+
+    // Only include published parks
+    query.whereNotNull("protected_areas.published_at");
 
     if (typeCode) {
       query.where("protected_areas.typeCode", typeCode);
