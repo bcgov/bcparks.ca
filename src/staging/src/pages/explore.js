@@ -14,6 +14,7 @@ import {
   Card,
   CardContent,
   Link,
+  LinearProgress,
   Breadcrumbs,
   Button,
   Divider,
@@ -418,7 +419,10 @@ export default function Explore({ location, data }) {
                   {!isActiveSearch && (
                     <>Find your next adventure</>
                   )}
-                  {isActiveSearch && totalResults > 0 && (
+                  { isLoading && isActiveSearch && (
+                    <>Searching...</>
+                  )}
+                  {!isLoading && isActiveSearch && totalResults > 0 && (
                     <>
                       {totalResults}{" "}
                       {totalResults === 1
@@ -693,6 +697,11 @@ export default function Explore({ location, data }) {
               </div>
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-list container">
+                  { isLoading && (
+                      <div className="container mt-5">
+                        <LinearProgress />
+                      </div>
+                  )}
                   {!isLoading && (
                     <>
                       {!searchResults ||
