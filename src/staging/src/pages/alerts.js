@@ -103,8 +103,10 @@ const PublicAdvisoryPage = ({ data }) => {
 
   // latest call
   // using state to catch when call has not changed, to avoid duplicate calls
-  const [apiCall, setApiCall] = useState("");
-  const apiUrl = data.site.siteMetadata.apiURL;
+  const [apiCall, setApiCall] = useState(""); // latest advisory fetch call
+  const [apiCountCall, setApiCountCall] = useState(""); // latest advisory count call
+
+  const apiUrl = data.site.siteMetadata.apiURL; // api root
 
   const [isSearchError, setIsSearchError] = useState(false); // true when api error - show msg
 
@@ -205,8 +207,8 @@ const PublicAdvisoryPage = ({ data }) => {
   }
  
   // API calls to get advisories and total count
-
-  const getAdvisoryTotalCount = () => {
+  const getAdvisoryTotalCount = useCallback(() => {
+    // Only runs once per page load
     // This needs to be a separate call, because we need the 
     // unfiltered count for the header
 
@@ -218,16 +220,21 @@ const PublicAdvisoryPage = ({ data }) => {
       q += "?eventType.eventType_contains=flood";
     }
 
-    const apiCall = apiUrl + q;
+    const newApiCountCall = apiUrl + q;
 
-    axios
-      .get(apiCall)
-      .then(function (data) {
-        setAdvisoryCount(data.data);
-      })
+    if (newApiCountCall !== apiCountCall) {
 
-      
-  }
+      setApiCountCall(newApiCountCall)
+
+      axios
+        .get(newApiCountCall)
+        .then(function (data) {
+          setAdvisoryCount(data.data);
+        })
+
+    }
+
+  }, [advisoryType, apiUrl, apiCountCall]);
 
   const getApiQuery = useCallback((advisoryTypeFilter) => {
 
@@ -296,7 +303,7 @@ const PublicAdvisoryPage = ({ data }) => {
     newApiCall += "&_start=" + (pageLen * (pageIndex - 1));
 
     if (apiCall !== newApiCall) { // Don't repeat the same call
-      
+
       setApiCall(newApiCall); // Store this as the latest call
 
       axios
@@ -376,7 +383,7 @@ const PublicAdvisoryPage = ({ data }) => {
       setIsDataOld(true);
       getAdvisories(q);
     }
-  }, [pageIndex, advisoryType, getApiQuery, getAdvisories]);
+  }, [pageIndex, advisoryType, isNewFilter, getApiQuery, getAdvisories]);
 
   // Get total advisory count of this type
   // only has to happen once, when type changes, page reloads
@@ -451,53 +458,6 @@ const PublicAdvisoryPage = ({ data }) => {
 }
 
 export default PublicAdvisoryPage
-
-/*
-
-  - This section of the graphql query was removed as advisories
-  - are now being loaded through the api
-  - Leaving this here as a comment for future reference
-
-  allStrapiPublicAdvisory(sort: { fields: advisoryDate, order: DESC }) {
-    nodes {
-      id
-      title
-      description
-      isAdvisoryDateDisplayed
-      isEffectiveDateDisplayed
-      isEndDateDisplayed
-      isReservationsAffected
-      isSafetyRelated
-      urgency {
-        code
-        color
-        sequence
-        urgency
-      }
-      protectedAreas {
-        orcs
-        protectedAreaName
-        hasCampfireBan
-        hasSmokingBan
-        slug
-      }
-      accessStatus {
-        color
-        accessStatus
-        precedence
-      }
-      eventType {
-        eventType
-      }
-      advisoryDate(formatString: "MMMM DD, YYYY")
-      advisoryNumber
-      dcTicketNumber
-      effectiveDate(formatString: "MMMM DD, YYYY")
-      endDate(formatString: "MMMM DD, YYYY")
-      expiryDate(formatString: "MMMM DD, YYYY")
-    }
-  }
-*/
 
 export const query = graphql`
   {
