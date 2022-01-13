@@ -1,0 +1,42 @@
+name: Run Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - src/**
+
+jobs:
+  test-strapi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - run: cd src/cms
+
+      - run: yarn install
+        working-directory: src/cms
+
+      - run: yarn test
+        working-directory: src/cms
+  test-gatsby:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - run: yarn install
+        working-directory: src/staging
+
+      - run: yarn test
+        working-directory: src/staging

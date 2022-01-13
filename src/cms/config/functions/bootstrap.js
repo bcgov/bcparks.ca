@@ -13,9 +13,13 @@ const initialDataLoad = require("../../data/functions/initialDataLoad");
  */
 
 module.exports = async () => {
-  // Setup text indexes for search
-  await createSearchIndexes();
+  // Skip the bootstrap for unit tests for now.
+  // Will need to create unit test specific bootstrapping later.
+  if (process.env.NODE_ENV !== "test") {
+    // Setup text indexes for search
+    await createSearchIndexes();
 
-  // Load seed data first run
-  await initialDataLoad.seedData();
+    // Load seed data first run
+    await initialDataLoad.seedData();
+  }
 };
