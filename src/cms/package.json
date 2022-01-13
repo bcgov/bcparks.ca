@@ -8,7 +8,8 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "jest --forceExit --detectOpenHandles"
+    "test": "jest --forceExit --detectOpenHandles",
+    "lint": "eslint ./"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^29.0.0",
@@ -35,6 +36,10 @@
     "strapi-provider-upload-aws-s3": "^3.6.8",
     "strapi-utils": "3.6.1",
     "utf8": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.13.10",
+    "eslint": "^8.0.0"
   },
   "engines": {
     "node": ">=10.16.0 <=14.x.x",
