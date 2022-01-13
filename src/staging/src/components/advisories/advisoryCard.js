@@ -37,9 +37,12 @@ const useStyles = makeStyles(theme => ({
       width: "1.5em",
       height: "1.5em"
     },
-    '& ::before': {
+    '&::before': {
       background:"none"
-    }
+    },
+    '&.Mui-expanded': {
+      margin:0
+    },
   },
   cardTitle: {
     fontSize: "1.3rem",
