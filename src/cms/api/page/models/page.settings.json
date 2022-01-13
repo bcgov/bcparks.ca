@@ -16,18 +16,11 @@
     },
     "Template": {
       "type": "enumeration",
-      "enum": [
-        "staticLanding1",
-        "staticContent1"
-      ]
+      "enum": ["staticLanding1", "staticContent1"]
     },
     "Content": {
       "type": "dynamiczone",
-      "components": [
-        "parks.html-area",
-        "parks.image",
-        "parks.seo"
-      ]
+      "components": ["parks.html-area", "parks.image", "parks.seo"]
     }
   }
 }
