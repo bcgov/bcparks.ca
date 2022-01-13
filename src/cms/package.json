@@ -40,7 +40,6 @@
     "node": ">=10.16.0 <=14.x.x",
     "npm": "^6.0.0"
   },
-  "license": "MIT",
   "devDependencies": {
     "jest": "^27.4.7",
     "supertest": "^6.2.1"

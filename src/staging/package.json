@@ -3,7 +3,6 @@
   "private": true,
   "description": "BC Parks - staging site",
   "version": "0.1.0",
-  "license": "0BSD",
   "dependencies": {
     "@arcgis/core": "^4.20.2",
     "@bcgov/bc-sans": "^1.0.1",
