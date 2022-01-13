@@ -1,9 +1,11 @@
 name: Deploy to Prod
 
 on:
-  push:
-    tags:
-      - "v[0-9].[0-9]+.[0-9]+"
+  workflow_dispatch:
+    inputs:
+      releaseTag:
+        description: "Tag of version to be promoted to PROD"
+        required: true
 
 env:
   TOOLS_NAMESPACE: ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools
@@ -14,24 +16,31 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Attempt to checkout tag
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.releaseTag }}
+
+      - name: Tag not found
+        if: ${{ failure() }}
+        run: |
+          echo "::error::Git Tag not found, please double check input"
+          exit 1
+
+      - name: Set env
+        run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
       - name: Login OpenShift
         uses: redhat-actions/oc-login@v1
         with:
           openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
           openshift_token: ${{ secrets.OPENSHIFT_SERVICE_TOKEN }}
-          
-      - name: Backup images
-        run: |
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin:${{ env.ENVIRONMENT }} admin:${{ env.ENVIRONMENT }}-backup-$(date +%s)
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder:${{ env.ENVIRONMENT }} public-builder:${{ env.ENVIRONMENT }}-backup-$(date +%s)
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag public:${{ env.ENVIRONMENT }} public:${{ env.ENVIRONMENT }}-backup-$(date +%s)
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi:${{ env.ENVIRONMENT }} strapi:${{ env.ENVIRONMENT }}-backup-$(date +%s)
 
       - name: Tag Prod images
         run: |
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin:test admin:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder:test public-builder:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi:test strapi:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin:${{ env.SHORT_SHA }} admin:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder:${{ env.SHORT_SHA }} public-builder:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi:${{ env.SHORT_SHA }} strapi:${{ env.ENVIRONMENT }}
 
       - name: Trigger Gatsby static build workflow
         uses: peter-evans/repository-dispatch@v1

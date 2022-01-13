@@ -1,15 +1,9 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { graphql } from "gatsby"
 import axios from "axios"
 import Footer from "../components/footer"
 import MegaMenu from "../components/megaMenu"
 import "../styles/search.scss"
-import {
-  labelCompare,
-  searchParkByCriteria,
-  sortAsc,
-  sortDesc,
-} from "../components/search/searchUtil"
 import {
   Checkbox,
   FormGroup,
@@ -20,6 +14,7 @@ import {
   Card,
   CardContent,
   Link,
+  LinearProgress,
   Breadcrumbs,
   Button,
   Divider,
@@ -65,45 +60,15 @@ export const query = graphql`
     allStrapiActivityTypes(sort: { fields: activityName }) {
       totalCount
       nodes {
+        id
         activityName
-        activityNumber
       }
     }
     allStrapiFacilityTypes(sort: { fields: facilityName }) {
       totalCount
       nodes {
-        facilityName
-        facilityNumber
-      }
-    }
-    allStrapiProtectedArea(sort: { fields: protectedAreaName }) {
-      nodes {
-        parkActivities {
-          activityType
-          isActive
-          isActivityOpen
-          name
-        }
-        parkFacilities {
-          facilityType
-          isActive
-          isFacilityOpen
-          name
-        }
         id
-        orcs
-        latitude
-        longitude
-        protectedAreaName
-        slug
-        parkNames {
-          parkName
-          id
-          parkNameType
-        }
-        status
-        typeCode
-        marineProtectedArea
+        facilityName
       }
     }
     allStrapiMenus(
@@ -135,16 +100,29 @@ export const query = graphql`
 export default function Explore({ location, data }) {
   const menuContent = data?.allStrapiMenus?.nodes || []
 
-  const activityItems = data.allStrapiActivityTypes.nodes.map(a => ({
-    label: a.activityName,
-    value: a.activityNumber,
-  }))
-  const facilityItems = data.allStrapiFacilityTypes.nodes.map(f => ({
-    label: f.facilityName,
-    value: f.facilityNumber,
-  }))
+  const activityItems = data.allStrapiActivityTypes.nodes.map(activity => {
+    const id = parseInt(activity.id.replace('Activity-types_', ''), 10);
+    return {
+      label: activity.activityName,
+      value: id,
+    }
+  });
+  const activityItemsLabels = {};
+  activityItems.forEach(item => {
+    activityItemsLabels[item.value] = item.label;
+  });
 
-  const protectedAreas = data.allStrapiProtectedArea.nodes
+  const facilityItems = data.allStrapiFacilityTypes.nodes.map(facility => {
+    const id = parseInt(facility.id.replace('Facility-types_', ''), 10);
+    return {
+      label: facility.facilityName,
+      value: id,
+    }
+  })
+  const facilityItemsLabels = {};
+  facilityItems.forEach(item => {
+    facilityItemsLabels[item.value] = item.label;
+  });
 
   const [quickSearch, setQuickSearch] = useState({
     camping: false,
@@ -184,12 +162,10 @@ export default function Explore({ location, data }) {
 
   const [openQuickView, setOpenQuickView] = useState(false)
 
-  const [filteredResults, setFilteredResults] = useState(false)
-
   const sortOptions = [
-    { value: "rel", label: "Sort by Relevence" },
-    { value: "asc", label: "Sort A-Z" },
-    { value: "desc", label: "Sort Z-A" },
+    { value: "rank:desc", label: "Sort by Relevance" },
+    { value: "protectedAreaName:asc", label: "Sort A-Z" },
+    { value: "protectedAreaName:desc", label: "Sort Z-A" },
   ]
 
   const [sortOption, setSortOption] = useState(
@@ -221,17 +197,20 @@ export default function Explore({ location, data }) {
       ...quickSearch,
       [event.target.name]: event.target.checked,
     })
+    setCurrentPage(1)
   }
   const handleActivityDelete = chipToDelete => {
     setSelectedActivities(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
+    setCurrentPage(1)
   }
 
   const handleFacilityDelete = chipToDelete => {
     setSelectedFacilities(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
+    setCurrentPage(1)
   }
 
   const handleFilterDelete = chipToDelete => () => {
@@ -244,6 +223,7 @@ export default function Explore({ location, data }) {
         ...quickSearch,
         [chipToDelete.type]: false,
       })
+      setCurrentPage(1)
     }
   }
 
@@ -262,37 +242,6 @@ export default function Explore({ location, data }) {
   const handleCloseQuickView = () => {
     setOpenQuickView(false)
   }
-
-  const isFilteredResult = useCallback(() => {
-    let filtered = false
-    if (
-      camping ||
-      petFriendly ||
-      wheelchair ||
-      marine ||
-      ecoReserve ||
-      electricalHookup
-    ) {
-      filtered = true
-    }
-    if (selectedActivities.length > 0 || selectedFacilities.length > 0) {
-      filtered = true
-    }
-    if (searchText && searchText !== "") {
-      filtered = true
-    }
-    return filtered
-  }, [
-    camping,
-    ecoReserve,
-    electricalHookup,
-    marine,
-    petFriendly,
-    selectedActivities,
-    selectedFacilities,
-    wheelchair,
-    searchText,
-  ])
 
   const setFilters = useCallback(() => {
     const filters = []
@@ -320,7 +269,7 @@ export default function Explore({ location, data }) {
     if (electricalHookup) {
       filters.push({ label: "Electrical Hookup", type: "electricalHookup" })
     }
-    filters.sort(labelCompare)
+    filters.sort((a, b) => a.label.localeCompare(b.label))
     setFilterSelections([...filters])
   }, [
     camping,
@@ -333,108 +282,122 @@ export default function Explore({ location, data }) {
     wheelchair,
   ])
 
-  const processResults = useCallback(
-    (results, dataSet) => {
-      const allResults = results.map(r => {
-        if (dataSet === 0) {
-          return {
-            protectedAreaName: r.protectedAreaName,
-            isOpenToPublic: true,
-            advisories: ["Wildfire alert"],
-            hasDayUsePass: true,
-            hasReservations: true,
-            parkActivities: [],
-            parkFacilities: [],
-            parkPhotos: [
-              "https://bcparks.ca/explore/parkpgs/strath/photos/images/12.jpg",
-              "https://bcparks.ca/explore/parkpgs/strath/photos/images/13.jpg",
-            ],
-            slug: r.slug,
-          }
-        }
-        return {
-          protectedAreaName: r.protectedAreaName,
-          isOpenToPublic: true,
-          advisories: ["Wildfire alert"],
-          hasDayUsePass: true,
-          hasReservations: true,
-          parkActivities: r.parkActivities.map(a => a.name.split(":")[1]),
-          parkFacilities: r.parkFacilities.map(a => a.name.split(":")[1]),
-          parkPhotos: [
-            "https://bcparks.ca/explore/parkpgs/strath/photos/images/12.jpg",
-            "https://bcparks.ca/explore/parkpgs/strath/photos/images/13.jpg",
-          ],
-          slug: r.slug,
-        }
-      })
-      if (sortOption.value === "asc") {
-        allResults.sort(sortAsc)
-      } else {
-        allResults.sort(sortDesc)
-      }
-      setSearchResults([...allResults])
-      setTotalResults(allResults.length)
-      setNumberOfPages(Math.ceil(results.length / itemsPerPage))
-      setIsLoading(false)
-    },
-    [sortOption]
-  )
+  const params = useMemo(() => {
+    // TODO: using names is a bit fragile here, all data should have 'codes' and then
+    // we can use those instead
+    const wheelchairFacility = data.allStrapiFacilityTypes.nodes.find(facility => {
+      return facility.facilityName.toLowerCase() === "accessibility information";
+    });
+    const wheelchairFacilityId = wheelchairFacility.id.replace('Facility-types_', '');
+    const electricalFacility = data.allStrapiFacilityTypes.nodes.find(facility => {
+      return facility.facilityName.toLowerCase() === "electrical hookups";
+    });
+    const electricalFacilityId = electricalFacility.id.replace('Facility-types_', '');
+    const petsActivity = data.allStrapiActivityTypes.nodes.find(activity => {
+      return activity.activityName.toLowerCase() === "pets on leash";
+    });
+    const petsActivityId = petsActivity.id.replace('Activity-types_', '');
 
-  useEffect(() => {
-    setIsLoading(true)
-    setFilters()
-    setFilteredResults(isFilteredResult())
-    // TODO: Execute live search here.
-    const dataSet = 1 // Live search: 0, Strapi search: 1
+    const params = {
+      _q: searchText,
+    };
 
-    if (dataSet === 0) {
-      let postBody = {
-        selectedActivities: selectedActivities,
-        selectedFacilities: selectedFacilities,
-        searchText: searchText,
-        camping: quickSearch.camping,
-        petFriendly: quickSearch.petFriendly,
-        wheelchair: quickSearch.wheelchair,
-        marine: quickSearch.marine,
-        ecoReserve: quickSearch.ecoReserve,
-        electricalHookup: quickSearch.electricalHookup,
-      }
-
-      axios
-        .post(`${data.site.siteMetadata.apiURL}/search-views`, postBody)
-        .then(function (data) {
-          let results = data.data
-          processResults(results, dataSet)
-        })
-    } else {
-      const resultsStrapi = searchParkByCriteria(
-        false,
-        protectedAreas,
-        selectedActivities,
-        selectedFacilities,
-        searchText,
-        quickSearch.camping,
-        quickSearch.petFriendly,
-        quickSearch.wheelchair,
-        quickSearch.marine,
-        quickSearch.ecoReserve,
-        quickSearch.electricalHookup
-      )
-      processResults(resultsStrapi, dataSet)
+    if (selectedActivities.length > 0) {
+      params.activities = selectedActivities.map(activity => activity.value);
     }
+    if (selectedFacilities.length > 0) {
+      params.facilities = selectedFacilities.map(facility => facility.value);
+    }
+    if (quickSearch.camping) {
+      params.camping = "Y";
+    }
+    if (quickSearch.petFriendly) {
+      if (typeof params.activities === "undefined") {
+        params.activities = [];
+      }
+      params.activities.push(petsActivityId);
+    }
+    if (quickSearch.wheelchair) {
+      if (typeof params.facilities === "undefined") {
+        params.facilities = [];
+      }
+      params.facilities.push(wheelchairFacilityId);
+    }
+    if (quickSearch.marine) {
+      params.marineProtectedArea = "Y";
+    }
+    if (quickSearch.ecoReserve) {
+      params.typeCode = "ER";
+    }
+    if (quickSearch.electricalHookup) {
+      if (typeof params.facilities === "undefined") {
+        params.facilities = [];
+      }
+      params.facilities.push(electricalFacilityId);
+    }
+
+    return params;
   }, [
-    sortOption,
-    currentPage,
+    data.allStrapiActivityTypes.nodes,
+    data.allStrapiFacilityTypes.nodes,
     searchText,
     selectedActivities,
     selectedFacilities,
     quickSearch,
-    protectedAreas,
+  ]);
+
+  const isActiveSearch = (
+    params._q ||
+    params.activity ||
+    params.facility ||
+    params.camping ||
+    params.marine ||
+    params.ecoReserve
+  );
+
+  useEffect(() => {
+    setIsLoading(true)
+    setFilters()
+
+    const apiUrl = data.site.siteMetadata.apiURL;
+
+    const pageStart = (currentPage - 1) * itemsPerPage;
+    const pageLimit = itemsPerPage;
+    let sort = sortOption.value;
+    if (sortOption.value === "rank:desc" && !params.searchText) {
+      sort = "protectedAreaName:asc";
+    }
+
+    const countPromise = axios.get(`${apiUrl}/protected-areas/count`, { params });
+    const resultPromise = axios
+      .get(
+        `${apiUrl}/protected-areas/`,
+        { params: { ...params, _start: pageStart, _limit: pageLimit, _sort: sort }}
+      );
+    Promise.all([countPromise, resultPromise]).then(([countResponse, resultResponse]) => {
+      if (countResponse.status === 200 && resultResponse.status === 200) {
+        const total = parseInt(countResponse.data, 10);
+        const pages = Math.ceil(total / itemsPerPage);
+        setSearchResults([...resultResponse.data]);
+        setTotalResults(total);
+        setNumberOfPages(pages);
+      } else {
+        setSearchResults([]);
+        setTotalResults(0);
+        setNumberOfPages(0);
+      }
+    }).finally(() => {
+      setIsLoading(false);
+    });
+  }, [
+    params,
+    sortOption,
+    currentPage,
     data.site.siteMetadata.apiURL,
-    processResults,
     setFilters,
-    isFilteredResult,
-    filteredResults,
+    setNumberOfPages,
+    setSearchResults,
+    setTotalResults,
   ])
 
   return (
@@ -453,11 +416,16 @@ export default function Explore({ location, data }) {
             <div className="row no-gutters">
               <div className="col-12">
                 <h1 className="headline-text p40t sm-p10">
-                  {!filteredResults && <>Find your next adventure</>}
-                  {filteredResults && (
+                  {!isActiveSearch && (
+                    <>Find your next adventure</>
+                  )}
+                  { isLoading && isActiveSearch && (
+                    <>Searching...</>
+                  )}
+                  {!isLoading && isActiveSearch && totalResults > 0 && (
                     <>
-                      {searchResults.length}{" "}
-                      {searchResults.length === 1
+                      {totalResults}{" "}
+                      {totalResults === 1
                         ? " result found"
                         : " results found"}
                     </>
@@ -729,6 +697,11 @@ export default function Explore({ location, data }) {
               </div>
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-list container">
+                  { isLoading && (
+                      <div className="container mt-5">
+                        <LinearProgress />
+                      </div>
+                  )}
                   {!isLoading && (
                     <>
                       {!searchResults ||
@@ -741,15 +714,6 @@ export default function Explore({ location, data }) {
                       {searchResults && searchResults.length > 0 && (
                         <>
                           {searchResults
-                            .slice(
-                              (currentPage - 1) * itemsPerPage,
-                              searchResults.length === 1
-                                ? searchResults.length
-                                : currentPage * itemsPerPage >
-                                  searchResults.length - 1
-                                ? searchResults.length
-                                : currentPage * itemsPerPage
-                            )
                             .map((r, index) => (
                               <div key={index} className="m20t">
                                 <Card className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
@@ -816,7 +780,7 @@ export default function Explore({ location, data }) {
                                                 )}
                                                 {!r.isOpenToPublic && (
                                                   <div className="text-red">
-                                                    Closed public access
+                                                    Closed to public access
                                                   </div>
                                                 )}
                                               </div>
@@ -830,8 +794,8 @@ export default function Explore({ location, data }) {
                                               </h3>
                                             </Link>
                                             <div className="row p10t mr5">
-                                              <div className="col-6">
-                                                {r.advisories.map(
+                                            <div className="col-6">
+                                                {r.advisories && r.advisories.length > 0 && r.advisories.map(
                                                   (a, index1) => (
                                                     // TODO Display all advisories when Event types are
                                                     // available in elastic search results based on severity
@@ -883,14 +847,14 @@ export default function Explore({ location, data }) {
                                                         <b>Activities:</b>
                                                       </div>
                                                       {r.parkActivities.map(
-                                                        (a, index2) => (
+                                                        (parkActivity, index2) => (
                                                           <div
                                                             key={index2}
                                                             className="park-af-list pr3 text-black"
                                                           >
                                                             {index2 < 11 && (
                                                               <>
-                                                                {a}
+                                                                {activityItemsLabels[parkActivity.activityType]}
                                                                 {index2 === 10
                                                                   ? " ..."
                                                                   : index2 ===
@@ -918,14 +882,14 @@ export default function Explore({ location, data }) {
                                                         <b>Facilities:</b>
                                                       </div>
                                                       {r.parkFacilities.map(
-                                                        (f, index3) => (
+                                                        (parkFacility, index3) => (
                                                           <div
-                                                            key={index3}
+                                                            key={parkFacility.id}
                                                             className="park-af-list pr3 text-black"
                                                           >
                                                             {index3 < 6 && (
                                                               <>
-                                                                {f}
+                                                                {facilityItemsLabels[parkFacility.facilityType]}
                                                                 {index3 === 5
                                                                   ? " ..."
                                                                   : index3 ===
@@ -1148,7 +1112,7 @@ export default function Explore({ location, data }) {
 
                                             <div className="row p20t mr5">
                                               <div className="col-12">
-                                                {r.advisories.map(
+                                                {r.advisories && r.advisories.length > 0 && r.advisories.map(
                                                   (a, index1) => (
                                                     // TODO Display all advisories when Event types are
                                                     // available in elastic search results based on severity
