@@ -1,9 +1,14 @@
 "use strict";
 
 /* Creates a generated searchtext column on protected_areas, if it doesn't already exist */
-module.exports = async () => {
+const createSearchIndexes = async () => {
   try {
     const knex = strapi.connections[strapi.config.database.defaultConnection];
+
+    // Index setup is postgresql specific
+    if (knex.client.config.client !== "pg") {
+      return;
+    }
 
     const hasSearchColumn = await knex.schema.hasColumn(
       "protected_areas",
@@ -56,4 +61,8 @@ module.exports = async () => {
   } catch (err) {
     strapi.log.error(err);
   }
+};
+
+module.exports = async () => {
+  await createSearchIndexes();
 };

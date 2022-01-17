@@ -1,5 +1,5 @@
 "use strict";
-const createSearchIndexes = require("../../data/functions/createSearchIndexes");
+const dbsetup = require("./dbsetup");
 
 /**
  * An asynchronous bootstrap function that runs before
@@ -12,10 +12,5 @@ const createSearchIndexes = require("../../data/functions/createSearchIndexes");
  */
 
 module.exports = async () => {
-  // Skip the bootstrap for unit tests for now.
-  // Will need to create unit test specific bootstrapping later.
-  if (process.env.NODE_ENV !== "test") {
-    // Setup text indexes for search
-    await createSearchIndexes();
-  }
+  await dbsetup();
 };
