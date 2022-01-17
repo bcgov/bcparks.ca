@@ -99,14 +99,6 @@ const savePublicAdvisoryAudit = async (
 const loadPublicAdvisoryAudit = async () => {
   try {
     const modelName = "public-advisory-audit";
-    const loadSetting = await loadUtils.getLoadSettings(modelName);
-
-    if (loadSetting && loadSetting.purge) {
-      await strapi.services[modelName].delete();
-      await strapi.services["public-advisory"].delete();
-    }
-
-    if (loadSetting && !loadSetting.reload) return;
 
     const currentData = await strapi.services[modelName].find();
     if (currentData.length === 0) {

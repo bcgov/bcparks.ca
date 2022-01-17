@@ -65,12 +65,6 @@ const loadImage = async (parkId, filepath) => {
 
 const loadParkPhoto = async () => {
   const modelName = "park-photo";
-  const loadSetting = await loadUtils.getLoadSettings(modelName);
-
-  if (loadSetting && loadSetting.purge)
-    await strapi.services[modelName].delete();
-
-  if (loadSetting && !loadSetting.reload) return;
 
   const currentData = await strapi.services[modelName].find();
   if (currentData.length === 0) {
