@@ -8,7 +8,7 @@ beforeAll(async () => {
 
 /** this code is called once before all the tested are finished */
 afterAll(async () => {
-  const dbSettings = strapi.config.get("database.connections.default.settings");  
+  const dbSettings = strapi.config.get("database.connections.default.settings");
 
   //close server to release the db-file
   await strapi.destroy();

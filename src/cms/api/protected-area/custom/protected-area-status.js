@@ -223,7 +223,9 @@ const getProtectedAreaStatus = async (ctx) => {
       orcsSiteNumber: null,
       protectedAreaName: protectedArea.protectedAreaName,
       protectedAreaNameAliases: parkNamesAliases
-        .filter((p) => p.protectedArea && +p.protectedArea.orcs === protectedArea.orcs)
+        .filter(
+          (p) => p.protectedArea && +p.protectedArea.orcs === protectedArea.orcs
+        )
         .map((d) => d.parkName),
       type: protectedArea.type,
       typeCode: protectedArea.typeCode,

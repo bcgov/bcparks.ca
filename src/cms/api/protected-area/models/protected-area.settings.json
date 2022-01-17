@@ -9,10 +9,7 @@
     "increments": true,
     "timestamps": true,
     "draftAndPublish": true,
-    "privateAttributes": [
-      "search_text",
-      "search_rank"
-    ]
+    "privateAttributes": ["search_text", "search_rank"]
   },
   "attributes": {
     "orcs": {
@@ -61,13 +58,7 @@
     },
     "typeCode": {
       "type": "enumeration",
-      "enum": [
-        "PK",
-        "PA",
-        "RA",
-        "ER",
-        "CS"
-      ]
+      "enum": ["PK", "PA", "RA", "ER", "CS"]
     },
     "latitude": {
       "type": "float"
