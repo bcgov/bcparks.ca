@@ -14,21 +14,23 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "12/06/2021 10:41:26 AM"
+    "x-generation-date": "01/17/2022 11:28:28 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
     "showGeneratedFiles": true,
-    "generateDefaultResponse": true
+    "generateDefaultResponse": true,
+    "pluginsForWhichToGenerateDoc": ["email", "upload", "users-permissions"]
   },
   "servers": [
-    { "url": "http://localhost:1337", "description": "Development server" },
-    { "url": "YOUR_STAGING_SERVER", "description": "Staging server" },
-    { "url": "YOUR_PRODUCTION_SERVER", "description": "Production server" }
+    { "url": "http://localhost:1337", "description": "Local development" },
+    { "url": "https://dev-cms.bcparks.ca", "description": "DEV env" },
+    { "url": "https://test-cms.bcparks.ca", "description": "TEST env" },
+    { "url": "https://cms.bcparks.ca", "description": "PROD env" }
   ],
   "externalDocs": {
     "description": "Find out more",
-    "url": "https://strapi.io/documentation/developer-docs/latest/getting-started/introduction.html"
+    "url": "https://strapi.io/documentation/"
   },
   "security": [{ "bearerAuth": [] }],
   "paths": {
@@ -6157,250 +6159,6 @@
       }
     },
     "/regions/{id}": {},
-    "/search-views": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": { "properties": { "foo": { "type": "string" } } }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": ["Search-view"],
-        "parameters": [
-          {
-            "name": "_limit",
-            "in": "query",
-            "required": false,
-            "description": "Maximum number of results possible",
-            "schema": { "type": "integer" },
-            "deprecated": false
-          },
-          {
-            "name": "_sort",
-            "in": "query",
-            "required": false,
-            "description": "Sort according to a specific field.",
-            "schema": { "type": "string" },
-            "deprecated": false
-          },
-          {
-            "name": "_start",
-            "in": "query",
-            "required": false,
-            "description": "Skip a specific number of entries (especially useful for pagination)",
-            "schema": { "type": "integer" },
-            "deprecated": false
-          },
-          {
-            "name": "=",
-            "in": "query",
-            "required": false,
-            "description": "Get entries that matches exactly your input",
-            "schema": { "type": "string" },
-            "deprecated": false
-          },
-          {
-            "name": "_ne",
-            "in": "query",
-            "required": false,
-            "description": "Get records that are not equals to something",
-            "schema": { "type": "string" },
-            "deprecated": false
-          },
-          {
-            "name": "_lt",
-            "in": "query",
-            "required": false,
-            "description": "Get record that are lower than a value",
-            "schema": { "type": "string" },
-            "deprecated": false
-          },
-          {
-            "name": "_lte",
-            "in": "query",
-            "required": false,
-            "description": "Get records that are lower than or equal to a value",
-            "schema": { "type": "string" },
-            "deprecated": false
-          },
-          {
-            "name": "_gt",
-            "in": "query",
-            "required": false,
-            "description": "Get records that are greater than a value",
-            "schema": { "type": "string" },
-            "deprecated": false
-          },
-          {
-            "name": "_gte",
-            "in": "query",
-            "required": false,
-            "description": "Get records that are greater than  or equal a value",
-            "schema": { "type": "string" },
-            "deprecated": false
-          },
-          {
-            "name": "_contains",
-            "in": "query",
-            "required": false,
-            "description": "Get records that contains a value",
-            "schema": { "type": "string" },
-            "deprecated": false
-          },
-          {
-            "name": "_containss",
-            "in": "query",
-            "required": false,
-            "description": "Get records that contains (case sensitive) a value",
-            "schema": { "type": "string" },
-            "deprecated": false
-          },
-          {
-            "name": "_in",
-            "in": "query",
-            "required": false,
-            "description": "Get records that matches any value in the array of values",
-            "schema": { "type": "array", "items": { "type": "string" } },
-            "deprecated": false
-          },
-          {
-            "name": "_nin",
-            "in": "query",
-            "required": false,
-            "description": "Get records that doesn't match any value in the array of values",
-            "schema": { "type": "array", "items": { "type": "string" } },
-            "deprecated": false
-          }
-        ]
-      }
-    },
-    "/search-views/count": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": { "properties": { "foo": { "type": "string" } } }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": ["Search-view"],
-        "parameters": []
-      }
-    },
-    "/search-views/{id}": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": { "properties": { "foo": { "type": "string" } } }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": ["Search-view"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": { "type": "string" }
-          }
-        ]
-      }
-    },
-    "/search": {},
     "/sections": {
       "get": {
         "deprecated": false,
@@ -10137,116 +9895,6 @@
           "updated_by": { "type": "string" }
         }
       },
-      "Search-view": {
-        "required": ["id"],
-        "properties": {
-          "id": { "type": "string" },
-          "title": { "type": "string" },
-          "orcs": { "type": "string" },
-          "protectedAreaName": { "type": "string" },
-          "totalArea": { "type": "string" },
-          "uplandArea": { "type": "string" },
-          "marineArea": { "type": "string" },
-          "marineProtectedArea": { "type": "string" },
-          "type": { "type": "string" },
-          "class": { "type": "string" },
-          "establishedDate": { "type": "string" },
-          "repealedDate": { "type": "string" },
-          "status": { "type": "string" },
-          "url": { "type": "string" },
-          "typeCode": { "type": "string" },
-          "latitude": { "type": "string" },
-          "longitude": { "type": "string" },
-          "mapZoom": { "type": "string" },
-          "isDayUsePass": { "type": "string" },
-          "isFogZone": { "type": "string" },
-          "featureId": { "type": "string" },
-          "hasCampfireBan": { "type": "string" },
-          "hasSmokingBan": { "type": "string" },
-          "hasCampfireBanOverride": { "type": "string" },
-          "hasSmokingBanOverride": { "type": "string" },
-          "campfireBanRescindedDate": { "type": "string" },
-          "description": { "type": "string" },
-          "safetyInfo": { "type": "string" },
-          "specialNotes": { "type": "string" },
-          "locationNotes": { "type": "string" },
-          "parkContact": { "type": "string" },
-          "reservations": { "type": "string" },
-          "natureAndCulture": { "type": "string" },
-          "reconciliationNotes": { "type": "string" },
-          "slug": { "type": "string" },
-          "parkactivities": { "type": "object" },
-          "camping": { "type": "boolean" },
-          "petFriendly": { "type": "boolean" },
-          "wheelchair": { "type": "boolean" },
-          "marine": { "type": "boolean" },
-          "ecoReserve": { "type": "boolean" },
-          "electricalHookup": { "type": "boolean" }
-        }
-      },
-      "NewSearch-view": {
-        "properties": {
-          "title": { "type": "string" },
-          "orcs": { "type": "string" },
-          "protectedAreaName": { "type": "string" },
-          "totalArea": { "type": "string" },
-          "uplandArea": { "type": "string" },
-          "marineArea": { "type": "string" },
-          "marineProtectedArea": { "type": "string" },
-          "type": { "type": "string" },
-          "class": { "type": "string" },
-          "establishedDate": { "type": "string" },
-          "repealedDate": { "type": "string" },
-          "status": { "type": "string" },
-          "url": { "type": "string" },
-          "typeCode": { "type": "string" },
-          "latitude": { "type": "string" },
-          "longitude": { "type": "string" },
-          "mapZoom": { "type": "string" },
-          "isDayUsePass": { "type": "string" },
-          "isFogZone": { "type": "string" },
-          "featureId": { "type": "string" },
-          "hasCampfireBan": { "type": "string" },
-          "hasSmokingBan": { "type": "string" },
-          "hasCampfireBanOverride": { "type": "string" },
-          "hasSmokingBanOverride": { "type": "string" },
-          "campfireBanRescindedDate": { "type": "string" },
-          "description": { "type": "string" },
-          "safetyInfo": { "type": "string" },
-          "specialNotes": { "type": "string" },
-          "locationNotes": { "type": "string" },
-          "parkContact": { "type": "string" },
-          "reservations": { "type": "string" },
-          "natureAndCulture": { "type": "string" },
-          "reconciliationNotes": { "type": "string" },
-          "slug": { "type": "string" },
-          "parkactivities": { "type": "object" },
-          "camping": { "type": "boolean" },
-          "petFriendly": { "type": "boolean" },
-          "wheelchair": { "type": "boolean" },
-          "marine": { "type": "boolean" },
-          "ecoReserve": { "type": "boolean" },
-          "electricalHookup": { "type": "boolean" },
-          "created_by": { "type": "string" },
-          "updated_by": { "type": "string" }
-        }
-      },
-      "Search": {
-        "required": ["id"],
-        "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "description": { "type": "string" }
-        }
-      },
-      "NewSearch": {
-        "properties": {
-          "name": { "type": "string" },
-          "description": { "type": "string" },
-          "created_by": { "type": "string" },
-          "updated_by": { "type": "string" }
-        }
-      },
       "Section": {
         "required": ["id", "sectionNumber"],
         "properties": {
@@ -10593,30 +10241,6 @@
           "updated_by": { "type": "string" }
         }
       },
-      "X-data-load-setting": {
-        "required": ["id"],
-        "properties": {
-          "id": { "type": "string" },
-          "model": { "type": "string" },
-          "loaderFunction": { "type": "string" },
-          "reload": { "type": "boolean" },
-          "purge": { "type": "boolean" },
-          "notes": { "type": "string" },
-          "published_at": { "type": "string", "format": "date-time" }
-        }
-      },
-      "NewX-data-load-setting": {
-        "properties": {
-          "model": { "type": "string" },
-          "loaderFunction": { "type": "string" },
-          "reload": { "type": "boolean" },
-          "purge": { "type": "boolean" },
-          "notes": { "type": "string" },
-          "published_at": { "type": "string", "format": "date-time" },
-          "created_by": { "type": "string" },
-          "updated_by": { "type": "string" }
-        }
-      },
       "UsersPermissionsRole": {
         "required": ["id", "name"],
         "properties": {
@@ -10740,7 +10364,6 @@
     { "name": "Menu" },
     { "name": "Page" },
     { "name": "Region" },
-    { "name": "Search" },
     { "name": "Section" },
     { "name": "Site" },
     { "name": "Token" },

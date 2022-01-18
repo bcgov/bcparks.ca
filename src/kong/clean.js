@@ -13,7 +13,6 @@ const pathsToDelete = [
   "/public-advisory-audits",
   "/statutory-holidays",
   "/tokens",
-  "/x-data-load-settings",
   "/email/settings",
   "/upload",
   "/users-permissions",

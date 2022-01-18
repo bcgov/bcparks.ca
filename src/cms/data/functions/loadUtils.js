@@ -14,34 +14,9 @@ const formatDate = (date) => {
   }
 };
 
-const getLoadSettings = async (modelName) => {
-  let message = {
-    model: modelName,
-    reload: null,
-    purge: null,
-  };
-
-  const loadSetting = await strapi
-    .query("x-data-load-setting")
-    .findOne({ model: modelName });
-
-  if (loadSetting) {
-    message.reload = loadSetting.reload;
-    message.purge = loadSetting.purge;
-  }
-
-  strapi.log.info("pre-load config", message);
-  return loadSetting;
-};
 
 const loadJson = async (model, jsonFile, object) => {
   try {
-    const loadSetting = await getLoadSettings(model);
-
-    if (loadSetting && loadSetting.purge) await strapi.services[model].delete();
-
-    if (loadSetting && !loadSetting.reload) return;
-
     const currentData = await strapi.services[model].find();
 
     if (currentData.length == 0) {
@@ -67,6 +42,5 @@ const loadJson = async (model, jsonFile, object) => {
 
 module.exports = {
   loadJson,
-  getLoadSettings,
   formatDate,
 };

@@ -9,7 +9,8 @@
     "build": "strapi build",
     "strapi": "strapi",
     "test": "jest --forceExit --detectOpenHandles",
-    "lint": "eslint ./ && prettier --check **/*.js"
+    "lint": "eslint ./ && prettier --check **/*.js",
+    "seed": "node scripts/seed.js"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^29.0.0",

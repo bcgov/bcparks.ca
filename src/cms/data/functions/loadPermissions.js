@@ -85,7 +85,6 @@ const setPublicPermissions = async () => {
         "token",
         "statutory-holidays",
         "public-advisory-audit",
-        "x-data-load-setting",
       ],
       role: publicRole.id,
       action_in: ["count", "find", "findone", "names", "items", "status"],
