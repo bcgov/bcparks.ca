@@ -95,15 +95,17 @@ const DesktopMenu = ({ linkStructure }) => {
 
   return (
     <>
-      <nav className="navbar navbar-dark" id="desktopNav">
-        <Link to="/">
-          <img className="bc-parks-logo" src={BCParksLogo} alt="BC Parks logo" />
-        </Link>
-        <a href="https://www.discovercamping.ca" rel="noreferrer" target="_blank" className="btn book-campsite-btn">Book a campsite</a>
-      </nav>
+      <div className="bc-bg-blue-dk">
+        <nav className="navbar" id="desktopNav">
+          <Link to="/">
+            <img className="bc-parks-logo" src={BCParksLogo} alt="BC Parks logo" />
+          </Link>
+          <a href="https://www.discovercamping.ca" rel="noreferrer" target="_blank" className="btn book-campsite-btn">Book a campsite</a>
+        </nav>
+      </div>
       <div id="desktopNavMenu">
         <nav className="desktopNavWrapper">
-          <div className="list-wrapper">
+          <div className="bc-bg-blue-md">
             <ul className="menu menu-bar justify-content-center mx-auto">
               {formattedContent.map(fc => {
                 return generateMenuItem(fc)

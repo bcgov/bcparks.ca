@@ -299,9 +299,9 @@ $largeStart: 992px;
     padding: 10px !important;
   }
 
-  .MuiPaper-root {
-    //color: $colorBlue !important;
-  }
+  /*.MuiPaper-root {
+    color: $colorBlue !important;
+  }*/
 
   .MuiDialog-paperWidthSm {
     border-radius: 0px !important;
@@ -956,7 +956,7 @@ div[class$="-singleValue"] {
 
   @media (min-width: 1200px) {
     .container {
-      max-width: 1600px !important;
+      max-width: 1440px !important;
     }
   }
 
