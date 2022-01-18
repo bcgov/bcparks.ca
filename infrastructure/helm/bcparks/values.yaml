@@ -266,3 +266,22 @@ backup:
     requests:
       cpu: 250m
       memory: 250Mi
+
+sysdig:
+  componentName: sysdigteam
+  enabled: true
+
+  description: "bcparks.ca sysdig team"
+
+  users:
+    - email: hi@cole.io
+      role: ROLE_TEAM_MANAGER
+    - email: neal.li@gov.bc.ca
+      role: ROLE_TEAM_MANAGER
+    - email: day@oxd.com
+      role: ROLE_TEAM_EDIT
+    - email: mark@digitalspace.ca
+      role: ROLE_TEAM_EDIT
+    - email: cameron@digitalspace.ca
+      role: ROLE_TEAM_EDIT
+    - email: goldie.zohar@gmail.com
