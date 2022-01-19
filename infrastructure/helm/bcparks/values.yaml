@@ -35,6 +35,9 @@ images:
   backup:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/backup-container
     tag: postgres-latest
+  landing:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/landing
+    tag: latest
 
 cms:
   componentName: cms
@@ -266,6 +269,23 @@ backup:
     requests:
       cpu: 250m
       memory: 250Mi
+
+landing:
+  imagePullPolicy: Always
+
+  componentName: landing
+
+  resources:
+    limits:
+      cpu: 100m
+      memory: 100Mi
+    requests:
+      cpu: 50m
+      memory: 50Mi
+
+  service:
+    portName: landing
+    port: 3000
 
 sysdig:
   componentName: sysdigteam
