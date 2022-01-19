@@ -97,6 +97,28 @@ export const query = graphql`
   }
 `
 
+const TestCard = ({col, orientation}) => {
+  return (
+    <>
+      <div className={'col-12 col-md-' + col + ' card-col-padding'} onclick="location.href='/reserve'">
+        <div className={'card grid-card grid-card-' + orientation }>
+          <div class="card-img">
+            <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
+          </div>
+          <div class="card-body">
+            <h5 class="card-body-header">
+              <a href="/reserve">Camping information</a>
+            </h5>
+            <p class="card-text">
+              Reservation policies and fees.
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
+
 export default function Home({ data }) {
   const zonesContent =
     data?.strapiWebsites?.homepage?.Content?.filter(
@@ -128,6 +150,15 @@ export default function Home({ data }) {
       </Container>
       <Container className="content-width-override" fixed disableGutters={isMobile ? true: false}>
         <div id="main">
+          <div className="row">
+            <TestCard col={8}></TestCard>
+            <TestCard col={4}></TestCard>
+            <TestCard col={4}></TestCard>
+            <TestCard col={8}></TestCard>
+            <br/><br />
+            <TestCard col={12} orientation={'horz'}></TestCard>
+            <TestCard col={12} orientation={'horz'}></TestCard>
+          </div>
           {zonesContent.map(content => <Zone key={content.id} zoneID={`Zone${content.id}`} Content={content} />)}
         </div>
       </Container>
