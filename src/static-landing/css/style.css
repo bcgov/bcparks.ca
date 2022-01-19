@@ -1,0 +1,205 @@
+body {
+  color: #036;
+}
+
+a:link {
+  color: #fff;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #fff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #fcba19;
+}
+
+a.btn {
+  background-color: #fff;
+  border: 2px solid #036;
+  border-radius: 5px;
+  color: #036;
+  text-align: center;
+}
+
+a.btn:hover {
+  background-color: #036;
+  color: #fff;
+}
+
+.navbar {
+  padding: 0;
+  background-color: #036 !important;
+  z-index: 1000;
+}
+
+.sub-header {
+  width: 100%;
+}
+
+.footer {
+  background-color: #036;
+  border-top: 2px solid #fcba19;
+  margin-top: 32px;
+}
+
+.footer .gov-links {
+  padding: 16px 0;
+  margin: 0;
+}
+
+.footer .gov-links li {
+  display: inline-block;
+  margin: 0 16px;
+  font-size: 1.2rem;
+}
+
+.beta-banner {
+  padding: 5px 10px;
+  z-index: 10000;
+  background-color: #fcba19;
+  color: #003366;
+}
+
+.beta-welcome {
+  padding-top: 80px;
+  margin-bottom: 100px;
+  color: #003366;
+  background-image: url("../images/image-background-credit-michael-benz.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.beta-welcome_main-heading {
+  font-weight: bold;
+  margin-bottom: 16px;
+  font-size: 3rem;
+}
+
+.beta-welcome_screenshots-container {
+  margin-top: -100px;
+}
+
+.beta-welcome_screenshots {
+  position: relative;
+  top: 150px;
+  max-width: 100%;
+  height: auto;
+}
+
+.beta-description {
+  color: #000;
+  width: 80%;
+  margin-top: 160px;
+}
+
+.contents {
+  margin-top: 160px;
+}
+
+.contents div:first-child {
+  padding-right: 32px;
+}
+
+.contents p {
+  color: #000;
+}
+
+.research {
+  background-image: url("../images/research-intake.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 330px;
+  border-radius: 16px;
+  margin-top: 160px;
+  padding: 32px;
+  color: #fff;
+}
+
+.research_large-screen img {
+  width: 300px;
+  margin-left: -30px;
+}
+
+.research_narrow-screen {
+  display: none;
+}
+
+.research_narrow-screen_flex-container {
+  height: 100%;
+}
+
+.research_narrow-screen_content {
+  width: 100%;
+  background-color: #036;
+  border-radius: 0 0 16px 16px;
+  padding: 48px 32px;
+}
+
+.research_narrow-screen_content a:visited {
+  color: #fff;
+  text-decoration: none;
+}
+
+.social-media {
+  margin-top: 100px;
+  color: #003366;
+}
+
+.social-media_icon {
+  margin: 0 8px;
+}
+
+@media screen and (max-width: 992px) {
+  .contents {
+    margin-top: 80px;
+  }
+
+  .contents h2 {
+    margin-top: 32px;
+  }
+
+  .contents div:first-child {
+    padding-right: unset;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .footer .gov-links li {
+    font-size: 0.8rem;
+  }
+
+  .beta-welcome_screenshots-container {
+    margin-top: unset;
+  }
+
+  .beta-welcome_screenshots {
+    top: 100px;
+  }
+
+  .beta-description {
+    margin-top: unset;
+  }
+
+  .research {
+    padding: unset;
+  }
+
+  .research_large-screen {
+    display: none;
+  }
+
+  .research_narrow-screen {
+    display: unset;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .beta-welcome_screenshots {
+    top: 70px;
+  }
+}
