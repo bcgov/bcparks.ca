@@ -112,6 +112,9 @@ const TestCard = ({col, orientation}) => {
             <p class="card-text">
               Reservation policies and fees.
             </p>
+            <div class="card-button">
+              Learn more <i class="fa fa-chevron-circle-right"></i>
+            </div>
           </div>
         </div>
       </div>
