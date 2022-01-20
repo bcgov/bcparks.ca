@@ -10,6 +10,8 @@ images:
     tag: test
   public:
     tag: test
+  landing:
+    tag: test
 
 cms:
   resources:
