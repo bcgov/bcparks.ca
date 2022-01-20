@@ -108,6 +108,10 @@ a.btn:hover {
   color: #000;
 }
 
+.contents img {
+  width: 100%;
+}
+
 .research {
   background-image: url("../images/research-intake.png");
   background-position: center;
@@ -143,6 +147,10 @@ a.btn:hover {
 .research_narrow-screen_content a:visited {
   color: #fff;
   text-decoration: none;
+}
+
+.research_narrow-screen_content a:hover {
+  color: #fcba19;
 }
 
 .social-media {
