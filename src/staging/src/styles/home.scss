@@ -236,6 +236,11 @@ $tabletBreakpoint: 768px;
       height:100%;
       width:50%;
       order: 1;
+
+      .card-body-header {
+        width:375px;
+        line-height:2.25rem;
+      }
     }
     .card-text {
       margin-top:auto;
@@ -276,6 +281,7 @@ $tabletBreakpoint: 768px;
   line-height: 30px;
   border-radius: 4px;
   display: inline-flex;
+  margin-top: auto;
 
   i {
     margin:auto 0 auto auto;
