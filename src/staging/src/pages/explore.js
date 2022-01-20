@@ -60,14 +60,14 @@ export const query = graphql`
     allStrapiActivityTypes(sort: { fields: activityName }) {
       totalCount
       nodes {
-        id
+        strapiId
         activityName
       }
     }
     allStrapiFacilityTypes(sort: { fields: facilityName }) {
       totalCount
       nodes {
-        id
+        strapiId
         facilityName
       }
     }
@@ -101,10 +101,9 @@ export default function Explore({ location, data }) {
   const menuContent = data?.allStrapiMenus?.nodes || []
 
   const activityItems = data.allStrapiActivityTypes.nodes.map(activity => {
-    const id = parseInt(activity.id.replace('Activity-types_', ''), 10);
     return {
       label: activity.activityName,
-      value: id,
+      value: activity.strapiId,
     }
   });
   const activityItemsLabels = {};
@@ -113,10 +112,9 @@ export default function Explore({ location, data }) {
   });
 
   const facilityItems = data.allStrapiFacilityTypes.nodes.map(facility => {
-    const id = parseInt(facility.id.replace('Facility-types_', ''), 10);
     return {
       label: facility.facilityName,
-      value: id,
+      value: facility.strapiId,
     }
   })
   const facilityItemsLabels = {};
@@ -289,15 +287,15 @@ export default function Explore({ location, data }) {
     const wheelchairFacility = data.allStrapiFacilityTypes.nodes.find(facility => {
       return facility.facilityName.toLowerCase() === "accessibility information";
     });
-    const wheelchairFacilityId = wheelchairFacility.id.replace('Facility-types_', '');
+    const wheelchairFacilityId = wheelchairFacility.strapiId;
     const electricalFacility = data.allStrapiFacilityTypes.nodes.find(facility => {
       return facility.facilityName.toLowerCase() === "electrical hookups";
     });
-    const electricalFacilityId = electricalFacility.id.replace('Facility-types_', '');
+    const electricalFacilityId = electricalFacility.strapiId;
     const petsActivity = data.allStrapiActivityTypes.nodes.find(activity => {
       return activity.activityName.toLowerCase() === "pets on leash";
     });
-    const petsActivityId = petsActivity.id.replace('Activity-types_', '');
+    const petsActivityId = petsActivity.strapiId;
 
     const params = {
       _q: searchText,
