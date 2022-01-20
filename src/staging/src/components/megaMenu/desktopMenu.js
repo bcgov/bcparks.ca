@@ -22,7 +22,7 @@ const DesktopMenu = ({ linkStructure }) => {
     if (!strapiChildren?.length) {
       return (
         <React.Fragment key={`f${title}`}>
-          <li key={title}>
+          <li key={title} className="menu-bar-list-item">
             <Link to={url ?? '/'} className="menu-link menu-bar-link">{title}</Link>
           </li>
           <li key="empty" className="empty"></li>
@@ -31,7 +31,7 @@ const DesktopMenu = ({ linkStructure }) => {
     }
     if (strapiChildren?.length) {
       return (
-        <li key={title}>
+        <li key={title} className="menu-bar-list-item">
           <a href={url} onClick={e => handleLinkClick(e, url)} className="menu-link menu-bar-link" data-haspopup="true">{title}</a>
           <ul className="mega-menu mega-menu--multiLevel"> {/** level 1 */}
             <li key={`t${title}`} className="menu-list-header">

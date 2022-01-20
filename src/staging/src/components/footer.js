@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   },
   logo: {
     [theme.breakpoints.up("sm")]: {
-      height: "60px",
+      height: "90px",
     },
     [theme.breakpoints.down("sm")]: {
       height: "40px",
@@ -32,6 +32,9 @@ const useStyles = makeStyles(theme => ({
     paddingTop: "10px",
     listStyle: "none",
     paddingLeft: "20px",
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.05rem"
+    },
   },
   menu2: {
     // need to reorder 2 and 3 in mobile to keep
@@ -63,7 +66,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: "5px",
     height: "1px",
     backgroundColor: "#fcba19",
-    width: "30px",
+    width: "48px",
   },
   menuItem: {
     marginTop: "10px",
@@ -84,7 +87,7 @@ const useStyles = makeStyles(theme => ({
     display: "block",
     textAlign: "center",
     paddingTop: "15px",
-    marginTop: "30px",
+    marginTop: "60px",
     borderTop: "solid 1px #fff",
     paddingBottom: "20px",
     [theme.breakpoints.up("md")]: {
@@ -96,7 +99,8 @@ const useStyles = makeStyles(theme => ({
     margin: "0 10px",
     display: "inline-block",
     [theme.breakpoints.up("md")]: {
-      margin: "2px 10px",
+      fontSize: "1rem",
+      margin: "20px 40px 10px 0px",
     },
   },
   searchBoxContainer: {
@@ -106,13 +110,13 @@ const useStyles = makeStyles(theme => ({
     },
   },
   searchBox: {
-    lineHeight: "40px",
-    height: "40px",
+    lineHeight: "50px",
+    height: "50px",
     width: "100%",
-    maxWidth: "400px",
+    maxWidth: "445px",
     color: "#fff",
     paddingLeft: "20px",
-    borderRadius: "20px",
+    borderRadius: "25px",
     alignItems: "center",
     display: "flex",
     [theme.breakpoints.down("sm")]: {
@@ -123,10 +127,10 @@ const useStyles = makeStyles(theme => ({
     },
     "& input": { // needed to make basic input styling invisible
       background: "none",
-      height: "30px",
+      height: "40px",
       color: "#fff",
       fontFamily: "BC Sans, Verdana, Arial, sans serif",
-      fontSize: "0.75rem",
+      fontSize: "1rem",
       "&::placeholder": {
         color: "#fff",
         opacity: 1,
