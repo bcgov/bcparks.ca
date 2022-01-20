@@ -168,11 +168,7 @@ export default function Explore({ location, data }) {
     { value: "protectedAreaName:desc", label: "Sort Z-A" },
   ]
 
-  const [sortOption, setSortOption] = useState(
-    location.state && location.state.sortOption
-      ? location.state.sortOption
-      : sortOptions[0]
-  )
+  const [sortOption, setSortOption] = useState(sortOptions[0]);
 
   const breadcrumbs = [
     <Link key="1" href="/">
@@ -241,6 +237,11 @@ export default function Explore({ location, data }) {
 
   const handleCloseQuickView = () => {
     setOpenQuickView(false)
+  }
+
+  const handleSortChange = (value) => {
+    setSortOption(value)
+    setCurrentPage(1)
   }
 
   const setFilters = useCallback(() => {
@@ -364,7 +365,7 @@ export default function Explore({ location, data }) {
     const pageStart = (currentPage - 1) * itemsPerPage;
     const pageLimit = itemsPerPage;
     let sort = sortOption.value;
-    if (sortOption.value === "rank:desc" && !params.searchText) {
+    if (sort === "rank:desc" && !params._q) {
       sort = "protectedAreaName:asc";
     }
 
@@ -553,9 +554,7 @@ export default function Explore({ location, data }) {
                         className="park-filter-select h50p"
                         variant="outlined"
                         options={sortOptions}
-                        onChange={e => {
-                          setSortOption(e)
-                        }}
+                        onChange={handleSortChange}
                         placeholder="Sort by"
                       />
                     </div>
