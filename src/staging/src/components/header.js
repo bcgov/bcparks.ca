@@ -4,15 +4,14 @@ import {
   Box
 } from "@material-ui/core"
 
-import InfoIcon from "@material-ui/icons/Info"
 import { makeStyles } from "@material-ui/core/styles";
 import "../styles/global.scss"
 
 const useStyles = makeStyles(theme => ({
   // This extra styling is so that in mobile the improve link is below the beta message
   betaHeader: {
-    minHeight: '44px',
-    fontSize: "0.8rem",
+    minHeight: '55px',
+    fontSize: "1rem", 
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -23,6 +22,10 @@ const useStyles = makeStyles(theme => ({
     "& a:hover": {
       color: "#036"
     },
+    [theme.breakpoints.down('sm')]: {
+      minHeight: '36px',
+      fontSize: "0.7rem"
+    }
   },
   betaMsg: {
 
@@ -37,22 +40,23 @@ const useStyles = makeStyles(theme => ({
     "& a": { color: "#036" }
   },
   infoIcon: {
-    height: "20px;",
-    marginRight: "4px"
+    fontSize: "1.2rem",  
+    marginRight: "8px",
+    [theme.breakpoints.down('sm')]: { 
+      fontSize: "0.7rem"
+    }
   }
 }));
 
 export default function Header({ children, mode = 'external', content = [] }) {
-  const isBeta = true; // TODO set to false to remove beta banner
   const classes = useStyles();
 
   if (mode === 'internal') {
     return (
       <>
         <Box className={classes.betaHeader + " bc-bg-yellow bc-color-blue-dk"}>
-          <InfoIcon className={classes.infoIcon} fontSize="small" />
+          <i className={'fa fa-info-circle ' + classes.infoIcon }></i>
           <Box className={classes.betaMsg}>
-            
             This site is in beta
           </Box>
           <Box className={classes.linkDivider}>|</Box>
@@ -64,8 +68,4 @@ export default function Header({ children, mode = 'external', content = [] }) {
         </>
     )
   }
-  // TODO is the following case (i.e. mode="external") ever hit?
-  return (
-    <header id='header' dangerouslySetInnerHTML={{ __html: children }} />
-  )
 }

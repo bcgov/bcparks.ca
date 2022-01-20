@@ -205,9 +205,7 @@ export default function Footer() {
   const menu2 = [
     { type: "header", display: "Get involved" },
     { type: "link", display: "Volunteer", link: "/volunteers" },
-    { type: "link", display: "Support BC Parks", link: "/volunteers",
-      note: "TODO update this link",
-    },
+    { type: "link", display: "Support BC Parks", link: "/volunteers" },
   ]
   const menu3 = [
     { type: "header", display: "Stay connected" },
