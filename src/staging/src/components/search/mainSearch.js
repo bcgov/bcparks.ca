@@ -1,11 +1,23 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
-import { TextField, Button, Link, InputAdornment } from "@material-ui/core"
+import { TextField, Button, Link, InputAdornment, InputLabel } from "@material-ui/core"
 import "../../styles/search.scss"
 import { navigate } from "gatsby"
 import SearchFilter from "./searchFilter"
+import SearchIcon from "@material-ui/icons/Search"
+import { makeStyles } from "@material-ui/core/styles";
 
+
+const useStyles = makeStyles(theme => ({
+  searchLabel: {
+    display: "none"
+  }
+}));
+  
 const MainSearch = ({ data: { activities, facilities } }) => {
+
+  const classes = useStyles()
+
   const activityItems = activities.map(a => ({
     label: a.activityName,
     value: a.activityNumber,
@@ -196,7 +208,58 @@ const MainSearch = ({ data: { activities, facilities } }) => {
     )
   }
 
+  const newVers = true;
+
   return (
+    <>
+      { newVers ? (
+        <div id="home-parks-search">
+          <div className="home-search-box">
+            <div className="home-search-header">
+              Find your next adventure
+            </div>
+            <div className="home-search-field">
+              <InputLabel className="sr-only" htmlFor="park-search-text">
+                  Search
+              </InputLabel>
+              <TextField
+                id="park-search-text"
+                variant="outlined"
+                placeholder="Plan your next adventure by searching for campsites and day use areas"
+                className="park-search-text-box h50p"
+                value={searchText}
+                onChange={event => {
+                  setSearchText(event.target.value)
+                }}
+                onKeyPress={ev => {
+                  if (ev.key === "Enter") {
+                    searchParkFilter()
+                    ev.preventDefault()
+                  }
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon className="search-icon" />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <Button
+                  variant="contained"
+                  onClick={searchParkFilter}
+                  className="home-search-button"
+              >
+                Search
+              </Button>
+            </div>
+            <div className="home-search-filter-link">
+              <a href="/explore">Search by activity</a>
+            </div>
+          </div>
+        </div>
+      ) : (
+
     <div className="park-search-container park-search-text-container">
       <div className="d-none d-lg-block v-align-abs">
         {renderDesktop()}
@@ -223,7 +286,9 @@ const MainSearch = ({ data: { activities, facilities } }) => {
           sortOptions,
         }}
       />
-    </div>
+      </div > 
+      )}
+    </>  
   )
 }
 

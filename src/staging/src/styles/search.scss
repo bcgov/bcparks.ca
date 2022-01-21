@@ -28,7 +28,7 @@ $largeStart: 992px;
   background-color: $colorGrey !important;
 }
 
-.park-search {
+.park-search { /* As of BRS-313, only occurence of this class is on home page */
   .park-search-text-box {
     width: 80% !important;
     @media screen and (max-width: $mediumBreakpoint) {
@@ -126,9 +126,10 @@ $largeStart: 992px;
 .park-search {
   font-family: $globalFont !important;
   width: 100%;
+  position: relative;  
+  overflow-y: hidden;    
 
   @media screen and (min-width: $largeStart) {
-    position: relative;
     max-height: 742px;
   }
 
@@ -141,7 +142,6 @@ $largeStart: 992px;
   }
 
   img {
-    height: 440px;
     width: 100%;
   }
   .park-search-container {
@@ -222,11 +222,6 @@ $largeStart: 992px;
     padding: 30px;
   }
 
-  .park-search-text-box {
-    @media screen and (min-width: $largeStart) {
-      width: 70% !important;
-    }
-  }
 }
 
 .park-search-text-wrapper {

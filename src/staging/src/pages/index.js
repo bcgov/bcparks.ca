@@ -122,21 +122,76 @@ export default function Home({ data }) {
               }}
             />
           <div className="park-search-carousel">
-            <Zone key={6} Content={searchCarousel} />
+            <img src="https://nrs.objectstore.gov.bc.ca/vfvzob/homepage_conservation_e3c91c2159.jpg" alt="Mount Robson Park" />
+            {/*<div class="carousel slide" data-ride="carousel" id="home-carousel">
+              <ol class="carousel-indicators">&nbsp;</ol>
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <p class="mb-0">
+                    <img src="https://nrs.objectstore.gov.bc.ca/vfvzob/homepage_conservation_e3c91c2159.jpg" alt="Mount Robson Park" />
+                  </p>
+                  <div class="carousel-caption text-center text-lg-right">
+                    <p class="mb-0">Mount Robson Park by Paul Zizka</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <Zone key={6} Content={searchCarousel} />*/}
+          </div> 
+        </div>
+      </Container>
+      <Container className="content-width-override" fixed disableGutters={isMobile ? true : false}>
+        <div>
+          <div>
+            <div class="home-advisories text-center" id="home-advisories">
+              <h2 class="zone-header">Advisories</h2>
+              <div class="zone-hr"><hr/></div>
+              <p>
+                Updated Monday to Friday from 8:30 am to 4:30 pm, excluding statutory holidays.
+              </p>
+              <div class="home-advisory-buttons row no-gutters">
+                <div class="home-advisory-button col-12 col-lg-3 pr-sm-2">
+                  <a href="/alerts?type=floods" class="btn btn-primary btn-block">
+                    <span class="text-white">Parks impacted by <span class="font-weight-bold">flooding</span>
+                    <i class="fa fa-chevron-circle-right"></i>
+                    </span>
+                  </a>
+                </div>
+                <div class="home-advisory-button col-12 col-lg-3 pr-sm-2">
+                  <a class="btn btn-primary btn-block" href="/alerts?type=wildfires">
+                    <span class="text-white">Parks impacted by <span class="font-weight-bold">wildfires</span> <span class="fa fa-chevron-circle-right"> </span>
+                    </span>
+                  </a>
+                </div>
+                <div class="home-advisory-button home-advisory-button--all col-12 col-lg-2 pr-sm-2">
+                  <a class="btn btn-light btn-block" href="/alerts">
+                    <span class="text-primary font-weight-bold">See all advisories </span>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </Container>
       <Container className="content-width-override" fixed disableGutters={isMobile ? true: false}>
         <div id="main">
+          <div class="text-center" id="home-plan-your-trip">
+            <h2 class="zone-header">Plan your trip</h2>
+            <div class="zone-hr"><hr/></div>
+            <p class="zone-content">
+              <span>There's an adventure waiting for every visitor.</span>
+            </p>
+          </div>
           <div class="row">
-            <div class="col-12 col-md-8 card-col-padding" onclick="location.href='/reserve'">
+            <div class="col-12 col-md-8 card-col-padding">
               <div class="card grid-card">
                 <div class="card-img">
                   <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
-                    <a href="/reserve">Camping information</a>
+                    <a href="/reserve">Camping information<span class="card-click-area"></span></a>
                   </h5>
                   <p class="card-text">
                     Reservation policies and fees.
@@ -144,14 +199,14 @@ export default function Home({ data }) {
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-4 card-col-padding" onclick="location.href='/visiting'">
+            <div class="col-12 col-md-4 card-col-padding">
               <div class="card grid-card">
                 <div class="card-img">
                   <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
-                    <a href="/visiting">Things to do</a>
+                    <a href="/visiting">Things to do<span class="card-click-area"></span></a>
                   </h5>
                   <p class="card-text">
                     Explore activities and attractions.
@@ -159,14 +214,14 @@ export default function Home({ data }) {
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-4 card-col-padding" onclick="location.href='/accessibility'">
+            <div class="col-12 col-md-4 card-col-padding">
               <div class="card grid-card">
                 <div class="card-img">
                   <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
-                    <a href="/accessibility">Accessibility</a>
+                    <a href="/accessibility">Accessibility<span class="card-click-area"></span></a>
                   </h5>
                   <p class="card-text">
                     BC Parks for everyone.
@@ -174,14 +229,14 @@ export default function Home({ data }) {
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-8 card-col-padding" onclick="location.href='/responsible-recreation'">
+            <div class="col-12 col-md-8 card-col-padding">
               <div class="card grid-card">
                 <div class="card-img">
                   <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
-                    <a href="/responsible-recreation">Visit Responsibly</a>
+                    <a href="/responsible-recreation">Visit Responsibly<span class="card-click-area"></span></a>
                   </h5>
                   <p class="card-text">
                     Guideline for a safe and respectful adventure.
@@ -190,15 +245,32 @@ export default function Home({ data }) {
               </div>
             </div>
           </div>
+          <div class="home-desktop-card-spacer">&nbsp;</div>
           <div class="row">
-            <div class="col-12 card-col-padding" onclick="location.href='/reconciliation'">
+            <div class="col-12 card-col-padding">
               <div class="card grid-card grid-card-horz">
                 <div class="card-img">
                   <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
-                    <a href="/reconciliation">Indigenous Relations and Reconciliation</a>
+                    Indigenous Relations and Reconciliation
+                  </h5>
+                  <a class="card-button" href="/reconciliation">
+                    Learn more <i class="fa fa-chevron-circle-right"></i>
+                    <span class="card-click-area"></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 card-col-padding">
+              <div class="card grid-card grid-card-horz">
+                <div class="card-img">
+                  <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
+                </div>
+                <div class="card-body">
+                  <h5 class="card-body-header">
+                    <a href="/wildlife-safety">Wildlife Viewing and Safety<span class="card-click-area"></span></a>
                   </h5>
                   <div class="card-button">
                     Learn more <i class="fa fa-chevron-circle-right"></i>
@@ -206,14 +278,14 @@ export default function Home({ data }) {
                 </div>
               </div>
             </div>
-            <div class="col-12 card-col-padding" onclick="location.href='/wildlife-safety'">
+            <div class="col-12 card-col-padding">
               <div class="card grid-card grid-card-horz">
                 <div class="card-img">
                   <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
-                    <a href="/wildlife-safety">Wildlife Viewing and Safety</a>
+                    <a href="/conserve">Conservation<span class="card-click-area"></span></a>
                   </h5>
                   <div class="card-button">
                     Learn more <i class="fa fa-chevron-circle-right"></i>
@@ -221,14 +293,14 @@ export default function Home({ data }) {
                 </div>
               </div>
             </div>
-            <div class="col-12 card-col-padding" onclick="location.href='/conserve'">
+            <div class="col-12 card-col-padding">
               <div class="card grid-card grid-card-horz">
                 <div class="card-img">
                   <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
-                    <a href="/conserve">Conservation</a>
+                    <a href="/news">Get to know BC Parks<span class="card-click-area"></span></a>
                   </h5>
                   <div class="card-button">
                     Learn more <i class="fa fa-chevron-circle-right"></i>
@@ -236,29 +308,14 @@ export default function Home({ data }) {
                 </div>
               </div>
             </div>
-            <div class="col-12 card-col-padding" onclick="location.href='/news'">
+            <div class="col-12 card-col-padding">
               <div class="card grid-card grid-card-horz">
                 <div class="card-img">
                   <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
-                    <a href="/news">Get to know BC Parks</a>
-                  </h5>
-                  <div class="card-button">
-                    Learn more <i class="fa fa-chevron-circle-right"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 card-col-padding" onclick="location.href='/get-involved'">
-              <div class="card grid-card grid-card-horz">
-                <div class="card-img">
-                  <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
-                </div>
-                <div class="card-body">
-                  <h5 class="card-body-header">
-                    <a href="/get-involved">Get Involved</a>
+                    <a href="/get-involved">Get Involved<span class="card-click-area"></span></a>
                   </h5>
                   <div class="card-button">
                     Learn more <i class="fa fa-chevron-circle-right"></i>
@@ -267,7 +324,9 @@ export default function Home({ data }) {
               </div>
             </div>
           </div>
+          {/*}
           {zonesContent.map(content => <Zone key={content.id} zoneID={`Zone${content.id}`} Content={content} />)}
+          */}
         </div>
       </Container>
       <Container className="max-width-override" fixed disableGutters>
