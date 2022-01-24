@@ -41,6 +41,7 @@ jobs:
           oc -n ${{ env.TOOLS_NAMESPACE }} tag admin:${{ env.SHORT_SHA }} admin:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder:${{ env.SHORT_SHA }} public-builder:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi:${{ env.SHORT_SHA }} strapi:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag landing:${{ env.SHORT_SHA }} landing:${{ env.ENVIRONMENT }}
 
       - name: Trigger Gatsby static build workflow
         uses: peter-evans/repository-dispatch@v1
