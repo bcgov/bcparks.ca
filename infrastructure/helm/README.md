@@ -24,10 +24,6 @@ Run the following commands from the `infrastructure/helm/bcparks` directory.
 
 `helm -n 61d198-prod install bcparks . -f values-prod.yaml`
 
-### Tools
-
-`helm -n 61d198-tools install bcparks .`
-
 ## Upgrading
 
 The `upgrade` command can be used when updating existing deployments in a namespace.
@@ -46,10 +42,6 @@ Run the following commands from the `infrastructure/helm/bcparks` directory.
 
 `helm -n 61d198-prod upgrade bcparks . -f values-prod.yaml`
 
-### Tools
-
-`helm -n 61d198-tools upgrade bcparks .`
-
 ## Teardown
 
 The `uninstall` command ca be used to remove all resources defined by the Helm chart. Please note that secrets and PVCs created by the Helm chart are not automatically removed.
@@ -67,7 +59,3 @@ Run the following commands from the `infrastructure/helm/bcparks` directory.
 ### Prod
 
 `helm -n 61d198-prod uninstall bcparks`
-
-### Tools
-
-`helm -n 61d198-tools uninstall bcparks`

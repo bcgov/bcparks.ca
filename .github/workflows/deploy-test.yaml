@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.inputs.releaseTag }}
-      
+
       - name: Tag not found
         if: ${{ failure() }}
         run: |
@@ -29,13 +29,13 @@ jobs:
 
       - name: Set env
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-        
+
       - name: Login OpenShift
         uses: redhat-actions/oc-login@v1
         with:
           openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
           openshift_token: ${{ secrets.OPENSHIFT_SERVICE_TOKEN }}
-          
+
       - name: Tag Test images
         run: |
           oc -n ${{ env.TOOLS_NAMESPACE }} tag admin:${{ env.SHORT_SHA }} admin:${{ env.ENVIRONMENT }}
@@ -53,3 +53,4 @@ jobs:
         run: |
           oc -n ${{ env.NAMESPACE }} rollout restart deployment bcparks-admin
           oc -n ${{ env.NAMESPACE }} rollout restart deployment bcparks-cms
+          oc -n ${{ env.NAMESPACE }} rollout restart deployment bcparks-landing
