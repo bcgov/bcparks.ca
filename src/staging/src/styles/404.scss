@@ -1,0 +1,21 @@
+@import "./global.scss";
+
+$header-height: 100px;
+
+.not-found{
+  min-height: 100vh;
+  background-color: $colorBlue;
+  color:white;
+  margin-bottom: 0px;
+}
+
+.not-found-container{
+  height: calc(100vh - $header-height);
+}
+
+.home-button{
+  font-weight: bold;
+  color:$colorBlue;
+  background-color: white;
+}
+
