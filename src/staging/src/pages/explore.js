@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { graphql } from "gatsby"
 import axios from "axios"
 import Footer from "../components/footer"
-import MegaMenu from "../components/megaMenu"
+import Header from "../components/header"
 import "../styles/search.scss"
 import {
   Checkbox,
@@ -401,7 +401,7 @@ export default function Explore({ location, data }) {
 
   return (
     <> 
-      <MegaMenu content={menuContent} />
+      <Header mode="internal" content={menuContent} />
       <div className="search-body">
         <div className="search-results-main container">
           <div className="search-results-container">

@@ -2,11 +2,316 @@
 
 exports[`Footer renders correctly 1`] = `
 <footer
-  dangerouslySetInnerHTML={
-    Object {
-      "__html": "Test footer data",
-    }
-  }
   id="footer"
-/>
+>
+  <div
+    className="home-footer"
+    id="home-footer"
+  >
+    <div
+      className="MuiBox-root MuiBox-root-19"
+    >
+      <div
+        className="MuiGrid-root MuiGrid-container"
+        sx={
+          Object {
+            "flexGrow": 1,
+          }
+        }
+      >
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-4 MuiGrid-grid-lg-6"
+        >
+          <div
+            className="MuiBox-root MuiBox-root-20"
+          >
+            <div
+              className="makeStyles-logoContainer-1"
+              id="footer-logo"
+            >
+              <a
+                href="/"
+              >
+                <img
+                  alt="BC Parks logo"
+                  className="makeStyles-logo-2"
+                  src="test-file-stub"
+                />
+              </a>
+            </div>
+          </div>
+          <div
+            className="MuiBox-root MuiBox-root-21"
+          >
+            <div
+              className="makeStyles-searchBoxContainer-14"
+            >
+              <div
+                className="makeStyles-searchBox-15 bc-bg-blue-md"
+              >
+                <label
+                  className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated"
+                  htmlFor="footer-site-search"
+                >
+                  Search
+                </label>
+                <div
+                  aria-label="Search BCParks.ca"
+                  className="MuiFormControl-root MuiTextField-root"
+                  onKeyPress={[Function]}
+                >
+                  <div
+                    className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
+                    onClick={[Function]}
+                  >
+                    <input
+                      aria-invalid={false}
+                      autoFocus={false}
+                      className="MuiInputBase-input MuiInput-input"
+                      disabled={false}
+                      id="footer-site-search"
+                      onAnimationStart={[Function]}
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      placeholder="Search BCParks.ca"
+                      required={false}
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root makeStyles-searchIcon-17"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-6"
+        >
+          <div
+            className="MuiGrid-root MuiGrid-container"
+            sx={
+              Object {
+                "flexGrow": 1,
+              }
+            }
+          >
+            <div
+              className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-sm-6 MuiGrid-grid-md-4 MuiGrid-grid-lg-4"
+            >
+              <div>
+                <ul
+                  className="makeStyles-menuList-3"
+                >
+                  <li>
+                    <div
+                      className="makeStyles-menuHeader-7"
+                    >
+                      Get a permit
+                    </div>
+                    <div
+                      className="makeStyles-menuDivider-8"
+                    >
+                       
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      className="makeStyles-menuItem-9"
+                    >
+                      <a
+                        href="/permits"
+                      >
+                        Commercial services
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              className="MuiGrid-root makeStyles-menu2-4 MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-sm-6 MuiGrid-grid-md-4 MuiGrid-grid-lg-4"
+            >
+              <div>
+                <ul
+                  className="makeStyles-menuList-3"
+                >
+                  <li>
+                    <div
+                      className="makeStyles-menuHeader-7"
+                    >
+                      Get involved
+                    </div>
+                    <div
+                      className="makeStyles-menuDivider-8"
+                    >
+                       
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      className="makeStyles-menuItem-9"
+                    >
+                      <a
+                        href="/volunteers"
+                      >
+                        Volunteer
+                      </a>
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      className="makeStyles-menuItem-9"
+                    >
+                      <a
+                        href="/volunteers"
+                      >
+                        Support BC Parks
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              className="MuiGrid-root makeStyles-menu3-5 MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-sm-6 MuiGrid-grid-md-4 MuiGrid-grid-lg-4"
+            >
+              <div>
+                <ul
+                  className="makeStyles-menuList-3"
+                >
+                  <li>
+                    <div
+                      className="makeStyles-menuHeader-7"
+                    >
+                      Stay connected
+                    </div>
+                    <div
+                      className="makeStyles-menuDivider-8"
+                    >
+                       
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      className="makeStyles-menuItem-9"
+                    >
+                      <a
+                        href="/contact"
+                      >
+                        Contact us
+                      </a>
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      className="makeStyles-menuItem-9"
+                    >
+                      <a
+                        href="https://engage.gov.bc.ca/bcparksblog/"
+                      >
+                        News releases
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              className="MuiGrid-root makeStyles-menu4-6 MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-sm-6 MuiGrid-grid-md-12 MuiGrid-grid-lg-12"
+            >
+              <div
+                className="makeStyles-socialIcons-10"
+              >
+                <div
+                  className="makeStyles-socialIcon-11"
+                >
+                  <a
+                    href="https://www.facebook.com/YourBCParks/"
+                  >
+                    <img
+                      alt="Facebook"
+                      src="test-file-stub"
+                    />
+                  </a>
+                </div>
+                <div
+                  className="makeStyles-socialIcon-11"
+                >
+                  <a
+                    href="https://www.instagram.com/yourbcparks"
+                  >
+                    <img
+                      alt="Instagram"
+                      src="test-file-stub"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="makeStyles-utilityMenu-12"
+      >
+        <div
+          className="makeStyles-utilityLink-13"
+        >
+          <a
+            href="/accessibility"
+          >
+            Accessibility
+          </a>
+        </div>
+        <div
+          className="makeStyles-utilityLink-13"
+        >
+          <a
+            href="/careers"
+          >
+            Careers
+          </a>
+        </div>
+        <div
+          className="makeStyles-utilityLink-13"
+        >
+          <a
+            href="/disclaimer"
+          >
+            Disclaimer
+          </a>
+        </div>
+        <div
+          className="makeStyles-utilityLink-13"
+        >
+          <a
+            href="/privacy"
+          >
+            Privacy
+          </a>
+        </div>
+        <div
+          className="makeStyles-utilityLink-13"
+        >
+          <a
+            href="/copyright"
+          >
+            Copyright
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
 `;

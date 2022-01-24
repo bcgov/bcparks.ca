@@ -15,7 +15,9 @@ body {
     align-self: center;
     margin-left: auto;
     @media screen and (max-width: 750px) {
-      padding: 5px 10px !important;
+      height:30px;
+      line-height:30px;
+      padding: 0px 10px;
     }
   }
 
