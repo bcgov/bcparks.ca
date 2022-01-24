@@ -11,7 +11,6 @@ $tabletBreakpoint: 768px;
   overflow-x: hidden;
 }
 
-/** Center vertical align in a parent with absolute positioning(grid-card/card-body) */
 .v-align-abs {
   position: relative;
   top: 50%;
@@ -79,33 +78,7 @@ $tabletBreakpoint: 768px;
   color: $colorBlue !important;
 }
 
-.grid-card {
-  border: none;
-  background: $colorBlue;
-  border-radius: 12px;
-  overflow: hidden;
-  height: 100%;
-  position:relative;
 
-  .card-click-area{ /* when put in a contained a tag, makes whole grid-card the link */
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    position: absolute;     
-    z-index: 1;
-  }
-
-  @media screen and (max-width: $desktopBreakpoint) {
-    width: 90%;
-    margin: 16px 5%;
-  }
-  @media screen and (min-width: $desktopBreakpoint) {
-    width: 100%;
-  }
-
-
-}
 
 .round-bl {
   border-bottom-left-radius: 0.25rem;
@@ -134,230 +107,15 @@ $tabletBreakpoint: 768px;
   }
 }
 
-.card-col-padding {
-  max-height: 320px;
-  margin-bottom: 30px;  
-  
-  @media screen and (min-width: $desktopBreakpoint) {
-    max-height: 500px;
-  }
 
-}
 
-.link-img > img {
-  height: 219px;
-}
 
-.card-img > img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  
-}
 
-.full-horizontal-img {
-  height: 100%;
-  > img {
-    height: 100%;
-    object-fit: cover;
-  }
 
-  @media screen and (max-width: $desktopBreakpoint - 1px) {
-    > img {
-      max-width: 50vw;
-    }
-  }
 
-  @media screen and (min-width: $desktopBreakpoint) {
-    > img {
-      width: 100%;
-    }
-    max-height: 330px;
-  }
-}
 
-#home-news,#home-get-involved {
-  .card {
-    border: unset;
-  }
-}
 
-.card-img,
-.horizontal-card-img,
-.full-horizontal-img {
-  margin-bottom: unset;
-}
 
-.horizontal-card-img > img {
-  max-height: 166px;
-  width: 100%;
-  object-fit: cover;
-
-  @media screen and (min-width: $desktopBreakpoint) {
-    max-height: 245px;
-  }
-}
-
-.grid-card .card-img {
-  height: 65%;
-  overflow: hidden;
-}
-
-.grid-card .card-body {
-
-  color: $colorWhite;
-  width: 100%;
-  height: 35%;
-  display: flex;
-  flex-grow:0;
-  justify-content: center;
-  flex-direction: column;
-  padding:10px 50px;
-
-  @media screen and (min-width: $desktopBreakpoint) {
-    height: 30%;
-  }
-
-  @media screen and (max-width: 414px) {
-    padding: 10px 30px;
-  }
-  .card-text {
-    font-size:1rem;
-    margin-top:0px;
-    @media screen and (min-width: $desktopBreakpoint) {
-      font-size:1.2rem;
-    }
-  }
-}
-
-.grid-card.grid-card-horz {
-
-  @media screen and (min-width: $desktopBreakpoint) {
-    height:330px;
-    flex-direction: row;
-
-    .card-img {
-      height:100%;
-      width:50%;
-      order:2;
-    }
-    .card-body {
-      padding:50px;
-      height:100%;
-      width:50%;
-      order: 1;
-
-      .card-body-header {
-        width:375px;
-        line-height:2.25rem;
-      }
-    }
-    .card-text {
-      margin-top:auto;
-    }
-  }
-  @media screen and (max-width: $desktopBreakpoint) {
-    .card-body-header{
-      font-size:1.5rem;
-    }
-  }
-}
-
-/*.card-body:hover {
-  background-color: $colorGold;
-  > .v-align-abs {
-    color: $colorBlue;
-    .card-body-header > a {
-      color: $colorWhite !important;
-    }
-  }
-  > .card-body-header > a {
-    color: $colorWhite !important;
-  }
-}*/
-
-.grid-card:hover {
-
-  a {
-    color: $colorBlue;
-  }
-  a:hover {
-    color: $colorWhite;
-  }
-  .card-text {
-    color: $colorWhite;
-  }
-}
-
-.grid-card.grid-card-horz:hover {
-  background-color: $colorBlue;
-  .card-body-header {
-    color: $colorWhite;
-  }
-  a:hover {
-    color: $colorBlue;
-    background: $colorGold;
-    text-decoration: none;
-  }
-  .card-text {
-    color: $colorWhite;
-  }
-}
-
-.horizontal-card-body {
-  height: 50%;
-  &:hover {
-    a {
-      color: $colorBlue !important;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
-.grid-card .card-button {
-  background: $colorWhite;
-  color: $colorBlue;
-  width: 180px;
-  padding: 10px 20px;
-  line-height: 30px;
-  border-radius: 4px;
-  display: inline-flex;
-  margin-top: auto;
-  text-decoration: none;
-  i {
-    margin:auto 0 auto auto;
-    font-size: 1rem;
-  }
-
-  @media screen and (max-width: $desktopBreakpoint) {
-    display:none;
-  }
-}
-.grid-card .card-button:hover {
-  text-decoration: none;
-  background: $colorBlue;
-}
-.card-body-header {
-  margin-bottom:5px;
-  font-size: 1.8rem;  
-}
-
-.card-body-header > a {
-
-  color: $colorWhite;
-  font-weight: bold;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-
-  @media screen and (max-width: 414px) {
-    font-size: 1.5rem;
-    margin-bottom: 5px;
-  }
-}
 
 .underline {
   text-decoration: underline !important;
@@ -506,29 +264,6 @@ $tabletBreakpoint: 768px;
   color: $colorBlue;
   background-color: $colorGrey;
 
-  .split-card-body {
-    background-color: $colorGrey;
-    bottom: unset;
-    color: $colorBlue;
-  }
-  .split-card-body .card-title {
-    margin: 0 36px 10px 36px;
-  }
-  .split-card .col-6 {
-    background-color: $colorGrey;
-  }
-  .split-card:hover {
-    > div > div {
-      background-color: $colorGold;
-      > div {
-        background-color: $colorGold;
-      }
-    }
-    .zone-hr > hr {
-      color: $colorBlue !important;
-    }
-  }
-
   .fa-chevron-circle-right {
     font-size: 24px;
   }
@@ -658,7 +393,7 @@ $tabletBreakpoint: 768px;
     height: 100%;
     margin: 0px auto;  
   }
-  .home-search-box {
+  .parks-search-wrapper {
 
     background: $colorBlue;
     color: $colorWhite;  
@@ -668,7 +403,7 @@ $tabletBreakpoint: 768px;
       padding:20px;
       text-align:center;
 
-      .home-search-header{
+      .parks-search-header{
         font-size:2rem;
         font-weight: bold;
         line-height: 2.5rem;
@@ -681,7 +416,7 @@ $tabletBreakpoint: 768px;
       width: 800px;
       min-height: 200px;
 
-      .home-search-header{
+      .parks-search-header{
         font-size:2rem;
         font-weight: bold;
       }
@@ -689,14 +424,14 @@ $tabletBreakpoint: 768px;
   }
 
 
-  .home-search-field{
+  .parks-search-field{
     margin-top:15px;   
     display:flex; 
 
     @media screen and (max-width: $desktopBreakpoint) {
       flex-direction: column;
       flex-grow:1;
-      .home-search-button{
+      .parks-search-button{
         width:100%;
         margin:10px 0px;
       }
@@ -706,7 +441,7 @@ $tabletBreakpoint: 768px;
       font-size:0.85rem;
     }
   }
-  .home-search-button{
+  .parks-search-button{
     background: $colorGold;
     color: $colorBlue;
     height: 50px;
@@ -714,7 +449,7 @@ $tabletBreakpoint: 768px;
     font-size:1.1rem;
     padding:0px 25px;
   }
-  .home-search-filter-link{
+  .parks-search-filter-link{
     font-size:0.9rem;
     margin-top:15px;
 

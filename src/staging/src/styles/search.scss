@@ -28,7 +28,8 @@ $largeStart: 992px;
   background-color: $colorGrey !important;
 }
 
-.park-search { /* As of BRS-313, only occurence of this class is on home page */
+
+.park-search { 
   .park-search-text-box {
     width: 80% !important;
     @media screen and (max-width: $mediumBreakpoint) {
