@@ -53,3 +53,4 @@ jobs:
         run: |
           oc -n ${{ env.NAMESPACE }} rollout restart deployment bcparks-admin
           oc -n ${{ env.NAMESPACE }} rollout restart deployment bcparks-cms
+          oc -n ${{ env.NAMESPACE }} rollout restart deployment bcparks-landing
