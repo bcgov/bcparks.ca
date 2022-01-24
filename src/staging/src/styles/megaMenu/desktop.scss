@@ -22,8 +22,9 @@ $mobileMenuWidth:                   100%;
 #desktopNav {
   background-color: $colorBlue;
   height: 100px;
-  max-width: 1440px; 
+  max-width: 1100px; 
   margin: 0px auto;
+  padding: 0px 20px;
 }
 
 nav {
@@ -62,7 +63,7 @@ nav {
 }
 
 .menu-bar {
-  max-width: 1440px;
+  max-width: 1100px;
   display: flex;
   height: auto;
   min-height: 65px;

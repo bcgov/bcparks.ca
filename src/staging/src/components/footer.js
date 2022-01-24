@@ -92,6 +92,7 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: "20px",
     [theme.breakpoints.up("md")]: {
       textAlign: "left",
+      margin: "60px 25px 0px 25px",
     },
   },
   utilityLink: {
