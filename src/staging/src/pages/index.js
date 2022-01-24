@@ -7,6 +7,23 @@ import MainSearch from "../components/search/mainSearch"
 import { Container } from "@material-ui/core"
 import { useMediaQuery } from "react-responsive"
 
+// Temporary in-code images
+import imgSearchBg from "../images/home/image006.png"
+import imgCampingInfo from "../images/home/image012.png"
+import imgThingsToDo from "../images/home/image013.png"
+import imgAccessibility from "../images/home/image011.png"
+import imgVisitResponsibly from "../images/home/image014.png"
+import imgReconciliation from "../images/home/image007.png"
+import imgWildlife from "../images/home/image010.png"
+import imgConservation from "../images/home/image003.png"
+import imgGetToKnow from "../images/home/image005.png"
+import imgGetInvolved from "../images/home/image004.png"
+
+
+
+
+
+
 import "../styles/home.scss"
 
 export const query = graphql`
@@ -122,7 +139,7 @@ export default function Home({ data }) {
               }}
             />
           <div className="park-search-carousel">
-            <img src="https://nrs.objectstore.gov.bc.ca/vfvzob/homepage_conservation_e3c91c2159.jpg" alt="Mount Robson Park" />
+            <img src={imgSearchBg} alt="Mount Robson Park" />
             {/*<div class="carousel slide" data-ride="carousel" id="home-carousel">
               <ol class="carousel-indicators">&nbsp;</ol>
               <div class="carousel-inner">
@@ -141,7 +158,7 @@ export default function Home({ data }) {
           </div> 
         </div>
       </Container>
-      <Container className="content-width-override" fixed disableGutters={isMobile ? true : false}>
+      <Container className="home-content-width-override" fixed disableGutters={isMobile ? true : false}>
         <div>
           <div>
             <div class="home-advisories text-center" id="home-advisories">
@@ -151,20 +168,20 @@ export default function Home({ data }) {
                 Updated Monday to Friday from 8:30 am to 4:30 pm, excluding statutory holidays.
               </p>
               <div class="home-advisory-buttons row no-gutters">
-                <div class="home-advisory-button col-12 col-lg-3 pr-sm-2">
+                <div class="home-advisory-button col-12 col-lg-4 pr-sm-2">
                   <a href="/alerts?type=floods" class="btn btn-primary btn-block">
                     <span class="text-white">Parks impacted by <span class="font-weight-bold">flooding</span>
                     <i class="fa fa-chevron-circle-right"></i>
                     </span>
                   </a>
                 </div>
-                <div class="home-advisory-button col-12 col-lg-3 pr-sm-2">
+                <div class="home-advisory-button col-12 col-lg-4 pr-sm-2">
                   <a class="btn btn-primary btn-block" href="/alerts?type=wildfires">
                     <span class="text-white">Parks impacted by <span class="font-weight-bold">wildfires</span> <span class="fa fa-chevron-circle-right"> </span>
                     </span>
                   </a>
                 </div>
-                <div class="home-advisory-button home-advisory-button--all col-12 col-lg-2 pr-sm-2">
+                <div class="home-advisory-button home-advisory-button--all col-12 col-lg-3 pr-sm-2">
                   <a class="btn btn-light btn-block" href="/alerts">
                     <span class="text-primary font-weight-bold">See all advisories </span>
                   </a>
@@ -174,7 +191,7 @@ export default function Home({ data }) {
           </div>
         </div>
       </Container>
-      <Container className="content-width-override" fixed disableGutters={isMobile ? true: false}>
+      <Container className="home-content-width-override" fixed disableGutters={isMobile ? true: false}>
         <div id="main">
           <div class="text-center" id="home-plan-your-trip">
             <h2 class="zone-header">Plan your trip</h2>
@@ -187,7 +204,7 @@ export default function Home({ data }) {
             <div class="col-12 col-md-8 card-col-padding">
               <div class="card grid-card">
                 <div class="card-img">
-                  <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
+                  <img src={imgCampingInfo} alt="People setting up a tent" />
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
@@ -202,7 +219,7 @@ export default function Home({ data }) {
             <div class="col-12 col-md-4 card-col-padding">
               <div class="card grid-card">
                 <div class="card-img">
-                  <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
+                  <img src={imgThingsToDo} alt="People with binoculars" />
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
@@ -217,7 +234,7 @@ export default function Home({ data }) {
             <div class="col-12 col-md-4 card-col-padding">
               <div class="card grid-card">
                 <div class="card-img">
-                  <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
+                  <img src={imgAccessibility} alt="A child in a wheelchair" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
@@ -232,7 +249,7 @@ export default function Home({ data }) {
             <div class="col-12 col-md-8 card-col-padding">
               <div class="card grid-card">
                 <div class="card-img">
-                  <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
+                  <img src={imgVisitResponsibly} alt="Cleaning up after a dog" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
@@ -250,7 +267,7 @@ export default function Home({ data }) {
             <div class="col-12 card-col-padding">
               <div class="card grid-card grid-card-horz">
                 <div class="card-img">
-                  <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
+                  <img src={imgReconciliation} alt="A wood carving" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
@@ -266,7 +283,7 @@ export default function Home({ data }) {
             <div class="col-12 card-col-padding">
               <div class="card grid-card grid-card-horz">
                 <div class="card-img">
-                  <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
+                  <img src={imgWildlife} alt="A Bighorn Sheep" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
@@ -281,7 +298,7 @@ export default function Home({ data }) {
             <div class="col-12 card-col-padding">
               <div class="card grid-card grid-card-horz">
                 <div class="card-img">
-                  <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
+                  <img src={imgConservation} alt="A mountain peak" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
@@ -296,7 +313,7 @@ export default function Home({ data }) {
             <div class="col-12 card-col-padding">
               <div class="card grid-card grid-card-horz">
                 <div class="card-img">
-                  <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
+                  <img src={imgGetToKnow} alt="Family walking on a trail" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
@@ -311,7 +328,7 @@ export default function Home({ data }) {
             <div class="col-12 card-col-padding">
               <div class="card grid-card grid-card-horz">
                 <div class="card-img">
-                  <img src="http://localhost:1337/uploads/homepage_camping_769a1e5d9e.jpg" alt="People setting up a tent" />    
+                  <img src={imgGetInvolved} alt="People holding license plates" />    
                 </div>
                 <div class="card-body">
                   <h5 class="card-body-header">
