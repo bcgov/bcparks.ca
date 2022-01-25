@@ -48,24 +48,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Header({ children, mode = 'external', content = [] }) {
+export default function Header({ content = [] }) {
   const classes = useStyles();
 
-  if (mode === 'internal') {
-    return (
-      <>
-        <Box className={classes.betaHeader + " bc-bg-yellow bc-color-blue-dk"}>
-          <i className={'fa fa-info-circle ' + classes.infoIcon }></i>
-          <Box className={classes.betaMsg}>
-            This site is in beta
-          </Box>
-          <Box className={classes.linkDivider}>|</Box>
-          <Box className={classes.link}>
-            <a href="#">Help us improve this by submitting here</a>
-          </Box>
+  return (
+    <>
+      <Box className={classes.betaHeader + " bc-bg-yellow bc-color-blue-dk"}>
+        <i className={"fa fa-info-circle " + classes.infoIcon}></i>
+        <Box className={classes.betaMsg}>This site is in beta</Box>
+        <Box className={classes.linkDivider}>|</Box>
+        <Box className={classes.link}>
+          <a href="#">Help us improve this by submitting here</a>
         </Box>
-        <MegaMenu content={content} />
-        </>
-    )
-  }
+      </Box>
+      <MegaMenu content={content} />
+    </>
+  )  
 }
