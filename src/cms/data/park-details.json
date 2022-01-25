@@ -493,7 +493,8 @@
 			"locationNotes": "",
 			"maps": "",
 			"natureAndCulture": "",
-			"managementPlanning": ""
+			"managementPlanning": "",
+			"protectedAreaName": "Barkerville Park"
 		},
 		{
 			"orcs": "9783",
@@ -9613,7 +9614,8 @@
 			"locationNotes": "<ul><li><a href=\"/explore/map.html\">Location Map</a></li></ul>Tweedsmuir Provincial Park is approximately 480 kilometres by air northwest of Vancouver. The park is bounded on the north and southwest by the Coast Mountains and on the east by the Nechako Plateau. The park is south of Highway #16, approximately 90 to 100 kilometres, between Burns Lake and Houston.<br><br>The Nechako Reservoir (Ootsa and Whitesail Lakes) is the main access route to the northern region of the park but boaters must use caution when travelling on these lakes as the shoreline is a forest of drowned trees and floating debris that create hazardous boating conditions. A number of channels have been cut through the dead trees to give access to emergency landing areas. These provide shelter from the sudden and strong winds that funnel down the lakes from the Coast Mountains. See <strong><a href=\"#GeneralInfo\">Visitor Information</a></strong>. <br><br>",
 			"maps": "Any maps listed are for information only; they may not represent legal boundaries and should not be used for navigation.<ul><li><a href=\"tweedsmuir-park-map.pdf\" target=\"_blank\">Park Map <span class=\"fileinfo\">[PDF]</span></a></li><li><a href=\"tweedsmuir-brochure-print-ready.pdf\" target=\"_blank\">Print-ready Park Brochure <span class=\"fileinfo\">[PDF]</span></a></li><li><a href=\"eutsuk-hazard-map.pdf\" target=\"_blank\">Eutsuk Lake Submerged Hazards Map <span class=\"fileinfo\">[PDF]</span></a></li><li><a href=\"nechako-pre-flood.kml\">Google Earth KML File of the Nechako Reservoir Pre-Flood</a>, must have Google Earth and/or and Google Maps installed.</li></ul>",
 			"natureAndCulture": "<ul><li><a href=\"nat_cul.html#History\">History</a></li><li><a href=\"nat_cul.html#cultural\">Cultural Heritage</a></li><li><a href=\"nat_cul.html#conservation\">Conservation</a></li><li><a href=\"nat_cul.html#wildlife\">Wildlife</a></li></ul>",
-			"managementPlanning": "<ul><li><a href=\"/planning/\">Management Planning Information</a></li><li>Approved <a href=\"/planning/mgmtplns/tweedsmuir/tweeds_mp.pdf\" target=\"_blank\">Master Plan <span class=\"fileinfo\">[PDF]</span></a><br><strong>Disclaimer:</strong><br>This is not the original management planning product. This document has been scanned from the original format of the plan. It may contain some formatting changes, however the content is consistent with the original.</li></ul>"
+			"managementPlanning": "<ul><li><a href=\"/planning/\">Management Planning Information</a></li><li>Approved <a href=\"/planning/mgmtplns/tweedsmuir/tweeds_mp.pdf\" target=\"_blank\">Master Plan <span class=\"fileinfo\">[PDF]</span></a><br><strong>Disclaimer:</strong><br>This is not the original management planning product. This document has been scanned from the original format of the plan. It may contain some formatting changes, however the content is consistent with the original.</li></ul>",
+			"protectedAreaName": "Tweedsmuir Park (North)"
 		},
 		{
 			"orcs": "19",
@@ -10138,7 +10140,8 @@
 			"locationNotes": "10 km north of Hwy #5 at Clearwater, on the Clearwater Valley Road.",
 			"maps": "Any maps listed are for information only; they may not represent legal boundaries and should not be used for navigation.    <ul>   <li>There are no digital maps or brochures for this park. </li>    </ul>",
 			"natureAndCulture": "<ul>   <li><strong>History:</strong> Established in 1965 as Spahats Creek Provincial Park; added to Wells Gray in 1996.</li>    </ul>",
-			"managementPlanning": "<ul><li><a href=\"/planning/\">Management Planning Information</a></li>     <li><a href=\"/explore/parkpgs/wells_gry/#Management\">Online Management Plan </a></li></ul>"
+			"managementPlanning": "<ul><li><a href=\"/planning/\">Management Planning Information</a></li>     <li><a href=\"/explore/parkpgs/wells_gry/#Management\">Online Management Plan </a></li></ul>",
+			"protectedAreaName": "Spahats Creek Park"
 		},
 		{
 			"orcs": "24",
@@ -10723,7 +10726,8 @@
 			"locationNotes": "",
 			"maps": "",
 			"natureAndCulture": "",
-			"managementPlanning": ""
+			"managementPlanning": "",
+			"protectedAreaName": "Burns Bog (Management Agreement with GVRD)"
 		},
 		{
 			"orcs": "1027",
@@ -13318,7 +13322,8 @@
 			"locationNotes": "",
 			"maps": "",
 			"natureAndCulture": "",
-			"managementPlanning": ""
+			"managementPlanning": "",
+			"protectedAreaName": "Bright Angel Park"
 		},
 		{
 			"orcs": "176",
@@ -13333,7 +13338,8 @@
 			"locationNotes": "",
 			"maps": "",
 			"natureAndCulture": "",
-			"managementPlanning": ""
+			"managementPlanning": "",
+			"protectedAreaName": "Christie Memorial Park"
 		},
 		{
 			"orcs": "261",
