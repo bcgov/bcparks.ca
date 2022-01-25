@@ -165,12 +165,6 @@ const loadFireCentreZoneXref = async () => {
 
 const loadParkActivity = async () => {
   const modelName = "park-activity";
-  const loadSetting = await loadUtils.getLoadSettings(modelName);
-
-  if (loadSetting && loadSetting.purge)
-    await strapi.services[modelName].delete();
-
-  if (loadSetting && !loadSetting.reload) return;
 
   const currentData = await strapi.services[modelName].find();
   if (currentData.length === 0) {
@@ -227,12 +221,6 @@ const loadParkActivity = async () => {
 
 const loadParkFacility = async () => {
   const modelName = "park-facility";
-  const loadSetting = await loadUtils.getLoadSettings(modelName);
-
-  if (loadSetting && loadSetting.purge)
-    await strapi.services[modelName].delete();
-
-  if (loadSetting && !loadSetting.reload) return;
 
   const currentData = await strapi.services[modelName].find();
   if (currentData.length === 0) {
@@ -289,12 +277,6 @@ const loadParkFacility = async () => {
 
 const loadParkName = async () => {
   const modelName = "park-name";
-  const loadSetting = await loadUtils.getLoadSettings(modelName);
-
-  if (loadSetting && loadSetting.purge)
-    await strapi.services[modelName].delete();
-
-  if (loadSetting && !loadSetting.reload) return;
 
   const currentData = await strapi.services[modelName].find();
   if (currentData.length === 0) {
@@ -486,12 +468,6 @@ const loadMenus = async () => {
 
 const loadParkOperation = async () => {
   const modelName = "park-operation";
-  const loadSetting = await loadUtils.getLoadSettings(modelName);
-
-  if (loadSetting && loadSetting.purge)
-    await strapi.services[modelName].delete();
-
-  if (loadSetting && !loadSetting.reload) return;
 
   const currentData = await strapi.services[modelName].find();
   if (currentData.length === 0) {

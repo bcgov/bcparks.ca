@@ -7,7 +7,10 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "test": "jest --forceExit --detectOpenHandles",
+    "lint": "eslint ./ && prettier --check **/*.js",
+    "seed": "node scripts/seed.js"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^29.0.0",
@@ -30,8 +33,8 @@
     "strapi-plugin-graphql": "^3.6.1",
     "strapi-plugin-upload": "3.6.1",
     "strapi-plugin-users-permissions": "3.6.1",
-    "strapi-provider-upload-aws-s3": "^3.6.8",
     "strapi-provider-email-nodemailer": "^3.6.8",
+    "strapi-provider-upload-aws-s3": "^3.6.8",
     "strapi-utils": "3.6.1",
     "utf8": "^3.0.0"
   },
@@ -39,5 +42,20 @@
     "node": ">=10.16.0 <=14.x.x",
     "npm": "^6.0.0"
   },
-  "license": "MIT"
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.13.10",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "jest": "^27.4.7",
+    "supertest": "^6.2.1"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      ".tmp",
+      ".cache"
+    ],
+    "testEnvironment": "node",
+    "testTimeout": 60000
+  }
 }

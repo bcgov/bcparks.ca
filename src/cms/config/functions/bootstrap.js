@@ -1,6 +1,5 @@
 "use strict";
-const createSearchIndexes = require("../../data/functions/createSearchIndexes");
-const initialDataLoad = require("../../data/functions/initialDataLoad");
+const dbsetup = require("./dbsetup");
 
 /**
  * An asynchronous bootstrap function that runs before
@@ -13,9 +12,5 @@ const initialDataLoad = require("../../data/functions/initialDataLoad");
  */
 
 module.exports = async () => {
-  // Setup text indexes for search
-  await createSearchIndexes();
-
-  // Load seed data first run
-  await initialDataLoad.seedData();
+  await dbsetup();
 };

@@ -43,7 +43,7 @@ module.exports = {
    *
    * Protected area search is used for the main parks search page on the frontend.
    * It uses some complex filters and Postgres full text search to achieve this.
-   * 
+   *
    * Full text indexes and the search_text column are created automatically during
    * bootstrap.
    */
@@ -231,12 +231,12 @@ module.exports = {
 
     return await results.fetchAll();
   },
-    /*
+  /*
    * Park search count handling
    *
    * Protected area search is used for the main parks search page on the frontend.
    * Counting is a bit simpler than data retrieval so we use different queries.
-   * 
+   *
    * Full text indexes and the search_text column are created automatically during
    * bootstrap.
    */

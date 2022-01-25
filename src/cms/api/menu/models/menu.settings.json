@@ -21,12 +21,7 @@
     },
     "pageType": {
       "type": "enumeration",
-      "enum": [
-        "Landing",
-        "Unique",
-        "Content",
-        "Form"
-      ]
+      "enum": ["Landing", "Unique", "Content", "Form"]
     },
     "order": {
       "type": "integer",

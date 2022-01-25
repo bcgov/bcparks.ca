@@ -7,17 +7,6 @@ const publicAdvisoryAudit = require("./loadPublicAdvisoryAudit");
 const parkPhoto = require("./loadParkPhoto");
 const pageMedia = require("./loadPageMedia");
 
-const isFirstRun = async () => {
-  const pluginStore = strapi.store({
-    environment: strapi.config.environment,
-    type: "type",
-    name: "setup",
-  });
-  const initHasRun = await pluginStore.get({ key: "initHasRun" });
-  await pluginStore.set({ key: "initHasRun", value: true });
-  return !initHasRun;
-};
-
 const loadData = async () => {
   try {
     console.time("initialLoad");
@@ -106,15 +95,11 @@ const rewriteData = async () => {
 };
 
 const seedData = async () => {
-  // Load data and set default public roles on first run
-  const setupCMS = await isFirstRun();
-  if (setupCMS) {
-    const isAdminCreated = await permission.createAdmin();
-    const isTokenCreated = await permission.createApiToken();
-    const isPermissionsSet = await permission.setDefaultPermissions();
-    const isDataLoaded = await loadData();
-    return isAdminCreated && isTokenCreated && isPermissionsSet && isDataLoaded;
-  }
+  const isAdminCreated = await permission.createAdmin();
+  const isTokenCreated = await permission.createApiToken();
+  const isPermissionsSet = await permission.setDefaultPermissions();
+  const isDataLoaded = await loadData();
+  return isAdminCreated && isTokenCreated && isPermissionsSet && isDataLoaded;
 };
 
 module.exports = {

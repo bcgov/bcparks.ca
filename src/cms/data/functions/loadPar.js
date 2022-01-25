@@ -336,6 +336,9 @@ const loadParkDetails = async () => {
     const data = JSON.parse(jsonData);
 
     for await (const park of data["parkDetails"]) {
+      // Some parks are present in the JSON data but not PAR; in that case,
+      // add what data we have
+      const orcsExists = await strapi.services["protected-area"].findOne({ orcs: park.orcs });
       const protectedArea = {
         description: park.description,
         safetyInfo: park.safetyInfo,
@@ -350,11 +353,19 @@ const loadParkDetails = async () => {
         managementPlanning: park.managementPlanning,
         partnerships: park.partnerships,
       };
-      await strapi.services["protected-area"]
-        .update({ orcs: park.orcs }, protectedArea)
-        .catch((error) => {
-          strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
-        });
+      if (orcsExists) {
+        await strapi.services["protected-area"]
+          .update({ orcs: park.orcs }, protectedArea)
+          .catch((error) => {
+            strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
+          });
+      } else {
+        await strapi.services["protected-area"]
+          .create({ orcs: park.orcs, ...protectedArea }, )
+          .catch((error) => {
+            strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
+          });
+      }
     }
     strapi.log.info("loading park details completed...");
   } catch (error) {

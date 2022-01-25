@@ -10,6 +10,8 @@ images:
     tag: prod
   public:
     tag: prod
+  landing:
+    tag: prod
 
 cms:
   resources:
