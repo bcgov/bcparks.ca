@@ -353,6 +353,11 @@ const loadParkDetails = async () => {
         managementPlanning: park.managementPlanning,
         partnerships: park.partnerships,
       };
+
+      if (typeof park.protectedAreaName !== "undefined") {
+        protectedArea.protectedAreaName = park.protectedAreaName;
+      }
+
       if (orcsExists) {
         await strapi.services["protected-area"]
           .update({ orcs: park.orcs }, protectedArea)
