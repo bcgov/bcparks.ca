@@ -1,43 +1,26 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
-import { TextField, Button, Link, InputAdornment, InputLabel } from "@material-ui/core"
+import { TextField, Button, InputAdornment, InputLabel } from "@material-ui/core"
 import "../../styles/search.scss"
 import { navigate } from "gatsby"
-import SearchFilter from "./searchFilter"
 import SearchIcon from "@material-ui/icons/Search"
-import { makeStyles } from "@material-ui/core/styles";
 
-
-const useStyles = makeStyles(theme => ({
-  searchLabel: {
-    display: "none"
-  }
-}));
   
-const MainSearch = ({ data: { activities, facilities } }) => {
+const MainSearch = () => {
 
-  const classes = useStyles()
-
-  const activityItems = activities.map(a => ({
-    label: a.activityName,
-    value: a.activityNumber,
-  }))
-
-  const facilityItems = facilities.map(f => ({
-    label: f.facilityName,
-    value: f.facilityNumber,
-  }))
-  const [openFilter, setOpenFilter] = useState(false)
-  const [quickSearch, setQuickSearch] = useState({
+  // search options not set here, but need to be passed to search page
+  // via state, so setting all to initial values below
+  let quickSearch = {
     camping: false,
     petFriendly: false,
     wheelchair: false,
     marine: false,
     ecoReserve: false,
     electricalHookup: false,
-  })
-  const [selectedActivities, setSelectedActivities] = useState([])
-  const [selectedFacilities, setSelectedFacilities] = useState([])
+  }
+  const selectedActivities = [];
+  const selectedFacilities = [];
+
   const [searchText, setSearchText] = useState("")
 
   const sortOptions = [
@@ -46,11 +29,7 @@ const MainSearch = ({ data: { activities, facilities } }) => {
     { value: "desc", label: "Sort Z-A" },
   ]
 
-  const [sortOption, setSortOption] = useState(sortOptions[0])
-
-  const handleClickOpenFilter = () => {
-    setOpenFilter(true)
-  }
+  const sortOption= sortOptions[0]
 
   const searchParkFilter = () => {
     navigate("/explore", {
@@ -104,8 +83,8 @@ const MainSearch = ({ data: { activities, facilities } }) => {
           Search
         </Button>
       </div>
-      <div className="parks-search-filter-link">
-        <a href="/explore">Search by activity</a>
+      <div className="parks-search-filter-link" onClick={searchParkFilter}>
+        Search by activity
       </div>
     </div>
   )

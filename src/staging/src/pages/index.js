@@ -172,29 +172,29 @@ export default function Home({ data }) {
           <Container className="home-content-width-override" fixed disableGutters={isMobile ? true : false}>
             <div>
               <div>
-                <div class="home-advisories text-center" id="home-advisories">
-                  <h2 class="zone-header">Advisories</h2>
-                  <div class="zone-hr"><hr/></div>
+                <div className="home-advisories text-center" id="home-advisories">
+                  <h2 className="zone-header">Advisories</h2>
+                  <div className="zone-hr"><hr/></div>
                   <p>
                   Updated Monday to Friday from 8:30 am to 4:30 pm, excluding statutory holidays.
                   </p>
-                  <div class="home-advisory-buttons row no-gutters">
-                    <div class="home-advisory-button col-12 col-lg-4 pr-sm-2">
-                      <a href="/alerts?type=floods" class="btn btn-primary btn-block">
-                        <span class="text-white">Parks impacted by <span class="font-weight-bold">flooding</span>
-                        <i class="fa fa-chevron-circle-right"></i>
+                  <div className="home-advisory-buttons row no-gutters">
+                    <div className="home-advisory-button col-12 col-lg-4 pr-sm-2">
+                      <a href="/alerts?type=floods" className="btn btn-primary btn-block">
+                        <span className="text-white">Parks impacted by <span className="font-weight-bold">flooding</span>
+                        <i className="fa fa-chevron-circle-right"></i>
                         </span>
                       </a>
                     </div>
-                    <div class="home-advisory-button col-12 col-lg-4 pr-sm-2">
-                      <a class="btn btn-primary btn-block" href="/alerts?type=wildfires">
-                        <span class="text-white">Parks impacted by <span class="font-weight-bold">wildfires</span> <span class="fa fa-chevron-circle-right"> </span>
+                    <div className="home-advisory-button col-12 col-lg-4 pr-sm-2">
+                      <a className="btn btn-primary btn-block" href="/alerts?type=wildfires">
+                        <span className="text-white">Parks impacted by <span className="font-weight-bold">wildfires</span> <span className="fa fa-chevron-circle-right"> </span>
                         </span>
                       </a>
                     </div>
-                    <div class="home-advisory-button home-advisory-button--all col-12 col-lg-3 pr-sm-2">
-                      <a class="btn btn-light btn-block" href="/alerts">
-                        <span class="text-primary font-weight-bold">See all advisories </span>
+                    <div className="home-advisory-button home-advisory-button--all col-12 col-lg-3 pr-sm-2">
+                      <a className="btn btn-light btn-block" href="/alerts">
+                        <span className="text-primary font-weight-bold">See all advisories </span>
                       </a>
                     </div>
                   </div>
@@ -204,148 +204,148 @@ export default function Home({ data }) {
           </Container>
           <Container className="home-content-width-override" fixed disableGutters={isMobile ? true: false}>
             <div id="main">
-              <div class="text-center" id="home-plan-your-trip">
-                <h2 class="zone-header">Plan your trip</h2>
-                <div class="zone-hr"><hr/></div>
-                <p class="zone-content">
+              <div className="text-center" id="home-plan-your-trip">
+                <h2 className="zone-header">Plan your trip</h2>
+                <div className="zone-hr"><hr/></div>
+                <p className="zone-content">
                   <span>There's an adventure waiting for every visitor.</span>
                 </p>
               </div>
-              <div class="row">
-                <div class="col-12 col-md-8 home-card-wrapper">
-                  <a href="/reserve"class="card grid-card">
-                    <div class="card-img">
+              <div className="row">
+                <div className="col-12 col-md-8 home-card-wrapper">
+                  <a href="/reserve"className="card grid-card">
+                    <div className="card-img">
                       <img src={imgCampingInfo} alt="People setting up a tent" />
                     </div>
-                    <div class="card-body">
-                      <h5 class="card-body-header">
+                    <div className="card-body">
+                      <h5 className="card-body-header">
                         Camping information
                       </h5>
-                      <p class="card-text">
+                      <p className="card-text">
                       Reservation policies and fees.
                       </p>
                     </div>
                   </a>
                 </div>
-                <div class="col-12 col-md-4 home-card-wrapper">
-                  <a href="/visiting" class="card grid-card">
-                    <div class="card-img">
+                <div className="col-12 col-md-4 home-card-wrapper">
+                  <a href="/visiting" className="card grid-card">
+                    <div className="card-img">
                       <img src={imgThingsToDo} alt="People with binoculars" />
                     </div>
-                    <div class="card-body">
-                      <h5 class="card-body-header">
+                    <div className="card-body">
+                      <h5 className="card-body-header">
                       Things to do
                       </h5>
-                      <p class="card-text">
+                      <p className="card-text">
                       Explore activities and attractions.
                       </p>
                     </div>
                   </a>
                 </div>
-                <div class="col-12 col-md-4 home-card-wrapper">
-                  <a href="/accessibility" class="card grid-card">
-                    <div class="card-img">
+                <div className="col-12 col-md-4 home-card-wrapper">
+                  <a href="/accessibility" className="card grid-card">
+                    <div className="card-img">
                       <img src={imgAccessibility} alt="A child in a wheelchair" />    
                     </div>
-                    <div class="card-body">
-                      <h5 class="card-body-header">
+                    <div className="card-body">
+                      <h5 className="card-body-header">
                         Accessibility
                       </h5>
-                      <p class="card-text">
+                      <p className="card-text">
                       BC Parks for everyone.
                       </p>
                     </div>
                   </a>
                 </div>
-                <div class="col-12 col-md-8 home-card-wrapper">
-                  <a href="/responsible-recreation" class="card grid-card">
-                    <div class="card-img">
+                <div className="col-12 col-md-8 home-card-wrapper">
+                  <a href="/responsible-recreation" className="card grid-card">
+                    <div className="card-img">
                       <img src={imgVisitResponsibly} alt="Cleaning up after a dog" />    
                     </div>
-                    <div class="card-body">
-                      <h5 class="card-body-header">
+                    <div className="card-body">
+                      <h5 className="card-body-header">
                         Visit Responsibly
                       </h5>
-                      <p class="card-text">
+                      <p className="card-text">
                       Guideline for a safe and respectful adventure.
                       </p>
                     </div>
                   </a>
                 </div>
               </div>
-              <div class="home-desktop-card-spacer">&nbsp;</div>
-              <div class="row">
-                <div class="col-12 home-card-wrapper">
-                  <a href="/reconciliation" class="card grid-card grid-card--horz">
-                    <div class="card-img">
+              <div className="home-desktop-card-spacer">&nbsp;</div>
+              <div className="row">
+                <div className="col-12 home-card-wrapper">
+                  <a href="/reconciliation" className="card grid-card grid-card--horz">
+                    <div className="card-img">
                       <img src={imgReconciliation} alt="A wood carving" />    
                     </div>
-                    <div class="card-body">
-                      <h5 class="card-body-header">
+                    <div className="card-body">
+                      <h5 className="card-body-header">
                       Indigenous Relations and Reconciliation
                       </h5>
-                      <div class="card-button">
-                      Learn more <i class="fa fa-chevron-circle-right"></i>
+                      <div className="card-button">
+                      Learn more <i className="fa fa-chevron-circle-right"></i>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div class="col-12 home-card-wrapper">
-                  <a href="/wildlife-safety" class="card grid-card grid-card--horz">
-                    <div class="card-img">
+                <div className="col-12 home-card-wrapper">
+                  <a href="/wildlife-safety" className="card grid-card grid-card--horz">
+                    <div className="card-img">
                       <img src={imgWildlife} alt="A Bighorn Sheep" />    
                     </div>
-                    <div class="card-body">
-                      <h5 class="card-body-header">
+                    <div className="card-body">
+                      <h5 className="card-body-header">
                         Wildlife Viewing and Safety
                       </h5>
-                      <div class="card-button">
-                      Learn more <i class="fa fa-chevron-circle-right"></i>
+                      <div className="card-button">
+                      Learn more <i className="fa fa-chevron-circle-right"></i>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div class="col-12 home-card-wrapper">
-                  <a href="/conserve" class="card grid-card grid-card--horz">
-                    <div class="card-img">
+                <div className="col-12 home-card-wrapper">
+                  <a href="/conserve" className="card grid-card grid-card--horz">
+                    <div className="card-img">
                       <img src={imgConservation} alt="A mountain peak" />    
                     </div>
-                    <div class="card-body">
-                      <h5 class="card-body-header">
+                    <div className="card-body">
+                      <h5 className="card-body-header">
                         Conservation
                       </h5>
-                      <div class="card-button">
-                      Learn more <i class="fa fa-chevron-circle-right"></i>
+                      <div className="card-button">
+                      Learn more <i className="fa fa-chevron-circle-right"></i>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div class="col-12 home-card-wrapper">
-                  <a href="/news" class="card grid-card grid-card--horz">
-                    <div class="card-img">
+                <div className="col-12 home-card-wrapper">
+                  <a href="/news" className="card grid-card grid-card--horz">
+                    <div className="card-img">
                       <img src={imgGetToKnow} alt="Family walking on a trail" />    
                     </div>
-                    <div class="card-body">
-                      <h5 class="card-body-header">
+                    <div className="card-body">
+                      <h5 className="card-body-header">
                         Get to know BC Parks
                       </h5>
-                      <div class="card-button">
-                      Learn more <i class="fa fa-chevron-circle-right"></i>
+                      <div className="card-button">
+                      Learn more <i className="fa fa-chevron-circle-right"></i>
                       </div>
                     </div>
                   </a>
                 </div>
-                <div class="col-12 home-card-wrapper">
-                  <a href="/get-involved" class="card grid-card grid-card--horz">
-                    <div class="card-img">
+                <div className="col-12 home-card-wrapper">
+                  <a href="/get-involved" className="card grid-card grid-card--horz">
+                    <div className="card-img">
                       <img src={imgGetInvolved} alt="People holding license plates" />    
                     </div>
-                    <div class="card-body">
-                      <h5 class="card-body-header">
+                    <div className="card-body">
+                      <h5 className="card-body-header">
                         Get Involved
                       </h5>
-                      <div class="card-button">
-                      Learn more <i class="fa fa-chevron-circle-right"></i>
+                      <div className="card-button">
+                      Learn more <i className="fa fa-chevron-circle-right"></i>
                       </div>
                     </div>
                   </a>

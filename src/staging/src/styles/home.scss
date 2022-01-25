@@ -452,9 +452,10 @@ $tabletBreakpoint: 768px;
   .parks-search-filter-link{
     font-size:0.9rem;
     margin-top:15px;
-
-    a {
-      color:$colorWhite;
-    }
+    color:$colorWhite;
+  }
+  .parks-search-filter-link:hover{
+    text-decoration: underline;
+    cursor: pointer;
   }
 }
