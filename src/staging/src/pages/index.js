@@ -156,13 +156,7 @@ export default function Home({ data }) {
             <Header mode="internal" content={menuContent} />
               <div className="park-search">
                 <div id="home-parks-search">
-                  <MainSearch
-                      data={{
-                        activities: data.allStrapiActivityTypes.nodes,
-                        facilities: data.allStrapiFacilityTypes.nodes,
-                        protectedAreas: data.allStrapiProtectedArea.nodes,
-                      }}
-                  />
+                  <MainSearch />
                 </div>
               <div className="park-search-carousel">
                 <img src={imgSearchBg} alt="Mount Robson Park" />

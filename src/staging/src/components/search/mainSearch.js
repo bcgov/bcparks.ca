@@ -8,37 +8,12 @@ import SearchIcon from "@material-ui/icons/Search"
   
 const MainSearch = () => {
 
-  // search options not set here, but need to be passed to search page
-  // via state, so setting all to initial values below
-  let quickSearch = {
-    camping: false,
-    petFriendly: false,
-    wheelchair: false,
-    marine: false,
-    ecoReserve: false,
-    electricalHookup: false,
-  }
-  const selectedActivities = [];
-  const selectedFacilities = [];
-
   const [searchText, setSearchText] = useState("")
-
-  const sortOptions = [
-    { value: "rel", label: "Sort by Relevance" },
-    { value: "asc", label: "Sort A-Z" },
-    { value: "desc", label: "Sort Z-A" },
-  ]
-
-  const sortOption= sortOptions[0]
 
   const searchParkFilter = () => {
     navigate("/explore", {
       state: {
-        quickSearch,
-        selectedActivities,
-        selectedFacilities,
-        searchText,
-        sortOption,
+        searchText
       },
     })
   }
@@ -83,7 +58,11 @@ const MainSearch = () => {
           Search
         </Button>
       </div>
-      <div className="parks-search-filter-link" onClick={searchParkFilter}>
+      <div className="parks-search-filter-link"
+        role="button"
+        tabIndex={0}
+        onKeyDown={searchParkFilter}
+        onClick={searchParkFilter}>
         Search by activity
       </div>
     </div>

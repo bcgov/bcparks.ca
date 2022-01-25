@@ -160,18 +160,3 @@ a.grid-card:hover {
   background: $colorGold;
 }
 
-/* --- specific to home page -- */
-.home-card-wrapper {
-  max-height: 320px;
-  margin-bottom: 30px;  
-  
-  @media screen and (min-width: $desktopBreakpoint) {
-    max-height: 500px;
-  }
-}
-
-#home-news,#home-get-involved {
-  .card {
-    border: unset;
-  }
-}

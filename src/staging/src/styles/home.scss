@@ -226,19 +226,6 @@ $tabletBreakpoint: 768px;
       height: 55px;
     }
   }
-  /*@media screen and (min-width: 376px) and (max-width: 990px) {
-    .home-advisory-buttons {
-      padding: 0 17% !important;
-    }
-  }
-  @media screen and (max-width: 473px) {
-    .home-advisory-buttons span {
-      font-size: 15px;
-    }
-    .home-advisory-button__all {
-      height:55px;
-    }
-  }*/
 
 }
 
@@ -374,7 +361,22 @@ $tabletBreakpoint: 768px;
   padding-bottom: 40px;
 }
 
-/* ------------- SEARCH ------------ */@at-root
+.home-card-wrapper {
+  max-height: 320px;
+  margin-bottom: 30px;  
+  
+  @media screen and (min-width: $desktopBreakpoint) {
+    max-height: 500px;
+  }
+}
+
+#home-news,#home-get-involved {
+  .card {
+    border: unset;
+  }
+}
+
+/* ------------- SEARCH ------------ */
 
 #home-parks-search {
   position: absolute;
