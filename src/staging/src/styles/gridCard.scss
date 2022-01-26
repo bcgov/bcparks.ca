@@ -1,0 +1,162 @@
+$colorBlue: #003366;
+$colorBlueOpacity: rgba(0, 51, 102, 0.8);
+$colorGold: #fcba19;
+$colorGrey: #eef1f5;
+$colorWhite: #fff;
+$desktopBreakpoint: 992px;
+$tabletBreakpoint: 768px;
+
+.grid-card {
+  border: none;
+  background: $colorBlue;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 100%;
+  position:relative;
+  text-decoration: none;
+
+   @media screen and (max-width: $desktopBreakpoint) {
+    width: 90%;
+    margin: 16px 5%;
+  }
+  @media screen and (min-width: $desktopBreakpoint) {
+    width: 100%;
+  }
+
+  .card-img {
+    height: 65%;
+    overflow: hidden;
+    margin-bottom: unset;
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover; 
+    }
+  }
+
+  .card-body {
+
+    color: $colorWhite;
+    width: 100%;
+    height: 35%;
+    display: flex;
+    flex-grow:0;
+    justify-content: center;
+    flex-direction: column;
+    padding:10px 50px;
+
+    @media screen and (min-width: $desktopBreakpoint) {
+        height: 30%;
+    }
+
+    @media screen and (max-width: 414px) {
+        padding: 10px 30px;
+    }
+
+    .card-body-header {
+        margin-bottom:5px;
+        font-size: 1.8rem;  
+        font-weight: bold;
+        text-decoration: none;  
+        color: $colorWhite;
+        text-decoration: none;
+
+        @media screen and (max-width: 414px) {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+    }
+
+    .card-text {
+      font-size:1rem;
+      margin-top:0px;
+      text-decoration: none;
+      @media screen and (min-width: $desktopBreakpoint) {
+        font-size:1.2rem;
+      }
+    }
+  }
+}
+
+
+.grid-card.grid-card--horz {
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    height:330px;
+    flex-direction: row;
+
+    .card-img {
+      height:100%;
+      width:50%;
+      order:2;
+    }
+    .card-body {
+      padding:50px;
+      height:100%;
+      width:50%;
+      order: 1;
+
+      .card-body-header {
+        width:375px;
+        line-height:2.25rem;
+      }
+    }
+    .card-text {
+      margin-top:auto;
+    }
+  }
+  @media screen and (max-width: $desktopBreakpoint) {
+    .card-body-header{
+      font-size:1.5rem;
+    }
+  }
+}
+
+a.grid-card:hover {
+    text-decoration: none;
+
+  .card-body-header {
+    color: $colorWhite;
+    text-decoration: underline;
+  }
+
+  .card-text {
+    color: $colorWhite;
+    text-decoration: none;
+  }
+}
+
+.grid-card.grid-card--horz:hover {
+  background-color: $colorBlue;
+  .card-body-header {
+    color: $colorWhite;
+  }
+  .card-text {
+    color: $colorWhite;
+  }
+}
+.grid-card .card-button {
+  background: $colorWhite;
+  color: $colorBlue;
+  width: 180px;
+  padding: 10px 20px;
+  line-height: 30px;
+  border-radius: 4px;
+  display: inline-flex;
+  margin-top: auto;
+  text-decoration: none;
+  i {
+    margin:auto 0 auto auto;
+    font-size: 1rem;
+  }
+
+  @media screen and (max-width: $desktopBreakpoint) {
+    display:none;
+  }
+}
+.grid-card:hover .card-button {
+  text-decoration: none;
+  background: $colorGold;
+}
+

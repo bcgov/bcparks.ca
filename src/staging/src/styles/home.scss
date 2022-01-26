@@ -11,7 +11,6 @@ $tabletBreakpoint: 768px;
   overflow-x: hidden;
 }
 
-/** Center vertical align in a parent with absolute positioning(grid-card/card-body) */
 .v-align-abs {
   position: relative;
   top: 50%;
@@ -22,11 +21,6 @@ $tabletBreakpoint: 768px;
       cursor: pointer;
     }
   }
-}
-
-.zone-links {
-  padding: 0 20px 0 20px;
-  margin-top: 20px;
 }
 
 .zone-cards {
@@ -44,10 +38,11 @@ $tabletBreakpoint: 768px;
 }
 
 .zone-header {
-  margin: 0 20px 0 20px;
+  margin: 40px 20px 0 20px;
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
+  color: $colorBlue;
 
   @media screen and (min-width: $desktopBreakpoint) {
     font-size: 36px;
@@ -83,13 +78,7 @@ $tabletBreakpoint: 768px;
   color: $colorBlue !important;
 }
 
-.grid-card {
-  background-color: unset !important;
 
-  @media screen and (min-width: $desktopBreakpoint) {
-    width: 100%;
-  }
-}
 
 .round-bl {
   border-bottom-left-radius: 0.25rem;
@@ -108,137 +97,25 @@ $tabletBreakpoint: 768px;
   margin-left: 36px;
 }
 
-.card-col-padding {
-  max-height: 316px;
-  
+.home-desktop-card-spacer{
+  display:block;
   @media screen and (min-width: $desktopBreakpoint) {
-    max-height: 440px;
+    height: 200px;
+  }
+  @media screen and (max-width: $desktopBreakpoint) {
+    height: 20px;
   }
 }
 
-.card-col-padding:not(:last-child) {
-  margin-bottom: 16px;
-}
 
-.link-img > img {
-  height: 219px;
-}
 
-.card-img > img {
-  height: 316px;
-  width: 100%;
-  object-fit: cover;
-  
-  @media screen and (min-width: $desktopBreakpoint) {
-    height: 440px;
-    object-fit: cover;
-  }
-}
 
-.full-horizontal-img {
-  height: 100%;
-  > img {
-    height: 100%;
-    object-fit: cover;
-  }
 
-  @media screen and (max-width: $desktopBreakpoint - 1px) {
-    > img {
-      max-width: 50vw;
-    }
-  }
 
-  @media screen and (min-width: $desktopBreakpoint) {
-    > img {
-      width: 100%;
-    }
-    max-height: 330px;
-  }
-}
 
-#home-news,#home-get-involved {
-  .card {
-    border: unset;
-  }
-}
 
-.card-img,
-.horizontal-card-img,
-.full-horizontal-img {
-  margin-bottom: unset;
-}
 
-.horizontal-card-img > img {
-  max-height: 166px;
-  width: 100%;
-  object-fit: cover;
 
-  @media screen and (min-width: $desktopBreakpoint) {
-    max-height: 245px;
-  }
-}
-
-.grid-card .card-body {
-  font-size: 16px;
-  color: $colorWhite;
-  background-color: $colorBlueOpacity;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 52.5%;
-
-  @media screen and (min-width: $desktopBreakpoint) {
-    height: 30%;
-  }
-  @media screen and (max-width: 414px) {
-    font-size: 15px;
-    padding: 16px;
-  }
-}
-
-.card-body:hover {
-  background-color: $colorGold;
-  > .v-align-abs {
-    color: $colorBlue;
-    .card-body-header > a {
-      color: $colorBlue !important;
-    }
-  }
-  > .card-body-header > a {
-    color: $colorBlue !important;
-  }
-}
-
-.horizontal-card-body {
-  height: 50%;
-  &:hover {
-    a {
-      color: $colorBlue !important;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
-.card-body-header {
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
-.card-body-header > a {
-  font-size: 16px;
-  color: $colorGold;
-  font-weight: bold;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-
-  @media screen and (max-width: 414px) {
-    font-size: 15px;
-  }
-}
 
 .underline {
   text-decoration: underline !important;
@@ -252,30 +129,78 @@ $tabletBreakpoint: 768px;
 }
 
 #home-advisories {
-  color: $colorBlue;
-  padding-top: 40px;
 
-  .advisory-button {
-    background-color: $colorBlue !important;
-    color: $colorWhite;
-    height: 49px;
-    text-align: center;
+  @media screen and (max-width: $desktopBreakpoint) {
+    padding:20px;
   }
-  .advisory-button:hover {
-    background-color: transparent !important;
-    border: 2px solid $colorBlue;
-    a > span {
-      color: $colorBlue !important;
+
+  .home-advisory-buttons {
+
+    margin-top: 20px;
+    display: flex;
+    
+
+    @media screen and (min-width: $desktopBreakpoint) {
+      flex-grow: 0;
+      justify-content: center;
+      padding: 0 20px 0 20px;    
+    }
+    @media screen and (max-width: $desktopBreakpoint) {
+      flex-grow: 1;
+
+      .home-advisory-button {
+        width:100%;
+        margin-bottom:5px;
+      }
     }
   }
-  .all-advisory-button {
-    background-color: $colorWhite !important;
-    color: $colorBlue;
-    height: 49px;
-    text-align: center;
-    border: 2px solid $colorBlue;
-    border-radius: 5px;
+
+  .home-advisory-button {
+
+    .btn{
+      background-color: $colorBlue !important;
+      color: $colorWhite;
+      height: 50px;
+      line-height: 50px;
+      padding:0px;
+      text-align: center;
+      border:2px solid $colorBlue;
+    }
+  
+    .btn:hover {
+      background-color: $colorGold !important;
+      border:2px solid $colorGold;
+      text-decoration: none;
+    }
+
+    .fa {
+      color: $colorGold;
+      padding-left: 30px;
+      font-size: 20px;
+    }
+    a:hover{
+      span { /* otherwise white on white */
+        color:$colorBlue !important;
+      }
+    }
   }
+
+  .home-advisory-button.home-advisory-button--all {
+
+    .btn{
+      background-color: $colorWhite !important;
+      color: $colorBlue;
+    }
+    a.btn:hover {
+      background-color: $colorBlue !important;
+      text-decoration: none;      
+      span {
+        color: $colorWhite !important;
+      }
+
+    }
+  }
+
 
   .advisory-content {
     font-size: 16px;
@@ -284,34 +209,21 @@ $tabletBreakpoint: 768px;
     border: 2px solid $colorBlue;
     border-radius: 5px;
   }
-  .advisory > p {
+
+
+  .advisory-button > p {
     margin-bottom: 5px;
-  }
-  .advisory .fa-chevron-circle-right {
-    color: $colorGold;
-    padding-left: 30px;
-    font-size: 20px;
   }
 
   @media screen and (min-width: $desktopBreakpoint) {
     .advisory-button {
       height: 55px;
+      margin-right: 18px;
+
+      
     }
     .all-advisory-button {
       height: 55px;
-    }
-  }
-  @media screen and (min-width: 376px) and (max-width: 990px) {
-    .zone-links {
-      padding: 0 17% !important;
-    }
-  }
-  @media screen and (max-width: 473px) {
-    .zone-links span {
-      font-size: 15px;
-    }
-    .all-advisory-button {
-      height:55px;
     }
   }
 
@@ -319,9 +231,13 @@ $tabletBreakpoint: 768px;
 
 #home-plan-your-trip {
   color: $colorBlue;
-  padding-top: 30px;
+
   margin-top: 50px;
   padding-bottom: 40px;
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    padding-top: 30px;
+  }
 }
 
 #home-about-bc-parks {
@@ -334,29 +250,6 @@ $tabletBreakpoint: 768px;
 #home-get-involved {
   color: $colorBlue;
   background-color: $colorGrey;
-
-  .split-card-body {
-    background-color: $colorGrey;
-    bottom: unset;
-    color: $colorBlue;
-  }
-  .split-card-body .card-title {
-    margin: 0 36px 10px 36px;
-  }
-  .split-card .col-6 {
-    background-color: $colorGrey;
-  }
-  .split-card:hover {
-    > div > div {
-      background-color: $colorGold;
-      > div {
-        background-color: $colorGold;
-      }
-    }
-    .zone-hr > hr {
-      color: $colorBlue !important;
-    }
-  }
 
   .fa-chevron-circle-right {
     font-size: 24px;
@@ -432,8 +325,8 @@ $tabletBreakpoint: 768px;
   }
 }
 
-.content-width-override {
-  max-width: 1440px !important; 
+.home-content-width-override {
+  max-width: 1100px !important;
 }
 .max-width-override {
   max-width: 1920px !important;
@@ -466,4 +359,105 @@ $tabletBreakpoint: 768px;
 .main {
 
   padding-bottom: 40px;
+}
+
+.home-card-wrapper {
+  max-height: 320px;
+  margin-bottom: 30px;  
+  
+  @media screen and (min-width: $desktopBreakpoint) {
+    max-height: 500px;
+  }
+}
+
+#home-news,#home-get-involved {
+  .card {
+    border: unset;
+  }
+}
+
+/* ------------- SEARCH ------------ */
+
+#home-parks-search {
+  position: absolute;
+
+
+
+  @media screen and (max-width: $desktopBreakpoint) {
+    bottom: 30px;
+    left: 5%;
+    width: 90%;
+  }
+  @media screen and (min-width: $desktopBreakpoint) {
+    top: 0px;
+    left: 0px;   
+    width: 100%;
+    height: 100%;
+    margin: 0px auto;  
+  }
+  .parks-search-wrapper {
+
+    background: $colorBlue;
+    color: $colorWhite;  
+
+
+    @media screen and (max-width: $desktopBreakpoint) {
+      padding:20px;
+      text-align:center;
+
+      .parks-search-header{
+        font-size:2rem;
+        font-weight: bold;
+        line-height: 2.5rem;
+      }
+    }
+    @media screen and (min-width: $desktopBreakpoint) {
+      text-align: left;      
+      padding: 25px 40px;
+      margin: 360px auto 0px auto;
+      width: 800px;
+      min-height: 200px;
+
+      .parks-search-header{
+        font-size:2rem;
+        font-weight: bold;
+      }
+    }
+  }
+
+
+  .parks-search-field{
+    margin-top:15px;   
+    display:flex; 
+
+    @media screen and (max-width: $desktopBreakpoint) {
+      flex-direction: column;
+      flex-grow:1;
+      .parks-search-button{
+        width:100%;
+        margin:10px 0px;
+      }
+    }
+
+    input {
+      font-size:0.85rem;
+    }
+  }
+  .parks-search-button{
+    background: $colorGold;
+    color: $colorBlue;
+    height: 50px;
+    margin-left: auto;
+    font-size:1.1rem;
+    padding:0px 25px;
+  }
+  .parks-search-filter-link{
+    font-size:0.9rem;
+    margin-top:15px;
+    color:$colorWhite;
+  }
+  .parks-search-filter-link:hover{
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
