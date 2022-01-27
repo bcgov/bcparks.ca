@@ -3,13 +3,11 @@ body {
 }
 
 a:link {
-  color: #fff;
-  text-decoration: none;
+  color: #036;
 }
 
 a:visited {
-  color: #fff;
-  text-decoration: none;
+  color: #036;
 }
 
 a:hover {
@@ -22,6 +20,7 @@ a.btn {
   border-radius: 5px;
   color: #036;
   text-align: center;
+  text-decoration: none;
 }
 
 a.btn:hover {
@@ -54,6 +53,20 @@ a.btn:hover {
   display: inline-block;
   margin: 0 16px;
   font-size: 1.2rem;
+}
+
+.gov-links a:link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.gov-links a:visited {
+  color: #fff;
+  text-decoration: none;
+}
+
+.gov-links a:hover {
+  color: #fcba19;
 }
 
 .beta-banner {
@@ -92,8 +105,25 @@ a.btn:hover {
 
 .beta-description {
   color: #000;
-  width: 80%;
+  max-width: 1100px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 160px;
+}
+
+.beta-description a:link {
+  color: #036;
+  text-decoration: underline;
+}
+
+.beta-description a:visited {
+  color: #036;
+  text-decoration: underline;
+}
+
+.beta-description a:hover {
+  color: #fcba19;
 }
 
 .contents {
@@ -140,6 +170,11 @@ a.btn:hover {
   padding: 48px 32px;
 }
 
+.research_narrow-screen_content a:link {
+  color: #fff;
+  text-decoration: none;
+}
+
 .research_narrow-screen_content a:visited {
   color: #fff;
   text-decoration: none;
@@ -183,6 +218,9 @@ a.btn:hover {
 
   .beta-description {
     margin-top: unset;
+    text-align: unset;
+    margin-left: unset;
+    margin-right: unset;
   }
 
   .research {
@@ -201,5 +239,9 @@ a.btn:hover {
 @media screen and (max-width: 576px) {
   .beta-welcome_screenshots {
     top: 70px;
+  }
+
+  .beta-welcome_sub-heading {
+    margin-bottom: 64px;
   }
 }
