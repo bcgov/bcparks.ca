@@ -418,7 +418,7 @@ const PublicAdvisoryPage = ({ data }) => {
         }
 
         <div className="mb-3">
-          <i className={"fa fa-info-circle"}></i> <em>Not all advisories are available in beta</em>
+          <i className="fa fa-info-circle"></i> <em>Not all advisories are available in beta</em>
         </div>
 
         <div className={ isDataOld ? classes.loadingArea : "hidden" }>

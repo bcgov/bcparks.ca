@@ -695,7 +695,7 @@ export default function Explore({ location, data }) {
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-list container">
                 <div className="mt-1 text-center">
-                  <i className={"fa fa-info-circle"}></i> <em>Park search is limited during beta</em>
+                  <i className="fa fa-info-circle"></i> <em>Park search is limited during beta</em>
                 </div>
                   { isLoading && (
                       <div className="container mt-5">
