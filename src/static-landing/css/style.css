@@ -112,18 +112,17 @@ a.btn:hover {
   margin-top: 160px;
 }
 
-.beta-description a:link {
-  color: #036;
-  text-decoration: underline;
+.beta-description {
+  color: #000;
+  max-width: 1100px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 160px;
 }
 
-.beta-description a:visited {
-  color: #036;
-  text-decoration: underline;
-}
-
-.beta-description a:hover {
-  color: #fcba19;
+.beta-description h2 {
+  color: #003366;
 }
 
 .contents {
