@@ -417,6 +417,10 @@ const PublicAdvisoryPage = ({ data }) => {
         </div>
         }
 
+        <div className="mb-3">
+          <i className="fa fa-info-circle"></i> <em>Not all advisories are available in beta</em>
+        </div>
+
         <div className={ isDataOld ? classes.loadingArea : "hidden" }>
           <div className={classes.loadingSpinner}><CircularProgress></CircularProgress></div>
           <div className={classes.loadingText}>Loading...</div>
