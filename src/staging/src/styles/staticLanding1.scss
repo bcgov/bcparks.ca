@@ -1,108 +1,186 @@
-$colorBlue: #003366;
-$colorBlueOpacity: #00336690;
+// TODO: global vars file
+$globalFont: "BCSans", Verdana, Arial, sans serif;
+$bodyFont: 16px;
+$colorLightGrey: #f2f2f2;
+$colorBlue: #036;
+$colorLightBlue: #2464a4;
 $colorGold: #fcba19;
-$colorGrey: #eef1f5;
 $colorWhite: #fff;
-$desktopBreakpoint: 576px;
+$mdBreakpoint: 768px;
+$lgBreakpoint: 992px;
+$xlBreakpoint: 1200px;
 
-#content {
-  background-color: aliceblue;
+.bcp-landing-intro {
+  max-width: 1440px;
+  margin: 0 auto;
+
+  @media screen and (min-width: $mdBreakpoint) {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  h2 {
+    color: $colorBlue;
+    margin: 27px 0 13px;
+
+    @media screen and (min-width: $mdBreakpoint) {
+      margin-top: 40px;
+      margin-bottom: 93px;
+    }
+
+    @media screen and (min-width: $lgBreakpoint) {
+      margin-top: 60px;
+    }
+
+    @media screen and (min-width: $xlBreakpoint) {
+      margin-top: 107px;
+    }
+  }
+
+  &__image {
+    // Hack to ignore p tag injected by CKEditor around images
+    > p {
+      display: inline;
+    }
+    @media screen and (min-width: $mdBreakpoint) {
+      height: auto;
+      margin-left: auto;
+      order: 2;
+      width: 720px;
+    }
+
+    img {
+      max-width: 100%;
+      object-fit: cover;
+      object-position: left top;
+    }
+  }
+
+  &__text {
+    margin-bottom: 23px;
+
+    @media screen and (min-width: $mdBreakpoint) {
+      order: 1;
+      max-width: 50%;
+      padding-top: 16px;
+      padding-bottom: 16px;
+      padding-right: 16px;
+      padding-left: calc(calc(max(100vw, $mdBreakpoint) - $mdBreakpoint) / 2);
+    }
+    @media screen and (min-width: $lgBreakpoint) {
+      padding-left: calc(calc(max(100vw, $lgBreakpoint) - $lgBreakpoint) / 2);
+    }
+    @media screen and (min-width: $xlBreakpoint) {
+      padding-right: 60px;
+      padding-left: calc(calc(max(100vw, $xlBreakpoint) - $xlBreakpoint) / 2);
+    }
+    @media screen and (min-width: 1440px) {
+      padding-right: 110px;
+      padding-left: 165px;
+    }
+  }
 }
 
-.content-width-override {
-  max-width: 1440px !important; 
+.bcp-landing-links {
+  background-color: $colorLightGrey;
+  padding-bottom: 60px;
+  padding-top: 30px;
+  width: 100%;
+
+  @media screen and (min-width: $mdBreakpoint) {
+    padding-bottom: 98px;
+    padding-top: 72px;
+  }
+
+  .content {
+    max-width: 1110px;
+  }
+
+  .col {
+    margin-bottom: 33px;
+    margin-top: 33px;
+  }
 }
-.max-width-override {
-  max-width: 1920px !important;
+
+.bcp-landing-park-search {
+  background-color: $colorLightBlue;
+  width: 100%;
+
+  .container {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
 }
 
-#main {
-  .mainCol {
-    @media screen and (max-width: $desktopBreakpoint) {
-      padding: 0 20px 0 20px;
-    }
-    padding: 6vh 0 6vh 0;
-    h2,h3 {
-      color: $colorBlue;
-    }
-  }
-  .mainContent {
-    background-color: $colorWhite;
-    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%) !important;
-    h2 {
-      padding-top: 40px;
-    }
-    .icon-links {
-      img {
-        height: 26px;
-      }
-      a {
-        display: flex;
-        img {
-          padding-right: 5px;
-        }
-      }
-    }
-    .bullet-links {
-      li {
-        display: list-item;
-        list-style: square;
-        color: $colorGold;
-        margin-left: 20px;
-      }
-    }
-    .sub-bullet-links {
-      padding: 0 0 20px 20px;
-    }
-    .zone-hr > hr {
-      margin: 15px 0 10px 0;
-      height: 2px;
-      background-color: $colorGold;
-      width: 35px;
-      display: inline-block;
-    
-      @media screen and (min-width: $desktopBreakpoint) {
-        margin: 35px 20px 20px 0;
-        width: 75px;
-      }
-    }
-  }
+/* TODO: these styles are pretty clunky and repeated with home /search
+ * Search component should be bootstrap based and include styling.
+ */
+.parks-search-wrapper {
+  color: $colorWhite;
 
-  .sideBarContainerWrapper{
-    @media screen and (max-width: $desktopBreakpoint) {
-      margin: 40px 0 40px 0;
-      padding-left: 0px;
-      padding-right: 0px;
+  @media screen and (min-width: $mdBreakpoint) {
+    .parks-search-header {
+      font-size: 2rem;
+      font-weight: bold;
+      line-height: 2.5rem;
     }
   }
+}
+.parks-search-field {
+  margin-top: 15px;
+  display: flex;
 
-  .sideBarContainer {
-    background-color: $colorWhite;
-    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%) !important;
-    padding: 20px;
-    h3 {
-      padding-top: 20px;
-    }
-    p {
-      display: list-item;
-      list-style: square;
-      margin-left: 20px;
-      margin-bottom: 5px;
-      a {
-        display: inline-flex;
-      }
-    }
-    p::marker {
-      color: $colorGold;
-      font-size: 20px;
-      margin-right: 5px !important;
-    }
+  input {
+    font-size: 0.85rem;
   }
-  [class*='news_top'] {
-    padding-top: 20px;
-    p {
-      list-style: none !important;
-      margin-left: 0 !important;
-    }
+}
+.parks-search-button {
+  background: $colorGold;
+  color: $colorBlue;
+  height: 50px;
+  margin-left: auto;
+  font-size: 1.1rem;
+  padding: 0px 25px;
+}
+.parks-search-filter-link {
+  font-size: 0.9rem;
+  margin-top: 15px;
+  color: $colorWhite;
+}
+.parks-search-filter-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.park-search-text-box {
+  margin-right: 10px;
+  width: 100% !important;
+
+  .MuiOutlinedInput-root {
+    width: 100% !important;
+    max-width: 700px !important;
+    background-color: $colorWhite !important;
+    border: none !important;
+    border-radius: 5px !important;
+    font-size: $bodyFont !important;
+    font-family: $globalFont !important;
   }
+  .MuiOutlinedInput-input {
+    padding: 10px 7px !important;
+  }
+  .MuiOutlinedInput-root:focus {
+    outline: none !important;
+    outline-offset: 1px !important;
+  }
+  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border: 1px solid $colorBlue !important;
+  }
+}
+button:focus {
+  outline: unset !important;
+}
+.park-filter-select [class*="-control"] {
+  border-radius: 50px !important;
+  background-color: $colorWhite !important;
+  font-family: $globalFont !important;
+  font-size: $bodyFont !important;
 }
