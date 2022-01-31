@@ -223,6 +223,7 @@ a.btn:hover {
   }
 
   .research {
+    background-image: url("../images/research-intake-narrow.png");
     padding: unset;
   }
 
@@ -235,7 +236,11 @@ a.btn:hover {
   }
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 576px) {  
+  .beta-banner {
+    font-size: 0.8rem;
+  }
+  
   .beta-welcome_screenshots {
     top: 70px;
   }
