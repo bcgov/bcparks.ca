@@ -53,6 +53,7 @@
     "sass": "^1.37.5",
     "sharp": "^0.28.3",
     "simple-react-lightbox": "^3.6.9-0",
+    "slugify": "^1.6.5",
     "typography": "^0.16.19",
     "typography-theme-kirkham": "^0.16.19"
   },

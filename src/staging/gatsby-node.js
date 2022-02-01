@@ -1,13 +1,47 @@
-// Create pages dynamically
 const { graphql } = require("gatsby")
-const fetch = require(`node-fetch`)
+const slugify = require("slugify")
+
+
+const strapiApiRequest = (graphql, query) =>
+  new Promise((resolve, reject) => {
+    resolve(
+      graphql(query).then(result => {
+        if (result.errors) {
+          reject(result.errors)
+        }
+        return result
+      })
+    )
+  })
+
 
 exports.onPostBuild = ({ reporter }) => {
   reporter.info(`Pages have been built!`)
 }
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
+  const { createFieldExtension, createTypes } = actions
+
+  // Clean up any incoming slugs
+  // TODO: make slug required in Strapi, after which this can be removed
+  createFieldExtension({
+    name: "parkPath",
+    extend(options, prevFieldConfig) {
+      return {
+        resolve({ slug, protectedAreaName, orcs }) {
+          if (slug) {
+            return slug
+          }
+          // If we don't have a slug, fall back to name, then orcs
+          if (protectedAreaName) {
+            return `parks/${slugify(protectedAreaName)}`
+          }
+          return `parks/park-${orcs}`
+       },
+      }
+    },
+  })
+
   const typeDefs = `
   type StrapiParkAccessStatus implements Node {
     campfireBanEffectiveDate: Date
@@ -26,6 +60,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   type StrapiProtectedArea implements Node {
     hasDayUsePass: String
     parkContact: String
+    urlPath: String @parkPath
   }
 
   type StrapiPublicAdvisoryProtectedAreas implements Node {
@@ -42,19 +77,6 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const parkQuery = `
-  {
-    allStrapiProtectedArea {
-      nodes {
-        id
-        orcs
-        protectedAreaName
-        slug
-      }
-      totalCount
-    }
-  }
-  `
   const staticQuery = `
   {
     allStrapiPages(filter: {Slug: {nin: ["/home", "/alerts", "/explore"]}}) {
@@ -68,9 +90,35 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     }
   }
   `
-  const dependencies = { graphql, actions, reporter }
-  await createPageSlugs('park', parkQuery, dependencies)
-  await createPageSlugs('static', staticQuery, dependencies)
+
+  await createParks({ graphql, actions })
+  await createPageSlugs('static', staticQuery, { graphql, actions, reporter })
+}
+
+async function createParks({ graphql, actions, reporter }) {
+  const parkQuery = `
+  {
+    allStrapiProtectedArea {
+      nodes {
+        id
+        orcs
+        protectedAreaName
+        slug  
+        urlPath
+      }
+      totalCount
+    }
+  }
+  `
+  const result = await strapiApiRequest(graphql, parkQuery)
+
+  result.data.allStrapiProtectedArea.nodes.forEach(park => {
+    actions.createPage({
+      path: park.urlPath,
+      component: require.resolve(`./src/templates/park.js`) ,
+      context: { ...park },
+    })
+  })
 }
 
 async function createPageSlugs(type, query, { graphql, actions, reporter }) {
@@ -82,18 +130,7 @@ async function createPageSlugs(type, query, { graphql, actions, reporter }) {
     )
     return
   }
-  if (type === 'park') {
-    result.data.allStrapiProtectedArea.nodes.forEach(park => {
-      const slug = park.slug
-        ? park.slug
-        : park.protectedAreaName.toLowerCase().replace(/ /g, "-")
-      actions.createPage({
-        path: slug,
-        component: require.resolve(`./src/templates/parkTemplate.js`),
-        context: { orcs: park.orcs, park: park },
-      })
-    })
-  }
+
   if (type === 'static') {
     result.data.allStrapiPages.nodes.forEach(page => {
       actions.createPage({
