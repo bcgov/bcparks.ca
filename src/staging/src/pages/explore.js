@@ -27,6 +27,8 @@ import SearchIcon from "@material-ui/icons/Search"
 import Select from "react-select"
 import CloseIcon from "@material-ui/icons/Close"
 import dayUseIcon from "../images/park/day-use.png"
+import ExpandLess from "@material-ui/icons/ExpandLess"
+import ExpandMore from "@material-ui/icons/ExpandMore"
 // import blueAlertIcon from "../images/park/blue-alert-32.png"
 // import yellowAlertIcon from "../images/park/yellow-alert-32.png"
 import redAlertIcon from "../images/park/red-alert-32.png"
@@ -111,6 +113,16 @@ export default function Explore({ location, data }) {
     activityItemsLabels[item.value] = item.label;
   });
 
+  const truncatedFilterLength = 5;
+
+  const [filteredActivities, setFilteredActivities] = useState(
+    activityItems.slice(0, truncatedFilterLength)
+  )
+
+  const [showActivities, setActivityVisibility] = useState(false)
+
+  const [showMoreActivities, setMoreActivites] = useState(true)
+
   const facilityItems = data.allStrapiFacilityTypes.nodes.map(facility => {
     return {
       label: facility.facilityName,
@@ -122,6 +134,14 @@ export default function Explore({ location, data }) {
     facilityItemsLabels[item.value] = item.label;
   });
 
+  const [filteredFacilities, setFilteredFacilities] = useState(
+    facilityItems.slice(0, truncatedFilterLength)
+  )
+
+  const [showFacilities, setFacilityVisibility] = useState(false)
+
+  const [showMoreFacilities, setMoreFacilities] = useState(true)
+
   const [quickSearch, setQuickSearch] = useState({
     camping: false,
     petFriendly: false,
@@ -130,6 +150,16 @@ export default function Explore({ location, data }) {
     ecoReserve: false,
     electricalHookup: false,
   })
+
+  const quickSearchFilters = [
+    { label: 'Camping', type: 'camping' },
+    { label: 'Dog friendly', type: 'petFriendly' },
+    { label: 'Wheelchair accessible', type: 'wheelchair' },
+    { label: 'Marine park', type: 'marine' },
+    { label: 'Ecological reserve', type: 'ecoReserve' },
+    { label: 'Electrical hookups', type: 'electricalHookup' }
+  ]
+
   const [selectedActivities, setSelectedActivities] = useState(
     location.state && location.state.selectedActivities
       ? [...location.state.selectedActivities]
@@ -193,6 +223,45 @@ export default function Explore({ location, data }) {
     })
     setCurrentPage(1)
   }
+
+  const handleActivitiesLengthChange = () => {
+    setMoreActivites(!showMoreActivities);
+    if (showMoreActivities) {
+      setFilteredActivities(activityItems);
+    } else {
+      setFilteredActivities(activityItems.slice(0, truncatedFilterLength));
+    }
+  }
+
+  const handleActivityCheck = (activity, event) => {
+    if (event.target.checked) {
+      setSelectedActivities([...selectedActivities, activity])
+    } else {
+      setSelectedActivities([
+        ...selectedActivities.filter(a => a.value !== activity.value),
+      ])
+    }
+  }
+
+  const handleFacilitiesLengthChange = () => {
+    setMoreFacilities(!showMoreFacilities);
+    if (showMoreFacilities) {
+      setFilteredFacilities(facilityItems);
+    } else {
+      setFilteredFacilities(facilityItems.slice(0, truncatedFilterLength));
+    }
+  }
+
+  const handleFacilityCheck = (facility, event) => {
+    if (event.target.checked) {
+      setSelectedFacilities([...selectedActivities, facility])
+    } else {
+      setSelectedFacilities([
+        ...selectedFacilities.filter(a => a.value !== facility.value),
+      ])
+    }
+  }
+
   const handleActivityDelete = chipToDelete => {
     setSelectedActivities(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
@@ -371,7 +440,7 @@ export default function Explore({ location, data }) {
     const resultPromise = axios
       .get(
         `${apiUrl}/protected-areas/`,
-        { params: { ...params, _start: pageStart, _limit: pageLimit, _sort: sort }}
+        { params: { ...params, _start: pageStart, _limit: pageLimit, _sort: sort } }
       );
     Promise.all([countPromise, resultPromise]).then(([countResponse, resultResponse]) => {
       if (countResponse.status === 200 && resultResponse.status === 200) {
@@ -400,7 +469,7 @@ export default function Explore({ location, data }) {
   ])
 
   return (
-    <> 
+    <>
       <Header content={menuContent} />
       <div className="search-body">
         <div className="search-results-main container">
@@ -418,7 +487,7 @@ export default function Explore({ location, data }) {
                   {!isActiveSearch && (
                     <>Find your next adventure</>
                   )}
-                  { isLoading && isActiveSearch && (
+                  {isLoading && isActiveSearch && (
                     <>Searching...</>
                   )}
                   {!isLoading && isActiveSearch && totalResults > 0 && (
@@ -564,143 +633,204 @@ export default function Explore({ location, data }) {
               <div className="col-lg-3 col-md-12 col-sm-12">
                 <div className="search-results-quick-filter m15t">
                   <div className="row p20t no-gutters d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                    <div className="col-12">
+                    <div className="col-12 pr-3">
                       <h4 className="filter-heading p30t">Filter by</h4>
                       <div className="">
                         <h4 className="filter-heading p10t">Popular filters</h4>
                         <FormGroup className="p10l filter-options-container">
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                checked={camping}
-                                onChange={handleQuickSearchChange}
-                                name="camping"
+                          {quickSearchFilters.map((item) => {
+                            return (
+                              <FormControlLabel
+                                key={item.label}
+                                control={
+                                  <Checkbox
+                                    checked={quickSearch[item.type]}
+                                    onChange={handleQuickSearchChange}
+                                    name={item.type}
+                                  />
+                                }
+                                label={item.label}
+                                className={
+                                  quickSearch[item.type] ? "text-light-blue no-wrap" : "no-wrap"
+                                }
                               />
-                            }
-                            label="Camping"
-                            className={
-                              camping ? "text-light-blue no-wrap" : "no-wrap"
-                            }
-                          />
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                checked={petFriendly}
-                                onChange={handleQuickSearchChange}
-                                name="petFriendly"
-                              />
-                            }
-                            label="Dog friendly"
-                            className={
-                              petFriendly
-                                ? "text-light-blue no-wrap"
-                                : "no-wrap"
-                            }
-                          />
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                checked={wheelchair}
-                                onChange={handleQuickSearchChange}
-                                name="wheelchair"
-                              />
-                            }
-                            label="Wheelchair accessible"
-                            className={
-                              wheelchair ? "text-light-blue no-wrap" : "no-wrap"
-                            }
-                          />
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                checked={marine}
-                                onChange={handleQuickSearchChange}
-                                name="marine"
-                              />
-                            }
-                            label="Marine park"
-                            className={
-                              marine ? "text-light-blue no-wrap" : "no-wrap"
-                            }
-                          />
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                checked={ecoReserve}
-                                onChange={handleQuickSearchChange}
-                                name="ecoReserve"
-                              />
-                            }
-                            label="Ecological reserve"
-                            className={
-                              ecoReserve ? "text-light-blue no-wrap" : "no-wrap"
-                            }
-                          />
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                checked={electricalHookup}
-                                onChange={handleQuickSearchChange}
-                                name="electricalHookup"
-                              />
-                            }
-                            label="Electrical hookups"
-                            className={
-                              electricalHookup
-                                ? "text-light-blue no-wrap"
-                                : "no-wrap"
-                            }
-                          />
+                            )
+                          })}
                         </FormGroup>
+                        <hr></hr>
+                        <div
+                          tabIndex={0}
+                          role="button"
+                          className="row pointer mr-3"
+                          onClick={() => { setActivityVisibility(!showActivities) }}
+                          onKeyDown={() => { setActivityVisibility(!showActivities) }}>
+                          <div className="col-md-4">
+                            <h4 className="filter-heading p10t">Activities</h4>
+                          </div>
+                          <div className="col-md-2 ml-auto">
+                            {
+                              showActivities ?
+                                <ExpandLess fontSize="large" className="mt-auto" />
+                                :
+                                <ExpandMore fontSize="large" className="mt-auto" />
+                            }
+                          </div>
+                        </div>
+                        <div>
+                          {
+                            showActivities ?
+                              <div>
+                                <FormGroup className="p10l filter-options-container">
+                                  {filteredActivities.map((a) => {
+                                    return (
+                                      <FormControlLabel
+                                        key={a.label}
+                                        control={
+                                          <Checkbox
+                                            checked={
+                                              selectedActivities.filter(
+                                                act => act.value === a.value
+                                              ).length === 1
+                                                ? true
+                                                : false
+                                            }
+                                            onChange={event => {
+                                              handleActivityCheck(a, event)
+                                            }}
+                                            name={a.label}
+                                          />
+                                        }
+                                        label={a.label}
+                                        className={
+                                          selectedActivities.filter(
+                                            act => act.value === a.value
+                                          ).length === 1
+                                            ? "text-light-blue no-wrap"
+                                            : "no-wrap"
+                                        }
+                                      />
+                                    )
+                                  })}
+                                </FormGroup>
+                                <Link
+                                  className="ml-auto pointer p20"
+                                  onClick={() => {
+                                    handleActivitiesLengthChange([])
+                                  }}
+                                  tabIndex="0"
+                                >
+                                  {
+                                    showMoreActivities ?
+                                      <div style={{ color: `#2464A4` }}>
+                                        Show all {activityItems.length}
+                                        <ExpandMore fontSize="small" />
+                                      </div>
+                                      :
+                                      <div style={{ color: `#2464A4` }}>
+                                        Show less
+                                        <ExpandLess fontSize="small"/>
+                                      </div>
+                                  }
+                                </Link>
+                              </div>
+                              :
+                              <div></div>
+                          }
+                        </div>
+                        <hr></hr>
+                        <div
+                          tabIndex={0}
+                          role="button"
+                          className="row pointer mr-3"
+                          onClick={() => { setFacilityVisibility(!showFacilities) }}
+                          onKeyDown={() => { setFacilityVisibility(!showFacilities) }}>
+                          <div className="col-md-4">
+                            <h4 className="filter-heading p10t">Facilities</h4>
+                          </div>
+                          <div className="col-md-2 ml-auto">
+                            {
+                              showFacilities ?
+                                <ExpandLess fontSize="large" className="mt-auto" />
+                                :
+                                <ExpandMore fontSize="large" className="mt-auto" />
+                            }
+                          </div>
+                        </div>
+                        <div>
+                          {
+                            showFacilities ?
+                              <div>
+                                <FormGroup className="p10l filter-options-container">
+                                  {filteredFacilities.map((f) => {
+                                    return (
+                                      <FormControlLabel
+                                      key={f.label}
+                                        control={
+                                          <Checkbox
+                                            checked={
+                                              selectedFacilities.filter(
+                                                fac => fac.value === f.value
+                                              ).length === 1
+                                                ? true
+                                                : false
+                                            }
+                                            onChange={event => {
+                                              handleFacilityCheck(f, event)
+                                            }}
+                                            name={f.label}
+                                          />
+                                        }
+                                        label={f.label}
+                                        className={
+                                          selectedFacilities.filter(
+                                            fac => fac.value === f.value
+                                          ).length === 1
+                                            ? "text-light-blue no-wrap"
+                                            : "no-wrap"
+                                        }
+                                      />
+                                    )
+                                  })}
+                                </FormGroup>
+                                <Link
+                                  className="ml-auto pointer p20"
+                                  onClick={() => {
+                                    handleFacilitiesLengthChange([])
+                                  }}
+                                  tabIndex="0"
+                                >
+                                  {
+                                    showMoreFacilities ?
+                                      <div style={{ color: `#2464A4` }}>
+                                        Show all {facilityItems.length}
+                                        <ExpandMore fontSize="small" />
+                                      </div>
+                                      :
+                                      <div style={{ color: `#2464A4` }}>
+                                        Show less
+                                        <ExpandLess fontSize="small" />
+                                      </div>
+                                  }
+                                </Link>
+                              </div>
+                              :
+                              <div></div>
+                          }
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="select-padding d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                    <Select
-                      id="activities-select"
-                      options={activityItems}
-                      value={selectedActivities}
-                      controlShouldRenderValue={false}
-                      isClearable={false}
-                      isMulti
-                      onChange={e => {
-                        setSelectedActivities(e)
-                      }}
-                      className="park-filter-select h50p"
-                      variant="outlined"
-                      placeholder="Activities"
-                    />
-                  </div>
-
-                  <div className="select-padding d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                    <Select
-                      id="facilities-select"
-                      options={facilityItems}
-                      value={selectedFacilities}
-                      controlShouldRenderValue={false}
-                      isClearable={false}
-                      isMulti
-                      onChange={e => {
-                        setSelectedFacilities(e)
-                      }}
-                      className="park-filter-select h50p"
-                      variant="outlined"
-                      placeholder="Facilities"
-                    />
-                    <br />
-                    <br />
                   </div>
                 </div>
               </div>
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-list container">
-                <div className="mt-1 text-center">
-                  <i className="fa fa-info-circle"></i> <em>Park search is limited during beta</em>
-                </div>
-                  { isLoading && (
-                      <div className="container mt-5">
-                        <LinearProgress />
-                      </div>
+                  <div className="mt-1 text-center">
+                    <i className="fa fa-info-circle"></i> <em>Park search is limited during beta</em>
+                  </div>
+                  {isLoading && (
+                    <div className="container mt-5">
+                      <LinearProgress />
+                    </div>
                   )}
                   {!isLoading && (
                     <>
@@ -794,7 +924,7 @@ export default function Explore({ location, data }) {
                                               </h3>
                                             </Link>
                                             <div className="row p10t mr5">
-                                            <div className="col-6">
+                                              <div className="col-6">
                                                 {r.advisories && r.advisories.length > 0 && r.advisories.map(
                                                   (a, index1) => (
                                                     // TODO Display all advisories when Event types are
@@ -841,7 +971,7 @@ export default function Explore({ location, data }) {
                                               <div className="col-6">
                                                 {r.parkActivities &&
                                                   r.parkActivities.length >
-                                                    0 && (
+                                                  0 && (
                                                     <>
                                                       <div className="park-af-list pr3">
                                                         <b>Activities:</b>
@@ -861,9 +991,9 @@ export default function Explore({ location, data }) {
                                                                     r
                                                                       .parkActivities
                                                                       .length -
-                                                                      1
-                                                                  ? ""
-                                                                  : ", "}
+                                                                    1
+                                                                    ? ""
+                                                                    : ", "}
                                                               </>
                                                             )}
                                                           </div>
@@ -876,7 +1006,7 @@ export default function Explore({ location, data }) {
                                               <div className="col-6">
                                                 {r.parkFacilities &&
                                                   r.parkFacilities.length >
-                                                    0 && (
+                                                  0 && (
                                                     <>
                                                       <div className="park-af-list pr3">
                                                         <b>Facilities:</b>
@@ -896,9 +1026,9 @@ export default function Explore({ location, data }) {
                                                                     r
                                                                       .parkFacilities
                                                                       .length -
-                                                                      1
-                                                                  ? ""
-                                                                  : ", "}
+                                                                    1
+                                                                    ? ""
+                                                                    : ", "}
                                                               </>
                                                             )}
                                                           </div>
@@ -1158,7 +1288,7 @@ export default function Explore({ location, data }) {
                                               <div className="col-12">
                                                 {r.parkActivities &&
                                                   r.parkActivities.length >
-                                                    0 && (
+                                                  0 && (
                                                     <>
                                                       <div className="park-af-list pr3">
                                                         <b>Activities:</b>
@@ -1178,9 +1308,9 @@ export default function Explore({ location, data }) {
                                                                     r
                                                                       .parkActivities
                                                                       .length -
-                                                                      1
-                                                                  ? ""
-                                                                  : ", "}
+                                                                    1
+                                                                    ? ""
+                                                                    : ", "}
                                                               </>
                                                             )}
                                                           </div>
@@ -1193,7 +1323,7 @@ export default function Explore({ location, data }) {
                                               <div className="col-12 p20t">
                                                 {r.parkFacilities &&
                                                   r.parkFacilities.length >
-                                                    0 && (
+                                                  0 && (
                                                     <>
                                                       <div className="park-af-list pr3">
                                                         <b>Facilities:</b>
@@ -1213,9 +1343,9 @@ export default function Explore({ location, data }) {
                                                                     r
                                                                       .parkFacilities
                                                                       .length -
-                                                                      1
-                                                                  ? ""
-                                                                  : ", "}
+                                                                    1
+                                                                    ? ""
+                                                                    : ", "}
                                                               </>
                                                             )}
                                                           </div>
