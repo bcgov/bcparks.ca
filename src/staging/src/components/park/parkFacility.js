@@ -84,14 +84,14 @@ export default function ParkFacility({ data }) {
                     >
                       <Box mr={1}>
                         <img
-                          src={facility.icon}
-                          alt={facility.icon ? facility.facilityName : ""}
+                          src={facility.facilityType.icon}
+                          alt={facility.facilityType.icon ? facility.facilityType.facilityName : ""}
                           width="48"
                           height="48"
                         />
                       </Box>
                       <HtmlContent className="pl15 p10t">
-                        {facility.facilityName}
+                        {facility.facilityType.facilityName}
                       </HtmlContent>
                     </AccordionSummary>
                     <AccordionDetails>

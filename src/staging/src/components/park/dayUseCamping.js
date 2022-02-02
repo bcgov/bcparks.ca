@@ -15,7 +15,7 @@ export default function DayUseCamping({ data }) {
   const classes = useStyles()
 
   const hasCamping = data.parkFacilities.some(facility =>
-    facility.facilityName.toLowerCase().includes("camping")
+    facility.facilityType.facilityName.toLowerCase().includes("camping")
   )
 
   let title = []

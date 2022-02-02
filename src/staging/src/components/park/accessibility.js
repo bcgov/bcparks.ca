@@ -15,7 +15,7 @@ export default function Accessibility({ parkFacilities }) {
   const classes = useStyles()
 
   const isAccessibility = parkFacilities.some(facility =>
-    facility.facilityName.toLowerCase().includes("accessibility")
+    facility.facilityType.facilityName.toLowerCase().includes("accessibility")
   )
 
   return (

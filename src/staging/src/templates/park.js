@@ -47,27 +47,19 @@ export default function ParkTemplate({ data }) {
   const classes = useStyles()
 
   const park = data.strapiProtectedArea
-  const parkAccessStatus = data.strapiParkAccessStatus
-  const advisories = data.allStrapiPublicAdvisory
-  const photos = data.allStrapiParkPhoto
-  const parkOperation = data.strapiParkOperation
-    ? data.strapiParkOperation
-    : { hasReservations: false }
+  const photos = data.allStrapiParkPhoto.nodes
+  const operations = data.allStrapiParkOperation.nodes
 
-    // Determine if activity/facility types are active globally and compare to flags on dependent nodes(parkAcccessStatus.parkFacilities/parkActivities)
-  const allStrapiActivityTypes = data.allStrapiActivityTypes.nodes
-  const allStrapiFacilityTypes = data.allStrapiFacilityTypes.nodes
-  const filterActiveActivityFacilityTypes = (node, nodeProperty = '', typeCollection) => {
-    const globalSetting = typeCollection?.find(tc => tc.isActive && tc[nodeProperty] === node[nodeProperty]) ?? {}
-    return globalSetting[nodeProperty] === node[nodeProperty]
-  }
+
+  const activeActivities = park.parkActivities.filter(activity => activity.isActive)
+  const activeFacilities = park.parkFacilities.filter(facility => facility.isActive)
+
+  const hasReservations = operations.some(op => op.hasReservations)
+  const hasCamping = activeFacilities.some(facility =>
+    facility.facilityType.facilityName.toLowerCase().includes("camping")
+  )
 
   const menuContent = data?.allStrapiMenus?.nodes || []
-  const alertsCount = advisories.totalCount
-
-  const hasCamping = parkAccessStatus.parkFacilities.some(facility =>
-    facility.facilityName.toLowerCase().includes("camping")
-  )
 
   const parkOverviewRef = useRef("")
   const accessibilityRef = useRef("")
@@ -107,7 +99,7 @@ export default function ParkTemplate({ data }) {
       visible: park.accessibility,
     },
     {
-      text: `Alerts (${alertsCount})`,
+      text: `Alerts (1)`,
       url: "park-advisory-details-container",
       visible: true,
     },
@@ -119,12 +111,12 @@ export default function ParkTemplate({ data }) {
     {
       text: "Facilities",
       url: "park-facility-container",
-      visible: parkAccessStatus.parkFacilities.length > 0,
+      visible: activeFacilities.length > 0,
     },
     {
       text: "Activities",
       url: "park-activity-container",
-      visible: parkAccessStatus.parkActivities.length > 0,
+      visible: activeActivities.length > 0,
     },
     { text: "Maps and Location", url: "park-map-container", visible: true },
     {
@@ -146,11 +138,9 @@ export default function ParkTemplate({ data }) {
 
   const parkStatusData = {
     park: park,
-    parkAccessStatus: parkAccessStatus,
-    advisories: advisories,
     menu: menuItems,
     activeSection: activeSection,
-    parkOperation: parkOperation,
+    parkOperations: operations,
   }
 
   const mapData = {
@@ -240,35 +230,29 @@ export default function ParkTemplate({ data }) {
                 )}
                 {menuItems[2].visible && (
                   <div ref={advisoryRef} className="full-width">
-                    <AdvisoryDetails data={advisories} />
+                    <AdvisoryDetails data={[]} />
                   </div>
                 )}
                 {menuItems[3].visible && (
                   <div ref={campingRef} className="full-width">
                     <CampingDetails
                       data={{
-                        parkFacilities: parkAccessStatus.parkFacilities.filter(pf => {
-                          return filterActiveActivityFacilityTypes(pf, 'facilityName', allStrapiFacilityTypes)
-                        }),
+                        parkFacilities: activeFacilities,
                         reservations: park.reservations,
                         hasDayUsePass: park.hasDayUsePass,
-                        hasReservations: parkOperation.hasReservations,
+                        hasReservations: hasReservations,
                       }}
                     />
                   </div>
                 )}
                 {menuItems[4].visible && (
                   <div ref={facilityRef} className="full-width">
-                    <ParkFacility data={parkAccessStatus.parkFacilities.filter(pf => {
-                      return filterActiveActivityFacilityTypes(pf, 'facilityName', allStrapiFacilityTypes)
-                    })} />
+                    <ParkFacility data={activeFacilities} />
                   </div>
                 )}
                 {menuItems[5].visible && (
                   <div ref={activityRef} className="full-width">
-                    <ParkActivity data={parkAccessStatus.parkActivities.filter(pa => {
-                      return filterActiveActivityFacilityTypes(pa, 'activityName', allStrapiActivityTypes)
-                    })} />
+                    <ParkActivity data={activeActivities} />
                   </div>
                 )}
                 {menuItems[6].visible && (
@@ -305,33 +289,8 @@ export default function ParkTemplate({ data }) {
 }
 
 export const query = graphql`
-  query($orcs: Int) {
-    strapiParkAccessStatus(orcs: { eq: $orcs }) {
-      orcs
-      parkActivities {
-        activityCode
-        activityName
-        description
-        icon
-        iconNA
-        rank
-      }
-      parkFacilities {
-        facilityName
-        description
-        icon
-        iconNA
-        rank
-      }
-      accessStatus
-      campfireBanEffectiveDate
-      hasCampfireBan
-      hasCampfiresFacility
-      hasSmokingBan
-      parkWebsiteUrl
-      protectedAreaName
-    }
-    strapiProtectedArea(orcs: { eq: $orcs }) {
+  query ProtectedAreaDetails ($orcs: Int) {
+    strapiProtectedArea(orcs: {eq: $orcs}) {
       protectedAreaName
       description
       status
@@ -348,84 +307,41 @@ export const query = graphql`
       longitude
       mapZoom
       parkActivities {
-        activityType
         isActive
         isActivityOpen
-        name
+        description
+        activityType {
+          activityName
+          activityCode
+          icon
+          iconNA
+        }
       }
       parkFacilities {
-        facilityType
         isActive
         isFacilityOpen
-        name
-      }
-    }
-    strapiParkPhoto(orcs: { eq: $orcs }) {
-      image {
-        localFile {
-          childImageSharp {
-            gatsbyImageData(layout: FULL_WIDTH)
-          }
-        }
-      }
-    }
-    strapiParkOperation(orcs: { eq: $orcs }) {
-      orcs
-      hasReservations
-    }
-    allStrapiPublicAdvisory(
-      filter: { protectedAreas: { elemMatch: { orcs: { eq: $orcs } } } }
-      sort: { fields: urgency___sequence, order: DESC }
-    ) {
-      nodes {
-        id
-        title
         description
-        isAdvisoryDateDisplayed
-        isEffectiveDateDisplayed
-        isEndDateDisplayed
-        isReservationsAffected
-        isSafetyRelated
-        urgency {
-          code
-          color
-          sequence
-          urgency
-        }
-        protectedAreas {
-          orcs
-          hasCampfireBan
-          hasSmokingBan
-        }
-        accessStatus {
-          color
-          accessStatus
-          precedence
-        }
-        advisoryDate(formatString: "MMMM DD, YYYY")
-        advisoryNumber
-        dcTicketNumber
-        effectiveDate(formatString: "MMMM DD, YYYY")
-        endDate(formatString: "MMMM DD, YYYY")
-        expiryDate(formatString: "MMMM DD, YYYY")
-        eventType {
-          eventType
-          id
+        facilityType {
+          facilityName
+          facilityCode
+          icon
+          iconNA
         }
       }
-      totalCount
     }
-    allStrapiParkPhoto(filter: { orcs: { eq: $orcs } }) {
+    allStrapiParkOperation(filter: {orcs: {eq: $orcs}, isActive: {eq: true}}) {
       nodes {
         orcs
+        isActive
+        hasReservations
+      }
+    }
+    allStrapiParkPhoto(filter: {orcs: {eq: $orcs}, isActive: {eq: true}}) {
+      nodes {
+        orcs
+        isActive
+        imageUrl
         caption
-        image {
-          localFile {
-            childImageSharp {
-              gatsbyImageData(layout: FULL_WIDTH)
-            }
-          }
-        }
       }
     }
     strapiWebsites(Name: { eq: "BCParks.ca" }) {
@@ -465,18 +381,6 @@ export const query = graphql`
           id
           title
         }
-      }
-    }
-    allStrapiActivityTypes {
-      nodes {
-        activityName
-        isActive
-      }
-    }
-    allStrapiFacilityTypes {
-      nodes {
-        facilityName
-        isActive
       }
     }
   }

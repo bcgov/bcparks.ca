@@ -15,7 +15,7 @@ import Spacer from "./spacer"
 
 export default function CampingDetails({ data }) {
   const campingFacilities = data.parkFacilities.filter(facility =>
-    facility.facilityName.toLowerCase().includes("camping")
+    facility.facilityType.facilityName.toLowerCase().includes("camping")
   )
 
   let expandedInitial = []
@@ -141,19 +141,19 @@ export default function CampingDetails({ data }) {
                   >
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}
-                      aria-controls={facility.facilityName}
+                      aria-controls={facility.facilityType.facilityName}
                       id={index}
                     >
                       <Box mr={1}>
                         <img
-                          src={facility.icon}
-                          alt={facility.icon ? facility.facilityName : ""}
+                          src={facility.facilityType.icon}
+                          alt={facility.facilityType.icon ? facility.facilityType.facilityName : ""}
                           width="48"
                           height="48"
                         />
                       </Box>
                       <HtmlContent className="pl15 p10t">
-                        {facility.facilityName}
+                        {facility.facilityType.facilityName}
                       </HtmlContent>
                     </AccordionSummary>
                     <AccordionDetails>

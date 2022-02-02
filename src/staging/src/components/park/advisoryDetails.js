@@ -32,7 +32,8 @@ const useStyles = makeStyles(theme => ({
 export default function AdvisoryDetails({ data }) {
   const classes = useStyles()
 
-  const advisoryData = data.nodes
+  // TODO: pass as props
+  const advisoryData = []
 
   let expandedsInitial = []
   advisoryData.forEach((advisory, index) => {

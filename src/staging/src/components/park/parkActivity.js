@@ -79,19 +79,19 @@ export default function ParkActivity({ data }) {
                   >
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}
-                      aria-controls={activity.activityName}
+                      aria-controls={activity.activityType.activityName}
                       id={index}
                     >
                       <Box mr={1}>
                         <img
-                          src={activity.icon}
-                          alt={activity.icon ? activity.activityName : ""}
+                          src={activity.activityType.icon}
+                          alt={activity.activityType.icon ? activity.activityType.activityName : ""}
                           width="48"
                           height="48"
                         />
                       </Box>
                       <HtmlContent className="pl15 p10t">
-                        {activity.activityName}
+                        {activity.activityType.activityName}
                       </HtmlContent>
                     </AccordionSummary>
                     <AccordionDetails>

@@ -17,11 +17,18 @@ import ExpandMore from "@material-ui/icons/ExpandMore"
 import { navigate } from "gatsby"
 
 export default function ParkHeader({ data }) {
-  const { advisories, parkAccessStatus, park, menu, parkOperation } = data
+  const { park, menu, parkOperations } = data
+  const hasReservations = parkOperations.some(op => op.hasReservations)
 
   const menuItems = useRef([...menu])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
+
+  // TODO: pass as props
+  const parkAccessStatus = {
+    accessStatus: "open"
+  }
+  const advisories = []
 
   useEffect(() => {
     menuItems.current[currentIndex].visible = false
@@ -54,7 +61,7 @@ export default function ParkHeader({ data }) {
           <div className="flex-display p10t">
             <Grid item xs={12} sm={12} md={12} lg={7}>
               <>
-                {parkOperation.hasReservations && (
+                {hasReservations && (
                   <Button
                     className="yellow-button"
                     href="https://discovercamping.ca/"
@@ -65,7 +72,7 @@ export default function ParkHeader({ data }) {
                 {park.hasDayUsePass === "true" && (
                   <Button
                     className={
-                      parkOperation.hasReservations
+                      hasReservations
                         ? "blue-button ml10"
                         : "blue-button"
                     }
@@ -105,7 +112,7 @@ export default function ParkHeader({ data }) {
           </Grid>
 
           <Grid item xs={12}>
-            {parkOperation.hasReservations && (
+            {hasReservations && (
               <div className="p20t">
                 <Button
                   className="yellow-button full-width"
@@ -124,7 +131,7 @@ export default function ParkHeader({ data }) {
             )}
           </Grid>
 
-          {park.hasDayUsePass !== "true" && !parkOperation.hasReservations && (
+          {park.hasDayUsePass !== "true" && !hasReservations && (
             <div className="p10t"></div>
           )}
           {/* Mobile */}
