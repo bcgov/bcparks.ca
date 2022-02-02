@@ -666,11 +666,13 @@ div[class$="-singleValue"] {
 }
 
 .text-green {
-  color: green;
+  color: #008556;
+  font-weight: bold;
 }
 
 .text-red {
-  color: red;
+  color: #D8292F;
+  font-weight: bold;
 }
 
 .text-light-blue {
@@ -789,6 +791,7 @@ div[class$="-singleValue"] {
 
 .park-heading-text {
   color: $colorBlue;
+  margin-top: 10px;
 }
 
 .search-results-main {
