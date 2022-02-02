@@ -49,6 +49,16 @@ exports.createSchemaCustomization = ({ actions }) => {
     precedence: String
   }
 
+  type StrapiActivityTypes implements Node {
+    activityName: String
+    activityCode: String
+  }
+
+  type StrapiFacilityTypes implements Node {
+    facilityName: String
+    facilityCode: String
+  }
+
   type StrapiParkAccessStatusParkActivities implements Node {
     description: String
   }
@@ -57,10 +67,38 @@ exports.createSchemaCustomization = ({ actions }) => {
     description: String
   }
 
+  type StrapiParkActivities implements Node {
+    name: String
+    isActive: Boolean
+    isActivityOpen: Boolean
+    activityType: StrapiActivityTypes @link(by: "strapiId")
+  }
+
+  type StrapiParkFacilities implements Node {
+    name: String
+    isActive: Boolean
+    isActivityOpen: Boolean
+    facilityType: StrapiFacilityTypes @link(by: "strapiId")
+  }
+
+  type StrapiParkOperation implements Node {
+    orcs: Int
+    isActive: Boolean 
+    hasReservations: Boolean
+  }
+
+  type StrapiParkPhoto implements Node {
+    orcs: Int
+    isActive: Boolean
+  }
+
   type StrapiProtectedArea implements Node {
+    orcs: Int
     hasDayUsePass: String
     parkContact: String
     urlPath: String @parkPath
+    parkActivities: [StrapiParkActivities]
+    parkFacilities: [StrapiParkFacilities]
   }
 
   type StrapiPublicAdvisoryProtectedAreas implements Node {
@@ -71,7 +109,6 @@ exports.createSchemaCustomization = ({ actions }) => {
   type StrapiPublicAdvisory implements Node {
     accessStatus: StrapiParkAccessStatus
   }
-
   `
   createTypes(typeDefs)
 }
