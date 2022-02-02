@@ -7,6 +7,6 @@
 ## Running local dev server
 
 1. ``yarn``
-2. ``yarn start``
+2. ``yarn start``. This will run Gatsby in development mode.
 
 You are able to create builds by running ``yarn build``.

@@ -2,6 +2,11 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Prerequisites
+
+1. Make sure Strapi is running. Follow the steps found in ``src/cms/``
+2. Copy ``.env.example`` as ``.env``.
+  * ```REACT_APP_CMS_BASE_URL=http://localhost:1337``` must be set. Be sure your Strapi server is actually running on port ``1337``.
 
 ## Dev steps to run locally
 1. Update .env file with API url
