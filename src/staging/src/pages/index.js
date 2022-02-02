@@ -40,50 +40,6 @@ export const query = graphql`
         }
       }
     }
-    allStrapiActivityTypes(sort: { fields: activityName }) {
-      totalCount
-      nodes {
-        activityName
-        activityNumber
-      }
-    }
-    allStrapiFacilityTypes(sort: { fields: facilityName }) {
-      totalCount
-      nodes {
-        facilityName
-        facilityNumber
-      }
-    }
-    allStrapiProtectedArea(sort: { fields: protectedAreaName }) {
-      nodes {
-        parkActivities {
-          activityType
-          isActive
-          isActivityOpen
-          name
-        }
-        parkFacilities {
-          facilityType
-          isActive
-          isFacilityOpen
-          name
-        }
-        id
-        orcs
-        latitude
-        longitude
-        protectedAreaName
-        slug
-        parkNames {
-          parkName
-          id
-          parkNameType
-        }
-        status
-        typeCode
-        marineProtectedArea
-      }
-    }
     allStrapiMenus(
       sort: { fields: order, order: ASC }
       filter: { show: { eq: true } }
@@ -131,13 +87,7 @@ export default function Home({ data }) {
           <Container className="park-search-container-wrapper max-width-override" fixed disableGutters>
             <Header mode="internal" content={menuContent} />
             <div className="park-search">
-              <MainSearch
-                  data={{
-                    activities: data.allStrapiActivityTypes.nodes,
-                    facilities: data.allStrapiFacilityTypes.nodes,
-                    protectedAreas: data.allStrapiProtectedArea.nodes,
-                  }}
-                />
+              <MainSearch />
               <div className="park-search-carousel">
                 <Zone key={6} Content={searchCarousel}  />
                 <div className="col-12 d-none d-lg-block text-center text-white" id="carousel-down"><i className="fa fa-chevron-down"></i></div>
