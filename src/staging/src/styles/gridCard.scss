@@ -27,11 +27,13 @@ $tabletBreakpoint: 768px;
     height: 65%;
     overflow: hidden;
     margin-bottom: unset;
+    transition: border-left-width 250ms linear;
 
     img {
       height: 100%;
       width: 100%;
       object-fit: cover;
+      transition: transform 250ms linear;
     }
   }
 
@@ -147,6 +149,15 @@ $tabletBreakpoint: 768px;
 
     .card-button {
       border: 2px solid $colorBlue;
+      transition: border-color 150ms;
+    }
+
+    .card-img {
+      border-radius: 0;
+
+      @media screen and (min-width: $desktopBreakpoint) {
+        border-left: 0 solid $colorGold;
+      }
     }
   }
 
@@ -182,12 +193,27 @@ $tabletBreakpoint: 768px;
     &.grid-card--light {
       background-color: $colorWhite;
 
+      .card-button {
+        border-color: $colorGold;
+      }
+
       .card-body-header {
         color: $colorBlue;
+        text-decoration: none;
       }
 
       .card-text {
         color: $colorBlue;
+      }
+
+      .card-img {
+        @media screen and (min-width: $desktopBreakpoint) {
+          border-left-width: 8px;
+        }
+
+        img {
+          transform: scale(1.15);
+        }
       }
     }
   }
