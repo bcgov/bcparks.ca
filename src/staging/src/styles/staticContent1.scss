@@ -8,6 +8,10 @@ $colorBorder: #96b3cf;
 $colorBackground: #F2F2F2;
 $colorComponent: #606060;
 
+.static-content-width {
+  max-width: 1140px;
+  padding: 40px;
+}
 .content {
   padding-top: 20px;
   padding-bottom: 35px;

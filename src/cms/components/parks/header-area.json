@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_parks_header_areas",
+  "info": {
+    "name": "HeaderArea",
+    "icon": "heading"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "ImageURL": {
+      "type": "string"
+    },
+    "ImageAlt": {
+      "type": "string"
+    },
+    "ImageCaption": {
+      "type": "text"
+    },
+    "HeaderHTML": {
+      "type": "richtext"
+    }
+  }
+}

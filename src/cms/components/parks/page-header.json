@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_parks_page_headers",
+  "info": {
+    "name": "PageHeader",
+    "icon": "archway",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "PageTitle": {
+      "type": "string"
+    },
+    "ImageUrl": {
+      "type": "string"
+    },
+    "ImageAlt": {
+      "type": "string"
+    },
+    "ImageCaption": {
+      "type": "text"
+    },
+    "IntroHtml": {
+      "type": "richtext"
+    }
+  }
+}
