@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
+import PropTypes from "prop-types";
 import {
   Grid,
   Button,
@@ -16,19 +17,10 @@ import ExpandMore from "@material-ui/icons/ExpandMore"
 
 import { navigate } from "gatsby"
 
-export default function ParkHeader({ data }) {
-  const { park, menu, parkOperations } = data
-  const hasReservations = parkOperations.some(op => op.hasReservations)
-
+export default function ParkHeader({ park, menu, hasReservations, advisories }) {
   const menuItems = useRef([...menu])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
-
-  // TODO: pass as props
-  const parkAccessStatus = {
-    accessStatus: "open"
-  }
-  const advisories = []
 
   useEffect(() => {
     menuItems.current[currentIndex].visible = false
@@ -93,10 +85,10 @@ export default function ParkHeader({ data }) {
               className="park-info-header-flex"
             >
               <div className="park-info-header park-access">
-                <ParkAccessStatus data={parkAccessStatus.accessStatus} />
+                <ParkAccessStatus advisories={advisories} />
               </div>
               <div className="park-info-header ml-auto park-access">
-                <Advisory data={advisories} />
+                <Advisory advisories={advisories} />
               </div>
             </Grid>
           </div>
@@ -104,10 +96,10 @@ export default function ParkHeader({ data }) {
         <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
           <Grid item xs={12} sm={12} md={12} className="park-info-header-flex">
             <div className="park-info-header">
-              <ParkAccessStatus data={parkAccessStatus.accessStatus} />
+              <ParkAccessStatus advisories={advisories} />
             </div>
             <div className="park-info-header">
-              <Advisory data={advisories} />
+              <Advisory advisories={advisories} />
             </div>
           </Grid>
 
@@ -172,3 +164,13 @@ export default function ParkHeader({ data }) {
     </Paper>
   )
 }
+
+ParkHeader.propTypes = {
+  park: PropTypes.shape({
+    protectedAreaName: PropTypes.string,
+    orcs: PropTypes.number
+  }).isRequired,
+  menu: PropTypes.array.isRequired,
+  hasReservations: PropTypes.bool,
+  advisories: PropTypes.array,
+};

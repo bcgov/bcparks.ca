@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import PropTypes from "prop-types";
 import {
   Box,
   Button,
@@ -29,14 +30,11 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function AdvisoryDetails({ data }) {
+export default function AdvisoryDetails({ advisories }) {
   const classes = useStyles()
 
-  // TODO: pass as props
-  const advisoryData = []
-
   let expandedsInitial = []
-  advisoryData.forEach((advisory, index) => {
+  advisories.forEach((advisory, index) => {
     expandedsInitial[index] = false
   })
 
@@ -50,13 +48,13 @@ export default function AdvisoryDetails({ data }) {
 
   const expandAll = isAllExpanded => {
     let expandeds = []
-    advisoryData.forEach((advisory, index) => {
+    advisories.forEach((advisory, index) => {
       expandeds[index] = isAllExpanded
     })
     setExpandeds(expandeds)
   }
 
-  const advisories = advisoryData.map(advisory => {
+  const advisoriesWithIcons = advisories.map(advisory => {
     let alertIcon
     let alertColorCss
     switch (advisory.urgency.color) {
@@ -76,9 +74,10 @@ export default function AdvisoryDetails({ data }) {
         alertIcon = blueAlertIcon
         alertColorCss = "blue-alert"
     }
-    advisory.alertIcon = alertIcon
-    advisory.alertColorCss = alertColorCss
-    return advisory
+
+    return {
+      alertIcon, alertColorCss, ...advisory
+    }
   })
 
   return (
@@ -115,12 +114,12 @@ export default function AdvisoryDetails({ data }) {
             </Box>
           </Grid>
         </Grid>
-        {data.totalCount === 0 && (
+        {advisories.length === 0 && (
           <HtmlContent>There are no reported alerts for this park</HtmlContent>
         )}
-        {data.totalCount > 0 && (
+        {advisories.length > 0 && (
           <Grid container spacing={1}>
-            {advisories.map((advisory, index) => (
+            {advisoriesWithIcons.map((advisory, index) => (
               <Grid key={advisory.id} item xs={12}>
                 <Accordion
                   className={advisory.alertColorCss}
@@ -182,3 +181,7 @@ export default function AdvisoryDetails({ data }) {
     </Grid>
   )
 }
+
+AdvisoryDetails.propTypes = {
+  advisories: PropTypes.array.isRequired,
+};

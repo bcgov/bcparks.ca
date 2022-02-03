@@ -1,4 +1,5 @@
-import React, { useRef } from "react"
+import React, { useEffect, useState, useRef } from "react"
+import axios from "axios"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import {
@@ -43,13 +44,26 @@ const useStyles = makeStyles(theme => ({
   appBarOffset: theme.mixins.toolbar,
 }))
 
+
+const loadAdvisories = async (apiBaseUrl, orcs) => {
+  const params = {
+    "protectedAreas.orcs_in": orcs,
+    "_limit": 100,
+    "_sort": "urgency.sequence:DESC"
+  }
+
+  return axios.get(`${apiBaseUrl}/public-advisories`, { params })
+}
+
+
 export default function ParkTemplate({ data }) {
   const classes = useStyles()
+
+  const apiBaseUrl = data.site.siteMetadata.apiURL;
 
   const park = data.strapiProtectedArea
   const photos = data.allStrapiParkPhoto.nodes
   const operations = data.allStrapiParkOperation.nodes
-
 
   const activeActivities = park.parkActivities.filter(activity => activity.isActive)
   const activeFacilities = park.parkFacilities.filter(facility => facility.isActive)
@@ -60,6 +74,27 @@ export default function ParkTemplate({ data }) {
   )
 
   const menuContent = data?.allStrapiMenus?.nodes || []
+
+  const [advisoryLoadError, setAdvisoryLoadError] = useState(false)
+  const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true)
+  const [advisories, setAdvisories] = useState([])
+
+  useEffect(() => {
+    setIsLoadingAdvisories(true)
+
+    loadAdvisories(apiBaseUrl, park.orcs).then(response => {
+      if (response.status === 200) {
+        setAdvisories([...response.data])
+        setAdvisoryLoadError(false)
+      } else {
+        setAdvisories([])
+        setAdvisoryLoadError(true)
+      }
+    }).finally(() => {
+      setIsLoadingAdvisories(false)
+    })
+
+  }, [apiBaseUrl, park.orcs])
 
   const parkOverviewRef = useRef("")
   const accessibilityRef = useRef("")
@@ -99,7 +134,7 @@ export default function ParkTemplate({ data }) {
       visible: park.accessibility,
     },
     {
-      text: `Alerts (1)`,
+      text: (!isLoadingAdvisories && !advisoryLoadError) ? `Alerts (${advisories.length})` : "Alerts",
       url: "park-advisory-details-container",
       visible: true,
     },
@@ -135,13 +170,6 @@ export default function ParkTemplate({ data }) {
       visible: park.reconciliationNotes,
     },
   ]
-
-  const parkStatusData = {
-    park: park,
-    menu: menuItems,
-    activeSection: activeSection,
-    parkOperations: operations,
-  }
 
   const mapData = {
     latitude: park.latitude,
@@ -189,7 +217,7 @@ export default function ParkTemplate({ data }) {
               </Breadcrumbs>
             </Grid>
             <Grid item xs={12} sm={12}>
-              <ParkHeader data={parkStatusData} />
+              <ParkHeader park={park} menu={menuItems} hasReservations={hasReservations} advisories={advisories} />
             </Grid>
             <Grid item xs={12} sm={12}>
               <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
@@ -204,7 +232,7 @@ export default function ParkTemplate({ data }) {
               lg={3}
               className="park-menu-root d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none"
             >
-              <ParkMenu data={parkStatusData} />
+              <ParkMenu data={{ menu: menuItems, activeSection }} />
             </Grid>
             <Grid
               item
@@ -230,7 +258,19 @@ export default function ParkTemplate({ data }) {
                 )}
                 {menuItems[2].visible && (
                   <div ref={advisoryRef} className="full-width">
-                    <AdvisoryDetails data={[]} />
+                    {isLoadingAdvisories && (
+                      <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                      </div>
+                    )}
+                    {!isLoadingAdvisories && advisoryLoadError && (
+                      <div className="alert alert-danger" role="alert">
+                      An error occurred while loading current public advisories.
+                    </div>
+                    )}
+                    {!isLoadingAdvisories && !advisoryLoadError && (
+                      <AdvisoryDetails advisories={advisories} />
+                    )}
                   </div>
                 )}
                 {menuItems[3].visible && (
@@ -381,6 +421,11 @@ export const query = graphql`
           id
           title
         }
+      }
+    }
+    site {
+      siteMetadata {
+        apiURL
       }
     }
   }
