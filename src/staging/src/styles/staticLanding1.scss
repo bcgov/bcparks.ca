@@ -1,5 +1,5 @@
 // TODO: global vars file
-$globalFont: "BCSans", Verdana, Arial, sans serif;
+$globalFont: "BCSans", verdana, arial, sans serif;
 $bodyFont: 16px;
 $colorLightGrey: #f2f2f2;
 $colorBlue: #036;
@@ -42,6 +42,7 @@ $xlBreakpoint: 1200px;
     > p {
       display: inline;
     }
+
     @media screen and (min-width: $mdBreakpoint) {
       height: auto;
       margin-left: auto;
@@ -62,18 +63,18 @@ $xlBreakpoint: 1200px;
     @media screen and (min-width: $mdBreakpoint) {
       order: 1;
       max-width: 50%;
-      padding-top: 16px;
-      padding-bottom: 16px;
-      padding-right: 16px;
-      padding-left: calc(calc(max(100vw, $mdBreakpoint) - $mdBreakpoint) / 2);
+      padding: 16px 16px 16px calc(calc(max(100vw, $mdBreakpoint) - $mdBreakpoint) / 2);
     }
+
     @media screen and (min-width: $lgBreakpoint) {
       padding-left: calc(calc(max(100vw, $lgBreakpoint) - $lgBreakpoint) / 2);
     }
+
     @media screen and (min-width: $xlBreakpoint) {
       padding-right: 60px;
       padding-left: calc(calc(max(100vw, $xlBreakpoint) - $xlBreakpoint) / 2);
     }
+
     @media screen and (min-width: 1440px) {
       padding-right: 110px;
       padding-left: 165px;
@@ -126,6 +127,7 @@ $xlBreakpoint: 1200px;
     }
   }
 }
+
 .parks-search-field {
   margin-top: 15px;
   display: flex;
@@ -134,23 +136,27 @@ $xlBreakpoint: 1200px;
     font-size: 0.85rem;
   }
 }
+
 .parks-search-button {
   background: $colorGold;
   color: $colorBlue;
   height: 50px;
   margin-left: auto;
   font-size: 1.1rem;
-  padding: 0px 25px;
+  padding: 0 25px;
 }
+
 .parks-search-filter-link {
   font-size: 0.9rem;
   margin-top: 15px;
   color: $colorWhite;
 }
+
 .parks-search-filter-link:hover {
   text-decoration: underline;
   cursor: pointer;
 }
+
 .park-search-text-box {
   margin-right: 10px;
   width: 100% !important;
@@ -164,20 +170,25 @@ $xlBreakpoint: 1200px;
     font-size: $bodyFont !important;
     font-family: $globalFont !important;
   }
+
   .MuiOutlinedInput-input {
     padding: 10px 7px !important;
   }
+
   .MuiOutlinedInput-root:focus {
     outline: none !important;
     outline-offset: 1px !important;
   }
+
   .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
     border: 1px solid $colorBlue !important;
   }
 }
+
 button:focus {
   outline: unset !important;
 }
+
 .park-filter-select [class*="-control"] {
   border-radius: 50px !important;
   background-color: $colorWhite !important;
