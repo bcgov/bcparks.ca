@@ -4,6 +4,7 @@ import { sortBy } from "lodash"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import {
+  Box,
   Container,
   Grid,
   CssBaseline,
@@ -168,7 +169,7 @@ export default function ParkTemplate({ data }) {
       url: "park-activity-container",
       visible: activeActivities.length > 0,
     },
-    { text: "Maps and Location", url: "park-map-container", visible: true },
+    { text: "Location", url: "park-map-container", visible: true },
     {
       text: "Park and activity maps",
       url: "park-map-details-container",
@@ -319,6 +320,13 @@ export default function ParkTemplate({ data }) {
                 {menuItems[6].visible && (
                   <div ref={mapRef} className="full-width">
                     <MapLocation data={mapData} />
+                    {park.locationNotes && (
+                      <Grid item xs={12} id="park-location-notes-container">
+                        <Box mb={8}>
+                          <div dangerouslySetInnerHTML={{__html: park.locationNotes}}></div>
+                        </Box>
+                      </Grid>
+                    )}
                   </div>
                 )}
                 {menuItems[7].visible && (
@@ -360,6 +368,7 @@ export const query = graphql`
       type
       typeCode
       hasDayUsePass
+      locationNotes
       reconciliationNotes
       parkContact
       reservations
