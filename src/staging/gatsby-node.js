@@ -52,11 +52,13 @@ exports.createSchemaCustomization = ({ actions }) => {
   type StrapiActivityTypes implements Node {
     activityName: String
     activityCode: String
+    rank: Int
   }
 
   type StrapiFacilityTypes implements Node {
     facilityName: String
     facilityCode: String
+    rank: Int
   }
 
   type StrapiParkAccessStatusParkActivities implements Node {

@@ -12,10 +12,8 @@ import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
-const _ = require("lodash")
-
 export default function ParkActivity({ data }) {
-  const activityData = _.sortBy(data, ["activityName"], ["asc"])
+  const activityData = data
   let expandedInitial = []
   activityData.forEach((activity, index) => {
     expandedInitial[index] = false

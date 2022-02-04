@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
+import { sortBy } from "lodash"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import {
@@ -44,29 +45,39 @@ const useStyles = makeStyles(theme => ({
   appBarOffset: theme.mixins.toolbar,
 }))
 
-
 const loadAdvisories = async (apiBaseUrl, orcs) => {
   const params = {
     "protectedAreas.orcs_in": orcs,
-    "_limit": 100,
-    "_sort": "urgency.sequence:DESC"
+    _limit: 100,
+    _sort: "urgency.sequence:DESC",
   }
 
   return axios.get(`${apiBaseUrl}/public-advisories`, { params })
 }
 
-
 export default function ParkTemplate({ data }) {
   const classes = useStyles()
 
-  const apiBaseUrl = data.site.siteMetadata.apiURL;
+  const apiBaseUrl = data.site.siteMetadata.apiURL
 
   const park = data.strapiProtectedArea
   const photos = data.allStrapiParkPhoto.nodes
   const operations = data.allStrapiParkOperation.nodes
 
-  const activeActivities = park.parkActivities.filter(activity => activity.isActive)
-  const activeFacilities = park.parkFacilities.filter(facility => facility.isActive)
+  const activeActivities = sortBy(
+    park.parkActivities.filter(
+      activity => activity.isActive && activity.activityType.isActive
+    ),
+    ["activityType.rank", "activityType.activityName"],
+    ["asc"]
+  )
+  const activeFacilities = sortBy(
+    park.parkFacilities.filter(
+      facility => facility.isActive && facility.facilityType.isActive
+    ),
+    ["facilityType.rank", "facilityType.facilityName"],
+    ["asc"]
+  )
 
   const hasReservations = operations.some(op => op.hasReservations)
   const hasCamping = activeFacilities.some(facility =>
@@ -82,18 +93,19 @@ export default function ParkTemplate({ data }) {
   useEffect(() => {
     setIsLoadingAdvisories(true)
 
-    loadAdvisories(apiBaseUrl, park.orcs).then(response => {
-      if (response.status === 200) {
-        setAdvisories([...response.data])
-        setAdvisoryLoadError(false)
-      } else {
-        setAdvisories([])
-        setAdvisoryLoadError(true)
-      }
-    }).finally(() => {
-      setIsLoadingAdvisories(false)
-    })
-
+    loadAdvisories(apiBaseUrl, park.orcs)
+      .then(response => {
+        if (response.status === 200) {
+          setAdvisories([...response.data])
+          setAdvisoryLoadError(false)
+        } else {
+          setAdvisories([])
+          setAdvisoryLoadError(true)
+        }
+      })
+      .finally(() => {
+        setIsLoadingAdvisories(false)
+      })
   }, [apiBaseUrl, park.orcs])
 
   const parkOverviewRef = useRef("")
@@ -134,7 +146,10 @@ export default function ParkTemplate({ data }) {
       visible: park.accessibility,
     },
     {
-      text: (!isLoadingAdvisories && !advisoryLoadError) ? `Alerts (${advisories.length})` : "Alerts",
+      text:
+        !isLoadingAdvisories && !advisoryLoadError
+          ? `Alerts (${advisories.length})`
+          : "Alerts",
       url: "park-advisory-details-container",
       visible: true,
     },
@@ -217,7 +232,12 @@ export default function ParkTemplate({ data }) {
               </Breadcrumbs>
             </Grid>
             <Grid item xs={12} sm={12}>
-              <ParkHeader park={park} menu={menuItems} hasReservations={hasReservations} advisories={advisories} />
+              <ParkHeader
+                park={park}
+                menu={menuItems}
+                hasReservations={hasReservations}
+                advisories={advisories}
+              />
             </Grid>
             <Grid item xs={12} sm={12}>
               <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
@@ -265,8 +285,9 @@ export default function ParkTemplate({ data }) {
                     )}
                     {!isLoadingAdvisories && advisoryLoadError && (
                       <div className="alert alert-danger" role="alert">
-                      An error occurred while loading current public advisories.
-                    </div>
+                        An error occurred while loading current public
+                        advisories.
+                      </div>
                     )}
                     {!isLoadingAdvisories && !advisoryLoadError && (
                       <AdvisoryDetails advisories={advisories} />
@@ -329,8 +350,8 @@ export default function ParkTemplate({ data }) {
 }
 
 export const query = graphql`
-  query ProtectedAreaDetails ($orcs: Int) {
-    strapiProtectedArea(orcs: {eq: $orcs}) {
+  query ProtectedAreaDetails($orcs: Int) {
+    strapiProtectedArea(orcs: { eq: $orcs }) {
       protectedAreaName
       description
       status
@@ -353,8 +374,10 @@ export const query = graphql`
         activityType {
           activityName
           activityCode
+          isActive
           icon
           iconNA
+          rank
         }
       }
       parkFacilities {
@@ -364,19 +387,25 @@ export const query = graphql`
         facilityType {
           facilityName
           facilityCode
+          isActive
           icon
           iconNA
+          rank
         }
       }
     }
-    allStrapiParkOperation(filter: {orcs: {eq: $orcs}, isActive: {eq: true}}) {
+    allStrapiParkOperation(
+      filter: { orcs: { eq: $orcs }, isActive: { eq: true } }
+    ) {
       nodes {
         orcs
         isActive
         hasReservations
       }
     }
-    allStrapiParkPhoto(filter: {orcs: {eq: $orcs}, isActive: {eq: true}}) {
+    allStrapiParkPhoto(
+      filter: { orcs: { eq: $orcs }, isActive: { eq: true } }
+    ) {
       nodes {
         orcs
         isActive
