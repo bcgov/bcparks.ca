@@ -349,3 +349,27 @@ body {
     padding: 0px !important;
   }
 }
+
+.park-photo {
+  height: 400px;
+  overflow: hidden; 
+  position: relative;
+
+  img {
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    max-width: none;
+    object-fit: cover;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  &--small {
+    height: 196px;
+  }
+}
