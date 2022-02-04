@@ -1,5 +1,6 @@
 import React, { useState } from "react"
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"
+import { parseJSON, format } from "date-fns"
 import {
   Box,
   Button,
@@ -30,6 +31,11 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+
+const formatDate = (isoDate) => {
+  return isoDate ? format(parseJSON(isoDate), "MMMM dd, yyyy") : ""
+}
+
 export default function AdvisoryDetails({ advisories }) {
   const classes = useStyles()
 
@@ -54,9 +60,10 @@ export default function AdvisoryDetails({ advisories }) {
     setExpandeds(expandeds)
   }
 
-  const advisoriesWithIcons = advisories.map(advisory => {
+  const advisoriesWithFormatting = advisories.map(advisory => {
     let alertIcon
     let alertColorCss
+
     switch (advisory.urgency.color) {
       case "blue":
         alertIcon = blueAlertIcon
@@ -76,7 +83,12 @@ export default function AdvisoryDetails({ advisories }) {
     }
 
     return {
-      alertIcon, alertColorCss, ...advisory
+      alertIcon,
+      alertColorCss,  
+      formattedAdvisoryDate: formatDate(advisory.advisoryDate),
+      formattedEffectiveDate: formatDate(advisory.effectiveDate),
+      formattedEndDate: formatDate(advisory.endDate),
+      ...advisory
     }
   })
 
@@ -119,7 +131,7 @@ export default function AdvisoryDetails({ advisories }) {
         )}
         {advisories.length > 0 && (
           <Grid container spacing={1}>
-            {advisoriesWithIcons.map((advisory, index) => (
+            {advisoriesWithFormatting.map((advisory, index) => (
               <Grid key={advisory.id} item xs={12}>
                 <Accordion
                   className={advisory.alertColorCss}
@@ -146,25 +158,25 @@ export default function AdvisoryDetails({ advisories }) {
                     <div className="advisory-content">
                       <HtmlContent>{advisory.description}</HtmlContent>
                       {advisory.isEffectiveDateDisplayed &&
-                        advisory.effectiveDate && (
+                        advisory.formattedEffectiveDate && (
                           <>
                             <br />
                             <p>
-                              In effect {advisory.effectiveDate}
-                              {advisory.isEndDateDisplayed && advisory.endDate && (
+                              In effect {advisory.formattedEffectiveDate}
+                              {advisory.isEndDateDisplayed && advisory.formattedEndDate && (
                                 <>
                                   {" to "}
-                                  {advisory.endDate}
+                                  {advisory.formattedEndDate}
                                 </>
                               )}
                             </p>
                           </>
                         )}
                       {advisory.isAdvisoryDateDisplayed &&
-                        advisory.advisoryDate && (
+                        advisory.formattedAdvisoryDate && (
                           <>
                             <br />
-                            <p>Posted {advisory.advisoryDate}</p>
+                            <p>Posted {advisory.formattedAdvisoryDate}</p>
                           </>
                         )}
                       <br />
