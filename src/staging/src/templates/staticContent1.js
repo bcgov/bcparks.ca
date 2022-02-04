@@ -2,10 +2,11 @@ import React, { useRef } from "react"
 import { graphql, useStaticQuery, Link } from "gatsby"
 import Header from "../components/header"
 import Footer from "../components/footer"
+import Seo from "../components/seo"
+import HTMLArea from "../components/HTMLArea"
 import PageMenu from "../components/pageContent/pageMenu"
-import PageHeader from "../components/pageContent/pageHeader"
 import PageContent from "../components/pageContent/pageContent"
-import { Container, Breadcrumbs } from "@material-ui/core"
+import { Breadcrumbs } from "@material-ui/core"
 import useScrollSpy from "react-use-scrollspy"
 
 import "../styles/staticContent1.scss"
@@ -60,21 +61,33 @@ export default function StaticContent1({ pageContext }) {
   const meta = pageContext?.page?.Content.find(c => Boolean(c.strapi_component === 'parks.seo')) || {}
   const menuContent = queryData?.allStrapiMenus?.nodes || [] // megaMenu
 
-  console.log(pageContent)
+  // look for PageHeader content
+  // if it exists, will affect the layout of the top of the page
+  // note that it does not matter what position the component is in, it will appear at the top
+  // note that if there are more than one such component, it will pick the first
+  const headerContent = pageContext?.page?.Content.find(c => Boolean(c.strapi_component === 'parks.page-header')) || {}
+  const hasPageHeader = (headerContent.PageTitle !== undefined)
 
-  // get page title, using same method as renderBreadcrumbs
-  // this assume the page is in the menu, use metaTitle from SEO otherwise
-  let slug = pageContext?.page?.Slug
-  let current = menuContent.find(mc => mc.url === slug)
-  let pageTitle = current ? current.title : meta.metaTitle;
+  // Get page title from record
+  // if not there, get from page title, if there is a PageHeader compopnent
+  // otherwise, page title & breadcrumb assumed to be in the content
+  let pageTitle = pageContext.page.title
+  if (!pageTitle) {
+    pageTitle = headerContent.PageTitle
+  }
+  const hasTitle = (pageTitle !== undefined)
 
+  const sections = pageContent.filter(c => Boolean(c.strapi_component === 'parks.page-section')) || []
+  const hasSections = (sections.length > 0)
 
   // create page sections for sticky sidebar menu
   // and scrollspy highlighting
-  let pageSections = [{ display: pageTitle, sectionIndex: 0, id: 0, link: "#" }];
+
   let sectionRefs = [
     // Creating 10 refs for scrollspy
     // TODO create dynamically without causing error
+    // these are created whether or not there are sections
+    // as useRef cannot be used conditionally
     useRef(null),
     useRef(null),
     useRef(null),
@@ -86,52 +99,100 @@ export default function StaticContent1({ pageContext }) {
     useRef(null),
     useRef(null),
   ]
-    
-  let sectionIndex = 0
-  for (var cIdx in pageContent) {
-    var c = pageContent[cIdx];
-    sectionIndex += 1;    
-    if (c.strapi_component === 'parks.page-section') {
-      // each section needs an index to be used for in-page navigation
-      // and scrollspy highlighting
-      c.sectionIndex = sectionIndex;
-      pageSections.push({ display: c.SectionTitle, sectionIndex: sectionIndex, id: c.id, link: "#page-section-" + c.id })
+  
+  let pageSections = []
+  if (hasSections) {
+    let firstSectionTitle = pageTitle
+    if (!firstSectionTitle) {
+      // get page title, using same method as renderBreadcrumbs
+      // this assume the page is in the menu, use metaTitle from SEO otherwise
+      const slug = pageContext?.page?.Slug
+      const current = menuContent.find(mc => mc.url === slug)
+      firstSectionTitle = current ? current.title : meta.metaTitle;
+    }
+    pageSections = [{ display: firstSectionTitle, sectionIndex: 0, id: 0, link: "#" }];
 
-    } 
+    let sectionIndex = 0
+    for (var cIdx in pageContent) {
+      var c = pageContent[cIdx];
+      sectionIndex += 1;
+      if (c.strapi_component === 'parks.page-section') {
+        // each section needs an index to be used for in-page navigation
+        // and scrollspy highlighting
+        c.sectionIndex = sectionIndex;
+        pageSections.push({ display: c.SectionTitle, sectionIndex: sectionIndex, id: c.id, link: "#page-section-" + c.id })
+
+      }
+    }
   }
 
   // activeSection will be the index of the on-screen section
+  // this is setup whether or not there are sections, 
+  // as useScrollSpy cannot be used conditionally
   const activeSection = useScrollSpy({ 
     sectionElementRefs: sectionRefs,
     defaultValue: 0,
     offsetPx: -180,
   })
 
-  
 
   
   return (
     <>
-      <Container id="header" className="max-width-override" fixed disableGutters>
-        <Header mode="internal" ref={sectionRefs[0]} content={menuContent} />
-      </Container>
-      <Container className="d-none d-md-block static-content-width content" fixed>
+      <Seo title={meta.metaTitle} description={meta.description} keywords={meta.metaKeywords} />
+      <div className="max-width-override" ref={sectionRefs[0]}>
+        <Header mode="internal" content={menuContent} />
+      </div>
+      <div className="d-none d-md-block static-content-container page-breadcrumbs">
         <Breadcrumbs   
             separator="›"
             aria-label="breadcrumb"
           >
             {renderBreadcrumbs(menuContent, pageContext?.page)}
         </Breadcrumbs>
-      </Container>
-      <PageHeader pageSections={pageSections} activeSection={activeSection}></PageHeader>
-      <Container className="static-content-width content" fixed>
+      </div>
+      { hasTitle &&
+        <div className="static-content--header">
+            <div className="header-title header-title--desktop d-none d-md-block">
+                {pageTitle}
+            </div>
+                {headerContent.ImageUrl && <div className="header-image-wrapper">
+                    <img src={headerContent.ImageUrl} alt={headerContent.ImageAlt ?? null} />
+                </div>}
+            <div className="header-title header-title--mobile d-block d-md-none">
+                {pageTitle}
+            </div>
+        </div>
+
+      }
+      {hasSections &&
+        <div className="page-menu--mobile">
+          <div className="d-block d-md-none">
+            <PageMenu pageSections={pageSections} activeSection={activeSection} menuStyle="select" />
+          </div>
+        </div>
+      }
+      <div className="static-content-container">
         <div className="page-content-wrapper">
-          {pageSections.length > 1 ? (
+          {hasSections ? (
             <div className="row">
-              <div className="page-content-menu col-md-3 col-12">
-                <PageMenu pageSections={pageSections} activeSection={activeSection} />
+              <div className="page-menu--desktop col-md-3 col-12 d-none d-md-block">
+                <div className="">
+                  <PageMenu pageSections={pageSections} activeSection={activeSection} menuStyle="nav" />
+                </div>
               </div>
-              <div className="page-content col-md-8 col-12">
+              <div className="page-content col-md-9 col-12">
+               
+                {hasPageHeader &&
+                  <div className="header-content">
+                    <div className="page-header--caption">
+                        { headerContent.ImageCaption }
+                    </div>
+                    <HTMLArea isVisible>
+                      {headerContent.IntroHtml}
+                    </HTMLArea>
+                  </div>
+                }
                 {pageContent.map(content =>
                   <div ref={ sectionRefs[content.sectionIndex]} key={content.strapi_component + '-' + content.id}>
                     <PageContent contentType={content.strapi_component} content={content}></PageContent>
@@ -140,15 +201,24 @@ export default function StaticContent1({ pageContext }) {
               </div>
             </div>
           ) : (
-            <div>{pageContent.map(content => <PageContent contentType={content.strapi_component} content={content} key={content.strapi_component + '-' + content.id}></PageContent>)}</div>
+              <div>
+                {hasPageHeader &&
+                  <div className="header-content">
+                    <HTMLArea isVisible>
+                      {headerContent.IntroHtml}
+                    </HTMLArea>
+                  </div>
+                }
+                {pageContent.map(content => <PageContent contentType={content.strapi_component} content={content} key={content.strapi_component + '-' + content.id}></PageContent>)}
+              </div>
           )}
         </div>
-      </Container>
-      <Container className="max-width-override" fixed disableGutters>
+      </div>
+      <div className="max-width-override">
         <Footer>
           {queryData.strapiWebsites.Footer}
         </Footer>
-      </Container>
+      </div>
     </>
   )
 }

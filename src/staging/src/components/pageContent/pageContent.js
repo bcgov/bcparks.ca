@@ -1,8 +1,9 @@
 
 import React from "react"
-import HTMLArea from "../htmlArea"
-import PageSection from "../pageContent/pageSection"
+
 import LinkCard from "./linkCard"
+import PageSection from "../pageContent/pageSection"
+import HTMLArea from "../HTMLArea"
 
 /*
  * PageContent is a generic switch for different strapi content types.
@@ -21,6 +22,7 @@ export default function PageContent({ contentType, content }) {
         return null
     }
 
+<<<<<<< HEAD
     if (contentType === "parks.link-card") {
       return (
         <LinkCard
@@ -31,11 +33,21 @@ export default function PageContent({ contentType, content }) {
         ></LinkCard>
       )
     }
+=======
+>>>>>>> 2ce2e1a (BRS-384 Static page update, new page components)
     if (contentType === "parks.html-area") {
         return <HTMLArea isVisible={true}>{content.HTML}</HTMLArea>
     }
     if (contentType === "parks.page-section") {
         return <PageSection sectionTitle={content.SectionTitle} sectionId={content.id} sectionHtml={content.SectionHTML} />
     }
+<<<<<<< HEAD
   return null
 }
+=======
+
+    return null
+
+
+}
+>>>>>>> 2ce2e1a (BRS-384 Static page update, new page components)

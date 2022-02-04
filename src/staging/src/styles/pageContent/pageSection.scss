@@ -1,0 +1,21 @@
+@import '../variables.scss';
+
+.page-section {
+    margin-top:80px;
+}
+
+.page-section-title {
+  font-size: 1.5rem;
+    color: $colorLink;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+.page-section-hr {
+    > hr {
+      margin-top: 5px;
+      height: 1px;
+      background-color: $colorGoldPrimary;
+      width: 75px;
+      display: inline-block;
+    }
+}

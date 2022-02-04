@@ -1,27 +1,52 @@
 
-import React, { useState, useEffect } from "react"
+import React from "react"
 
-import "../../styles/pageContent/pageContent.scss"
+import "../../styles/pageContent/pageMenu.scss"
 
-export default function PageMenu({ pageSections, activeSection })
+export default function PageMenu({ pageSections, activeSection, menuStyle })
 {
-console.log(pageSections)
 
-    return (
-        <>
-        <div className="d-none d-md-block">
-            <div className="sticky-top">
-                <nav className="navbar">
-                    <nav id="section-navbar" className="nav nav-pills">
-                        {pageSections.map(section =>
+    if (menuStyle === "nav") {
+        return (
+            <nav className="navbar">
+                <nav id="section-navbar" className="nav">
+                    {pageSections.map(section =>
                         <a className="nav-link"
-                            active-section={ activeSection === section.sectionIndex ? 'true' : 'false' }
+                            active-section={activeSection === section.sectionIndex ? 'true' : 'false'}
                             key={section.id} href={section.link}>{section.display}</a>
-                            )}
-                    </nav>
+                    )}
                 </nav>
-            </div>
-        </div>    
-    </>
-  )
+            </nav>
+        )
+    }
+
+    if (menuStyle === "select") {
+
+        let sectionIndex = activeSection
+        const handleSectionChange = (e) => { 
+            let index = e.target.value
+            console.log(index)
+            let s = pageSections.find(c => (c.sectionIndex === Number(index)))
+            console.log(s)
+            let link = s.link
+            window.location.hash = link
+            
+        }
+
+        return(
+            <select className="section-select"
+                value={sectionIndex}
+                onChange={handleSectionChange}>
+                <option value={0}>Table of Contents</option>
+                {pageSections.map(section => section.sectionIndex > 0 &&
+                    <option key={section.sectionIndex} value={section.sectionIndex}>
+                        {section.display}
+                    </option>
+                )}
+            </select>
+        )
+    }
+
+    return null
+
 }
