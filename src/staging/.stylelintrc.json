@@ -1,0 +1,7 @@
+{
+    "extends": "stylelint-config-standard-scss",
+    "rules": {
+        "selector-class-pattern": "^[a-zA-Z][a-zA-Z0-9-_]*$",
+        "scss/dollar-variable-pattern": "^[a-zA-Z][a-zA-Z0-9-_]*$"
+    }
+  }

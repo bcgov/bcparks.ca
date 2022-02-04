@@ -1,78 +1,122 @@
 import React from "react"
-import { graphql, useStaticQuery } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
 import Seo from "../components/seo"
 import Header from "../components/header"
 import Footer from "../components/footer"
-import Zone from "../components/zone"
-import { Container, CssBaseline } from "@material-ui/core"
+import MainSearch from "../components/search/mainSearch"
+import PageContent from "../components/pageContent/pageContent"
+import { CssBaseline } from "@material-ui/core"
+import "../styles/global.scss"
 import "../styles/staticLanding1.scss"
 
-export default function StaticLanding1({ data, pageContext }) {
+const LandingPage = ({ pageContext }) => {
   const queryData = useStaticQuery(graphql`
-  {
-    strapiWebsites(Name: { eq: "BCParks.ca" }) {
-      Footer
-      Header
-      Name
-      Navigation
-      id
-      homepage {
+    {
+      strapiWebsites(Name: { eq: "BCParks.ca" }) {
+        Footer
+        Header
+        Name
+        Navigation
         id
-        Template
-        Content {
+        homepage {
           id
-          strapi_component
-          HTML
+          Template
+          Content {
+            id
+            strapi_component
+            HTML
+          }
         }
       }
-    }
-    allStrapiMenus(
-      sort: { fields: order, order: ASC }
-      filter: { show: { eq: true } }
-    ) {
-      nodes {
-        strapiId
-        title
-        url
-        order
-        id
-        strapiChildren {
-          id
+      allStrapiMenus(
+        sort: { fields: order, order: ASC }
+        filter: { show: { eq: true } }
+      ) {
+        nodes {
+          strapiId
           title
           url
           order
-          parent
-        }
-        strapiParent {
           id
-          title
+          strapiChildren {
+            id
+            title
+            url
+            order
+            parent
+          }
+          strapiParent {
+            id
+            title
+          }
         }
       }
     }
-  }
   `)
-
-  const zonesContent = pageContext?.page?.Content?.filter(c => Boolean(c.HTML))
-  const meta = pageContext?.page?.Content.find(c => Boolean(c.metaTitle)) || {}
   const menuContent = queryData?.allStrapiMenus?.nodes || []
+  const { page } = pageContext
+  const components = page?.Content || []
+  const meta =
+    components.find(component => component.strapi_component === "parks.seo") ||
+    {}
+  const introContent = components.slice(0, 1)
+  const linkContent = components.slice(1)
 
   return (
     <>
-      <Seo title={meta.metaTitle} description={meta.description} keywords={meta.metaKeywords} />
+      <Seo
+        title={meta.metaTitle}
+        description={meta.description}
+        keywords={meta.metaKeywords}
+      />
       <CssBaseline />
-      <Container id="content" className="max-width-override" fixed disableGutters>
-        <Header mode="internal" content={menuContent} />
-      </Container>
-      <Container className="content-width-override" fixed disableGutters>
-        <div id="main">
-          {zonesContent.map(content => <Zone key={content.id} zoneID={`Zone${content.id}`} Content={content} />)}
+      <Header mode="internal" content={menuContent} />
+      {linkContent.length > 0 && (
+        <div id="intro-content" className="bcp-landing-intro">
+          {introContent.map(content => (
+            <PageContent
+              key={content.id}
+              contentType={content.strapi_component}
+              content={content}
+            />
+          ))}
         </div>
-      </Container>
-      <Container className="max-width-override" fixed disableGutters>
-        <Footer>
-          {queryData.strapiWebsites.Footer}
-        </Footer>
-      </Container>
+      )}
+      {linkContent.length > 0 && (
+        <div id="link-content" className="bcp-landing-links">
+          <div className="container">
+            {linkContent.map(content => (
+              <div key={content.id} className="row">
+                <div className="col">
+                  <PageContent
+                    contentType={content.strapi_component}
+                    content={content}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      <div className="bcp-landing-park-search d-none d-lg-block">
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <StaticImage
+                src="../images/landing/footer-find-your-next-adventure.png"
+                alt="Two hikers filming in a BC Park"
+              />
+            </div>
+            <div className="col">
+              <MainSearch />
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer>{queryData.strapiWebsites.Footer}</Footer>
     </>
   )
 }
+
+export default LandingPage

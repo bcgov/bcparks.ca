@@ -30,7 +30,7 @@ const MainSearch = () => {
         <TextField
           id="park-search-text"
           variant="outlined"
-          placeholder="Plan your next adventure by searching for campsites and day use areas"
+          placeholder="Search by park name or campsite"
           className="park-search-text-box h50p"
           value={searchText}
           onChange={event => {
