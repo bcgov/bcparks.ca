@@ -16,31 +16,16 @@ import Spacer from "./spacer"
 export default function CampingDetails({ data }) {
   const campingFacilities = data.parkFacilities.filter(facility =>
     facility.facilityType.facilityName.toLowerCase().includes("camping")
-  )
-
-  let expandedInitial = []
-  campingFacilities.forEach((camping, index) => {
-    expandedInitial[index] = false
-  })
-
-  // const [allExpanded, setAllExpanded] = useState(false)
-  const [expanded, setExpanded] = useState(expandedInitial)
+  ) 
+  const [reservationsExpanded, setReservationsExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(Array(campingFacilities.length).fill(false))
 
   if (campingFacilities.length === 0) return null
 
-  const handleChange = id => (event, isExpanded) => {
-    expanded[id] = isExpanded
+  const toggleExpand = index => (event, isExpanded) => {
+    expanded[index] = isExpanded
     setExpanded([...expanded])
   }
-
-  // const expandAll = isAllExpanded => {
-  //   let expanded = []
-  //   expanded[0] = isAllExpanded
-  //   campingFacilities.forEach((camping, index) => {
-  //     expanded[index + 1] = isAllExpanded
-  //   })
-  //   setExpanded(expanded)
-  // }
 
   return (
     <Grid
@@ -89,35 +74,12 @@ export default function CampingDetails({ data }) {
         </Grid>
         {campingFacilities.length > 0 && (
           <div id="park-camping-list-container" className="anchor-link">
-            {/* <Grid
-              container
-              item
-              xs={12}
-              spacing={0}
-              direction="row"
-              alignItems="center"
-              justifyContent="flex-end"
-            >
-              <Box m={2}>
-                {campingFacilities.length > 1 && (
-                  <Button
-                    color="primary"
-                    onClick={() => {
-                      expandAll(!allExpanded)
-                      setAllExpanded(!allExpanded)
-                    }}
-                  >
-                    {allExpanded ? "[collapse all]" : "[expand all]"}
-                  </Button>
-                )}
-              </Box>
-            </Grid> */}
             <Grid container spacing={2}>
               {data.reservations && (
                 <Grid key="reservation" item xs={12}>
                   <Accordion
-                    expanded={expanded[0]}
-                    onChange={handleChange(0)}
+                    expanded={reservationsExpanded}
+                    onChange={() => setReservationsExpanded(!reservationsExpanded)}
                     className="park-details-shaded"
                   >
                     <AccordionSummary
@@ -137,7 +99,7 @@ export default function CampingDetails({ data }) {
                 <Grid key={index} item xs={12}>
                   <Accordion
                     expanded={expanded[index]}
-                    onChange={handleChange(index)}
+                    onChange={toggleExpand(index)}
                   >
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}
