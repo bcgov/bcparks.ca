@@ -24,6 +24,7 @@ import ParkMapDetails from "../components/park/parkMapDetails"
 import MapLocation from "../components/park/mapLocation"
 import ParkMenu from "../components/park/parkMenu"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
+import SafetyInfo from "../components/park/safetyInfo"
 import ScrollToTop from "../components/scrollToTop"
 import { makeStyles } from "@material-ui/core/styles"
 import Header from "../components/header"
@@ -112,6 +113,7 @@ export default function ParkTemplate({ data }) {
   const parkOverviewRef = useRef("")
   const accessibilityRef = useRef("")
   const advisoryRef = useRef("")
+  const safetyRef = useRef("")
   const campingRef = useRef("")
   const facilityRef = useRef("")
   const activityRef = useRef("")
@@ -155,6 +157,11 @@ export default function ParkTemplate({ data }) {
       visible: true,
     },
     {
+      text: "Safety info",
+      url: "park-safety-info-container",
+      visible: true,
+    },
+    {
       text: "Camping",
       url: "park-camping-details-container",
       visible: hasCamping,
@@ -178,7 +185,7 @@ export default function ParkTemplate({ data }) {
     {
       text: "Learn about this park",
       url: "park-about-container",
-      visible: park.parkContact,
+      visible: true,
     },
     {
       text: "Reconciliation with Indigenous peoples",
@@ -296,6 +303,11 @@ export default function ParkTemplate({ data }) {
                   </div>
                 )}
                 {menuItems[3].visible && (
+                  <div ref={safetyRef} className="full-width">
+                    <SafetyInfo park={park} />
+                  </div>
+                )}
+                {menuItems[4].visible && (
                   <div ref={campingRef} className="full-width">
                     <CampingDetails
                       data={{
@@ -307,39 +319,43 @@ export default function ParkTemplate({ data }) {
                     />
                   </div>
                 )}
-                {menuItems[4].visible && (
+                {menuItems[5].visible && (
                   <div ref={facilityRef} className="full-width">
                     <ParkFacility data={activeFacilities} />
                   </div>
                 )}
-                {menuItems[5].visible && (
+                {menuItems[6].visible && (
                   <div ref={activityRef} className="full-width">
                     <ParkActivity data={activeActivities} />
                   </div>
                 )}
-                {menuItems[6].visible && (
+                {menuItems[7].visible && (
                   <div ref={mapRef} className="full-width">
                     <MapLocation data={mapData} />
                     {park.locationNotes && (
                       <Grid item xs={12} id="park-location-notes-container">
                         <Box mb={8}>
-                          <div dangerouslySetInnerHTML={{__html: park.locationNotes}}></div>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: park.locationNotes,
+                            }}
+                          ></div>
                         </Box>
                       </Grid>
                     )}
                   </div>
                 )}
-                {menuItems[7].visible && (
+                {menuItems[8].visible && (
                   <div ref={activityMapRef} className="full-width">
                     <ParkMapDetails data={park.maps} />
                   </div>
                 )}
-                {menuItems[8].visible && (
+                {menuItems[9].visible && (
                   <div ref={aboutRef} className="full-width">
-                    <About data={park.parkContact} />
+                    <About park={park} />
                   </div>
                 )}
-                {menuItems[9].visible && (
+                {menuItems[10].visible && (
                   <div ref={reconciliationRef} className="full-width">
                     <Reconciliation data={park.reconciliationNotes} />
                   </div>
@@ -370,12 +386,17 @@ export const query = graphql`
       hasDayUsePass
       locationNotes
       reconciliationNotes
+      safetyInfo
+      specialNotes
       parkContact
+      natureAndCulture
       reservations
       maps
       latitude
       longitude
       mapZoom
+      totalArea
+      establishedDate
       parkActivities {
         isActive
         isActivityOpen
