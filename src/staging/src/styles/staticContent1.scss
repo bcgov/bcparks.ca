@@ -93,6 +93,12 @@ $colorComponent: #606060;
     margin-bottom:60px;
 
 }
+.page-content-wrapper {
+    
+    .page-content {
+        position: relative;
+    }
+}
 
 /* Note most/all of the following is for backwards compat for older content */
 

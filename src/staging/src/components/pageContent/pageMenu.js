@@ -25,9 +25,7 @@ export default function PageMenu({ pageSections, activeSection, menuStyle })
         let sectionIndex = activeSection
         const handleSectionChange = (e) => { 
             let index = e.target.value
-            console.log(index)
             let s = pageSections.find(c => (c.sectionIndex === Number(index)))
-            console.log(s)
             let link = s.link
             window.location.hash = link
             

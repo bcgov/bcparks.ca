@@ -7,26 +7,11 @@
   },
   "options": {},
   "attributes": {
-    "SectionTitle": {
+    "sectionTitle": {
       "type": "string"
     },
-    "SectionHTML": {
+    "sectionHTML": {
       "type": "richtext"
-    },
-    "IncludeImage": {
-      "type": "boolean"
-    },
-    "SectionImage": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ],
-      "plugin": "upload",
-      "required": false,
-      "pluginOptions": {}
     }
   }
 }

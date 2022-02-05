@@ -66,14 +66,14 @@ export default function StaticContent1({ pageContext }) {
   // note that it does not matter what position the component is in, it will appear at the top
   // note that if there are more than one such component, it will pick the first
   const headerContent = pageContext?.page?.Content.find(c => Boolean(c.strapi_component === 'parks.page-header')) || {}
-  const hasPageHeader = (headerContent.PageTitle !== undefined)
+  const hasPageHeader = (headerContent.pageTitle !== undefined)
 
   // Get page title from record
   // if not there, get from page title, if there is a PageHeader compopnent
   // otherwise, page title & breadcrumb assumed to be in the content
   let pageTitle = pageContext.page.title
   if (!pageTitle) {
-    pageTitle = headerContent.PageTitle
+    pageTitle = headerContent.pageTitle
   }
   const hasTitle = (pageTitle !== undefined)
 
@@ -113,8 +113,7 @@ export default function StaticContent1({ pageContext }) {
     pageSections = [{ display: firstSectionTitle, sectionIndex: 0, id: 0, link: "#" }];
 
     let sectionIndex = 0
-    for (var cIdx in pageContent) {
-      var c = pageContent[cIdx];
+    for (const c of pageContent){
       sectionIndex += 1;
       if (c.strapi_component === 'parks.page-section') {
         // each section needs an index to be used for in-page navigation
@@ -156,8 +155,8 @@ export default function StaticContent1({ pageContext }) {
             <div className="header-title header-title--desktop d-none d-md-block">
                 {pageTitle}
             </div>
-                {headerContent.ImageUrl && <div className="header-image-wrapper">
-                    <img src={headerContent.ImageUrl} alt={headerContent.ImageAlt ?? null} />
+                {headerContent.imageUrl && <div className="header-image-wrapper">
+                    <img src={headerContent.imageUrl} alt={headerContent.imageAlt ?? null} />
                 </div>}
             <div className="header-title header-title--mobile d-block d-md-none">
                 {pageTitle}
@@ -186,10 +185,10 @@ export default function StaticContent1({ pageContext }) {
                 {hasPageHeader &&
                   <div className="header-content">
                     <div className="page-header--caption">
-                        { headerContent.ImageCaption }
+                        { headerContent.imageCaption }
                     </div>
                     <HTMLArea isVisible>
-                      {headerContent.IntroHtml}
+                      {headerContent.introHtml}
                     </HTMLArea>
                   </div>
                 }
@@ -205,7 +204,7 @@ export default function StaticContent1({ pageContext }) {
                 {hasPageHeader &&
                   <div className="header-content">
                     <HTMLArea isVisible>
-                      {headerContent.IntroHtml}
+                      {headerContent.introHtml}
                     </HTMLArea>
                   </div>
                 }

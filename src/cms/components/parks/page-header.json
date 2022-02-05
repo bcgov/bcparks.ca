@@ -7,19 +7,19 @@
   },
   "options": {},
   "attributes": {
-    "PageTitle": {
+    "pageTitle": {
       "type": "string"
     },
-    "ImageUrl": {
+    "imageUrl": {
       "type": "string"
     },
-    "ImageAlt": {
+    "imageAlt": {
       "type": "string"
     },
-    "ImageCaption": {
+    "imageCaption": {
       "type": "text"
     },
-    "IntroHtml": {
+    "introHtml": {
       "type": "richtext"
     }
   }
