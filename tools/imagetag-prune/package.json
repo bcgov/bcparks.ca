@@ -1,0 +1,15 @@
+{
+  "name": "imagetag-prune",
+  "description": "Utility to help prune older image tags in OpenShift namespace",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "phin": "^3.6.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bcgov/bcparks.ca"
+  }
+}
