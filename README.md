@@ -33,13 +33,11 @@ Miscellaneous Global Styles - Avoid using classes in CMS content that are define
 
 --- Non-CMS Content:
 
-React component styling - For elements that are specific to component views, consider defining those style rules within the component files themselves using React methods. This will keep the scope of component styles within the components, as opposed to in global stylesheets where naming and rule conflicts are more likely.
+React component styling - For elements that are specific to component views, define those styles in component-specific scss files, and use nested defnitions to give styles for subelements a narrow scope. Avoid putting component-specific styles in global stylesheets where naming and rule conflicts are more likely.
 
 Use Bootstrap Components - Use Bootstrap component libraries where possible, and replace MUI components with Bootstrap equivalents as you work, ultimately removing MUI altogether. 
 
 Use Bootstrap Classes - When appropriate, and when it aids in readability. In particular, use Bootstrap for responsive layout.
-
-One-Off Styles - For styles within React components that need extra styling (and not easily accomplished with Bootstrap classes) consider adding the style directly e.g. style={{ minWidth: '300px}} instead of cluttering style definitions in the component file, or (even worse) a global stylesheet.
 
 Page Styling - For styling that is specific to different pages (e.g. home, alerts) or page templates (e.g. staticLanding) keep styles within scss files that are specific to, and only loaded by, those pages and templates.
 
