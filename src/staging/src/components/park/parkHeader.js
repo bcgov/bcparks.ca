@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
+import PropTypes from "prop-types";
 import {
   Grid,
   Button,
@@ -16,9 +17,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore"
 
 import { navigate } from "gatsby"
 
-export default function ParkHeader({ data }) {
-  const { advisories, parkAccessStatus, park, menu, parkOperation } = data
-
+export default function ParkHeader({ park, menu, hasReservations, advisories }) {
   const menuItems = useRef([...menu])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
@@ -54,7 +53,7 @@ export default function ParkHeader({ data }) {
           <div className="flex-display p10t">
             <Grid item xs={12} sm={12} md={12} lg={7}>
               <>
-                {parkOperation.hasReservations && (
+                {hasReservations && (
                   <Button
                     className="yellow-button"
                     href="https://discovercamping.ca/"
@@ -65,7 +64,7 @@ export default function ParkHeader({ data }) {
                 {park.hasDayUsePass === "true" && (
                   <Button
                     className={
-                      parkOperation.hasReservations
+                      hasReservations
                         ? "blue-button ml10"
                         : "blue-button"
                     }
@@ -86,10 +85,10 @@ export default function ParkHeader({ data }) {
               className="park-info-header-flex"
             >
               <div className="park-info-header park-access">
-                <ParkAccessStatus data={parkAccessStatus.accessStatus} />
+                <ParkAccessStatus advisories={advisories} />
               </div>
               <div className="park-info-header ml-auto park-access">
-                <Advisory data={advisories} />
+                <Advisory advisories={advisories} />
               </div>
             </Grid>
           </div>
@@ -97,15 +96,15 @@ export default function ParkHeader({ data }) {
         <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
           <Grid item xs={12} sm={12} md={12} className="park-info-header-flex">
             <div className="park-info-header">
-              <ParkAccessStatus data={parkAccessStatus.accessStatus} />
+              <ParkAccessStatus advisories={advisories} />
             </div>
             <div className="park-info-header">
-              <Advisory data={advisories} />
+              <Advisory advisories={advisories} />
             </div>
           </Grid>
 
           <Grid item xs={12}>
-            {parkOperation.hasReservations && (
+            {hasReservations && (
               <div className="p20t">
                 <Button
                   className="yellow-button full-width"
@@ -124,7 +123,7 @@ export default function ParkHeader({ data }) {
             )}
           </Grid>
 
-          {park.hasDayUsePass !== "true" && !parkOperation.hasReservations && (
+          {park.hasDayUsePass !== "true" && !hasReservations && (
             <div className="p10t"></div>
           )}
           {/* Mobile */}
@@ -165,3 +164,13 @@ export default function ParkHeader({ data }) {
     </Paper>
   )
 }
+
+ParkHeader.propTypes = {
+  park: PropTypes.shape({
+    protectedAreaName: PropTypes.string,
+    orcs: PropTypes.number
+  }).isRequired,
+  menu: PropTypes.array.isRequired,
+  hasReservations: PropTypes.bool,
+  advisories: PropTypes.array,
+};

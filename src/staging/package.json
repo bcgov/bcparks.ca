@@ -17,6 +17,7 @@
     "axios": "^0.22.0",
     "bootstrap": "~4.3.1",
     "coffee-register": "~2.2.0",
+    "date-fns": "^2.28.0",
     "gatsby": "^3.13.1",
     "gatsby-image": "^3.11.0",
     "gatsby-plugin-emotion": "^6.2.0",
@@ -53,6 +54,7 @@
     "sass": "^1.37.5",
     "sharp": "^0.28.3",
     "simple-react-lightbox": "^3.6.9-0",
+    "slugify": "^1.6.5",
     "typography": "^0.16.19",
     "typography-theme-kirkham": "^0.16.19"
   },

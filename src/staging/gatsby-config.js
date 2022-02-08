@@ -28,7 +28,6 @@ module.exports = {
           "urgency",
           "protected-area",
           "public-advisory",
-          "park-access-status",
           "park-photo",
           `websites`,
           `pages`,

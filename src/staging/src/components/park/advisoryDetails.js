@@ -1,4 +1,6 @@
 import React, { useState } from "react"
+import PropTypes from "prop-types"
+import { parseJSON, format } from "date-fns"
 import {
   Box,
   Button,
@@ -29,13 +31,16 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function AdvisoryDetails({ data }) {
+
+const formatDate = (isoDate) => {
+  return isoDate ? format(parseJSON(isoDate), "MMMM dd, yyyy") : ""
+}
+
+export default function AdvisoryDetails({ advisories }) {
   const classes = useStyles()
 
-  const advisoryData = data.nodes
-
   let expandedsInitial = []
-  advisoryData.forEach((advisory, index) => {
+  advisories.forEach((advisory, index) => {
     expandedsInitial[index] = false
   })
 
@@ -49,15 +54,16 @@ export default function AdvisoryDetails({ data }) {
 
   const expandAll = isAllExpanded => {
     let expandeds = []
-    advisoryData.forEach((advisory, index) => {
+    advisories.forEach((advisory, index) => {
       expandeds[index] = isAllExpanded
     })
     setExpandeds(expandeds)
   }
 
-  const advisories = advisoryData.map(advisory => {
+  const advisoriesWithFormatting = advisories.map(advisory => {
     let alertIcon
     let alertColorCss
+
     switch (advisory.urgency.color) {
       case "blue":
         alertIcon = blueAlertIcon
@@ -75,9 +81,15 @@ export default function AdvisoryDetails({ data }) {
         alertIcon = blueAlertIcon
         alertColorCss = "blue-alert"
     }
-    advisory.alertIcon = alertIcon
-    advisory.alertColorCss = alertColorCss
-    return advisory
+
+    return {
+      alertIcon,
+      alertColorCss,  
+      formattedAdvisoryDate: formatDate(advisory.advisoryDate),
+      formattedEffectiveDate: formatDate(advisory.effectiveDate),
+      formattedEndDate: formatDate(advisory.endDate),
+      ...advisory
+    }
   })
 
   return (
@@ -114,12 +126,12 @@ export default function AdvisoryDetails({ data }) {
             </Box>
           </Grid>
         </Grid>
-        {data.totalCount === 0 && (
+        {advisories.length === 0 && (
           <HtmlContent>There are no reported alerts for this park</HtmlContent>
         )}
-        {data.totalCount > 0 && (
+        {advisories.length > 0 && (
           <Grid container spacing={1}>
-            {advisories.map((advisory, index) => (
+            {advisoriesWithFormatting.map((advisory, index) => (
               <Grid key={advisory.id} item xs={12}>
                 <Accordion
                   className={advisory.alertColorCss}
@@ -146,25 +158,25 @@ export default function AdvisoryDetails({ data }) {
                     <div className="advisory-content">
                       <HtmlContent>{advisory.description}</HtmlContent>
                       {advisory.isEffectiveDateDisplayed &&
-                        advisory.effectiveDate && (
+                        advisory.formattedEffectiveDate && (
                           <>
                             <br />
                             <p>
-                              In effect {advisory.effectiveDate}
-                              {advisory.isEndDateDisplayed && advisory.endDate && (
+                              In effect {advisory.formattedEffectiveDate}
+                              {advisory.isEndDateDisplayed && advisory.formattedEndDate && (
                                 <>
                                   {" to "}
-                                  {advisory.endDate}
+                                  {advisory.formattedEndDate}
                                 </>
                               )}
                             </p>
                           </>
                         )}
                       {advisory.isAdvisoryDateDisplayed &&
-                        advisory.advisoryDate && (
+                        advisory.formattedAdvisoryDate && (
                           <>
                             <br />
-                            <p>Posted {advisory.advisoryDate}</p>
+                            <p>Posted {advisory.formattedAdvisoryDate}</p>
                           </>
                         )}
                       <br />
@@ -181,3 +193,7 @@ export default function AdvisoryDetails({ data }) {
     </Grid>
   )
 }
+
+AdvisoryDetails.propTypes = {
+  advisories: PropTypes.array.isRequired,
+};

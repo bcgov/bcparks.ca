@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react"
-import { makeStyles } from "@material-ui/core/styles"
+import React, { useState } from "react"
 import { Button, Grid, Box, Divider } from "@material-ui/core"
-import { GatsbyImage } from "gatsby-plugin-image"
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox"
 import PhotoLibraryOutlinedIcon from "@material-ui/icons/PhotoLibraryOutlined"
 import { useLightbox } from "simple-react-lightbox"
+import ParkPhoto from "./parkPhoto"
 
 const ShowPhotos = ({ text, setShowPhotos }) => {
   const { openLightbox } = useLightbox()
@@ -23,45 +22,15 @@ const ShowPhotos = ({ text, setShowPhotos }) => {
   )
 }
 
-const useStyles = makeStyles({
-  bigPhoto: {
-    objectFit: "cover",
-    overflow: "hidden",
-    height: 400,
-    zIndex: 2,
-  },
-  blurPhoto: {
-    objectFit: "cover",
-    overflow: "hidden",
-    height: 400,
-    zIndex: 2,
-    filter: "blur(2px)",
-  },
-  smallPhoto: {
-    objectFit: "cover",
-    overflow: "hidden",
-    height: 196,
-    zIndex: 2,
-  },
-})
-
 export default function ParkPhotoGallery({ photos }) {
-  const classes = useStyles()
   const [showPhoto, setShowPhoto] = useState(false)
-  const parkPhotos = photos.nodes.map((photo, index) => {
+  const parkPhotos = photos.map((photo, index) => {
     return {
       index: index,
       caption: photo.caption || "",
-      image:
-        photo.image != null
-          ? photo.image.localFile.childImageSharp.gatsbyImageData
-          : null,
+      imageUrl: photo.imageUrl,
     }
   })
-
-  useEffect(() => {
-    return
-  }, [showPhoto])
 
   const srlOptions = {
     settings: {
@@ -105,7 +74,6 @@ export default function ParkPhotoGallery({ photos }) {
             <br />
             <Box
               id="park-photo-gallery-container"
-              className={classes.photoGallery}
             >
               <SimpleReactLightbox>
                 <SRLWrapper options={srlOptions}>
@@ -113,16 +81,16 @@ export default function ParkPhotoGallery({ photos }) {
                     <>
                       <Grid item container spacing={1}>
                         <Grid item xs={12} md={6}>
-                          <GatsbyImage
-                            className={classes.bigPhoto}
-                            image={parkPhotos[0].image}
+                          <ParkPhoto
+                            type="big"
+                            src={parkPhotos[0].imageUrl}
                             alt={parkPhotos[0].caption}
                           />
                         </Grid>
                         <Grid item xs={12} md={6} className="show-photo-button">
-                          <GatsbyImage
-                            className={classes.blurPhoto}
-                            image={parkPhotos[0].image}
+                          <ParkPhoto
+                            type="blur"
+                            src={parkPhotos[0].imageUrl}
                             alt={parkPhotos[0].caption}
                           />
                           <div className="show-photos">
@@ -141,16 +109,16 @@ export default function ParkPhotoGallery({ photos }) {
                     <>
                       <Grid item container spacing={1}>
                         <Grid item xs={12} md={6}>
-                          <GatsbyImage
-                            className={classes.bigPhoto}
-                            image={parkPhotos[0].image}
+                          <ParkPhoto
+                            type="big"
+                            src={parkPhotos[0].imageUrl}
                             alt={parkPhotos[0].caption}
                           />
                         </Grid>
                         <Grid item xs={12} md={6} className="show-photo-button">
-                          <GatsbyImage
-                            className={classes.bigPhoto}
-                            image={parkPhotos[1].image}
+                          <ParkPhoto
+                            type="big"
+                            src={parkPhotos[1].imageUrl}
                             alt={parkPhotos[1].caption}
                           />
 
@@ -169,9 +137,9 @@ export default function ParkPhotoGallery({ photos }) {
                                 key={index}
                                 className={`${showPhoto}? "" : hide-photo`}
                               >
-                                <GatsbyImage
-                                  className={classes.smallPhoto}
-                                  image={photo.image}
+                                <ParkPhoto
+                                  type="small"
+                                  src={photo.imageUrl}
                                   alt={photo.caption}
                                   key={index}
                                 />
@@ -188,9 +156,9 @@ export default function ParkPhotoGallery({ photos }) {
                           {parkPhotos
                             .filter(f => f.index === 0)
                             .map((photo, index) => (
-                              <GatsbyImage
-                                className={classes.bigPhoto}
-                                image={photo.image}
+                              <ParkPhoto
+                                type="big"
+                                src={photo.imageUrl}
                                 alt={photo.caption}
                                 key={index}
                               />
@@ -211,9 +179,9 @@ export default function ParkPhotoGallery({ photos }) {
                               )
                               .map((photo, index) => (
                                 <Grid item xs={6} key={index}>
-                                  <GatsbyImage
-                                    className={classes.smallPhoto}
-                                    image={photo.image}
+                                  <ParkPhoto
+                                    type="small"
+                                    src={photo.imageUrl}
                                     alt={photo.caption}
                                     key={index}
                                   />
@@ -228,9 +196,9 @@ export default function ParkPhotoGallery({ photos }) {
                                   key={index}
                                   className={`${showPhoto}? "" : hide-photo`}
                                 >
-                                  <GatsbyImage
-                                    className={classes.smallPhoto}
-                                    image={photo.image}
+                                  <ParkPhoto
+                                    type="small"
+                                    src={photo.imageUrl}
                                     alt={photo.caption}
                                     key={index}
                                   />
@@ -270,15 +238,14 @@ export default function ParkPhotoGallery({ photos }) {
           >
             <Box
               id="park-photo-gallery-container"
-              className={classes.photoGallery}
             >
               <SimpleReactLightbox>
                 <SRLWrapper options={srlOptions}>
                   <Grid item container spacing={1}>
                     <Grid item xs={12} md={12}>
-                      <GatsbyImage
-                        className={classes.bigPhoto}
-                        image={parkPhotos[0].image}
+                      <ParkPhoto
+                        type="big"
+                        src={parkPhotos[0].imageUrl}
                         alt={parkPhotos[0].caption}
                       />
                       <div className="show-photos">
@@ -296,9 +263,9 @@ export default function ParkPhotoGallery({ photos }) {
                             key={index}
                             className={`${showPhoto}? "" : hide-photo`}
                           >
-                            <GatsbyImage
-                              className={classes.smallPhoto}
-                              image={photo.image}
+                            <ParkPhoto
+                              type="small"
+                              src={photo.imageUrl}
                               alt={photo.caption}
                               key={index}
                             />
