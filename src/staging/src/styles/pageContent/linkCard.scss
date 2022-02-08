@@ -1,14 +1,8 @@
-$colorBlue: #036;
-$colorBlueOpacity: rgb(0 51 102 / 80%);
-$colorGold: #fcba19;
-$colorGrey: #eef1f5;
-$colorWhite: #fff;
-$desktopBreakpoint: 992px;
-$tabletBreakpoint: 768px;
+@import '../variables.scss';
 
-.grid-card {
+.link-card {
   border: none;
-  background-color: $colorBlue;
+  background-color: $colorBluePrimary;
   border-radius: 12px;
   overflow: hidden;
   margin: 16px 5%;
@@ -81,7 +75,7 @@ $tabletBreakpoint: 768px;
 
   .card-button {
     background: $colorWhite;
-    color: $colorBlue;
+    color: $colorBluePrimary;
     width: 180px;
     padding: 10px 20px;
     line-height: 30px;
@@ -137,18 +131,18 @@ $tabletBreakpoint: 768px;
 
   &--light {
     background-color: $colorWhite;
-    color: $colorBlue;
+    color: $colorBluePrimary;
 
     .card-body-header {
-      color: $colorBlue;
+      color: $colorBluePrimary;
     }
 
     .card-text {
-      color: $colorBlue;
+      color: $colorBluePrimary;
     }
 
     .card-button {
-      border: 2px solid $colorBlue;
+      border: 2px solid $colorBluePrimary;
       transition: border-color 150ms;
     }
 
@@ -156,7 +150,7 @@ $tabletBreakpoint: 768px;
       border-radius: 0;
 
       @media screen and (min-width: $desktopBreakpoint) {
-        border-left: 0 solid $colorGold;
+        border-left: 0 solid $colorGoldPrimary;
       }
     }
   }
@@ -174,12 +168,12 @@ $tabletBreakpoint: 768px;
     }
 
     .card-button {
-      color: $colorBlue;
-      background: $colorGold;
+      color: $colorBluePrimary;
+      background: $colorGoldPrimary;
     }
 
-    &.grid-card--horz {
-      background-color: $colorBlue;
+    &.link-card--horz {
+      background-color: $colorBluePrimary;
 
       .card-body-header {
         color: $colorWhite;
@@ -190,20 +184,20 @@ $tabletBreakpoint: 768px;
       }
     }
 
-    &.grid-card--light {
+    &.link-card--landing-page {
       background-color: $colorWhite;
 
       .card-button {
-        border-color: $colorGold;
+        border-color: $colorGoldPrimary;
       }
 
       .card-body-header {
-        color: $colorBlue;
+        color: $colorBluePrimary;
         text-decoration: none;
       }
 
       .card-text {
-        color: $colorBlue;
+        color: $colorBluePrimary;
       }
 
       .card-img {

@@ -72,7 +72,6 @@ export const query = graphql`
         Content {
           id
           strapi_component
-          HTML
         }
       }
     }

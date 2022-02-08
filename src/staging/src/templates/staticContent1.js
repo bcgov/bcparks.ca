@@ -27,7 +27,6 @@ export default function StaticContent1({ pageContext }) {
         Content {
           id
           strapi_component
-          HTML
         }
       }
     }

@@ -2,7 +2,8 @@
   "collectionName": "components_parks_link_cards",
   "info": {
     "name": "LinkCard",
-    "icon": "window-maximize"
+    "icon": "window-maximize",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -20,6 +21,23 @@
     },
     "imageAltText": {
       "type": "string"
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Learn more"
+    },
+    "variation": {
+      "type": "enumeration",
+      "enum": [
+        "LandingPage",
+        "Footer",
+        "Home33Width",
+        "Home66Width",
+        "HomeFullWidth"
+      ]
     }
   }
 }

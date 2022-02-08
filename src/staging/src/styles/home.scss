@@ -11,6 +11,10 @@ $tabletBreakpoint: 768px;
   overflow-x: hidden;
 }
 
+#home {
+  
+}
+
 .v-align-abs {
   position: relative;
   top: 50%;
@@ -128,7 +132,7 @@ $tabletBreakpoint: 768px;
   }
 }
 
-#home-advisories {
+.home-advisories {
 
   @media screen and (max-width: $desktopBreakpoint) {
     padding:20px;
@@ -182,6 +186,23 @@ $tabletBreakpoint: 768px;
       span { /* otherwise white on white */
         color:$colorBlue !important;
       }
+      &::after {
+        color:$colorBlue;
+      }
+    }
+    .btn::after {
+      content: "\f138";
+      display: inline-block;
+      font-family: "Font Awesome 5 Free";
+      font-style: normal;
+      font-variant: normal;
+      font-weight: 900;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+
+      color: $colorGold;
+      padding-left: 30px;
+      font-size: 20px;
     }
   }
 
@@ -327,6 +348,12 @@ $tabletBreakpoint: 768px;
 
 .home-content-width-override {
   max-width: 1100px !important;
+  margin:0px auto;
+  padding:0px 24px;
+
+  @media screen and (max-width: $desktopBreakpoint) {
+    padding: 0px;
+  }
 }
 .max-width-override {
   max-width: 1920px !important;
@@ -380,6 +407,7 @@ $tabletBreakpoint: 768px;
 
 #home-parks-search {
   position: absolute;
+  z-index: 2;
 
 
 
@@ -414,7 +442,7 @@ $tabletBreakpoint: 768px;
     @media screen and (min-width: $desktopBreakpoint) {
       text-align: left;      
       padding: 25px 40px;
-      margin: 360px auto 0px auto;
+      margin: 180px auto 0px auto;
       width: 800px;
       min-height: 200px;
 
