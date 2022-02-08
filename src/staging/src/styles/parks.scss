@@ -163,13 +163,22 @@ body {
   z-index: 10 !important;
 }
 
+// TODO: destroy this .grey-background thing up with fire
 .grey-background {
   background-color: #eef1f5 !important;
 }
 
 .grey-background .MuiPaper-root,
 .grey-background .MuiBox-root {
-  background-color: #eef1f5 !important;
+  background-color: transparent;
+
+  .red-alert {
+    background-color: #eef1f5 !important;
+  }
+
+  &.bc-bg-yellow {
+    background-color: #fcba19;
+  }
 }
 
 .park-heading {
