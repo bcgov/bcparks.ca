@@ -8,9 +8,19 @@ $colorBorder: #96b3cf;
 $colorBackground: #F2F2F2;
 $colorComponent: #606060;
 
-.content {
-  padding-top: 20px;
-  padding-bottom: 35px;
+.static-content-container.page-breadcrumbs {
+  padding-top:15px;
+  padding-bottom:0px;
+}
+
+.static-content-container {
+  max-width: 1140px;
+  padding: 20px 40px 35px 40px;
+  margin: 0px auto;
+
+  @media screen and (max-width: 415px) {
+    padding: 16px;
+  }
 
   .card {
     border-color: $colorLink !important;
@@ -33,10 +43,65 @@ $colorComponent: #606060;
       background-color: $colorWhite !important;
     }
   }
+  a:hover {
+    color: $colorGoldPrimary;
+  }  
 }
-a:hover {
-  color: $colorGoldPrimary;
+
+/* ---- HEADER ---- */
+
+.static-content--header {
+    .header-image-wrapper {
+        max-height: 455px;
+        width:100%;
+        overflow:hidden;
+    }
+
+    .header-title {
+        font-size: 2rem;
+        color: $colorBluePrimary;
+        font-weight: 700;
+    }
+    .header-title--desktop {
+        margin-bottom:30px;
+    }
+    .header-title--mobile {
+        margin: 16px;
+    }
+    @media (max-width: 576px) {
+        .header-image-wrapper {
+            height: 345px;
+            width:100%;
+
+            img {
+                height:100%;
+            }
+        }
+    }
 }
+@media (min-width: 576px) {
+    .static-content--header {
+        max-width: 1140px;
+        margin:0 auto;
+        padding:40px 40px 10px 40px;
+    }
+}
+.page-header--caption {
+
+    color: #656565;
+    font-size: 0.9rem;
+    margin-bottom:60px;
+
+}
+.page-content-wrapper {
+    
+    .page-content {
+        position: relative;
+    }
+}
+
+/* Note most/all of the following is for backwards compat for older content */
+
 .MuiBreadcrumbs-separator {
   color: $colorGoldPrimary !important;
 }
@@ -132,3 +197,4 @@ a:hover {
     background-color: unset !important;
   }
 }
+
