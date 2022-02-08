@@ -244,6 +244,8 @@ export default function ParkTemplate({ data }) {
                 park={park}
                 menu={menuItems}
                 hasReservations={hasReservations}
+                isLoadingAdvisories={isLoadingAdvisories}
+                advisoryLoadError={advisoryLoadError}
                 advisories={advisories}
               />
             </Grid>
@@ -287,14 +289,18 @@ export default function ParkTemplate({ data }) {
                 {menuItems[2].visible && (
                   <div ref={advisoryRef} className="full-width">
                     {isLoadingAdvisories && (
-                      <div className="spinner-border" role="status">
-                        <span className="sr-only">Loading...</span>
+                      <div className="mb-5">
+                        <div className="spinner-border" role="status">
+                          <span className="sr-only">Loading...</span>
+                        </div>
                       </div>
                     )}
                     {!isLoadingAdvisories && advisoryLoadError && (
-                      <div className="alert alert-danger" role="alert">
-                        An error occurred while loading current public
-                        advisories.
+                      <div className="mb-5">
+                        <div className="alert alert-danger" role="alert">
+                          An error occurred while loading current public
+                          advisories.
+                        </div>
                       </div>
                     )}
                     {!isLoadingAdvisories && !advisoryLoadError && (
