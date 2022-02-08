@@ -119,7 +119,7 @@ export default function StaticContent1({ pageContext }) {
         // each section needs an index to be used for in-page navigation
         // and scrollspy highlighting
         c.sectionIndex = sectionIndex;
-        pageSections.push({ display: c.SectionTitle, sectionIndex: sectionIndex, id: c.id, link: "#page-section-" + c.id })
+        pageSections.push({ display: c.sectionTitle, sectionIndex: sectionIndex, id: c.id, link: "#page-section-" + c.id })
 
       }
     }
