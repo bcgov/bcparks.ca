@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"
 import {
   Grid,
   Button,
@@ -17,7 +17,14 @@ import ExpandMore from "@material-ui/icons/ExpandMore"
 
 import { navigate } from "gatsby"
 
-export default function ParkHeader({ park, menu, hasReservations, advisories }) {
+export default function ParkHeader({
+  park,
+  menu,
+  hasReservations,
+  isLoadingAdvisories,
+  advisoryLoadError,
+  advisories,
+}) {
   const menuItems = useRef([...menu])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
@@ -64,9 +71,7 @@ export default function ParkHeader({ park, menu, hasReservations, advisories }) 
                 {park.hasDayUsePass === "true" && (
                   <Button
                     className={
-                      hasReservations
-                        ? "blue-button ml10"
-                        : "blue-button"
+                      hasReservations ? "blue-button ml10" : "blue-button"
                     }
                     href="#"
                   >
@@ -75,22 +80,24 @@ export default function ParkHeader({ park, menu, hasReservations, advisories }) 
                 )}
               </>
             </Grid>
+            {!isLoadingAdvisories && !advisoryLoadError && (
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={12}
+                lg={5}
+                className="park-info-header-flex"
+              >
+                <div className="park-info-header park-access">
+                  <ParkAccessStatus advisories={advisories} />
+                </div>
 
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={12}
-              lg={5}
-              className="park-info-header-flex"
-            >
-              <div className="park-info-header park-access">
-                <ParkAccessStatus advisories={advisories} />
-              </div>
-              <div className="park-info-header ml-auto park-access">
-                <Advisory advisories={advisories} />
-              </div>
-            </Grid>
+                <div className="park-info-header ml-auto park-access">
+                  <Advisory advisories={advisories} />
+                </div>
+              </Grid>
+            )}
           </div>
         </div>
         <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
@@ -168,9 +175,11 @@ export default function ParkHeader({ park, menu, hasReservations, advisories }) 
 ParkHeader.propTypes = {
   park: PropTypes.shape({
     protectedAreaName: PropTypes.string,
-    orcs: PropTypes.number
+    orcs: PropTypes.number,
   }).isRequired,
   menu: PropTypes.array.isRequired,
+  isLoadingAdvisories: PropTypes.bool.isRequired,
+  advisoryLoadError: PropTypes.any,
   hasReservations: PropTypes.bool,
   advisories: PropTypes.array,
-};
+}
