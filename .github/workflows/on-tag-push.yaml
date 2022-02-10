@@ -1,0 +1,39 @@
+name: Tag image on Git Tag Push
+
+on:
+  push:
+    tags:
+      - "*"
+
+env:
+  TOOLS_NAMESPACE: ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools
+  NAMESPACE: ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-test
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set env
+        run: |
+          echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Login OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT_SERVICE_TOKEN }}
+
+      - name: Tag images
+        run: |
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin:${{ env.SHORT_SHA }} admin:${{ env.RELEASE_VERSION }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder:${{ env.SHORT_SHA }} public-builder:${{ env.RELEASE_VERSION }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi:${{ env.SHORT_SHA }} strapi:${{ env.RELEASE_VERSION }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag landing:${{ env.SHORT_SHA }} landing:${{ env.RELEASE_VERSION }}
+
+      - name: Delete images tags with commit hash
+        run: |
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d admin:${{ env.SHORT_SHA }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d public-builder:${{ env.SHORT_SHA }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d strapi:${{ env.SHORT_SHA }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d landing:${{ env.SHORT_SHA }}

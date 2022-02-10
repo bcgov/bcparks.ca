@@ -38,10 +38,10 @@ jobs:
 
       - name: Tag Prod images
         run: |
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin:${{ env.SHORT_SHA }} admin:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder:${{ env.SHORT_SHA }} public-builder:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi:${{ env.SHORT_SHA }} strapi:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag landing:${{ env.SHORT_SHA }} landing:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin:${{ github.event.inputs.releaseTag }} admin:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder:${{ github.event.inputs.releaseTag }} public-builder:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi:${{ github.event.inputs.releaseTag }} strapi:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag landing:${{ github.event.inputs.releaseTag }} landing:${{ env.ENVIRONMENT }}
 
       - name: Trigger Gatsby static build workflow
         uses: peter-evans/repository-dispatch@v1
