@@ -4,8 +4,6 @@ cluster:
 images:
   strapi:
     tag: test
-  staging:
-    tag: test
   admin:
     tag: test
   public:
@@ -16,7 +14,7 @@ images:
 cms:
   resources:
     limits:
-      cpu: "2"
+      cpu: "1"
       memory: 2Gi
     requests:
       cpu: 250m
@@ -25,36 +23,18 @@ cms:
   env:
     externalUrl: https://test-cms.bcparks.ca
 
+  hpa:
+    minReplicas: 2
+    maxReplicas: 4
+
 admin:
   env:
     externalUrl: https://test-staff.bcparks.ca
 
-postgres:
-  resources:
-    limits:
-      cpu: "1"
-      memory: 4Gi
-    requests:
-      cpu: 250m
-      memory: 250Mi
-  pvc:
-    size: 20Gi
-
-mariadb:
-  resources:
-    limits:
-      cpu: "1"
-      memory: 4Gi
-    requests:
-      cpu: 250m
-      memory: 250Mi
-  pvc:
-    size: 20Gi
-
 patroni:
   resources:
     limits:
-      cpu: "1"
+      cpu: 500m
       memory: 2Gi
     requests:
       cpu: 250m
@@ -72,3 +52,8 @@ backup:
   enironment:
     friendlyName: bcparks.ca CMS Postgres Backup [test]
     name: 61d198-test
+
+public:
+  hpa:
+    minReplicas: 1
+    maxReplicas: 3

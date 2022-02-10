@@ -25,10 +25,6 @@ spec:
         component: {{ .Values.pgbouncer.componentName }}
         release: {{ .Release.Name }}
     spec:
-      initContainers:
-        - name: wait-for-db
-          image: {{ .Values.images.postgres.name }}:{{ .Values.images.postgres.tag }}
-          command: ['sh', '-c', 'until pg_isready -h {{ template "bcparks_patroni_fullname" . }} -p {{ .Values.patroni.service.port }}; do echo waiting for database; sleep 2; done;']
       containers:
         - name: {{ .Values.pgbouncer.componentName }}
           resources:
@@ -40,6 +36,12 @@ spec:
               containerPort: {{ .Values.pgbouncer.service.port }}
               protocol: TCP
           env:
+            - name: PGBOUNCER_DEFAULT_POOL_SIZE
+              value: {{ .Values.pgbouncer.env.defaultPoolSize | quote }}
+            - name: PGBOUNCER_POOL_MODE
+              value: {{ .Values.pgbouncer.env.poolMode }}
+            - name: PGBOUNCER_MAX_CLIENT_CONN
+              value: {{ .Values.pgbouncer.env.maxClientConn | quote }}
             - name: POSTGRESQL_HOST
               value: {{ template "bcparks_patroni_fullname" . }}
             - name: POSTGRESQL_PORT

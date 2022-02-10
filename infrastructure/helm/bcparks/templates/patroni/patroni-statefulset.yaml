@@ -34,6 +34,8 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       containers:
         - env:
+            - name: POSTGRESQL_MAX_CONNECTIONS
+              value: {{ .Values.patroni.env.maxConnections | quote }}
             - name: POD_IP
               valueFrom:
                 fieldRef:
