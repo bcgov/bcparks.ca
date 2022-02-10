@@ -20,7 +20,6 @@ import SearchIcon from "@material-ui/icons/Search"
 import CancelIcon from "@material-ui/icons/Cancel"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
-import Select from "react-select"
 import { navigate } from "gatsby"
 
 
@@ -28,15 +27,12 @@ const SearchFilter = ({
   data: {
     activityItems,
     facilityItems,
-    quickSearchFilters,
     openFilter,
     setOpenFilter,
-    quickSearch,
     selectedActivities,
     setSelectedActivities,
     selectedFacilities,
     setSelectedFacilities,
-    setQuickSearch,
     searchText,
     setSearchText,
   },
@@ -49,19 +45,7 @@ const SearchFilter = ({
     setOpenFilter(false)
   }
 
-  //Quick Search/Popular
-  const handleQuickSearchChange = event => {
-    setQuickSearch({
-      ...quickSearch,
-      [event.target.name]: event.target.checked,
-    })
-  }
-
-  const handleQuickSearchDelete = chipToDelete => {
-    //setSelectedActivities(chips =>
-    //  chips.filter(chip => chip.value !== chipToDelete.value)
-    //)
-  }
+  //TODO: Quick Search/Popular
 
   const handleActivityCheck = (activity, event) => {
     if (event.target.checked) {
@@ -118,34 +102,6 @@ const SearchFilter = ({
       filters.push({ ...f, type: "facility" })
     })
 
-    const {
-      camping,
-      petFriendly,
-      wheelchair,
-      marine,
-      ecoReserve,
-      electricalHookup,
-    } = quickSearch
-
-    if (camping) {
-      filters.push({ label: "Camping", type: "camping" })
-    }
-    if (petFriendly) {
-      filters.push({ label: "Dog Friendly", type: "petFriendly" })
-    }
-    if (wheelchair) {
-      filters.push({ label: "Wheelchair Accessible", type: "wheelchair" })
-    }
-    if (marine) {
-      filters.push({ label: "Marine Park", type: "marine" })
-    }
-    if (ecoReserve) {
-      filters.push({ label: "Ecological reserve", type: "ecoReserve" })
-    }
-    if (electricalHookup) {
-      filters.push({ label: "Electrical Hookup", type: "electricalHookup" })
-    }
-
     filters.sort((a, b) => a.label.localeCompare(b.label))
     setFilterSelections([...filters])
   }, [
@@ -158,7 +114,6 @@ const SearchFilter = ({
         selectedActivities,
         selectedFacilities,
         searchText,
-        quickSearch,
       },
     })
     setOpenFilter(false)
@@ -207,7 +162,7 @@ const SearchFilter = ({
                   }}
                 />
               </div>
-              <div className="col-lg-3 col-md-8 col-sm-8 mt8 p10l d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+              <div className="col-lg-3 col-md-8 col-sm-8 mt8 d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
                 <Button
                   variant="contained"
                   onClick={() => {
@@ -242,7 +197,8 @@ const SearchFilter = ({
                       onClick={() => {
                         setSelectedActivities([])
                         setSelectedFacilities([])
-                        setQuickSearch([])
+                        //TODO: Quick Search/Popular
+                        //setQuickSearch([])
                       }}
                       tabIndex="0"
                     >
@@ -292,78 +248,7 @@ const SearchFilter = ({
               </div>
               <div className="p20l-filter col-lg-8 col-md-12 col-sm-12">
 
-                {/* TODO: Add Popular */}
-
-                {/* <div className="row">
-                  <div className="col-12">
-                    <div className="park-filter-options">
-
-                      <div className="park-filter-option-label flex-display">
-                        <div
-                          className="flex-display pointer full-width p20"
-                          onClick={() => {
-                            handleShowFilterClick(2)
-                          }}
-                          tabIndex="0"
-                          role="button"
-                          onKeyPress={() => {
-                            handleShowFilterClick(2)
-                          }}
-                        >
-                          {showFilters[2] ? (
-                            <ExpandLess fontSize="large" className="mtm5" />
-                          ) : (
-                            <ExpandMore fontSize="large" className="mtm5" />
-                          )}
-                          <div className="p10l park-select-label">
-                            Popular
-                          </div>
-                        </div>
-                        <Link
-                          className="ml-auto pointer p20"
-                          onClick={() => {
-                            setQuickSearch([])
-                          }}
-                          tabIndex="0"
-                        >
-                          Reset
-                        </Link>
-                      </div>
-
-                      <Divider className="yellow-divider" />
-                      <Collapse
-                        in={showFilters[2]}
-                        timeout="auto"
-                        unmountOnExit
-                        className="p20"
-                      >
-                        <div className="row container">
-                          <div className="col-lg-6 col-md-12 col-sm-12">
-                            <FormGroup className="p10l filter-options-container">
-                              {
-                                quickSearchFilters.map((item, index) => (
-                                  <FormControlLabel
-                                    key={index}
-                                    control={
-                                      <Checkbox
-                                        checked={item.value}
-                                        onChange={handleQuickSearchChange}
-                                        name={item.label}
-                                      />
-                                    }
-                                    label={item.label}
-
-                                  />
-                                ))
-                              }
-                            </FormGroup>
-                          </div>
-                        </div>
-                      </Collapse>
-                    </div>
-                  </div>
-                </div> */}
-
+                {/* TODO: Quick Search/Popular */}
 
                 <div className="row p20t">
                   <div className="col-12">
@@ -573,7 +458,7 @@ SearchFilter.propTypes = {
     quickSearchFilters: PropTypes.array.isRequired,
     openFilter: PropTypes.bool.isRequired,
     setOpenFilter: PropTypes.func.isRequired,
-    quickSearch: PropTypes.array.isRequired,
+    quickSearch: PropTypes.object.isRequired,
     selectedActivities: PropTypes.array.isRequired,
     setSelectedActivities: PropTypes.func.isRequired,
     selectedFacilities: PropTypes.array.isRequired,

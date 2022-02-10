@@ -24,7 +24,6 @@ import {
 } from "@material-ui/core"
 import Pagination from "@material-ui/lab/Pagination"
 import SearchIcon from "@material-ui/icons/Search"
-import Select from "react-select"
 import CloseIcon from "@material-ui/icons/Close"
 import dayUseIcon from "../images/park/day-use.png"
 import ExpandLess from "@material-ui/icons/ExpandLess"
@@ -190,14 +189,6 @@ export default function Explore({ location, data }) {
 
   const [openQuickView, setOpenQuickView] = useState(false)
 
-  const sortOptions = [
-    { value: "rank:desc", label: "Sort by Relevance" },
-    { value: "protectedAreaName:asc", label: "Sort A-Z" },
-    { value: "protectedAreaName:desc", label: "Sort Z-A" },
-  ]
-
-  const [sortOption, setSortOption] = useState(sortOptions[0]);
-
   const breadcrumbs = [
     <Link key="1" href="/">
       Home
@@ -306,11 +297,6 @@ export default function Explore({ location, data }) {
     setOpenQuickView(false)
   }
 
-  const handleSortChange = (value) => {
-    setSortOption(value)
-    setCurrentPage(1)
-  }
-
   const handleSearch = () => {
     setSearchText(inputText)
   }
@@ -341,7 +327,6 @@ export default function Explore({ location, data }) {
     if (electricalHookup) {
       filters.push({ label: "Electrical Hookup", type: "electricalHookup" })
     }
-    filters.sort((a, b) => a.label.localeCompare(b.label))
     setFilterSelections([...filters])
   }, [
     camping,
@@ -435,16 +420,12 @@ export default function Explore({ location, data }) {
 
     const pageStart = (currentPage - 1) * itemsPerPage;
     const pageLimit = itemsPerPage;
-    let sort = sortOption.value;
-    if (sort === "rank:desc" && !params._q) {
-      sort = "protectedAreaName:asc";
-    }
 
     const countPromise = axios.get(`${apiUrl}/protected-areas/count`, { params });
     const resultPromise = axios
       .get(
         `${apiUrl}/protected-areas/`,
-        { params: { ...params, _start: pageStart, _limit: pageLimit, _sort: sort } }
+        { params: { ...params, _start: pageStart, _limit: pageLimit } }
       );
     Promise.all([countPromise, resultPromise]).then(([countResponse, resultResponse]) => {
       if (countResponse.status === 200 && resultResponse.status === 200) {
@@ -463,7 +444,6 @@ export default function Explore({ location, data }) {
     });
   }, [
     params,
-    //sortOption,
     currentPage,
     data.site.siteMetadata.apiURL,
     setFilters,
@@ -576,8 +556,8 @@ export default function Explore({ location, data }) {
                   </div>
                 </div>
                 <div className="search-results-list container">
-                  <div className="row no-gutters">
-                    <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12 pr10 p10t">
+                  <div className="row">
+                    <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12 p10t">
                       <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
                         <Button
                           variant="outlined"
@@ -588,7 +568,7 @@ export default function Explore({ location, data }) {
                         </Button>
                       </div>
                     </div>
-                    <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12 pr10 p10t">
+                    <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12 p10t">
                       <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
                         <Button
                           fullWidth
@@ -608,7 +588,7 @@ export default function Explore({ location, data }) {
               <div className="col-lg-3 col-md-12 col-sm-12">
                 <div className="search-results-quick-filter">
                   <div className="row no-gutters d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                    <div className="col-12 pr-3">
+                    <div className="col-12">
                       <div className="search-results-quick-filter">
                         <div className="row no-gutters pb20">
                           <div className="col-12 park-search-text-box-container d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
@@ -636,7 +616,7 @@ export default function Explore({ location, data }) {
                               }}
                             />
                           </div>
-                          <div class="m15t col-12 park-search-text-box-container d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+                          <div className="m15t col-12 park-search-text-box-container d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
                             <Button
                               fullWidth
                               className="bcgov-normal-blue mobile-search-element-height h50p"
@@ -1467,7 +1447,6 @@ export default function Explore({ location, data }) {
           openFilter,
           setOpenFilter,
           quickSearch,
-          setQuickSearch,
           selectedActivities,
           setSelectedActivities,
           selectedFacilities,
