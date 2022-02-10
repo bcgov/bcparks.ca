@@ -14,18 +14,9 @@ images:
   pgbouncer:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/pgbouncer
     tag: latest
-  staging:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/staging
-    tag: latest
-  alpine:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/alpine
-    tag: latest
   admin:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/admin
     tag: latest
-  mariadb:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/mariadb
-    tag: 10.5-utf8
   public:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/public
     tag: latest
@@ -47,7 +38,7 @@ cms:
   resources:
     limits:
       cpu: "1"
-      memory: 1Gi
+      memory: 2Gi
     requests:
       cpu: 250m
       memory: 250Mi
@@ -68,36 +59,10 @@ cms:
     portName: strapi
     port: 1337
 
-  pvc:
-    enabled: false
-    accessMode: ReadWriteMany
-    storageClassName: netapp-file-standard
-    size: 5Gi
-
-postgres:
-  componentName: postgres
-
-  enabled: false
-
-  resources:
-    limits:
-      cpu: 500m
-      memory: 500Mi
-    requests:
-      cpu: 250m
-      memory: 250Mi
-
-  env:
-    maxConnections: 200
-
-  service:
-    portName: postgres
-    port: 5432
-
-  pvc:
-    accessMode: ReadWriteOnce
-    storageClassName: netapp-file-standard
-    size: 5Gi
+  hpa:
+    minReplicas: 1
+    # Default to 1 max replica on dev, overriden in test and prod envs
+    maxReplicas: 1
 
 patroni:
   componentName: patroni
@@ -110,11 +75,14 @@ patroni:
 
   resources:
     limits:
-      cpu: "1"
+      cpu: 500m
       memory: 1Gi
     requests:
       cpu: 250m
       memory: 250Mi
+
+  env:
+    maxConnections: 240
 
   service:
     portName: patroni-leader
@@ -132,65 +100,20 @@ pgbouncer:
 
   resources:
     limits:
-      cpu: 250m
-      memory: 250Mi
+      cpu: 150m
+      memory: 150Mi
     requests:
-      cpu: 100m
+      cpu: 50m
       memory: 50Mi
 
   env:
+    defaultPoolSize: 80
+    poolMode: transaction
+    maxClientConn: 120
 
   service:
     portName: pgbouncer
     port: 6432
-
-mariadb:
-  componentName: mariadb
-
-  enabled: false
-
-  imagePullPolicy: Always
-
-  resources:
-    limits:
-      cpu: 500m
-      memory: 500Mi
-    requests:
-      cpu: 250m
-      memory: 250Mi
-
-  service:
-    portName: mariadb
-    port: 3306
-
-  pvc:
-    accessMode: ReadWriteOnce
-    storageClassName: netapp-file-standard
-    size: 5Gi
-
-staging:
-  enabled: false
-
-  imagePullPolicy: Always
-
-  componentName: staging
-
-  resources:
-    limits:
-      cpu: 500m
-      memory: 3Gi
-    requests:
-      cpu: 250m
-      memory: 250Mi
-
-  service:
-    portName: staging
-    port: 8000
-
-  pvc:
-    accessMode: ReadWriteMany
-    storageClassName: netapp-file-standard
-    size: 1Gi
 
 admin:
   imagePullPolicy: Always
@@ -203,8 +126,8 @@ admin:
 
   resources:
     limits:
-      cpu: 150m
-      memory: 250Mi
+      cpu: 100m
+      memory: 100Mi
     requests:
       cpu: 50m
       memory: 50Mi
@@ -220,8 +143,8 @@ public:
 
   resources:
     limits:
-      cpu: 150m
-      memory: 250Mi
+      cpu: 100m
+      memory: 100Mi
     requests:
       cpu: 50m
       memory: 50Mi
@@ -229,6 +152,11 @@ public:
   service:
     portName: public
     port: 3000
+
+  hpa:
+    minReplicas: 1
+    # Default to 1 max replica on dev, overriden in test and prod envs
+    maxReplicas: 1
 
 backup:
   componentName: postgres-backup

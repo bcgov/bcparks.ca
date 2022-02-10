@@ -80,18 +80,6 @@ Gets the suffix of the namespace. (-dev, -tools, ... )
 https://{{ .Release.Name }}-{{ .Values.cms.componentName }}-{{ .Release.Namespace }}.{{ .Values.cluster.domain }}
 {{- end -}}
 
-{{ define "bcparks_postgres_fullname" -}}
-{{ .Release.Name }}-{{ .Values.postgres.componentName }}
-{{- end -}}
-
-{{ define "bcparks_postgres_volume_claim" -}}
-{{ .Release.Name }}-postgres
-{{- end -}}
-
-{{ define "bcparks_postgres_secret" -}}
-{{ .Release.Name }}-postgres-secret
-{{- end -}}
-
 {{ define "bcparks_patroni_fullname" -}}
 {{ .Release.Name }}-{{ .Values.patroni.componentName }}
 {{- end -}}
@@ -106,22 +94,6 @@ https://{{ .Release.Name }}-{{ .Values.cms.componentName }}-{{ .Release.Namespac
 
 {{ define "bcparks_pgbouncer_fullname" -}}
 {{ .Release.Name }}-{{ .Values.pgbouncer.componentName }}
-{{- end -}}
-
-{{ define "bcparks_mariadb_fullname" -}}
-{{ .Release.Name }}-{{ .Values.mariadb.componentName }}
-{{- end -}}
-
-{{ define "bcparks_mariadb_volume_claim" -}}
-{{ .Release.Name }}-mariadb
-{{- end -}}
-
-{{ define "bcparks_mariadb_secret" -}}
-{{ .Release.Name }}-mariadb-secret
-{{- end -}}
-
-{{ define "bcparks_staging_volume_claim" -}}
-{{ .Release.Name }}-staging
 {{- end -}}
 
 {{ define "bcparks_admin_external_url" -}}

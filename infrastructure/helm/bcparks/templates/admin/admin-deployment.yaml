@@ -55,3 +55,23 @@ spec:
               value: {{ .Values.cluster.ssoClientId }}
             - name: REACT_APP_STAT_HOLIDAY_API
               value: {{ .Values.admin.env.statHolidayApi }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          startupProbe:
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
