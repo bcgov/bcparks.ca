@@ -24,7 +24,6 @@ import {
 } from "@material-ui/core"
 import Pagination from "@material-ui/lab/Pagination"
 import SearchIcon from "@material-ui/icons/Search"
-import Select from "react-select"
 import CloseIcon from "@material-ui/icons/Close"
 import dayUseIcon from "../images/park/day-use.png"
 import ExpandLess from "@material-ui/icons/ExpandLess"
@@ -190,14 +189,6 @@ export default function Explore({ location, data }) {
 
   const [openQuickView, setOpenQuickView] = useState(false)
 
-  const sortOptions = [
-    { value: "rank:desc", label: "Sort by Relevance" },
-    { value: "protectedAreaName:asc", label: "Sort A-Z" },
-    { value: "protectedAreaName:desc", label: "Sort Z-A" },
-  ]
-
-  const [sortOption, setSortOption] = useState(sortOptions[0]);
-
   const breadcrumbs = [
     <Link key="1" href="/">
       Home
@@ -306,9 +297,8 @@ export default function Explore({ location, data }) {
     setOpenQuickView(false)
   }
 
-  const handleSortChange = (value) => {
-    setSortOption(value)
-    setCurrentPage(1)
+  const handleSearch = () => {
+    setSearchText(inputText)
   }
 
   const setFilters = useCallback(() => {
@@ -337,7 +327,6 @@ export default function Explore({ location, data }) {
     if (electricalHookup) {
       filters.push({ label: "Electrical Hookup", type: "electricalHookup" })
     }
-    filters.sort((a, b) => a.label.localeCompare(b.label))
     setFilterSelections([...filters])
   }, [
     camping,
@@ -431,16 +420,12 @@ export default function Explore({ location, data }) {
 
     const pageStart = (currentPage - 1) * itemsPerPage;
     const pageLimit = itemsPerPage;
-    let sort = sortOption.value;
-    if (sort === "rank:desc" && !params._q) {
-      sort = "protectedAreaName:asc";
-    }
 
     const countPromise = axios.get(`${apiUrl}/protected-areas/count`, { params });
     const resultPromise = axios
       .get(
         `${apiUrl}/protected-areas/`,
-        { params: { ...params, _start: pageStart, _limit: pageLimit, _sort: sort } }
+        { params: { ...params, _start: pageStart, _limit: pageLimit } }
       );
     Promise.all([countPromise, resultPromise]).then(([countResponse, resultResponse]) => {
       if (countResponse.status === 200 && resultResponse.status === 200) {
@@ -459,7 +444,6 @@ export default function Explore({ location, data }) {
     });
   }, [
     params,
-    sortOption,
     currentPage,
     data.site.siteMetadata.apiURL,
     setFilters,
@@ -537,42 +521,11 @@ export default function Explore({ location, data }) {
                 </div>
               </div>
             </div>
-            <div className="row p20t no-gutters">
-              <div className="col-lg-3 col-md-12 col-sm-12">
-                <div className="search-results-quick-filter">
-                  <div className="row no-gutters">
-                    <div className="col-12 park-search-text-box-container d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                      <TextField
-                        id="park-search-text"
-                        variant="outlined"
-                        placeholder="e.g Alice Park"
-                        className="park-search-text-box h50p"
-                        value={inputText}
-                        onChange={event => {
-                          setInputText(event.target.value)
-                        }}
-                        onKeyPress={ev => {
-                          if (ev.key === "Enter") {
-                            setSearchText(inputText)
-                            ev.preventDefault()
-                          }
-                        }}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <SearchIcon className="search-icon" />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="row no-gutters">
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-quick-filter d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
                   <div className="row no-gutters">
-                    <div className="col-12 pb20">
+                    <div className="col-12">
                       <h4 className="filter-heading">
                         Search by park name, location, activity
                       </h4>
@@ -603,8 +556,8 @@ export default function Explore({ location, data }) {
                   </div>
                 </div>
                 <div className="search-results-list container">
-                  <div className="row no-gutters">
-                    <div className="col-lg-8 col-md-6 col-sm-6 col-xs-6 w50 pr10">
+                  <div className="row">
+                    <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12 p10t">
                       <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
                         <Button
                           variant="outlined"
@@ -615,15 +568,17 @@ export default function Explore({ location, data }) {
                         </Button>
                       </div>
                     </div>
-                    <div className="col-lg-4 col-md-6 col-sm-6 col-xs-6 w50">
-                      <Select
-                        value={sortOption}
-                        className="park-filter-select h50p"
-                        variant="outlined"
-                        options={sortOptions}
-                        onChange={handleSortChange}
-                        placeholder="Sort by"
-                      />
+                    <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12 p10t">
+                      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
+                        <Button
+                          fullWidth
+                          className="bcgov-normal-blue mobile-search-element-height h50p"
+                          onClick={() => {
+                            handleSearch()
+                          }}>
+                          Search
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -631,12 +586,52 @@ export default function Explore({ location, data }) {
             </div>
             <div className="row no-gutters">
               <div className="col-lg-3 col-md-12 col-sm-12">
-                <div className="search-results-quick-filter m15t">
-                  <div className="row p20t no-gutters d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+                <div className="search-results-quick-filter">
+                  <div className="row no-gutters d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+                    <div className="col-12">
+                      <div className="search-results-quick-filter">
+                        <div className="row no-gutters pb20">
+                          <div className="col-12 park-search-text-box-container d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+                            <TextField
+                              id="park-search-text"
+                              variant="outlined"
+                              placeholder="e.g Alice Park"
+                              className="park-search-text-box h50p"
+                              value={inputText}
+                              onChange={event => {
+                                setInputText(event.target.value)
+                              }}
+                              onKeyPress={ev => {
+                                if (ev.key === "Enter") {
+                                  setSearchText(inputText)
+                                  ev.preventDefault()
+                                }
+                              }}
+                              InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <SearchIcon className="search-icon" />
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                          </div>
+                          <div className="m15t col-12 park-search-text-box-container d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+                            <Button
+                              fullWidth
+                              className="bcgov-normal-blue mobile-search-element-height h50p"
+                              onClick={() => {
+                                handleSearch()
+                              }}>
+                              Search
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div className="col-12 pr-3">
-                      <h4 className="filter-heading p30t">Filter by</h4>
                       <div className="">
-                        <h4 className="filter-heading p10t">Popular filters</h4>
+                        <h4 className="filter-heading p10t">Popular</h4>
                         <FormGroup className="p10l filter-options-container">
                           {quickSearchFilters.map((item) => {
                             return (
@@ -728,7 +723,7 @@ export default function Explore({ location, data }) {
                                       :
                                       <div style={{ color: `#2464A4` }}>
                                         Show less
-                                        <ExpandLess fontSize="small"/>
+                                        <ExpandLess fontSize="small" />
                                       </div>
                                   }
                                 </Link>
@@ -764,7 +759,7 @@ export default function Explore({ location, data }) {
                                   {filteredFacilities.map((f) => {
                                     return (
                                       <FormControlLabel
-                                      key={f.label}
+                                        key={f.label}
                                         control={
                                           <Checkbox
                                             checked={
@@ -824,7 +819,7 @@ export default function Explore({ location, data }) {
               </div>
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-list container">
-                  <div className="mt-1 text-center">
+                  <div className="m10t text-center">
                     <i className="fa fa-info-circle"></i> <em>Park search is limited during beta</em>
                   </div>
                   {isLoading && (
@@ -940,7 +935,7 @@ export default function Explore({ location, data }) {
                                                             className="search-result-icon"
                                                             src={redAlertIcon}
                                                           />
-                                                          <div className="pl15 text-blue">
+                                                          <div className="pl15 text-blue pb20">
                                                             {a} (1)
                                                           </div>
                                                         </>
@@ -976,6 +971,7 @@ export default function Explore({ location, data }) {
                                                       <div className="park-af-list pr3">
                                                         <b>Activities:</b>
                                                       </div>
+                                                      <div></div>
                                                       {r.parkActivities.map(
                                                         (parkActivity, index2) => (
                                                           <div
@@ -1011,6 +1007,7 @@ export default function Explore({ location, data }) {
                                                       <div className="park-af-list pr3">
                                                         <b>Facilities:</b>
                                                       </div>
+                                                      <div></div>
                                                       {r.parkFacilities.map(
                                                         (parkFacility, index3) => (
                                                           <div
@@ -1446,19 +1443,17 @@ export default function Explore({ location, data }) {
         data={{
           activityItems,
           facilityItems,
+          quickSearchFilters,
           openFilter,
           setOpenFilter,
           quickSearch,
-          setQuickSearch,
           selectedActivities,
           setSelectedActivities,
           selectedFacilities,
           setSelectedFacilities,
+          setQuickSearch,
           searchText,
           setSearchText,
-          sortOption,
-          setSortOption,
-          sortOptions,
         }}
       />
       <Footer>{data.strapiWebsites.Footer}</Footer>
