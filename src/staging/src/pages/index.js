@@ -70,7 +70,7 @@ export default function Home({ data }) {
               <MainSearch />
             </div>
           <div className="home-page-search-bg">
-            <StaticImage src="../images/home/home_search_bg.png"
+            <StaticImage src="../images/home/search_bg.png"
               placeholder="blurred"
               loading="eager"
               style={{ display: "block" }}
