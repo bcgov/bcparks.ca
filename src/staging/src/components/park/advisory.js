@@ -61,7 +61,7 @@ export default function Advisory({ advisories }) {
           <>
             {textMap.length === 0 && (
               <Link to="#park-advisory-details-container">
-                There are no reported alerts for this park
+                There are no reported advisories for this park
               </Link>
             )}
             {textMap.length > 0 && (

@@ -70,9 +70,9 @@ const AdvisoryList = ({ advisories }) => {
 
     // alertMsg to use for aria-label on date circle, for screen readers
     if (capColor === "Grey") {
-      advisory.alertMsg = "Grey Alert - Informational Advisory"
+      advisory.alertMsg = "Grey Advisory - Informational Advisory"
     } else {
-      advisory.alertMsg = capColor + " Alert - " + level + " Urgency"; // eg Red alert - high urgency
+      advisory.alertMsg = capColor + " Advisory - " + level + " Urgency"; // eg Red alert - high urgency
     }
 
 
