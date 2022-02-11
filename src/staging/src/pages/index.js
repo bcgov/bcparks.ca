@@ -60,25 +60,25 @@ export default function Home({ data }) {
  
   const pageContent = data.strapiPages.Content || [];
   const menuContent = data?.allStrapiMenus?.nodes || []
-  const isMobile = useMediaQuery({ query: '(max-width: 414px)' })
 
   return (
     <div id="home">
-      <div className="park-search-container-wrapper max-width-override" fixed disableGutters>
+      <div className="park-search-container-wrapper home-max-width-override">
         <Header mode="internal" content={menuContent} />
           <div className="park-search">
             <div id="home-parks-search">
               <MainSearch />
             </div>
-          <div className="park-search-carousel">
-            <StaticImage src="../images/home/image006.png"
+          <div className="home-page-search-bg">
+            <StaticImage src="../images/home/home_search_bg.png"
               placeholder="blurred"
               loading="eager"
+              style={{ display: "block" }}
               alt="Mount Robson Park" />
           </div> 
         </div>
       </div>
-      <div className="home-content-width-override" fixed disableGutters={isMobile ? true: false}>
+      <div className="home-content-width-override">
         <div id="main">
           {pageContent.map(content =>
             <div key={content.strapi_component + '-' + content.id}>
@@ -87,7 +87,7 @@ export default function Home({ data }) {
           )}
         </div>
       </div>
-      <div className="max-width-override" fixed disableGutters>
+      <div className="home-max-width-override" fixed disableGutters>
         <Footer>
           {data.strapiWebsites.Footer}
         </Footer>

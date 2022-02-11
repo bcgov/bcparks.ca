@@ -8,11 +8,14 @@ $tabletBreakpoint: 768px;
 
 #main {
   padding-bottom: 40px;
-  overflow-x: hidden;
+  overflow-x: hidden; /* without this, there is a small right margin */
 }
 
-#home {
-  
+.home-page-search-bg {
+  .gatsby-image-wrapper {
+    display:block;
+    margin: 0 auto;
+  }
 }
 
 .v-align-abs {
@@ -355,8 +358,9 @@ $tabletBreakpoint: 768px;
     padding: 0px;
   }
 }
-.max-width-override {
+.home-max-width-override {
   max-width: 1920px !important;
+  margin: 0 auto;
 }
 
 #carousel-down {
