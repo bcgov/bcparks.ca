@@ -1,0 +1,19 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.redis.componentName }}-config
+  labels:
+    component: {{ .Values.redis.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+data:
+  redis.conf: |
+    appendonly no
+    cluster-enabled no
+    cluster-require-full-coverage no
+    cluster-migration-barrier 1
+    protected-mode no
+    save 900 1
+    save 300 10
+    save 60 10000

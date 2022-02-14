@@ -1,0 +1,68 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.redis.componentName }}
+  labels:
+    component: {{ .Values.redis.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      component: {{ .Values.redis.componentName }}
+      release: {{ .Release.Name }}
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        component: {{ .Values.redis.componentName }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Values.redis.componentName }}
+          command:
+            - redis-server
+          args:
+            - '/conf/redis.conf'
+            - '--requirepass'
+            - $(REDIS_PASSWORD)
+          resources:
+{{ toYaml .Values.redis.resources | indent 12 }}
+          image: {{ .Values.images.redis.name }}:{{ .Values.images.redis.tag }}
+          imagePullPolicy: {{ .Values.redis.imagePullPolicy }}
+          ports:
+            - name: {{ .Values.redis.service.portName }}
+              containerPort: {{ .Values.redis.service.port }}
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-{{ .Values.redis.componentName }}-secret
+          volumeMounts:
+            - name: conf
+              mountPath: /conf
+              readOnly: false
+            - name: data
+              mountPath: /data
+              readOnly: false
+          readinessProbe:
+                exec:
+                  command:
+                    - /bin/sh
+                    - -c
+                    - test "$(redis-cli -h $HOSTNAME -a $REDIS_PASSWORD ping)" == "PONG"
+                initialDelaySeconds: 15
+                timeoutSeconds: 1
+                failureThreshold: 3
+      volumes:
+        - name: conf
+          configMap:
+            name: {{ .Release.Name }}-{{ .Values.redis.componentName }}-config
+            defaultMode: 420
+        - name: data
+          emptyDir: {}

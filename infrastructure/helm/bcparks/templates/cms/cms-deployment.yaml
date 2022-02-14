@@ -35,6 +35,8 @@ spec:
               containerPort: {{ .Values.cms.service.port }}
               protocol: TCP
           env:            
+            - name: NODE_OPTIONS
+              value: --max_old_space_size=4096
             - name: NODE_ENV
               value: {{ .Values.cms.env.nodeEnv }}
             - name: STRAPI_TELEMETRY_DISABLED
@@ -97,7 +99,26 @@ spec:
             - name: STRAPI_SMTP_FROM
               value: {{ .Values.cms.env.smtpFrom }}
             - name: STRAPI_SMTP_REPLY_TO
-              value: {{ .Values.cms.env.smtpReplyTo }}
+              value: {{ .Values.cms.env.smtpReplyTo }}              
+            - name: STRAPI_CACHE_ENABLED
+              value: {{ .Values.cms.env.cacheEnabled | quote }}
+            - name: STRAPI_CACHE_TYPE
+              value: {{ .Values.cms.env.cacheType }}
+            - name: STRAPI_CACHE_MODELS
+              value: {{ .Values.cms.env.cacheModels }}
+            - name: STRAPI_CACHE_TTL
+              value: {{ .Values.cms.env.cacheTtl | quote }}
+            - name: STRAPI_CACHE_TIMEOUT
+              value: {{ .Values.cms.env.cacheTimeout | quote }}
+            - name: REDIS_HOST
+              value: {{ .Release.Name }}-{{ .Values.redis.componentName }}
+            - name: REDIS_PORT
+              value: {{ .Values.redis.service.port | quote }}
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-{{ .Values.redis.componentName }}-secret
+                  key: REDIS_PASSWORD
           envFrom:
             - secretRef:
                 name: {{ template "bcparks_cms_secret" . }}

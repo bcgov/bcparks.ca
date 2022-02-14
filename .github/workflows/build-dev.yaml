@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: strapi
-      BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-14:1-43
+      BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-14:1-56
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
