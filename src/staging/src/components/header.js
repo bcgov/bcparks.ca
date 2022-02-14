@@ -58,7 +58,7 @@ export default function Header({ content = [] }) {
         <Box className={classes.betaMsg}>This site is in beta</Box>
         <Box className={classes.linkDivider}>|</Box>
         <Box className={classes.link}>
-          <a href="#">Help us improve this by submitting here</a>
+          <a href="https://chefs.nrs.gov.bc.ca/app/form/success?s=d4b3917c-04da-4446-b733-372a09bdb7a9">Help us improve this by submitting here</a>
         </Box>
       </Box>
       <MegaMenu content={content} />
