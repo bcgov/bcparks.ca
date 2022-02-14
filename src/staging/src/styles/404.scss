@@ -1,6 +1,20 @@
 @import "./global.scss";
 
 $header-height: 100px;
+$footer-height: 413px;
+
+h1{
+  font-weight: 100;
+}
+
+.btn-outline-primary{
+  border: none !important;
+  justify-content: left !important;
+}
+
+.thumb-link{
+  color: white !important;
+}
 
 .not-found{
   min-height: 100vh;
@@ -10,7 +24,12 @@ $header-height: 100px;
 }
 
 .not-found-container{
-  height: calc(100vh - $header-height);
+  min-height: calc(100vh - $footer-height - $header-height);
+}
+
+.footer{
+  position: relative;
+  bottom: 0;
 }
 
 .home-button{
