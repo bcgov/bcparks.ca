@@ -29,7 +29,8 @@
         "parks.seo",
         "parks.link-card",
         "parks.page-section",
-        "parks.page-header"
+        "parks.page-header",
+        "parks.card-set"
       ]
     }
   }

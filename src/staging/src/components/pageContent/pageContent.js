@@ -1,9 +1,10 @@
 
 import React from "react"
 
-import LinkCard from "./linkCard"
+import HTMLArea from "../HTMLArea" 
 import PageSection from "../pageContent/pageSection"
-import HTMLArea from "../HTMLArea"
+import LinkCard from "./linkCard"
+
 
 /*
  * PageContent is a generic switch for different strapi content types.
@@ -22,12 +23,33 @@ export default function PageContent({ contentType, content }) {
       return (
         <LinkCard
           title={content.title}
+          subTitle={content.subTitle}
           url={content.url}
           imageUrl={content.imageUrl}
           imageAltText={content.imageAltText}
+          variation={content.variation}
+          buttonText={content.buttonText}
         ></LinkCard>
       )
     }
+  if (contentType === "parks.card-set") {
+    return (
+      <div className="row">
+        {content.cards.map(card =>
+          <LinkCard
+            key={card.id}
+            title={card.title}
+            subTitle={card.subTitle}
+            url={card.url}
+            imageUrl={card.imageUrl}
+            imageAltText={card.imageAltText}
+            variation={card.variation}
+            buttonText={card.buttonText}
+          ></LinkCard>
+        )}
+      </div>
+    )
+  }
     if (contentType === "parks.html-area") {
         return <HTMLArea isVisible={true}>{content.HTML}</HTMLArea>
     }
@@ -36,7 +58,6 @@ export default function PageContent({ contentType, content }) {
     }
 
     return null
-
 
 }
 

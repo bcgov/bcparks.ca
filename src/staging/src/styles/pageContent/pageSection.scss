@@ -19,3 +19,20 @@
       display: inline-block;
     }
 }
+
+
+/* style variation for home */
+#home {
+    .page-section {
+        text-align: center;
+    }
+    .page-section-title {
+        font-size:36px;
+        color: $colorBluePrimary;
+        font-weight: bold;
+    }
+    .page-section-hr {
+        margin: 20px;
+    }
+}
+

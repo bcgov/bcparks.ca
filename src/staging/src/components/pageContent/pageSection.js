@@ -1,4 +1,3 @@
-
 import React from "react"
 import HTMLArea from "../HTMLArea"
 import "../../styles/pageContent/pageSection.scss"

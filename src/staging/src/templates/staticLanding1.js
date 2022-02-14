@@ -25,7 +25,6 @@ const LandingPage = ({ pageContext }) => {
           Content {
             id
             strapi_component
-            HTML
           }
         }
       }
