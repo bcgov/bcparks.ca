@@ -24,8 +24,8 @@ export default function LinkCard({ url, title, subTitle, imageUrl, imageAltText,
       cardClasses += "link-card--horz"
       break;
     case "Footer": // TODO for inner pages
-      wrapClasses += ""
-      cardClasses += ""
+      wrapClasses += "col-12 col-md-6 link-card--footer-wrapper"
+      cardClasses += "link-card link-card--footer"
       break;
     case "LandingPage":
       cardClasses += "link-card--horz link-card--landing-page"
@@ -34,13 +34,12 @@ export default function LinkCard({ url, title, subTitle, imageUrl, imageAltText,
       cardClasses += ""
       break;
   }
-
   return (
     <div className={wrapClasses}>
     <Link
       className={cardClasses}
       to={url}
-    >
+      >
       <div className="card-img">
         <img src={imageUrl} alt={imageAltText ?? null} />
       </div>
