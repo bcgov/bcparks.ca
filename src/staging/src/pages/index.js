@@ -1,7 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
-import { useMediaQuery } from "react-responsive"
 
 import Header from "../components/header"
 import Footer from "../components/footer"
@@ -87,7 +86,7 @@ export default function Home({ data }) {
           )}
         </div>
       </div>
-      <div className="home-max-width-override" fixed disableGutters>
+      <div className="home-max-width-override">
         <Footer>
           {data.strapiWebsites.Footer}
         </Footer>

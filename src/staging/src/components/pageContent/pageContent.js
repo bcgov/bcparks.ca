@@ -37,6 +37,7 @@ export default function PageContent({ contentType, content }) {
       <div className="row">
         {content.cards.map(card =>
           <LinkCard
+            key={card.id}
             title={card.title}
             subTitle={card.subTitle}
             url={card.url}
