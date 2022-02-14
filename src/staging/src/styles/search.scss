@@ -7,6 +7,9 @@ $colorWhite: #fff;
 $colorBlack: #000;
 $colorGold: #fcba19;
 $colorTextBlack: #494949;
+$colorDarkGrey: #e9ecef; //needs to be updated when body background colour is changed
+$colorGreen: #008556;
+$colorRed: #D8292F;
 $colorYellow: rgba(252, 186, 25, 1);
 $bodyFont: 16px;
 $headingFont: 2rem;
@@ -386,7 +389,7 @@ $largeStart: 992px;
     }
 
     .MuiChip-deleteIcon {
-      margin-left: auto !important;
+      margin-left: 5px;
     }
   }
 
@@ -524,6 +527,7 @@ div[class$="-singleValue"] {
   margin-top: 10px !important;
 }
 
+
 .p2030 {
   padding: 20px 30px !important;
 }
@@ -538,6 +542,10 @@ div[class$="-singleValue"] {
 
 .pr15 {
   padding-right: 15px !important;
+}
+
+.pr20 {
+  padding-right: 20px;
 }
 
 .pr30 {
@@ -566,6 +574,10 @@ div[class$="-singleValue"] {
 
 .mt8 {
   margin-top: 8px !important;
+}
+
+.mb20 {
+  margin-bottom: 20px;
 }
 
 .h50p,
@@ -666,13 +678,11 @@ div[class$="-singleValue"] {
 }
 
 .text-green {
-  color: #008556;
-  font-weight: bold;
+  color: $colorGreen;
 }
 
 .text-red {
-  color: #D8292F;
-  font-weight: bold;
+  color: $colorRed;
 }
 
 .text-light-blue {
@@ -900,7 +910,7 @@ div[class$="-singleValue"] {
 
   .MuiChip-outlined {
     background-color: $colorBlue !important;
-    border-radius: 10px !important;
+    border-radius: 5000px !important;
   }
 
   .MuiChip-label {
@@ -982,6 +992,17 @@ div[class$="-singleValue"] {
     }
   }
 }
+
+.no-results-container {
+  min-height: 380px !important;
+  background-color: $colorDarkGrey;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  border-radius: 8px;
+}
+
+
 @media (min-width: 1350px) {
   .search-results-main {
     // Added 30px extra to compensate padding
