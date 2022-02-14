@@ -99,4 +99,4 @@ jobs:
       - name: Send alert if build fails 
         id: failure_alert
         run: |
-          curl -X POST -H 'Content-Type: application/json' --data '{"workflow":"${{github.workflow}}","repo":"${{github.repository}}"}' https://chat.developer.gov.bc.ca/hooks/aPYwd4PeHJh5Wnf7u/MmZPC2AZQoFKuSsGwzmxLtMwX3CmHZYLHYPqLnxAdhZsFLJX
+          curl -X POST -H 'Content-Type: application/json' --data '{"workflow":"${{github.workflow}}","repo":"${{github.repository}}"}' https://chat.developer.gov.bc.ca/hooks/${{ secrets.ROCKETCHAT_TOKEN }}
