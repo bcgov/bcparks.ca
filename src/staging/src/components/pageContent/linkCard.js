@@ -1,6 +1,5 @@
 import React from "react"
 import PropTypes from "prop-types";
-import { Link } from "gatsby"
 import "../../styles/pageContent/linkCard.scss"
 
 
@@ -36,9 +35,9 @@ export default function LinkCard({ url, title, subTitle, imageUrl, imageAltText,
   }
   return (
     <div className={wrapClasses}>
-    <Link
+    <a
       className={cardClasses}
-      to={url}
+      href={url}
       >
       <div className="card-img">
         <img src={imageUrl} alt={imageAltText ?? null} />
@@ -50,7 +49,7 @@ export default function LinkCard({ url, title, subTitle, imageUrl, imageAltText,
             {buttonText} <i className="fa fa-chevron-circle-right"></i>
           </div>}
       </div>
-      </Link>
+      </a>
     </div>
   )
 }
