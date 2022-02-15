@@ -22,7 +22,7 @@ export default function LinkCard({ url, title, subTitle, imageUrl, imageAltText,
       wrapClasses += "col-12 home-card-wrapper"
       cardClasses += "link-card--horz"
       break;
-    case "Footer": // TODO for inner pages
+    case "Footer": 
       wrapClasses += "col-12 col-md-6 link-card--footer-wrapper"
       cardClasses += "link-card link-card--footer"
       break;
