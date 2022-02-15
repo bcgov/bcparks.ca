@@ -29,6 +29,9 @@ images:
   landing:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/landing
     tag: latest
+  redis:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/redis
+    tag: 6.2.6-alpine
 
 cms:
   componentName: cms
@@ -54,6 +57,11 @@ cms:
     smtpPort: 25
     smtpFrom: noreply@gov.bc.ca
     smtpReplyTo: noreply@gov.bc.ca
+    cacheEnabled: true
+    cacheType: redis
+    cacheModels: public-advisory,protected-area
+    cacheTtl: 300000
+    cacheTimeout: 10000
 
   service:
     portName: strapi
@@ -214,3 +222,21 @@ landing:
   service:
     portName: landing
     port: 3000
+
+
+redis:
+  imagePullPolicy: Always
+
+  componentName: redis
+
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+    requests:
+      cpu: 25m
+      memory: 64Mi
+
+  service:
+    portName: redis
+    port: 6379
