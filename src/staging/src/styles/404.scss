@@ -38,3 +38,41 @@ h1{
   background-color: white;
 }
 
+.banner-icon{
+  font-size: 1.2rem;
+  margin-right: 1rem;
+}
+
+.banner-text{
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  a{
+    text-decoration: none;
+  }
+  a:hover{
+    color: #036;
+  }
+}
+
+.banner-text-dark-link{
+  font-size: 1rem;
+  a{
+    color: #036;
+    text-decoration: none;
+  }
+}
+
+.link-divider{
+  display: block;
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 576px) {
+  .banner-text, .banner-text-dark-link, .banner-icon{
+    font-size: 0.7rem;
+    margin-right: 0.1rem;
+  }
+  .link-divider{
+    display: none;
+  }
+}
