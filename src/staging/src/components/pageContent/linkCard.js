@@ -1,6 +1,5 @@
 import React from "react"
 import PropTypes from "prop-types";
-import { Link } from "gatsby"
 import "../../styles/pageContent/linkCard.scss"
 
 
@@ -23,9 +22,9 @@ export default function LinkCard({ url, title, subTitle, imageUrl, imageAltText,
       wrapClasses += "col-12 home-card-wrapper"
       cardClasses += "link-card--horz"
       break;
-    case "Footer": // TODO for inner pages
-      wrapClasses += ""
-      cardClasses += ""
+    case "Footer": 
+      wrapClasses += "col-12 col-md-6 link-card--footer-wrapper"
+      cardClasses += "link-card link-card--footer"
       break;
     case "LandingPage":
       cardClasses += "link-card--horz link-card--landing-page"
@@ -34,13 +33,12 @@ export default function LinkCard({ url, title, subTitle, imageUrl, imageAltText,
       cardClasses += ""
       break;
   }
-
   return (
     <div className={wrapClasses}>
-    <Link
+    <a
       className={cardClasses}
-      to={url}
-    >
+      href={url}
+      >
       <div className="card-img">
         <img src={imageUrl} alt={imageAltText ?? null} />
       </div>
@@ -51,7 +49,7 @@ export default function LinkCard({ url, title, subTitle, imageUrl, imageAltText,
             {buttonText} <i className="fa fa-chevron-circle-right"></i>
           </div>}
       </div>
-      </Link>
+      </a>
     </div>
   )
 }
