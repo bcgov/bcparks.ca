@@ -55,7 +55,7 @@ export default function Header({ content = [] }) {
     <>
       <Box className={classes.betaHeader + " bc-bg-yellow bc-color-blue-dk"}>
         <i className={"fa fa-info-circle " + classes.infoIcon}></i>
-        <Box className={classes.betaMsg}>This site is in <a href="https://beta.bcparks.ca/intro">beta</a></Box>
+        <Box className={classes.betaMsg}>This site is in<a href="https://beta.bcparks.ca/intro">beta</a></Box>
         <Box className={classes.linkDivider}>|</Box>
         <Box className={classes.link}>
           <a href="https://chefs.nrs.gov.bc.ca/app/form/success?s=d4b3917c-04da-4446-b733-372a09bdb7a9">Help us improve this site by submitting here</a>
