@@ -12,6 +12,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
+import StaticIcon from "./staticIcon"
 
 export default function CampingDetails({ data }) {
   const campingFacilities = data.parkFacilities.filter(facility =>
@@ -107,12 +108,7 @@ export default function CampingDetails({ data }) {
                       id={index}
                     >
                       <Box mr={1}>
-                        <img
-                          src={facility.facilityType.icon}
-                          alt={facility.facilityType.icon ? facility.facilityType.facilityName : ""}
-                          width="48"
-                          height="48"
-                        />
+                        <StaticIcon name={facility.facilityType.icon} size={48} />
                       </Box>
                       <HtmlContent className="pl15 p10t">
                         {facility.facilityType.facilityName}
