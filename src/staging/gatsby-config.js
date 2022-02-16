@@ -4,8 +4,8 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    title: `BC Parks Staging Site`,
-    description: `BC Parks Staging Site`,
+    title: `BC Parks`,
+    description: `BC Parks`,
     author: `@bcparks`,
     apiURL: process.env.REACT_APP_CMS_BASE_URL,
   },
