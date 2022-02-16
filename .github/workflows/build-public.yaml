@@ -29,7 +29,7 @@ jobs:
               echo "ENV_SUFFIX=test" >> $GITHUB_ENV
               echo "IMAGE_TAG=test" >> $GITHUB_ENV
               echo "REACT_APP_CMS_BASE_URL=https://bcparks-api-gov-bc-ca.test.api.gov.bc.ca" >> $GITHUB_ENV
-          elif [[ "${{ github.event.client_payload.env }}" == "prod" ]]; then
+          elif [[ "${{ github.event.client_payload.env }}" == "prod" || "${{ github.event.inputs.buildEnv }}" == "prod" ]]; then
               echo "ENV_SUFFIX=prod" >> $GITHUB_ENV
               echo "IMAGE_TAG=prod" >> $GITHUB_ENV
               echo "REACT_APP_CMS_BASE_URL=https://bcparks.api.gov.bc.ca" >> $GITHUB_ENV
