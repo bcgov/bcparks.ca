@@ -151,8 +151,8 @@ export default function ParkTemplate({ data }) {
     {
       text:
         !isLoadingAdvisories && !advisoryLoadError
-          ? `Alerts (${advisories.length})`
-          : "Alerts",
+          ? `Advisories (${advisories.length})`
+          : "Advisories",
       url: "park-advisory-details-container",
       visible: true,
     },

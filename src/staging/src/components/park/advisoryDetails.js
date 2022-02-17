@@ -102,7 +102,7 @@ export default function AdvisoryDetails({ advisories }) {
       <Paper elevation={0}>
         <Grid container>
           <Grid item xs={6}>
-            <Heading>{`Alerts (${advisories.length})`}</Heading>
+            <Heading>{`Advisories (${advisories.length})`}</Heading>
           </Grid>
           <Grid
             item
@@ -127,7 +127,7 @@ export default function AdvisoryDetails({ advisories }) {
           </Grid>
         </Grid>
         {advisories.length === 0 && (
-          <HtmlContent>There are no reported alerts for this park</HtmlContent>
+          <HtmlContent>There are no reported advisories for this park</HtmlContent>
         )}
         {advisories.length > 0 && (
           <Grid container spacing={1}>
