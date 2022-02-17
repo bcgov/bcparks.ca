@@ -28,7 +28,7 @@ export default function ParkHeader({
   const menuItems = useRef([...menu])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
-  const reservationsURL = "http://camping.bcparks.ca";
+  const reservationsURL = "https://camping.bcparks.ca";
 
   useEffect(() => {
     menuItems.current[currentIndex].visible = false
