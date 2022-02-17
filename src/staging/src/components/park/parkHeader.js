@@ -28,6 +28,7 @@ export default function ParkHeader({
   const menuItems = useRef([...menu])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
+  const reservationsURL = "https://camping.bcparks.ca";
 
   useEffect(() => {
     menuItems.current[currentIndex].visible = false
@@ -63,7 +64,7 @@ export default function ParkHeader({
                 {hasReservations && (
                   <Button
                     className="yellow-button"
-                    href="https://discovercamping.ca/"
+                    href={reservationsURL}
                   >
                     Book a campsite
                   </Button>
