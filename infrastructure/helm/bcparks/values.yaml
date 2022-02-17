@@ -22,7 +22,7 @@ images:
     tag: latest
   patroni:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/patroni-postgres
-    tag: 12.4-latest
+    tag: 2.0.1-12.4
   backup:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/backup-container
     tag: postgres-latest
