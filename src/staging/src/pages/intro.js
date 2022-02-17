@@ -25,16 +25,19 @@ const IntroPage = ({ data }) => {
 
   return (
     <>
-      <Seo
-        title={seoContent.metaTitle}
-        description={seoContent.description}
-        keywords={seoContent.metaKeywords}
-      />
+      {seoContent && (
+        <Seo
+          title={seoContent.metaTitle}
+          description={seoContent.description}
+          keywords={seoContent.metaKeywords}
+        />
+      )}
+
       <div className="max-width-override">
         <Header mode="internal" content={menuContent} />
       </div>
 
-      <HTMLArea isVisible={true}>{htmlContent.HTML}</HTMLArea>
+      {htmlContent && <HTMLArea isVisible={true}>{htmlContent.HTML}</HTMLArea>}
 
       <div className="max-width-override">
         <Footer>{data.strapiWebsites.Footer}</Footer>
