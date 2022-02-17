@@ -245,10 +245,10 @@ export default function Explore({ location, data }) {
 
   const handleFacilityCheck = (facility, event) => {
     if (event.target.checked) {
-      setSelectedFacilities([...selectedActivities, facility])
+      setSelectedFacilities([...selectedFacilities, facility])
     } else {
       setSelectedFacilities([
-        ...selectedFacilities.filter(a => a.value !== facility.value),
+        ...selectedFacilities.filter(f => f.value !== facility.value),
       ])
     }
   }
