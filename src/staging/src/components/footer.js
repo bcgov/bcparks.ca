@@ -234,9 +234,12 @@ export default function Footer() {
   return (
     <>
       {/* The next 3 lines will load the Snowplow script mounted from OpenShift configmap. */}
-      <Helmet>
-        <script src="/_scripts/snowplow.js"/>
-      </Helmet>
+      {process.env.GATSBY_ENABLE_SNOWPLOW === "true" && (
+        <Helmet>
+          <script src="/_scripts/snowplow.js" />
+        </Helmet>
+      )}
+      
       <footer id="footer">
         <div className="home-footer" id="home-footer">
           <Box sx={{ margin: "40px 0" }}>
