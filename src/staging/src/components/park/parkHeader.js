@@ -116,7 +116,7 @@ export default function ParkHeader({
               <div className="p20t">
                 <Button
                   className="yellow-button full-width"
-                  href="https://discovercamping.ca/"
+                  href={reservationsURL}
                 >
                   Book a campsite
                 </Button>
