@@ -13,6 +13,7 @@ env:
   IMAGE_NAME: public
   BUILDER_IMAGE_NAME: public-builder
   DEPLOYMENT_NAME: public
+  GATSBY_ENABLE_SNOWPLOW: true
 
 jobs:
   build:

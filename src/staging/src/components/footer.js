@@ -5,6 +5,7 @@ import {
   InputLabel,
   TextField
 } from "@material-ui/core"
+import { Helmet } from "react-helmet";
 
 import SearchIcon from "@material-ui/icons/Search"
 import bcParksWordmark from "../images/BCParks_Wordmark_White.svg"
@@ -232,6 +233,13 @@ export default function Footer() {
 
   return (
     <>
+      {/* The next 3 lines will load the Snowplow script mounted from OpenShift configmap. */}
+      {process.env.GATSBY_ENABLE_SNOWPLOW === "true" && (
+        <Helmet>
+          <script src="/_scripts/snowplow.js" />
+        </Helmet>
+      )}
+      
       <footer id="footer">
         <div className="home-footer" id="home-footer">
           <Box sx={{ margin: "40px 0" }}>
