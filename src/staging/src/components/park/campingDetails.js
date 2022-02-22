@@ -41,7 +41,7 @@ export default function CampingDetails({ data }) {
             {data.hasReservations && (
               <Button
                 className="yellow-button full-width"
-                href="https://discovercamping.ca/"
+                href="https://camping.bcparks.ca/"
               >
                 Book a campsite
               </Button>
@@ -65,7 +65,7 @@ export default function CampingDetails({ data }) {
               {data.hasReservations && (
                 <Button
                   className="yellow-button"
-                  href="https://discovercamping.ca/"
+                  href="https://camping.bcparks.ca/"
                 >
                   Book a campsite
                 </Button>
