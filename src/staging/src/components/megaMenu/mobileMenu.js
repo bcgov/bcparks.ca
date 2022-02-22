@@ -72,7 +72,7 @@ const MobileMenu = ({ linkStructure }) => {
         })}
         {targetIsRoot &&
           <li className={`text-center nav-item book-campsite-item`}>
-            <a href="https://www.discovercamping.ca" rel="noopener noreferrer nofollow" target="_blank">
+            <a href="https://camping.bcparks.ca" rel="noopener noreferrer nofollow" target="_blank">
               <button type="button" className={`btn px-4 py-3`} id="book-campsite">Book a campsite</button>
             </a>
           </li>
@@ -103,7 +103,7 @@ const MobileMenu = ({ linkStructure }) => {
           )
         })}
         <li className={`text-center nav-item book-campsite-item`}>
-          <a href="https://www.discovercamping.ca" rel="noreferrer" target="_blank">
+          <a href="https://camping.bcparks.ca" rel="noreferrer" target="_blank">
             <button type="button" className={`btn px-4 py-3`} id="book-campsite">Book a campsite</button>
           </a>
         </li>
@@ -125,7 +125,7 @@ const MobileMenu = ({ linkStructure }) => {
         <a className="navbar-brand" href="/">
           <img src={BCParksLogo} className="logo" alt="BC Parks logo" />
         </a>
-        <a href="https://www.discovercamping.ca" rel="noreferrer" target="_blank" className="btn book-campsite-btn mr-2">Book a campsite</a>
+        <a href="https://camping.bcparks.ca" rel="noreferrer" target="_blank" className="btn book-campsite-btn mr-2">Book a campsite</a>
         <button
           className={`navbar-toggler border-0 float-right collapsed`}
           type="button"
