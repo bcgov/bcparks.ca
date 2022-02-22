@@ -35,6 +35,7 @@ import parksLogo from "../images/Mask_Group_5.png"
 import Carousel from "react-material-ui-carousel"
 import SearchFilter from "../components/search/searchFilter"
 import NoSearchResults from "../components/search/noSearchResults"
+import Seo from "../components/seo"
 
 export const query = graphql`
   query {
@@ -454,6 +455,7 @@ export default function Explore({ location, data }) {
 
   return (
     <>
+      <Seo title="Explore"/>
       <Header content={menuContent} />
       <div className="search-body">
         <div className="search-results-main container">
