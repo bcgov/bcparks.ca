@@ -100,7 +100,7 @@ const DesktopMenu = ({ linkStructure }) => {
           <Link to="/">
             <img className="bc-parks-logo" src={BCParksLogo} alt="BC Parks logo" />
           </Link>
-          <a href="https://camping.bcparks.ca" rel="noreferrer" target="_blank" className="btn book-campsite-btn">Book a campsite</a>
+          <a href="https://camping.bcparks.ca" className="btn book-campsite-btn">Book a campsite</a>
         </nav>
       </div>
       <div id="desktopNavMenu">
