@@ -212,12 +212,13 @@ const PublicAdvisoryPage = ({ data }) => {
     // This needs to be a separate call, because we need the 
     // unfiltered count for the header
 
-    let q = "/public-advisories/count";
+    // exclude unpublished parks
+    let q = "/public-advisories/count?protectedAreas.published_at_null=false";
 
     if (advisoryType === "wildfire") {
-      q += "?eventType.eventType_contains=wildfire";
+      q += "&eventType.eventType_contains=wildfire";
     } else if (advisoryType === "flood") {
-      q += "?eventType.eventType_contains=flood";
+      q += "&eventType.eventType_contains=flood";
     }
 
     const newApiCountCall = apiUrl + q;
@@ -238,7 +239,8 @@ const PublicAdvisoryPage = ({ data }) => {
 
   const getApiQuery = useCallback((advisoryTypeFilter) => {
 
-    let q = "?_sort=advisoryDate:DESC"; // Order by date
+    // Order by date and exclude unpublished parks
+    let q = "?protectedAreas.published_at_null=false&_sort=advisoryDate:DESC";
 
     if (advisoryTypeFilter === "wildfire") {
       q += "&eventType.eventType_contains=wildfire";

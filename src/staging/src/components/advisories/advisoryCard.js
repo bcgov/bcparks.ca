@@ -208,7 +208,7 @@ const AdvisoryCard = ({ advisory, index }) => {
                     )}
                     <div>
                     {advisory.protectedAreas.length > 0 &&
-                    advisory.protectedAreas.map((par, index) => (
+                    advisory.protectedAreas.filter(park => park.published_at).map((par, index) => (
                         <Chip
                         size="small"
                         variant="outlined"
