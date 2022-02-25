@@ -137,7 +137,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 async function createParks({ graphql, actions, reporter }) {
   const parkQuery = `
   {
-    allStrapiProtectedArea {
+    allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}) {
       nodes {
         id
         orcs
