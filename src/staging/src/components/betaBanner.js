@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
     minHeight: '55px',
     fontSize: "1rem",
     display: "flex",
+    flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "center",
     "& a": {
@@ -23,8 +24,9 @@ const useStyles = makeStyles(theme => ({
       color: "#036"
     },
     [theme.breakpoints.down('sm')]: {
-      minHeight: '36px',
-      fontSize: "0.7rem"
+      minHeight: '40px',
+      fontSize: "0.8rem",
+      padding: "5px"
     }
   },
   betaMsg: {
@@ -32,9 +34,6 @@ const useStyles = makeStyles(theme => ({
   },
   linkDivider: {
     margin: "0px 4px",
-    [theme.breakpoints.down('sm')]: { // otherwise shifting margins
-      display: "none"
-    }
   },
   link: {
     "& a": { color: "#036" }
@@ -52,17 +51,15 @@ export default function BetaBanner() {
   const classes = useStyles();
 
   return (
-    <>
-      <Box className={classes.betaHeader + " bc-bg-yellow bc-color-blue-dk"}>
-        <i className={"fa fa-info-circle " + classes.infoIcon}></i>
-        <Box className={classes.betaMsg}>This site is in<Link to="/intro">beta</Link></Box>
-        <Box className={classes.linkDivider}>|</Box>
-        <Box className={classes.betaMsg}>
-          <a href="https://chefs.nrs.gov.bc.ca/app/form/submit?f=62ae996e-0f0b-4c2c-a8ae-6a32bb1b046f">Feedback Form</a>
-        </Box>
-        <Box className={classes.linkDivider}>|</Box>
-        <Box className={classes.betaMsg}>Return to<a href="https://bcparks.ca/">bcparks.ca</a></Box>
+    <Box className={classes.betaHeader + " bc-bg-yellow bc-color-blue-dk"}>
+      <i className={"fa fa-info-circle " + classes.infoIcon}></i>
+      <Box className={classes.betaMsg}>This site is in<Link to="/intro">beta</Link></Box>
+      <Box className={classes.linkDivider}>|</Box>
+      <Box className={classes.betaMsg}>
+        <a href="https://chefs.nrs.gov.bc.ca/app/form/submit?f=62ae996e-0f0b-4c2c-a8ae-6a32bb1b046f">Feedback Form</a>
       </Box>
-    </>
+      <Box className={classes.linkDivider}>|</Box>
+      <Box className={classes.betaMsg}>Return to<a href="https://bcparks.ca/">bcparks.ca</a></Box>
+    </Box>
   )
 }
