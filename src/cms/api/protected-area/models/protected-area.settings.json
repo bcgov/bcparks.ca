@@ -155,6 +155,11 @@
     },
     "slug": {
       "type": "string"
+    },
+    "isDisplayed": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     }
   }
 }
