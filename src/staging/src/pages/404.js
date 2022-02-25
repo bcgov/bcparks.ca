@@ -4,19 +4,12 @@ import Seo from "../components/seo"
 import BCParksLogo from "../images/bcparks-h-rgb-rev.png"
 import Footer from "../components/footer"
 import ThumbLink from "../components/thumbLink"
-import { Box } from "@material-ui/core"
 import "../styles/404.scss"
+import BetaBanner from "../components/betaBanner"
 
 const NotFoundPage = () => (
   <>
-  <Box className="bc-bg-yellow bc-color-blue-dk text-center d-flex align-items-center justify-content-center p-2">
-        <i className="banner-icon fa fa-info-circle"></i>
-        <Box className="banner-text">This site is in <a href="https://beta.bcparks.ca/intro">beta</a></Box>
-        <Box className="link-divider">|</Box>
-        <Box className="banner-text-dark-link">
-          <a href="https://chefs.nrs.gov.bc.ca/app/form/success?s=d4b3917c-04da-4446-b733-372a09bdb7a9">Help us improve this site by submitting here</a>
-        </Box>
-      </Box>
+    <BetaBanner></BetaBanner>
     <Seo title="404: Not found" />
     <div className="not-found">
       <nav className="navbar navbar-dark" id="desktopNav">
