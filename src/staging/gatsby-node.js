@@ -97,6 +97,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   type StrapiProtectedArea implements Node {
     orcs: Int
     hasDayUsePass: String
+    isDisplayed: Boolean
     parkContact: String
     urlPath: String @parkPath
     parkActivities: [StrapiParkActivities]
@@ -137,7 +138,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 async function createParks({ graphql, actions, reporter }) {
   const parkQuery = `
   {
-    allStrapiProtectedArea {
+    allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}) {
       nodes {
         id
         orcs
