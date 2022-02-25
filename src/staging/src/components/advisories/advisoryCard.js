@@ -56,7 +56,7 @@ const AdvisoryCard = ({ advisory, index }) => {
                       )}
                       <div>
                         {advisory.protectedAreas.length > 0 &&
-                          advisory.protectedAreas.filter(park => park.published_at).map((par, index) => (
+                          advisory.protectedAreas.filter(park => park.published_at && park.isDisplayed).map((par, index) => (
                             <Badge
                               pill variant="light"
                               className="parkLink my-2"
