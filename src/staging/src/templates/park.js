@@ -126,6 +126,7 @@ export default function ParkTemplate({ data }) {
     parkOverviewRef,
     accessibilityRef,
     advisoryRef,
+    safetyRef,
     campingRef,
     facilityRef,
     activityRef,
