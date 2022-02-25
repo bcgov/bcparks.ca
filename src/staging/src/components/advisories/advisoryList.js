@@ -2,11 +2,6 @@
 import React from "react"
 import AdvisoryCard from "../advisories/advisoryCard"
 
-import {
-  Grid,
-} from "@material-ui/core"
-
-   
 const AdvisoryList = ({ advisories }) => {
   // NB when paging was done in front-end, this component
   // had more work to do. However this component still processes
@@ -122,13 +117,11 @@ const AdvisoryList = ({ advisories }) => {
   return (
     <>  
     { haveAdvisories && (       
-      <Grid
-        container
-          spacing={1}>
+      <div>
           {advisories.map((advisory, index) => (
            <AdvisoryCard key={index} advisory={advisory} index={index}></AdvisoryCard>
           ))}
-      </Grid>
+      </div>
     )}
     </>
   );
