@@ -14,10 +14,10 @@ $mobileMenuBackHeight:              calc(1.4em + 40px);
 $mobileMenuBackOffset:              calc(0px - (1.4em + 40px));
 $mobileMenuWidth:                   100%;
 
-.bc-parks-logo {
+/*.bc-parks-logo {
   max-height: 50px;
   max-width: 199px;
-}
+}*/
 
 #desktopNav {
   background-color: $colorBlue;
@@ -43,8 +43,9 @@ nav {
   max-width: 1440px;
 }
 
-.book-campsite-btn {
+a.btn.book-campsite-btn {
   background-color: $colorLight;
+  border: solid 1px transparent;
   color: $colorBlue;
   font-size: 13px;
   padding: 0px 30px;
@@ -53,10 +54,16 @@ nav {
   border-radius:20px;
   &:hover {
     background-color: $colorLight;
+    color: $colorBlue;
     text-decoration: underline;
     outline: 1px solid $colorGold;
   }
+  @media screen and (max-width: $desktopBreakpoint) {
+    margin-right:30px;
+  }
+
 }
+
 
 .list-wrapper {
   background: $colorLightBlue;

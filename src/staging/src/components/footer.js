@@ -215,6 +215,7 @@ export default function Footer() {
     { type: "link", display: "News releases", link: "https://engage.gov.bc.ca/bcparksblog/"  },
   ]
   const utilityMenu = [
+    { display: "Sitemap", link: "/sitemap"},    
     { display: "Accessibility", link: "/accessibility" },
     { display: "Careers", link: "/careers" },
     { display: "Disclaimer", link: "/disclaimer" },

@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import axios from "axios"
 import Header from "../components/header"
-import Menu from "../components/menu"
 import Footer from "../components/footer"
 
 import {
@@ -399,7 +398,6 @@ const PublicAdvisoryPage = ({ data }) => {
         <title>BC Parks | Public Advisories</title>
       </Helmet>
       <Header mode="internal" content={menuContent} />
-      <Menu>{data.strapiWebsites.Navigation}</Menu>
       <Container>
 
         <br />

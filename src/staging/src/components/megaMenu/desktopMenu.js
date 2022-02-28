@@ -5,7 +5,6 @@ import { isTablet } from "react-device-detect"
 import BCParksLogo from "../../images/bcparks-h-rgb-rev.png"
 
 const DesktopMenu = ({ linkStructure }) => {
-  const formattedContent = formatMenuTree(linkStructure)
 
   /**
    * Certain top level menu links are designed to dropdown in response to hover on desktop view.
@@ -72,27 +71,6 @@ const DesktopMenu = ({ linkStructure }) => {
     }
   }
 
-  /**
-   * Nest child menus from the second layer of IA down to the fourth. Used in conjuction with generateMenuItem().
-   * @param {Object[]} menu 
-   * @returns {Object[]}
-   */
-  function formatMenuTree(menu) {
-    const formattedMenuTree = menu.filter(i => i?.strapiParent?.title === 'Home')
-    formattedMenuTree.forEach(menuTree => {
-      if (menuTree.strapiChildren.length) {
-        menuTree.strapiChildren.forEach(child => {
-          const childSubMenus = menu.filter(i => i?.strapiParent?.id === child.id).map(c => {
-            delete c.strapiChildren
-            return { ...c }
-          })
-          return child.strapiChildren = childSubMenus
-        })
-      }
-    })
-    return formattedMenuTree
-  }
-
   return (
     <>
       <div className="bc-bg-blue-dk">
@@ -107,7 +85,7 @@ const DesktopMenu = ({ linkStructure }) => {
         <nav className="desktopNavWrapper">
           <div className="bc-bg-blue-md">
             <ul className="menu menu-bar justify-content-center mx-auto">
-              {formattedContent.map(fc => {
+              {linkStructure.map(fc => {
                 return generateMenuItem(fc)
               })}
             </ul>
