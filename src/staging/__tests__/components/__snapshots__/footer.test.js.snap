@@ -269,6 +269,15 @@ exports[`Footer renders correctly 1`] = `
           className="makeStyles-utilityLink-13"
         >
           <a
+            href="/sitemap"
+          >
+            Sitemap
+          </a>
+        </div>
+        <div
+          className="makeStyles-utilityLink-13"
+        >
+          <a
             href="/accessibility"
           >
             Accessibility
