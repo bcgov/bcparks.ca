@@ -1,0 +1,53 @@
+.expand-button{
+  background: transparent;
+  border: none;
+
+  &:hover{
+    background-color: #e7ebf2 ;
+    color: #3f51b5;
+  }
+
+  &:active{
+    background-color: #d7dee8 !important;
+    color: #3f51b5 !important;
+  }
+
+  &:focus{
+    border:none !important;
+    box-shadow: none !important;
+  }
+}
+
+.small {
+  width: 25px;
+  height: 25px;
+  border-radius: 4px;
+}
+
+.accordion-toggle {
+  cursor: pointer;
+}
+
+.expand-icon{
+  color: rgba(0, 0, 0, 0.54);
+
+  & .open{
+    font-size: 1.5rem;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+    transition: 0.3s;
+  }
+
+  & .close{
+    font-size: 1.5rem;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    transition: 0.3s;
+  }
+}
