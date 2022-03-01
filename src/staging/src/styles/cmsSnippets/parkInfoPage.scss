@@ -1,0 +1,56 @@
+@import "../global.scss";
+
+.booking-button {
+  background-color: $colorGold !important;
+  border: 2px solid $colorGold !important;
+
+  &:hover{
+    background-color: transparent !important;
+    border: 2px solid $colorGold !important;
+    text-decoration: underline;
+  }
+}
+
+.expand-icon{
+  color: rgba(0, 0, 0, 0.54);
+
+  & .open{
+    font-size: 1.5rem;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+    transition: 0.3s;
+  }
+
+  & .close{
+    font-size: 1.5rem;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    transition: 0.3s;
+  }
+}
+
+.park-details {
+  background-color: white;
+  color: $colorBlue;
+  border-radius: 4px;
+  border: 1px solid $colorBlue;
+
+  &:hover{
+    border: 1px solid $colorGold;
+  }
+}
+
+.accordion-toggle {
+  cursor: pointer;
+}
+
+.accordion-header{
+  font-size: 16px;
+  color: #003366 !important;
+}

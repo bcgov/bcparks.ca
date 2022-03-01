@@ -1,130 +1,129 @@
 import React, { useState } from "react"
-import {
-  Box,
-  Button,
-  Grid,
-  Paper,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from "@material-ui/core"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import "../../styles/cmsSnippets/parkInfoPage.scss"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import Accordion from "react-bootstrap/Accordion"
+import Container from "react-bootstrap/Container"
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
-import Spacer from "./spacer"
 import StaticIcon from "./staticIcon"
+import { navigate } from "gatsby"
+
+function toCamping() {
+  navigate("https://camping.bcparks.ca/");
+}
 
 export default function CampingDetails({ data }) {
   const campingFacilities = data.parkFacilities.filter(facility =>
     facility.facilityType.facilityName.toLowerCase().includes("camping")
-  ) 
+  )
   const [reservationsExpanded, setReservationsExpanded] = useState(false)
   const [expanded, setExpanded] = useState(Array(campingFacilities.length).fill(false))
 
   if (campingFacilities.length === 0) return null
 
-  const toggleExpand = index => (event, isExpanded) => {
-    expanded[index] = isExpanded
+  const toggleExpand = index => {
+    expanded[index] = !expanded[index]
     setExpanded([...expanded])
   }
 
-  return (
-    <Grid
-      item
-      xs={12}
-      id="park-camping-details-container"
-      className="anchor-link"
-    >
-      <Paper elevation={0}>
-        <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-          <Grid item xs={12} container>
-            {data.hasReservations && (
-              <Button
-                className="yellow-button full-width"
-                href="https://camping.bcparks.ca/"
-              >
-                Book a campsite
-              </Button>
-            )}
-          </Grid>
-          <br />
-        </div>
-        <Grid container>
-          <Grid item xs={6}>
-            <Heading>Camping</Heading>
-          </Grid>
+  const toggleReservations = () => {
+    setReservationsExpanded(!reservationsExpanded);
+  }
 
-          <Grid
-            item
-            xs={6}
-            container
-            justifyContent="flex-end"
-            alignItems="flex-start"
-          >
-            <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-              {data.hasReservations && (
-                <Button
-                  className="yellow-button"
-                  href="https://camping.bcparks.ca/"
-                >
-                  Book a campsite
-                </Button>
+  return (
+    <div className="mb-5">
+      <Row
+        id="park-camping-details-container"
+        className="anchor-link d-flex justify-content-between"
+      >
+        {data.hasReservations && (
+          <Col lg={{ span: 4, order: 'last' }} xl={3} md={{ span: 12, order: 'first' }}
+            className="mb-3">
+            <button
+              className="btn btn-warning btn-block booking-button p-2"
+              onClick={() => toCamping()}
+            >
+              Book a campsite
+            </button>
+          </Col>
+        )}
+        <Col md={{ order: 'last' }} lg={{ order: 'first' }}>
+          <Heading>Camping</Heading>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          {campingFacilities.length > 0 && (
+            <div id="park-camping-list-container" className="anchor-link">
+              {data.reservations && (
+                <div key="reservation">
+                  <Accordion
+                    key="reservations"
+                    aria-controls="reservations"
+                    className="park-details mb-2"
+                  >
+                    <Accordion.Toggle as={Container}
+                      eventKey="0"
+                      id="panel1a-header"
+                      onClick={() => toggleReservations()}
+                    >
+                      <div className="d-flex justify-content-between p-3 accordion-toggle">
+                        <HtmlContent className="accordion-header pl-2">Reservations</HtmlContent>
+                        <div className="d-flex align-items-center expand-icon">
+                          <i className={(reservationsExpanded ? "open " : "close ") + "fa fa-angle-down mx-3"}></i>
+                        </div>
+                      </div>
+                    </Accordion.Toggle>
+
+                    <Accordion.Collapse
+                      eventKey="0"
+                    >
+                      <div className="p-3 pl-5">
+                        <HtmlContent>{data.reservations}</HtmlContent>
+                      </div>
+                    </Accordion.Collapse>
+                  </Accordion>
+                </div>
               )}
             </div>
-          </Grid>
-        </Grid>
-        {campingFacilities.length > 0 && (
-          <div id="park-camping-list-container" className="anchor-link">
-            <Grid container spacing={2}>
-              {data.reservations && (
-                <Grid key="reservation" item xs={12}>
-                  <Accordion
-                    expanded={reservationsExpanded}
-                    onChange={() => setReservationsExpanded(!reservationsExpanded)}
-                    className="park-details-shaded"
-                  >
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="reservations"
-                      id="panel1a-header"
-                    >
-                      <HtmlContent>Reservations</HtmlContent>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <HtmlContent>{data.reservations}</HtmlContent>
-                    </AccordionDetails>
-                  </Accordion>
-                </Grid>
-              )}
-              {campingFacilities.map((facility, index) => (
-                <Grid key={index} item xs={12}>
-                  <Accordion
-                    expanded={expanded[index]}
-                    onChange={toggleExpand(index)}
-                  >
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls={facility.facilityType.facilityName}
-                      id={index}
-                    >
-                      <Box mr={1}>
-                        <StaticIcon name={facility.facilityType.icon} size={48} />
-                      </Box>
-                      <HtmlContent className="pl15 p10t">
-                        {facility.facilityType.facilityName}
-                      </HtmlContent>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <HtmlContent>{facility.description}</HtmlContent>
-                    </AccordionDetails>
-                  </Accordion>
-                </Grid>
-              ))}
-            </Grid>
-          </div>
-        )}
-        <Spacer />
-      </Paper>
-    </Grid>
+          )}
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          {campingFacilities.map((facility, index) => (
+            <Accordion
+              key={"campingFacility" + index}
+              className="park-details mb-2"
+            >
+              <Accordion.Toggle as={Container}
+                aria-controls={facility.facilityType.facilityName}
+                eventKey="0"
+                id={index}
+                onClick={() => toggleExpand(index)}
+              >
+                <div className="d-flex justify-content-between p-3 accordion-toggle">
+                  <div className="d-flex justify-content-left align-items-center pl-2">
+                    <StaticIcon name={facility.facilityType.icon} size={48} />
+                    <HtmlContent className="pl-3 accordion-header">{facility.facilityType.facilityName}</HtmlContent>
+                  </div>
+                  <div className="d-flex align-items-center expand-icon">
+                    <i className={(expanded[index] ? "open " : "close ") + "fa fa-angle-down mx-3"}></i>
+                  </div>
+                </div>
+              </Accordion.Toggle>
+              <Accordion.Collapse
+                eventKey="0"
+              >
+                <div className="p-4">
+                  <HtmlContent>{facility.description}</HtmlContent>
+                </div>
+              </Accordion.Collapse>
+            </Accordion>
+          ))}
+        </Col>
+      </Row>
+    </div>
   )
 }
