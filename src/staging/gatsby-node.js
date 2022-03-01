@@ -71,6 +71,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
   type StrapiParkActivities implements Node {
     name: String
+    description: String
     isActive: Boolean
     isActivityOpen: Boolean
     activityType: StrapiActivityTypes @link(by: "strapiId")
@@ -78,15 +79,10 @@ exports.createSchemaCustomization = ({ actions }) => {
 
   type StrapiParkFacilities implements Node {
     name: String
+    description: String
     isActive: Boolean
-    isActivityOpen: Boolean
+    isFacilityOpen: Boolean
     facilityType: StrapiFacilityTypes @link(by: "strapiId")
-  }
-
-  type StrapiParkOperation implements Node {
-    orcs: Int
-    isActive: Boolean 
-    hasReservations: Boolean
   }
 
   type StrapiParkPhoto implements Node {
@@ -104,7 +100,104 @@ exports.createSchemaCustomization = ({ actions }) => {
     urlPath: String @parkPath
     parkActivities: [StrapiParkActivities]
     parkFacilities: [StrapiParkFacilities]
+    parkOperation: StrapiParkOperation
+    parkOperationSubAreas: [StrapiParkOperationSubAreas]
   }
+
+  type StrapiParkOperationSubAreaDates implements Node {
+    operatingYear: String
+  }
+
+  type StrapiParkOperationSubAreaType implements Node {
+    isActive: Boolean
+    subAreaType: String
+    subAreaTypeCode: String
+    iconUrl: String
+  }
+
+  type StrapiParkOperation implements Node {
+    openDate: Date
+    closeDate: Date
+    isActive: Boolean
+    hasReservations: Boolean
+    hasBackcountryReservations: Boolean
+    hasBackcountryPermits: Boolean
+    hasDayUsePass: Boolean
+    hasFirstComeFirstServed: Boolean
+    reservationUrl: String
+    backcountryPermitUrl: String
+    dayUsePassUrl: String
+    hasParkGate: Boolean
+    offSeasonUse: Boolean  
+    totalCapacity: String
+    frontcountrySites: String
+    reservableSites: String
+    nonReservableSites: String
+    vehicleSites: String
+    vehicleSitesReservable: String
+    doubleSites: String
+    pullThroughSites: String
+    rvSites: String
+    rvSitesReservable: String
+    electrifiedSites: String
+    longStaySites: String
+    walkInSites: String
+    walkInSitesReservable: String
+    groupSites: String
+    groupSitesReservable: String
+    backcountrySites: String
+    wildernessSites: String
+    boatAccessSites: String
+    horseSites: String
+    cabins: String
+    huts: String
+    yurts: String
+    shelters: String
+    boatLaunches: String
+    openNote: String
+    serviceNote: String
+    reservationsNote: String
+    offSeasonNote: String
+    generalNote: String
+    adminNote: String
+  }
+
+  type StrapiParkOperationSubAreas implements Node {
+    name: String
+    isActive: Boolean
+    isActivityOpen: Boolean
+    totalCapacity: String
+    frontcountrySites: String
+    reservableSites: String
+    nonReservableSites: String
+    vehicleSites: String
+    vehicleSitesReservable: String
+    doubleSites: String
+    pullThroughSites: String
+    rvSites: String
+    rvSitesReservable: String
+    electrifiedSites: String
+    longStaySites: String
+    walkInSites: String
+    walkInSitesReservable: String
+    groupSites: String
+    groupSitesReservable: String
+    backcountrySites: String
+    wildernessSites: String
+    boatAccessSites: String
+    horseSites: String
+    cabins: String
+    huts: String
+    yurts: String
+    shelters: String
+    boatLaunches: String
+    openNote: String
+    serviceNote: String
+    reservationsNote: String
+    offSeasonNote: String
+    adminNote: String
+  }
+
 
   type StrapiPublicAdvisoryProtectedAreas implements Node {
     hasCampfireBan: String

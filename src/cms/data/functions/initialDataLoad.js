@@ -3,6 +3,7 @@
 const permission = require("./loadPermissions");
 const parData = require("./loadPar");
 const otherData = require("./loadOtherData");
+const operationData = require("./loadOperationData");
 const publicAdvisoryAudit = require("./loadPublicAdvisoryAudit");
 const parkPhoto = require("./loadParkPhoto");
 const pageMedia = require("./loadPageMedia");
@@ -46,6 +47,7 @@ const loadData = async () => {
 
     strapi.log.info("------Data load completed------");
     console.timeEnd("initialLoad");
+
   } catch (error) {
     strapi.log.error(error);
     return false;

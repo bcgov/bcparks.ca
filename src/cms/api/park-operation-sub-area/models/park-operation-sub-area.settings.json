@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "park_operations",
+  "collectionName": "park_operation_sub_areas",
   "info": {
-    "name": "ParkOperation",
+    "name": "ParkOperationSubArea",
     "description": ""
   },
   "options": {
@@ -11,49 +11,49 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "orcsSiteNumber": {
+    "parkSubAreaId": {
       "type": "integer"
     },
+    "parkSubAreaTypeId": {
+      "type": "integer"
+    },
+    "parkSubArea": {
+      "type": "string"
+    },
+    "parkSubAreaType": {
+      "via": "parkOperationSubAreas",
+      "model": "park-operation-sub-area-type"
+    },
+    "protectedArea": {
+      "model": "protected-area",
+      "via": "parkOperationSubAreas"
+    },
+    "parkOperationSubAreaDates": {
+      "via": "parkOperationSubArea",
+      "collection": "park-operation-sub-area-date"
+    },
+    "orcsSiteNumber": {
+      "type": "string"
+    },
     "isActive": {
+      "type": "boolean"
+    },
+    "isOpen": {
       "type": "boolean"
     },
     "hasReservations": {
       "type": "boolean"
     },
-    "openDate": {
-      "type": "date"
-    },
-    "closeDate": {
-      "type": "date"
-    },
     "hasFirstComeFirstServed": {
-      "type": "boolean"
-    },
-    "hasBackcountryReservations": {
       "type": "boolean"
     },
     "hasBackcountryPermits": {
       "type": "boolean"
     },
-    "hasDayUsePass": {
+    "hasBackcountryReservations": {
       "type": "boolean"
     },
-    "reservationUrl": {
-      "type": "string"
-    },
-    "backcountryReservationUrl": {
-      "type": "string"
-    },
-    "backcountryPermitUrl": {
-      "type": "string"
-    },
-    "dayUsePassUrl": {
-      "type": "string"
-    },
-    "hasParkGate": {
-      "type": "boolean"
-    },
-    "offSeasonUse": {
+    "isCleanAirSite": {
       "type": "boolean"
     },
     "totalCapacity": {
@@ -137,21 +137,17 @@
     "serviceNote": {
       "type": "text"
     },
-    "reservationsNote": {
+    "reservationNote": {
       "type": "text"
     },
     "offSeasonNote": {
       "type": "text"
     },
-    "generalNote": {
-      "type": "text"
-    },
     "adminNote": {
       "type": "text"
     },
-    "protectedArea": {
-      "model": "protected-area",
-      "via": "parkOperation"
+    "parkAccessUnitId": {
+      "type": "integer"
     }
   }
 }

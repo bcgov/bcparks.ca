@@ -11,6 +11,7 @@ import {
   Link,
   Breadcrumbs,
 } from "@material-ui/core"
+import ParkDates from "../components/park/parkDates"
 import ParkOverview from "../components/park/parkOverview"
 import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
@@ -81,7 +82,7 @@ export default function ParkTemplate({ data }) {
     ["asc"]
   )
 
-  const hasReservations = operations.some(op => op.hasReservations)
+  const hasReservations = operations.hasReservations; //.some(op => op.hasReservations)
   const hasCamping = activeFacilities.some(facility =>
     facility.facilityType.facilityName.toLowerCase().includes("camping")
   )
@@ -110,7 +111,8 @@ export default function ParkTemplate({ data }) {
       })
   }, [apiBaseUrl, park.orcs])
 
-  const parkOverviewRef = useRef("")
+  const parkOverviewRef = useRef("")  
+  const parkDatesRef = useRef("") 
   const accessibilityRef = useRef("")
   const advisoryRef = useRef("")
   const safetyRef = useRef("")
@@ -123,7 +125,8 @@ export default function ParkTemplate({ data }) {
   const reconciliationRef = useRef("")
 
   const sectionRefs = [
-    parkOverviewRef,
+    parkOverviewRef,   
+    parkDatesRef,
     accessibilityRef,
     advisoryRef,
     safetyRef,
@@ -143,7 +146,8 @@ export default function ParkTemplate({ data }) {
   })
 
   const menuItems = [
-    { text: "Park overview", url: "park-overview-container", visible: true },
+    { text: "Park overview", url: "park-overview-container", visible: true },    
+    { text: "Dates of Operation  ", url: "park-dates-container", visible: true },
     {
       text: "Accessibility",
       url: "accessibility-details-container",
@@ -276,18 +280,23 @@ export default function ParkTemplate({ data }) {
               data-target="#parkScrollSpy"
               data-offset="20"
             >
-              <Grid container spacing={0}>
-                {menuItems[0].visible && (
+                 {menuItems[0].visible && (
                   <div ref={parkOverviewRef} className="full-width">
                     <ParkOverview data={park.description} />
                   </div>
-                )}
+                )}             
+              <Grid container spacing={0}>
                 {menuItems[1].visible && (
+                  <div ref={parkDatesRef} className="full-width">
+                    <ParkDates data={{ parkOperation: park.parkOperation, subAreas: park.parkOperationSubAreas }} />
+                  </div>
+                )}
+                {menuItems[2].visible && (
                   <div ref={accessibilityRef} className="full-width">
                     <AccessibilityDetails />
                   </div>
                 )}
-                {menuItems[2].visible && (
+                {menuItems[3].visible && (
                   <div ref={advisoryRef} className="full-width">
                     {isLoadingAdvisories && (
                       <div className="mb-5">
@@ -309,12 +318,12 @@ export default function ParkTemplate({ data }) {
                     )}
                   </div>
                 )}
-                {menuItems[3].visible && (
+                {menuItems[4].visible && (
                   <div ref={safetyRef} className="full-width">
                     <SafetyInfo park={park} />
                   </div>
                 )}
-                {menuItems[4].visible && (
+                {menuItems[5].visible && (
                   <div ref={campingRef} className="full-width">
                     <CampingDetails
                       data={{
@@ -326,17 +335,17 @@ export default function ParkTemplate({ data }) {
                     />
                   </div>
                 )}
-                {menuItems[5].visible && (
+                {menuItems[6].visible && (
                   <div ref={facilityRef} className="full-width">
                     <ParkFacility data={activeFacilities} />
                   </div>
                 )}
-                {menuItems[6].visible && (
+                {menuItems[7].visible && (
                   <div ref={activityRef} className="full-width">
                     <ParkActivity data={activeActivities} />
                   </div>
                 )}
-                {menuItems[7].visible && (
+                {menuItems[8].visible && (
                   <div ref={mapRef} className="full-width">
                     <MapLocation data={mapData} />
                     {park.locationNotes && (
@@ -352,17 +361,17 @@ export default function ParkTemplate({ data }) {
                     )}
                   </div>
                 )}
-                {menuItems[8].visible && (
+                {menuItems[9].visible && (
                   <div ref={activityMapRef} className="full-width">
                     <ParkMapDetails data={park.maps} />
                   </div>
                 )}
-                {menuItems[9].visible && (
+                {menuItems[10].visible && (
                   <div ref={aboutRef} className="full-width">
                     <About park={park} />
                   </div>
                 )}
-                {menuItems[10].visible && (
+                {menuItems[11].visible && (
                   <div ref={reconciliationRef} className="full-width">
                     <Reconciliation data={park.reconciliationNotes} />
                   </div>
@@ -430,14 +439,116 @@ export const query = graphql`
           rank
         }
       }
-    }
-    allStrapiParkOperation(
-      filter: { orcs: { eq: $orcs }, isActive: { eq: true } }
-    ) {
-      nodes {
-        orcs
+      parkOperation {
+        openDate
+        closeDate
         isActive
         hasReservations
+        hasBackcountryReservations
+        hasBackcountryPermits
+        hasDayUsePass
+        hasFirstComeFirstServed
+        reservationUrl
+        backcountryPermitUrl
+        dayUsePassUrl
+        hasParkGate
+        offSeasonUse
+        totalCapacity
+        frontcountrySites
+        reservableSites
+        nonReservableSites
+        vehicleSites
+        vehicleSitesReservable
+        doubleSites
+        pullThroughSites
+        rvSites
+        rvSitesReservable
+        electrifiedSites
+        longStaySites
+        walkInSites
+        walkInSitesReservable
+        groupSites
+        groupSitesReservable
+        backcountrySites
+        wildernessSites
+        boatAccessSites
+        horseSites
+        cabins
+        huts
+        yurts
+        shelters
+        boatLaunches
+        cabins
+        huts
+        yurts
+        shelters
+        boatLaunches
+        openNote
+        serviceNote
+        reservationsNote
+        offSeasonNote
+        generalNote
+        adminNote
+      }
+      parkOperationSubAreas {
+        parkSubArea
+        orcsSiteNumber
+        isActive
+        isOpen
+        hasReservations
+        hasBackcountryReservations
+        hasBackcountryPermits
+        hasFirstComeFirstServed
+        parkAccessUnitId
+        isCleanAirSite
+        totalCapacity
+        frontcountrySites
+        reservableSites
+        nonReservableSites
+        vehicleSites
+        vehicleSitesReservable
+        doubleSites
+        pullThroughSites
+        rvSites
+        rvSitesReservable
+        electrifiedSites
+        longStaySites
+        walkInSites
+        walkInSitesReservable
+        groupSites
+        groupSitesReservable
+        backcountrySites
+        wildernessSites
+        boatAccessSites
+        horseSites
+        cabins
+        huts
+        yurts
+        shelters
+        boatLaunches
+        openNote
+        serviceNote
+        reservationNote
+        offSeasonNote
+        adminNote
+        parkOperationSubAreaDates {
+          isActive
+          operatingYear
+          openDate
+          closeDate
+          serviceStartDate
+          serviceEndDate
+          reservationStartDate
+          reservationEndDate
+          offSeasonEndDate
+          offSeasonEndDate
+        }
+        parkSubAreaType {
+          isActive
+          subAreaType
+          subAreaTypeCode
+          iconUrl         
+        }
       }
     }
     # Park photos are split into featured and non-featured in order to sort correctly,

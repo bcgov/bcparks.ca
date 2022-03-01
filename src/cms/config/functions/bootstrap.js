@@ -1,5 +1,6 @@
 "use strict";
 const dbsetup = require("./dbsetup");
+const permission = require("../../data/functions/loadPermissions");
 
 /**
  * An asynchronous bootstrap function that runs before
@@ -13,4 +14,8 @@ const dbsetup = require("./dbsetup");
 
 module.exports = async () => {
   await dbsetup();
+
+  // make sure all content types that should have public read permissions
+  const p = await permission.setPublicPermissions();
+  console.log("Public permisisons for content-types set:", p)
 };
