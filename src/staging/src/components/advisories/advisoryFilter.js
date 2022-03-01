@@ -8,7 +8,6 @@ import {
   TextField,
   InputAdornment,
   Checkbox,
-  InputLabel,
   FormControlLabel,
   NativeSelect
 } from "@material-ui/core"
@@ -150,9 +149,9 @@ const AdvisoryFilter = ({ filterFunctions }) => {
     <>
       <Grid container spacing={1}>
         <Grid item xs={12} sm={5}>
-          <InputLabel htmlFor="advisory-search-text" className={classes.filterLabel}>
+          <label htmlFor="advisory-search-text" className={classes.filterLabel}>
             Search
-          </InputLabel>
+          </label>
           <TextField
             id="advisory-search-text"
             variant="outlined"
@@ -179,13 +178,13 @@ const AdvisoryFilter = ({ filterFunctions }) => {
             
         </Grid>
         <Grid item xs={7} sm={2}>
-          <InputLabel htmlFor="advisory-type" className={classes.filterLabel}>
+          <label htmlFor="advisory-type" className={classes.filterLabel}>
             Event type
-          </InputLabel>
+          </label>
           <NativeSelect
             value={advisoryType}
             id="advisory-type"
-            label="Event type"
+            
             className={classes.typeSelect + " h50p"}
             variant="outlined"
             onChange={event => {
@@ -198,8 +197,9 @@ const AdvisoryFilter = ({ filterFunctions }) => {
           </NativeSelect>
         </Grid>
         <Grid item xs={5} sm={1}>
-          <div className={classes.filterLabel}>&nbsp;</div>
+          <label htmlFor="search-button" className={classes.filterLabel}>&nbsp;</label>
             <Button
+              id="search-button"
               variant="contained"
               fullWidth
               onClick={() => {
