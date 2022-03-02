@@ -68,7 +68,7 @@ nav {
 @media screen and (max-width: $desktopBreakpoint) {
     .menu-toggle {
         position:absolute;
-        top:52px;
+        top:60px;
         right:20px;
         color:$colorWhite;
         font-size: 20px;
@@ -96,14 +96,15 @@ nav {
     }
     .mega-menu.menu-mode--responsive.menu-closed {
         height:0px;
-        top:-20px;
+        box-shadow: none;
+        border-bottom: none;
     }
     .mega-menu.menu-mode--responsive{
         overflow:hidden;  
         transition:height 0.5s;    
         width:100%;
         background:$colorWhite;
-        top:100px;
+        top:112px;
         position:absolute;
         z-index:6; 
         border-bottom:solid 2px #aaa; 
