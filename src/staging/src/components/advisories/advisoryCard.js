@@ -30,7 +30,6 @@ const AdvisoryCard = ({ advisory, index }) => {
             </div>
           </div>
           <Accordion
-            style={{ border: "transparent" }}
             aria-controls={advisory.cardTitle}
             id={advisory.id}>
             <Accordion.Toggle as={Card} eventKey="0" className={(advisory.description ? "" : "noDetails ") + "advisoryCard"}>
