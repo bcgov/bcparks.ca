@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link, navigate } from "gatsby"
 import PropTypes from "prop-types"
 import { isTablet } from "react-device-detect"
+import BCParksLogo from "../images/bcparks-h-rgb-rev.png"
+import BCParksWordmark from "../images/BCParks_Wordmark_White.svg"
 import "../styles/megaMenu/megaMenu.scss"
 
 const MegaMenu = ({ content, menuMode }) => {
@@ -72,7 +74,7 @@ const MegaMenu = ({ content, menuMode }) => {
   }
 
   const sectionHover = (e, section, menuMode) => {
-    if ((window.screen.width >= 992) && (menuMode !== 'sitemap') && !isTablet) { // otherwise hover triggered in mobile emulator
+    if ((window.innerWidth >= 992) && (menuMode !== 'sitemap') && !isTablet) { // otherwise hover triggered in mobile emulator
       if (section !== selectedItem) { // don't trigger nav through hovers
         setSelectedItem(section)
         let selObj = getSelectionObj(section, {}); // track the selected item at this level and above
@@ -240,27 +242,38 @@ const MegaMenu = ({ content, menuMode }) => {
 
   return (
     <>
-      <div className={'menu-toggle menu-mode--' + menuMode + ' menu-toggle--' + (isMenuOpen ? "open" : "closed")}
-        role="button"
-        tabIndex={0}
-        onKeyDown={e => {
-          if ((e.key === 'Enter') || (e.key === ' ')) {
-            toggleMenu(e)
-          }
-        }}
-        onClick={e => toggleMenu(e)}>
-        <nav className="menu-open"><i className="fa fa-bars"></i></nav>
-        <nav className="menu-close"><i className="fa fa-times"></i></nav>
-      </div>
-      <nav className={'mega-menu menu-selected-level-'+ selectedItem.treeLevel +' menu-mode--' + menuMode + ' menu-' + ( isMenuOpen ? "open": "closed") }>
-        <div className="menu-wrapper" tabIndex={0} role="menu" onFocus={ e => menuFocus(e) } onMouseLeave={ e => menuReset(e) }>
-          {menuTree.map((page, index) => (
-            <div key="index">
-                { generateMenus(page, menuMode)}
-            </div>
-          ))}
+      <div className="mega-menu-wrapper">
+        <div className="header-wrapper">
+          <nav className="header-nav">
+          <Link to="/">
+            <img className="bc-parks-logo--desktop d-none d-lg-block" alt="BC Parks Logo" src={BCParksLogo} />
+            <img className="bc-parks-logo--mobile d-block d-lg-none" alt="BC Parks Logo" src={BCParksWordmark}/>
+          </Link>
+          <a href="https://camping.bcparks.ca" className="btn book-campsite-btn">Book a campsite</a>
+          </nav>
+        </div> 
+        <div className={'menu-toggle menu-mode--' + menuMode + ' menu-toggle--' + (isMenuOpen ? "open" : "closed")}
+          role="button"
+          tabIndex={0}
+          onKeyDown={e => {
+            if ((e.key === 'Enter') || (e.key === ' ')) {
+              toggleMenu(e)
+            }
+          }}
+          onClick={e => toggleMenu(e)}>
+          <nav className="menu-open"><i className="fa fa-bars"></i></nav>
+          <nav className="menu-close"><i className="fa fa-times"></i></nav>
         </div>
-      </nav>
+        <nav className={'mega-menu menu-selected-level-'+ selectedItem.treeLevel +' menu-mode--' + menuMode + ' menu-' + ( isMenuOpen ? "open": "closed") }>
+          <div className="menu-wrapper" tabIndex={0} role="menu" onFocus={ e => menuFocus(e) } onMouseLeave={ e => menuReset(e) }>
+            {menuTree.map((page, index) => (
+              <div key="index">
+                  { generateMenus(page, menuMode)}
+              </div>
+            ))}
+          </div>
+        </nav>
+      </div>
     </>                      
   )
 }

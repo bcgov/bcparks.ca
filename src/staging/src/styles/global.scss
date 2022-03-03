@@ -37,44 +37,6 @@ style {
   display: none !important;
 }
 
-/* header */
-.header-wrapper {
-  width:100%;
-  background:$colorBlue;
-
-  .header-nav {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-
-    @media screen and (min-width: $desktopBreakpoint) {
-      height: 100px;
-      max-width: 1140px;
-      margin: 0px auto;
-      padding: 0px 20px;
-    }
-    @media screen and (max-width: $desktopBreakpoint) {
-      height: 72px;
-      margin: 0px;
-      padding: 0px;
-    }
-    a {
-      display: block;
-      text-decoration: none;
-    }
-
-    .bc-parks-logo--desktop {
-      max-height: 50px;
-      max-width: 199px;
-    }
-    .bc-parks-logo--mobile {
-      height: 50px;
-    }
-  }
-}
-
 /** Override BC-Gov style */
 footer #home-footer nav {
   border-top: unset;

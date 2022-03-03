@@ -1,18 +1,58 @@
 @import '../variables.scss';
+@import 'bootstrap';
 
 /* ---------------- HEADER ----------------- */
 
 
-/* TODO Move to global.scss? */
+/* header */
+.header-wrapper {
+  width:100%;
+  background:$colorBluePrimary;
 
-.bc-parks-logo {
-  max-height: 50px;
-  max-width: 199px;
+  .header-nav {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    @include media-breakpoint-up(lg) {
+      height: 100px;
+      max-width: 1140px;
+      margin: 0px auto;
+      padding: 0px 20px;
+    }
+    @include media-breakpoint-down(md) {
+      height: 72px;
+      margin: 0px;
+      padding: 0px;
+    }
+    /*@include media-breakpoint-up(lg) {
+      height: 100px;
+      max-width: 1140px;
+      margin: 0px auto;
+      padding: 0px 20px;
+    }
+    @include media-breakpoint-down(md) {
+      height: 72px;
+      margin: 0px;
+      padding: 0px;
+    }*/
+    a {
+      display: block;
+      text-decoration: none;
+    }
+
+    .bc-parks-logo--desktop {
+      max-height: 50px;
+      max-width: 199px;
+    }
+    .bc-parks-logo--mobile {
+      height: 50px;
+    }
+  }
 }
-.bc-parks-wordmark {
-  height: 50px;
-  max-width: 199px;
-}
+
 a.btn.book-campsite-btn {
   background-color: $colorWhite;
   border: solid 1px transparent;
@@ -28,7 +68,7 @@ a.btn.book-campsite-btn {
     text-decoration: underline;
     outline: 1px solid $colorGoldPrimary;
   }
-  @media screen and (max-width: $desktopBreakpoint) {
+  @include media-breakpoint-down(md) {
     margin-right:50px;
     padding: 0px 10px;
     line-height:30px;
@@ -36,16 +76,6 @@ a.btn.book-campsite-btn {
     border-radius:15px;
   }
 
-}
-
-@media screen and (min-width: $desktopBreakpoint) {
-
-    .navbar--header {
-        max-width: 1140px; 
-        margin: 0px auto;
-        padding: 0px 20px;
-        height: 100px;
-    }
 }
 
 /* TODO scope these properly: */
@@ -65,10 +95,10 @@ nav {
 
 
 /* -------------------- START MOBILE STYLING ----------------- */
-@media screen and (max-width: $desktopBreakpoint) {
+@include media-breakpoint-down(md) {
     .menu-toggle {
         position:absolute;
-        top:60px;
+        top:20px;
         right:20px;
         color:$colorWhite;
         font-size: 20px;
@@ -104,7 +134,7 @@ nav {
         transition:height 0.5s;    
         width:100%;
         background:$colorWhite;
-        top:112px;
+        top:72px;
         position:absolute;
         z-index:6; 
         border-bottom:solid 2px #aaa; 
@@ -195,11 +225,13 @@ nav {
         }
     }
 }
-
+.mega-menu-wrapper {
+    position:relative;
+}
 
 /* -------------------- START DESKTOP STYLING ----------------- */
 
-@media screen and (min-width: $desktopBreakpoint) {
+@include media-breakpoint-up(lg) {
 
     .menu-toggle {
         display:none;
@@ -399,7 +431,7 @@ nav {
     font-size:2.6rem;
     font-weight: 700;
     color:$colorBluePrimary;
-    @media screen and (max-width: $desktopBreakpoint) {
+    @include media-breakpoint-down(md) {
         font-size:1.75rem;    
     }
 }
@@ -521,7 +553,7 @@ nav {
         display:none;
     }
 
-    @media screen and (max-width: $desktopBreakpoint) {
+    @include media-breakpoint-down(md) {
         /* mobile sizing */
         .menu-back{
             display: none;
