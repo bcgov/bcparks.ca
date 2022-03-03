@@ -30,24 +30,25 @@ Foreach ($item in $patroniInfo) {
         break
     }
 }
-Write-Host "Current patroni leader: $leaderName"
+Write-Host "Current patroni leader: ${leaderName}"
 
+oc exec ${leaderName}  -- /bin/bash -c "mkdir -p ${remoteTempPath}"
 
-oc rsync $InputPath $leaderName:$remoteTempPath 
-
-if (!$?) {
-   Write-Host "An error occurred."
-   Exit 1
-}
-
-oc exec $leaderName  -- /bin/bash -c "PGUSER=`$APP_USER PGPASSWORD=`$APP_PASSWORD psql `$APP_DATABASE < ${remoteTempPath}/${exportFilename}"
+oc rsync $InputPath ${leaderName}:${remoteTempPath}
 
 if (!$?) {
    Write-Host "An error occurred."
    Exit 1
 }
 
-oc exec $leaderName -- rm -r $remoteTempPath
+oc exec ${leaderName}  -- /bin/bash -c "PGUSER=`$APP_USER PGPASSWORD=`$APP_PASSWORD psql `$APP_DATABASE < ${remoteTempPath}/${exportFilename}"
+
+if (!$?) {
+   Write-Host "An error occurred."
+   Exit 1
+}
+
+oc exec $leaderName -- rm -r ${remoteTempPath}
 
 if (!$?) {
    Write-Host "An error occurred."

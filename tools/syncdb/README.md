@@ -23,16 +23,23 @@ Users will require access to the appropriate OpenShift project, and will need to
 
 ## Export data
 
-Running the following command will copy a data dump to /dbexport on your local system:
+Running the following command will copy a data dump to the db-export subfolder of the current directory
+on your local system:
 
 ```shell
-pwsh export-db.ps1 -Project 61d198-test -OutputPath /dbexport
+pwsh export-db.ps1 -Project 61d198-test -OutputPath ./
 ```
+
+This script dumps data to a temporary folder on one of the Patroni OpenShift pods and then syncs it locally.
 
 ## Import data
 
-Running the following command will update the dev db with a previously generated export:
+Running the following command will update the dev db with a previously generated export (note the trailing
+slash is required for rsync to copy the data to the expected path):
 
 ```shell
-pwsh import-db.ps1 -Project 61d198-dev -InputPath /dbexport
+pwsh import-db.ps1 -Project 61d198-dev -InputPath ./db-export/
 ```
+
+This script syncs a local export.sql file to a temporary directory on the leader Patroni pod, and imports
+it using psql.
