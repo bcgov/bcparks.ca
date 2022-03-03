@@ -1,16 +1,11 @@
 import React, { useState } from "react"
-import {
-  Paper,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Grid,
-  Box,
-} from "@material-ui/core"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import "../../styles/cmsSnippets/parkInfoPage.scss"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import Accordion from "react-bootstrap/Accordion"
+import Container from "react-bootstrap/Container"
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
-import Spacer from "./spacer"
 import StaticIcon from "./staticIcon"
 
 export default function ParkFacility({ data }) {
@@ -21,50 +16,56 @@ export default function ParkFacility({ data }) {
 
   if (facilityData.length === 0) return null
 
-  const handleChange = id => (event, isExpanded) => {
-    expanded[id] = isExpanded
+  const toggleExpand = index => {
+    expanded[index] = !expanded[index]
     setExpanded([...expanded])
   }
 
-  return (
-    <Grid item xs={12} id="park-facility-container" className="anchor-link">
-      <Paper elevation={0}>
-        <Grid container>
-          <Grid item xs={12}>
-            <Heading>Facilities</Heading>
-          </Grid>
-        </Grid>
 
-        <Grid container spacing={1}>
+  return (
+    <div className="mb-5">
+      <Row
+        id="park-facility-container"
+        className="anchor-link"
+      >
+        <Col>
+          <Heading>Facilities</Heading>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           {facilityData.map((facility, index) => (
-            <Grid key={index} item xs={12}>
-              <Paper>
-                <Accordion
-                  expanded={expanded[index]}
-                  onChange={handleChange(index)}
-                >
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls={facility.activityName}
-                    id={index}
-                  >
-                    <Box mr={1}>
-                      <StaticIcon name={facility.facilityType.icon} size={48} />
-                    </Box>
-                    <HtmlContent className="pl15 p10t">
-                      {facility.facilityType.facilityName}
-                    </HtmlContent>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <HtmlContent>{facility.description}</HtmlContent>
-                  </AccordionDetails>
-                </Accordion>
-              </Paper>
-            </Grid>
+            <Accordion
+              key={"parkFacility" + index}
+              className="park-details mb-2"
+            >
+              <Accordion.Toggle as={Container}
+                aria-controls={facility.activityName}
+                eventKey="0"
+                id={index}
+                onClick={() => toggleExpand(index)}
+              >
+                <div className="d-flex justify-content-between p-3 accordion-toggle">
+                  <div className="d-flex justify-content-left align-items-center pl-2">
+                    <StaticIcon name={facility.facilityType.icon} size={48} />
+                    <HtmlContent className="pl-3 accordion-header">{facility.facilityType.facilityName}</HtmlContent>
+                  </div>
+                  <div className="d-flex align-items-center expand-icon">
+                    <i className={(expanded[index] ? "open " : "close ") + "fa fa-angle-down mx-3"}></i>
+                  </div>
+                </div>
+              </Accordion.Toggle>
+              <Accordion.Collapse
+                eventKey="0"
+              >
+                <div className="p-4">
+                  <HtmlContent>{facility.description}</HtmlContent>
+                </div>
+              </Accordion.Collapse>
+            </Accordion>
           ))}
-        </Grid>
-        <Spacer />
-      </Paper>
-    </Grid>
+        </Col>
+      </Row>
+    </div>
   )
 }

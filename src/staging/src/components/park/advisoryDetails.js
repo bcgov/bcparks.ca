@@ -110,6 +110,7 @@ export default function AdvisoryDetails({ advisories }) {
                 // Otherwise the activeKey is set to null, effectively removing the 'open' state from the accordion.
                 // This is a cheeky way to programmatically open one, some, or all items simultaneously.
                 activeKey={expandeds[index] ? advisory.id : null}
+                key={advisory.id}
                 aria-controls={advisory.title}
                 className="mb-4">
                 <Accordion.Toggle as={Container} className="accordion-toggle" onClick={() => {
