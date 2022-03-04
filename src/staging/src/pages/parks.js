@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { Box, Grid, Container } from "@material-ui/core"
 import Header from "../components/header"
-import Menu from "../components/menu"
 import Footer from "../components/footer"
 import "../styles/home.scss"
 
@@ -13,7 +12,6 @@ const ParksPage = ({ data }) => (
       <title>BC Parks</title>
     </Helmet>
     <Header>{data.strapiWebsites.Header}</Header>
-    <Menu>{data.strapiWebsites.Navigation}</Menu>
     <Container>
       <br />
       <h1>Parks</h1>

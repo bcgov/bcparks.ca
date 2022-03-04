@@ -30,7 +30,8 @@
         "parks.link-card",
         "parks.page-section",
         "parks.page-header",
-        "parks.card-set"
+        "parks.card-set",
+        "parks.fancy-link"
       ]
     }
   }
