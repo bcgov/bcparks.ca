@@ -438,6 +438,11 @@ nav {
 .menu-toggle.menu-mode--sitemap {
     display:none;
 }
+.mega-menu-wrapper.menu-mode--sitemap{
+    .header-wrapper {
+        display: none;
+    }    
+}
 .mega-menu.menu-mode--sitemap { 
 
      margin-top:60px;   

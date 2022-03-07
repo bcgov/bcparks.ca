@@ -242,7 +242,7 @@ const MegaMenu = ({ content, menuMode }) => {
 
   return (
     <>
-      <div className="mega-menu-wrapper">
+      <div className={'mega-menu-wrapper menu-mode--' + menuMode}>
         <div className="header-wrapper">
           <nav className="header-nav">
           <Link to="/">
