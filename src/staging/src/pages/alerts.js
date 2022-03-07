@@ -212,7 +212,7 @@ const PublicAdvisoryPage = ({ data }) => {
     // unfiltered count for the header
 
     // exclude unpublished parks
-    let q = "/public-advisories/count?protectedAreas.published_at_null=false";
+    let q = "/public-advisories/count?protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true";
 
     if (advisoryType === "wildfire") {
       q += "&eventType.eventType_contains=wildfire";
@@ -239,7 +239,7 @@ const PublicAdvisoryPage = ({ data }) => {
   const getApiQuery = useCallback((advisoryTypeFilter) => {
 
     // Order by date and exclude unpublished parks
-    let q = "?protectedAreas.published_at_null=false&_sort=advisoryDate:DESC";
+    let q = "?protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true&_sort=advisoryDate:DESC";
 
     if (advisoryTypeFilter === "wildfire") {
       q += "&eventType.eventType_contains=wildfire";
