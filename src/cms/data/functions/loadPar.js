@@ -7,27 +7,28 @@ const fs = require("fs");
 const loadParData = async () => {
   const PAR_URL = "https://a100.gov.bc.ca/pub/parws/protectedLands";
   strapi.log.info("Loading Protected Areas data..");
-  const response = await axios
-    .get(PAR_URL, {
-      params: {
-        protectedLandName: "%",
-        protectedLandTypeCodes: "CS,ER,PA,PK,RA",
-      },
-    })
-    .catch((error) => {
-      strapi.log.error(error);
-    });
-  if (response.data) {
-    const protectedAreas = [...response.data.data];
-    strapi.log.info(
-      `Retrieved ${protectedAreas.length} records from PAR. Loading into cms...`
-    );
-    for (const protectedArea of protectedAreas) {
-      await loadProtectedLandData(protectedArea).then((res) => {
-        return res;
+  try {
+    const response = await axios
+      .get(PAR_URL, {
+        params: {
+          protectedLandName: "%",
+          protectedLandTypeCodes: "CS,ER,PA,PK,RA",
+        },
       });
+    if (response.data) {
+      const protectedAreas = [...response.data.data];
+      strapi.log.info(
+        `Retrieved ${protectedAreas.length} records from PAR. Loading into cms...`
+      );
+      for (const protectedArea of protectedAreas) {
+        await loadProtectedLandData(protectedArea).then((res) => {
+          return res;
+        });
+      }
+      strapi.log.info("PAR data loaded successfully");
     }
-    strapi.log.info("PAR data loaded successfully");
+  } catch (error) {
+    strapi.log.error(error);
   }
 };
 
@@ -92,10 +93,7 @@ const loadManagementAreas = async (managementAreas) => {
   const promises = managementAreas.map(
     async (area) => await loadManagementAreaWithRelations(area)
   );
-  const managementAreasObj = await Promise.all(promises).then((res) => {
-    return res;
-  });
-  return managementAreasObj;
+  return await Promise.all(promises);
 };
 
 const loadSite = async (site, orcNumber) => {
@@ -129,10 +127,7 @@ const loadSite = async (site, orcNumber) => {
 
 const loadSites = async (sites, orcNumber) => {
   const promises = sites.map(async (site) => await loadSite(site, orcNumber));
-  const sitesObj = await Promise.all(promises).then((res) => {
-    return res;
-  });
-  return sitesObj;
+  return await Promise.all(promises);
 };
 
 const saveProtectedLandData = async (
@@ -145,7 +140,7 @@ const saveProtectedLandData = async (
   });
 
   if (!protectedArea) {
-    protectedArea = await strapi.services["protected-area"]
+    return await strapi.services["protected-area"]
       .create({
         orcs: protectedLandData.orcNumber,
         protectedAreaName: utf8.encode(protectedLandData.protectedLandName),
@@ -170,13 +165,10 @@ const saveProtectedLandData = async (
         mapZoom: null,
         sites: sites,
         managementAreas: managementAreas,
-      })
-      .then((res) => {
-        return res;
       });
   } else {
     const id = protectedArea.id;
-    protectedArea = await strapi.services["protected-area"]
+    return await strapi.services["protected-area"]
       .update(
         { id: id },
         {
@@ -203,26 +195,22 @@ const saveProtectedLandData = async (
           sites: sites,
           managementAreas: managementAreas,
         }
-      )
-      .then((res) => {
-        return res;
-      });
+      );
   }
-  return protectedArea;
 };
 
 const loadProtectedLandData = async (protectedLandData) => {
   try {
-    await Promise.all([
+    let response = await Promise.all([
       loadManagementAreas(protectedLandData.managementAreas),
       loadSites(protectedLandData.sites, protectedLandData.orcNumber),
-    ]).then(async (response) => {
-      return await saveProtectedLandData(
-        protectedLandData,
-        response[0],
-        response[1]
-      );
-    });
+    ])
+
+    return await saveProtectedLandData(
+      protectedLandData,
+      response[0],
+      response[1]
+    );
   } catch (error) {
     strapi.log.error(error);
   }
@@ -260,9 +248,7 @@ const loadAdditionalProtectedAreaInfo = async () => {
       }
     }
 
-    strapi.log.info(
-      "loading protected area supplementary information completed..."
-    );
+    strapi.log.info("loading protected area supplementary information completed...");
   } catch (error) {
     strapi.log.error(error);
   }
@@ -290,15 +276,15 @@ const loadAdditionalSiteInfo = async () => {
         }
         site.note = s.note;
 
-        await strapi.services["site"]
-          .update({ orcsSiteNumber: s.orcs + "-" + s.orcsSiteNumber }, site)
-          .catch(async () => {
-            strapi.log.info("creating custom site...");
-            const protectedArea = await Promise.resolve(
-              strapi.query("protected-area").findOne({
-                orcs: s.orcs,
-              })
-            );
+        try {
+          await strapi.services["site"].update({ orcsSiteNumber: s.orcs + "-" + s.orcsSiteNumber }, site);
+        } catch (error) {
+          strapi.log.info("creating custom site...");
+          const protectedArea = await strapi.query("protected-area").findOne({
+            orcs: s.orcs,
+          });
+
+          try {
             await strapi.services["site"]
               .create({
                 ...site,
@@ -313,11 +299,11 @@ const loadAdditionalSiteInfo = async () => {
                   ? moment(s.repealedDate, "YYYY-MM-DD").tz("UTC").format()
                   : null,
                 protectedArea: protectedArea,
-              })
-              .catch((error) => {
-                strapi.log.error("error creating custom site", error);
               });
-          });
+            } catch (error) {
+              strapi.log.error("error creating custom site", error);
+            }
+        }
       }
     }
     strapi.log.info("loading site supplementary information completed...");
@@ -358,18 +344,14 @@ const loadParkDetails = async () => {
         protectedArea.protectedAreaName = park.protectedAreaName;
       }
 
-      if (orcsExists) {
-        await strapi.services["protected-area"]
-          .update({ orcs: park.orcs }, protectedArea)
-          .catch((error) => {
-            strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
-          });
-      } else {
-        await strapi.services["protected-area"]
-          .create({ orcs: park.orcs, ...protectedArea }, )
-          .catch((error) => {
-            strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
-          });
+      try {
+        if (orcsExists) {
+          await strapi.services["protected-area"].update({ orcs: park.orcs }, protectedArea);
+        } else {
+          await strapi.services["protected-area"].create({ orcs: park.orcs, ...protectedArea }, );
+        }
+      } catch (error) {
+        strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
       }
     }
     strapi.log.info("loading park details completed...");
@@ -390,11 +372,11 @@ const loadParkUrl = async () => {
         oldUrl: park.oldUrl,
         slug: park.url.replace("https://bcparks.ca/", "").replace(/\/$/, ""),
       };
-      await strapi.services["protected-area"]
-        .update({ orcs: park.orcs }, protectedArea)
-        .catch((error) => {
-          strapi.log.error(`error load park urls: orcs ${park.orcs}`, error);
-        });
+      try {
+        await strapi.services["protected-area"].update({ orcs: park.orcs }, protectedArea);
+      } catch (error) {
+        strapi.log.error(`error load park urls: orcs ${park.orcs}`, error);
+      }
     }
     strapi.log.info("loading park urls completed...");
   } catch (error) {
@@ -419,11 +401,11 @@ const loadParSomeDefaultValues = async () => {
     protectedArea.hasSmokingBan =
       protectedArea.hasSmokingBan === true ? true : false;
 
-    await strapi.services["protected-area"]
-      .update({ orcs: protectedArea.orcs }, protectedArea)
-      .catch((error) => {
-        strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
-      });
+    try {
+      await strapi.services["protected-area"].update({ orcs: protectedArea.orcs }, protectedArea);
+    } catch (error) {
+      strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
+    }
   }
   strapi.log.info("loading park default values completed...");
 };
