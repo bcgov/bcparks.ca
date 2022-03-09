@@ -4,6 +4,7 @@ import MegaMenu from "../components/megaMenu.js"
 import { Helmet } from "react-helmet"
 import Header from "../components/header"
 import Footer from "../components/footer"
+import { Link, Breadcrumbs } from "@material-ui/core"
 import "../styles/staticContent1.scss"
 
 
@@ -11,14 +12,30 @@ const SitemapPage = ({ data }) => {
 
   const menuContent = data?.allStrapiMenus?.nodes || []
 
+    const breadcrumbs = [
+    <Link key="1" href="/">
+      Home
+    </Link>,
+    <div key="2" className="breadcrumb-text">
+      Site Map
+    </div>,
+  ]
 
   return (
     <>
       <Helmet>
-        <title>BC Parks - Site Map</title>
+        <title>Site Map | BC Parks</title>
       </Helmet>
       <Header mode="internal" content={menuContent} />
+
       <div className="static-content-container">
+        <Breadcrumbs
+          separator="›"
+          aria-label="breadcrumb"
+          className="p10t sm-p10"
+        >
+          {breadcrumbs}
+        </Breadcrumbs>       
         <div className="sitemap-header">Sitemap</div>
         This is the main structure of the website, subject to change.
         <MegaMenu content={menuContent} menuMode="sitemap" />
