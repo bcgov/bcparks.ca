@@ -35,6 +35,7 @@ module.exports = {
           "facility-types",
           "menus",
           "park-operation",
+          "access-statuses"
         ],
         queryLimit: -1,
       },

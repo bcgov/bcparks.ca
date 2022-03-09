@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql, useStaticQuery } from "gatsby"
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles"
 import { Card, CardHeader, Avatar } from "@material-ui/core"
@@ -21,38 +22,27 @@ const ICONS = {
   "red": redStatusIcon,
 }
 
-const PRECEDENCES = {
-  1: {
-    text: "Full Closure",
-    color: "red"
-  },
-  2: {
-    text: "Partial Closure",
-    color: "yellow"
-  },
-  3: {
-    text: "Inaccessible",
-    color: "yellow"
-  },
-  4: {
-    text: "Warning",
-    color: "yellow"
-  },
-  5: {
-    text: "Closed to the public",
-    color: "yellow"
-  },
-  6: {
-    text: "Restricted; permit required",
-    color: "yellow"
-  },
-  99: {
-    text: "Open",
-    color: "blue"
-  },
-}
-
 export default function ParkAccessStatus({ advisories }) {
+
+  const data = useStaticQuery(
+    graphql`
+      {
+        allStrapiAccessStatuses {
+          edges {
+            node {
+              id
+              color
+              accessStatus
+              precedence
+            }
+          }
+        }
+      }
+    `
+  )
+
+  const accessStatusList = data?.allStrapiAccessStatuses.edges;
+
   const classes = useStyles()
   let parkStatusIcon = blueStatusIcon
   let parkStatusText = "Open to public access"
@@ -73,11 +63,19 @@ export default function ParkAccessStatus({ advisories }) {
         });
       } else {
         // advisory is coming from explore page
-        accessStatuses.push({
-          precedence: advisory.accessStatus,
-          color: PRECEDENCES[advisory.accessStatus].color,
-          text: PRECEDENCES[advisory.accessStatus].text,
+        // get accessStatus based on precedence
+        let thisStatus = accessStatusList.filter(status => {
+          return status.node.precedence === advisory.accessStatus;
         })
+        if (!thisStatus || thisStatus.length === 0) {
+          break;
+        } else {
+          accessStatuses.push({
+            precedence: thisStatus[0].node.precedence,
+            color: thisStatus[0].node.color,
+            text: thisStatus[0].node.accessStatus,
+          })
+        }
       }
     }
   }
