@@ -3,8 +3,10 @@ const axios = require("axios");
 const fs = require("fs");
 const loadUtils = require("./loadUtils");
 
+const WILDFIRE_BANS_PROHIBITIONS_API_ENDPOINT = "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/British_Columbia_Bans_and_Prohibition_Areas/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields";
+
 const loadAccessStatus = async () => {
-  loadUtils.loadJson(
+  await loadUtils.loadJson(
     "access-status",
     "./data/access-status.json",
     "access-status"
@@ -12,7 +14,7 @@ const loadAccessStatus = async () => {
 };
 
 const loadActivityType = async () => {
-  loadUtils.loadJson(
+  await loadUtils.loadJson(
     "activity-type",
     "./data/park-activity.json",
     "park-activity"
@@ -20,27 +22,23 @@ const loadActivityType = async () => {
 };
 
 const loadAdvisoryStatus = async () => {
-  loadUtils.loadJson(
+  await loadUtils.loadJson(
     "advisory-status",
     "./data/advisory-status.json",
     "advisory-status"
   );
 };
 
-const loadAssetType = async () => {
-  console.log("loadAssetType");
-};
-
 const loadEventType = async () => {
-  loadUtils.loadJson("event-type", "./data/event-type.json", "event-type");
+  await loadUtils.loadJson("event-type", "./data/event-type.json", "event-type");
 };
 
 const loadLinkType = async () => {
-  loadUtils.loadJson("link-type", "./data/link-type.json", "link-type");
+  await loadUtils.loadJson("link-type", "./data/link-type.json", "link-type");
 };
 
 const loadFacilityType = async () => {
-  loadUtils.loadJson(
+  await loadUtils.loadJson(
     "facility-type",
     "./data/park-facility.json",
     "park-facility"
@@ -48,71 +46,63 @@ const loadFacilityType = async () => {
 };
 
 const loadFireCentre = async () => {
-  loadUtils.loadJson("fire-centre", "./data/fire-centre.json", "fire-centre");
+  await loadUtils.loadJson("fire-centre", "./data/fire-centre.json", "fire-centre");
 };
 
 const loadFireZone = async () => {
-  loadUtils.loadJson("fire-zone", "./data/fire-zone.json", "fire-zone");
+  await loadUtils.loadJson("fire-zone", "./data/fire-zone.json", "fire-zone");
 };
 
 const loadFireBanProhibition = async () => {
-  const WILDFIRE_BANS_PROHIBITIONS_API_ENDPOINT =
-    "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/British_Columbia_Bans_and_Prohibition_Areas/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields";
-
   strapi.log.info("Loading Fire Bans and Prohibitions data..");
   await strapi.services["fire-ban-prohibition"].delete();
 
-  axios
-    .get(WILDFIRE_BANS_PROHIBITIONS_API_ENDPOINT)
-    .then(async (response) => {
-      const { features } = response.data;
-      if (!features) return;
-      features.forEach(async (feature) => {
-        const {
-          attributes: {
-            TYPE: type,
-            ACCESS_PROHIBITION_DESCRIPTION: access_prohibition_description,
-            ACCESS_STATUS_EFFECTIVE_DATE: access_status_effective_date,
-            BULLETIN_URL: bulletin_url,
-            FIRE_CENTRE_NAME: fire_centre_name,
-            FIRE_ZONE_NAME: fire_zone_name,
-          },
-        } = feature;
+  let response = await axios.get(WILDFIRE_BANS_PROHIBITIONS_API_ENDPOINT);
+  const { features } = response.data;
+  if (!features) return;
+  for (let z=0;z < features.length;z++) {
+    const feature = features[z];
+    const {
+      attributes: {
+        TYPE: type,
+        ACCESS_PROHIBITION_DESCRIPTION: access_prohibition_description,
+        ACCESS_STATUS_EFFECTIVE_DATE: access_status_effective_date,
+        BULLETIN_URL: bulletin_url,
+        FIRE_CENTRE_NAME: fire_centre_name,
+        FIRE_ZONE_NAME: fire_zone_name,
+      },
+    } = feature;
 
-        let fireCentre = null;
-        if (fire_centre_name) {
-          fireCentre = await strapi.services["fire-centre"].findOne({
-            fireCentreName_contains: fire_centre_name,
-          });
-        }
-
-        let fireZone = null;
-        if (fire_zone_name) {
-          fireZone = await strapi.services["fire-zone"].findOne({
-            fireZoneName_contains: fire_zone_name,
-          });
-        }
-
-        const prohibition = {
-          type: type,
-          prohibitionDescription: access_prohibition_description,
-          effectiveDate: access_status_effective_date,
-          bulletinURL: bulletin_url,
-          fireCentreSource: fire_centre_name,
-          fireCentre: fireCentre,
-          fireZone: fireZone,
-        };
-
-        await strapi.services["fire-ban-prohibition"].create(prohibition);
+    let fireCentre = null;
+    if (fire_centre_name) {
+      fireCentre = await strapi.services["fire-centre"].findOne({
+        fireCentreName_contains: fire_centre_name,
       });
-    })
-    .catch((error) => {
-      strapi.log.error(error);
-    });
+    }
+
+    let fireZone = null;
+    if (fire_zone_name) {
+      fireZone = await strapi.services["fire-zone"].findOne({
+        fireZoneName_contains: fire_zone_name,
+      });
+    }
+
+    const prohibition = {
+      type: type,
+      prohibitionDescription: access_prohibition_description,
+      effectiveDate: access_status_effective_date,
+      bulletinURL: bulletin_url,
+      fireCentreSource: fire_centre_name,
+      fireCentre: fireCentre,
+      fireZone: fireZone,
+    };
+
+    await strapi.services["fire-ban-prohibition"].create(prohibition);
+  }
 };
 
 const loadStandardMessage = async () => {
-  loadUtils.loadJson(
+  await loadUtils.loadJson(
     "standard-message",
     "./data/standard-message.json",
     "standard-message"
@@ -120,7 +110,7 @@ const loadStandardMessage = async () => {
 };
 
 const loadUrgency = async () => {
-  loadUtils.loadJson("urgency", "./data/urgency.json", "urgency");
+  await loadUtils.loadJson("urgency", "./data/urgency.json", "urgency");
 };
 
 // xref
@@ -154,9 +144,7 @@ const loadFireCentreZoneXref = async () => {
 
       if (fireZones.length > 0) {
         fireCentre.fireZones = fireZones;
-        await strapi
-          .query("fire-centre")
-          .update({ id: fireCentre.id }, fireCentre);
+        await strapi.query("fire-centre").update({ id: fireCentre.id }, fireCentre);
       }
     }
   }
@@ -202,15 +190,16 @@ const loadParkActivity = async () => {
           isActivityOpen: activity.isActivityOpen,
           isActive: activity.isActive,
         };
-        await strapi.services["park-activity"]
-          .create(parkActivity)
-          .catch((error) => {
+        
+        try {
+          await strapi.services["park-activity"].create(parkActivity);
+        } catch (error) {
             strapi.log.error(
               `error creating park-activity ${parkActivity.activityNumber}...`,
               error,
               parkActivity
             );
-          });
+        };
       }
     } catch (error) {
       strapi.log.error(error);
@@ -258,15 +247,16 @@ const loadParkFacility = async () => {
           isFacilityOpen: facility.isFacilityOpen,
           isActive: facility.isActive,
         };
-        await strapi.services["park-facility"]
-          .create(parkFacility)
-          .catch((error) => {
-            strapi.log.error(
-              `error creating park-facility ${parkFacility.facilityNumber}...`,
-              error,
-              parkFacility
-            );
-          });
+        
+        try {
+          await strapi.services["park-facility"].create(parkFacility);
+        } catch (error) {
+          strapi.log.error(
+            `error creating park-facility ${parkFacility.facilityNumber}...`,
+            error,
+            parkFacility
+          );
+        };
       }
     } catch (error) {
       strapi.log.error(error);
@@ -309,7 +299,7 @@ const loadParkName = async () => {
 };
 
 const loadParkNameType = async () => {
-  loadUtils.loadJson(
+  await loadUtils.loadJson(
     "park-name-type",
     "./data/park-name-type.json",
     "park-name-type"
@@ -343,9 +333,7 @@ const loadParkFireZoneXref = async () => {
 
       if (fireZones.length > 0) {
         protectedArea.fireZones = fireZones;
-        await strapi
-          .query("protected-area")
-          .update({ id: protectedArea.id }, protectedArea);
+        await strapi.query("protected-area").update({ id: protectedArea.id }, protectedArea);
       }
     }
   }
@@ -362,9 +350,7 @@ const loadParkFogZoneXref = async () => {
     if (protectedArea) {
       protectedArea.isFogZone = data.fogZone === "Y" ? true : false;
 
-      await strapi
-        .query("protected-area")
-        .update({ id: protectedArea.id }, protectedArea);
+      await strapi.query("protected-area").update({ id: protectedArea.id }, protectedArea);
     }
   }
 };
@@ -399,14 +385,15 @@ const loadWebsites = async (formattedJson) => {
       const websiteJson = formattedJson
       const dataSeed = JSON.parse(websiteJson)["website"];
 
-      dataSeed.forEach(async (data) => {
+      for(let z=0;z < dataSeed.length;z++) {
+        const data = dataSeed[z];
         const keys = Object.keys(data);
         for (let i = 0; i < keys.length; i++) {
           if (data[keys[i]] === "") data[keys[i]] = null;
         }
         data.homepage = websiteHomepage?.id
         await strapi.services["website"].create(data);
-      });
+      };
       strapi.log.info("loading website completed...");
     }
   } catch (error) {
@@ -415,7 +402,7 @@ const loadWebsites = async (formattedJson) => {
 };
 
 const loadPages = async () => {
-  loadUtils.loadJson("page", "./data/pages.json", "page");
+  await loadUtils.loadJson("page", "./data/pages.json", "page");
 };
 
 const loadMenus = async () => {
@@ -480,11 +467,12 @@ const loadParkOperation = async () => {
         isActive: data.isActive,
         hasReservations: data.hasReservations,
       };
-      await strapi.services["park-operation"]
-        .create(parkOperation)
-        .catch((error) => {
-          console.log(error);
-        });
+
+      try {
+        await strapi.services["park-operation"].create(parkOperation);
+      } catch (e) {
+        console.error('ERROR:', e);
+      }
     }
     strapi.log.info("loading park operation completed...");
   }
@@ -496,7 +484,6 @@ module.exports = {
   loadAccessStatus,
   loadActivityType,
   loadAdvisoryStatus,
-  loadAssetType,
   loadEventType,
   loadLinkType,
   loadFacilityType,

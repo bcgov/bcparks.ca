@@ -11,7 +11,7 @@ const loadData = async () => {
   try {
     console.time("initialLoad");
     strapi.log.info("------Data load begins------");
-    return Promise.all([
+    await Promise.all([
       parData.loadParData(),
       otherData.loadBusinessHours(),
       otherData.loadStatutoryHolidays(),
@@ -27,26 +27,25 @@ const loadData = async () => {
       otherData.loadFireCentre(),
       otherData.loadFireZone(),
       otherData.loadParkOperation(),
-    ]).then(async () => {
-      return Promise.all([
-        parData.loadAdditionalParData(),
-        otherData.loadFireCentreZoneXref(),
-        otherData.loadParkFireZoneXref(),
-        otherData.loadFireBanProhibition(),
-        otherData.loadParkFogZoneXref(),
-        otherData.loadParkActivity(),
-        otherData.loadParkFacility(),
-        otherData.loadParkName(),
-        otherData.loadMenus(),
-        publicAdvisoryAudit.loadPublicAdvisoryAudit(),
-        pageMedia.loadPageMedia(),
-        parkPhoto.loadParkPhoto(),
-      ]).then(() => {
-        strapi.log.info("------Data load completed------");
-        console.timeEnd("initialLoad");
-        return true;
-      });
-    });
+    ]);
+
+    await Promise.all([
+      parData.loadAdditionalParData(),
+      otherData.loadFireCentreZoneXref(),
+      otherData.loadParkFireZoneXref(),
+      otherData.loadFireBanProhibition(),
+      otherData.loadParkFogZoneXref(),
+      otherData.loadParkActivity(),
+      otherData.loadParkFacility(),
+      otherData.loadParkName(),
+      otherData.loadMenus(),
+      publicAdvisoryAudit.loadPublicAdvisoryAudit(),
+      pageMedia.loadPageMedia(),
+      parkPhoto.loadParkPhoto(),
+    ]);
+
+    strapi.log.info("------Data load completed------");
+    console.timeEnd("initialLoad");
   } catch (error) {
     strapi.log.error(error);
     return false;
@@ -59,7 +58,7 @@ const loadData = async () => {
 const rewriteData = async () => {
   try {
     strapi.log.info("---------Removing all data---------");
-    Promise.all([
+    await Promise.all([
       strapi.services["protected-area"].delete(),
       strapi.services["section"].delete(),
       strapi.services["management-area"].delete(),
@@ -83,12 +82,10 @@ const rewriteData = async () => {
       strapi.services["website"].delete(),
       strapi.services["page"].delete(),
       strapi.services["menu"].delete(),
-    ]).then(() => {
-      strapi.log.info("---------Removing all data completed---------");
-      Promise.resolve(loadData()).then(() => {
-        return true;
-      });
-    });
+    ])
+    
+    strapi.log.info("---------Removing all data completed---------");
+    await loadData();
   } catch (error) {
     strapi.log.error(error);
   }

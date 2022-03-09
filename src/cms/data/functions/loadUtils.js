@@ -24,14 +24,15 @@ const loadJson = async (model, jsonFile, object) => {
       var jsonData = fs.readFileSync(jsonFile, "utf8");
       const dataSeed = JSON.parse(jsonData)[object];
 
-      dataSeed.forEach(async (data) => {
+      for(let z=0;z < dataSeed.length;z++) {
+        const data = dataSeed[z];
         const keys = Object.keys(data);
         for (let i = 0; i < keys.length; i++) {
           if (data[keys[i]] === "") data[keys[i]] = null;
         }
 
         await strapi.services[model].create(data);
-      });
+      }
       strapi.log.info(`loading ${model} completed...`);
     }
   } catch (error) {

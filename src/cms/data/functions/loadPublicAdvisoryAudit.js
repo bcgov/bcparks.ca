@@ -1,7 +1,6 @@
 "use strict";
 const fs = require("fs");
 const loadUtils = require("./loadUtils");
-const moment = require("moment");
 
 const savePublicAdvisoryAudit = async (
   modelName,
@@ -128,9 +127,7 @@ const loadPublicAdvisoryAudit = async () => {
           advisoryStatuses,
           eventTypes,
           urgencies
-        ).then((res) => {
-          return res;
-        });
+        );
       }
       const publicAdvisoryCount = await strapi.services[modelName].count();
       strapi.log.info(`public advisories loaded: ${publicAdvisoryCount}`);
