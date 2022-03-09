@@ -31,6 +31,7 @@ export default function ParkAccessStatus({ advisories }) {
           edges {
             node {
               id
+              strapiId
               color
               accessStatus
               precedence
@@ -64,8 +65,8 @@ export default function ParkAccessStatus({ advisories }) {
       } else {
         // advisory is coming from explore page
         // get accessStatus based on precedence
-        let thisStatus = accessStatusList.filter(status => {
-          return status.node.precedence === advisory.accessStatus;
+        let thisStatus = accessStatusList.find(status => {
+          return status.node.strapiId === advisory.accessStatus;
         })
         if (!thisStatus || thisStatus.length === 0) {
           break;
