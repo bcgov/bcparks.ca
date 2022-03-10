@@ -13,9 +13,13 @@ const NotFoundPage = () => (
     <Seo title="404: Not found" />
     <div className="not-found">
       <nav className="navbar navbar-dark" id="desktopNav">
-        <Link to="/">
-          <img className="bc-parks-logo" src={BCParksLogo} alt="BC Parks logo" />
-        </Link>
+        <div className="container">
+          <div className="p-md-3 p-sm-0 mx-2">
+          <Link to="/">
+            <img className="bc-parks-logo" height="50" src={BCParksLogo} alt="BC Parks logo" />
+          </Link>
+            </div>
+        </div>
       </nav>
       <div>
         <div className="not-found-container d-flex align-items-center justify-content-center container">
