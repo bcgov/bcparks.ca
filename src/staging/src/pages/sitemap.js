@@ -12,7 +12,7 @@ const SitemapPage = ({ data }) => {
 
   const menuContent = data?.allStrapiMenus?.nodes || []
 
-    const breadcrumbs = [
+    const breadcrumbs = [ // TODO convert MUI breadcrumbs and use gatsby Link
     <Link key="1" href="/">
       Home
     </Link>,
