@@ -68,13 +68,13 @@ export default function ParkAccessStatus({ advisories }) {
         let thisStatus = accessStatusList.find(status => {
           return status.node.strapiId === advisory.accessStatus;
         })
-        if (!thisStatus || thisStatus.length === 0) {
+        if (!thisStatus) {
           break;
         } else {
           accessStatuses.push({
-            precedence: thisStatus[0].node.precedence,
-            color: thisStatus[0].node.color,
-            text: thisStatus[0].node.accessStatus,
+            precedence: thisStatus.node.precedence,
+            color: thisStatus.node.color,
+            text: thisStatus.node.accessStatus,
           })
         }
       }
