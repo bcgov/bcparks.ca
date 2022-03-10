@@ -15,10 +15,10 @@ const NotFoundPage = () => (
       <nav className="navbar navbar-dark" id="desktopNav">
         <div className="container">
           <div className="p-md-3 p-sm-0 mx-2">
-          <Link to="/">
-            <img className="bc-parks-logo" height="50" src={BCParksLogo} alt="BC Parks logo" />
-          </Link>
-            </div>
+            <Link to="/">
+              <img className="bc-parks-logo" height="50" src={BCParksLogo} alt="BC Parks logo" />
+            </Link>
+          </div>
         </div>
       </nav>
       <div>
