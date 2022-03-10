@@ -36,6 +36,7 @@ import Carousel from "react-material-ui-carousel"
 import SearchFilter from "../components/search/searchFilter"
 import NoSearchResults from "../components/search/noSearchResults"
 import Seo from "../components/seo"
+import ParkAccessStatus from "../components/park/parkAccessStatus"
 
 export const query = graphql`
   query {
@@ -455,7 +456,7 @@ export default function Explore({ location, data }) {
 
   return (
     <>
-      <Seo title="Explore"/>
+      <Seo title="Explore" />
       <Header content={menuContent} />
       <div className="search-body">
         <div className="search-results-main container">
@@ -488,7 +489,7 @@ export default function Explore({ location, data }) {
               </div>
             </div>
             <div className="row no-gutters">
-            <div className="col-lg-3 col-md-12 col-sm-12">
+              <div className="col-lg-3 col-md-12 col-sm-12">
                 <div className="search-results-quick-filter m15t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
                   <div className="row no-gutters">
                   </div>
@@ -821,7 +822,7 @@ export default function Explore({ location, data }) {
                   {!isLoading && (
                     <>
                       {!searchResults ||
-                        (searchResults.length === 0 && (<NoSearchResults></NoSearchResults>) )}
+                        (searchResults.length === 0 && (<NoSearchResults></NoSearchResults>))}
                       {searchResults && searchResults.length > 0 && (
                         <>
                           {searchResults
@@ -884,16 +885,9 @@ export default function Explore({ location, data }) {
                                           <div className="col-lg-7 p20t park-content p20l">
                                             <div className="row">
                                               <div className="col-12 park-overview-content text-blue small-font">
-                                                {r.isOpenToPublic && (
-                                                  <div className="text-green font-weight-bold">
-                                                    Open to public access
-                                                  </div>
-                                                )}
-                                                {!r.isOpenToPublic && (
-                                                  <div className="text-red font-weight-bold">
-                                                    Closed to public access
-                                                  </div>
-                                                )}
+                                                <div>
+                                                  <ParkAccessStatus advisories={r.advisories}/>
+                                                </div>
                                               </div>
                                             </div>
                                             <Link
@@ -922,7 +916,7 @@ export default function Explore({ location, data }) {
                                                             src={redAlertIcon}
                                                           />
                                                           <div className="pl15 text-blue pb20">
-                                                            {a} (1)
+                                                            {a.title} (1)
                                                           </div>
                                                         </>
                                                       )}
@@ -1240,7 +1234,7 @@ export default function Explore({ location, data }) {
                                                             src={redAlertIcon}
                                                           />
                                                           <div className="pl15 text-blue">
-                                                            {a} (1)
+                                                            {a.title} (1)
                                                           </div>
                                                         </>
                                                       )}

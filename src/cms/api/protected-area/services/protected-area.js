@@ -94,8 +94,8 @@ module.exports = {
           // Include all advisories, filtering out nulls caused by joins.
           // In future this can be replaced with a count
           knex.raw(
-            'array_remove(array_agg(DISTINCT ?? ORDER BY ??), NULL) AS "advisories"',
-            ["public_advisories.title", "public_advisories.title"]
+            'to_json(array_remove(array_agg(DISTINCT ?? ORDER BY ??), NULL)) AS "advisories"',
+            ["public_advisories.*", "public_advisories.*"]
           ),
           // Include all active park photos. Photo ordering hasn't been implemented
           // yet, so order is indeterminate. We do check that the photo is active.
