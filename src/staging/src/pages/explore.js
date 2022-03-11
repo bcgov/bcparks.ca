@@ -885,9 +885,7 @@ export default function Explore({ location, data }) {
                                           <div className="col-lg-7 p20t park-content p20l">
                                             <div className="row">
                                               <div className="col-12 park-overview-content text-blue small-font">
-                                                <div>
                                                   <ParkAccessStatus advisories={r.advisories}/>
-                                                </div>
                                               </div>
                                             </div>
                                             <Link
@@ -1078,16 +1076,7 @@ export default function Explore({ location, data }) {
                                           <div className="col-12 p20t park-content-mobile">
                                             <div className="row">
                                               <div className="col-12 park-overview-content text-blue small-font">
-                                                {r.isOpenToPublic && (
-                                                  <div className="text-green font-weight-bold">
-                                                    Open to public access
-                                                  </div>
-                                                )}
-                                                {!r.isOpenToPublic && (
-                                                  <div className="text-red font-weight-bold">
-                                                    Closed public access
-                                                  </div>
-                                                )}
+                                                <ParkAccessStatus advisories={r.advisories}/>
                                               </div>
                                             </div>
                                             <Link
