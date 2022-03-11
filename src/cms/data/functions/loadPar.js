@@ -338,6 +338,7 @@ const loadParkDetails = async () => {
         purpose: park.purpose,
         managementPlanning: park.managementPlanning,
         partnerships: park.partnerships,
+        isDisplayed: park.isDisplayed || false,
       };
 
       if (typeof park.protectedAreaName !== "undefined") {
