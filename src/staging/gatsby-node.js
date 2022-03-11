@@ -92,6 +92,8 @@ exports.createSchemaCustomization = ({ actions }) => {
   type StrapiParkPhoto implements Node {
     orcs: Int
     isActive: Boolean
+    sortOrder: Int
+    isFeatured: Boolean
   }
 
   type StrapiProtectedArea implements Node {

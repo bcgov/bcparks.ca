@@ -63,7 +63,7 @@ export default function ParkTemplate({ data }) {
   const apiBaseUrl = data.site.siteMetadata.apiURL
 
   const park = data.strapiProtectedArea
-  const photos = data.allStrapiParkPhoto.nodes
+  const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
   const operations = data.allStrapiParkOperation.nodes
 
   const activeActivities = sortBy(
@@ -440,12 +440,22 @@ export const query = graphql`
         hasReservations
       }
     }
-    allStrapiParkPhoto(
-      filter: { orcs: { eq: $orcs }, isActive: { eq: true } }
+    # Park photos are split into featured and non-featured in order to sort correctly,
+    # with null values last.
+    featuredPhotos:allStrapiParkPhoto(
+      filter: { orcs: { eq: $orcs }, isFeatured: { eq: true }, isActive: { eq: true } }
+      sort: {order: [ASC, DESC, DESC], fields: [sortOrder, dateTaken, strapiId]}
     ) {
       nodes {
-        orcs
-        isActive
+        imageUrl
+        caption
+      }
+    }
+    regularPhotos:allStrapiParkPhoto(
+      filter: { orcs: { eq: $orcs }, isFeatured: { ne: true }, isActive: { eq: true } }
+      sort: {order: [ASC, DESC, DESC], fields: [sortOrder, dateTaken, strapiId]}
+    ) {
+      nodes {
         imageUrl
         caption
       }
