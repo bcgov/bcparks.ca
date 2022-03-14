@@ -61,32 +61,6 @@ module.exports = {
   }) {
     const knex = strapi.connections[strapi.config.database.defaultConnection];
 
-    // Load open access status ids
-    const openAccessStatus = await strapi
-      .query("access-status")
-      .model.query((query) => {
-        query.where("accessStatus", "ILIKE", "%open%");
-      })
-      .fetch();
-
-    // Check park access status. If the park has any advisories
-    // with access status set and not equal to "open" then it is closed.
-    // TODO: will likely be replaced with the access status text.
-    let isOpenToPublicSelect;
-    if (openAccessStatus) {
-      isOpenToPublicSelect = knex.raw(
-        `bool_and(
-          CASE
-            WHEN public_advisories."accessStatus" IS NULL THEN TRUE
-            WHEN public_advisories."accessStatus" = ? THEN TRUE
-            ELSE FALSE
-          END) AS "isOpenToPublic"`,
-        [openAccessStatus.id]
-      );
-    } else {
-      isOpenToPublicSelect = knex.raw('TRUE AS "isOpenToPublic"');
-    }
-
     const results = strapi.query("protected-area").model.query((query) => {
       query
         .select(
@@ -119,7 +93,6 @@ module.exports = {
           knex.raw(
             'bool_or(park_operations."hasReservations") AS "hasReservations"'
           ),
-          isOpenToPublicSelect
         )
         .leftJoin(
           "park_activities",
