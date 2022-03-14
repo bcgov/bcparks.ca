@@ -115,6 +115,7 @@ const SearchFilter = ({
     selectedFacilities,])
 
   const searchParkFilter = () => {
+    setCurrentPage(1);
     navigate("/explore", {
       state: {
         selectedActivities,
@@ -472,6 +473,7 @@ SearchFilter.propTypes = {
     setQuickSearch: PropTypes.func.isRequired,
     searchText: PropTypes.string.isRequired,
     setSearchText: PropTypes.func.isRequired,
+    setCurrentPage: PropTypes.func.isRequired
   }),
 }
 

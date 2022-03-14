@@ -300,6 +300,7 @@ export default function Explore({ location, data }) {
   }
 
   const handleSearch = () => {
+    setCurrentPage(1);
     setSearchText(inputText)
   }
 
@@ -598,6 +599,7 @@ export default function Explore({ location, data }) {
                               onKeyPress={ev => {
                                 if (ev.key === "Enter") {
                                   setSearchText(inputText)
+                                  setCurrentPage(1)
                                   ev.preventDefault()
                                 }
                               }}
