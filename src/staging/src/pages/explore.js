@@ -903,32 +903,38 @@ export default function Explore({ location, data }) {
                                                 {r.protectedAreaName}
                                               </h3>
                                             </Link>
+
                                             <div className="row p10t mr5">
                                               <div className="col-6">
-                                                {r.advisories && r.advisories.length > 0 && r.advisories.map(
-                                                  (a, index1) => (
-                                                    // TODO Display all advisories when Event types are
-                                                    // available in elastic search results based on severity
-                                                    <div
-                                                      key={index1}
-                                                      className="flex-display"
-                                                    >
-                                                      {index1 === 0 && (
-                                                        <>
-                                                          <img
-                                                            alt=""
-                                                            className="search-result-icon"
-                                                            src={redAlertIcon}
-                                                          />
-                                                          <div className="pl15 text-blue pb20">
-                                                            {a.title} (1)
-                                                          </div>
-                                                        </>
-                                                      )}
-                                                    </div>
-                                                  )
-                                                )}
+                                                <Link
+                                                  href={`/${r.slug}#park-advisory-details-container`}
+                                                >
+                                                  {r.advisories && r.advisories.length > 0 && r.advisories.map(
+                                                    (advisory, index) => (
+                                                      // TODO Display all advisories when Event types are
+                                                      // available in elastic search results based on severity
+                                                      <div
+                                                        key={index}
+                                                        className="flex-display"
+                                                      >
+                                                        {index === 0 && (
+                                                          <>
+                                                            <img
+                                                              alt=""
+                                                              className="search-result-icon"
+                                                              src={redAlertIcon}
+                                                            />
+                                                            <div className="pl15 text-blue pb20">
+                                                              {advisory.title} (1)
+                                                            </div>
+                                                          </>
+                                                        )}
+                                                      </div>
+                                                    )
+                                                  )}
+                                                </Link>
                                               </div>
+
                                               <div className="col-6">
                                                 {r.hasDayUsePass &&
                                                   r.hasReservations && (

@@ -12,7 +12,6 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
     return (
         <div className="row search-result-card no-gutters">
             {/* Photos */}
-
             {park.parkPhotos && park.parkPhotos.length < 1 && (
                 <div className="col-12 close-margin park-image-div-mobile park-image-logo-div">
                     <img
@@ -32,30 +31,30 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
                 </div>
             )}
             {park.parkPhotos && park.parkPhotos.length > 1 && (
-                    <div className="col-12 close-margin park-image-div-mobile">
-                        <Carousel
-                            className="park-carousel-mobile"
-                            autoPlay={false}
-                            indicators={false}
-                            navButtonsAlwaysVisible={true}
-                            animation="fade"
-                            timeout={200}
-                        >
-                            {park.parkPhotos.map(
-                                (item, index) => {
-                                    return (
-                                        <img
-                                            alt="park carousel"
-                                            key={index}
-                                            className="search-result-image"
-                                            src={`${item}`}
-                                        />
-                                    )
-                                }
-                            )}
-                        </Carousel>
-                    </div>
-                )}
+                <div className="col-12 close-margin park-image-div-mobile">
+                    <Carousel
+                        className="park-carousel-mobile"
+                        autoPlay={false}
+                        indicators={false}
+                        navButtonsAlwaysVisible={true}
+                        animation="fade"
+                        timeout={200}
+                    >
+                        {park.parkPhotos.map(
+                            (item, index) => {
+                                return (
+                                    <img
+                                        alt="park carousel"
+                                        key={index}
+                                        className="search-result-image"
+                                        src={`${item}`}
+                                    />
+                                )
+                            }
+                        )}
+                    </Carousel>
+                </div>
+            )}
             <div className="col-12 park-content-mobile p2030 container">
                 {/* Park Access */}
                 <div className="row">
@@ -79,27 +78,31 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
                 {/* Advisories */}
                 <div className="row p10t">
                     <div className="col-12">
-                        {park.advisories && park.advisories.length > 0 && park.advisories.map(
-                            (advisory, index) => (
-                                <div
-                                    key={index}
-                                    className="flex-display"
-                                >
-                                    {index === 0 && (
-                                        <>
-                                            <img
-                                                alt=""
-                                                className="search-result-icon"
-                                                src={redAlertIcon}
-                                            />
-                                            <div className="pl15 text-blue">
-                                                {advisory.title} (1)
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-                            )
-                        )}
+                        <Link
+                            href={`/${park.slug}#park-advisory-details-container`}
+                        >
+                            {park.advisories && park.advisories.length > 0 && park.advisories.map(
+                                (advisory, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex-display"
+                                    >
+                                        {index === 0 && (
+                                            <>
+                                                <img
+                                                    alt=""
+                                                    className="search-result-icon"
+                                                    src={redAlertIcon}
+                                                />
+                                                <div className="pl15 text-blue">
+                                                    {advisory.title} (1)
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                )
+                            )}
+                        </Link>
                     </div>
                 </div>
                 {/* DayUse */}

@@ -75,7 +75,7 @@ export default function AdvisoryDetails({ advisories }) {
 
   return (
     <div className="mb-5">
-      <Row className="anchor-link" id="park-advisory-details-container">
+      <Row>
         <Col >
           <div className="d-flex justify-content-between align-items-flex-start">
             <Heading>{`Advisories (${advisories.length})`}</Heading>
