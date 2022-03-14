@@ -151,6 +151,11 @@ module.exports = {
           "protected_areas.orcs",
           "park_operations.orcs"
         )
+        .leftJoin(
+          "park_names",
+          "protected_areas.id",
+          "park_names.protectedArea"
+        )
         .groupBy("protected_areas.id");
 
       // Only include published & displayed parks
@@ -172,7 +177,9 @@ module.exports = {
         // and the description columns of park_activities and park_facilities
         // Any match here counts.
         query.where((builder) => {
-          builder.where(
+          builder.where("protected_areas.protectedAreaName", "ILIKE", `%${searchText}%`);
+          builder.orWhere("park_names.parkName", "ILIKE", `%${searchText}%`);
+          builder.orWhere(
             knex.raw(
               "protected_areas.search_text @@ websearch_to_tsquery('english', ?)",
               [searchText]
@@ -273,6 +280,11 @@ module.exports = {
         "park_facilities.facilityType",
         "facility_types.id"
       )
+      .leftJoin(
+        "park_names",
+        "protected_areas.id",
+        "park_names.protectedArea"
+      )
       .groupBy("protected_areas.id");
 
     // Only include published & displayed parks
@@ -294,7 +306,9 @@ module.exports = {
       // and the description columns of park_activities and park_facilities.
       // Any match here counts.
       query.where((builder) => {
-        builder.where(
+        builder.where("protected_areas.protectedAreaName", "ILIKE", `%${searchText}%`);
+        builder.orWhere("park_names.parkName", "ILIKE", `%${searchText}%`);
+        builder.orWhere(
           knex.raw(
             "protected_areas.search_text @@ websearch_to_tsquery('english', ?)",
             [searchText]
