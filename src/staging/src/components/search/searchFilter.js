@@ -35,6 +35,7 @@ const SearchFilter = ({
     setSelectedFacilities,
     searchText,
     setSearchText,
+    setCurrentPage,
   },
 
 }) => {
@@ -55,6 +56,7 @@ const SearchFilter = ({
         ...selectedActivities.filter(a => a.value !== activity.value),
       ])
     }
+    setCurrentPage(1);
   }
 
   const handleFacilityCheck = (facility, event) => {
@@ -65,6 +67,7 @@ const SearchFilter = ({
         ...selectedFacilities.filter(f => f.value !== facility.value),
       ])
     }
+    setCurrentPage(1);
   }
 
   const handleShowFilterClick = index => {
@@ -77,12 +80,14 @@ const SearchFilter = ({
     setSelectedActivities(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
+    setCurrentPage(1);
   }
 
   const handleFacilityDelete = chipToDelete => {
     setSelectedFacilities(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
+    setCurrentPage(1);
   }
 
   const handleFilterDelete = chipToDelete => () => {
@@ -91,6 +96,7 @@ const SearchFilter = ({
     } else if (chipToDelete.type === "facility") {
       handleFacilityDelete(chipToDelete)
     }
+    setCurrentPage(1);
   }
 
   const setFilters = useCallback(() => {

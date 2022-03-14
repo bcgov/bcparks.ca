@@ -1413,6 +1413,7 @@ export default function Explore({ location, data }) {
           setQuickSearch,
           searchText,
           setSearchText,
+          setCurrentPage,
         }}
       />
       <Footer>{data.strapiWebsites.Footer}</Footer>
