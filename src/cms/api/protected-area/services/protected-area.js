@@ -108,8 +108,8 @@ module.exports = {
                   AND park_photos."isActive" = TRUE
                   AND park_photos."thumbnailUrl" IS NOT NULL
               ORDER BY park_photos."isFeatured" DESC NULLS LAST,
-              	  park_photos."sortOrder" ASC NULLS LAST,
-              	  park_photos."dateTaken" DESC,
+                  park_photos."sortOrder" ASC NULLS LAST,
+                  park_photos."dateTaken" DESC,
                   park_photos."id" DESC
               LIMIT 6
             ) AS "parkPhotos"`
