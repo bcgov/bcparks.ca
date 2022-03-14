@@ -40,6 +40,16 @@
     },
     "thumbnailUrl": {
       "type": "string"
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "sortOrder": {
+      "type": "integer",
+      "required": true,
+      "default": 100
     }
   }
 }
