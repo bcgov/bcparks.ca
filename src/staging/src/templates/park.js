@@ -65,7 +65,7 @@ export default function ParkTemplate({ data }) {
 
   const park = data.strapiProtectedArea
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
-  const operations = data.allStrapiParkOperation.nodes
+  const operations = park.parkOperation || {}
 
   const activeActivities = sortBy(
     park.parkActivities.filter(
