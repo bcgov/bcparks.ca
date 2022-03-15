@@ -12,6 +12,8 @@ export default function ParkDates({ data }) {
   // If no operations record, show "not available" message  
   const hasOperations = (parkOperation.isActive) // either false, or whole record missing
 
+  const fmt = "MMM DD, yyyy"; // date format for display
+
   // -------- Operating Dates --------
 
   const datePhrase = (openDate, closeDate) => {
@@ -20,7 +22,6 @@ export default function ParkDates({ data }) {
       
       try {
 
-        const fmt = "MMM DD, yyyy";
         const open = moment(openDate).format(fmt);
         const close = moment(closeDate).format(fmt);
 

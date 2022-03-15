@@ -2,6 +2,74 @@
 const fs = require("fs");
 const permission = require("./loadPermissions");
 
+const getExistingParkOperation = (currentData, dataToFind) => {
+  // shoud only be one record per protected area
+  const rec = currentData.find(d => (d.protectedArea) && (d.protectedArea.orcs === dataToFind.orcs))
+  return(rec)
+}
+
+const getExistingSubAreaDate = (currentData, dataToFind) => {
+  // both subarea and year
+  const rec = currentData.find(d => (d.parkOperationSubArea?.parkSubAreaId === dataToFind.parkSubAreaId) && (d.operatingYear === dataToFind.operatingYear));
+  return(rec)
+}
+
+const updateSubAreaRelations = async (data) => {
+  // make relation between sub-area and type
+  if (data.parkSubAreaTypeId) {
+    const subAreaTypeService = strapi.services["park-operation-sub-area-type"];
+    const subAreaType = await subAreaTypeService.findOne({ subAreaTypeId: data.parkSubAreaTypeId });
+    data.parkSubAreaType = subAreaType ? subAreaType.id : null;
+  } else {
+    data.parkSubAreaType = null;
+  }
+  // relate subarea to protected areas
+  if (data.orcs) {
+    const protectedAreaService = strapi.services["protected-area"];
+    const protectedArea = await protectedAreaService.findOne({ orcs: data.orcs })
+    data.protectedArea = protectedArea ? protectedArea.id : null;
+  } else {
+    data.protectedArea = null;
+  }
+  // relate subarea to facility
+  if (data.parkFacilityId) {
+    const parkFacilityService = strapi.services["park-facility"];
+    const parkFacility = await parkFacilityService.findOne({ id: data.parkFacilityId })
+    data.parkFacility = parkFacility ? parkFacility.id : null;
+  } else {
+    data.parkFacility = null;
+  }
+  const isMissingRelation = ((data.parkSubAreaType === null) || (data.protectedArea === null)) // park facility not needed
+  return(!isMissingRelation)
+}
+
+const updateParkOperationsRelations = async (data) => {
+  // relate operation to protected areas
+  if (data.orcs) {
+    const paService = strapi.services["protected-area"];
+    const pa = await paService.findOne({ orcs: data.orcs })
+    data.protectedArea = pa ? pa.id : null;
+  } else {
+    data.protectedArea = null;
+  }
+
+  const isMissingRelation = (data.protectedArea === null)
+  return(!isMissingRelation)  
+}
+
+const updateSubAreaDateRelations = async (data) => {
+  // relate date to subarea
+  if (data.parkSubAreaId) {
+    const subAreaService = strapi.services["park-operation-sub-area"];
+    const subArea = await subAreaService.findOne({ parkSubAreaId: data.parkSubAreaId })
+    data.parkOperationSubArea = subArea ? subArea.id : null;
+  } else {
+    data.parkOperationSubArea = null;
+  }
+  const isMissingRelation = (data.parkOperationSubArea === null)
+  return(!isMissingRelation)  
+}
+
 const updateOperationsFromJson = async ({modelName, jsonFile, objectName, idName, isSeedMode = true, allowUpdates = false }) => {
   // general purpose function used to upload
   // parkOperations, parkOperationSubarea,
@@ -38,25 +106,24 @@ const updateOperationsFromJson = async ({modelName, jsonFile, objectName, idName
         try {
           // get existing record
           let existingRecord;
+
           switch (modelName) {
             case "park-operation":
-              // shoud only be one record per protected area
-              existingRecord = currentData.find(d => (d.protectedArea) && (d.protectedArea.orcs === data.orcs))
+              existingRecord = getExistingParkOperation(currentData, data)
               break;
             case "park-operation-sub-area-date":
-              // specific call to get existingRecord
-              // both subarea and year
-              existingRecord = currentData.find(d => (d.parkOperationSubArea?.parkSubAreaId === data.parkSubAreaId) && (d.operatingYear === data.operatingYear)); // get existing record
+              existingRecord = getExistingSubAreaDate(currentData, data)   
               break;
             default:
               existingRecord = currentData.find(d => d[idName] === idVal);
               break;
           }
+
           const doesExist = (existingRecord !== undefined);
 
           if (!idVal) {
             // id needed
-            console.log("Id for " + modelName + " is missing in json: " + idName)
+            console.error("Id for " + modelName + " is missing in json: " + idName)
             missingCount++;
           } else {
 
@@ -65,65 +132,25 @@ const updateOperationsFromJson = async ({modelName, jsonFile, objectName, idName
               if (data[keys[i]] === "") data[keys[i]] = null;
             }
             
-            let isMissingRelation = false;
+            let relationsMade = false;
 
             switch (modelName) { // add relations, specific to model
               case "park-operation-sub-area":
-                // make relation between sub-area and type
-                if (data.parkSubAreaTypeId) {
-                  const subAreaTypeService = strapi.services["park-operation-sub-area-type"];
-                  const subAreaType = await subAreaTypeService.findOne({ subAreaTypeId: data.parkSubAreaTypeId });
-                  data.parkSubAreaType = subAreaType ? subAreaType.id : null;
-                } else {
-                  data.parkSubAreaType = null;
-                }
-                // relate subarea to protected areas
-                if (data.orcs) {
-                  const protectedAreaService = strapi.services["protected-area"];
-                  const protectedArea = await protectedAreaService.findOne({ orcs: data.orcs })
-                  data.protectedArea = protectedArea ? protectedArea.id : null;
-                } else {
-                  data.protectedArea = null;
-                }
-                // relate subarea to facility
-                if (data.parkFacilityId) {
-                  const parkFacilityService = strapi.services["park-facility"];
-                  const parkFacility = await parkFacilityService.findOne({ id: data.parkFacilityId })
-                  data.parkFacility = parkFacility ? parkFacility.id : null;
-                } else {
-                  data.parkFacility = null;
-                }
-                isMissingRelation = ((data.parkSubAreaType === null) || (data.protectedArea === null)) // park facility not needed
+                relationsMade = await updateSubAreaRelations(data)              
                 break;
               case "park-operation":
-                // relate operation to protected areas
-                if (data.orcs) {
-                  const paService = strapi.services["protected-area"];
-                  const pa = await paService.findOne({ orcs: data.orcs })
-                  data.protectedArea = pa ? pa.id : null;
-                } else {
-                  data.protectedArea = null;
-                }
-
-                isMissingRelation = (data.protectedArea === null)
+                relationsMade = await updateParkOperationsRelations(data)
                 break;
               case "park-operation-sub-area-date":
-                // relate date to subarea
-                if (data.parkSubAreaId) {
-                  const subAreaService = strapi.services["park-operation-sub-area"];
-                  const subArea = await subAreaService.findOne({ parkSubAreaId: data.parkSubAreaId })
-                  data.parkOperationSubArea = subArea ? subArea.id : null;
-                } else {
-                  data.parkOperationSubArea = null;
-                }
-                isMissingRelation = (data.parkOperationSubArea === null)
+                relationsMade = await updateSubAreaDateRelations(data)
                 break;
               default:
                 // no default relation for other models
+                relationsMade = true;
                 break;
             }
-            if (isMissingRelation) {
-              console.log("Missing relation, not creating or updating for: " + idVal)
+            if (!relationsMade) {
+              console.error("Missing relation, not creating or updating for: " + idVal)
               missingCount++;
             } else {
               if (doesExist) {
@@ -139,8 +166,8 @@ const updateOperationsFromJson = async ({modelName, jsonFile, objectName, idName
           }
 
         } catch (e) {
-          console.log("!! Json import failed for " + modelName + " data with " + idName + ":" + idVal);
-          console.log(e);
+          console.error("!! Json import failed for " + modelName + " data with " + idName + ":" + idVal);
+          console.error(e);
         }
       };
       console.log(modelName + " - Updates: " + updateCount + ", Creates: " + createCount + ", Missing: " + missingCount);
@@ -148,8 +175,8 @@ const updateOperationsFromJson = async ({modelName, jsonFile, objectName, idName
     return(true)
 
   } catch (error) {
-    console.log(`error loading ${modelName}...`);
-    console.log(error);
+    console.error(`error loading ${modelName}...`);
+    console.error(error);
     return(false)
   }
 }
@@ -192,7 +219,7 @@ const loadParkOperationSubAreas = async ({ isSeedMode = true, allowUpdates = fal
 };
 
 const loadParkOperationSubAreaDates = async ({ isSeedMode = true, allowUpdates = false }) => {
-    const a = await updateOperationsFromJson({
+  const a = await updateOperationsFromJson({
     modelName: "park-operation-sub-area-date",
     jsonFile: "./data/park-operation-sub-area-dates.json",
     objectName: "parkOperationSubAreaDates",
@@ -210,7 +237,7 @@ const loadData = async ({ isSeedMode = true, allowUpdates = false }) => {
     const p3 = await loadParkOperationSubAreaDates(config)
     const p4 = await loadParkOperations(config)
   } catch (err) {
-    console.log("Error in loading operations data")
+    console.error("Error in loading operations data")
     return (false);
   }
 }
