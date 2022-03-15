@@ -10,3 +10,6 @@
 2. ``yarn start``. This will run Gatsby in development mode.
 
 You are able to create builds by running ``yarn build``.
+
+If you are running gatsby in a VM, you can pin the websocket port in order to allow a forwarding rule to work consistently.  `export INTERNAL_STATUS_PORT=<port number>`
+See https://github.com/gatsbyjs/gatsby/blob/247b1dc0441fdade52a5ff7a71de8c9340ee05fd/packages/gatsby/src/commands/develop.ts#L213 for more info.
