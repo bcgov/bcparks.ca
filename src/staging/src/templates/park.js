@@ -82,7 +82,7 @@ export default function ParkTemplate({ data }) {
     ["asc"]
   )
 
-  const hasReservations = operations.hasReservations; //.some(op => op.hasReservations)
+  const hasReservations = operations.hasReservations
   const hasCamping = activeFacilities.some(facility =>
     facility.facilityType.facilityName.toLowerCase().includes("camping")
   )
@@ -111,8 +111,8 @@ export default function ParkTemplate({ data }) {
       })
   }, [apiBaseUrl, park.orcs])
 
-  const parkOverviewRef = useRef("")  
-  const parkDatesRef = useRef("") 
+  const parkOverviewRef = useRef("")
+  const parkDatesRef = useRef("")
   const accessibilityRef = useRef("")
   const advisoryRef = useRef("")
   const safetyRef = useRef("")
@@ -125,7 +125,7 @@ export default function ParkTemplate({ data }) {
   const reconciliationRef = useRef("")
 
   const sectionRefs = [
-    parkOverviewRef,   
+    parkOverviewRef,
     parkDatesRef,
     accessibilityRef,
     advisoryRef,
@@ -146,8 +146,12 @@ export default function ParkTemplate({ data }) {
   })
 
   const menuItems = [
-    { text: "Park overview", url: "park-overview-container", visible: true },    
-    { text: "Dates of Operation  ", url: "park-dates-container", visible: true },
+    { text: "Park overview", url: "park-overview-container", visible: true },
+    {
+      text: "Dates of operation  ",
+      url: "park-dates-container",
+      visible: true,
+    },
     {
       text: "Accessibility",
       url: "accessibility-details-container",
@@ -280,15 +284,20 @@ export default function ParkTemplate({ data }) {
               data-target="#parkScrollSpy"
               data-offset="20"
             >
-                 {menuItems[0].visible && (
-                  <div ref={parkOverviewRef} className="full-width">
-                    <ParkOverview data={park.description} />
-                  </div>
-                )}             
+              {menuItems[0].visible && (
+                <div ref={parkOverviewRef} className="full-width">
+                  <ParkOverview data={park.description} />
+                </div>
+              )}
               <Grid container spacing={0}>
                 {menuItems[1].visible && (
                   <div ref={parkDatesRef} className="full-width">
-                    <ParkDates data={{ parkOperation: park.parkOperation, subAreas: park.parkOperationSubAreas }} />
+                    <ParkDates
+                      data={{
+                        parkOperation: park.parkOperation,
+                        subAreas: park.parkOperationSubAreas,
+                      }}
+                    />
                   </div>
                 )}
                 {menuItems[2].visible && (
@@ -547,24 +556,38 @@ export const query = graphql`
           isActive
           subAreaType
           subAreaTypeCode
-          iconUrl         
+          iconUrl
         }
       }
     }
     # Park photos are split into featured and non-featured in order to sort correctly,
     # with null values last.
-    featuredPhotos:allStrapiParkPhoto(
-      filter: { orcs: { eq: $orcs }, isFeatured: { eq: true }, isActive: { eq: true } }
-      sort: {order: [ASC, DESC, DESC], fields: [sortOrder, dateTaken, strapiId]}
+    featuredPhotos: allStrapiParkPhoto(
+      filter: {
+        orcs: { eq: $orcs }
+        isFeatured: { eq: true }
+        isActive: { eq: true }
+      }
+      sort: {
+        order: [ASC, DESC, DESC]
+        fields: [sortOrder, dateTaken, strapiId]
+      }
     ) {
       nodes {
         imageUrl
         caption
       }
     }
-    regularPhotos:allStrapiParkPhoto(
-      filter: { orcs: { eq: $orcs }, isFeatured: { ne: true }, isActive: { eq: true } }
-      sort: {order: [ASC, DESC, DESC], fields: [sortOrder, dateTaken, strapiId]}
+    regularPhotos: allStrapiParkPhoto(
+      filter: {
+        orcs: { eq: $orcs }
+        isFeatured: { ne: true }
+        isActive: { eq: true }
+      }
+      sort: {
+        order: [ASC, DESC, DESC]
+        fields: [sortOrder, dateTaken, strapiId]
+      }
     ) {
       nodes {
         imageUrl

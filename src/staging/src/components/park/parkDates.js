@@ -1,42 +1,39 @@
 import React from "react"
-import moment from "moment";
+import moment from "moment"
 import HTMLArea from "../HTMLArea"
 import Heading from "./heading" // TODO this is MUI, but in many places
 
 export default function ParkDates({ data }) {
-
-  const parkOperation = data.parkOperation || {};
-  const subAreas = data.subAreas || [];
+  const parkOperation = data.parkOperation || {}
+  const subAreas = data.subAreas || []
 
   // Operations record is required, even if subarea records are present
-  // If no operations record, show "not available" message  
-  const hasOperations = (parkOperation.isActive) // either false, or whole record missing
+  // If no operations record, show "not available" message
+  const hasOperations = parkOperation.isActive // either false, or whole record missing
 
-  const fmt = "MMM DD, yyyy"; // date format for display
+  const fmt = "MMM DD, yyyy" // date format for display
 
   // -------- Operating Dates --------
 
   const datePhrase = (openDate, closeDate) => {
-
     if (openDate && closeDate) {
-      
       try {
-
-        const open = moment(openDate).format(fmt);
-        const close = moment(closeDate).format(fmt);
+        const open = moment(openDate).format(fmt)
+        const close = moment(closeDate).format(fmt)
 
         // check if dates go from jan 1 to dec 31
         // for puposes of checking if year-round, ignoring year
-        const openYearRound = (open.indexOf("Jan 01") === 0) && (close.indexOf("Dec 31") === 0);
-        let output = openYearRound ? "year-round" : open + " - " + close;
+        const openYearRound =
+          open.indexOf("Jan 01") === 0 && close.indexOf("Dec 31") === 0
+        let output = openYearRound ? "year-round" : open + " - " + close
 
-        return (output)
+        return output
       } catch (err) {
-        console.log("Err formatting date " + openDate + ", " + closeDate);
-        return("")
+        console.log("Err formatting date " + openDate + ", " + closeDate)
+        return ""
       }
     } else {
-      return ("-"); // at least one date missing
+      return "-" // at least one date missing
     }
   }
 
@@ -45,33 +42,36 @@ export default function ParkDates({ data }) {
   const parkDates = datePhrase(parkOperation.openDate, parkOperation.closeDate)
 
   // ---- Subarea Dates -----
-  const subAreaCount = subAreas.length;
+  const subAreaCount = subAreas.length
 
-  let dates = [];
-  
+  let dates = []
+
   for (let idx in subAreas) {
-
-    const subArea = subAreas[idx];
+    const subArea = subAreas[idx]
 
     if (subArea.isActive) {
-      
       // Subarea operating dates
-      const saDates = subArea.parkOperationSubAreaDates;
-      let saDateCount = 0;
+      const saDates = subArea.parkOperationSubAreaDates
+      let saDateCount = 0
       for (let dIdx in saDates) {
-        saDateCount++;
-        const dateRec = saDates[dIdx];
+        saDateCount++
+        const dateRec = saDates[dIdx]
         if (dateRec.isActive) {
-
-          const serviceDates = datePhrase(dateRec.serviceStartDate, dateRec.serviceEndDate)
-          const resDates = datePhrase(dateRec.reservationStartDate, dateRec.reservationEndDate)
+          const serviceDates = datePhrase(
+            dateRec.serviceStartDate,
+            dateRec.serviceEndDate
+          )
+          const resDates = datePhrase(
+            dateRec.reservationStartDate,
+            dateRec.reservationEndDate
+          )
           // TODO winter dates
 
           dates.push({
             dateCount: saDateCount,
             subArea: subArea.parkSubArea,
             serviceDates: serviceDates,
-            resDates: resDates
+            resDates: resDates,
           })
         }
       }
@@ -83,18 +83,22 @@ export default function ParkDates({ data }) {
     }
   }
   // Subareas to appear in alpha order
-  dates.sort((a, b) => (a.subArea >= b.subArea) ? 1 : -1)
-  
+  dates.sort((a, b) => (a.subArea >= b.subArea ? 1 : -1))
 
   // -------- Operating Notes ----------
 
   // Use this to configure which notes show below the subareas,
   // and in what order. Note that "openNote" appears separately above subareas
-  const notesList = ["generalNote", "serviceNote", "reservationsNotes", "offSeasonNote"]
+  const notesList = [
+    "generalNote",
+    "serviceNote",
+    "reservationsNotes",
+    "offSeasonNote",
+  ]
 
-  let notes = [];
+  let notes = []
   for (const nIdx in notesList) {
-    const n = notesList[nIdx];
+    const n = notesList[nIdx]
     if (parkOperation[n]) {
       notes.push({ noteType: n, display: parkOperation[n] })
     }
@@ -105,12 +109,36 @@ export default function ParkDates({ data }) {
   const countsList = [
     // Use this to configure which counts show and in what order
     // Don't show if isActive is false
-    { display: "Total number of wilderness campsites", countVar: "wildernessSites", isActive: true },
-    { display: "Total number of backcountry campsites", countVar: "backgrountrySites", isActive: true  },
-    { display: "Total number of vehicle-accessible campsites", countVar: "vehicleSites", isActive: true },
-    { display: "Total number of group campsites", countVar: "groupSites", isActive: true  },
-    { display: "Total number of RV-accessible campsites", countVar: "rvSites", isActive: true },
-    { display: "Total number of reservable frontcountry campsites", countVar: "reservableSites", isActive: true  },    
+    {
+      display: "Total number of wilderness campsites",
+      countVar: "wildernessSites",
+      isActive: true,
+    },
+    {
+      display: "Total number of backcountry campsites",
+      countVar: "backgrountrySites",
+      isActive: true,
+    },
+    {
+      display: "Total number of vehicle-accessible campsites",
+      countVar: "vehicleSites",
+      isActive: true,
+    },
+    {
+      display: "Total number of group campsites",
+      countVar: "groupSites",
+      isActive: true,
+    },
+    {
+      display: "Total number of RV-accessible campsites",
+      countVar: "rvSites",
+      isActive: true,
+    },
+    {
+      display: "Total number of reservable frontcountry campsites",
+      countVar: "reservableSites",
+      isActive: true,
+    },
     { display: "", countVar: "totalCapacity", isActive: false },
     { display: "", countVar: "reservableSites", isActive: false },
     { display: "", countVar: "nonReservableSites", isActive: false },
@@ -123,44 +151,51 @@ export default function ParkDates({ data }) {
     { display: "", countVar: "shelters", isActive: false },
     { display: "", countVar: "boatLaunches", isActive: false },
     { display: "", countVar: "vehicleSitesReservable", isActive: false },
-    { display: "", countVar: "rvSitesReservable", isActive: false },    
+    { display: "", countVar: "rvSitesReservable", isActive: false },
   ]
 
-  let counts = [];
-  let asterixFootnote = false; // show only if necessary
+  let counts = []
+  let asterixFootnote = false // show only if necessary
   for (const cIdx in countsList) {
-    const c = countsList[cIdx];
+    const c = countsList[cIdx]
     if (c.isActive) {
-      const countVal = parkOperation[c.countVar];
+      const countVal = parkOperation[c.countVar]
       if (countVal) {
         counts.push({ display: c.display, countVal: countVal })
         if (countVal === "*") {
           // need to explain * as a count
-          asterixFootnote = true;
+          asterixFootnote = true
         }
       }
     }
   }
 
-
   return (
-    <div id="park-dates-container" className="anchor-link">
+    <div id="park-dates-container" className="anchor-link mb-3">
       <div className="anchor-link">
         <Heading>Dates of Operation</Heading>
         {!hasOperations && (
-          <div className="font-italic">There is currently no operating date information available</div>
+          <div className="font-italic">
+            There is currently no operating date information available
+          </div>
         )}
         {hasOperations && (
           <>
+            <div className="dates-header font-italic text-center">
+              All dates are subject to change without notice.
+            </div>
+            <div className="font-italic text-center">
+              While this site is in beta, make sure to check advisories below,
+              which may affect these dates
+            </div>
+            {parkDates && (
+              <>
+                <h4 className="dates-access-dates text-center mt-3">
+                  The park is open to public access {parkDates}
+                </h4>
+              </>
+            )}
 
-            <div className="dates-header font-italic text-center">All dates are subject to change without notice.</div>
-            <div className="font-italic text-center">While this site is in beta, make sure to check advisories below, which may affect these dates</div>
-            {parkDates && (<>
-              <h4 className="dates-access-dates text-center mt-3">
-                The park is open to public access {parkDates}
-              </h4>  
-            </>)}
-        
             {parkOperation.openNote && (
               <div className="dates-open-note">
                 <HTMLArea isVisible={true}>{parkOperation.openNote}</HTMLArea>
@@ -170,28 +205,37 @@ export default function ParkDates({ data }) {
             {subAreaCount && (
               <>
                 <hr />
-                <div className="dates-sub-areas m-3">
+                <div className="dates-sub-areas">
                   <div className="row">
-                    <div className="col col-3 pl-0">&nbsp;</div>
+                    <div className="col col-3">&nbsp;</div>
                     <div className="col col-3 text-center">
                       Main Camping Season
-                   <div>(Full services and fees)</div>
+                      <div>(Full services and fees)</div>
                     </div>
-                    <div className="col col-3 text-center">Reservable Dates</div>
+                    <div className="col col-3 text-center">
+                      Reservable Dates
+                    </div>
                     <div className="col col-3 text-center">
                       Winter Camping Season
-                <div>(Not available in beta)</div>
+                      <div>(Not available in beta)</div>
                     </div>
                   </div>
-              
+
                   {dates.map((d, index) => (
-                    <div key={index} className={(d.dateCount === 1) ? 'border-dark border-top row pt-3 mt-3' : 'row py-1'}>
+                    <div
+                      key={index}
+                      className={
+                        d.dateCount === 1
+                          ? "border-dark border-top row pt-3 mt-3 ml-1"
+                          : "row py-1"
+                      }
+                    >
                       <div className="col col-3 pl-0">
-                        {(d.dateCount === 1) ? (<>
-                          {d.subArea}
-                        </>) : ""}
+                        {d.dateCount === 1 ? <>{d.subArea}</> : ""}
                       </div>
-                      <div className="col col-3 text-center">{d.serviceDates}</div>
+                      <div className="col col-3 text-center">
+                        {d.serviceDates}
+                      </div>
                       <div className="col col-3 text-center">{d.resDates}</div>
                       <div className="col col-3 text-center">&nbsp;</div>
                     </div>
@@ -200,14 +244,13 @@ export default function ParkDates({ data }) {
                 <hr />
               </>
             )}
-          
-            {(notes.length > 0) && (
-              <div className="park-operation-notes mt-3">
 
+            {notes.length > 0 && (
+              <div className="park-operation-notes mt-3">
                 <div className="font-weight-bold">Notes</div>
                 {notes.map((note, index) => (
                   <div key={index}>
-                    { note.noteType === "offSeasonNote" && (
+                    {note.noteType === "offSeasonNote" && (
                       <div className="font-weight-bold">Winter Camping</div>
                     )}
                     <div key={index} className="park-operation-note">
@@ -229,6 +272,7 @@ export default function ParkDates({ data }) {
             </div>
           </>
         )}
+        <div className="m-3">&nbsp;</div>
       </div>
     </div>
   )
