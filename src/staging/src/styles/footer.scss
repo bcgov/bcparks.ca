@@ -1,0 +1,90 @@
+@import "./variables.scss";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+#footer {
+  background-color: $colorBluePrimary !important;
+  overflow-x: hidden;
+}
+
+#home-footer {
+  max-width: 1100px;
+  font-size: 0.8rem !important;
+  padding: 0px;
+  margin: 0px auto;
+
+  .footer-search-container {
+    background: none;
+    border: none;
+
+    /* style search box in footer */
+    .footer-search-box {
+      background-color: $colorBlueMed;
+      border-radius: 25px;
+      height: 50px;
+      line-height: 50px;
+      align-items: center;
+      display: flex;
+
+      .fa {
+        margin-left: 20px;
+      }
+    }
+
+    input.form-control {
+      border: none;
+      background: none;
+      height: 40px;
+      color: #fff;
+      font-family: BC Sans, Verdana, Arial, sans serif;
+      font-size: 1rem;
+    }
+    input:focus {
+      background: none;
+      box-shadow: none;
+    }
+    input::placeholder {
+      color: $colorWhite;
+    }
+    input:focus::placeholder {
+      color: transparent;
+    }
+    input[type="search"]::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
+  }
+  #footer-logo {
+    height: 40px;
+    @include media-breakpoint-up(md) {
+      height: 90px;
+    }
+    img {
+      height: 100%;
+    }
+  }
+
+  .footer-utility-link {
+    font-size: 0.8rem;
+    @include media-breakpoint-up(md) {
+      font-size: 1rem;
+    }
+  }
+
+  .footer-menu-list {
+    font-size: 1.05rem;
+
+    .footer-menu-divider {
+      margin-top: 1rem;
+      margin-bottom: 5px;
+      height: 1px;
+      background-color: $colorGoldPrimary;
+      width: 48px;
+    }
+  }
+
+  a {
+    color: $colorWhite;
+    text-decoration: none;
+  }
+}
