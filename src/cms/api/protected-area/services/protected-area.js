@@ -92,20 +92,26 @@ module.exports = {
         .select(
           "protected_areas.*",
           // Include all advisories, filtering out nulls caused by joins.
-          // In future this can be replaced with a count
           knex.raw(
             'to_json(array_remove(array_agg(DISTINCT ?? ORDER BY ??), NULL)) AS "advisories"',
             ["public_advisories.*", "public_advisories.*"]
           ),
-          // Include all active park photos. Photo ordering hasn't been implemented
-          // yet, so order is indeterminate. We do check that the photo is active.
-          // TODO: could likely be done as a join instead of subquery
+          // Include all active park photos. Ordering is by featured first,
+          // then sort order, then most recently taken first (as a fallback
+          // for cases where the order is not specified).
+          // Only includes the first 6 photos, as a some parks may have large galleries
           knex.raw(
             `array(
               SELECT "thumbnailUrl"
               FROM park_photos
               WHERE park_photos.orcs = protected_areas.orcs
                   AND park_photos."isActive" = TRUE
+                  AND park_photos."thumbnailUrl" IS NOT NULL
+              ORDER BY park_photos."isFeatured" DESC NULLS LAST,
+                  park_photos."sortOrder" ASC NULLS LAST,
+                  park_photos."dateTaken" DESC,
+                  park_photos."id" DESC
+              LIMIT 6
             ) AS "parkPhotos"`
           ),
           // Check all associated park operations rows, and set hasReservations
