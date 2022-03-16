@@ -81,6 +81,7 @@ module.exports = {
             JOIN public_advisories
             ON public_advisories.id = public_advisories__protected_areas.public_advisory_id
             WHERE public_advisories__protected_areas.public_advisory_id = protected_areas.id
+              AND public_advisories.published_at IS NOT NULL
           ) AS "advisories"`
         ),
         // Include first 5 active park photos thumbnails, ordered by
@@ -90,6 +91,7 @@ module.exports = {
             SELECT "thumbnailUrl"
             FROM park_photos
             WHERE park_photos.orcs = protected_areas.orcs
+                AND park_photos.published_at IS NOT NULL
                 AND park_photos."isActive" = TRUE
                 AND park_photos."thumbnailUrl" IS NOT NULL
             ORDER BY park_photos."isFeatured" DESC NULLS LAST,
@@ -102,7 +104,8 @@ module.exports = {
         knex.raw(
           `EXISTS(
             SELECT 1 FROM park_operations
-            WHERE orcs = protected_areas.orcs 
+            WHERE orcs = protected_areas.orcs
+              AND park_operations.published_at IS NOT NULL
               AND "hasReservations" = TRUE
           ) AS "hasReservations"`
         )
@@ -150,7 +153,13 @@ module.exports = {
                   websearch_to_tsquery('english', ?)
                 ) AS activity_desc_rank
                 FROM park_activities
-                WHERE park_activities."protectedArea" = id
+                JOIN activity_types
+                ON (activity_types.id = park_activities."activityType")
+                WHERE park_activities."protectedArea" = protected_areas.id
+                  AND park_activities.published_at IS NOT NULL
+                  AND park_activities."isActive" = TRUE
+                  AND activity_types.published_at IS NOT NULL
+                  AND activity_types."isActive" = TRUE
                 ORDER BY activity_desc_rank DESC LIMIT 1
               ),
               0.0) AS activity_desc_rank`,
@@ -167,7 +176,13 @@ module.exports = {
                     websearch_to_tsquery('english', ?)
                   ) AS facility_desc_rank
                   FROM park_facilities
-                  WHERE park_facilities."protectedArea" = id
+                  JOIN facility_types
+                  ON (facility_types.id = park_facilities."facilityType")
+                  WHERE park_facilities."protectedArea" = protected_areas.id
+                    AND park_facilities.published_at IS NOT NULL
+                    AND park_facilities."isActive" = TRUE
+                    AND facility_types.published_at IS NOT NULL
+                    AND facility_types."isActive" = TRUE
                   ORDER BY facility_desc_rank DESC
                   LIMIT 1
                 ),
@@ -185,6 +200,7 @@ module.exports = {
                 SELECT similarity(park_names."parkName", ?) AS name_similarity
                 FROM park_names
                 WHERE park_names."protectedArea" = id
+                  AND park_names.published_at IS NOT NULL
                 ORDER BY name_similarity DESC
                 LIMIT 1
               ),
@@ -296,6 +312,10 @@ module.exports = {
             "park_facilities.facilityType",
             "facility_types.id"
           )
+          .where("park_facilities.isActive", true)
+          .where("facility_types.isActive", true)
+          .whereNotNull("facility_types.published_at")
+          .whereNotNull("park_facilities.published_at")
           .where("facility_types.facilityName", "ILIKE", "%camping%");
       });
     }
@@ -305,6 +325,11 @@ module.exports = {
         builder
           .select("protectedArea")
           .from("park_activities")
+          .innerJoin("activity_types", "park_activities.activityType", "activity_types.id")
+          .where("park_activities.isActive", true)
+          .where("activity_types.isActive", true)
+          .whereNotNull("activity_types.published_at")
+          .whereNotNull("park_activities.published_at")
           .whereIn("activityType", activityTypeIds);
       });
     }
@@ -314,6 +339,11 @@ module.exports = {
         builder
           .select("protectedArea")
           .from("park_facilities")
+          .innerJoin("facility_types", "park_facilities.facilityType", "facility_types.id")
+          .where("park_facilities.isActive", true)
+          .where("facility_types.isActive", true)
+          .whereNotNull("facility_types.published_at")
+          .whereNotNull("park_facilities.published_at")
           .whereIn("facilityType", facilityTypeIds);
       });
     }
@@ -336,12 +366,18 @@ module.exports = {
           subqueryBuilder
             .select("protectedArea")
             .from("park_names")
+            .whereNotNull("park_names.published_at")
             .where(knex.raw('"parkName" % ?', [searchText]));
         });
         builder.orWhereIn("protected_areas.id", (subqueryBuilder) => {
           subqueryBuilder
             .select("protectedArea")
             .from("park_activities")
+            .innerJoin("activity_types", "park_activities.activityType", "activity_types.id")
+            .where("park_activities.isActive", true)
+            .where("activity_types.isActive", true)
+            .whereNotNull("activity_types.published_at")
+            .whereNotNull("park_activities.published_at")
             .where(
               knex.raw(
                 "to_tsvector('english', description) @@ websearch_to_tsquery('english', ?)",
@@ -353,6 +389,11 @@ module.exports = {
           subqueryBuilder
             .select("protectedArea")
             .from("park_facilities")
+            .innerJoin("facility_types", "park_facilities.facilityType", "facility_types.id")
+            .where("park_facilities.isActive", true)
+            .where("facility_types.isActive", true)
+            .whereNotNull("facility_types.published_at")
+            .whereNotNull("park_facilities.published_at")
             .where(
               knex.raw(
                 "to_tsvector('english', description) @@ websearch_to_tsquery('english', ?)",
