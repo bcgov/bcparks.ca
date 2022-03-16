@@ -37,11 +37,6 @@ style {
   display: none !important;
 }
 
-/** Override BC-Gov style */
-footer #home-footer nav {
-  border-top: unset;
-}
-
 .line {
   background-color: $colorGold;
   height: 2px;
@@ -121,15 +116,6 @@ footer #home-footer nav {
   transform: scale(0.7);
 }
 
-.footer-left-links {
-  padding-left: 40px !important;
-}
-
-#footer {
-  background-color: $colorBlue !important;
-  overflow-x: hidden;
-}
-
 #home-header {
   .nav-item:not(:last-child) {
     border-bottom: 1px solid white;
@@ -140,60 +126,6 @@ footer #home-footer nav {
     border-bottom-left-radius: 50em !important;
     > .form-control {
       background-color: #7a94a5 !important;
-    }
-  }
-}
-
-#home-footer {
-  background-color: $colorBlue !important;
-  max-width: 1100px; 
-  font-size: 14px !important;
-  padding: 0px;
-
-
-  > p {
-    padding: 40px 0 10px 0;
-    margin-bottom: 0;
-  }
-  a {
-    color: $colorWhite;
-    text-decoration: none;
-  }
-  .footer-body {
-    height: 77.5%;
-  }
-  .home-footer .card-body {
-    font-size: 14px;
-  }
-  .footer-body .col {
-    padding: 0 40px;
-  }
-  .navbar {
-    border-top: 1px solid $colorWhite;
-    opacity: 0.65;
-  }
-  .footer-search-group {
-    background-color: #184775;
-    > .form-control {
-      opacity: 0.5;
-      background-color: #184775;
-    }
-  }
-
-  @media screen and (min-width: $desktopBreakpoint) {
-    margin-right: auto;
-    margin-left: auto;
-    #footer-social-icons {
-      height: 65px;
-    }
-    .footer-search-group {
-      max-width: 300px;
-      > .input-group-append {
-        height: 30px;
-      }
-    }
-    .input-group-text {
-      padding-top: 15px !important;
     }
   }
 }
@@ -219,55 +151,8 @@ img.alert-exclamation {
   transform: scale(0.8);
 }
 
-.footer-search-box {
-  font-size: 12px !important;
-  color: $colorWhite !important;
-}
-
-.footer-card-footer {
-  font-size: 12px;
-}
-
-.footer-card-footer .nav hr {
-  width: 1px;
-  height: 25px;
-  background-color: #eef1f5;
-}
-
-.footer-card-footer .nav {
-  border-top: 1px solid #eef1f5;
-}
-
-.footer-card-footer .nav-item:not(:last-child) {
-  border-right: 1px solid grey;
-}
-
-.footer-bottom-links {
-  border-top: 1px solid #ffffff90;
-}
-
-.footer-nav-links {
-  flex-direction: row;
-}
-
-.footer-nav-links .nav-item:not(:last-child) {
-  padding-right: 20px;
-}
-
-.footer-nav-links .nav-item:not(:first-child) {
-  padding-left: 20px;
-}
-
 .nav-menu-links .nav-item:not(:last-child) {
   border-right: 1px solid $colorWhite;
-}
-
-.footer-card-footer .nav-link {
-  color: $colorWhite;
-}
-
-.footer-card-footer > .navbar {
-  border-top: 1px solid white;
 }
 
 .footing-hr {
@@ -312,7 +197,7 @@ li.post-separator {
     flex-wrap: wrap;
     list-style: none;
     margin: 0;
-    padding: 0;  
+    padding: 0;
   }
 
   li {
