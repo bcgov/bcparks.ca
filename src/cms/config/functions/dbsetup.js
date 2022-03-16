@@ -4,7 +4,7 @@
  *  - a generated searchtext column on protected_areas
  *  - a trigram index on protected_area names
  *  - a trigram index on park_names
- * 
+ *
  * Before each operation, check to see if it has already been done.
  */
 const createSearchIndexes = async () => {
@@ -67,21 +67,25 @@ const createSearchIndexes = async () => {
     }
 
     // Enable pg_trgm and set up trigram indexes to catch misspelled park names
-    const hasTrgmExtension = await knex.select('oid').from('pg_extension').where('extname', 'pg_trgm').first();
+    const hasTrgmExtension = await knex
+      .select("oid")
+      .from("pg_extension")
+      .where("extname", "pg_trgm")
+      .first();
     if (!hasTrgmExtension) {
       await knex.schema.raw('CREATE EXTENSION "pg_trgm"');
     }
 
-    if (
-      !indexes.find((index) => index.indexname === "park_names_trgm_idx")
-    ) {
+    if (!indexes.find((index) => index.indexname === "park_names_trgm_idx")) {
       await knex.schema.raw(
         'CREATE INDEX park_names_trgm_idx ON park_names USING gin ("parkName" gin_trgm_ops)'
       );
     }
 
     if (
-      !indexes.find((index) => index.indexname === "protected_area_name_trgm_idx")
+      !indexes.find(
+        (index) => index.indexname === "protected_area_name_trgm_idx"
+      )
     ) {
       await knex.schema.raw(
         'CREATE INDEX protected_area_name_trgm_idx ON protected_areas USING gin ("protectedAreaName" gin_trgm_ops)'

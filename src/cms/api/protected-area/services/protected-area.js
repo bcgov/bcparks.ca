@@ -238,8 +238,6 @@ module.exports = {
 
       query.limit(limit);
       query.offset(offset);
-
-      console.log(query.toString());
     });
 
     return await results.fetchAll();
@@ -325,7 +323,11 @@ module.exports = {
         builder
           .select("protectedArea")
           .from("park_activities")
-          .innerJoin("activity_types", "park_activities.activityType", "activity_types.id")
+          .innerJoin(
+            "activity_types",
+            "park_activities.activityType",
+            "activity_types.id"
+          )
           .where("park_activities.isActive", true)
           .where("activity_types.isActive", true)
           .whereNotNull("activity_types.published_at")
@@ -339,7 +341,11 @@ module.exports = {
         builder
           .select("protectedArea")
           .from("park_facilities")
-          .innerJoin("facility_types", "park_facilities.facilityType", "facility_types.id")
+          .innerJoin(
+            "facility_types",
+            "park_facilities.facilityType",
+            "facility_types.id"
+          )
           .where("park_facilities.isActive", true)
           .where("facility_types.isActive", true)
           .whereNotNull("facility_types.published_at")
@@ -373,7 +379,11 @@ module.exports = {
           subqueryBuilder
             .select("protectedArea")
             .from("park_activities")
-            .innerJoin("activity_types", "park_activities.activityType", "activity_types.id")
+            .innerJoin(
+              "activity_types",
+              "park_activities.activityType",
+              "activity_types.id"
+            )
             .where("park_activities.isActive", true)
             .where("activity_types.isActive", true)
             .whereNotNull("activity_types.published_at")
@@ -389,7 +399,11 @@ module.exports = {
           subqueryBuilder
             .select("protectedArea")
             .from("park_facilities")
-            .innerJoin("facility_types", "park_facilities.facilityType", "facility_types.id")
+            .innerJoin(
+              "facility_types",
+              "park_facilities.facilityType",
+              "facility_types.id"
+            )
             .where("park_facilities.isActive", true)
             .where("facility_types.isActive", true)
             .whereNotNull("facility_types.published_at")
