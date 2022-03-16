@@ -182,7 +182,7 @@ const AdvisoryFilter = ({ filterFunctions }) => {
             Event type
           </label>
           <NativeSelect
-            value={advisoryType}
+            value={getType()}
             id="advisory-type"
             
             className={classes.typeSelect + " h50p"}
