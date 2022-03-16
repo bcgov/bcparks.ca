@@ -402,7 +402,6 @@ const PublicAdvisoryPage = ({ data }) => {
 
         <br />
         <h1>{pageTitle}</h1>
-        {advisoryCount > 0 &&
         <div className={classes.advisoriesHeader}>
           <div className={classes.advisoryCountNotice}>
             <div className={classes.advisoryCount}>
@@ -415,8 +414,6 @@ const PublicAdvisoryPage = ({ data }) => {
           </div>
           <AdvisoryFilter filterFunctions={filterFunctions}></AdvisoryFilter>
         </div>
-        }
-
         <div className="mb-3">
           <i className="fa fa-info-circle"></i> <em>Not all advisories are available in beta</em>
         </div>
