@@ -37,6 +37,7 @@ import SearchFilter from "../components/search/searchFilter"
 import NoSearchResults from "../components/search/noSearchResults"
 import Seo from "../components/seo"
 import ParkAccessStatus from "../components/park/parkAccessStatus"
+import QuickView from "../components/park/quickView"
 
 export const query = graphql`
   query {
@@ -291,10 +292,13 @@ export default function Explore({ location, data }) {
     setOpenFilter(true)
   }
 
-  const handleOpenQuickView = () => {
+  const [currentPark, setCurrentPark] = useState({});
+
+  function setParkQuickView(park) {
+    setCurrentPark(park)
     setOpenQuickView(true)
   }
-
+  
   const handleCloseQuickView = () => {
     setOpenQuickView(false)
   }
@@ -429,6 +433,7 @@ export default function Explore({ location, data }) {
         `${apiUrl}/protected-areas/`,
         { params: { ...params, _start: pageStart, _limit: pageLimit } }
       );
+
     Promise.all([countPromise, resultPromise]).then(([countResponse, resultResponse]) => {
       if (countResponse.status === 200 && resultResponse.status === 200) {
         const total = parseInt(countResponse.data, 10);
@@ -884,7 +889,7 @@ export default function Explore({ location, data }) {
 
                                           <div className="col-lg-7 p20t park-content p20l">
                                             <div className="row">
-                                              <div className="col-12 park-overview-content text-blue small-font">
+                                              <div className="col-12 park-overview-content text-blue small-font p5l">
                                                 <ParkAccessStatus advisories={r.advisories} />
                                               </div>
                                             </div>
@@ -1075,7 +1080,7 @@ export default function Explore({ location, data }) {
 
                                           <div className="col-12 p20t park-content-mobile">
                                             <div className="row">
-                                              <div className="col-12 park-overview-content text-blue small-font">
+                                              <div className="col-12 park-overview-content text-blue small-font p5l">
                                                 <ParkAccessStatus advisories={r.advisories} />
                                               </div>
                                             </div>
@@ -1107,7 +1112,7 @@ export default function Explore({ location, data }) {
                                             </div>
                                             <div className="full-width">
                                               <Link
-                                                onClick={handleOpenQuickView}
+                                                onClick={() => setParkQuickView(r)}
                                                 className="park-quick-link link"
                                               >
                                                 Quick View
@@ -1119,233 +1124,6 @@ export default function Explore({ location, data }) {
                                     </div>
                                   </CardContent>
                                 </Card>
-                                <Dialog
-                                  open={openQuickView}
-                                  onClose={handleCloseQuickView}
-                                  aria-labelledby="park-quick-view-dialog"
-                                  className="park-quick-view-dialog"
-                                  fullScreen
-                                  fullWidth
-                                  scroll="paper"
-                                >
-                                  <DialogContent className="park-quick-view-dialog-content">
-                                    <div className="row search-result-card no-gutters">
-                                      <div className="col-12">
-                                        <div className="row">
-                                          {r.parkPhotos &&
-                                            r.parkPhotos.length === 0 && (
-                                              <div className="col-12 close-margin park-image-div-mobile park-image-logo-div">
-                                                <img
-                                                  alt="logo"
-                                                  key={index}
-                                                  className="search-result-logo-image"
-                                                  src={parksLogo}
-                                                />
-                                              </div>
-                                            )}
-                                          {r.parkPhotos &&
-                                            r.parkPhotos.length === 1 && (
-                                              <div className="col-12 close-margin park-image-div-mobile">
-                                                <img
-                                                  alt="park"
-                                                  key={index}
-                                                  className="search-result-image"
-                                                  src={r.parkPhotos[0]}
-                                                />
-                                              </div>
-                                            )}
-                                          {r.parkPhotos &&
-                                            r.parkPhotos.length > 1 && (
-                                              <div className="col-12 close-margin park-image-div-mobile">
-                                                <Carousel
-                                                  className="park-carousel-mobile"
-                                                  autoPlay={false}
-                                                  indicators={false}
-                                                  navButtonsAlwaysVisible={true}
-                                                  animation="fade"
-                                                  timeout={200}
-                                                >
-                                                  {r.parkPhotos.map(
-                                                    (item, index) => {
-                                                      return (
-                                                        <img
-                                                          alt="park carousel"
-                                                          key={index}
-                                                          className="search-result-image"
-                                                          src={`${item}`}
-                                                        />
-                                                      )
-                                                    }
-                                                  )}
-                                                </Carousel>
-                                              </div>
-                                            )}
-
-                                          <div className="col-12 park-content-mobile p2030 container">
-                                            <div className="row">
-                                              <div className="col-12 park-overview-content text-blue small-font">
-                                                <ParkAccessStatus advisories={r.advisories} />
-                                              </div>
-                                            </div>
-                                            <Link
-                                              href={`/${r.slug}`}
-                                              className="p10t"
-                                            >
-                                              <h3 className="park-heading-text">
-                                                {r.protectedAreaName}
-                                              </h3>
-                                            </Link>
-
-                                            <div className="row p20t mr5">
-                                              <div className="col-12">
-                                                {r.advisories && r.advisories.length > 0 && r.advisories.map(
-                                                  (a, index1) => (
-                                                    // TODO Display all advisories when Event types are
-                                                    // available in elastic search results based on severity
-                                                    <div
-                                                      key={index1}
-                                                      className="flex-display"
-                                                    >
-                                                      {index1 === 0 && (
-                                                        <>
-                                                          <img
-                                                            alt=""
-                                                            className="search-result-icon"
-                                                            src={redAlertIcon}
-                                                          />
-                                                          <div className="pl15 text-blue">
-                                                            {a.title} (1)
-                                                          </div>
-                                                        </>
-                                                      )}
-                                                    </div>
-                                                  )
-                                                )}
-                                              </div>
-                                              <div className="col-12 p20t">
-                                                {r.hasDayUsePass &&
-                                                  r.hasReservations && (
-                                                    <div className="flex-display">
-                                                      <img
-                                                        alt=""
-                                                        className="search-result-icon"
-                                                        src={dayUseIcon}
-                                                      />
-                                                      <div className="pl15 mtm7 text-blue">
-                                                        Day use and camping{" "}
-                                                        <br />
-                                                        offered at this park
-                                                      </div>
-                                                    </div>
-                                                  )}
-                                              </div>
-                                            </div>
-                                            <div className="row p20t mr5">
-                                              <div className="col-12">
-                                                {r.parkActivities &&
-                                                  r.parkActivities.length >
-                                                  0 && (
-                                                    <>
-                                                      <div className="park-af-list pr3">
-                                                        <b>Activities:</b>
-                                                      </div>
-                                                      {r.parkActivities.map(
-                                                        (a, index2) => (
-                                                          <div
-                                                            key={index2}
-                                                            className="park-af-list pr3 text-black"
-                                                          >
-                                                            {index2 < 11 && (
-                                                              <>
-                                                                {a}
-                                                                {index2 === 10
-                                                                  ? " ..."
-                                                                  : index2 ===
-                                                                    r
-                                                                      .parkActivities
-                                                                      .length -
-                                                                    1
-                                                                    ? ""
-                                                                    : ", "}
-                                                              </>
-                                                            )}
-                                                          </div>
-                                                        )
-                                                      )}
-                                                      <br />
-                                                    </>
-                                                  )}
-                                              </div>
-                                              <div className="col-12 p20t">
-                                                {r.parkFacilities &&
-                                                  r.parkFacilities.length >
-                                                  0 && (
-                                                    <>
-                                                      <div className="park-af-list pr3">
-                                                        <b>Facilities:</b>
-                                                      </div>
-                                                      {r.parkFacilities.map(
-                                                        (f, index3) => (
-                                                          <div
-                                                            key={index3}
-                                                            className="park-af-list pr3 text-black"
-                                                          >
-                                                            {index3 < 6 && (
-                                                              <>
-                                                                {f}
-                                                                {index3 === 5
-                                                                  ? " ..."
-                                                                  : index3 ===
-                                                                    r
-                                                                      .parkFacilities
-                                                                      .length -
-                                                                    1
-                                                                    ? ""
-                                                                    : ", "}
-                                                              </>
-                                                            )}
-                                                          </div>
-                                                        )
-                                                      )}
-                                                      <br />
-                                                    </>
-                                                  )}
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </DialogContent>
-                                  <DialogActions className="d-block p20 background-blue">
-                                    <div className="row">
-                                      <div className="col-12 p0 align-center flex-display full-width">
-                                        <div className="full-width">
-                                          <Link
-                                            href={`/${r.slug}`}
-                                            className="park-quick-link link-white"
-                                          >
-                                            Visit Park Page
-                                          </Link>
-                                        </div>
-                                        <div className="divider-div align-center">
-                                          <Divider
-                                            orientation="vertical"
-                                            className="vertical-divider align-center"
-                                          />
-                                        </div>
-                                        <div className="full-width">
-                                          <Link
-                                            onClick={handleCloseQuickView}
-                                            className="park-quick-link link-white"
-                                          >
-                                            Close Quick View
-                                          </Link>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </DialogActions>
-                                </Dialog>
                               </div>
                             ))}
                           <div className="small-flex-display p20t">
@@ -1388,6 +1166,48 @@ export default function Explore({ location, data }) {
                           </div>
                           <br />
                           <br />
+
+                          <Dialog
+                            open={openQuickView}
+                            onClose={handleCloseQuickView}
+                            aria-labelledby="park-quick-view-dialog"
+                            className="park-quick-view-dialog"
+                            fullScreen
+                            fullWidth
+                            scroll="paper"
+                          >
+                            <DialogContent className="park-quick-view-dialog-content">
+                              <QuickView park={currentPark} activityItemsLabels={activityItemsLabels} facilityItemsLabels={facilityItemsLabels}></QuickView>
+                            </DialogContent>
+                            <DialogActions className="d-block p20 background-blue">
+                              <div className="row">
+                                <div className="col-12 p0 align-center flex-display full-width">
+                                  <div className="full-width">
+                                    <Link
+                                      href={`/${currentPark.slug}`}
+                                      className="park-quick-link link-white"
+                                    >
+                                      Visit Park Page
+                                    </Link>
+                                  </div>
+                                  <div className="divider-div align-center">
+                                    <Divider
+                                      orientation="vertical"
+                                      className="vertical-divider align-center"
+                                    />
+                                  </div>
+                                  <div className="full-width">
+                                    <Link
+                                      onClick={handleCloseQuickView}
+                                      className="park-quick-link link-white"
+                                    >
+                                      Close Quick View
+                                    </Link>
+                                  </div>
+                                </div>
+                              </div>
+                            </DialogActions>
+                          </Dialog>
                         </>
                       )}
                     </>
