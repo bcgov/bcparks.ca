@@ -6,7 +6,6 @@ import HTMLArea from "../components/HTMLArea"
 import Header from "../components/header"
 import Footer from "../components/footer"
 
-import "../styles/betaLanding.scss"
 
 const IntroPage = ({ data }) => {
   const pageContent = data?.strapiPages?.Content || []
