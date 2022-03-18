@@ -1,6 +1,12 @@
 "use strict";
 
-/* Creates a generated searchtext column on protected_areas, if it doesn't already exist */
+/* Creates indexes required for search:
+ *  - a generated searchtext column on protected_areas
+ *  - a trigram index on protected_area names
+ *  - a trigram index on park_names
+ *
+ * Before each operation, check to see if it has already been done.
+ */
 const createSearchIndexes = async () => {
   try {
     const knex = strapi.connections[strapi.config.database.defaultConnection];
@@ -33,6 +39,7 @@ const createSearchIndexes = async () => {
         "protected_areas",
         "park_activities",
         "park_facilities",
+        "park_names",
       ]);
 
     if (
@@ -56,6 +63,32 @@ const createSearchIndexes = async () => {
     ) {
       await knex.schema.raw(
         "CREATE INDEX facility_desc_search_idx ON park_facilities USING gin(setweight(to_tsvector('english', description), 'D'))"
+      );
+    }
+
+    // Enable pg_trgm and set up trigram indexes to catch misspelled park names
+    const hasTrgmExtension = await knex
+      .select("oid")
+      .from("pg_extension")
+      .where("extname", "pg_trgm")
+      .first();
+    if (!hasTrgmExtension) {
+      await knex.schema.raw('CREATE EXTENSION "pg_trgm"');
+    }
+
+    if (!indexes.find((index) => index.indexname === "park_names_trgm_idx")) {
+      await knex.schema.raw(
+        'CREATE INDEX park_names_trgm_idx ON park_names USING gin ("parkName" gin_trgm_ops)'
+      );
+    }
+
+    if (
+      !indexes.find(
+        (index) => index.indexname === "protected_area_name_trgm_idx"
+      )
+    ) {
+      await knex.schema.raw(
+        'CREATE INDEX protected_area_name_trgm_idx ON protected_areas USING gin ("protectedAreaName" gin_trgm_ops)'
       );
     }
   } catch (err) {
