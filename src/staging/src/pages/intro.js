@@ -37,7 +37,7 @@ const IntroPage = ({ data }) => {
         <Header mode="internal" content={menuContent} />
       </div>
 
-      {htmlContent && <HTMLArea isVisible={true}>{htmlContent.HTML}</HTMLArea>}
+      {htmlContent && <HTMLArea className="intro-page" isVisible={true}>{htmlContent.HTML}</HTMLArea>}
 
       <div className="max-width-override">
         <Footer>{data.strapiWebsites.Footer}</Footer>
