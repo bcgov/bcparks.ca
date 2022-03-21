@@ -14,7 +14,6 @@ const formatDate = (date) => {
   }
 };
 
-
 const loadJson = async (model, jsonFile, object) => {
   try {
     const currentData = await strapi.services[model].find();

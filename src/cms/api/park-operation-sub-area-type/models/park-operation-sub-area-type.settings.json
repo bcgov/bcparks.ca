@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_operation_sub_area_types",
+  "info": {
+    "name": "ParkOperationSubAreaType",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "subAreaType": {
+      "type": "string"
+    },
+    "subAreaTypeCode": {
+      "type": "string"
+    },
+    "iconUrl": {
+      "type": "string"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "subAreaTypeId": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "parkOperationSubAreas": {
+      "via": "parkSubAreaType",
+      "collection": "park-operation-sub-area"
+    }
+  }
+}

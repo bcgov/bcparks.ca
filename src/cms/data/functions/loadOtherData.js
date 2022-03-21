@@ -453,31 +453,6 @@ const loadMenus = async () => {
   }
 };
 
-const loadParkOperation = async () => {
-  const modelName = "park-operation";
-
-  const currentData = await strapi.services[modelName].find();
-  if (currentData.length === 0) {
-    strapi.log.info("loading park operation...");
-    var jsonData = fs.readFileSync("./data/park-operation.json", "utf8");
-    const dataSeed = JSON.parse(jsonData)["parkOperation"];
-    for await (const data of dataSeed) {
-      const parkOperation = {
-        orcs: parseInt(data.orcs),
-        isActive: data.isActive,
-        hasReservations: data.hasReservations,
-      };
-
-      try {
-        await strapi.services["park-operation"].create(parkOperation);
-      } catch (e) {
-        console.error('ERROR:', e);
-      }
-    }
-    strapi.log.info("loading park operation completed...");
-  }
-};
-
 module.exports = {
   loadBusinessHours,
   loadStatutoryHolidays,
@@ -502,5 +477,4 @@ module.exports = {
   loadPages,
   loadWebsites,
   loadMenus,
-  loadParkOperation,
 };

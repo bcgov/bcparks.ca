@@ -418,4 +418,37 @@ module.exports = {
       });
     }
   },
+  find(params, populate) {
+    let fields = [
+      'parkOperationSubAreas.parkOperationSubAreaDates',
+      'parkOperationSubAreas.parkSubAreaType',
+      'parkActivities',
+      'parkFacilities',
+      'parkOperation',
+      'parkNames',
+      'fireZones',
+      'managementAreas',
+    ];
+    if (populate) {
+      fields = [...fields, ...populate]
+    }
+    return strapi.query('protected-area').find(params, fields);
+  },
+
+  findOne(params, populate) {
+    let fields = [
+      'parkOperationSubAreas.parkOperationSubAreaDates',
+      'parkOperationSubAreas.parkSubAreaType',
+      'parkActivities',
+      'parkFacilities',
+      'parkOperation',
+      'parkNames',
+      'fireZones',
+      'managementAreas',
+    ];
+    if (populate) {
+      fields = [...fields, ...populate]
+    }
+    return strapi.query('protected-area').findOne(params, fields);
+  },
 };

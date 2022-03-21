@@ -64,26 +64,32 @@ const setAuthPermissions = async () => {
 };
 
 const setPublicPermissions = async () => {
-  const publicRole = await findRole("public");
-  const publicPermissions = await strapi
-    .query("permission", "users-permissions")
-    .find({
-      type: "application",
-      controller_nin: [
-        "token",
-        "statutory-holidays",
-        "public-advisory-audit",
-      ],
-      role: publicRole.id,
-      action_in: ["count", "find", "findone", "names", "items", "status"],
-      _limit: -1,
-    });
-  await Promise.all(
-    publicPermissions.map((p) =>
-      strapi.query("permission", "users-permissions")
-            .update({ id: p.id }, { enabled: true })
-    )
-  );
+  try {
+    const publicRole = await findRole("public");
+    const publicPermissions = await strapi
+      .query("permission", "users-permissions")
+      .find({
+        type: "application",
+        controller_nin: [
+          "token",
+          "statutory-holidays",
+          "public-advisory-audit",
+        ],
+        role: publicRole.id,
+        action_in: ["count", "find", "findone", "names", "items", "status"],
+        _limit: -1,
+      });
+    await Promise.all(
+      publicPermissions.map((p) =>
+        strapi
+          .query("permission", "users-permissions")
+          .update({ id: p.id }, { enabled: true })
+      )
+    );
+    return(true)
+  } catch (err) {
+    return(false)
+  }
 };
 
 const setDefaultPermissions = async () => {
@@ -142,5 +148,6 @@ module.exports = {
   createAdmin,
   createApiUser,
   createApiToken,
+  setPublicPermissions,
   setDefaultPermissions,
 };

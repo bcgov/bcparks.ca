@@ -9,7 +9,10 @@
     "increments": true,
     "timestamps": true,
     "draftAndPublish": true,
-    "privateAttributes": ["search_text", "search_rank"]
+    "privateAttributes": [
+      "search_text",
+      "search_rank"
+    ]
   },
   "attributes": {
     "orcs": {
@@ -58,7 +61,13 @@
     },
     "typeCode": {
       "type": "enumeration",
-      "enum": ["PK", "PA", "RA", "ER", "CS"]
+      "enum": [
+        "PK",
+        "PA",
+        "RA",
+        "ER",
+        "CS"
+      ]
     },
     "latitude": {
       "type": "float"
@@ -160,6 +169,14 @@
       "type": "boolean",
       "default": false,
       "required": true
+    },
+    "parkOperationSubAreas": {
+      "via": "protectedArea",
+      "collection": "park-operation-sub-area"
+    },
+    "parkOperation": {
+      "via": "protectedArea",
+      "model": "park-operation"
     }
   }
 }
