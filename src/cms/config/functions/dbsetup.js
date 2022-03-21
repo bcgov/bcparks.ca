@@ -1,10 +1,13 @@
 "use strict";
 
 /* Creates indexes required for search:
- *  - a generated searchtext column on protected_areas
+ *  - a generated search text column on protected_areas
+ *  - a gin search text index on park_activities.description
+ *  - a gin search text index on park_facilities.description
  *  - a trigram index on protected_area names
  *  - a trigram index on park_names
  *
+ * Also enables the pg_trgm extension.
  * Before each operation, check to see if it has already been done.
  */
 const createSearchIndexes = async () => {
@@ -40,6 +43,7 @@ const createSearchIndexes = async () => {
         "park_activities",
         "park_facilities",
         "park_names",
+        "public_advisories",
       ]);
 
     if (
@@ -66,6 +70,21 @@ const createSearchIndexes = async () => {
       );
     }
 
+    const hasAdvisorySearchColumn = await knex.schema.hasColumn(
+      "public_advisories",
+      "search_text"
+    );
+
+    if (!hasAdvisorySearchColumn) {
+      await knex.schema.raw(
+        `ALTER TABLE public_advisories
+              ADD COLUMN search_text tsvector GENERATED ALWAYS AS (    
+                  setweight(to_tsvector('english', (title)), 'A') || ' ' ||
+                  setweight(to_tsvector('english', (description)), 'C') || ' '::tsvector
+              ) STORED`
+      );
+    }
+
     // Enable pg_trgm and set up trigram indexes to catch misspelled park names
     const hasTrgmExtension = await knex
       .select("oid")
@@ -89,6 +108,16 @@ const createSearchIndexes = async () => {
     ) {
       await knex.schema.raw(
         'CREATE INDEX protected_area_name_trgm_idx ON protected_areas USING gin ("protectedAreaName" gin_trgm_ops)'
+      );
+    }
+
+    if (
+      !indexes.find(
+        (index) => index.indexname === "public_advisories_title_trgm_idx"
+      )
+    ) {
+      await knex.schema.raw(
+        "CREATE INDEX public_advisories_title_trgm_idx ON public_advisories USING gin (title gin_trgm_ops)"
       );
     }
   } catch (err) {
