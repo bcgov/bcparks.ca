@@ -21,6 +21,7 @@ export default function ParkHeader({
   park,
   menu,
   hasReservations,
+  hasDayUsePass,
   isLoadingAdvisories,
   advisoryLoadError,
   advisories,
@@ -29,6 +30,7 @@ export default function ParkHeader({
   const [currentIndex, setCurrentIndex] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
   const reservationsURL = "https://camping.bcparks.ca";
+  const dayUsePassURL = "https://reserve.bcparks.ca/dayuse;"
 
   useEffect(() => {
     menuItems.current[currentIndex].visible = false
@@ -63,18 +65,16 @@ export default function ParkHeader({
               <>
                 {hasReservations && (
                   <Button
-                    className="yellow-button"
+                    className="yellow-button mr-3"
                     href={reservationsURL}
                   >
                     Book a campsite
                   </Button>
                 )}
-                {park.hasDayUsePass === "true" && (
+                {hasDayUsePass && (
                   <Button
-                    className={
-                      hasReservations ? "blue-button ml10" : "blue-button"
-                    }
-                    href="#"
+                    className="blue-button"
+                    href={dayUsePassURL}
                   >
                     Get a daypass
                   </Button>
@@ -111,29 +111,23 @@ export default function ParkHeader({
             </div>
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={12} className="mb-2">
             {hasReservations && (
-              <div className="p20t">
-                <Button
-                  className="yellow-button full-width"
-                  href={reservationsURL}
-                >
+              <Button
+              className="yellow-button full-width mt-2"
+              href={reservationsURL}
+              >
                   Book a campsite
                 </Button>
-              </div>
             )}
-            {park.hasDayUsePass === "true" && (
-              <div className="p10t">
-                <Button className="blue-button full-width" href="#">
+            {hasDayUsePass && (
+                <Button 
+                  className="blue-button full-width mt-2"
+                  href={dayUsePassURL}>
                   Get a daypass
                 </Button>
-              </div>
             )}
           </Grid>
-
-          {park.hasDayUsePass !== "true" && !hasReservations && (
-            <div className="p10t"></div>
-          )}
           {/* Mobile */}
           <Grid item xs={12} className="park-menu-mobile">
             <List
