@@ -30,7 +30,7 @@ export default function ParkHeader({
   const [currentIndex, setCurrentIndex] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
   const reservationsURL = "https://camping.bcparks.ca";
-  const dayUsePassURL = "https://reserve.bcparks.ca/dayuse;"
+  const dayUsePassURL = "https://reserve.bcparks.ca/dayuse";
 
   useEffect(() => {
     menuItems.current[currentIndex].visible = false
