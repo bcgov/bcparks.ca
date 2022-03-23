@@ -41,18 +41,19 @@ const updateSubAreaRelations = async (data) => {
   } else {
     data.protectedArea = null;
   }
-  // relate subarea to facility
-  if (data.parkFacilityId) {
-    const parkFacilityService = strapi.services["park-facility"];
-    const parkFacility = await parkFacilityService.findOne({
-      id: data.parkFacilityId,
+  // relate subarea to facility type
+  // note that the key is facilityNumber, not something like facilityTypeId
+  if (data.facilityNumber) {
+    const facilityTypeService = strapi.services["facility-type"];
+    const facilityType = await facilityTypeService.findOne({
+      facilityNumber: data.facilityNumber,
     });
-    data.parkFacility = parkFacility ? parkFacility.id : null;
+    data.facilityType = facilityType ? facilityType.id : null;
   } else {
-    data.parkFacility = null;
+    data.facilityType = null;
   }
   const isMissingRelation =
-    data.parkSubAreaType === null || data.protectedArea === null; // park facility not needed
+    data.parkSubAreaType === null || data.protectedArea === null; // facility type not needed
   return !isMissingRelation;
 };
 
@@ -100,6 +101,8 @@ const updateOperationsFromJson = async ({
   // differences in models, e.g. relations, handled in case statements
 
   try {
+    console.log("-");
+    console.log("Loading records for model: " + modelName);
     let createCount = 0;
     let updateCount = 0;
     let missingCount = 0;
@@ -208,8 +211,7 @@ const updateOperationsFromJson = async ({
         }
       }
       console.log(
-        modelName +
-          " - Updates: " +
+        "Updates: " +
           updateCount +
           ", Creates: " +
           createCount +

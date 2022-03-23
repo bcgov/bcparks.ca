@@ -9,19 +9,16 @@ export default function StaticIcon({ name, size }) {
   if (name && name.startsWith("https://")) {
     iconSrc = name
   } else if (name) {
-    iconSrc = `/icons/${name}.svg`
+    if (name.indexOf(".svg") === -1) {
+      iconSrc = `/icons/${name}.svg`
+    } else {
+      iconSrc = `/icons/${name}`
+    }
   } else {
     return null
   }
 
-  return (
-    <img
-      src={iconSrc}
-      alt=""
-      width={size}
-      height={size}
-    />
-  )
+  return <img src={iconSrc} alt="" width={size} height={size} />
 }
 
 StaticIcon.propTypes = {

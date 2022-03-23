@@ -1,7 +1,6 @@
 const { graphql } = require("gatsby")
 const slugify = require("slugify")
 
-
 const strapiApiRequest = (graphql, query) =>
   new Promise((resolve, reject) => {
     resolve(
@@ -13,7 +12,6 @@ const strapiApiRequest = (graphql, query) =>
       })
     )
   })
-
 
 exports.onPostBuild = ({ reporter }) => {
   reporter.info(`Pages have been built!`)
@@ -37,7 +35,7 @@ exports.createSchemaCustomization = ({ actions }) => {
             return `parks/${slugify(protectedAreaName)}`
           }
           return `parks/park-${orcs}`
-       },
+        },
       }
     },
   })
@@ -56,6 +54,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   }
 
   type StrapiFacilityTypes implements Node {
+    facilityNumber: Int
     facilityName: String
     facilityCode: String
     rank: Int
@@ -227,7 +226,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   `
 
   await createParks({ graphql, actions })
-  await createPageSlugs('static', staticQuery, { graphql, actions, reporter })
+  await createPageSlugs("static", staticQuery, { graphql, actions, reporter })
 }
 
 async function createParks({ graphql, actions, reporter }) {
@@ -250,7 +249,7 @@ async function createParks({ graphql, actions, reporter }) {
   result.data.allStrapiProtectedArea.nodes.forEach(park => {
     actions.createPage({
       path: park.urlPath,
-      component: require.resolve(`./src/templates/park.js`) ,
+      component: require.resolve(`./src/templates/park.js`),
       context: { ...park },
     })
   })
@@ -266,7 +265,7 @@ async function createPageSlugs(type, query, { graphql, actions, reporter }) {
     return
   }
 
-  if (type === 'static') {
+  if (type === "static") {
     result.data.allStrapiPages.nodes.forEach(page => {
       actions.createPage({
         path: page.Slug,

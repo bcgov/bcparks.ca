@@ -148,6 +148,10 @@
     },
     "parkAccessUnitId": {
       "type": "integer"
+    },
+    "facilityType": {
+      "model": "facility-type",
+      "via": "parkOperationSubAreas"
     }
   }
 }

@@ -86,7 +86,7 @@ export default function ParkTemplate({ data }) {
   )
 
   const hasReservations = operations.hasReservations
-  const hasDayUsePass = park.hasDayUsePass;
+  const hasDayUsePass = park.hasDayUsePass
   const hasCamping = activeFacilities.some(facility =>
     facility.facilityType.facilityName.toLowerCase().includes("camping")
   )
@@ -152,11 +152,6 @@ export default function ParkTemplate({ data }) {
   const menuItems = [
     { text: "Park overview", url: "park-overview-container", visible: true },
     {
-      text: "Dates of operation  ",
-      url: "park-dates-container",
-      visible: true,
-    },
-    {
       text: "Accessibility",
       url: "accessibility-details-container",
       visible: park.accessibility,
@@ -167,6 +162,11 @@ export default function ParkTemplate({ data }) {
           ? `Advisories (${advisories.length})`
           : "Advisories",
       url: "park-advisory-details-container",
+      visible: true,
+    },
+    {
+      text: "Dates of operation  ",
+      url: "park-dates-container",
       visible: true,
     },
     {
@@ -296,22 +296,16 @@ export default function ParkTemplate({ data }) {
               )}
               <Grid container spacing={0}>
                 {menuItems[1].visible && (
-                  <div ref={parkDatesRef} className="full-width">
-                    <ParkDates
-                      data={{
-                        parkOperation: park.parkOperation,
-                        subAreas: park.parkOperationSubAreas,
-                      }}
-                    />
-                  </div>
-                )}
-                {menuItems[2].visible && (
                   <div ref={accessibilityRef} className="full-width">
                     <AccessibilityDetails />
                   </div>
                 )}
-                {menuItems[3].visible && (
-                  <div ref={advisoryRef} className="full-width anchor-link" id="park-advisory-details-container">
+                {menuItems[2].visible && (
+                  <div
+                    ref={advisoryRef}
+                    className="full-width anchor-link"
+                    id="park-advisory-details-container"
+                  >
                     {isLoadingAdvisories && (
                       <div className="mb-5">
                         <Heading>{`Advisories`}</Heading>
@@ -331,6 +325,17 @@ export default function ParkTemplate({ data }) {
                     {!isLoadingAdvisories && !advisoryLoadError && (
                       <AdvisoryDetails advisories={advisories} />
                     )}
+                  </div>
+                )}
+                {menuItems[3].visible && (
+                  <div ref={parkDatesRef} className="full-width">
+                    <ParkDates
+                      data={{
+                        parkOperation: park.parkOperation,
+                        subAreas: park.parkOperationSubAreas,
+                        advisories: advisories,
+                      }}
+                    />
                   </div>
                 )}
                 {menuItems[4].visible && (
@@ -361,20 +366,20 @@ export default function ParkTemplate({ data }) {
                   </div>
                 )}
                 {menuItems[8].visible && (
-                    <div ref={mapRef} className="full-width">
-                      <MapLocation data={mapData} />
-                      {park.locationNotes && (
-                        <Grid item xs={12} id="park-location-notes-container">
-                          <Box mb={8}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html: park.locationNotes,
-                              }}
-                            ></div>
-                          </Box>
-                        </Grid>
-                      )}
-                    </div>
+                  <div ref={mapRef} className="full-width">
+                    <MapLocation data={mapData} />
+                    {park.locationNotes && (
+                      <Grid item xs={12} id="park-location-notes-container">
+                        <Box mb={8}>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: park.locationNotes,
+                            }}
+                          ></div>
+                        </Box>
+                      </Grid>
+                    )}
+                  </div>
                 )}
                 {menuItems[9].visible && (
                   <div ref={activityMapRef} className="full-width">
@@ -555,7 +560,7 @@ export const query = graphql`
           serviceEndDate
           reservationStartDate
           reservationEndDate
-          offSeasonEndDate
+          offSeasonStartDate
           offSeasonEndDate
         }
         parkSubAreaType {
@@ -563,6 +568,14 @@ export const query = graphql`
           subAreaType
           subAreaTypeCode
           iconUrl
+        }
+        facilityType {
+          facilityName
+          facilityNumber
+          facilityCode
+          isActive
+          icon
+          rank
         }
       }
     }
