@@ -650,7 +650,7 @@ services:
         methods:
           - GET
         paths:
-          - /park-operations
+          - /park-operation-sub-area-dates
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -661,7 +661,7 @@ services:
         methods:
           - GET
         paths:
-          - /park-operations/count
+          - /park-operation-sub-area-dates/count
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -672,7 +672,7 @@ services:
         methods:
           - GET
         paths:
-          - /park-operations/(?<id>\S+)$
+          - /park-operation-sub-area-dates/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -683,7 +683,7 @@ services:
         methods:
           - GET
         paths:
-          - /park-photos
+          - /park-operation-sub-area-types
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -694,7 +694,7 @@ services:
         methods:
           - GET
         paths:
-          - /park-photos/count
+          - /park-operation-sub-area-types/count
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -705,7 +705,7 @@ services:
         methods:
           - GET
         paths:
-          - /park-photos/(?<id>\S+)$
+          - /park-operation-sub-area-types/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -716,7 +716,7 @@ services:
         methods:
           - GET
         paths:
-          - /protected-areas
+          - /park-operation-sub-areas
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -727,7 +727,7 @@ services:
         methods:
           - GET
         paths:
-          - /protected-areas/count
+          - /park-operation-sub-areas/count
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -738,7 +738,7 @@ services:
         methods:
           - GET
         paths:
-          - /protected-areas/names
+          - /park-operation-sub-areas/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -749,7 +749,7 @@ services:
         methods:
           - GET
         paths:
-          - /protected-areas/items
+          - /park-operations
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -760,7 +760,7 @@ services:
         methods:
           - GET
         paths:
-          - /protected-areas/status
+          - /park-operations/count
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -771,7 +771,7 @@ services:
         methods:
           - GET
         paths:
-          - /protected-areas/(?<orcs>\S+)$
+          - /park-operations/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -782,7 +782,7 @@ services:
         methods:
           - GET
         paths:
-          - /public-advisories
+          - /park-photos
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -793,7 +793,7 @@ services:
         methods:
           - GET
         paths:
-          - /public-advisories/count
+          - /park-photos/count
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -804,7 +804,7 @@ services:
         methods:
           - GET
         paths:
-          - /public-advisories/(?<advisoryNumber>\S+)$
+          - /park-photos/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -815,7 +815,7 @@ services:
         methods:
           - GET
         paths:
-          - /regions
+          - /protected-areas
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -826,7 +826,7 @@ services:
         methods:
           - GET
         paths:
-          - /regions/count
+          - /protected-areas/count
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -837,7 +837,7 @@ services:
         methods:
           - GET
         paths:
-          - /regions/(?<regionNumber>\S+)$
+          - /protected-areas/names
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -848,7 +848,7 @@ services:
         methods:
           - GET
         paths:
-          - /search-views
+          - /protected-areas/items
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -859,7 +859,7 @@ services:
         methods:
           - GET
         paths:
-          - /search-views/count
+          - /protected-areas/status
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -870,7 +870,7 @@ services:
         methods:
           - GET
         paths:
-          - /search-views/(?<id>\S+)$
+          - /protected-areas/(?<orcs>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -881,7 +881,7 @@ services:
         methods:
           - GET
         paths:
-          - /sections
+          - /public-advisories
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -892,7 +892,7 @@ services:
         methods:
           - GET
         paths:
-          - /sections/count
+          - /public-advisories/count
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -903,7 +903,7 @@ services:
         methods:
           - GET
         paths:
-          - /sections/(?<sectionNumber>\S+)$
+          - /public-advisories/(?<advisoryNumber>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -914,7 +914,7 @@ services:
         methods:
           - GET
         paths:
-          - /sites
+          - /regions
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -925,7 +925,7 @@ services:
         methods:
           - GET
         paths:
-          - /sites/count
+          - /regions/count
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -936,7 +936,7 @@ services:
         methods:
           - GET
         paths:
-          - /sites/(?<orcsSiteNumber>\S+)$
+          - /regions/(?<regionNumber>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -947,7 +947,7 @@ services:
         methods:
           - GET
         paths:
-          - /standard-messages
+          - /sections
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -958,7 +958,7 @@ services:
         methods:
           - GET
         paths:
-          - /standard-messages/count
+          - /sections/count
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -969,7 +969,7 @@ services:
         methods:
           - GET
         paths:
-          - /standard-messages/(?<id>\S+)$
+          - /sections/(?<sectionNumber>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -980,7 +980,7 @@ services:
         methods:
           - GET
         paths:
-          - /urgencies
+          - /sites
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -991,7 +991,7 @@ services:
         methods:
           - GET
         paths:
-          - /urgencies/count
+          - /sites/count
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -1002,7 +1002,7 @@ services:
         methods:
           - GET
         paths:
-          - /urgencies/(?<id>\S+)$
+          - /sites/(?<orcsSiteNumber>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -1013,7 +1013,7 @@ services:
         methods:
           - GET
         paths:
-          - /websites
+          - /standard-messages
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -1024,7 +1024,7 @@ services:
         methods:
           - GET
         paths:
-          - /websites/count
+          - /standard-messages/count
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -1032,6 +1032,72 @@ services:
           - OAS3_import
           - ns.bcparks
         name: BCParks-path_93-get
+        methods:
+          - GET
+        paths:
+          - /standard-messages/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: BCParks-path_94-get
+        methods:
+          - GET
+        paths:
+          - /urgencies
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: BCParks-path_95-get
+        methods:
+          - GET
+        paths:
+          - /urgencies/count
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: BCParks-path_96-get
+        methods:
+          - GET
+        paths:
+          - /urgencies/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: BCParks-path_97-get
+        methods:
+          - GET
+        paths:
+          - /websites
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: BCParks-path_98-get
+        methods:
+          - GET
+        paths:
+          - /websites/count
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: BCParks-path_99-get
         methods:
           - GET
         paths:
