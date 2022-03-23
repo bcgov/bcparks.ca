@@ -235,7 +235,7 @@ const PublicAdvisoryPage = ({ data }) => {
   const getApiQuery = useCallback((advisoryTypeFilter) => {
 
     // Order by date and exclude unpublished parks
-    let q = "?protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true&_sort=advisoryDate:DESC";
+    let q = "?_sort=advisoryDate:DESC";
 
     if (advisoryTypeFilter === "wildfire") {
       q += "&eventType.eventType_contains=wildfire";
@@ -268,24 +268,22 @@ const PublicAdvisoryPage = ({ data }) => {
 
     if (anySearch) { // only apply filter if there is a keyword
 
-      let n = 0;
+      if (useParksFilter || useKeywordFilter) {
+        let searchType;
+        if (useParksFilter && !useKeywordFilter) {
+          searchType = "park";
+        } else if (useKeywordFilter && !useParksFilter) {
+          searchType = "keyword";
+        } else { 
+          searchType = "all";
+        } 
+        q += `&_q=${searchText}`;
+        q += `&_searchType=${searchType}`;
+      }
 
-      if (useParksFilter) {
-        q += "&_where[_or][" + n + "]"
-        q += "[protectedAreas.protectedAreaName_contains]=" + searchText;
-        n++;
-      }
       if (useTypesFilter) {
-        q += "&_where[_or][" + n + "]"
-        q += "[eventType.eventType_contains]=" + searchText;
-        n++;
-      }
-      if (useKeywordFilter) {
-        q += "&_where[_or][" + n + "]"
-        q += "[description_contains]=" + searchText;
-        n++;
-        q += "&_where[_or][" + n + "]"
-        q += "[title_contains]=" + searchText;
+        // TODO: Not sure how this is supposed to interact with advisoryTypeFilter
+        q += `&eventType.eventType_contains=${searchText}`;
       }
     }
 
