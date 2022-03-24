@@ -84,6 +84,7 @@ export default function ParkTemplate({ data }) {
   )
 
   const hasReservations = operations.hasReservations
+  const hasDayUsePass = park.hasDayUsePass;
   const hasCamping = activeFacilities.some(facility =>
     facility.facilityType.facilityName.toLowerCase().includes("camping")
   )
@@ -254,6 +255,7 @@ export default function ParkTemplate({ data }) {
                 park={park}
                 menu={menuItems}
                 hasReservations={hasReservations}
+                hasDayUsePass={hasDayUsePass}
                 isLoadingAdvisories={isLoadingAdvisories}
                 advisoryLoadError={advisoryLoadError}
                 advisories={advisories}
@@ -340,7 +342,7 @@ export default function ParkTemplate({ data }) {
                       data={{
                         parkFacilities: activeFacilities,
                         reservations: park.reservations,
-                        hasDayUsePass: park.hasDayUsePass,
+                        hasDayUsePass: hasDayUsePass,
                         hasReservations: hasReservations,
                       }}
                     />
