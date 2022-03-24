@@ -357,20 +357,22 @@ export default function ParkTemplate({ data }) {
                   </div>
                 )}
                 {menuItems[8].visible && (
-                  <div ref={mapRef} className="full-width">
-                    <MapLocation data={mapData} />
-                    {park.locationNotes && (
-                      <Grid item xs={12} id="park-location-notes-container">
-                        <Box mb={8}>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: park.locationNotes,
-                            }}
-                          ></div>
-                        </Box>
-                      </Grid>
-                    )}
-                  </div>
+                  <a href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000">
+                    <div ref={mapRef} className="full-width">
+                      <MapLocation data={mapData} />
+                      {park.locationNotes && (
+                        <Grid item xs={12} id="park-location-notes-container">
+                          <Box mb={8}>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: park.locationNotes,
+                              }}
+                            ></div>
+                          </Box>
+                        </Grid>
+                      )}
+                    </div>
+                  </a>
                 )}
                 {menuItems[9].visible && (
                   <div ref={activityMapRef} className="full-width">
