@@ -382,7 +382,9 @@ const PublicAdvisoryPage = ({ data }) => {
 
   // Get total advisory count of this type
   // only has to happen once, when type changes, page reloads
-  getAdvisoryTotalCount();
+  useEffect(() => {
+    getAdvisoryTotalCount();
+  }, [getAdvisoryTotalCount]);
 
   const menuContent = data?.allStrapiMenus?.nodes || []
 
