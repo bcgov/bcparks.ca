@@ -80,7 +80,7 @@ module.exports = {
             FROM public_advisories__protected_areas
             JOIN public_advisories
             ON public_advisories.id = public_advisories__protected_areas.public_advisory_id
-            WHERE public_advisories__protected_areas.public_advisory_id = protected_areas.id
+            WHERE public_advisories__protected_areas."protected-area_id" = protected_areas.id
               AND public_advisories.published_at IS NOT NULL
           ) AS "advisories"`
         ),
