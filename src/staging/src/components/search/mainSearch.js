@@ -1,9 +1,9 @@
 import React, { useState } from "react"
-import { TextField, Button, InputAdornment, InputLabel } from "@material-ui/core"
-import "../../styles/search.scss"
 import { navigate } from "gatsby"
+import { TextField, Button, InputAdornment, InputLabel } from "@material-ui/core"
 import SearchIcon from "@material-ui/icons/Search"
 
+import "../../styles/search.scss"
   
 const MainSearch = () => {
 

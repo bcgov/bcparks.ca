@@ -1,13 +1,15 @@
 import React, { useState } from "react"
-import "../../styles/cmsSnippets/parkInfoPage.scss"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
+import { navigate } from "gatsby"
 import Accordion from "react-bootstrap/Accordion"
+import Col from "react-bootstrap/Col"
 import Container from "react-bootstrap/Container"
+import Row from "react-bootstrap/Row"
+
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
-import { navigate } from "gatsby"
+
+import "../../styles/cmsSnippets/parkInfoPage.scss"
 
 function toCamping() {
   navigate("https://camping.bcparks.ca/");

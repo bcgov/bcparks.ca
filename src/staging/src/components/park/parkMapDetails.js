@@ -1,8 +1,9 @@
 import React from "react"
 import { Paper, Grid } from "@material-ui/core"
+
 import Heading from "./heading"
-import Spacer from "./spacer"
 import HtmlContent from "./htmlContent"
+import Spacer from "./spacer"
 
 export default function ParkMapDetails({ data }) {
   return (

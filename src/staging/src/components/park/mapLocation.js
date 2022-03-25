@@ -1,10 +1,11 @@
 import React, { useRef, useEffect } from "react"
 import { Paper, Grid } from "@material-ui/core"
-import Heading from "./heading"
-import Spacer from "./spacer"
 import MapView from "@arcgis/core/views/MapView"
 import WebMap from "@arcgis/core/WebMap"
 import ScaleBar from "@arcgis/core/widgets/ScaleBar"
+
+import Heading from "./heading"
+import Spacer from "./spacer"
 
 export default function MapLocation({ data }) {
   const webMapId = "bdc3d62fffc14e2da2eb85c9a763bac2"

@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link, navigate } from "gatsby"
 import PropTypes from "prop-types"
+import { Link, navigate } from "gatsby"
 import { isTablet } from "react-device-detect"
+
 import BCParksLogo from "../images/bcparks-h-rgb-rev.png"
 import BCParksWordmark from "../images/BCParks_Wordmark_White.svg"
+
 import "../styles/megaMenu/megaMenu.scss"
 
 const MegaMenu = ({ content, menuMode }) => {

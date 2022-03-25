@@ -1,11 +1,14 @@
 import React from "react"
-import "../../styles/search.scss"
-import parksLogo from "../../images/Mask_Group_5.png"
-import { Link, } from "@material-ui/core"
+import { Link } from "@material-ui/core"
 import Carousel from "react-material-ui-carousel"
+
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
+
 import dayUseIcon from "../../images/park/day-use.png"
+import parksLogo from "../../images/Mask_Group_5.png"
 import redAlertIcon from "../../images/park/red-alert-32.png"
+
+import "../../styles/search.scss"
 
 export default function QuickView({ park, activityItemsLabels, facilityItemsLabels }) {
 

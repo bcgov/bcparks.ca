@@ -1,11 +1,14 @@
 import * as React from "react"
 import { Link } from "gatsby"
-import Seo from "../components/seo"
-import BCParksLogo from "../images/bcparks-h-rgb-rev.png"
-import Footer from "../components/footer"
-import ThumbLink from "../components/thumbLink"
-import "../styles/404.scss"
+
 import BetaBanner from "../components/betaBanner"
+import Footer from "../components/footer"
+import Seo from "../components/seo"
+import ThumbLink from "../components/thumbLink"
+
+import BCParksLogo from "../images/bcparks-h-rgb-rev.png"
+
+import "../styles/404.scss"
 
 const NotFoundPage = () => (
   <>

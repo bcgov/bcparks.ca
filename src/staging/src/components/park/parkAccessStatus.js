@@ -1,12 +1,12 @@
 import React from "react"
-import { graphql, useStaticQuery } from "gatsby"
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles"
+import { graphql, useStaticQuery } from "gatsby"
 import { Card, CardHeader, Avatar } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles"
 
 import blueStatusIcon from "../../images/park/blue-status-64.png"
-import yellowStatusIcon from "../../images/park/yellow-status-64.png"
 import redStatusIcon from "../../images/park/red-status-64.png"
+import yellowStatusIcon from "../../images/park/yellow-status-64.png"
 
 const useStyles = makeStyles({
   card: {

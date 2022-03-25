@@ -1,5 +1,6 @@
 
 import React from "react"
+
 import AdvisoryCard from "../advisories/advisoryCard"
 
 const AdvisoryList = ({ advisories }) => {

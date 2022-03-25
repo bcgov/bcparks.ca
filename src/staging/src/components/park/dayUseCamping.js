@@ -1,8 +1,9 @@
 import React from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import { Grid, Card, CardHeader, Avatar } from "@material-ui/core"
-import dayUseIcon from "../../images/park/day-use.png"
 import { Link } from "gatsby"
+import { Grid, Card, CardHeader, Avatar } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles"
+
+import dayUseIcon from "../../images/park/day-use.png"
 
 const useStyles = makeStyles({
   card: {

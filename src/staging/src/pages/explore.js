@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { graphql } from "gatsby"
 import axios from "axios"
-import Footer from "../components/footer"
-import Header from "../components/header"
-import "../styles/search.scss"
 import {
   Checkbox,
   FormGroup,
@@ -25,19 +22,23 @@ import {
 import Pagination from "@material-ui/lab/Pagination"
 import SearchIcon from "@material-ui/icons/Search"
 import CancelIcon from "@material-ui/icons/Cancel"
-import dayUseIcon from "../images/park/day-use.png"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
-// import blueAlertIcon from "../images/park/blue-alert-32.png"
-// import yellowAlertIcon from "../images/park/yellow-alert-32.png"
-import redAlertIcon from "../images/park/red-alert-32.png"
-import parksLogo from "../images/Mask_Group_5.png"
 import Carousel from "react-material-ui-carousel"
-import SearchFilter from "../components/search/searchFilter"
-import NoSearchResults from "../components/search/noSearchResults"
+
+import Footer from "../components/footer"
+import Header from "../components/header"
 import Seo from "../components/seo"
 import ParkAccessStatus from "../components/park/parkAccessStatus"
 import QuickView from "../components/park/quickView"
+import NoSearchResults from "../components/search/noSearchResults"
+import SearchFilter from "../components/search/searchFilter"
+
+import dayUseIcon from "../images/park/day-use.png"
+import parksLogo from "../images/Mask_Group_5.png"
+import redAlertIcon from "../images/park/red-alert-32.png"
+
+import "../styles/search.scss"
 
 export const query = graphql`
   query {

@@ -1,12 +1,13 @@
 import React, { useState } from "react"
-import "../../styles/cmsSnippets/advisoryCard.scss"
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col"
 import Badge from "react-bootstrap/Badge";
 import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
 
 import HTMLArea from "../HTMLArea"
+
+import "../../styles/cmsSnippets/advisoryCard.scss"
 
 const AdvisoryCard = ({ advisory, index }) => {
 

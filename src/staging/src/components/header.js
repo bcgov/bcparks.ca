@@ -1,7 +1,7 @@
 import React from "react"
-import MegaMenu from "./megaMenu.js"
-import BetaBanner from "../components/betaBanner"
 
+import BetaBanner from "../components/betaBanner"
+import MegaMenu from "./megaMenu.js"
 
 export default function Header({ content = [] }) {
 

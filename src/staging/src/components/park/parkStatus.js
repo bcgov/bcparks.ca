@@ -1,9 +1,10 @@
 import React from "react"
 import { Grid, Box } from "@material-ui/core"
-import ParkAccessStatus from "./parkAccessStatus"
+import { makeStyles } from "@material-ui/core/styles"
+
 import Advisory from "./advisory"
 import CampfireBan from "./campfireBan"
-import { makeStyles } from "@material-ui/core/styles"
+import ParkAccessStatus from "./parkAccessStatus"
 
 const useStyles = makeStyles({
   topGrid: {
