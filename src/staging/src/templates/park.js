@@ -359,20 +359,20 @@ export default function ParkTemplate({ data }) {
                   </div>
                 )}
                 {menuItems[8].visible && (
-                    <div ref={mapRef} className="full-width">
-                      <MapLocation data={mapData} />
-                      {park.locationNotes && (
-                        <Grid item xs={12} id="park-location-notes-container">
-                          <Box mb={8}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html: park.locationNotes,
-                              }}
-                            ></div>
-                          </Box>
-                        </Grid>
-                      )}
-                    </div>
+                  <div ref={mapRef} className="full-width">
+                    <MapLocation data={mapData} />
+                    {park.locationNotes && (
+                      <Grid item xs={12} id="park-location-notes-container">
+                        <Box mb={8}>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: park.locationNotes,
+                            }}
+                          ></div>
+                        </Box>
+                      </Grid>
+                    )}
+                  </div>
                 )}
                 {menuItems[9].visible && (
                   <div ref={activityMapRef} className="full-width">
