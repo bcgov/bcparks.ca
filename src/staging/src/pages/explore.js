@@ -31,12 +31,12 @@ import Header from "../components/header"
 import Seo from "../components/seo"
 import ParkAccessStatus from "../components/park/parkAccessStatus"
 import QuickView from "../components/park/quickView"
+import AdvisorySummary from "../components/search/advisorySummary"
 import NoSearchResults from "../components/search/noSearchResults"
 import SearchFilter from "../components/search/searchFilter"
 
 import dayUseIcon from "../images/park/day-use.png"
 import parksLogo from "../images/Mask_Group_5.png"
-import redAlertIcon from "../images/park/red-alert-32.png"
 
 import "../styles/search.scss"
 
@@ -907,33 +907,11 @@ export default function Explore({ location, data }) {
 
                                             <div className="row p10t mr5">
                                               <div className="col-6">
-                                                <Link
+                                              {r.advisories && r.advisories.length > 0 && (<Link
                                                   href={`/${r.slug}#park-advisory-details-container`}
                                                 >
-                                                  {r.advisories && r.advisories.length > 0 && r.advisories.map(
-                                                    (advisory, index) => (
-                                                      // TODO Display all advisories when Event types are
-                                                      // available in elastic search results based on severity
-                                                      <div
-                                                        key={index}
-                                                        className="flex-display"
-                                                      >
-                                                        {index === 0 && (
-                                                          <>
-                                                            <img
-                                                              alt=""
-                                                              className="search-result-icon"
-                                                              src={redAlertIcon}
-                                                            />
-                                                            <div className="pl15 text-blue pb20">
-                                                              {advisory.title} (1)
-                                                            </div>
-                                                          </>
-                                                        )}
-                                                      </div>
-                                                    )
-                                                  )}
-                                                </Link>
+                                                   <AdvisorySummary advisories={r.advisories} />
+                                                </Link>)}
                                               </div>
 
                                               <div className="col-6">
