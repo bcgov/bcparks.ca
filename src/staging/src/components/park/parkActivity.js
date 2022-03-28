@@ -27,7 +27,7 @@ export default function ParkActivity({ data }) {
   return (
     <div className="mb-5">
       <Row
-        id="park-camping-details-container"
+        id="park-activity-container"
         className="anchor-link"
       >
         <Col>
