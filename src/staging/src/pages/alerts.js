@@ -2,18 +2,14 @@ import React, { useState, useEffect, useCallback } from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import axios from "axios"
-import Header from "../components/header"
-import Footer from "../components/footer"
-
 import {
   Container,
   CircularProgress,
 } from "@material-ui/core"
-
-
 import { makeStyles } from "@material-ui/core/styles";
 
-
+import Footer from "../components/footer"
+import Header from "../components/header"
 import AdvisoryFilter from "../components/advisories/advisoryFilter"
 import AdvisoryList from "../components/advisories/advisoryList"
 import AdvisoryPageNav from "../components/advisories/advisoryPageNav"

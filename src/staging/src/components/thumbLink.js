@@ -1,8 +1,9 @@
 
 import React from "react"
-import "../styles/404.scss"
 import { navigate, graphql, useStaticQuery } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image";
+
+import "../styles/404.scss"
 
 function goToLink(link) {
     navigate(link);

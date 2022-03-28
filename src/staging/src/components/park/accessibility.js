@@ -1,7 +1,8 @@
 import React from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import { Grid, Card, CardHeader, Avatar } from "@material-ui/core"
 import { Link } from "gatsby"
+import { Grid, Card, CardHeader, Avatar } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles"
+
 import accessibilityIcon from "../../images/park/accessibility.png"
 
 const useStyles = makeStyles({

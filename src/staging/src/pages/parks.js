@@ -2,8 +2,10 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { Box, Grid, Container } from "@material-ui/core"
-import Header from "../components/header"
+
 import Footer from "../components/footer"
+import Header from "../components/header"
+
 import "../styles/home.scss"
 
 const ParksPage = ({ data }) => (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import PropTypes from "prop-types"
+import { navigate } from "gatsby"
 import {
   Grid,
   Button,
@@ -10,13 +11,11 @@ import {
   ListItem,
   ListItemText,
 } from "@material-ui/core"
-import ParkAccessStatus from "./parkAccessStatus"
-import Advisory from "./advisory"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
 
-import { navigate } from "gatsby"
-
+import Advisory from "./advisory"
+import ParkAccessStatus from "./parkAccessStatus"
 export default function ParkHeader({
   park,
   menu,

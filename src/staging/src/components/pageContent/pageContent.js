@@ -1,10 +1,9 @@
 
 import React from "react"
 
-import HTMLArea from "../HTMLArea" 
-import PageSection from "../pageContent/pageSection"
+import HTMLArea from "../HTMLArea"
 import LinkCard from "./linkCard"
-
+import PageSection from "../pageContent/pageSection"
 
 /*
  * PageContent is a generic switch for different strapi content types.

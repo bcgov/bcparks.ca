@@ -1,12 +1,14 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
-import Seo from "../components/seo"
-import Header from "../components/header"
+import { CssBaseline } from "@material-ui/core"
+
 import Footer from "../components/footer"
+import Header from "../components/header"
+import Seo from "../components/seo"
 import MainSearch from "../components/search/mainSearch"
 import PageContent from "../components/pageContent/pageContent"
-import { CssBaseline } from "@material-ui/core"
+
 import "../styles/global.scss"
 import "../styles/staticLanding1.scss"
 

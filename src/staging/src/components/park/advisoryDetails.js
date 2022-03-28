@@ -1,18 +1,20 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { parseJSON, format } from "date-fns"
-import "../../styles/cmsSnippets/advisoryDetails.scss"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import Button from "react-bootstrap/Button"
 import Accordion from "react-bootstrap/Accordion"
+import Button from "react-bootstrap/Button"
+import Col from "react-bootstrap/Col"
 import Container from "react-bootstrap/Container"
+import Row from "react-bootstrap/Row"
+
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 
 import blueAlertIcon from "../../images/park/blue-alert-64.png"
-import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
 import redAlertIcon from "../../images/park/red-alert-64.png"
+import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
+
+import "../../styles/cmsSnippets/advisoryDetails.scss"
 
 const formatDate = (isoDate) => {
   return isoDate ? format(parseJSON(isoDate), "MMMM dd, yyyy") : ""

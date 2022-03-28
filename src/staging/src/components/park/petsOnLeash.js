@@ -1,8 +1,9 @@
 import React from "react"
+import { Link } from "gatsby"
 import { makeStyles } from "@material-ui/core/styles"
 import { Grid, Card, CardHeader, Avatar } from "@material-ui/core"
+
 import petsOnLeashIcon from "../../images/park/pets-on-leash.png"
-import { Link } from "gatsby"
 
 const useStyles = makeStyles({
   card: {

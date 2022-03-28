@@ -1,11 +1,12 @@
 import React from "react"
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles"
-import { Avatar, Card, CardHeader } from "@material-ui/core"
-import redAlertIcon from "../../images/park/red-alert-64.png"
-import blueAlertIcon from "../../images/park/blue-alert-64.png"
-import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
 import { Link } from "gatsby"
+import { Avatar, Card, CardHeader } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles"
+
+import blueAlertIcon from "../../images/park/blue-alert-64.png"
+import redAlertIcon from "../../images/park/red-alert-64.png"
+import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
 
 const useStyles = makeStyles({
   card: {

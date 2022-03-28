@@ -1,10 +1,10 @@
 import React, { useEffect } from "react"
 import { graphql } from "gatsby"
 
-import Seo from "../components/seo"
-import HTMLArea from "../components/HTMLArea"
-import Header from "../components/header"
 import Footer from "../components/footer"
+import Header from "../components/header"
+import HTMLArea from "../components/HTMLArea"
+import Seo from "../components/seo"
 
 import "../styles/betaLanding.scss"
 

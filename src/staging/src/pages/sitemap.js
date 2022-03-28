@@ -1,10 +1,12 @@
 import React from "react"
 import { graphql } from "gatsby"
-import MegaMenu from "../components/megaMenu.js"
 import { Helmet } from "react-helmet"
-import Header from "../components/header"
-import Footer from "../components/footer"
 import { Link, Breadcrumbs } from "@material-ui/core"
+
+import Footer from "../components/footer"
+import Header from "../components/header"
+import MegaMenu from "../components/megaMenu.js"
+
 import "../styles/staticContent1.scss"
 
 

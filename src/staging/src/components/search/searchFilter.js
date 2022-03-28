@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react"
 import PropTypes from "prop-types"
+import { navigate } from "gatsby"
 import {
   TextField,
   Dialog,
@@ -15,12 +16,12 @@ import {
   Checkbox,
   Link,
 } from "@material-ui/core"
-import "../../styles/search.scss"
 import SearchIcon from "@material-ui/icons/Search"
 import CancelIcon from "@material-ui/icons/Cancel"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
-import { navigate } from "gatsby"
+
+import "../../styles/search.scss"
 
 
 const SearchFilter = ({

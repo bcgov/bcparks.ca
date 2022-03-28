@@ -1,13 +1,14 @@
 import React, { useRef } from "react"
 import { graphql, useStaticQuery, Link } from "gatsby"
-import Header from "../components/header"
-import Footer from "../components/footer"
-import Seo from "../components/seo"
-import HTMLArea from "../components/HTMLArea"
-import PageMenu from "../components/pageContent/pageMenu"
-import PageContent from "../components/pageContent/pageContent"
 import { Breadcrumbs } from "@material-ui/core"
 import useScrollSpy from "react-use-scrollspy"
+
+import Footer from "../components/footer"
+import Header from "../components/header"
+import HTMLArea from "../components/HTMLArea"
+import Seo from "../components/seo"
+import PageContent from "../components/pageContent/pageContent"
+import PageMenu from "../components/pageContent/pageMenu"
 
 import "../styles/staticContent1.scss"
 

@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react"
 import { graphql, navigate } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 
-import Header from "../components/header"
 import Footer from "../components/footer"
+import Header from "../components/header"
 import MainSearch from "../components/search/mainSearch"
 import PageContent from "../components/pageContent/pageContent"
+import Seo from "../components/seo"
 
 import "../styles/home.scss"
-import Seo from "../components/seo"
 
 export const query = graphql`
   query {
