@@ -533,7 +533,7 @@ export default function Explore({ location, data }) {
                       <TextField
                         id="park-search-text"
                         variant="outlined"
-                        placeholder="e.g Alice Park"
+                        placeholder="e.g Alice Lake Park"
                         className="park-search-text-box h50p"
                         value={inputText}
                         onChange={event => {
@@ -596,7 +596,7 @@ export default function Explore({ location, data }) {
                             <TextField
                               id="park-search-text"
                               variant="outlined"
-                              placeholder="e.g Alice Park"
+                              placeholder="e.g Alice Lake Park"
                               className="park-search-text-box h50p"
                               value={inputText}
                               onChange={event => {
