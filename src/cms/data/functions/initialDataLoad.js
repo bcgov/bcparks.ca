@@ -27,7 +27,6 @@ const loadData = async () => {
       otherData.loadUrgency(),
       otherData.loadFireCentre(),
       otherData.loadFireZone(),
-      otherData.loadParkOperation(),
     ]);
 
     await Promise.all([
@@ -44,6 +43,8 @@ const loadData = async () => {
       pageMedia.loadPageMedia(),
       parkPhoto.loadParkPhoto(),
     ]);
+
+    await operationData.loadData({isSeedMode: true});
 
     strapi.log.info("------Data load completed------");
     console.timeEnd("initialLoad");
