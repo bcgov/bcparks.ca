@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { navigate } from "@reach/router"
 import {
   Box,
   Grid,
@@ -93,16 +94,9 @@ const AdvisoryFilter = ({ filterFunctions }) => {
   const [isParksFilter, setIsParksFilter] = useState(
     getFilter("parks")
   )
-  const [isTypesFilter, setIsTypesFilter] = useState(
-    getFilter("types")
-  )
   const [isKeywordFilter, setIsKeywordsFilter] = useState(
     getFilter("keyword")
   )
-  const [advisoryType, setAdvisoryType] = useState(
-    getType()
-  )
-
 
   // Local handlers, calls to parent methods
   // will trigger useEffect functions in parent
@@ -113,30 +107,18 @@ const AdvisoryFilter = ({ filterFunctions }) => {
     setSearchText(filterText)
   }
 
-  const handleTypeFilterChange = (str) => {
+  const handleTypeFilterChange = (advisoryType) => {
     // This changes the URL query str and causes the page to
     // rerender with the type changed
-    let newLoc = "/alerts/?type=" + str;
-    if (str !== "public") {
-      newLoc += "s"; // add "s" to wildfire and flood
-    }
-    window.location = newLoc; // this will trigger a reload
-
-    // NB - these lines are irrelevant as the above line
-    // has triggered a reload - these are kept in order to 
-    // remove react warnings
-    setAdvisoryType(str);
-    setType(str);
+    setType(advisoryType);
+    const updatedPath = `/alerts/?type=${advisoryType}${advisoryType === 'public' ? '' : 's'}`;
+    navigate(updatedPath);
   }
 
   // Checkboxes
   const handleParksFilterChange = () => {
     setIsParksFilter(!isParksFilter)
     setFilter("parks", !isParksFilter)
-  }
-  const handleTypesFilterChange = () => {
-    setIsTypesFilter(!isTypesFilter)
-    setFilter("types", !isTypesFilter)
   }
   const handleKeywordsFilterChange = () => {
     setIsKeywordsFilter(!isKeywordFilter)
@@ -238,20 +220,6 @@ const AdvisoryFilter = ({ filterFunctions }) => {
             }
             label="Park Names"
           />
-          {advisoryType === 'public' && (
-        <FormControlLabel
-          className={classes.filterElement + " " + (isTypesFilter ? "text-light-blue no-wrap" : "no-wrap") }
-              control={
-                <Checkbox
-                  checked={isTypesFilter}
-                  style={{ color: '#38598a'}}
-                  onChange={event => { handleTypesFilterChange() }}
-                  name="types"
-                />
-              }
-              label="Events"
-            />
-          )}
 
       </Box>
 

@@ -81,7 +81,6 @@ const PublicAdvisoryPage = ({ data }) => {
   const [pageTitle, setPageTitle] = useState("Public Advisories")
 
   // state of filter checkboxes:
-  const [isTypesFilter, setIsTypesFilter] = useState(false)
   const [isParksFilter, setIsParksFilter] = useState(false)
   const [isKeywordFilter, setIsKeywordFilter] = useState(false)
 
@@ -120,9 +119,6 @@ const PublicAdvisoryPage = ({ data }) => {
       case "parks":
         isFiltered = isParksFilter
         break
-      case "types":
-        isFiltered = isTypesFilter
-        break
       case "keyword":
         isFiltered = isKeywordFilter
         break
@@ -140,9 +136,6 @@ const PublicAdvisoryPage = ({ data }) => {
     switch (filterType) {
       case "parks":
         setIsParksFilter(isActive)
-        break
-      case "types":
-        setIsTypesFilter(isActive)
         break
       case "keywords":
         setIsKeywordFilter(isActive)
@@ -223,7 +216,7 @@ const PublicAdvisoryPage = ({ data }) => {
   const getApiQuery = useCallback(
     advisoryTypeFilter => {
       // Order by date and exclude unpublished parks
-      let q = "?_sort=advisoryDate:DESC"
+      let q = "?_sort=advisoryDate:DESC&protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true"
 
       if (advisoryTypeFilter === "wildfire") {
         q += "&eventType.eventType_contains=wildfire"
@@ -232,23 +225,15 @@ const PublicAdvisoryPage = ({ data }) => {
       }
 
       let useParksFilter = isParksFilter
-      let useTypesFilter = isTypesFilter
       let useKeywordFilter = isKeywordFilter
 
       // check if any checkbox filter is set
-      let anyFilter = isParksFilter || isTypesFilter || isKeywordFilter
+      let anyFilter = isParksFilter || isKeywordFilter
 
       if (!anyFilter) {
         // use all filters if none are selected
         useParksFilter = true
-        useTypesFilter = true
         useKeywordFilter = true
-      }
-
-      if (advisoryTypeFilter !== "public") {
-        // filter is already applied
-        // ignore types checkbox
-        useTypesFilter = false
       }
 
       // check if there is anything in the search textbox
@@ -269,16 +254,11 @@ const PublicAdvisoryPage = ({ data }) => {
           q += `&_q=${searchText}`
           q += `&_searchType=${searchType}`
         }
-
-        if (useTypesFilter) {
-          // TODO: Not sure how this is supposed to interact with advisoryTypeFilter
-          q += `&eventType.eventType_contains=${searchText}`
-        }
       }
 
       return q
     },
-    [isKeywordFilter, isParksFilter, isTypesFilter, searchText]
+    [isKeywordFilter, isParksFilter, searchText]
   )
 
   const getAdvisories = useCallback(
@@ -360,7 +340,7 @@ const PublicAdvisoryPage = ({ data }) => {
     setIsAnySearch(anySearch)
 
     setIsNewFilter(true)
-  }, [isParksFilter, isTypesFilter, isKeywordFilter, searchText])
+  }, [isParksFilter, isKeywordFilter, searchText])
 
   useEffect(() => {
     if (!isNewFilter) {
