@@ -1,48 +1,71 @@
 # KONG API Service Portal Setup
 
-The public API is accessible at https://bcparks.api.gov.bc.ca (PROD) or https://bcparks-api-gov-bc-ca.test.api.gov.bc.ca (TEST) 
+The public API is accessible at https://bcparks.api.gov.bc.ca (PROD) or
+https://bcparks-api-gov-bc-ca.test.api.gov.bc.ca (TEST). Dev does not have a corresponding API Gateway.
 
-Steps to register the Strapi API in with DataBC KONG API Portal
+API access is controlled via Kong, administered via the BC Gov API Programme Services API Gateway.
+**Kong configuration is not updated via Github Actions, and must be updated manually when there are changes.**
 
-## API Portal TEST Environment
-1. Log into https://api-gov-bc-ca.test.api.gov.bc.ca/ 
-2. Create a namespace called BCParks
-3. Create a service account and note down the client id and cient secret
-4. Download the GWA CLI (refer to https://api-gov-bc-ca.test/docs/platform-api-owner-user-journey)
-5. In command prompt run the following commands
+For an overview of the API Gateway update process, see:
+https://api-gov-bc-ca.test.api.gov.bc.ca/docs/platform-api-owner-user-journey
 
-    gwa init -T --api-version=2 --namespace=bcparks --client-id=<ClientID from Step 3> --client-secret=<Client Secret from Step 3>
-    
-    gwa pg public-test.yaml
+Access to the web UI for creating service accounts can be requested in the `#aps-ops` rocketchat channel.
+
+## Kong Config Update
+
+If there have been changes to the API endpoints available on Strapi, the following steps need to be taken:
+
+1. Visit [Strapi admin](http://localhost:1337/admin/plugins/documentation) and under Plugins -> Documentation,
+   click "Regenerate".
+2. Copy the content of `src/cms/extensions/documentation/documentation/1.0.0/full_documentation.json` (the
+   generated OpenAPI spec) to `src/kong/public-documentation.json` (overwriting the existing content).
+3. Run `node clean.js` to remove any private API endpoints from the file.
+4. Download the GWA CLI from https://github.com/bcgov/gwa-cli/releases
+5. In the src/kong directory, run (for TEST):
+
+   ```sh
+   gwa init -T --api-version=2 --namespace=bcparks --client-id=<ClientID> --client-secret=<ClientSecret>
+   gwa new public-documentation.json --route-host=bcparks.api.gov.bc.ca --service-url=bcparks-cms.61d198-test.svc --plugins rate-limiting cors  --outfile=public-test.yaml
+   ```
+
+   (for PROD):
+
+   ```sh
+   gwa init -P --api-version=2 --namespace=bcparks --client-id=<ClientID> --client-secret=<ClientSecret>
+   gwa new public-documentation.json --route-host=bcparks.api.gov.bc.ca --service-url=bcparks-cms.61d198-prod.svc --plugins rate-limiting cors  --outfile=public-prod.yaml
+   ```
+
+6. Diff the `public-test.yaml` or `public-prod.yaml` file against the committed version. Only routes
+   should be changed. **If any host, port, rate limiting, etc setting have changed, revert those changes.**
+7. Commit the resulting file. Note that committing does not ensure the changes will be picked up. They must
+   be manually applied per the instructions below.
+
+## TEST Environment Publication
+
+1. Log into https://api-gov-bc-ca.test.api.gov.bc.ca/
+2. Select the BC Parks namespace
+3. Create a service account with `GatewayConfig.Publish` scope and note down the client id and client secret
+4. Download the GWA CLI from https://github.com/bcgov/gwa-cli/releases
+5. In command prompt run the following commands:
+
+   ```sh
+   gwa init -T --api-version=2 --namespace=bcparks --client-id=<ClientID> --client-secret=<ClientSecret>
+   gwa pg public-test.yaml
+   ```
 
 6. Check the Gateway in the API Service Portal to make sure that the routes have been published
 
-## API Portal PROD Environment
-1. Log into https://api.gov.bc.ca/ 
-2. Create a namespace called BCParks
-3. Create a service account and note down the client id and cient secret
-4. Download the GWA CLI (refer to https://api.gov.bc.ca/docs/platform-api-owner-user-journey)
-5. In command prompt run the following commands
+## PROD Environment Publication
 
-    gwa init -P --api-version=2 --namespace=bcparks --client-id=<ClientID from Step 3> --client-secret=<Client Secret from Step 3>
-    
-    gwa pg public-prod.yaml
+1. Log into https://api.gov.bc.ca/
+2. Select the BC Parks namespace
+3. Create a service account with `GatewayConfig.Publish` scope and note down the client id and client secret
+4. Download the GWA CLI from https://github.com/bcgov/gwa-cli/releases
+5. In command prompt run the following commands:
+
+   ```sh
+   gwa init -P --api-version=2 --namespace=bcparks --client-id=<ClientID> --client-secret=<ClientSecret>
+   gwa pg public-prod.yaml
+   ```
 
 6. Check the Gateway in the API Service Portal to make sure that the routes have been published
-
-If a new OpenAPI spec needs to be generated, the following steps need to be followed
-1. Edit the public-documentation.json (this is a manually edited copy from the full_documentation.json from STRAPI)
-2. In command prompt run the following command after the gwa init command
-
-    gwa new public-documentation.json --route-host=bcparks.api.gov.bc.ca --service-url=<Openshift Service endpoint>--plugins rate-limiting cors  --outfile=public-prod.yaml
-3. Add the generated YAML file with the following
-    
-    services:
-    
-      name: BCPARKS
-    
-        host: <Openshift Service endpoint>
-    
-        protocol: http
-    
-        port: 1337
