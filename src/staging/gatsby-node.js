@@ -94,7 +94,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
   type StrapiProtectedArea implements Node {
     orcs: Int
-    hasDayUsePass: String
+    hasDayUsePass: Boolean
     isDisplayed: Boolean
     parkContact: String
     urlPath: String @parkPath
