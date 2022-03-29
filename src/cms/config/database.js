@@ -1,17 +1,6 @@
 module.exports = ({ env }) => ({
-  defaultConnection: env("DATABASE_CLIENT", "default"),
+  defaultConnection: env("DATABASE_CLIENT", "postgres"),
   connections: {
-    default: {
-      connector: "bookshelf",
-      settings: {
-        client: "sqlite",
-        timezone: "UTC",
-        filename: env("DATABASE_FILENAME", ".tmp/data.db"),
-      },
-      options: {
-        useNullAsDefault: true,
-      },
-    },
     postgres: {
       connector: "bookshelf",
       settings: {

@@ -10,7 +10,6 @@ Strapi allows administration of site data.
 3. Set ``DATABASE_HOST``, ``DATABASE_PORT``, ``DATABASE_NAME``, ``DATABASE_USERNAME``,
    ``DATABASE_PASSWORD`` appropriately in ``.env``.
     * Copy ``.env.example`` and save as ``.env``
-    * By default, database client will be set to sqlite. If you are using Postgres locally make sure to set ``DATABASE_CLIENT=postgres`` in ``.env``.
     * Set ```DATABASE_HOST=localhost```;
     * Set ``DATABASE_NAME=cms`` in ``.env``.
 4. Run ``npm install``.
