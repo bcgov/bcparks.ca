@@ -174,7 +174,7 @@ export default function ParkDates({ data }) {
   return (
     <div id="park-dates-container" className="anchor-link mb-3">
       <div className="anchor-link">
-        <Heading>Dates of Operation</Heading>
+        <Heading>Dates of operation</Heading>
         {!hasOperations && (
           <div className="font-italic">
             There is currently no operating date information available
