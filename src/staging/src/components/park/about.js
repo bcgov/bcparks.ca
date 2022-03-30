@@ -1,9 +1,6 @@
 import React from "react"
-<<<<<<< Updated upstream
 import { parseISO, format } from "date-fns"
-=======
 import { capitalize } from "lodash"
->>>>>>> Stashed changes
 import { Paper, Grid } from "@material-ui/core"
 
 import Heading from "./heading"
