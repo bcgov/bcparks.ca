@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
-import { sortBy } from "lodash"
+import { sortBy, capitalize } from "lodash"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import {
@@ -150,7 +150,11 @@ export default function ParkTemplate({ data }) {
   })
 
   const menuItems = [
-    { text: "Park overview", url: "park-overview-container", visible: true },
+    { 
+      text: capitalize(`${park.type} overview`),
+      url: "park-overview-container", 
+      visible: true 
+    },
     {
       text: "Accessibility",
       url: "accessibility-details-container",
@@ -189,14 +193,18 @@ export default function ParkTemplate({ data }) {
       url: "park-activity-container",
       visible: activeActivities.length > 0,
     },
-    { text: "Location", url: "park-map-container", visible: true },
+    { 
+      text: "Location", 
+      url: "park-map-container", 
+      visible: true 
+    },
     {
-      text: "Park and activity maps",
+      text: capitalize(`${park.type} and activity maps`),
       url: "park-map-details-container",
       visible: park.maps,
     },
     {
-      text: "Learn about this park",
+      text: capitalize(`Learn about this ${park.type}`),
       url: "park-about-container",
       visible: true,
     },
@@ -291,7 +299,7 @@ export default function ParkTemplate({ data }) {
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">
-                  <ParkOverview data={park.description} />
+                  <ParkOverview data={park.description} type={park.type} />
                 </div>
               )}
               <Grid container spacing={0}>
@@ -383,7 +391,7 @@ export default function ParkTemplate({ data }) {
                 )}
                 {menuItems[9].visible && (
                   <div ref={activityMapRef} className="full-width">
-                    <ParkMapDetails data={park.maps} />
+                    <ParkMapDetails data={park.maps} type={park.type} />
                   </div>
                 )}
                 {menuItems[10].visible && (
