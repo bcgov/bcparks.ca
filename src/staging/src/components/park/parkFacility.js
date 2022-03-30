@@ -12,7 +12,7 @@ import StaticIcon from "./staticIcon"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
 export default function ParkFacility({ data }) {
-  const [facilityData, setFacilityData] = useState(
+  const [facilityData] = useState(
     JSON.parse(JSON.stringify(data)) // deep copy
   )
   const [expanded, setExpanded] = useState(Array(data.length).fill(false))
@@ -25,25 +25,22 @@ export default function ParkFacility({ data }) {
     },
     [expanded]
   )
-  //const [isInitial, setIsInitial] = useState(true)
 
   const checkHash = useCallback(() => {
     // Check hash in url
     // if we find a matching facilityCode, open that facility accordion
-    // TODO setup useEffect etc.
     let h = ""
 
     if (typeof window !== "undefined") {
       h = window.location.hash
       if (h !== undefined) {
-        for (const idx in facilityData) {
-          const facility = facilityData[idx]
+        facilityData.forEach(facility => {
           if (h === "#" + facility.facilityType.facilityCode) {
             if (!expanded[facility.uiId]) {
               toggleExpand(facility.uiId)
             }
           }
-        }
+        })
       }
     }
   }, [expanded, facilityData, toggleExpand])

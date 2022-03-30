@@ -12,11 +12,12 @@ import StaticIcon from "./staticIcon"
 import { ParkAccessFromAdvisories } from "../../components/park/parkAccessStatus"
 
 export default function ParkDates({ data }) {
-  const parkOperation = data.parkOperation || {}
-  const subAreas = data.subAreas || []
+  const dataCopy = JSON.parse(JSON.stringify(data)) // deep copy
+  const parkOperation = dataCopy.parkOperation || {}
+  const subAreas = dataCopy.subAreas || []
   subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
 
-  const advisories = data.advisories || []
+  const advisories = dataCopy.advisories || []
 
   const parkStatus = ParkAccessFromAdvisories(advisories)
   const parkStatusText = parkStatus.parkStatusText
@@ -81,9 +82,9 @@ export default function ParkDates({ data }) {
       let saDateCount = 0
       subArea.processedDates = []
       for (let dIdx in saDates) {
-        saDateCount++
         const dateRec = saDates[dIdx]
         if (dateRec.isActive) {
+          saDateCount++
           const serviceDates = datePhrase(
             dateRec.serviceStartDate,
             dateRec.serviceEndDate

@@ -8,12 +8,10 @@ export default function StaticIcon({ name, size }) {
   // Handle both cases for the time being
   if (name && name.startsWith("https://")) {
     iconSrc = name
+  } else if (name && name.indexOf(".svg") === -1) {
+    iconSrc = `/icons/${name}.svg`
   } else if (name) {
-    if (name.indexOf(".svg") === -1) {
-      iconSrc = `/icons/${name}.svg`
-    } else {
-      iconSrc = `/icons/${name}`
-    }
+    iconSrc = `/icons/${name}`
   } else {
     return null
   }
