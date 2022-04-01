@@ -1,18 +1,40 @@
-import React from "react"
+import React, { useState } from "react"
 import moment from "moment"
 
-import Heading from "./heading" // TODO this is MUI, but in many places
 import HTMLArea from "../HTMLArea"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import Accordion from "react-bootstrap/Accordion"
+import Container from "react-bootstrap/Container"
+import Heading from "./heading"
+import HtmlContent from "./htmlContent"
+import StaticIcon from "./staticIcon"
+import { ParkAccessFromAdvisories } from "../../components/park/parkAccessStatus"
 
 export default function ParkDates({ data }) {
-  const parkOperation = data.parkOperation || {}
-  const subAreas = data.subAreas || []
+  const dataCopy = JSON.parse(JSON.stringify(data)) // deep copy
+  const parkOperation = dataCopy.parkOperation || {}
+  const subAreas = dataCopy.subAreas || []
+  subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
+
+  const advisories = dataCopy.advisories || []
+
+  const parkStatus = ParkAccessFromAdvisories(advisories)
+  const parkStatusText = parkStatus.parkStatusText
+  const parkStatusIcon = parkStatus.parkStatusIcon
+
+  // Accordion expanded state
+  const [expanded, setExpanded] = useState(Array(subAreas.length).fill(false))
+  const toggleExpand = index => {
+    expanded[index] = !expanded[index]
+    setExpanded([...expanded])
+  }
 
   // Operations record is required, even if subarea records are present
   // If no operations record, show "not available" message
   const hasOperations = parkOperation.isActive // either false, or whole record missing
 
-  const fmt = "MMM DD, yyyy" // date format for display
+  const fmt = "MMM D, yyyy" // date format for display
 
   // -------- Operating Dates --------
 
@@ -25,39 +47,44 @@ export default function ParkDates({ data }) {
         // check if dates go from jan 1 to dec 31
         // for puposes of checking if year-round, ignoring year
         const openYearRound =
-          open.indexOf("Jan 01") === 0 && close.indexOf("Dec 31") === 0
+          open.indexOf("Jan 1") === 0 && close.indexOf("Dec 31") === 0
         let output = openYearRound ? "year-round" : open + " - " + close
 
         return output
       } catch (err) {
-        console.log("Err formatting date " + openDate + ", " + closeDate)
+        console.error("Err formatting date " + openDate + ", " + closeDate)
         return ""
       }
     } else {
-      return "-" // at least one date missing
+      return "" // at least one date missing
     }
   }
 
   // Overall operating dates for parks, to display above subareas
-  // TODO override with closures via advisories
   const parkDates = datePhrase(parkOperation.openDate, parkOperation.closeDate)
 
   // ---- Subarea Dates -----
-  const subAreaCount = subAreas.length
-
-  let dates = []
 
   for (let idx in subAreas) {
     const subArea = subAreas[idx]
 
     if (subArea.isActive) {
+      const typeObj = subArea.parkSubAreaType || {}
+      const iconUrl = typeObj.iconUrl || ""
+      const typeIcon = iconUrl.split("/")[iconUrl.split("/").length - 1] // ignore path, get filename
+      subArea.typeIcon = typeIcon
+
+      const facilityType = subArea.facilityType || {}
+      subArea.facilityName = facilityType.facilityName || ""
+
       // Subarea operating dates
       const saDates = subArea.parkOperationSubAreaDates
       let saDateCount = 0
+      subArea.processedDates = []
       for (let dIdx in saDates) {
-        saDateCount++
         const dateRec = saDates[dIdx]
         if (dateRec.isActive) {
+          saDateCount++
           const serviceDates = datePhrase(
             dateRec.serviceStartDate,
             dateRec.serviceEndDate
@@ -66,25 +93,28 @@ export default function ParkDates({ data }) {
             dateRec.reservationStartDate,
             dateRec.reservationEndDate
           )
-          // TODO winter dates
+          const offSeasonDates = datePhrase(
+            dateRec.offSeasonStartDate,
+            dateRec.offSeasonEndDate
+          )
 
-          dates.push({
-            dateCount: saDateCount,
-            subArea: subArea.parkSubArea,
-            serviceDates: serviceDates,
-            resDates: resDates,
-          })
+          if (saDateCount === 1) {
+            subArea.serviceDates = serviceDates
+            subArea.resDates = resDates
+            subArea.offSeasonDates = offSeasonDates
+          } else {
+            // more than one date for this subarea, extend sentence
+            subArea.serviceDates += serviceDates ? ", " + serviceDates : ""
+            subArea.resDates += resDates ? ", " + resDates : ""
+            subArea.offSeasonDates += offSeasonDates
+              ? ", " + offSeasonDates
+              : "" // prettier is adding extra line breaks
+          }
         }
       }
-
-      // TODO process subarea type
-      // Show subarea type icon
-      // Add other related icons e.g. accessibility
-      // Link to activty section on page
+      subArea.hasDates = saDateCount > 0
     }
   }
-  // Subareas to appear in alpha order
-  dates.sort((a, b) => (a.subArea >= b.subArea ? 1 : -1))
 
   // -------- Operating Notes ----------
 
@@ -173,108 +203,131 @@ export default function ParkDates({ data }) {
 
   return (
     <div id="park-dates-container" className="anchor-link mb-3">
-      <div className="anchor-link">
-        <Heading>Dates of Operation</Heading>
-        {!hasOperations && (
-          <div className="font-italic">
-            There is currently no operating date information available
-          </div>
-        )}
-        {hasOperations && (
-          <>
-            <div className="dates-header font-italic text-center">
-              All dates are subject to change without notice.
+      <Heading>Dates of Operation</Heading>
+      <Row>
+        <Col>
+          {!hasOperations && (
+            <div className="font-italic">
+              There is currently no operating date information available
             </div>
-            <div className="font-italic text-center">
-              While this site is in beta, make sure to check advisories below,
-              which may affect these dates
-            </div>
-            {parkDates && (
-              <>
-                <h4 className="dates-access-dates text-center mt-3">
-                  The park is open to public access {parkDates}
-                </h4>
-              </>
-            )}
-
-            {parkOperation.openNote && (
-              <div className="dates-open-note">
-                <HTMLArea isVisible={true}>{parkOperation.openNote}</HTMLArea>
-              </div>
-            )}
-
-            {subAreaCount && (
-              <>
-                <hr />
-                <div className="dates-sub-areas">
-                  <div className="row">
-                    <div className="col col-3">&nbsp;</div>
-                    <div className="col col-3 text-center">
-                      Main Camping Season
-                      <div>(Full services and fees)</div>
-                    </div>
-                    <div className="col col-3 text-center">
-                      Reservable Dates
-                    </div>
-                    <div className="col col-3 text-center">
-                      Winter Camping Season
-                      <div>(Not available in beta)</div>
-                    </div>
-                  </div>
-
-                  {dates.map((d, index) => (
-                    <div
-                      key={index}
-                      className={
-                        d.dateCount === 1
-                          ? "border-dark border-top row pt-3 mt-3 ml-1"
-                          : "row py-1"
-                      }
-                    >
-                      <div className="col col-3 pl-0">
-                        {d.dateCount === 1 ? <>{d.subArea}</> : ""}
-                      </div>
-                      <div className="col col-3 text-center">
-                        {d.serviceDates}
-                      </div>
-                      <div className="col col-3 text-center">{d.resDates}</div>
-                      <div className="col col-3 text-center">&nbsp;</div>
-                    </div>
-                  ))}
+          )}
+          {hasOperations && (
+            <>
+              <div className="text-center">
+                <div className="dates-header font-italic">
+                  All dates are subject to change without notice.
                 </div>
-                <hr />
-              </>
-            )}
-
-            {notes.length > 0 && (
-              <div className="park-operation-notes mt-3">
-                <div className="font-weight-bold">Notes</div>
-                {notes.map((note, index) => (
-                  <div key={index}>
-                    {note.noteType === "offSeasonNote" && (
-                      <div className="font-weight-bold">Winter Camping</div>
-                    )}
-                    <div key={index} className="park-operation-note">
-                      <HTMLArea isVisible={true}>{note.display}</HTMLArea>
-                    </div>
+                {parkDates && (
+                  <>
+                    <h4 className="my-3">Open to public access {parkDates}</h4>
+                  </>
+                )}
+                <h4 className="my-3">
+                  Current status:
+                  <img
+                    src={parkStatusIcon}
+                    alt=""
+                    className="mx-1"
+                    style={{ width: 32, height: 32 }}
+                  />
+                  {parkStatusText}
+                </h4>
+                <div className="font-italic my-3">
+                  Be sure to check advisories above before visiting
+                </div>
+                {parkOperation.openNote && (
+                  <div className="dates-open-note">
+                    <HTMLArea isVisible={true}>
+                      {parkOperation.openNote}
+                    </HTMLArea>
                   </div>
-                ))}
+                )}
               </div>
-            )}
-            <div className="park-operation-counts my-3">
-              {counts.map((count, index) => (
-                <div key={index} className="park-operation-count">
-                  {count.display}: {count.countVal}
+              {subAreas
+                .filter(subArea => subArea.isActive && subArea.hasDates)
+                .map((subArea, index) => (
+                  <Accordion
+                    key={"parkActivity" + index}
+                    className="park-details mb-2"
+                  >
+                    <Accordion.Toggle
+                      as={Container}
+                      aria-controls={subArea.parkSubArea}
+                      eventKey="0"
+                      id={index}
+                      onClick={() => toggleExpand(index)}
+                    >
+                      <div className="d-flex justify-content-between p-3 accordion-toggle">
+                        <div className="d-flex justify-content-left align-items-center pl-2">
+                          <StaticIcon name={subArea.typeIcon} size={48} />
+                          <HtmlContent className="pl-3 accordion-header">
+                            {subArea.parkSubArea}
+                          </HtmlContent>
+                        </div>
+                        <div className="d-flex align-items-center expand-icon">
+                          <i
+                            className={
+                              (expanded[index] ? "open " : "close ") +
+                              "fa fa-angle-down mx-3"
+                            }
+                          ></i>
+                        </div>
+                      </div>
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                      <div className="p-4">
+                        {subArea.serviceDates && (
+                          <p>Main Camping Season: {subArea.serviceDates}</p>
+                        )}
+                        {subArea.resDates && (
+                          <p>Reservable dates: {subArea.resDates}</p>
+                        )}
+                        {subArea.offSeasonDates && (
+                          <p>Off-season camping: {subArea.offSeasonDates}</p>
+                        )}
+                        {subArea.facilityName && (
+                          <p>
+                            Facility type: &nbsp;
+                            <a href={"#" + subArea.facilityType.facilityCode}>
+                              {subArea.facilityName}
+                            </a>
+                          </p>
+                        )}
+                      </div>
+                    </Accordion.Collapse>
+                  </Accordion>
+                ))}
+            </>
+          )}
+
+          {notes.length > 0 && (
+            <div className="park-operation-notes mt-3">
+              <div className="font-weight-bold">Notes</div>
+              {notes.map((note, index) => (
+                <div key={index}>
+                  {note.noteType === "offSeasonNote" && (
+                    <div className="font-weight-bold">Winter Camping</div>
+                  )}
+                  <div key={index} className="park-operation-note">
+                    <HTMLArea isVisible={true}>{note.display}</HTMLArea>
+                  </div>
                 </div>
               ))}
-              {asterixFootnote && (
-                <div className="">* Number of sites is undesignated</div>
-              )}
             </div>
-          </>
-        )}
-        <div className="m-3">&nbsp;</div>
-      </div>
+          )}
+          <div className="park-operation-counts my-3">
+            {counts.map((count, index) => (
+              <div key={index} className="park-operation-count">
+                {count.display}: {count.countVal}
+              </div>
+            ))}
+            {asterixFootnote && (
+              <div className="">* Number of sites is undesignated</div>
+            )}
+          </div>
+        </Col>
+      </Row>
+      <div className="m-3">&nbsp;</div>
     </div>
   )
 }
