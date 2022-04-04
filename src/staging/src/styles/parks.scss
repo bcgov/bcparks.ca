@@ -28,21 +28,6 @@ body {
   background-color: #eef1f5;
 }
 
-#park-menu-container {
-  z-index: 1 !important;
-  position: sticky !important;
-  top: 1rem !important;
-  padding-bottom: 20px !important;
-
-  .MuiPaper-root {
-    background-color: transparent !important;
-  }
-}
-
-#park-menu-container .MuiListItem-button {
-  padding: 2px;
-}
-
 .park-info-header {
   padding-left: 15px;
 }
@@ -199,7 +184,7 @@ body {
   border: 1px solid #1a5a96 !important;
 }
 
-#park-info-container .MuiAccordionDetails-root {
+.park-info-container .MuiAccordionDetails-root {
   padding-left: 25px !important;
   padding-right: 25px !important;
   padding-bottom: 15px !important;
@@ -228,24 +213,29 @@ body {
   padding: 0px;
 }
 
-#park-info-container {
+.park-info-container {
   padding: 0px 25px !important;
+
+  @media (max-width: $mediumBreakpoint) {
+    margin-bottom: 25px;
+    margin-top: 25px;
+  }
 }
 
-#park-info-container .MuiAccordionSummary-root {
+.park-info-container .MuiAccordionSummary-root {
   padding: 0px 25px !important;
   font-size: 16px !important;
 }
 
-#park-info-container .MuiAccordionSummary-root {
+.park-info-container .MuiAccordionSummary-root {
   color: #003366;
 }
 
-#park-info-container .MuiPaper-elevation1 {
+.park-info-container .MuiPaper-elevation1 {
   box-shadow: unset !important;
 }
 
-#park-info-container .MuiLink-root {
+.park-info-container .MuiLink-root {
   color: #1a5a96 !important;
 }
 
@@ -287,8 +277,7 @@ body {
   display: none;
 }
 
-.park-photo-container,
-.park-menu-root {
+.park-photo-container {
   padding: 0px !important;
 }
 
@@ -313,12 +302,20 @@ body {
   margin-left: auto !important;
 }
 
+#park-menu-mobile {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0px;
+  z-index: 1000;
+}
+
 .park-menu-mobile {
   border: 1px solid #003366;
   border-radius: 5px;
   padding: 3px 0px !important;
   margin-top: 10px !important;
   color: #003366 !important;
+  background: #fff;
 }
 
 #mapDiv {
@@ -361,7 +358,7 @@ body {
 
 .park-photo {
   height: 400px;
-  overflow: hidden; 
+  overflow: hidden;
   position: relative;
 
   img {
