@@ -26,7 +26,7 @@ export const query = graphql`
         }
       }
     }
-    strapiPages(Slug: { eq: "/home" }){
+    strapiPages(Slug: { eq: "/home" }) {
       Slug
       Content
     }
@@ -40,6 +40,7 @@ export const query = graphql`
         url
         order
         id
+        imgUrl
         strapiChildren {
           id
           title
@@ -57,14 +58,13 @@ export const query = graphql`
 `
 
 export default function Home({ data }) {
-
-  const pageContent = data.strapiPages.Content || [];
+  const pageContent = data.strapiPages.Content || []
   const menuContent = data?.allStrapiMenus?.nodes || []
 
   // Fake loading flag to briefly show a blank page while redirecting to the
-  // beta landing page.  The intention is to prevent home page content from 
+  // beta landing page.  The intention is to prevent home page content from
   // briefly showing before redirecting to the beta landing page.
-  // 
+  //
   // The state, useEffect and the conditional render can be removed later
   const [loading, setLoading] = useState(true)
 
@@ -84,7 +84,7 @@ export default function Home({ data }) {
         <></>
       ) : (
         <div id="home">
-          <Seo title="Home"/>
+          <Seo title="Home" />
           <div className="park-search-container-wrapper home-max-width-override">
             <Header mode="internal" content={menuContent} />
             <div className="park-search">
@@ -92,27 +92,30 @@ export default function Home({ data }) {
                 <MainSearch />
               </div>
               <div className="home-page-search-bg">
-                <StaticImage src="../images/home/search_bg.png"
+                <StaticImage
+                  src="../images/home/search_bg.png"
                   placeholder="blurred"
                   loading="eager"
                   style={{ display: "block" }}
-                  alt="Mount Robson Park" />
+                  alt="Mount Robson Park"
+                />
               </div>
             </div>
           </div>
           <div className="home-content-width-override">
             <div id="main">
-              {pageContent.map(content =>
-                <div key={content.strapi_component + '-' + content.id}>
-                  <PageContent contentType={content.strapi_component} content={content}></PageContent>
+              {pageContent.map(content => (
+                <div key={content.strapi_component + "-" + content.id}>
+                  <PageContent
+                    contentType={content.strapi_component}
+                    content={content}
+                  ></PageContent>
                 </div>
-              )}
+              ))}
             </div>
           </div>
           <div className="home-max-width-override">
-            <Footer>
-              {data.strapiWebsites.Footer}
-            </Footer>
+            <Footer>{data.strapiWebsites.Footer}</Footer>
           </div>
         </div>
       )}

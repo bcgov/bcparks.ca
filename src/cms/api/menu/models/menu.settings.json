@@ -21,7 +21,12 @@
     },
     "pageType": {
       "type": "enumeration",
-      "enum": ["Landing", "Unique", "Content", "Form"]
+      "enum": [
+        "Landing",
+        "Unique",
+        "Content",
+        "Form"
+      ]
     },
     "order": {
       "type": "integer",
@@ -39,6 +44,9 @@
     "show": {
       "type": "boolean",
       "default": false
+    },
+    "imgUrl": {
+      "type": "string"
     }
   }
 }

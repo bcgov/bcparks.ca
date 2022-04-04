@@ -24,7 +24,7 @@ export default function ParkOverview({ data: parkOverview }) {
   const [expanded, setExpanded] = useState(false)
 
   return (
-    <Grid item xs={12} id="park-overview-container" className="anchor-link">
+    <Grid item xs={12} className="anchor-link">
       <div className="anchor-link">
         <Paper elevation={0}>
           <Box className={expanded ? classes.expanded : classes.collapsed}>
