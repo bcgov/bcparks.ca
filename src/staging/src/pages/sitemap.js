@@ -9,12 +9,11 @@ import MegaMenu from "../components/megaMenu.js"
 
 import "../styles/staticContent1.scss"
 
-
 const SitemapPage = ({ data }) => {
-
   const menuContent = data?.allStrapiMenus?.nodes || []
 
-    const breadcrumbs = [ // TODO convert MUI breadcrumbs and use gatsby Link
+  const breadcrumbs = [
+    // TODO convert MUI breadcrumbs and use gatsby Link
     <Link key="1" href="/">
       Home
     </Link>,
@@ -37,7 +36,7 @@ const SitemapPage = ({ data }) => {
           className="p10t sm-p10"
         >
           {breadcrumbs}
-        </Breadcrumbs>       
+        </Breadcrumbs>
         <div className="sitemap-header">Sitemap</div>
         This is the main structure of the website, subject to change.
         <MegaMenu content={menuContent} menuMode="sitemap" />
@@ -69,6 +68,7 @@ export const query = graphql`
         url
         order
         id
+        imgUrl
         strapiChildren {
           id
           title

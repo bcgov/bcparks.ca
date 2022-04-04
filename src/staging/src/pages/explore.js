@@ -86,6 +86,7 @@ export const query = graphql`
         url
         order
         id
+        imgUrl
         strapiChildren {
           id
           title
@@ -110,13 +111,13 @@ export default function Explore({ location, data }) {
       label: activity.activityName,
       value: activity.strapiId,
     }
-  });
-  const activityItemsLabels = {};
+  })
+  const activityItemsLabels = {}
   activityItems.forEach(item => {
-    activityItemsLabels[item.value] = item.label;
-  });
+    activityItemsLabels[item.value] = item.label
+  })
 
-  const truncatedFilterLength = 5;
+  const truncatedFilterLength = 5
 
   const [filteredActivities, setFilteredActivities] = useState(
     activityItems.slice(0, truncatedFilterLength)
@@ -132,10 +133,10 @@ export default function Explore({ location, data }) {
       value: facility.strapiId,
     }
   })
-  const facilityItemsLabels = {};
+  const facilityItemsLabels = {}
   facilityItems.forEach(item => {
-    facilityItemsLabels[item.value] = item.label;
-  });
+    facilityItemsLabels[item.value] = item.label
+  })
 
   const [filteredFacilities, setFilteredFacilities] = useState(
     facilityItems.slice(0, truncatedFilterLength)
@@ -155,12 +156,12 @@ export default function Explore({ location, data }) {
   })
 
   const quickSearchFilters = [
-    { label: 'Camping', type: 'camping' },
-    { label: 'Dog friendly', type: 'petFriendly' },
-    { label: 'Wheelchair accessible', type: 'wheelchair' },
-    { label: 'Marine park', type: 'marine' },
-    { label: 'Ecological reserve', type: 'ecoReserve' },
-    { label: 'Electrical hookups', type: 'electricalHookup' }
+    { label: "Camping", type: "camping" },
+    { label: "Dog friendly", type: "petFriendly" },
+    { label: "Wheelchair accessible", type: "wheelchair" },
+    { label: "Marine park", type: "marine" },
+    { label: "Ecological reserve", type: "ecoReserve" },
+    { label: "Electrical hookups", type: "electricalHookup" },
   ]
 
   const [selectedActivities, setSelectedActivities] = useState(
@@ -220,11 +221,11 @@ export default function Explore({ location, data }) {
   }
 
   const handleActivitiesLengthChange = () => {
-    setMoreActivites(!showMoreActivities);
+    setMoreActivites(!showMoreActivities)
     if (showMoreActivities) {
-      setFilteredActivities(activityItems);
+      setFilteredActivities(activityItems)
     } else {
-      setFilteredActivities(activityItems.slice(0, truncatedFilterLength));
+      setFilteredActivities(activityItems.slice(0, truncatedFilterLength))
     }
   }
 
@@ -239,11 +240,11 @@ export default function Explore({ location, data }) {
   }
 
   const handleFacilitiesLengthChange = () => {
-    setMoreFacilities(!showMoreFacilities);
+    setMoreFacilities(!showMoreFacilities)
     if (showMoreFacilities) {
-      setFilteredFacilities(facilityItems);
+      setFilteredFacilities(facilityItems)
     } else {
-      setFilteredFacilities(facilityItems.slice(0, truncatedFilterLength));
+      setFilteredFacilities(facilityItems.slice(0, truncatedFilterLength))
     }
   }
 
@@ -293,19 +294,19 @@ export default function Explore({ location, data }) {
     setOpenFilter(true)
   }
 
-  const [currentPark, setCurrentPark] = useState({});
+  const [currentPark, setCurrentPark] = useState({})
 
   function setParkQuickView(park) {
     setCurrentPark(park)
     setOpenQuickView(true)
   }
-  
+
   const handleCloseQuickView = () => {
     setOpenQuickView(false)
   }
 
   const handleSearch = () => {
-    setCurrentPage(1);
+    setCurrentPage(1)
     setSearchText(inputText)
   }
 
@@ -350,58 +351,64 @@ export default function Explore({ location, data }) {
   const params = useMemo(() => {
     // TODO: using names is a bit fragile here, all data should have 'codes' and then
     // we can use those instead
-    const wheelchairFacility = data.allStrapiFacilityTypes.nodes.find(facility => {
-      return facility.facilityName.toLowerCase() === "accessibility information";
-    });
-    const wheelchairFacilityId = wheelchairFacility.strapiId;
-    const electricalFacility = data.allStrapiFacilityTypes.nodes.find(facility => {
-      return facility.facilityName.toLowerCase() === "electrical hookups";
-    });
-    const electricalFacilityId = electricalFacility.strapiId;
+    const wheelchairFacility = data.allStrapiFacilityTypes.nodes.find(
+      facility => {
+        return (
+          facility.facilityName.toLowerCase() === "accessibility information"
+        )
+      }
+    )
+    const wheelchairFacilityId = wheelchairFacility.strapiId
+    const electricalFacility = data.allStrapiFacilityTypes.nodes.find(
+      facility => {
+        return facility.facilityName.toLowerCase() === "electrical hookups"
+      }
+    )
+    const electricalFacilityId = electricalFacility.strapiId
     const petsActivity = data.allStrapiActivityTypes.nodes.find(activity => {
-      return activity.activityName.toLowerCase() === "pets on leash";
-    });
-    const petsActivityId = petsActivity.strapiId;
+      return activity.activityName.toLowerCase() === "pets on leash"
+    })
+    const petsActivityId = petsActivity.strapiId
 
     const params = {
       _q: searchText,
-    };
+    }
 
     if (selectedActivities.length > 0) {
-      params.activities = selectedActivities.map(activity => activity.value);
+      params.activities = selectedActivities.map(activity => activity.value)
     }
     if (selectedFacilities.length > 0) {
-      params.facilities = selectedFacilities.map(facility => facility.value);
+      params.facilities = selectedFacilities.map(facility => facility.value)
     }
     if (quickSearch.camping) {
-      params.camping = "Y";
+      params.camping = "Y"
     }
     if (quickSearch.petFriendly) {
       if (typeof params.activities === "undefined") {
-        params.activities = [];
+        params.activities = []
       }
-      params.activities.push(petsActivityId);
+      params.activities.push(petsActivityId)
     }
     if (quickSearch.wheelchair) {
       if (typeof params.facilities === "undefined") {
-        params.facilities = [];
+        params.facilities = []
       }
-      params.facilities.push(wheelchairFacilityId);
+      params.facilities.push(wheelchairFacilityId)
     }
     if (quickSearch.marine) {
-      params.marineProtectedArea = "Y";
+      params.marineProtectedArea = "Y"
     }
     if (quickSearch.ecoReserve) {
-      params.typeCode = "ER";
+      params.typeCode = "ER"
     }
     if (quickSearch.electricalHookup) {
       if (typeof params.facilities === "undefined") {
-        params.facilities = [];
+        params.facilities = []
       }
-      params.facilities.push(electricalFacilityId);
+      params.facilities.push(electricalFacilityId)
     }
 
-    return params;
+    return params
   }, [
     data.allStrapiActivityTypes.nodes,
     data.allStrapiFacilityTypes.nodes,
@@ -409,48 +416,49 @@ export default function Explore({ location, data }) {
     selectedActivities,
     selectedFacilities,
     quickSearch,
-  ]);
+  ])
 
-  const isActiveSearch = (
+  const isActiveSearch =
     params._q ||
     params.activity ||
     params.facility ||
     params.camping ||
     params.marine ||
     params.ecoReserve
-  );
 
   useEffect(() => {
     setIsLoading(true)
     setFilters()
 
-    const apiUrl = data.site.siteMetadata.apiURL;
+    const apiUrl = data.site.siteMetadata.apiURL
 
-    const pageStart = (currentPage - 1) * itemsPerPage;
-    const pageLimit = itemsPerPage;
+    const pageStart = (currentPage - 1) * itemsPerPage
+    const pageLimit = itemsPerPage
 
-    const countPromise = axios.get(`${apiUrl}/protected-areas/count`, { params });
-    const resultPromise = axios
-      .get(
-        `${apiUrl}/protected-areas/`,
-        { params: { ...params, _start: pageStart, _limit: pageLimit } }
-      );
+    const countPromise = axios.get(`${apiUrl}/protected-areas/count`, {
+      params,
+    })
+    const resultPromise = axios.get(`${apiUrl}/protected-areas/`, {
+      params: { ...params, _start: pageStart, _limit: pageLimit },
+    })
 
-    Promise.all([countPromise, resultPromise]).then(([countResponse, resultResponse]) => {
-      if (countResponse.status === 200 && resultResponse.status === 200) {
-        const total = parseInt(countResponse.data, 10);
-        const pages = Math.ceil(total / itemsPerPage);
-        setSearchResults([...resultResponse.data]);
-        setTotalResults(total);
-        setNumberOfPages(pages);
-      } else {
-        setSearchResults([]);
-        setTotalResults(0);
-        setNumberOfPages(0);
-      }
-    }).finally(() => {
-      setIsLoading(false);
-    });
+    Promise.all([countPromise, resultPromise])
+      .then(([countResponse, resultResponse]) => {
+        if (countResponse.status === 200 && resultResponse.status === 200) {
+          const total = parseInt(countResponse.data, 10)
+          const pages = Math.ceil(total / itemsPerPage)
+          setSearchResults([...resultResponse.data])
+          setTotalResults(total)
+          setNumberOfPages(pages)
+        } else {
+          setSearchResults([])
+          setTotalResults(0)
+          setNumberOfPages(0)
+        }
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }, [
     params,
     currentPage,
@@ -478,18 +486,12 @@ export default function Explore({ location, data }) {
             <div className="row no-gutters">
               <div className="col-12">
                 <h1 className="headline-text p40t sm-p10">
-                  {!isActiveSearch && (
-                    <>Find a park</>
-                  )}
-                  {isLoading && isActiveSearch && (
-                    <>Searching...</>
-                  )}
+                  {!isActiveSearch && <>Find a park</>}
+                  {isLoading && isActiveSearch && <>Searching...</>}
                   {!isLoading && isActiveSearch && (
                     <>
                       {totalResults}{" "}
-                      {totalResults === 1
-                        ? " result found"
-                        : " results found"}
+                      {totalResults === 1 ? " result found" : " results found"}
                     </>
                   )}
                 </h1>
@@ -498,8 +500,7 @@ export default function Explore({ location, data }) {
             <div className="row no-gutters">
               <div className="col-lg-3 col-md-12 col-sm-12">
                 <div className="search-results-quick-filter m15t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                  <div className="row no-gutters">
-                  </div>
+                  <div className="row no-gutters"></div>
                 </div>
               </div>
               <div className="col-lg-9 col-md-12 col-sm-12">
@@ -565,7 +566,8 @@ export default function Explore({ location, data }) {
                           className="bcgov-normal-blue mobile-search-element-height h50p"
                           onClick={() => {
                             handleSearch()
-                          }}>
+                          }}
+                        >
                           Search
                         </Button>
                       </div>
@@ -622,7 +624,8 @@ export default function Explore({ location, data }) {
                             <Button
                               fullWidth
                               className="bcgov-normal-blue mobile-search-element-height h50p"
-                              onClick={handleSearch}>
+                              onClick={handleSearch}
+                            >
                               Search
                             </Button>
                           </div>
@@ -633,7 +636,7 @@ export default function Explore({ location, data }) {
                       <div className="">
                         <h4 className="filter-heading p10t">Popular</h4>
                         <FormGroup className="p10l filter-options-container">
-                          {quickSearchFilters.map((item) => {
+                          {quickSearchFilters.map(item => {
                             return (
                               <FormControlLabel
                                 key={item.label}
@@ -646,7 +649,9 @@ export default function Explore({ location, data }) {
                                 }
                                 label={item.label}
                                 className={
-                                  quickSearch[item.type] ? "text-light-blue no-wrap" : "no-wrap"
+                                  quickSearch[item.type]
+                                    ? "text-light-blue no-wrap"
+                                    : "no-wrap"
                                 }
                               />
                             )
@@ -657,160 +662,176 @@ export default function Explore({ location, data }) {
                           tabIndex={0}
                           role="button"
                           className="row pointer mr-3"
-                          onClick={() => { setActivityVisibility(!showActivities) }}
-                          onKeyDown={() => { setActivityVisibility(!showActivities) }}>
+                          onClick={() => {
+                            setActivityVisibility(!showActivities)
+                          }}
+                          onKeyDown={() => {
+                            setActivityVisibility(!showActivities)
+                          }}
+                        >
                           <div className="col-md-4">
                             <h4 className="filter-heading p10t">Activities</h4>
                           </div>
                           <div className="col-md-2 ml-auto">
-                            {
-                              showActivities ?
-                                <ExpandLess fontSize="large" className="mt-auto" />
-                                :
-                                <ExpandMore fontSize="large" className="mt-auto" />
-                            }
+                            {showActivities ? (
+                              <ExpandLess
+                                fontSize="large"
+                                className="mt-auto"
+                              />
+                            ) : (
+                              <ExpandMore
+                                fontSize="large"
+                                className="mt-auto"
+                              />
+                            )}
                           </div>
                         </div>
                         <div>
-                          {
-                            showActivities ?
-                              <div>
-                                <FormGroup className="p10l filter-options-container">
-                                  {filteredActivities.map((a) => {
-                                    return (
-                                      <FormControlLabel
-                                        key={a.label}
-                                        control={
-                                          <Checkbox
-                                            checked={
-                                              selectedActivities.filter(
-                                                act => act.value === a.value
-                                              ).length === 1
-                                                ? true
-                                                : false
-                                            }
-                                            onChange={event => {
-                                              handleActivityCheck(a, event)
-                                            }}
-                                            name={a.label}
-                                          />
-                                        }
-                                        label={a.label}
-                                        className={
-                                          selectedActivities.filter(
-                                            act => act.value === a.value
-                                          ).length === 1
-                                            ? "text-light-blue no-wrap"
-                                            : "no-wrap"
-                                        }
-                                      />
-                                    )
-                                  })}
-                                </FormGroup>
-                                <Link
-                                  className="ml-auto pointer p20"
-                                  onClick={() => {
-                                    handleActivitiesLengthChange([])
-                                  }}
-                                  tabIndex="0"
-                                >
-                                  {
-                                    showMoreActivities ?
-                                      <div style={{ color: `#2464A4` }}>
-                                        Show all {activityItems.length}
-                                        <ExpandMore fontSize="small" />
-                                      </div>
-                                      :
-                                      <div style={{ color: `#2464A4` }}>
-                                        Show less
-                                        <ExpandLess fontSize="small" />
-                                      </div>
-                                  }
-                                </Link>
-                              </div>
-                              :
-                              <div></div>
-                          }
+                          {showActivities ? (
+                            <div>
+                              <FormGroup className="p10l filter-options-container">
+                                {filteredActivities.map(a => {
+                                  return (
+                                    <FormControlLabel
+                                      key={a.label}
+                                      control={
+                                        <Checkbox
+                                          checked={
+                                            selectedActivities.filter(
+                                              act => act.value === a.value
+                                            ).length === 1
+                                              ? true
+                                              : false
+                                          }
+                                          onChange={event => {
+                                            handleActivityCheck(a, event)
+                                          }}
+                                          name={a.label}
+                                        />
+                                      }
+                                      label={a.label}
+                                      className={
+                                        selectedActivities.filter(
+                                          act => act.value === a.value
+                                        ).length === 1
+                                          ? "text-light-blue no-wrap"
+                                          : "no-wrap"
+                                      }
+                                    />
+                                  )
+                                })}
+                              </FormGroup>
+                              <Link
+                                className="ml-auto pointer p20"
+                                onClick={() => {
+                                  handleActivitiesLengthChange([])
+                                }}
+                                tabIndex="0"
+                              >
+                                {showMoreActivities ? (
+                                  <div style={{ color: `#2464A4` }}>
+                                    Show all {activityItems.length}
+                                    <ExpandMore fontSize="small" />
+                                  </div>
+                                ) : (
+                                  <div style={{ color: `#2464A4` }}>
+                                    Show less
+                                    <ExpandLess fontSize="small" />
+                                  </div>
+                                )}
+                              </Link>
+                            </div>
+                          ) : (
+                            <div></div>
+                          )}
                         </div>
                         <hr></hr>
                         <div
                           tabIndex={0}
                           role="button"
                           className="row pointer mr-3"
-                          onClick={() => { setFacilityVisibility(!showFacilities) }}
-                          onKeyDown={() => { setFacilityVisibility(!showFacilities) }}>
+                          onClick={() => {
+                            setFacilityVisibility(!showFacilities)
+                          }}
+                          onKeyDown={() => {
+                            setFacilityVisibility(!showFacilities)
+                          }}
+                        >
                           <div className="col-md-4">
                             <h4 className="filter-heading p10t">Facilities</h4>
                           </div>
                           <div className="col-md-2 ml-auto">
-                            {
-                              showFacilities ?
-                                <ExpandLess fontSize="large" className="mt-auto" />
-                                :
-                                <ExpandMore fontSize="large" className="mt-auto" />
-                            }
+                            {showFacilities ? (
+                              <ExpandLess
+                                fontSize="large"
+                                className="mt-auto"
+                              />
+                            ) : (
+                              <ExpandMore
+                                fontSize="large"
+                                className="mt-auto"
+                              />
+                            )}
                           </div>
                         </div>
                         <div>
-                          {
-                            showFacilities ?
-                              <div>
-                                <FormGroup className="p10l filter-options-container">
-                                  {filteredFacilities.map((f) => {
-                                    return (
-                                      <FormControlLabel
-                                        key={f.label}
-                                        control={
-                                          <Checkbox
-                                            checked={
-                                              selectedFacilities.filter(
-                                                fac => fac.value === f.value
-                                              ).length === 1
-                                                ? true
-                                                : false
-                                            }
-                                            onChange={event => {
-                                              handleFacilityCheck(f, event)
-                                            }}
-                                            name={f.label}
-                                          />
-                                        }
-                                        label={f.label}
-                                        className={
-                                          selectedFacilities.filter(
-                                            fac => fac.value === f.value
-                                          ).length === 1
-                                            ? "text-light-blue no-wrap"
-                                            : "no-wrap"
-                                        }
-                                      />
-                                    )
-                                  })}
-                                </FormGroup>
-                                <Link
-                                  className="ml-auto pointer p20"
-                                  onClick={() => {
-                                    handleFacilitiesLengthChange([])
-                                  }}
-                                  tabIndex="0"
-                                >
-                                  {
-                                    showMoreFacilities ?
-                                      <div style={{ color: `#2464A4` }}>
-                                        Show all {facilityItems.length}
-                                        <ExpandMore fontSize="small" />
-                                      </div>
-                                      :
-                                      <div style={{ color: `#2464A4` }}>
-                                        Show less
-                                        <ExpandLess fontSize="small" />
-                                      </div>
-                                  }
-                                </Link>
-                              </div>
-                              :
-                              <div></div>
-                          }
+                          {showFacilities ? (
+                            <div>
+                              <FormGroup className="p10l filter-options-container">
+                                {filteredFacilities.map(f => {
+                                  return (
+                                    <FormControlLabel
+                                      key={f.label}
+                                      control={
+                                        <Checkbox
+                                          checked={
+                                            selectedFacilities.filter(
+                                              fac => fac.value === f.value
+                                            ).length === 1
+                                              ? true
+                                              : false
+                                          }
+                                          onChange={event => {
+                                            handleFacilityCheck(f, event)
+                                          }}
+                                          name={f.label}
+                                        />
+                                      }
+                                      label={f.label}
+                                      className={
+                                        selectedFacilities.filter(
+                                          fac => fac.value === f.value
+                                        ).length === 1
+                                          ? "text-light-blue no-wrap"
+                                          : "no-wrap"
+                                      }
+                                    />
+                                  )
+                                })}
+                              </FormGroup>
+                              <Link
+                                className="ml-auto pointer p20"
+                                onClick={() => {
+                                  handleFacilitiesLengthChange([])
+                                }}
+                                tabIndex="0"
+                              >
+                                {showMoreFacilities ? (
+                                  <div style={{ color: `#2464A4` }}>
+                                    Show all {facilityItems.length}
+                                    <ExpandMore fontSize="small" />
+                                  </div>
+                                ) : (
+                                  <div style={{ color: `#2464A4` }}>
+                                    Show less
+                                    <ExpandLess fontSize="small" />
+                                  </div>
+                                )}
+                              </Link>
+                            </div>
+                          ) : (
+                            <div></div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -820,7 +841,8 @@ export default function Explore({ location, data }) {
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-list container">
                   <div className="m10t text-center">
-                    <i className="fa fa-info-circle"></i> <em>Park search is limited during beta</em>
+                    <i className="fa fa-info-circle"></i>{" "}
+                    <em>Park search is limited during beta</em>
                   </div>
                   {isLoading && (
                     <div className="container mt-5">
@@ -830,289 +852,314 @@ export default function Explore({ location, data }) {
                   {!isLoading && (
                     <>
                       {!searchResults ||
-                        (searchResults.length === 0 && (<NoSearchResults></NoSearchResults>))}
+                        (searchResults.length === 0 && (
+                          <NoSearchResults></NoSearchResults>
+                        ))}
                       {searchResults && searchResults.length > 0 && (
                         <>
-                          {searchResults
-                            .map((r, index) => (
-                              <div key={index} className="m20t">
-                                <Card className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                                  <CardContent className="park-card park-card-desktop">
-                                    <div className="row search-result-card no-gutters">
-                                      <div className="col-12">
-                                        <div className="row">
-                                          {r.parkPhotos &&
-                                            r.parkPhotos.length === 0 && (
-                                              <div className="col-lg-5 close-margin park-image-div park-image-logo-div">
-                                                <img
-                                                  alt="logo"
-                                                  key={index}
-                                                  className="search-result-logo-image"
-                                                  src={parksLogo}
-                                                />
-                                              </div>
-                                            )}
-                                          {r.parkPhotos &&
-                                            r.parkPhotos.length === 1 && (
-                                              <div className="col-lg-5 close-margin park-image-div">
-                                                <img
-                                                  alt="park"
-                                                  key={index}
-                                                  className="search-result-image"
-                                                  src={r.parkPhotos[0]}
-                                                />
-                                              </div>
-                                            )}
-                                          {r.parkPhotos &&
-                                            r.parkPhotos.length > 1 && (
-                                              <div className="col-lg-5 close-margin park-image-div">
-                                                <Carousel
-                                                  className="park-carousel"
-                                                  autoPlay={false}
-                                                  indicators={false}
-                                                  navButtonsAlwaysVisible={true}
-                                                  animation="fade"
-                                                  timeout={200}
-                                                >
-                                                  {r.parkPhotos.map(
-                                                    (item, index) => {
-                                                      return (
-                                                        <img
-                                                          alt="park carousel"
-                                                          key={index}
-                                                          className="search-result-image"
-                                                          src={`${item}`}
-                                                        />
-                                                      )
-                                                    }
-                                                  )}
-                                                </Carousel>
-                                              </div>
-                                            )}
-
-                                          <div className="col-lg-7 p20t park-content p20l">
-                                            <div className="row">
-                                              <div className="col-12 park-overview-content text-blue small-font p5l">
-                                                <ParkAccessStatus advisories={r.advisories} />
-                                              </div>
-                                            </div>
-                                            <Link
-                                              href={`/${r.slug}`}
-                                              className="p10t"
-                                            >
-                                              <h3 className="park-heading-text">
-                                                {r.protectedAreaName}
-                                              </h3>
-                                            </Link>
-
-                                            <div className="row p10t mr5">
-                                              <div className="col-6">
-                                              {r.advisories && r.advisories.length > 0 && (<Link
-                                                  href={`/${r.slug}#park-advisory-details-container`}
-                                                >
-                                                   <AdvisorySummary advisories={r.advisories} />
-                                                </Link>)}
-                                              </div>
-
-                                              <div className="col-6">
-                                                {r.hasDayUsePass &&
-                                                  r.hasReservations && (
-                                                    <div className="flex-display">
-                                                      <img
-                                                        alt=""
-                                                        className="search-result-icon"
-                                                        src={dayUseIcon}
-                                                      />
-                                                      <div className="pl15 mtm7 text-blue">
-                                                        Day use and camping{" "}
-                                                        <br />
-                                                        offered at this park
-                                                      </div>
-                                                    </div>
-                                                  )}
-                                              </div>
-                                            </div>
-                                            <div className="row p10t mr5">
-                                              <div className="col-6">
-                                                {r.parkActivities &&
-                                                  r.parkActivities.length >
-                                                  0 && (
-                                                    <>
-                                                      <div className="park-af-list pr3">
-                                                        <b>Activities:</b>
-                                                      </div>
-                                                      {r.parkActivities.map(
-                                                        (parkActivity, index2) => (
-                                                          <div
-                                                            key={index2}
-                                                            className="park-af-list pr3 text-black"
-                                                          >
-                                                            {index2 < 11 && (
-                                                              <>
-                                                                {activityItemsLabels[parkActivity.activityType]}
-                                                                {index2 === 10
-                                                                  ? " ..."
-                                                                  : index2 ===
-                                                                    r
-                                                                      .parkActivities
-                                                                      .length -
-                                                                    1
-                                                                    ? ""
-                                                                    : ", "}
-                                                              </>
-                                                            )}
-                                                          </div>
-                                                        )
-                                                      )}
-                                                      <br />
-                                                    </>
-                                                  )}
-                                              </div>
-                                              <div className="col-6">
-                                                {r.parkFacilities &&
-                                                  r.parkFacilities.length >
-                                                  0 && (
-                                                    <>
-                                                      <div className="park-af-list pr3">
-                                                        <b>Facilities:</b>
-                                                      </div>
-
-                                                      {r.parkFacilities.map(
-                                                        (parkFacility, index3) => (
-                                                          <div
-                                                            key={parkFacility.id}
-                                                            className="park-af-list pr3 text-black"
-                                                          >
-                                                            {index3 < 6 && (
-                                                              <>
-                                                                {facilityItemsLabels[parkFacility.facilityType]}
-                                                                {index3 === 5
-                                                                  ? " ..."
-                                                                  : index3 ===
-                                                                    r
-                                                                      .parkFacilities
-                                                                      .length -
-                                                                    1
-                                                                    ? ""
-                                                                    : ", "}
-                                                              </>
-                                                            )}
-                                                          </div>
-                                                        )
-                                                      )}
-                                                      <br />
-                                                    </>
-                                                  )}
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-                                <Card className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-                                  <CardContent className="park-card">
-                                    <div className="row search-result-card no-gutters">
-                                      <div className="col-12">
-                                        <div className="row">
-                                          {r.parkPhotos &&
-                                            r.parkPhotos.length === 0 && (
-                                              <div className="col-12 close-margin park-image-div-mobile park-image-logo-div">
-                                                <img
-                                                  alt="logo"
-                                                  key={index}
-                                                  className="search-result-logo-image"
-                                                  src={parksLogo}
-                                                />
-                                              </div>
-                                            )}
-                                          {r.parkPhotos &&
-                                            r.parkPhotos.length === 1 && (
-                                              <div className="col-12 close-margin park-image-div-mobile">
-                                                <img
-                                                  alt="park"
-                                                  key={index}
-                                                  className="search-result-image"
-                                                  src={r.parkPhotos[0]}
-                                                />
-                                              </div>
-                                            )}
-                                          {r.parkPhotos &&
-                                            r.parkPhotos.length > 1 && (
-                                              <div className="col-12 close-margin park-image-div-mobile">
-                                                <Carousel
-                                                  className="park-carousel-mobile"
-                                                  autoPlay={false}
-                                                  indicators={false}
-                                                  navButtonsAlwaysVisible={true}
-                                                  animation="fade"
-                                                  timeout={200}
-                                                >
-                                                  {r.parkPhotos.map(
-                                                    (item, index) => {
-                                                      return (
-                                                        <img
-                                                          alt="park carousel"
-                                                          key={index}
-                                                          className="search-result-image"
-                                                          src={`${item}`}
-                                                        />
-                                                      )
-                                                    }
-                                                  )}
-                                                </Carousel>
-                                              </div>
-                                            )}
-
-                                          <div className="col-12 p20t park-content-mobile">
-                                            <div className="row">
-                                              <div className="col-12 park-overview-content text-blue small-font p5l">
-                                                <ParkAccessStatus advisories={r.advisories} />
-                                              </div>
-                                            </div>
-                                            <Link
-                                              href={`/${r.slug}`}
-                                              className="p10t"
-                                            >
-                                              <h3 className="park-heading-text">
-                                                {r.protectedAreaName}
-                                              </h3>
-                                            </Link>
-                                          </div>
-                                        </div>
-                                        <div className="row pb20 p20l pr20">
-                                          <div className="col-12 p0 align-center flex-display full-width">
-                                            <div className="full-width">
-                                              <Link
-                                                href={`/${r.slug}`}
-                                                className="park-quick-link link"
-                                              >
-                                                Visit Park Page
-                                              </Link>
-                                            </div>
-                                            <div className="divider-div align-center">
-                                              <Divider
-                                                orientation="vertical"
-                                                className="vertical-divider align-center"
+                          {searchResults.map((r, index) => (
+                            <div key={index} className="m20t">
+                              <Card className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+                                <CardContent className="park-card park-card-desktop">
+                                  <div className="row search-result-card no-gutters">
+                                    <div className="col-12">
+                                      <div className="row">
+                                        {r.parkPhotos &&
+                                          r.parkPhotos.length === 0 && (
+                                            <div className="col-lg-5 close-margin park-image-div park-image-logo-div">
+                                              <img
+                                                alt="logo"
+                                                key={index}
+                                                className="search-result-logo-image"
+                                                src={parksLogo}
                                               />
                                             </div>
-                                            <div className="full-width">
-                                              <Link
-                                                onClick={() => setParkQuickView(r)}
-                                                className="park-quick-link link"
+                                          )}
+                                        {r.parkPhotos &&
+                                          r.parkPhotos.length === 1 && (
+                                            <div className="col-lg-5 close-margin park-image-div">
+                                              <img
+                                                alt="park"
+                                                key={index}
+                                                className="search-result-image"
+                                                src={r.parkPhotos[0]}
+                                              />
+                                            </div>
+                                          )}
+                                        {r.parkPhotos &&
+                                          r.parkPhotos.length > 1 && (
+                                            <div className="col-lg-5 close-margin park-image-div">
+                                              <Carousel
+                                                className="park-carousel"
+                                                autoPlay={false}
+                                                indicators={false}
+                                                navButtonsAlwaysVisible={true}
+                                                animation="fade"
+                                                timeout={200}
                                               >
-                                                Quick View
-                                              </Link>
+                                                {r.parkPhotos.map(
+                                                  (item, index) => {
+                                                    return (
+                                                      <img
+                                                        alt="park carousel"
+                                                        key={index}
+                                                        className="search-result-image"
+                                                        src={`${item}`}
+                                                      />
+                                                    )
+                                                  }
+                                                )}
+                                              </Carousel>
+                                            </div>
+                                          )}
+
+                                        <div className="col-lg-7 p20t park-content p20l">
+                                          <div className="row">
+                                            <div className="col-12 park-overview-content text-blue small-font p5l">
+                                              <ParkAccessStatus
+                                                advisories={r.advisories}
+                                              />
+                                            </div>
+                                          </div>
+                                          <Link
+                                            href={`/${r.slug}`}
+                                            className="p10t"
+                                          >
+                                            <h3 className="park-heading-text">
+                                              {r.protectedAreaName}
+                                            </h3>
+                                          </Link>
+
+                                          <div className="row p10t mr5">
+                                            <div className="col-6">
+                                              {r.advisories &&
+                                                r.advisories.length > 0 && (
+                                                  <Link
+                                                    href={`/${r.slug}#park-advisory-details-container`}
+                                                  >
+                                                    <AdvisorySummary
+                                                      advisories={r.advisories}
+                                                    />
+                                                  </Link>
+                                                )}
+                                            </div>
+
+                                            <div className="col-6">
+                                              {r.hasDayUsePass &&
+                                                r.hasReservations && (
+                                                  <div className="flex-display">
+                                                    <img
+                                                      alt=""
+                                                      className="search-result-icon"
+                                                      src={dayUseIcon}
+                                                    />
+                                                    <div className="pl15 mtm7 text-blue">
+                                                      Day use and camping <br />
+                                                      offered at this park
+                                                    </div>
+                                                  </div>
+                                                )}
+                                            </div>
+                                          </div>
+                                          <div className="row p10t mr5">
+                                            <div className="col-6">
+                                              {r.parkActivities &&
+                                                r.parkActivities.length > 0 && (
+                                                  <>
+                                                    <div className="park-af-list pr3">
+                                                      <b>Activities:</b>
+                                                    </div>
+                                                    {r.parkActivities.map(
+                                                      (
+                                                        parkActivity,
+                                                        index2
+                                                      ) => (
+                                                        <div
+                                                          key={index2}
+                                                          className="park-af-list pr3 text-black"
+                                                        >
+                                                          {index2 < 11 && (
+                                                            <>
+                                                              {
+                                                                activityItemsLabels[
+                                                                  parkActivity
+                                                                    .activityType
+                                                                ]
+                                                              }
+                                                              {index2 === 10
+                                                                ? " ..."
+                                                                : index2 ===
+                                                                  r
+                                                                    .parkActivities
+                                                                    .length -
+                                                                    1
+                                                                ? ""
+                                                                : ", "}
+                                                            </>
+                                                          )}
+                                                        </div>
+                                                      )
+                                                    )}
+                                                    <br />
+                                                  </>
+                                                )}
+                                            </div>
+                                            <div className="col-6">
+                                              {r.parkFacilities &&
+                                                r.parkFacilities.length > 0 && (
+                                                  <>
+                                                    <div className="park-af-list pr3">
+                                                      <b>Facilities:</b>
+                                                    </div>
+
+                                                    {r.parkFacilities.map(
+                                                      (
+                                                        parkFacility,
+                                                        index3
+                                                      ) => (
+                                                        <div
+                                                          key={parkFacility.id}
+                                                          className="park-af-list pr3 text-black"
+                                                        >
+                                                          {index3 < 6 && (
+                                                            <>
+                                                              {
+                                                                facilityItemsLabels[
+                                                                  parkFacility
+                                                                    .facilityType
+                                                                ]
+                                                              }
+                                                              {index3 === 5
+                                                                ? " ..."
+                                                                : index3 ===
+                                                                  r
+                                                                    .parkFacilities
+                                                                    .length -
+                                                                    1
+                                                                ? ""
+                                                                : ", "}
+                                                            </>
+                                                          )}
+                                                        </div>
+                                                      )
+                                                    )}
+                                                    <br />
+                                                  </>
+                                                )}
                                             </div>
                                           </div>
                                         </div>
                                       </div>
                                     </div>
-                                  </CardContent>
-                                </Card>
-                              </div>
-                            ))}
+                                  </div>
+                                </CardContent>
+                              </Card>
+                              <Card className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
+                                <CardContent className="park-card">
+                                  <div className="row search-result-card no-gutters">
+                                    <div className="col-12">
+                                      <div className="row">
+                                        {r.parkPhotos &&
+                                          r.parkPhotos.length === 0 && (
+                                            <div className="col-12 close-margin park-image-div-mobile park-image-logo-div">
+                                              <img
+                                                alt="logo"
+                                                key={index}
+                                                className="search-result-logo-image"
+                                                src={parksLogo}
+                                              />
+                                            </div>
+                                          )}
+                                        {r.parkPhotos &&
+                                          r.parkPhotos.length === 1 && (
+                                            <div className="col-12 close-margin park-image-div-mobile">
+                                              <img
+                                                alt="park"
+                                                key={index}
+                                                className="search-result-image"
+                                                src={r.parkPhotos[0]}
+                                              />
+                                            </div>
+                                          )}
+                                        {r.parkPhotos &&
+                                          r.parkPhotos.length > 1 && (
+                                            <div className="col-12 close-margin park-image-div-mobile">
+                                              <Carousel
+                                                className="park-carousel-mobile"
+                                                autoPlay={false}
+                                                indicators={false}
+                                                navButtonsAlwaysVisible={true}
+                                                animation="fade"
+                                                timeout={200}
+                                              >
+                                                {r.parkPhotos.map(
+                                                  (item, index) => {
+                                                    return (
+                                                      <img
+                                                        alt="park carousel"
+                                                        key={index}
+                                                        className="search-result-image"
+                                                        src={`${item}`}
+                                                      />
+                                                    )
+                                                  }
+                                                )}
+                                              </Carousel>
+                                            </div>
+                                          )}
+
+                                        <div className="col-12 p20t park-content-mobile">
+                                          <div className="row">
+                                            <div className="col-12 park-overview-content text-blue small-font p5l">
+                                              <ParkAccessStatus
+                                                advisories={r.advisories}
+                                              />
+                                            </div>
+                                          </div>
+                                          <Link
+                                            href={`/${r.slug}`}
+                                            className="p10t"
+                                          >
+                                            <h3 className="park-heading-text">
+                                              {r.protectedAreaName}
+                                            </h3>
+                                          </Link>
+                                        </div>
+                                      </div>
+                                      <div className="row pb20 p20l pr20">
+                                        <div className="col-12 p0 align-center flex-display full-width">
+                                          <div className="full-width">
+                                            <Link
+                                              href={`/${r.slug}`}
+                                              className="park-quick-link link"
+                                            >
+                                              Visit Park Page
+                                            </Link>
+                                          </div>
+                                          <div className="divider-div align-center">
+                                            <Divider
+                                              orientation="vertical"
+                                              className="vertical-divider align-center"
+                                            />
+                                          </div>
+                                          <div className="full-width">
+                                            <Link
+                                              onClick={() =>
+                                                setParkQuickView(r)
+                                              }
+                                              className="park-quick-link link"
+                                            >
+                                              Quick View
+                                            </Link>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            </div>
+                          ))}
                           <div className="small-flex-display p20t">
                             <div className="small-m-auto">
                               {searchResults.length > 0 && (
@@ -1164,7 +1211,11 @@ export default function Explore({ location, data }) {
                             scroll="paper"
                           >
                             <DialogContent className="park-quick-view-dialog-content">
-                              <QuickView park={currentPark} activityItemsLabels={activityItemsLabels} facilityItemsLabels={facilityItemsLabels}></QuickView>
+                              <QuickView
+                                park={currentPark}
+                                activityItemsLabels={activityItemsLabels}
+                                facilityItemsLabels={facilityItemsLabels}
+                              ></QuickView>
                             </DialogContent>
                             <DialogActions className="d-block p20 background-blue">
                               <div className="row">

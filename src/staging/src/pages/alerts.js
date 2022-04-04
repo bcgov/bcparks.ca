@@ -216,7 +216,8 @@ const PublicAdvisoryPage = ({ data }) => {
   const getApiQuery = useCallback(
     advisoryTypeFilter => {
       // Order by date and exclude unpublished parks
-      let q = "?_sort=advisoryDate:DESC&protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true"
+      let q =
+        "?_sort=advisoryDate:DESC&protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true"
 
       if (advisoryTypeFilter === "wildfire") {
         q += "&eventType.eventType_contains=wildfire"
@@ -475,6 +476,7 @@ export const query = graphql`
         url
         order
         id
+        imgUrl
         strapiChildren {
           id
           title

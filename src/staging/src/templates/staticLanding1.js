@@ -40,6 +40,7 @@ const LandingPage = ({ pageContext }) => {
           url
           order
           id
+          imgUrl
           strapiChildren {
             id
             title
