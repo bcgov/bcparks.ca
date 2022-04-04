@@ -14,7 +14,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles"
 import useScrollSpy from "react-use-scrollspy"
 
-import { capitalizeFirstLetter } from "../utils/helpers";
+import { capitalizeFirstLetter } from "../utils/helpers"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
