@@ -1,6 +1,7 @@
 import React from "react"
-import { capitalize } from "lodash"
 import { Paper, Grid } from "@material-ui/core"
+
+import { capitalizeFirstLetter } from "../../utils/helpers";
 
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
@@ -17,7 +18,7 @@ export default function ParkMapDetails({ data, type }) {
           className="anchor-link"
         >
           <Paper elevation={0}>
-            <Heading>{capitalize(`${type} and activity maps`)}</Heading>
+            <Heading>{capitalizeFirstLetter(`${type} and activity maps`)}</Heading>
             <HtmlContent>{data}</HtmlContent>
           </Paper>
           <Spacer />

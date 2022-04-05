@@ -1,7 +1,8 @@
 import React from "react"
 import { parseISO, format } from "date-fns"
-import { capitalize } from "lodash"
 import { Paper, Grid } from "@material-ui/core"
+
+import { capitalizeFirstLetter } from "../../utils/helpers";
 
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
@@ -21,7 +22,7 @@ export default function About({
   return (
     <Grid item xs={12} id="park-about-container" className="anchor-link">
       <Paper elevation={0}>
-        <Heading>{capitalize(`Learn more about this ${park.type}`)}</Heading>
+        <Heading>{capitalizeFirstLetter(`Learn more about this ${park.type}`)}</Heading>
         {(park.totalArea || park.establishedDate) && (
           <ul>
             <li>
@@ -34,7 +35,7 @@ export default function About({
         )}
         {park.parkContact && (
           <>
-            <h3 className="heading">{capitalize(`${park.type} contact`)}</h3>
+            <h3 className="heading">{capitalizeFirstLetter(`${park.type} contact`)}</h3>
             <HtmlContent>{park.parkContact}</HtmlContent>
           </>
         )}

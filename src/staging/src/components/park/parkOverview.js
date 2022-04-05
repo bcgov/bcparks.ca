@@ -1,7 +1,8 @@
 import React, { useState } from "react"
-import { capitalize } from "lodash"
 import { Box, Paper, Link, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
+
+import { capitalizeFirstLetter } from "../../utils/helpers";
 
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
@@ -29,7 +30,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
       <div className="anchor-link">
         <Paper elevation={0}>
           <Box className={expanded ? classes.expanded : classes.collapsed}>
-            <Heading>{capitalize(`${type} overview`)}</Heading>
+            <Heading>{capitalizeFirstLetter(`${type} overview`)}</Heading>
             <HtmlContent className="park-overview-html">
               {parkOverview}
             </HtmlContent>

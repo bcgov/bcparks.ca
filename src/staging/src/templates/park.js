@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
-import { sortBy, capitalize } from "lodash"
+import { sortBy } from "lodash"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import {
@@ -13,6 +13,8 @@ import {
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import useScrollSpy from "react-use-scrollspy"
+
+import { capitalizeFirstLetter } from "../utils/helpers";
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -151,7 +153,7 @@ export default function ParkTemplate({ data }) {
 
   const menuItems = [
     { 
-      text: capitalize(`${park.type} overview`),
+      text: capitalizeFirstLetter(`${park.type} overview`),
       url: "park-overview-container", 
       visible: true 
     },
@@ -199,12 +201,12 @@ export default function ParkTemplate({ data }) {
       visible: true 
     },
     {
-      text: capitalize(`${park.type} and activity maps`),
+      text: capitalizeFirstLetter(`${park.type} and activity maps`),
       url: "park-map-details-container",
       visible: park.maps,
     },
     {
-      text: capitalize(`Learn about this ${park.type}`),
+      text: capitalizeFirstLetter(`Learn about this ${park.type}`),
       url: "park-about-container",
       visible: true,
     },
