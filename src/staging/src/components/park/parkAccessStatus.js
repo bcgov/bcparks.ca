@@ -1,5 +1,5 @@
 import React from "react"
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"
 import { graphql, useStaticQuery } from "gatsby"
 import { Card, CardHeader, Avatar } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
@@ -17,13 +17,12 @@ const useStyles = makeStyles({
 })
 
 const ICONS = {
-  "blue": blueStatusIcon,
-  "yellow": yellowStatusIcon,
-  "red": redStatusIcon,
+  blue: blueStatusIcon,
+  yellow: yellowStatusIcon,
+  red: redStatusIcon,
 }
 
-export default function ParkAccessStatus({ advisories }) {
-
+function ParkAccessFromAdvisories(advisories) {
   const data = useStaticQuery(
     graphql`
       {
@@ -42,16 +41,12 @@ export default function ParkAccessStatus({ advisories }) {
     `
   )
 
-  const accessStatusList = data?.allStrapiAccessStatuses.edges;
+  let accessStatuses = []
+  const accessStatusList = data?.allStrapiAccessStatuses.edges
 
-  const classes = useStyles()
   let parkStatusIcon = blueStatusIcon
   let parkStatusText = "Open to public access"
-
-  // unfortunately, incoming advisories from parks details and explore pages are structured differently.
-  // we need to differentiate between the two structures. 
-
-  let accessStatuses = [];
+  let parkStatusColor = "blue"
 
   for (let advisory of advisories) {
     if (advisory.accessStatus) {
@@ -61,15 +56,15 @@ export default function ParkAccessStatus({ advisories }) {
           precedence: advisory.accessStatus.precedence,
           color: advisory.accessStatus.color,
           text: advisory.accessStatus.accessStatus,
-        });
+        })
       } else {
         // advisory is coming from explore page
         // get accessStatus based on precedence
         let thisStatus = accessStatusList.find(status => {
-          return status.node.strapiId === advisory.accessStatus;
+          return status.node.strapiId === advisory.accessStatus
         })
         if (!thisStatus) {
-          break;
+          break
         } else {
           accessStatuses.push({
             precedence: thisStatus.node.precedence,
@@ -85,10 +80,33 @@ export default function ParkAccessStatus({ advisories }) {
     return a.precedence - b.precedence
   })
 
-  if (accessStatuses.length > 0 && typeof ICONS[accessStatuses[0].color] !== "undefined") {
+  if (
+    accessStatuses.length > 0 &&
+    typeof ICONS[accessStatuses[0].color] !== "undefined"
+  ) {
     parkStatusIcon = ICONS[accessStatuses[0].color]
     parkStatusText = accessStatuses[0].text
+    parkStatusColor = accessStatuses[0].color
   }
+
+  return {
+    parkStatusIcon: parkStatusIcon,
+    parkStatusText: parkStatusText,
+    parkStatusColor: parkStatusColor,
+  }
+}
+export { ParkAccessFromAdvisories }
+
+export default function ParkAccessStatus({ advisories }) {
+  const classes = useStyles()
+  const {
+    parkStatusIcon,
+    parkStatusText,
+    parkStatusColor,
+  } = ParkAccessFromAdvisories(advisories)
+
+  // unfortunately, incoming advisories from parks details and explore pages are structured differently.
+  // we need to differentiate between the two structures.
 
   return (
     <>
@@ -112,4 +130,4 @@ export default function ParkAccessStatus({ advisories }) {
 
 ParkAccessStatus.propTypes = {
   advisories: PropTypes.array,
-};
+}

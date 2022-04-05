@@ -37,6 +37,10 @@
     },
     "isCamping": {
       "type": "boolean"
+    },
+    "parkOperationSubAreas": {
+      "via": "facilityType",
+      "collection": "park-operation-sub-area"
     }
   }
 }

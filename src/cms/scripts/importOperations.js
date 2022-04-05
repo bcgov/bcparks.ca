@@ -9,8 +9,12 @@ strapi({ serveAdminPanel: false })
   .load()
   .then(async (app) => {
     try {
-      const op = await operationDataLoad.loadData({ isSeedMode: false, allowUpdates: true });
-      console.log("Operation data loading script complete -----")
+      console.log("-- Operation data loading script starting");
+      const op = await operationDataLoad.loadData({
+        isSeedMode: false,
+        allowUpdates: true,
+      });
+      console.log("-- Operation data loading script complete");
     } catch (err) {
       app.log.error(`Error occurred loading operations data`);
       app.log.error(err);

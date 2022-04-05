@@ -4,7 +4,7 @@
   "description": "BC Parks - staging site",
   "version": "0.1.0",
   "dependencies": {
-    "@arcgis/core": "^4.20.2",
+    "@arcgis/core": "~4.22.2",
     "@bcgov/bc-sans": "^1.0.1",
     "@bcgov/bootstrap-theme": "https://github.com/bcgov/bootstrap-theme/releases/download/v1.1.1/bcgov-bootstrap-theme-1.1.1.tgz",
     "@elastic/app-search-javascript": "^7.14.0",
