@@ -17,6 +17,7 @@ export default function ParkFacility({ data }) {
   )
   const [expanded, setExpanded] = useState(Array(data.length).fill(false))
   const [numFacilities, setNumFacilities] = useState(0)
+  const [hash, setHash] = useState("")
 
   const toggleExpand = useCallback(
     index => {
@@ -33,7 +34,7 @@ export default function ParkFacility({ data }) {
 
     if (typeof window !== "undefined") {
       h = window.location.hash
-      if (h !== undefined) {
+      if (h !== undefined && h !== hash) {
         facilityData.forEach(facility => {
           if (h === "#" + facility.facilityType.facilityCode) {
             if (!expanded[facility.uiId]) {
@@ -41,9 +42,10 @@ export default function ParkFacility({ data }) {
             }
           }
         })
+        setHash(h)
       }
     }
-  }, [expanded, facilityData, toggleExpand])
+  }, [expanded, facilityData, hash, toggleExpand])
 
   useEffect(() => {
     // Each element in the array needs a unique id for the accordions
