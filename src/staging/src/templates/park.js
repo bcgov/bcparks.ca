@@ -150,77 +150,82 @@ export default function ParkTemplate({ data }) {
   })
 
   const menuItems = [
-    { text: "Park overview", url: "park-overview-container", visible: true },
     {
-      text: "Accessibility",
-      url: "accessibility-details-container",
+      sectionIndex: 0,
+      display: "Park overview",
+      link: "#park-overview-container",
+      visible: true,
+    },
+    {
+      sectionIndex: 1,
+      display: "Accessibility",
+      link: "#accessibility-details-container",
       visible: park.accessibility,
     },
     {
-      text:
+      sectionIndex: 2,
+      display:
         !isLoadingAdvisories && !advisoryLoadError
           ? `Advisories (${advisories.length})`
           : "Advisories",
-      url: "park-advisory-details-container",
+      link: "#park-advisory-details-container",
       visible: true,
     },
     {
-      text: "Dates of operation  ",
-      url: "park-dates-container",
+      sectionIndex: 3,
+      display: "Dates of operation  ",
+      link: "#park-dates-container",
       visible: true,
     },
     {
-      text: "Safety info",
-      url: "park-safety-info-container",
+      sectionIndex: 4,
+      display: "Safety info",
+      link: "#park-safety-info-container",
       visible: true,
     },
     {
-      text: "Camping",
-      url: "park-camping-details-container",
+      sectionIndex: 5,
+      display: "Camping",
+      link: "#park-camping-details-container",
       visible: hasCamping,
     },
     {
-      text: "Facilities",
-      url: "park-facility-container",
+      sectionIndex: 6,
+      display: "Facilities",
+      link: "#park-facility-container",
       visible: activeFacilities.length > 0,
     },
     {
-      text: "Activities",
-      url: "park-activity-container",
+      sectionIndex: 7,
+      display: "Activities",
+      link: "#park-activity-container",
       visible: activeActivities.length > 0,
     },
-    { text: "Location", url: "park-map-container", visible: true },
     {
-      text: "Park and activity maps",
-      url: "park-map-details-container",
-      visible: park.maps,
-    },
-    {
-      text: "Learn about this park",
-      url: "park-about-container",
+      sectionIndex: 8,
+      display: "Location",
+      link: "#park-map-container",
       visible: true,
     },
     {
-      text: "Reconciliation with Indigenous peoples",
-      url: "park-reconciliation-container",
+      sectionIndex: 9,
+      display: "Park and activity maps",
+      link: "#park-map-details-container",
+      visible: park.maps,
+    },
+    {
+      sectionIndex: 10,
+      display: "Learn about this park",
+      link: "#park-about-container",
+      visible: true,
+    },
+    {
+      sectionIndex: 11,
+      display: "Reconciliation with Indigenous peoples",
+      link: "#park-reconciliation-container",
       visible: park.reconciliationNotes,
     },
   ]
-
-  // Create array from menuItems in format for PageMenu component
-  let pageSections = []
-  let sectionIndex = 0
-  menuItems.forEach(item => {
-    if (item.visible) {
-      pageSections.push({
-        display: item.text,
-        sectionIndex: sectionIndex,
-        id: sectionIndex,
-        link: "#" + item.url,
-      })
-    }
-    sectionIndex++
-  })
 
   const mapData = {
     latitude: park.latitude,
@@ -283,7 +288,7 @@ export default function ParkTemplate({ data }) {
       <div className="page-menu--mobile">
         <div className="d-block d-md-none">
           <PageMenu
-            pageSections={pageSections}
+            pageSections={menuItems}
             activeSection={activeSection}
             menuStyle="select"
           />
@@ -306,7 +311,7 @@ export default function ParkTemplate({ data }) {
               className="page-menu--desktop d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none"
             >
               <PageMenu
-                pageSections={pageSections}
+                pageSections={menuItems}
                 activeSection={activeSection}
                 menuStyle="nav"
               />

@@ -13,7 +13,7 @@ export default function PageMenu({ pageSections, activeSection, menuStyle }) {
               active-section={
                 activeSection === section.sectionIndex ? "true" : "false"
               }
-              key={section.id}
+              key={section.sectionIndex}
               href={section.link}
             >
               {section.display}
@@ -26,7 +26,6 @@ export default function PageMenu({ pageSections, activeSection, menuStyle }) {
 
   if (menuStyle === "select") {
     let sectionIndex = activeSection
-    console.log(sectionIndex)
     const handleSectionChange = e => {
       let index = e.target.value
       let s = pageSections.find(c => c.sectionIndex === Number(index))
