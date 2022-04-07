@@ -207,7 +207,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     accessStatus: StrapiParkAccessStatus
   }
 
-  type StrapiMenu implements Node {
+  type StrapiMenus implements Node {
     title: String
     url: String
     imgUrl: String
