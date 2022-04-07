@@ -206,6 +206,12 @@ exports.createSchemaCustomization = ({ actions }) => {
   type StrapiPublicAdvisory implements Node {
     accessStatus: StrapiParkAccessStatus
   }
+
+  type StrapiMenu implements Node {
+    title: String
+    url: String
+    imgUrl: String
+  }
   `
   createTypes(typeDefs)
 }
