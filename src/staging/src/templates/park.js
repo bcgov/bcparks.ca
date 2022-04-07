@@ -638,6 +638,7 @@ export const query = graphql`
         url
         order
         id
+        imgUrl
         strapiChildren {
           id
           title

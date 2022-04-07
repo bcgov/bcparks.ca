@@ -37,7 +37,11 @@ const IntroPage = ({ data }) => {
         <Header mode="internal" content={menuContent} />
       </div>
 
-      {htmlContent && <div className="intro-page"><HTMLArea isVisible={true}>{htmlContent.HTML}</HTMLArea></div>}
+      {htmlContent && (
+        <div className="intro-page">
+          <HTMLArea isVisible={true}>{htmlContent.HTML}</HTMLArea>
+        </div>
+      )}
 
       <div className="max-width-override">
         <Footer>{data.strapiWebsites.Footer}</Footer>
@@ -68,6 +72,7 @@ export const query = graphql`
         url
         order
         id
+        imgUrl
         strapiChildren {
           id
           title
