@@ -14,6 +14,8 @@ import {
 import { makeStyles } from "@material-ui/core/styles"
 import useScrollSpy from "react-use-scrollspy"
 
+import { capitalizeFirstLetter } from "../utils/helpers";
+
 import Footer from "../components/footer"
 import Header from "../components/header"
 import PageMenu from "../components/pageContent/pageMenu"
@@ -152,7 +154,7 @@ export default function ParkTemplate({ data }) {
   const menuItems = [
     {
       sectionIndex: 0,
-      display: "Park overview",
+      display: capitalizeFirstLetter(`${park.type} overview`),
       link: "#park-overview-container",
       visible: true,
     },
@@ -209,13 +211,13 @@ export default function ParkTemplate({ data }) {
     },
     {
       sectionIndex: 9,
-      display: "Park and activity maps",
+      display: capitalizeFirstLetter(`${park.type} and activity maps`),
       link: "#park-map-details-container",
       visible: park.maps,
     },
     {
       sectionIndex: 10,
-      display: "Learn about this park",
+      display: capitalizeFirstLetter(`Learn about this ${park.type}`),
       link: "#park-about-container",
       visible: true,
     },
@@ -326,7 +328,7 @@ export default function ParkTemplate({ data }) {
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">
-                  <ParkOverview data={park.description} />
+                  <ParkOverview data={park.description} type={park.type} />
                 </div>
               )}
               {menuItems[1].visible && (
@@ -426,7 +428,6 @@ export default function ParkTemplate({ data }) {
                   <Reconciliation data={park.reconciliationNotes} />
                 </div>
               )}
-
               <br />
               <br />
               <br />
