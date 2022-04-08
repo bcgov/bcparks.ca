@@ -2,6 +2,8 @@ import React from "react"
 import { parseISO, format } from "date-fns"
 import { Paper, Grid } from "@material-ui/core"
 
+import { capitalizeFirstLetter } from "../../utils/helpers";
+
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
@@ -20,7 +22,7 @@ export default function About({
   return (
     <Grid item xs={12} id="park-about-container" className="anchor-link">
       <Paper elevation={0}>
-        <Heading>Learn more about this park</Heading>
+        <Heading>{capitalizeFirstLetter(`Learn more about this ${park.type}`)}</Heading>
         {(park.totalArea || park.establishedDate) && (
           <ul>
             <li>
@@ -33,14 +35,14 @@ export default function About({
         )}
         {park.parkContact && (
           <>
-            <h3 className="heading">Park Contact</h3>
+            <h3 className="heading">{capitalizeFirstLetter(`${park.type} contact`)}</h3>
             <HtmlContent>{park.parkContact}</HtmlContent>
           </>
         )}
         {park.parkContact && park.natureAndCulture && <Spacer />}
         {park.natureAndCulture && (
           <>
-            <h3 className="heading">Nature & Culture</h3>
+            <h3 className="heading">Nature & culture</h3>
             <HtmlContent>{park.natureAndCulture}</HtmlContent>
           </>
         )}

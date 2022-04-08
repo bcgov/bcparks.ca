@@ -1,11 +1,13 @@
 import React from "react"
 import { Paper, Grid } from "@material-ui/core"
 
+import { capitalizeFirstLetter } from "../../utils/helpers";
+
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
-export default function ParkMapDetails({ data }) {
+export default function ParkMapDetails({ data, type }) {
   return (
     <>
       {data && (
@@ -16,7 +18,7 @@ export default function ParkMapDetails({ data }) {
           className="anchor-link"
         >
           <Paper elevation={0}>
-            <Heading>Park and activity maps</Heading>
+            <Heading>{capitalizeFirstLetter(`${type} and activity maps`)}</Heading>
             <HtmlContent>{data}</HtmlContent>
           </Paper>
           <Spacer />

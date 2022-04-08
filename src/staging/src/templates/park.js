@@ -14,6 +14,8 @@ import {
 import { makeStyles } from "@material-ui/core/styles"
 import useScrollSpy from "react-use-scrollspy"
 
+import { capitalizeFirstLetter } from "../utils/helpers";
+
 import Footer from "../components/footer"
 import Header from "../components/header"
 
@@ -150,7 +152,11 @@ export default function ParkTemplate({ data }) {
   })
 
   const menuItems = [
-    { text: "Park overview", url: "park-overview-container", visible: true },
+    { 
+      text: capitalizeFirstLetter(`${park.type} overview`),
+      url: "park-overview-container", 
+      visible: true 
+    },
     {
       text: "Accessibility",
       url: "accessibility-details-container",
@@ -189,14 +195,18 @@ export default function ParkTemplate({ data }) {
       url: "park-activity-container",
       visible: activeActivities.length > 0,
     },
-    { text: "Location", url: "park-map-container", visible: true },
+    { 
+      text: "Location", 
+      url: "park-map-container", 
+      visible: true 
+    },
     {
-      text: "Park and activity maps",
+      text: capitalizeFirstLetter(`${park.type} and activity maps`),
       url: "park-map-details-container",
       visible: park.maps,
     },
     {
-      text: "Learn about this park",
+      text: capitalizeFirstLetter(`Learn about this ${park.type}`),
       url: "park-about-container",
       visible: true,
     },
@@ -291,7 +301,7 @@ export default function ParkTemplate({ data }) {
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">
-                  <ParkOverview data={park.description} />
+                  <ParkOverview data={park.description} type={park.type} />
                 </div>
               )}
               <Grid container spacing={0}>
@@ -383,7 +393,7 @@ export default function ParkTemplate({ data }) {
                 )}
                 {menuItems[9].visible && (
                   <div ref={activityMapRef} className="full-width">
-                    <ParkMapDetails data={park.maps} />
+                    <ParkMapDetails data={park.maps} type={park.type} />
                   </div>
                 )}
                 {menuItems[10].visible && (

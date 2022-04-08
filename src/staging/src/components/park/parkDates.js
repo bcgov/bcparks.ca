@@ -203,7 +203,7 @@ export default function ParkDates({ data }) {
 
   return (
     <div id="park-dates-container" className="anchor-link mb-3">
-      <Heading>Dates of Operation</Heading>
+      <Heading>Dates of operation</Heading>
       <Row>
         <Col>
           {!hasOperations && (
