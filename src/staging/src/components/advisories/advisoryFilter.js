@@ -2,117 +2,111 @@ import React, { useState } from "react"
 import { navigate } from "@reach/router"
 import {
   Box,
-  Grid,
   Button,
   TextField,
   InputAdornment,
   Checkbox,
   FormControlLabel,
-  NativeSelect
+  NativeSelect,
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 import SearchIcon from "@material-ui/icons/Search"
-
+import "../../styles/advisories/advisoryFilter.scss"
 
 const useStyles = makeStyles(theme => ({
   searchBox: {
     marginRight: "10px",
-    width: "100%"
+    width: "100%",
   },
   typeSelect: {
     width: "100%",
     borderRadius: "4px",
     paddingLeft: "8px",
     border: "solid 1px #aaa",
-    '&::before': {
-      borderBottom:0
-    }
+    "&::before": {
+      borderBottom: 0,
+    },
   },
   filterElement: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       marginRight: "4%",
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       marginBottom: "15px",
-      marginRight: "10px",
+      marginLeft: "10px",
       "& .MuiCheckbox-root": {
         marginRight: "0px",
-        paddingRight: "5px"
-      }      
+        paddingRight: "5px",
+      },
     },
   },
   filterSearch: {
-    [theme.breakpoints.down('sm')]: {
-      width: "99%"
+    [theme.breakpoints.down("sm")]: {
+      width: "99%",
     },
-    [theme.breakpoints.up('sm')]: {
-      width: "25%"
-    }
+    [theme.breakpoints.up("sm")]: {
+      width: "25%",
+    },
   },
   filterType: {
-    [theme.breakpoints.down('sm')]: {
-      width: "60%"
+    [theme.breakpoints.down("sm")]: {
+      width: "60%",
     },
-    [theme.breakpoints.up('sm')]: {
-      width: "15%"
-    }
+    [theme.breakpoints.up("sm")]: {
+      width: "15%",
+    },
   },
   filterLabel: {
     fontWeight: "bold",
     fontSize: "1rem",
     lineHeight: "1.75rem",
-    color:"#000",
+    color: "#000",
     fontFamily: "unset",
     marginBottom: "0px",
   },
   filterBy: {
-    [theme.breakpoints.up('sm')]: {
-    display: 'inline-flex',
-    marginRight: '15px',
-    verticalAlign: 'middle',
-    marginBottom: '10px',
+    [theme.breakpoints.up("sm")]: {
+      display: "inline-flex",
+      marginRight: "15px",
+      verticalAlign: "middle",
+      marginBottom: "10px",
     },
-  }
+  },
 }))
 
-const AdvisoryFilter = ({ filterFunctions }) => { 
-
+const AdvisoryFilter = ({ filterFunctions }) => {
   const classes = useStyles()
 
-  // Get parent's filter functions 
-  const getSearchText = filterFunctions.getSearchText;
-  const setSearchText = filterFunctions.setSearchText;
-  const setFilter = filterFunctions.setFilter;
-  const getFilter = filterFunctions.getFilter;
-  const getType = filterFunctions.getType;
-  const setType = filterFunctions.setType; 
+  // Get parent's filter functions
+  const getSearchText = filterFunctions.getSearchText
+  const setSearchText = filterFunctions.setSearchText
+  const setFilter = filterFunctions.setFilter
+  const getFilter = filterFunctions.getFilter
+  const getType = filterFunctions.getType
+  const setType = filterFunctions.setType
 
-  const [filterText, setFilterText] = useState(
-    getSearchText() 
-  )
-  const [isParksFilter, setIsParksFilter] = useState(
-    getFilter("parks")
-  )
-  const [isKeywordFilter, setIsKeywordsFilter] = useState(
-    getFilter("keyword")
-  )
+  const [filterText, setFilterText] = useState(getSearchText())
+  const [isParksFilter, setIsParksFilter] = useState(getFilter("parks"))
+  const [isKeywordFilter, setIsKeywordsFilter] = useState(getFilter("keyword"))
 
   // Local handlers, calls to parent methods
   // will trigger useEffect functions in parent
-  const updateAdvisoriesSearchText = (str) => {
-   setSearchText(str) 
+  const updateAdvisoriesSearchText = str => {
+    setSearchText(str)
   }
   const handleSearch = () => {
     setSearchText(filterText)
   }
 
-  const handleTypeFilterChange = (advisoryType) => {
+  const handleTypeFilterChange = advisoryType => {
     // This changes the URL query str and causes the page to
     // rerender with the type changed
-    setType(advisoryType);
-    const updatedPath = `/alerts/?type=${advisoryType}${advisoryType === 'public' ? '' : 's'}`;
-    navigate(updatedPath);
+    setType(advisoryType)
+    const updatedPath = `/alerts/?type=${advisoryType}${
+      advisoryType === "public" ? "" : "s"
+    }`
+    navigate(updatedPath)
   }
 
   // Checkboxes
@@ -125,11 +119,10 @@ const AdvisoryFilter = ({ filterFunctions }) => {
     setFilter("keywords", !isKeywordFilter)
   }
 
-
   return (
-    <>
-      <Grid container spacing={1}>
-        <Grid item xs={12} sm={5}>
+    <div className="advisory-filter-container">
+      <div className="row">
+        <div className="col-12 col-md-6">
           <label htmlFor="advisory-search-text" className={classes.filterLabel}>
             Search
           </label>
@@ -141,7 +134,7 @@ const AdvisoryFilter = ({ filterFunctions }) => {
             value={filterText}
             onChange={event => {
               setFilterText(event.target.value)
-            }} 
+            }}
             onKeyPress={ev => {
               if (ev.key === "Enter") {
                 updateAdvisoriesSearchText(filterText)
@@ -155,75 +148,87 @@ const AdvisoryFilter = ({ filterFunctions }) => {
                 </InputAdornment>
               ),
             }}
-            />
-            
-        </Grid>
-        <Grid item xs={7} sm={2}>
+          />
+        </div>
+        <div className="col-7 col-md-4">
           <label htmlFor="advisory-type" className={classes.filterLabel}>
-            Event type
+            Event
           </label>
           <NativeSelect
             value={getType()}
             id="advisory-type"
-            
             className={classes.typeSelect + " h50p"}
             variant="outlined"
             onChange={event => {
               handleTypeFilterChange(event.target.value)
             }}
-            placeholder="Event type">
+            placeholder="Event"
+          >
             <option value="public">All</option>
             <option value="wildfire">Wildfires</option>
             <option value="flood">Floods</option>
           </NativeSelect>
-        </Grid>
-        <Grid item xs={5} sm={1}>
-          <label htmlFor="search-button" className={classes.filterLabel}>&nbsp;</label>
-            <Button
-              id="search-button"
-              variant="contained"
-              fullWidth
-              onClick={() => {
-                handleSearch()
-              }}
-              className="bcgov-normal-blue mobile-search-element-height h50p">
+        </div>
+        <div className="col-5 col-md-2">
+          <label htmlFor="search-button" className={classes.filterLabel}>
+            &nbsp;
+          </label>
+          <Button
+            id="search-button"
+            variant="contained"
+            fullWidth
+            onClick={() => {
+              handleSearch()
+            }}
+            className="bcgov-normal-blue mobile-search-element-height h50p"
+          >
             Search
-            </Button>
-        </Grid>
-      </Grid>
+          </Button>
+        </div>
+      </div>
 
-      <Box sx={{ marginTop: '10px' }}>
+      <Box sx={{ marginTop: "10px" }}>
         <Box className={classes.filterBy}>
-          Filter by:
+          <b>Filters</b>
         </Box>
         <FormControlLabel
-          className={classes.filterElement + " " + (isKeywordFilter ? "text-light-blue no-wrap" : "no-wrap") }
-            control={
-              <Checkbox
-                checked={isKeywordFilter}
-                style={{ color: '#38598a'}}
-                onChange={event => { handleKeywordsFilterChange() }}
-                name="keywords"
-              />
-            }
-            label="Keywords"
-          />
+          className={
+            classes.filterElement +
+            " " +
+            (isKeywordFilter ? "text-light-blue no-wrap" : "no-wrap")
+          }
+          control={
+            <Checkbox
+              checked={isKeywordFilter}
+              style={{ color: "#38598a" }}
+              onChange={event => {
+                handleKeywordsFilterChange()
+              }}
+              name="keywords"
+            />
+          }
+          label="Keywords"
+        />
         <FormControlLabel
-          className={classes.filterElement + " " + (isParksFilter ? "text-light-blue no-wrap" : "no-wrap") }
-            control={
-              <Checkbox
-                checked={isParksFilter}
-                style={{ color: '#38598a'}}
-                onChange={event => { handleParksFilterChange() }}
-                name="parks"
-              />
-            }
-            label="Park Names"
-          />
-
+          className={
+            classes.filterElement +
+            " " +
+            (isParksFilter ? "text-light-blue no-wrap" : "no-wrap")
+          }
+          control={
+            <Checkbox
+              checked={isParksFilter}
+              style={{ color: "#38598a" }}
+              onChange={event => {
+                handleParksFilterChange()
+              }}
+              name="parks"
+            />
+          }
+          label="Park Names"
+        />
       </Box>
-
-    </>
+    </div>
   )
 }
 

@@ -1,0 +1,45 @@
+@import "../variables.scss";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.advisory-legend {
+  .advisory-legend-item {
+    line-height: 1rem;
+
+    @include media-breakpoint-up(md) {
+      background: #f2f2f2;
+      height: 100%;
+      margin: 2px;
+      padding: 5% 5%;
+    }
+    @include media-breakpoint-down(sm) {
+      margin-left: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .legend-icon {
+      border-radius: 50%;
+      @include media-breakpoint-up(md) {
+        width: 2rem;
+        height: 2rem;
+      }
+      @include media-breakpoint-down(sm) {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+  }
+  .row {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .col {
+    padding: 0px 4px 0px 0px;
+    margin: 0px;
+    border-radius: 4px;
+  }
+  .col:last-child {
+    padding: 0px;
+  }
+}

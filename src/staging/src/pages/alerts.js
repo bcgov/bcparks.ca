@@ -10,21 +10,19 @@ import Header from "../components/header"
 import AdvisoryFilter from "../components/advisories/advisoryFilter"
 import AdvisoryList from "../components/advisories/advisoryList"
 import AdvisoryPageNav from "../components/advisories/advisoryPageNav"
+import AdvisoryLegend from "../components/advisories/advisoryLegend"
 
 import "../styles/home.scss"
 
 const useStyles = makeStyles(theme => ({
   advisoriesHeader: {
-    marginBottom: "20px",
+    marginBottom: "2px",
   },
   advisoryCountNotice: {
     paddingBottom: "20px",
     "& div": {
       display: "inline",
     },
-  },
-  advisoryCount: {
-    fontWeight: "bold",
   },
   loadingArea: {
     display: "flex",
@@ -35,36 +33,6 @@ const useStyles = makeStyles(theme => ({
   },
   filterResult: {
     paddingBottom: "20px",
-  },
-  legend: {
-    display: "flex",
-    justifyContent: "left",
-    marginBottom: "20px",
-  },
-  legendItem: {
-    display: "inline-flex",
-    marginRight: "20px",
-    lineHeight: "16px",
-    fontWeight: "bold",
-  },
-  legendCircle: {
-    width: "16px",
-    height: "16px",
-    borderRadius: "50%",
-    background: "#656565",
-    display: "inline-block",
-    marginRight: "10px",
-  },
-  // these colors are in more than once place
-  // TODO fix this
-  blueAlert: {
-    background: "#2464a4",
-  },
-  redAlert: {
-    background: "#d8292f",
-  },
-  yellowAlert: {
-    background: "#fcba19",
   },
 }))
 
@@ -370,19 +338,9 @@ const PublicAdvisoryPage = ({ data }) => {
         <h1>{pageTitle}</h1>
         <div className={classes.advisoriesHeader}>
           <div className={classes.advisoryCountNotice}>
-            <div className={classes.advisoryCount}>
-              {advisoryCount} {advisoryType} advisories in effect &nbsp;
-            </div>
-            <div>
-              Updated Monday to Friday from 8:30 am to 4:30 pm, excluding
-              statutory holidays.
-            </div>
+            {advisoryCount} Active Alerts in BC Parks
           </div>
           <AdvisoryFilter filterFunctions={filterFunctions}></AdvisoryFilter>
-        </div>
-        <div className="mb-3">
-          <i className="fa fa-info-circle"></i>{" "}
-          <em>Not all advisories are available in beta</em>
         </div>
 
         <div className={isDataOld ? classes.loadingArea : "hidden"}>
@@ -401,27 +359,7 @@ const PublicAdvisoryPage = ({ data }) => {
               "There was an error in your search. Tip: avoid using punctuation"}
           </div>
 
-          <div className={classes.legend}>
-            <div className={classes.legendItem}>
-              <div className={classes.redAlert + " " + classes.legendCircle}>
-                &nbsp;
-              </div>
-              <div className={classes.legendLevel}>High</div>
-            </div>
-            <div className={classes.legendItem}>
-              <div className={classes.yellowAlert + " " + classes.legendCircle}>
-                &nbsp;
-              </div>
-              <div className={classes.legendLevel}>Moderate</div>
-            </div>
-            <div className={classes.legendItem}>
-              <div className={classes.blueAlert + " " + classes.legendCircle}>
-                &nbsp;
-              </div>
-              <div className={classes.legendLevel}>Low</div>
-            </div>
-          </div>
-
+          <AdvisoryLegend />
           <AdvisoryList
             advisories={advisories}
             pageIndex={pageIndex}
