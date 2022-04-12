@@ -12,7 +12,7 @@ import StaticIcon from "./staticIcon"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
 function toCamping() {
-  navigate("https://camping.bcparks.ca/");
+  navigate("https://camping.bcparks.ca/")
 }
 
 export default function CampingDetails({ data }) {
@@ -20,7 +20,9 @@ export default function CampingDetails({ data }) {
     facility.facilityType.facilityName.toLowerCase().includes("camping")
   )
   const [reservationsExpanded, setReservationsExpanded] = useState(false)
-  const [expanded, setExpanded] = useState(Array(campingFacilities.length).fill(false))
+  const [expanded, setExpanded] = useState(
+    Array(campingFacilities.length).fill(false)
+  )
 
   if (campingFacilities.length === 0) return null
 
@@ -30,7 +32,7 @@ export default function CampingDetails({ data }) {
   }
 
   const toggleReservations = () => {
-    setReservationsExpanded(!reservationsExpanded);
+    setReservationsExpanded(!reservationsExpanded)
   }
 
   return (
@@ -40,8 +42,12 @@ export default function CampingDetails({ data }) {
         className="anchor-link d-flex justify-content-between"
       >
         {data.hasReservations && (
-          <Col lg={{ span: 4, order: 'last' }} xl={3} md={{ span: 12, order: 'first' }}
-            className="mb-3">
+          <Col
+            lg={{ span: 4, order: "last" }}
+            xl={3}
+            md={{ span: 12, order: "first" }}
+            className="mb-3"
+          >
             <button
               className="btn btn-warning btn-block booking-button p-2"
               onClick={() => toCamping()}
@@ -50,7 +56,7 @@ export default function CampingDetails({ data }) {
             </button>
           </Col>
         )}
-        <Col md={{ order: 'last' }} lg={{ order: 'first' }}>
+        <Col md={{ order: "last" }} lg={{ order: "first" }}>
           <Heading>Camping</Heading>
         </Col>
       </Row>
@@ -65,22 +71,28 @@ export default function CampingDetails({ data }) {
                     aria-controls="reservations"
                     className="park-details mb-2"
                   >
-                    <Accordion.Toggle as={Container}
+                    <Accordion.Toggle
+                      as={Container}
                       eventKey="0"
                       id="panel1a-header"
                       onClick={() => toggleReservations()}
                     >
                       <div className="d-flex justify-content-between p-3 accordion-toggle">
-                        <HtmlContent className="accordion-header pl-2">Reservations</HtmlContent>
+                        <HtmlContent className="accordion-header pl-2">
+                          Reservations
+                        </HtmlContent>
                         <div className="d-flex align-items-center expand-icon">
-                          <i className={(reservationsExpanded ? "open " : "close ") + "fa fa-angle-down mx-3"}></i>
+                          <i
+                            className={
+                              (reservationsExpanded ? "open " : "close ") +
+                              "fa fa-angle-down mx-3"
+                            }
+                          ></i>
                         </div>
                       </div>
                     </Accordion.Toggle>
 
-                    <Accordion.Collapse
-                      eventKey="0"
-                    >
+                    <Accordion.Collapse eventKey="0">
                       <div className="p-3 pl-5">
                         <HtmlContent>{data.reservations}</HtmlContent>
                       </div>
@@ -99,7 +111,8 @@ export default function CampingDetails({ data }) {
               key={"campingFacility" + index}
               className="park-details mb-2"
             >
-              <Accordion.Toggle as={Container}
+              <Accordion.Toggle
+                as={Container}
                 aria-controls={facility.facilityType.facilityName}
                 eventKey="0"
                 id={index}
@@ -108,16 +121,21 @@ export default function CampingDetails({ data }) {
                 <div className="d-flex justify-content-between p-3 accordion-toggle">
                   <div className="d-flex justify-content-left align-items-center pl-2">
                     <StaticIcon name={facility.facilityType.icon} size={48} />
-                    <HtmlContent className="pl-3 accordion-header">{facility.facilityType.facilityName}</HtmlContent>
+                    <HtmlContent className="pl-3 accordion-header">
+                      {facility.facilityType.facilityName}
+                    </HtmlContent>
                   </div>
                   <div className="d-flex align-items-center expand-icon">
-                    <i className={(expanded[index] ? "open " : "close ") + "fa fa-angle-down mx-3"}></i>
+                    <i
+                      className={
+                        (expanded[index] ? "open " : "close ") +
+                        "fa fa-angle-down mx-3"
+                      }
+                    ></i>
                   </div>
                 </div>
               </Accordion.Toggle>
-              <Accordion.Collapse
-                eventKey="0"
-              >
+              <Accordion.Collapse eventKey="0">
                 <div className="p-4">
                   <HtmlContent>{facility.description}</HtmlContent>
                 </div>

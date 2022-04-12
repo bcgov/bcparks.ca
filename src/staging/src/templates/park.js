@@ -18,6 +18,7 @@ import { capitalizeFirstLetter } from "../utils/helpers";
 
 import Footer from "../components/footer"
 import Header from "../components/header"
+import PageMenu from "../components/pageContent/pageMenu"
 
 import About from "../components/park/about"
 import AccessibilityDetails from "../components/park/accessibilityDetails"
@@ -30,7 +31,6 @@ import ParkDates from "../components/park/parkDates"
 import ParkFacility from "../components/park/parkFacility"
 import ParkHeader from "../components/park/parkHeader"
 import ParkMapDetails from "../components/park/parkMapDetails"
-import ParkMenu from "../components/park/parkMenu"
 import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import MapLocation from "../components/park/mapLocation"
@@ -118,28 +118,28 @@ export default function ParkTemplate({ data }) {
   }, [apiBaseUrl, park.orcs])
 
   const parkOverviewRef = useRef("")
-  const parkDatesRef = useRef("")
   const accessibilityRef = useRef("")
   const advisoryRef = useRef("")
+  const parkDatesRef = useRef("")
   const safetyRef = useRef("")
   const campingRef = useRef("")
   const facilityRef = useRef("")
   const activityRef = useRef("")
-  const mapRef = useRef("")
+  const mapLocationRef = useRef("")
   const activityMapRef = useRef("")
   const aboutRef = useRef("")
   const reconciliationRef = useRef("")
 
   const sectionRefs = [
     parkOverviewRef,
-    parkDatesRef,
     accessibilityRef,
     advisoryRef,
+    parkDatesRef,
     safetyRef,
     campingRef,
     facilityRef,
     activityRef,
-    mapRef,
+    mapLocationRef,
     activityMapRef,
     aboutRef,
     reconciliationRef,
@@ -148,71 +148,83 @@ export default function ParkTemplate({ data }) {
   const activeSection = useScrollSpy({
     sectionElementRefs: sectionRefs,
     defaultValue: 0,
-    offsetPx: -80,
+    offsetPx: -250,
   })
 
   const menuItems = [
-    { 
-      text: capitalizeFirstLetter(`${park.type} overview`),
-      url: "park-overview-container", 
-      visible: true 
+    {
+      sectionIndex: 0,
+      display: capitalizeFirstLetter(`${park.type} overview`),
+      link: "#park-overview-container",
+      visible: true,
     },
     {
-      text: "Accessibility",
-      url: "accessibility-details-container",
+      sectionIndex: 1,
+      display: "Accessibility",
+      link: "#accessibility-details-container",
       visible: park.accessibility,
     },
     {
-      text:
+      sectionIndex: 2,
+      display:
         !isLoadingAdvisories && !advisoryLoadError
           ? `Advisories (${advisories.length})`
           : "Advisories",
-      url: "park-advisory-details-container",
+      link: "#park-advisory-details-container",
       visible: true,
     },
     {
-      text: "Dates of operation  ",
-      url: "park-dates-container",
+      sectionIndex: 3,
+      display: "Dates of operation  ",
+      link: "#park-dates-container",
       visible: true,
     },
     {
-      text: "Safety info",
-      url: "park-safety-info-container",
+      sectionIndex: 4,
+      display: "Safety info",
+      link: "#park-safety-info-container",
       visible: true,
     },
     {
-      text: "Camping",
-      url: "park-camping-details-container",
+      sectionIndex: 5,
+      display: "Camping",
+      link: "#park-camping-details-container",
       visible: hasCamping,
     },
     {
-      text: "Facilities",
-      url: "park-facility-container",
+      sectionIndex: 6,
+      display: "Facilities",
+      link: "#park-facility-container",
       visible: activeFacilities.length > 0,
     },
     {
-      text: "Activities",
-      url: "park-activity-container",
+      sectionIndex: 7,
+      display: "Activities",
+      link: "#park-activity-container",
       visible: activeActivities.length > 0,
     },
-    { 
-      text: "Location", 
-      url: "park-map-container", 
-      visible: true 
-    },
     {
-      text: capitalizeFirstLetter(`${park.type} and activity maps`),
-      url: "park-map-details-container",
-      visible: park.maps,
-    },
-    {
-      text: capitalizeFirstLetter(`Learn about this ${park.type}`),
-      url: "park-about-container",
+      sectionIndex: 8,
+      display: "Location",
+      link: "#park-map-container",
       visible: true,
     },
     {
-      text: "Reconciliation with Indigenous peoples",
-      url: "park-reconciliation-container",
+      sectionIndex: 9,
+      display: capitalizeFirstLetter(`${park.type} and activity maps`),
+      link: "#park-map-details-container",
+      visible: park.maps,
+    },
+    {
+      sectionIndex: 10,
+      display: capitalizeFirstLetter(`Learn about this ${park.type}`),
+      link: "#park-about-container",
+      visible: true,
+    },
+    {
+      sectionIndex: 11,
+      display: "Reconciliation with Indigenous peoples",
+      link: "#park-reconciliation-container",
       visible: park.reconciliationNotes,
     },
   ]
@@ -250,7 +262,7 @@ export default function ParkTemplate({ data }) {
         </Grid>
       </div>
       <div className="container parks-container">
-        <Container id="park-info-container" maxWidth={false}>
+        <Container className="park-info-container" maxWidth={false}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <div className="p30t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none" />
@@ -265,7 +277,6 @@ export default function ParkTemplate({ data }) {
             <Grid item xs={12} sm={12}>
               <ParkHeader
                 park={park}
-                menu={menuItems}
                 hasReservations={hasReservations}
                 hasDayUsePass={hasDayUsePass}
                 isLoadingAdvisories={isLoadingAdvisories}
@@ -273,6 +284,21 @@ export default function ParkTemplate({ data }) {
                 advisories={advisories}
               />
             </Grid>
+          </Grid>
+        </Container>
+      </div>
+      <div className="page-menu--mobile">
+        <div className="d-block d-md-none">
+          <PageMenu
+            pageSections={menuItems}
+            activeSection={activeSection}
+            menuStyle="select"
+          />
+        </div>
+      </div>
+      <div className="container parks-container">
+        <Container className="park-info-container" maxWidth={false}>
+          <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
                 <ParkPhotoGallery photos={photos} />
@@ -284,9 +310,13 @@ export default function ParkTemplate({ data }) {
               sm={12}
               md={3}
               lg={3}
-              className="park-menu-root d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none"
+              className="page-menu--desktop d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none"
             >
-              <ParkMenu data={{ menu: menuItems, activeSection }} />
+              <PageMenu
+                pageSections={menuItems}
+                activeSection={activeSection}
+                menuStyle="nav"
+              />
             </Grid>
             <Grid
               item
@@ -295,118 +325,109 @@ export default function ParkTemplate({ data }) {
               md={9}
               lg={9}
               className={classes.parkContent}
-              data-spy="scroll"
-              data-target="#parkScrollSpy"
-              data-offset="20"
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">
                   <ParkOverview data={park.description} type={park.type} />
                 </div>
               )}
-              <Grid container spacing={0}>
-                {menuItems[1].visible && (
-                  <div ref={accessibilityRef} className="full-width">
-                    <AccessibilityDetails />
-                  </div>
-                )}
-                {menuItems[2].visible && (
-                  <div
-                    ref={advisoryRef}
-                    className="full-width anchor-link"
-                    id="park-advisory-details-container"
-                  >
-                    {isLoadingAdvisories && (
-                      <div className="mb-5">
-                        <Heading>{`Advisories`}</Heading>
-                        <div className="spinner-border" role="status">
-                          <span className="sr-only">Loading...</span>
-                        </div>
+              {menuItems[1].visible && (
+                <div ref={accessibilityRef} className="full-width">
+                  <AccessibilityDetails />
+                </div>
+              )}
+              {menuItems[2].visible && (
+                <div ref={advisoryRef} className="full-width">
+                  {isLoadingAdvisories && (
+                    <div className="mb-5">
+                      <Heading>{`Advisories`}</Heading>
+                      <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
                       </div>
-                    )}
-                    {!isLoadingAdvisories && advisoryLoadError && (
-                      <div className="mb-5">
-                        <div className="alert alert-danger" role="alert">
-                          An error occurred while loading current public
-                          advisories.
-                        </div>
+                    </div>
+                  )}
+                  {!isLoadingAdvisories && advisoryLoadError && (
+                    <div className="mb-5">
+                      <div className="alert alert-danger" role="alert">
+                        An error occurred while loading current public
+                        advisories.
                       </div>
-                    )}
-                    {!isLoadingAdvisories && !advisoryLoadError && (
-                      <AdvisoryDetails advisories={advisories} />
-                    )}
-                  </div>
-                )}
-                {menuItems[3].visible && (
-                  <div ref={parkDatesRef} className="full-width">
-                    <ParkDates
-                      data={{
-                        parkOperation: park.parkOperation,
-                        subAreas: park.parkOperationSubAreas,
-                        advisories: advisories,
-                      }}
-                    />
-                  </div>
-                )}
-                {menuItems[4].visible && (
-                  <div ref={safetyRef} className="full-width">
-                    <SafetyInfo park={park} />
-                  </div>
-                )}
-                {menuItems[5].visible && (
-                  <div ref={campingRef} className="full-width">
-                    <CampingDetails
-                      data={{
-                        parkFacilities: activeFacilities,
-                        reservations: park.reservations,
-                        hasDayUsePass: hasDayUsePass,
-                        hasReservations: hasReservations,
-                      }}
-                    />
-                  </div>
-                )}
-                {menuItems[6].visible && (
-                  <div ref={facilityRef} className="full-width">
-                    <ParkFacility data={activeFacilities} />
-                  </div>
-                )}
-                {menuItems[7].visible && (
-                  <div ref={activityRef} className="full-width">
-                    <ParkActivity data={activeActivities} />
-                  </div>
-                )}
-                {menuItems[8].visible && (
-                  <div ref={mapRef} className="full-width">
-                    <MapLocation data={mapData} />
-                    {park.locationNotes && (
-                      <Grid item xs={12} id="park-location-notes-container">
-                        <Box mb={8}>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: park.locationNotes,
-                            }}
-                          ></div>
-                        </Box>
-                      </Grid>
-                    )}
-                  </div>
-                )}
-                {menuItems[9].visible && (
-                  <div ref={activityMapRef} className="full-width">
-                    <ParkMapDetails data={park.maps} type={park.type} />
-                  </div>
-                )}
-                {menuItems[10].visible && (
-                  <div ref={aboutRef} className="full-width">
-                    <About park={park} />
-                  </div>
-                )}
-                {menuItems[11].visible && (
-                  <div ref={reconciliationRef} className="full-width">
-                    <Reconciliation data={park.reconciliationNotes} />
-                  </div>
-                )}
-              </Grid>
+                    </div>
+                  )}
+                  {!isLoadingAdvisories && !advisoryLoadError && (
+                    <AdvisoryDetails advisories={advisories} />
+                  )}
+                </div>
+              )}
+              {menuItems[3].visible && (
+                <div ref={parkDatesRef} className="full-width">
+                  <ParkDates
+                    data={{
+                      parkOperation: park.parkOperation,
+                      subAreas: park.parkOperationSubAreas,
+                      advisories: advisories,
+                    }}
+                  />
+                </div>
+              )}
+              {menuItems[4].visible && (
+                <div ref={safetyRef} className="full-width">
+                  <SafetyInfo park={park} />
+                </div>
+              )}
+              {menuItems[5].visible && (
+                <div ref={campingRef} className="full-width">
+                  <CampingDetails
+                    data={{
+                      parkFacilities: activeFacilities,
+                      reservations: park.reservations,
+                      hasDayUsePass: hasDayUsePass,
+                      hasReservations: hasReservations,
+                    }}
+                  />
+                </div>
+              )}
+              {menuItems[6].visible && (
+                <div ref={facilityRef} className="full-width">
+                  <ParkFacility data={activeFacilities} />
+                </div>
+              )}
+              {menuItems[7].visible && (
+                <div ref={activityRef} className="full-width">
+                  <ParkActivity data={activeActivities} />
+                </div>
+              )}
+              {menuItems[8].visible && (
+                <div ref={mapLocationRef} className="full-width">
+                  <MapLocation data={mapData} />
+                  {park.locationNotes && (
+                    <Grid item xs={12} id="park-location-notes-container">
+                      <Box mb={8}>
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: park.locationNotes,
+                          }}
+                        ></div>
+                      </Box>
+                    </Grid>
+                  )}
+                </div>
+              )}
+              {menuItems[9].visible && (
+                <div ref={activityMapRef} className="full-width">
+                  <ParkMapDetails data={park.maps} />
+                </div>
+              )}
+              {menuItems[10].visible && (
+                <div ref={aboutRef} className="full-width">
+                  <About park={park} />
+                </div>
+              )}
+              {menuItems[11].visible && (
+                <div ref={reconciliationRef} className="full-width">
+                  <Reconciliation data={park.reconciliationNotes} />
+                </div>
+              )}
               <br />
               <br />
               <br />

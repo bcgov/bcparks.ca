@@ -16,12 +16,11 @@ import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
 
 import "../../styles/cmsSnippets/advisoryDetails.scss"
 
-const formatDate = (isoDate) => {
+const formatDate = isoDate => {
   return isoDate ? format(parseJSON(isoDate), "MMMM dd, yyyy") : ""
 }
 
 export default function AdvisoryDetails({ advisories }) {
-
   let expandedsInitial = []
   advisories.forEach((advisory, index) => {
     expandedsInitial[index] = false
@@ -71,24 +70,25 @@ export default function AdvisoryDetails({ advisories }) {
       formattedAdvisoryDate: formatDate(advisory.advisoryDate),
       formattedEffectiveDate: formatDate(advisory.effectiveDate),
       formattedEndDate: formatDate(advisory.endDate),
-      ...advisory
+      ...advisory,
     }
   })
 
   return (
     <div className="mb-5">
       <Row>
-        <Col >
+        <Col>
           <div className="d-flex justify-content-between align-items-flex-start">
             <Heading>{`Advisories (${advisories.length})`}</Heading>
-            <div>
+            <div className="anchor-link" id="park-advisory-details-container">
               {advisories.length > 1 && (
                 <Button
                   className="btn btn-outline-primary expand-button"
                   onClick={() => {
                     expandAll(!allExpanded)
                     setAllExpanded(!allExpanded)
-                  }}>
+                  }}
+                >
                   {allExpanded ? "[collapse all]" : "[expand all]"}
                 </Button>
               )}
@@ -99,7 +99,9 @@ export default function AdvisoryDetails({ advisories }) {
       <Row>
         {advisories.length === 0 && (
           <Col>
-            <HtmlContent>There are no reported advisories for this park</HtmlContent>
+            <HtmlContent>
+              There are no reported advisories for this park
+            </HtmlContent>
           </Col>
         )}
         {advisories.length > 0 && (
@@ -114,43 +116,55 @@ export default function AdvisoryDetails({ advisories }) {
                 activeKey={expandeds[index] ? advisory.id : null}
                 key={advisory.id}
                 aria-controls={advisory.title}
-                className="mb-4">
-                <Accordion.Toggle as={Container} className="accordion-toggle" onClick={() => {
-                  handleChange(index);
-                }}
-                  eventKey={advisory.id}>
+                className="mb-4"
+              >
+                <Accordion.Toggle
+                  as={Container}
+                  className="accordion-toggle"
+                  onClick={() => {
+                    handleChange(index)
+                  }}
+                  eventKey={advisory.id}
+                >
                   <div className="d-flex justify-content-between">
                     <div className="d-inline-flex align-items-start">
                       <img
                         src={advisory.alertIcon}
                         className="small mr-3"
                         alt="Alert icon"
-                      >
-                      </img>
+                      ></img>
                       <HtmlContent>{advisory.title}</HtmlContent>
                     </div>
                     <div className="d-flex align-items-center expand-icon">
-                      <i className={(expandeds[index] ? "open " : "close ") + "fa fa-angle-down mx-3"}></i>
+                      <i
+                        className={
+                          (expandeds[index] ? "open " : "close ") +
+                          "fa fa-angle-down mx-3"
+                        }
+                      ></i>
                     </div>
                   </div>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={advisory.id}>
                   <div className="advisory-content p-3">
-                    {advisory.description &&
-                      <HtmlContent className="mb-2">{advisory.description}</HtmlContent>
-                    }
+                    {advisory.description && (
+                      <HtmlContent className="mb-2">
+                        {advisory.description}
+                      </HtmlContent>
+                    )}
                     {advisory.isEffectiveDateDisplayed &&
                       advisory.formattedEffectiveDate && (
                         <>
                           <br />
                           <p>
                             In effect {advisory.formattedEffectiveDate}
-                            {advisory.isEndDateDisplayed && advisory.formattedEndDate && (
-                              <>
-                                {" to "}
-                                {advisory.formattedEndDate}
-                              </>
-                            )}
+                            {advisory.isEndDateDisplayed &&
+                              advisory.formattedEndDate && (
+                                <>
+                                  {" to "}
+                                  {advisory.formattedEndDate}
+                                </>
+                              )}
                           </p>
                         </>
                       )}
@@ -176,4 +190,4 @@ export default function AdvisoryDetails({ advisories }) {
 
 AdvisoryDetails.propTypes = {
   advisories: PropTypes.array.isRequired,
-};
+}
