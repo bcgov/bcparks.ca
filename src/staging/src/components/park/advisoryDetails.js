@@ -14,7 +14,7 @@ import blueAlertIcon from "../../images/park/blue-alert-64.png"
 import redAlertIcon from "../../images/park/red-alert-64.png"
 import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
 
-import "../../styles/cmsSnippets/advisoryDetails.scss"
+import "../../styles/advisories/advisoryDetails.scss"
 
 const formatDate = isoDate => {
   return isoDate ? format(parseJSON(isoDate), "MMMM dd, yyyy") : ""
