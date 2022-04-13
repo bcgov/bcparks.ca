@@ -118,22 +118,14 @@ export default function ParkDates({ data }) {
 
   // -------- Operating Notes ----------
 
-  // Use this to configure which notes show below the subareas,
+  // Use this to configure which notes show below the subareas, and within each subarea
   // and in what order. Note that "openNote" appears separately above subareas
   const notesList = [
-    "generalNote",
-    "serviceNote",
-    "reservationsNotes",
-    "offSeasonNote",
+    { noteVar: "generalNote", display: "" },
+    { noteVar: "serviceNote", display: "" },
+    { noteVar: "reservationsNotes", display: "Reservations Note" },
+    { noteVar: "offSeasonNote", display: "Winter Note" },
   ]
-
-  let notes = []
-  for (const nIdx in notesList) {
-    const n = notesList[nIdx]
-    if (parkOperation[n]) {
-      notes.push({ noteType: n, display: parkOperation[n] })
-    }
-  }
 
   // -------- Capacity Counts ----------
 
@@ -141,65 +133,92 @@ export default function ParkDates({ data }) {
     // Use this to configure which counts show and in what order
     // Don't show if isActive is false
     {
-      display: "Total number of wilderness campsites",
-      countVar: "wildernessSites",
+      display: "reservable frontcountry campsites",
+      countVar: "reservableSites",
       isActive: true,
     },
     {
-      display: "Total number of backcountry campsites",
-      countVar: "backgrountrySites",
-      isActive: true,
-    },
-    {
-      display: "Total number of vehicle-accessible campsites",
+      display: "vehicle-accessible campsites",
       countVar: "vehicleSites",
       isActive: true,
     },
     {
-      display: "Total number of group campsites",
+      display: "double campsites",
+      countVar: "doubleSites",
+      isActive: true,
+    },
+    {
+      display: "group campsites",
       countVar: "groupSites",
       isActive: true,
     },
     {
-      display: "Total number of RV-accessible campsites",
+      display: "walk-in campsites",
+      countVar: "walkInSites",
+      isActive: true,
+    },
+    {
+      display: "backcountry campsites",
+      countVar: "backgrountrySites",
+      isActive: true,
+    },
+    {
+      display: "wilderness campsites",
+      countVar: "wildernessSites",
+      isActive: true,
+    },
+    {
+      display: "boat-accessible campsites",
+      countVar: "boatAccessSites",
+      isActive: true,
+    },
+    {
+      display: "horse-accessible",
+      countVar: "horseSites",
+      isActive: true,
+    },
+    {
+      display: "RV-accessible campsites",
       countVar: "rvSites",
       isActive: true,
     },
     {
-      display: "Total number of reservable frontcountry campsites",
-      countVar: "reservableSites",
+      display: "pull-through campsites",
+      countVar: "pullThroughSites",
       isActive: true,
     },
-    { display: "", countVar: "totalCapacity", isActive: false },
-    { display: "", countVar: "reservableSites", isActive: false },
-    { display: "", countVar: "nonReservableSites", isActive: false },
-    { display: "", countVar: "doubleSites", isActive: false },
-    { display: "", countVar: "pullThroughSites", isActive: false },
-    { display: "", countVar: "horseSites", isActive: false },
-    { display: "", countVar: "cabins", isActive: false },
-    { display: "", countVar: "huts", isActive: false },
-    { display: "", countVar: "yurts", isActive: false },
-    { display: "", countVar: "shelters", isActive: false },
-    { display: "", countVar: "boatLaunches", isActive: false },
-    { display: "", countVar: "vehicleSitesReservable", isActive: false },
-    { display: "", countVar: "rvSitesReservable", isActive: false },
+    {
+      display: "campsites with electrical hook-ups",
+      countVar: "electrifiedSites",
+      isActive: true,
+    },
+    {
+      display: "long-stay campsites",
+      countVar: "longStaySites",
+      isActive: true,
+    },
+    { display: "cabins", countVar: "cabins", isActive: true },
+    { display: "huts", countVar: "huts", isActive: true },
+    { display: "yurts", countVar: "yurts", isActive: true },
+    { display: "shelters", countVar: "shelters", isActive: true },
+    { display: "boat launches", countVar: "boatLaunches", isActive: true },
+    {
+      display: "first-come, first-served frontcountry campsites",
+      countVar: "nonReservableSites",
+      isActive: false,
+    },
+    {
+      display: "reservable vehicle-accessible campsites",
+      countVar: "vehicleSitesReservable",
+      isActive: false,
+    },
+    {
+      display: "reservable RV-accessible campsites",
+      countVar: "rvSitesReservable",
+      isActive: false,
+    },
+    { display: "TOTAL", countVar: "totalCapacity", isActive: false },
   ]
-
-  let counts = []
-  let asterixFootnote = false // show only if necessary
-  for (const cIdx in countsList) {
-    const c = countsList[cIdx]
-    if (c.isActive) {
-      const countVal = parkOperation[c.countVar]
-      if (countVal) {
-        counts.push({ display: c.display, countVal: countVal })
-        if (countVal === "*") {
-          // need to explain * as a count
-          asterixFootnote = true
-        }
-      }
-    }
-  }
 
   return (
     <div id="park-dates-container" className="anchor-link mb-3">
@@ -293,37 +312,64 @@ export default function ParkDates({ data }) {
                             </a>
                           </p>
                         )}
+                        {notesList
+                          .filter(note => subArea[note.noteVar])
+                          .map((note, index) => (
+                            <div key={index} className="mb-2">
+                              {note.display && <>{note.display}: </>}{" "}
+                              <HTMLArea isVisible={true}>
+                                {subArea[note.noteVar]}
+                              </HTMLArea>
+                            </div>
+                          ))}
+                        {countsList
+                          .filter(
+                            count =>
+                              subArea[count.countVar] &&
+                              subArea[count.countVar] !== "0" &&
+                              count.isActive
+                          )
+                          .map((count, index) => (
+                            <div key={index} className="park-operation-count">
+                              Number of {count.display}:{" "}
+                              {subArea[count.countVar] === "*"
+                                ? "undesignated"
+                                : subArea[count.countVar]}
+                            </div>
+                          ))}
                       </div>
                     </Accordion.Collapse>
                   </Accordion>
                 ))}
             </>
           )}
-
-          {notes.length > 0 && (
-            <div className="park-operation-notes mt-3">
-              <div className="font-weight-bold">Notes</div>
-              {notes.map((note, index) => (
-                <div key={index}>
-                  {note.noteType === "offSeasonNote" && (
-                    <div className="font-weight-bold">Winter Camping</div>
-                  )}
-                  <div key={index} className="park-operation-note">
-                    <HTMLArea isVisible={true}>{note.display}</HTMLArea>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-          <div className="park-operation-counts my-3">
-            {counts.map((count, index) => (
-              <div key={index} className="park-operation-count">
-                {count.display}: {count.countVal}
+          {notesList
+            .filter(note => parkOperation[note.noteVar])
+            .map((note, index) => (
+              <div key={index} className="mb-2">
+                {note.display && <>{note.display}: </>}{" "}
+                <HTMLArea isVisible={true}>
+                  {parkOperation[note.noteVar]}
+                </HTMLArea>
               </div>
             ))}
-            {asterixFootnote && (
-              <div className="">* Number of sites is undesignated</div>
-            )}
+
+          <div className="park-operation-counts my-3">
+            {countsList
+              .filter(
+                count =>
+                  parkOperation[count.countVar] &&
+                  parkOperation[count.countVar] !== "0" &&
+                  parkOperation.isActive
+              )
+              .map((count, index) => (
+                <div key={index} className="park-operation-count">
+                  Total number of {count.display}:{" "}
+                  {parkOperation[count.countVar] === "*"
+                    ? "undesignated"
+                    : parkOperation[count.countVar]}
+                </div>
+              ))}
           </div>
         </Col>
       </Row>
