@@ -7,7 +7,7 @@ export default function PageMenu({ pageSections, activeSection, menuStyle }) {
     return (
       <nav className="navbar">
         <nav id="section-navbar" className="nav">
-          {pageSections.map(section => (
+          {pageSections.filter(s => s.visible).map(section => (
             <a
               className="nav-link"
               active-section={
