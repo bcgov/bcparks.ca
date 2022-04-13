@@ -175,7 +175,7 @@ export default function ParkTemplate({ data }) {
     },
     {
       sectionIndex: 3,
-      display: "Dates of operation  ",
+      display: "Dates of operation",
       link: "#park-dates-container",
       visible: true,
     },
@@ -206,7 +206,7 @@ export default function ParkTemplate({ data }) {
     {
       sectionIndex: 8,
       display: "Location",
-      link: "#park-map-container",
+      link: "#park-maps-location-container",
       visible: true,
     },
     {
@@ -399,23 +399,25 @@ export default function ParkTemplate({ data }) {
               )}
               {menuItems[8].visible && (
                 <div ref={mapLocationRef} className="full-width">
-                  <MapLocation data={mapData} />
-                  {park.locationNotes && (
-                    <Grid item xs={12} id="park-location-notes-container">
-                      <Box mb={8}>
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: park.locationNotes,
-                          }}
-                        ></div>
-                      </Box>
-                    </Grid>
-                  )}
+                  <div id="park-maps-location-container" className="anchor-link">
+                    <MapLocation data={mapData} />
+                    {park.locationNotes && (
+                      <Grid item xs={12} id="park-location-notes-container">
+                        <Box mb={8}>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: park.locationNotes,
+                            }}
+                          ></div>
+                        </Box>
+                      </Grid>
+                    )}
+                  </div>
                 </div>
               )}
               {menuItems[9].visible && (
                 <div ref={activityMapRef} className="full-width">
-                  <ParkMapDetails data={park.maps} />
+                  <ParkMapDetails data={park.maps} type={park.type} />
                 </div>
               )}
               {menuItems[10].visible && (

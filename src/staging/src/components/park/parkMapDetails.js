@@ -11,13 +11,15 @@ export default function ParkMapDetails({ data, type }) {
   return (
     <>
       {data && (
-        <Grid item xs={12} className="anchor-link">
-          <Paper elevation={0}>
-            <Heading>{capitalizeFirstLetter(`${type} and activity maps`)}</Heading>
-            <HtmlContent>{data}</HtmlContent>
-          </Paper>
-          <Spacer />
-        </Grid>
+        <div id="park-map-details-container" className="anchor-link">
+          <Grid item xs={12} className="anchor-link">
+            <Paper elevation={0}>
+              <Heading>{capitalizeFirstLetter(`${type} and activity maps`)}</Heading>
+              <HtmlContent>{data}</HtmlContent>
+            </Paper>
+            <Spacer />
+          </Grid>
+        </div>
       )}
     </>
   )

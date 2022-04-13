@@ -75,24 +75,22 @@ export default function AdvisoryDetails({ advisories }) {
   })
 
   return (
-    <div className="mb-5">
+    <div id="park-advisory-details-container" className="anchor-link mb-5">
       <Row>
         <Col>
           <div className="d-flex justify-content-between align-items-flex-start">
             <Heading>{`Advisories (${advisories.length})`}</Heading>
-            <div className="anchor-link" id="park-advisory-details-container">
-              {advisories.length > 1 && (
-                <Button
-                  className="btn btn-outline-primary expand-button"
-                  onClick={() => {
-                    expandAll(!allExpanded)
-                    setAllExpanded(!allExpanded)
-                  }}
-                >
-                  {allExpanded ? "[collapse all]" : "[expand all]"}
-                </Button>
-              )}
-            </div>
+            {advisories.length > 1 && (
+              <Button
+                className="btn btn-outline-primary expand-button"
+                onClick={() => {
+                  expandAll(!allExpanded)
+                  setAllExpanded(!allExpanded)
+                }}
+              >
+                {allExpanded ? "[collapse all]" : "[expand all]"}
+              </Button>
+            )}
           </div>
         </Col>
       </Row>
