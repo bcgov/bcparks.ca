@@ -3,10 +3,10 @@ import { Link } from "@material-ui/core"
 import Carousel from "react-material-ui-carousel"
 
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
+import AdvisorySummary from "../../components/search/advisorySummary";
 
 import dayUseIcon from "../../images/park/day-use.png"
 import parksLogo from "../../images/Mask_Group_5.png"
-import redAlertIcon from "../../images/park/red-alert-32.png"
 
 import "../../styles/search.scss"
 
@@ -81,31 +81,15 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
                 {/* Advisories */}
                 <div className="row p10t">
                     <div className="col-12">
-                        <Link
-                            href={`/${park.slug}#park-advisory-details-container`}
-                        >
-                            {park.advisories && park.advisories.length > 0 && park.advisories.map(
-                                (advisory, index) => (
-                                    <div
-                                        key={index}
-                                        className="flex-display"
-                                    >
-                                        {index === 0 && (
-                                            <>
-                                                <img
-                                                    alt=""
-                                                    className="search-result-icon"
-                                                    src={redAlertIcon}
-                                                />
-                                                <div className="pl15 text-blue">
-                                                    {advisory.title} (1)
-                                                </div>
-                                            </>
-                                        )}
-                                    </div>
-                                )
-                            )}
-                        </Link>
+                        {park.advisories && park.advisories.length > 0 && (
+                            <Link
+                                href={`/${park.slug}#park-advisory-details-container`}
+                            >
+                                <AdvisorySummary
+                                    advisories={park.advisories}
+                                />
+                            </Link>
+                        )}
                     </div>
                 </div>
                 {/* DayUse */}
