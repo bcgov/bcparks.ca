@@ -161,7 +161,8 @@ $tabletBreakpoint: 768px;
   }
 
   .home-advisory-button {
-    .btn{
+
+    .btn {
       background-color: $colorBlue !important;
       color: $colorWhite;
       height: 50px;
@@ -182,7 +183,7 @@ $tabletBreakpoint: 768px;
       padding-left: 30px;
       font-size: 20px;
     }
-    a:hover{
+    a:hover {
       span { /* otherwise white on white */
         color:$colorBlue !important;
       }
@@ -207,16 +208,22 @@ $tabletBreakpoint: 768px;
   }
 
   .home-advisory-button.home-advisory-button--all {
-    .btn{
+
+    .btn {
       background-color: $colorWhite !important;
       color: $colorBlue;
     }
+
     a.btn:hover {
       background-color: $colorBlue !important;
       text-decoration: none;      
       span {
         color: $colorWhite !important;
       }
+    }
+
+    .btn::after {
+      display: none;
     }
   }
 
