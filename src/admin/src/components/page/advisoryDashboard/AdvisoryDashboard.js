@@ -59,7 +59,7 @@ export default function AdvisoryDashboard({
     const response = await Promise.all([
       getManagementAreas(cmsData, setCmsData),
       cmsAxios.get(
-        `public-advisory-audits?_limit=500&_sort=advisoryDate:DESC${parkIdQuery}`,
+        `public-advisory-audits?_limit=1500&_sort=advisoryDate:DESC${parkIdQuery}`,
         {
           headers: { Authorization: `Bearer ${keycloak.token}` },
         }
