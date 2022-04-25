@@ -123,7 +123,7 @@ export default function ParkDates({ data }) {
   const notesList = [
     { noteVar: "generalNote", display: "" },
     { noteVar: "serviceNote", display: "" },
-    { noteVar: "reservationsNotes", display: "Reservations Note" },
+    { noteVar: "reservationNote", display: "Reservations Note" },
     { noteVar: "offSeasonNote", display: "Winter Note" },
   ]
 
@@ -159,7 +159,7 @@ export default function ParkDates({ data }) {
     },
     {
       display: "backcountry campsites",
-      countVar: "backgrountrySites",
+      countVar: "backcountrySites",
       isActive: true,
     },
     {
@@ -173,7 +173,7 @@ export default function ParkDates({ data }) {
       isActive: true,
     },
     {
-      display: "horse-accessible",
+      display: "horse-accessible campsites",
       countVar: "horseSites",
       isActive: true,
     },
