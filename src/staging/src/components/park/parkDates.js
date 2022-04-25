@@ -173,7 +173,7 @@ export default function ParkDates({ data }) {
       isActive: true,
     },
     {
-      display: "horse-accessible",
+      display: "horse-accessible campsites",
       countVar: "horseSites",
       isActive: true,
     },
