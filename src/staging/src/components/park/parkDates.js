@@ -120,10 +120,17 @@ export default function ParkDates({ data }) {
 
   // Use this to configure which notes show below the subareas, and within each subarea
   // and in what order. Note that "openNote" appears separately above subareas
-  const notesList = [
+  const parkOperationsNotesList = [
     { noteVar: "generalNote", display: "" },
     { noteVar: "serviceNote", display: "" },
-    { noteVar: "reservationNote", display: "Reservations Note" },
+    { noteVar: "reservationsNote", display: "Reservation Note" },
+    { noteVar: "offSeasonNote", display: "Winter Note" },
+  ]
+
+  const subAreasNotesList = [
+    { noteVar: "generalNote", display: "" },
+    { noteVar: "serviceNote", display: "" },
+    { noteVar: "reservationNote", display: "Reservation Note" },
     { noteVar: "offSeasonNote", display: "Winter Note" },
   ]
 
@@ -312,7 +319,7 @@ export default function ParkDates({ data }) {
                             </a>
                           </p>
                         )}
-                        {notesList
+                        {subAreasNotesList
                           .filter(note => subArea[note.noteVar])
                           .map((note, index) => (
                             <div key={index} className="mb-2">
@@ -343,7 +350,7 @@ export default function ParkDates({ data }) {
                 ))}
             </>
           )}
-          {notesList
+          {parkOperationsNotesList
             .filter(note => parkOperation[note.noteVar])
             .map((note, index) => (
               <div key={index} className="mb-2">
@@ -360,7 +367,7 @@ export default function ParkDates({ data }) {
                 count =>
                   parkOperation[count.countVar] &&
                   parkOperation[count.countVar] !== "0" &&
-                  parkOperation.isActive
+                  count.isActive
               )
               .map((count, index) => (
                 <div key={index} className="park-operation-count">
