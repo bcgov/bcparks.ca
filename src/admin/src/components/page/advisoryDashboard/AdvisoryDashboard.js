@@ -424,12 +424,12 @@ export default function AdvisoryDashboard({
   return (
     <>
       <br />
-      {parkNamesQuery.isLoading && (
+      {parkNamesQuery.isFetching && (
         <div className="page-loader">
           <Loader page />
         </div>
       )}
-      {!parkNamesQuery.isLoading && (
+      {!parkNamesQuery.isFetching && (
         <div
           className={styles.AdvisoryDashboard}
           data-testid="AdvisoryDashboard"
@@ -459,12 +459,12 @@ export default function AdvisoryDashboard({
             />
           </div>
           <br />
-          {publicAdvisoryQuery.isLoading && (
+          {publicAdvisoryQuery.isFetching && (
             <div className="page-loader">
               <Loader page />
             </div>
           )}
-          {!publicAdvisoryQuery.isLoading && (
+          {!publicAdvisoryQuery.isFetching && (
             <div className="container-fluid">
               <DataTable
                 key={publicAdvisoryQuery.data.length}

@@ -445,7 +445,7 @@ export default function Advisory({
           setManagementAreas([...managementAreas]);
           const siteData = res[4];
           const sites = siteData.map((s) => ({
-            label: s.protectedArea.protectedAreaName + ": " + s.siteName,
+            label: s?.protectedArea?.protectedAreaName + ": " + s.siteName,
             value: s.id,
             type: "site",
             obj: s,
