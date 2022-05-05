@@ -43,6 +43,21 @@ export default function AdvisoryDashboard({
   const [publishedAdvisories, setPublishedAdvisories] = useState([]);
   const isMounted = useRef(true);
 
+  // Preserve filters
+  const [filters, setFilters] = useState([]);
+  useEffect(() => {
+    const advisoryFilters = window.localStorage.getItem('advisoryFilters');
+    if (advisoryFilters) {
+      setFilters(JSON.parse(advisoryFilters));
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('advisoryFilters', JSON.stringify(filters));
+  }, [filters]);
+
+  const getFilterValue = (col) => filters.find((obj) => obj.fieldName === col.field)?.fieldValue;
+
   if (!keycloak && !initialized) setToError(true);
 
   useEffect(() => {
@@ -421,6 +436,7 @@ export default function AdvisoryDashboard({
   if (toError) {
     return <Redirect push to="/bcparks/error" />;
   }
+
   return (
     <>
       <br />
@@ -474,7 +490,16 @@ export default function AdvisoryDashboard({
                   pageSize: 50,
                   pageSizeOptions: [25, 50, 100],
                 }}
-                columns={tableColumns}
+                onFilterChange={(filters) => {
+                  const arrFilters = filters.map((obj) => {
+                    return { 
+                      fieldName: obj.column["field"],
+                      fieldValue: obj.value
+                    };
+                  });
+                  setFilters(arrFilters);
+                }}
+                columns={tableColumns.map((col) => ({ ...col, defaultFilter: getFilterValue(col) }))}
                 data={publicAdvisoryQuery.data}
                 title=""
                 onRowClick={(event, rowData) => {
