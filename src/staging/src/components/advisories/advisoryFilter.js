@@ -9,6 +9,7 @@ import {
   FormControlLabel,
   NativeSelect,
 } from "@material-ui/core"
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from "@material-ui/core/styles"
 
 import SearchIcon from "@material-ui/icons/Search"
@@ -19,14 +20,8 @@ const useStyles = makeStyles(theme => ({
     marginRight: "10px",
     width: "100%",
   },
-  typeSelect: {
-    width: "100%",
-    borderRadius: "4px",
-    paddingLeft: "8px",
-    border: "solid 1px #aaa",
-    "&::before": {
-      borderBottom: 0,
-    },
+  selectEndAdornment: {
+    top: 0
   },
   filterElement: {
     [theme.breakpoints.up("sm")]: {
@@ -74,6 +69,13 @@ const useStyles = makeStyles(theme => ({
     },
   },
 }))
+
+const defaultAdvisoryEventType = { title: 'All', key: 'public' };
+const advisoryEventTypes = [
+  defaultAdvisoryEventType,
+  { title: 'Wildfires', key: 'wildfire' },
+  { title: 'Floods', key: 'flood' },
+];
 
 const AdvisoryFilter = ({ filterFunctions }) => {
   const classes = useStyles()
@@ -154,20 +156,26 @@ const AdvisoryFilter = ({ filterFunctions }) => {
           <label htmlFor="advisory-type" className={classes.filterLabel}>
             Event
           </label>
-          <NativeSelect
-            value={getType()}
+          <Autocomplete
             id="advisory-type"
-            className={classes.typeSelect + " h50p"}
-            variant="outlined"
-            onChange={event => {
-              handleTypeFilterChange(event.target.value)
+            classes={{
+              endAdornment: classes.selectEndAdornment,
             }}
-            placeholder="Event"
-          >
-            <option value="public">All</option>
-            <option value="wildfire">Wildfires</option>
-            <option value="flood">Floods</option>
-          </NativeSelect>
+            className={"h50p"}
+            options={advisoryEventTypes}
+            getOptionLabel={(option) => option.title}
+            defaultValue={defaultAdvisoryEventType}
+            onChange={(event, obj) => {
+              handleTypeFilterChange(obj?.key || defaultAdvisoryEventType.key)
+            }}
+            renderInput={(params) =>
+              <TextField
+                {...params}
+                value={getType()}
+                variant="outlined"
+              />
+            }
+          />
         </div>
         <div className="col-5 col-md-2">
           <label htmlFor="search-button" className={classes.filterLabel}>
