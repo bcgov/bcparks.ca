@@ -2,6 +2,7 @@ import React from "react"
 import { Paper, Grid } from "@material-ui/core"
 
 import Heading from "./heading"
+import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
 export default function Reconciliation({ data }) {
@@ -14,7 +15,7 @@ export default function Reconciliation({ data }) {
     >
       <Paper elevation={0}>
         <Heading>Reconciliation with Indigenous peoples</Heading>
-        <p>{data}</p>
+        <HtmlContent>{data}</HtmlContent>
         <Spacer />
       </Paper>
     </Grid>
