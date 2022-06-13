@@ -64,8 +64,8 @@ module.exports = async (ctx, next) => {
       if (decodedToken) {
         if (tokenType === "keycloak") {
           // fetch authenticated user using keycloak creds
-          if (decodedToken.realm_access && decodedToken.realm_access.roles) {
-            const roles = decodedToken.realm_access.roles;
+          if (decodedToken.resource_access['staff-portal'] && decodedToken.resource_access['staff-portal'].roles) {
+            const roles = decodedToken.resource_access['staff-portal'].roles;
             const roleMatch = roles.some((e) =>
               KEYCLOAK_AUTH_ROLES.includes(e)
             );
