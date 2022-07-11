@@ -605,7 +605,6 @@ export const query = graphql`
         facilityType {
           facilityName
           facilityNumber
-          facilityCode
           isActive
           icon
           rank
