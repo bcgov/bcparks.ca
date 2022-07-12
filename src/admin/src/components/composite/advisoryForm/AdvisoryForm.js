@@ -1171,7 +1171,7 @@ export default function AdvisoryForm({
                   {mode === "update" && (
                     <>
                       <Button
-                        label="Update"
+                        label="Submit"
                         styling="bcgov-normal-blue btn"
                         onClick={() => {
                           if (validAdvisoryData(advisoryData, false, mode)) {
@@ -1192,7 +1192,6 @@ export default function AdvisoryForm({
                       />
                     </>
                   )}
-
                   <Button
                     label="Cancel"
                     styling="bcgov-normal-light btn"
