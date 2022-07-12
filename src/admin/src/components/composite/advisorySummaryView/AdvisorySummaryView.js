@@ -85,7 +85,10 @@ export default function AdvisorySummaryView({
             </div>
             <div className="col-lg-8 col-md-6 col-12">
               {advisory.standardMessages.map((m, index) => (
-                <div key={index}>{m.description}</div>
+                <div
+                  key={index}
+                  dangerouslySetInnerHTML={{ __html: m.description }}
+                ></div>
               ))}
             </div>
           </div>
