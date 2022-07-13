@@ -80,7 +80,7 @@ const PublicAdvisoryPage = ({ data }) => {
     const eventTypesPromise = axios.get(`${apiUrl}/event-types/`)
     const eventTypesResponse = await Promise.all([eventTypesPromise])
 
-    const formattedEventTypes = eventTypesResponse.data.map((obj) => ({ label: obj.eventType, value: obj.eventType.toLowerCase() }))
+    const formattedEventTypes = eventTypesResponse[0].data.map((obj) => ({ label: obj.eventType, value: obj.eventType.toLowerCase() }))
     formattedEventTypes.splice(0, 0, defaultAdvisoryEventType)
     setEventTypes(formattedEventTypes)
 
