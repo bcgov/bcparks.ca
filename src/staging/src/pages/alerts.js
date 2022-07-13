@@ -11,6 +11,8 @@ import AdvisoryFilter from "../components/advisories/advisoryFilter"
 import AdvisoryList from "../components/advisories/advisoryList"
 import AdvisoryPageNav from "../components/advisories/advisoryPageNav"
 import AdvisoryLegend from "../components/advisories/advisoryLegend"
+import { capitalizeFirstLetter } from "../utils/helpers"
+import { getAdvisoryTypeFromUrl } from "../utils/advisoryHelper"
 
 import "../styles/home.scss"
 
@@ -39,7 +41,6 @@ const useStyles = makeStyles(theme => ({
 const PublicAdvisoryPage = ({ data }) => {
   const classes = useStyles()
 
-  const [advisoryType, setAdvisoryType] = useState("") // flood, wildfires or all/public (default)
   const [advisories, setAdvisories] = useState([]) // array of advisories
   const [advisoryCount, setAdvisoryCount] = useState(0) // total of of selected type
 
@@ -70,8 +71,33 @@ const PublicAdvisoryPage = ({ data }) => {
   const pageLen = 10 // num items per page
   const [pageCount, setPageCount] = useState(1) // num pages in current search
 
-  // Filter getters and setters --------------------
+  /* Advisory Event Types */
+  const defaultAdvisoryEventType = { label: 'All', value: 'all' }
+  const [eventTypes, setEventTypes] = useState([])
+  const [advisoryType, setAdvisoryType] = useState(defaultAdvisoryEventType.value)
 
+  useEffect(async () => {
+    const eventTypesPromise = axios.get(`${apiUrl}/event-types/`)
+    const eventTypesResponse = await Promise.all([eventTypesPromise])
+
+    const formattedEventTypes = eventTypesResponse.data.map((obj) => ({ label: obj.eventType, value: obj.eventType.toLowerCase() }))
+    formattedEventTypes.splice(0, 0, defaultAdvisoryEventType)
+    setEventTypes(formattedEventTypes)
+
+    let eventType = getAdvisoryTypeFromUrl()
+    setAdvisoryType(eventType)
+  }, [])
+
+  // Get advisory type from url params ---------------
+  const updatePageTitle = (aType) => {
+    if (aType !== 'all') {
+      setPageTitle(`Public Advisories | ${capitalizeFirstLetter(aType)}`)
+    } else {
+      setPageTitle("Public Advisories")
+    }
+  }
+
+  // Filter getters and setters --------------------
   const getSearchText = () => {
     return searchText
   }
@@ -124,35 +150,6 @@ const PublicAdvisoryPage = ({ data }) => {
     getType: getAdvisoryType,
   }
 
-  // Get advisory type from url params ---------------
-
-  const checkAdvisoryType = () => {
-    let aType = "public"
-    let thisUrl = ""
-    let params
-
-    if (typeof window !== "undefined" && window.document) {
-      thisUrl = new URLSearchParams(window.location.search)
-      params = Object.fromEntries(thisUrl.entries())
-    }
-
-    if (params && params.type) {
-      switch (params.type) {
-        case "wildfires":
-          aType = "wildfire"
-          setPageTitle("Public Advisories | Wildfires")
-          break
-        case "floods":
-          aType = "flood"
-          setPageTitle("Public Advisories | Flooding")
-          break
-        default:
-          setPageTitle("Public Advisories")
-      }
-    }
-
-    return aType
-  }
 
   // API calls to get advisories and total count
   const getAdvisoryTotalCount = useCallback(() => {
@@ -164,14 +161,11 @@ const PublicAdvisoryPage = ({ data }) => {
     let q =
       "/public-advisories/count?protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true"
 
-    if (advisoryType === "wildfire") {
-      q += "&eventType.eventType_contains=wildfire"
-    } else if (advisoryType === "flood") {
-      q += "&eventType.eventType_contains=flood"
+    if (advisoryType !== "all") {
+      q += `&eventType.eventType_contains=${advisoryType}`
     }
 
     const newApiCountCall = apiUrl + q
-
     if (newApiCountCall !== apiCountCall) {
       setApiCountCall(newApiCountCall)
 
@@ -187,10 +181,8 @@ const PublicAdvisoryPage = ({ data }) => {
       let q =
         "?_sort=advisoryDate:DESC&protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true"
 
-      if (advisoryTypeFilter === "wildfire") {
-        q += "&eventType.eventType_contains=wildfire"
-      } else if (advisoryTypeFilter === "flood") {
-        q += "&eventType.eventType_contains=flood"
+      if (advisoryTypeFilter !== "all") {
+        q += `&eventType.eventType_contains=${advisoryTypeFilter}`
       }
 
       let useParksFilter = isParksFilter
@@ -292,7 +284,8 @@ const PublicAdvisoryPage = ({ data }) => {
   // If the filter changes, set data as old and get new data
   useEffect(() => {
     if (isNewFilter) {
-      let aType = checkAdvisoryType()
+      const aType = getAdvisoryTypeFromUrl()
+      updatePageTitle(aType)
       setAdvisoryType(aType)
       setIsDataOld(true)
 
@@ -314,6 +307,7 @@ const PublicAdvisoryPage = ({ data }) => {
   useEffect(() => {
     if (!isNewFilter) {
       let q = getApiQuery(advisoryType)
+      updatePageTitle(advisoryType)
       setIsDataOld(true)
       getAdvisories(q)
     }
@@ -340,7 +334,10 @@ const PublicAdvisoryPage = ({ data }) => {
           <div className={classes.advisoryCountNotice}>
             {advisoryCount} Active Alerts in BC Parks
           </div>
-          <AdvisoryFilter filterFunctions={filterFunctions}></AdvisoryFilter>
+          <AdvisoryFilter
+            defaultEventType={defaultAdvisoryEventType}
+            eventTypes={eventTypes}
+            filterFunctions={filterFunctions}></AdvisoryFilter>
         </div>
 
         <div className={isDataOld ? classes.loadingArea : "hidden"}>

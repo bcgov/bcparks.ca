@@ -7,12 +7,12 @@ import {
   InputAdornment,
   Checkbox,
   FormControlLabel,
-  NativeSelect,
 } from "@material-ui/core"
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete from '@material-ui/lab/Autocomplete'
 import { makeStyles } from "@material-ui/core/styles"
-
 import SearchIcon from "@material-ui/icons/Search"
+
+import { getAdvisoryTypeFromUrl } from "../../utils/advisoryHelper";
 import "../../styles/advisories/advisoryFilter.scss"
 
 const useStyles = makeStyles(theme => ({
@@ -70,14 +70,11 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const defaultAdvisoryEventType = { title: 'All', key: 'public' };
-const advisoryEventTypes = [
-  defaultAdvisoryEventType,
-  { title: 'Wildfires', key: 'wildfire' },
-  { title: 'Floods', key: 'flood' },
-];
-
-const AdvisoryFilter = ({ filterFunctions }) => {
+const AdvisoryFilter = ({
+  eventTypes = [],
+  defaultEventType = { label: getAdvisoryTypeFromUrl() },
+  filterFunctions
+}) => {
   const classes = useStyles()
 
   // Get parent's filter functions
@@ -105,10 +102,7 @@ const AdvisoryFilter = ({ filterFunctions }) => {
     // This changes the URL query str and causes the page to
     // rerender with the type changed
     setType(advisoryType)
-    const updatedPath = `/alerts/?type=${advisoryType}${
-      advisoryType === "public" ? "" : "s"
-    }`
-    navigate(updatedPath)
+    navigate(`/alerts/?type=${advisoryType}`)
   }
 
   // Checkboxes
@@ -119,6 +113,10 @@ const AdvisoryFilter = ({ filterFunctions }) => {
   const handleKeywordsFilterChange = () => {
     setIsKeywordsFilter(!isKeywordFilter)
     setFilter("keywords", !isKeywordFilter)
+  }
+
+  const getEventType = () => {
+    return eventTypes.find((o) => o.value.toLowerCase() === getType()) || defaultEventType
   }
 
   return (
@@ -158,21 +156,23 @@ const AdvisoryFilter = ({ filterFunctions }) => {
           </label>
           <Autocomplete
             id="advisory-type"
+            defaultValue={defaultEventType}
+            value={getEventType()}
             classes={{
               endAdornment: classes.selectEndAdornment,
             }}
             className={"h50p"}
-            options={advisoryEventTypes}
-            getOptionLabel={(option) => option.title}
-            defaultValue={defaultAdvisoryEventType}
+            options={eventTypes}
+            getOptionLabel={(option) => option.label}
             onChange={(event, obj) => {
-              handleTypeFilterChange(obj?.key || defaultAdvisoryEventType.key)
-            }}
+                handleTypeFilterChange(obj ? obj.value.toLowerCase() : defaultEventType.value)
+              }
+            }
             renderInput={(params) =>
               <TextField
                 {...params}
-                value={getType()}
                 variant="outlined"
+                placeholder={defaultEventType.label}
               />
             }
           />
