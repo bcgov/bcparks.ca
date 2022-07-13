@@ -12,6 +12,6 @@ const getAdvisoryTypeFromUrl = () => {
     return aType
 }
 
-export default {
+export {
     getAdvisoryTypeFromUrl
-};
+}
