@@ -364,7 +364,10 @@ export default function AdvisorySummaryView({
           <div className="col-lg-4 col-md-6 col-12 ad-label">
             Internal Notes
           </div>
-          <div className="col-lg-8 col-md-6 col-12">{advisory.note}</div>
+          <div
+            className="col-lg-8 col-md-6 col-12"
+            dangerouslySetInnerHTML={{ __html: advisory.note }}>
+          </div>
         </div>
       )}
       {advisory.advisoryStatus && (

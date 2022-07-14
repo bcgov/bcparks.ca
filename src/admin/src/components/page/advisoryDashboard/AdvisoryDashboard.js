@@ -288,6 +288,9 @@ export default function AdvisoryDashboard({
       title: "Headline",
       headerStyle: { width: 400 },
       cellStyle: { width: 400 },
+      render: (rowData) => {
+        return <div dangerouslySetInnerHTML={{ __html: rowData.title }}></div>;
+      },
     },
     { field: "eventType.eventType", title: "Event Type" },
     {
