@@ -9,6 +9,7 @@ const customStatus = require("../../protected-area/custom/protected-area-status"
 
 module.exports = {
   async find(ctx) {
+    console.log("Park access status find:", ctx);
     const parkAccessStatuses = await customStatus.getProtectedAreaStatus(ctx);
     return parkAccessStatuses;
   },
