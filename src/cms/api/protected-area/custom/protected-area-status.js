@@ -1,8 +1,6 @@
 "use strict";
 const _ = require("lodash");
 
-const { sanitizeEntity } = require("strapi-utils");
-
 const boolToYN = (boolVar) => {
   return boolVar ? "Y" : "N";
 };
@@ -95,7 +93,7 @@ const getProtectedAreaStatus = async (ctx) => {
 
   const publicAdvisories = await getPublishedPublicAdvisories();
 
-  return entities.map((protectedArea) => {
+  const payload = entities.map((protectedArea) => {
     let publicAdvisory = getPublicAdvisory(
       publicAdvisories,
       protectedArea.orcs
@@ -271,8 +269,29 @@ const getProtectedAreaStatus = async (ctx) => {
       publicAdvisoryId: publicAdvisory.id,
     };
   });
+
+  // Store payload into a cached location
+  const results = await strapi.services['park-access-status-cache'].find({ cacheId: 1 });
+  if (results.length === 0) {
+    console.log("Creating cache for the first time.")
+    await strapi.services['park-access-status-cache'].create({
+      cacheId: 1,
+      payload: payload
+    });
+  } else {
+    // Update
+    console.log("Updating cache entry.")
+    await strapi.services['park-access-status-cache'].update({
+      cacheId: 1
+    }, {
+      cacheId: 1,
+      payload: payload
+    });
+  }
+  
+  return payload;
 };
 
 module.exports = {
-  getProtectedAreaStatus,
+  getProtectedAreaStatus
 };
