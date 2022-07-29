@@ -40,7 +40,7 @@ export default function PageMenu({ pageSections, activeSection, menuStyle }) {
         onChange={handleSectionChange}
       >
         <option value={0}>Table of Contents</option>
-        {pageSections.map(
+        {pageSections.filter(s => s.visible).map(
           section =>
             section.sectionIndex > 0 && (
               <option key={section.sectionIndex} value={section.sectionIndex}>
