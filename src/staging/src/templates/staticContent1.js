@@ -135,6 +135,7 @@ export default function StaticContent1({ pageContext }) {
           sectionIndex: sectionIndex,
           id: c.id,
           link: "#page-section-" + c.id,
+          visible: true // Default
         })
       }
     }
