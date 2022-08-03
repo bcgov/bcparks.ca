@@ -158,7 +158,7 @@ const getPublishedPublicAdvisories = async () => {
 };
 
 const updateProtectedAreaStatusCache = async (ctx) => {
-  let entities = await strapi.services["protected-area"].find();
+  let entities = await strapi.services["protected-area"].find({ _limit: 1200});
 
   const regionsData = await strapi.services["region"].find({ _limit: -1 });
   const sectionsData = await strapi.services["section"].find({ _limit: -1 });
