@@ -22,7 +22,10 @@ const formatDate = isoDate => {
 
 export default function AdvisoryDetails({ advisories }) {
   let expandedsInitial = []
-  advisories.forEach((advisory, index) => {
+  advisories.sort((a, b) => {
+    return b?.urgency?.sequence - a?.urgency?.sequence
+      || new Date(b.advisoryDate) - new Date(a.advisoryDate)
+  }).forEach((advisory, index) => {
     expandedsInitial[index] = false
   })
 
@@ -45,7 +48,6 @@ export default function AdvisoryDetails({ advisories }) {
   const advisoriesWithFormatting = advisories.map(advisory => {
     let alertIcon
     let alertColorCss
-
     switch (advisory.urgency.color) {
       case "blue":
         alertIcon = blueAlertIcon
