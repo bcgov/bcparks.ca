@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { cmsAxios } from "../../../axios_config";
 import { Redirect, useHistory } from "react-router-dom";
-import { useQuery } from "react-query";
 import PropTypes from "prop-types";
 import { useKeycloak } from "@react-keycloak/web";
 import styles from "./AdvisoryDashboard.css";
@@ -42,6 +41,11 @@ export default function AdvisoryDashboard({
   const [selectedParkId, setSelectedParkId] = useState(0);
   const [publishedAdvisories, setPublishedAdvisories] = useState([]);
   const isMounted = useRef(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isGridLoading, setIsGridLoading] = useState(false);
+  const [hasErrors, setHasErrors] = useState(false);
+  const [parkNamesData, setParkNamesData] = useState([]);
+  const [publicAdvisoriesData, setPublicAdvisoriesData] = useState([]);
 
   // Preserve filters
   const [filters, setFilters] = useState([]);
@@ -67,11 +71,63 @@ export default function AdvisoryDashboard({
     };
   }, [isMounted]);
 
-  const fetchPublicAdvisory = async ({ queryKey }) => {
-    const [, selectedParkId] = queryKey;
+  useEffect(() => {
+
+    const fetchParkNames = async () => {
+      setIsLoading(true);
+      const data = await getProtectedAreas(cmsData, setCmsData);
+      const parkNames = data.map((p) => ({
+        label: p.protectedAreaName,
+        value: p.id,
+      }));
+      setParkNamesData(parkNames);
+      setIsLoading(false);
+    };
+
+    fetchParkNames();
+  }, []);
+
+  useEffect(() => {
+    fetchPublicAdvisory(selectedParkId);
+  }, [selectedParkId]);
+
+  const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
+    const advisoryStatuses = await getAdvisoryStatuses(cmsData, setCmsData);
+    if (advisoryStatuses) {
+      const publishedStatus = advisoryStatuses.filter(
+        (as) => as.code === "PUB"
+      );
+      if (publishedStatus && publishedStatus[0]) {
+        await cmsAxios
+          .get(
+            `/public-advisories?_advisoryStatus=${publishedStatus[0].id}&_limit=-1`
+          )
+          .then((res) => {
+            const result = res.data;
+            let publishedAdvisories = [];
+            result.forEach((ad) => {
+              publishedAdvisories = [
+                ...publishedAdvisories,
+                ad.advisoryNumber,
+              ];
+            });
+            if (isMounted.current) {
+              setPublishedAdvisories([...publishedAdvisories]);
+            }
+          })
+          .catch(() => {
+            setHasErrors(true);
+          });
+      }
+    }
+  };
+
+  const fetchPublicAdvisory = async (selectedParkId) => {
+    setIsGridLoading(true);
+    setHasErrors(false);
     let parkIdQuery =
       selectedParkId > 0 ? `&protectedAreas.id=${selectedParkId}` : "";
-    const response = await Promise.all([
+    await Promise.all([
       getManagementAreas(cmsData, setCmsData),
       cmsAxios.get(
         `public-advisory-audits?_limit=1500&_sort=advisoryDate:DESC${parkIdQuery}`,
@@ -79,86 +135,48 @@ export default function AdvisoryDashboard({
           headers: { Authorization: `Bearer ${keycloak.token}` },
         }
       ),
-    ]);
+    ])
+    .then((response) => {
+      getCurrentPublishedAdvisories(cmsData, setCmsData);
 
-    const managementAreas = response[0];
-    const publicAdvisories = response[1].data;
+      const managementAreas = response[0];
+      const publicAdvisories = response[1].data;
 
-    const getCurrentPublishedAdvisories = (cmsData, setCmsData) => {
-      const advisoryStatuses = getAdvisoryStatuses(cmsData, setCmsData);
-      if (advisoryStatuses) {
-        const publishedStatus = advisoryStatuses.filter(
-          (as) => as.code === "PUB"
-        );
-        if (publishedStatus && publishedStatus[0]) {
-          cmsAxios
-            .get(
-              `/public-advisories?_advisoryStatus=${publishedStatus[0].id}&_limit=-1`
-            )
-            .then((res) => {
-              const result = res.data;
-              let publishedAdvisories = [];
-              result.forEach((ad) => {
-                publishedAdvisories = [
-                  ...publishedAdvisories,
-                  ad.advisoryNumber,
-                ];
-              });
-              if (isMounted.current) {
-                setPublishedAdvisories([...publishedAdvisories]);
-              }
-            });
+      const regionParksCount = managementAreas.reduce((region, item) => {
+        region[item.region.id] =
+          (region[item.region.id] || 0) + item.protectedAreas.length;
+        return region;
+      }, {});
+
+      const updatedPublicAdvisories = publicAdvisories.map((publicAdvisory) => {
+        publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
+        publicAdvisory.associatedParks =
+          publicAdvisory.protectedAreas
+            .map((p) => p.protectedAreaName)
+            .join(", ") +
+          publicAdvisory.regions.map((r) => r.regionName).join(", ");
+  
+        let regionsWithParkCount = [];
+        if (publicAdvisory.regions.length > 0) {
+          publicAdvisory.regions.forEach((region) => {
+            region.count = regionParksCount[region.id];
+            regionsWithParkCount = [...regionsWithParkCount, region];
+          });
+          publicAdvisory.regions = regionsWithParkCount;
         }
+  
+        return publicAdvisory;
+      });
+      if (isMounted.current) {
+        setPublicAdvisoriesData(updatedPublicAdvisories);
       }
-    };
-
-    getCurrentPublishedAdvisories(cmsData, setCmsData);
-
-    const regionParksCount = managementAreas.reduce((region, item) => {
-      region[item.region.id] =
-        (region[item.region.id] || 0) + item.protectedAreas.length;
-      return region;
-    }, {});
-
-    const data = publicAdvisories.map((publicAdvisory) => {
-      publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
-      publicAdvisory.associatedParks =
-        publicAdvisory.protectedAreas
-          .map((p) => p.protectedAreaName)
-          .join(", ") +
-        publicAdvisory.regions.map((r) => r.regionName).join(", ");
-
-      let regionsWithParkCount = [];
-      if (publicAdvisory.regions.length > 0) {
-        publicAdvisory.regions.forEach((region) => {
-          region.count = regionParksCount[region.id];
-          regionsWithParkCount = [...regionsWithParkCount, region];
-        });
-        publicAdvisory.regions = regionsWithParkCount;
-      }
-
-      return publicAdvisory;
+    })
+    .catch(() => {
+      setHasErrors(true);
     });
-    return data;
+
+    setIsGridLoading(false);
   };
-
-  const publicAdvisoryQuery = useQuery(
-    ["publicAdvisories", selectedParkId],
-    fetchPublicAdvisory
-  );
-
-  const fetchParkNames = async () => {
-    const data = await getProtectedAreas(cmsData, setCmsData);
-    return data.map((p) => ({
-      label: p.protectedAreaName,
-      value: p.id,
-    }));
-  };
-
-  const STALE_TIME_MILLISECONDS = 4 * 60 * 60 * 1000; // 4 hours
-  const parkNamesQuery = useQuery("parkNames", fetchParkNames, {
-    staleTime: STALE_TIME_MILLISECONDS,
-  });
 
   const tableColumns = [
     {
@@ -428,27 +446,23 @@ export default function AdvisoryDashboard({
     },
   ];
 
-  if (parkNamesQuery.isError || publicAdvisoryQuery.isError) {
-    return <Redirect to="/bcparks/error" />;
-  }
-
   if (toCreate) {
     return <Redirect to="/bcparks/create-advisory" />;
   }
 
-  if (toError) {
+  if (toError || hasErrors) {
     return <Redirect push to="/bcparks/error" />;
   }
 
   return (
     <>
       <br />
-      {parkNamesQuery.isFetching && (
+      {isLoading && (
         <div className="page-loader">
           <Loader page />
         </div>
       )}
-      {!parkNamesQuery.isFetching && (
+      {!isLoading && (
         <div
           className={styles.AdvisoryDashboard}
           data-testid="AdvisoryDashboard"
@@ -470,7 +484,7 @@ export default function AdvisoryDashboard({
               </div>
             </div>
             <Select
-              options={parkNamesQuery.data}
+              options={parkNamesData}
               onChange={(e) => setSelectedParkId(e ? e.value : 0)}
               placeholder="Select a Park..."
               className="bcgov-select"
@@ -478,15 +492,15 @@ export default function AdvisoryDashboard({
             />
           </div>
           <br />
-          {publicAdvisoryQuery.isFetching && (
+          {isGridLoading && (
             <div className="page-loader">
               <Loader page />
             </div>
           )}
-          {!publicAdvisoryQuery.isFetching && (
+          {!isGridLoading && (
             <div className="container-fluid">
               <DataTable
-                key={publicAdvisoryQuery.data.length}
+                key={publicAdvisoriesData.length}
                 options={{
                   filtering: true,
                   search: false,
@@ -503,7 +517,7 @@ export default function AdvisoryDashboard({
                   setFilters(arrFilters);
                 }}
                 columns={tableColumns.map((col) => ({ ...col, defaultFilter: getFilterValue(col) }))}
-                data={publicAdvisoryQuery.data}
+                data={publicAdvisoriesData}
                 title=""
                 onRowClick={(event, rowData) => {
                   history.push(`advisory-summary/${rowData.id}`);
