@@ -85,7 +85,6 @@ export default function ParkAccessStatus() {
               { title: "Management Area", field: "managementAreasStr" },
               { title: "Fire Centre", field: "fireCentresStr" },
               { title: "Fire Zone", field: "fireZonesStr" },
-              { title: "Fog Zone", field: "isFogZone" },
               { title: "Access Status", field: "accessStatus" },
               {
                 title: "Access Details",
