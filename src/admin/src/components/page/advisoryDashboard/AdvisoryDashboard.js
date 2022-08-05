@@ -97,27 +97,27 @@ export default function AdvisoryDashboard({
       const publishedStatus = advisoryStatuses.filter(
         (as) => as.code === "PUB"
       );
-      if (publishedStatus && publishedStatus[0]) {
-        await cmsAxios
+      if (publishedStatus?.length > 0) {
+        const result = await cmsAxios
           .get(
             `/public-advisories?_advisoryStatus=${publishedStatus[0].id}&_limit=-1`
           )
-          .then((res) => {
-            const result = res.data;
-            let publishedAdvisories = [];
-            result.forEach((ad) => {
-              publishedAdvisories = [
-                ...publishedAdvisories,
-                ad.advisoryNumber,
-              ];
-            });
-            if (isMounted.current) {
-              setPublishedAdvisories([...publishedAdvisories]);
-            }
-          })
           .catch(() => {
             setHasErrors(true);
           });
+
+        let publishedAdvisories = [];
+        if (result?.data?.length > 0) {
+          result.data.forEach((ad) => {
+            publishedAdvisories = [
+              ...publishedAdvisories,
+              ad.advisoryNumber,
+            ];
+          });
+        }
+        if (isMounted.current) {
+          setPublishedAdvisories([...publishedAdvisories]);
+        }
       }
     }
   };
@@ -127,7 +127,7 @@ export default function AdvisoryDashboard({
     setHasErrors(false);
     let parkIdQuery =
       selectedParkId > 0 ? `&protectedAreas.id=${selectedParkId}` : "";
-    await Promise.all([
+    const response = await Promise.all([
       getManagementAreas(cmsData, setCmsData),
       cmsAxios.get(
         `public-advisory-audits?_limit=1500&_sort=advisoryDate:DESC${parkIdQuery}`,
@@ -136,45 +136,43 @@ export default function AdvisoryDashboard({
         }
       ),
     ])
-    .then((response) => {
-      getCurrentPublishedAdvisories(cmsData, setCmsData);
-
-      const managementAreas = response[0];
-      const publicAdvisories = response[1].data;
-
-      const regionParksCount = managementAreas.reduce((region, item) => {
-        region[item.region.id] =
-          (region[item.region.id] || 0) + item.protectedAreas.length;
-        return region;
-      }, {});
-
-      const updatedPublicAdvisories = publicAdvisories.map((publicAdvisory) => {
-        publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
-        publicAdvisory.associatedParks =
-          publicAdvisory.protectedAreas
-            .map((p) => p.protectedAreaName)
-            .join(", ") +
-          publicAdvisory.regions.map((r) => r.regionName).join(", ");
-  
-        let regionsWithParkCount = [];
-        if (publicAdvisory.regions.length > 0) {
-          publicAdvisory.regions.forEach((region) => {
-            region.count = regionParksCount[region.id];
-            regionsWithParkCount = [...regionsWithParkCount, region];
-          });
-          publicAdvisory.regions = regionsWithParkCount;
-        }
-  
-        return publicAdvisory;
-      });
-      if (isMounted.current) {
-        setPublicAdvisoriesData(updatedPublicAdvisories);
-      }
-    })
     .catch(() => {
       setHasErrors(true);
     });
 
+    getCurrentPublishedAdvisories(cmsData, setCmsData);
+
+    const managementAreas = response[0];
+    const publicAdvisories = response[1].data;
+
+    const regionParksCount = managementAreas.reduce((region, item) => {
+      region[item.region.id] =
+        (region[item.region.id] || 0) + item.protectedAreas.length;
+      return region;
+    }, {});
+
+    const updatedPublicAdvisories = publicAdvisories.map((publicAdvisory) => {
+      publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
+      publicAdvisory.associatedParks =
+        publicAdvisory.protectedAreas
+          .map((p) => p.protectedAreaName)
+          .join(", ") +
+        publicAdvisory.regions.map((r) => r.regionName).join(", ");
+
+      let regionsWithParkCount = [];
+      if (publicAdvisory?.regions?.length > 0) {
+        publicAdvisory.regions.forEach((region) => {
+          region.count = regionParksCount[region.id];
+          regionsWithParkCount = [...regionsWithParkCount, region];
+        });
+        publicAdvisory.regions = regionsWithParkCount;
+      }
+
+      return publicAdvisory;
+    });
+    if (isMounted.current) {
+      setPublicAdvisoriesData(updatedPublicAdvisories);
+    }
     setIsGridLoading(false);
   };
 
