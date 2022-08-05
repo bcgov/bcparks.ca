@@ -94,14 +94,10 @@ export default function AdvisoryDashboard({
   const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
     const advisoryStatuses = await getAdvisoryStatuses(cmsData, setCmsData);
     if (advisoryStatuses) {
-      const publishedStatus = advisoryStatuses.filter(
-        (as) => as.code === "PUB"
-      );
+      const publishedStatus = advisoryStatuses.filter((as) => as.code === "PUB");
       if (publishedStatus?.length > 0) {
         const result = await cmsAxios
-          .get(
-            `/public-advisories?_advisoryStatus=${publishedStatus[0].id}&_limit=-1`
-          )
+          .get(`/public-advisories?_advisoryStatus=${publishedStatus[0].id}&_limit=-1`)
           .catch(() => {
             setHasErrors(true);
           });
@@ -109,10 +105,7 @@ export default function AdvisoryDashboard({
         let publishedAdvisories = [];
         if (result?.data?.length > 0) {
           result.data.forEach((ad) => {
-            publishedAdvisories = [
-              ...publishedAdvisories,
-              ad.advisoryNumber,
-            ];
+            publishedAdvisories = [...publishedAdvisories, ad.advisoryNumber];
           });
         }
         if (isMounted.current) {
@@ -125,8 +118,7 @@ export default function AdvisoryDashboard({
   const fetchPublicAdvisory = async (selectedParkId) => {
     setIsGridLoading(true);
     setHasErrors(false);
-    let parkIdQuery =
-      selectedParkId > 0 ? `&protectedAreas.id=${selectedParkId}` : "";
+    let parkIdQuery = selectedParkId > 0 ? `&protectedAreas.id=${selectedParkId}` : "";
     const response = await Promise.all([
       getManagementAreas(cmsData, setCmsData),
       cmsAxios.get(
@@ -146,18 +138,14 @@ export default function AdvisoryDashboard({
     const publicAdvisories = response[1].data;
 
     const regionParksCount = managementAreas.reduce((region, item) => {
-      region[item.region.id] =
-        (region[item.region.id] || 0) + item.protectedAreas.length;
+      region[item.region.id] = (region[item.region.id] || 0) + item.protectedAreas.length;
       return region;
     }, {});
 
     const updatedPublicAdvisories = publicAdvisories.map((publicAdvisory) => {
       publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
-      publicAdvisory.associatedParks =
-        publicAdvisory.protectedAreas
-          .map((p) => p.protectedAreaName)
-          .join(", ") +
-        publicAdvisory.regions.map((r) => r.regionName).join(", ");
+      publicAdvisory.associatedParks = publicAdvisory.protectedAreas.map((p) => p.protectedAreaName).join(", ")
+        + publicAdvisory.regions.map((r) => r.regionName).join(", ");
 
       let regionsWithParkCount = [];
       if (publicAdvisory?.regions?.length > 0) {
