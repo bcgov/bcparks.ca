@@ -36,7 +36,7 @@ export default function AdvisoryDashboard({
   const history = useHistory();
   const { keycloak, initialized } = useKeycloak();
   const [toError, setToError] = useState(false);
-  const today = moment(new Date()).tz("America/Vancouver").toISOString();
+
   const [toCreate, setToCreate] = useState(false);
   const [selectedParkId, setSelectedParkId] = useState(0);
   const [publishedAdvisories, setPublishedAdvisories] = useState([]);
@@ -72,7 +72,6 @@ export default function AdvisoryDashboard({
   }, [isMounted]);
 
   useEffect(() => {
-
     const fetchParkNames = async () => {
       setIsLoading(true);
       const data = await getProtectedAreas(cmsData, setCmsData);
@@ -85,11 +84,66 @@ export default function AdvisoryDashboard({
     };
 
     fetchParkNames();
-  }, []);
+  }, [cmsData, setCmsData]);
 
   useEffect(() => {
-    fetchPublicAdvisory(selectedParkId);
-  }, [selectedParkId]);
+    const fetchPublicAdvisory = async () => {
+      setIsGridLoading(true);
+      setHasErrors(false);
+      let parkIdQuery = selectedParkId > 0 ? `&protectedAreas.id=${selectedParkId}` : "";
+      const response = await Promise.all([
+        getManagementAreas(cmsData, setCmsData),
+        cmsAxios.get(
+          `public-advisory-audits?_limit=1500&_sort=advisoryDate:DESC${parkIdQuery}`,
+          {
+            headers: { Authorization: `Bearer ${keycloak.token}` },
+          }
+        ),
+      ])
+      .catch(() => {
+        setHasErrors(true);
+      });
+  
+      getCurrentPublishedAdvisories(cmsData, setCmsData);
+  
+      const managementAreas = response[0];
+      const publicAdvisories = response[1].data;
+  
+      const regionParksCount = managementAreas.reduce((region, item) => {
+        region[item.region.id] = (region[item.region.id] || 0) + item.protectedAreas.length;
+        return region;
+      }, {});
+  
+      const today = moment(new Date()).tz("America/Vancouver").toISOString();
+      const updatedPublicAdvisories = publicAdvisories.map((publicAdvisory) => {
+        publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
+        publicAdvisory.associatedParks = publicAdvisory.protectedAreas.map((p) => p.protectedAreaName).join(", ")
+          + publicAdvisory.regions.map((r) => r.regionName).join(", ");
+  
+        let regionsWithParkCount = [];
+        if (publicAdvisory?.regions?.length > 0) {
+          publicAdvisory.regions.forEach((region) => {
+            region.count = regionParksCount[region.id];
+            regionsWithParkCount = [...regionsWithParkCount, region];
+          });
+          publicAdvisory.regions = regionsWithParkCount;
+        }
+  
+        return publicAdvisory;
+      });
+      if (isMounted.current) {
+        setPublicAdvisoriesData(updatedPublicAdvisories);
+      }
+      setIsGridLoading(false);
+    };
+
+    fetchPublicAdvisory();
+  }, [
+    cmsData,
+    setCmsData,
+    keycloak,
+    selectedParkId
+  ]);
 
   const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
     const advisoryStatuses = await getAdvisoryStatuses(cmsData, setCmsData);
@@ -113,55 +167,6 @@ export default function AdvisoryDashboard({
         }
       }
     }
-  };
-
-  const fetchPublicAdvisory = async (selectedParkId) => {
-    setIsGridLoading(true);
-    setHasErrors(false);
-    let parkIdQuery = selectedParkId > 0 ? `&protectedAreas.id=${selectedParkId}` : "";
-    const response = await Promise.all([
-      getManagementAreas(cmsData, setCmsData),
-      cmsAxios.get(
-        `public-advisory-audits?_limit=1500&_sort=advisoryDate:DESC${parkIdQuery}`,
-        {
-          headers: { Authorization: `Bearer ${keycloak.token}` },
-        }
-      ),
-    ])
-    .catch(() => {
-      setHasErrors(true);
-    });
-
-    getCurrentPublishedAdvisories(cmsData, setCmsData);
-
-    const managementAreas = response[0];
-    const publicAdvisories = response[1].data;
-
-    const regionParksCount = managementAreas.reduce((region, item) => {
-      region[item.region.id] = (region[item.region.id] || 0) + item.protectedAreas.length;
-      return region;
-    }, {});
-
-    const updatedPublicAdvisories = publicAdvisories.map((publicAdvisory) => {
-      publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
-      publicAdvisory.associatedParks = publicAdvisory.protectedAreas.map((p) => p.protectedAreaName).join(", ")
-        + publicAdvisory.regions.map((r) => r.regionName).join(", ");
-
-      let regionsWithParkCount = [];
-      if (publicAdvisory?.regions?.length > 0) {
-        publicAdvisory.regions.forEach((region) => {
-          region.count = regionParksCount[region.id];
-          regionsWithParkCount = [...regionsWithParkCount, region];
-        });
-        publicAdvisory.regions = regionsWithParkCount;
-      }
-
-      return publicAdvisory;
-    });
-    if (isMounted.current) {
-      setPublicAdvisoriesData(updatedPublicAdvisories);
-    }
-    setIsGridLoading(false);
   };
 
   const tableColumns = [
