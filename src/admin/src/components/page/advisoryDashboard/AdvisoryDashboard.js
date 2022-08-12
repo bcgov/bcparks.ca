@@ -20,13 +20,13 @@ import EditIcon from "@material-ui/icons/Edit";
 import InfoIcon from "@material-ui/icons/Info";
 import PublishIcon from "@material-ui/icons/Publish";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import { SvgIcon } from "@material-ui/core";
 
-import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
-
 import {
-  getProtectedAreas,
+  getRegions,
   getManagementAreas,
+  getProtectedAreas,
   getAdvisoryStatuses,
 } from "../../../utils/CmsDataUtil";
 
@@ -38,28 +38,18 @@ export default function AdvisoryDashboard({
   const [toError, setToError] = useState(false);
   const [toCreate, setToCreate] = useState(false);
   const [selectedParkId, setSelectedParkId] = useState(0);
+  const [selectedPark, setSelectedPark] = useState(null);
   const [publishedAdvisories, setPublishedAdvisories] = useState([]);
   const isMounted = useRef(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [isGridLoading, setIsGridLoading] = useState(false);
   const [hasErrors, setHasErrors] = useState(false);
-  const [parkNamesData, setParkNamesData] = useState([]);
-  const [publicAdvisoriesData, setPublicAdvisoriesData] = useState([]);
-
-  // Preserve filters
-  const [filters, setFilters] = useState([]);
-  useEffect(() => {
-    const advisoryFilters = window.localStorage.getItem('advisoryFilters');
-    if (advisoryFilters) {
-      setFilters(JSON.parse(advisoryFilters));
-    }
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem('advisoryFilters', JSON.stringify(filters));
-  }, [filters]);
-
-  const getFilterValue = (col) => filters.find((obj) => obj.fieldName === col.field)?.fieldValue;
+  const [originalPublicAdvisories, setOriginalPublicAdvisories] = useState([]);
+  const [publicAdvisories, setPublicAdvisories] = useState([]);
+  const [regions, setRegions] = useState([]);
+  const [managementAreas, setManagementAreas] = useState([]);
+  const [protectedAreas, setProtectedAreas] = useState([]);
+  const [originalProtectedAreas, setOriginalProtectedAreas] = useState([]);
+  const [selectedRegionId, setSelectedRegionId] = useState(0);
 
   if (!keycloak && !initialized) setToError(true);
 
@@ -71,78 +61,139 @@ export default function AdvisoryDashboard({
   }, [isMounted]);
 
   useEffect(() => {
-    const fetchParkNames = async () => {
+    const fetchData = async () => {
       setIsLoading(true);
-      const data = await getProtectedAreas(cmsData, setCmsData);
-      const parkNames = data.map((p) => ({
-        label: p.protectedAreaName,
-        value: p.id,
-      }));
-      setParkNamesData(parkNames);
-      setIsLoading(false);
-    };
+      if (initialized && keycloak) {
+        const res = await Promise.all([
+          getRegions(cmsData, setCmsData),
+          getManagementAreas(cmsData, setCmsData),
+          getProtectedAreas(cmsData, setCmsData),
+          cmsAxios.get(`public-advisory-audits?_limit=1500&_sort=advisoryDate:DESC`, { headers: { Authorization: `Bearer ${keycloak.token}` } })
+        ])
+        .catch(() => {
+          setError({ status: 500, message: "Error loading data" });
+          setToError(true);
+          setIsLoading(false);
+        });
+        // Regions
+        const regionsData = res[0];
 
-    fetchParkNames();
-  }, [cmsData, setCmsData]);
+        // Management Areas
+        const managementAreasData = res[1];
 
-  useEffect(() => {
-    const fetchPublicAdvisory = async () => {
-      setIsGridLoading(true);
-      setHasErrors(false);
-      let parkIdQuery = selectedParkId > 0 ? `&protectedAreas.id=${selectedParkId}` : "";
-      const response = await Promise.all([
-        getManagementAreas(cmsData, setCmsData),
-        cmsAxios.get(
-          `public-advisory-audits?_limit=1500&_sort=advisoryDate:DESC${parkIdQuery}`,
-          {
-            headers: { Authorization: `Bearer ${keycloak.token}` },
+        // Protected Areas
+        const protectedAreasData = res[2];
+
+        // Public Advisories
+        const regionParksCount = managementAreasData.reduce((region, item) => {
+          region[item.region.id] = (region[item.region.id] || 0) + item.protectedAreas.length;
+          return region;
+        }, {});
+
+        const publicAdvisories = res[3].data;
+        const today = moment(new Date()).tz("America/Vancouver").toISOString();
+        const updatedPublicAdvisories = publicAdvisories.map((publicAdvisory) => {
+          publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
+          publicAdvisory.associatedParks = publicAdvisory.protectedAreas.map((p) => p.protectedAreaName).join(", ")
+            + publicAdvisory.regions.map((r) => r.regionName).join(", ");
+    
+          let regionsWithParkCount = [];
+          if (publicAdvisory?.regions?.length > 0) {
+            publicAdvisory.regions.forEach((region) => {
+              region.count = regionParksCount[region.id];
+              regionsWithParkCount = [...regionsWithParkCount, region];
+            });
+            publicAdvisory.regions = regionsWithParkCount;
           }
-        ),
-      ])
-      .catch(() => {
-        setHasErrors(true);
-      });
-  
-      getCurrentPublishedAdvisories(cmsData, setCmsData);
-  
-      const managementAreas = response[0];
-      const publicAdvisories = response[1].data;
-  
-      const regionParksCount = managementAreas.reduce((region, item) => {
-        region[item.region.id] = (region[item.region.id] || 0) + item.protectedAreas.length;
-        return region;
-      }, {});
-  
-      const today = moment(new Date()).tz("America/Vancouver").toISOString();
-      const updatedPublicAdvisories = publicAdvisories.map((publicAdvisory) => {
-        publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
-        publicAdvisory.associatedParks = publicAdvisory.protectedAreas.map((p) => p.protectedAreaName).join(", ")
-          + publicAdvisory.regions.map((r) => r.regionName).join(", ");
-  
-        let regionsWithParkCount = [];
-        if (publicAdvisory?.regions?.length > 0) {
-          publicAdvisory.regions.forEach((region) => {
-            region.count = regionParksCount[region.id];
-            regionsWithParkCount = [...regionsWithParkCount, region];
-          });
-          publicAdvisory.regions = regionsWithParkCount;
-        }
-  
-        return publicAdvisory;
-      });
-      if (isMounted.current) {
-        setPublicAdvisoriesData(updatedPublicAdvisories);
-      }
-      setIsGridLoading(false);
-    };
+          return publicAdvisory;
+        });
 
-    fetchPublicAdvisory();
+        // Published Advisories
+        getCurrentPublishedAdvisories(cmsData, setCmsData);
+
+        if (isMounted.current) {
+          setRegions([...regionsData]);
+          setManagementAreas([...managementAreasData]);
+
+          setProtectedAreas([...protectedAreasData]);
+          setOriginalProtectedAreas([...protectedAreasData]);
+
+          setPublicAdvisories(updatedPublicAdvisories);
+          setOriginalPublicAdvisories(updatedPublicAdvisories);
+        }
+      }
+      setIsLoading(false);
+    }
+    fetchData();
   }, [
+    initialized,
+    keycloak,
     cmsData,
     setCmsData,
-    keycloak,
-    selectedParkId
+    setError
   ]);
+
+  const removeDuplicatesById = (arr) => {
+    return arr.filter((obj, index, self) => index === self.findIndex((o) => o.id === obj.id));
+  };
+
+  useEffect(() => {
+    const filterAdvisoriesByParkId = () => {
+      if (selectedParkId) {
+        let filteredPublicAdvsories = [];
+        originalPublicAdvisories.forEach((obj) => {
+          if (obj.protectedAreas.filter(p => p.id === selectedParkId).length > 0) {
+            filteredPublicAdvsories.push(obj);
+          }
+        });
+        setPublicAdvisories([...filteredPublicAdvsories]);
+      }
+      else {
+        setPublicAdvisories([...originalPublicAdvisories]);
+      }
+    };
+
+    filterAdvisoriesByParkId();
+  }, [selectedParkId, originalPublicAdvisories]);
+
+  useEffect(() => {
+    const filterAdvisoriesByRegionId = () => {
+      if (selectedRegionId) {
+        const filteredManagementAreas = managementAreas.filter((m) => {
+          return m.region.id === selectedRegionId;
+        });
+  
+        // Filter park names dropdown list
+        let list = [];
+        filteredManagementAreas.forEach((obj) => {
+          list = [...list.concat(obj.protectedAreas)];
+        });
+  
+        // Remove duplicates
+        const filteredProtectedAreas = removeDuplicatesById(list);
+        
+        // Filter advisories in grid
+        let filteredPublicAdvsories = [];
+  
+        originalPublicAdvisories.forEach((obj) => {
+          obj.protectedAreas.forEach(p => {
+            let idx = filteredProtectedAreas.findIndex(o => o.orcs === p.orcs);
+            if (idx !== -1) {
+              filteredPublicAdvsories.push(obj);
+            }
+          });
+        });
+  
+        setProtectedAreas([...filteredProtectedAreas]);
+        setPublicAdvisories([...removeDuplicatesById(filteredPublicAdvsories)]);
+      } else {
+        setProtectedAreas([...originalProtectedAreas]);
+        setPublicAdvisories([...originalPublicAdvisories]);
+      }
+    }
+
+    filterAdvisoriesByRegionId();
+  }, [selectedRegionId, managementAreas, originalProtectedAreas, originalPublicAdvisories]);
 
   const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
     const advisoryStatuses = await getAdvisoryStatuses(cmsData, setCmsData);
@@ -473,51 +524,56 @@ export default function AdvisoryDashboard({
                 />
               </div>
             </div>
-            <Select
-              options={parkNamesData}
-              onChange={(e) => setSelectedParkId(e ? e.value : 0)}
-              placeholder="Select a Park..."
-              className="bcgov-select"
-              isClearable
-            />
+            <div className="row ad-row">
+              <div className="col-lg-6 col-md-4 col-sm-12">
+                <Select
+                  options={regions.map((r) => ({ label: r.regionName + " Region", value: r.id }) )}
+                  onChange={(e) => {
+                    setSelectedPark(null);
+                    setSelectedParkId(0);
+                    setSelectedRegionId(e ? e.value : 0)
+                  }}
+                  placeholder="Select a Region..."
+                  className="bcgov-select"
+                  isClearable
+                />
+              </div>
+              <div className="col-lg-6 col-md-4 col-sm-12">
+                <Select
+                  value={selectedPark}
+                  options={protectedAreas.map((p) => ({ label: p.protectedAreaName, value: p.id }) )}
+                  onChange={(e) => {
+                    setSelectedPark(e);
+                    setSelectedParkId(e ? e.value : 0)
+                  }}
+                  placeholder="Select a Park..."
+                  className="bcgov-select"
+                  isClearable
+                />
+              </div>
+            </div>
           </div>
           <br />
-          {isGridLoading && (
-            <div className="page-loader">
-              <Loader page />
-            </div>
-          )}
-          {!isGridLoading && (
-            <div className="container-fluid">
-              <DataTable
-                key={publicAdvisoriesData.length}
-                options={{
-                  filtering: true,
-                  search: false,
-                  pageSize: 50,
-                  pageSizeOptions: [25, 50, 100],
-                }}
-                onFilterChange={(filters) => {
-                  const arrFilters = filters.map((obj) => {
-                    return { 
-                      fieldName: obj.column["field"],
-                      fieldValue: obj.value
-                    };
-                  });
-                  setFilters(arrFilters);
-                }}
-                columns={tableColumns.map((col) => ({ ...col, defaultFilter: getFilterValue(col) }))}
-                data={publicAdvisoriesData}
-                title=""
-                onRowClick={(event, rowData) => {
-                  history.push(`advisory-summary/${rowData.id}`);
-                }}
-                components={{
-                  Toolbar: (props) => <div></div>,
-                }}
-              />
-            </div>
-          )}
+          <div className="container-fluid">
+            <DataTable
+              key={publicAdvisories.length}
+              options={{
+                filtering: true,
+                search: false,
+                pageSize: 50,
+                pageSizeOptions: [25, 50, 100],
+              }}
+              columns={tableColumns}
+              data={publicAdvisories}
+              title=""
+              onRowClick={(event, rowData) => {
+                history.push(`advisory-summary/${rowData.id}`);
+              }}
+              components={{
+                Toolbar: (props) => <div></div>,
+              }}
+            />
+          </div>
         </div>
       )}
     </>
