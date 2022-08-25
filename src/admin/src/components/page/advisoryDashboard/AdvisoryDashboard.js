@@ -34,22 +34,24 @@ export default function AdvisoryDashboard({
   page: { setError, cmsData, setCmsData },
 }) {
   const history = useHistory();
+  const isMounted = useRef(true);
   const { keycloak, initialized } = useKeycloak();
   const [toError, setToError] = useState(false);
   const [toCreate, setToCreate] = useState(false);
+  const [selectedRegionId, setSelectedRegionId] = useState(0);
+  const [selectedRegion, setSelectedRegion] = useState(null);
   const [selectedParkId, setSelectedParkId] = useState(0);
   const [selectedPark, setSelectedPark] = useState(null);
   const [publishedAdvisories, setPublishedAdvisories] = useState([]);
-  const isMounted = useRef(true);
   const [isLoading, setIsLoading] = useState(false);
   const [hasErrors, setHasErrors] = useState(false);
   const [originalPublicAdvisories, setOriginalPublicAdvisories] = useState([]);
+  const [regionalPublicAdvisories, setRegionalPublicAdvisories] = useState([]);
   const [publicAdvisories, setPublicAdvisories] = useState([]);
   const [regions, setRegions] = useState([]);
   const [managementAreas, setManagementAreas] = useState([]);
   const [protectedAreas, setProtectedAreas] = useState([]);
   const [originalProtectedAreas, setOriginalProtectedAreas] = useState([]);
-  const [selectedRegionId, setSelectedRegionId] = useState(0);
 
   if (!keycloak && !initialized) setToError(true);
 
@@ -59,6 +61,43 @@ export default function AdvisoryDashboard({
       isMounted.current = false;
     };
   }, [isMounted]);
+
+  useEffect(() => {
+    filterAdvisoriesByRegionId(selectedRegionId);
+  }, [selectedRegionId]);
+
+  useEffect(() => {
+    if (selectedParkId !== -1) {
+      filterAdvisoriesByParkId(selectedParkId);
+    }
+  }, [selectedParkId]);
+
+  // Preserve filters
+  const defaultPageFilters = [
+    { filterName: 'region', filterValue: '', type: 'page'},
+    { filterName: 'park', filterValue: '', type: 'page'}
+  ];
+  const [filters, setFilters] = useState([...defaultPageFilters]);
+
+  useEffect(() => {
+    const filters = JSON.parse(localStorage.getItem('advisoryFilters'));
+    if (filters) {
+      setFilters([...filters]);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('advisoryFilters', JSON.stringify(filters));
+  }, [filters]);
+
+  const getTableFilterValue = (col) => {
+    return filters.find((obj) => obj.type === 'table' && obj.fieldName === col.field)?.fieldValue || '';
+  }
+
+  const getPageFilterValue = (filters, filterName) => {
+    return filters.find((obj) => obj.type === 'page' && obj.filterName === filterName)?.filterValue || 0;
+  }
+  /*-------------------------------------------------------------------------*/
 
   useEffect(() => {
     const fetchData = async () => {
@@ -120,6 +159,22 @@ export default function AdvisoryDashboard({
 
           setPublicAdvisories(updatedPublicAdvisories);
           setOriginalPublicAdvisories(updatedPublicAdvisories);
+
+          // Preserve filters
+          let filters = JSON.parse(localStorage.getItem('advisoryFilters'));
+          let regionId = getPageFilterValue(filters, 'region');
+          if (regionId) {
+            let region = regionsData.find((r) => (r.id === regionId));
+            setSelectedRegionId(regionId);
+            setSelectedRegion(({ label: region.regionName + " Region", value: region.id }));
+          }
+
+          let parkId = getPageFilterValue(filters, 'park');
+          if (parkId) {
+            let park = protectedAreasData.find((p) => (p.id === parkId));
+            setSelectedParkId(parkId);
+            setSelectedPark(({ label: park.protectedAreaName, value: park.id }));
+          }
         }
       }
       setIsLoading(false);
@@ -136,64 +191,60 @@ export default function AdvisoryDashboard({
   const removeDuplicatesById = (arr) => {
     return arr.filter((obj, index, self) => index === self.findIndex((o) => o.id === obj.id));
   };
+  
+  const filterAdvisoriesByParkId = (pId) => {
+    const advisories = selectedRegionId ? regionalPublicAdvisories : originalPublicAdvisories;
 
-  useEffect(() => {
-    const filterAdvisoriesByParkId = () => {
-      if (selectedParkId) {
-        let filteredPublicAdvsories = [];
-        originalPublicAdvisories.forEach((obj) => {
-          if (obj.protectedAreas.filter(p => p.id === selectedParkId).length > 0) {
+    if (pId) {
+      let filteredPublicAdvsories = [];
+      advisories.forEach((obj) => {
+        if (obj.protectedAreas.filter(p => p.id === pId).length > 0) {
+          filteredPublicAdvsories.push(obj);
+        }
+      });
+      setPublicAdvisories([...filteredPublicAdvsories]);
+    }
+    else {
+      setPublicAdvisories([...advisories]);
+    }
+  };
+
+  const filterAdvisoriesByRegionId = (regId) => {
+    if (regId) {
+      const filteredManagementAreas = managementAreas.filter((m) => {
+        return m.region.id === regId;
+      });
+
+      // Filter park names dropdown list
+      let list = [];
+      filteredManagementAreas.forEach((obj) => {
+        list = [...list.concat(obj.protectedAreas)];
+      });
+
+      // Remove duplicates
+      const filteredProtectedAreas = removeDuplicatesById(list);
+      
+      // Filter advisories in grid
+      let filteredPublicAdvsories = [];
+
+      originalPublicAdvisories.forEach((obj) => {
+        obj.protectedAreas.forEach(p => {
+          let idx = filteredProtectedAreas.findIndex(o => o.orcs === p.orcs);
+          if (idx !== -1) {
             filteredPublicAdvsories.push(obj);
           }
         });
-        setPublicAdvisories([...filteredPublicAdvsories]);
-      }
-      else {
-        setPublicAdvisories([...originalPublicAdvisories]);
-      }
-    };
+      });
 
-    filterAdvisoriesByParkId();
-  }, [selectedParkId, originalPublicAdvisories]);
-
-  useEffect(() => {
-    const filterAdvisoriesByRegionId = () => {
-      if (selectedRegionId) {
-        const filteredManagementAreas = managementAreas.filter((m) => {
-          return m.region.id === selectedRegionId;
-        });
-  
-        // Filter park names dropdown list
-        let list = [];
-        filteredManagementAreas.forEach((obj) => {
-          list = [...list.concat(obj.protectedAreas)];
-        });
-  
-        // Remove duplicates
-        const filteredProtectedAreas = removeDuplicatesById(list);
-        
-        // Filter advisories in grid
-        let filteredPublicAdvsories = [];
-  
-        originalPublicAdvisories.forEach((obj) => {
-          obj.protectedAreas.forEach(p => {
-            let idx = filteredProtectedAreas.findIndex(o => o.orcs === p.orcs);
-            if (idx !== -1) {
-              filteredPublicAdvsories.push(obj);
-            }
-          });
-        });
-  
-        setProtectedAreas([...filteredProtectedAreas]);
-        setPublicAdvisories([...removeDuplicatesById(filteredPublicAdvsories)]);
-      } else {
-        setProtectedAreas([...originalProtectedAreas]);
-        setPublicAdvisories([...originalPublicAdvisories]);
-      }
+      setProtectedAreas([...filteredProtectedAreas]);
+      setPublicAdvisories([...removeDuplicatesById(filteredPublicAdvsories)]);
+      setRegionalPublicAdvisories([...removeDuplicatesById(filteredPublicAdvsories)]);
+    } else {
+      setProtectedAreas([...originalProtectedAreas]);
+      setPublicAdvisories([...originalPublicAdvisories]);
+      setRegionalPublicAdvisories([...originalPublicAdvisories]);
     }
-
-    filterAdvisoriesByRegionId();
-  }, [selectedRegionId, managementAreas, originalProtectedAreas, originalPublicAdvisories]);
+  };
 
   const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
     const advisoryStatuses = await getAdvisoryStatuses(cmsData, setCmsData);
@@ -527,11 +578,21 @@ export default function AdvisoryDashboard({
             <div className="row ad-row">
               <div className="col-lg-6 col-md-4 col-sm-12">
                 <Select
+                  value={selectedRegion}
                   options={regions.map((r) => ({ label: r.regionName + " Region", value: r.id }) )}
                   onChange={(e) => {
+                    setSelectedRegion(e);
+                    setSelectedRegionId(e ? e.value : 0);
+
                     setSelectedPark(null);
-                    setSelectedParkId(0);
-                    setSelectedRegionId(e ? e.value : 0)
+                    setSelectedParkId(-1); // Do not filter by parkId
+
+                    let arr = [...filters.filter((o) => !(o.type === 'page'))];
+                    setFilters([
+                      ...arr,
+                      {type: 'page', filterName: 'region', filterValue: e ? e.value : 0},
+                      {type: 'page', filterName: 'park', filterValue: 0}, // Reset park filter
+                    ]);
                   }}
                   placeholder="Select a Region..."
                   className="bcgov-select"
@@ -544,7 +605,10 @@ export default function AdvisoryDashboard({
                   options={protectedAreas.map((p) => ({ label: p.protectedAreaName, value: p.id }) )}
                   onChange={(e) => {
                     setSelectedPark(e);
-                    setSelectedParkId(e ? e.value : 0)
+                    setSelectedParkId(e ? e.value : 0);
+
+                    let arr = [...filters.filter((o) => !(o.type === 'page' && o.filterName === 'park'))];
+                    setFilters([...arr, {type: 'page', filterName: 'park', filterValue: e ? e.value : 0}]);
                   }}
                   placeholder="Select a Park..."
                   className="bcgov-select"
@@ -563,7 +627,18 @@ export default function AdvisoryDashboard({
                 pageSize: 50,
                 pageSizeOptions: [25, 50, 100],
               }}
-              columns={tableColumns}
+              onFilterChange={(filters) => {
+                const advisoryFilters = JSON.parse(localStorage.getItem('advisoryFilters'));
+                const arrFilters = filters.map((obj) => {
+                  return { 
+                    fieldName: obj.column["field"],
+                    fieldValue: obj.value,
+                    type: 'table'
+                  };
+                });
+                setFilters([...advisoryFilters.filter(o => o.type === 'page'), ...arrFilters]);
+              }}
+              columns={tableColumns.map((col) => ({ ...col, defaultFilter: getTableFilterValue(col) }))}
               data={publicAdvisories}
               title=""
               onRowClick={(event, rowData) => {
