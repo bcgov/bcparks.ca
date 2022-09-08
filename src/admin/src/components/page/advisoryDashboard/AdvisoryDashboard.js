@@ -26,7 +26,7 @@ import { SvgIcon } from "@material-ui/core";
 import {
   getRegions,
   getManagementAreas,
-  getProtectedAreas,
+  getParkNames,
   getAdvisoryStatuses,
 } from "../../../utils/CmsDataUtil";
 
@@ -50,8 +50,8 @@ export default function AdvisoryDashboard({
   const [publicAdvisories, setPublicAdvisories] = useState([]);
   const [regions, setRegions] = useState([]);
   const [managementAreas, setManagementAreas] = useState([]);
-  const [protectedAreas, setProtectedAreas] = useState([]);
-  const [originalProtectedAreas, setOriginalProtectedAreas] = useState([]);
+  const [parkNames, setParkNames] = useState([]);
+  const [originalParkNames, setOriginalParkNames] = useState([]);
 
   if (!keycloak && !initialized) setToError(true);
 
@@ -106,7 +106,7 @@ export default function AdvisoryDashboard({
         const res = await Promise.all([
           getRegions(cmsData, setCmsData),
           getManagementAreas(cmsData, setCmsData),
-          getProtectedAreas(cmsData, setCmsData),
+          getParkNames(cmsData, setCmsData),
           cmsAxios.get(`public-advisory-audits?_limit=1500&_sort=advisoryDate:DESC`, { headers: { Authorization: `Bearer ${keycloak.token}` } })
         ])
         .catch(() => {
@@ -121,7 +121,7 @@ export default function AdvisoryDashboard({
         const managementAreasData = res[1];
 
         // Protected Areas
-        const protectedAreasData = res[2];
+        const parkNamesData = res[2];
 
         // Public Advisories
         const regionParksCount = managementAreasData.reduce((region, item) => {
@@ -154,8 +154,8 @@ export default function AdvisoryDashboard({
           setRegions([...regionsData]);
           setManagementAreas([...managementAreasData]);
 
-          setProtectedAreas([...protectedAreasData]);
-          setOriginalProtectedAreas([...protectedAreasData]);
+          setParkNames([...parkNamesData]);
+          setOriginalParkNames([...parkNamesData]);
 
           setPublicAdvisories(updatedPublicAdvisories);
           setOriginalPublicAdvisories(updatedPublicAdvisories);
@@ -171,9 +171,9 @@ export default function AdvisoryDashboard({
 
           let parkId = getPageFilterValue(filters, 'park');
           if (parkId) {
-            let park = protectedAreasData.find((p) => (p.id === parkId));
+            let park = parkNamesData.find((p) => (p.id === parkId));
             setSelectedParkId(parkId);
-            setSelectedPark(({ label: park.protectedAreaName, value: park.id }));
+            setSelectedPark(({ label: park.parkName, value: park.id }));
           }
         }
       }
@@ -196,9 +196,11 @@ export default function AdvisoryDashboard({
     const advisories = selectedRegionId ? regionalPublicAdvisories : originalPublicAdvisories;
 
     if (pId) {
-      let filteredPublicAdvsories = [];
+      const filteredPublicAdvsories = [];
+      const currentParkObj = parkNames.find(o => o.id === pId);
+
       advisories.forEach((obj) => {
-        if (obj.protectedAreas.filter(p => p.id === pId).length > 0) {
+        if (obj.protectedAreas.filter(p => p.id === currentParkObj.protectedArea.id).length > 0) {
           filteredPublicAdvsories.push(obj);
         }
       });
@@ -225,22 +227,31 @@ export default function AdvisoryDashboard({
       const filteredProtectedAreas = removeDuplicatesById(list);
       
       // Filter advisories in grid
-      let filteredPublicAdvsories = [];
+      const filteredPublicAdvsories = [];
 
       originalPublicAdvisories.forEach((obj) => {
         obj.protectedAreas.forEach(p => {
-          let idx = filteredProtectedAreas.findIndex(o => o.orcs === p.orcs);
+          let idx = filteredProtectedAreas.findIndex(o => o?.orcs === p?.orcs);
           if (idx !== -1) {
             filteredPublicAdvsories.push(obj);
           }
         });
       });
 
-      setProtectedAreas([...filteredProtectedAreas]);
+      // Filter park names in dropdown options
+      const filteredParkNames = [];
+      originalParkNames.forEach((p) => {
+        let idx = filteredProtectedAreas.findIndex(o => o?.orcs === p?.protectedArea?.orcs);
+        if (idx !== -1) {
+          filteredParkNames.push(p);
+        }
+      });
+
+      setParkNames([...filteredParkNames]);
       setPublicAdvisories([...removeDuplicatesById(filteredPublicAdvsories)]);
       setRegionalPublicAdvisories([...removeDuplicatesById(filteredPublicAdvsories)]);
     } else {
-      setProtectedAreas([...originalProtectedAreas]);
+      setParkNames([...originalParkNames]);
       setPublicAdvisories([...originalPublicAdvisories]);
       setRegionalPublicAdvisories([...originalPublicAdvisories]);
     }
@@ -494,15 +505,22 @@ export default function AdvisoryDashboard({
           );
         }
 
-        const parksCount = rowData.protectedAreas.length;
-        let protectedAreas = rowData.protectedAreas.slice(0, displayCount);
+        const rowParkNames = [];
+        originalParkNames.filter(pn => pn.parkNameType.nameType === "Escaped").forEach((p) => {
+          let idx = rowData.protectedAreas.findIndex(o => o?.orcs === p?.protectedArea?.orcs);
+          if (idx !== -1 && p.parkNameType.nameType === "Escaped") {
+            rowParkNames.push(p);
+          }
+        });
 
+        let parksCount = rowParkNames.length;
+        let parkNames = rowParkNames.slice(0, displayCount);
         return (
           <div>
-            {protectedAreas.map((p, i) => (
+            {parkNames.map((p, i) => (
               <span key={i}>
-                {p.protectedAreaName}
-                {protectedAreas.length - 1 > i && ", "}
+                {p.parkName}
+                {parkNames.length - 1 > i && ", "}
               </span>
             ))}
             {parksCount > displayCount && (
@@ -602,7 +620,7 @@ export default function AdvisoryDashboard({
               <div className="col-lg-6 col-md-4 col-sm-12">
                 <Select
                   value={selectedPark}
-                  options={protectedAreas.map((p) => ({ label: p.protectedAreaName, value: p.id }) )}
+                  options={parkNames.filter(pn => pn.parkNameType.nameType === "Escaped").map((p) => ({ label: p.parkName, value: p.id }) )}
                   onChange={(e) => {
                     setSelectedPark(e);
                     setSelectedParkId(e ? e.value : 0);
