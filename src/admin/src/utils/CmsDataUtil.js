@@ -215,3 +215,19 @@ export function getStandardMessages(cmsData, setCmsData) {
     return cmsData.standardMessages;
   }
 }
+
+export function getParkNames(cmsData, setCmsData) {
+  if (!cmsData.parkNames) {
+    const result = cmsAxios
+      .get(`/park-names/items`)
+      .then((res) => {
+        const data = cmsData;
+        data.parkNames = res.data;
+        setCmsData(data);
+        return res.data;
+      });
+    return result;
+  } else {
+    return cmsData.parkNames;
+  }
+}

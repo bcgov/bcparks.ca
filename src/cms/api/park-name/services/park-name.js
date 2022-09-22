@@ -27,4 +27,22 @@ module.exports = {
       }, {})
     ).map(([key, value]) => ({ orcs: key, parkNames: value }));
   },
+  async items() {
+    const parkNameData = await strapi.query("park-name").find({
+      _limit: -1,
+    });
+
+    return parkNameData.map(({ parkName, id, parkNameType, protectedArea }) => ({
+      id,
+      parkName,
+      parkNameType: {
+        nameTypeId: parkNameType.nameTypeId,
+        nameType: parkNameType.nameType,
+      },
+      protectedArea: {
+        orcs: protectedArea?.orcs,
+        id: protectedArea?.id
+      }
+    }));
+  },
 };

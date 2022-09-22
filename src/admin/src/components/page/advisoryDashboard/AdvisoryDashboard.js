@@ -22,6 +22,7 @@ import PublishIcon from "@material-ui/icons/Publish";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import { SvgIcon } from "@material-ui/core";
+import { decode } from "he";
 
 import {
   getRegions,
@@ -197,7 +198,7 @@ export default function AdvisoryDashboard({
 
     if (pId) {
       const filteredPublicAdvsories = [];
-      const currentParkObj = parkNames.find(o => o.id === pId);
+      const currentParkObj = parkNames.find(o => o.protectedArea?.id === pId);
 
       advisories.forEach((obj) => {
         if (obj.protectedAreas.filter(p => p.id === currentParkObj.protectedArea.id).length > 0) {
@@ -519,7 +520,7 @@ export default function AdvisoryDashboard({
           <div>
             {parkNames.map((p, i) => (
               <span key={i}>
-                {p.parkName}
+                <span dangerouslySetInnerHTML={{ __html: p.parkName }} />
                 {parkNames.length - 1 > i && ", "}
               </span>
             ))}
@@ -620,7 +621,12 @@ export default function AdvisoryDashboard({
               <div className="col-lg-6 col-md-4 col-sm-12">
                 <Select
                   value={selectedPark}
-                  options={parkNames.filter(pn => pn.parkNameType.nameType === "Escaped").map((p) => ({ label: p.parkName, value: p.id }) )}
+                  options={parkNames
+                    .filter(pn => pn.parkNameType.nameType === "Escaped")
+                    .map(p => ({
+                      label: decode(p.parkName).replace(/(<([^>]+)>)/gi, ""),
+                      value: p.protectedArea?.id
+                    }))}
                   onChange={(e) => {
                     setSelectedPark(e);
                     setSelectedParkId(e ? e.value : 0);

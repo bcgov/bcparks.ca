@@ -5,4 +5,10 @@
  * to customize this controller
  */
 
-module.exports = {};
+module.exports = {
+  async items() {
+    // custom route for lightweight park names used in client app
+    const entities = await strapi.services["park-name"].items();
+    return entities;
+  },
+};
