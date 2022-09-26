@@ -15,6 +15,14 @@
       "config": {
         "policies": []
       }
+    },    
+    {
+      "method": "GET",
+      "path": "/park-names/items",
+      "handler": "park-name.items",
+      "config": {
+        "policies": []
+      }
     },
     {
       "method": "GET",
