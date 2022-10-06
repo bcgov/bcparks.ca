@@ -21,7 +21,7 @@ export default function ParkHeader({
         <div className="col-12 no-padding">
           <Grid item xs={12}>
             <Box mt={0}>
-              <h1 className="park-heading">{park.protectedAreaName}</h1>
+              <h1>{park.protectedAreaName}</h1>
             </Box>
           </Grid>
           <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">

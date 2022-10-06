@@ -167,9 +167,6 @@ export default function StaticContent1({ pageContext }) {
       </div>
       {hasTitle && (
         <div className="static-content--header">
-          <div className="header-title header-title--desktop d-none d-md-block">
-            {pageTitle}
-          </div>
           {headerContent.imageUrl && (
             <div className="header-image-wrapper">
               <img
@@ -178,9 +175,9 @@ export default function StaticContent1({ pageContext }) {
               />
             </div>
           )}
-          <div className="header-title header-title--mobile d-block d-md-none">
+          <h1 className="header-title">
             {pageTitle}
-          </div>
+          </h1>
         </div>
       )}
       {hasSections && (

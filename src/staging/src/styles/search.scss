@@ -809,10 +809,6 @@ div[class$="-singleValue"] {
 }
 
 .search-results-main {
-  color: $colorBlue !important;
-  font-family: $globalFont !important;
-  font-size: $bodyFont !important;
-
   .park-search-text-box-container {
     padding-right: 20px;
   }
@@ -829,10 +825,6 @@ div[class$="-singleValue"] {
 
   .search-results-container {
     padding-top: 40px !important;
-  }
-
-  .headline-text {
-    color: $colorBlack;
   }
 
   .text-blue {

@@ -51,41 +51,37 @@ $colorComponent: #606060;
 /* ---- HEADER ---- */
 
 .static-content--header {
-  .header-image-wrapper {
-    max-height: 455px;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .header-title {
-    font-size: 2rem;
-    color: $colorBluePrimary;
-    font-weight: 700;
-  }
-  .header-title--desktop {
-    margin-bottom: 30px;
-  }
-  .header-title--mobile {
-    margin: 16px;
-  }
-  @media (max-width: 576px) {
-    .header-image-wrapper {
-      height: 345px;
-      width: 100%;
-
-      img {
-        height: 100%;
-      }
-    }
-  }
-}
-@media (min-width: 576px) {
-  .static-content--header {
+  display: flex;
+  flex-wrap: wrap;
+  @media (min-width: 576px) {
     max-width: 1140px;
     margin: 0 auto;
     padding: 40px 40px 10px 40px;
   }
+
+  .header-image-wrapper {
+    height: 345px;
+    order: 1;
+    > img {
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    @media (min-width: 576px) {
+      height: 455px;
+      order: 2
+    }
+  }
+  .header-title {
+    margin: 16px;
+    order: 2;
+    @media (min-width: 576px) {
+      margin: 0 0 32px;
+      order: 1;
+    }
+  }
 }
+
 .page-header--caption {
   color: #656565;
   font-size: 0.9rem;
