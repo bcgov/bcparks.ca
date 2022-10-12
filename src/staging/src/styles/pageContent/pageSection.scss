@@ -4,22 +4,20 @@
     margin-top:80px;
 }
 
-.page-section-title {
-  font-size: 1.5rem;
-    color: $colorLink;
-    font-weight: bold;
-    margin-bottom: 0;
+h2.page-section-title {
+    position: relative;
+    margin-top: 80px;
+    margin-bottom: 40px;
+    &::after {
+        position: absolute;
+        content: "";
+        background-color: $colorGoldPrimary;
+        height: 2px;
+        width: 75px;
+        bottom: -12px;
+        left: 0;
+      }
 }
-.page-section-hr {
-    > hr {
-      margin-top: 5px;
-      height: 1px;
-      background-color: $colorGoldPrimary;
-      width: 75px;
-      display: inline-block;
-    }
-}
-
 
 /* style variation for home */
 #home {
@@ -27,12 +25,19 @@
         text-align: center;
     }
     .page-section-title {
-        font-size:36px;
+        font-size: 36px;
         color: $colorBluePrimary;
-        font-weight: bold;
+        font-weight: 700;
     }
     .page-section-hr {
         margin: 20px;
+        & hr {    
+            background-color: $colorGoldPrimary;
+            display: inline-block;
+            height: 1px;
+            margin-top: 5px;
+            width: 75px;
+        }
     }
 }
 

@@ -10,8 +10,7 @@ export default function PageSection({ sectionId, sectionTitle, sectionHtml})
     return (
         <>
             <div className="page-section" id={"page-section-" + sectionId}>
-                <div className="page-section-title">{sectionTitle}</div>
-                <div className="page-section-hr"><hr /></div>
+                <h2 className="page-section-title">{sectionTitle}</h2>
 
                 <HTMLArea className="page-section-html" isVisible={true}>
                     {sectionHtml}

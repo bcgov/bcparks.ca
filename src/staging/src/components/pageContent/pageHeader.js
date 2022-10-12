@@ -1,3 +1,5 @@
+// Note: I don't think this template does anything
+
 import React from "react"
 
 import "../../styles/pageContent/pageHeader.scss"

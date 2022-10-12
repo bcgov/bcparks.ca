@@ -28,8 +28,8 @@ const NotFoundPage = () => (
         <div className="not-found-container d-flex align-items-center justify-content-center container">
           <div className="p-3">
             <div className="mx-2">
-              <h1>This page is still being designed.</h1>
-              <h1>Please visit our featured pages below.</h1>
+              <h1>This page is still being designed.<br /><br />
+                Please visit our featured pages below.</h1>
             </div>
             <div className="mt-2 d-flex justify-content-center">
               <div className="row">
