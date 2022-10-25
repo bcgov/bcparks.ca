@@ -38,6 +38,7 @@ import SafetyInfo from "../components/park/safetyInfo"
 import ScrollToTop from "../components/scrollToTop"
 
 import "../styles/parks.scss"
+import { PARK_NAME_TYPE } from "../utils/constants";
 
 const drawerWidth = 230
 
@@ -235,6 +236,8 @@ export default function ParkTemplate({ data }) {
     mapZoom: park.mapZoom,
   }
 
+  const parkName = park.parkNames.find(item=> item.parkNameType === PARK_NAME_TYPE.Escaped).parkName || park.protectedAreaName
+
   const breadcrumbs = [
     <Link key="1" href="/">
       Home
@@ -243,14 +246,14 @@ export default function ParkTemplate({ data }) {
       Find a Park
     </Link>,
     <div key="3" className="breadcrumb-text">
-      {park.protectedAreaName}
+      {parkName}
     </div>,
   ]
 
   return (
     <div className="grey-background">
       <Helmet>
-        <title>BC Parks | {park.protectedAreaName}</title>
+        <title>BC Parks | {parkName}</title>
       </Helmet>
       <Header mode="internal" content={menuContent} />
       <ScrollToTop />
@@ -276,7 +279,7 @@ export default function ParkTemplate({ data }) {
             </Grid>
             <Grid item xs={12} sm={12}>
               <ParkHeader
-                park={park}
+                parkName={parkName || park.protectedAreaName}
                 hasReservations={hasReservations}
                 hasDayUsePass={hasDayUsePass}
                 isLoadingAdvisories={isLoadingAdvisories}
@@ -492,6 +495,11 @@ export const query = graphql`
           rank
         }
       }
+      parkNames {
+        parkNameType
+        parkName
+        id
+      }
       parkOperation {
         openDate
         closeDate
@@ -610,6 +618,7 @@ export const query = graphql`
           rank
         }
       }
+      
     }
     # Park photos are split into featured and non-featured in order to sort correctly,
     # with null values last.

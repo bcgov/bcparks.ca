@@ -39,6 +39,7 @@ import dayUseIcon from "../images/park/day-use.png"
 import parksLogo from "../images/Mask_Group_5.png"
 
 import "../styles/search.scss"
+import { PARK_NAME_TYPE } from "../utils/constants";
 
 export const query = graphql`
   query {
@@ -97,6 +98,19 @@ export const query = graphql`
         strapiParent {
           id
           title
+        }
+      }
+    },
+    allStrapiProtectedArea(      
+      sort: {fields: parent___internal___type}
+      ){
+      nodes {
+        type, 
+        typeCode,
+        parkNames {
+          parkNameType
+          parkName
+          id
         }
       }
     }
@@ -468,6 +482,8 @@ export default function Explore({ location, data }) {
     setSearchResults,
     setTotalResults,
   ])
+
+ const getParkName = item => item.parkNameType === PARK_NAME_TYPE.Escaped
 
   return (
     <>
@@ -926,7 +942,7 @@ export default function Explore({ location, data }) {
                                             className="p10t"
                                           >
                                             <h3 className="park-heading-text">
-                                              {r.protectedAreaName}
+                                              {r.parkNames.find(getParkName).parkName || r.protectedAreaName }
                                             </h3>
                                           </Link>
 
@@ -1121,7 +1137,7 @@ export default function Explore({ location, data }) {
                                             className="p10t"
                                           >
                                             <h3 className="park-heading-text">
-                                              {r.protectedAreaName}
+                                            {r.parkNames.find(getParkName).parkName || r.protectedAreaName }
                                             </h3>
                                           </Link>
                                         </div>
