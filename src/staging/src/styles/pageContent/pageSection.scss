@@ -28,15 +28,11 @@ h2.page-section-title {
         font-size: 36px;
         color: $colorBluePrimary;
         font-weight: 700;
-    }
-    .page-section-hr {
-        margin: 20px;
-        & hr {    
-            background-color: $colorGoldPrimary;
-            display: inline-block;
-            height: 1px;
-            margin-top: 5px;
-            width: 75px;
+        margin-top: 90px;
+        margin-bottom: 80px;
+        &::after {
+            left: calc(50% - 37px);
+            bottom: -36px;
         }
     }
 }
