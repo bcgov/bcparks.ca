@@ -1,5 +1,5 @@
 "use strict";
 
-module.exports = async (/* ctx */) => {
-  // return ctx.notFound('My custom message 404');
+module.exports = async (ctx) => {
+  return ctx.notFound('404 - not found');
 };
