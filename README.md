@@ -1,10 +1,26 @@
-# BC Parks CMS
+# BC Parks CMS <!-- omit in toc -->
 
 [![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999)](<Redirect-URL>)
 
-## Summary
+## Summary <!-- omit in toc -->
 
-A data driven progressive mobile web site that provides potential BC Park visitors with information on provincial parks, conservation areas, and ecological reserves.  Content on these pages includes descriptions, activities, amenities, park status, etc.
+An API-driven, fully responsive web site that provides potential BC Park visitors with information on provincial parks, conservation areas, and ecological reserves.  Content on these pages includes descriptions, activities, amenities, park status, etc.
+
+This site is built using [Strapi CMS](https://strapi.io), a headless CMS, and [Gatsby](https://www.gatsbyjs.com); an open-source static site generator built on top of [Node.js](https://nodejs.org/en/) using [React](https://reactjs.org) and [GraphQL](https://graphql.org).
+
+## Table of Contents <!-- omit in toc -->
+
+- [Links](#links)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+- [Commit/branching](#commitbranching)
+- [Application walkthrough](#application-walkthrough)
+- [Communication Channels](#communication-channels)
+- [Additional Documentation](#additional-documentation)
+- [Deployment](#deployment)
+
+- [Backend Development - Strapi Localhost](src/cms/README.md)
+- [Frontend development - Gatsby/GraphQL](src/staging/README.md)
 
 ## Links
 
@@ -19,31 +35,54 @@ Prod | Test | Dev
 [Sample API endpoint](https://cms.bcparks.ca/urgencies)| [Test - Sample API Endpoint](https://test-cms.bcparks.ca/urgencies)| [Dev - Sample API Endpoint](https://dev-cms.bcparks.ca/urgencies) |
 [GraphQL](https://cms.bcparks.ca/graphql)              | [Test - GraphQL](https://test-cms.bcparks.ca/graphql)              | [Dev - GraphQL](https://dev-cms.bcparks.ca/graphql)               |
 
-## Styling Guidelines
+## Getting Started 
 
---- CMS Content:
+Running a local environment allows users to quickly see changes without waiting for a full build (10+ minutes). The local environment setup described below uses Gatsby JS to render the site frontend locally, and you can choose to set up a local Strapi CMS instance or use an external Strapi CMS instance (TEST or PROD) as the datasource.
 
-Use Bootstrap - Bootstrap classes are applied to both the CMS and public website, so these are the best classes to use in CMS content, allowing editors to better preview the content layout. In particular, use Bootstrap for responsive layout, and basic spacing and sizing. Target Bootstrap 4.
+IMPORTANT: this process is not currently working on Windows without virtualisation. It is known to work on OS X, and inside a Linux container running in VMWare Player.
 
-CMS Snippets - A collection of html snippets for custom layout elements, such as stylized buttons, will be maintained at the slug "/cms-snippets" for handy re-use. Any custom (non-bootstrap) classes used here should have a cms- prefix so they can be quickly identified and maintained separately from other global classes eg. class="cms-advisory-link" which should be maintained in the styles/cmsSnippets folder.
+### Prerequisites
 
-Note that changing cms- classes may have non-obvious effects on CMS content. Avoid making changes to cms- classes. If an adjustment is needed in a specific case, consider adding a --variation of a class to capture that case.
+1.  Ensure you have a command-line shell (like PowerShell, iTerm or the terminal integrated with Visual Studio Code) and Node JS 14 installed (the node version must be 14 - newer versions do not work).
 
-Miscellaneous Global Styles - Avoid using classes in CMS content that are defined in the app but are not Bootstrap or cms- classes. Using classes that are globally defined, or in a css file for a particular page, can be very dangerous as a dev editing a styling rule may not realize their change will apply to CMS content, as well as their target elements. 
+2. If you're running Strapi locally, you'll need to have [Docker](https://www.docker.com) installed. 
 
---- Non-CMS Content:
+3. Create a fork of the repo from https://github.com/bcgov/bcparks.ca
+    
+4.  Clone your forked git repository into a local directory
 
-React component styling - For elements that are specific to component views, define those styles in component-specific scss files, and use nested defnitions to give styles for subelements a narrow scope. Avoid putting component-specific styles in global stylesheets where naming and rule conflicts are more likely.
 
-Use Bootstrap Components - Use Bootstrap component libraries where possible, and replace MUI components with Bootstrap equivalents as you work, ultimately removing MUI altogether. 
+## Commit/branching
 
-Use Bootstrap Classes - When appropriate, and when it aids in readability. In particular, use Bootstrap for responsive layout.
+Each developer should create a feature branch for work on their forked repo that relates to the associated JIRA issue. (example: `username/bcparks.ca/CM-123-brief-description`
 
-Page Styling - For styling that is specific to different pages (e.g. home, alerts) or page templates (e.g. staticLanding) keep styles within scss files that are specific to, and only loaded by, those pages and templates.
+Ensure you've added the upstream repo on your local: 
+```git remote add upstream git@github.com:bcgov/bcparks.ca.git```
 
--- General:
-Font sizing - Use rem units for font sizes
-Icons - Use FontAwesome icons e.g class="fa fa-warning" (and not MUI icons)
-BEM - When appropriate, help your fellow dev by using BEM naming conventions to indicate when a class is a --variation or a __subelement.
-Scss - When appropriate, use Scss to aid in readability and to narrow the scope of contextual styling rules. Use variables for globals like brand colors and fonts, and only define those once, when possible.
-Global - Only place truly global styles in global.scss
+Prior to creating a PR, it's good practice to sync your fork with the upstream repo. `git checkout main` and then `git pull upstream main` followed by checking out your branch and then running `git rebase main`
+
+Alternatively, you could do this in GitHub, and use the 'Sync fork' button in your forked repo, and then pull it into your local.
+
+For full details on how to create a PR, refer to the instructions on [Confluence](#additional-documentation).
+
+ 
+## Application walkthrough
+
+Detailed instructions on how to perform common tasks in the CMS can be found on [Confluence](#additional-documentation).
+
+ 
+## Communication Channels
+
+Most communications are handled through the BC Parks Service Transformation Microsoft Teams instance. Please reach out to your Project Manager for access.
+  
+
+## Additional Documentation
+
+BCP Web Team Jira Board: https://bcparksdigital.atlassian.net/jira/software/projects/BWT/boards/5
+
+Confluence: https://apps.nrs.gov.bc.ca/int/confluence/pages/viewpage.action?pageId=109185900
+
+
+## Deployment
+
+Deployment and content sync information can be found on the [Confluence](#additional-documentation) page.
