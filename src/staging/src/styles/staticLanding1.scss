@@ -38,22 +38,15 @@ $xlBreakpoint: 1200px;
   }
 
   &__image {
-    // Hack to ignore p tag injected by CKEditor around images
-    > p {
-      display: inline;
-    }
-
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 400px;
     @media screen and (min-width: $mdBreakpoint) {
       height: auto;
       margin-left: auto;
       order: 2;
       width: 720px;
-    }
-
-    img {
-      max-width: 100%;
-      object-fit: cover;
-      object-position: left top;
     }
   }
 
