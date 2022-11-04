@@ -1,6 +1,83 @@
 {
   "protectedArea": [
     {
+      "orcs": "103",
+      "protectedAreaName": "Barkerville Park",
+      "url": "https://bcparks.ca/explore/parkpgs/barkerville/",
+      "latitude": "53.0849699999999",
+      "longitude": "-121.515158",
+      "mapZoom": "10",
+      "fogZone": false,
+      "dayUsePass": false,
+      "status": "Repealed"
+    },
+    {
+      "orcs": "100",
+      "protectedAreaName": "Bright Angel Park",
+      "url": "https://bcparks.ca/explore/parkpgs/bright_angel/",
+      "latitude": "48.735642",
+      "longitude": "-123.676848",
+      "mapZoom": "10",
+      "fogZone": false,
+      "dayUsePass": false,
+      "status": "Repealed"
+    },
+    {
+      "orcs": "309",
+      "protectedAreaName": "Canal Flats Park",
+      "url": "https://bcparks.ca/explore/parkpgs/canal_flats/",
+      "latitude": "50.178058",
+      "longitude": "-115.817595",
+      "mapZoom": "10",
+      "fogZone": false,
+      "dayUsePass": false,
+      "status": "Repealed"
+    },
+    {
+      "orcs": "342",
+      "protectedAreaName": "Cascade Recreation Area",
+      "url": "https://bcparks.ca/explore/parkpgs/cascade/",
+      "latitude": "49.292025",
+      "longitude": "-120.916916",
+      "mapZoom": "10",
+      "fogZone": false,
+      "dayUsePass": false,
+      "status": "Repealed"
+    },
+    {
+      "orcs": "1076",
+      "protectedAreaName": "Kakwa Recreation Area",
+      "url": "https://bcparks.ca/recreation-areas/kakwa/",
+      "latitude": "53.954578",
+      "longitude": "-120.243835",
+      "mapZoom": "10",
+      "fogZone": false,
+      "dayUsePass": false,
+      "status": "Repealed"
+    },
+    {
+      "orcs": "175",
+      "protectedAreaName": "Spahats Creek Park",
+      "url": "https://bcparks.ca/explore/parkpgs/wg_spah/",
+      "latitude": "51.7375",
+      "longitude": "-120.00833",
+      "mapZoom": "12",
+      "fogZone": false,
+      "dayUsePass": false,
+      "status": "Repealed"
+    },
+    {
+      "orcs": "260",
+      "protectedAreaName": "Truman Dagnus Locheed Park",
+      "url": "https://bcparks.ca/explore/parkpgs/truman/",
+      "latitude": "50.221278",
+      "longitude": "-119.374331",
+      "mapZoom": "10",
+      "fogZone": false,
+      "dayUsePass": false,
+      "status": "Repealed"
+    },
+    {
       "orcs": "18",
       "protectedAreaName": "Tweedsmuir Park (North)",
       "url": "https://bcparks.ca/explore/parkpgs/tweeds_n/",
@@ -83,7 +160,7 @@
       "url": "https://bcparks.ca/explore/parkpgs/allison_lk/",
       "latitude": "49.682479",
       "longitude": "-120.603146",
-      "mapZoom": "10",
+      "mapZoom": "14",
       "fogZone": false,
       "dayUsePass": false,
       "status": "Active"
@@ -589,7 +666,7 @@
       "url": "https://bcparks.ca/explore/parkpgs/big_bunsby/",
       "latitude": "50.107384",
       "longitude": "-127.509382",
-      "mapZoom": "10",
+      "mapZoom": "13",
       "fogZone": true,
       "dayUsePass": false,
       "status": "Active"
@@ -1629,17 +1706,6 @@
       "status": "Active"
     },
     {
-      "orcs": "258",
-      "protectedAreaName": "Chilliwack Lake Park",
-      "url": "https://bcparks.ca/explore/parkpgs/chilliwack_lk/",
-      "latitude": "49.070542",
-      "longitude": "-121.435171",
-      "mapZoom": "10",
-      "fogZone": false,
-      "dayUsePass": false,
-      "status": "Active"
-    },
-    {
       "orcs": "3098",
       "protectedAreaName": "Chilliwack River Ecological Reserve",
       "url": "https://bcparks.ca/eco_reserve/chilliwackr_er.html",
@@ -2208,7 +2274,7 @@
       "longitude": "-123.206314",
       "mapZoom": "10",
       "fogZone": false,
-      "dayUsePass": true,
+      "dayUsePass": false,
       "status": "Active"
     },
     {
@@ -2390,7 +2456,7 @@
     {
       "orcs": "633",
       "protectedAreaName": "Denman Island Park",
-      "url": "https://bcparks.ca/explore/parkpgs/denman_isl/",
+      "url": "https://bcparks.ca/parks/denman-island/",
       "latitude": "49.56532",
       "longitude": "-124.81114",
       "mapZoom": "11",
@@ -2401,7 +2467,7 @@
     {
       "orcs": "634",
       "protectedAreaName": "Denman Island Protected Area",
-      "url": "https://bcparks.ca/explore/parkpgs/denman_isl/",
+      "url": "https://bcparks.ca/protected-areas/denman-island/",
       "latitude": "49.57556",
       "longitude": "-124.82722",
       "mapZoom": "11",
@@ -2514,7 +2580,7 @@
       "url": "https://bcparks.ca/explore/parkpgs/downing/",
       "latitude": "51.004439",
       "longitude": "-121.779737",
-      "mapZoom": "10",
+      "mapZoom": "12",
       "fogZone": false,
       "dayUsePass": false,
       "status": "Active"
@@ -2523,8 +2589,8 @@
       "orcs": "587",
       "protectedAreaName": "Dragon Mountain Park",
       "url": "https://bcparks.ca/explore/parkpgs/dragon_mt/",
-      "latitude": "54.4266",
-      "longitude": "-124.9261",
+      "latitude": "52.881",
+      "longitude": "-122.358",
       "mapZoom": "10",
       "fogZone": false,
       "dayUsePass": false,
@@ -2894,17 +2960,6 @@
       "status": "Active"
     },
     {
-      "orcs": "631",
-      "protectedAreaName": "Elk Falls Protected Area",
-      "url": "https://bcparks.ca/protected-areas/elk-falls/",
-      "latitude": "50.03722",
-      "longitude": "-125.33248",
-      "mapZoom": "11",
-      "fogZone": false,
-      "dayUsePass": false,
-      "status": "Active"
-    },
-    {
       "orcs": "253",
       "protectedAreaName": "Elk Lakes Park",
       "url": "https://bcparks.ca/explore/parkpgs/elk_lk/",
@@ -3204,7 +3259,7 @@
     {
       "orcs": "5039",
       "protectedAreaName": "Exchamsiks River Protected Area",
-      "url": "https://bcparks.ca/explore/parkpgs/exchamsiks_rv/",
+      "url": "https://bcparks.ca/protected-areas/exchamsiks-river/",
       "latitude": "54.353565",
       "longitude": "-129.280703",
       "mapZoom": "10",
@@ -3336,7 +3391,7 @@
     {
       "orcs": "343",
       "protectedAreaName": "Fiordland Conservancy",
-      "url": "https://bcparks.ca/explore/parkpgs/fiordland/",
+      "url": "https://bcparks.ca/conservancies/fiordland/",
       "latitude": "52.8653839999999",
       "longitude": "-127.986359",
       "mapZoom": "10",
@@ -4650,7 +4705,7 @@
       "longitude": "-122.477854",
       "mapZoom": "10",
       "fogZone": false,
-      "dayUsePass": false,
+      "dayUsePass": true,
       "status": "Active"
     },
     {
@@ -6031,7 +6086,7 @@
     {
       "orcs": "50",
       "protectedAreaName": "Maquinna Marine Park",
-      "url": "https://bcparks.ca/explore/parkpgs/maquinna/",
+      "url": "https://bcparks.ca/parks/maquinna-marine/",
       "latitude": "49.381959",
       "longitude": "-126.327181",
       "mapZoom": "10",
@@ -6042,7 +6097,7 @@
     {
       "orcs": "5042",
       "protectedAreaName": "Maquinna Protected Area",
-      "url": "https://bcparks.ca/explore/parkpgs/maquinna/",
+      "url": "https://bcparks.ca/protected-areas/maquinna/",
       "latitude": "49.373061",
       "longitude": "-126.275628",
       "mapZoom": "10",
@@ -6546,17 +6601,6 @@
       "status": "Active"
     },
     {
-      "orcs": "9957",
-      "protectedAreaName": "Mount Edziza Conservancy",
-      "url": "https://bcparks.ca/conservancies/mount-edziza/",
-      "latitude": "57.69",
-      "longitude": "-130.487",
-      "mapZoom": "14",
-      "fogZone": false,
-      "dayUsePass": false,
-      "status": "Active"
-    },
-    {
       "orcs": "238",
       "protectedAreaName": "Mount Edziza Park",
       "url": "https://bcparks.ca/explore/parkpgs/mt_edziza/",
@@ -6718,7 +6762,7 @@
       "longitude": "-119.361587",
       "mapZoom": "10",
       "fogZone": false,
-      "dayUsePass": true,
+      "dayUsePass": false,
       "status": "Active"
     },
     {
@@ -6762,7 +6806,7 @@
       "longitude": "-122.91933",
       "mapZoom": "11",
       "fogZone": false,
-      "dayUsePass": true,
+      "dayUsePass": false,
       "status": "Active"
     },
     {
@@ -7135,17 +7179,6 @@
       "latitude": "55.236589",
       "longitude": "-127.032983",
       "mapZoom": "10",
-      "fogZone": false,
-      "dayUsePass": false,
-      "status": "Active"
-    },
-    {
-      "orcs": "133",
-      "protectedAreaName": "Newcastle Island Marine Park",
-      "url": "https://bcparks.ca/explore/parkpgs/newcastle/",
-      "latitude": "49.190205",
-      "longitude": "-123.934833",
-      "mapZoom": "13",
       "fogZone": false,
       "dayUsePass": false,
       "status": "Active"
@@ -8099,7 +8132,7 @@
     {
       "orcs": "5029",
       "protectedAreaName": "Ptarmigan Protected Area",
-      "url": "https://bcparks.ca/explore/parkpgs/ptarmigan/",
+      "url": "https://bcparks.ca/protected-areas/ptarmigan/",
       "latitude": "53.5316919999999",
       "longitude": "-120.863575",
       "mapZoom": "10",
@@ -8498,7 +8531,7 @@
       "url": "https://bcparks.ca/parks/rock-creek/",
       "latitude": "49.056292",
       "longitude": "-119.000304",
-      "mapZoom": "10",
+      "mapZoom": "16",
       "fogZone": false,
       "dayUsePass": false,
       "status": "Active"
@@ -8801,6 +8834,17 @@
       "status": "Active"
     },
     {
+      "orcs": "133",
+      "protectedAreaName": "Saysutshun (Newcastle Island Marine) Park",
+      "url": "https://bcparks.ca/parks/saysutshun/",
+      "latitude": "49.190205",
+      "longitude": "-123.934833",
+      "mapZoom": "13",
+      "fogZone": false,
+      "dayUsePass": false,
+      "status": "Active"
+    },
+    {
       "orcs": "9830",
       "protectedAreaName": "Scatter River Old Growth Park",
       "url": "https://bcparks.ca/explore/parkpgs/scatter/",
@@ -8880,7 +8924,7 @@
     {
       "orcs": "5030",
       "protectedAreaName": "Seven Sisters Protected Area",
-      "url": "https://bcparks.ca/explore/parkpgs/seven_sis/",
+      "url": "https://bcparks.ca/protected-areas/seven-sisters/",
       "latitude": "54.885188",
       "longitude": "-128.30167",
       "mapZoom": "10",
@@ -9556,7 +9600,7 @@
       "longitude": "-123.136553",
       "mapZoom": "10",
       "fogZone": false,
-      "dayUsePass": true,
+      "dayUsePass": false,
       "status": "Active"
     },
     {
@@ -9653,7 +9697,7 @@
       "url": "https://bcparks.ca/explore/parkpgs/strath/",
       "latitude": "49.640943",
       "longitude": "-125.723",
-      "mapZoom": "8",
+      "mapZoom": "10",
       "fogZone": false,
       "dayUsePass": false,
       "status": "Active"
@@ -9815,7 +9859,7 @@
     {
       "orcs": "9777",
       "protectedAreaName": "Sutherland River Park",
-      "url": "https://bcparks.ca/explore/parkpgs/suth_river/",
+      "url": "https://bcparks.ca/parks/sutherland-river/",
       "latitude": "54.460288",
       "longitude": "-125.084514",
       "mapZoom": "10",
@@ -9826,7 +9870,7 @@
     {
       "orcs": "5033",
       "protectedAreaName": "Sutherland River Protected Area",
-      "url": "https://bcparks.ca/explore/parkpgs/suth_river/",
+      "url": "https://bcparks.ca/protected-areas/sutherland-river/",
       "latitude": "54.3383039999999",
       "longitude": "-124.817342",
       "mapZoom": "10",
@@ -9884,6 +9928,17 @@
       "url": "https://bcparks.ca/explore/parkpgs/swiws/",
       "latitude": "49.016527",
       "longitude": "-119.450372",
+      "mapZoom": "10",
+      "fogZone": false,
+      "dayUsePass": false,
+      "status": "Active"
+    },
+    {
+      "orcs": "258",
+      "protectedAreaName": "Sxotsaqel / Chilliwack Lake Park",
+      "url": "https://bcparks.ca/parks/sxotsaqel-chilliwack-lake/",
+      "latitude": "49.070542",
+      "longitude": "-121.435171",
       "mapZoom": "10",
       "fogZone": false,
       "dayUsePass": false,
@@ -10105,6 +10160,17 @@
       "latitude": "48.4499449999999",
       "longitude": "-123.264391",
       "mapZoom": "10",
+      "fogZone": false,
+      "dayUsePass": false,
+      "status": "Active"
+    },
+    {
+      "orcs": "9957",
+      "protectedAreaName": "Tenh D?etle Conservancy",
+      "url": "https://bcparks.ca/conservancies/tenh-dzetle/",
+      "latitude": "57.69",
+      "longitude": "-130.487",
+      "mapZoom": "14",
       "fogZone": false,
       "dayUsePass": false,
       "status": "Active"
@@ -10629,7 +10695,7 @@
     {
       "orcs": "1086",
       "protectedAreaName": "Upper Klinaklini Protected Area",
-      "url": "https://bcparks.ca/explore/cnsrvncy/dzawadi_upper_klinaklini_river/",
+      "url": "https://bcparks.ca/protected-areas/upper-klinaklini/",
       "latitude": "51.092222",
       "longitude": "-125.626111",
       "mapZoom": "10",
@@ -11369,7 +11435,7 @@
       "url": "https://bcparks.ca/explore/cnsrvncy/zumtela-bay/",
       "latitude": "54.58138",
       "longitude": "-130.370901",
-      "mapZoom": "12",
+      "mapZoom": "10",
       "fogZone": false,
       "dayUsePass": false,
       "status": "Active"

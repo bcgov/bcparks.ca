@@ -1,4 +1,5 @@
-{"park-name":[
+{
+  "park-name": [
     {
       "parkNameId": 1102,
       "orcs": 6648,
@@ -10,7 +11,7 @@
     {
       "parkNameId": 1103,
       "orcs": 361,
-      "parkName": "Adams Lake Park – Bush Creek Site",
+      "parkName": "Adams Lake Park — Bush Creek Site",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -90,7 +91,7 @@
     {
       "parkNameId": 1113,
       "orcs": 3931,
-      "parkName": "Ancient Forest/Chun T'oh Whudujut Park",
+      "parkName": "Ancient Forest/Chun T’oh Whudujut Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -98,7 +99,7 @@
     {
       "parkNameId": 1114,
       "orcs": 9953,
-      "parkName": "Ancient Forest/Chun T'oh Whudujut Protected Area",
+      "parkName": "Ancient Forest/Chun T’oh Whudujut Protected Area",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -122,7 +123,7 @@
     {
       "parkNameId": 1117,
       "orcs": 386,
-      "parkName": "Anhluut'ukwsim Lax̱mihl Angwinga'asanakwhl Nisga'a [a.k.a. Nisga'a Memorial Lava Bed Park]",
+      "parkName": "Anhluut’ukwsim Lax_mihl Angwinga’asanakwhl Nisga’a [a.k.a. Nisga’a Memorial Lava Bed Park]",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -194,7 +195,7 @@
     {
       "parkNameId": 1126,
       "orcs": 246,
-      "parkName": "Atlin/Áa Tlein Téix’i Park",
+      "parkName": "Atlin/ a Tlein Tix’i Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -210,7 +211,7 @@
     {
       "parkNameId": 1128,
       "orcs": 3,
-      "parkName": "ȽÁU,WELṈEW̱/John Dean Park",
+      "parkName": "? U,WELN_EW_/John Dean Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -274,7 +275,7 @@
     {
       "parkNameId": 1136,
       "orcs": 1002,
-      "parkName": "Banks Nii Łuutiksm Conservancy",
+      "parkName": "Banks Nii Luutiksm Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -378,7 +379,7 @@
     {
       "parkNameId": 1149,
       "orcs": 524,
-      "parkName": "Becher's Prairie Park",
+      "parkName": "Becher’s Prairie Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -490,7 +491,7 @@
     {
       "parkNameId": 1163,
       "orcs": 1003,
-      "parkName": "Bishop Bay – Monkey Beach Conservancy",
+      "parkName": "Bishop Bay — Monkey Beach Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -498,7 +499,7 @@
     {
       "parkNameId": 1164,
       "orcs": 1125,
-      "parkName": "Bishop Bay – Monkey Beach Corridor Conservancy",
+      "parkName": "Bishop Bay — Monkey Beach Corridor Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -610,7 +611,7 @@
     {
       "parkNameId": 1178,
       "orcs": 527,
-      "parkName": "Boothman's Oxbow Park",
+      "parkName": "Boothman’s Oxbow Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -1674,7 +1675,7 @@
     {
       "parkNameId": 1311,
       "orcs": 585,
-      "parkName": "Dante's Inferno Park",
+      "parkName": "Dante’s Inferno Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -1706,7 +1707,7 @@
     {
       "parkNameId": 1315,
       "orcs": 13,
-      "parkName": "Dead Man's Island Park",
+      "parkName": "Dead Man’s Island Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -2282,7 +2283,7 @@
     {
       "parkNameId": 1387,
       "orcs": 556,
-      "parkName": "Esté-tiwilh/Sigurd Creek Conservancy",
+      "parkName": "Est-tiwilh/Sigurd Creek Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -2298,7 +2299,7 @@
     {
       "parkNameId": 1389,
       "orcs": 1091,
-      "parkName": "Ethelda Bay – Tennant Island Conservany",
+      "parkName": "Ethelda Bay — Tennant Island Conservany",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -2370,7 +2371,7 @@
     {
       "parkNameId": 1398,
       "orcs": 3033,
-      "parkName": "Field's Lease Ecological Reserve",
+      "parkName": "Field’s Lease Ecological Reserve",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -2498,7 +2499,7 @@
     {
       "parkNameId": 1414,
       "orcs": 1039,
-      "parkName": "Forward Harbour/ƛəx̌əᵂəyəm Conservancy",
+      "parkName": "Forward Harbour/??x????y?m Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -2754,7 +2755,7 @@
     {
       "parkNameId": 1446,
       "orcs": 8774,
-      "parkName": "God's Pocket Marine Park",
+      "parkName": "God’s Pocket Marine Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -2786,7 +2787,7 @@
     {
       "parkNameId": 1450,
       "orcs": 1080,
-      "parkName": "Golden Gate/X̱áat Yádi Aani Conservancy",
+      "parkName": "Golden Gate/X_ at Y di Aani Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -2946,7 +2947,7 @@
     {
       "parkNameId": 1470,
       "orcs": 8350,
-      "parkName": "Hai Lake – Mount Herman Park",
+      "parkName": "Hai Lake — Mount Herman Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -2962,7 +2963,7 @@
     {
       "parkNameId": 1472,
       "orcs": 547,
-      "parkName": "Hakai Lúxvbálís Conservancy",
+      "parkName": "Hakai Lúxvb l¡s Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3034,7 +3035,7 @@
     {
       "parkNameId": 1481,
       "orcs": 411,
-      "parkName": "Háthayim Marine Park [a.k.a. Von Donop Marine Park]",
+      "parkName": "H thayim Marine Park [a.k.a. Von Donop Marine Park]",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3050,7 +3051,7 @@
     {
       "parkNameId": 1483,
       "orcs": 3100,
-      "parkName": "Hayne's Lease Ecological Reserve",
+      "parkName": "Hayne’s Lease Ecological Reserve",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3098,7 +3099,7 @@
     {
       "parkNameId": 1489,
       "orcs": 1072,
-      "parkName": "Hǝnʎǝmdzi Mǝkola/Yorke Island Conservancy",
+      "parkName": "H?n??mdzi M?kola/Yorke Island Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3274,7 +3275,7 @@
     {
       "parkNameId": 1511,
       "orcs": 568,
-      "parkName": "Indian Lake – Hitchcock Creek/Át Ch'îni Shà Conservancy",
+      "parkName": "Indian Lake — Hitchcock Creek/ t Ch’—ni Sh— Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3346,7 +3347,7 @@
     {
       "parkNameId": 1520,
       "orcs": 412,
-      "parkName": "Jáji7em and Kw'ulh Marine Park [a.k.a. Sandy Island Marine Park]",
+      "parkName": "J ji7em and Kw’ulh Marine Park [a.k.a. Sandy Island Marine Park]",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3482,7 +3483,7 @@
     {
       "parkNameId": 1537,
       "orcs": 1118,
-      "parkName": "K'distsausk/Turtle Point Conservancy",
+      "parkName": "K’distsausk/Turtle Point Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3570,7 +3571,7 @@
     {
       "parkNameId": 1548,
       "orcs": 397,
-      "parkName": "Khutzeymateen Park [a.k.a. Khutzeymateen/K'tzim-a-deen Grizzly Sanctuary]",
+      "parkName": "Khutzeymateen Park [a.k.a. Khutzeymateen/K’tzim-a-deen Grizzly Sanctuary]",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3794,7 +3795,7 @@
     {
       "parkNameId": 1576,
       "orcs": 1014,
-      "parkName": "K'lgaan/Klekane Conservancy",
+      "parkName": "K’lgaan/Klekane Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3826,7 +3827,7 @@
     {
       "parkNameId": 1580,
       "orcs": 1017,
-      "parkName": "K'mooda/Lowe-Gamble Conservancy",
+      "parkName": "K’mooda/Lowe-Gamble Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3834,7 +3835,7 @@
     {
       "parkNameId": 1581,
       "orcs": 1001,
-      "parkName": "K'Nabiyaaxl/Ashdown Conservancy",
+      "parkName": "K’Nabiyaaxl/Ashdown Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3882,7 +3883,7 @@
     {
       "parkNameId": 1587,
       "orcs": 1012,
-      "parkName": "K'ootz/Khutze Conservancy",
+      "parkName": "K’ootz/Khutze Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3914,7 +3915,7 @@
     {
       "parkNameId": 1591,
       "orcs": 1101,
-      "parkName": "Ksi X'anmaas Conservancy",
+      "parkName": "Ksi X’anmaas Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3922,7 +3923,7 @@
     {
       "parkNameId": 1592,
       "orcs": 1022,
-      "parkName": "Ksi xts'at'kw/Stagoo Conservancy",
+      "parkName": "Ksi xts’at’kw/Stagoo Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3930,7 +3931,7 @@
     {
       "parkNameId": 1593,
       "orcs": 1020,
-      "parkName": "Kt'ii/Racey Conservancy",
+      "parkName": "Kt’ii/Racey Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3946,7 +3947,7 @@
     {
       "parkNameId": 1595,
       "orcs": 1102,
-      "parkName": "Kts'mkta'ani/Union Lake Conservancy",
+      "parkName": "Kts’mkta’ani/Union Lake Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3954,7 +3955,7 @@
     {
       "parkNameId": 1596,
       "orcs": 564,
-      "parkName": "Kun⨱alas Heritage Site/Conservancy",
+      "parkName": "Kun?alas Heritage Site/Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3962,7 +3963,7 @@
     {
       "parkNameId": 1597,
       "orcs": 566,
-      "parkName": "K'uuna Gwaay Conservancy",
+      "parkName": "K’uuna Gwaay Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3970,7 +3971,7 @@
     {
       "parkNameId": 1598,
       "orcs": 1123,
-      "parkName": "K'waal Conservancy",
+      "parkName": "K’waal Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -3994,7 +3995,7 @@
     {
       "parkNameId": 1601,
       "orcs": 552,
-      "parkName": "K'zuzált/Twin Two Conservancy",
+      "parkName": "K’zuz lt/Twin Two Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -4090,7 +4091,7 @@
     {
       "parkNameId": 1613,
       "orcs": 1006,
-      "parkName": "Lax ka'gaas/Campania Conservancy",
+      "parkName": "Lax ka’gaas/Campania Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -4490,7 +4491,7 @@
     {
       "parkNameId": 1663,
       "orcs": 1116,
-      "parkName": "Maxtaktsm'aa/Union Passage Conservancy",
+      "parkName": "Maxtaktsm’aa/Union Passage Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -4594,7 +4595,7 @@
     {
       "parkNameId": 1676,
       "orcs": 557,
-      "parkName": "Mkwal'ts Conservancy",
+      "parkName": "Mkwal’ts Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -4610,7 +4611,7 @@
     {
       "parkNameId": 1678,
       "orcs": 1010,
-      "parkName": "Moksgm'ol/Chapple – Cornwall Conservancy",
+      "parkName": "Moksgm’ol/Chapple — Cornwall Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -4626,7 +4627,7 @@
     {
       "parkNameId": 1680,
       "orcs": 1081,
-      "parkName": "Monarch Mountain/a Xéegi Deiyi Conservancy",
+      "parkName": "Monarch Mountain/a Xegi Deiyi Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -4850,7 +4851,7 @@
     {
       "parkNameId": 1708,
       "orcs": 1079,
-      "parkName": "Mount Minto/K'iyán Conservancy",
+      "parkName": "Mount Minto/K’iy n Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -4890,7 +4891,7 @@
     {
       "parkNameId": 1713,
       "orcs": 2,
-      "parkName": "Mount Robson Park – Berg Lake Trail",
+      "parkName": "Mount Robson Park — Berg Lake Trail",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -5074,7 +5075,7 @@
     {
       "parkNameId": 1736,
       "orcs": 525,
-      "parkName": "Nakina – Inklin Rivers (Kuthai Area)/Yáwu Yaa Conservancy",
+      "parkName": "Nakina — Inklin Rivers (Kuthai Area)/Y wu Yaa Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -5082,7 +5083,7 @@
     {
       "parkNameId": 1737,
       "orcs": 523,
-      "parkName": "Nakina – Inklin Rivers/Yáwu Yaa Conservancy",
+      "parkName": "Nakina — Inklin Rivers/Y wu Yaa Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -5154,7 +5155,7 @@
     {
       "parkNameId": 1746,
       "orcs": 593,
-      "parkName": "Ne'āh' Conservancy",
+      "parkName": "Ne’ah’ Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -5178,7 +5179,7 @@
     {
       "parkNameId": 1749,
       "orcs": 1075,
-      "parkName": "Neğiƛ/Nekite Estuary Conservancy",
+      "parkName": "Negi?/Nekite Estuary Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -5186,7 +5187,7 @@
     {
       "parkNameId": 1750,
       "orcs": 534,
-      "parkName": "Nenikë​kh/Nanika-Kidprice Park",
+      "parkName": "Nenik—?kh/Nanika-Kidprice Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -5266,7 +5267,7 @@
     {
       "parkNameId": 1760,
       "orcs": 577,
-      "parkName": "Nisga'a Memorial Lava Bed Corridor Protected Area",
+      "parkName": "Nisga’a Memorial Lava Bed Corridor Protected Area",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -5274,7 +5275,7 @@
     {
       "parkNameId": 1761,
       "orcs": 3932,
-      "parkName": "Nisga'a Memorial Lava Bed Corridor Protected Area (No. 2)",
+      "parkName": "Nisga’a Memorial Lava Bed Corridor Protected Area (No. 2)",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -5282,7 +5283,7 @@
     {
       "parkNameId": 1762,
       "orcs": 1088,
-      "parkName": "Nisga'a Memorial Lava Bed Protected Area",
+      "parkName": "Nisga’a Memorial Lava Bed Protected Area",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -5314,7 +5315,7 @@
     {
       "parkNameId": 1766,
       "orcs": 546,
-      "parkName": "Nlháxten/Cerise Creek Conservancy",
+      "parkName": "Nlh xten/Cerise Creek Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -5586,7 +5587,7 @@
     {
       "parkNameId": 1800,
       "orcs": 1038,
-      "parkName": "Pałəmin/Estero Basin Conservancy",
+      "parkName": "Pal?min/Estero Basin Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -5970,7 +5971,7 @@
     {
       "parkNameId": 1848,
       "orcs": 1015,
-      "parkName": "Q'Altanaas/Aaltanhash Conservancy",
+      "parkName": "Q’Altanaas/Aaltanhash Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -5986,7 +5987,7 @@
     {
       "parkNameId": 1850,
       "orcs": 1041,
-      "parkName": "Qudǝs/Gillard-Jimmy Judd Island Conservancy",
+      "parkName": "Qud?s/Gillard-Jimmy Judd Island Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -6002,7 +6003,7 @@
     {
       "parkNameId": 1852,
       "orcs": 553,
-      "parkName": "Qwalímak/Upper Birkenhead Conservancy",
+      "parkName": "Qwal¡mak/Upper Birkenhead Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -6042,7 +6043,7 @@
     {
       "parkNameId": 1857,
       "orcs": 584,
-      "parkName": "Rainbow/Q'iwentem Park",
+      "parkName": "Rainbow/Q’iwentem Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -6474,7 +6475,7 @@
     {
       "parkNameId": 1911,
       "orcs": 570,
-      "parkName": "Sgaay Taw Siiwaay K'adjuu Conservancy",
+      "parkName": "Sgaay Taw Siiwaay K’adjuu Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -6770,7 +6771,7 @@
     {
       "parkNameId": 1948,
       "orcs": 8277,
-      "parkName": "Smith River Falls – Fort Halkett Park",
+      "parkName": "Smith River Falls — Fort Halkett Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -6922,7 +6923,7 @@
     {
       "parkNameId": 1967,
       "orcs": 256,
-      "parkName": "St. Mary's Alpine Park",
+      "parkName": "St. Mary’s Alpine Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -6978,7 +6979,7 @@
     {
       "parkNameId": 1974,
       "orcs": 9458,
-      "parkName": "Stein Valley Nlaka'pamux Heritage Park",
+      "parkName": "Stein Valley Nlaka’pamux Heritage Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -7026,7 +7027,7 @@
     {
       "parkNameId": 1980,
       "orcs": 1,
-      "parkName": "Strathcona Park – Megin/Talbot",
+      "parkName": "Strathcona Park — Megin/Talbot",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -7202,7 +7203,7 @@
     {
       "parkNameId": 2002,
       "orcs": 142,
-      "parkName": "sẃiẃs Park",
+      "parkName": "s?i?s Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -7234,7 +7235,7 @@
     {
       "parkNameId": 2006,
       "orcs": 178,
-      "parkName": "Tā Ch'ilā Park [a.k.a. Boya Lake Park]",
+      "parkName": "Ta Ch’ila Park [a.k.a. Boya Lake Park]",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -7282,7 +7283,7 @@
     {
       "parkNameId": 2012,
       "orcs": 9522,
-      "parkName": "Taku River/T'aḵú Téix' Conservancy",
+      "parkName": "Taku River/T’a?ú Tix’ Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -7426,7 +7427,7 @@
     {
       "parkNameId": 2030,
       "orcs": 517,
-      "parkName": "Thunderbird's Nest (T'iitsk'in Paawats) Protected Area",
+      "parkName": "Thunderbird’s Nest (T’iitsk’in Paawats) Protected Area",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -7594,7 +7595,7 @@
     {
       "parkNameId": 2051,
       "orcs": 409,
-      "parkName": "Ts'il?os Park",
+      "parkName": "Ts’il?os Park",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -7642,7 +7643,7 @@
     {
       "parkNameId": 2057,
       "orcs": 9123,
-      "parkName": "Tutshi Lake/T'ooch' Áayi Conservancy",
+      "parkName": "Tutshi Lake/T’ooch’  ayi Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -7682,7 +7683,7 @@
     {
       "parkNameId": 2062,
       "orcs": 1023,
-      "parkName": "Ugwiwa'/Cape Caution – Blunden Bay Conservancy",
+      "parkName": "Ugwiwa’/Cape Caution — Blunden Bay Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -7690,7 +7691,7 @@
     {
       "parkNameId": 2063,
       "orcs": 1028,
-      "parkName": "Ugwiwa'/Cape Caution Conservancy",
+      "parkName": "Ugwiwa’/Cape Caution Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -7730,7 +7731,7 @@
     {
       "parkNameId": 2068,
       "orcs": 1077,
-      "parkName": "Upper Gladys River/Watsíx Deiyi Conservancy",
+      "parkName": "Upper Gladys River/Wats¡x Deiyi Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -7770,7 +7771,7 @@
     {
       "parkNameId": 2073,
       "orcs": 555,
-      "parkName": "Upper Rogers Kóḻii7 Conservancy",
+      "parkName": "Upper Rogers K¢?ii7 Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -7962,7 +7963,7 @@
     {
       "parkNameId": 2097,
       "orcs": 1062,
-      "parkName": "Ẁaẁley/Seymour Estuary Conservancy",
+      "parkName": "?a?ley/Seymour Estuary Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -8138,7 +8139,7 @@
     {
       "parkNameId": 2119,
       "orcs": 1083,
-      "parkName": "Willison Creek – Nelson Lake/Sít' Héeni Conservancy",
+      "parkName": "Willison Creek — Nelson Lake/S¡t’ Heni Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -8218,7 +8219,7 @@
     {
       "parkNameId": 2129,
       "orcs": 1064,
-      "parkName": "Xᵂakᵂəᕈnaxdəᕈma/Stafford Estuary Conservancy",
+      "parkName": "X?ak???naxd??ma/Stafford Estuary Conservancy",
       "nameTypeId": 1,
       "source": "",
       "note": ""
@@ -8298,7 +8299,7 @@
     {
       "parkNameId": 2139,
       "orcs": 566,
-      "parkName": "&#7733;'uuna Gwaay Heritage Site/Conservancy",
+      "parkName": "&#7733;&rsquo;uuna Gwaay Heritage Site/Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -8394,7 +8395,7 @@
     {
       "parkNameId": 2151,
       "orcs": 9953,
-      "parkName": "Ancient Forest/Chun T'oh Whudujut Protected Area",
+      "parkName": "Ancient Forest/Chun T&rsquo;oh Whudujut Protected Area",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -8402,7 +8403,7 @@
     {
       "parkNameId": 2152,
       "orcs": 3931,
-      "parkName": "Ancient Forest/Chun T'oh Whudujut Provincial Park",
+      "parkName": "Ancient Forest/Chun T&rsquo;oh Whudujut Provincial Park",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -8426,7 +8427,7 @@
     {
       "parkNameId": 2155,
       "orcs": 386,
-      "parkName": "Anhluut'ukwsim La<u>g</u>mihl Angwinga'Asanskwhl Nis<u>g</u>a'a Provincial Park [a.k.a. Nis<u>g</u>a'a Memorial Lava Bed Park]",
+      "parkName": "Anhluut&rsquo;ukwsim La<u>g</u>mihl Angwinga&rsquo;Asanskwhl Nis<u>g</u>a&rsquo;a Provincial Park [a.k.a. Nis<u>g</u>a&rsquo;a Memorial Lava Bed Park]",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -8498,7 +8499,7 @@
     {
       "parkNameId": 2164,
       "orcs": 246,
-      "parkName": "Atlin/&Aacute;a Tlein T&eacute;i<u>x</u>'i Provincial Park",
+      "parkName": "Atlin/&Aacute;a Tlein T&eacute;i<u>x</u>&rsquo;i Provincial Park",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -8666,7 +8667,7 @@
     {
       "parkNameId": 2185,
       "orcs": 524,
-      "parkName": "Becher's Prairie Provincial Park",
+      "parkName": "Becher&rsquo;s Prairie Provincial Park",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -8898,7 +8899,7 @@
     {
       "parkNameId": 2214,
       "orcs": 527,
-      "parkName": "Boothman's Oxbow Provincial Park",
+      "parkName": "Boothman&rsquo;s Oxbow Provincial Park",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -9962,7 +9963,7 @@
     {
       "parkNameId": 2347,
       "orcs": 585,
-      "parkName": "Dante's Inferno Provincial Park",
+      "parkName": "Dante&rsquo;s Inferno Provincial Park",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -9994,7 +9995,7 @@
     {
       "parkNameId": 2351,
       "orcs": 13,
-      "parkName": "Dead Man's Island Provincial Park",
+      "parkName": "Dead Man&rsquo;s Island Provincial Park",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -10658,7 +10659,7 @@
     {
       "parkNameId": 2434,
       "orcs": 3033,
-      "parkName": "Field's Lease Ecological Reserve",
+      "parkName": "Field&rsquo;s Lease Ecological Reserve",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -11042,7 +11043,7 @@
     {
       "parkNameId": 2482,
       "orcs": 8774,
-      "parkName": "God's Pocket Marine Provincial Park",
+      "parkName": "God&rsquo;s Pocket Marine Provincial Park",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -11346,7 +11347,7 @@
     {
       "parkNameId": 2520,
       "orcs": 3100,
-      "parkName": "Hayne's Lease Ecological Reserve",
+      "parkName": "Hayne&rsquo;s Lease Ecological Reserve",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -11562,7 +11563,7 @@
     {
       "parkNameId": 2547,
       "orcs": 568,
-      "parkName": "Indian Lake &ndash; Hitchcock Creek/&Aacute;t Ch'&icirc;ni Sh&agrave; Conservancy",
+      "parkName": "Indian Lake &ndash; Hitchcock Creek/&Aacute;t Ch&rsquo;&icirc;ni Sh&agrave; Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -11610,7 +11611,7 @@
     {
       "parkNameId": 2553,
       "orcs": 412,
-      "parkName": "J&#225;ji7em  and Kw'ulh Marine Provincial Park",
+      "parkName": "J&#225;ji7em and Kw&rsquo;ulh Marine Provincial Park",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -11770,7 +11771,7 @@
     {
       "parkNameId": 2573,
       "orcs": 1118,
-      "parkName": "K'distsausk/Turtle Point Conservancy",
+      "parkName": "K&rsquo;distsausk/Turtle Point Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -11858,7 +11859,7 @@
     {
       "parkNameId": 2584,
       "orcs": 397,
-      "parkName": "Khutzeymateen Provincial Park [a.k.a. Khutzeymateen/K'tzim-a-deen Grizzly Sanctuary]",
+      "parkName": "Khutzeymateen Provincial Park [a.k.a. Khutzeymateen/K&rsquo;tzim-a-deen Grizzly Sanctuary]",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -12082,7 +12083,7 @@
     {
       "parkNameId": 2612,
       "orcs": 1014,
-      "parkName": "K'lgaan/Klekane Conservancy",
+      "parkName": "K&rsquo;lgaan/Klekane Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -12114,7 +12115,7 @@
     {
       "parkNameId": 2616,
       "orcs": 1017,
-      "parkName": "K'mooda/Lowe-Gamble Conservancy",
+      "parkName": "K&rsquo;mooda/Lowe-Gamble Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -12122,7 +12123,7 @@
     {
       "parkNameId": 2617,
       "orcs": 1001,
-      "parkName": "K'nabiyaaxl/Ashdown Conservancy",
+      "parkName": "K&rsquo;nabiyaaxl/Ashdown Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -12170,7 +12171,7 @@
     {
       "parkNameId": 2623,
       "orcs": 1012,
-      "parkName": "K'ootz/Khutze Conservancy",
+      "parkName": "K&rsquo;ootz/Khutze Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -12202,7 +12203,7 @@
     {
       "parkNameId": 2627,
       "orcs": 1101,
-      "parkName": "Ksi X'anmaas Conservancy",
+      "parkName": "Ksi X&rsquo;anmaas Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -12210,7 +12211,7 @@
     {
       "parkNameId": 2628,
       "orcs": 1022,
-      "parkName": "Ksi xts'at'kw/Stagoo Conservancy",
+      "parkName": "Ksi xts&rsquo;at&rsquo;kw/Stagoo Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -12218,7 +12219,7 @@
     {
       "parkNameId": 2629,
       "orcs": 1020,
-      "parkName": "Kt'ii/Racey Conservancy",
+      "parkName": "Kt&rsquo;ii/Racey Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -12234,7 +12235,7 @@
     {
       "parkNameId": 2631,
       "orcs": 1102,
-      "parkName": "Kts'mkta'ani/Union Lake Conservancy",
+      "parkName": "Kts&rsquo;mkta&rsquo;ani/Union Lake Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -12250,7 +12251,7 @@
     {
       "parkNameId": 2633,
       "orcs": 1123,
-      "parkName": "K'waal Conservancy",
+      "parkName": "K&rsquo;waal Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -12274,7 +12275,7 @@
     {
       "parkNameId": 2636,
       "orcs": 552,
-      "parkName": "K'zuz&#225;lt/Twin Two Conservancy",
+      "parkName": "K&rsquo;zuz&#225;lt/Twin Two Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -12370,7 +12371,7 @@
     {
       "parkNameId": 2648,
       "orcs": 1006,
-      "parkName": "Lax ka'Gass/Campania Conservancy",
+      "parkName": "Lax ka&rsquo;Gass/Campania Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -12770,7 +12771,7 @@
     {
       "parkNameId": 2698,
       "orcs": 1116,
-      "parkName": "Maxtaktsm'aa/Union Passage Conservancy",
+      "parkName": "Maxtaktsm&rsquo;aa/Union Passage Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -12874,7 +12875,7 @@
     {
       "parkNameId": 2711,
       "orcs": 557,
-      "parkName": "Mkwal'ts Conservancy",
+      "parkName": "Mkwal&rsquo;ts Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -12890,7 +12891,7 @@
     {
       "parkNameId": 2713,
       "orcs": 1010,
-      "parkName": "Moksgm'ol/Chapple-Cornwall Conservancy",
+      "parkName": "Moksgm&rsquo;ol/Chapple-Cornwall Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -13130,7 +13131,7 @@
     {
       "parkNameId": 2743,
       "orcs": 1079,
-      "parkName": "Mount Minto/K'iy&#225;n Conservancy",
+      "parkName": "Mount Minto/K&rsquo;iy&#225;n Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -13434,7 +13435,7 @@
     {
       "parkNameId": 2781,
       "orcs": 593,
-      "parkName": "Ne'&#257;h' Conservancy",
+      "parkName": "Ne&rsquo;&#257;h&rsquo; Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -13466,7 +13467,7 @@
     {
       "parkNameId": 2785,
       "orcs": 534,
-      "parkName": "Nenikë​kh/Nanika-Kidprice Provincial Park",
+      "parkName": "Nenik—?kh/Nanika-Kidprice Provincial Park",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -13546,7 +13547,7 @@
     {
       "parkNameId": 2795,
       "orcs": 577,
-      "parkName": "Nisga'a Memorial Lava Bed Corridor Protected Area",
+      "parkName": "Nisga&rsquo;a Memorial Lava Bed Corridor Protected Area",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -13554,7 +13555,7 @@
     {
       "parkNameId": 2796,
       "orcs": 3932,
-      "parkName": "Nisga'a Memorial Lava Bed Corridor Protected Area (No. 2)",
+      "parkName": "Nisga&rsquo;a Memorial Lava Bed Corridor Protected Area (No. 2)",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -13562,7 +13563,7 @@
     {
       "parkNameId": 2797,
       "orcs": 1088,
-      "parkName": "Nisga'a Memorial Lava Bed Protected Area",
+      "parkName": "Nisga&rsquo;a Memorial Lava Bed Protected Area",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -14250,7 +14251,7 @@
     {
       "parkNameId": 2883,
       "orcs": 1015,
-      "parkName": "Q'altanaas/Aaltanhash Conservancy",
+      "parkName": "Q&rsquo;altanaas/Aaltanhash Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -14322,7 +14323,7 @@
     {
       "parkNameId": 2892,
       "orcs": 584,
-      "parkName": "Rainbow/Q'iwentem Provincial Park",
+      "parkName": "Rainbow/Q&rsquo;iwentem Provincial Park",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -14762,7 +14763,7 @@
     {
       "parkNameId": 2947,
       "orcs": 570,
-      "parkName": "SGaay Taw Siiwaay K'adjuu Heritage Site/Conservancy",
+      "parkName": "SGaay Taw Siiwaay K&rsquo;adjuu Heritage Site/Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -15210,7 +15211,7 @@
     {
       "parkNameId": 3003,
       "orcs": 256,
-      "parkName": "St. Mary's Alpine Provincial Park",
+      "parkName": "St. Mary&rsquo;s Alpine Provincial Park",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -15266,7 +15267,7 @@
     {
       "parkNameId": 3010,
       "orcs": 9458,
-      "parkName": "Stein Valley Nlaka'pamux Heritage Provincial Park",
+      "parkName": "Stein Valley Nlaka&rsquo;pamux Heritage Provincial Park",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -15514,7 +15515,7 @@
     {
       "parkNameId": 3041,
       "orcs": 178,
-      "parkName": "T&#257; Ch'il&#257; Provincial Park [a.k.a. Boya Lake Park]",
+      "parkName": "T&#257; Ch&rsquo;il&#257; Provincial Park [a.k.a. Boya Lake Park]",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -15562,7 +15563,7 @@
     {
       "parkNameId": 3047,
       "orcs": 9522,
-      "parkName": "Taku River/T'a&#7733;&uacute; T&eacute;i<u>x</u>' Conservancy",
+      "parkName": "Taku River/T&rsquo;a&#7733;&uacute; T&eacute;i<u>x</u>&rsquo; Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -15706,7 +15707,7 @@
     {
       "parkNameId": 3065,
       "orcs": 517,
-      "parkName": "Thunderbird's Nest (T'iitsk'in Paawats) Protected Area",
+      "parkName": "Thunderbird&rsquo;s Nest (T&rsquo;iitsk&rsquo;in Paawats) Protected Area",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -15874,7 +15875,7 @@
     {
       "parkNameId": 3086,
       "orcs": 409,
-      "parkName": "Ts'il&#660;os Provincial Park",
+      "parkName": "Ts&rsquo;il&#660;os Provincial Park",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -15914,7 +15915,7 @@
     {
       "parkNameId": 3091,
       "orcs": 9123,
-      "parkName": "Tutshi Lake/T'ooch' &Aacute;ayi Conservancy",
+      "parkName": "Tutshi Lake/T&rsquo;ooch&rsquo; &Aacute;ayi Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -15954,7 +15955,7 @@
     {
       "parkNameId": 3096,
       "orcs": 1028,
-      "parkName": "Ug&#7490;iwa'/Cape Caution Conservancy",
+      "parkName": "Ug&#7490;iwa&rsquo;/Cape Caution Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -15962,7 +15963,7 @@
     {
       "parkNameId": 3097,
       "orcs": 1023,
-      "parkName": "Ug&#7490;iwa'/Cape Caution-Blunden Bay Conservancy",
+      "parkName": "Ug&#7490;iwa&rsquo;/Cape Caution-Blunden Bay Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -16402,7 +16403,7 @@
     {
       "parkNameId": 3152,
       "orcs": 1083,
-      "parkName": "Willison Creek – Nelson Lake/Sít' Héeni Conservancy",
+      "parkName": "Willison Creek — Nelson Lake/S&#161;t&rsquo; H&#130;eni Conservancy",
       "nameTypeId": 2,
       "source": "Custom",
       "note": ""
@@ -16634,7 +16635,7 @@
     {
       "parkNameId": 3181,
       "orcs": 9953,
-      "parkName": "Ancient Forest/Chun T'oh Whudujut Protected Area",
+      "parkName": "Ancient Forest/Chun T’oh Whudujut Protected Area",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -16642,7 +16643,7 @@
     {
       "parkNameId": 3182,
       "orcs": 3931,
-      "parkName": "Ancient Forest/Chun T'oh Whudujut Provincial Park",
+      "parkName": "Ancient Forest/Chun T’oh Whudujut Provincial Park",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -16666,7 +16667,7 @@
     {
       "parkNameId": 3185,
       "orcs": 386,
-      "parkName": "Anhluut'ukwsim Laxmihl Angwinga'asanskwhl Nisga'a Park [a.k.a. Nisga'a Memorial Lava Bed Park]",
+      "parkName": "Anhluut’ukwsim Laxmihl Angwinga’asanskwhl Nisga’a Park [a.k.a. Nisga’a Memorial Lava Bed Park]",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -16738,7 +16739,7 @@
     {
       "parkNameId": 3194,
       "orcs": 246,
-      "parkName": "Atlin/Aa Tlein Teix'i Provincial Park",
+      "parkName": "Atlin/Aa Tlein Teix’i Provincial Park",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -16906,7 +16907,7 @@
     {
       "parkNameId": 3215,
       "orcs": 524,
-      "parkName": "Becher's Prairie Provincial Park",
+      "parkName": "Becher’s Prairie Provincial Park",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -17138,7 +17139,7 @@
     {
       "parkNameId": 3244,
       "orcs": 527,
-      "parkName": "Boothman's Oxbow Provincial Park",
+      "parkName": "Boothman’s Oxbow Provincial Park",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -18202,7 +18203,7 @@
     {
       "parkNameId": 3377,
       "orcs": 585,
-      "parkName": "Dante's Inferno Provincial Park",
+      "parkName": "Dante’s Inferno Provincial Park",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -18234,7 +18235,7 @@
     {
       "parkNameId": 3381,
       "orcs": 13,
-      "parkName": "Dead Man's Island Provincial Park",
+      "parkName": "Dead Man’s Island Provincial Park",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -18898,7 +18899,7 @@
     {
       "parkNameId": 3464,
       "orcs": 3033,
-      "parkName": "Field's Lease Ecological Reserve",
+      "parkName": "Field’s Lease Ecological Reserve",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -19282,7 +19283,7 @@
     {
       "parkNameId": 3512,
       "orcs": 8774,
-      "parkName": "God's Pocket Marine Provincial Park",
+      "parkName": "God’s Pocket Marine Provincial Park",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -19578,7 +19579,7 @@
     {
       "parkNameId": 3549,
       "orcs": 3100,
-      "parkName": "Hayne's Lease Ecological Reserve",
+      "parkName": "Hayne’s Lease Ecological Reserve",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -19802,7 +19803,7 @@
     {
       "parkNameId": 3577,
       "orcs": 568,
-      "parkName": "Indian Lake – Hitchcock Creek/At Ch'ini Sha Conservancy",
+      "parkName": "Indian Lake — Hitchcock Creek/At Ch’ini Sha Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -19874,7 +19875,7 @@
     {
       "parkNameId": 3586,
       "orcs": 412,
-      "parkName": "Jaji7em and Kw'ulh Marine Park [a.k.a. Sandy Island Marine Park]",
+      "parkName": "Jaji7em and Kw’ulh Marine Park [a.k.a. Sandy Island Marine Park]",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -20010,7 +20011,7 @@
     {
       "parkNameId": 3603,
       "orcs": 1118,
-      "parkName": "K'distsausk/Turtle Point Conservancy",
+      "parkName": "K’distsausk/Turtle Point Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -20098,7 +20099,7 @@
     {
       "parkNameId": 3614,
       "orcs": 397,
-      "parkName": "Khutzeymateen Park [a.k.a. Khutzeymateen/K'tzim-a-deen Grizzly Sanctuary]",
+      "parkName": "Khutzeymateen Park [a.k.a. Khutzeymateen/K’tzim-a-deen Grizzly Sanctuary]",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -20322,7 +20323,7 @@
     {
       "parkNameId": 3642,
       "orcs": 1014,
-      "parkName": "K'lgaan/Klekane Conservancy",
+      "parkName": "K’lgaan/Klekane Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -20354,7 +20355,7 @@
     {
       "parkNameId": 3646,
       "orcs": 1017,
-      "parkName": "K'mooda/Lowe-Gamble Conservancy",
+      "parkName": "K’mooda/Lowe-Gamble Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -20362,7 +20363,7 @@
     {
       "parkNameId": 3647,
       "orcs": 1001,
-      "parkName": "K'Nabiyaaxl/Ashdown Conservancy",
+      "parkName": "K’Nabiyaaxl/Ashdown Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -20410,7 +20411,7 @@
     {
       "parkNameId": 3653,
       "orcs": 1012,
-      "parkName": "K'ootz/Khutze Conservancy",
+      "parkName": "K’ootz/Khutze Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -20442,7 +20443,7 @@
     {
       "parkNameId": 3657,
       "orcs": 1101,
-      "parkName": "Ksi X'anmaas Conservancy",
+      "parkName": "Ksi X’anmaas Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -20450,7 +20451,7 @@
     {
       "parkNameId": 3658,
       "orcs": 1022,
-      "parkName": "Ksi xts'at'kw/Stagoo Conservancy",
+      "parkName": "Ksi xts’at’kw/Stagoo Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -20458,7 +20459,7 @@
     {
       "parkNameId": 3659,
       "orcs": 1020,
-      "parkName": "Kt'ii/Racey Conservancy",
+      "parkName": "Kt’ii/Racey Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -20474,7 +20475,7 @@
     {
       "parkNameId": 3661,
       "orcs": 1102,
-      "parkName": "Kts'mkta'ani/Union Lake Conservancy",
+      "parkName": "Kts’mkta’ani/Union Lake Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -20490,7 +20491,7 @@
     {
       "parkNameId": 3663,
       "orcs": 566,
-      "parkName": "K'uuna Gwaay Conservancy",
+      "parkName": "K’uuna Gwaay Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -20498,7 +20499,7 @@
     {
       "parkNameId": 3664,
       "orcs": 1123,
-      "parkName": "K'waal Conservancy",
+      "parkName": "K’waal Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -20522,7 +20523,7 @@
     {
       "parkNameId": 3667,
       "orcs": 552,
-      "parkName": "K'zuzalt/Twin Two Conservancy",
+      "parkName": "K’zuzalt/Twin Two Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -20626,7 +20627,7 @@
     {
       "parkNameId": 3680,
       "orcs": 1006,
-      "parkName": "Lax ka'gaas/Campania Conservancy",
+      "parkName": "Lax ka’gaas/Campania Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -21026,7 +21027,7 @@
     {
       "parkNameId": 3730,
       "orcs": 1116,
-      "parkName": "Maxtaktsm'aa/Union Passage Conservancy",
+      "parkName": "Maxtaktsm’aa/Union Passage Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -21130,7 +21131,7 @@
     {
       "parkNameId": 3743,
       "orcs": 557,
-      "parkName": "Mkwal'ts Conservancy",
+      "parkName": "Mkwal’ts Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -21146,7 +21147,7 @@
     {
       "parkNameId": 3745,
       "orcs": 1010,
-      "parkName": "Moksgm'ol/Chapple - Cornwall Conservancy",
+      "parkName": "Moksgm’ol/Chapple - Cornwall Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -21386,7 +21387,7 @@
     {
       "parkNameId": 3775,
       "orcs": 1079,
-      "parkName": "Mount Minto/K'iyan Conservancy",
+      "parkName": "Mount Minto/K’iyan Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -21690,7 +21691,7 @@
     {
       "parkNameId": 3813,
       "orcs": 593,
-      "parkName": "Ne'ah' Conservancy",
+      "parkName": "Ne’ah’ Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -21722,7 +21723,7 @@
     {
       "parkNameId": 3817,
       "orcs": 534,
-      "parkName": "Nenike​kh/Nanika-Kidprice Provincial Park",
+      "parkName": "Nenike?kh/Nanika-Kidprice Provincial Park",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -21802,7 +21803,7 @@
     {
       "parkNameId": 3827,
       "orcs": 577,
-      "parkName": "Nisga'a Memorial Lava Bed Corridor Protected Area",
+      "parkName": "Nisga’a Memorial Lava Bed Corridor Protected Area",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -21810,7 +21811,7 @@
     {
       "parkNameId": 3828,
       "orcs": 3932,
-      "parkName": "Nisga'a Memorial Lava Bed Corridor Protected Area (No. 2)",
+      "parkName": "Nisga’a Memorial Lava Bed Corridor Protected Area (No. 2)",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -21818,7 +21819,7 @@
     {
       "parkNameId": 3829,
       "orcs": 1088,
-      "parkName": "Nisga'a Memorial Lava Bed Protected Area",
+      "parkName": "Nisga’a Memorial Lava Bed Protected Area",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -22506,7 +22507,7 @@
     {
       "parkNameId": 3915,
       "orcs": 1015,
-      "parkName": "Q'Altanaas/Aaltanhash Conservancy",
+      "parkName": "Q’Altanaas/Aaltanhash Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -22578,7 +22579,7 @@
     {
       "parkNameId": 3924,
       "orcs": 584,
-      "parkName": "Rainbow/Q'iwentem Provincial Park",
+      "parkName": "Rainbow/Q’iwentem Provincial Park",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -23010,7 +23011,7 @@
     {
       "parkNameId": 3978,
       "orcs": 570,
-      "parkName": "Sgaay Taw Siiwaay K'adjuu Conservancy",
+      "parkName": "Sgaay Taw Siiwaay K’adjuu Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -23458,7 +23459,7 @@
     {
       "parkNameId": 4034,
       "orcs": 256,
-      "parkName": "St. Mary's Alpine Provincial Park",
+      "parkName": "St. Mary’s Alpine Provincial Park",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -23514,7 +23515,7 @@
     {
       "parkNameId": 4041,
       "orcs": 9458,
-      "parkName": "Stein Valley Nlaka'pamux Heritage Provincial Park",
+      "parkName": "Stein Valley Nlaka’pamux Heritage Provincial Park",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -23770,7 +23771,7 @@
     {
       "parkNameId": 4073,
       "orcs": 178,
-      "parkName": "Ta Ch'ila Park [a.k.a. Boya Lake Park]",
+      "parkName": "Ta Ch’ila Park [a.k.a. Boya Lake Park]",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -23818,7 +23819,7 @@
     {
       "parkNameId": 4079,
       "orcs": 9522,
-      "parkName": "Taku River/T'aku Teix' Conservancy",
+      "parkName": "Taku River/T’aku Teix’ Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -23962,7 +23963,7 @@
     {
       "parkNameId": 4097,
       "orcs": 517,
-      "parkName": "Thunderbird's Nest (T'iitsk'in Paawats) Protected Area",
+      "parkName": "Thunderbird’s Nest (T’iitsk’in Paawats) Protected Area",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -24122,7 +24123,7 @@
     {
       "parkNameId": 4117,
       "orcs": 409,
-      "parkName": "Ts'il?os Park",
+      "parkName": "Ts’il?os Park",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -24170,7 +24171,7 @@
     {
       "parkNameId": 4123,
       "orcs": 9123,
-      "parkName": "Tutshi Lake/T'ooch' Aayi Conservancy",
+      "parkName": "Tutshi Lake/T’ooch’ Aayi Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -24210,7 +24211,7 @@
     {
       "parkNameId": 4128,
       "orcs": 1023,
-      "parkName": "Ugwiwa'/Cape Caution - Blunden Bay Conservancy",
+      "parkName": "Ugwiwa’/Cape Caution - Blunden Bay Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -24218,7 +24219,7 @@
     {
       "parkNameId": 4129,
       "orcs": 1028,
-      "parkName": "Ugwiwa'/Cape Caution Conservancy",
+      "parkName": "Ugwiwa’/Cape Caution Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -24666,7 +24667,7 @@
     {
       "parkNameId": 4185,
       "orcs": 1083,
-      "parkName": "Willison Creek - Nelson Lake/Sit' Heeni Conservancy",
+      "parkName": "Willison Creek - Nelson Lake/Sit’ Heeni Conservancy",
       "nameTypeId": 4,
       "source": "Custom",
       "note": ""
@@ -25207,4 +25208,5 @@
       "source": "Custom",
       "note": ""
     }
-  ]}
+  ]
+}
