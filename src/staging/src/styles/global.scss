@@ -2,6 +2,7 @@ $colorGold: #fcba19;
 $colorWhite: #fff;
 $colorWhiteOpacity: #ffffff90;
 $colorGrey: #eef1f5;
+$colorLightGrey: #f2f2f2;
 $colorBlue: #003366;
 $colorBlueMed: #2464a4;
 $desktopBreakpoint: 576px;
@@ -117,6 +118,17 @@ figure.media div[data-oembed-url] {
 }
 
 img { max-width: 100%; }
+
+// This is temp as we should be rendering <table class="table"> through CKEditor
+// so that tables pick up standard boostrap styles
+figure.table {
+  table {
+    width: 100%;
+    thead {
+      background: $colorLightGrey;
+  }
+  }
+}
 
 
 /* end CKEeditor added styles */
