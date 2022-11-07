@@ -62,10 +62,12 @@ const getPublishedPublicAdvisories = async () => {
 // custom route for park status view
 const getProtectedAreaStatus = async (ctx) => {
   let entities;
+  const { accessStatus, ...query } = ctx.query
+
   if (ctx.query._q) {
     entities = await strapi.services["protected-area"].search(ctx.query);
   } else {
-    entities = await strapi.services["protected-area"].find(ctx.query);
+    entities = await strapi.services["protected-area"].find(query);
   }
 
   const regionsData = await strapi.services["region"].find({ _limit: -1 });
@@ -93,7 +95,7 @@ const getProtectedAreaStatus = async (ctx) => {
 
   const publicAdvisories = await getPublishedPublicAdvisories();
 
-  const payload = entities.map((protectedArea) => {
+  let payload = entities.map((protectedArea) => {
     let publicAdvisory = getPublicAdvisory(
       publicAdvisories,
       protectedArea.orcs
@@ -269,6 +271,11 @@ const getProtectedAreaStatus = async (ctx) => {
       publicAdvisoryId: publicAdvisory.id,
     };
   });
+
+  // filter accessStatus field
+  if(accessStatus){
+    payload = payload.filter((o)=> o?.accessStatus?.toLowerCase() == accessStatus.toLowerCase())
+  }
 
   // Store unfiltered payload into a cached location (unfiltered == no orcs specified)
   if (!ctx.query.orcs) {
