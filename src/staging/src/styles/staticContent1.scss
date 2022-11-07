@@ -62,8 +62,10 @@ $colorComponent: #606060;
   .header-image-wrapper {
     height: 345px;
     order: 1;
+    flex: 0 0 100%;
     > img {
       height: 100%;
+      width: 100%;
       object-fit: cover;
       object-position: center;
     }

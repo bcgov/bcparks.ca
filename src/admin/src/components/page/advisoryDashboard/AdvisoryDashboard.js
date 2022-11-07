@@ -22,7 +22,7 @@ import PublishIcon from "@material-ui/icons/Publish";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import { SvgIcon } from "@material-ui/core";
-import { decode } from "html-entities";
+import { decode } from "he";
 
 import {
   getRegions,

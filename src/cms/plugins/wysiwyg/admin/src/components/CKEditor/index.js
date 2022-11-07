@@ -36,6 +36,10 @@ const Wrapper = styled.div`
 	.ck-content img {
 		max-width: 100%;
 	}
+	.ck-content .bcp-landing-intro__image { 
+		min-height: 300px;
+		background-position: center;
+	 }
 `
 
 const configuration = {
@@ -73,11 +77,11 @@ const configuration = {
 		contentToolbar: [
 			'tableColumn',
 			'tableRow',
-			'mergeTableCells'
+			'mergeTableCells',
+			'tableCellProperties'
 		]
 	},
 	link: {
-		defaultProtocol: 'https://',
 		decorators: {
 			isFile: {
 				mode: 'automatic',
