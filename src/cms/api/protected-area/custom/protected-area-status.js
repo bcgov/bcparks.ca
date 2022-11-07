@@ -28,20 +28,20 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
     links: [],
   };
 
-  filteredByOrcs.map((p) => {
-    const data = {
-      id: p.id,
-      advisoryNumber: p.advisoryNumber,
-      advisoryTitle: p.title,
-      effectiveDate: p.effectiveDate,
-      endDate: p.endDate,
-      eventType: p.eventType ? p.eventType.eventType : null,
-      accessStatus: p.accessStatus ? p.accessStatus.accessStatus : null,
-      precedence: p.accessStatus ? p.accessStatus.precedence : null,
-      reservationsAffected: p.reservationsAffected,
+    filteredByOrcs.map((p) => {
+      const data = {
+        id: p.id,
+        advisoryNumber: p.advisoryNumber,
+        advisoryTitle: p.title,
+        effectiveDate: p.effectiveDate,
+        endDate: p.endDate,
+        eventType: p.eventType ? p.eventType.eventType : null,
+        accessStatus: p.accessStatus ? p.accessStatus.accessStatus : null,
+        precedence: p.accessStatus ? p.accessStatus.precedence : null,
+        reservationsAffected: p.reservationsAffected,
       links: p.links,
-    };
-    publicAdvisories = [...publicAdvisories, data];
+      };
+      publicAdvisories = [...publicAdvisories, data];
   });
 
   if (publicAdvisories.length === 0)
@@ -62,12 +62,15 @@ const getPublishedPublicAdvisories = async () => {
 // custom route for park status view
 const getProtectedAreaStatus = async (ctx) => {
   let entities;
+  const { accessStatus, ...query } = ctx.query
+
   if (ctx.query._q) {
     entities = await strapi.services["protected-area"].search(ctx.query);
   } else {
-    entities = await strapi.services["protected-area"].find(ctx.query);
+    entities = await strapi.services["protected-area"].find(query);
   }
-
+  const publicAdvisories = await getPublishedPublicAdvisories();
+ 
   const regionsData = await strapi.services["region"].find({ _limit: -1 });
   const sectionsData = await strapi.services["section"].find({ _limit: -1 });
   const fireCentresData = await strapi.services["fire-centre"].find({
@@ -91,9 +94,8 @@ const getProtectedAreaStatus = async (ctx) => {
     fireCentre_null: false,
   });
 
-  const publicAdvisories = await getPublishedPublicAdvisories();
 
-  const payload = entities.map((protectedArea) => {
+  let payload = entities.map((protectedArea) => {
     let publicAdvisory = getPublicAdvisory(
       publicAdvisories,
       protectedArea.orcs
@@ -270,6 +272,10 @@ const getProtectedAreaStatus = async (ctx) => {
     };
   });
 
+  // filter accessStatus field
+if(accessStatus){
+  payload = payload.filter((o)=> o?.accessStatus?.toLowerCase() == accessStatus.toLowerCase())
+}
   // Store unfiltered payload into a cached location (unfiltered == no orcs specified)
   if (!ctx.query.orcs) {
     const results = await strapi.services["park-access-status-cache"].find({

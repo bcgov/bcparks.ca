@@ -84,6 +84,7 @@ module.exports = {
 function parseSearchFilters(query) {
   const searchText = query._q;
   const typeCode = query.typeCode || query.typeCode_eq;
+  const accessStatus = query.accessStatus || query.accessStatus_eq;
   const marineProtectedArea =
     query.marineProtectedArea || query.marineProtectedArea_eq;
   const camping =
@@ -116,6 +117,7 @@ function parseSearchFilters(query) {
   return {
     searchText,
     typeCode,
+    accessStatus,
     camping,
     marineProtectedArea,
     activityTypeIds,
