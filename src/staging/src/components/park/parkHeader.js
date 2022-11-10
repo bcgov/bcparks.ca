@@ -5,7 +5,7 @@ import { Grid, Button, Box, Paper } from "@material-ui/core"
 import Advisory from "./advisory"
 import ParkAccessStatus from "./parkAccessStatus"
 export default function ParkHeader({
-  park,
+  parkName,
   hasReservations,
   hasDayUsePass,
   isLoadingAdvisories,
@@ -21,7 +21,7 @@ export default function ParkHeader({
         <div className="col-12 no-padding">
           <Grid item xs={12}>
             <Box mt={0}>
-              <h1>{park.protectedAreaName}</h1>
+              <h1>{parkName}</h1>
             </Box>
           </Grid>
           <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
@@ -105,10 +105,7 @@ export default function ParkHeader({
 }
 
 ParkHeader.propTypes = {
-  park: PropTypes.shape({
-    protectedAreaName: PropTypes.string,
-    orcs: PropTypes.number,
-  }).isRequired,
+  parkName: PropTypes.string.isRequired,
   isLoadingAdvisories: PropTypes.bool.isRequired,
   advisoryLoadError: PropTypes.any,
   hasReservations: PropTypes.bool,
