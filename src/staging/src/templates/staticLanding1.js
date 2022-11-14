@@ -1,7 +1,7 @@
 import React from "react"
-import { useStaticQuery, graphql, Link } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
-import { CssBaseline, Breadcrumbs } from "@material-ui/core"
+import { CssBaseline } from "@material-ui/core"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -101,21 +101,6 @@ const LandingPage = ({ pageContext }) => {
           </div>
         </div>
       )}
-      {/* Show breadcrumbs and title even if there's no HTMLArea */}
-      {linkContent.length === 0 && (
-        <>
-          <div className="d-none d-md-block static-content-container page-breadcrumbs">
-            <Breadcrumbs separator="›" aria-label="breadcrumb">
-              {renderBreadcrumbs(menuContent, pageContext?.page)}
-            </Breadcrumbs>
-          </div>
-          <div className="static-content--header">
-            <h1 className="header-title">
-              {page.Title}
-            </h1>
-          </div>
-        </>
-      )}
       <div className="bcp-landing-park-search d-none d-lg-block">
         <div className="container">
           <div className="row">
@@ -134,33 +119,6 @@ const LandingPage = ({ pageContext }) => {
       <Footer>{queryData.strapiWebsites.Footer}</Footer>
     </>
   )
-}
-
-
-function renderBreadcrumbs(menuContent, pageContext) {
-  // TODO this doesn't work if the page is not in the menu
-  let current = menuContent.find(mc => mc.url === pageContext.Slug)
-  const breadcrumbItems = [
-    <div key={pageContext.id} className="breadcrumb-text">
-      {current?.title}
-    </div>,
-  ]
-
-  let parent = menuContent.find(mc => mc.strapiId === current?.strapiParent?.id)
-  return addItems(parent, menuContent, breadcrumbItems)
-
-  function addItems(parent, menuContent, breadcrumbItems) {
-    if (parent) {
-      breadcrumbItems.push(
-        <Link key={parent.strapiId} to={parent?.url ?? "/"}>
-          {parent.title}
-        </Link>
-      )
-      parent = menuContent.find(mc => mc.strapiId === parent?.strapiParent?.id)
-      return addItems(parent, menuContent, breadcrumbItems)
-    }
-    return breadcrumbItems.reverse()
-  }
 }
 
 export default LandingPage
