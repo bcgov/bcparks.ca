@@ -226,7 +226,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         Slug
         Template
         Content
-        Title
       }
     }
   }

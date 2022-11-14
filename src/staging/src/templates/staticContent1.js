@@ -77,7 +77,7 @@ export default function StaticContent1({ pageContext }) {
   // Get page title from record
   // if not there, get from page title, if there is a PageHeader compopnent
   // otherwise, page title & breadcrumb assumed to be in the content
-  let pageTitle = pageContext.page.Title
+  let pageTitle = pageContext.page.title
   if (!pageTitle) {
     pageTitle = headerContent.pageTitle
   }
