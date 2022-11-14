@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 export default function ParkOverview({ data: parkOverview, type }) {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
-  
+
   return (
     <div id="park-overview-container" className="anchor-link">
       <Grid item xs={12} className="anchor-link">
