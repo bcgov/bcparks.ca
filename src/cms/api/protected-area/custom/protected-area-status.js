@@ -62,7 +62,7 @@ const getPublishedPublicAdvisories = async () => {
 // custom route for park status view
 const getProtectedAreaStatus = async (ctx) => {
   let entities;
-  const { accessStatus, ...query } = ctx.query
+  const { accessStatus, accessStatus_ne, ...query } = ctx.query;
 
   if (ctx.query._q) {
     entities = await strapi.services["protected-area"].search(ctx.query);
@@ -273,8 +273,14 @@ const getProtectedAreaStatus = async (ctx) => {
   });
 
   // filter accessStatus field
-  if(accessStatus){
-    payload = payload.filter((o)=> o?.accessStatus?.toLowerCase() == accessStatus.toLowerCase())
+  if (accessStatus) {
+   return payload = payload.filter(
+      (o) => o?.accessStatus?.toLowerCase() == accessStatus.toLowerCase()
+    );
+  } else if (accessStatus_ne) {
+    return payload = payload.filter(
+      (o) => o?.accessStatus?.toLowerCase() != accessStatus_ne.toLowerCase()
+    );
   }
 
   // Store unfiltered payload into a cached location (unfiltered == no orcs specified)
@@ -302,10 +308,10 @@ const getProtectedAreaStatus = async (ctx) => {
       );
     }
   }
-  
+
   return payload;
 };
 
 module.exports = {
-  getProtectedAreaStatus
+  getProtectedAreaStatus,
 };
