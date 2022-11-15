@@ -273,14 +273,25 @@ const getProtectedAreaStatus = async (ctx) => {
   });
 
   // filter accessStatus field
-  if (accessStatus) {
-   return payload = payload.filter(
+  if (accessStatus && accessStatus_ne) {
+    return (payload = payload.filter((o) => {
+      const protected_area_item = o?.accessStatus?.toLowerCase();
+      const query_accessStatus = accessStatus.toLowerCase();
+      const query_accessStatus_ne = accessStatus_ne.toLowerCase();
+
+      return (
+        protected_area_item == query_accessStatus &&
+        protected_area_item != query_accessStatus_ne
+      );
+    }));
+  } else if (accessStatus) {
+    return (payload = payload.filter(
       (o) => o?.accessStatus?.toLowerCase() == accessStatus.toLowerCase()
-    );
+    ));
   } else if (accessStatus_ne) {
-    return payload = payload.filter(
+    return (payload = payload.filter(
       (o) => o?.accessStatus?.toLowerCase() != accessStatus_ne.toLowerCase()
-    );
+    ));
   }
 
   // Store unfiltered payload into a cached location (unfiltered == no orcs specified)
