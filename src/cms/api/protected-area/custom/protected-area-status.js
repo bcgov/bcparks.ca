@@ -283,32 +283,6 @@ const getProtectedAreaStatus = async (ctx) => {
     ));
   }
 
-  // Store unfiltered payload into a cached location (unfiltered == no orcs specified)
-  if (!ctx.query.orcs) {
-    const results = await strapi.services["park-access-status-cache"].find({
-      cacheId: 1,
-    });
-    if (results.length === 0) {
-      console.log("Creating cache for the first time.");
-      await strapi.services["park-access-status-cache"].create({
-        cacheId: 1,
-        payload: payload,
-      });
-    } else {
-      // Update
-      console.log("Updating cache entry.");
-      await strapi.services["park-access-status-cache"].update(
-        {
-          cacheId: 1,
-        },
-        {
-          cacheId: 1,
-          payload: payload,
-        }
-      );
-    }
-  }
-
   return payload;
 };
 
