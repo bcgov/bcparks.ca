@@ -273,18 +273,7 @@ const getProtectedAreaStatus = async (ctx) => {
   });
 
   // filter accessStatus field
-  if (accessStatus && accessStatus_ne) {
-    return (payload = payload.filter((o) => {
-      const protected_area_item = o?.accessStatus?.toLowerCase();
-      const query_accessStatus = accessStatus.toLowerCase();
-      const query_accessStatus_ne = accessStatus_ne.toLowerCase();
-
-      return (
-        protected_area_item == query_accessStatus &&
-        protected_area_item != query_accessStatus_ne
-      );
-    }));
-  } else if (accessStatus) {
+  if (accessStatus) {
     return (payload = payload.filter(
       (o) => o?.accessStatus?.toLowerCase() == accessStatus.toLowerCase()
     ));
