@@ -3,15 +3,15 @@
  */
 const strapi = require("strapi");
 
-const loader = require("../data/functions/seedData.js");
+const loader = require("../data/functions/reimportData.js");
 
 strapi({ serveAdminPanel: false })
   .load()
   .then(async (app) => {
     try {
-      await loader.seedData();
+      await loader.reimport();
     } catch (err) {
-      app.log.error(`Error occurred seeding initial data`);
+      app.log.error(`Error occurred reimporting data`);
       app.log.error(err);
       process.exit(1);
     }
