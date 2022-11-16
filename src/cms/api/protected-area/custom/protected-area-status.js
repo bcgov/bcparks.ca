@@ -62,10 +62,12 @@ const getPublishedPublicAdvisories = async () => {
 // custom route for park status view
 const getProtectedAreaStatus = async (ctx) => {
   let entities;
+  const { accessStatus, accessStatus_ne, ...query } = ctx.query;
+
   if (ctx.query._q) {
     entities = await strapi.services["protected-area"].search(ctx.query);
   } else {
-    entities = await strapi.services["protected-area"].find(ctx.query);
+    entities = await strapi.services["protected-area"].find(query);
   }
 
   const regionsData = await strapi.services["region"].find({ _limit: -1 });
@@ -93,7 +95,7 @@ const getProtectedAreaStatus = async (ctx) => {
 
   const publicAdvisories = await getPublishedPublicAdvisories();
 
-  const payload = entities.map((protectedArea) => {
+  let payload = entities.map((protectedArea) => {
     let publicAdvisory = getPublicAdvisory(
       publicAdvisories,
       protectedArea.orcs
@@ -270,35 +272,20 @@ const getProtectedAreaStatus = async (ctx) => {
     };
   });
 
-  // Store unfiltered payload into a cached location (unfiltered == no orcs specified)
-  if (!ctx.query.orcs) {
-    const results = await strapi.services["park-access-status-cache"].find({
-      cacheId: 1,
-    });
-    if (results.length === 0) {
-      console.log("Creating cache for the first time.");
-      await strapi.services["park-access-status-cache"].create({
-        cacheId: 1,
-        payload: payload,
-      });
-    } else {
-      // Update
-      console.log("Updating cache entry.");
-      await strapi.services["park-access-status-cache"].update(
-        {
-          cacheId: 1,
-        },
-        {
-          cacheId: 1,
-          payload: payload,
-        }
-      );
-    }
+  // filter accessStatus field
+  if (accessStatus) {
+    return (payload = payload.filter(
+      (o) => o?.accessStatus?.toLowerCase() == accessStatus.toLowerCase()
+    ));
+  } else if (accessStatus_ne) {
+    return (payload = payload.filter(
+      (o) => o?.accessStatus?.toLowerCase() != accessStatus_ne.toLowerCase()
+    ));
   }
-  
+
   return payload;
 };
 
 module.exports = {
-  getProtectedAreaStatus
+  getProtectedAreaStatus,
 };
