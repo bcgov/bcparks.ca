@@ -372,7 +372,7 @@ const updateProtectedAreaStatusCache = async (ctx) => {
     });
   } else {
     // Update
-    console.log("Updating cache entry.")
+    console.log("Updating park-access-status-cache entry.")
     await strapi.services['park-access-status-cache'].update({
       cacheId: 1
     }, {
@@ -380,6 +380,4 @@ const updateProtectedAreaStatusCache = async (ctx) => {
       payload: payload
     });
   }
-
-  console.log("done:", payload);
 };
