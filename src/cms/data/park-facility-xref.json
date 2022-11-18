@@ -2113,7 +2113,7 @@
       "isActive": true
     },
     {
-      "facilityNumber": "2",
+      "facilityNumber": "4",
       "orcs": "254",
       "orcsSiteNumber": "254",
       "description": "Wilderness, backcountry or walk-in camping is allowed, but no facilities are provided. The park is open year-round, if accessible.",
@@ -2305,10 +2305,10 @@
       "isActive": true
     },
     {
-      "facilityNumber": "2",
+      "facilityNumber": "4",
       "orcs": "341",
       "orcsSiteNumber": "341",
-      "description": "",
+      "description": "Wilderness, backcountry or walk-in camping is allowed, but no facilities are provided. Please practice <a href=\"https://bcparks.ca/visiting/backcountry-visitor-guide/\">    Responsible Recreation</a>.",
       "isFacilityOpen": false,
       "isActive": true
     },
@@ -14908,7 +14908,7 @@
       "facilityNumber": "16",
       "orcs": "341",
       "orcsSiteNumber": "341",
-      "description": "",
+      "description": "Keep backcountry campfires small.",
       "isFacilityOpen": false,
       "isActive": true
     },
@@ -18210,7 +18210,7 @@
     },
     {
       "facilityNumber": "5",
-      "orcs": "",
+      "orcs": "252",
       "orcsSiteNumber": "252",
       "description": "",
       "isFacilityOpen": false,
@@ -18218,7 +18218,7 @@
     },
     {
       "facilityNumber": "19",
-      "orcs": "",
+      "orcs": "264",
       "orcsSiteNumber": "264",
       "description": "<p>     An information shelter is located at Hague Lake. </p>",
       "isFacilityOpen": false,
@@ -18226,7 +18226,7 @@
     },
     {
       "facilityNumber": "40",
-      "orcs": "",
+      "orcs": "365",
       "orcsSiteNumber": "365",
       "description": "",
       "isFacilityOpen": false,
@@ -18234,7 +18234,7 @@
     },
     {
       "facilityNumber": "40",
-      "orcs": "",
+      "orcs": "198",
       "orcsSiteNumber": "198",
       "description": "",
       "isFacilityOpen": false,
@@ -18242,7 +18242,7 @@
     },
     {
       "facilityNumber": "40",
-      "orcs": "",
+      "orcs": "382",
       "orcsSiteNumber": "382",
       "description": "",
       "isFacilityOpen": false,
@@ -18250,7 +18250,7 @@
     },
     {
       "facilityNumber": "40",
-      "orcs": "",
+      "orcs": "227",
       "orcsSiteNumber": "227",
       "description": "",
       "isFacilityOpen": false,
@@ -18258,7 +18258,7 @@
     },
     {
       "facilityNumber": "40",
-      "orcs": "",
+      "orcs": "252",
       "orcsSiteNumber": "252",
       "description": "",
       "isFacilityOpen": false,
@@ -18266,7 +18266,7 @@
     },
     {
       "facilityNumber": "40",
-      "orcs": "",
+      "orcs": "228",
       "orcsSiteNumber": "228",
       "description": "",
       "isFacilityOpen": false,
@@ -18274,7 +18274,7 @@
     },
     {
       "facilityNumber": "40",
-      "orcs": "",
+      "orcs": "265",
       "orcsSiteNumber": "265",
       "description": "",
       "isFacilityOpen": false,
@@ -18282,7 +18282,7 @@
     },
     {
       "facilityNumber": "40",
-      "orcs": "",
+      "orcs": "373",
       "orcsSiteNumber": "373",
       "description": "",
       "isFacilityOpen": false,
@@ -18290,7 +18290,7 @@
     },
     {
       "facilityNumber": "40",
-      "orcs": "",
+      "orcs": "375",
       "orcsSiteNumber": "375",
       "description": "",
       "isFacilityOpen": false,
@@ -18298,7 +18298,7 @@
     },
     {
       "facilityNumber": "36",
-      "orcs": "",
+      "orcs": "9815",
       "orcsSiteNumber": "9815",
       "description": "",
       "isFacilityOpen": false,
@@ -18306,7 +18306,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "9815",
       "orcsSiteNumber": "9815",
       "description": "",
       "isFacilityOpen": false,
@@ -18314,7 +18314,7 @@
     },
     {
       "facilityNumber": "17",
-      "orcs": "",
+      "orcs": "9815",
       "orcsSiteNumber": "9815",
       "description": "<p> There are three cabins available in both summer and winter for the public&rsquo;s overnight use: </p> <ul> <li> 8 Mile log cabin </li> <li> Raven Lake cabin </li> <li> Grizzly Den cabin </li> </ul> <p> The cabins are rustic. It is highly recommended to bring a camp stove and fuel. </p> <p> Cabins are available for reservation through the <a href=\"\"http://www.pgbrs.org/\"\">PGBRS website</a>. The public are asked to keep the cabins clean and restock the wood bin for the next group. Those wishing to use the cabins should be prepared to camp outside in the event the cabins are full. For more information, check the <a href=\"\"sugarbowl_grizzlyden_brochure.pdf\"\" target=\"\"_blank\"\">park brochure <span class=\"\"fileinfo\"\">[PDF]</span></a>. </p>",
       "isFacilityOpen": false,
@@ -18322,7 +18322,7 @@
     },
     {
       "facilityNumber": "18",
-      "orcs": "",
+      "orcs": "9815",
       "orcsSiteNumber": "9815",
       "description": "Winter camping is available in this park.",
       "isFacilityOpen": false,
@@ -18330,7 +18330,7 @@
     },
     {
       "facilityNumber": "17",
-      "orcs": "",
+      "orcs": "251",
       "orcsSiteNumber": "251",
       "description": "<p>     <strong>Bert&rsquo;s Cabin:</strong> Site includes one cabin (Maximum Occupancy: 4 people) and three tent pads (Maximum Occupancy: 4 people / tent pad). <a href=\"#Reservations\">     Available by reservation </a> through the <a href=\"https://camping.bcparks.ca/\">     BC Parks reservations system</a>.    </p>       <ul>         <li>      Dogs are not allowed in Bert&rsquo;s Cabin at any time.     </li>        </ul>       <div class=\"ParkFees\">     Cabin and Tent Pads Fee: $88.00 per party/night. </div>",
       "isFacilityOpen": false,
@@ -18338,7 +18338,7 @@
     },
     {
       "facilityNumber": "7",
-      "orcs": "",
+      "orcs": "33",
       "orcsSiteNumber": "33",
       "description": "",
       "isFacilityOpen": false,
@@ -18346,7 +18346,7 @@
     },
     {
       "facilityNumber": "43",
-      "orcs": "",
+      "orcs": "33",
       "orcsSiteNumber": "33",
       "description": "",
       "isFacilityOpen": false,
@@ -18354,7 +18354,7 @@
     },
     {
       "facilityNumber": "44",
-      "orcs": "",
+      "orcs": "9780",
       "orcsSiteNumber": "9780",
       "description": "",
       "isFacilityOpen": false,
@@ -18362,7 +18362,7 @@
     },
     {
       "facilityNumber": "17",
-      "orcs": "",
+      "orcs": "485",
       "orcsSiteNumber": "485",
       "description": "",
       "isFacilityOpen": false,
@@ -18370,7 +18370,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "485",
       "orcsSiteNumber": "485",
       "description": "",
       "isFacilityOpen": false,
@@ -18378,7 +18378,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "485",
       "orcsSiteNumber": "485",
       "description": "",
       "isFacilityOpen": false,
@@ -18386,7 +18386,7 @@
     },
     {
       "facilityNumber": "18",
-      "orcs": "",
+      "orcs": "485",
       "orcsSiteNumber": "485",
       "description": "",
       "isFacilityOpen": false,
@@ -18394,7 +18394,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "340",
       "orcsSiteNumber": "340",
       "description": "",
       "isFacilityOpen": false,
@@ -18402,7 +18402,7 @@
     },
     {
       "facilityNumber": "17",
-      "orcs": "",
+      "orcs": "340",
       "orcsSiteNumber": "340",
       "description": "",
       "isFacilityOpen": false,
@@ -18410,7 +18410,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "340",
       "orcsSiteNumber": "340",
       "description": "",
       "isFacilityOpen": false,
@@ -18418,7 +18418,7 @@
     },
     {
       "facilityNumber": "1",
-      "orcs": "",
+      "orcs": "142",
       "orcsSiteNumber": "142",
       "description": "<p>     This small park offers 41 vehicle-accessible campsites, seven of which are double sites. <a href=\"#Reservations\">     Campsite reservations</a> are accepted for all sites. Reservations are strongly recommended for all weekend from May through September and any dates in July and August. If a site is not reserved for that evening, a green &ldquo;available for 1 night&rdquo; sign will be placed on that site indicating that it is available that night. The maximum length of stay is seven days due to the size and popularity of the campground. Access to the boat launch remains open year-round.    </p>       <p>     The sites are large with level gravel pads, picnic tables and fire rings. The many of the sites can accommodate larger RVs. Most of the sites are right on the lake, one of the attractions of this park. The landscape is open with sites being separated by pockets of beach and scattered cottonwood and Ponderosa pine trees for shade. The inner campsites and those at the tip of the spit are in thickets of shrubs that offer more privacy and shade and the opportunity for bird watching. The nearest services are in Osoyoos and there is a phone in the campground near site #10.    </p>       <h4> Check-in procedures: </h4>       <ul>         <li>      <strong>Guests with reservations:</strong> Check reservation board at campground entrance for pre-assigned site number.     </li>         <li>      <strong>Guests without reservations:</strong> Check the reservation board for sites that may be available on a first-come, first-served basis or for one night only.      <br>      <strong>Special note:</strong> during peak season, reservations are highly recommended as first-come, first-served sites are available on a minimal basis only.     </li>        </ul>       <div class=\"ParkFees\">     Vehicle Accessible Camping Fee: $32.00 per party/night    </div>       <div class=\"ParkFees\">     BC Senior&rsquo;s Rate (day after Labour Day to June 14 only): $16.00 per <strong>senior party/</strong>night. Read the <a href=\"/fees/senior.html\">     User Fees Policy</a> for information on Senior Camping Discounts. </div>",
       "isFacilityOpen": false,
@@ -18426,7 +18426,7 @@
     },
     {
       "facilityNumber": "6",
-      "orcs": "",
+      "orcs": "142",
       "orcsSiteNumber": "142",
       "description": "This park has a day-use/picnic area. A narrow, shaded terrace with tables overlooks the sandy beach and north to Osoyoos. Cottonwoods separate the tables from the beach. There is plenty of paved parking and two small wooden change houses just off the narrow beach.",
       "isFacilityOpen": false,
@@ -18434,7 +18434,7 @@
     },
     {
       "facilityNumber": "8",
-      "orcs": "",
+      "orcs": "142",
       "orcsSiteNumber": "142",
       "description": "This park only has flush toilets; no pit toilets.",
       "isFacilityOpen": false,
@@ -18442,7 +18442,7 @@
     },
     {
       "facilityNumber": "10",
-      "orcs": "",
+      "orcs": "142",
       "orcsSiteNumber": "142",
       "description": "Cold water taps are located throughout the park. Taps are shut off during the off-season.",
       "isFacilityOpen": false,
@@ -18450,7 +18450,7 @@
     },
     {
       "facilityNumber": "13",
-      "orcs": "",
+      "orcs": "142",
       "orcsSiteNumber": "142",
       "description": "There is a single launch; concrete ramp, shallow, rocky. The parking lot beside the boat launch is for vehicles with trailers only. Check with US Customs prior to going to USA on Osoyoos Lake; Boaters be aware of narrow channel at end of Haynes Point, so stay between yellow markers. Boats must stay out of marked swimming areas. Marinas in Osoyoos for private boat rentals. There is a flush toilet at the boat launch.",
       "isFacilityOpen": false,
@@ -18458,7 +18458,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "142",
       "orcsSiteNumber": "142",
       "description": "While campfires are allowed and campfire rings are provided at each campsite, we encourage visitors to conserve wood and protect the environment by minimizing the use of fire and using campstoves instead. Firewood can be purchased in the park or you may bring your own wood. Fees for firewood are set locally and may vary from park to park. Limited burning hours or campfire bans may be implemented. To preserve vegetation and ground cover, please don&rsquo;t gather firewood from the area around your campsite or elsewhere in the park (this is a ticketable offence under the    <em>     Park Act    </em>    ). Dead wood is an important habitat element for many plants and animals and it adds organic matter to the soil.",
       "isFacilityOpen": false,
@@ -18466,7 +18466,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "9544",
       "orcsSiteNumber": "9544",
       "description": "",
       "isFacilityOpen": false,
@@ -18474,7 +18474,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "1022",
       "orcsSiteNumber": "1022",
       "description": "",
       "isFacilityOpen": false,
@@ -18482,7 +18482,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "1022",
       "orcsSiteNumber": "1022",
       "description": "Campfires are permitted.",
       "isFacilityOpen": false,
@@ -18490,7 +18490,7 @@
     },
     {
       "facilityNumber": "11",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-101",
       "description": "<p> Some facilities and hiking trails in the park are wheelchair-accessible. </p>",
       "isFacilityOpen": false,
@@ -18498,7 +18498,7 @@
     },
     {
       "facilityNumber": "1",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-101",
       "description": "<p> This park offers vehicle-accessible campsites, both reservable and first-come, first-served. <br> </p> <div class=\"\"ParkFees\"\"> Vehicle Accessible Camping Fee: $16.00 per party / night </div> <div class=\"\"ParkFees\"\"> BC Senior&rsquo;s Rate (day after Labour Day to June 14 only): $8.00 per <strong>senior party/</strong>night. Read the <a href=\"\"../../../fees/senior.html\"\">User Fees Policy</a> for information on Senior Camping Discounts.</div> <a href=\"\"/explore/parkpgs/wells_gry/#dates-ops\"\">Dates of Operation for frontcountry/vehicle accessible sites in Wells Gray</a>",
       "isFacilityOpen": false,
@@ -18506,7 +18506,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-101",
       "description": "",
       "isFacilityOpen": false,
@@ -18514,7 +18514,7 @@
     },
     {
       "facilityNumber": "6",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-101",
       "description": "This park has a day-use/picnic area.",
       "isFacilityOpen": false,
@@ -18522,7 +18522,7 @@
     },
     {
       "facilityNumber": "8",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-101",
       "description": "This park only has pit toilets; no flush toilets.",
       "isFacilityOpen": false,
@@ -18530,7 +18530,7 @@
     },
     {
       "facilityNumber": "10",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-101",
       "description": "Cold water taps are located throughout the park but are not provided in the day-use areas. Taps are shut off during the off-season.",
       "isFacilityOpen": false,
@@ -18538,7 +18538,7 @@
     },
     {
       "facilityNumber": "13",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-101",
       "description": "The boat launch is located at the end for Wells Gray Park Road, near the southern end of Clearwater Lake.",
       "isFacilityOpen": false,
@@ -18546,7 +18546,7 @@
     },
     {
       "facilityNumber": "14",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-101",
       "description": "A sani-station/dump is  available during the collecting season across the north end of Falls Creek  Campground.<br><div class=\"\"ParkFees\"\"> Sani-station Use Fee: $5.00 per discharge </div>",
       "isFacilityOpen": false,
@@ -18554,7 +18554,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-101",
       "description": "While campfires are allowed and campfire rings are provided at each campsite, we encourage visitors to conserve wood and protect the environment by minimizing the use of fire and using campstoves instead. Firewood can be purchased in the park or you may bring your own wood. Fees for firewood are set locally and may vary from park to park. Limited burning hours or campfire bans may be implemented. To preserve vegetation and ground cover, please don&rsquo;t gather firewood from the area around your campsite or elsewhere in the park (this is a ticketable offence under the <em>Park Act</em>). Dead wood is an important habitat element for many plants and animals and it adds organic matter to the soil.",
       "isFacilityOpen": false,
@@ -18562,7 +18562,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "9435",
       "orcsSiteNumber": "9435",
       "description": "",
       "isFacilityOpen": false,
@@ -18570,7 +18570,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "9435",
       "orcsSiteNumber": "9435",
       "description": "<p>     Campfires are allowed, however, visitors should check with the Forest Service or at the park trailheads, to see if fires bans are in effect. For this backcountry area, use dead trees on the ground as wood supply for fires. At traditional campsites, use established fire-rings. In pristine areas, build fires on rocks or dig a hole, scatter the fire remnants and replace the sod ring when you move on. Please practice &ldquo;<a href=\"/explore/notrace.html\">     Leave No Trace</a>&rdquo; camping. </p>",
       "isFacilityOpen": false,
@@ -18578,7 +18578,7 @@
     },
     {
       "facilityNumber": "5",
-      "orcs": "",
+      "orcs": "9508",
       "orcsSiteNumber": "9508",
       "description": "",
       "isFacilityOpen": false,
@@ -18586,7 +18586,7 @@
     },
     {
       "facilityNumber": "36",
-      "orcs": "",
+      "orcs": "9508",
       "orcsSiteNumber": "9508",
       "description": "",
       "isFacilityOpen": false,
@@ -18594,7 +18594,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "9461",
       "orcsSiteNumber": "9461",
       "description": "",
       "isFacilityOpen": false,
@@ -18602,7 +18602,7 @@
     },
     {
       "facilityNumber": "6",
-      "orcs": "",
+      "orcs": "9461",
       "orcsSiteNumber": "9461",
       "description": "This park has a day-use/picnic area.",
       "isFacilityOpen": false,
@@ -18610,7 +18610,7 @@
     },
     {
       "facilityNumber": "17",
-      "orcs": "",
+      "orcs": "9461",
       "orcsSiteNumber": "9461",
       "description": "There are cabins in the park for public use.    <br>       <div class=\"ParkFees\">     Cabin Use Fee: 8 Mile Log Cabin and Grizzly Den Cabin - $5.00 per person/night; Raven Lake cabin - $10 per person/night ($5 base plus $5 mandatory Service Plus)    </div>    The cabin off the West Dore River Road is booked through the <strong>Ozalenka Alpine Club, who built and maintains hiking trails to the Ozalenka and Eagle Valleys in the Cariboo Mtns. Cabins must be reserved: 250-569-2596</strong>",
       "isFacilityOpen": false,
@@ -18618,7 +18618,7 @@
     },
     {
       "facilityNumber": "18",
-      "orcs": "",
+      "orcs": "9461",
       "orcsSiteNumber": "9461",
       "description": "There is winter camping available in the park. Cabin on West Dore River can be booked through <strong>Ozalenka Alpine Club: 250 569-2596</strong>",
       "isFacilityOpen": false,
@@ -18626,7 +18626,7 @@
     },
     {
       "facilityNumber": "1",
-      "orcs": "",
+      "orcs": "9778",
       "orcsSiteNumber": "9778",
       "description": "This park offers 4 vehicle accessible campsites on a first-come, first-served basis &ndash; campsite reservations are not accepted. Rustic camping is available at Sawmill Point. Facilities include fire rings, pit toilets, picnic tables and a gravel boat ramp.",
       "isFacilityOpen": false,
@@ -18634,7 +18634,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "9778",
       "orcsSiteNumber": "9778",
       "description": "",
       "isFacilityOpen": false,
@@ -18642,7 +18642,7 @@
     },
     {
       "facilityNumber": "6",
-      "orcs": "",
+      "orcs": "9778",
       "orcsSiteNumber": "9778",
       "description": "Day-use/picnic areas are available at Sawmill Point and Black Point.",
       "isFacilityOpen": false,
@@ -18650,7 +18650,7 @@
     },
     {
       "facilityNumber": "8",
-      "orcs": "",
+      "orcs": "9778",
       "orcsSiteNumber": "9778",
       "description": "Pit toilets are provided in the campground. There are no flush toilets.",
       "isFacilityOpen": false,
@@ -18658,7 +18658,7 @@
     },
     {
       "facilityNumber": "13",
-      "orcs": "",
+      "orcs": "9778",
       "orcsSiteNumber": "9778",
       "description": "A gravel boat launch is available at Sawmill Point. Public boat launches are available at each of the public ferry landings outside the park.",
       "isFacilityOpen": false,
@@ -18666,7 +18666,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "9778",
       "orcsSiteNumber": "9778",
       "description": "Campfires are permitted in fire rings. Please bring your own firewood. To preserve vegetation and ground cover, please don&rsquo;t gather firewood from the area around your campsite or elsewhere in the park. Dead wood is an important habitat element for many plants and animals and it adds organic matter to the soil. You can conserve firewood and air quality by keeping your campfire small. Limited burning hours or campfire bans may be implemented and some parks may use communal fire rings. Be prepared to bring a portable stove for cooking.",
       "isFacilityOpen": false,
@@ -18674,7 +18674,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "1113",
       "orcsSiteNumber": "1113",
       "description": "",
       "isFacilityOpen": false,
@@ -18682,7 +18682,7 @@
     },
     {
       "facilityNumber": "18",
-      "orcs": "",
+      "orcs": "1113",
       "orcsSiteNumber": "1113",
       "description": "",
       "isFacilityOpen": false,
@@ -18690,7 +18690,7 @@
     },
     {
       "facilityNumber": "8",
-      "orcs": "",
+      "orcs": "112",
       "orcsSiteNumber": "112",
       "description": "",
       "isFacilityOpen": false,
@@ -18698,7 +18698,7 @@
     },
     {
       "facilityNumber": "6",
-      "orcs": "",
+      "orcs": "112",
       "orcsSiteNumber": "112",
       "description": "",
       "isFacilityOpen": false,
@@ -18706,7 +18706,7 @@
     },
     {
       "facilityNumber": "11",
-      "orcs": "",
+      "orcs": "112",
       "orcsSiteNumber": "112",
       "description": "",
       "isFacilityOpen": false,
@@ -18714,7 +18714,7 @@
     },
     {
       "facilityNumber": "36",
-      "orcs": "",
+      "orcs": "199",
       "orcsSiteNumber": "199",
       "description": "",
       "isFacilityOpen": false,
@@ -18722,7 +18722,7 @@
     },
     {
       "facilityNumber": "1",
-      "orcs": "",
+      "orcs": "199",
       "orcsSiteNumber": "199",
       "description": "<h4>Lakeview Trailhead, BuckHorn</h4>       <p>     This park offers limited vehicle accessible campsites on a first-come, first-served basis.    </p>       <p>     To access the <strong>Lakeview Trailhead campground,</strong> turn left at 13 km on the Ashnola Forest Service Road. Another 500m down this dirt road is the gravel trailhead parking lot. There are three walk-in sites along the river downstream from the footbridge. The sites are within 20 metres of the parking lot and are rustic, having only fire rings and no picnic tables or constructed tent pads. Two pit toilets are on the other side of the parking lot. Overnight parking is permitted for self-contained units. The sites are used most often as an overnight stop by people intending to hike into the Core Area and wanting an early start.    </p>       <p>     <strong>Buckhorn campground</strong> is two kilometres further west along the Ashnola River almost at 16 km and the sites are maintained by a <a href=\"#contact\">         <span class=\"grHeading\">      Park Operator     </span>     </a>. There is a limited number of picnic tables, fire rings and 2 pit toilets.     <br>        </p>       <div class=\"ParkFees\">     Vehicle Accessible Camping Fee: $13.00 per party / night    </div>       <div class=\"ParkFees\">     BC Senior&rsquo;s Rate (day after Labour Day to June 14 only): $6.50 per senior party/night. Read the <a href=\"/fees/senior.html\">     User Fees Policy</a> for information on Senior Camping Discounts. </div>",
       "isFacilityOpen": false,
@@ -18730,7 +18730,7 @@
     },
     {
       "facilityNumber": "6",
-      "orcs": "",
+      "orcs": "199",
       "orcsSiteNumber": "199",
       "description": "<a href=\"http://www.cathedrallakes.ca/\">    Cathedral Lakes Lodge</a> offers day-trips into the Core Area driving up from the Ashnola at 8:00am and returning at 3:30.",
       "isFacilityOpen": false,
@@ -18738,7 +18738,7 @@
     },
     {
       "facilityNumber": "8",
-      "orcs": "",
+      "orcs": "199",
       "orcsSiteNumber": "199",
       "description": "This park only has pit toilets &ndash; no flush toilets.",
       "isFacilityOpen": false,
@@ -18746,7 +18746,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "199",
       "orcsSiteNumber": "199",
       "description": "<p>     This is a wilderness area and visitors must be prepared. Freezing temperatures and snow can occur in any month and campfires cannot be relied upon for cooking or as a source of heat. Campers must bring portable stoves for cooking. <strong>Fires are prohibited at Lake of the Woods and Pyramid.</strong>    </p>       <p>     Firewood can be purchased from the <a href=\"#contact\">     Park Operator</a> in some parks or you can bring your own wood. Fees for firewood are set locally and may vary. To preserve vegetation and ground cover, please don&rsquo;t gather firewood from the area around your campsite or elsewhere in the park. Dead wood is an important habitat element for many plants and animals and it adds organic matter to the soil. You can conserve firewood and air quality by keeping your campfire small. </p>",
       "isFacilityOpen": false,
@@ -18754,7 +18754,7 @@
     },
     {
       "facilityNumber": "36",
-      "orcs": "",
+      "orcs": "199",
       "orcsSiteNumber": "199",
       "description": "",
       "isFacilityOpen": false,
@@ -18762,7 +18762,7 @@
     },
     {
       "facilityNumber": "11",
-      "orcs": "",
+      "orcs": "386",
       "orcsSiteNumber": "386",
       "description": "<p>     The campground has a wheelchair-accessible campsite and pit toilet. </p>",
       "isFacilityOpen": false,
@@ -18770,7 +18770,7 @@
     },
     {
       "facilityNumber": "1",
-      "orcs": "",
+      "orcs": "386",
       "orcsSiteNumber": "386",
       "description": "<p>     This park offers 16 vehicle-accessible campsites on a first-come, first-served basis, campsite reservations are not accepted. There are large sites, double sites and wheelchair-accessible sites available. Most sites are shaded due to the surrounding deciduous forest. Additional parking is available at the Visitor Information Centre, which is located next to the campground. Self-registration, running water, and firewood are available. There are no sani-dump facilities. The visitor centre is located next to the campground.    </p>       <div class=\"ParkFees\">     Vehicle-Accessible Camping Fee: $20.00 per party/night    </div>       <div class=\"ParkFees\">     BC Senior&rsquo;s Rate (day after Labour Day to June 14 only): $10.00 per <strong>senior party/</strong>night. Read the <a href=\"/fees/senior.html\">     User Fees Policy</a> for information on Senior Camping Discounts. </div>",
       "isFacilityOpen": false,
@@ -18778,7 +18778,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "386",
       "orcsSiteNumber": "386",
       "description": "",
       "isFacilityOpen": false,
@@ -18786,7 +18786,7 @@
     },
     {
       "facilityNumber": "6",
-      "orcs": "",
+      "orcs": "386",
       "orcsSiteNumber": "386",
       "description": "<p>     This park has several day-use/picnic areas. One is located at Vetter Falls another at Lava Lake and also, the Visitor Information Centre. There are fire rings available at the Visitor Information Centre and the day-use area. </p>",
       "isFacilityOpen": false,
@@ -18794,7 +18794,7 @@
     },
     {
       "facilityNumber": "8",
-      "orcs": "",
+      "orcs": "386",
       "orcsSiteNumber": "386",
       "description": "Pit toilets are available at Lava Lake, Vetter Falls, Nis    <u>     g    </u>    a&rsquo;a Campground, the visitor information shelter and the Tseax River pullout. A wheelchair-accessible pit toilet is located at the Nis    <u>     g    </u>    a&rsquo;a Campground.",
       "isFacilityOpen": false,
@@ -18802,7 +18802,7 @@
     },
     {
       "facilityNumber": "10",
-      "orcs": "",
+      "orcs": "386",
       "orcsSiteNumber": "386",
       "description": "<p>     There is a water pump located at the Nis     <u>      g     </u>     a&rsquo;a Memorial Lava Bed Park Campground. </p>",
       "isFacilityOpen": false,
@@ -18810,7 +18810,7 @@
     },
     {
       "facilityNumber": "13",
-      "orcs": "",
+      "orcs": "386",
       "orcsSiteNumber": "386",
       "description": "<p>     A gravel, single lane boat launch accessing the Nass River can be found at the park&rsquo;s north end. A gravel, single lane boat launch accessing Lava Lake can be found at the park&rsquo;s south end. Parking space is available for vehicle and boat trailers at both locations. Overnight moorage is not recommended at the Nass River boat launch location due to fluctuating river levels. </p>",
       "isFacilityOpen": false,
@@ -18818,7 +18818,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "386",
       "orcsSiteNumber": "386",
       "description": "<p>     <strong>Please Conserve Firewood.</strong> There are fire rings available for use at the visitor centre and the campground. While campfires are allowed and campfire rings are provided at each campsite, we encourage visitors to conserve wood and protect the environment by minimizing the use of fire and using campstoves instead. Firewood can be purchased in the park or you may bring your own wood. Fees for firewood are set locally and may vary from park to park. Limited burning hours or campfire bans may be implemented. To preserve vegetation and ground cover, please don&rsquo;t gather firewood from the area around your campsite or elsewhere in the park (this is a ticketable offence under the     <em>      Park Act     </em>     ). Dead wood is an important habitat element for many plants and animals and it adds organic matter to the soil. </p>",
       "isFacilityOpen": false,
@@ -18826,7 +18826,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "4433",
       "orcsSiteNumber": "4433",
       "description": "",
       "isFacilityOpen": false,
@@ -18834,7 +18834,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "492",
       "orcsSiteNumber": "492",
       "description": "",
       "isFacilityOpen": false,
@@ -18842,7 +18842,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "492",
       "orcsSiteNumber": "492",
       "description": "<p>     <strong>Please Conserve Firewood</strong> &ndash; While campfires are allowed, we encourage visitors to conserve wood and protect the environment by minimizing the use of campfires and using camp stoves instead. Limited burning hours or campfire bans may be implemented. No firewood available. </p>",
       "isFacilityOpen": false,
@@ -18850,7 +18850,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "5035",
       "orcsSiteNumber": "5035",
       "description": "",
       "isFacilityOpen": false,
@@ -18858,7 +18858,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "5035",
       "orcsSiteNumber": "5035",
       "description": "<p>     Keep fires small in the back country. Campfires are permitted, however, no campfire pits are provided at this time. </p>",
       "isFacilityOpen": false,
@@ -18866,7 +18866,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "517",
       "orcsSiteNumber": "517",
       "description": "",
       "isFacilityOpen": false,
@@ -18874,7 +18874,7 @@
     },
     {
       "facilityNumber": "10",
-      "orcs": "",
+      "orcs": "517",
       "orcsSiteNumber": "517",
       "description": "Bring your own drinking water, as potable water is not available in the protected area.",
       "isFacilityOpen": false,
@@ -18882,7 +18882,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "517",
       "orcsSiteNumber": "517",
       "description": "<ul>         <li>      Visitors&rsquo; are asked to conserve the environment in the protected area by minimizing the use of fire.     </li>         <li>      Campfire bans may be implemented during the dry season be prepared by bringing a potable stove for cooking.     </li>     </ul>",
       "isFacilityOpen": false,
@@ -18890,7 +18890,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "303",
       "orcsSiteNumber": "303-1",
       "description": "",
       "isFacilityOpen": false,
@@ -18898,7 +18898,7 @@
     },
     {
       "facilityNumber": "6",
-      "orcs": "",
+      "orcs": "303",
       "orcsSiteNumber": "303-1",
       "description": "",
       "isFacilityOpen": false,
@@ -18906,7 +18906,7 @@
     },
     {
       "facilityNumber": "8",
-      "orcs": "",
+      "orcs": "303",
       "orcsSiteNumber": "303-1",
       "description": "",
       "isFacilityOpen": false,
@@ -18914,7 +18914,7 @@
     },
     {
       "facilityNumber": "2",
-      "orcs": "",
+      "orcs": "303",
       "orcsSiteNumber": "303-1",
       "description": "",
       "isFacilityOpen": false,
@@ -18922,7 +18922,7 @@
     },
     {
       "facilityNumber": "11",
-      "orcs": "",
+      "orcs": "9213",
       "orcsSiteNumber": "9213",
       "description": "<p>     The shower building in 1-50 section has a separate wheelchair-accessible show stall complete with a seat and a showehead/hose that detaches from the wall for easier use. The lockable room also has a toilet. The shower building in 51-100 sections have wheelchair-accessible showers and washroom facilities. </p>",
       "isFacilityOpen": false,
@@ -18930,7 +18930,7 @@
     },
     {
       "facilityNumber": "1",
-      "orcs": "",
+      "orcs": "9213",
       "orcsSiteNumber": "9213",
       "description": "<p>     This park offers 101 vehicle accessible campsites and 85 of these sites are reservable. The gate to the campground is locked during the off-season. The campsites are arranged in two areas that differ dramatically in landscape.    </p>       <p>     <strong>Campsites #1 to 50</strong> have been upgraded and redeveloped in order to reduce the environmental impact on the old growth forest. Previously, campsites were not defined and allowed multiple campers in an area, and as a result of the upgrading, please be advised that the campsites are redesigned as individual campsites.    </p>       <p>     <strong>Campsites #51 to 75 and Campsites #76 to 100</strong> were built in 1999, most are located in an open, grassy area rimmed by aspen, cottonwood and other shrubs. They are arranged in two loops and include seven double sites. Shade is limited on some of the sites, but the well-spaced sites separated by tall grass are somewhat private. The sites are fairly large gravel pads with a picnic table and a fire ring.    </p>       <p>     <strong>Campsites #111 to 160</strong> are located in an open, grassy area. Shade is limited on most of the sites. The sites are fairly large gravel pads with a picnic table and a fire ring.    </p>       <p>     All camping areas are accessed off the main road into the park. After driving past the historic barns and through the grassy delta, the group site is on your left, the road to the manor house, day-use beach parking, boat launch and sites 51-100 just past that on the right and access to sites 1-50 straight ahead.     <br>        </p>       <div class=\"ParkFees\">     Vehicle Accessible Camping Fee: $32.00 per party/night    </div>       <div class=\"ParkFees\">     BC Senior&rsquo;s Rate (day after Labour Day to June 14 only): $16.00 per <strong>senior party/</strong>night. Read the <a href=\"/fees/senior.html\">     User Fees Policy</a> for information on Senior Camping Discounts. </div>",
       "isFacilityOpen": false,
@@ -18938,7 +18938,7 @@
     },
     {
       "facilityNumber": "3",
-      "orcs": "",
+      "orcs": "9213",
       "orcsSiteNumber": "9213",
       "description": "<p>     There is a group camping area at Fintry. It consists of a spacious three-lane wide paved loop around a central grassy area. Around the outside of the pavement there are 3 pods located on open lawn. There is plenty of room for large RVs.    </p>       <p>     <strong>Pod 1</strong> is the smallest of the three and consists of a fire ring and several tables. Pod 1 is best suited for up to 40 campers. <strong>     <br>     Pod 2</strong> backs on to a steep hill. It has a larger fire ring, several tables and a cook shelter. The shelter is a half-wall structure with a tin roof and a cement floor. Inside there are tables, stove, counter with shelving and sink. Pod 2 is best suited to accommodate up to 60 campers.     <br>     <strong>Pod 3 </strong>has a fire pit, several tables and a similar shelter as pod 2. Pod 3 can accommodate up to 60 campers.    </p>       <p>     All 3 pods share four flush toilets and two water taps in the groupsite area and are only a short walk away from a shower house. <a href=\"#Reservations\">     Reservation information &raquo;</a>    </p>       <div class=\"ParkFees\">         <p>      <strong>Youth group camping charges</strong> per night are $1/person (6+), with a $50 minimum and $150 maximum. Read the <a href=\"/fees/youth-groups.html\">      Youth Group policy</a> about Criteria for Youth Groups.     </p>         <p>      <strong>Regular group camping charges</strong> per night are the base rate for the site, which is $120.00/group site/night, plus $5/adult (16+, minimum charge for 15 adults), plus $1/child (6-15). There is no fee for children under the age of 6!     </p>     </div>",
       "isFacilityOpen": false,
@@ -18946,7 +18946,7 @@
     },
     {
       "facilityNumber": "6",
-      "orcs": "",
+      "orcs": "9213",
       "orcsSiteNumber": "9213",
       "description": "<p>     This park has a variety of day-use activities. Visitors can hike in Shorts Creek Canyon, wander past the heritage buildings (entry is prohibited) or relax on the beach. The day-use beach area is accessed from the new campground. There is a paved parking lot a short distance along a wide gravel trail from the coarse sand beach beside the Packing House. There are tables and a pit toilet near the beach and the swimming area is marked with buoys. The beach extends past the Packing House and around the point. There are opportunities for bird watching in the wetland and old growth cottonwood southwest of the Packing House.    </p>       <p>     Two gravel parking lots straddle the road to sites 51-100. They provide parking for those wishing to access the Manor House and the large irrigated lawns surrounding it. A horseshoe pit and volleyball net are located on these lawns north of the Manor House and a labyrinth to the east. </p>",
       "isFacilityOpen": false,
@@ -18954,7 +18954,7 @@
     },
     {
       "facilityNumber": "8",
-      "orcs": "",
+      "orcs": "9213",
       "orcsSiteNumber": "9213",
       "description": "The park has mostly flush toilets; however, there are also a couple of pit toilets located throughout the park.",
       "isFacilityOpen": false,
@@ -18962,7 +18962,7 @@
     },
     {
       "facilityNumber": "9",
-      "orcs": "",
+      "orcs": "9213",
       "orcsSiteNumber": "9213",
       "description": "There are two shower buildings for registered guests only. One is located in between sites 25 and 26. It is a concrete block building with five showers and three flush toilets. The building also has a dishwashing station at the rear end for your convenience. The other shower building is located in the 51-100 section next to sites 99/100 and the paved day-use parking area. It has four shower stalls and two toilet/sink stalls, each with individually locking rooms.",
       "isFacilityOpen": false,
@@ -18970,7 +18970,7 @@
     },
     {
       "facilityNumber": "10",
-      "orcs": "",
+      "orcs": "9213",
       "orcsSiteNumber": "9213",
       "description": "Drinking water is available in the park. There are cold water taps in the campgrounds and taps in the shower buildings.",
       "isFacilityOpen": false,
@@ -18978,7 +18978,7 @@
     },
     {
       "facilityNumber": "12",
-      "orcs": "",
+      "orcs": "9213",
       "orcsSiteNumber": "9213",
       "description": "There is a playground available at the park.",
       "isFacilityOpen": false,
@@ -18986,7 +18986,7 @@
     },
     {
       "facilityNumber": "13",
-      "orcs": "",
+      "orcs": "9213",
       "orcsSiteNumber": "9213",
       "description": "There is a paved boat launch and a floating dock for easy boat access.",
       "isFacilityOpen": false,
@@ -18994,7 +18994,7 @@
     },
     {
       "facilityNumber": "14",
-      "orcs": "",
+      "orcs": "9213",
       "orcsSiteNumber": "9213",
       "description": "There are two sani-station/dumps located by the falls day-use parking lot. Drinking water is also available at the sani-stations during the collecting season from April 5- Oct 14.",
       "isFacilityOpen": false,
@@ -19002,7 +19002,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "9213",
       "orcsSiteNumber": "9213",
       "description": "While campfires are allowed and campfire rings are provided at each campsite, we encourage visitors to conserve wood and protect the environment by minimizing the use of fire and using campstoves instead. Firewood can be purchased in the park or you may bring your own wood. Fees for firewood are set locally and may vary from park to park. Limited burning hours or campfire bans may be implemented. To preserve vegetation and ground cover, please don&rsquo;t gather firewood from the area around your campsite or elsewhere in the park (this is a ticketable offence under the    <em>     Park Act    </em>    ). Dead wood is an important habitat element for many plants and animals and it adds organic matter to the soil.    <br>    Campfires are not permitted in the Protected Area as there are no facilities provided for fires.",
       "isFacilityOpen": false,
@@ -19010,7 +19010,7 @@
     },
     {
       "facilityNumber": "17",
-      "orcs": "",
+      "orcs": "8297",
       "orcsSiteNumber": "8297",
       "description": "",
       "isFacilityOpen": false,
@@ -19018,7 +19018,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "8297",
       "orcsSiteNumber": "8297",
       "description": "",
       "isFacilityOpen": false,
@@ -19026,7 +19026,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "8297",
       "orcsSiteNumber": "8297",
       "description": "",
       "isFacilityOpen": false,
@@ -19034,7 +19034,7 @@
     },
     {
       "facilityNumber": "5",
-      "orcs": "",
+      "orcs": "1026",
       "orcsSiteNumber": "1026",
       "description": "",
       "isFacilityOpen": false,
@@ -19042,7 +19042,7 @@
     },
     {
       "facilityNumber": "6",
-      "orcs": "",
+      "orcs": "1026",
       "orcsSiteNumber": "1026",
       "description": "<p>     This park has a day-use/picnic area. </p>",
       "isFacilityOpen": false,
@@ -19050,7 +19050,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "1026",
       "orcsSiteNumber": "1026",
       "description": "<p>     Campfires are permitted. </p>",
       "isFacilityOpen": false,
@@ -19058,7 +19058,7 @@
     },
     {
       "facilityNumber": "15",
-      "orcs": "",
+      "orcs": "84",
       "orcsSiteNumber": "84",
       "description": "<p>     This campground offers electrical hookups. </p>",
       "isFacilityOpen": false,
@@ -19066,7 +19066,7 @@
     },
     {
       "facilityNumber": "17",
-      "orcs": "",
+      "orcs": "41",
       "orcsSiteNumber": "41",
       "description": "There are 25 visitor cabins available to reserve. <a href=\"faqs/index.html\">    Frequently asked questions about the cabins.</a>",
       "isFacilityOpen": false,
@@ -19074,7 +19074,7 @@
     },
     {
       "facilityNumber": "36",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-103",
       "description": "",
       "isFacilityOpen": false,
@@ -19082,7 +19082,7 @@
     },
     {
       "facilityNumber": "13",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-103",
       "description": "<p>     A paved boat launch is provided. If parking your vehicle at the boat launch overnight, advise the <a href=\"#Contact\">     park facility operator</a> of your expected time of return. </p>",
       "isFacilityOpen": false,
@@ -19090,7 +19090,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-103",
       "description": "<p>     While campfires are allowed and campfire rings are provided at each campsite, we encourage visitors to conserve wood and protect the environment by minimizing the use of fire and using campstoves instead. Firewood can be purchased in the park or you may bring your own wood. Fees for firewood are set locally and may vary from park to park.    </p>       <p>     Limited burning hours or campfire bans may be implemented. To preserve vegetation and ground cover, please don&rsquo;t gather firewood from the area around your campsite or elsewhere in the park (this is a ticketable offence under the     <em>      Park Act     </em>     ). Dead wood is an important habitat element for many plants and animals and it adds organic matter to the soil. </p>",
       "isFacilityOpen": false,
@@ -19098,7 +19098,7 @@
     },
     {
       "facilityNumber": "10",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-103",
       "description": "<p>     Cold water taps are located throughout the park. Taps are shut off during the off-season. </p>",
       "isFacilityOpen": false,
@@ -19106,7 +19106,7 @@
     },
     {
       "facilityNumber": "6",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-103",
       "description": "<p>     This park has a day-use/picnic area. An adventure playground is provided in the picnic area, as well as a large grassy playing field. A horseshoe pitch is also provided. </p>",
       "isFacilityOpen": false,
@@ -19114,7 +19114,7 @@
     },
     {
       "facilityNumber": "8",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-103",
       "description": "<p>     This park only has pit toilets; no flush toilets. </p>",
       "isFacilityOpen": false,
@@ -19122,7 +19122,7 @@
     },
     {
       "facilityNumber": "12",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-103",
       "description": "<p>     There is an excellent adventure playground for small children, a large grassy playing field for ball games, and a horseshoe pit adjacent to the campground. </p>",
       "isFacilityOpen": false,
@@ -19130,7 +19130,7 @@
     },
     {
       "facilityNumber": "1",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-103",
       "description": "<p>     Campsites are available for reservations during the main camping season and are otherwise available on a first-come, first-served basis.    </p>       <p>     No access from main park entrance; must come off Highway 24 at Inter Lakes exchange. No pull through sites. If there are no staff present when you arrive, find your site and staff will arrive later. Staff will be around at least once a day during the regular season. The campground is closed and the gates are locked in the off-season.    </p>       <ul>         <li>      <a href=\"/explore/parkpgs/wells_gry/\">      Dates of operation for Wells Gray Park</a>     </li>        </ul>       <div class=\"ParkFees\">     Vehicle Accessible Camping Fee: $23.00 per party / night    </div>       <div class=\"ParkFees\">     BC Senior&rsquo;s Rate (day after Labour Day to June 14 only): $11.50 per <strong>senior party/</strong>night. Read the <a href=\"/fees/senior.html\">     User Fees Policy</a> for information on Senior Camping Discounts. </div>",
       "isFacilityOpen": false,
@@ -19138,7 +19138,7 @@
     },
     {
       "facilityNumber": "30",
-      "orcs": "",
+      "orcs": "369",
       "orcsSiteNumber": "369",
       "description": "",
       "isFacilityOpen": false,
@@ -19146,7 +19146,7 @@
     },
     {
       "facilityNumber": "30",
-      "orcs": "",
+      "orcs": "408",
       "orcsSiteNumber": "408",
       "description": "",
       "isFacilityOpen": false,
@@ -19154,7 +19154,7 @@
     },
     {
       "facilityNumber": "22",
-      "orcs": "",
+      "orcs": "287",
       "orcsSiteNumber": "287",
       "description": "",
       "isFacilityOpen": false,
@@ -19162,7 +19162,7 @@
     },
     {
       "facilityNumber": "22",
-      "orcs": "",
+      "orcs": "6878",
       "orcsSiteNumber": "6878",
       "description": "",
       "isFacilityOpen": false,
@@ -19170,7 +19170,7 @@
     },
     {
       "facilityNumber": "22",
-      "orcs": "",
+      "orcs": "136",
       "orcsSiteNumber": "136",
       "description": "",
       "isFacilityOpen": false,
@@ -19178,7 +19178,7 @@
     },
     {
       "facilityNumber": "36",
-      "orcs": "",
+      "orcs": "9480",
       "orcsSiteNumber": "9480",
       "description": "",
       "isFacilityOpen": false,
@@ -19186,7 +19186,7 @@
     },
     {
       "facilityNumber": "8",
-      "orcs": "",
+      "orcs": "469",
       "orcsSiteNumber": "469",
       "description": "There are pit toilets available in the day-use/picknicking area.",
       "isFacilityOpen": false,
@@ -19194,7 +19194,7 @@
     },
     {
       "facilityNumber": "6",
-      "orcs": "",
+      "orcs": "469",
       "orcsSiteNumber": "469",
       "description": "The park offers day-use/picnicking area.",
       "isFacilityOpen": false,
@@ -19202,7 +19202,7 @@
     },
     {
       "facilityNumber": "11",
-      "orcs": "",
+      "orcs": "469",
       "orcsSiteNumber": "469",
       "description": "",
       "isFacilityOpen": false,
@@ -19210,7 +19210,7 @@
     },
     {
       "facilityNumber": "1",
-      "orcs": "",
+      "orcs": "400",
       "orcsSiteNumber": "400-5",
       "description": "This park offers vehicle accessible campsites on a first-come, first-served basis; campsite reservations are not accepted. A small clearing next to the bay provides space for vehicle accessible camping (roughly 5 units) in the snow-free season (May through October). Bring your own drinking water, as potable water is not available in the park.",
       "isFacilityOpen": false,
@@ -19218,7 +19218,7 @@
     },
     {
       "facilityNumber": "8",
-      "orcs": "",
+      "orcs": "400",
       "orcsSiteNumber": "400-5",
       "description": "This park only has pit toilets &ndash; no flush toilets.",
       "isFacilityOpen": false,
@@ -19226,7 +19226,7 @@
     },
     {
       "facilityNumber": "13",
-      "orcs": "",
+      "orcs": "400",
       "orcsSiteNumber": "400-5",
       "description": "There is a rustic gravel boat launch at this site and ample room for parking.",
       "isFacilityOpen": false,
@@ -19234,7 +19234,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "400",
       "orcsSiteNumber": "400-5",
       "description": "Campfires are permitted. If you chose to have a fire, please bring wood with you. Collecting firewood in the park is prohibited.",
       "isFacilityOpen": false,
@@ -20625,7 +20625,7 @@
       "isActive": true
     },
     {
-      "facilityNumber": "2",
+      "facilityNumber": "4",
       "orcs": "5026",
       "orcsSiteNumber": "5026",
       "description": "Wilderness, backcountry or walk-in camping is allowed, but no facilities are provided. Please practice <a href=\"https://bcparks.ca/visiting/backcountry-visitor-guide/\">    Responsible Recreation</a>.",
@@ -21186,7 +21186,7 @@
     },
     {
       "facilityNumber": "18",
-      "orcs": "",
+      "orcs": "122",
       "orcsSiteNumber": "122",
       "description": "",
       "isFacilityOpen": false,
@@ -21194,7 +21194,7 @@
     },
     {
       "facilityNumber": "15",
-      "orcs": "",
+      "orcs": "33",
       "orcsSiteNumber": "33",
       "description": "Electrical hookups are available at Skyview RV Campground.",
       "isFacilityOpen": false,
@@ -21202,7 +21202,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "300",
       "orcsSiteNumber": "300",
       "description": "",
       "isFacilityOpen": false,
@@ -21210,7 +21210,7 @@
     },
     {
       "facilityNumber": "5",
-      "orcs": "",
+      "orcs": "300",
       "orcsSiteNumber": "300",
       "description": "",
       "isFacilityOpen": false,
@@ -21218,7 +21218,7 @@
     },
     {
       "facilityNumber": "36",
-      "orcs": "",
+      "orcs": "9458",
       "orcsSiteNumber": "9458",
       "description": "",
       "isFacilityOpen": false,
@@ -21226,7 +21226,7 @@
     },
     {
       "facilityNumber": "49",
-      "orcs": "",
+      "orcs": "9868",
       "orcsSiteNumber": "9868",
       "description": "",
       "isFacilityOpen": false,
@@ -21234,7 +21234,7 @@
     },
     {
       "facilityNumber": "40",
-      "orcs": "",
+      "orcs": "133",
       "orcsSiteNumber": "133",
       "description": "",
       "isFacilityOpen": false,
@@ -21242,7 +21242,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "250",
       "orcsSiteNumber": "250",
       "description": "",
       "isFacilityOpen": false,
@@ -21250,7 +21250,7 @@
     },
     {
       "facilityNumber": "40",
-      "orcs": "",
+      "orcs": "116",
       "orcsSiteNumber": "116",
       "description": "",
       "isFacilityOpen": false,
@@ -21258,7 +21258,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24",
       "description": "",
       "isFacilityOpen": false,
@@ -21266,7 +21266,7 @@
     },
     {
       "facilityNumber": "36",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24",
       "description": "",
       "isFacilityOpen": false,
@@ -21274,7 +21274,7 @@
     },
     {
       "facilityNumber": "36",
-      "orcs": "",
+      "orcs": "372",
       "orcsSiteNumber": "372",
       "description": "",
       "isFacilityOpen": false,
@@ -21330,7 +21330,7 @@
     },
     {
       "facilityNumber": "18",
-      "orcs": "",
+      "orcs": "391",
       "orcsSiteNumber": "391",
       "description": "",
       "isFacilityOpen": false,
@@ -21338,7 +21338,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "1086",
       "orcsSiteNumber": "1086",
       "description": "<p>     Campfires are permitted, but rings are not provided. Be fire safe, and check the BC Wildfire website during high-risk times. </p>",
       "isFacilityOpen": false,
@@ -21354,7 +21354,7 @@
     },
     {
       "facilityNumber": "36",
-      "orcs": "",
+      "orcs": "9209",
       "orcsSiteNumber": "9209",
       "description": "",
       "isFacilityOpen": false,
@@ -21362,7 +21362,7 @@
     },
     {
       "facilityNumber": "11",
-      "orcs": "",
+      "orcs": "62",
       "orcsSiteNumber": "62",
       "description": "<p>     There are some wheelchair-accessible facilities at this park. </p>",
       "isFacilityOpen": false,
@@ -21370,7 +21370,7 @@
     },
     {
       "facilityNumber": "13",
-      "orcs": "",
+      "orcs": "62",
       "orcsSiteNumber": "62",
       "description": "<p>     The boat launch area on the west side of the Exchamsiks River offers a boat launching ramp into the Exchamsiks River. A single, paved boat launch is available for public use. Two picnic tables and a pit toilet are also available at the boat launch site. There is parking available for vehicles and boat trailers. Overnight boat launch parking is not permitted. Please note that camping is not permitted in the boat launch or day-use areas. </p>",
       "isFacilityOpen": false,
@@ -21378,7 +21378,7 @@
     },
     {
       "facilityNumber": "6",
-      "orcs": "",
+      "orcs": "62",
       "orcsSiteNumber": "62",
       "description": "<p>     From the day-use parking area on the east side of the Exchamsiks River is the starting point for the old-growth interpretive trail. Interpretive signs along the trail offer visitors information on the significance of this old growth forest. A pit toilet is located at the parking area. The boat launch area on the west side of the Exchamsiks River offers a boat launching ramp into the Exchamsiks River. Two picnic tables and a pit toilet are also available at the boat launch site. </p>",
       "isFacilityOpen": false,
@@ -21386,7 +21386,7 @@
     },
     {
       "facilityNumber": "8",
-      "orcs": "",
+      "orcs": "62",
       "orcsSiteNumber": "62",
       "description": "<p>     Pit toilets are located in the day-use area and at the boat launch day-use area. </p>",
       "isFacilityOpen": false,
@@ -21394,7 +21394,7 @@
     },
     {
       "facilityNumber": "36",
-      "orcs": "",
+      "orcs": "5044",
       "orcsSiteNumber": "5044",
       "description": "",
       "isFacilityOpen": false,
@@ -21402,7 +21402,7 @@
     },
     {
       "facilityNumber": "18",
-      "orcs": "",
+      "orcs": "7458",
       "orcsSiteNumber": "7458",
       "description": "",
       "isFacilityOpen": false,
@@ -21410,7 +21410,7 @@
     },
     {
       "facilityNumber": "18",
-      "orcs": "",
+      "orcs": "9485",
       "orcsSiteNumber": "9485",
       "description": "",
       "isFacilityOpen": false,
@@ -21418,7 +21418,7 @@
     },
     {
       "facilityNumber": "5",
-      "orcs": "",
+      "orcs": "389",
       "orcsSiteNumber": "389",
       "description": "",
       "isFacilityOpen": false,
@@ -21426,7 +21426,7 @@
     },
     {
       "facilityNumber": "18",
-      "orcs": "",
+      "orcs": "163",
       "orcsSiteNumber": "163",
       "description": "",
       "isFacilityOpen": false,
@@ -21434,7 +21434,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "9034",
       "orcsSiteNumber": "9034",
       "description": "",
       "isFacilityOpen": false,
@@ -21442,7 +21442,7 @@
     },
     {
       "facilityNumber": "18",
-      "orcs": "",
+      "orcs": "9034",
       "orcsSiteNumber": "9034",
       "description": "",
       "isFacilityOpen": false,
@@ -21450,7 +21450,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "9034",
       "orcsSiteNumber": "9034",
       "description": "<p>     No firewood available. Please bring a portable stove for cooking. Firewood can be purchased from the park facility operator in some parks or you can bring your own wood. Fees for firewood are set locally and may vary. To preserve vegetation and ground cover, please don&rsquo;t gather firewood from the area around your campsite or elsewhere in the park. Dead wood is an important habitat element for many plants and animals and it adds organic matter to the soil. You can conserve firewood and air quality by keeping your campfire small. Limited burning hours or campfire bans may be implemented and some parks may use communal fire rings. </p>",
       "isFacilityOpen": false,
@@ -21458,7 +21458,7 @@
     },
     {
       "facilityNumber": "6",
-      "orcs": "",
+      "orcs": "8741",
       "orcsSiteNumber": "8741",
       "description": "<p>     Seven Sisters Park offers a pleasant and quiet picnicking opportunity. Families with small children and novice hikers can easily reach the scenic lakeside picnic/camping site 1km along the 3km Watson Lakes Trail. </p>",
       "isFacilityOpen": false,
@@ -21466,7 +21466,7 @@
     },
     {
       "facilityNumber": "16",
-      "orcs": "",
+      "orcs": "8741",
       "orcsSiteNumber": "8741",
       "description": "<p>     While campfires are allowed in this backcountry area, we encourage visitors to use campstoves for cooking purposes. To preserve vegetation and ground cover, please don&rsquo;t gather wood for fires from the area unless required for emergency situations. Dead wood is an important habitat element for many plants and animals and it adds organic matter to the soil. </p>",
       "isFacilityOpen": false,
@@ -21474,7 +21474,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "8741",
       "orcsSiteNumber": "8741",
       "description": "",
       "isFacilityOpen": false,
@@ -21482,7 +21482,7 @@
     },
     {
       "facilityNumber": "5",
-      "orcs": "",
+      "orcs": "212",
       "orcsSiteNumber": "212",
       "description": "",
       "isFacilityOpen": false,
@@ -21490,7 +21490,7 @@
     },
     {
       "facilityNumber": "5",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-106",
       "description": "",
       "isFacilityOpen": false,
@@ -21498,7 +21498,7 @@
     },
     {
       "facilityNumber": "5",
-      "orcs": "",
+      "orcs": "24",
       "orcsSiteNumber": "24-103",
       "description": "",
       "isFacilityOpen": false,
@@ -21506,7 +21506,7 @@
     },
     {
       "facilityNumber": "36",
-      "orcs": "",
+      "orcs": "6197",
       "orcsSiteNumber": "6197",
       "description": "",
       "isFacilityOpen": false,
@@ -21514,7 +21514,7 @@
     },
     {
       "facilityNumber": "23",
-      "orcs": "",
+      "orcs": "358",
       "orcsSiteNumber": "358",
       "description": "",
       "isFacilityOpen": false,
@@ -21522,7 +21522,7 @@
     },
     {
       "facilityNumber": "2",
-      "orcs": "",
+      "orcs": "9435",
       "orcsSiteNumber": "9435",
       "description": "<p>     Wilderness camping is allowed year-round when accessible, but no facilities are provided. Travellers will come upon traditional campsites where impacts have occurred; campers are encouraged to use these locations. When toilets are not available, bury human waste at least six inches in soil and 30 metres from water. To ensure drinking water is safe it must be boiled for at least 5 minutes. Register a trip itinerary with friends, check in and check out. When practical, use impacted campsites; otherwise practice &ldquo;<a href=\"/explore/notrace.html\">     Leave No Trace</a>&rdquo; camping ethics. If you have a fire, build it on rocks, or remove sod, have fire, then replace sod. The Conservancy is a non-mechanized area. </p>",
       "isFacilityOpen": false,
@@ -21530,7 +21530,7 @@
     },
     {
       "facilityNumber": "4",
-      "orcs": "",
+      "orcs": "9185",
       "orcsSiteNumber": "9185",
       "description": "",
       "isFacilityOpen": false,

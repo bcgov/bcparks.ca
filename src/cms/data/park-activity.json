@@ -10,6 +10,15 @@
       "isActive": false
     },
     {
+      "activityNumber": "26",
+      "activityName": "Boat-Accessible Camping",
+      "activityCode": "boat-camping",
+      "icon": "",
+      "iconNA": "",
+      "rank": "",
+      "isActive": true
+    },
+    {
       "activityNumber": "4",
       "activityName": "Canoeing",
       "activityCode": "canoeing",
