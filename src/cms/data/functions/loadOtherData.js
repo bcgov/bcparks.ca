@@ -333,6 +333,14 @@ const loadParkFireZoneXref = async () => {
 
       if (fireZones.length > 0) {
         protectedArea.fireZones = fireZones;
+
+        // remove the parkOperation property from the object because Strapi will try 
+        // to update the Postgres db field with a JSON string instead of an integer 
+        // during data reload. This might be happening because there is a custom 
+        // findOne() defined in api\protected-area\services\protected-area.js which 
+        // returns an object property with the same name as one of the table fields
+        delete protectedArea.parkOperation;
+
         await strapi.query("protected-area").update({ id: protectedArea.id }, protectedArea);
       }
     }
@@ -349,6 +357,10 @@ const loadParkFogZoneXref = async () => {
     });
     if (protectedArea) {
       protectedArea.isFogZone = data.fogZone === "Y" ? true : false;
+
+      // remove the parkOperation property before updating (see the comment for 
+      // loadParkFireZoneXref() above)
+      delete protectedArea.parkOperation;
 
       await strapi.query("protected-area").update({ id: protectedArea.id }, protectedArea);
     }

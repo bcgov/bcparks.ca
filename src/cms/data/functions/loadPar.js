@@ -279,10 +279,10 @@ const loadAdditionalSiteInfo = async () => {
         try {
           await strapi.services["site"].update({ orcsSiteNumber: s.orcs + "-" + s.orcsSiteNumber }, site);
         } catch (error) {
-          strapi.log.info("creating custom site...");
           const protectedArea = await strapi.query("protected-area").findOne({
             orcs: s.orcs,
           });
+          strapi.log.info(`creating site ${protectedArea.protectedAreaName}::${s.siteName}`);
 
           try {
             await strapi.services["site"]
@@ -389,7 +389,7 @@ const loadParkUrl = async () => {
 const loadParSomeDefaultValues = async () => {
   strapi.log.info("loading park default values started...");
   const protectedAreas = await strapi.services["protected-area"].find({
-    _limit: 5,
+    _limit: -1,
   });
 
   for (const protectedArea of protectedAreas) {
@@ -402,10 +402,14 @@ const loadParSomeDefaultValues = async () => {
     protectedArea.hasSmokingBan =
       protectedArea.hasSmokingBan === true ? true : false;
 
+    // remove the parkOperation property before updating (see the comment for 
+    // loadParkFireZoneXref() for more details)
+    delete protectedArea.parkOperation;
+
     try {
       await strapi.services["protected-area"].update({ orcs: protectedArea.orcs }, protectedArea);
     } catch (error) {
-      strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
+      strapi.log.error(`error load park details: orcs ${protectedArea.orcs}`, error);
     }
   }
   strapi.log.info("loading park default values completed...");
