@@ -42,3 +42,11 @@ pwsh import-db.ps1 -Project 61d198-dev
 
 This script syncs a local export.sql file to a temporary directory on the leader Patroni pod, and imports
 it using psql.
+
+## Import data to your local PostgreSQL database (Docker Desktop)
+
+```
+docker cp ./export.sql postgres-docker:/tmp/db-export.sql
+docker exec postgres-docker /bin/bash -c "PGUSER=postgres PGPASSWORD=postgres psql cms < /tmp/db-export.sql"
+```
+
