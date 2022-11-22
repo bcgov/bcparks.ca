@@ -34,11 +34,10 @@ This script dumps data to a temporary folder on one of the Patroni OpenShift pod
 
 ## Import data
 
-Running the following command will update the dev db with a previously generated export (note the trailing
-slash is required for rsync to copy the data to the expected path):
+Running the following command will update the dev db with a previously generated export:
 
 ```shell
-pwsh import-db.ps1 -Project 61d198-dev -InputPath ./db-export/
+pwsh import-db.ps1 -Project 61d198-dev
 ```
 
 This script syncs a local export.sql file to a temporary directory on the leader Patroni pod, and imports
