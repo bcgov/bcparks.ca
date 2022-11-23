@@ -605,6 +605,7 @@ export default function AdvisoryDashboard({
                   placeholder="Select a Region..."
               className="bcgov-select"
               isClearable
+              isDisabled={!regions.length}
             />
           </div>
           <div className="col-lg-6 col-md-4 col-sm-12">
@@ -626,6 +627,7 @@ export default function AdvisoryDashboard({
               placeholder="Select a Park..."
               className="bcgov-select"
               isClearable
+              isDisabled={!parkNames.length}
             />
           </div>
         </div>
