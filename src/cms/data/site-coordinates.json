@@ -3,7 +3,6 @@
     {
       "orcs": "6648",
       "orcsSiteNumber": "2",
-      "protectedAreaName": "Adams Lake Marine Park",
       "siteName": "Poplar Point Site",
       "latitude": "51.202984",
       "longitude": "-119.528678",
@@ -17,7 +16,6 @@
     {
       "orcs": "6648",
       "orcsSiteNumber": "3",
-      "protectedAreaName": "Adams Lake Marine Park",
       "siteName": "Refuge Bay Site",
       "latitude": "51.3638",
       "longitude": "-119.4536",
@@ -31,7 +29,6 @@
     {
       "orcs": "6648",
       "orcsSiteNumber": "1",
-      "protectedAreaName": "Adams Lake Marine Park",
       "siteName": "Spillman Beaches Site",
       "latitude": "51.14",
       "longitude": "-119.6105",
@@ -45,7 +42,6 @@
     {
       "orcs": "308",
       "orcsSiteNumber": "1",
-      "protectedAreaName": "Arrow Lakes Park",
       "siteName": "Burton Site",
       "latitude": "49.9921",
       "longitude": "-117.88628",
@@ -59,7 +55,6 @@
     {
       "orcs": "308",
       "orcsSiteNumber": "2",
-      "protectedAreaName": "Arrow Lakes Park",
       "siteName": "Eagle Creek Site",
       "latitude": "49.76978",
       "longitude": "-118.13153",
@@ -73,7 +68,6 @@
     {
       "orcs": "308",
       "orcsSiteNumber": "3",
-      "protectedAreaName": "Arrow Lakes Park",
       "siteName": "Fauqier Site",
       "latitude": "49.87706",
       "longitude": "-118.07048",
@@ -87,7 +81,6 @@
     {
       "orcs": "308",
       "orcsSiteNumber": "4",
-      "protectedAreaName": "Arrow Lakes Park",
       "siteName": "Shelter Bay Site",
       "latitude": "50.63839",
       "longitude": "-117.92585",
@@ -101,7 +94,6 @@
     {
       "orcs": "400",
       "orcsSiteNumber": "3",
-      "protectedAreaName": "Babine Lake Marine Park",
       "siteName": "Hook (Deep) Bay Site",
       "latitude": "54.5599",
       "longitude": "-125.7064",
@@ -115,7 +107,6 @@
     {
       "orcs": "400",
       "orcsSiteNumber": "1",
-      "protectedAreaName": "Babine Lake Marine Park",
       "siteName": "Pendleton Bay Site",
       "latitude": "54.514364",
       "longitude": "-125.704667",
@@ -129,7 +120,6 @@
     {
       "orcs": "400",
       "orcsSiteNumber": "4",
-      "protectedAreaName": "Babine Lake Marine Park",
       "siteName": "Pierre Creek Site",
       "latitude": "54.63291",
       "longitude": "-125.85703",
@@ -143,7 +133,6 @@
     {
       "orcs": "400",
       "orcsSiteNumber": "5",
-      "protectedAreaName": "Babine Lake Marine Park",
       "siteName": "Pinkut Creek Site",
       "latitude": "54.4449",
       "longitude": "-125.4397",
@@ -157,7 +146,6 @@
     {
       "orcs": "400",
       "orcsSiteNumber": "6",
-      "protectedAreaName": "Babine Lake Marine Park",
       "siteName": "Sandpoint Site",
       "latitude": "54.67776",
       "longitude": "-125.89159",
@@ -171,7 +159,6 @@
     {
       "orcs": "400",
       "orcsSiteNumber": "2",
-      "protectedAreaName": "Babine Lake Marine Park",
       "siteName": "Smithers Landing Site to site oic 789/1993",
       "latitude": "55.063679",
       "longitude": "-126.531558",
@@ -183,9 +170,86 @@
       "repealedDate": ""
     },
     {
+      "orcs": "7",
+      "orcsSiteNumber": "102",
+      "siteName": "Black Tusk/Garibaldi Lake Area",
+      "latitude": "",
+      "longitude": "",
+      "mapZoom": "",
+      "url": "https://bcparks.ca/explore/parkpgs/garibaldi/blacktsk.html",
+      "note": "custom entry; not in PAR",
+      "status": "Active",
+      "establishedDate": "",
+      "repealedDate": ""
+    },
+    {
+      "orcs": "7",
+      "orcsSiteNumber": "103",
+      "siteName": "Cheakamus Lake",
+      "latitude": "",
+      "longitude": "",
+      "mapZoom": "",
+      "url": "https://bcparks.ca/explore/parkpgs/garibaldi/cheaka.html",
+      "note": "custom entry; not in PAR",
+      "status": "Active",
+      "establishedDate": "",
+      "repealedDate": ""
+    },
+    {
+      "orcs": "7",
+      "orcsSiteNumber": "101",
+      "siteName": "Diamond Head Area",
+      "latitude": "",
+      "longitude": "",
+      "mapZoom": "",
+      "url": "https://bcparks.ca/explore/parkpgs/garibaldi/diamond.html",
+      "note": "custom entry; not in PAR",
+      "status": "Active",
+      "establishedDate": "",
+      "repealedDate": ""
+    },
+    {
+      "orcs": "7",
+      "orcsSiteNumber": "104",
+      "siteName": "Singing Pass",
+      "latitude": "",
+      "longitude": "",
+      "mapZoom": "",
+      "url": "https://bcparks.ca/explore/parkpgs/garibaldi/singing.html",
+      "note": "custom entry; not in PAR",
+      "status": "Active",
+      "establishedDate": "",
+      "repealedDate": ""
+    },
+    {
+      "orcs": "7",
+      "orcsSiteNumber": "105",
+      "siteName": "Wedgemount Lake",
+      "latitude": "",
+      "longitude": "",
+      "mapZoom": "",
+      "url": "https://bcparks.ca/explore/parkpgs/garibaldi/wedgemt.html",
+      "note": "custom entry; not in PAR",
+      "status": "Active",
+      "establishedDate": "",
+      "repealedDate": ""
+    },
+    {
+      "orcs": "7",
+      "orcsSiteNumber": "106",
+      "siteName": "Wilderness Camping Zone",
+      "latitude": "",
+      "longitude": "",
+      "mapZoom": "",
+      "url": "https://bcparks.ca/reserve/wilderness/",
+      "note": "custom entry; not in PAR",
+      "status": "Active",
+      "establishedDate": "",
+      "repealedDate": ""
+    },
+    {
       "orcs": "273",
       "orcsSiteNumber": "1",
-      "protectedAreaName": "Green Lake Park",
       "siteName": "Arrowhead Site",
       "latitude": "51.398156",
       "longitude": "-121.258144",
@@ -199,7 +263,6 @@
     {
       "orcs": "273",
       "orcsSiteNumber": "2",
-      "protectedAreaName": "Green Lake Park",
       "siteName": "Black Bear Site",
       "latitude": "51.418141",
       "longitude": "-121.230267",
@@ -213,7 +276,6 @@
     {
       "orcs": "273",
       "orcsSiteNumber": "3",
-      "protectedAreaName": "Green Lake Park",
       "siteName": "Blue Spring Site",
       "latitude": "51.390712",
       "longitude": "-121.284415",
@@ -227,7 +289,6 @@
     {
       "orcs": "273",
       "orcsSiteNumber": "4",
-      "protectedAreaName": "Green Lake Park",
       "siteName": "Boyd Bay Site",
       "latitude": "51.350494",
       "longitude": "-121.288842",
@@ -241,7 +302,6 @@
     {
       "orcs": "273",
       "orcsSiteNumber": "5",
-      "protectedAreaName": "Green Lake Park",
       "siteName": "Buckside Hill Site",
       "latitude": "51.441871",
       "longitude": "-121.145929",
@@ -255,7 +315,6 @@
     {
       "orcs": "273",
       "orcsSiteNumber": "6",
-      "protectedAreaName": "Green Lake Park",
       "siteName": "Emerald Bay Site",
       "latitude": "51.442673",
       "longitude": "-121.159404",
@@ -269,7 +328,6 @@
     {
       "orcs": "273",
       "orcsSiteNumber": "7",
-      "protectedAreaName": "Green Lake Park",
       "siteName": "Green Lake Islands Site",
       "latitude": "51.435025",
       "longitude": "-121.124171",
@@ -283,7 +341,6 @@
     {
       "orcs": "273",
       "orcsSiteNumber": "8",
-      "protectedAreaName": "Green Lake Park",
       "siteName": "Little Arrowhead Site",
       "latitude": "51.403788",
       "longitude": "-121.250184",
@@ -297,7 +354,6 @@
     {
       "orcs": "273",
       "orcsSiteNumber": "9",
-      "protectedAreaName": "Green Lake Park",
       "siteName": "Nolan Creek Site",
       "latitude": "51.422897",
       "longitude": "-121.161129",
@@ -311,7 +367,6 @@
     {
       "orcs": "273",
       "orcsSiteNumber": "10",
-      "protectedAreaName": "Green Lake Park",
       "siteName": "Sunset View Site",
       "latitude": "51.409763",
       "longitude": "-121.201426",
@@ -325,7 +380,6 @@
     {
       "orcs": "357",
       "orcsSiteNumber": "1",
-      "protectedAreaName": "Kootenay Lake Park",
       "siteName": "Campbell Bay Site",
       "latitude": "49.954193",
       "longitude": "-116.862923",
@@ -339,7 +393,6 @@
     {
       "orcs": "357",
       "orcsSiteNumber": "2",
-      "protectedAreaName": "Kootenay Lake Park",
       "siteName": "Coffee Bay Site",
       "latitude": "49.696027",
       "longitude": "-116.907562",
@@ -353,7 +406,6 @@
     {
       "orcs": "357",
       "orcsSiteNumber": "4",
-      "protectedAreaName": "Kootenay Lake Park",
       "siteName": "Davis Creek Site",
       "latitude": "50.141893",
       "longitude": "-116.953267",
@@ -367,7 +419,6 @@
     {
       "orcs": "357",
       "orcsSiteNumber": "5",
-      "protectedAreaName": "Kootenay Lake Park",
       "siteName": "Lost Ledge Site",
       "latitude": "50.100514",
       "longitude": "-116.938021",
@@ -381,7 +432,6 @@
     {
       "orcs": "357",
       "orcsSiteNumber": "3",
-      "protectedAreaName": "Kootenay Lake Park",
       "siteName": "Midge Creek Site",
       "latitude": "49.373583",
       "longitude": "-116.811263",
@@ -395,7 +445,6 @@
     {
       "orcs": "486",
       "orcsSiteNumber": "1",
-      "protectedAreaName": "Lower Skeena River Park",
       "siteName": "Exstew Site",
       "latitude": "54.283484",
       "longitude": "-129.398526",
@@ -409,7 +458,6 @@
     {
       "orcs": "486",
       "orcsSiteNumber": "2",
-      "protectedAreaName": "Lower Skeena River Park",
       "siteName": "Kasiks River Site",
       "latitude": "54.283484",
       "longitude": "-129.398526",
@@ -423,7 +471,6 @@
     {
       "orcs": "2",
       "orcsSiteNumber": "101",
-      "protectedAreaName": "Mount Robson Park",
       "siteName": "Berg Lake Trail",
       "latitude": "53.050806",
       "longitude": "-119.361587",
@@ -437,7 +484,6 @@
     {
       "orcs": "2",
       "orcsSiteNumber": "1015",
-      "protectedAreaName": "Mount Robson Park",
       "siteName": "Berg Lake Trail - Berg Lake",
       "latitude": "53.050806",
       "longitude": "-119.36159",
@@ -451,7 +497,6 @@
     {
       "orcs": "2",
       "orcsSiteNumber": "1013",
-      "protectedAreaName": "Mount Robson Park",
       "siteName": "Berg Lake Trail - Emperor Falls",
       "latitude": "53.050806",
       "longitude": "-119.36159",
@@ -464,8 +509,20 @@
     },
     {
       "orcs": "2",
+      "orcsSiteNumber": "1018",
+      "siteName": "Berg Lake Trail - Kinney Lake",
+      "latitude": "53.050806",
+      "longitude": "-119.361587",
+      "mapZoom": "10",
+      "url": "https://bcparks.ca/parks/mt-robson/berg-lake-trail/kinney-lake/",
+      "note": "custom entry; not in PAR; used in DC",
+      "status": "Active",
+      "establishedDate": "2020-11-16",
+      "repealedDate": ""
+    },
+    {
+      "orcs": "2",
       "orcsSiteNumber": "1014",
-      "protectedAreaName": "Mount Robson Park",
       "siteName": "Berg Lake Trail - Marmot",
       "latitude": "53.050806",
       "longitude": "-119.36159",
@@ -479,7 +536,6 @@
     {
       "orcs": "2",
       "orcsSiteNumber": "1016",
-      "protectedAreaName": "Mount Robson Park",
       "siteName": "Berg Lake Trail - Rearguard",
       "latitude": "53.050806",
       "longitude": "-119.36159",
@@ -493,7 +549,6 @@
     {
       "orcs": "2",
       "orcsSiteNumber": "1017",
-      "protectedAreaName": "Mount Robson Park",
       "siteName": "Berg Lake Trail - Robson Pass",
       "latitude": "53.050806",
       "longitude": "-119.36159",
@@ -507,7 +562,6 @@
     {
       "orcs": "2",
       "orcsSiteNumber": "1012",
-      "protectedAreaName": "Mount Robson Park",
       "siteName": "Berg Lake Trail - Whitehorn",
       "latitude": "53.050806",
       "longitude": "-119.36159",
@@ -521,7 +575,6 @@
     {
       "orcs": "303",
       "orcsSiteNumber": "1",
-      "protectedAreaName": "Sechelt Inlets Marine Park",
       "siteName": "Halfway Bay Site",
       "latitude": "49.598469",
       "longitude": "-123.819761",
@@ -535,7 +588,6 @@
     {
       "orcs": "303",
       "orcsSiteNumber": "2",
-      "protectedAreaName": "Sechelt Inlets Marine Park",
       "siteName": "Kunechin Site",
       "latitude": "49.627603",
       "longitude": "-123.805639",
@@ -549,7 +601,6 @@
     {
       "orcs": "303",
       "orcsSiteNumber": "4",
-      "protectedAreaName": "Sechelt Inlets Marine Park",
       "siteName": "Piper Point Site",
       "latitude": "49.544456",
       "longitude": "-123.799845",
@@ -563,7 +614,6 @@
     {
       "orcs": "303",
       "orcsSiteNumber": "5",
-      "protectedAreaName": "Sechelt Inlets Marine Park",
       "siteName": "Skaiakos Point Site",
       "latitude": "49.583671",
       "longitude": "-123.816787",
@@ -577,7 +627,6 @@
     {
       "orcs": "303",
       "orcsSiteNumber": "6",
-      "protectedAreaName": "Sechelt Inlets Marine Park",
       "siteName": "Thornhill Site",
       "latitude": "49.655877",
       "longitude": "-123.609744",
@@ -591,7 +640,6 @@
     {
       "orcs": "303",
       "orcsSiteNumber": "8",
-      "protectedAreaName": "Sechelt Inlets Marine Park",
       "siteName": "Tzoonie Narrows Site",
       "latitude": "49.706456",
       "longitude": "-123.776813",
@@ -605,7 +653,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "1",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Albas Site",
       "latitude": "",
       "longitude": "",
@@ -619,7 +666,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "15",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Aline Hill Site",
       "latitude": "",
       "longitude": "",
@@ -633,7 +679,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "2",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Anstey View Site",
       "latitude": "",
       "longitude": "",
@@ -647,7 +692,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "3",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Beach Bay Site",
       "latitude": "",
       "longitude": "",
@@ -661,7 +705,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "28",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Bughouse Bay Site",
       "latitude": "",
       "longitude": "",
@@ -675,7 +718,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "18",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Cottonwood Beach Site",
       "latitude": "",
       "longitude": "",
@@ -689,7 +731,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "4",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Encounter Point Site",
       "latitude": "",
       "longitude": "",
@@ -703,7 +744,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "6",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Fowler Point Site",
       "latitude": "",
       "longitude": "",
@@ -717,7 +757,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "7",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Hermit Bay Site",
       "latitude": "",
       "longitude": "",
@@ -731,7 +770,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "8",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Horseshoe Bay Site",
       "latitude": "",
       "longitude": "",
@@ -745,7 +783,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "9",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Hungry Cove Site",
       "latitude": "",
       "longitude": "",
@@ -759,7 +796,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "27",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Mara Point Site",
       "latitude": "",
       "longitude": "",
@@ -773,7 +809,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "10",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Marble Point Site",
       "latitude": "",
       "longitude": "",
@@ -787,7 +822,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "11",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Nielsen Beach Site",
       "latitude": "",
       "longitude": "",
@@ -801,7 +835,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "12",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Paradise Point site",
       "latitude": "",
       "longitude": "",
@@ -815,7 +848,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "26",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Roberts Bay Site",
       "latitude": "",
       "longitude": "",
@@ -829,7 +861,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "21",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "St. Ives Site",
       "latitude": "",
       "longitude": "",
@@ -843,7 +874,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "29",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Swall Site",
       "latitude": "",
       "longitude": "",
@@ -857,7 +887,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "22",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Tiilis Beach site",
       "latitude": "",
       "longitude": "",
@@ -871,7 +900,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "13",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Twin Bays Site",
       "latitude": "",
       "longitude": "",
@@ -885,7 +913,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "14",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Two Mile Creek Site",
       "latitude": "",
       "longitude": "",
@@ -899,7 +926,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "23",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Woods Landing Site",
       "latitude": "",
       "longitude": "",
@@ -913,7 +939,6 @@
     {
       "orcs": "300",
       "orcsSiteNumber": "24",
-      "protectedAreaName": "Shuswap Lake Marine Park",
       "siteName": "Woods Lands South Site",
       "latitude": "",
       "longitude": "",
@@ -927,7 +952,6 @@
     {
       "orcs": "1",
       "orcsSiteNumber": "101",
-      "protectedAreaName": "Strathcona Park",
       "siteName": "Megin/Talbot",
       "latitude": "49.4948",
       "longitude": "-126.0837",
@@ -941,7 +965,6 @@
     {
       "orcs": "9658",
       "orcsSiteNumber": "1",
-      "protectedAreaName": "Stuart Lake Marine Park",
       "siteName": "Jus K&rsquo;etl&rsquo;o Bay Site",
       "latitude": "54.64388",
       "longitude": "-124.99908",
@@ -955,7 +978,6 @@
     {
       "orcs": "9658",
       "orcsSiteNumber": "2",
-      "protectedAreaName": "Stuart Lake Marine Park",
       "siteName": "North Arm Site",
       "latitude": "54.66817",
       "longitude": "-125.15536",
@@ -969,7 +991,6 @@
     {
       "orcs": "9658",
       "orcsSiteNumber": "3",
-      "protectedAreaName": "Stuart Lake Marine Park",
       "siteName": "Two Islands Site",
       "latitude": "54.58905",
       "longitude": "-124.64183",
@@ -983,7 +1004,6 @@
     {
       "orcs": "9601",
       "orcsSiteNumber": "1",
-      "protectedAreaName": "Sue Channel Park",
       "siteName": "Hawkesbury Island Site",
       "latitude": "53.70248",
       "longitude": "-128.90348",
@@ -997,7 +1017,6 @@
     {
       "orcs": "9601",
       "orcsSiteNumber": "2",
-      "protectedAreaName": "Sue Channel Park",
       "siteName": "Loretta Island Site",
       "latitude": "53.72739",
       "longitude": "-128.84342",
@@ -1011,7 +1030,6 @@
     {
       "orcs": "406",
       "orcsSiteNumber": "1",
-      "protectedAreaName": "Takla Lake Marine Park",
       "siteName": "Sandy Point Site",
       "latitude": "55.129695",
       "longitude": "-125.656822",
@@ -1025,7 +1043,6 @@
     {
       "orcs": "406",
       "orcsSiteNumber": "2",
-      "protectedAreaName": "Takla Lake Marine Park",
       "siteName": "Takla West Site",
       "latitude": "55.57407",
       "longitude": "-126.109975",
@@ -1039,7 +1056,6 @@
     {
       "orcs": "406",
       "orcsSiteNumber": "3",
-      "protectedAreaName": "Takla Lake Marine Park",
       "siteName": "White Bluff Site",
       "latitude": "55.53891",
       "longitude": "-126.035668",
@@ -1053,7 +1069,6 @@
     {
       "orcs": "24",
       "orcsSiteNumber": "102",
-      "protectedAreaName": "Wells Gray Park",
       "siteName": "Backcountry Areas",
       "latitude": "",
       "longitude": "",
@@ -1066,8 +1081,33 @@
     },
     {
       "orcs": "24",
+      "orcsSiteNumber": "108",
+      "siteName": "Clearwater River",
+      "latitude": "",
+      "longitude": "",
+      "mapZoom": "",
+      "url": "https://bcparks.ca/explore/parkpgs/wg_cwadd/",
+      "note": "custom entry; not in PAR",
+      "status": "Active",
+      "establishedDate": "2022-05-19",
+      "repealedDate": ""
+    },
+    {
+      "orcs": "24",
+      "orcsSiteNumber": "104",
+      "siteName": "Clearwater/Azure Marine",
+      "latitude": "",
+      "longitude": "",
+      "mapZoom": "",
+      "url": "https://bcparks.ca/explore/parkpgs/wg_clear/",
+      "note": "custom entry; not in PAR",
+      "status": "Active",
+      "establishedDate": "2021-07-12",
+      "repealedDate": ""
+    },
+    {
+      "orcs": "24",
       "orcsSiteNumber": "101",
-      "protectedAreaName": "Wells Gray Park",
       "siteName": "Corridor Area",
       "latitude": "52.197888",
       "longitude": "-120.090161",
@@ -1076,6 +1116,58 @@
       "note": "custom entry; not in PAR",
       "status": "Active",
       "establishedDate": "2020-06-25",
+      "repealedDate": ""
+    },
+    {
+      "orcs": "24",
+      "orcsSiteNumber": "103",
+      "siteName": "Mahood Lake",
+      "latitude": "",
+      "longitude": "",
+      "mapZoom": "",
+      "url": "https://bcparks.ca/explore/parkpgs/wg_mah/",
+      "note": "custom entry; not in PAR",
+      "status": "Active",
+      "establishedDate": "2021-07-12",
+      "repealedDate": ""
+    },
+    {
+      "orcs": "24",
+      "orcsSiteNumber": "106",
+      "siteName": "Murtle Lake",
+      "latitude": "",
+      "longitude": "",
+      "mapZoom": "",
+      "url": "https://bcparks.ca/explore/parkpgs/wg_murt/",
+      "note": "custom entry; not in PAR",
+      "status": "Active",
+      "establishedDate": "2021-07-12",
+      "repealedDate": ""
+    },
+    {
+      "orcs": "24",
+      "orcsSiteNumber": "107",
+      "siteName": "Spahats Creek",
+      "latitude": "",
+      "longitude": "",
+      "mapZoom": "",
+      "url": "https://bcparks.ca/explore/parkpgs/wg_spah/",
+      "note": "custom entry; not in PAR",
+      "status": "Active",
+      "establishedDate": "2021-07-12",
+      "repealedDate": ""
+    },
+    {
+      "orcs": "24",
+      "orcsSiteNumber": "105",
+      "siteName": "Trophy Mountain",
+      "latitude": "",
+      "longitude": "",
+      "mapZoom": "",
+      "url": "https://bcparks.ca/explore/parkpgs/wg_tradd/",
+      "note": "custom entry; not in PAR",
+      "status": "Active",
+      "establishedDate": "2021-07-12",
       "repealedDate": ""
     }
   ]

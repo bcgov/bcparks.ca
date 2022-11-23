@@ -22,7 +22,7 @@ import PublishIcon from "@material-ui/icons/Publish";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import { SvgIcon } from "@material-ui/core";
-import { decode } from "html-entities";
+import { decode } from "he";
 
 import {
   getRegions,
@@ -564,83 +564,77 @@ export default function AdvisoryDashboard({
   if (toError || hasErrors) {
     return <Redirect push to="/bcparks/error" />;
   }
-
+  
   return (
     <>
-      <br />
-      {isLoading && (
-        <div className="page-loader">
-          <Loader page />
+      <div className="container-fluid">
+        <div className="row ad-row">
+          <div className="col-lg-6 col-md-4 col-sm-12 ad-label">
+            <h2 className="float-left">Public Advisories</h2>
+          </div>
+          <div className="col-lg-6 col-md-4 col-sm-12 ad-label">
+            <Button
+              label="Create a new Advisory"
+              styling="bcgov-normal-yellow btn"
+              onClick={() => {
+                sessionStorage.clear();
+                setToCreate(true);
+              }}
+            />
+          </div>
         </div>
-      )}
-      {!isLoading && (
-        <div
-          className={styles.AdvisoryDashboard}
-          data-testid="AdvisoryDashboard"
-        >
-          <div className="container-fluid">
-            <div className="row ad-row">
-              <div className="col-lg-6 col-md-4 col-sm-12 ad-label">
-                <h2 className="float-left">Public Advisories</h2>
-              </div>
-              <div className="col-lg-6 col-md-4 col-sm-12 ad-label">
-                <Button
-                  label="Create a new Advisory"
-                  styling="bcgov-normal-yellow btn"
-                  onClick={() => {
-                    sessionStorage.clear();
-                    setToCreate(true);
-                  }}
-                />
-              </div>
-            </div>
-            <div className="row ad-row">
-              <div className="col-lg-6 col-md-4 col-sm-12">
-                <Select
-                  value={selectedRegion}
-                  options={regions.map((r) => ({ label: r.regionName + " Region", value: r.id }) )}
-                  onChange={(e) => {
-                    setSelectedRegion(e);
-                    setSelectedRegionId(e ? e.value : 0);
+        <div className="row ad-row">
+          <div className="col-lg-6 col-md-4 col-sm-12">
+            <Select
+              value={selectedRegion}
+              options={regions.map((r) => ({ label: r.regionName + " Region", value: r.id }) )}
+              onChange={(e) => {
+                setSelectedRegion(e);
+                setSelectedRegionId(e ? e.value : 0);
 
-                    setSelectedPark(null);
-                    setSelectedParkId(-1); // Do not filter by parkId
+                setSelectedPark(null);
+                setSelectedParkId(-1); // Do not filter by parkId
 
-                    let arr = [...filters.filter((o) => !(o.type === 'page'))];
+                let arr = [...filters.filter((o) => !(o.type === 'page'))];
                     setFilters([
                       ...arr,
                       {type: 'page', filterName: 'region', filterValue: e ? e.value : 0},
                       {type: 'page', filterName: 'park', filterValue: 0}, // Reset park filter
                     ]);
-                  }}
+                  }}              
                   placeholder="Select a Region..."
-                  className="bcgov-select"
-                  isClearable
-                />
-              </div>
-              <div className="col-lg-6 col-md-4 col-sm-12">
-                <Select
-                  value={selectedPark}
-                  options={parkNames
+              className="bcgov-select"
+              isClearable
+            />
+          </div>
+          <div className="col-lg-6 col-md-4 col-sm-12">
+            <Select
+              value={selectedPark}
+              options={parkNames
                     .filter(pn => pn.parkNameType.nameType === "Escaped")
                     .map(p => ({
                       label: decode(p.parkName).replace(/(<([^>]+)>)/gi, ""),
                       value: p.protectedArea?.id
                     }))}
-                  onChange={(e) => {
-                    setSelectedPark(e);
-                    setSelectedParkId(e ? e.value : 0);
+              onChange={(e) => {
+                setSelectedPark(e);
+                setSelectedParkId(e ? e.value : 0);
 
-                    let arr = [...filters.filter((o) => !(o.type === 'page' && o.filterName === 'park'))];
+                let arr = [...filters.filter((o) => !(o.type === 'page' && o.filterName === 'park'))];
                     setFilters([...arr, {type: 'page', filterName: 'park', filterValue: e ? e.value : 0}]);
-                  }}
-                  placeholder="Select a Park..."
-                  className="bcgov-select"
-                  isClearable
-                />
-              </div>
-            </div>
+              }}
+              placeholder="Select a Park..."
+              className="bcgov-select"
+              isClearable
+            />
           </div>
+        </div>
+      </div>
+      {!isLoading && (
+        <div
+          className={styles.AdvisoryDashboard}
+          data-testid="AdvisoryDashboard"
+        >
           <br />
           <div className="container-fluid">
             <DataTable
@@ -673,6 +667,11 @@ export default function AdvisoryDashboard({
               }}
             />
           </div>
+        </div>
+      )}
+      {isLoading && (
+        <div className="page-loader">
+          <Loader page />
         </div>
       )}
     </>

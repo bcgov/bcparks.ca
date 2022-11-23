@@ -3,13 +3,13 @@
  */
 const strapi = require("strapi");
 
-const initialDataLoad = require("../data/functions/initialDataLoad.js");
+const loader = require("../data/functions/seedData.js");
 
 strapi({ serveAdminPanel: false })
   .load()
   .then(async (app) => {
     try {
-      await initialDataLoad.seedData();
+      await loader.seedData();
     } catch (err) {
       app.log.error(`Error occurred seeding initial data`);
       app.log.error(err);

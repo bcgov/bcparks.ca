@@ -34,7 +34,7 @@ if (!$?) {
    Exit 1
 }
 
-oc rsync bcparks-patroni-0:$remoteTempPath $OutputPath
+oc cp $Project/bcparks-patroni-0:$remoteTempPath/$exportFilename $OutputPath/$exportFilename > /dev/null
 
 if (!$?) {
    Write-Host "An error occurred."

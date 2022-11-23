@@ -14,6 +14,10 @@
     "Slug": {
       "type": "string"
     },
+    "Title": {
+      "type": "string",
+      "required": false
+    },
     "Template": {
       "type": "enumeration",
       "enum": [
