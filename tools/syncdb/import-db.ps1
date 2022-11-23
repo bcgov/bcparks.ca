@@ -1,8 +1,6 @@
 Param (
   [Parameter(Mandatory)]
-  $Project,
-  [Parameter(Mandatory)]
-  $InputPath
+  $Project
 )
 
 $remoteTempPath="/tmp/db-import"
@@ -34,7 +32,7 @@ Write-Host "Current patroni leader: ${leaderName}"
 
 oc exec ${leaderName}  -- /bin/bash -c "mkdir -p ${remoteTempPath}"
 
-oc rsync $InputPath ${leaderName}:${remoteTempPath}
+oc cp ./$exportFilename $Project/${leaderName}:$remoteTempPath/$exportFilename
 
 if (!$?) {
    Write-Host "An error occurred."
