@@ -21,6 +21,10 @@ and [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/i
 
 Users will require access to the appropriate OpenShift project, and will need to login via ``oc login`` prior to import/export.
 
+Note: Windows users need to run the PowerShell scripts from Windows Subsystem for Linux for 
+these instructions to work. Depending on your git checkout config you may also also have to convert CRLF 
+to CR in the PowerShell scripts (using notepad++) before it will work on WSL.
+
 ## Export data
 
 Running the following command will copy a data dump to the db-export subfolder of the current directory
@@ -44,6 +48,9 @@ This script syncs a local export.sql file to a temporary directory on the leader
 it using psql.
 
 ## Import data to your local PostgreSQL database (Docker Desktop)
+
+Note: If you are on Windows, run this from the real PowerShell, not from Windows Subsystem for Linux 
+(assuming you have Docker Desktop running on Windows and not on WSL)
 
 ```
 docker cp ./export.sql postgres-docker:/tmp/db-export.sql
