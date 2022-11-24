@@ -338,7 +338,7 @@ const loadParkDetails = async () => {
         purpose: park.purpose,
         managementPlanning: park.managementPlanning,
         partnerships: park.partnerships,
-        isDisplayed: park.isDisplayed || false,
+        isDisplayed: orcsExists?.isDisplayed || park.isDisplayed || false,
       };
 
       if (typeof park.protectedAreaName !== "undefined") {
@@ -347,9 +347,11 @@ const loadParkDetails = async () => {
 
       try {
         if (orcsExists) {
+          // we only want to update parks here, not create.  If a park didn't exist in PAR
+          // then we don't want it in Strapi. This is partly because these parks don't have
+          // ParkNames associated with them and partly because they are all old parks that
+          // no longer exist.
           await strapi.services["protected-area"].update({ orcs: park.orcs }, protectedArea);
-        } else {
-          await strapi.services["protected-area"].create({ orcs: park.orcs, ...protectedArea }, );
         }
       } catch (error) {
         strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
@@ -393,21 +395,15 @@ const loadParSomeDefaultValues = async () => {
   });
 
   for (const protectedArea of protectedAreas) {
-    strapi.log.info("set default value for", protectedArea.orcs);
-    protectedArea.hasDayUsePass =
-      protectedArea.hasDayUsePass === true ? true : false;
-    protectedArea.isFogZone = protectedArea.isFogZone === true ? true : false;
-    protectedArea.hasCampfireBan =
-      protectedArea.hasCampfireBan === true ? true : false;
-    protectedArea.hasSmokingBan =
-      protectedArea.hasSmokingBan === true ? true : false;
-
-    // remove the parkOperation property before updating (see the comment for 
-    // loadParkFireZoneXref() for more details)
-    delete protectedArea.parkOperation;
+    const updateData = {
+      hasDayUsePass: protectedArea.hasDayUsePass === true ? true : false,
+      isFogZone: protectedArea.isFogZone === true ? true : false,
+      hasCampfireBan: protectedArea.hasCampfireBan === true ? true : false,
+      hasSmokingBan: protectedArea.hasSmokingBan === true ? true : false,
+    };
 
     try {
-      await strapi.services["protected-area"].update({ orcs: protectedArea.orcs }, protectedArea);
+      await strapi.services["protected-area"].update({ id: protectedArea.id }, updateData);
     } catch (error) {
       strapi.log.error(`error load park details: orcs ${protectedArea.orcs}`, error);
     }
