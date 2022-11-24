@@ -347,9 +347,11 @@ const loadParkDetails = async () => {
 
       try {
         if (orcsExists) {
+          // we only want to update parks here, not create.  If a park didn't exist in PAR
+          // then we don't want it in Strapi. This is partly because these parks don't have
+          // ParkNames associated with them and partly because they are all old parks that
+          // no longer exist.
           await strapi.services["protected-area"].update({ orcs: park.orcs }, protectedArea);
-        } else {
-          await strapi.services["protected-area"].create({ orcs: park.orcs, ...protectedArea }, );
         }
       } catch (error) {
         strapi.log.error(`error load park details: orcs ${park.orcs}`, error);
