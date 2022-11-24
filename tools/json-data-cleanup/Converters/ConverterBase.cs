@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Data;
 
 namespace ProcessSeedData.Converters
 {
@@ -35,10 +36,10 @@ namespace ProcessSeedData.Converters
 
             if (string.IsNullOrWhiteSpace(rawJson))
             {
-                return new T();
+                throw new DataException($"{rawFilePath} contains no data");
             }
 
-            return JsonConvert.DeserializeObject<T>(rawJson);
+            return JsonConvert.DeserializeObject<T>(rawJson) ?? new T { };
         }
 
         public void WriteProcessedFile<T>(T newObj)
