@@ -393,20 +393,15 @@ const loadParSomeDefaultValues = async () => {
   });
 
   for (const protectedArea of protectedAreas) {
-    protectedArea.hasDayUsePass =
-      protectedArea.hasDayUsePass === true ? true : false;
-    protectedArea.isFogZone = protectedArea.isFogZone === true ? true : false;
-    protectedArea.hasCampfireBan =
-      protectedArea.hasCampfireBan === true ? true : false;
-    protectedArea.hasSmokingBan =
-      protectedArea.hasSmokingBan === true ? true : false;
-
-    // remove the parkOperation property before updating (see the comment for 
-    // loadParkFireZoneXref() for more details)
-    delete protectedArea.parkOperation;
+    const updateData = {
+      hasDayUsePass: protectedArea.hasDayUsePass === true ? true : false,
+      isFogZone: protectedArea.isFogZone === true ? true : false,
+      hasCampfireBan: protectedArea.hasCampfireBan === true ? true : false,
+      hasSmokingBan: protectedArea.hasSmokingBan === true ? true : false,
+    };
 
     try {
-      await strapi.services["protected-area"].update({ orcs: protectedArea.orcs }, protectedArea);
+      await strapi.services["protected-area"].update({ id: protectedArea.id }, updateData);
     } catch (error) {
       strapi.log.error(`error load park details: orcs ${protectedArea.orcs}`, error);
     }
