@@ -284,10 +284,6 @@ const getProtectedAreaStatus = async (ctx) => {
       (o) => o?.accessStatus?.toLowerCase() != accessStatus_ne.toLowerCase()
     ));
   }
-<<<<<<< HEAD
-  
-=======
->>>>>>> 7af398f4c57cc170a6e5f9564da4d58862a16af1
 
   return payload;
 };
