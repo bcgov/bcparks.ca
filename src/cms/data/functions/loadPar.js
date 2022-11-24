@@ -338,7 +338,7 @@ const loadParkDetails = async () => {
         purpose: park.purpose,
         managementPlanning: park.managementPlanning,
         partnerships: park.partnerships,
-        isDisplayed: park.isDisplayed || false,
+        isDisplayed: orcsExists?.isDisplayed || park.isDisplayed || false,
       };
 
       if (typeof park.protectedAreaName !== "undefined") {
@@ -393,7 +393,6 @@ const loadParSomeDefaultValues = async () => {
   });
 
   for (const protectedArea of protectedAreas) {
-    strapi.log.info("set default value for", protectedArea.orcs);
     protectedArea.hasDayUsePass =
       protectedArea.hasDayUsePass === true ? true : false;
     protectedArea.isFogZone = protectedArea.isFogZone === true ? true : false;
