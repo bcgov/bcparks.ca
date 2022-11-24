@@ -14,4 +14,16 @@ module.exports = ({ env }) => ({
       defaultReplyTo: env("STRAPI_SMTP_REPLY_TO", "noreply@gov.bc.ca"),
     },
   },
+  upload: {
+    provider: "aws-s3",
+    providerOptions: {
+      accessKeyId: env("S3_ACCESS_KEY_ID"),
+      secretAccessKey: env("S3_ACCESS_SECRET"),
+      endpoint: env("S3_ENDPOINT"),
+      s3ForcePathStyle: true,
+      params: {
+        Bucket: env("S3_BUCKET"),
+      },
+    },
+  },
 });
