@@ -183,7 +183,7 @@ const loadParkActivity = async () => {
         const activityTypeId = activityType ? activityType.id : null;
 
         const parkActivity = {
-          protectedArea: protectedAreaId,
+          protectedArea: siteId !== null ? protectedAreaId : null,
           site: siteId,
           activityType: activityTypeId,
           description: activity.description,
@@ -240,7 +240,7 @@ const loadParkFacility = async () => {
         const facilityTypeId = facilityType ? facilityType.id : null;
 
         const parkFacility = {
-          protectedArea: protectedAreaId,
+          protectedArea: siteId !== null ? protectedAreaId : null,
           site: siteId,
           facilityType: facilityTypeId,
           description: facility.description,
