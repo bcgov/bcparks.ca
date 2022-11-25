@@ -1,6 +1,7 @@
 ﻿using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
+using HtmlAgilityPack;
 using Newtonsoft.Json;
 using System.Data;
 
@@ -71,10 +72,30 @@ namespace ProcessSeedData.Converters
                 input = $"<p>{input}</p>";
             }
 
-            // update these links
+            // update these links for easier matching later
             input = input.Replace("../../../planning/", "/planning/");
 
-            // parse the html
+            // parse the html with HtmlAgilityPack
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(input);
+
+            // remove html comments
+            htmlDoc.DocumentNode.Descendants()
+                 .Where(n => n.NodeType == HtmlAgilityPack.HtmlNodeType.Comment)
+                 .ToList()
+                 .ForEach(n => n.Remove());
+
+            // remove css classes and ids
+            htmlDoc.DocumentNode.Descendants()
+                 .ToList()
+                 .ForEach(n => { 
+                     n.Attributes.Remove("class");
+                     n.Attributes.Remove("id");
+                 });
+
+            input = htmlDoc.DocumentNode.OuterHtml;
+
+            // parse the html again with AngleSharp
             var p = new HtmlParser();
             var dom = p.ParseDocument(string.Empty);
             var nodes = p.ParseFragment(input, dom.Body);
@@ -91,27 +112,6 @@ namespace ProcessSeedData.Converters
             foreach (var script in scripts)
             {
                 script.Remove();
-            }
-
-            // remove the park_photo class
-            var parkphoto = nodes.QuerySelectorAll(".park_photo");
-            if (parkphoto.Length > 0)
-            {
-                parkphoto.RemoveClass("park_photo");
-            }
-
-            // remove the "fileinfo" class
-            var fileinfo = nodes.QuerySelectorAll(".fileinfo");
-            if (fileinfo.Length > 0)
-            {
-                fileinfo.RemoveClass("fileinfo");
-            }
-
-            // remove the "ParkFees" class
-            var parkFees = nodes.QuerySelectorAll(".ParkFees");
-            if (parkFees.Length > 0)
-            {
-                parkFees.RemoveClass("ParkFees");
             }
 
             // add a "legacy-link" class to all html anchors 
@@ -142,8 +142,7 @@ namespace ProcessSeedData.Converters
             }
             
             // manual string cleanup 
-            var html = nodes.ToHtml()
-                .Replace(" class=\"\"", "");
+            var html = nodes.ToHtml();
 
             // remove consecutive spaces
             while(html.Contains("  "))
