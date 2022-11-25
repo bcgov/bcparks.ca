@@ -1,13 +1,15 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
-import { CssBaseline } from "@material-ui/core"
+import { CssBaseline, Breadcrumbs } from "@material-ui/core"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
 import Seo from "../components/seo"
 import MainSearch from "../components/search/mainSearch"
 import PageContent from "../components/pageContent/pageContent"
+
+import { renderBreadcrumbs } from "../utils/helpers";
 
 import "../styles/global.scss"
 import "../styles/staticLanding1.scss"
@@ -98,6 +100,36 @@ const LandingPage = ({ pageContext }) => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+      {/* This is a temporary attempt not to break the existing hard code HTMLArea */}
+      {/* For the edge case: show breadcrumbs and title if there's no HTMLArea */}
+      {linkContent.length === 0 && (
+        <div className="bcp-landing-intro">
+          <div className="bcp-landing-intro__image">
+            {/* TODO: here should be landing image */}
+          </div>
+          <div className="bcp-landing-intro__text">
+            <div className="container">
+              <div className="row d-none d-lg-block">
+                <div className="col">
+                  <Breadcrumbs separator="›" aria-label="breadcrumb">
+                    {renderBreadcrumbs(menuContent, pageContext?.page)}
+                  </Breadcrumbs>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <h1>{page?.Title}</h1>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  {/* TODO: here should be some text */}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
