@@ -64,7 +64,9 @@ const getProtectedAreaStatus = async (ctx) => {
   let entities;
   const { accessStatus, accessStatus_ne, ...query } = ctx.query;
 
-  if (ctx.query._q) {
+  if (accessStatus || accessStatus_ne) {
+    entities = await strapi.services["protected-area"].find({ _limit: -1 });
+  } else if (ctx.query._q) {
     entities = await strapi.services["protected-area"].search(ctx.query);
   } else {
     entities = await strapi.services["protected-area"].find(query);
