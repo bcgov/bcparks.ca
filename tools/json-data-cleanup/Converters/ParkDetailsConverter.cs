@@ -24,7 +24,17 @@ namespace ProcessSeedData.Converters
                 var newItem = Mapper.Map<Serialization.ParkDetail>(item);
 
                 // manual steps go here
-               
+                newItem.description = ProcessHtml(item.description);
+                newItem.purpose = ProcessHtml(item.purpose);
+                newItem.safetyInfo = ProcessHtml(item.safetyInfo);
+                newItem.specialNotes = ProcessHtml(item.specialNotes);
+                newItem.parkContact = ProcessHtml(item.parkContact);
+                newItem.reservations = ProcessHtml(item.reservations);
+                newItem.locationNotes = ProcessHtml(item.locationNotes);
+                newItem.maps = ProcessHtml(item.maps);
+                newItem.natureAndCulture = ProcessHtml(item.natureAndCulture);
+                newItem.managementPlanning = ProcessHtml(item.managementPlanning);
+                
                 newObj.Items.Add(newItem);
             }
 

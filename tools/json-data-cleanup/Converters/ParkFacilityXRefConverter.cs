@@ -24,6 +24,7 @@ namespace ProcessSeedData.Converters
                 var newItem = Mapper.Map<Serialization.ParkFacilityXRef>(item);
 
                 // manual steps go here
+                newItem.description = ProcessHtml(item.description);
 
                 newObj.Items.Add(newItem);
             }
