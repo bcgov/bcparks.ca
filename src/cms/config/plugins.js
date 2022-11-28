@@ -14,4 +14,9 @@ module.exports = ({ env }) => ({
       defaultReplyTo: env("STRAPI_SMTP_REPLY_TO", "noreply@gov.bc.ca"),
     },
   },
+  upload: {
+    breakpoints: {
+      small: 720,
+    },
+  },
 });
