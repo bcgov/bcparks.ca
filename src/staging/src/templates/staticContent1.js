@@ -1,5 +1,5 @@
 import React, { useRef } from "react"
-import { graphql, useStaticQuery, Link } from "gatsby"
+import { graphql, useStaticQuery } from "gatsby"
 import { Breadcrumbs } from "@material-ui/core"
 import useScrollSpy from "react-use-scrollspy"
 
@@ -9,6 +9,8 @@ import HTMLArea from "../components/HTMLArea"
 import Seo from "../components/seo"
 import PageContent from "../components/pageContent/pageContent"
 import PageMenu from "../components/pageContent/pageMenu"
+
+import { renderBreadcrumbs } from "../utils/helpers";
 
 import "../styles/staticContent1.scss"
 
@@ -74,10 +76,10 @@ export default function StaticContent1({ pageContext }) {
     ) || {}
   const hasPageHeader = headerContent.pageTitle !== undefined
 
-  // Get page title from record
-  // if not there, get from page title, if there is a PageHeader compopnent
+  // Get page title from Title field
+  // if not there, get title from pageTitle, if there is a PageHeader component
   // otherwise, page title & breadcrumb assumed to be in the content
-  let pageTitle = pageContext.page.title
+  let pageTitle = pageContext.page.Title
   if (!pageTitle) {
     pageTitle = headerContent.pageTitle
   }
@@ -249,30 +251,4 @@ export default function StaticContent1({ pageContext }) {
       </div>
     </>
   )
-}
-
-function renderBreadcrumbs(menuContent, pageContext) {
-  // TODO this doesn't work if the page is not in the menu
-  let current = menuContent.find(mc => mc.url === pageContext.Slug)
-  const breadcrumbItems = [
-    <div key={pageContext.id} className="breadcrumb-text">
-      {current?.title}
-    </div>,
-  ]
-
-  let parent = menuContent.find(mc => mc.strapiId === current?.strapiParent?.id)
-  return addItems(parent, menuContent, breadcrumbItems)
-
-  function addItems(parent, menuContent, breadcrumbItems) {
-    if (parent) {
-      breadcrumbItems.push(
-        <Link key={parent.strapiId} to={parent?.url ?? "/"}>
-          {parent.title}
-        </Link>
-      )
-      parent = menuContent.find(mc => mc.strapiId === parent?.strapiParent?.id)
-      return addItems(parent, menuContent, breadcrumbItems)
-    }
-    return breadcrumbItems.reverse()
-  }
 }
