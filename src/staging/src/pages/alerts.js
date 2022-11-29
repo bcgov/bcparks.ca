@@ -150,7 +150,6 @@ const PublicAdvisoryPage = ({ data }) => {
     getType: getAdvisoryType,
   }
 
-
   // API calls to get advisories and total count
   const getAdvisoryTotalCount = useCallback(() => {
     // Only runs once per page load
@@ -276,6 +275,21 @@ const PublicAdvisoryPage = ({ data }) => {
     [pageIndex, apiCall, apiUrl]
   )
 
+  const protectedArea = data.allStrapiProtectedArea?.nodes
+
+  const advisoriesWithParkNames = advisories.map(item => {
+    const parkNamesList = item.protectedAreas.map(park => {
+      const findParkNames = protectedArea.find(
+        i => i.protectedAreaName === park.protectedAreaName
+      )
+      return findParkNames.parkNames
+    })
+    return {
+      ...item,
+      parkNames: parkNamesList[0],
+    }
+  })
+
   // Page setter exposed to AdvisortyPageNav
   const setPage = p => {
     setPageIndex(p)
@@ -358,7 +372,7 @@ const PublicAdvisoryPage = ({ data }) => {
 
           <AdvisoryLegend />
           <AdvisoryList
-            advisories={advisories}
+            advisories={advisoriesWithParkNames}
             pageIndex={pageIndex}
             pageLen={pageLen}
           ></AdvisoryList>
@@ -422,6 +436,17 @@ export const query = graphql`
         strapiParent {
           id
           title
+        }
+      }
+    }
+    allStrapiProtectedArea(sort: { fields: parent___internal___type }) {
+      nodes {
+        protectedAreaName
+        id
+        parkNames {
+          id
+          parkName
+          parkNameType
         }
       }
     }
