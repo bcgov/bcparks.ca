@@ -20,7 +20,7 @@ namespace ProcessSeedData.Deserialization
 
     public class ParkActivityXRefs
     {
-        [JsonProperty("")]
+        [JsonProperty("parkActivity")]
         public List<ParkActivityXRef> Items { get; set; }
     }
 }
