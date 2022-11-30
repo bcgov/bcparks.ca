@@ -1031,6 +1031,7 @@ export default function Advisory({
       .post(`upload`, fileForm, {
         headers: {
           "Content-Type": "multipart/form-data",
+         // Authorization: `Bearer ${keycloak.token}`,
         },
       })
       .catch((error) => {
