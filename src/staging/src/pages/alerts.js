@@ -280,7 +280,7 @@ const PublicAdvisoryPage = ({ data }) => {
   const advisoriesWithParkNames = advisories.map(item => {
     const parkNamesList = item.protectedAreas.map(park => {
       const findParkNames = protectedArea.find(
-        i => i.protectedAreaName === park.protectedAreaName
+        i => i.orcs === park.orcs
       )
       return findParkNames.parkNames
     })
@@ -442,7 +442,7 @@ export const query = graphql`
     allStrapiProtectedArea(sort: { fields: parent___internal___type }) {
       nodes {
         protectedAreaName
-        id
+        orcs
         parkNames {
           id
           parkName
