@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useStrapi } from 'strapi-helper-plugin';
+import { useStrapi, prefixFileUrlWithBackendUrl } from 'strapi-helper-plugin';
 import PropTypes from 'prop-types';
 
 const MediaLib = ({ isOpen, onChange, onToggle }) => {
@@ -23,7 +23,7 @@ const MediaLib = ({ isOpen, onChange, onToggle }) => {
     if (data) {
       const { url } = data;
 
-      setData({ ...data, url });
+      setData({ ...data, url: prefixFileUrlWithBackendUrl(url) });
     }
   };
 
