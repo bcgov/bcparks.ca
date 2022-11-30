@@ -60,10 +60,14 @@ export default function MapLocation({ data }) {
     <Grid item xs={12} id="park-map-container" className="anchor-link">
       <Paper elevation={0}>
         <Heading>Maps and location</Heading>
-        <a href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000">
-        <div id="mapDiv" ref={mapRef}></div>
-        </a>
-        <Spacer />
+        {data.latitude && data.longitude && (
+          <div>
+            <a href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000">
+              <div id="mapDiv" ref={mapRef}></div>
+            </a>
+            <Spacer />
+          </div>
+        )}
       </Paper>
     </Grid>
   )

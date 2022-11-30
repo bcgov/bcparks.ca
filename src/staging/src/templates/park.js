@@ -208,7 +208,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 8,
       display: "Location",
       link: "#park-maps-location-container",
-      visible: true,
+      visible: (park.latitude && park.longitude) || park.locationNotes,
     },
     {
       sectionIndex: 9,
