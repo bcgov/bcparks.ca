@@ -15,6 +15,9 @@ module.exports = ({ env }) => ({
     },
   },
   upload: {
+    breakpoints: {
+      small: 720,
+    },
     provider: "aws-s3",
     providerOptions: {
       accessKeyId: env("S3_ACCESS_KEY_ID"),
@@ -27,3 +30,4 @@ module.exports = ({ env }) => ({
     },
   },
 });
+
