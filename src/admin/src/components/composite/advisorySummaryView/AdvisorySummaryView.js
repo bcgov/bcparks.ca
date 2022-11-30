@@ -343,7 +343,7 @@ export default function AdvisorySummaryView({
               <div key={l.id}>
                 {l.url && (
                   <a
-                    href={l.file.url}
+                    href={l?.file?.url ? l.file.url: l.url}
                     rel="noreferrer"
                     target="_blank"
                     className="ad-anchor"
