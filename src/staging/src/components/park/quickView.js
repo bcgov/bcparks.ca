@@ -8,9 +8,12 @@ import AdvisorySummary from "../../components/search/advisorySummary";
 import dayUseIcon from "../../images/park/day-use.png"
 import parksLogo from "../../images/Mask_Group_5.png"
 
+import { PARK_NAME_TYPE } from "../../utils/constants"
+import { renderHTML } from "../../utils/helpers"
 import "../../styles/search.scss"
 
 export default function QuickView({ park, activityItemsLabels, facilityItemsLabels }) {
+    const getParkName = item => item.parkNameType === PARK_NAME_TYPE.Escaped
 
     return (
         <div className="row search-result-card no-gutters">
@@ -73,7 +76,8 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
                             className="p10t"
                         >
                             <h3 className="park-heading-text">
-                                {park.protectedAreaName}
+                                {renderHTML(park.parkNames.find(getParkName)?.parkName) ||
+                                park.protectedAreaName}
                             </h3>
                         </Link>
                     </div>
