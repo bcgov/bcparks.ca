@@ -977,7 +977,7 @@ export default function AdvisoryForm({
                         component="label"
                         className="bcgov-normal-blue btn transform-none ad-upload-btn"
                       >
-                        Upload
+                        Browse
                         <input
                           type="file"
                           accept=".jpg,.gif,.png,.gif,.pdf"
