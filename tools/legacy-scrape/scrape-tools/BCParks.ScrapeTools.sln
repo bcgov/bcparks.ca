@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessSeedData", "ProcessSeedData.csproj", "{3910C344-AAAF-456C-BE12-4B4C64E2AE86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCParks.ScrapeTools.JsonDataCleanup", "BCParks.ScrapeTools.JsonDataCleanup\BCParks.ScrapeTools.JsonDataCleanup.csproj", "{3910C344-AAAF-456C-BE12-4B4C64E2AE86}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCParks.ScrapeTools.Shared", "BCParks.ScrapeTools.Shared\BCParks.ScrapeTools.Shared.csproj", "{1012ADAE-013A-4766-87B8-42FA7F03B7AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{3910C344-AAAF-456C-BE12-4B4C64E2AE86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3910C344-AAAF-456C-BE12-4B4C64E2AE86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3910C344-AAAF-456C-BE12-4B4C64E2AE86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1012ADAE-013A-4766-87B8-42FA7F03B7AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1012ADAE-013A-4766-87B8-42FA7F03B7AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1012ADAE-013A-4766-87B8-42FA7F03B7AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1012ADAE-013A-4766-87B8-42FA7F03B7AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

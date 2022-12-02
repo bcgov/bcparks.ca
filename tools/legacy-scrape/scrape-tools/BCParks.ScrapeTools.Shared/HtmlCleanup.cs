@@ -2,68 +2,12 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
 using HtmlAgilityPack;
-using Newtonsoft.Json;
-using System.Data;
 
-namespace ProcessSeedData.Converters
+namespace BCParks.ScrapeTools.Shared
 {
-    public abstract class ConverterBase
+    public static class HtmlCleanup
     {
-        public string? SourceFile { get; set; }
-        public string? DestinationFile { get; set; }
-
-        public ConverterBase(string sourceFile, string destinationFile)
-        {
-            this.SourceFile = sourceFile;
-            this.DestinationFile = destinationFile;
-        }
-
-        public string GetDataPath()
-        {
-            var folder = AppContext.BaseDirectory;
-            var path = new DirectoryInfo(folder);
-
-            while (path.Parent != null && !path.FullName.ToLower().EndsWith(@"\tools"))
-            {
-                path = new DirectoryInfo(path.Parent.FullName);
-            }
-
-            return path.FullName.Replace(@"\tools", @"\src\cms\data");
-        }
-
-        public T ReadRawFile<T>() where T: new()
-        {
-            var rawFilePath = $@"Z:\_shared\json\{SourceFile}";
-            Console.WriteLine("Reading " + rawFilePath);
-
-            string rawJson = File.ReadAllText(rawFilePath);
-
-            if (string.IsNullOrWhiteSpace(rawJson))
-            {
-                throw new DataException($"{rawFilePath} contains no data");
-            }
-
-            return JsonConvert.DeserializeObject<T>(rawJson) ?? new T { };
-        }
-
-        public void WriteProcessedFile<T>(T newObj)
-        {
-            string dataPath = GetDataPath();
-
-            string newJson = JsonConvert.SerializeObject(newObj, Formatting.Indented, new JsonSerializerSettings
-            {
-                StringEscapeHandling = StringEscapeHandling.Default
-            });
-
-            var newFilePath = $@"{dataPath}\{DestinationFile}";
-
-            Console.WriteLine($"Writing {newFilePath}");
-            Console.WriteLine($"");
-
-            File.WriteAllText(newFilePath, newJson);
-        }
-
-        public string ProcessHtml(string input)
+        public static string Process(string input)
         {
             // wrap plain text strings in <p> tags
             input = input.Trim();
@@ -88,7 +32,7 @@ namespace ProcessSeedData.Converters
             // remove css classes and ids
             htmlDoc.DocumentNode.Descendants()
                  .ToList()
-                 .ForEach(n => { 
+                 .ForEach(n => {
                      n.Attributes.Remove("class");
                      n.Attributes.Remove("id");
                  });
@@ -140,12 +84,12 @@ namespace ProcessSeedData.Converters
                     link.OuterHtml = link.InnerHtml;
                 }
             }
-            
+
             // manual string cleanup 
             var html = nodes.ToHtml();
 
             // remove consecutive spaces
-            while(html.Contains("  "))
+            while (html.Contains("  "))
             {
                 html = html.Replace("  ", " ");
             }
@@ -165,5 +109,6 @@ namespace ProcessSeedData.Converters
             // return the formatted html replacing tabs with 2 spaces
             return pretty.Replace("\t", "  ");
         }
+
     }
 }
