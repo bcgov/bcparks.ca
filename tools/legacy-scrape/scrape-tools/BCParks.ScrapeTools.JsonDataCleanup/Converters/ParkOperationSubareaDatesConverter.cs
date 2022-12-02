@@ -4,7 +4,7 @@ namespace ProcessSeedData.Converters
 {
     public class ParkOperationSubareaDatesConverter : ConverterBase
     {
-        public ParkOperationSubareaDatesConverter(string sourceFile, string destinationFile): base(sourceFile, destinationFile)
+        public ParkOperationSubareaDatesConverter(string sourceFile, string destinationFile) : base(sourceFile, destinationFile)
         {
 
         }
@@ -13,7 +13,8 @@ namespace ProcessSeedData.Converters
         {
             var rawObj = ReadRawFile<Deserialization.ParkOperationSubareaDates>();
 
-            var Mapper = new MapperConfiguration(cfg => {
+            var Mapper = new MapperConfiguration(cfg =>
+            {
                 cfg.CreateMap<Deserialization.ParkOperationSubareaDate, Serialization.ParkOperationSubareaDate>();
             }).CreateMapper();
 

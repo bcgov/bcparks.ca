@@ -4,7 +4,7 @@ namespace ProcessSeedData.Converters
 {
     public class ProtectedAreaCoordinatesConverter : ConverterBase
     {
-        public ProtectedAreaCoordinatesConverter(string sourceFile, string destinationFile): base(sourceFile, destinationFile)
+        public ProtectedAreaCoordinatesConverter(string sourceFile, string destinationFile) : base(sourceFile, destinationFile)
         {
 
         }
@@ -13,7 +13,8 @@ namespace ProcessSeedData.Converters
         {
             var rawObj = ReadRawFile<Deserialization.ProtectedAreaCoordinates>();
 
-            var Mapper = new MapperConfiguration(cfg => {
+            var Mapper = new MapperConfiguration(cfg =>
+            {
                 cfg.CreateMap<Deserialization.ProtectedAreaCoordinate, Serialization.ProtectedAreaCoordinate>();
             }).CreateMapper();
 

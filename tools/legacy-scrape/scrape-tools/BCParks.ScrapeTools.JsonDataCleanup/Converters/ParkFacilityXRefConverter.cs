@@ -4,7 +4,7 @@ namespace ProcessSeedData.Converters
 {
     public class ParkFacilityXRefConverter : ConverterBase
     {
-        public ParkFacilityXRefConverter(string sourceFile, string destinationFile): base(sourceFile, destinationFile)
+        public ParkFacilityXRefConverter(string sourceFile, string destinationFile) : base(sourceFile, destinationFile)
         {
 
         }
@@ -13,7 +13,8 @@ namespace ProcessSeedData.Converters
         {
             var rawObj = ReadRawFile<Deserialization.ParkFacilityXRefs>();
 
-            var Mapper = new MapperConfiguration(cfg => {
+            var Mapper = new MapperConfiguration(cfg =>
+            {
                 cfg.CreateMap<Deserialization.ParkFacilityXRef, Serialization.ParkFacilityXRef>();
             }).CreateMapper();
 
