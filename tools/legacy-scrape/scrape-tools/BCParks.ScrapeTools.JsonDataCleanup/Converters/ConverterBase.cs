@@ -28,7 +28,7 @@ namespace ProcessSeedData.Converters
             return path.FullName.Replace(@"\tools", @"\src\cms\data");
         }
 
-        public T ReadRawFile<T>() where T: new()
+        public T ReadRawFile<T>() where T : new()
         {
             var rawFilePath = $@"Z:\_shared\json\{SourceFile}";
             Console.WriteLine("Reading " + rawFilePath);

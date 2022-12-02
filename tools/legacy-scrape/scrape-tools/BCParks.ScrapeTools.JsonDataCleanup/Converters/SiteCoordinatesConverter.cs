@@ -4,7 +4,7 @@ namespace ProcessSeedData.Converters
 {
     public class SiteCoordinatesConverter : ConverterBase
     {
-        public SiteCoordinatesConverter(string sourceFile, string destinationFile): base(sourceFile, destinationFile)
+        public SiteCoordinatesConverter(string sourceFile, string destinationFile) : base(sourceFile, destinationFile)
         {
 
         }
@@ -13,7 +13,8 @@ namespace ProcessSeedData.Converters
         {
             var rawObj = ReadRawFile<Deserialization.SiteCoordinates>();
 
-            var Mapper = new MapperConfiguration(cfg => {
+            var Mapper = new MapperConfiguration(cfg =>
+            {
                 cfg.CreateMap<Deserialization.SiteCoordinate, Serialization.SiteCoordinate>();
             }).CreateMapper();
 

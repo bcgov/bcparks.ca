@@ -4,7 +4,7 @@ namespace ProcessSeedData.Converters
 {
     public class ParkOperationSubareasConverter : ConverterBase
     {
-        public ParkOperationSubareasConverter(string sourceFile, string destinationFile): base(sourceFile, destinationFile)
+        public ParkOperationSubareasConverter(string sourceFile, string destinationFile) : base(sourceFile, destinationFile)
         {
 
         }
@@ -13,7 +13,8 @@ namespace ProcessSeedData.Converters
         {
             var rawObj = ReadRawFile<Deserialization.ParkOperationSubareas>();
 
-            var Mapper = new MapperConfiguration(cfg => {
+            var Mapper = new MapperConfiguration(cfg =>
+            {
                 cfg.CreateMap<Deserialization.ParkOperationSubarea, Serialization.ParkOperationSubarea>()
                 .ForMember(d => d.facilityNumber, opt => opt.Ignore());
             }).CreateMapper();
@@ -30,7 +31,7 @@ namespace ProcessSeedData.Converters
                 if (item.facilityNumber != "")
                 {
                     newItem.facilityNumber = int.Parse(item.facilityNumber);
-                } 
+                }
                 else
                 {
                     newItem.facilityNumber = null;

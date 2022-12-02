@@ -32,7 +32,8 @@ namespace BCParks.ScrapeTools.Shared
             // remove css classes and ids
             htmlDoc.DocumentNode.Descendants()
                  .ToList()
-                 .ForEach(n => {
+                 .ForEach(n =>
+                 {
                      n.Attributes.Remove("class");
                      n.Attributes.Remove("id");
                  });

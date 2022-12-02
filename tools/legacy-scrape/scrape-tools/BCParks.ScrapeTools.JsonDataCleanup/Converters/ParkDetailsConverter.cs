@@ -4,7 +4,7 @@ namespace ProcessSeedData.Converters
 {
     public class ParkDetailsConverter : ConverterBase
     {
-        public ParkDetailsConverter(string sourceFile, string destinationFile): base(sourceFile, destinationFile)
+        public ParkDetailsConverter(string sourceFile, string destinationFile) : base(sourceFile, destinationFile)
         {
 
         }
@@ -13,7 +13,8 @@ namespace ProcessSeedData.Converters
         {
             var rawObj = ReadRawFile<Deserialization.ParkDetails>();
 
-            var Mapper = new MapperConfiguration(cfg => {
+            var Mapper = new MapperConfiguration(cfg =>
+            {
                 cfg.CreateMap<Deserialization.ParkDetail, Serialization.ParkDetail>();
             }).CreateMapper();
 
@@ -34,7 +35,7 @@ namespace ProcessSeedData.Converters
                 newItem.maps = ProcessHtml(item.maps);
                 newItem.natureAndCulture = ProcessHtml(item.natureAndCulture);
                 newItem.managementPlanning = ProcessHtml(item.managementPlanning);
-                
+
                 newObj.Items.Add(newItem);
             }
 
