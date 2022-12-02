@@ -1,36 +1,34 @@
 ﻿using AutoMapper;
+using BCParks.ScrapeTools.JsonDataCleanup.Deserialization;
 
-namespace ProcessSeedData.Converters
+namespace BCParks.ScrapeTools.JsonDataCleanup.Converters;
+
+public class ParkActivityXRefConverter : ConverterBase
 {
-    public class ParkActivityXRefConverter : ConverterBase
+    public ParkActivityXRefConverter(string sourceFile, string destinationFile)
+        : base(sourceFile, destinationFile) { }
+
+    public void Process()
     {
-        public ParkActivityXRefConverter(string sourceFile, string destinationFile) : base(sourceFile, destinationFile)
-        {
+        var rawObj = ReadRawFile<ParkActivityXRefs>();
 
+        var Mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<ParkActivityXRef, Shared.Serialization.ParkActivityXRef>();
+        }).CreateMapper();
+
+        var newObj = new Shared.Serialization.ParkActivityXRefs();
+
+        foreach (var item in rawObj.Items)
+        {
+            var newItem = Mapper.Map<Shared.Serialization.ParkActivityXRef>(item);
+
+            // manual steps go here
+            newItem.description = ProcessHtml(item.description);
+
+            newObj.Items.Add(newItem);
         }
 
-        public void Process()
-        {
-            var rawObj = ReadRawFile<Deserialization.ParkActivityXRefs>();
-
-            var Mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Deserialization.ParkActivityXRef, Serialization.ParkActivityXRef>();
-            }).CreateMapper();
-
-            Serialization.ParkActivityXRefs newObj = new Serialization.ParkActivityXRefs();
-
-            foreach (Deserialization.ParkActivityXRef item in rawObj.Items)
-            {
-                var newItem = Mapper.Map<Serialization.ParkActivityXRef>(item);
-
-                // manual steps go here
-                newItem.description = ProcessHtml(item.description);
-
-                newObj.Items.Add(newItem);
-            }
-
-            WriteProcessedFile<Serialization.ParkActivityXRefs>(newObj);
-        }
+        WriteProcessedFile(newObj);
     }
 }

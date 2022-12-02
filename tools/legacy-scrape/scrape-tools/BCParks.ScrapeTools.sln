@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCParks.ScrapeTools.JsonDat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCParks.ScrapeTools.Shared", "BCParks.ScrapeTools.Shared\BCParks.ScrapeTools.Shared.csproj", "{1012ADAE-013A-4766-87B8-42FA7F03B7AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCParks.ScrapeTools.ParkSubPages", "BCParks.ScrapeTools.ParkSubPages\BCParks.ScrapeTools.ParkSubPages.csproj", "{559ECB76-117C-4B23-9F87-E29BC83375A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1012ADAE-013A-4766-87B8-42FA7F03B7AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1012ADAE-013A-4766-87B8-42FA7F03B7AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1012ADAE-013A-4766-87B8-42FA7F03B7AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{559ECB76-117C-4B23-9F87-E29BC83375A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{559ECB76-117C-4B23-9F87-E29BC83375A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{559ECB76-117C-4B23-9F87-E29BC83375A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{559ECB76-117C-4B23-9F87-E29BC83375A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

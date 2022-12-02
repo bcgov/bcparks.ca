@@ -1,28 +1,28 @@
 ﻿using Newtonsoft.Json;
 
-namespace BCParks.ScrapeTools.JsonDataCleanup.Deserialization;
+namespace BCParks.ScrapeTools.Shared.Serialization;
 
 /// <summary>
-///     This is a custom class for converting JSON files exported from the Visitor
-///     Service Database into C# objects. See the corresponding file with the same name
-///     in the Serialization folder for converting C# objects back into JSON. There
-///     are slight difference in class definitions to achieve the cleanup required.
+///     This is a custom class for writing JSON files in the expected format for the content
+///     import tool. See the corresponding file with the same name in the Deserialization
+///     folder converting JSON files exported from the Visitor Service Database into C# objects.
+///     There are slight difference in class definitions to achieve the cleanup required.
 /// </summary>
 public class ParkOperationSubarea
 {
-    public string? parkSubAreaId { get; set; }
+    public int parkSubAreaId { get; set; }
     public string? parkSubArea { get; set; }
-    public string? orcs { get; set; }
+    public int orcs { get; set; }
     public string? orcsSiteNumber { get; set; }
-    public string? isActive { get; set; }
-    public string? isOpen { get; set; }
-    public string? parkSubAreaTypeId { get; set; }
-    public string? facilityNumber { get; set; }
-    public string? hasReservations { get; set; }
-    public string? hasFirstComeFirstServed { get; set; }
-    public string? hasBackcountryPermits { get; set; }
-    public string? hasBackcountryReservations { get; set; }
-    public string? isCleanAirSite { get; set; }
+    public bool isActive { get; set; }
+    public bool isOpen { get; set; }
+    public int parkSubAreaTypeId { get; set; }
+    public int? facilityNumber { get; set; }
+    public bool hasReservations { get; set; }
+    public bool hasFirstComeFirstServed { get; set; }
+    public bool hasBackcountryPermits { get; set; }
+    public bool hasBackcountryReservations { get; set; }
+    public bool isCleanAirSite { get; set; }
     public int? parkAccessUnitId { get; set; }
     public string? totalCapacity { get; set; }
     public string? frontcountrySites { get; set; }
@@ -58,6 +58,11 @@ public class ParkOperationSubarea
 
 public class ParkOperationSubareas
 {
+    public ParkOperationSubareas()
+    {
+        Items = new List<ParkOperationSubarea>();
+    }
+
     [JsonProperty("parkOperationSubAreas")]
     public List<ParkOperationSubarea> Items { get; set; }
 }

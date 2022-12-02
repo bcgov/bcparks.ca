@@ -1,32 +1,30 @@
 ﻿using AutoMapper;
+using BCParks.ScrapeTools.JsonDataCleanup.Deserialization;
 
-namespace ProcessSeedData.Converters
+namespace BCParks.ScrapeTools.JsonDataCleanup.Converters;
+
+public class ParkUrlsConverter : ConverterBase
 {
-    public class ParkUrlsConverter : ConverterBase
+    public ParkUrlsConverter(string sourceFile, string destinationFile)
+        : base(sourceFile, destinationFile) { }
+
+    public void Process()
     {
-        public ParkUrlsConverter(string sourceFile, string destinationFile) : base(sourceFile, destinationFile)
-        {
+        var rawObj = ReadRawFile<ParkUrls>();
 
+        var Mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<ParkUrl, Shared.Serialization.ParkUrl>();
+        }).CreateMapper();
+
+        var newObj = new Shared.Serialization.ParkUrls();
+
+        foreach (var item in rawObj.Items)
+        {
+            var newItem = Mapper.Map<Shared.Serialization.ParkUrl>(item);
+            newObj.Items.Add(newItem);
         }
 
-        public void Process()
-        {
-            var rawObj = ReadRawFile<Deserialization.ParkUrls>();
-
-            var Mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Deserialization.ParkUrl, Serialization.ParkUrl>();
-            }).CreateMapper();
-
-            Serialization.ParkUrls newObj = new Serialization.ParkUrls();
-
-            foreach (Deserialization.ParkUrl item in rawObj.Items)
-            {
-                var newItem = Mapper.Map<Serialization.ParkUrl>(item);
-                newObj.Items.Add(newItem);
-            }
-
-            WriteProcessedFile<Serialization.ParkUrls>(newObj);
-        }
+        WriteProcessedFile(newObj);
     }
 }

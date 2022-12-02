@@ -147,6 +147,10 @@
 #RESHARPER
 **/.DotSettings
 
+#VisitorServices DB
+bcparks.ca-scrape.accdb
+bcparks.ca-scrape.laccdb
+
 ##### Frontend ######
 
 # dependencies
@@ -180,3 +184,4 @@ src/staging/package-lock.json
 
 # Don't ignore .s2i bin
 !**/.s2i/bin/
+*.sln.DotSettings.user

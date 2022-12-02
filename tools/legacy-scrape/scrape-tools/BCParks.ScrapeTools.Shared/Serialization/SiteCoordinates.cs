@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 
-namespace BCParks.ScrapeTools.JsonDataCleanup.Deserialization;
+namespace BCParks.ScrapeTools.Shared.Serialization;
 
 /// <summary>
-///     This is a custom class for converting JSON files exported from the Visitor
-///     Service Database into C# objects. See the corresponding file with the same name
-///     in the Serialization folder for converting C# objects back into JSON. There
-///     are slight difference in class definitions to achieve the cleanup required.
+///     This is a custom class for writing JSON files in the expected format for the content
+///     import tool. See the corresponding file with the same name in the Deserialization
+///     folder converting JSON files exported from the Visitor Service Database into C# objects.
+///     There are slight difference in class definitions to achieve the cleanup required.
 /// </summary>
 public class SiteCoordinate
 {
@@ -25,6 +25,11 @@ public class SiteCoordinate
 
 public class SiteCoordinates
 {
-    [JsonProperty("")]
+    public SiteCoordinates()
+    {
+        Items = new List<SiteCoordinate>();
+    }
+
+    [JsonProperty("site")]
     public List<SiteCoordinate> Items { get; set; }
 }
