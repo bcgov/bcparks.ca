@@ -219,7 +219,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const staticQuery = `
   {
-    allStrapiPages(filter: {Slug: {nin: ["/home", "/alerts", "/explore"]}}) {
+    allStrapiPages(filter: {Slug: {nin: ["/home", "/active-advisories", "/find-a-park"]}}) {
       totalCount
       nodes {
         id

@@ -58,7 +58,7 @@
         },
         {
           "title": "Find a Park",
-          "url": "/explore",
+          "url": "/find-a-park",
           "pageType": "Unique",
           "order": 1,
           "parent": 2695,
@@ -2308,7 +2308,7 @@
     },
     {
       "title": "Find a Park",
-      "url": "/explore",
+      "url": "/find-a-park",
       "pageType": "Unique",
       "order": 1,
       "parent": "Home",

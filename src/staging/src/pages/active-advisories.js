@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const PublicAdvisoryPage = ({ data }) => {
+const PublicActiveAdvisoriesPage = ({ data }) => {
   const classes = useStyles()
 
   const [advisories, setAdvisories] = useState([]) // array of advisories
@@ -391,7 +391,7 @@ const PublicAdvisoryPage = ({ data }) => {
   )
 }
 
-export default PublicAdvisoryPage
+export default PublicActiveAdvisoriesPage
 
 export const query = graphql`
   {

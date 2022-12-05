@@ -242,7 +242,7 @@ export default function ParkTemplate({ data }) {
     <Link key="1" href="/">
       Home
     </Link>,
-    <Link key="2" href="/explore">
+    <Link key="2" href="/find-a-park">
       Find a Park
     </Link>,
     <div key="3" className="breadcrumb-text">
@@ -440,7 +440,7 @@ export default function ParkTemplate({ data }) {
           </Grid>
         </Container>
       </div>
-      <Footer>{data.strapiWebsites.Footer}</Footer>
+      <Footer>{data?.strapiWebsites.Footer}</Footer>
     </div>
   )
 }

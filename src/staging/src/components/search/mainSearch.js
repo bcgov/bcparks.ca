@@ -10,7 +10,7 @@ const MainSearch = () => {
   const [searchText, setSearchText] = useState("")
 
   const searchParkFilter = () => {
-    navigate("/explore", {
+    navigate("/find-a-park", {
       state: {
         searchText
       },
