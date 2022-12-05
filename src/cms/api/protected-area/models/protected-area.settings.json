@@ -127,40 +127,40 @@
       "type": "date"
     },
     "description": {
-      "type": "text"
+      "type": "richtext"
     },
     "safetyInfo": {
-      "type": "text"
+      "type": "richtext"
     },
     "specialNotes": {
-      "type": "text"
+      "type": "richtext"
     },
     "locationNotes": {
-      "type": "text"
+      "type": "richtext"
     },
     "parkContact": {
-      "type": "text"
+      "type": "richtext"
     },
     "reservations": {
-      "type": "text"
+      "type": "richtext"
     },
     "maps": {
-      "type": "text"
+      "type": "richtext"
     },
     "managementPlanning": {
-      "type": "text"
+      "type": "richtext"
     },
     "natureAndCulture": {
-      "type": "text"
+      "type": "richtext"
     },
     "partnerships": {
-      "type": "text"
+      "type": "richtext"
     },
     "purpose": {
-      "type": "text"
+      "type": "richtext"
     },
     "reconciliationNotes": {
-      "type": "text"
+      "type": "richtext"
     },
     "slug": {
       "type": "string"
