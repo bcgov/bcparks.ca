@@ -3,7 +3,9 @@ import { Paper, Grid } from "@material-ui/core"
 import MapView from "@arcgis/core/views/MapView"
 import WebMap from "@arcgis/core/WebMap"
 import ScaleBar from "@arcgis/core/widgets/ScaleBar"
-
+import Fullscreen from "@arcgis/core/widgets/Fullscreen"
+import Locate from "@arcgis/core/widgets/Locate"
+ 
 import Heading from "./heading"
 import Spacer from "./spacer"
 
@@ -26,10 +28,7 @@ export default function MapLocation({ data }) {
         container: mapRef.current,
         map: webMap,
         center: [data.longitude, data.latitude],
-        zoom: data.mapZoom,
-        ui: {
-          components: ["attribution"]
-        }
+        zoom: data.mapZoom
       })
 
       const scaleBar = new ScaleBar({
@@ -41,17 +40,15 @@ export default function MapLocation({ data }) {
         position: "bottom-left",
       })
 
-      view.on("mouse-wheel", (event) => {
-        event.stopPropagation()
+      const locateWidget = new Locate({
+        view: view,
       })
+      view.ui.add(locateWidget, "top-left")
 
-      view.on("double-click", (event) => {
-        event.stopPropagation()
-      });
-
-      view.on("drag", (event) => {
-        event.stopPropagation()
-      });
+      const fullscreen = new Fullscreen({
+        view: view,
+      })
+      view.ui.add(fullscreen, "top-left")
 
     }
   }, [data.latitude, data.longitude, data.mapZoom])
@@ -62,9 +59,7 @@ export default function MapLocation({ data }) {
         <Heading>Maps and location</Heading>
         {data.latitude && data.longitude && (
           <div>
-            <a href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000">
-              <div id="mapDiv" ref={mapRef}></div>
-            </a>
+            <div id="mapDiv" ref={mapRef}></div>
             <Spacer />
           </div>
         )}
