@@ -117,7 +117,7 @@ const SearchFilter = ({
 
   const searchParkFilter = () => {
     setCurrentPage(1);
-    navigate("/explore", {
+    navigate("/find-a-park", {
       state: {
         selectedActivities,
         selectedFacilities,

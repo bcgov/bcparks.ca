@@ -10,7 +10,7 @@ import {
   InputAdornment,
   Card,
   CardContent,
-  Link,
+  Link, 
   LinearProgress,
   Breadcrumbs,
   Button,
@@ -118,7 +118,7 @@ export const query = graphql`
   }
 `
 
-export default function Explore({ location, data }) {
+export default function FindAPark({ location, data }) {
   const menuContent = data?.allStrapiMenus?.nodes || []
 
   const activityItems = data.allStrapiActivityTypes.nodes.map(activity => {
@@ -488,7 +488,7 @@ export default function Explore({ location, data }) {
 
   return (
     <>
-      <Seo title="Explore" />
+      <Seo title="Find a park" />
       <Header content={menuContent} />
       <div className="search-body">
         <div className="search-results-main container">

@@ -37,7 +37,7 @@ const NotFoundPage = () => (
                   <ThumbLink imageLink="404/home-thumb.jpg" title="Homepage" navLink="/" />
                 </div>
                 <div className="col-lg-4 col-md-12 mt-2">
-                  <ThumbLink imageLink="404/park-thumb.jpg" title="Park Search" navLink="/explore" />
+                  <ThumbLink imageLink="404/park-thumb.jpg" title="Park Search" navLink="/find-a-park" />
                 </div>
                 <div className="col-lg-4 col-md-12 mt-2">
                   <ThumbLink imageLink="404/reserve-thumb.jpg" title="Reservations" navLink="/reserve" />
