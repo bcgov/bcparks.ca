@@ -214,7 +214,7 @@ export default function FindAPark({ location, data }) {
       Home
     </Link>,
     <div key="2" className="breadcrumb-text">
-      Find a Park
+      Find a park
     </div>,
   ]
 
