@@ -12,8 +12,11 @@ import Spacer from "./spacer"
 export default function MapLocation({ data }) {
   const webMapId = "bdc3d62fffc14e2da2eb85c9a763bac2"
   const portalUrl = "https://governmentofbc.maps.arcgis.com"
+  const linkZoom = data.mapZoom + 1;
 
   const mapRef = useRef("")
+
+  const externalLink = `${portalUrl}/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,${data.parkOrcs}&center=${data.longitude},${data.latitude}&level=${linkZoom}`
 
   useEffect(() => {
     if (mapRef.current) {
@@ -60,6 +63,7 @@ export default function MapLocation({ data }) {
         {data.latitude && data.longitude && (
           <div>
             <div id="mapDiv" ref={mapRef}></div>
+            <p><a href={externalLink}>View a more detailed map.</a></p>
             <Spacer />
           </div>
         )}
