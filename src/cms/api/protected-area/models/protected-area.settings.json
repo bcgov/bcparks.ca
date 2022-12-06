@@ -179,7 +179,7 @@
       "model": "park-operation"
     },
     "park_sub_pages": {
-      "via": "protected_area",
+      "via": "protectedArea",
       "collection": "park-sub-page"
     }
   }

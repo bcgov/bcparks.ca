@@ -3,7 +3,7 @@
   "collectionName": "park_sub_pages",
   "info": {
     "name": "ParkSubPage",
-    "description": ""
+    "description": "Park Sub Page"
   },
   "options": {
     "increments": true,
@@ -18,12 +18,15 @@
     "title": {
       "type": "string"
     },
+    "oldUrl": {
+      "type": "string"
+    },
     "seo": {
       "type": "component",
       "repeatable": false,
       "component": "parks.seo"
     },
-    "page_header": {
+    "pageHeader": {
       "type": "component",
       "repeatable": false,
       "component": "parks.page-header"
@@ -35,7 +38,7 @@
         "parks.page-section"
       ]
     },
-    "protected_area": {
+    "protectedArea": {
       "model": "protected-area",
       "via": "park_sub_pages"
     }
