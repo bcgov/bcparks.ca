@@ -178,7 +178,7 @@
       "via": "protectedArea",
       "model": "park-operation"
     },
-    "park_sub_pages": {
+    "parkSubPages": {
       "via": "protectedArea",
       "collection": "park-sub-page"
     }

@@ -40,7 +40,7 @@
     },
     "protectedArea": {
       "model": "protected-area",
-      "via": "park_sub_pages"
+      "via": "parkSubPages"
     }
   }
 }
