@@ -947,6 +947,7 @@ export default function AdvisoryForm({
                     </div>
                   </div>
                   <div className="ad-link-group">
+           
                     <TextField
                       value={l.title}
                       onChange={(event) => {
@@ -957,7 +958,7 @@ export default function AdvisoryForm({
                       InputProps={{ ...linkTitleInput }}
                     />
                     <TextField
-                      value={l.url}
+                      value={l.file ? l.file.url : l.url}
                       onChange={(event) => {
                         updateLink(idx, "url", event.target.value);
                       }}
