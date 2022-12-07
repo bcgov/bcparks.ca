@@ -177,6 +177,10 @@
     "parkOperation": {
       "via": "protectedArea",
       "model": "park-operation"
+    },
+    "parkSubPages": {
+      "via": "protectedArea",
+      "collection": "park-sub-page"
     }
   }
 }
