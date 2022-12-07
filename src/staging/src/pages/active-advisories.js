@@ -47,7 +47,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const [isNewFilter, setIsNewFilter] = useState(true) // true when any part of filter changes
   const [isDataOld, setIsDataOld] = useState(true) // true when new adivsories needed
 
-  const [pageTitle, setPageTitle] = useState("Public Advisories")
+  const [pageTitle, setPageTitle] = useState("Active advisories")
 
   // state of filter checkboxes:
   const [isParksFilter, setIsParksFilter] = useState(false)
@@ -91,9 +91,9 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   // Get advisory type from url params ---------------
   const updatePageTitle = (aType) => {
     if (aType !== 'all') {
-      setPageTitle(`Public Advisories | ${capitalizeFirstLetter(aType)}`)
+      setPageTitle(`Active advisories | ${capitalizeFirstLetter(aType)}`)
     } else {
-      setPageTitle("Public Advisories")
+      setPageTitle("Active advisories")
     }
   }
 
@@ -338,7 +338,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   return (
     <>
       <Helmet>
-        <title>BC Parks | Public Advisories</title>
+        <title>Active advisories | BC Parks</title>
       </Helmet>
       <Header mode="internal" content={menuContent} />
       <Container>
