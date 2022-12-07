@@ -25,7 +25,7 @@ const SitemapPage = ({ data }) => {
   return (
     <>
       <Helmet>
-        <title>Site Map | BC Parks</title>
+        <title>BC Parks | Site Map </title>
       </Helmet>
       <Header mode="internal" content={menuContent} />
 

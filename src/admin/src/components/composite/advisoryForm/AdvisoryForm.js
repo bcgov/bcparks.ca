@@ -957,7 +957,7 @@ export default function AdvisoryForm({
                       InputProps={{ ...linkTitleInput }}
                     />
                     <TextField
-                      value={l.url}
+                      value={l.file ? l.file.url : l.url}
                       onChange={(event) => {
                         updateLink(idx, "url", event.target.value);
                       }}
