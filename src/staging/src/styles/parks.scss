@@ -1,10 +1,18 @@
+// This SCSS file is called often (all pages?), and probably shouldn't be called 'parks.scss'
+
 @import url("https://js.arcgis.com/4.10/esri/css/main.css");
 // @import url("https://governmentofbc.maps.arcgis.com/apps/webappviewer/jimu.js/css/jimu-theme.css");
 
 $mediumBreakpoint: 991.98px;
 
+html,
+body {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: BCSans, Verdana, Arial, "sans-serif" !important;
+  letter-spacing: normal;
 }
 
 .parks-container {
