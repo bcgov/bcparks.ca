@@ -270,7 +270,7 @@ export default function ParkDates({ data }) {
                 )}
               </div>
               {subAreas
-                .filter(subArea => subArea.isActive && subArea.hasDates)
+                .filter(subArea => subArea.isActive && (subArea.hasDates || !subArea.parkOperationSubAreaDates.length))
                 .map((subArea, index) => (
                   <Accordion
                     key={"parkActivity" + index}
@@ -302,12 +302,12 @@ export default function ParkDates({ data }) {
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
                       <div className="p-4">
-                        {subArea.serviceDates && (
-                          <p>Main Camping Season: {subArea.serviceDates}</p>
-                        )}
-                        {subArea.resDates && (
-                          <p>Reservable dates: {subArea.resDates}</p>
-                        )}
+                        <p>Main Camping Season: 
+                          {subArea.serviceDates ? subArea.serviceDates : "year-round"}
+                        </p>
+                        <p>Reservable dates: 
+                          {subArea.resDates ? subArea.resDates : "year-round"}
+                        </p>
                         {subArea.offSeasonDates && (
                           <p>Off-season camping: {subArea.offSeasonDates}</p>
                         )}
