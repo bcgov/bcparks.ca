@@ -253,7 +253,7 @@ export default function ParkTemplate({ data }) {
   return (
     <div className="grey-background">
       <Helmet>
-          <title>{park.protectedAreaName} | BC Parks </title>
+          <title>{park.protectedAreaName} | BC Parks</title>
       </Helmet>
       <Header mode="internal" content={menuContent} />
       <ScrollToTop />

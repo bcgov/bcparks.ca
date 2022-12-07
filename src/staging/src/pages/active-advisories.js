@@ -338,7 +338,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   return (
     <>
       <Helmet>
-        <title> Active advisories | BC Parks </title>
+        <title>Active advisories | BC Parks</title>
       </Helmet>
       <Header mode="internal" content={menuContent} />
       <Container>
