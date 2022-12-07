@@ -6,7 +6,6 @@ import reportWebVitals from "./reportWebVitals";
 import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css";
 import "./components/page.css";
 
-
 ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want to start measuring performance in your app, pass a function
