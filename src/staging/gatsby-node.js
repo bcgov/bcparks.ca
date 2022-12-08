@@ -1,5 +1,6 @@
 const { graphql } = require("gatsby")
 const slugify = require("slugify")
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 const strapiApiRequest = (graphql, query) =>
   new Promise((resolve, reject) => {
