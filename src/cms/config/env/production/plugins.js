@@ -10,5 +10,8 @@ module.exports = ({ env }) => ({
         Bucket: env("S3_BUCKET"),
       },
     },
+    breakpoints: {
+      small: 720,
+    },
   },
 });
