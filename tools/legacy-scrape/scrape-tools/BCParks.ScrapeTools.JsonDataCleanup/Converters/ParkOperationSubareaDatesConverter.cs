@@ -1,32 +1,33 @@
 ﻿using AutoMapper;
+using BCParks.ScrapeTools.JsonDataCleanup.Deserialization;
 
-namespace ProcessSeedData.Converters
+namespace BCParks.ScrapeTools.JsonDataCleanup.Converters;
+
+public class ParkOperationSubareaDatesConverter : ConverterBase
 {
-    public class ParkOperationSubareaDatesConverter : ConverterBase
+    public ParkOperationSubareaDatesConverter(string sourceFile, string destinationFile)
+        : base(sourceFile, destinationFile) { }
+
+    public void Process()
     {
-        public ParkOperationSubareaDatesConverter(string sourceFile, string destinationFile) : base(sourceFile, destinationFile)
-        {
+        var rawObj = ReadRawFile<ParkOperationSubareaDates>();
 
+        var Mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<
+                ParkOperationSubareaDate,
+                Shared.Serialization.ParkOperationSubareaDate
+            >();
+        }).CreateMapper();
+
+        var newObj = new Shared.Serialization.ParkOperationSubareaDates();
+
+        foreach (var item in rawObj.Items)
+        {
+            var newItem = Mapper.Map<Shared.Serialization.ParkOperationSubareaDate>(item);
+            newObj.Items.Add(newItem);
         }
 
-        public void Process()
-        {
-            var rawObj = ReadRawFile<Deserialization.ParkOperationSubareaDates>();
-
-            var Mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Deserialization.ParkOperationSubareaDate, Serialization.ParkOperationSubareaDate>();
-            }).CreateMapper();
-
-            Serialization.ParkOperationSubareaDates newObj = new Serialization.ParkOperationSubareaDates();
-
-            foreach (Deserialization.ParkOperationSubareaDate item in rawObj.Items)
-            {
-                var newItem = Mapper.Map<Serialization.ParkOperationSubareaDate>(item);
-                newObj.Items.Add(newItem);
-            }
-
-            WriteProcessedFile<Serialization.ParkOperationSubareaDates>(newObj);
-        }
+        WriteProcessedFile(newObj);
     }
 }

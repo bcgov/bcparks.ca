@@ -1,68 +1,44 @@
-﻿using BCParks.ScrapeTools.Shared;
+﻿using System.Data;
+using BCParks.ScrapeTools.Shared;
 using Newtonsoft.Json;
-using System.Data;
 
-namespace ProcessSeedData.Converters
+namespace BCParks.ScrapeTools.JsonDataCleanup.Converters;
+
+public abstract class ConverterBase
 {
-    public abstract class ConverterBase
+    protected ConverterBase(string sourceFile, string destinationFile)
     {
-        public string? SourceFile { get; set; }
-        public string? DestinationFile { get; set; }
+        this.sourceFile = sourceFile;
+        this.destinationFile = destinationFile;
+    }
 
-        public ConverterBase(string sourceFile, string destinationFile)
-        {
-            this.SourceFile = sourceFile;
-            this.DestinationFile = destinationFile;
-        }
+    public string? sourceFile { get; set; }
+    public string? destinationFile { get; set; }
 
-        public string GetDataPath()
-        {
-            var folder = AppContext.BaseDirectory;
-            var path = new DirectoryInfo(folder);
+    public T ReadRawFile<T>() where T : new()
+    {
+        var rawFilePath = $@"Z:\_shared\json\{sourceFile}";
+        Console.WriteLine("Reading " + rawFilePath);
 
-            while (path.Parent != null && !path.FullName.ToLower().EndsWith(@"\tools"))
-            {
-                path = new DirectoryInfo(path.Parent.FullName);
-            }
+        var rawJson = File.ReadAllText(rawFilePath);
 
-            return path.FullName.Replace(@"\tools", @"\src\cms\data");
-        }
+        if (string.IsNullOrWhiteSpace(rawJson))
+            throw new DataException($"{rawFilePath} contains no data");
 
-        public T ReadRawFile<T>() where T : new()
-        {
-            var rawFilePath = $@"Z:\_shared\json\{SourceFile}";
-            Console.WriteLine("Reading " + rawFilePath);
+        return JsonConvert.DeserializeObject<T>(rawJson) ?? new T();
+    }
 
-            string rawJson = File.ReadAllText(rawFilePath);
+    public void WriteProcessedFile<T>(T newObj)
+    {
+        var dataPath = PathUtils.GetDataPath();
+        var newFilePath = $@"{dataPath}\{destinationFile}";
+        Console.WriteLine($"Writing {newFilePath}");
+        JsonUtils.WriteProcessedFile(newObj, newFilePath);
+        Console.WriteLine("");
+    }
 
-            if (string.IsNullOrWhiteSpace(rawJson))
-            {
-                throw new DataException($"{rawFilePath} contains no data");
-            }
-
-            return JsonConvert.DeserializeObject<T>(rawJson) ?? new T { };
-        }
-
-        public void WriteProcessedFile<T>(T newObj)
-        {
-            string dataPath = GetDataPath();
-
-            string newJson = JsonConvert.SerializeObject(newObj, Formatting.Indented, new JsonSerializerSettings
-            {
-                StringEscapeHandling = StringEscapeHandling.Default
-            });
-
-            var newFilePath = $@"{dataPath}\{DestinationFile}";
-
-            Console.WriteLine($"Writing {newFilePath}");
-            Console.WriteLine($"");
-
-            File.WriteAllText(newFilePath, newJson);
-        }
-
-        public string ProcessHtml(string html)
-        {
-            return HtmlCleanup.Process(html);
-        }
+    public string ProcessHtml(string html)
+    {
+        return HtmlCleanup.Process(html);
     }
 }

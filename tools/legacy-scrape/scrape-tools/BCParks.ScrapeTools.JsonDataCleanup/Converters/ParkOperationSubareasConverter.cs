@@ -1,46 +1,44 @@
 ﻿using AutoMapper;
+using BCParks.ScrapeTools.JsonDataCleanup.Deserialization;
 
-namespace ProcessSeedData.Converters
+namespace BCParks.ScrapeTools.JsonDataCleanup.Converters;
+
+public class ParkOperationSubareasConverter : ConverterBase
 {
-    public class ParkOperationSubareasConverter : ConverterBase
+    public ParkOperationSubareasConverter(string sourceFile, string destinationFile)
+        : base(sourceFile, destinationFile) { }
+
+    public void Process()
     {
-        public ParkOperationSubareasConverter(string sourceFile, string destinationFile) : base(sourceFile, destinationFile)
+        var rawObj = ReadRawFile<ParkOperationSubareas>();
+
+        var Mapper = new MapperConfiguration(cfg =>
         {
-
-        }
-
-        public void Process()
-        {
-            var rawObj = ReadRawFile<Deserialization.ParkOperationSubareas>();
-
-            var Mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Deserialization.ParkOperationSubarea, Serialization.ParkOperationSubarea>()
+            cfg.CreateMap<ParkOperationSubarea, Shared.Serialization.ParkOperationSubarea>()
                 .ForMember(d => d.facilityNumber, opt => opt.Ignore());
-            }).CreateMapper();
+        }).CreateMapper();
 
-            Serialization.ParkOperationSubareas newObj = new Serialization.ParkOperationSubareas();
+        var newObj = new Shared.Serialization.ParkOperationSubareas();
 
-            foreach (Deserialization.ParkOperationSubarea item in rawObj.Items)
+        foreach (var item in rawObj.Items)
+        {
+            var newItem = Mapper.Map<Shared.Serialization.ParkOperationSubarea>(item);
+
+            // Copy facilityNumber manually because blanks break Automapper
+            // NOTE: The data on github has a mix of numbers and empty strings.
+            // This code will result in a mix of number and nulls instead
+            if (item.facilityNumber != "")
             {
-                var newItem = Mapper.Map<Serialization.ParkOperationSubarea>(item);
-
-                // Copy facilityNumber manually because blanks break Automapper
-                // NOTE: The data on github has a mix of numbers and empty strings.
-                // This code will result in a mix of number and nulls instead
-                if (item.facilityNumber != "")
-                {
-                    newItem.facilityNumber = int.Parse(item.facilityNumber);
-                }
-                else
-                {
-                    newItem.facilityNumber = null;
-                }
-
-                newObj.Items.Add(newItem);
+                newItem.facilityNumber = int.Parse(item.facilityNumber);
+            }
+            else
+            {
+                newItem.facilityNumber = null;
             }
 
-            WriteProcessedFile<Serialization.ParkOperationSubareas>(newObj);
+            newObj.Items.Add(newItem);
         }
+
+        WriteProcessedFile(newObj);
     }
 }

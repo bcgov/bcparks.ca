@@ -1,32 +1,30 @@
 ﻿using AutoMapper;
+using BCParks.ScrapeTools.JsonDataCleanup.Deserialization;
 
-namespace ProcessSeedData.Converters
+namespace BCParks.ScrapeTools.JsonDataCleanup.Converters;
+
+public class SiteCoordinatesConverter : ConverterBase
 {
-    public class SiteCoordinatesConverter : ConverterBase
+    public SiteCoordinatesConverter(string sourceFile, string destinationFile)
+        : base(sourceFile, destinationFile) { }
+
+    public void Process()
     {
-        public SiteCoordinatesConverter(string sourceFile, string destinationFile) : base(sourceFile, destinationFile)
-        {
+        var rawObj = ReadRawFile<SiteCoordinates>();
 
+        var Mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<SiteCoordinate, Shared.Serialization.SiteCoordinate>();
+        }).CreateMapper();
+
+        var newObj = new Shared.Serialization.SiteCoordinates();
+
+        foreach (var item in rawObj.Items)
+        {
+            var newItem = Mapper.Map<Shared.Serialization.SiteCoordinate>(item);
+            newObj.Items.Add(newItem);
         }
 
-        public void Process()
-        {
-            var rawObj = ReadRawFile<Deserialization.SiteCoordinates>();
-
-            var Mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Deserialization.SiteCoordinate, Serialization.SiteCoordinate>();
-            }).CreateMapper();
-
-            Serialization.SiteCoordinates newObj = new Serialization.SiteCoordinates();
-
-            foreach (Deserialization.SiteCoordinate item in rawObj.Items)
-            {
-                var newItem = Mapper.Map<Serialization.SiteCoordinate>(item);
-                newObj.Items.Add(newItem);
-            }
-
-            WriteProcessedFile<Serialization.SiteCoordinates>(newObj);
-        }
+        WriteProcessedFile(newObj);
     }
 }

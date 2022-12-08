@@ -1,32 +1,30 @@
 ﻿using AutoMapper;
+using BCParks.ScrapeTools.JsonDataCleanup.Deserialization;
 
-namespace ProcessSeedData.Converters
+namespace BCParks.ScrapeTools.JsonDataCleanup.Converters;
+
+public class ProtectedAreaCoordinatesConverter : ConverterBase
 {
-    public class ProtectedAreaCoordinatesConverter : ConverterBase
+    public ProtectedAreaCoordinatesConverter(string sourceFile, string destinationFile)
+        : base(sourceFile, destinationFile) { }
+
+    public void Process()
     {
-        public ProtectedAreaCoordinatesConverter(string sourceFile, string destinationFile) : base(sourceFile, destinationFile)
-        {
+        var rawObj = ReadRawFile<ProtectedAreaCoordinates>();
 
+        var Mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<ProtectedAreaCoordinate, Shared.Serialization.ProtectedAreaCoordinate>();
+        }).CreateMapper();
+
+        var newObj = new Shared.Serialization.ProtectedAreaCoordinates();
+
+        foreach (var item in rawObj.Items)
+        {
+            var newItem = Mapper.Map<Shared.Serialization.ProtectedAreaCoordinate>(item);
+            newObj.Items.Add(newItem);
         }
 
-        public void Process()
-        {
-            var rawObj = ReadRawFile<Deserialization.ProtectedAreaCoordinates>();
-
-            var Mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Deserialization.ProtectedAreaCoordinate, Serialization.ProtectedAreaCoordinate>();
-            }).CreateMapper();
-
-            Serialization.ProtectedAreaCoordinates newObj = new Serialization.ProtectedAreaCoordinates();
-
-            foreach (Deserialization.ProtectedAreaCoordinate item in rawObj.Items)
-            {
-                var newItem = Mapper.Map<Serialization.ProtectedAreaCoordinate>(item);
-                newObj.Items.Add(newItem);
-            }
-
-            WriteProcessedFile<Serialization.ProtectedAreaCoordinates>(newObj);
-        }
+        WriteProcessedFile(newObj);
     }
 }

@@ -1,35 +1,33 @@
 ﻿using AutoMapper;
+using BCParks.ScrapeTools.JsonDataCleanup.Deserialization;
 
-namespace ProcessSeedData.Converters
+namespace BCParks.ScrapeTools.JsonDataCleanup.Converters;
+
+public class ParkFireZoneXRefConverter : ConverterBase
 {
-    public class ParkFireZoneXRefConverter : ConverterBase
+    public ParkFireZoneXRefConverter(string sourceFile, string destinationFile)
+        : base(sourceFile, destinationFile) { }
+
+    public void Process()
     {
-        public ParkFireZoneXRefConverter(string sourceFile, string destinationFile) : base(sourceFile, destinationFile)
-        {
+        var rawObj = ReadRawFile<ParkFireZoneXRefs>();
 
+        var Mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<ParkFireZoneXRef, Shared.Serialization.ParkFireZoneXRef>();
+        }).CreateMapper();
+
+        var newObj = new Shared.Serialization.ParkFireZoneXRefs();
+
+        foreach (var item in rawObj.Items)
+        {
+            var newItem = Mapper.Map<Shared.Serialization.ParkFireZoneXRef>(item);
+
+            // manual steps go here
+
+            newObj.Items.Add(newItem);
         }
 
-        public void Process()
-        {
-            var rawObj = ReadRawFile<Deserialization.ParkFireZoneXRefs>();
-
-            var Mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Deserialization.ParkFireZoneXRef, Serialization.ParkFireZoneXRef>();
-            }).CreateMapper();
-
-            Serialization.ParkFireZoneXRefs newObj = new Serialization.ParkFireZoneXRefs();
-
-            foreach (Deserialization.ParkFireZoneXRef item in rawObj.Items)
-            {
-                var newItem = Mapper.Map<Serialization.ParkFireZoneXRef>(item);
-
-                // manual steps go here
-
-                newObj.Items.Add(newItem);
-            }
-
-            WriteProcessedFile<Serialization.ParkFireZoneXRefs>(newObj);
-        }
+        WriteProcessedFile(newObj);
     }
 }
