@@ -234,6 +234,7 @@ export default function ParkTemplate({ data }) {
     latitude: park.latitude,
     longitude: park.longitude,
     mapZoom: park.mapZoom,
+    parkOrcs: park.orcs
   }
 
  const parkName = renderHTML(park.parkNames.find(item=> item.parkNameType === PARK_NAME_TYPE.Escaped)?.parkName);
