@@ -294,10 +294,10 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
             use: loaders.null(),
           },
         ],
-        plugins: [
-          new NodePolyfillPlugin()
-        ]
       },
+      plugins: [
+        new NodePolyfillPlugin()
+      ]
     })
   }
 }
