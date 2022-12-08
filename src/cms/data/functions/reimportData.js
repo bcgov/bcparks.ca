@@ -3,6 +3,7 @@
 const parData = require("./loadPar");
 const otherData = require("./loadOtherData");
 const operationData = require("./loadOperationData");
+const parkSubpage = require("./loadParkSubpages");
 
 const loadData = async () => {
   try {
@@ -21,6 +22,7 @@ const loadData = async () => {
       otherData.loadParkActivity(),
       otherData.loadParkFacility(),
       otherData.loadParkName(),
+      parkSubpage.loadParkSubpages(),
     ]);
 
     await operationData.loadData({ isSeedMode: false, allowUpdates: true });
@@ -40,6 +42,7 @@ const rewriteData = async () => {
   try {
     strapi.log.info("---------Removing data requiring reload---------");
     await Promise.all([
+      strapi.services["park-sub-page"].delete(),
       strapi.services["site"].delete(),
       strapi.services["activity-type"].delete(),
       strapi.services["park-activity"].delete(),

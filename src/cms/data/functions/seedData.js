@@ -6,6 +6,7 @@ const otherData = require("./loadOtherData");
 const operationData = require("./loadOperationData");
 const publicAdvisoryAudit = require("./loadPublicAdvisoryAudit");
 const parkPhoto = require("./loadParkPhoto");
+const parkSubpage = require("./loadParkSubpages");
 const pageMedia = require("./loadPageMedia");
 
 const loadData = async () => {
@@ -42,6 +43,7 @@ const loadData = async () => {
       publicAdvisoryAudit.loadPublicAdvisoryAudit(),
       pageMedia.loadPageMedia(),
       parkPhoto.loadParkPhoto(),
+      parkSubpage.loadParkSubpages(),
     ]);
 
     await operationData.loadData({isSeedMode: true});
@@ -62,6 +64,7 @@ const rewriteData = async () => {
   try {
     strapi.log.info("---------Removing all data---------");
     await Promise.all([
+      strapi.services["park-sub-page"].delete(),
       strapi.services["protected-area"].delete(),
       strapi.services["section"].delete(),
       strapi.services["management-area"].delete(),
