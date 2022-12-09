@@ -168,9 +168,9 @@ const loadParkActivity = async () => {
         const protectedAreaId = protectedArea ? protectedArea.id : null;
 
         let site;
-        if (!isNaN(activity.orcsSiteNumber)) {
-          site = await strapi.services["site"].findOne({
-            siteNumber: activity.orcsSiteNumber,
+        if (activity.orcsSiteNumber !== activity.orcs) {
+          site = await strapi.query("site").findOne({
+            orcsSiteNumber: activity.orcsSiteNumber,
           });
         }
         const siteId = site ? site.id : null;
@@ -225,9 +225,9 @@ const loadParkFacility = async () => {
         const protectedAreaId = protectedArea ? protectedArea.id : null;
 
         let site;
-        if (!isNaN(facility.orcsSiteNumber)) {
-          site = await strapi.services["site"].findOne({
-            siteNumber: facility.orcsSiteNumber,
+        if (facility.orcsSiteNumber !== facility.orcs) {
+          site = await strapi.query("site").findOne({
+            orcsSiteNumber: facility.orcsSiteNumber,
           });
         }
         const siteId = site ? site.id : null;

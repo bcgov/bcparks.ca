@@ -16,12 +16,12 @@ const updateName = async (data) => {
     data.name = orcs;
   }
   if (data.site) {
-    const { siteNumber = { siteNumber: null } } = await strapi.services[
+    const { orcsSiteNumber = { orcsSiteNumber: null } } = await strapi.services[
       "site"
     ].findOne({
       id: data.site,
     });
-    if (siteNumber) data.name += `-${siteNumber}`;
+    if (orcsSiteNumber) data.name = orcsSiteNumber;
   }
 
   data.name += ":";
