@@ -30,8 +30,11 @@ const loadData = async () => {
       otherData.loadFireZone(),
     ]);
 
+    // this is run on its own because sites need to be imported after 
+    // protectedAreas and before parkActivities and parkFacilities
+    await parData.loadAdditionalParData();    
+
     await Promise.all([
-      parData.loadAdditionalParData(),
       otherData.loadFireCentreZoneXref(),
       otherData.loadParkFireZoneXref(),
       otherData.loadFireBanProhibition(),
