@@ -201,7 +201,7 @@
     {
       "orcs": "3931",
       "protectedAreaName": "Ancient Forest/Chun T&rsquo;oh Whudujut Park",
-      "url": "https://bcparks.ca/explore/parkpgs/ancient-forest/",
+      "url": "https://bcparks.ca/parks/ancient-forest-chun-toh-whudujut/",
       "latitude": "53.797",
       "longitude": "-121.3157",
       "mapZoom": "8",
@@ -212,7 +212,7 @@
     {
       "orcs": "9953",
       "protectedAreaName": "Ancient Forest/Chun T&rsquo;oh Whudujut Protected Area",
-      "url": "https://bcparks.ca/protected-areas/ancient-forest/",
+      "url": "https://bcparks.ca/protected-areas/ancient-forest-chun-toh-whudujut/",
       "latitude": "53.8229",
       "longitude": "-121.2314",
       "mapZoom": "8",
@@ -487,7 +487,7 @@
     {
       "orcs": "9783",
       "protectedAreaName": "Bearhole Lake Park",
-      "url": "https://bcparks.ca/explore/parkpgs/bearhole_lk/",
+      "url": "https://bcparks.ca/parks/bearhole-lake/",
       "latitude": "55.043446",
       "longitude": "-120.569811",
       "mapZoom": "10",
@@ -971,7 +971,7 @@
     {
       "orcs": "371",
       "protectedAreaName": "Boyle Point Park",
-      "url": "https://bcparks.ca/explore/parkpgs/boyle_pt/",
+      "url": "https://bcparks.ca/parks/boyle-point/",
       "latitude": "49.479853",
       "longitude": "-124.696289",
       "mapZoom": "13",
@@ -1917,7 +1917,7 @@
     {
       "orcs": "415",
       "protectedAreaName": "Close-To-The-Edge Park",
-      "url": "https://bcparks.ca/explore/parkpgs/close_to_the_edge/",
+      "url": "https://bcparks.ca/parks/close-to-the-edge/",
       "latitude": "54.055727",
       "longitude": "-121.010206",
       "mapZoom": "10",
@@ -1928,7 +1928,7 @@
     {
       "orcs": "4983",
       "protectedAreaName": "Close-To-The-Edge Protected Area",
-      "url": "https://bcparks.ca/explore/parkpgs/close_to_the_edge/",
+      "url": "https://bcparks.ca/protected-areas/close-to-the-edge/",
       "latitude": "54.0639",
       "longitude": "-121.039823",
       "mapZoom": "10",
@@ -2258,7 +2258,7 @@
     {
       "orcs": "4984",
       "protectedAreaName": "Cummins River Protected Area",
-      "url": "https://bcparks.ca/explore/parkpgs/cummins_lk/",
+      "url": "https://bcparks.ca/protected-areas/cummins-river/",
       "latitude": "52.052193",
       "longitude": "-118.201045",
       "mapZoom": "10",
@@ -2423,7 +2423,7 @@
     {
       "orcs": "4985",
       "protectedAreaName": "Denetiah Corridor Protected Area",
-      "url": "https://bcparks.ca/explore/parkpgs/denetiah/",
+      "url": "https://bcparks.ca/protected-areas/denetiah-corridor/",
       "latitude": "58.671578",
       "longitude": "-127.090536",
       "mapZoom": "10",
@@ -2709,7 +2709,7 @@
     {
       "orcs": "5015",
       "protectedAreaName": "Dune Za Keyih Protected Area (a.k.a. Frog-Gataga Protected Area)",
-      "url": "https://bcparks.ca/explore/parkpgs/dune_za/",
+      "url": "https://bcparks.ca/protected-areas/dune-za-keyih/",
       "latitude": "58.086376",
       "longitude": "-125.702404",
       "mapZoom": "10",
@@ -3435,7 +3435,7 @@
     {
       "orcs": "5040",
       "protectedAreaName": "Foch-Gilttoyees Protected Area",
-      "url": "https://bcparks.ca/explore/parkpgs/foch_gilttoyees/",
+      "url": "https://bcparks.ca/protected-areas/foch-gilttoyees/",
       "latitude": "53.772711",
       "longitude": "-129.024474",
       "mapZoom": "10",
@@ -3754,7 +3754,7 @@
     {
       "orcs": "5041",
       "protectedAreaName": "Gitnadoiks River Protected Area",
-      "url": "https://bcparks.ca/explore/parkpgs/gitnadoiks_rv/",
+      "url": "https://bcparks.ca/protected-areas/gitnadoiks-river/",
       "latitude": "54.319387",
       "longitude": "-129.211274",
       "mapZoom": "10",
@@ -4920,7 +4920,7 @@
     {
       "orcs": "1100",
       "protectedAreaName": "Khutzeymateen Inlet Conservancy",
-      "url": "https://bcparks.ca/explore/cnsrvncy/khutz_inlet/",
+      "url": "https://bcparks.ca/conservancies/khutzeymateen-inlet/",
       "latitude": "54.665531",
       "longitude": "-130.08708",
       "mapZoom": "10",
@@ -4931,7 +4931,7 @@
     {
       "orcs": "1078",
       "protectedAreaName": "Khutzeymateen Inlet West Conservancy",
-      "url": "https://bcparks.ca/explore/cnsrvncy/khutz_inlet/",
+      "url": "https://bcparks.ca/conservancies/khutzeymateen-inlet-west/",
       "latitude": "54.673879",
       "longitude": "-130.116526",
       "mapZoom": "10",
@@ -5734,7 +5734,7 @@
     {
       "orcs": "8969",
       "protectedAreaName": "Liard River Corridor Park",
-      "url": "https://bcparks.ca/explore/parkpgs/liard_rv_corr/",
+      "url": "https://bcparks.ca/parks/liard-river-corridor/",
       "latitude": "59.406082",
       "longitude": "-125.047579",
       "mapZoom": "10",
@@ -5745,7 +5745,7 @@
     {
       "orcs": "5022",
       "protectedAreaName": "Liard River Corridor Protected Area",
-      "url": "https://bcparks.ca/explore/parkpgs/liard_rv_corr/",
+      "url": "https://bcparks.ca/protected-areas/liard-river-corridor/",
       "latitude": "59.438754",
       "longitude": "-125.839967",
       "mapZoom": "10",
@@ -5767,7 +5767,7 @@
     {
       "orcs": "5034",
       "protectedAreaName": "Liard River West Corridor Park",
-      "url": "https://bcparks.ca/explore/parkpgs/liard_rv_corr/",
+      "url": "https://bcparks.ca/parks/liard-river-west-corridor/",
       "latitude": "59.415418",
       "longitude": "-125.862164",
       "mapZoom": "10",
@@ -6207,7 +6207,7 @@
     {
       "orcs": "5023",
       "protectedAreaName": "Maxhamish Lake Protected Area",
-      "url": "https://bcparks.ca/explore/parkpgs/maxhamish_lk/",
+      "url": "https://bcparks.ca/protected-areas/maxhamish-lake/",
       "latitude": "59.818708",
       "longitude": "-123.320082",
       "mapZoom": "10",
@@ -6806,7 +6806,7 @@
       "longitude": "-122.91933",
       "mapZoom": "11",
       "fogZone": false,
-      "dayUsePass": false,
+      "dayUsePass": true,
       "status": "Active"
     },
     {
@@ -6944,7 +6944,7 @@
     {
       "orcs": "5024",
       "protectedAreaName": "Myra-Bellevue Protected Area",
-      "url": "https://bcparks.ca/protected-areas/myra/",
+      "url": "https://bcparks.ca/protected-areas/myra-bellevue/",
       "latitude": "49.768404",
       "longitude": "-119.369426",
       "mapZoom": "10",
@@ -7043,7 +7043,7 @@
     {
       "orcs": "1053",
       "protectedAreaName": "Namu Conservancy",
-      "url": "https://bcparks.ca/explore/cnsrvncy/namu/",
+      "url": "https://bcparks.ca/conservancies/namu/",
       "latitude": "51.883271",
       "longitude": "-127.804786",
       "mapZoom": "10",
@@ -7054,7 +7054,7 @@
     {
       "orcs": "549",
       "protectedAreaName": "Namu Corridor Conservancy",
-      "url": "https://bcparks.ca/explore/cnsrvncy/namu/",
+      "url": "https://bcparks.ca/conservancies/namu-corridor/",
       "latitude": "51.911299",
       "longitude": "-127.744087",
       "mapZoom": "10",
@@ -9705,7 +9705,7 @@
     {
       "orcs": "9658",
       "protectedAreaName": "Stuart Lake Marine Park",
-      "url": "https://bcparks.ca/explore/parkpgs/stuart_lk/",
+      "url": "https://bcparks.ca/parks/stuart-lake-marine/",
       "latitude": "54.596028",
       "longitude": "-124.674976",
       "mapZoom": "10",
@@ -9848,7 +9848,7 @@
     {
       "orcs": "5032",
       "protectedAreaName": "Sustut Protected Area",
-      "url": "https://bcparks.ca/explore/parkpgs/sustut/",
+      "url": "https://bcparks.ca/protected-areas/sustut/",
       "latitude": "56.43844",
       "longitude": "-126.762899",
       "mapZoom": "10",

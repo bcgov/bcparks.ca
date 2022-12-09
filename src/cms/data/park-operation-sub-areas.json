@@ -4971,7 +4971,7 @@
     {
       "parkSubAreaId": 378,
       "parkSubArea": "Drumlummon Bay Cabin",
-      "orcs": 5040,
+      "orcs": 485,
       "orcsSiteNumber": "",
       "isActive": false,
       "isOpen": true,
@@ -6719,7 +6719,7 @@
     {
       "parkSubAreaId": 379,
       "parkSubArea": "Gilttoyees Inlet Cabin",
-      "orcs": 5040,
+      "orcs": 485,
       "orcsSiteNumber": "",
       "isActive": false,
       "isOpen": true,
@@ -15453,7 +15453,7 @@
       "openNote": "",
       "serviceNote": "",
       "reservationNote": "",
-      "offSeasonNote": "",
+      "offSeasonNote": "Cabins are reservable year-round. Peak season rates Dec. 17 to Jan. 7.",
       "adminNote": ""
     },
     {
