@@ -20,6 +20,6 @@ public class ParkActivityXRef
 
 public class ParkActivityXRefs
 {
-    [JsonProperty("parkActivity")]
+    [JsonProperty("")]
     public List<ParkActivityXRef> Items { get; set; }
 }

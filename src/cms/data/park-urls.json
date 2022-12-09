@@ -257,7 +257,7 @@
     },
     {
       "orcs": "563",
-      "url": "https://bcparks.ca/conservancies/kamdis-consevancy/",
+      "url": "https://bcparks.ca/conservancies/kamdis-heritage-site/",
       "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kamdis/"
     },
     {
@@ -278,12 +278,12 @@
     {
       "orcs": "1100",
       "url": "https://bcparks.ca/conservancies/khutzeymateen-inlet/",
-      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/khutz_inlet/"
+      "oldUrl": "https://bcparks.ca/conservancies/khutzeymateen-inlet/"
     },
     {
       "orcs": "1078",
       "url": "https://bcparks.ca/conservancies/khutzeymateen-inlet-west/",
-      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/khutz_inlet/"
+      "oldUrl": "https://bcparks.ca/conservancies/khutzeymateen-inlet-west/"
     },
     {
       "orcs": "1099",
@@ -493,12 +493,12 @@
     {
       "orcs": "1053",
       "url": "https://bcparks.ca/conservancies/namu/",
-      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/namu/"
+      "oldUrl": "https://bcparks.ca/conservancies/namu/"
     },
     {
       "orcs": "549",
       "url": "https://bcparks.ca/conservancies/namu-corridor/",
-      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/namu/"
+      "oldUrl": "https://bcparks.ca/conservancies/namu-corridor/"
     },
     {
       "orcs": "567",
@@ -747,7 +747,7 @@
     },
     {
       "orcs": "1062",
-      "url": "https://bcparks.ca/conservancies/wawley-seymour-estuary/",
+      "url": "https://bcparks.ca/conservancies/wawaa-seymour-estuary/",
       "oldUrl": "https://bcparks.ca/explore/cnsrvncy/seymour_estuary/"
     },
     {
@@ -1007,7 +1007,7 @@
     },
     {
       "orcs": "3120",
-      "url": "https://bcparks.ca/ecological-reserves/duke-of-edinburgh-pine-storm-tree-islands/",
+      "url": "https://bcparks.ca/ecological-reserves/duke-of-edinburgh-pine-storm-tree-islets/",
       "oldUrl": "https://bcparks.ca/eco_reserve/dukeedinb_er.html"
     },
     {
@@ -1382,7 +1382,7 @@
     },
     {
       "orcs": "3106",
-      "url": "https://bcparks.ca/ecological-reserves/skagit-river-rhododendron/",
+      "url": "https://bcparks.ca/ecological-reserves/skagit-river-rhododendrons/",
       "oldUrl": "https://bcparks.ca/eco_reserve/skagitrho_er.html"
     },
     {
@@ -1568,7 +1568,7 @@
     {
       "orcs": "3931",
       "url": "https://bcparks.ca/parks/ancient-forest-chun-toh-whudujut/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/ancient-forest/"
+      "oldUrl": "https://bcparks.ca/parks/ancient-forest-chun-toh-whudujut/"
     },
     {
       "orcs": "6301",
@@ -1663,7 +1663,7 @@
     {
       "orcs": "9783",
       "url": "https://bcparks.ca/parks/bearhole-lake/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/bearhole_lk/"
+      "oldUrl": "https://bcparks.ca/parks/bearhole-lake/"
     },
     {
       "orcs": "14",
@@ -1823,7 +1823,7 @@
     {
       "orcs": "371",
       "url": "https://bcparks.ca/parks/boyle-point/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/boyle_pt/"
+      "oldUrl": "https://bcparks.ca/parks/boyle-point/"
     },
     {
       "orcs": "414",
@@ -2058,7 +2058,7 @@
     {
       "orcs": "415",
       "url": "https://bcparks.ca/parks/close-to-the-edge/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/close_to_the_edge/"
+      "oldUrl": "https://bcparks.ca/parks/close-to-the-edge/"
     },
     {
       "orcs": "396",
@@ -3098,7 +3098,7 @@
     {
       "orcs": "8969",
       "url": "https://bcparks.ca/parks/liard-river-corridor/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/liard_rv_corr/"
+      "oldUrl": "https://bcparks.ca/parks/liard-river-corridor/"
     },
     {
       "orcs": "92",
@@ -3108,7 +3108,7 @@
     {
       "orcs": "5034",
       "url": "https://bcparks.ca/parks/liard-river-west-corridor/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/liard_rv_corr/"
+      "oldUrl": "https://bcparks.ca/parks/liard-river-west-corridor/"
     },
     {
       "orcs": "380",
@@ -3777,7 +3777,7 @@
     },
     {
       "orcs": "8288",
-      "url": "https://bcparks.ca/parks/prophet-river-hotsprings/",
+      "url": "https://bcparks.ca/parks/prophet-river-hot-springs/",
       "oldUrl": "https://bcparks.ca/explore/parkpgs/prophet_rv_hs/"
     },
     {
@@ -4283,7 +4283,7 @@
     {
       "orcs": "9658",
       "url": "https://bcparks.ca/parks/stuart-lake-marine/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/stuart_lk/"
+      "oldUrl": "https://bcparks.ca/parks/stuart-lake-marine/"
     },
     {
       "orcs": "8796",
@@ -4763,7 +4763,7 @@
     {
       "orcs": "9953",
       "url": "https://bcparks.ca/protected-areas/ancient-forest-chun-toh-whudujut/",
-      "oldUrl": "https://bcparks.ca/protected-areas/ancient-forest/"
+      "oldUrl": "https://bcparks.ca/protected-areas/ancient-forest-chun-toh-whudujut/"
     },
     {
       "orcs": "4981",
@@ -4813,7 +4813,7 @@
     {
       "orcs": "4983",
       "url": "https://bcparks.ca/protected-areas/close-to-the-edge/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/close_to_the_edge/"
+      "oldUrl": "https://bcparks.ca/protected-areas/close-to-the-edge/"
     },
     {
       "orcs": "430",
@@ -4823,7 +4823,7 @@
     {
       "orcs": "4984",
       "url": "https://bcparks.ca/protected-areas/cummins-river/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/cummins_lk/"
+      "oldUrl": "https://bcparks.ca/protected-areas/cummins-river/"
     },
     {
       "orcs": "9604",
@@ -4833,7 +4833,7 @@
     {
       "orcs": "4985",
       "url": "https://bcparks.ca/protected-areas/denetiah-corridor/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/denetiah/"
+      "oldUrl": "https://bcparks.ca/protected-areas/denetiah-corridor/"
     },
     {
       "orcs": "634",
@@ -4848,7 +4848,7 @@
     {
       "orcs": "5015",
       "url": "https://bcparks.ca/protected-areas/dune-za-keyih/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/dune_za/"
+      "oldUrl": "https://bcparks.ca/protected-areas/dune-za-keyih/"
     },
     {
       "orcs": "9596",
@@ -4888,7 +4888,7 @@
     {
       "orcs": "5040",
       "url": "https://bcparks.ca/protected-areas/foch-gilttoyees/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/foch_gilttoyees/"
+      "oldUrl": "https://bcparks.ca/protected-areas/foch-gilttoyees/"
     },
     {
       "orcs": "9794",
@@ -4908,7 +4908,7 @@
     {
       "orcs": "5041",
       "url": "https://bcparks.ca/protected-areas/gitnadoiks-river/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/gitnadoiks_rv/"
+      "oldUrl": "https://bcparks.ca/protected-areas/gitnadoiks-river/"
     },
     {
       "orcs": "4041",
@@ -4978,7 +4978,7 @@
     {
       "orcs": "5022",
       "url": "https://bcparks.ca/protected-areas/liard-river-corridor/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/liard_rv_corr/"
+      "oldUrl": "https://bcparks.ca/protected-areas/liard-river-corridor/"
     },
     {
       "orcs": "9805",
@@ -4998,7 +4998,7 @@
     {
       "orcs": "5023",
       "url": "https://bcparks.ca/protected-areas/maxhamish-lake/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/maxhamish_lk/"
+      "oldUrl": "https://bcparks.ca/protected-areas/maxhamish-lake/"
     },
     {
       "orcs": "5043",
@@ -5013,7 +5013,7 @@
     {
       "orcs": "5024",
       "url": "https://bcparks.ca/protected-areas/myra-bellevue/",
-      "oldUrl": "https://bcparks.ca/protected-areas/myra/"
+      "oldUrl": "https://bcparks.ca/protected-areas/myra-bellevue/"
     },
     {
       "orcs": "5025",
@@ -5118,7 +5118,7 @@
     {
       "orcs": "5032",
       "url": "https://bcparks.ca/protected-areas/sustut/",
-      "oldUrl": "https://bcparks.ca/explore/parkpgs/sustut/"
+      "oldUrl": "https://bcparks.ca/protected-areas/sustut/"
     },
     {
       "orcs": "5033",
