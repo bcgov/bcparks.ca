@@ -32,7 +32,14 @@ const publishAll = async () => {
       }, 
       {
         // these are the properties being updated
+
+        // display all parks
         isDisplayed: true,
+
+        // reset the reconcilliationNotes for all parks to the value from legacy
+        reconciliationNotes: `<p>
+  BC Parks is committed to reconciliation with Indigenous peoples. Although this webpage may not adequately represent the history and relationship of Indigenous peoples to this area, we are working in partnership with First Nations to update this information and better reflect these deep connections to the land. To learn about Indigenous territories in BC, see the <a href=\"https://maps.fpcc.ca/\">First Peoples’ Language Map</a> which also shows the locations of all BC Parks.
+</p>`,
         // you can add more properties to update here
       }
     );
