@@ -28,7 +28,7 @@
       "activityNumber": "1",
       "orcs": "4",
       "orcsSiteNumber": "4",
-      "description": "<p>\n  <a href=\"hiking\">\n    Kokanee Glacier Park has 85 km of hiking trails</a>. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure. During the winter season, all trails are under snow.\n</p>\n<ul>\n  <li>\n    <a href=\"../kokanee_gl/trail_report.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Trail Conditions Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (October 17, 2022)\n    </span>\n  </li>\n</ul>",
+      "description": "<p>\n  <a href=\"hiking\">\n    Kokanee Glacier Park has 85 km of hiking trails</a>. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure. During the winter season, all trails are under snow.\n</p>\n<ul>\n  <li>\n    <a href=\"../kokanee_gl/trail_report.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Trail Conditions Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (October 24, 2022)\n    </span>\n  </li>\n</ul>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -212,7 +212,7 @@
       "activityNumber": "1",
       "orcs": "36",
       "orcsSiteNumber": "36",
-      "description": "Kitty Coleman park offers a series of nature walking trails, which run through a mature forest and alongside a stream. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.",
+      "description": "<div>\n  <p>\n    Kitty Coleman park offers a series of nature walking trails, which run through a mature forest and alongside a stream. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -228,7 +228,7 @@
       "activityNumber": "1",
       "orcs": "39",
       "orcsSiteNumber": "39",
-      "description": "<p>\n  Trails on either side of Hwy #4 lead visitors through the mighty stands of this old-growth coastal forest. On the south side you will find the largest Douglas firs – one measuring more than 9 metres in circumference. On the northern side of the road you will find groves of ancient Western red cedar. Trails are well marked and maintained; some are wheelchair accessible. Loop trails lead through the old-growth forest and a raised viewing platform on the south side of the park offers a unique perspective of the surroundings.\n</p>\n<ul>\n  <li>\n    <strong>Smoking is prohibited in the park.</strong>\n  </li>\n</ul>\n<p>\n  The park’s small size and accessibility has left it vulnerable to impacts from high visitor use. Please obey posted signs and stay on designated trails, where you will find ample opportunities to view and photograph this bit of history.\n</p>",
+      "description": "<p>\n  Trails on either side of Hwy #4 lead visitors through the mighty stands of this old-growth coastal forest. On the south side you will find the largest Douglas firs – one measuring more than 9 metres in circumference. On the northern side of the road you will find groves of ancient Western red cedar. Trails are well marked and maintained; some are wheelchair-accessible. Loop trails lead through the old-growth forest and a raised viewing platform on the south side of the park offers a unique perspective of the surroundings.\n</p>\n<ul>\n  <li>\n    <strong>Smoking is prohibited in the park.</strong>\n  </li>\n</ul>\n<p>\n  The park’s small size and accessibility has left it vulnerable to impacts from high visitor use. Please obey posted signs and stay on designated trails, where you will find ample opportunities to view and photograph this bit of history.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -244,7 +244,7 @@
       "activityNumber": "1",
       "orcs": "41",
       "orcsSiteNumber": "41",
-      "description": "<ul>\n  <li>\n    <a href=\"/parks/sxotsaqel-chilliwack-lake/trail-report.pdf\" target=\"_blank\" class=\"legacy-link\">\n      South Fraser Trail Conditions Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (Aug 19, 2022)\n    </span>\n    <span>\n      (scroll down to the Cultus Lake Provincial Park entry)\n    </span>\n  </li>\n</ul>\nThere are five main trails for you to enjoy and admire the wonders of nature:\n<ul>\n  <li>\n    <strong>Teapot Hill Trail</strong>\n    is located near the Honeymoon Bay group site. There are some steep sections making this trail moderately difficult. This trail is a 5 km round trip (2 hours) viewing Cultus Lake and Columbia Valley.\n  </li>\n  <li>\n    <strong>Seven Sisters Trail</strong>\n    connects Entrance Bay and Clear Creek campgrounds. Along the trail, stands a group of large Douglas-fir trees, once numbering seven (2 hours return).\n    <br>\n  </li>\n  <li>\n    <strong>Cultus Lake Horse Trail</strong>\n    is 20 km round trip (5 hours), traveling from Edmeston Road to Watt Creek, which joins the north and south ends of the park. The trail was closed in August 2013 due to an active landslide in the area. BC Parks installed warning signage and reopened the trail to the public, however;\n    <strong>we strongly recommend visitors do not cross the landslide area during periods of intense rainfall.</strong>\n  </li>\n  <li>\n    <strong>Giant Douglas-fir Trail</strong>\n    begins 150 metres west of Delta Grove campground. The walk leads to this forest goliath and also connects with Clear Creek campground (45 minute return walk).\n  </li>\n  <li>\n    <strong>Maple Bay Trail</strong>\n    starts near the day-use parking lot and provides a self-guiding interpretive stroll past some of the park’s natural wonders (30 minutes).\n  </li>\n</ul>\nFor your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.",
+      "description": "<ul>\n  <li>\n    <a href=\"/parks/sxotsaqel-chilliwack-lake/trail-report.pdf\" target=\"_blank\" class=\"legacy-link\">\n      South Fraser Trail Conditions Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (November 9, 2022)\n    </span>\n    <span>\n      (scroll down to the Cultus Lake Provincial Park entry)\n    </span>\n  </li>\n</ul>\nThere are five main trails for you to enjoy and admire the wonders of nature:\n<ul>\n  <li>\n    <strong>Teapot Hill Trail</strong>\n    is located near the Honeymoon Bay group site. There are some steep sections making this trail moderately difficult. This trail is a 5 km round trip (2 hours) viewing Cultus Lake and Columbia Valley.\n  </li>\n  <li>\n    <strong>Seven Sisters Trail</strong>\n    connects Entrance Bay and Clear Creek campgrounds. Along the trail, stands a group of large Douglas-fir trees, once numbering seven (2 hours return).\n    <br>\n  </li>\n  <li>\n    <strong>Cultus Lake Horse Trail</strong>\n    is 20 km round trip (5 hours), traveling from Edmeston Road to Watt Creek, which joins the north and south ends of the park. The trail was closed in August 2013 due to an active landslide in the area. BC Parks installed warning signage and reopened the trail to the public, however;\n    <strong>we strongly recommend visitors do not cross the landslide area during periods of intense rainfall.</strong>\n  </li>\n  <li>\n    <strong>Giant Douglas-fir Trail</strong>\n    begins 150 metres west of Delta Grove campground. The walk leads to this forest goliath and also connects with Clear Creek campground (45 minute return walk).\n  </li>\n  <li>\n    <strong>Maple Bay Trail</strong>\n    starts near the day-use parking lot and provides a self-guiding interpretive stroll past some of the park’s natural wonders (30 minutes).\n  </li>\n</ul>\nFor your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -372,7 +372,7 @@
       "activityNumber": "1",
       "orcs": "68",
       "orcsSiteNumber": "68",
-      "description": "The Wagon Road Self-Guided Nature Trail is 2 km in length. It leads visitors on a voyage of discovery – from the ingenious eating habits of red crossbills to the Gold Rush history of the area. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.",
+      "description": "<div>\n  <p>\n    The Wagon Road Self-Guided Nature Trail is 2 km in length. It leads visitors on a voyage of discovery – from the ingenious eating habits of red crossbills to the Gold Rush history of the area. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -508,7 +508,7 @@
       "activityNumber": "1",
       "orcs": "96",
       "orcsSiteNumber": "96",
-      "description": "An extensive network of trails winds through Goldstream Provincial Park, totaling a distance of approximately 16 km. Trails start from both the day-use area and campground and range from easy walks, including short 5-15 minute walks along the river bank and through tall timber, to harder hikes. Some of the longer trails may take several hours to hike. For your own safety and preservation of the park, hike only on marked trails and obey posted signs. The ecosystems of this park are rare and fragile. Shortcutting trails destroys plant life and soil structure.",
+      "description": "<p>\n  An extensive network of trails winds through Goldstream Provincial Park, totaling a distance of approximately 16 km. Trails start from both the day-use area and campground and range from easy walks, including short 5-15 minute walks along the river bank and through tall timber, to harder hikes. Some of the longer trails may take several hours to hike. For your own safety and preservation of the park, hike only on marked trails and obey posted signs. The ecosystems of this park are rare and fragile. Shortcutting trails destroys plant life and soil structure.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -748,7 +748,7 @@
       "activityNumber": "1",
       "orcs": "164",
       "orcsSiteNumber": "164",
-      "description": "<p>\n  For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n</p>",
+      "description": "<p>\n  For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n</p>\n<ul>\n  <li>\n    <a href=\"hiking-map.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Summer hiking trail map</a>\n  </li>\n</ul>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -1444,7 +1444,7 @@
       "activityNumber": "1",
       "orcs": "314",
       "orcsSiteNumber": "314",
-      "description": "There is an easy walking trail to a lookout that overlooks Porteau Cove and Howe Sound. There is a slight elevation gain with a series of rock and wooden steps. The walk to the lookout is approximately 300 metres. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.",
+      "description": "<div>\n  <p>\n    There is an easy walking trail to a lookout that overlooks Porteau Cove and Howe Sound. There is a slight elevation gain with a series of rock and wooden steps. The walk to the lookout is approximately 300 metres. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -1556,7 +1556,7 @@
       "activityNumber": "1",
       "orcs": "335",
       "orcsSiteNumber": "335",
-      "description": "<p>\n  A trail through the Othello Tunnels is an easy 3.5 km round trip. This trail is part of the Trans Canada Trail and features a flat, gravel surface.\n</p>\n<p>\n  <strong>Flashlights are strongly recommended\n  </strong>for anyone walking or cycling through the tunnels. Some are long and dark, and the gravel surface underfoot may be uneven due to erosion caused by dripping water.\n</p>\n<ul>\n  <li>\n    <a href=\"/parks/sxotsaqel-chilliwack-lake/trail-report.pdf\" target=\"_blank\" class=\"legacy-link\">\n      South Fraser Trail Conditions Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (Aug 19, 2022)\n    </span>\n    <span>\n      (scroll to the Coquihalla Canyon Provincial Park entry)\n    </span>\n  </li>\n</ul>",
+      "description": "<p>\n  A trail through the Othello Tunnels is an easy 3.5 km round trip. This trail is part of the Trans Canada Trail and features a flat, gravel surface.\n</p>\n<p>\n  <strong>Flashlights are strongly recommended\n  </strong>for anyone walking or cycling through the tunnels. Some are long and dark, and the gravel surface underfoot may be uneven due to erosion caused by dripping water.\n</p>\n<ul>\n  <li>\n    <a href=\"/parks/sxotsaqel-chilliwack-lake/trail-report.pdf\" target=\"_blank\" class=\"legacy-link\">\n      South Fraser Trail Conditions Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (November 9, 2022)\n    </span>\n    <span>\n      (scroll to the Coquihalla Canyon Provincial Park entry)\n    </span>\n  </li>\n</ul>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -1572,7 +1572,7 @@
       "activityNumber": "1",
       "orcs": "338",
       "orcsSiteNumber": "338",
-      "description": "<p>\n  The park offers hiking opportunities for beginners as well as experienced backcountry travellers:\n</p>\n<ul>\n  <li>\n    <strong>Akamina Pass:</strong>\n    This old road built in the 1920s transects the park from Akamina Pass through the Kishinena Creeks to eventually reach the Flathead River valley. Cyclists use this route for day excursions from Waterton Lakes.\n  </li>\n  <li>\n    <strong>Forum Lake &amp; Falls:</strong>\n    From the Ranger Station, it is 200 m to the falls and 2 km to the lake. The hike to Forum Lake takes about 45 minutes with a climb of 200 m.\n  </li>\n  <li>\n    <strong>Wall Lake:</strong>\n    From the Akamina Road (200 m) from the Ranger Station it is 2 km to Wall Lake, 50 m elevation gain.\n  </li>\n</ul>\n<p>\n  For your own safety and preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure. Only experienced hikers with orienteering experience should consider following routes and unmarked trails in the park.\n</p>\n<ul>\n  <li>\n    <a href=\"trail-report.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Trail Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (July 25, 2022)\n    </span>\n  </li>\n</ul>",
+      "description": "<p>\n  The park offers hiking opportunities for beginners as well as experienced backcountry travellers:\n</p>\n<ul>\n  <li>\n    <strong>Akamina Pass:</strong>\n    This old road built in the 1920s transects the park from Akamina Pass through the Kishinena Creeks to eventually reach the Flathead River valley. Cyclists use this route for day excursions from Waterton Lakes.\n  </li>\n  <li>\n    <strong>Forum Lake &amp; Falls:</strong>\n    From the Ranger Station, it is 200 m to the falls and 2 km to the lake. The hike to Forum Lake takes about 45 minutes with a climb of 200 m.\n  </li>\n  <li>\n    <strong>Wall Lake:</strong>\n    From the Akamina Road (200 m) from the Ranger Station it is 2 km to Wall Lake, 50 m elevation gain.\n  </li>\n</ul>\n<p>\n  For your own safety and preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure. Only experienced hikers with orienteering experience should consider following routes and unmarked trails in the park.\n</p>\n<ul>\n  <li>\n    <a href=\"trail-report.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Trail Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (November 8, 2022)\n    </span>\n  </li>\n</ul>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -1852,7 +1852,7 @@
       "activityNumber": "1",
       "orcs": "410",
       "orcsSiteNumber": "410",
-      "description": "Hikers and mountaineers confront a near-endless pristine wilderness that includes everything from alpine meadows to the jagged edges of the Alsek Ranges and Mt. Fairweather, the province’s highest peak at 4,633 metres.\n<ul>\n  <li>\n    <a href=\"/explore/parkpgs/tatshens/hiking_biking.html\" target=\"_blank\" class=\"legacy-link\">\n      Hiking and Biking in Tatshenshini-Alsek Provincial Park</a>\n  </li>\n</ul>",
+      "description": "Hikers and mountaineers confront a near-endless pristine wilderness that includes everything from alpine meadows to the jagged edges of the Alsek Ranges and Mt. Fairweather, the province’s highest peak at 4,633 metres.\n<ul>\n  <li>\n    <a href=\"/explore/parkpgs/tatshens/hiking_biking.html\" target=\"_blank\" class=\"legacy-link\">\n      Hiking and Biking in Tatshenshini-Alsek Park</a>\n  </li>\n</ul>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -1892,7 +1892,7 @@
       "activityNumber": "1",
       "orcs": "426",
       "orcsSiteNumber": "426",
-      "description": "There are hiking opportunities at this park. For your own safety and preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroy plant life and soil structure.",
+      "description": "<p>\n  There are hiking opportunities at this park. For your own safety and preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroy plant life and soil structure.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -3364,7 +3364,7 @@
       "activityNumber": "3",
       "orcs": "36",
       "orcsSiteNumber": "36",
-      "description": "There is no designated swimming area at this park. There are no lifeguards on duty at provincial parks.",
+      "description": "<div>\n  <p>\n    There is no designated swimming area at this park. There are no lifeguards on duty at provincial parks.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -3516,7 +3516,7 @@
       "activityNumber": "3",
       "orcs": "68",
       "orcsSiteNumber": "68",
-      "description": "There are no lifeguards on duty at provincial parks. A wide, sandy beach welcomes summer visitors and an area is roped off for swimming. Changing rooms, an open air shower and washrooms are provided.",
+      "description": "<div>\n  <p>\n    There are no lifeguards on duty at provincial parks. A wide, sandy beach welcomes summer visitors and an area is roped off for swimming. Changing rooms, an open air shower and washrooms are provided.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -4028,7 +4028,7 @@
       "activityNumber": "4",
       "orcs": "204",
       "orcsSiteNumber": "204",
-      "description": "Paddle boats are available on site for public rental. For more information, please contact the\n<a href=\"#Contact\">\n  Park Operator</a>.",
+      "description": "<div>\n  <p>\n    Paddle boats are available on site for public rental. For more information, please contact the\n    <a href=\"#Contact\">\n      park operator</a>.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -4572,7 +4572,7 @@
       "activityNumber": "4",
       "orcs": "314",
       "orcsSiteNumber": "314",
-      "description": "Canoeing and kayaking are available in ocean area; know the ocean currents. The nearest kayak/canoe rentals are in Squamish.",
+      "description": "<div>\n  <p>\n    Canoeing and kayaking are available in ocean area; know the ocean currents. The nearest kayak/canoe rentals are in Squamish.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -4724,7 +4724,7 @@
       "activityNumber": "4",
       "orcs": "356",
       "orcsSiteNumber": "356",
-      "description": "<p>\n  Kinaskan Lake Provincial Park offers non-motorized paddling opportunities on Kinaskan Lake, Natadesleen Lake, and the Iskut River. Please ensure you have the required mandatory safe boating equipment on board.\n</p>\n<p>\n  <strong>Kinaskan Lake:</strong>\n  Launch your canoe or kayak from your campsite or the boat launch at Kinaskan Lake campground.\n</p>\n<p>\n  <strong>Natadesleen Lake:</strong>\n  Easily accessed by the Natadesleen Lake Trail. The trailhead is located approximately 10 km south of Kinaskan Lake Campground on Highway 37 and is a 1 km portage to the lake. After upgrades in 2018, the trail and boardwalk can accommodate canoe carts up to 32 inches wide. Natadesleen Lake offers fishing and wildlife viewing opportunities. Lower Cascade Falls Trail is only accessible by non-power boat, �via a trailhead located on the southwest side of Natadesleen Lake. A short 1 km hike will take you to the base of Cascade Falls, a unique waterfall formed by volcanic activity from Mount Edziza.\n</p>\n<p>\n  <strong>Kinaskan Lake to Natadesleen Lake via the Iskut River:</strong>\n  For more experienced paddlers, the Iskut River connects the two lakes and offers rainbow trout fishing and wildlife viewing opportunities. The average round trip is approximately 2-4 hours. To complete this trip, you must have a vehicle at the Natadesleen Lake Trail pullout along Highway 37, or arrange with the Park Operator\n  <u>\n  </u>\n  for a shuttle.\n</p>\n<p>\n  From the Kinaskan Lake boat launch, paddle west along the shoreline until you reach the Iskut River. Navigate the Iskut River downstream until you reach Natadesleen Lake. Once you reach Natadesleen Lake, you may choose to access the Lower Cascade Falls Trail or take out at the Natadesleen Lake Trail and portage your vessel to Highway 37.\n</p>\n<p>\n  To access the Lower Cascade Falls Trail, continue paddling to the southwest side of the lake and look for the Lower Cascade Falls trailhead.\n</p>\n<p>\n  To access the Natadesleen Lake Trail (take out), paddle to the south east side of Natadesleen Lake and find the Natadesleen Lake Trail. See\n  <a href=\"http://www.env.gov.bc.ca/bcparks/explore/parkpgs/kinaskan_lk/kinaskan-lake-trail-and-paddling-map.pdf?v=1564767252209\" target=\"_blank\">\n    Kinaskan Lake Trail and Paddling Route Map</a>. From there, it is a 1 km portage along the Natesdesleen Lake Tail back to Highway 37.\n</p>",
+      "description": "<p>\n  Kinaskan Lake Provincial Park offers non-motorized paddling opportunities on Kinaskan Lake, Natadesleen Lake, and the Iskut River. Please ensure you have the required mandatory safe boating equipment on board.\n</p>\n<p>\n  <strong>Kinaskan Lake:</strong>\n  Launch your canoe or kayak from your campsite or the boat launch at Kinaskan Lake campground.\n</p>\n<p>\n  <strong>Natadesleen Lake:</strong>\n  Easily accessed by the Natadesleen Lake Trail. The trailhead is located approximately 10 km south of Kinaskan Lake Campground on Highway 37 and is a 1 km portage to the lake. After upgrades in 2018, the trail and boardwalk can accommodate canoe carts up to 32 inches wide. Natadesleen Lake offers fishing and wildlife viewing opportunities. Lower Cascade Falls Trail is only accessible by non-power boat, �via a trailhead located on the southwest side of Natadesleen Lake. A short 1 km hike will take you to the base of Cascade Falls, a unique waterfall formed by volcanic activity from Mount Edziza.\n</p>\n<p>\n  <strong>Kinaskan Lake to Natadesleen Lake via the Iskut River:</strong>\n  For more experienced paddlers, the Iskut River connects the two lakes and offers rainbow trout fishing and wildlife viewing opportunities. The average round trip is approximately 2-4 hours. To complete this trip, you must have a vehicle at the Natadesleen Lake Trail pullout along Highway 37, or arrange with the Park Operator\n  <u></u>for a shuttle.\n</p>\n<p>\n  From the Kinaskan Lake boat launch, paddle west along the shoreline until you reach the Iskut River. Navigate the Iskut River downstream until you reach Natadesleen Lake. Once you reach Natadesleen Lake, you may choose to access the Lower Cascade Falls Trail or take out at the Natadesleen Lake Trail and portage your vessel to Highway 37.\n</p>\n<p>\n  To access the Lower Cascade Falls Trail, continue paddling to the southwest side of the lake and look for the Lower Cascade Falls trailhead.\n</p>\n<p>\n  To access the Natadesleen Lake Trail (take out), paddle to the south east side of Natadesleen Lake and find the Natadesleen Lake Trail. See\n  <a href=\"http://www.env.gov.bc.ca/bcparks/explore/parkpgs/kinaskan_lk/kinaskan-lake-trail-and-paddling-map.pdf?v=1564767252209\" target=\"_blank\">\n    Kinaskan Lake Trail and Paddling Route Map</a>. From there, it is a 1 km portage along the Natesdesleen Lake Tail back to Highway 37.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -5044,7 +5044,7 @@
       "activityNumber": "4",
       "orcs": "426",
       "orcsSiteNumber": "426",
-      "description": "There are opportunities for canoeing or kayaking in this park. The Frog River is for experienced paddlers only. The Gataga River is an excellent seven day trip from the forks of the Upper Gataga to Terminus Mountain in Denetiah Provincial Park. There are private excursions into this park. View the\n<a href=\"http://www.northern-rockies-lodge.com/\" target=\"_blank\">\n  Northern Rockies Lodge’s webpage</a>\nfor more information.",
+      "description": "<p>\n  There are opportunities for canoeing or kayaking in this park. The Frog River is for experienced paddlers only. The Gataga River is an excellent seven day trip from the forks of the Upper Gataga to Terminus Mountain in Denetiah Provincial Park. There are private excursions into this park. View the\n  <a href=\"http://www.northern-rockies-lodge.com/\">\n    Northern Rockies Lodge’s webpage</a>\n  for more information.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -5180,7 +5180,7 @@
       "activityNumber": "4",
       "orcs": "518",
       "orcsSiteNumber": "518",
-      "description": "Offers a 120 kilometre route to canoeists through four spectacular lakes – Tsayta, Indata, Tchentlo and Chuchi. Depending on how quickly you travel, canoeing the lake chain in its entirety takes between five and ten days. At various locations along the lake chain you will find both rustic Provincial Park campsites and Forest Service Recreation campsites for canoeists to rest and enjoy the amazing sunsets. Please\n<a href=\"essential_equipment_notice.pdf\" target=\"_blank\" class=\"legacy-link\">\n  read the following Important Notice\n  <span>\n    [PDF]\n  </span>\n</a>\nif wishing to visit this park.",
+      "description": "<p>\n  Offers a 120 kilometre route to canoeists through four spectacular lakes – Tsayta, Indata, Tchentlo and Chuchi. Depending on how quickly you travel, canoeing the lake chain in its entirety takes between five and ten days. At various locations along the lake chain you will find both rustic Provincial Park campsites and Forest Service Recreation campsites for canoeists to rest and enjoy the amazing sunsets. Please\n  <a href=\"essential_equipment_notice.pdf\" target=\"_blank\" class=\"legacy-link\">\n    read the following Important Notice\n    <span>\n      [PDF]\n    </span>\n  </a>\n  if wishing to visit this park.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -6596,7 +6596,7 @@
       "activityNumber": "5",
       "orcs": "36",
       "orcsSiteNumber": "36",
-      "description": "The waters around Kitty Coleman Park are popular for angling. Salmon and rock fish are the most available species, along with a variety of shellfish that can also be found in the area. Fishing is permitted as per provincial and federal fishing regulations. All anglers should check the current regulations issued by Fisheries and Oceans Canada prior to fishing. Anyone fishing or angling in British Columbia must have an\n<a href=\"../../fishreg.html\" class=\"legacy-link\">\n  appropriate licence</a>.",
+      "description": "<div>\n  <p>\n    The waters around Kitty Coleman Park are popular for angling. Salmon and rock fish are the most available species, along with a variety of shellfish that can also be found in the area. Fishing is permitted as per provincial and federal fishing regulations. All anglers should check the current regulations issued by Fisheries and Oceans Canada prior to fishing. Anyone fishing or angling in British Columbia must have an\n    <a href=\"../../fishreg.html\" class=\"legacy-link\">\n      appropriate licence</a>.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -6764,7 +6764,7 @@
       "activityNumber": "5",
       "orcs": "68",
       "orcsSiteNumber": "68",
-      "description": "This is an excellent fishing lake for Kokanee and lake trout, as well as rainbow trout and burbot during the summer months. Anyone fishing or angling in British Columbia must have an\n<a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n  appropriate licence</a>.",
+      "description": "<div>\n  <p>\n    This is an excellent fishing lake for Kokanee and lake trout, as well as rainbow trout and burbot during the summer months. Anyone fishing or angling in British Columbia must have an\n    <a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n      appropriate licence</a>.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -7388,7 +7388,7 @@
       "activityNumber": "5",
       "orcs": "204",
       "orcsSiteNumber": "204",
-      "description": "Anyone fishing or angling in British Columbia must have an\n<a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n  appropriate licence</a>.",
+      "description": "<div>\n  <p>\n    Anyone fishing or angling in British Columbia must have an\n    <a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n      appropriate licence</a>.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -7452,7 +7452,7 @@
       "activityNumber": "5",
       "orcs": "218",
       "orcsSiteNumber": "218",
-      "description": "Anyone fishing or angling in British Columbia must have an\n<a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n  appropriate licence</a>.",
+      "description": "<p>\n  Anyone fishing or angling in British Columbia must have an\n  <a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n    appropriate licence</a>.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -7532,7 +7532,7 @@
       "activityNumber": "3",
       "orcs": "96",
       "orcsSiteNumber": "96",
-      "description": "There is no designated swimming area at this park, however there are some sections of the Goldstream River near the campground that may be used for swimming. There are no lifeguards on duty at provincial parks.",
+      "description": "<p>\n  There is no designated swimming area at this park, however there are some sections of the Goldstream River near the campground that may be used for swimming. There are no lifeguards on duty at provincial parks.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -7924,7 +7924,7 @@
       "activityNumber": "3",
       "orcs": "204",
       "orcsSiteNumber": "204",
-      "description": "The large, south facing bay at Sun Oka is great for swimming. The sandy lake bottom makes getting in and out of the water easy. The large area is marked with swim buoys. Use caution when swimming near the buoys since there are often many motorboats and jet skis in the area. There are no lifeguards on duty at provincial parks.",
+      "description": "<div>\n  <p>\n    The large, south facing bay at Sun-Oka is great for swimming. The sandy lake bottom makes getting in and out of the water easy. The large area is marked with swim buoys. Use caution when swimming near the buoys since there are often many motorboats and jet skis in the area. There are no lifeguards on duty at provincial parks.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -7988,7 +7988,7 @@
       "activityNumber": "3",
       "orcs": "218",
       "orcsSiteNumber": "218",
-      "description": "There are no lifeguards on duty at provincial parks. Swimming areas are designated with buoys.",
+      "description": "<p>\n  There are no lifeguards on duty at provincial parks. Swimming areas are designated with buoys.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -8460,7 +8460,7 @@
       "activityNumber": "3",
       "orcs": "314",
       "orcsSiteNumber": "314",
-      "description": "The park has a rock and pebble beach for ocean swimming; sneakers or beach shoes are recommended. A series of man-made reefs and two sunken vessels provide excellent scuba diving opportunities. There are no lifeguards on duty at provincial parks.",
+      "description": "<div>\n  <p>\n    The park has a rock and pebble beach for ocean swimming; sneakers or beach shoes are recommended. A series of man-made reefs and two sunken vessels provide excellent scuba diving opportunities. There are no lifeguards on duty at provincial parks.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -8876,7 +8876,7 @@
       "activityNumber": "3",
       "orcs": "518",
       "orcsSiteNumber": "518",
-      "description": "<p>\n  There are NO LIFEGUARDS on duty at provincial parks. Along the chain there are many sandy beaches to enjoy.\n</p>",
+      "description": "<p>\n  <strong>\n    There are no lifeguards on duty at provincial parks.</strong>\n  Along the chain there are many sandy beaches to enjoy.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -9748,7 +9748,7 @@
       "activityNumber": "4",
       "orcs": "36",
       "orcsSiteNumber": "36",
-      "description": "Opportunities for canoeing or kayaking exist from this park.",
+      "description": "<div>\n  <p>\n    Opportunities for canoeing or kayaking exist from this park.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -9908,7 +9908,7 @@
       "activityNumber": "4",
       "orcs": "68",
       "orcsSiteNumber": "68",
-      "description": "Canoeing and kayaking are enjoyable activities on Lac La Hache. However, the lake is also used for power-boating and water-skiing.",
+      "description": "<div>\n  <p>\n    Canoeing and kayaking are enjoyable activities on Lac La Hache. However, the lake is also used for power-boating and water-skiing.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -10484,7 +10484,7 @@
       "activityNumber": "5",
       "orcs": "314",
       "orcsSiteNumber": "314",
-      "description": "<p>\n  Outside the park boundary, fish for salmon. It is illegal to fish for cod, rockfish and other finfish in Howe Sound, area 28-4.\n  <a href=\"http://www.pac.dfo-mpo.gc.ca/fm-gp/rec/tidal-maree/a-s28-eng.html\" target=\"_blank\">\n    http://www.pac.dfo-mpo.gc.ca/fm-gp/rec/tidal-maree/a-s28-eng.html</a>\n</p>\n<p>\n  Harvesting or collection of marine life within the park foreshore boundary is prohibited. Anyone fishing or angling in British Columbia must have an\n  <a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n    appropriate licence</a>.\n</p>",
+      "description": "<div>\n  <p>\n    Outside the park boundary, fish for salmon. It is illegal to fish for cod, rockfish and other finfish in Howe Sound, area 28-4.\n    <a href=\"http://www.pac.dfo-mpo.gc.ca/fm-gp/rec/tidal-maree/a-s28-eng.html\" target=\"_blank\">\n      http://www.pac.dfo-mpo.gc.ca/fm-gp/rec/tidal-maree/a-s28-eng.html</a>\n  </p>\n  <p>\n    Harvesting or collection of marine life within the park foreshore boundary is prohibited. Anyone fishing or angling in British Columbia must have an\n    <a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n      appropriate licence</a>.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -11100,7 +11100,7 @@
       "activityNumber": "5",
       "orcs": "426",
       "orcsSiteNumber": "426",
-      "description": "Anyone fishing or angling in British Columbia must have an\n<a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n  appropriate licence</a>. There are private excursions into this park. View\n<a href=\"http://www.northern-rockies-lodge.com/\" target=\"_blank\">\n  Northern Rockies Lodge’s webpage</a>\nfor more information.",
+      "description": "<p>\n  Anyone fishing or angling in British Columbia must have an\n  <a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n    appropriate licence</a>. There are private excursions into this park. View\n  <a href=\"http://www.northern-rockies-lodge.com/\">\n    Northern Rockies Lodge’s webpage</a>\n  for more information.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -11308,7 +11308,7 @@
       "activityNumber": "5",
       "orcs": "518",
       "orcsSiteNumber": "518",
-      "description": "<p>\n  Anyone fishing or angling in British Columbia must have an\n  <a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n    appropriate licence</a>. Fish species include rainbow trout, Dolly Varden and lake trout.</p>",
+      "description": "<p>\n  Anyone fishing or angling in British Columbia must have an\n  <a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n    appropriate licence</a>. Fish species include rainbow trout, Dolly Varden and lake trout.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -13172,7 +13172,7 @@
       "activityNumber": "7",
       "orcs": "36",
       "orcsSiteNumber": "36",
-      "description": "Seals, sea lions, whales, Dals porpoises, sea birds and bald eagles can all be spotted from Kitty Coleman Park. During the summer, passing cruise ships on their regular routes north and south offer a spectacular sight.",
+      "description": "<div>\n  <p>\n    Seals, sea lions, whales, Dals porpoises, sea birds and bald eagles can all be spotted from Kitty Coleman Park. During the summer, passing cruise ships on their regular routes north and south offer a spectacular sight.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -13180,7 +13180,7 @@
       "activityNumber": "7",
       "orcs": "39",
       "orcsSiteNumber": "39",
-      "description": "This easily accessible park offers awe-inspiring views of old-growth ecosystems throughout. On the south side of the park you will find the largest Douglas firs – one measuring more than 9 metres in circumference.",
+      "description": "<p>\n  This easily accessible park offers awe-inspiring views of old-growth ecosystems throughout. On the south side of the park you will find the largest Douglas firs – one measuring more than 9 metres in circumference.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -13388,7 +13388,7 @@
       "activityNumber": "7",
       "orcs": "96",
       "orcsSiteNumber": "96",
-      "description": "The scenery in Goldstream Park is spectacular wherever you go and there are endless opportunities for nature viewing at this park. A viewing platform located at the estuary near the Visitor Center provides visitors with great views of the eagle feeding frenzy in the winter. Trails throughout the park lead to various features and viewpoints, including old-growth Douglas firs more than 600 years old and the stunning Niagara Falls, which cascades 47.5 metres down a rock cliff into a crystal clear canyon pool below. Visitors also have ample opportunity to see spawning salmon, a variety of wildlife and, in the spring, colorful wildflowers, including the shade-loving western trillium and the calypso, a delicate orchid of the mossy forest glades. Spectacular panoramic views of the Strait of Georgia to the Strait of Juan de Fuca can be had from the summit of Mount Finlayson, making it well worth the climb.",
+      "description": "<p>\n  The scenery in Goldstream Park is spectacular wherever you go and there are endless opportunities for nature viewing at this park. A viewing platform located at the estuary near the Visitor Center provides visitors with great views of the eagle feeding frenzy in the winter. Trails throughout the park lead to various features and viewpoints, including old-growth Douglas firs more than 600 years old and the stunning Niagara Falls, which cascades 47.5 metres down a rock cliff into a crystal clear canyon pool below. Visitors also have ample opportunity to see spawning salmon, a variety of wildlife and, in the spring, colorful wildflowers, including the shade-loving western trillium and the calypso, a delicate orchid of the mossy forest glades. Spectacular panoramic views of the Strait of Georgia to the Strait of Juan de Fuca can be had from the summit of Mount Finlayson, making it well worth the climb.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -13820,7 +13820,7 @@
       "activityNumber": "7",
       "orcs": "314",
       "orcsSiteNumber": "314",
-      "description": "A short walking trail leads to a lookout which provides a spectacular view of Howe Sound and Porteau Cove. There are also good views of marine waterfowl and harbour seals, harbour porpoises, river otters, mink, coyotes, racoons, and from spring to fall: orcas, gray whales and humpback whales. Every two years, pink salmon spawn in the estuary in the park.",
+      "description": "<div>\n  <p>\n    A short walking trail leads to a lookout which provides a spectacular view of Howe Sound and Porteau Cove. There are also good views of marine waterfowl and harbour seals, harbour porpoises, river otters, mink, coyotes, racoons, and from spring to fall: orcas, gray whales and humpback whales. Every two years, pink salmon spawn in the estuary in the park.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -13972,7 +13972,7 @@
       "activityNumber": "7",
       "orcs": "371",
       "orcsSiteNumber": "371",
-      "description": "<p>\n  A viewpoint is located approximately 1.5 km from the parking lot at the end of the trail at Boyle Point. Visitors will be rewarded with spectacular views of Baynes Sound and the Chrome Island Lighthouse. From here, it is also possible to see seals and sea lions, bald eagles, osprey and a variety of seabirds.\n</p>",
+      "description": "A viewpoint is located approximately 1.5 km from the parking lot at the end of the trail at Boyle Point. Visitors will be rewarded with spectacular views of Baynes Sound and the Chrome Island Lighthouse. From here, it is also possible to see seals and sea lions, bald eagles, osprey and a variety of seabirds.",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -14188,7 +14188,7 @@
       "activityNumber": "7",
       "orcs": "518",
       "orcsSiteNumber": "518",
-      "description": "There are wildlife viewing opportunities in this park.",
+      "description": "<p>\n  There are wildlife viewing opportunities in this park.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -15324,7 +15324,7 @@
       "activityNumber": "8",
       "orcs": "36",
       "orcsSiteNumber": "36",
-      "description": "Pets/domestic animals must be on a leash at all times and are not allowed in beach areas or park buildings. You are responsible for their behaviour and must dispose of their excrement.",
+      "description": "<div>\n  <p>\n    Pets/domestic animals must be on a leash at all times and are not allowed in beach areas or park buildings. You are responsible for their behaviour and must dispose of their excrement.</p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -15348,7 +15348,7 @@
       "activityNumber": "8",
       "orcs": "39",
       "orcsSiteNumber": "39",
-      "description": "Pets/domestic animals must be on a leash and under control at all times. You are responsible for their behaviour and must dispose of their excrement. Garbage cans are located at the parking lot. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.",
+      "description": "<p>\n  Pets/domestic animals must be on a leash and under control at all times. You are responsible for their behaviour and must dispose of their excrement. Garbage cans are located at the parking lot. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -15524,7 +15524,7 @@
       "activityNumber": "8",
       "orcs": "68",
       "orcsSiteNumber": "68",
-      "description": "Pets/domestic animals must be on a leash at all times and are not allowed in beach areas or park buildings. You are responsible for their behaviour and must dispose of their excrement. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.",
+      "description": "<div>\n  <p>\n    Pets/domestic animals must be on a leash at all times and are not allowed in beach areas or park buildings. You are responsible for their behaviour and must dispose of their excrement. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -15700,7 +15700,7 @@
       "activityNumber": "8",
       "orcs": "96",
       "orcsSiteNumber": "96",
-      "description": "Pets/domestic animals must be on a leash at all times and are not allowed in beach areas or park buildings. You are responsible for their behaviour and must dispose of their excrement. Due to the sensitive nature of the salmon spawning cycle, dogs must be kept out of the river. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.",
+      "description": "<p>\n  Pets/domestic animals must be on a leash at all times and are not allowed in beach areas or park buildings. You are responsible for their behaviour and must dispose of their excrement. Due to the sensitive nature of the salmon spawning cycle, dogs must be kept out of the river. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -16196,7 +16196,7 @@
       "activityNumber": "8",
       "orcs": "204",
       "orcsSiteNumber": "204",
-      "description": "Pets/domestic animals must be on a leash at all times and are not allowed in the main beach areas or park buildings. There is a\n<strong>separate pet beach</strong>\naround the point to the east of the main beach. It is accessed by a 200m trail through the edge of the old growth cottonwoods. The pebbly beach extends east to where Trout Creek enters the lake. The dog beach does not continue across Trout Creek. Dogs are not permitted on the beach on the north side of the creek. Access is also possible from a trail along Trout Creek. There are no facilities at the dog beach though it is still busy with local dog owners. There is no overnight mooring, no fires on the beach and no swim buoys are in place to designate a swimming area. You are responsible for your pet’s behaviour and must dispose of their excrement. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.",
+      "description": "<div>\n  <p>\n    Pets/domestic animals must be on a leash at all times and are not allowed in the main beach areas or park buildings. There is a\n    <strong>separate pet beach</strong>\n    around the point to the east of the main beach. It is accessed by a 200m trail through the edge of the old growth cottonwoods. The pebbly beach extends east to where Trout Creek enters the lake. The dog beach does not continue across Trout Creek. Dogs are not permitted on the beach on the north side of the creek. Access is also possible from a trail along Trout Creek. There are no facilities at the dog beach though it is still busy with local dog owners. There is no overnight mooring, no fires on the beach and no swim buoys are in place to designate a swimming area. You are responsible for your pet’s behaviour and must dispose of their excrement. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.</p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -16268,7 +16268,7 @@
       "activityNumber": "8",
       "orcs": "218",
       "orcsSiteNumber": "218",
-      "description": "Pets/domestic animals must be on a leash at all times and are not allowed in beach areas or park buildings. You are responsible for their behaviour and must dispose of their excrement. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.",
+      "description": "<p>\n  Pets/domestic animals must be on a leash at all times and are not permitted in beach areas or park buildings. You are responsible for their behaviour and must dispose of their excrement. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -16812,7 +16812,7 @@
       "activityNumber": "8",
       "orcs": "314",
       "orcsSiteNumber": "314",
-      "description": "Pets/domestic animals must be on a leash at all times and are not allowed in beach areas or park buildings. You are responsible for their behaviour and must dispose of their excrement. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.",
+      "description": "<div>\n  <p>\n    Pets/domestic animals must be on a leash at all times and are not allowed in beach areas or park buildings. You are responsible for their behaviour and must dispose of their excrement. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -17124,7 +17124,7 @@
       "activityNumber": "8",
       "orcs": "371",
       "orcsSiteNumber": "371",
-      "description": "<p>\n  Pets/domestic animals must be on a leash and under control at all times. You are responsible for their behaviour and must dispose of their excrement. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.\n</p>",
+      "description": "Pets/domestic animals must be on a leash and under control at all times. You are responsible for their behaviour and must dispose of their excrement. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -17372,7 +17372,7 @@
       "activityNumber": "8",
       "orcs": "426",
       "orcsSiteNumber": "426",
-      "description": "Pets/domestic animals must be on a leash at all times and are not allowed in beach areas or park buildings. You are responsible for their behaviour and must dispose of their excrement. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.",
+      "description": "<p>\n  Pets/domestic animals must be on a leash at all times and are not allowed in beach areas or park buildings. You are responsible for their behaviour and must dispose of their excrement. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -19052,7 +19052,7 @@
       "activityNumber": "9",
       "orcs": "28",
       "orcsSiteNumber": "28",
-      "description": "Cycling is permitted on roadways in the park and mountain bike opportunities exist on the Pumphouse trails, which connect to the Snowden demonstration forest trail network. The pumphouse trail network is best accessed from near the water tower uphill of the logging road bridge over the Campbell River.\n<ul>\n  <li>\n    <a href=\"elkfalls_trailmap.pdf\" target=\"_blank\" class=\"legacy-link\">\n      View the trail map\n      <span>\n        [PDF 4MB]\n      </span>\n    </a>\n  </li>\n</ul>\nTrail and stunt construction is prohibited.\n<p>\n  Please note that bicycles with electric assist motors (e-bikes) are permitted on signed or designated trails within Elk Falls Provincial Park, provided they meet the definitions and criteria for e-bike use as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling\">BC Parks cycling guidelines</a>.\n</p>",
+      "description": "<p>\n  Cycling is permitted on roadways in the park and mountain bike opportunities exist on the pumphouse trails, which connect to the Snowden demonstration forest trail network. The pumphouse trail network is best accessed from near the water tower uphill of the logging road bridge over the Campbell River.\n</p>\n<ul>\n  <li>\n    <a href=\"elkfalls_trailmap.pdf\" target=\"_blank\" class=\"legacy-link\">\n      View the trail map\n      <span>\n        [PDF 4MB]\n      </span>\n    </a>\n  </li>\n</ul>\n<p>\n  Trail and stunt construction is prohibited.\n</p>\n<p>\n  Please note that bicycles with electric assist motors (e-bikes) are permitted on signed or designated trails within Elk Falls Provincial Park, provided they meet the definitions and criteria for e-bike use as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling\">BC Parks cycling guidelines</a>.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -19100,7 +19100,7 @@
       "activityNumber": "9",
       "orcs": "39",
       "orcsSiteNumber": "39",
-      "description": "<p>Cycling is permitted on roadways only, not on park trails. Bicycle helmets are mandatory in British Columbia.</p>\n<p>\n  Please note that bicycles with electric assist motors (e-bikes) are not allowed on the trails within  MacMillan Provincial Park. E-bikes are restricted to park roads and areas where motorized use is permitted as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling\">BC Parks cycling guidelines</a>. The only exception to this policy will be for authorized and identified trail maintenance bikes conducting work on behalf of BC Parks.\n</p>",
+      "description": "<p>\n  Cycling is permitted on roadways only, not on park trails. Bicycle helmets are mandatory in British Columbia.\n</p>\n<p>\n  Please note that bicycles with electric assist motors (e-bikes) are not allowed on the trails within  MacMillan Provincial Park. E-bikes are restricted to park roads and areas where motorized use is permitted as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling\">BC Parks cycling guidelines</a>. The only exception to this policy will be for authorized and identified trail maintenance bikes conducting work on behalf of BC Parks.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -19252,7 +19252,7 @@
       "activityNumber": "9",
       "orcs": "68",
       "orcsSiteNumber": "68",
-      "description": "<p>Bicycles must keep to roadways. Bicycle helmets are mandatory in British Columbia.</p>\n<p>\n  Please note that bicycles with electric assist motors (e-bikes) are not allowed on the trails within  Lac La Hache Provincial Park. E-bikes are restricted to park roads and areas where motorized use is permitted as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling\">BC Parks cycling guidelines</a>. The only exception to this policy will be for authorized and identified trail maintenance bikes conducting work on behalf of BC Parks.\n</p>",
+      "description": "<div>\n  <p>\n    Bicycles must keep to roadways. Bicycle helmets are mandatory in British Columbia.\n  </p>\n</div>\n<p>\n  Please note that bicycles with electric assist motors (e-bikes) are not allowed on the trails within  Lac La Hache Provincial Park. E-bikes are restricted to park roads and areas where motorized use is permitted as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling\">BC Parks cycling guidelines</a>. The only exception to this policy will be for authorized and identified trail maintenance bikes conducting work on behalf of BC Parks.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -20188,7 +20188,7 @@
       "activityNumber": "9",
       "orcs": "314",
       "orcsSiteNumber": "314",
-      "description": "<p>Bicycles must keep to roadways and trails. Bicycle helmets are mandatory in British Columbia.</p>\n<p>\n  Please note that bicycles with electric assist motors (e-bikes) are not allowed on the trails within  Porteau Cove Provincial Park. E-bikes are restricted to park roads and areas where motorized use is permitted as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling\">BC Parks cycling guidelines</a>. The only exception to this policy will be for authorized and identified trail maintenance bikes conducting work on behalf of BC Parks.\n</p>",
+      "description": "<div>\n  <p>\n    Bicycles must keep to roadways and trails. Bicycle helmets are mandatory in British Columbia.\n  </p>\n</div>\n<p>\n  Please note that bicycles with electric assist motors (e-bikes) are not allowed on the trails within  Porteau Cove Provincial Park. E-bikes are restricted to park roads and areas where motorized use is permitted as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling\">BC Parks cycling guidelines</a>. The only exception to this policy will be for authorized and identified trail maintenance bikes conducting work on behalf of BC Parks.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -20380,7 +20380,7 @@
       "activityNumber": "9",
       "orcs": "371",
       "orcsSiteNumber": "371",
-      "description": "<p>\n  Cycling is permitted on roadways only. A bike rack is located at the parking lot. Bicycle helmets are mandatory in British Columbia.\n</p>\n<p>\n  Please note that bicycles with electric assist motors (e-bikes) are not allowed on the trails within  Boyle Point Provincial Park. E-bikes are restricted to park roads and areas where motorized use is permitted as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling\">BC Parks cycling guidelines</a>. The only exception to this policy will be for authorized and identified trail maintenance bikes conducting work on behalf of BC Parks.\n</p>",
+      "description": "<p>Cycling is permitted on roadways only. A bike rack is located at the parking lot. Bicycle helmets are mandatory in British Columbia.</p>\n<p>\n  Please note that bicycles with electric assist motors (e-bikes) are not allowed on the trails within  Boyle Point Provincial Park. E-bikes are restricted to park roads and areas where motorized use is permitted as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling\">BC Parks cycling guidelines</a>. The only exception to this policy will be for authorized and identified trail maintenance bikes conducting work on behalf of BC Parks.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -20452,7 +20452,7 @@
       "activityNumber": "9",
       "orcs": "410",
       "orcsSiteNumber": "410",
-      "description": "Mountain bikers can explore old mining roads and other interesting and challenging terrain.\n<ul>\n  <li>\n    <a href=\"/explore/parkpgs/tatshens/hiking_biking.html\" target=\"_blank\" class=\"legacy-link\">\n      Hiking and Biking in Tatshenshini-Alsek Provincial Park</a>\n  </li>\n</ul>\n<p>\n  Please note that bicycles with electric assist motors (e-bikes) are not allowed on the trails within  Tatshenshini-Alsek Provincial Park. E-bikes are restricted to park roads and areas where motorized use is permitted as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling\">BC Parks cycling guidelines</a>. The only exception to this policy will be for authorized and identified trail maintenance bikes conducting work on behalf of BC Parks.\n</p>",
+      "description": "Mountain bikers can explore old mining roads and other interesting and challenging terrain.\n<ul>\n  <li>\n    <a href=\"/explore/parkpgs/tatshens/hiking_biking.html\" target=\"_blank\" class=\"legacy-link\">\n      Hiking and Biking in Tatshenshini-Alsek Park</a>\n  </li>\n</ul>\n<p>\n  Please note that bicycles with electric assist motors (e-bikes) are not allowed on the trails within  Tatshenshini-Alsek Provincial Park. E-bikes are restricted to park roads and areas where motorized use is permitted as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling\">BC Parks cycling guidelines</a>. The only exception to this policy will be for authorized and identified trail maintenance bikes conducting work on behalf of BC Parks.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -21116,7 +21116,7 @@
       "activityNumber": "10",
       "orcs": "68",
       "orcsSiteNumber": "68",
-      "description": "Lac la Hache is a popular lake for waterskiing.",
+      "description": "<div>\n  <p>\n    Lac la Hache is a popular lake for waterskiing.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -21268,7 +21268,7 @@
       "activityNumber": "10",
       "orcs": "204",
       "orcsSiteNumber": "204",
-      "description": "The designated boating beach is a great spot to start waterskiing from.",
+      "description": "<div>\n  <p>\n    The designated boating beach is a great spot to start waterskiing from.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -21932,7 +21932,7 @@
       "activityNumber": "11",
       "orcs": "314",
       "orcsSiteNumber": "314",
-      "description": "The strong winds of Howe Sound can create excellent windsurfing opportunities. A very popular windsurfing area known as the “Spit” is located in Squamish at the confluence of the Squamish River and Howe Sound.",
+      "description": "<div>\n  <p>\n    The strong winds of Howe Sound can create excellent windsurfing opportunities. A very popular windsurfing area known as the “Spit” is located in Squamish at the confluence of the Squamish River and Howe Sound.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -22204,7 +22204,7 @@
       "activityNumber": "12",
       "orcs": "204",
       "orcsSiteNumber": "204",
-      "description": "There are snorkelling opportunities at the beach.",
+      "description": "<div>\n  <p>\n    There are snorkelling opportunities at the beach.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -22332,7 +22332,7 @@
       "activityNumber": "12",
       "orcs": "314",
       "orcsSiteNumber": "314",
-      "description": "<p>\n  A series of man-made reefs and two sunken vessels provide excellent scuba diving opportunities. Depths vary from 6m to 18m (20’ to 60’). Be cautious of changing tides and strong in and outflow winds. Penetration of vessels is not recommended. The diving area is marked by a series of marker buoys. Various fascinating marine life has established itself throughout the dive area. Harvesting or harassment of marine life is prohibited within the park’s marine foreshore. Diving from a boat is prohibited within the park boundary.\n</p>\n<p>\n  There is an outdoor shower available in the day-use area from March 1 to November 12.\n</p>\n<p>\n  There are steps that lead down to the water’s edge that are located in the main parking lot. Please use proper etiquette when changing into and out dive gear in the parking lots, and avoid gear sprawl that inhibits vehicular traffic. Commercial diving such as providing instruction and guiding is prohibited unless authorized by a Park Use Permit.\n</p>",
+      "description": "<div>\n  <p>\n    A series of man-made reefs and two sunken vessels provide excellent scuba diving opportunities. Depths vary from 6m to 18m (20’ to 60’). Be cautious of changing tides and strong in and outflow winds. Penetration of vessels is not recommended. The diving area is marked by a series of marker buoys. Various fascinating marine life has established itself throughout the dive area. Harvesting or harassment of marine life is prohibited within the park’s marine foreshore. Diving from a boat is prohibited within the park boundary.\n  </p>\n  <p>\n    There is an outdoor shower available in the day-use area from March 1 to November 12.\n  </p>\n  <p>\n    There are steps that lead down to the water’s edge that are located in the main parking lot. Please use proper etiquette when changing into and out dive gear in the parking lots, and avoid gear sprawl that inhibits vehicular traffic. Commercial diving such as providing instruction and guiding is prohibited unless authorized by a park use permit.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -22964,7 +22964,7 @@
       "activityNumber": "13",
       "orcs": "426",
       "orcsSiteNumber": "426",
-      "description": "Horses and/or horseback riding are permitted.",
+      "description": "<p>\n  Horses and/or horseback riding are permitted.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -24484,7 +24484,7 @@
       "activityNumber": "16",
       "orcs": "426",
       "orcsSiteNumber": "426",
-      "description": "The park is open to hunting. All hunters to the area should refer to the current\n<a href=\"/explore/fishreg.html#hunting\" class=\"legacy-link\">\n  BC Hunting &amp; Trapping Regulations Synopsis</a>\nfor more details and information.",
+      "description": "<p>\n  The park is open to hunting. All hunters to the area should refer to the current\n  <a href=\"/explore/fishreg.html#hunting\" class=\"legacy-link\">\n    BC Hunting &amp; Trapping Regulations Synopsis</a>\n  for more details and information.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -24644,7 +24644,7 @@
       "activityNumber": "16",
       "orcs": "518",
       "orcsSiteNumber": "518",
-      "description": "Hunting is permitted only during lawful game hunting season. Check with\n<a href=\"/explore/fishreg.html#hunting\" class=\"legacy-link\">\n  Hunting and Trapping Synopsis</a>\nfor regulations.",
+      "description": "<p>\n  Hunting is permitted only during lawful game hunting season. Check the\n  <a href=\"/explore/fishreg.html#hunting\" class=\"legacy-link\">\n    Hunting and Trapping Regulations Synopsis</a>\n  for regulations.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -24708,7 +24708,7 @@
       "activityNumber": "16",
       "orcs": "583",
       "orcsSiteNumber": "583",
-      "description": "Hunting is permitted only during lawful game hunting season. Check the\n<a href=\"\" explore=\"\" fishreg.html\"\"=\"\">BC Hunting &amp; Trapping Regulations Synopsis</a>\nfor regulations.",
+      "description": "Hunting is permitted only during lawful game hunting season. Check the\n<a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n  BC Hunting &amp; Trapping Regulations Synopsis</a>\nfor regulations.",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -26596,7 +26596,7 @@
       "activityNumber": "17",
       "orcs": "314",
       "orcsSiteNumber": "314",
-      "description": "Day-use is open with limited facilities. Winter camping is permitted, but services are limited. Only portions of the campground may be vehicle accessible; access may be restricted due to snow fall.",
+      "description": "<div>\n  <p>\n    Day-use is open with limited facilities. Winter camping is permitted, but services are limited. Only portions of the campground may be vehicle-accessible; access may be restricted due to snow fall.\n  </p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -29380,7 +29380,7 @@
       "activityNumber": "1",
       "orcs": "8297",
       "orcsSiteNumber": "8297",
-      "description": "",
+      "description": "<p>\n  The Davie Trail, which extends north from Fort Ware to Lower Post, is a wilderness route that runs along the Kechika River in the Rocky Mountain Trench. This route is only recommended for experienced backcountry hikers or horseback riders, as the area is remote and there are many hazards such as river crossings.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -29388,7 +29388,7 @@
       "activityNumber": "4",
       "orcs": "8297",
       "orcsSiteNumber": "8297",
-      "description": "",
+      "description": "<p>\n  The Kechika River and Dall and Denetiah Lakes provide excellent opportunities for remote, wilderness canoeing/kayaking. Access to Dall and Denetiah Lakes is only by air, while the Kechika River can be reached by road from the south and north ends.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -29404,7 +29404,7 @@
       "activityNumber": "5",
       "orcs": "8297",
       "orcsSiteNumber": "8297",
-      "description": "",
+      "description": "<p>\n  Anyone fishing or angling in British Columbia must have an\n  <a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n    appropriate licence</a>.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -29412,7 +29412,7 @@
       "activityNumber": "8",
       "orcs": "8297",
       "orcsSiteNumber": "8297",
-      "description": "",
+      "description": "<p>\n  Pets/domestic animals must be on a leash at all times and are not allowed in beach areas or park buildings. You are responsible for their behaviour and must dispose of their excrement. Dogs should be under control to avoid any potential problem with wildlife.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -29420,7 +29420,7 @@
       "activityNumber": "13",
       "orcs": "8297",
       "orcsSiteNumber": "8297",
-      "description": "",
+      "description": "<p>\n  Denetiah Park provides excellent opportunities for backcountry horseback riding. Riders should be experienced and prepared for wilderness travel, as there are no designated trails.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -29428,7 +29428,7 @@
       "activityNumber": "16",
       "orcs": "8297",
       "orcsSiteNumber": "8297",
-      "description": "",
+      "description": "<p>\n  The park is open to hunting. All hunters to the area should refer to the current\n  <a href=\"/explore/fishreg.html#hunting\" class=\"legacy-link\">\n    BC Hunting &amp; Trapping Regulations Synopsis</a>\n  for more details and information.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -32076,7 +32076,7 @@
       "activityNumber": "18",
       "orcs": "28",
       "orcsSiteNumber": "28",
-      "description": "This park offers winter camping, but no services are available during the off-season.\n<br>\n<div parkfees\"\"=\"\">\n  <p>Winter Vehicle Accessible Camping Fee: $11.00 per party / night</p>\n</div>",
+      "description": "<p>\n  This park offers winter camping, but no services are available during the off-season.\n</p>\n<div parkfees\"\"=\"\">\n  <p>Winter Vehicle Accessible Camping Fee: $11.00 per party / night</p>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -32412,7 +32412,7 @@
       "activityNumber": "17",
       "orcs": "453",
       "orcsSiteNumber": "453",
-      "description": "<strong>Snowmobiling:\n</strong>Operated by the Eagle Valley Snowmobile Club out of Sicamous, an lengthy groomed trail extends from the valley bottom to the Owlhead cabin, just inside the Park. From the cabin, well used routes pass outside the Park accessing alpine and sub-alpine riding areas. Refer to the Club’s website for more information\n<a href=\"http://www.sledsicamous.com/\" target=\"_blank\">\n  http://www.sledsicamous.com/</a>. User fees are in effect. Summer motorized access into the Park is\n<u>\n  NOT\n</u>\npermitted.",
+      "description": "<strong>Snowmobiling:\n</strong>Operated by the Eagle Valley Snowmobile Club out of Sicamous, an lengthy groomed trail extends from the valley bottom to the Owlhead cabin, just inside the Park. From the cabin, well used routes pass outside the Park accessing alpine and sub-alpine riding areas. Refer to the Club’s website for more information\n<a href=\"http://www.sledsicamous.com/\" target=\"_blank\">\n  http://www.sledsicamous.com/</a>. User fees are in effect. Summer motorized access into the Park is\n<u>NOT</u>\npermitted.",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -32900,7 +32900,7 @@
       "activityNumber": "18",
       "orcs": "314",
       "orcsSiteNumber": "314",
-      "description": "<p>\n  Sites 1-44 are available for camping during the winter season. Walk-in sites 1-6 are also avaialble for winter camping – see Dates of Operation table above for specific dates. The washroom/shower buildings are closed during the winter season. Potable water is available at one standpipe outside the campground washroom, and the sani-station is open unless temperatures drop below freezing.\n</p>\n<div parkfees\"\"=\"\">\n  Winter Vehicle Accessible Camping Fee: $18.00/party/night camping fee plus $8.00 electrical/night = $26.00/party/night\n</div>\n<div parkfees\"\"=\"\">\n  BC Senior’s Winter Rate: $17.50 per\n  <strong>senior party/</strong>night plus $8.00 electrical/night = $25.50/party/night. See\n  <a href=\"\" fees=\"\" senior.html\"\"=\"\">User Fees Policy</a>\n  for information on Senior Camping Discounts.\n</div>",
+      "description": "<div actfac\"\"=\"\">\n  <p>\n    Sites 1-44 are available for camping during the winter season. Walk-in sites 1-6 are also avaialble for winter camping – see Dates of Operation table above for specific dates. The washroom/shower buildings are closed during the winter season. Potable water is available at one standpipe outside the campground washroom, and the sani-station is open unless temperatures drop below freezing.\n  </p>\n  <div parkfees\"\"=\"\">\n    Winter Vehicle-Accessible Camping Fee: $18.00/party/night camping fee plus $8.00 electrical/night = $26.00/party/night\n  </div>\n  <div parkfees\"\"=\"\">\n    BC Senior’s Winter Rate: $17.50 per\n    <strong>senior party/</strong>night plus $8.00 electrical/night = $25.50/party/night. See\n    <a href=\"\" fees=\"\" senior.html\"\"=\"\">User Fees Policy</a>\n    for information on Senior Camping Discounts.\n  </div>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -35892,7 +35892,7 @@
       "activityNumber": "1",
       "orcs": "8969",
       "orcsSiteNumber": "8969",
-      "description": "<p>\n  There are no developed trails at this park. On the south side of the Liard River, an old BC Hydro road crosses the Trout River and continues to the Grand Canyon of the Liard. This road provides horseback and foot access, but can be hazardous at the Trout River crossing.\n</p>",
+      "description": "There are no developed trails at this park. On the south side of the Liard River, an old BC Hydro road crosses the Trout River and continues to the Grand Canyon of the Liard. This road provides horseback and foot access, but can be hazardous at the Trout River crossing.",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -35908,7 +35908,7 @@
       "activityNumber": "5",
       "orcs": "8969",
       "orcsSiteNumber": "8969",
-      "description": "<p>\n  Sport fish species include arctic grayling, chum salmon, bull trout, inconnu, lake whitefish, mountain whitefish, northern pike and burbot. Anyone fishing or angling in British Columbia must have an\n  <a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n    appropriate licence</a>.\n</p>",
+      "description": "Sport fish species include arctic grayling, chum salmon, bull trout, inconnu, lake whitefish, mountain whitefish, northern pike and burbot. Anyone fishing or angling in British Columbia must have an\n<a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n  appropriate licence</a>.",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -35916,7 +35916,7 @@
       "activityNumber": "16",
       "orcs": "8969",
       "orcsSiteNumber": "8969",
-      "description": "<p>\n  Liard River Corridor is open to hunting. Hunters going into the Liard River Corridor should reference the\n  <a href=\"/explore/fishreg.html#hunting\" class=\"legacy-link\">\n    BC Hunting &amp; Trapping Regulations Synopsis</a>\n  for more information.\n</p>\n<p>\n  There is a private company offering hunting excursions into this park. View the\n  <a href=\"http://www.huntlra.com/\">\n    Liard River Adventures’ website</a>\n  for more information.\n</p>",
+      "description": "Liard River Corridor is open to hunting. Hunters going into the Liard River Corridor should reference the\n<a href=\"/explore/fishreg.html#hunting\" class=\"legacy-link\">\n  BC Hunting &amp; Trapping Regulations Synopsis</a>\nfor more information. There is a private company offering hunting excursions into this park. View the\n<a href=\"http://www.huntlra.com/\">\n  Liard River Adventures’ website</a>\nfor more information.",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -35924,7 +35924,7 @@
       "activityNumber": "17",
       "orcs": "8969",
       "orcsSiteNumber": "8969",
-      "description": "<p>\n  There are winter recreation opportunities in the park.\n</p>",
+      "description": "There are winter recreation opportunities in the park.",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -36164,7 +36164,7 @@
       "activityNumber": "8",
       "orcs": "9822",
       "orcsSiteNumber": "9822",
-      "description": "",
+      "description": "<p>\n  Pets/domestic animals must be on a leash at all times. You are responsible for their behaviour and must dispose of their excrement. Backcountry areas are not suitable for dogs or other pets due to wildlife issues and the potential for problems with bears.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -36172,7 +36172,7 @@
       "activityNumber": "16",
       "orcs": "9822",
       "orcsSiteNumber": "9822",
-      "description": "",
+      "description": "<p>\n  This park is open to hunting during the lawful game season. See the\n  <a href=\"/explore/fishreg.html#hunting\" class=\"legacy-link\">\n    British Columbia Hunting and Trapping regulations synopsis</a>\n  for further details.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
