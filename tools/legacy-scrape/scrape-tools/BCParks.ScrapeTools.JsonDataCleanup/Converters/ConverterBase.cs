@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 
 namespace BCParks.ScrapeTools.JsonDataCleanup.Converters;
 
-public abstract class ConverterBase
+public class ConverterBase
 {
-    protected ConverterBase(string sourceFile, string destinationFile)
+    public ConverterBase(string sourceFile, string destinationFile = "")
     {
         this.sourceFile = sourceFile;
         this.destinationFile = destinationFile;
@@ -23,7 +23,9 @@ public abstract class ConverterBase
         var rawJson = File.ReadAllText(rawFilePath);
 
         if (string.IsNullOrWhiteSpace(rawJson))
+        {
             throw new DataException($"{rawFilePath} contains no data");
+        }
 
         return JsonConvert.DeserializeObject<T>(rawJson) ?? new T();
     }
