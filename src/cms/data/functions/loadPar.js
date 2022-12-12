@@ -322,8 +322,10 @@ const loadParkDetails = async () => {
     const data = JSON.parse(jsonData);
 
     for await (const park of data["parkDetails"]) {
-      // Some parks are present in the JSON data but not PAR; in that case,
-      // add what data we have
+      // if the park has an orcsSiteNumber then it is a site, not a protectedArea
+      if (park.orcsSiteNumber !== "") {
+        continue;
+      }
       const orcsExists = await strapi.services["protected-area"].findOne({ orcs: park.orcs });
       const protectedArea = {
         description: park.description,
