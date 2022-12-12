@@ -213,6 +213,12 @@ exports.createSchemaCustomization = ({ actions }) => {
     url: String
     imgUrl: String
   }
+
+  type StrapiParkSubPages implements Node {
+    slug: String
+    title: String
+    protectedArea: StrapiProtectedArea
+  }
   `
   createTypes(typeDefs)
 }
@@ -234,6 +240,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   `
 
   await createParks({ graphql, actions })
+  await createParkSubPages({ graphql, actions })
   await createPageSlugs("static", staticQuery, { graphql, actions, reporter })
 }
 
@@ -259,6 +266,35 @@ async function createParks({ graphql, actions, reporter }) {
       path: park.urlPath,
       component: require.resolve(`./src/templates/park.js`),
       context: { ...park },
+    })
+  })
+}
+
+async function createParkSubPages({ graphql, actions, reporter }) {
+  const parkSubPageQuery = `
+  {
+    allStrapiParkSubPages {
+      nodes {
+        id
+        slug
+        title
+        protectedArea {
+          urlPath
+        }
+      }
+      totalCount
+    }
+  }
+  `
+  const result = await strapiApiRequest(graphql, parkSubPageQuery)
+
+  result.data.allStrapiParkSubPages.nodes.forEach(parkSubPage => {
+    const parkPath = parkSubPage.protectedArea?.urlPath
+    const parkSubPagePath = `${parkPath}/${parkSubPage.slug}`
+    actions.createPage({
+      path: parkSubPage.slug,
+      component: require.resolve(`./src/templates/parkSubPage.js`),
+      context: { ...parkSubPage },
     })
   })
 }
