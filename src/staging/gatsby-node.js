@@ -213,6 +213,16 @@ exports.createSchemaCustomization = ({ actions }) => {
     url: String
     imgUrl: String
   }
+
+  type StrapiSites implements Node {
+    siteName: String
+    siteNumber: Int
+    orcsSiteNumber: String
+    protectedArea: StrapiProtectedArea
+    parkActivities: [StrapiParkActivities]
+    parkFacilities: [StrapiParkFacilities]
+    parkOperation: StrapiParkOperation
+  }
   `
   createTypes(typeDefs)
 }
@@ -234,6 +244,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   `
 
   await createParks({ graphql, actions })
+  await createSites({ graphql, actions })
   await createPageSlugs("static", staticQuery, { graphql, actions, reporter })
 }
 
@@ -259,6 +270,37 @@ async function createParks({ graphql, actions, reporter }) {
       path: park.urlPath,
       component: require.resolve(`./src/templates/park.js`),
       context: { ...park },
+    })
+  })
+}
+
+async function createSites({ graphql, actions, reporter }) {
+  const siteQuery = `
+  {
+    allStrapiSites {
+      nodes {
+        id
+        siteName
+        siteNumber
+        orcsSiteNumber
+        protectedArea {
+          urlPath
+        }
+      }
+      totalCount
+    }
+  }
+  `
+  const result = await strapiApiRequest(graphql, siteQuery)
+
+  result.data.allStrapiSites.nodes.forEach(site => {
+    const slug = slugify(site.siteName).toLowerCase()
+    const parkPath = site.protectedArea?.urlPath
+    const sitePath = `${parkPath}/${slug}`
+    actions.createPage({
+      path: sitePath,
+      component: require.resolve(`./src/templates/site.js`),
+      context: { ...site },
     })
   })
 }

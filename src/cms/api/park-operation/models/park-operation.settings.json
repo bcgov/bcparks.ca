@@ -12,7 +12,7 @@
   },
   "attributes": {
     "orcsSiteNumber": {
-      "type": "integer"
+      "type": "string"
     },
     "isActive": {
       "type": "boolean"
@@ -152,6 +152,10 @@
     "protectedArea": {
       "model": "protected-area",
       "via": "parkOperation"
+    },
+    "site": {
+      "via": "parkOperation",
+      "model": "site"
     }
   }
 }
