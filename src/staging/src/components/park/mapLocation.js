@@ -53,6 +53,13 @@ export default function MapLocation({ data }) {
       })
       view.ui.add(fullscreen, "top-left")
 
+      // As per CM-209. Currently the map layers point back to the legacy URLs
+      // This can be removed when the layers are updated in the arcgis instance
+      view.on("click", (event) => {
+        event.stopPropagation()
+      });
+
+
     }
   }, [data.latitude, data.longitude, data.mapZoom])
 
