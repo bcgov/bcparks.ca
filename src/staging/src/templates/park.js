@@ -11,7 +11,6 @@ import {
   Link,
   Breadcrumbs,
 } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
 import useScrollSpy from "react-use-scrollspy"
 
 import { capitalizeFirstLetter, renderHTML } from "../utils/helpers";
@@ -38,21 +37,7 @@ import SafetyInfo from "../components/park/safetyInfo"
 import ScrollToTop from "../components/scrollToTop"
 
 import "../styles/parks.scss"
-import { PARK_NAME_TYPE } from "../utils/constants";
-
-const drawerWidth = 230
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex",
-  },
-  parkContent: {
-    [theme.breakpoints.up("sm")]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-    },
-  },
-  appBarOffset: theme.mixins.toolbar,
-}))
+import { PARK_NAME_TYPE, useStyles } from "../utils/constants";
 
 const loadAdvisories = async (apiBaseUrl, orcs) => {
   const params = {

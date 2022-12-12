@@ -11,7 +11,6 @@ import {
   Link,
   Breadcrumbs,
 } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
 import useScrollSpy from "react-use-scrollspy"
 
 import Footer from "../components/footer"
@@ -30,20 +29,7 @@ import MapLocation from "../components/park/mapLocation"
 import ScrollToTop from "../components/scrollToTop"
 
 import "../styles/parks.scss"
-
-const drawerWidth = 230
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex",
-  },
-  parkContent: {
-    [theme.breakpoints.up("sm")]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-    },
-  },
-  appBarOffset: theme.mixins.toolbar,
-}))
+import { useStyles } from "../utils/constants"
 
 const loadAdvisories = async (apiBaseUrl, orcs) => {
   const params = {

@@ -294,8 +294,10 @@ async function createSites({ graphql, actions, reporter }) {
   const result = await strapiApiRequest(graphql, siteQuery)
 
   result.data.allStrapiSites.nodes.forEach(site => {
+    // TODO: slug can be deleted when site.slug has created on all strapi env
     const slug = slugify(site.siteName).toLowerCase()
     const parkPath = site.protectedArea?.urlPath
+    // TODO: change sitePath `${parkPath}/${slug}` to `${parkPath}/${site.slug}` when site.slug has created on all strapi env
     const sitePath = `${parkPath}/${slug}`
     actions.createPage({
       path: sitePath,

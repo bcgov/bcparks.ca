@@ -1,3 +1,5 @@
+import { makeStyles } from "@material-ui/core/styles"
+
 export const PARK_NAME_TYPE = {
   Legal: 1,
   Escaped: 2,
@@ -6,3 +8,17 @@ export const PARK_NAME_TYPE = {
   Alias: 5,
   Historic: 6,
 }
+
+// for stylings
+const drawerWidth = 230
+export const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex",
+  },
+  parkContent: {
+    [theme.breakpoints.up("sm")]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+    },
+  },
+  appBarOffset: theme.mixins.toolbar,
+}))

@@ -11,6 +11,9 @@
     "draftAndPublish": true
   },
   "attributes": {
+    "slug": {
+      "type": "string"
+    },
     "siteName": {
       "type": "string"
     },
