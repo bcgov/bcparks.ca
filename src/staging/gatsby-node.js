@@ -282,7 +282,6 @@ async function createParkSubPages({ graphql, actions, reporter }) {
           urlPath
         }
       }
-      totalCount
     }
   }
   `
@@ -292,7 +291,7 @@ async function createParkSubPages({ graphql, actions, reporter }) {
     const parkPath = parkSubPage.protectedArea?.urlPath
     const parkSubPagePath = `${parkPath}/${parkSubPage.slug}`
     actions.createPage({
-      path: parkSubPage.slug,
+      path: parkSubPagePath,
       component: require.resolve(`./src/templates/parkSubPage.js`),
       context: { ...parkSubPage },
     })

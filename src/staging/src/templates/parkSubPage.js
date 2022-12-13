@@ -1,6 +1,6 @@
 import React, { useRef } from "react"
-import { graphql, useStaticQuery } from "gatsby"
-import { Breadcrumbs } from "@material-ui/core"
+import { graphql } from "gatsby"
+import { Breadcrumbs, Link } from "@material-ui/core"
 import useScrollSpy from "react-use-scrollspy"
 
 import Footer from "../components/footer"
@@ -10,96 +10,39 @@ import Seo from "../components/seo"
 import PageContent from "../components/pageContent/pageContent"
 import PageMenu from "../components/pageContent/pageMenu"
 
-import { renderBreadcrumbs } from "../utils/helpers";
-
 import "../styles/staticContent1.scss"
 
-export default function ParkSubPage({ pageContext }) {
-  const queryData = useStaticQuery(graphql`
-    {
-      strapiWebsites(Name: { eq: "BCParks.ca" }) {
-        Footer
-        Header
-        Name
-        Navigation
-        id
-        homepage {
-          id
-          Template
-          Content {
-            id
-            strapi_component
-          }
-        }
+export default function ParkSubPage({ data }) {
+  const page = data.strapiParkSubPages
+  const contents = page.content
+  const seo = page.seo
+  const header = page.pageHeader
+  const park = page.protectedArea
+  const menuContent = data?.allStrapiMenus?.nodes || []
+  const sections = contents.filter(content => Boolean(content.strapi_component === "parks.page-section")) || []
+  const hasSections = sections.length > 0
+
+  let pageSections = []
+  if (hasSections) {
+    let sectionIndex = 0
+    for (const section of sections) {
+      sectionIndex += 1
+      section.sectionIndex = sectionIndex
+      // if pageSection doesn't have a sectionTitle, display page title
+      if (!section.sectionTitle) {
+          section.sectionTitle = page.title
       }
-      allStrapiMenus(
-        sort: { fields: order, order: ASC }
-        filter: { show: { eq: true } }
-      ) {
-        nodes {
-          strapiId
-          title
-          url
-          order
-          id
-          imgUrl
-          strapiChildren {
-            id
-            title
-            url
-            order
-            parent
-          }
-          strapiParent {
-            id
-            title
-          }
-        }
-      }
+      pageSections.push({
+        display: section.sectionTitle,
+        sectionIndex: sectionIndex,
+        id: section.id,
+        link: "#page-section-" + section.id,
+        visible: true
+      })
     }
-  `)
-  console.log(pageContext)
-
-  // const pageContent = pageContext?.page?.Content // array of content components in page
-  // const meta =
-  //   pageContext?.page?.Content.find(c =>
-  //     Boolean(c.strapi_component === "parks.seo")
-  //   ) || {}
-  // const menuContent = queryData?.allStrapiMenus?.nodes || [] // megaMenu
-
-  // look for PageHeader content
-  // if it exists, will affect the layout of the top of the page
-  // note that it does not matter what position the component is in, it will appear at the top
-  // note that if there are more than one such component, it will pick the first
-  // const headerContent =
-  //   pageContext?.page?.Content.find(c =>
-  //     Boolean(c.strapi_component === "parks.page-header")
-  //   ) || {}
-  // const hasPageHeader = headerContent.pageTitle !== undefined
-
-  // Get page title from Title field
-  // if not there, get title from pageTitle, if there is a PageHeader component
-  // otherwise, page title & breadcrumb assumed to be in the content
-  // let pageTitle = pageContext.page.Title
-  // if (!pageTitle) {
-  //   pageTitle = headerContent.pageTitle
-  // }
-  // const hasTitle = pageTitle !== undefined
-
-  // const sections =
-  //   pageContent.filter(c =>
-  //     Boolean(c.strapi_component === "parks.page-section")
-  //   ) || []
-  // const hasSections = sections.length > 0
-
-  // create page sections for sticky sidebar menu
-  // and scrollspy highlighting
+  }
 
   let sectionRefs = [
-    // Creating 10 refs for scrollspy
-    // TODO create dynamically without causing error
-    // these are created whether or not there are sections
-    // as useRef cannot be used conditionally
     useRef(null),
     useRef(null),
     useRef(null),
@@ -112,76 +55,56 @@ export default function ParkSubPage({ pageContext }) {
     useRef(null),
   ]
 
-  // let pageSections = []
-  // if (hasSections) {
-  //   let firstSectionTitle = pageTitle
-  //   if (!firstSectionTitle) {
-  //     // get page title, using same method as renderBreadcrumbs
-  //     // this assume the page is in the menu, use metaTitle from SEO otherwise
-  //     const slug = pageContext?.page?.Slug
-  //     const current = menuContent.find(mc => mc.url === slug)
-  //     firstSectionTitle = current ? current.title : meta.metaTitle
-  //   }
-  //   pageSections = [
-  //     { display: firstSectionTitle, sectionIndex: 0, id: 0, link: "#" },
-  //   ]
+  const activeSection = useScrollSpy({
+    sectionElementRefs: sectionRefs,
+    defaultValue: 0,
+    offsetPx: -180,
+  })
 
-  //   let sectionIndex = 0
-  //   for (const c of pageContent) {
-  //     sectionIndex += 1
-  //     if (c.strapi_component === "parks.page-section") {
-  //       // each section needs an index to be used for in-page navigation
-  //       // and scrollspy highlighting
-  //       c.sectionIndex = sectionIndex
-  //       pageSections.push({
-  //         display: c.sectionTitle,
-  //         sectionIndex: sectionIndex,
-  //         id: c.id,
-  //         link: "#page-section-" + c.id,
-  //         visible: true // Default
-  //       })
-  //     }
-  //   }
-  // }
-
-  // activeSection will be the index of the on-screen section
-  // this is setup whether or not there are sections,
-  // as useScrollSpy cannot be used conditionally
-  // const activeSection = useScrollSpy({
-  //   sectionElementRefs: sectionRefs,
-  //   defaultValue: 0,
-  //   offsetPx: -180,
-  // })
+  const breadcrumbs = [
+    <Link key="1" href="/">
+      Home
+    </Link>,
+    <Link key="2" href="/find-a-park">
+      Find a Park
+    </Link>,
+    <Link key="3" href={`/${park.slug}`}>
+      {park.protectedAreaName}
+    </Link>,
+    <div key="4" className="breadcrumb-text">
+      {page.title}
+    </div>,
+  ]
 
   return (
     <>
-    <h1>TEST</h1>
-    
-      {/* <Seo
-        title={meta.metaTitle}
-        description={meta.description}
-        keywords={meta.metaKeywords}
-      />
+      {seo &&
+        <Seo
+          title={seo.metaTitle}
+          description={seo.description}
+          keywords={seo.metaKeywords}
+        />
+      }
       <div className="max-width-override" ref={sectionRefs[0]}>
         <Header mode="internal" content={menuContent} />
       </div>
       <div className="d-none d-md-block static-content-container page-breadcrumbs">
-        <Breadcrumbs separator="›" aria-label="breadcrumb">
-          {renderBreadcrumbs(menuContent, pageContext?.page)}
+        <Breadcrumbs separator="›" aria-label="breadcrumb" className="p20t">
+          {breadcrumbs}
         </Breadcrumbs>
       </div>
-      {hasTitle && (
+      {header && (
         <div className="static-content--header">
-          {headerContent.imageUrl && (
+          {header.imageUrl && (
             <div className="header-image-wrapper">
               <img
-                src={headerContent.imageUrl}
-                alt={headerContent.imageAlt ?? null}
+                src={header.imageUrl}
+                alt={header.imageAlt ?? null}
               />
             </div>
           )}
           <h1 className="header-title">
-            {pageTitle}
+            {park.protectedAreaName}: {page.title}
           </h1>
         </div>
       )}
@@ -210,15 +133,15 @@ export default function ParkSubPage({ pageContext }) {
                 </div>
               </div>
               <div className="page-content col-md-9 col-12">
-                {hasPageHeader && (
+                {header && (
                   <div className="header-content">
                     <div className="page-header--caption">
-                      {headerContent.imageCaption}
+                      {header.imageCaption}
                     </div>
-                    <HTMLArea isVisible>{headerContent.introHtml}</HTMLArea>
+                    <HTMLArea isVisible>{header.introHtml}</HTMLArea>
                   </div>
                 )}
-                {pageContent.map(content => (
+                {contents.map(content => (
                   <div
                     ref={sectionRefs[content.sectionIndex]}
                     key={content.strapi_component + "-" + content.id}
@@ -233,12 +156,12 @@ export default function ParkSubPage({ pageContext }) {
             </div>
           ) : (
             <div>
-              {hasPageHeader && (
+              {header && (
                 <div className="header-content">
-                  <HTMLArea isVisible>{headerContent.introHtml}</HTMLArea>
+                  <HTMLArea isVisible>{header.introHtml}</HTMLArea>
                 </div>
               )}
-              {pageContent.map(content => (
+              {contents.map(content => (
                 <PageContent
                   contentType={content.strapi_component}
                   content={content}
@@ -250,8 +173,75 @@ export default function ParkSubPage({ pageContext }) {
         </div>
       </div>
       <div className="max-width-override">
-        <Footer>{queryData.strapiWebsites.Footer}</Footer>
-      </div> */}
+        <Footer>{data?.strapiWebsites.Footer}</Footer>
+      </div>
     </>
   )
 }
+
+export const query = graphql`
+  query ParkSubPageDetails($slug: String) {
+    strapiParkSubPages(slug: { eq: $slug }) {
+      id
+      slug
+      title
+      oldUrl
+      content
+      seo {
+        metaDescription
+        metaKeywords
+        metaTitle
+      }
+      pageHeader {
+        imageAlt
+        imageCaption
+        imageUrl
+        introHtml
+        pageTitle
+      }
+      protectedArea {
+        slug
+        protectedAreaName
+      }
+    }
+    strapiWebsites(Name: { eq: "BCParks.ca" }) {
+      Footer
+      Header
+      Name
+      Navigation
+      id
+      homepage {
+        id
+        Template
+        Content {
+          id
+          strapi_component
+        }
+      }
+    }
+    allStrapiMenus(
+      sort: { fields: order, order: ASC }
+      filter: { show: { eq: true } }
+    ) {
+      nodes {
+        strapiId
+        title
+        url
+        order
+        id
+        imgUrl
+        strapiChildren {
+          id
+          title
+          url
+          order
+          parent
+        }
+        strapiParent {
+          id
+          title
+        }
+      }
+    }
+  }
+`
