@@ -215,7 +215,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     imgUrl: String
   }
 
-  type StrapiRedirectPath implements Node {
+  type StrapiRedirects implements Node {
     fromPath: String
     toPath: String
   }
