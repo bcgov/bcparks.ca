@@ -20,6 +20,7 @@ const pathsToDelete = [
   "/auth",
   "/connect",
   "/email",
+  "/redirects",
 ];
 const paths = data.paths;
 

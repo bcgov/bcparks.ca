@@ -28,6 +28,7 @@ const loadData = async () => {
       otherData.loadUrgency(),
       otherData.loadFireCentre(),
       otherData.loadFireZone(),
+      otherData.loadRedirects(),
     ]);
 
     // this is run on its own because sites need to be imported after 

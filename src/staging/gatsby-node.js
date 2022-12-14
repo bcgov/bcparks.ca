@@ -1,25 +1,26 @@
-const { graphql } = require("gatsby")
-const slugify = require("slugify")
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+const { graphql } = require("gatsby");
+const slugify = require("slugify");
+
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 const strapiApiRequest = (graphql, query) =>
   new Promise((resolve, reject) => {
     resolve(
-      graphql(query).then(result => {
+      graphql(query).then((result) => {
         if (result.errors) {
-          reject(result.errors)
+          reject(result.errors);
         }
-        return result
+        return result;
       })
-    )
-  })
+    );
+  });
 
 exports.onPostBuild = ({ reporter }) => {
-  reporter.info(`Pages have been built!`)
-}
+  reporter.info(`Pages have been built!`);
+};
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createFieldExtension, createTypes } = actions
+  const { createFieldExtension, createTypes } = actions;
 
   // Clean up any incoming slugs
   // TODO: make slug required in Strapi, after which this can be removed
@@ -29,17 +30,17 @@ exports.createSchemaCustomization = ({ actions }) => {
       return {
         resolve({ slug, protectedAreaName, orcs }) {
           if (slug) {
-            return slug
+            return slug;
           }
           // If we don't have a slug, fall back to name, then orcs
           if (protectedAreaName) {
-            return `parks/${slugify(protectedAreaName)}`
+            return `parks/${slugify(protectedAreaName)}`;
           }
-          return `parks/park-${orcs}`
+          return `parks/park-${orcs}`;
         },
-      }
+      };
     },
-  })
+  });
 
   const typeDefs = `
   type StrapiParkAccessStatus implements Node {
@@ -213,10 +214,15 @@ exports.createSchemaCustomization = ({ actions }) => {
     url: String
     imgUrl: String
   }
-  `
-  createTypes(typeDefs)
-}
 
+  type StrapiRedirectPath implements Node {
+    fromPath: String
+    toPath: String
+  }
+
+  `;
+  createTypes(typeDefs);
+};
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const staticQuery = `
   {
@@ -231,10 +237,64 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       }
     }
   }
-  `
+  `;
+  await createRedirects({ graphql, actions });
+  await createParks({ graphql, actions });
+  await createPageSlugs("static", staticQuery, { graphql, actions, reporter });
+};
 
-  await createParks({ graphql, actions })
-  await createPageSlugs("static", staticQuery, { graphql, actions, reporter })
+const parkQuery = `
+{
+  allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}) {
+    nodes {
+      id
+      orcs
+      protectedAreaName
+      slug  
+      url
+      oldUrl
+    }
+    totalCount
+  }
+}
+`;
+const staticQueryPath = `
+{ 
+  allStrapiRedirects {
+    nodes {
+      toPath
+      fromPath
+    }
+  }
+}`;
+
+async function createRedirects({ graphql, actions, result }) {
+  const response = await strapiApiRequest(graphql, staticQueryPath);
+  const redirects = response.data.allStrapiRedirects.nodes;
+
+  const resultPark = await strapiApiRequest(graphql, parkQuery);
+
+  let parks = resultPark.data.allStrapiProtectedArea.nodes;
+
+  parks.map((park) => {
+    redirects.map((item) => {
+
+      if (park.slug !== item.toPath) {
+        return actions.createRedirect({
+          fromPath: item.fromPath,
+          toPath: item.toPath,
+          isPermanent: true,
+          statusCode: 301,
+          force: true,
+        });
+      }
+      //  return actions.createRedirect({
+      //   fromPath: `/*`,
+      //   toPath: `/`,
+      //   statusCode: 404,
+      // });
+    });
+  });
 }
 
 async function createParks({ graphql, actions, reporter }) {
@@ -251,36 +311,36 @@ async function createParks({ graphql, actions, reporter }) {
       totalCount
     }
   }
-  `
-  const result = await strapiApiRequest(graphql, parkQuery)
+  `;
+  const result = await strapiApiRequest(graphql, parkQuery);
 
-  result.data.allStrapiProtectedArea.nodes.forEach(park => {
+  result.data.allStrapiProtectedArea.nodes.forEach((park) => {
     actions.createPage({
       path: park.urlPath,
       component: require.resolve(`./src/templates/park.js`),
       context: { ...park },
-    })
-  })
+    });
+  });
 }
 
 async function createPageSlugs(type, query, { graphql, actions, reporter }) {
-  const result = await graphql(query)
+  const result = await graphql(query);
   // Handle errors
   if (result.errors) {
     reporter.panicOnBuild(
       `Error while running GraphQL query - node create page.`
-    )
-    return
+    );
+    return;
   }
 
   if (type === "static") {
-    result.data.allStrapiPages.nodes.forEach(page => {
+    result.data.allStrapiPages.nodes.forEach((page) => {
       actions.createPage({
         path: page.Slug,
         component: require.resolve(`./src/templates/${page.Template}.js`),
         context: { page },
-      })
-    })
+      });
+    });
   }
 }
 
@@ -295,9 +355,7 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
           },
         ],
       },
-      plugins: [
-        new NodePolyfillPlugin()
-      ]
-    })
+      plugins: [new NodePolyfillPlugin()],
+    });
   }
-}
+};

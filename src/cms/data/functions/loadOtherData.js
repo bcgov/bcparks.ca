@@ -380,6 +380,17 @@ const loadStatutoryHolidays = async () => {
   }
 };
 
+const loadRedirects = async () => {
+  strapi.log.info("Loading url's..");
+  try {
+    var jsonData = fs.readFileSync("./data/redirects.json", "utf8");
+    const data = JSON.parse(jsonData);
+    await strapi.services["redirects"].createOrUpdate(data);
+  } catch (error) {
+    strapi.log.error(error);
+  }
+};
+
 const loadWebsites = async (formattedJson) => {
   try {
     const currentData = await strapi.services["website"].find();
@@ -481,4 +492,5 @@ module.exports = {
   loadPages,
   loadWebsites,
   loadMenus,
+  loadRedirects,
 };
