@@ -97,6 +97,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     hasDayUsePass: Boolean
     isDisplayed: Boolean
     parkContact: String
+    marineArea: Float
     urlPath: String @parkPath
     parkActivities: [StrapiParkActivities]
     parkFacilities: [StrapiParkFacilities]
