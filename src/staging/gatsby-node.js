@@ -298,7 +298,11 @@ async function createSites({ graphql, actions, reporter }) {
     const slug = slugify(site.siteName).toLowerCase()
     const parkPath = site.protectedArea?.urlPath
     // TODO: change sitePath `${parkPath}/${slug}` to `${parkPath}/${site.slug}` when site.slug has created on all strapi env
-    const sitePath = `${parkPath}/${slug}`
+    let sitePath = `${parkPath}/${slug}`
+    // If site doesn't have a relation with protectedArea, its path will be `parks/protected-area/${slug}`
+    if (!parkPath) {
+      sitePath = `parks/protected-area/${slug}`
+    }
     actions.createPage({
       path: sitePath,
       component: require.resolve(`./src/templates/site.js`),
