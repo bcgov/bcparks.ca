@@ -11,6 +11,9 @@
     "draftAndPublish": true
   },
   "attributes": {
+    "slug": {
+      "type": "string"
+    },
     "siteName": {
       "type": "string"
     },
@@ -60,6 +63,19 @@
     },
     "note": {
       "type": "string"
+    },
+    "hasDayUsePass": {
+      "type": "boolean"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "locationNotes": {
+      "type": "richtext"
+    },
+    "parkOperation": {
+      "via": "site",
+      "model": "park-operation"
     }
   }
 }

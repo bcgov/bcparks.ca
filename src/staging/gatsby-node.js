@@ -97,6 +97,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     hasDayUsePass: Boolean
     isDisplayed: Boolean
     parkContact: String
+    marineArea: Float
     urlPath: String @parkPath
     parkActivities: [StrapiParkActivities]
     parkFacilities: [StrapiParkFacilities]
@@ -219,6 +220,16 @@ exports.createSchemaCustomization = ({ actions }) => {
     title: String
     protectedArea: StrapiProtectedArea
   }
+
+  type StrapiSites implements Node {
+    siteName: String
+    siteNumber: Int
+    orcsSiteNumber: String
+    protectedArea: StrapiProtectedArea
+    parkActivities: [StrapiParkActivities]
+    parkFacilities: [StrapiParkFacilities]
+    parkOperation: StrapiParkOperation
+  }
   `
   createTypes(typeDefs)
 }
@@ -241,6 +252,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   await createParks({ graphql, actions })
   await createParkSubPages({ graphql, actions })
+  await createSites({ graphql, actions })
   await createPageSlugs("static", staticQuery, { graphql, actions, reporter })
 }
 
@@ -294,6 +306,43 @@ async function createParkSubPages({ graphql, actions, reporter }) {
       path: parkSubPagePath,
       component: require.resolve(`./src/templates/parkSubPage.js`),
       context: { ...parkSubPage },
+    })
+  })
+}
+
+async function createSites({ graphql, actions, reporter }) {
+  const siteQuery = `
+  {
+    allStrapiSites {
+      nodes {
+        id
+        siteName
+        siteNumber
+        orcsSiteNumber
+        protectedArea {
+          urlPath
+        }
+      }
+      totalCount
+    }
+  }
+  `
+  const result = await strapiApiRequest(graphql, siteQuery)
+
+  result.data.allStrapiSites.nodes.forEach(site => {
+    // TODO: slug can be deleted when site.slug has created on all strapi env
+    const slug = slugify(site.siteName).toLowerCase()
+    const parkPath = site.protectedArea?.urlPath
+    // TODO: change sitePath `${parkPath}/${slug}` to `${parkPath}/${site.slug}` when site.slug has created on all strapi env
+    let sitePath = `${parkPath}/${slug}`
+    // If site doesn't have a relation with protectedArea, its path will be `parks/protected-area/${slug}`
+    if (!parkPath) {
+      sitePath = `parks/protected-area/${slug}`
+    }
+    actions.createPage({
+      path: sitePath,
+      component: require.resolve(`./src/templates/site.js`),
+      context: { ...site },
     })
   })
 }

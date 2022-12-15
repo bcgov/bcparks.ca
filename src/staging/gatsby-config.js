@@ -37,7 +37,8 @@ module.exports = {
           "park-operation",
           "access-statuses",
           "park-operation-sub-areas",
-          "park-sub-pages"
+          "park-sub-pages",
+          "sites"
         ],
         queryLimit: -1,
       },
