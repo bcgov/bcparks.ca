@@ -3011,15 +3011,15 @@
       "adminNote": ""
     },
     {
-      "parkSubAreaId": 21,
+      "parkSubAreaId": 20,
       "isActive": true,
       "operatingYear": 2023,
-      "openDate": "2023-05-05",
-      "closeDate": "2023-11-30",
+      "openDate": "2023-05-04",
+      "closeDate": "2023-09-25",
       "serviceStartDate": "2023-05-04",
-      "serviceEndDate": "2023-10-08",
+      "serviceEndDate": "2023-09-25",
       "reservationStartDate": "2023-05-04",
-      "reservationEndDate": "2023-10-07",
+      "reservationEndDate": "2023-09-24",
       "offSeasonStartDate": "",
       "offSeasonEndDate": "",
       "adminNote": ""
@@ -3291,15 +3291,15 @@
       "adminNote": ""
     },
     {
-      "parkSubAreaId": 20,
+      "parkSubAreaId": 21,
       "isActive": true,
       "operatingYear": 2023,
       "openDate": "2023-05-08",
-      "closeDate": "2023-09-05",
+      "closeDate": "2023-09-25",
       "serviceStartDate": "2023-05-08",
-      "serviceEndDate": "2023-09-05",
+      "serviceEndDate": "2023-09-25",
       "reservationStartDate": "2023-05-08",
-      "reservationEndDate": "2023-09-04",
+      "reservationEndDate": "2023-09-24",
       "offSeasonStartDate": "",
       "offSeasonEndDate": "",
       "adminNote": ""
@@ -3319,29 +3319,15 @@
       "adminNote": ""
     },
     {
-      "parkSubAreaId": 511,
-      "isActive": true,
-      "operatingYear": 2023,
-      "openDate": "2023-05-08",
-      "closeDate": "2023-09-05",
-      "serviceStartDate": "2023-05-08",
-      "serviceEndDate": "2023-09-05",
-      "reservationStartDate": "2023-05-08",
-      "reservationEndDate": "2023-09-04",
-      "offSeasonStartDate": "",
-      "offSeasonEndDate": "",
-      "adminNote": ""
-    },
-    {
       "parkSubAreaId": 476,
       "isActive": true,
       "operatingYear": 2023,
       "openDate": "2023-05-08",
       "closeDate": "2023-09-05",
       "serviceStartDate": "2023-05-08",
-      "serviceEndDate": "2023-09-05",
+      "serviceEndDate": "2023-09-18",
       "reservationStartDate": "2023-05-08",
-      "reservationEndDate": "2023-09-04",
+      "reservationEndDate": "2023-09-17",
       "offSeasonStartDate": "",
       "offSeasonEndDate": "",
       "adminNote": ""
@@ -3426,6 +3412,20 @@
       "serviceEndDate": "2023-09-18",
       "reservationStartDate": "2023-05-11",
       "reservationEndDate": "2023-09-17",
+      "offSeasonStartDate": "",
+      "offSeasonEndDate": "",
+      "adminNote": ""
+    },
+    {
+      "parkSubAreaId": 511,
+      "isActive": true,
+      "operatingYear": 2023,
+      "openDate": "2023-05-11",
+      "closeDate": "2023-09-05",
+      "serviceStartDate": "2023-05-11",
+      "serviceEndDate": "2023-09-05",
+      "reservationStartDate": "2023-05-11",
+      "reservationEndDate": "2023-09-04",
       "offSeasonStartDate": "",
       "offSeasonEndDate": "",
       "adminNote": ""

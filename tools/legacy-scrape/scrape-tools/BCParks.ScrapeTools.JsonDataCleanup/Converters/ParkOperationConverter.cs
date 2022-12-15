@@ -26,6 +26,11 @@ public class ParkOperationConverter : ConverterBase
             // reservationNote was renamed to reservationsNote
             newItem.reservationsNote = item.reservationNote;
 
+            // remove generalNote if it contains the text "Attention Visitor Notice"
+            newItem.generalNote = newItem.generalNote.Contains("\"Attention Visitor Notice\"")
+                ? ""
+                : newItem.generalNote;
+
             newObj.Items.Add(newItem);
         }
 
