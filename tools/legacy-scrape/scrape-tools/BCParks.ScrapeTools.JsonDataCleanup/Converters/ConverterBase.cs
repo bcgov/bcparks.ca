@@ -21,6 +21,7 @@ public class ConverterBase
         Console.WriteLine("Reading " + rawFilePath);
 
         var rawJson = File.ReadAllText(rawFilePath);
+        rawJson = rawJson.Replace("�", " ");
 
         if (string.IsNullOrWhiteSpace(rawJson))
         {
