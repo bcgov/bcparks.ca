@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "redirects",
+  "collectionName": "legacy_redirects",
   "info": {
-    "name": "Redirects"
+    "name": "LegacyRedirect"
   },
   "options": {
     "increments": true,

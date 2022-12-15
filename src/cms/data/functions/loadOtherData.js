@@ -380,12 +380,12 @@ const loadStatutoryHolidays = async () => {
   }
 };
 
-const loadRedirects = async () => {
+const loadLegacyRedirect = async () => {
   strapi.log.info("Loading url's..");
   try {
-    var jsonData = fs.readFileSync("./data/redirects.json", "utf8");
+    var jsonData = fs.readFileSync("./data/legacy-redirect.json", "utf8");
     const data = JSON.parse(jsonData);
-    await strapi.services["redirects"].createOrUpdate(data);
+    await strapi.services["legacy-redirect"].createOrUpdate(data);
   } catch (error) {
     strapi.log.error(error);
   }
@@ -492,5 +492,5 @@ module.exports = {
   loadPages,
   loadWebsites,
   loadMenus,
-  loadRedirects,
+  loadLegacyRedirect,
 };

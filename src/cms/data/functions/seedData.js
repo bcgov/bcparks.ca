@@ -28,7 +28,7 @@ const loadData = async () => {
       otherData.loadUrgency(),
       otherData.loadFireCentre(),
       otherData.loadFireZone(),
-      otherData.loadRedirects(),
+      otherData.loadLegacyRedirect(),
     ]);
 
     // this is run on its own because sites need to be imported after 
@@ -92,6 +92,7 @@ const rewriteData = async () => {
       strapi.services["website"].delete(),
       strapi.services["page"].delete(),
       strapi.services["menu"].delete(),
+      strapi.services["legacy-redirect"].delete(),
     ])
     
     strapi.log.info("---------Removing all data completed---------");

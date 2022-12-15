@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/redirects",
-      "handler": "redirects.find",
+      "path": "/legacy-redirects",
+      "handler": "legacy-redirect.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/redirects/count",
-      "handler": "redirects.count",
+      "path": "/legacy-redirects/count",
+      "handler": "legacy-redirect.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/redirects/:id",
-      "handler": "redirects.findOne",
+      "path": "/legacy-redirects/:id",
+      "handler": "legacy-redirect.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/redirects",
-      "handler": "redirects.create",
+      "path": "/legacy-redirects",
+      "handler": "legacy-redirect.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/redirects/:id",
-      "handler": "redirects.update",
+      "path": "/legacy-redirects/:id",
+      "handler": "legacy-redirect.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/redirects/:id",
-      "handler": "redirects.delete",
+      "path": "/legacy-redirects/:id",
+      "handler": "legacy-redirect.delete",
       "config": {
         "policies": []
       }

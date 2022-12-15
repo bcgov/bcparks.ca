@@ -1,0 +1,9 @@
+{
+    "legacy-redirect": [
+      {
+        "fromPath": "/newPath",
+        "toPath": "/oldPath"
+      }
+    ]
+  }
+  

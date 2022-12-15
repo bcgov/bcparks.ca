@@ -260,7 +260,7 @@ const parkQuery = `
 `;
 const staticQueryPath = `
 { 
-  allStrapiRedirects {
+  allStrapiLegacyRedirect {
     nodes {
       toPath
       fromPath
@@ -268,15 +268,16 @@ const staticQueryPath = `
   }
 }`;
 
+
 async function createRedirects({ graphql, actions, result }) {
   const response = await strapiApiRequest(graphql, staticQueryPath);
-  const redirects = response.data.allStrapiRedirects.nodes;
+  const redirects = response.data.allStrapiLegacyRedirect.nodes;
 
   const resultPark = await strapiApiRequest(graphql, parkQuery);
 
   let parks = resultPark.data.allStrapiProtectedArea.nodes;
 
-  parks.map((park) => {
+  parks.forEach((park) => {
     redirects.map((item) => {
 
       if (park.slug !== item.toPath) {
