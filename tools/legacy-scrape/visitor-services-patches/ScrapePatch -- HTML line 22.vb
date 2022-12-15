@@ -1,1 +1,2 @@
+'InlineTags = Array("!--", "a", "i", "b", "sup", "sub", "strong", "img") 'never followed by a line break
 InlineTags = Array("!--", "a", "i", "b", "sup", "sub", "strong", "img", "u") 'never followed by a line break
