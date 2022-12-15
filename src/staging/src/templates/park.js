@@ -73,11 +73,18 @@ export default function ParkTemplate({ data }) {
     ["asc"]
   )
 
+  const campingFacilities = 
+    activeFacilities.filter(
+      facility => facility.facilityType.facilityName.toLowerCase().includes("camping")
+    )
+  
+  const nonCampingFacilities = 
+    activeFacilities.filter(
+      facility => !facility.facilityType.facilityName.toLowerCase().includes("camping")
+    )
+  
   const hasReservations = operations.hasReservations
   const hasDayUsePass = park.hasDayUsePass
-  const hasCamping = activeFacilities.some(facility =>
-    facility.facilityType.facilityName.toLowerCase().includes("camping")
-  )
 
   const menuContent = data?.allStrapiMenus?.nodes || []
 
@@ -175,13 +182,13 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 5,
       display: "Camping",
       link: "#park-camping-details-container",
-      visible: hasCamping,
+      visible: campingFacilities.length > 0,
     },
     {
       sectionIndex: 6,
       display: "Facilities",
       link: "#park-facility-container",
-      visible: activeFacilities.length > 0,
+      visible: nonCampingFacilities.length > 0,
     },
     {
       sectionIndex: 7,
@@ -368,7 +375,7 @@ export default function ParkTemplate({ data }) {
                 <div ref={campingRef} className="full-width">
                   <CampingDetails
                     data={{
-                      parkFacilities: activeFacilities,
+                      parkFacilities: campingFacilities,
                       reservations: park.reservations,
                       hasDayUsePass: hasDayUsePass,
                       hasReservations: hasReservations,
@@ -378,7 +385,7 @@ export default function ParkTemplate({ data }) {
               )}
               {menuItems[6].visible && (
                 <div ref={facilityRef} className="full-width">
-                  <ParkFacility data={activeFacilities} />
+                  <ParkFacility data={nonCampingFacilities} />
                 </div>
               )}
               {menuItems[7].visible && (

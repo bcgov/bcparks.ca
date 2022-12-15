@@ -16,9 +16,7 @@ function toCamping() {
 }
 
 export default function CampingDetails({ data }) {
-  const campingFacilities = data.parkFacilities.filter(facility =>
-    facility.facilityType.facilityName.toLowerCase().includes("camping")
-  )
+  const campingFacilities = data.parkFacilities
   const [reservationsExpanded, setReservationsExpanded] = useState(false)
   const [expanded, setExpanded] = useState(
     Array(campingFacilities.length).fill(false)
