@@ -199,7 +199,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     adminNote: String
   }
 
-
   type StrapiPublicAdvisoryProtectedAreas implements Node {
     hasCampfireBan: String
     hasSmokingBan: String
@@ -215,10 +214,27 @@ exports.createSchemaCustomization = ({ actions }) => {
     imgUrl: String
   }
 
+  type StrapiSeoComponent implements Node {
+    metaTitle: String
+    metaDescription: String
+    metaKeywords: String
+  }
+
+  type StrapiPageHeaderComponent implements Node {
+    pageTitle: String
+    imageUrl: String
+    imageAlt: String
+    imageCaption: String
+    introHtml: String
+  }
+
   type StrapiParkSubPages implements Node {
     slug: String
     title: String
+    oldUrl: String
     protectedArea: StrapiProtectedArea
+    seo: StrapiSeoComponent
+    pageHeader: StrapiPageHeaderComponent
   }
 
   type StrapiSites implements Node {
