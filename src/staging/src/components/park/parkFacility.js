@@ -73,7 +73,7 @@ export default function ParkFacility({ data }) {
             >
               <Accordion.Toggle
                 as={Container}
-                aria-controls={facility.activityName}
+                aria-controls={facility.facilityType.facilityName}
                 eventKey={"parkFacility" + index}
                 id={index}
                 onClick={() => toggleExpand(index)}
