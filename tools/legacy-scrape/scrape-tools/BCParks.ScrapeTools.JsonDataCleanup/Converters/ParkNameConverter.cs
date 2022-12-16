@@ -27,6 +27,9 @@ public class ParkNameConverter : ConverterBase
             // fix weird character at "Adams Lake Park — Bush Creek Site"
             newItem.parkName = newItem.parkName.Replace("�", "\u2014");
 
+            // remove the word Provincial from all park names as ler Lea
+            newItem.parkName = newItem.parkName.Replace(" Provincial ", " ");
+
             // unescape HTML
             if (newItem.nameTypeId != 2)
             {
