@@ -275,7 +275,9 @@ async function createParks({ graphql, actions, reporter }) {
 
   result.data.allStrapiProtectedArea.nodes.forEach(park => {
     actions.createPage({
-      path: park.urlPath,
+      // add a trailing slash park pages so they are treated as folders
+      // when resolving relative urls (so they can link to their child pages)
+      path: park.urlPath.replace(/\/$|$/, `/`),
       component: require.resolve(`./src/templates/park.js`),
       context: { ...park },
     })
