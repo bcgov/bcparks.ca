@@ -276,3 +276,9 @@ li.post-separator {
     }
   }
 }
+
+// Temp style for legacy links. Must be removed prior to deploy
+
+.legacy-link {
+  background-color: #FFFF00;
+}
