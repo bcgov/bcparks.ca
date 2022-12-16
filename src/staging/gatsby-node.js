@@ -1,6 +1,6 @@
 const { graphql } = require("gatsby")
 const slugify = require("slugify")
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
 
 const strapiApiRequest = (graphql, query) =>
   new Promise((resolve, reject) => {
@@ -254,6 +254,55 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   await createParkSubPages({ graphql, actions })
   await createSites({ graphql, actions })
   await createPageSlugs("static", staticQuery, { graphql, actions, reporter })
+  await createRedirects({ graphql, actions })
+}
+
+const parkQuery = `
+{
+  allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}) {
+    nodes {
+      id
+      orcs
+      protectedAreaName
+      slug  
+      url
+      oldUrl
+    }
+    totalCount
+  }
+}
+`
+const staticQueryPath = `
+{ 
+  allStrapiLegacyRedirect {
+    nodes {
+      toPath
+      fromPath
+    }
+  }
+}`
+
+async function createRedirects({ graphql, actions, result }) {
+  const response = await strapiApiRequest(graphql, staticQueryPath)
+  const redirects = response.data.allStrapiLegacyRedirect.nodes
+
+  const resultPark = await strapiApiRequest(graphql, parkQuery)
+
+  let parks = resultPark.data.allStrapiProtectedArea.nodes
+
+  parks.map(park => {
+    redirects.map(item => {
+      if (park.slug !== item.toPath) {
+        return actions.createRedirect({
+          fromPath: item.fromPath,
+          toPath: item.toPath,
+          isPermanent: true,
+          statusCode: 301,
+          force: true,
+        })
+      }
+    })
+  })
 }
 
 async function createParks({ graphql, actions, reporter }) {
