@@ -230,6 +230,11 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkFacilities: [StrapiParkFacilities]
     parkOperation: StrapiParkOperation
   }
+
+  type StrapiLegacyRedirect implements Node {
+    fromPath: String
+    toPath: String
+  }
   `
   createTypes(typeDefs)
 }
