@@ -82,7 +82,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
     const formattedEventTypes = eventTypesResponse[0].data.map((obj) => ({ label: obj.eventType, value: obj.eventType.toLowerCase() }))
     formattedEventTypes.splice(0, 0, defaultAdvisoryEventType)
-    setEventTypes(formattedEventTypes)
+    
+    const localeSortEvent  = formattedEventTypes?.sort((a, b) => a.value.localeCompare(b.value, 'en', { sensitivity: 'base' }));
+    
+    setEventTypes(localeSortEvent)
 
     let eventType = getAdvisoryTypeFromUrl()
     setAdvisoryType(eventType)
