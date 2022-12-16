@@ -306,7 +306,16 @@ public static class HtmlCleanup
             {
                 n.Attributes.Remove("class");
                 n.Attributes.Remove("id");
-                n.Attributes.Remove("style");
+                n.Attributes.Remove("style"); 
+                n.Attributes.Remove("data-lightbox");
+                n.Attributes.Remove("data-title");
+                n.Attributes.Remove("border");
+                n.Attributes.Remove("align");
+                n.Attributes.Remove("cellspacing");
+                n.Attributes.Remove("cellpadding");
+                n.Attributes.Remove("valign");
+                n.Attributes.Remove("bordercolor");
+                n.Attributes.Remove("bgcolor");
             });
 
         input = htmlDoc.DocumentNode.OuterHtml;
@@ -336,6 +345,34 @@ public static class HtmlCleanup
         foreach (var meta in metaTags)
         {
             meta.Remove();
+        }
+
+        // remove input tags
+        var inputTags = nodes.QuerySelectorAll("input");
+        foreach (var inputTag in inputTags)
+        {
+            inputTag.Remove();
+        }
+
+        // remove textarea tags
+        var textareaTags = nodes.QuerySelectorAll("textarea");
+        foreach (var textareaTag in textareaTags)
+        {
+            textareaTag.Remove();
+        }
+
+        // remove font tags
+        var fontTags = nodes.QuerySelectorAll("font");
+        foreach (var fontTag in fontTags)
+        {
+            fontTag.OuterHtml = fontTag.InnerHtml;
+        }
+
+        // remove form tags
+        var formTags = nodes.QuerySelectorAll("form");
+        foreach (var formTag in formTags)
+        {
+            formTag.OuterHtml = formTag.InnerHtml;
         }
 
         // add a "legacy-link" class to all html anchors
