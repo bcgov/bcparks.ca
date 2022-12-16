@@ -306,6 +306,7 @@ public static class HtmlCleanup
             {
                 n.Attributes.Remove("class");
                 n.Attributes.Remove("id");
+                n.Attributes.Remove("style");
             });
 
         input = htmlDoc.DocumentNode.OuterHtml;

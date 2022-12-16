@@ -56,7 +56,7 @@ public class ParkActivityXRefConverter : ConverterBase
                     newItem.description +=
                         "\n<p class=\"cycling-ebike-banned\">\n  Please note that bicycles with electric assist motors (e-bikes) are not allowed on the trails within  "
                         + GetParkName(newItem)
-                        + ". E-bikes are restricted to park roads and areas where motorized use is permitted as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling\">BC Parks cycling guidelines</a>. The only exception to this policy will be for authorized and identified trail maintenance bikes conducting work on behalf of BC Parks.\n</p>";
+                        + ". E-bikes are restricted to park roads and areas where motorized use is permitted. The only exception to this policy will be for authorized and identified trail maintenance bikes conducting work on behalf of BC Parks.\n</p>";
                 }
             }
 
@@ -67,7 +67,7 @@ public class ParkActivityXRefConverter : ConverterBase
                 newItem.description =
                     "\n<p>\n  Please note that bicycles with electric assist motors (e-bikes) are permitted on signed or designated trails within "
                     + GetParkName(newItem)
-                    + ", provided they meet the definitions and criteria for e-bike use as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling\">BC Parks cycling guidelines</a>.\n</p>";
+                    + ", provided they meet the definitions and criteria for e-bike use as outlined in the <a href=\"/plan-your-trip/things-to-do/cycling#page-section-248\">BC Parks cycling guidelines</a>.\n</p>";
             }
 
             newObj.Items.Add(newItem);
