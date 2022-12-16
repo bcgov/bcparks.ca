@@ -68,8 +68,8 @@ export default function ParkSubPage({ data }) {
     <Link key="2" href="/find-a-park">
       Find a Park
     </Link>,
-    <Link key="3" href={`/${park.slug}`}>
-      {park.protectedAreaName}
+    <Link key="3" href={`/${park?.slug ? park.slug : 'parks/protected-area'}`}>
+      {park?.protectedAreaName}
     </Link>,
     <div key="4" className="breadcrumb-text">
       {page.title}
@@ -104,7 +104,7 @@ export default function ParkSubPage({ data }) {
             </div>
           )}
           <h1 className="header-title">
-            {park.protectedAreaName}: {page.title}
+            {park?.protectedAreaName}: {page.title}
           </h1>
         </div>
       )}
