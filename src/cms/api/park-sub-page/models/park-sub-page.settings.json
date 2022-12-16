@@ -13,10 +13,11 @@
   "attributes": {
     "slug": {
       "type": "string",
-      "required": false
+      "required": true
     },
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "oldUrl": {
       "type": "string"
