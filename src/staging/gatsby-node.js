@@ -296,9 +296,6 @@ async function createRedirects({ graphql, actions, result }) {
         return actions.createRedirect({
           fromPath: item.fromPath,
           toPath: item.toPath,
-          isPermanent: true,
-          statusCode: 301,
-          force: true,
         })
       }
     })
