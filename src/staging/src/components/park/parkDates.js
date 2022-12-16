@@ -312,12 +312,7 @@ export default function ParkDates({ data }) {
                           <p>Off-season camping: {subArea.offSeasonDates}</p>
                         )}
                         {subArea.facilityName && (
-                          <p>
-                            Facility type: &nbsp;
-                            <a href={"#" + subArea.facilityType.facilityCode}>
-                              {subArea.facilityName}
-                            </a>
-                          </p>
+                          <p>Facility type: {subArea.facilityName}</p>
                         )}
                         {subAreasNotesList
                           .filter(note => subArea[note.noteVar])
