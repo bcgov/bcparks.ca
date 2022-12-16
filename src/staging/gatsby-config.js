@@ -38,7 +38,8 @@ module.exports = {
           "access-statuses",
           "park-operation-sub-areas",
           "park-sub-pages",
-          "sites"
+          "sites",
+          "legacy-redirect",
         ],
         queryLimit: -1,
       },
