@@ -39,7 +39,6 @@ module.exports = {
           "park-operation-sub-areas",
           "park-sub-pages",
           "sites",
-          "legacy-redirect",
         ],
         queryLimit: -1,
       },
