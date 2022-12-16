@@ -262,7 +262,7 @@ public static class HtmlCleanup
             { "/volunteers/recognition/", "/get-involved/volunteer/awards" },
             { "/wildfire/", "/active-advisories/?type=wildfire%20nearby" },
             // mappings from sub-page slugs
-            { "nat_cul.html", "nature-and-culture" },
+            { "nat_cul.html", "nature-culture" },
             { "hiking.html", "hiking" },
             { "trails.html", "trails" },
             { "climbing.html", "climbing" },
@@ -411,6 +411,16 @@ public static class HtmlCleanup
             else if (href.StartsWith("photos"))
             {
                 link.Remove();
+            }
+            else if (!href.Contains("/") && href.Contains(".html"))
+            {
+                var slugifiedChildUrl = href.Replace(".html", "")
+                    .Replace("_", "-")
+                    .Trim()
+                    .ToLower();
+                link.SetAttribute("href", slugifiedChildUrl);
+                // still add the legacy-link class because these require human review
+                link.ClassList.Add("legacy-link");
             }
             // don't add the class to absolute urls, mailto links, or named anchors
             else if (
