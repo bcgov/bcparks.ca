@@ -306,7 +306,7 @@ public static class HtmlCleanup
             {
                 n.Attributes.Remove("class");
                 n.Attributes.Remove("id");
-                n.Attributes.Remove("style"); 
+                n.Attributes.Remove("style");
                 n.Attributes.Remove("data-lightbox");
                 n.Attributes.Remove("data-title");
                 n.Attributes.Remove("border");
@@ -380,11 +380,11 @@ public static class HtmlCleanup
         foreach (var link in links)
         {
             var href = (link.GetAttribute("href") ?? "").ToLower();
-            href = href.Split("#")[0];
             var hash = "";
             if (href.Split("#").Length > 1)
             {
                 hash = href.Split("#")[1];
+                href = href.Split("#")[0];
             }
 
             if (href.StartsWith("/accessibility/parks/"))

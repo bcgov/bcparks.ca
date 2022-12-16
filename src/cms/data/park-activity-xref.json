@@ -4,7 +4,7 @@
       "activityNumber": "1",
       "orcs": "1",
       "orcsSiteNumber": "1",
-      "description": "<div>\n  <iframe width=\"374\" height=\"210\" src=\"https://www.youtube-nocookie.com/embed/y2-H2vRsW2k\" title=\"Mount Albert Edward Trail Safety Video\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"> \n  </iframe>\n  <p>\n    In-depth visual planning resources to help hikers make informed decisions and stay safe along Mount Albert Edward Trail.\n  </p>\n</div>\n<p>\n  Visitors to Strathcona have numerous hiking trails to enjoy, ranging from 20-minute ambles to arduous, multi-day hikes and mountaineering adventures. School groups planning to hike in Strathcona Park are asked to\n  <a href=\"schoolreg-2.html\" class=\"legacy-link\">\n    register</a>\n  with the Vancouver Island Region. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n</p>\n<ul>\n  <li>\n    <a href=\"buttle.html\" class=\"legacy-link\">\n      Buttle Lake area trails</a>\n  </li>\n  <li>\n    <a href=\"forbid.html\" class=\"legacy-link\">\n      Forbidden Plateau area trails</a>\n  </li>\n  <li>\n    <a href=\"albert-edward.html\" class=\"legacy-link\">\n      Mt. Albert Edward route</a>\n  </li>\n  <li>\n    <a href=\"trails\">\n      Nature walks and short trails</a>\n  </li>\n  <li>\n    <a href=\"trails\">\n      Other hiking trails</a>\n  </li>\n</ul>\n<h4>Current Trail Conditions</h4>\n<p>\n  Please be advised that most trails are snow covered from late October/November until at least June, and for higher elevation trails, often until mid July. For those exploring the park during the snow cover season, you should be well equipped for changing conditions and check avalanche reports prior to heading out.\n</p>\n<ul>\n  <li>\n    <a href=\"trail_report.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Trail Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (September 21, 2022) (available seasonally from May through October)\n    </span>\n  </li>\n  <li>\n    <a href=\"docs/paradise-meadows-parking-restrictions-for-the-winter-season.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Paradise Meadows Parking Restrictions for the Winter Season\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (December 10, 2019)\n    </span>\n  </li>\n</ul>\n<ul>\n  <li>\n    <a href=\"docs/centennial_trail.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Paradise Meadows Barrier-Free Centennial Trail\n      <span>\n        [PDF 3.6MB]\n      </span>\n    </a>\n    – an easily accessible sub-alpine trail which is suitable for everyone.\n  </li>\n</ul>",
+      "description": "<div>\n  <iframe width=\"374\" height=\"210\" src=\"https://www.youtube-nocookie.com/embed/y2-H2vRsW2k\" title=\"Mount Albert Edward Trail Safety Video\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"> \n  </iframe>\n  <p>\n    In-depth visual planning resources to help hikers make informed decisions and stay safe along Mount Albert Edward Trail.\n  </p>\n</div>\n<p>\n  Visitors to Strathcona have numerous hiking trails to enjoy, ranging from 20-minute ambles to arduous, multi-day hikes and mountaineering adventures. School groups planning to hike in Strathcona Park are asked to\n  <a href=\"schoolreg-2.html\" class=\"legacy-link\">\n    register</a>\n  with the Vancouver Island Region. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n</p>\n<ul>\n  <li>\n    <a href=\"buttle.html\" class=\"legacy-link\">\n      Buttle Lake area trails</a>\n  </li>\n  <li>\n    <a href=\"forbid.html\" class=\"legacy-link\">\n      Forbidden Plateau area trails</a>\n  </li>\n  <li>\n    <a href=\"albert-edward.html\" class=\"legacy-link\">\n      Mt. Albert Edward route</a>\n  </li>\n  <li>\n    <a href=\"trails#nature_walks\">\n      Nature walks and short trails</a>\n  </li>\n  <li>\n    <a href=\"trails#other_trails\">\n      Other hiking trails</a>\n  </li>\n</ul>\n<h4>Current Trail Conditions</h4>\n<p>\n  Please be advised that most trails are snow covered from late October/November until at least June, and for higher elevation trails, often until mid July. For those exploring the park during the snow cover season, you should be well equipped for changing conditions and check avalanche reports prior to heading out.\n</p>\n<ul>\n  <li>\n    <a href=\"trail_report.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Trail Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (September 21, 2022) (available seasonally from May through October)\n    </span>\n  </li>\n  <li>\n    <a href=\"docs/paradise-meadows-parking-restrictions-for-the-winter-season.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Paradise Meadows Parking Restrictions for the Winter Season\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (December 10, 2019)\n    </span>\n  </li>\n</ul>\n<ul>\n  <li>\n    <a href=\"docs/centennial_trail.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Paradise Meadows Barrier-Free Centennial Trail\n      <span>\n        [PDF 3.6MB]\n      </span>\n    </a>\n    – an easily accessible sub-alpine trail which is suitable for everyone.\n  </li>\n</ul>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -116,7 +116,7 @@
       "activityNumber": "1",
       "orcs": "19",
       "orcsSiteNumber": "19",
-      "description": "For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n<ul>\n  <li>\n    <a href=\"hiking\">\n      Trail Information</a>\n  </li>\n</ul>",
+      "description": "For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n<ul>\n  <li>\n    <a href=\"hiking#hiking\">\n      Trail Information</a>\n  </li>\n</ul>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -468,7 +468,7 @@
       "activityNumber": "1",
       "orcs": "90",
       "orcsSiteNumber": "90",
-      "description": "There are 10 trails in this park and they include: The\n<a href=\"trails\">\n  Four Lakes Trail</a>,\n<a href=\"trails\">\n  Mike’s Loop</a>, Stump Lake Loop Trail, Alice Lake Loop Trail, Swamp Lantern Interpretive Loop Trail,\n<a href=\"trails\">\n  Bob MacIntosh Memorial Trail</a>,\n<a href=\"trails\">\n  Jacks Trail</a>,\n<a href=\"trails\">\n  DeBeck’s Hill Trail</a>,\n<a href=\"trails\">\n  Tracks from Hell Trail</a>\nand trails to the Lower Alice Ridge. The last five trails head out of the park. For your own safety and preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroy plant life and soil structure.",
+      "description": "There are 10 trails in this park and they include: The\n<a href=\"trails#fourlakes\">\n  Four Lakes Trail</a>,\n<a href=\"trails#othertrails\">\n  Mike’s Loop</a>, Stump Lake Loop Trail, Alice Lake Loop Trail, Swamp Lantern Interpretive Loop Trail,\n<a href=\"trails#othertrails\">\n  Bob MacIntosh Memorial Trail</a>,\n<a href=\"trails#othertrails\">\n  Jacks Trail</a>,\n<a href=\"trails#debecks\">\n  DeBeck’s Hill Trail</a>,\n<a href=\"trails#othertrails\">\n  Tracks from Hell Trail</a>\nand trails to the Lower Alice Ridge. The last five trails head out of the park. For your own safety and preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroy plant life and soil structure.",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -940,7 +940,7 @@
       "activityNumber": "1",
       "orcs": "206",
       "orcsSiteNumber": "206",
-      "description": "There are hikes that do not require technical mountaineering skills. Trails to Conrad Kain Hut and Cobalt Lake offer superb scenic values for the experienced, physically fit and well equipped hiker. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroy plant life and soil structure.\n<ul>\n  <li>\n    <a href=\"hiking\">\n      Hiking Trails in Bugaboo Provincial Park</a>\n  </li>\n</ul>\n<ul>\n  <li>\n    <a href=\"trail_report.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Trail Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (August 8, 2022)\n    </span>\n    <br>\n    <em>\n      Please note: Trail reports updated regularly in May-August as the trail melts.\n    </em>\n  </li>\n</ul>",
+      "description": "There are hikes that do not require technical mountaineering skills. Trails to Conrad Kain Hut and Cobalt Lake offer superb scenic values for the experienced, physically fit and well equipped hiker. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroy plant life and soil structure.\n<ul>\n  <li>\n    <a href=\"hiking#hiking\">\n      Hiking Trails in Bugaboo Provincial Park</a>\n  </li>\n</ul>\n<ul>\n  <li>\n    <a href=\"trail_report.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Trail Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (August 8, 2022)\n    </span>\n    <br>\n    <em>\n      Please note: Trail reports updated regularly in May-August as the trail melts.\n    </em>\n  </li>\n</ul>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -1084,7 +1084,7 @@
       "activityNumber": "1",
       "orcs": "238",
       "orcsSiteNumber": "238",
-      "description": "There is a hiking trail from Mowdade Lake to Buckley Lake. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n<ul>\n  <li>\n    <a href=\"camp-hike\">\n      Hiking Routes and Camping</a>\n  </li>\n</ul>",
+      "description": "There is a hiking trail from Mowdade Lake to Buckley Lake. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n<ul>\n  <li>\n    <a href=\"camp-hike#hiking\">\n      Hiking Routes and Camping</a>\n  </li>\n</ul>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -1124,7 +1124,7 @@
       "activityNumber": "1",
       "orcs": "247",
       "orcsSiteNumber": "247",
-      "description": "There are several great\n<a href=\"hiking\">\n  hiking trails</a>\nin this park. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n<ul>\n  <li>\n    <a href=\"trail_report.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Trail Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (August 29, 2022)\n    </span>\n    <br>\n    <em>\n      Trail reports updated regularly May-August as trails melt out.\n    </em>\n  </li>\n</ul>",
+      "description": "There are several great\n<a href=\"hiking#hiking\">\n  hiking trails</a>\nin this park. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n<ul>\n  <li>\n    <a href=\"trail_report.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Trail Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (August 29, 2022)\n    </span>\n    <br>\n    <em>\n      Trail reports updated regularly May-August as trails melt out.\n    </em>\n  </li>\n</ul>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -1284,7 +1284,7 @@
       "activityNumber": "1",
       "orcs": "276",
       "orcsSiteNumber": "276",
-      "description": "<p>\n  Hikers will enjoy the two distinct topographical areas, upland and flat delta, which have created a great terrain for hiking. There is a trail to Upper Canyon, which has beautiful views of the lake. There are some rough sections along the 2.5 km trail. A self-guiding nature trail has interpretative stops to Margaret Falls. Campground Hosts (if available) can assist with area information. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n</p>\n<ul>\n  <li>\n    <a href=\"hiking\">\n      Trail Information</a>\n  </li>\n</ul>",
+      "description": "<p>\n  Hikers will enjoy the two distinct topographical areas, upland and flat delta, which have created a great terrain for hiking. There is a trail to Upper Canyon, which has beautiful views of the lake. There are some rough sections along the 2.5 km trail. A self-guiding nature trail has interpretative stops to Margaret Falls. Campground Hosts (if available) can assist with area information. For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n</p>\n<ul>\n  <li>\n    <a href=\"hiking#hiking\">\n      Trail Information</a>\n  </li>\n</ul>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -1300,7 +1300,7 @@
       "activityNumber": "1",
       "orcs": "278",
       "orcsSiteNumber": "278",
-      "description": "<p>\n  For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n</p>\n<ul>\n  <li>\n    <a href=\"hike-ski\">\n      Summer hiking trails in Cypress Provincial Park</a>\n  </li>\n  <li>\n    <a href=\"hike-ski\">\n      Winter hiking trails in Cypress Provincial Park</a>\n  </li>\n</ul>\n<ul>\n  <li>\n    <a href=\"trail-report-cypress.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Trail Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (February 24, 2022)\n    </span>\n  </li>\n</ul>\n<div>\n  <div>\n    <div>\n      <iframe width=\"374\" height=\"210\" src=\"https://www.youtube-nocookie.com/embed/_T6oc8aaHaY\" title=\"Eagle Bluffs Trail Safety Video\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"> \n      </iframe>\n      <p>\n        In-depth visual planning resources to help hikers make informed decisions and stay safe along Eagle Bluffs Trail.\n      </p>\n    </div>\n    <div>\n      <iframe width=\"374\" height=\"210\" src=\"https://www.youtube-nocookie.com/embed/cG8lD9_kkdE\" title=\"Howe Sound Crest Trail Safety Video\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"> \n      </iframe>\n      <p>\n        In-depth visual planning resources to help hikers make informed decisions and stay safe along Howe Sound Crest Trail.\n      </p>\n    </div>\n  </div>\n</div>",
+      "description": "<p>\n  For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n</p>\n<ul>\n  <li>\n    <a href=\"hike-ski#hiking\">\n      Summer hiking trails in Cypress Provincial Park</a>\n  </li>\n  <li>\n    <a href=\"hike-ski#winter-access-trails\">\n      Winter hiking trails in Cypress Provincial Park</a>\n  </li>\n</ul>\n<ul>\n  <li>\n    <a href=\"trail-report-cypress.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Trail Report\n      <span>\n        [PDF]\n      </span>\n    </a>\n    <span>\n      (February 24, 2022)\n    </span>\n  </li>\n</ul>\n<div>\n  <div>\n    <div>\n      <iframe width=\"374\" height=\"210\" src=\"https://www.youtube-nocookie.com/embed/_T6oc8aaHaY\" title=\"Eagle Bluffs Trail Safety Video\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"> \n      </iframe>\n      <p>\n        In-depth visual planning resources to help hikers make informed decisions and stay safe along Eagle Bluffs Trail.\n      </p>\n    </div>\n    <div>\n      <iframe width=\"374\" height=\"210\" src=\"https://www.youtube-nocookie.com/embed/cG8lD9_kkdE\" title=\"Howe Sound Crest Trail Safety Video\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"\"> \n      </iframe>\n      <p>\n        In-depth visual planning resources to help hikers make informed decisions and stay safe along Howe Sound Crest Trail.\n      </p>\n    </div>\n  </div>\n</div>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -1844,7 +1844,7 @@
       "activityNumber": "1",
       "orcs": "409",
       "orcsSiteNumber": "409",
-      "description": "<p>\n  The backcountry of Ts’ilʔos Park is recommended for experienced travellers only who are equipped for trail finding, first aid, and survival situations. Hiking routes are not maintained and there are no facilities.\n</p>\n<p>\n  In order to meet budget targets, trail maintenance has been reduced on the Yohetta/Tzchaikazan Loop Trail in this park. Although this trail will remain open, users may encounter fallen trees and/or trail wash-outs. Extra caution is advised.\n</p>\n<p>\n  For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n</p>\n<ul>\n  <li>\n    <a href=\"camp-hike\">\n      Trail Information</a>\n  </li>\n</ul>",
+      "description": "<p>\n  The backcountry of Ts’ilʔos Park is recommended for experienced travellers only who are equipped for trail finding, first aid, and survival situations. Hiking routes are not maintained and there are no facilities.\n</p>\n<p>\n  In order to meet budget targets, trail maintenance has been reduced on the Yohetta/Tzchaikazan Loop Trail in this park. Although this trail will remain open, users may encounter fallen trees and/or trail wash-outs. Extra caution is advised.\n</p>\n<p>\n  For your own safety and the preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.\n</p>\n<ul>\n  <li>\n    <a href=\"camp-hike#hiking\">\n      Trail Information</a>\n  </li>\n</ul>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -2708,7 +2708,7 @@
       "activityNumber": "1",
       "orcs": "9548",
       "orcsSiteNumber": "9548",
-      "description": "<p>\n  The value of Granby Provincial Park lies in its lack of development. This wilderness character is evident in the trail system, resulting in challenging yet rewarding hiking experiences.\n  <a href=\"nature-and-culture\">\n    Trails within the park</a>\n  are unmarked and may be overgrown or in disrepair. See below for trail descriptions. These descriptions are not meant to be used for navigation.\n</p>",
+      "description": "<p>\n  The value of Granby Provincial Park lies in its lack of development. This wilderness character is evident in the trail system, resulting in challenging yet rewarding hiking experiences.\n  <a href=\"nature-and-culture#hiking\">\n    Trails within the park</a>\n  are unmarked and may be overgrown or in disrepair. See below for trail descriptions. These descriptions are not meant to be used for navigation.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -2716,7 +2716,7 @@
       "activityNumber": "1",
       "orcs": "9549",
       "orcsSiteNumber": "9549",
-      "description": "There are over 48 km of trails in the park.\n<a href=\"nature-and-culture\">\n  View detailed trail information »</a>",
+      "description": "There are over 48 km of trails in the park.\n<a href=\"nature-and-culture#hiking\">\n  View detailed trail information »</a>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -6508,7 +6508,7 @@
       "activityNumber": "5",
       "orcs": "19",
       "orcsSiteNumber": "19",
-      "description": "There are extensive\n<a href=\"fish-hunt\">\n  fishing</a>\nopportunities at this park. Anyone fishing or angling in British Columbia must have an\n<a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n  appropriate licence</a>.",
+      "description": "There are extensive\n<a href=\"fish-hunt#fishing\">\n  fishing</a>\nopportunities at this park. Anyone fishing or angling in British Columbia must have an\n<a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n  appropriate licence</a>.",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -10108,7 +10108,7 @@
       "activityNumber": "5",
       "orcs": "247",
       "orcsSiteNumber": "247",
-      "description": "<a href=\"camp-fish\">\n  Fishing</a>\nis a major attraction at this park, particularly in Fish Lake which has a trail circumnavigating the lake for access. Anyone fishing or angling in British Columbia must have an\n<a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n  appropriate licence</a>.",
+      "description": "<a href=\"camp-fish#fishing\">\n  Fishing</a>\nis a major attraction at this park, particularly in Fish Lake which has a trail circumnavigating the lake for access. Anyone fishing or angling in British Columbia must have an\n<a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n  appropriate licence</a>.",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -10140,7 +10140,7 @@
       "activityNumber": "5",
       "orcs": "253",
       "orcsSiteNumber": "253",
-      "description": "<a href=\"camp-fish\">\n  Fishing in Elk Lakes Provincial Park</a>\nis often rewarding; species found are Bull trout, Rocky Mountain whitefish and Cutthroat trout. Anyone fishing or angling in British Columbia must have an\n<a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n  appropriate licence</a>. Consult the\n<a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n  B.C. Sport Fishing Regulations</a>\nfor special restrictions.",
+      "description": "<a href=\"camp-fish#fishing\">\n  Fishing in Elk Lakes Provincial Park</a>\nis often rewarding; species found are Bull trout, Rocky Mountain whitefish and Cutthroat trout. Anyone fishing or angling in British Columbia must have an\n<a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n  appropriate licence</a>. Consult the\n<a href=\"/explore/fishreg.html\" class=\"legacy-link\">\n  B.C. Sport Fishing Regulations</a>\nfor special restrictions.",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -14612,7 +14612,7 @@
       "activityNumber": "7",
       "orcs": "9482",
       "orcsSiteNumber": "9482",
-      "description": "There is no viewing platform but it is possible to see\n<a href=\"nature-and-culture\">\n  California bighorn sheep and mule deer</a>\nthroughout the park.",
+      "description": "There is no viewing platform but it is possible to see\n<a href=\"nature-and-culture#wildlife\">\n  California bighorn sheep and mule deer</a>\nthroughout the park.",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -23212,7 +23212,7 @@
       "activityNumber": "13",
       "orcs": "8299",
       "orcsSiteNumber": "8299",
-      "description": "<ul>\n  <li>\n    <a href=\"trails\">\n      Horse Riders’ Backcountry Ethics</a>\n  </li>\n</ul>\n<p>\n  Horses are a traditional way to travel in the area; however, horses’ hooves each exert over 1,500 p.s.i. of pressure every time they hit the ground, which can greatly impact trails and campsites. Review the\n  <a href=\"https://bcparks.ca/explore/parkpgs/redfern/trails.html#ethics\">\n    Horse Riders’ Backcountry Ethics</a>\n  adapted for Redfern-Keily Provincial Park to reduce impacts to the environment and keep the park accessible to riders in years to come.\n</p>",
+      "description": "<ul>\n  <li>\n    <a href=\"trails#ethics\">\n      Horse Riders’ Backcountry Ethics</a>\n  </li>\n</ul>\n<p>\n  Horses are a traditional way to travel in the area; however, horses’ hooves each exert over 1,500 p.s.i. of pressure every time they hit the ground, which can greatly impact trails and campsites. Review the\n  <a href=\"https://bcparks.ca/explore/parkpgs/redfern/trails.html#ethics\">\n    Horse Riders’ Backcountry Ethics</a>\n  adapted for Redfern-Keily Provincial Park to reduce impacts to the environment and keep the park accessible to riders in years to come.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -26548,7 +26548,7 @@
       "activityNumber": "17",
       "orcs": "278",
       "orcsSiteNumber": "278",
-      "description": "<p>\n  Cypress Mountain Resort is located within the provincial park. They offer a full range of downhill skiing&nbsp;&amp; snowboarding, cross-country skiing, a snow tubing park with a tube tow and 11 km of marked of self guided interpretive snowshoeing trails in the Nordic ski area. The\n  <a href=\"hike-ski\">\n    Alpine Ski Area</a>\n  features 6 chairlifts and 2 high speed quad chairs, 2 quad chairs and 2 double chairs. There is also a a magic carpet for Skooters (Kids Camp) that services 53 ski runs for all levels of ability.\n</p>\n<p>\n  BC Parks maintains three\n  <a href=\"hike-ski\">\n    backcountry winter trails</a>\n  for snowshoeing and backcountry skiing, the\n  <strong>Bowen Look-out</strong>, the\n  <strong>Black Mountain Plateau</strong>, and the\n  <strong>Hollyburn Peak</strong>\n  trails. Tobogganing is only permitted in the designated area.\n</p>\n<ul>\n  <li>\n    <a href=\"winter-trails-and-bac.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Winter trail and backcountry corridor map\n      <span>\n        [PDF]\n      </span>\n    </a>\n  </li>\n</ul>\n<p>\n  <strong>Parking:</strong>\n  During the peak winter months, parking capacity can be exceeded at the upper parking lots of Cypress Park. These parking lots service the customers of Cypress Mountain Resort who pay a fee to ski, snowboard, snowshoe and snowtube, as well as the general public that comes to play in the park. Please do your part to ensure there is sufficient parking for everyone. Be sure to carpool, or consider taking the Cypress Coach Lines bus.\n</p>\n<p>\n  Tobogganing is only permitted in the designated area. Grouse Mountain and Mount Seymour offer skiing opportunities nearby.\n</p>",
+      "description": "<p>\n  Cypress Mountain Resort is located within the provincial park. They offer a full range of downhill skiing&nbsp;&amp; snowboarding, cross-country skiing, a snow tubing park with a tube tow and 11 km of marked of self guided interpretive snowshoeing trails in the Nordic ski area. The\n  <a href=\"hike-ski#skiing\">\n    Alpine Ski Area</a>\n  features 6 chairlifts and 2 high speed quad chairs, 2 quad chairs and 2 double chairs. There is also a a magic carpet for Skooters (Kids Camp) that services 53 ski runs for all levels of ability.\n</p>\n<p>\n  BC Parks maintains three\n  <a href=\"hike-ski#winter-access-trails\">\n    backcountry winter trails</a>\n  for snowshoeing and backcountry skiing, the\n  <strong>Bowen Look-out</strong>, the\n  <strong>Black Mountain Plateau</strong>, and the\n  <strong>Hollyburn Peak</strong>\n  trails. Tobogganing is only permitted in the designated area.\n</p>\n<ul>\n  <li>\n    <a href=\"winter-trails-and-bac.pdf\" target=\"_blank\" class=\"legacy-link\">\n      Winter trail and backcountry corridor map\n      <span>\n        [PDF]\n      </span>\n    </a>\n  </li>\n</ul>\n<p>\n  <strong>Parking:</strong>\n  During the peak winter months, parking capacity can be exceeded at the upper parking lots of Cypress Park. These parking lots service the customers of Cypress Mountain Resort who pay a fee to ski, snowboard, snowshoe and snowtube, as well as the general public that comes to play in the park. Please do your part to ensure there is sufficient parking for everyone. Be sure to carpool, or consider taking the Cypress Coach Lines bus.\n</p>\n<p>\n  Tobogganing is only permitted in the designated area. Grouse Mountain and Mount Seymour offer skiing opportunities nearby.\n</p>",
       "isActivityOpen": true,
       "isActive": true
     },
@@ -28836,7 +28836,7 @@
       "activityNumber": "1",
       "orcs": "0",
       "orcsSiteNumber": "199",
-      "description": "There are several well-defined\n<a href=\"hiking\">\n  hiking trails in this park</a>. Hikers will require at least a full day to hike one-way into the core area. For your own safety and preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.",
+      "description": "There are several well-defined\n<a href=\"hiking#hiking\">\n  hiking trails in this park</a>. Hikers will require at least a full day to hike one-way into the core area. For your own safety and preservation of the park, obey posted signs and keep to designated trails. Shortcutting trails destroys plant life and soil structure.",
       "isActivityOpen": true,
       "isActive": true
     },
