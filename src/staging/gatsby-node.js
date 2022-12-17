@@ -294,19 +294,17 @@ async function createRedirects({ graphql, actions, result }) {
   const resultPark = await strapiApiRequest(graphql, parkQuery)
 
   const redirects = response.data.allStrapiLegacyRedirect.nodes
+  const parks = resultPark.data.allStrapiProtectedArea.nodes
+  
   redirects.map(item => {
     return actions.createRedirect({
       fromPath: item.fromPath,
       toPath: item.toPath,
     })
   })
-
-  const parks = resultPark.data.allStrapiProtectedArea.nodes
   parks.map(park => {
     const oldUrl = parseUrl(park.oldUrl);
-
     if(oldUrl.pathname !== `/${park.slug}/`) {
-
       return actions.createRedirect({
         fromPath: oldUrl.pathname,
         toPath: park.slug,
