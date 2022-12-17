@@ -1,6 +1,8 @@
 const { graphql } = require("gatsby")
 const slugify = require("slugify")
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
+const parseUrl = require("parse-url")
+
 
 const strapiApiRequest = (graphql, query) =>
   new Promise((resolve, reject) => {
@@ -289,21 +291,26 @@ const staticQueryPath = `
 
 async function createRedirects({ graphql, actions, result }) {
   const response = await strapiApiRequest(graphql, staticQueryPath)
-  const redirects = response.data.allStrapiLegacyRedirect.nodes
-
   const resultPark = await strapiApiRequest(graphql, parkQuery)
 
-  let parks = resultPark.data.allStrapiProtectedArea.nodes
-
-  parks.map(park => {
-    redirects.map(item => {
-      if (park.slug !== item.toPath) {
-        return actions.createRedirect({
-          fromPath: item.fromPath,
-          toPath: item.toPath,
-        })
-      }
+  const redirects = response.data.allStrapiLegacyRedirect.nodes
+  redirects.map(item => {
+    return actions.createRedirect({
+      fromPath: item.fromPath,
+      toPath: item.toPath,
     })
+  })
+
+  const parks = resultPark.data.allStrapiProtectedArea.nodes
+  parks.map(park => {
+    const oldUrl = parseUrl(park.oldUrl);
+
+    if(oldUrl.pathname !== `/${park.slug}`) {
+      return actions.createRedirect({
+        fromPath: oldUrl.pathname,
+        toPath: park.slug,
+      })
+    }
   })
 }
 
