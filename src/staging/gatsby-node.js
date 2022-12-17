@@ -241,7 +241,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     siteName: String
     siteNumber: Int
     orcsSiteNumber: String
-    content: [Node]!
     protectedArea: StrapiProtectedArea
     parkActivities: [StrapiParkActivities]
     parkFacilities: [StrapiParkFacilities]
