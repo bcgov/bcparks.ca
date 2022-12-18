@@ -13,8 +13,8 @@ const loadParkSubpages = async () => {
     const strapiData =
     {
       slug: page.slug,
-      protectedArea: protectedArea.id,
-      title: page.title,
+      protectedArea: protectedArea?.id,
+      title: page.heading,
       oldUrl: page.oldUrl,
       content: [
         {
@@ -22,8 +22,8 @@ const loadParkSubpages = async () => {
           "HTML": page.content
         }
       ],
-      pageHeader: {
-        pageTitle: page.heading
+      seo: {
+        metaTitle: page.title
       }
     };
     await strapi.services["park-sub-page"].create(strapiData);
