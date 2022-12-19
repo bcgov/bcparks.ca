@@ -201,7 +201,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     adminNote: String
   }
 
-
   type StrapiPublicAdvisoryProtectedAreas implements Node {
     hasCampfireBan: String
     hasSmokingBan: String
@@ -217,9 +216,25 @@ exports.createSchemaCustomization = ({ actions }) => {
     imgUrl: String
   }
 
+  type StrapiPageHeaderComponent implements Node {
+    pageTitle: String
+    introHtml: String
+    imageUrl: String
+    imageCaption: String
+    imageAlt: String
+  }
+
+  type StrapiSeoComponent implements Node {
+    metaKeywords: String
+    metaTitle: String
+    metaDescription: String
+  }  
+
   type StrapiParkSubPages implements Node {
     slug: String
     title: String
+    pageHeader: StrapiPageHeaderComponent
+    seo: StrapiSeoComponent
     protectedArea: StrapiProtectedArea
   }
 
@@ -231,6 +246,10 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkActivities: [StrapiParkActivities]
     parkFacilities: [StrapiParkFacilities]
     parkOperation: StrapiParkOperation
+  }
+
+  type StrapiPages implements Node {
+    Title: String
   }
 
   type StrapiLegacyRedirect implements Node {
@@ -332,7 +351,9 @@ async function createParks({ graphql, actions, reporter }) {
 
   result.data.allStrapiProtectedArea.nodes.forEach(park => {
     actions.createPage({
-      path: park.urlPath,
+      // add a trailing slash park pages so they are treated as folders
+      // when resolving relative urls (so they can link to their child pages)
+      path: park.urlPath.replace(/\/$|$/, `/`),
       component: require.resolve(`./src/templates/park.js`),
       context: { ...park },
     })

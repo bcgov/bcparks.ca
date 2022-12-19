@@ -122,7 +122,7 @@ internal class Program
                         orcs = url.orcs,
                         oldUrl = subpageUrl,
                         slug = page.Split(".")[0]
-                            .Replace("nat_cul", "nature-and-culture")
+                            .Replace("nat_cul", "nature-culture")
                             .Replace("hikeski", "hike-ski")
                             .Replace("horseuse", "horse-use")
                             .Replace("faqs/index", "faqs")
