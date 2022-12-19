@@ -323,7 +323,7 @@ async function createRedirects({ graphql, actions, result }) {
   })
   parks.map(park => {
     const oldUrl = parseUrl(park.oldUrl);
-    if(oldUrl.pathname !== `/${park.slug}/`) {
+    if(oldUrl?.pathname !== `/${park.slug}/`) {
       return actions.createRedirect({
         fromPath: oldUrl.pathname,
         toPath: park.slug,
