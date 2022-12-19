@@ -23,13 +23,13 @@ const ParksPage = ({ data }) => (
             <Grid item xs={12} key={document.node.id}>
               <p>
                 <a
-                  href={`/${
-                    document.node.slug
-                      ? document.node.slug
-                      : document.node.protectedAreaName
-                          .toLowerCase()
-                          .replace(/ /g, "-")
-                  }`}
+                  href={`/${(document.node.slug
+                    ? document.node.slug
+                    : document.node.protectedAreaName
+                      .toLowerCase()
+                      .replace(/ /g, "-"))
+                    .replace(/\/$|$/, `/`)
+                    }`}
                 >
                   {`${document.node.protectedAreaName}`}
                 </a>

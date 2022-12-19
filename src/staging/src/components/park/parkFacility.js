@@ -16,7 +16,6 @@ export default function ParkFacility({ data }) {
     JSON.parse(JSON.stringify(data)) // deep copy
   )
   const [expanded, setExpanded] = useState(Array(data.length).fill(false))
-  const [numFacilities, setNumFacilities] = useState(0)
   const [hash, setHash] = useState("")
 
   const toggleExpand = useCallback(
@@ -31,16 +30,17 @@ export default function ParkFacility({ data }) {
     // Check hash in url
     // if we find a matching facilityCode, open that facility accordion
     let h = ""
-
+    let idx = 0
     if (typeof window !== "undefined") {
       h = window.location.hash
       if (h !== undefined && h !== hash) {
         facilityData.forEach(facility => {
           if (h === "#" + facility.facilityType.facilityCode) {
-            if (!expanded[facility.uiId]) {
-              toggleExpand(facility.uiId)
+            if (!expanded[idx]) {
+              toggleExpand(idx)
             }
           }
+          idx++
         })
         setHash(h)
       }
@@ -48,16 +48,6 @@ export default function ParkFacility({ data }) {
   }, [expanded, facilityData, hash, toggleExpand])
 
   useEffect(() => {
-    // Each element in the array needs a unique id for the accordions
-    // to be togglable through code
-    let i = 0
-    for (const idx in facilityData) {
-      const facility = facilityData[idx]
-      facility.uiId = i
-      i++
-    }
-    setNumFacilities(i)
-
     window.addEventListener("hashchange", function (e) {
       checkHash()
     })
@@ -75,47 +65,46 @@ export default function ParkFacility({ data }) {
       </Row>
       <Row>
         <Col>
-          {numFacilities &&
-            facilityData.map((facility, index) => (
-              <Accordion
-                key={facility.uiId}
-                activeKey={expanded[index] ? facility.uiId : null}
-                className="park-details mb-2"
+          {facilityData.map((facility, index) => (
+            <Accordion
+              key={"parkFacility" + index}
+              activeKey={expanded[index] ? "parkFacility" + index : null}
+              className="park-details mb-2"
+            >
+              <Accordion.Toggle
+                as={Container}
+                aria-controls={facility.facilityType.facilityName}
+                eventKey={"parkFacility" + index}
+                id={index}
+                onClick={() => toggleExpand(index)}
               >
-                <Accordion.Toggle
-                  as={Container}
-                  aria-controls={facility.activityName}
-                  eventKey={facility.uiId}
-                  id={index}
-                  onClick={() => toggleExpand(index)}
+                <div
+                  id={facility.facilityType.facilityCode}
+                  className="d-flex justify-content-between p-3 accordion-toggle"
                 >
-                  <div
-                    id={facility.facilityType.facilityCode}
-                    className="d-flex justify-content-between p-3 accordion-toggle"
-                  >
-                    <div className="d-flex justify-content-left align-items-center pl-2">
-                      <StaticIcon name={facility.facilityType.icon} size={48} />
-                      <HtmlContent className="pl-3 accordion-header">
-                        {facility.facilityType.facilityName}
-                      </HtmlContent>
-                    </div>
-                    <div className="d-flex align-items-center expand-icon">
-                      <i
-                        className={
-                          (expanded[index] ? "open " : "close ") +
-                          "fa fa-angle-down mx-3"
-                        }
-                      ></i>
-                    </div>
+                  <div className="d-flex justify-content-left align-items-center pl-2">
+                    <StaticIcon name={facility.facilityType.icon} size={48} />
+                    <HtmlContent className="pl-3 accordion-header">
+                      {facility.facilityType.facilityName}
+                    </HtmlContent>
                   </div>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey={facility.uiId}>
-                  <div className="p-4">
-                    <HtmlContent>{facility.description}</HtmlContent>
+                  <div className="d-flex align-items-center expand-icon">
+                    <i
+                      className={
+                        (expanded[index] ? "open " : "close ") +
+                        "fa fa-angle-down mx-3"
+                      }
+                    ></i>
                   </div>
-                </Accordion.Collapse>
-              </Accordion>
-            ))}
+                </div>
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey={"parkFacility" + index}>
+                <div className="p-4">
+                  <HtmlContent>{facility.description}</HtmlContent>
+                </div>
+              </Accordion.Collapse>
+            </Accordion>
+          ))}
         </Col>
       </Row>
     </div>

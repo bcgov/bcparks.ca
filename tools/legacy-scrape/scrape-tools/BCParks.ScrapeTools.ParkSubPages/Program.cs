@@ -1,4 +1,5 @@
-﻿using AngleSharp.Dom;
+﻿using System.Text.RegularExpressions;
+using AngleSharp.Dom;
 using BCParks.ScrapeTools.Shared;
 using BCParks.ScrapeTools.Shared.Serialization;
 using Newtonsoft.Json;
@@ -18,6 +19,12 @@ internal class Program
 
         foreach (var url in urls)
         {
+            if (url.orcs == "18")
+            {
+                // skip tweedsmuir park north (Repealed status)
+                continue;
+            }
+
             var client = new HttpClient();
             var indexPageContent = await client
                 .GetAsync(url.oldUrl)
@@ -122,7 +129,7 @@ internal class Program
                         orcs = url.orcs,
                         oldUrl = subpageUrl,
                         slug = page.Split(".")[0]
-                            .Replace("nat_cul", "nature-and-culture")
+                            .Replace("nat_cul", "nature-culture")
                             .Replace("hikeski", "hike-ski")
                             .Replace("horseuse", "horse-use")
                             .Replace("faqs/index", "faqs")
@@ -133,8 +140,12 @@ internal class Program
                             .Replace("hikecamp", "camp-hike")
                             .Replace("_", "-"),
                         content = html,
-                        heading = heading,
-                        title = titleText
+                        heading = CleanupTitle(heading),
+                        title =
+                            titleText == "BC Parks - Province of British Columbia"
+                            || titleText == "Visiting - BC Parks - Province of British Columbia"
+                                ? CleanupTitle(heading)
+                                : CleanupTitle(titleText)
                     }
                 );
                 count++;
@@ -157,5 +168,17 @@ internal class Program
         {
             subPageNodes.QuerySelectorAll(removeId)[0].Remove();
         }
+    }
+
+    private static string CleanupTitle(string titleText)
+    {
+        titleText = Regex.Replace(titleText, @"\s+", " ");
+        return titleText
+            .Replace(" - Province of British Columbia", "")
+            .Replace("Ministry of Environment, ", "")
+            .Replace("Ministry of Environment - ", "")
+            .Replace(" - BC Parks", "")
+            .Replace("BC Parks - ", "")
+            .Replace(" Provincial Park", " Park");
     }
 }
