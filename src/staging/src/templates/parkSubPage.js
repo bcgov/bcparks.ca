@@ -78,13 +78,11 @@ export default function ParkSubPage({ data }) {
 
   return (
     <>
-      {seo &&
-        <Seo
-          title={seo.metaTitle}
-          description={seo.description}
-          keywords={seo.metaKeywords}
-        />
-      }
+      <Seo
+        title={seo?.metaTitle ?? park.protectedAreaName + ": " + page.title}
+        description={seo?.description}
+        keywords={seo?.metaKeywords}
+      />
       <div className="max-width-override" ref={sectionRefs[0]}>
         <Header mode="internal" content={menuContent} />
       </div>
@@ -93,21 +91,19 @@ export default function ParkSubPage({ data }) {
           {breadcrumbs}
         </Breadcrumbs>
       </div>
-      {header && (
-        <div className="static-content--header">
-          {header.imageUrl && (
-            <div className="header-image-wrapper">
-              <img
-                src={header.imageUrl}
-                alt={header.imageAlt ?? null}
-              />
-            </div>
-          )}
-          <h1 className="header-title">
-            {park.protectedAreaName}: {page.title}
-          </h1>
-        </div>
-      )}
+      <div className="static-content--header">
+        {header?.imageUrl && (
+          <div className="header-image-wrapper">
+            <img
+              src={header.imageUrl}
+              alt={header.imageAlt ?? null}
+            />
+          </div>
+        )}
+        <h1 className="header-title">
+          {park.protectedAreaName}: {header?.title ?? page.title}
+        </h1>
+      </div>
       {hasSections && (
         <div className="page-menu--mobile">
           <div className="d-block d-md-none">
