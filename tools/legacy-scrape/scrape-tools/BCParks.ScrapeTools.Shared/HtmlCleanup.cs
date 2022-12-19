@@ -262,7 +262,7 @@ public static class HtmlCleanup
             { "/volunteers/recognition/", "/get-involved/volunteer/awards" },
             { "/wildfire/", "/active-advisories/?type=wildfire%20nearby" },
             // mappings from sub-page slugs
-            { "nat_cul.html", "nature-and-culture" },
+            { "nat_cul.html", "nature-culture" },
             { "hiking.html", "hiking" },
             { "trails.html", "trails" },
             { "climbing.html", "climbing" },
@@ -307,6 +307,15 @@ public static class HtmlCleanup
                 n.Attributes.Remove("class");
                 n.Attributes.Remove("id");
                 n.Attributes.Remove("style");
+                n.Attributes.Remove("data-lightbox");
+                n.Attributes.Remove("data-title");
+                n.Attributes.Remove("border");
+                n.Attributes.Remove("align");
+                n.Attributes.Remove("cellspacing");
+                n.Attributes.Remove("cellpadding");
+                n.Attributes.Remove("valign");
+                n.Attributes.Remove("bordercolor");
+                n.Attributes.Remove("bgcolor");
             });
 
         input = htmlDoc.DocumentNode.OuterHtml;
@@ -338,16 +347,44 @@ public static class HtmlCleanup
             meta.Remove();
         }
 
+        // remove input tags
+        var inputTags = nodes.QuerySelectorAll("input");
+        foreach (var inputTag in inputTags)
+        {
+            inputTag.Remove();
+        }
+
+        // remove textarea tags
+        var textareaTags = nodes.QuerySelectorAll("textarea");
+        foreach (var textareaTag in textareaTags)
+        {
+            textareaTag.Remove();
+        }
+
+        // remove font tags
+        var fontTags = nodes.QuerySelectorAll("font");
+        foreach (var fontTag in fontTags)
+        {
+            fontTag.OuterHtml = fontTag.InnerHtml;
+        }
+
+        // remove form tags
+        var formTags = nodes.QuerySelectorAll("form");
+        foreach (var formTag in formTags)
+        {
+            formTag.OuterHtml = formTag.InnerHtml;
+        }
+
         // add a "legacy-link" class to all html anchors
         var links = nodes.QuerySelectorAll("a");
         foreach (var link in links)
         {
             var href = (link.GetAttribute("href") ?? "").ToLower();
-            href = href.Split("#")[0];
             var hash = "";
             if (href.Split("#").Length > 1)
             {
                 hash = href.Split("#")[1];
+                href = href.Split("#")[0];
             }
 
             if (href.StartsWith("/accessibility/parks/"))
@@ -374,6 +411,16 @@ public static class HtmlCleanup
             else if (href.StartsWith("photos"))
             {
                 link.Remove();
+            }
+            else if (!href.Contains("/") && href.Contains(".html"))
+            {
+                var slugifiedChildUrl = href.Replace(".html", "")
+                    .Replace("_", "-")
+                    .Trim()
+                    .ToLower();
+                link.SetAttribute("href", slugifiedChildUrl);
+                // still add the legacy-link class because these require human review
+                link.ClassList.Add("legacy-link");
             }
             // don't add the class to absolute urls, mailto links, or named anchors
             else if (

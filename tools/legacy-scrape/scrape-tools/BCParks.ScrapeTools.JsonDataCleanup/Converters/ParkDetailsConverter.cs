@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BCParks.ScrapeTools.JsonDataCleanup.Common;
 using BCParks.ScrapeTools.JsonDataCleanup.Deserialization;
 
 namespace BCParks.ScrapeTools.JsonDataCleanup.Converters;
@@ -22,6 +23,11 @@ public class ParkDetailsConverter : ConverterBase
         foreach (var item in rawObj.Items)
         {
             var newItem = Mapper.Map<Shared.Serialization.ParkDetail>(item);
+
+            if (ParkSlugs.Slugs.ContainsKey(newItem.orcs))
+            {
+                newItem.url = $"https://bcparks.ca{ParkSlugs.Slugs[newItem.orcs]}/";
+            }
 
             // manual steps go here
             newItem.description = ProcessHtml(item.description);
