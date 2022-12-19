@@ -349,13 +349,21 @@ public static class HtmlCleanup
         // parse the html again with AngleSharp
         var nodes = GetNodes(input);
 
-        if (!isParkSubpage)
+        // remove images or add a legacy-image class for park subpages
+        var images = nodes.QuerySelectorAll("img");
+        foreach (var img in images)
         {
-            // remove images
-            var images = nodes.QuerySelectorAll("img");
-            foreach (var img in images)
+            if (!isParkSubpage)
             {
                 img.Remove();
+            }
+            else
+            {
+                var src = img.GetAttribute("src") ?? "";
+                if (!src.ToLower().StartsWith("http"))
+                {
+                    img.ClassList.Add("legacy-image");
+                }
             }
         }
 
