@@ -39,6 +39,7 @@ module.exports = {
           "park-operation-sub-areas",
           "park-sub-pages",
           "sites",
+          "legacy-redirect",
         ],
         queryLimit: -1,
       },
@@ -75,6 +76,7 @@ module.exports = {
       },
     },
     `gatsby-plugin-gatsby-cloud`,
+    `gatsby-plugin-meta-redirect`
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,

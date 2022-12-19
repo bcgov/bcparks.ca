@@ -1,6 +1,8 @@
 const { graphql } = require("gatsby")
 const slugify = require("slugify")
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
+const parseUrl = require("parse-url")
+
 
 const strapiApiRequest = (graphql, query) =>
   new Promise((resolve, reject) => {
@@ -249,6 +251,11 @@ exports.createSchemaCustomization = ({ actions }) => {
   type StrapiPages implements Node {
     Title: String
   }
+
+  type StrapiLegacyRedirect implements Node {
+    fromPath: String
+    toPath: String
+  }
   `
   createTypes(typeDefs)
 }
@@ -273,6 +280,56 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   await createParkSubPages({ graphql, actions })
   await createSites({ graphql, actions })
   await createPageSlugs("static", staticQuery, { graphql, actions, reporter })
+  await createRedirects({ graphql, actions })
+}
+
+const parkQuery = `
+{
+  allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}) {
+    nodes {
+      id
+      orcs
+      protectedAreaName
+      slug  
+      url
+      oldUrl
+    }
+    totalCount
+  }
+}
+`
+const staticQueryPath = `
+{ 
+  allStrapiLegacyRedirect {
+    nodes {
+      toPath
+      fromPath
+    }
+  }
+}`
+
+async function createRedirects({ graphql, actions, result }) {
+  const response = await strapiApiRequest(graphql, staticQueryPath)
+  const resultPark = await strapiApiRequest(graphql, parkQuery)
+
+  const redirects = response.data.allStrapiLegacyRedirect.nodes
+  const parks = resultPark.data.allStrapiProtectedArea.nodes
+  
+  redirects.map(item => {
+    return actions.createRedirect({
+      fromPath: item.fromPath,
+      toPath: item.toPath,
+    })
+  })
+  parks.map(park => {
+    const oldUrl = parseUrl(park.oldUrl);
+    if(oldUrl?.pathname !== `/${park.slug}/`) {
+      return actions.createRedirect({
+        fromPath: oldUrl.pathname,
+        toPath: park.slug,
+      })
+    }
+  })
 }
 
 async function createParks({ graphql, actions, reporter }) {
