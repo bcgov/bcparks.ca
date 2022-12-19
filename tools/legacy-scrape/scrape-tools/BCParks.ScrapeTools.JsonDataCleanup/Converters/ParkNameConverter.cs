@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using AutoMapper;
 using BCParks.ScrapeTools.JsonDataCleanup.Deserialization;
+using BCParks.ScrapeTools.Shared;
 
 namespace BCParks.ScrapeTools.JsonDataCleanup.Converters;
 
@@ -34,6 +35,10 @@ public class ParkNameConverter : ConverterBase
             if (newItem.nameTypeId != 2)
             {
                 newItem.parkName = HttpUtility.HtmlDecode(newItem.parkName);
+            }
+            else
+            {
+                newItem.parkName = HtmlCleanup.TagsToEntities(newItem.parkName);
             }
 
             newObj.Items.Add(newItem);

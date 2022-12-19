@@ -66,10 +66,13 @@ public static class HtmlCleanup
                 "/explore/map.html",
                 "https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000"
             },
+            { "/misc/bears/bearbowr.html", "/plan-your-trip/visit-responsibly/wildlife-safety" },
             {
                 "/explore/misc/bears/bearbowr.html",
                 "/plan-your-trip/visit-responsibly/wildlife-safety"
             },
+            { "/misc/bears/", "/plan-your-trip/visit-responsibly/wildlife-safety" },
+            { "/explore/misc/bears/", "/plan-your-trip/visit-responsibly/wildlife-safety" },
             {
                 "/explore/misc/bears/index.html",
                 "/plan-your-trip/visit-responsibly/wildlife-safety"
@@ -78,8 +81,14 @@ public static class HtmlCleanup
                 "/explore/misc/wolves/index.html",
                 "/plan-your-trip/visit-responsibly/wildlife-safety"
             },
+            {
+                "/explore/misc/wolves/wolfsaf.html",
+                "/plan-your-trip/visit-responsibly/wildlife-safety"
+            },
             { "/explore/parks/", "/find-a-park" },
             { "/fees/", "/reservations/camping-fees" },
+            { "/fees/fees.html", "/reservations/camping-fees" },
+            { "/fees/index.html", "/reservations/camping-fees" },
             { "/fees/disability.html", "/reservations/camping-fees#page-section-219" },
             { "/fees/senior.html", "/reservations/camping-fees#page-section-218" },
             { "/fees/youth-groups.html", "/reservations/camping-fees#page-section-217" },
@@ -186,12 +195,16 @@ public static class HtmlCleanup
                 "/reservations/backcountry-camping/bowron-lake-canoe-circuit"
             },
             { "/reserve/day-use/", "/reservations/day-use-passes" },
+            { "/reserve/frontcountry.html", "/reservations/frontcountry-camping" },
             { "/reserve/frontcountry-camping/", "/reservations/frontcountry-camping" },
             { "/reserve/garibaldi/", "/reservations/backcountry-camping/garibaldi" },
+            { "/reserve/group.html", "/reservations/group-camping" },
             { "/reserve/group-camping/", "/reservations/group-camping" },
             { "/reserve/joffre-lakes/", "/reservations/backcountry-camping/joffre-lakes" },
             { "/reserve/mt-assiniboine/", "/reservations/backcountry-camping/mount-assiniboine" },
+            { "/reserve/picnic_shelter.html", "/reservations/picnic-shelters" },
             { "/reserve/picnic-shelter/", "/reservations/picnic-shelters" },
+            { "/reserve/dc_refund_guidelines.html", "/reservations/cancellations-refunds" },
             { "/reserve/refunds/", "/reservations/cancellations-refunds" },
             {
                 "/reserve/wilderness/",
@@ -216,6 +229,12 @@ public static class HtmlCleanup
                 "/visiting/campfire-bans-safety/",
                 "/plan-your-trip/visit-responsibly/responsible-recreation#page-section-160"
             },
+            {
+                "http://www.env.gov.bc.ca/bcparks/explore/fishreg.html",
+                "/plan-your-trip/things-to-do/freshwater-fishing"
+            },
+            { "/explore/fishreg.html", "/plan-your-trip/things-to-do/freshwater-fishing" },
+            { "/fishreg.html", "/plan-your-trip/things-to-do/freshwater-fishing" },
             { "/visiting/fish-hunt/", "/plan-your-trip/things-to-do/freshwater-fishing" },
             {
                 "/visiting/frontcountry-visitor-guide/",
@@ -238,6 +257,12 @@ public static class HtmlCleanup
                 "/plan-your-trip/visit-responsibly/responsible-recreation"
             },
             { "/visiting/visitor-safety/", "/plan-your-trip/visit-responsibly/staying-safe" },
+            {
+                "/explore/gen_info/wild_gen.html",
+                "/plan-your-trip/visit-responsibly/wildlife-safety"
+            },
+            { "/explore/wild_gen.html", "/plan-your-trip/visit-responsibly/wildlife-safety" },
+            { "/wild_gen.html", "/plan-your-trip/visit-responsibly/wildlife-safety" },
             { "/visiting/wildlife-safety/", "/plan-your-trip/visit-responsibly/wildlife-safety" },
             { "/visiting/winter-safety/", "/plan-your-trip/visit-responsibly/winter-safety" },
             { "/volunteers/", "/get-involved/volunteer" },
@@ -261,6 +286,10 @@ public static class HtmlCleanup
             { "/volunteers/opportunities/", "/get-involved/volunteer" },
             { "/volunteers/recognition/", "/get-involved/volunteer/awards" },
             { "/wildfire/", "/active-advisories/?type=wildfire%20nearby" },
+            { "/notrace.html", "https://leavenotrace.ca/" },
+            { "/explore/notrace.html", "https://leavenotrace.ca/" },
+            { "/explore/safety/", "/plan-your-trip/visit-responsibly/staying-safe" },
+            { "/safety/", "/plan-your-trip/visit-responsibly/staying-safe" },
             // mappings from sub-page slugs
             { "nat_cul.html", "nature-culture" },
             { "hiking.html", "hiking" },
@@ -282,10 +311,7 @@ public static class HtmlCleanup
     public static string Process(string input, bool isParkSubpage = false)
     {
         input = input.Trim();
-        input = UnderlineToUtf8(input);
-
-        // update these links for easier matching later
-        input = input.Replace("../../../planning/", "/planning/");
+        input = TagsToEntities(input);
 
         // parse the html with HtmlAgilityPack
         var htmlDoc = new HtmlDocument();
@@ -379,13 +405,67 @@ public static class HtmlCleanup
         var links = nodes.QuerySelectorAll("a");
         foreach (var link in links)
         {
-            var href = (link.GetAttribute("href") ?? "").ToLower();
+            var href = link.GetAttribute("href") ?? "";
+            if (href.StartsWith("http://bcparks.ca"))
+            {
+                href = href.Replace("http://bcparks.ca", "");
+            }
+
+            if (href.StartsWith("https://bcparks.ca"))
+            {
+                href = href.Replace("https://bcparks.ca", "");
+            }
+
+            if (href.StartsWith("http://www.env.gov.bc.ca/bcparks"))
+            {
+                href = href.Replace("http://www.env.gov.bc.ca/bcparks", "");
+            }
+
+            if (href.StartsWith("https://www.env.gov.bc.ca/bcparks"))
+            {
+                href = href.Replace("https://www.env.gov.bc.ca/bcparks", "");
+            }
+
+            if (href.Contains("notrace.html"))
+            {
+                href = "/notrace.html";
+            }
+
+            //  http://www.env.gov.bc.ca/bcparks,
+
+            if (href.Contains("../../../"))
+            {
+                href = href.Replace("../../../", "/");
+            }
+
+            if (href.Contains("../../"))
+            {
+                href = href.Replace("../../", "/");
+            }
+
+            if (href.Contains("/bcaprks"))
+            {
+                href = href.Replace("/bcaprks", "/bcparks");
+            }
+
+            if (href.Contains("/explroe"))
+            {
+                href = href.Replace("/explroe", "/explore");
+            }
+
+            if (href.Contains("/bcparks/explore"))
+            {
+                href = href.Replace("/bcparks/explore", "/explore");
+            }
+
             var hash = "";
             if (href.Split("#").Length > 1)
             {
                 hash = href.Split("#")[1];
                 href = href.Split("#")[0];
             }
+
+            href = href.ToLower();
 
             if (href.StartsWith("/accessibility/parks/"))
             {
@@ -405,6 +485,18 @@ public static class HtmlCleanup
                 else
                 {
                     link.SetAttribute("href", pageMapping[href]);
+                }
+            }
+            else if (string.IsNullOrWhiteSpace(hash) && pageMapping.ContainsKey(href + "/"))
+            {
+                if (!pageMapping[href + "/"].Contains("#") && !string.IsNullOrWhiteSpace(hash))
+                {
+                    // add back the anchor hash if the original url had one and the new URL does not
+                    link.SetAttribute("href", $"{pageMapping[href + "/"]}#{hash}");
+                }
+                else
+                {
+                    link.SetAttribute("href", pageMapping[href + "/"]);
                 }
             }
             // remove photo page links
@@ -465,159 +557,72 @@ public static class HtmlCleanup
         return p.ParseFragment(fragment, dom.Body);
     }
 
-    public static string UnderlineToUtf8(string input)
+    public static string TagsToEntities(string input)
     {
+        for (var i = 65; i <= 90; i++)
+        {
+            var letter = (char)i;
+            input = input.Replace($"<u>{letter}</u>", $"{letter}&#817;");
+        }
+
+        for (var i = 97; i <= 122; i++)
+        {
+            var letter = (char)i;
+            input = input.Replace($"<u>{letter}</u>", $"{letter}&#817;");
+        }
+
         return input
-            .Replace("<u>a</u>", "a̲")
-            .Replace("<u>b</u>", "b̲")
-            .Replace("<u>c</u>", "c̲")
-            .Replace("<u>d</u>", "d̲")
-            .Replace("<u>e</u>", "e̲")
-            .Replace("<u>f</u>", "f̲")
-            .Replace("<u>g</u>", "g̲")
-            .Replace("<u>h</u>", "h̲")
-            .Replace("<u>i</u>", "i̲")
-            .Replace("<u>j</u>", "j̲")
-            .Replace("<u>k</u>", "k̲")
-            .Replace("<u>l</u>", "l̲")
-            .Replace("<u>m</u>", "m̲")
-            .Replace("<u>n</u>", "n̲")
-            .Replace("<u>o</u>", "o̲")
-            .Replace("<u>p</u>", "p̲")
-            .Replace("<u>q</u>", "q̲")
-            .Replace("<u>r</u>", "r̲")
-            .Replace("<u>s</u>", "s̲")
-            .Replace("<u>t</u>", "t̲")
-            .Replace("<u>u</u>", "u̲")
-            .Replace("<u>v</u>", "v̲")
-            .Replace("<u>w</u>", "w̲")
-            .Replace("<u>x</u>", "x̲")
-            .Replace("<u>y</u>", "y̲")
-            .Replace("<u>z</u>", "z̲")
-            .Replace("<u>A</u>", "A̲")
-            .Replace("<u>B</u>", "B̲")
-            .Replace("<u>C</u>", "C̲")
-            .Replace("<u>D</u>", "D̲")
-            .Replace("<u>E</u>", "E̲")
-            .Replace("<u>F</u>", "F̲")
-            .Replace("<u>G</u>", "G̲")
-            .Replace("<u>H</u>", "H̲")
-            .Replace("<u>I</u>", "I̲")
-            .Replace("<u>J</u>", "J̲")
-            .Replace("<u>K</u>", "K̲")
-            .Replace("<u>L</u>", "L̲")
-            .Replace("<u>M</u>", "M̲")
-            .Replace("<u>N</u>", "N̲")
-            .Replace("<u>O</u>", "O̲")
-            .Replace("<u>P</u>", "P̲")
-            .Replace("<u>Q</u>", "Q̲")
-            .Replace("<u>R</u>", "R̲")
-            .Replace("<u>S</u>", "S̲")
-            .Replace("<u>T</u>", "T̲")
-            .Replace("<u>U</u>", "U̲")
-            .Replace("<u>V</u>", "V̲")
-            .Replace("<u>W</u>", "W̲")
-            .Replace("<u>X</u>", "X̲")
-            .Replace("<u>Y</u>", "Y̲")
-            .Replace("<u>Z</u>", "Z̲")
-            .Replace("<u>a</u>", "a̲")
-            .Replace("<u>b</u>", "b̲")
-            .Replace("<u>c</u>", "c̲")
-            .Replace("<u>d</u>", "d̲")
-            .Replace("<u>e</u>", "e̲")
-            .Replace("<u>f</u>", "f̲")
-            .Replace("<u>g</u>", "g̲")
-            .Replace("<u>h</u>", "h̲")
-            .Replace("<u>i</u>", "i̲")
-            .Replace("<u>j</u>", "j̲")
-            .Replace("<u>k</u>", "k̲")
-            .Replace("<u>l</u>", "l̲")
-            .Replace("<u>m</u>", "m̲")
-            .Replace("<u>n</u>", "n̲")
-            .Replace("<u>o</u>", "o̲")
-            .Replace("<u>p</u>", "p̲")
-            .Replace("<u>q</u>", "q̲")
-            .Replace("<u>r</u>", "r̲")
-            .Replace("<u>s</u>", "s̲")
-            .Replace("<u>t</u>", "t̲")
-            .Replace("<u>u</u>", "u̲")
-            .Replace("<u>v</u>", "v̲")
-            .Replace("<u>w</u>", "w̲")
-            .Replace("<u>x</u>", "x̲")
-            .Replace("<u>y</u>", "y̲")
-            .Replace("<u>z</u>", "z̲")
-            .Replace("<u>A</u>", "A̲")
-            .Replace("<u>B</u>", "B̲")
-            .Replace("<u>C</u>", "C̲")
-            .Replace("<u>D</u>", "D̲")
-            .Replace("<u>E</u>", "E̲")
-            .Replace("<u>F</u>", "F̲")
-            .Replace("<u>G</u>", "G̲")
-            .Replace("<u>H</u>", "H̲")
-            .Replace("<u>I</u>", "I̲")
-            .Replace("<u>J</u>", "J̲")
-            .Replace("<u>K</u>", "K̲")
-            .Replace("<u>L</u>", "L̲")
-            .Replace("<u>M</u>", "M̲")
-            .Replace("<u>N</u>", "N̲")
-            .Replace("<u>O</u>", "O̲")
-            .Replace("<u>P</u>", "P̲")
-            .Replace("<u>Q</u>", "Q̲")
-            .Replace("<u>R</u>", "R̲")
-            .Replace("<u>S</u>", "S̲")
-            .Replace("<u>T</u>", "T̲")
-            .Replace("<u>U</u>", "U̲")
-            .Replace("<u>V</u>", "V̲")
-            .Replace("<u>W</u>", "W̲")
-            .Replace("<u>X</u>", "X̲")
-            .Replace("<u>Y</u>", "Y̲")
-            .Replace("<u>Z</u>", "Z̲")
-            .Replace("<sup>a</sup>", "ᵃ")
-            .Replace("<sup>b</sup>", "ᵇ")
-            .Replace("<sup>c</sup>", "ᶜ")
-            .Replace("<sup>d</sup>", "ᵈ")
-            .Replace("<sup>e</sup>", "ᵉ")
-            .Replace("<sup>f</sup>", "ᶠ")
-            .Replace("<sup>g</sup>", "ᵍ")
-            .Replace("<sup>h</sup>", "ʰ")
-            .Replace("<sup>i</sup>", "ⁱ")
-            .Replace("<sup>j</sup>", "ʲ")
-            .Replace("<sup>k</sup>", "ᵏ")
-            .Replace("<sup>l</sup>", "ˡ")
-            .Replace("<sup>m</sup>", "ᵐ")
-            .Replace("<sup>n</sup>", "ⁿ")
-            .Replace("<sup>o</sup>", "ᵒ")
-            .Replace("<sup>p</sup>", "ᵖ")
-            .Replace("<sup>r</sup>", "ʳ")
-            .Replace("<sup>s</sup>", "ˢ")
-            .Replace("<sup>t</sup>", "ᵗ")
-            .Replace("<sup>u</sup>", "ᵘ")
-            .Replace("<sup>v</sup>", "ᵛ")
-            .Replace("<sup>w</sup>", "ʷ")
-            .Replace("<sup>x</sup>", "ˣ")
-            .Replace("<sup>y</sup>", "ʸ")
-            .Replace("<sup>z</sup>", "ᶻ")
-            .Replace("<sup>A</sup>", "ᴬ")
-            .Replace("<sup>B</sup>", "ᴮ")
-            .Replace("<sup>C</sup>", "ꟲ")
-            .Replace("<sup>D</sup>", "ᴰ")
-            .Replace("<sup>E</sup>", "ᴱ")
-            .Replace("<sup>F</sup>", "ꟳ")
-            .Replace("<sup>G</sup>", "ᴳ")
-            .Replace("<sup>H</sup>", "ᴴ")
-            .Replace("<sup>I</sup>", "ᴵ")
-            .Replace("<sup>J</sup>", "ᴶ")
-            .Replace("<sup>K</sup>", "ᴷ")
-            .Replace("<sup>L</sup>", "ᴸ")
-            .Replace("<sup>M</sup>", "ᴹ")
-            .Replace("<sup>N</sup>", "ᴺ")
-            .Replace("<sup>O</sup>", "ᴼ")
-            .Replace("<sup>P</sup>", "ᴾ")
-            .Replace("<sup>Q</sup>", "ꟴ")
-            .Replace("<sup>R</sup>", "ᴿ")
-            .Replace("<sup>T</sup>", "ᵀ")
-            .Replace("<sup>U</sup>", "ᵁ")
-            .Replace("<sup>V</sup>", "ⱽ")
-            .Replace("<sup>W</sup>", "ᵂ");
+            .SupEscape("a", "ᵃ")
+            .SupEscape("b", "ᵇ")
+            .SupEscape("c", "ᶜ")
+            .SupEscape("d", "ᵈ")
+            .SupEscape("e", "ᵉ")
+            .SupEscape("f", "ᶠ")
+            .SupEscape("g", "ᵍ")
+            .SupEscape("h", "ʰ")
+            .SupEscape("i", "ⁱ")
+            .SupEscape("j", "ʲ")
+            .SupEscape("k", "ᵏ")
+            .SupEscape("l", "ˡ")
+            .SupEscape("m", "ᵐ")
+            .SupEscape("n", "ⁿ")
+            .SupEscape("o", "ᵒ")
+            .SupEscape("p", "ᵖ")
+            .SupEscape("r", "ʳ")
+            .SupEscape("s", "ˢ")
+            .SupEscape("t", "ᵗ")
+            .SupEscape("u", "ᵘ")
+            .SupEscape("v", "ᵛ")
+            .SupEscape("w", "ʷ")
+            .SupEscape("x", "ˣ")
+            .SupEscape("y", "ʸ")
+            .SupEscape("z", "ᶻ")
+            .SupEscape("A", "ᴬ")
+            .SupEscape("B", "ᴮ")
+            .SupEscape("C", "ꟲ")
+            .SupEscape("D", "ᴰ")
+            .SupEscape("E", "ᴱ")
+            .SupEscape("F", "ꟳ")
+            .SupEscape("G", "ᴳ")
+            .SupEscape("H", "ᴴ")
+            .SupEscape("I", "ᴵ")
+            .SupEscape("J", "ᴶ")
+            .SupEscape("K", "ᴷ")
+            .SupEscape("L", "ᴸ")
+            .SupEscape("M", "ᴹ")
+            .SupEscape("N", "ᴺ")
+            .SupEscape("O", "ᴼ")
+            .SupEscape("P", "ᴾ")
+            .SupEscape("Q", "ꟴ")
+            .SupEscape("R", "ᴿ")
+            .SupEscape("T", "ᵀ")
+            .SupEscape("U", "ᵁ")
+            .SupEscape("V", "ⱽ")
+            .SupEscape("W", "ᵂ");
+    }
+
+    public static string SupEscape(this string input, string find, string replace)
+    {
+        return input.Replace($"<sup>{find}</sup>", $"&#{(int)replace[0]};");
     }
 }
