@@ -39,7 +39,10 @@ const Wrapper = styled.div`
 	.ck-content .bcp-landing-intro__image { 
 		min-height: 300px;
 		background-position: center;
-	 }
+	}
+	.ck-content .legacy-link {
+  	background-color: #FFFF00;
+	}
 `
 
 const configuration = {
@@ -100,6 +103,11 @@ const configuration = {
 			{ model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' }
 		]
 	},
+	list: {
+		properties: {
+				styles: true,
+		}
+	},
 	style: {
 		definitions: [
 			{
@@ -111,6 +119,11 @@ const configuration = {
 				name: 'Primary button',
 				element: 'a',
 				classes: [ 'btn', 'btn-primary' ]
+			},
+			{
+				name: 'Legacy link',
+				element: 'a',
+				classes: [ 'legacy-link' ]
 			}
 		]
 	},

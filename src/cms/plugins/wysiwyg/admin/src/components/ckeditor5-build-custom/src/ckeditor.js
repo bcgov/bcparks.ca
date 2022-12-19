@@ -13,6 +13,7 @@ import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalli
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js';
 import Link from '@ckeditor/ckeditor5-link/src/link.js';
 import List from '@ckeditor/ckeditor5-list/src/list.js';
+import ListProperties from '@ckeditor/ckeditor5-list/src/listproperties.js'
 import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed.js';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
 import RemoveFormat from '@ckeditor/ckeditor5-remove-format/src/removeformat.js';
@@ -37,6 +38,7 @@ Editor.builtinPlugins = [
 	Italic,
 	Link,
 	List,
+	ListProperties,
 	MediaEmbed,
 	Paragraph,
 	RemoveFormat,
