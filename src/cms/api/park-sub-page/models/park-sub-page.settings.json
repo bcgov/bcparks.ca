@@ -41,7 +41,8 @@
     },
     "protectedArea": {
       "model": "protected-area",
-      "via": "parkSubPages"
+      "via": "parkSubPages",
+      "required": true
     }
   }
 }
