@@ -102,7 +102,7 @@ const AdvisoryFilter = ({
     // This changes the URL query str and causes the page to
     // rerender with the type changed
     setType(advisoryType)
-    navigate(`/alerts/?type=${advisoryType}`)
+    navigate(`/active-advisories/?type=${advisoryType}`)
   }
 
   // Checkboxes
@@ -118,6 +118,7 @@ const AdvisoryFilter = ({
   const getEventType = () => {
     return eventTypes.find((o) => o.value.toLowerCase() === getType()) || defaultEventType
   }
+
 
   return (
     <div className="advisory-filter-container">
