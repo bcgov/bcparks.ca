@@ -45,8 +45,7 @@ export default function ThumbLink({ imageLink, title, navLink }) {
                     <GatsbyImage image={image.node.childImageSharp.gatsbyImageData}
                         alt={title} />
                     <div className="mt-2 text-left">
-                        <h3 className="mb-1">{title}</h3>
-                        <p>Learn more</p>
+                        <h3>{title}</h3>
                     </div>
                 </div>
             </button>

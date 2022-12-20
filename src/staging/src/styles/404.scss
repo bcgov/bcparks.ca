@@ -1,15 +1,18 @@
 @import "./global.scss";
 
-$header-height-404: 100px;
-$footer-height-404: 413px;
+$header-height-404: 220px;
+$footer-height-404: 390px;
 
 .not-found {
-  min-height: 100vh;
   background-color: $colorBlue;
   color:white;
   margin-bottom: 0px;
   h1 {
     font-weight: 100;
+  }
+
+  a {
+    color: white;
   }
 
   .btn-outline-primary{
