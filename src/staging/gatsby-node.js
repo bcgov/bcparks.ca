@@ -279,7 +279,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   await createParkSubPages({ graphql, actions })
   await createSites({ graphql, actions })
   await createPageSlugs("static", staticQuery, { graphql, actions, reporter })
-  await createRedirects({ graphql, actions })
+  await createRedirects({ graphql, actions, reporter })
 }
 
 const parkQuery = `
@@ -307,7 +307,7 @@ const staticQueryPath = `
   }
 }`
 
-async function createRedirects({ graphql, actions, result }) {
+async function createRedirects({ graphql, actions, reporter }) {
   const response = await strapiApiRequest(graphql, staticQueryPath)
   const resultPark = await strapiApiRequest(graphql, parkQuery)
 
