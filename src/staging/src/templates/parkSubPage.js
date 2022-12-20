@@ -176,8 +176,11 @@ export default function ParkSubPage({ data }) {
 }
 
 export const query = graphql`
-  query ParkSubPageDetails($slug: String) {
-    strapiParkSubPages(slug: { eq: $slug }) {
+  query ParkSubPageDetails($slug: String, $protectedAreaSlug: String) {
+    strapiParkSubPages(
+      slug: { eq: $slug }
+      protectedArea: {slug: {eq: $protectedAreaSlug}}
+    ) {
       id
       slug
       title

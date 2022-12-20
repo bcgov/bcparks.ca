@@ -373,6 +373,7 @@ async function createParkSubPages({ graphql, actions, reporter }) {
         slug
         title
         protectedArea {
+          slug
           urlPath
         }
       }
@@ -387,7 +388,10 @@ async function createParkSubPages({ graphql, actions, reporter }) {
     actions.createPage({
       path: parkSubPagePath,
       component: require.resolve(`./src/templates/parkSubPage.js`),
-      context: { ...parkSubPage },
+      context: {
+        protectedAreaSlug: parkSubPage.protectedArea.slug,
+        ...parkSubPage 
+      },
     })
   })
 }
