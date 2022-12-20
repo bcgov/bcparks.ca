@@ -55,6 +55,7 @@ export default function ParkTemplate({ data }) {
   const apiBaseUrl = data.site.siteMetadata.apiURL
 
   const park = data.strapiProtectedArea
+  const parkType = park.type ?? "park"
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
   const operations = park.parkOperation || {}
 
@@ -147,9 +148,9 @@ export default function ParkTemplate({ data }) {
   const menuItems = [
     {
       sectionIndex: 0,
-      display: capitalizeFirstLetter(`${park.type} overview`),
+      display: capitalizeFirstLetter(`${parkType} overview`),
       link: "#park-overview-container",
-      visible: true,
+      visible: park.description,
     },
     {
       sectionIndex: 1,
@@ -170,13 +171,13 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 3,
       display: "Dates of operation",
       link: "#park-dates-container",
-      visible: true,
+      visible: park.parkOperation,
     },
     {
       sectionIndex: 4,
       display: "Safety info",
       link: "#park-safety-info-container",
-      visible: true,
+      visible: park.safetyInfo || park.specialNotes,
     },
     {
       sectionIndex: 5,
@@ -204,15 +205,15 @@ export default function ParkTemplate({ data }) {
     },
     {
       sectionIndex: 9,
-      display: capitalizeFirstLetter(`${park.type} and activity maps`),
+      display: capitalizeFirstLetter(`${parkType} and activity maps`),
       link: "#park-map-details-container",
       visible: park.maps,
     },
     {
       sectionIndex: 10,
-      display: capitalizeFirstLetter(`Learn about this ${park.type}`),
+      display: capitalizeFirstLetter(`Learn about this ${parkType}`),
       link: "#park-about-container",
-      visible: true,
+      visible: park.totalArea || park.establishedDate || park.parkContact || park.natureAndCulture,
     },
     {
       sectionIndex: 11,
@@ -324,7 +325,7 @@ export default function ParkTemplate({ data }) {
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">
-                  <ParkOverview data={park.description} type={park.type} />
+                  <ParkOverview data={park.description} type={parkType} />
                 </div>
               )}
               {menuItems[1].visible && (
@@ -413,7 +414,7 @@ export default function ParkTemplate({ data }) {
               )}
               {menuItems[9].visible && (
                 <div ref={activityMapRef} className="full-width">
-                  <ParkMapDetails data={park.maps} type={park.type} />
+                  <ParkMapDetails data={park.maps} type={parkType} />
                 </div>
               )}
               {menuItems[10].visible && (
