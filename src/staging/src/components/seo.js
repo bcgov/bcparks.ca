@@ -9,7 +9,7 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 
-function SEO({ description, lang, meta, title, keywords }) {
+function SEO({ canonical, description, lang, meta, title, keywords }) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -35,6 +35,11 @@ function SEO({ description, lang, meta, title, keywords }) {
       }}
       title={title}
       titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
+      link={
+        canonical
+        ? [{ rel: 'canonical', key: canonical, href: canonical }]
+        : []
+      }
       meta={[
         {
           name: `description`,
@@ -46,32 +51,32 @@ function SEO({ description, lang, meta, title, keywords }) {
         },
         {
           property: `og:title`,
-          content: title,
+          content: `${title} | ${defaultTitle}`,
         },
         {
           property: `og:description`,
           content: metaDescription,
         },
         {
-          property: `og:type`,
-          content: `website`,
+          property: `og:image`,
+          content: `https://nrs.objectstore.gov.bc.ca/kuwyyf/generic_social_1146x600_603acfb441.jpg`,
         },
         {
           name: `twitter:card`,
-          content: `summary`,
+          content: `https://nrs.objectstore.gov.bc.ca/kuwyyf/generic_social_1146x600_603acfb441.jpg`,
         },
         {
-          name: `twitter:creator`,
-          content: site.siteMetadata?.author || ``,
+          property: `og:site_name`,
+          content: `BC Parks`,
         },
         {
-          name: `twitter:title`,
-          content: title,
+          property: `og:url`,
+          content: `https://bcparks.ca`,
         },
         {
-          name: `twitter:description`,
-          content: metaDescription,
-        },
+          property: `og:type`,
+          content: `website`,
+        }
       ].concat(meta)}
     />
   )
@@ -85,6 +90,7 @@ SEO.defaultProps = {
 }
 
 SEO.propTypes = {
+  canonical: PropTypes.string,
   description: PropTypes.string,
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),

@@ -104,6 +104,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkFacilities: [StrapiParkFacilities]
     parkOperation: StrapiParkOperation
     parkOperationSubAreas: [StrapiParkOperationSubAreas]
+    seo: StrapiSeoComponent
   }
 
   type StrapiParkOperationSubAreaDates implements Node {
@@ -227,6 +228,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     metaKeywords: String
     metaTitle: String
     metaDescription: String
+    canonical: String
   }  
 
   type StrapiParkSubPages implements Node {

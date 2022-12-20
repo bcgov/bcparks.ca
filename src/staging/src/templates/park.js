@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
-import { sortBy } from "lodash"
+import { sortBy, truncate } from "lodash"
 import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 import {
   Box,
   Container,
@@ -35,6 +34,7 @@ import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import MapLocation from "../components/park/mapLocation"
 import SafetyInfo from "../components/park/safetyInfo"
 import ScrollToTop from "../components/scrollToTop"
+import Seo from "../components/seo"
 
 import "../styles/parks.scss"
 import { PARK_NAME_TYPE, useStyles } from "../utils/constants";
@@ -62,6 +62,7 @@ export default function ParkTemplate({ data }) {
 
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
   const operations = park.parkOperation || {}
+  const seo = park.seo
 
   const activeActivities = sortBy(
     park.parkActivities.filter(
@@ -234,8 +235,12 @@ export default function ParkTemplate({ data }) {
     parkOrcs: park.orcs
   }
 
- const parkName = renderHTML(park.parkNames.find(item=> item.parkNameType === PARK_NAME_TYPE.Escaped)?.parkName);
+  const parkName = renderHTML(park.parkNames.find(item=> item.parkNameType === PARK_NAME_TYPE.Escaped)?.parkName);
 
+  const parkDescription = park.description?.replace(/(<([^>]+)>)/ig, '');
+  const parkDescriptionShort = truncate(parkDescription, { length: 160 });
+    
+  
   const breadcrumbs = [
     <Link key="1" href="/">
       Home
@@ -250,61 +255,64 @@ export default function ParkTemplate({ data }) {
 
   return (
     <div className="grey-background">
-      <Helmet>
-          <title>{park.protectedAreaName} | BC Parks</title>
-      </Helmet>
+      <Seo
+        title={seo?.metaTitle ?? park.protectedAreaName}
+        description={seo?.metaDescription ?? parkDescriptionShort}
+        keywords={seo?.metaKeywords}
+        canonical={seo?.canonical}
+      />
       <Header mode="internal" content={menuContent} />
       <ScrollToTop />
       <CssBaseline />
+    
+      <div className="d-flex flex-wrap d-md-block">
+        <div className="container parks-container order-2">
+          <Container className="park-info-container" maxWidth={false}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12}>
+                <div className="p30t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none" />
+                <Breadcrumbs
+                  separator="›"
+                  aria-label="breadcrumb"
+                  className="p20t"
+                >
+                  {breadcrumbs}
+                </Breadcrumbs>
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <ParkHeader
+                  parkName={parkName || park.protectedAreaName}
+                  hasReservations={hasReservations}
+                  hasDayUsePass={hasDayUsePass}
+                  isLoadingAdvisories={isLoadingAdvisories}
+                  advisoryLoadError={advisoryLoadError}
+                  advisories={advisories}
+                />
+              </Grid>
+            </Grid>
+          </Container>
+        </div>
 
-      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-        <Grid item xs={12} sm={12}>
-          <ParkPhotoGallery photos={photos} />
-        </Grid>
-      </div>
-      <div className="container parks-container">
-        <Container className="park-info-container" maxWidth={false}>
-          <Grid container spacing={2}>
+        <div className="page-menu--mobile w-100 order-3 d-block d-lg-none">
+            <PageMenu
+              pageSections={menuItems}
+              activeSection={activeSection}
+              menuStyle="select"
+            />
+        </div>
+        
+        <div className="container parks-container gallery-container order-1">
+          <Container className="park-info-container" maxWidth={false}>
             <Grid item xs={12} sm={12}>
-              <div className="p30t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none" />
-              <Breadcrumbs
-                separator="›"
-                aria-label="breadcrumb"
-                className="p20t"
-              >
-                {breadcrumbs}
-              </Breadcrumbs>
+              <ParkPhotoGallery photos={photos} />
             </Grid>
-            <Grid item xs={12} sm={12}>
-              <ParkHeader
-                parkName={parkName || park.protectedAreaName}
-                hasReservations={hasReservations}
-                hasDayUsePass={hasDayUsePass}
-                isLoadingAdvisories={isLoadingAdvisories}
-                advisoryLoadError={advisoryLoadError}
-                advisories={advisories}
-              />
-            </Grid>
-          </Grid>
-        </Container>
-      </div>
-      <div className="page-menu--mobile">
-        <div className="d-block d-md-none">
-          <PageMenu
-            pageSections={menuItems}
-            activeSection={activeSection}
-            menuStyle="select"
-          />
+          </Container>
         </div>
       </div>
+
       <div className="container parks-container">
         <Container className="park-info-container" maxWidth={false}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={12}>
-              <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                <ParkPhotoGallery photos={photos} />
-              </div>
-            </Grid>
             <Grid
               item
               xs={12}
@@ -438,7 +446,9 @@ export default function ParkTemplate({ data }) {
           </Grid>
         </Container>
       </div>
-      <Footer />
+
+      <Footer>{data?.strapiWebsites.Footer}</Footer>
+
     </div>
   )
 }
@@ -467,6 +477,12 @@ export const query = graphql`
       mapZoom
       totalArea
       establishedDate
+      seo {
+        canonical
+        metaDescription
+        metaKeywords
+        metaTitle
+      }
       parkActivities {
         isActive
         isActivityOpen

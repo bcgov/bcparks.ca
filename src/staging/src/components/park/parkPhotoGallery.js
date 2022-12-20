@@ -65,7 +65,7 @@ export default function ParkPhotoGallery({ photos }) {
           <Grid
             item
             xs={12}
-            className="park-photo-container"
+            className="park-photo-container this-is-small-photos"
             onClick={() => {
               if (!showPhoto) {
                 setShowPhoto(true)
@@ -83,7 +83,7 @@ export default function ParkPhotoGallery({ photos }) {
                       <Grid item container spacing={1}>
                         <Grid item xs={12} md={6}>
                           <ParkPhoto
-                            type="big"
+                            type="small"
                             src={parkPhotos[0].imageUrl}
                             alt={parkPhotos[0].caption}
                           />
@@ -277,8 +277,6 @@ export default function ParkPhotoGallery({ photos }) {
                 </SRLWrapper>
               </SimpleReactLightbox>
             </Box>
-            <br />
-            <br />
           </Grid>
         )}
       </div>

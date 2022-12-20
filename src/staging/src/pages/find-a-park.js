@@ -473,7 +473,7 @@ export default function FindAPark({ location, data }) {
 
   return (
     <>
-      <Seo title="Find a park" />
+      <Seo title="Find a park" description="Find a park by searching for activies, facilites or by park name" />
       <Header content={menuContent} />
       <div className="search-body">
         <div className="search-results-main container">
@@ -729,6 +729,7 @@ export default function FindAPark({ location, data }) {
                                   handleActivitiesLengthChange([])
                                 }}
                                 tabIndex="0"
+                                href="#"
                               >
                                 {showMoreActivities ? (
                                   <div style={{ color: `#2464A4` }}>
@@ -817,6 +818,7 @@ export default function FindAPark({ location, data }) {
                                   handleFacilitiesLengthChange([])
                                 }}
                                 tabIndex="0"
+                                href="#"
                               >
                                 {showMoreFacilities ? (
                                   <div style={{ color: `#2464A4` }}>
@@ -924,7 +926,7 @@ export default function FindAPark({ location, data }) {
                                             </div>
                                           </div>
                                           <Link
-                                            href={`/${r.slug}`}
+                                            href={`/${r.slug}/`}
                                             className="p10t"
                                           >
                                             <h3 className="park-heading-text">
@@ -1119,7 +1121,7 @@ export default function FindAPark({ location, data }) {
                                             </div>
                                           </div>
                                           <Link
-                                            href={`/${r.slug}`}
+                                            href={`/${r.slug}/`}
                                             className="p10t"
                                           >
                                             <h3 className="park-heading-text">
@@ -1150,6 +1152,7 @@ export default function FindAPark({ location, data }) {
                                                 setParkQuickView(r)
                                               }
                                               className="park-quick-link link"
+                                              href="#"
                                             >
                                               Quick View
                                             </Link>
@@ -1240,6 +1243,7 @@ export default function FindAPark({ location, data }) {
                                     <Link
                                       onClick={handleCloseQuickView}
                                       className="park-quick-link link-white"
+                                      href="#"
                                     >
                                       Close Quick View
                                     </Link>
