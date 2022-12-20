@@ -331,7 +331,7 @@ async function createRedirects({ graphql, actions, reporter }) {
         })
       }
     } catch (error) {
-      reporter.warn(`Field oldUrl for park ${park.id} could not be parsed`)
+      reporter.warn(`Field oldUrl for park ${park.protectedAreaName} could not be parsed`)
     }
   })
 }
