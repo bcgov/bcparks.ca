@@ -322,12 +322,20 @@ async function createRedirects({ graphql, actions, result }) {
     })
   })
   parks.map(park => {
-    const oldUrl = parseUrl(park.oldUrl);
-    if(oldUrl?.pathname !== `/${park.slug}/`) {
-      return actions.createRedirect({
-        fromPath: oldUrl.pathname,
-        toPath: park.slug,
-      })
+    let oldUrl = '';
+    try {
+       oldUrl = parseUrl(park.oldUrl);
+       if(oldUrl?.pathname !== `/${park.slug}/`) {
+         return actions.createRedirect({
+           fromPath: oldUrl.pathname,
+           toPath: park.slug,
+         })
+       }git 
+       else {
+        throw "Invalid url";
+       }
+    } catch(TheSpecialUrlParserException) {
+        // Invalid url
     }
   })
 }
