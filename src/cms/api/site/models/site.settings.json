@@ -15,7 +15,8 @@
       "type": "string"
     },
     "siteName": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "siteNumber": {
       "type": "integer"
@@ -48,7 +49,8 @@
     },
     "protectedArea": {
       "via": "sites",
-      "model": "protected-area"
+      "model": "protected-area",
+      "required": true
     },
     "parkActivities": {
       "via": "site",

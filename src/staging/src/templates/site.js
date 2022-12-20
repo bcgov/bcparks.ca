@@ -69,8 +69,7 @@ export default function ParkTemplate({ data }) {
   )
 
   const hasReservations = operations.hasReservations
-  // TODO: change park.hasDayUsePass to site.hasDayUsePass when site.hasDayUsePass has created on all strapi env
-  const hasDayUsePass = park?.hasDayUsePass
+  const hasDayUsePass = site.hasDayUsePass
 
   // Use hasCamping if camping section is needed
   // const hasCamping = activeFacilities.some(facility =>
@@ -140,8 +139,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 0,
       display: "Site overview",
       link: "#park-overview-container",
-      // TODO: change park.description to site.description when site.description has created on all strapi env
-      visible: park?.description,
+      visible: site.description,
     },
     {
       sectionIndex: 1,
@@ -174,8 +172,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 5,
       display: "Location",
       link: "#park-maps-location-container",
-      // TODO: change park.locationNotes to site.locationNotes when site.locationNotes has created on all strapi env
-      visible: (site.latitude && site.longitude) || park?.locationNotes,
+      visible: (site.latitude && site.longitude) || site.locationNotes,
     },
   ]
 
@@ -282,8 +279,7 @@ export default function ParkTemplate({ data }) {
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">
-                  {/* TODO: change park.description to site.description when site.description has created on all strapi env */}
-                  <ParkOverview data={park?.description} type="site" />
+                  <ParkOverview data={site.description} type="site" />
                 </div>
               )}
               {menuItems[1].visible && (
@@ -328,13 +324,12 @@ export default function ParkTemplate({ data }) {
                 <div ref={mapLocationRef} className="full-width">
                   <div id="park-maps-location-container" className="anchor-link">
                     <MapLocation data={mapData} />
-                    {/* TODO: change park.locationNotes to site.locationNotes when site.locationNotes has created on all strapi env */}
-                    {park?.locationNotes && (
+                    {site.locationNotes && (
                       <Grid item xs={12} id="park-location-notes-container">
                         <Box mb={8}>
                           <div
                             dangerouslySetInnerHTML={{
-                              __html: park?.locationNotes,
+                              __html: site.locationNotes,
                             }}
                           ></div>
                         </Box>
@@ -364,14 +359,14 @@ export const query = graphql`
       mapZoom
       longitude
       latitude
+      locationNotes
+      description
+      hasDayUsePass
       isUnofficialSite
       protectedArea {
         orcs
         slug
         protectedAreaName
-        locationNotes
-        description
-        hasDayUsePass
       }
       parkActivities {
         isActive
