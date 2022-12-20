@@ -331,15 +331,7 @@ async function createRedirects({ graphql, actions, reporter }) {
         })
       }
     } catch (error) {
-      reporter.warn(`Field oldUrl for park ${park.id} not found, 
-      error message: ${JSON.stringify(error)}
-      
-
-      ================
-      
-      park object: ${JSON.stringify(park)}
-      `
-      )
+      reporter.warn(`Field oldUrl for park ${park.id} could not be parsed`)
     }
   })
 }
