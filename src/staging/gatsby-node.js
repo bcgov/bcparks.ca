@@ -330,10 +330,7 @@ async function createRedirects({ graphql, actions, result }) {
            fromPath: oldUrl.pathname,
            toPath: park.slug,
          })
-       }git 
-       else {
-        throw "Invalid url";
-       }
+       } 
     } catch(TheSpecialUrlParserException) {
         // Invalid url
     }
