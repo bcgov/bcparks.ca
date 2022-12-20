@@ -3,7 +3,6 @@ const slugify = require("slugify")
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
 const parseUrl = require("parse-url")
 
-
 const strapiApiRequest = (graphql, query) =>
   new Promise((resolve, reject) => {
     resolve(
@@ -280,7 +279,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   await createParkSubPages({ graphql, actions })
   await createSites({ graphql, actions })
   await createPageSlugs("static", staticQuery, { graphql, actions, reporter })
-  await createRedirects({ graphql, actions })
+  await createRedirects({ graphql, actions, reporter })
 }
 
 const parkQuery = `
@@ -308,13 +307,13 @@ const staticQueryPath = `
   }
 }`
 
-async function createRedirects({ graphql, actions, result }) {
+async function createRedirects({ graphql, actions, reporter }) {
   const response = await strapiApiRequest(graphql, staticQueryPath)
   const resultPark = await strapiApiRequest(graphql, parkQuery)
 
   const redirects = response.data.allStrapiLegacyRedirect.nodes
   const parks = resultPark.data.allStrapiProtectedArea.nodes
-  
+
   redirects.map(item => {
     return actions.createRedirect({
       fromPath: item.fromPath,
@@ -322,12 +321,17 @@ async function createRedirects({ graphql, actions, result }) {
     })
   })
   parks.map(park => {
-    const oldUrl = parseUrl(park.oldUrl);
-    if(oldUrl?.pathname !== `/${park.slug}/`) {
-      return actions.createRedirect({
-        fromPath: oldUrl.pathname,
-        toPath: park.slug,
-      })
+    let oldUrl = '';
+    try {
+      oldUrl = parseUrl(park.oldUrl);
+      if (oldUrl?.pathname !== `/${park.slug}/`) {
+        return actions.createRedirect({
+          fromPath: oldUrl.pathname,
+          toPath: park.slug,
+        })
+      }
+    } catch (error) {
+      reporter.warn(`Field oldUrl for park ${park.protectedAreaName} could not be parsed`)
     }
   })
 }
@@ -457,9 +461,7 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
           },
         ],
       },
-      plugins: [
-        new NodePolyfillPlugin()
-      ]
+      plugins: [new NodePolyfillPlugin()],
     })
   }
 }
