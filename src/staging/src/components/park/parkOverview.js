@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { Box, Paper, Link, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -24,12 +24,18 @@ const useStyles = makeStyles(theme => ({
 export default function ParkOverview({ data: parkOverview, type }) {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
+  const [height, setHeight] = useState(0)
+  const ref = useRef(null)
+  useEffect(() => {
+    setHeight(ref.current.clientHeight)
+  })
+  const isLong = height >= 260
 
   return (
     <div id="park-overview-container" className="anchor-link">
       <Grid item xs={12} className="anchor-link">
         <Paper elevation={0}>
-          <Box className={expanded ? classes.expanded : classes.collapsed}>
+          <Box className={expanded ? classes.expanded : classes.collapsed} ref={ref}>
             <Heading>{capitalizeFirstLetter(`${type} overview`)}</Heading>
             <HtmlContent className="park-overview-html">
               {parkOverview}
@@ -44,7 +50,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
             }}
           >
             <br />
-            {expanded ? "Read less" : "Read more"}
+            {isLong && (expanded ? "Read less" : "Read more")}
           </Link>
           <Spacer />
         </Paper>
