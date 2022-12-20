@@ -3,7 +3,6 @@ const slugify = require("slugify")
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
 const parseUrl = require("parse-url")
 
-
 const strapiApiRequest = (graphql, query) =>
   new Promise((resolve, reject) => {
     resolve(
@@ -247,15 +246,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkFacilities: [StrapiParkFacilities]
     parkOperation: StrapiParkOperation
   }
-
-  type StrapiPages implements Node {
-    Title: String
-  }
-
-  type StrapiLegacyRedirect implements Node {
-    fromPath: String
-    toPath: String
-  }
   `
   createTypes(typeDefs)
 }
@@ -314,7 +304,7 @@ async function createRedirects({ graphql, actions, result }) {
 
   const redirects = response.data.allStrapiLegacyRedirect.nodes
   const parks = resultPark.data.allStrapiProtectedArea.nodes
-  
+
   redirects.map(item => {
     return actions.createRedirect({
       fromPath: item.fromPath,
@@ -324,15 +314,23 @@ async function createRedirects({ graphql, actions, result }) {
   parks.map(park => {
     let oldUrl = '';
     try {
-       oldUrl = parseUrl(park.oldUrl);
-       if(oldUrl?.pathname !== `/${park.slug}/`) {
-         return actions.createRedirect({
-           fromPath: oldUrl.pathname,
-           toPath: park.slug,
-         })
-       } 
-    } catch(TheSpecialUrlParserException) {
-        // Invalid url
+      oldUrl = parseUrl(park.oldUrl);
+      if (oldUrl?.pathname !== `/${park.slug}/`) {
+        return actions.createRedirect({
+          fromPath: oldUrl.pathname,
+          toPath: park.slug,
+        })
+      }
+    } catch (error) {
+      reporter.warn(`Field oldUrl for park ${park.id} not found, 
+      error message: ${JSON.stringify(error)}
+      
+
+      ================
+      
+      park object: ${JSON.stringify(park)}
+      `
+      )
     }
   })
 }
@@ -462,9 +460,7 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
           },
         ],
       },
-      plugins: [
-        new NodePolyfillPlugin()
-      ]
+      plugins: [new NodePolyfillPlugin()],
     })
   }
 }
