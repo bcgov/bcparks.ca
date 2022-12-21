@@ -58,7 +58,7 @@ export default function ParkTemplate({ data }) {
   const parkType = park.type ?? "park"
 
   // function to check if a string contains anything besides html tags and whitespace characters
-  const isNotWhiteSpace = (str) => str.replace(/(<([^>]+)>)|^\s+|\s+$|\s+/g, "").length > 0;
+  const isNullOrWhiteSpace = (str) => !str || !str.replace(/(<([^>]+)>)|^\s+|\s+$|\s+/g, "");
 
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
   const operations = park.parkOperation || {}
@@ -154,7 +154,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 0,
       display: capitalizeFirstLetter(`${parkType} overview`),
       link: "#park-overview-container",
-      visible: isNotWhiteSpace(park.description),
+      visible: !isNullOrWhiteSpace(park.description),
     },
     {
       sectionIndex: 1,
@@ -175,13 +175,13 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 3,
       display: "Dates of operation",
       link: "#park-dates-container",
-      visible: park.parkOperation,
+      visible: !isNullOrWhiteSpace(park.parkOperation),
     },
     {
       sectionIndex: 4,
       display: "Safety info",
       link: "#park-safety-info-container",
-      visible: park.safetyInfo || park.specialNotes,
+      visible: !isNullOrWhiteSpace(park.safetyInfo) || !isNullOrWhiteSpace(park.specialNotes),
     },
     {
       sectionIndex: 5,
@@ -205,7 +205,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 8,
       display: "Location",
       link: "#park-maps-location-container",
-      visible: (park.latitude && park.longitude) || park.locationNotes,
+      visible: (park.latitude && park.longitude) || !isNullOrWhiteSpace(park.locationNotes),
     },
     {
       sectionIndex: 9,
@@ -217,13 +217,13 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 10,
       display: capitalizeFirstLetter(`Learn about this ${parkType}`),
       link: "#park-about-container",
-      visible: park.totalArea || park.establishedDate || park.parkContact || park.natureAndCulture,
+      visible: park.totalArea || park.establishedDate || !isNullOrWhiteSpace(park.parkContact) || !isNullOrWhiteSpace(park.natureAndCulture),
     },
     {
       sectionIndex: 11,
       display: "Reconciliation with Indigenous peoples",
       link: "#park-reconciliation-container",
-      visible: park.reconciliationNotes,
+      visible: !isNullOrWhiteSpace(park.reconciliationNotes),
     },
   ]
 
