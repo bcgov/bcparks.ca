@@ -56,6 +56,11 @@ export default function ParkTemplate({ data }) {
 
   const park = data.strapiProtectedArea
   const parkType = park.type ?? "park"
+
+  // remove HTML tags from the park.description
+  const regex = /(<([^>]+)>)/ig;
+  const parkDescription = park.description.replace(regex, "")
+
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
   const operations = park.parkOperation || {}
 
@@ -150,7 +155,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 0,
       display: capitalizeFirstLetter(`${parkType} overview`),
       link: "#park-overview-container",
-      visible: park.description,
+      visible: parkDescription,
     },
     {
       sectionIndex: 1,
