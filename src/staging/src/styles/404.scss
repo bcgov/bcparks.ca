@@ -1,18 +1,11 @@
 @import "./global.scss";
 
-$header-height-404: 220px;
-$footer-height-404: 390px;
-
 .not-found {
   background-color: $colorBlue;
   color:white;
   margin-bottom: 0px;
   h1 {
     font-weight: 100;
-  }
-
-  a {
-    color: white;
   }
 
   .btn-outline-primary{
@@ -22,10 +15,6 @@ $footer-height-404: 390px;
 
   .thumb-link{
     color: white !important;
-  }
-
-  .not-found-container{
-    min-height: calc(100vh - $footer-height-404 - $header-height-404);
   }
 
   .footer{

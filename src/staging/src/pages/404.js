@@ -1,4 +1,5 @@
 import * as React from "react"
+import { graphql, useStaticQuery } from "gatsby"
 
 import Header from "../components/header"
 import Footer from "../components/footer"
@@ -7,19 +8,52 @@ import ThumbLink from "../components/thumbLink"
 
 import "../styles/404.scss"
 
-const NotFoundPage = () => (
+const NotFoundPage = () => {
+
+  const queryData = useStaticQuery(graphql`
+    query {
+      allStrapiMenus(
+        sort: { fields: order, order: ASC }
+        filter: { show: { eq: true } }
+      ) {
+        nodes {
+          strapiId
+          title
+          url
+          order
+          id
+          imgUrl
+          strapiChildren {
+            id
+            title
+            url
+            order
+            parent
+          }
+          strapiParent {
+            id
+            title
+          }
+        }
+      }
+    }
+  `)
+
+  const menuContent = queryData?.allStrapiMenus?.nodes || []
+
+  return(
   <>
     <Seo title="404: Not found" />
-    <Header />
+    <Header mode="internal" content={menuContent} />
     <div className="not-found">
       <div>
         <div className="not-found-container d-flex align-items-center justify-content-center container">
           <div className="p-3">
-            <div className="mx-2">
+            <div className="m-2">
               <p>
                 Good catch! You seem to have found a link that’s not working or a page that hasn’t been added to our new
                 website yet. Help us fix things as soon as possible by letting us know at{" "}
-                <a href="mailto:parkinfo@gov.bc.ca" aria-label="Send a mail to BC Parks">
+                <a href="mailto:parkinfo@gov.bc.ca" aria-label="Send a mail to BC Parks" className="text-white">
                   parkinfo@gov.bc.ca
                 </a>
               </p>
@@ -29,15 +63,9 @@ const NotFoundPage = () => (
             </div>
             <div className="mt-2 d-flex justify-content-center">
               <div className="row">
-                <div className="col-lg-4 col-md-12 mt-2">
-                  <ThumbLink imageLink="404/home-thumb.jpg" title="Homepage" navLink="/" />
-                </div>
-                <div className="col-lg-4 col-md-12 mt-2">
-                  <ThumbLink imageLink="404/park-thumb.jpg" title="Find a park" navLink="/find-a-park" />
-                </div>
-                <div className="col-lg-4 col-md-12 mt-2">
-                  <ThumbLink imageLink="404/reserve-thumb.jpg" title="Reservations" navLink="/reservations" />
-                </div>
+                <ThumbLink imageLink="404/home-thumb.jpg" title="Homepage" navLink="/" />
+                <ThumbLink imageLink="404/park-thumb.jpg" title="Find a park" navLink="/find-a-park" />
+                <ThumbLink imageLink="404/reserve-thumb.jpg" title="Reservations" navLink="/reservations" />
               </div>
             </div>
           </div>
@@ -46,7 +74,8 @@ const NotFoundPage = () => (
       </div>
     </div>
   </>
-)
+  )
+}
 
 export default NotFoundPage
 
