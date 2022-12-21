@@ -57,9 +57,8 @@ export default function ParkTemplate({ data }) {
   const park = data.strapiProtectedArea
   const parkType = park.type ?? "park"
 
-  // remove HTML tags from the park.description
-  const regex = /(<([^>]+)>)/ig;
-  const parkDescription = park.description.replace(regex, "")
+  // function to check if a string contains anything besides html tags and whitespace characters
+  const isNotWhiteSpace = (str) => str.replace(/(<([^>]+)>)|^\s+|\s+$|\s+/g, "").length > 0;
 
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
   const operations = park.parkOperation || {}
@@ -155,7 +154,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 0,
       display: capitalizeFirstLetter(`${parkType} overview`),
       link: "#park-overview-container",
-      visible: parkDescription,
+      visible: isNotWhiteSpace(park.description),
     },
     {
       sectionIndex: 1,
