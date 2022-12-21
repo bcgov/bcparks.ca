@@ -305,7 +305,8 @@ public static class HtmlCleanup
             { "campfish.html", "camp-fish" },
             { "fishhunt.html", "fish-hunt" },
             { "camphike.html", "camp-hike" },
-            { "hikecamp.html", "camp-hike" }
+            { "hikecamp.html", "camp-hike" },
+            { "shmar23.html", "site-list" }
         };
 
     public static string Process(string input, bool isParkSubpage = false)
@@ -342,6 +343,19 @@ public static class HtmlCleanup
                 n.Attributes.Remove("valign");
                 n.Attributes.Remove("bordercolor");
                 n.Attributes.Remove("bgcolor");
+
+                // remove height and width from tables and images (but keep them on iframes and videos)
+                if (
+                    n.Name == "table"
+                    || n.Name == "col"
+                    || n.Name == "td"
+                    || n.Name == "th"
+                    || n.Name == "img"
+                )
+                {
+                    n.Attributes.Remove("width");
+                    n.Attributes.Remove("height");
+                }
             });
 
         input = htmlDoc.DocumentNode.OuterHtml;
@@ -407,6 +421,13 @@ public static class HtmlCleanup
         foreach (var formTag in formTags)
         {
             formTag.OuterHtml = formTag.InnerHtml;
+        }
+
+        // remove span tags
+        var spanTags = nodes.QuerySelectorAll("span");
+        foreach (var spanTag in spanTags)
+        {
+            spanTag.OuterHtml = spanTag.InnerHtml;
         }
 
         // add a "legacy-link" class to all html anchors
@@ -475,7 +496,12 @@ public static class HtmlCleanup
 
             href = href.ToLower();
 
-            if (href.StartsWith("/accessibility/parks/"))
+            if (string.IsNullOrEmpty(href) && hash == "top")
+            {
+                // remove links to #top
+                link.Remove();
+            }
+            else if (href.StartsWith("/accessibility/parks/"))
             {
                 link.SetAttribute("href", "https://accessibility.bcparks.ca");
             }
@@ -533,6 +559,17 @@ public static class HtmlCleanup
             }
         }
 
+        // add an empty alt tag to any image that is missing an alt tag
+        images = nodes.QuerySelectorAll("img");
+        foreach (var img in images)
+        {
+            var alt= img.GetAttribute("alt") ?? "";
+            if (string.IsNullOrEmpty(alt))
+            {
+                img.SetAttribute("alt", "");
+            }
+        }
+
         // manual string cleanup
         var html = nodes.ToHtml();
 
@@ -545,8 +582,9 @@ public static class HtmlCleanup
         // format the html nicely
         var pretty = GetNodes(html).Prettify();
 
-        // remove empty div tags
+        // remove empty div and p tags
         pretty = pretty.Replace("<div>\n</div>", "");
+        pretty = pretty.Replace("<p>\n</p>", "");
 
         // remove leading carriage returns
         while (pretty.StartsWith("\n"))
