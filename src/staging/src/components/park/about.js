@@ -25,15 +25,21 @@ export default function About({
       <Paper elevation={0}>
         <Heading>{capitalizeFirstLetter(`Learn more about this ${parkType}`)}</Heading>
         {(park.totalArea || park.establishedDate) && (
-          <ul>
-            <li>
-              <strong>Date established:</strong> {formattedEstablishedDate}
-            </li>
-            <li>
-              <strong>Size:</strong> {park.totalArea} hectares
-            </li>
-          </ul>
+          <>
+            <h3>{capitalizeFirstLetter(`${park.type} details`)}</h3>
+            <div className="about-details">
+              <ul>
+                <li>
+                  <strong>Date established:</strong> {formattedEstablishedDate}
+                </li>
+                <li>
+                  <strong>Size:</strong> {park.totalArea} hectares
+                </li>
+              </ul>
+            </div>
+          </>
         )}
+        {(park.totalArea || park.establishedDate) && park.parkContact && <Spacer />}
         {park.parkContact && (
           <>
             <h3 className="heading">{capitalizeFirstLetter(`${parkType} contact`)}</h3>
@@ -43,7 +49,7 @@ export default function About({
         {park.parkContact && park.natureAndCulture && <Spacer />}
         {park.natureAndCulture && (
           <>
-            <h3 className="heading">Nature & culture</h3>
+            <h3>Nature & culture</h3>
             <HtmlContent>{park.natureAndCulture}</HtmlContent>
           </>
         )}

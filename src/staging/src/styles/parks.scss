@@ -17,7 +17,7 @@ $mediumBreakpoint: 991.98px;
 }
 
 .heading {
-  color: #000;
+  color: #003366;
 }
 
 #park-activity-container .MuiAccordion-root,
@@ -137,9 +137,11 @@ $mediumBreakpoint: 991.98px;
   max-width: 100%;
 }
 
-.raw-html-content li {
-  display: list-item !important;
-  margin-left: 16px;
+.raw-html-content, .about-details {
+  li {
+    display: list-item !important;
+    margin-left: 16px;
+  }
 }
 
 .park-page-footer {
