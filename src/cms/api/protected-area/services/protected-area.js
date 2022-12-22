@@ -73,10 +73,14 @@ module.exports = {
 
     const results = strapi.query("protected-area").model.query((query) => {
       query.select(
-        "protected_areas.*",
+        "protected_areas.id",
+        "protected_areas.protectedAreaName",
+        "protected_areas.slug",
         knex.raw(
           `array(
-            SELECT to_json(public_advisories.*)
+            SELECT to_json((
+              SELECT d FROM (SELECT public_advisories."id", public_advisories."urgency") d
+            ))
             FROM public_advisories__protected_areas
             JOIN public_advisories
             ON public_advisories.id = public_advisories__protected_areas.public_advisory_id
@@ -126,11 +130,8 @@ module.exports = {
       } else if (sortCol === "rank" && sortDesc && searchText) {
         // if we're sorting by relevance, add various rank columns to the query
         // for sorting:
-        // - search_rank: full text search rank on the protected area model
-        // - activity_desc_rank: highest scoring full text search rank on an activity description
-        // - facility_desc_rank: highest scoring full text search rank on a facility description
         // - protected_area_name_search_similarity: similarity score for the protected area name
-        // - park_name_search_similarity: similarity score for the park name table
+        // - search_rank: full text search rank on the protected area model
         //
         // Unfortunately there's no clear way to combine these ranks (as they use different
         // scales) so we sort by them in order.
@@ -143,92 +144,22 @@ module.exports = {
             [searchText]
           ),
           knex.raw(
-            `GREATEST(
-              (
-                SELECT ts_rank(
-                  setweight(
-                    to_tsvector('english', park_activities.description),
-                    'D'
-                  ),
-                  websearch_to_tsquery('english', ?)
-                ) AS activity_desc_rank
-                FROM park_activities
-                JOIN activity_types
-                ON (activity_types.id = park_activities."activityType")
-                WHERE park_activities."protectedArea" = protected_areas.id
-                  AND park_activities.published_at IS NOT NULL
-                  AND park_activities."isActive" = TRUE
-                  AND activity_types.published_at IS NOT NULL
-                  AND activity_types."isActive" = TRUE
-                ORDER BY activity_desc_rank DESC LIMIT 1
-              ),
-              0.0) AS activity_desc_rank`,
-            [searchText]
-          ),
-          knex.raw(
-            `GREATEST(
-              (
-                SELECT ts_rank(
-                  setweight(
-                    to_tsvector('english', park_facilities.description),
-                    'D'
-                    ),
-                    websearch_to_tsquery('english', ?)
-                  ) AS facility_desc_rank
-                  FROM park_facilities
-                  JOIN facility_types
-                  ON (facility_types.id = park_facilities."facilityType")
-                  WHERE park_facilities."protectedArea" = protected_areas.id
-                    AND park_facilities.published_at IS NOT NULL
-                    AND park_facilities."isActive" = TRUE
-                    AND facility_types.published_at IS NOT NULL
-                    AND facility_types."isActive" = TRUE
-                  ORDER BY facility_desc_rank DESC
-                  LIMIT 1
-                ),
-                0.0
-              ) AS facility_desc_rank`,
-            [searchText]
-          ),
-          knex.raw(
             'similarity("protectedAreaName", ?) AS protected_area_name_search_similarity',
             [searchText]
           ),
-          knex.raw(
-            `GREATEST(
-              (
-                SELECT similarity(park_names."parkName", ?) AS name_similarity
-                FROM park_names
-                WHERE park_names."protectedArea" = id
-                  AND park_names.published_at IS NOT NULL
-                ORDER BY name_similarity DESC
-                LIMIT 1
-              ),
-              0.0
-            ) AS park_name_search_similarity`,
-            [searchText]
-          )
         );
         query.orderBy([
-          {
-            column: "search_rank",
-            order: "desc",
-          },
-          {
-            column: "activity_desc_rank",
-            order: "desc",
-          },
-          {
-            column: "facility_desc_rank",
-            order: "desc",
-          },
           {
             column: "protected_area_name_search_similarity",
             order: "desc",
           },
           {
-            column: "park_name_search_similarity",
+            column: "search_rank",
             order: "desc",
+          },
+          {
+            column: "protectedAreaName",
+            order: "asc",
           },
         ]);
       } else {
