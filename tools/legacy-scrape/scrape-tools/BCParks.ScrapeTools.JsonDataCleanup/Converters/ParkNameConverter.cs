@@ -44,6 +44,8 @@ public class ParkNameConverter : ConverterBase
             newObj.Items.Add(newItem);
         }
 
+        newObj.Items = newObj.Items.OrderBy(i => i.parkNameId).ToList();
+
         WriteProcessedFile(newObj);
     }
 }

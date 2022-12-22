@@ -138,6 +138,7 @@ internal class Program
                             .Replace("fishhunt", "fish-hunt")
                             .Replace("camphike", "camp-hike")
                             .Replace("hikecamp", "camp-hike")
+                            .Replace("shmar23", "site-list")
                             .Replace("_", "-"),
                         content = html,
                         heading = CleanupTitle(heading),
