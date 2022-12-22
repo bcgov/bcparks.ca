@@ -131,22 +131,29 @@ module.exports = {
         // if we're sorting by relevance, add various rank columns to the query
         // for sorting:
         // - protected_area_name_search_similarity: similarity score for the protected area name
-        // - search_rank: full text search rank on the protected area model
+        // - park_name_search_similarity: similarity score for the park name table
         //
         // Unfortunately there's no clear way to combine these ranks (as they use different
         // scales) so we sort by them in order.
         query.select(
           knex.raw(
-            `GREATEST(
-              ts_rank(protected_areas.search_text, websearch_to_tsquery('english', ?)),
-              0.0
-            ) AS search_rank`,
-            [searchText]
-          ),
-          knex.raw(
             'similarity("protectedAreaName", ?) AS protected_area_name_search_similarity',
             [searchText]
           ),
+          knex.raw(
+            `GREATEST(
+              (
+                SELECT similarity(park_names."parkName", ?) AS name_similarity
+                FROM park_names
+                WHERE park_names."protectedArea" = id
+                  AND park_names.published_at IS NOT NULL
+                ORDER BY name_similarity DESC
+                LIMIT 1
+              ),
+              0.0
+            ) AS park_name_search_similarity`,
+            [searchText]
+          )
         );
         query.orderBy([
           {
@@ -154,7 +161,7 @@ module.exports = {
             order: "desc",
           },
           {
-            column: "search_rank",
+            column: "park_name_search_similarity",
             order: "desc",
           },
           {
@@ -290,61 +297,29 @@ module.exports = {
       // and the description columns of park_activities and park_facilities
       // Any match here counts.
       query.where((builder) => {
-        builder.where(
-          knex.raw('protected_areas."protectedAreaName" % ?', [searchText])
-        );
-        builder.orWhere(
-          knex.raw(
-            "protected_areas.search_text @@ websearch_to_tsquery('english', ?)",
-            [searchText]
-          )
-        );
+        builder.where("protectedAreaName", "ILIKE", `%${searchText}%`);
         builder.orWhereIn("protected_areas.id", (subqueryBuilder) => {
           subqueryBuilder
             .select("protectedArea")
             .from("park_names")
             .whereNotNull("park_names.published_at")
-            .where(knex.raw('"parkName" % ?', [searchText]));
-        });
-        builder.orWhereIn("protected_areas.id", (subqueryBuilder) => {
-          subqueryBuilder
-            .select("protectedArea")
-            .from("park_activities")
-            .innerJoin(
-              "activity_types",
-              "park_activities.activityType",
-              "activity_types.id"
-            )
-            .where("park_activities.isActive", true)
-            .where("activity_types.isActive", true)
-            .whereNotNull("activity_types.published_at")
-            .whereNotNull("park_activities.published_at")
-            .where(
-              knex.raw(
-                "to_tsvector('english', description) @@ websearch_to_tsquery('english', ?)",
-                [searchText]
-              )
-            );
-        });
-        builder.orWhereIn("protected_areas.id", (subqueryBuilder) => {
-          subqueryBuilder
-            .select("protectedArea")
-            .from("park_facilities")
-            .innerJoin(
-              "facility_types",
-              "park_facilities.facilityType",
-              "facility_types.id"
-            )
-            .where("park_facilities.isActive", true)
-            .where("facility_types.isActive", true)
-            .whereNotNull("facility_types.published_at")
-            .whereNotNull("park_facilities.published_at")
-            .where(
-              knex.raw(
-                "to_tsvector('english', description) @@ websearch_to_tsquery('english', ?)",
-                [searchText]
-              )
-            );
+            .whereIn("parkNameType", [1, 3, 4, 5, 6])
+            .where((orBuilder) => {
+              orBuilder
+                .where(knex.raw('"parkName" % ?', [searchText]))
+                .orWhere(
+                  knex.raw(
+                    `to_tsvector('english', "parkName") @@ websearch_to_tsquery('english', ?)`,
+                    [searchText]
+                  )
+                )
+                .orWhere(
+                  knex.raw(
+                    'similarity("parkName", ?) > 0.12',
+                    [searchText]
+                  )
+                )
+            })
         });
       });
     }
