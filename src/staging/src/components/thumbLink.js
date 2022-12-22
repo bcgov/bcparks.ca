@@ -3,54 +3,38 @@ import React from "react"
 import { navigate, graphql, useStaticQuery } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image";
 
-function goToLink(link) {
-    navigate(link);
-}
-
 export default function ThumbLink({ imageLink, title, navLink }) {
 
-    const query = useStaticQuery(graphql`
+  const query = useStaticQuery(graphql`
     query {
         images: allFile(
           filter: {sourceInstanceName: {eq: "images"}, relativeDirectory: {eq: "404"}}
         ) {
-          edges {
-            node {
-              relativePath
-              childImageSharp {
-                gatsbyImageData(placeholder: BLURRED)
-                fluid(maxWidth: 1000) {
-                  base64
-                  tracedSVG
-                  srcWebp
-                  srcSetWebp
-                  originalImg
-                  originalName
-                }
-              }
+          nodes {
+            relativePath
+            childImageSharp {
+              gatsbyImageData(placeholder: BLURRED)
             }
           }
         }
       }
-    `)
+  `)
 
-    const image = query.images.edges.find(
-        img => img.node.relativePath === imageLink
-    );
+  const image = query.images.nodes.find(
+    img => img.relativePath === imageLink
+  );
 
-    return (
-        <>
-            <button className="btn btn-outline-primary thumb-link" onClick={() => goToLink(navLink)}>
-                <div>
-                    <GatsbyImage image={image.node.childImageSharp.gatsbyImageData}
-                        alt={title} />
-                    <div className="mt-2 text-left">
-                        <h3 className="mb-1">{title}</h3>
-                        <p>Learn more</p>
-                    </div>
-                </div>
-            </button>
-        </>
-    )
+  return (
+    <div className="col-lg-4 col-md-12 mt-2">
+      <button className="btn btn-outline-primary thumb-link" onClick={() => navigate(navLink)}>
+        <div>
+          <GatsbyImage image={image.childImageSharp.gatsbyImageData} alt={title} />
+          <div className="mt-2 text-left">
+            <h3>{title}</h3>
+          </div>
+        </div>
+      </button>
+    </div>
+  )
 }
 

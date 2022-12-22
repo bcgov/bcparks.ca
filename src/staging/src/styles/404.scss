@@ -1,10 +1,6 @@
 @import "./global.scss";
 
-$header-height-404: 100px;
-$footer-height-404: 413px;
-
 .not-found {
-  min-height: 100vh;
   background-color: $colorBlue;
   color:white;
   margin-bottom: 0px;
@@ -19,10 +15,6 @@ $footer-height-404: 413px;
 
   .thumb-link{
     color: white !important;
-  }
-
-  .not-found-container{
-    min-height: calc(100vh - $footer-height-404 - $header-height-404);
   }
 
   .footer{
