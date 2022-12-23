@@ -18,7 +18,7 @@ import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed.js';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
 import RemoveFormat from '@ckeditor/ckeditor5-remove-format/src/removeformat.js';
 import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting.js';
-import Style from '@ckeditor/ckeditor5-style/src/style';
+import Style from '@ckeditor/ckeditor5-style/src/style.js';
 import Table from '@ckeditor/ckeditor5-table/src/table.js'; 
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
 import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties.js';

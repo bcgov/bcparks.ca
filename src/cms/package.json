@@ -11,7 +11,7 @@
     "test": "jest --forceExit --detectOpenHandles",
     "lint": "eslint ./ && prettier --check **/*.js",
     "seed": "node scripts/seed.js",
-    "reimport": "node scripts/reimport.js"    
+    "reimport": "node scripts/reimport.js"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^29.2.0",
@@ -44,7 +44,9 @@
     "npm": "^6.0.0"
   },
   "devDependencies": {
+    "@babel/core": "7.20.5",
     "@babel/eslint-parser": "^7.13.10",
+    "@babel/traverse": "7.20.5",
     "eslint": "^8.0.0",
     "eslint-config-prettier": "^8.3.0",
     "jest": "^27.4.7",
