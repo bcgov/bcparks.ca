@@ -256,10 +256,9 @@ export default function ParkTemplate({ data }) {
   return (
     <div className="grey-background">
       <Seo
-        title={seo?.metaTitle ?? park.protectedAreaName}
-        description={seo?.metaDescription ?? parkDescriptionShort}
+        title={seo?.metaTitle || park.protectedAreaName}
+        description={seo?.metaDescription || parkDescriptionShort}
         keywords={seo?.metaKeywords}
-        canonical={seo?.canonical}
       />
       <Header mode="internal" content={menuContent} />
       <ScrollToTop />
@@ -478,7 +477,6 @@ export const query = graphql`
       totalArea
       establishedDate
       seo {
-        canonical
         metaDescription
         metaKeywords
         metaTitle

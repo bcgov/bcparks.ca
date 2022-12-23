@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
-import { sortBy } from "lodash"
+import { sortBy, truncate } from "lodash"
 import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 import {
   Box,
   Container,
@@ -27,6 +26,7 @@ import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import MapLocation from "../components/park/mapLocation"
 import ScrollToTop from "../components/scrollToTop"
+import Seo from "../components/seo"
 
 import "../styles/parks.scss"
 import { useStyles } from "../utils/constants"
@@ -183,6 +183,9 @@ export default function ParkTemplate({ data }) {
     parkOrcs: site.orcsSiteNumber
   }
 
+  const siteDescription = site.description?.replace(/(<([^>]+)>)/ig, '');
+  const siteDescriptionShort = truncate(siteDescription, { length: 160 });
+
   const breadcrumbs = [
     <Link key="1" href="/">
       Home
@@ -200,9 +203,10 @@ export default function ParkTemplate({ data }) {
 
   return (
     <div className="grey-background">
-      <Helmet>
-          <title>{park?.protectedAreaName}: {site.siteName} | BC Parks</title>
-      </Helmet>
+      <Seo
+        title={`${park?.protectedAreaName}: ${site.siteName}`}
+        description={siteDescriptionShort}
+      />
       <Header mode="internal" content={menuContent} />
       <ScrollToTop />
       <CssBaseline />

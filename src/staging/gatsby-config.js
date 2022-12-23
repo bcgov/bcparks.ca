@@ -8,6 +8,7 @@ module.exports = {
     description: `BC Parks`,
     author: `@bcparks`,
     apiURL: process.env.REACT_APP_CMS_BASE_URL,
+    image: 'https://nrs.objectstore.gov.bc.ca/kuwyyf/generic_social_1146x600_603acfb441.jpg'
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

@@ -228,7 +228,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     metaKeywords: String
     metaTitle: String
     metaDescription: String
-    canonical: String
   }  
 
   type StrapiParkSubPages implements Node {

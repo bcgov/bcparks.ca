@@ -9,7 +9,7 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 
-function SEO({ canonical, description, lang, meta, title, keywords }) {
+function SEO({ description, lang, meta, title, keywords }) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -18,6 +18,7 @@ function SEO({ canonical, description, lang, meta, title, keywords }) {
             title
             description
             author
+            image
           }
         }
       }
@@ -25,8 +26,9 @@ function SEO({ canonical, description, lang, meta, title, keywords }) {
   )
 
   const metaDescription = description || site.siteMetadata.description
-  const metaKeywords = keywords || site.siteMetadata.keywords
+  const metaKeywords = keywords
   const defaultTitle = site.siteMetadata?.title
+  const defaultImage = site.siteMetadata?.image
 
   return (
     <Helmet
@@ -35,11 +37,6 @@ function SEO({ canonical, description, lang, meta, title, keywords }) {
       }}
       title={title}
       titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
-      link={
-        canonical
-        ? [{ rel: 'canonical', key: canonical, href: canonical }]
-        : []
-      }
       meta={[
         {
           name: `description`,
@@ -58,25 +55,21 @@ function SEO({ canonical, description, lang, meta, title, keywords }) {
           content: metaDescription,
         },
         {
-          property: `og:image`,
-          content: `https://nrs.objectstore.gov.bc.ca/kuwyyf/generic_social_1146x600_603acfb441.jpg`,
-        },
-        {
-          name: `twitter:card`,
-          content: `https://nrs.objectstore.gov.bc.ca/kuwyyf/generic_social_1146x600_603acfb441.jpg`,
+          property: `og:type`,
+          content: `website`,
         },
         {
           property: `og:site_name`,
-          content: `BC Parks`,
+          content: defaultTitle,
         },
         {
-          property: `og:url`,
-          content: `https://bcparks.ca`,
+          property: `og:image`,
+          content: defaultImage,
         },
         {
-          property: `og:type`,
-          content: `website`,
-        }
+          name: `twitter:card`,
+          content: defaultImage,
+        },
       ].concat(meta)}
     />
   )
@@ -90,7 +83,6 @@ SEO.defaultProps = {
 }
 
 SEO.propTypes = {
-  canonical: PropTypes.string,
   description: PropTypes.string,
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
