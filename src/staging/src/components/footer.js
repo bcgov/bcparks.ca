@@ -16,7 +16,7 @@ function FooterMenu({ items }) {
             {item.type === "header" && (
               <>
                 <div className="font-weight-bold">{item.display}</div>
-                <div className="footer-menu-divider">&nbsp;</div>
+                <div className="footer-menu-divider"></div>
               </>
             )}
             {item.type === "link" && (
@@ -96,9 +96,7 @@ export default function Footer() {
                       </div>
                     </div>
                   ))}
-                  <div className="col col-8 d-none d-sm-block order-5">
-                    &nbsp;
-                  </div>
+                  <div className="col col-8 d-none d-sm-block order-5"></div>
                   <div className="col col-6 col-sm-4 order-last">
                     <div className="text-left">
                       <div className="d-inline-block mt-3 ml-4 ml-md-1">

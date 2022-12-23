@@ -38,7 +38,7 @@ exports[`Footer renders correctly 1`] = `
             className="row"
           >
             <div
-              className="col col-6 col-sm-4"
+              className="col col-12 col-sm-4"
             >
               <div>
                 <ul
@@ -52,9 +52,7 @@ exports[`Footer renders correctly 1`] = `
                     </div>
                     <div
                       className="footer-menu-divider"
-                    >
-                       
-                    </div>
+                    />
                   </li>
                   <li>
                     <div
@@ -107,9 +105,7 @@ exports[`Footer renders correctly 1`] = `
                     </div>
                     <div
                       className="footer-menu-divider"
-                    >
-                       
-                    </div>
+                    />
                   </li>
                   <li>
                     <div
@@ -162,13 +158,11 @@ exports[`Footer renders correctly 1`] = `
                     </div>
                     <div
                       className="footer-menu-divider"
-                    >
-                       
-                    </div>
+                    />
                   </li>
                   <li>
                     <div
-                      className="font-weight-bold"
+                      className="mt-2"
                     >
                       <a
                         href="/contact"
@@ -193,9 +187,7 @@ exports[`Footer renders correctly 1`] = `
             </div>
             <div
               className="col col-8 d-none d-sm-block order-5"
-            >
-               
-            </div>
+            />
             <div
               className="col col-6 col-sm-4 order-last"
             >
