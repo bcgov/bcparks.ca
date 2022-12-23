@@ -389,7 +389,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       </Container>
       <br />
       <br />
-      <Footer/>
+      <Footer />
     </>
   )
 }
