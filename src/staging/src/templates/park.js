@@ -433,7 +433,7 @@ export default function ParkTemplate({ data }) {
           </Grid>
         </Container>
       </div>
-      <Footer>{data?.strapiWebsites.Footer}</Footer>
+      <Footer />
     </div>
   )
 }
@@ -645,21 +645,6 @@ export const query = graphql`
       nodes {
         imageUrl
         caption
-      }
-    }
-    strapiWebsites(Name: { eq: "BCParks.ca" }) {
-      Footer
-      Header
-      Name
-      Navigation
-      id
-      homepage {
-        id
-        Template
-        Content {
-          id
-          strapi_component
-        }
       }
     }
     allStrapiMenus(

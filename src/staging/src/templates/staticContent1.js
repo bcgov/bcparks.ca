@@ -17,21 +17,6 @@ import "../styles/staticContent1.scss"
 export default function StaticContent1({ pageContext }) {
   const queryData = useStaticQuery(graphql`
     {
-      strapiWebsites(Name: { eq: "BCParks.ca" }) {
-        Footer
-        Header
-        Name
-        Navigation
-        id
-        homepage {
-          id
-          Template
-          Content {
-            id
-            strapi_component
-          }
-        }
-      }
       allStrapiMenus(
         sort: { fields: order, order: ASC }
         filter: { show: { eq: true } }
@@ -247,7 +232,7 @@ export default function StaticContent1({ pageContext }) {
         </div>
       </div>
       <div className="max-width-override">
-        <Footer>{queryData.strapiWebsites.Footer}</Footer>
+        <Footer />
       </div>
     </>
   )

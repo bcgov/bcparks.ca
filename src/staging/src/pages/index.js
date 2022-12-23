@@ -12,20 +12,6 @@ import "../styles/home.scss"
 
 export const query = graphql`
   query {
-    strapiWebsites(Name: { eq: "BCParks.ca" }) {
-      Footer
-      Header
-      Name
-      Navigation
-      id
-      homepage {
-        id
-        Template
-        Content {
-          id
-        }
-      }
-    }
     strapiPages(Slug: { eq: "/home" }) {
       Slug
       Content
@@ -115,7 +101,7 @@ export default function Home({ data }) {
             </div>
           </div>
           <div className="home-max-width-override">
-            <Footer>{data.strapiWebsites.Footer}</Footer>
+            <Footer />
           </div>
         </div>
       )}

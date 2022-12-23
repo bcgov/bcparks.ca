@@ -65,10 +65,7 @@
   }
 
   .footer-utility-link {
-    font-size: 0.8rem;
-    @include media-breakpoint-up(md) {
-      font-size: 1rem;
-    }
+    font-size: 1rem;
   }
 
   .footer-menu-list {

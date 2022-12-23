@@ -13,7 +13,7 @@ const ParksPage = ({ data }) => (
     <Helmet>
       <title>BC Parks</title>
     </Helmet>
-    <Header>{data.strapiWebsites.Header}</Header>
+    <Header />
     <Container>
       <br />
       <h1>Parks</h1>
@@ -40,7 +40,7 @@ const ParksPage = ({ data }) => (
         </Grid>
       </Box>
     </Container>
-    <Footer>{data.strapiWebsites.Footer}</Footer>
+    <Footer />
   </>
 )
 
@@ -57,21 +57,6 @@ export const query = graphql`
           typeCode
           url
           slug
-        }
-      }
-    }
-    strapiWebsites(Name: { eq: "BCParks.ca" }) {
-      Footer
-      Header
-      Name
-      Navigation
-      id
-      homepage {
-        id
-        Template
-        Content {
-          id
-          strapi_component
         }
       }
     }
