@@ -71,31 +71,211 @@ exports[`Footer renders correctly 1`] = `
                     <div
                       className="mt-2"
                     >
-
-                <a href="/commercial-use/filming-in-parks">
-                Filming in parks
-                </a>
-                </div>
-                </li><li><div class="mt-2">
-                <a href="/commercial-use/travel-trade">Travel trade</a></div>
-                </li></ul>
-                </div></div><div class="col col-12 col-sm-4">
-                <div>
-                <ul class="footer-menu-list list-unstyled pt-3 pl-1 ml-3 ml-md-0 text-white">
-                <li><div class="font-weight-bold">Get involved</div>
-                <div class="footer-menu-divider">&nbsp;</div></li><li>
-                <div class="mt-2"><a href="/get-involved/donate">Donate</a></div></li><li>
-                <div class="mt-2"><a href="/get-involved/buy-licence-plate">Buy a licence plate</a></div></li><li><div class="mt-2"><a href="/get-involved/volunteer">Volunteer</a></div></li></ul></div></div><div class="col col-12 col-sm-4"><div><ul class="footer-menu-list list-unstyled pt-3 pl-1 ml-3 ml-md-0 text-white"><li><div class="font-weight-bold">Stay connected</div><div class="footer-menu-divider">&nbsp;</div></li><li><div class="mt-2"><a href="/contact">Contact us</a></div></li><li><div class="mt-2"><a href="https://engage.gov.bc.ca/bcparksblog/">BC Parks blog</a></div></li></ul></div></div><div class="col col-8 d-none d-sm-block order-5">&nbsp;</div><div class="col col-6 col-sm-4 order-last"><div class="text-left"><div class="d-inline-block mt-3 ml-4 ml-md-1"><a href="https://www.facebook.com/YourBCParks/">
-                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzQiIGhlaWdodD0iMzQiIHZpZXdCb3g9IjAgMCAzNCAzNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTM0IDE3QzM0IDcuNjExMTUgMjYuMzg4OCAwIDE3IDBDNy42MTExNSAwIDAgNy42MTExNSAwIDE3QzAgMjUuNDg1MSA2LjIxNjYyIDMyLjUxODEgMTQuMzQzOCAzMy43OTM1VjIxLjkxNDFIMTAuMDI3M1YxN0gxNC4zNDM4VjEzLjI1NDdDMTQuMzQzOCA4Ljk5NDA2IDE2Ljg4MTggNi42NDA2MyAyMC43NjQ5IDYuNjQwNjNDMjIuNjI0MyA2LjY0MDYzIDI0LjU3MDMgNi45NzI2NiAyNC41NzAzIDYuOTcyNjZWMTEuMTU2M0gyMi40MjY3QzIwLjMxNSAxMS4xNTYzIDE5LjY1NjIgMTIuNDY2OCAxOS42NTYyIDEzLjgxMjVWMTdIMjQuMzcxMUwyMy42MTc0IDIxLjkxNDFIMTkuNjU2MlYzMy43OTM1QzI3Ljc4MzQgMzIuNTE4MSAzNCAyNS40ODUxIDM0IDE3WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==" 
-                alt="Facebook">
-                </a>
-                </div>
-                <div class="d-inline-block mt-3 ml-4">
-                <a href="https://www.instagram.com/yourbcparks">
-                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzQiIGhlaWdodD0iMzQiIHZpZXdCb3g9IjAgMCAzNCAzNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE3IDMuMDYxMzNDMjEuNTQyMiAzLjA2MTMzIDIyLjA4MDEgMy4wODEyNSAyMy44NjY0IDMuMTYwOTRDMjUuNTI2NiAzLjIzMzk4IDI2LjQyMyAzLjUxMjg5IDI3LjAyMDcgMy43NDUzMUMyNy44MTA5IDQuMDUwNzggMjguMzgyIDQuNDIyNjYgMjguOTczIDUuMDEzNjdDMjkuNTcwNyA1LjYxMTMzIDI5LjkzNTkgNi4xNzU3OCAzMC4yNDE0IDYuOTY2MDJDMzAuNDczOCA3LjU2MzY3IDMwLjc1MjcgOC40NjY4IDMwLjgyNTggMTAuMTIwM0MzMC45MDU1IDExLjkxMzMgMzAuOTI1NCAxMi40NTEyIDMwLjkyNTQgMTYuOTg2N0MzMC45MjU0IDIxLjUyODkgMzAuOTA1NSAyMi4wNjY4IDMwLjgyNTggMjMuODUzMUMzMC43NTI3IDI1LjUxMzMgMzAuNDczOCAyNi40MDk4IDMwLjI0MTQgMjcuMDA3NEMyOS45MzU5IDI3Ljc5NzcgMjkuNTY0MSAyOC4zNjg3IDI4Ljk3MyAyOC45NTk4QzI4LjM3NTQgMjkuNTU3NCAyNy44MTA5IDI5LjkyMjcgMjcuMDIwNyAzMC4yMjgxQzI2LjQyMyAzMC40NjA1IDI1LjUxOTkgMzAuNzM5NSAyMy44NjY0IDMwLjgxMjVDMjIuMDczNCAzMC44OTIyIDIxLjUzNTUgMzAuOTEyMSAxNyAzMC45MTIxQzEyLjQ1NzggMzAuOTEyMSAxMS45MTk5IDMwLjg5MjIgMTAuMTMzNiAzMC44MTI1QzguNDczNDQgMzAuNzM5NSA3LjU3Njk1IDMwLjQ2MDUgNi45NzkzIDMwLjIyODFDNi4xODkwNiAyOS45MjI3IDUuNjE3OTcgMjkuNTUwOCA1LjAyNjk1IDI4Ljk1OThDNC40MjkzIDI4LjM2MjEgNC4wNjQwNiAyNy43OTc3IDMuNzU4NTkgMjcuMDA3NEMzLjUyNjE3IDI2LjQwOTggMy4yNDcyNyAyNS41MDY2IDMuMTc0MjIgMjMuODUzMUMzLjA5NDUzIDIyLjA2MDIgMy4wNzQ2MSAyMS41MjIzIDMuMDc0NjEgMTYuOTg2N0MzLjA3NDYxIDEyLjQ0NDUgMy4wOTQ1MyAxMS45MDY2IDMuMTc0MjIgMTAuMTIwM0MzLjI0NzI3IDguNDYwMTYgMy41MjYxNyA3LjU2MzY3IDMuNzU4NTkgNi45NjYwMkM0LjA2NDA2IDYuMTc1NzggNC40MzU5NCA1LjYwNDY5IDUuMDI2OTUgNS4wMTM2N0M1LjYyNDYxIDQuNDE2MDIgNi4xODkwNiA0LjA1MDc4IDYuOTc5MyAzLjc0NTMxQzcuNTc2OTUgMy41MTI4OSA4LjQ4MDA4IDMuMjMzOTggMTAuMTMzNiAzLjE2MDk0QzExLjkxOTkgMy4wODEyNSAxMi40NTc4IDMuMDYxMzMgMTcgMy4wNjEzM1pNMTcgMEMxMi4zODQ4IDAgMTEuODA3IDAuMDE5OTIxOSA5Ljk5NDE0IDAuMDk5NjA5NEM4LjE4Nzg5IDAuMTc5Mjk3IDYuOTQ2MDkgMC40NzE0ODQgNS44NzAzMSAwLjg4OTg0NEM0Ljc0ODA1IDEuMzI4MTIgMy43OTg0NCAxLjkwNTg2IDIuODU1NDcgMi44NTU0N0MxLjkwNTg2IDMuNzk4NDQgMS4zMjgxMiA0Ljc0ODA1IDAuODg5ODQ0IDUuODYzNjdDMC40NzE0ODQgNi45NDYwOSAwLjE3OTI5NyA4LjE4MTI1IDAuMDk5NjA5NCA5Ljk4NzVDMC4wMTk5MjE5IDExLjgwNyAwIDEyLjM4NDggMCAxN0MwIDIxLjYxNTIgMC4wMTk5MjE5IDIyLjE5MyAwLjA5OTYwOTQgMjQuMDA1OUMwLjE3OTI5NyAyNS44MTIxIDAuNDcxNDg0IDI3LjA1MzkgMC44ODk4NDQgMjguMTI5N0MxLjMyODEyIDI5LjI1MiAxLjkwNTg2IDMwLjIwMTYgMi44NTU0NyAzMS4xNDQ1QzMuNzk4NDQgMzIuMDg3NSA0Ljc0ODA1IDMyLjY3MTkgNS44NjM2NyAzMy4xMDM1QzYuOTQ2MDkgMzMuNTIxOSA4LjE4MTI1IDMzLjgxNDEgOS45ODc1IDMzLjg5MzdDMTEuODAwNCAzMy45NzM0IDEyLjM3ODEgMzMuOTkzNCAxNi45OTM0IDMzLjk5MzRDMjEuNjA4NiAzMy45OTM0IDIyLjE4NjMgMzMuOTczNCAyMy45OTkyIDMzLjg5MzdDMjUuODA1NSAzMy44MTQxIDI3LjA0NzMgMzMuNTIxOSAyOC4xMjMgMzMuMTAzNUMyOS4yMzg3IDMyLjY3MTkgMzAuMTg4MyAzMi4wODc1IDMxLjEzMTMgMzEuMTQ0NUMzMi4wNzQyIDMwLjIwMTYgMzIuNjU4NiAyOS4yNTIgMzMuMDkwMiAyOC4xMzYzQzMzLjUwODYgMjcuMDUzOSAzMy44MDA4IDI1LjgxODggMzMuODgwNSAyNC4wMTI1QzMzLjk2MDIgMjIuMTk5NiAzMy45ODAxIDIxLjYyMTkgMzMuOTgwMSAxNy4wMDY2QzMzLjk4MDEgMTIuMzkxNCAzMy45NjAyIDExLjgxMzcgMzMuODgwNSAxMC4wMDA4QzMzLjgwMDggOC4xOTQ1MyAzMy41MDg2IDYuOTUyNzMgMzMuMDkwMiA1Ljg3Njk1QzMyLjY3MTkgNC43NDgwNSAzMi4wOTQxIDMuNzk4NDQgMzEuMTQ0NSAyLjg1NTQ3QzMwLjIwMTYgMS45MTI1IDI5LjI1MiAxLjMyODEyIDI4LjEzNjMgMC44OTY0ODRDMjcuMDUzOSAwLjQ3ODEyNSAyNS44MTg4IDAuMTg1OTM4IDI0LjAxMjUgMC4xMDYyNUMyMi4xOTMgMC4wMTk5MjE5IDIxLjYxNTIgMCAxNyAwWiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTE2Ljk5OCA4LjI2NzU4QzEyLjE3NyA4LjI2NzU4IDguMjY1NjIgMTIuMTc4OSA4LjI2NTYyIDE3QzguMjY1NjIgMjEuODIxMSAxMi4xNzcgMjUuNzMyNCAxNi45OTggMjUuNzMyNEMyMS44MTkxIDI1LjczMjQgMjUuNzMwNSAyMS44MjExIDI1LjczMDUgMTdDMjUuNzMwNSAxMi4xNzg5IDIxLjgxOTEgOC4yNjc1OCAxNi45OTggOC4yNjc1OFpNMTYuOTk4IDIyLjY2NDVDMTMuODcwMyAyMi42NjQ1IDExLjMzMzYgMjAuMTI3NyAxMS4zMzM2IDE3QzExLjMzMzYgMTMuODcyMyAxMy44NzAzIDExLjMzNTUgMTYuOTk4IDExLjMzNTVDMjAuMTI1OCAxMS4zMzU1IDIyLjY2MjUgMTMuODcyMyAyMi42NjI1IDE3QzIyLjY2MjUgMjAuMTI3NyAyMC4xMjU4IDIyLjY2NDUgMTYuOTk4IDIyLjY2NDVaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMjguMTE2NCA3LjkyMTk3QzI4LjExNjQgOS4wNTA4OCAyNy4yIDkuOTYwNjUgMjYuMDc3NyA5Ljk2MDY1QzI0Ljk0ODggOS45NjA2NSAyNC4wMzkxIDkuMDQ0MjQgMjQuMDM5MSA3LjkyMTk3QzI0LjAzOTEgNi43OTMwNyAyNC45NTU1IDUuODgzMyAyNi4wNzc3IDUuODgzM0MyNy4yIDUuODgzMyAyOC4xMTY0IDYuNzk5NzEgMjguMTE2NCA3LjkyMTk3WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==" alt="Instagram"></a></div></div></div></div></div></div><div class="text-left text-sm-center py-3 mx-3 mx-md-0 mt-5 border-top border-white"><div class="footer-utility-link my-2 mr-3 d-inline-block"><a href="/sitemap">Sitemap</a></div><div class="footer-utility-link my-2 mr-3 d-inline-block"><a href="https://www2.gov.bc.ca/gov/content/home/disclaimer">Disclaimer</a></div><div class="footer-utility-link my-2 mr-3 d-inline-block"><a href="https://www2.gov.bc.ca/gov/content/home/privacy">Privacy</a></div><div class="footer-utility-link my-2 mr-3 d-inline-block"><a href="https://www2.gov.bc.ca/gov/content/home/accessible-government">Accessibility</a></div><div class="footer-utility-link my-2 mr-3 d-inline-block">
-                <a
-                    href="https://www2.gov.bc.ca/gov/content/home/copyright"
+                      <a
+                        href="/commercial-use/filming-in-parks"
+                      >
+                        Filming in parks
+                      </a>
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      className="mt-2"
+                    >
+                      <a
+                        href="/commercial-use/travel-trade"
+                      >
+                        Travel trade
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              className="col col-12 col-sm-4"
+            >
+              <div>
+                <ul
+                  className="footer-menu-list list-unstyled pt-3 pl-1 ml-3 ml-md-0 text-white"
                 >
+                  <li>
+                    <div
+                      className="font-weight-bold"
+                    >
+                      Get involved
+                    </div>
+                    <div
+                      className="footer-menu-divider"
+                    >
+                       
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      className="mt-2"
+                    >
+                      <a
+                        href="/get-involved/donate"
+                      >
+                        Donate
+                      </a>
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      className="mt-2"
+                    >
+                      <a
+                        href="/get-involved/buy-licence-plate"
+                      >
+                        Buy a licence plate
+                      </a>
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      className="mt-2"
+                    >
+                      <a
+                        href="/get-involved/volunteer"
+                      >
+                        Volunteer
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              className="col col-12 col-sm-4"
+            >
+              <div>
+                <ul
+                  className="footer-menu-list list-unstyled pt-3 pl-1 ml-3 ml-md-0 text-white"
+                >
+                  <li>
+                    <div
+                      className="font-weight-bold"
+                    >
+                      Stay connected
+                    </div>
+                    <div
+                      className="footer-menu-divider"
+                    >
+                       
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      className="font-weight-bold"
+                    >
+                      <a
+                        href="/contact"
+                      >
+                        Contact us
+                      </a>
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      className="mt-2"
+                    >
+                      <a
+                        href="https://engage.gov.bc.ca/bcparksblog/"
+                      >
+                        BC Parks blog
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              className="col col-8 d-none d-sm-block order-5"
+            >
+               
+            </div>
+            <div
+              className="col col-6 col-sm-4 order-last"
+            >
+              <div
+                className="text-left"
+              >
+                <div
+                  className="d-inline-block mt-3 ml-4 ml-md-1"
+                >
+                  <a
+                    href="https://www.facebook.com/YourBCParks/"
+                  >
+                    <img
+                      alt="Facebook"
+                      src="test-file-stub"
+                    />
+                  </a>
+                </div>
+                <div
+                  className="d-inline-block mt-3 ml-4"
+                >
+                  <a
+                    href="https://www.instagram.com/yourbcparks"
+                  >
+                    <img
+                      alt="Instagram"
+                      src="test-file-stub"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="text-left text-sm-center py-3 mx-3 mx-md-0 mt-5 border-top border-white"
+      >
+        <div
+          className="footer-utility-link my-2 mr-3 d-inline-block"
+        >
+          <a
+            href="/sitemap"
+          >
+            Sitemap
+          </a>
+        </div>
+        <div
+          className="footer-utility-link my-2 mr-3 d-inline-block"
+        >
+          <a
+            href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+          >
+            Disclaimer
+          </a>
+        </div>
+        <div
+          className="footer-utility-link my-2 mr-3 d-inline-block"
+        >
+          <a
+            href="https://www2.gov.bc.ca/gov/content/home/privacy"
+          >
+            Privacy
+          </a>
+        </div>
+        <div
+          className="footer-utility-link my-2 mr-3 d-inline-block"
+        >
+          <a
+            href="https://www2.gov.bc.ca/gov/content/home/accessible-government"
+          >
+            Accessibility
+          </a>
+        </div>
+        <div
+          className="footer-utility-link my-2 mr-3 d-inline-block"
+        >
+          <a
+            href="https://www2.gov.bc.ca/gov/content/home/copyright"
+          >
             Copyright
           </a>
         </div>
