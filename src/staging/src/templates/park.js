@@ -55,6 +55,11 @@ export default function ParkTemplate({ data }) {
   const apiBaseUrl = data.site.siteMetadata.apiURL
 
   const park = data.strapiProtectedArea
+  const parkType = park.type ?? "park"
+
+  // function to check if a string contains anything besides html tags and whitespace characters
+  const isNullOrWhiteSpace = (str) => !str || !str.replace(/(<([^>]+)>)|^\s+|\s+$|\s+/g, "");
+
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
   const operations = park.parkOperation || {}
 
@@ -147,9 +152,9 @@ export default function ParkTemplate({ data }) {
   const menuItems = [
     {
       sectionIndex: 0,
-      display: capitalizeFirstLetter(`${park.type} overview`),
+      display: capitalizeFirstLetter(`${parkType} overview`),
       link: "#park-overview-container",
-      visible: true,
+      visible: !isNullOrWhiteSpace(park.description),
     },
     {
       sectionIndex: 1,
@@ -170,13 +175,13 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 3,
       display: "Dates of operation",
       link: "#park-dates-container",
-      visible: true,
+      visible: !isNullOrWhiteSpace(park.parkOperation),
     },
     {
       sectionIndex: 4,
       display: "Safety info",
       link: "#park-safety-info-container",
-      visible: true,
+      visible: !isNullOrWhiteSpace(park.safetyInfo) || !isNullOrWhiteSpace(park.specialNotes),
     },
     {
       sectionIndex: 5,
@@ -200,25 +205,25 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 8,
       display: "Location",
       link: "#park-maps-location-container",
-      visible: (park.latitude && park.longitude) || park.locationNotes,
+      visible: (park.latitude && park.longitude) || !isNullOrWhiteSpace(park.locationNotes),
     },
     {
       sectionIndex: 9,
-      display: capitalizeFirstLetter(`${park.type} and activity maps`),
+      display: capitalizeFirstLetter(`${parkType} and activity maps`),
       link: "#park-map-details-container",
       visible: park.maps,
     },
     {
       sectionIndex: 10,
-      display: capitalizeFirstLetter(`Learn about this ${park.type}`),
+      display: capitalizeFirstLetter(`Learn about this ${parkType}`),
       link: "#park-about-container",
-      visible: true,
+      visible: park.totalArea || park.establishedDate || !isNullOrWhiteSpace(park.parkContact) || !isNullOrWhiteSpace(park.natureAndCulture),
     },
     {
       sectionIndex: 11,
       display: "Reconciliation with Indigenous peoples",
       link: "#park-reconciliation-container",
-      visible: park.reconciliationNotes,
+      visible: !isNullOrWhiteSpace(park.reconciliationNotes),
     },
   ]
 
@@ -324,7 +329,7 @@ export default function ParkTemplate({ data }) {
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">
-                  <ParkOverview data={park.description} type={park.type} />
+                  <ParkOverview data={park.description} type={parkType} />
                 </div>
               )}
               {menuItems[1].visible && (
@@ -413,7 +418,7 @@ export default function ParkTemplate({ data }) {
               )}
               {menuItems[9].visible && (
                 <div ref={activityMapRef} className="full-width">
-                  <ParkMapDetails data={park.maps} type={park.type} />
+                  <ParkMapDetails data={park.maps} type={parkType} />
                 </div>
               )}
               {menuItems[10].visible && (
