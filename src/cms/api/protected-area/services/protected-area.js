@@ -79,7 +79,11 @@ module.exports = {
         knex.raw(
           `array(
             SELECT to_json((
-              SELECT d FROM (SELECT public_advisories."id", public_advisories."urgency") d
+              SELECT j FROM (
+                SELECT public_advisories."id", 
+                public_advisories."urgency", 
+                public_advisories."accessStatus"
+              ) j
             ))
             FROM public_advisories__protected_areas
             JOIN public_advisories
