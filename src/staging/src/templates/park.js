@@ -58,7 +58,7 @@ export default function ParkTemplate({ data }) {
   const parkType = park.type ?? "park"
 
   // function to check if a string contains anything besides html tags and whitespace characters
-  const isNullOrWhiteSpace = (str) => !str || !str.replace(/(<([^>]+)>)|^\s+|\s+$|\s+/g, "");
+  const isNullOrWhiteSpace = (str) => !str || !str.toString().replace(/(<([^>]+)>)|^\s+|\s+$|\s+/g, "");
 
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
   const operations = park.parkOperation || {}
