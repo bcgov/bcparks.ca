@@ -238,9 +238,13 @@ exports.createSchemaCustomization = ({ actions }) => {
   }
 
   type StrapiSites implements Node {
+    slug: String
     siteName: String
     siteNumber: Int
     orcsSiteNumber: String
+    locationNotes: String
+    description: String
+    hasDayUsePass: Boolean
     protectedArea: StrapiProtectedArea
     parkActivities: [StrapiParkActivities]
     parkFacilities: [StrapiParkFacilities]
@@ -402,6 +406,7 @@ async function createSites({ graphql, actions, reporter }) {
     allStrapiSites {
       nodes {
         id
+        slug
         siteName
         siteNumber
         orcsSiteNumber
@@ -416,15 +421,11 @@ async function createSites({ graphql, actions, reporter }) {
   const result = await strapiApiRequest(graphql, siteQuery)
 
   result.data.allStrapiSites.nodes.forEach(site => {
-    // TODO: slug can be deleted when site.slug has created on all strapi env
-    const slug = slugify(site.siteName).toLowerCase()
-    const parkPath = site.protectedArea?.urlPath
-    // TODO: change sitePath `${parkPath}/${slug}` to `${parkPath}/${site.slug}` when site.slug has created on all strapi env
-    let sitePath = `${parkPath}/${slug}`
-    // If site doesn't have a relation with protectedArea, its path will be `parks/protected-area/${slug}`
-    if (!parkPath) {
-      sitePath = `parks/protected-area/${slug}`
-    }
+    // fallback in case site doesn't have a slug
+    const slug = site.slug ?? slugify(site.siteName).toLowerCase()
+    // fallback in case site doesn't have a relation with protectedArea
+    const parkPath = site.protectedArea?.urlPath ?? "no-protected-area"
+    const sitePath = `${parkPath}/${slug}`
     actions.createPage({
       path: sitePath,
       component: require.resolve(`./src/templates/site.js`),
