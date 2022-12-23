@@ -14,7 +14,10 @@
     "token": {
       "type": "string",
       "required": true,
-      "unique": true
+      "unique": true,
+      "minLength": 40,
+      "regex": "^[^\\s]+(\\s+[^\\s]+)*$",
+      "private": true
     },
     "user": {
       "unique": true,

@@ -12,94 +12,68 @@ module.exports = async (ctx, next) => {
   }
 
   // add the detection of `token` query parameter
-  if (
-    (ctx.request && ctx.request.header && ctx.request.header.authorization) ||
-    (ctx.request.query && ctx.request.query.token)
-  ) {
+  if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
     try {
-      // init `id` and `isAdmin` outside of validation blocks
+      // init `id` outside of validation blocks
       let id;
-      let isAdmin;
-      let tokenType;
-      let decodedToken;
+      let keycloakJwtToken;
+      let strapiTextToken;
 
-      if (ctx.request.query && ctx.request.query.token) {
-        // find the token entry that match the token from the request
-        const [token] = await strapi
-          .query("token")
-          .find({ token: ctx.request.query.token });
-
-        if (!token) {
-          throw new Error(`Invalid token: This token doesn't exist`);
-        } else {
-          if (token.user && typeof token.token === "string") {
-            id = token.user.id;
-          }
-          isAdmin = false;
-        }
-
-        delete ctx.request.query.token;
-      } else if (
-        ctx.request &&
-        ctx.request.header &&
-        ctx.request.header.authorization
-      ) {
-        // get information if token is keycloak type
-        decodedToken = await strapi.plugins[
+      // get information if token is keycloak type
+      keycloakJwtToken = await strapi.plugins[
+        "users-permissions"
+      ].services.jwt.getKCToken(ctx);
+      if (!keycloakJwtToken) {
+        // get information if token is strapi type
+        strapiTextToken = await strapi.plugins[
           "users-permissions"
-        ].services.jwt.getKCToken(ctx);
-        if (decodedToken) {
-          tokenType = "keycloak";
-        } else {
-          // get information if token is strapi type
-          decodedToken = await strapi.plugins[
-            "users-permissions"
-          ].services.jwt.getToken(ctx);
-          if (decodedToken) {
-            tokenType = "strapi";
+        ].services.jwt.getStrapiToken(ctx);
+      }
+
+      if (keycloakJwtToken) {
+        // fetch authenticated user using keycloak creds
+        if (keycloakJwtToken.resource_access?.['staff-portal']?.roles) {
+          const roles = keycloakJwtToken.resource_access['staff-portal'].roles;
+          const roleMatch = roles.some((e) =>
+            KEYCLOAK_AUTH_ROLES.includes(e)
+          );
+
+          if (!API_USER_EMAIL) {
+            throw new Error("API_USER_EMAIL value not set");
           }
+
+          if (roleMatch) {
+            ctx.state.user = await strapi.plugins[
+              "users-permissions"
+            ].services.user.fetch({ email: API_USER_EMAIL });
+          } else {
+            throw new Error(
+              "Invalid token: User role does not have access permissions"
+            );
+          }
+        } else {
+          throw new Error(
+            "Invalid token: Token did not contain required fields"
+          );
         }
       }
 
-      if (decodedToken) {
-        if (tokenType === "keycloak") {
-          // fetch authenticated user using keycloak creds
-          if (decodedToken.resource_access?.['staff-portal']?.roles) {
-            const roles = decodedToken.resource_access['staff-portal'].roles;
-            const roleMatch = roles.some((e) =>
-              KEYCLOAK_AUTH_ROLES.includes(e)
-            );
+      if (strapiTextToken) {
+        const [strapiToken] = await strapi
+          .query("token")
+          .find({ token: strapiTextToken });
 
-            if (!API_USER_EMAIL) {
-              throw new Error("API_USER_EMAIL value not set");
-            }
-
-            if (roleMatch) {
-              ctx.state.user = await strapi.plugins[
-                "users-permissions"
-              ].services.user.fetch({ email: API_USER_EMAIL });
-            } else {
-              throw new Error(
-                "Invalid token: User role does not have access permissions"
-              );
-            }
-          } else {
-            throw new Error(
-              "Invalid token: Token did not contain required fields"
-            );
-          }
+        if (!strapiToken) {
+          throw new Error(`Invalid token: This token doesn't exist`);
         } else {
-          id = decodedToken.id;
-          isAdmin = decodedToken.isAdmin || false;
-          if (id === undefined) {
-            throw new Error(
-              "Invalid token: Token did not contain required fields"
-            );
+          if (strapiToken.user && typeof strapiToken.token === "string") {
+            id = strapiToken.user.id;
+            // fetch authenticated user
+            ctx.state.user = await strapi.plugins[
+              "users-permissions"
+            ].services.user.fetchAuthenticatedUser(id);
+            strapi.log.warn(`${strapiToken.user.email}(user.id=${id}) authenticated with a Strapi token`)
           }
-          // fetch authenticated user
-          ctx.state.user = await strapi.plugins[
-            "users-permissions"
-          ].services.user.fetchAuthenticatedUser(id);
         }
       }
     } catch (err) {

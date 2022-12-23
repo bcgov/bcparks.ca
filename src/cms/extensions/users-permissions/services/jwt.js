@@ -29,7 +29,11 @@ module.exports = {
         jwksUri: SSO_JWKSURI,
       });
 
-      const kid = jwt.decode(tokenString, { complete: true }).header.kid;
+      const decoded = jwt.decode(tokenString, { complete: true });
+      if (!decoded || !decoded.header) {
+        return false;
+      }
+      const kid = decoded.header.kid;
 
       return new Promise((resolve, reject) => {
         client.getSigningKey(kid, (err, key) => {
@@ -55,56 +59,17 @@ module.exports = {
     });
   },
 
-  getToken(ctx) {
-    const params = _.assign({}, ctx.request.body, ctx.request.query);
-
-    let token = "";
-
+  getStrapiToken(ctx) {
     if (ctx.request && ctx.request.header && ctx.request.header.authorization) {
-      const parts = ctx.request.header.authorization.split(" ");
-
-      if (parts.length === 2) {
-        const scheme = parts[0];
-        const credentials = parts[1];
-        if (/^Bearer$/i.test(scheme)) {
-          token = credentials;
-        }
-      } else {
+      const authHeader = ctx.request.header.authorization;
+      if (!authHeader.match(/^Bearer /g)) {
         throw new Error(
           "Invalid authorization header format. Format is Authorization: Bearer [token]"
         );
       }
-    } else if (params.token) {
-      token = params.token;
+      return authHeader.replace(/^Bearer /, "");
     } else {
       throw new Error("No authorization header was found");
     }
-
-    return this.verify(token);
-  },
-
-  issue(payload, jwtOptions = {}) {
-    _.defaults(jwtOptions, strapi.plugins["users-permissions"].config.jwt);
-    return jwt.sign(
-      _.clone(payload.toJSON ? payload.toJSON() : payload),
-      _.get(strapi.plugins, ["users-permissions", "config", "jwtSecret"]),
-      jwtOptions
-    );
-  },
-
-  verify(token) {
-    return new Promise(function (resolve, reject) {
-      jwt.verify(
-        token,
-        _.get(strapi.plugins, ["users-permissions", "config", "jwtSecret"]),
-        {},
-        function (err, tokenPayload = {}) {
-          if (err) {
-            return reject(new Error("Invalid token."));
-          }
-          resolve(tokenPayload);
-        }
-      );
-    });
-  },
+  }
 };
