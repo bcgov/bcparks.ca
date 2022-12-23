@@ -55,7 +55,7 @@ const LandingPage = ({ pageContext }) => {
   return (
     <>
       <Seo
-        title={meta?.metaTitle || pageContext.page.Title}
+        title={meta?.metaTitle || page?.Title}
         description={meta?.metaDescription}
         keywords={meta?.metaKeywords}
       />

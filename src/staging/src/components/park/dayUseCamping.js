@@ -34,6 +34,7 @@ export default function DayUseCamping({ data }) {
                   variant="square"
                   src={dayUseIcon}
                   aria-label="day use"
+                  alt=""
                 />
               }
               title={

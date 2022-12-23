@@ -119,7 +119,7 @@ export default function ParkAccessStatus({ advisories }) {
               src={parkStatusIcon}
               aria-label="park access status"
               className="park-overview-icon"
-              alt="icon"
+              alt=""
             />
           }
           title={parkStatusText}

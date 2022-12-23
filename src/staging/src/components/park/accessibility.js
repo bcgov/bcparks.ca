@@ -30,6 +30,7 @@ export default function Accessibility({ parkFacilities }) {
                   variant="square"
                   src={accessibilityIcon}
                   aria-label="accessibility information"
+                  alt=""
                 />
               }
               title={<Link to="#park-facility-container">Accessibility</Link>}
