@@ -24,6 +24,11 @@
     "status": {
       "type": "string"
     },
+    "isDisplayed": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
     "establishedDate": {
       "type": "date"
     },
