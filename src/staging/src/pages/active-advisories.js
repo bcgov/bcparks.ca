@@ -92,8 +92,8 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         );
   
         setEventTypes(localeSortEvent);
-      } catch {
-        console.error("Fetch Even Type error");
+      } catch (err) {
+        console.error("Fetch Even Type error:", err);
       }
     };
   
