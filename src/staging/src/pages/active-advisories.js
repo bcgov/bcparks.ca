@@ -77,32 +77,32 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const [advisoryType, setAdvisoryType] = useState(defaultAdvisoryEventType.value)
 
   useEffect(() => {
-    axios
-      .get(`${apiUrl}/event-types/`)
-      .then((response) => {
-        
-        if (Array.isArray(response.data)) {
-          const formattedEventTypes = response.data.map((obj) => ({
-            label: obj.eventType,
-            value: obj.eventType.toLowerCase(),
-          }));
-          formattedEventTypes.splice(0, 0, defaultAdvisoryEventType);
+    const fetchEvenType = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/event-types/`);
   
-          const localeSortEvent = formattedEventTypes?.sort((a, b) =>
-            a.value.localeCompare(b.value, "en", { sensitivity: "base" })
-          );
+        const formattedEventTypes = response.data.map((obj) => ({
+          label: obj.eventType,
+          value: obj.eventType.toLowerCase(),
+        }));
   
-          setEventTypes(localeSortEvent);
-        }
-      })
-      .catch((error) => {
-        console.log("fetching event-types", error);
-      });
+        formattedEventTypes.splice(0, 0, defaultAdvisoryEventType);
+        const localeSortEvent = formattedEventTypes?.sort((a, b) =>
+          a.value.localeCompare(b.value, "en", { sensitivity: "base" })
+        );
+  
+        setEventTypes(localeSortEvent);
+      } catch {
+        console.error("Fetch Even Type error");
+      }
+    };
+  
+    fetchEvenType();
   
     let eventType = getAdvisoryTypeFromUrl();
     setAdvisoryType(eventType);
   }, [defaultAdvisoryEventType, apiUrl]);
-
+  
   // Get advisory type from url params ---------------
   const updatePageTitle = (aType) => {
     if (aType !== 'all') {
