@@ -341,7 +341,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
   return (
     <>
-      <Seo title="Active advisories" description="Active advisories and alerts for BC Parks" />
+      <Seo title="Active advisories" description="Up-to-date information to help you plan your visit to a park in British Columbia. Get updates on access, closures, hazards, and trail conditions in BC Parks." />
       <Header mode="internal" content={menuContent} />
       <Container>
         <br />
