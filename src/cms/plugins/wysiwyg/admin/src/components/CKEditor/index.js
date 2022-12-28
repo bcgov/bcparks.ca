@@ -7,8 +7,8 @@ const Wrapper = styled.div`
 	.ck-dropdown .ck-button.ck-dropdown__button .ck-button__label {
 		width: 6em;
 	}
-	.ck-editor__editable {
-		min-height: 200px;
+	.ck-editor__main > div {
+		min-height: 200px
 	}
 	.ck-content {
 		font-size: 16px;
@@ -149,11 +149,21 @@ const Editor = ({ onChange, name, value }) => {
 				editor={ClassicEditor}
 				config={configuration}
 				data={value}
-				onReady={editor => editor.setData(value)}
+				onReady={editor => {
+					if (value) {
+						editor.setData(value)
+					}
+				}}
 				onChange={(event, editor) => {
 					const data = editor.getData();
 					onChange({ target: { name, value: data } });
 				}}
+				onError={ ( error, { willEditorRestart } ) => {
+					if ( willEditorRestart ) {
+						this.editor.ui.view.toolbar.element.remove();
+					}
+				}}
+				
 			/>
 		</Wrapper>
 	);
