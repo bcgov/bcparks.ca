@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import axios from "axios"
@@ -72,24 +72,36 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const [pageCount, setPageCount] = useState(1) // num pages in current search
 
   /* Advisory Event Types */
-  const defaultAdvisoryEventType = { label: 'All', value: 'all' }
+  const defaultAdvisoryEventType = useMemo(()=> ({ label: 'All', value: 'all' }), [])
   const [eventTypes, setEventTypes] = useState([])
   const [advisoryType, setAdvisoryType] = useState(defaultAdvisoryEventType.value)
 
-  useEffect(async () => {
-    const eventTypesPromise = axios.get(`${apiUrl}/event-types/`)
-    const eventTypesResponse = await Promise.all([eventTypesPromise])
-
-    const formattedEventTypes = eventTypesResponse[0].data.map((obj) => ({ label: obj.eventType, value: obj.eventType.toLowerCase() }))
-    formattedEventTypes.splice(0, 0, defaultAdvisoryEventType)
-    
-    const localeSortEvent  = formattedEventTypes?.sort((a, b) => a.value.localeCompare(b.value, 'en', { sensitivity: 'base' }));
-    
-    setEventTypes(localeSortEvent)
-
-    let eventType = getAdvisoryTypeFromUrl()
-    setAdvisoryType(eventType)
-  }, [])
+  useEffect(() => {
+    axios
+      .get(`${apiUrl}/event-types/`)
+      .then((response) => {
+        
+        if (Array.isArray(response.data)) {
+          const formattedEventTypes = response.data.map((obj) => ({
+            label: obj.eventType,
+            value: obj.eventType.toLowerCase(),
+          }));
+          formattedEventTypes.splice(0, 0, defaultAdvisoryEventType);
+  
+          const localeSortEvent = formattedEventTypes?.sort((a, b) =>
+            a.value.localeCompare(b.value, "en", { sensitivity: "base" })
+          );
+  
+          setEventTypes(localeSortEvent);
+        }
+      })
+      .catch((error) => {
+        console.log("fetching event-types", error);
+      });
+  
+    let eventType = getAdvisoryTypeFromUrl();
+    setAdvisoryType(eventType);
+  }, [defaultAdvisoryEventType, apiUrl]);
 
   // Get advisory type from url params ---------------
   const updatePageTitle = (aType) => {
