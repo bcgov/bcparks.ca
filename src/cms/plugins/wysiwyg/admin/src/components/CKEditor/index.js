@@ -26,6 +26,9 @@ const Wrapper = styled.div`
 		font-size: 20px;
 		border-left: solid 3px #fcba19;
 	}
+	.ck-content ul {
+		list-style-type: disc;
+		}
 	.ck-content blockquote.callout-box {
 		background-color: #D9EAF7;
 		font-weight: 700;
@@ -42,6 +45,9 @@ const Wrapper = styled.div`
 	}
 	.ck-content .legacy-link {
   	background-color: #FFFF00;
+	}
+	.ck-content ol li.lower-alpha {
+		list-style-type: lower-alpha;
 	}
 `
 
@@ -86,9 +92,10 @@ const configuration = {
 	},
 	link: {
 		decorators: {
-			isFile: {
-				mode: 'automatic',
-				callback: url => url.endsWith( '.pdf','.jpg','.jpeg','.png','.gif','.svg','.doc','.docx','.xls','.xlsx' ),
+			openInNewTab: {
+				mode: 'manual',
+				label: 'Open in a new tab',
+				defaultValue: false,
 				attributes: {
 					target: '_blank',
 					rel: 'noopener'
@@ -102,11 +109,6 @@ const configuration = {
 			{ model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
 			{ model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' }
 		]
-	},
-	list: {
-		properties: {
-				styles: true,
-		}
 	},
 	style: {
 		definitions: [
@@ -124,6 +126,11 @@ const configuration = {
 				name: 'Legacy link',
 				element: 'a',
 				classes: [ 'legacy-link' ]
+			},
+			{
+				name: 'Lettered list',
+				element: 'li',
+				classes: ['lower-alpha' ]
 			}
 		]
 	},
@@ -158,7 +165,7 @@ const Editor = ({ onChange, name, value }) => {
 					const data = editor.getData();
 					onChange({ target: { name, value: data } });
 				}}
-				onError={ ( error, { willEditorRestart } ) => {
+				onError={(error, { willEditorRestart }) => {
 					if ( willEditorRestart ) {
 						this.editor.ui.view.toolbar.element.remove();
 					}
