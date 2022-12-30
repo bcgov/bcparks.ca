@@ -263,7 +263,7 @@ exports[`Footer renders correctly 1`] = `
           </a>
         </div>
         <div
-          className="footer-utility-link my-2 mr-3 d-inline-block"
+          className="footer-utility-link my-2 mr-4 d-inline-block"
         >
           <a
             href="https://www2.gov.bc.ca/gov/content/home/copyright"

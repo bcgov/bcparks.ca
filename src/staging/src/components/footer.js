@@ -117,7 +117,7 @@ export default function Footer() {
             <div className="text-left text-sm-center py-3 mx-3 mx-md-0 mt-5 border-top border-white">
               {utilityMenu.map((item, index) => (
                 <div
-                  className="footer-utility-link my-2 mr-3 d-inline-block"
+                  className="footer-utility-link my-2 mr-4 d-inline-block"
                   key={index}
                 >
                   <a href={item.link}>{item.display}</a>
