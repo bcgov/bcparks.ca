@@ -227,7 +227,7 @@ exports[`Footer renders correctly 1`] = `
         className="text-left text-sm-center py-3 mx-3 mx-md-0 mt-5 border-top border-white"
       >
         <div
-          className="footer-utility-link my-2 mr-3 d-inline-block"
+          className="footer-utility-link my-2 mr-4 d-inline-block"
         >
           <a
             href="/sitemap"
@@ -236,7 +236,7 @@ exports[`Footer renders correctly 1`] = `
           </a>
         </div>
         <div
-          className="footer-utility-link my-2 mr-3 d-inline-block"
+          className="footer-utility-link my-2 mr-4 d-inline-block"
         >
           <a
             href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
@@ -245,7 +245,7 @@ exports[`Footer renders correctly 1`] = `
           </a>
         </div>
         <div
-          className="footer-utility-link my-2 mr-3 d-inline-block"
+          className="footer-utility-link my-2 mr-4 d-inline-block"
         >
           <a
             href="https://www2.gov.bc.ca/gov/content/home/privacy"
@@ -254,7 +254,7 @@ exports[`Footer renders correctly 1`] = `
           </a>
         </div>
         <div
-          className="footer-utility-link my-2 mr-3 d-inline-block"
+          className="footer-utility-link my-2 mr-4 d-inline-block"
         >
           <a
             href="https://www2.gov.bc.ca/gov/content/home/accessible-government"
