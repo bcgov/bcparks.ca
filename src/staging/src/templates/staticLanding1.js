@@ -11,7 +11,6 @@ import PageContent from "../components/pageContent/pageContent"
 
 import { renderBreadcrumbs } from "../utils/helpers";
 
-import "../styles/global.scss"
 import "../styles/staticLanding1.scss"
 
 const LandingPage = ({ pageContext }) => {

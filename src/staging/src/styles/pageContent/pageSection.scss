@@ -1,4 +1,4 @@
-@import '../variables.scss';
+@import "../variables.scss";
 
 .page-section {
     margin-top:80px;
@@ -11,7 +11,7 @@ h2.page-section-title {
     &::after {
         position: absolute;
         content: "";
-        background-color: $colorGoldPrimary;
+        background-color: $colorGold;
         height: 2px;
         width: 75px;
         bottom: -12px;
@@ -26,7 +26,7 @@ h2.page-section-title {
     }
     .page-section-title {
         font-size: 36px;
-        color: $colorBluePrimary;
+        color: $colorBlue;
         font-weight: 700;
         margin-top: 90px;
         margin-bottom: 80px;

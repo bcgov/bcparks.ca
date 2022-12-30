@@ -3,8 +3,6 @@ import { Link } from "gatsby"
 import { Box } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles";
 
-import "../styles/global.scss"
-
 const useStyles = makeStyles(theme => ({
   // This extra styling is so that in mobile the improve link is below the beta message
   betaHeader: {

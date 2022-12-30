@@ -1,10 +1,10 @@
-@import "./variables.scss";
+@import "variables.scss";
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 
 #footer {
-  background-color: $colorBluePrimary !important;
+  background-color: $colorBlue !important;
   overflow-x: hidden;
 }
 
@@ -37,7 +37,7 @@
       background: none;
       height: 40px;
       color: #fff;
-      font-family: BC Sans, Verdana, Arial, sans serif;
+      font-family: $globalFont;
       font-size: 1rem;
     }
     input:focus {
@@ -75,7 +75,7 @@
       margin-top: 0.5rem;
       margin-bottom: 5px;
       height: 1px;
-      background-color: $colorGoldPrimary;
+      background-color: $colorGold;
       width: 48px;
     }
   }
