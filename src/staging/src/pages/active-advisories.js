@@ -16,6 +16,8 @@ import { getAdvisoryTypeFromUrl } from "../utils/advisoryHelper"
 
 import "../styles/home.scss"
 
+const qs = require('qs')
+
 const useStyles = makeStyles(theme => ({
   advisoriesHeader: {
     marginBottom: "2px",
@@ -200,22 +202,17 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       }
 
       // check if there is anything in the search textbox
-      let anySearch = searchText && searchText !== ""
+      const anySearch = searchText && searchText !== ""
 
+      // only apply filter if there is a keyword
       if (anySearch) {
-        // only apply filter if there is a keyword
-
-        if (useParksFilter || useKeywordFilter) {
-          let searchType
-          if (useParksFilter && !useKeywordFilter) {
-            searchType = "park"
-          } else if (useKeywordFilter && !useParksFilter) {
-            searchType = "keyword"
-          } else {
-            searchType = "all"
-          }
+        if (advisoryType !== "all") {
+          q += "&" + qs.stringify({ _where: { _or: [
+            { title_contains: searchText },
+            { description_contains: searchText },
+          ]}})
+        } else {
           q += `&_q=${searchText}`
-          q += `&_searchType=${searchType}`
         }
       }
 
