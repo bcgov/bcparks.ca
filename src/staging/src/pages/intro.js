@@ -44,7 +44,7 @@ const IntroPage = ({ data }) => {
       )}
 
       <div className="max-width-override">
-        <Footer>{data.strapiWebsites.Footer}</Footer>
+        <Footer />
       </div>
     </>
   )
@@ -54,9 +54,6 @@ export default IntroPage
 
 export const query = graphql`
   {
-    strapiWebsites(Name: { eq: "BCParks.ca" }) {
-      Footer
-    }
     strapiPages(Slug: { eq: "/beta-landing" }) {
       id
       Slug

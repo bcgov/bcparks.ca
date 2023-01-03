@@ -17,21 +17,6 @@ import "../styles/staticLanding1.scss"
 const LandingPage = ({ pageContext }) => {
   const queryData = useStaticQuery(graphql`
     {
-      strapiWebsites(Name: { eq: "BCParks.ca" }) {
-        Footer
-        Header
-        Name
-        Navigation
-        id
-        homepage {
-          id
-          Template
-          Content {
-            id
-            strapi_component
-          }
-        }
-      }
       allStrapiMenus(
         sort: { fields: order, order: ASC }
         filter: { show: { eq: true } }
@@ -148,7 +133,7 @@ const LandingPage = ({ pageContext }) => {
           </div>
         </div>
       </div>
-      <Footer>{queryData.strapiWebsites.Footer}</Footer>
+      <Footer />
     </>
   )
 }

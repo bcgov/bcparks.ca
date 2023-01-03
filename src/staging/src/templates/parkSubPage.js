@@ -169,7 +169,7 @@ export default function ParkSubPage({ data }) {
         </div>
       </div>
       <div className="max-width-override">
-        <Footer>{data?.strapiWebsites.Footer}</Footer>
+        <Footer />
       </div>
     </>
   )
@@ -201,21 +201,6 @@ export const query = graphql`
       protectedArea {
         slug
         protectedAreaName
-      }
-    }
-    strapiWebsites(Name: { eq: "BCParks.ca" }) {
-      Footer
-      Header
-      Name
-      Navigation
-      id
-      homepage {
-        id
-        Template
-        Content {
-          id
-          strapi_component
-        }
       }
     }
     allStrapiMenus(

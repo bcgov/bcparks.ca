@@ -41,7 +41,7 @@ const SitemapPage = ({ data }) => {
         This is the main structure of the website, subject to change.
         <MegaMenu content={menuContent} menuMode="sitemap" />
       </div>
-      <Footer>{data.strapiWebsites.Footer}</Footer>
+      <Footer />
     </>
   )
 }
@@ -50,9 +50,6 @@ export default SitemapPage
 
 export const query = graphql`
   {
-    strapiWebsites(Name: { eq: "BCParks.ca" }) {
-      Footer
-    }
     strapiPages(Slug: { eq: "/beta-landing" }) {
       id
       Slug

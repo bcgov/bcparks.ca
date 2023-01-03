@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { Helmet } from "react-helmet"
 
 import bcParksWordmark from "../images/BCParks_Wordmark_White.svg"
@@ -16,7 +16,7 @@ function FooterMenu({ items }) {
             {item.type === "header" && (
               <>
                 <div className="font-weight-bold">{item.display}</div>
-                <div className="footer-menu-divider">&nbsp;</div>
+                <div className="footer-menu-divider"></div>
               </>
             )}
             {item.type === "link" && (
@@ -38,43 +38,34 @@ export default function Footer() {
   // TODO replace with data from Strapi
   const menu1 = [
     { type: "header", display: "Get a permit" },
-    { type: "link", display: "Commercial services", link: "/commercial-use" },
+    { type: "link", display: "Commercial use", link: "/commercial-use" },
+    { type: "link", display: "Filming in parks", link: "/commercial-use/filming-in-parks" },
+    { type: "link", display: "Travel trade", link: "/commercial-use/travel-trade" },
   ]
   const menu2 = [
     { type: "header", display: "Get involved" },
-    { type: "link", display: "Volunteer", link: "/volunteers" },
-    { type: "link", display: "Support BC Parks", link: "/donate" },
+    { type: "link", display: "Donate", link: "/get-involved/donate" },
+    { type: "link", display: "Buy a licence plate", link: "/get-involved/buy-licence-plate" },
+    { type: "link", display: "Volunteer", link: "/get-involved/volunteer" },
   ]
   const menu3 = [
     { type: "header", display: "Stay connected" },
     { type: "link", display: "Contact us", link: "/contact" },
     {
       type: "link",
-      display: "Blog",
+      display: "BC Parks blog",
       link: "https://engage.gov.bc.ca/bcparksblog/",
     },
   ]
+  const footerMenu = [menu1, menu2, menu3]
   const utilityMenu = [
     { display: "Sitemap", link: "/sitemap" },
-    { display: "Accessibility", link: "/accessibility" },
-    { display: "Careers", link: "/careers" },
-    { display: "Disclaimer", link: "/disclaimer" },
-    { display: "Privacy", link: "/privacy" },
-    { display: "Copyright", link: "/copyright" },
+    { display: "Disclaimer", link: "https://www2.gov.bc.ca/gov/content/home/disclaimer" },
+    { display: "Privacy", link: "https://www2.gov.bc.ca/gov/content/home/privacy" },
+    { display: "Accessibility", link: "https://www2.gov.bc.ca/gov/content/home/accessible-government" },
+    { display: "Copyright", link: "https://www2.gov.bc.ca/gov/content/home/copyright" },
   ]
 
-  const [searchText, setSearchText] = useState("")
-  const [searchMsg, setSearchMsg] = useState("")
-
-  const handleSearchTextChange = str => {
-    // TODO - search box does nothing
-    setSearchText(str)
-    if (str) {
-      setSearchMsg("Search utility under construction")
-    } else {
-      setSearchMsg("")
-    }
-  }
 
   return (
     <>
@@ -89,58 +80,23 @@ export default function Footer() {
         <div className="home-footer" id="home-footer">
           <div className="my-5 by-3">
             <div className="row">
-              <div className="col col-12 col-md-5">
+              <div className="col col-12 col-md-4">
                 <div className="text-center text-md-left" id="footer-logo">
                   <a href="/">
                     <img alt="BC Parks logo" src={bcParksWordmark} />
                   </a>
                 </div>
-
-                <div className="footer-search-container form-control text-white">
-                  <div className="footer-search-box d-flex">
-                    <span className="fa fa-search form-control-icon"></span>
-                    <input
-                      type="search"
-                      className="form-control"
-                      placeholder="Search BCParks.ca"
-                      aria-label="Search BCParks.ca"
-                      onChange={event => {
-                        handleSearchTextChange(event.target.value)
-                      }}
-                      onKeyPress={ev => {
-                        if (ev.key === "Enter") {
-                          handleSearchTextChange(searchText)
-                          ev.preventDefault()
-                        }
-                      }}
-                    />
-                  </div>
-                </div>
-                <div className="footer-search-msg text-center font-italic text-white mt-3">
-                  {searchMsg === "" ? <> &nbsp; </> : searchMsg}
-                </div>
               </div>
-              <div className="col d-none d-lg-block col-lg-1">&nbsp;</div>
-              <div className="col col-12 col-md-6">
+              <div className="col col-12 col-md-8">
                 <div className="row">
-                  <div className="col col-6 col-sm-4">
-                    <div>
-                      <FooterMenu items={menu1}></FooterMenu>
+                  {footerMenu.map((item, index) => (
+                    <div className="col col-12 col-sm-4" key={index}>
+                      <div>
+                        <FooterMenu items={item}></FooterMenu>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col col-6 col-sm-4 order-sm-3">
-                    <div>
-                      <FooterMenu items={menu3}></FooterMenu>
-                    </div>
-                  </div>
-                  <div className="col col-6 col-sm-4 order-sm-2">
-                    <div>
-                      <FooterMenu items={menu2}></FooterMenu>
-                    </div>
-                  </div>
-                  <div className="col col-8 d-none d-sm-block order-5">
-                    &nbsp;
-                  </div>
+                  ))}
+                  <div className="col col-8 d-none d-sm-block order-5"></div>
                   <div className="col col-6 col-sm-4 order-last">
                     <div className="text-left">
                       <div className="d-inline-block mt-3 ml-4 ml-md-1">
@@ -158,10 +114,10 @@ export default function Footer() {
                 </div>
               </div>
             </div>
-            <div className="text-center py-3 mt-5 border-top border-white">
+            <div className="text-left text-sm-center py-3 mx-3 mx-md-0 mt-5 border-top border-white">
               {utilityMenu.map((item, index) => (
                 <div
-                  className="footer-utility-link mx-1 mx-sm-2 mx-md-3 d-inline-block"
+                  className="footer-utility-link my-2 mr-4 d-inline-block"
                   key={index}
                 >
                   <a href={item.link}>{item.display}</a>

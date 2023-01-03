@@ -389,7 +389,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       </Container>
       <br />
       <br />
-      <Footer>{data.strapiWebsites.Footer}</Footer>
+      <Footer />
     </>
   )
 }
@@ -398,21 +398,6 @@ export default PublicActiveAdvisoriesPage
 
 export const query = graphql`
   {
-    strapiWebsites(Name: { eq: "BCParks.ca" }) {
-      Footer
-      Header
-      Name
-      Navigation
-      id
-      homepage {
-        id
-        Template
-        Content {
-          id
-          strapi_component
-        }
-      }
-    }
     site {
       siteMetadata {
         apiURL

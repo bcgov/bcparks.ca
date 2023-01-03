@@ -49,21 +49,6 @@ export const query = graphql`
         apiURL
       }
     }
-    strapiWebsites(Name: { eq: "BCParks.ca" }) {
-      Footer
-      Header
-      Name
-      Navigation
-      id
-      homepage {
-        id
-        Template
-        Content {
-          id
-          strapi_component
-        }
-      }
-    }
     allStrapiActivityTypes(sort: { fields: activityName }) {
       totalCount
       nodes {
@@ -1291,7 +1276,7 @@ export default function FindAPark({ location, data }) {
           setCurrentPage,
         }}
       />
-      <Footer>{data.strapiWebsites.Footer}</Footer>
+      <Footer />
     </>
   )
 }
