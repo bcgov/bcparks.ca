@@ -12,7 +12,8 @@
   },
   "attributes": {
     "Slug": {
-      "type": "string"
+      "type": "string",
+      "regex": "^[a-z0-9]+(?:-[a-z0-9]+)*$|^$"
     },
     "Title": {
       "type": "string",
