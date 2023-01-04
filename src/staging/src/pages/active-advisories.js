@@ -161,10 +161,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
     // exclude unpublished parks
     let q =
-      "/public-advisories/count?protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true"
+      "/public-advisories/count"
 
     if (advisoryType !== "all") {
-      q += `&eventType.eventType_contains=${advisoryType}`
+      q += `?protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true&eventType.eventType_contains=${advisoryType}`
     }
 
     const newApiCountCall = apiUrl + q
@@ -250,6 +250,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
             // Get count
             let apiCount = apiUrl + "/public-advisories/count" + q
+            if (q === "?_sort=advisoryDate:DESC&protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true") {
+             apiCount = apiUrl + "/public-advisories/count"
+            }
+            
             axios
               .get(apiCount)
               .then(function (data) {
