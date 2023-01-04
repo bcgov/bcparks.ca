@@ -19,6 +19,7 @@ import PageMenu from "../components/pageContent/pageMenu"
 
 import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
+import CampingDetails from "../components/park/campingDetails"
 import Heading from "../components/park/heading.js"
 import ParkActivity from "../components/park/parkActivity"
 import ParkFacility from "../components/park/parkFacility"
@@ -67,14 +68,17 @@ export default function ParkTemplate({ data }) {
     ["facilityType.rank", "facilityType.facilityName"],
     ["asc"]
   )
+  const campingFacilities = 
+    activeFacilities.filter(
+      facility => facility.facilityType.facilityName.toLowerCase().includes("camping")
+    )
+  const nonCampingFacilities = 
+    activeFacilities.filter(
+      facility => !facility.facilityType.facilityName.toLowerCase().includes("camping")
+    )
 
   const hasReservations = operations.hasReservations
   const hasDayUsePass = site.hasDayUsePass
-
-  // Use hasCamping if camping section is needed
-  // const hasCamping = activeFacilities.some(facility =>
-  //   facility.facilityType.facilityName.toLowerCase().includes("camping")
-  // )
 
   const menuContent = data?.allStrapiMenus?.nodes || []
 
@@ -158,18 +162,24 @@ export default function ParkTemplate({ data }) {
     },
     {
       sectionIndex: 3,
-      display: "Facilities",
-      link: "#park-facility-container",
-      visible: activeFacilities.length > 0,
+      display: "Camping",
+      link: "#park-camping-details-container",
+      visible: campingFacilities.length > 0,
     },
     {
       sectionIndex: 4,
+      display: "Facilities",
+      link: "#park-facility-container",
+      visible: nonCampingFacilities.length > 0,
+    },
+    {
+      sectionIndex: 5,
       display: "Activities",
       link: "#park-activity-container",
       visible: activeActivities.length > 0,
     },
     {
-      sectionIndex: 5,
+      sectionIndex: 6,
       display: "Location",
       link: "#park-maps-location-container",
       visible: (site.latitude && site.longitude) || site.locationNotes,
@@ -310,17 +320,29 @@ export default function ParkTemplate({ data }) {
                   )}
                 </div>
               )}
-              {menuItems[3].visible && (
-                <div ref={facilityRef} className="full-width">
-                  <ParkFacility data={activeFacilities} />
+               {menuItems[3].visible && (
+                <div ref={campingRef} className="full-width">
+                  <CampingDetails
+                    data={{
+                      parkFacilities: campingFacilities,
+                      reservations: site.reservations,
+                      hasDayUsePass: hasDayUsePass,
+                      hasReservations: hasReservations,
+                    }}
+                  />
                 </div>
               )}
               {menuItems[4].visible && (
+                <div ref={facilityRef} className="full-width">
+                  <ParkFacility data={nonCampingFacilities} />
+                </div>
+              )}
+              {menuItems[5].visible && (
                 <div ref={activityRef} className="full-width">
                   <ParkActivity data={activeActivities} />
                 </div>
               )}
-              {menuItems[5].visible && (
+              {menuItems[6].visible && (
                 <div ref={mapLocationRef} className="full-width">
                   <div id="park-maps-location-container" className="anchor-link">
                     <MapLocation data={mapData} />
@@ -361,6 +383,7 @@ export const query = graphql`
       latitude
       locationNotes
       description
+      reservations
       hasDayUsePass
       isUnofficialSite
       protectedArea {
