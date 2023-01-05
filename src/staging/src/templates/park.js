@@ -446,7 +446,7 @@ export default function ParkTemplate({ data }) {
         </Container>
       </div>
 
-      <Footer>{data?.strapiWebsites.Footer}</Footer>
+      <Footer />
 
     </div>
   )
