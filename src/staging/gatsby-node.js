@@ -422,7 +422,7 @@ async function createSites({ graphql, actions, reporter }) {
 
   result.data.allStrapiSites.nodes.forEach(site => {
     // fallback in case site doesn't have a slug
-    const slug = site.slug ? site.slug : slugify(site.siteName).toLowerCase()
+    const slug = site.slug || slugify(site.siteName).toLowerCase()
     // fallback in case site doesn't have a relation with protectedArea
     const parkPath = site.protectedArea?.urlPath ?? "no-protected-area"
     const sitePath = `${parkPath}/${slug}`
