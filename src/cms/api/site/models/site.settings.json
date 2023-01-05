@@ -12,8 +12,7 @@
   },
   "attributes": {
     "slug": {
-      "type": "string",
-      "regex": "^[a-z0-9]+(?:-[a-z0-9]+)*$|^$"
+      "type": "string"
     },
     "siteName": {
       "type": "string",
