@@ -13,8 +13,7 @@
   "attributes": {
     "slug": {
       "type": "string",
-      "required": true,
-      "regex": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      "required": true
     },
     "title": {
       "type": "string",
