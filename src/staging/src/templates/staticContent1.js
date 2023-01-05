@@ -140,9 +140,9 @@ export default function StaticContent1({ pageContext }) {
   return (
     <>
       <Seo
-        title={meta.metaTitle}
-        description={meta.description}
-        keywords={meta.metaKeywords}
+        title={meta?.metaTitle || pageTitle}
+        description={meta?.metaDescription}
+        keywords={meta?.metaKeywords}
       />
       <div className="max-width-override" ref={sectionRefs[0]}>
         <Header mode="internal" content={menuContent} />
@@ -158,7 +158,7 @@ export default function StaticContent1({ pageContext }) {
             <div className="header-image-wrapper">
               <img
                 src={headerContent.imageUrl}
-                alt={headerContent.imageAlt ?? null}
+                alt={headerContent.imageAlt ?? ""}
               />
             </div>
           )}

@@ -104,6 +104,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkFacilities: [StrapiParkFacilities]
     parkOperation: StrapiParkOperation
     parkOperationSubAreas: [StrapiParkOperationSubAreas]
+    seo: StrapiSeoComponent
   }
 
   type StrapiParkOperationSubAreaDates implements Node {

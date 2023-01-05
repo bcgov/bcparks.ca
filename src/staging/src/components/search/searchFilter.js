@@ -289,6 +289,7 @@ const SearchFilter = ({
                             setSelectedActivities([])
                           }}
                           tabIndex="0"
+                          href="#"
                         >
                           Reset
                         </Link>
@@ -372,6 +373,7 @@ const SearchFilter = ({
                             setSelectedFacilities([])
                           }}
                           tabIndex="0"
+                          href="#"
                         >
                           Reset
                         </Link>

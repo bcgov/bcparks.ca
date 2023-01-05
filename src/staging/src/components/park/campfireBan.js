@@ -39,6 +39,7 @@ export default function CampfireBan({ data }) {
                   variant="square"
                   src={campfireBanIcon}
                   aria-label={title}
+                  alt=""
                 />
               }
               title={title}

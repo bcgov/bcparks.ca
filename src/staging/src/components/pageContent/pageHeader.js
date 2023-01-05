@@ -15,7 +15,7 @@ export default function PageHeader({ pageTitle, imageUrl, imageAlt })
                 {pageTitle}
             </div>
                 {imageUrl && <div className="header-image-wrapper">
-                    <img src={imageUrl} alt={imageAlt} />
+                    <img src={imageUrl} alt={imageAlt ?? ""} />
                 </div>}
             <div className="header-title header-title--mobile d-block d-md-none">
                 {pageTitle}

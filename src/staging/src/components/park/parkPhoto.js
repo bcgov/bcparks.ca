@@ -6,7 +6,7 @@ export default function ParkPhoto({ type, src, alt }) {
 
   return (
     <div className={`park-photo park-photo--${type}`}>
-      <img src={src} alt={alt} />
+      <img src={src} alt={alt ?? ""} />
     </div>
   )
 }

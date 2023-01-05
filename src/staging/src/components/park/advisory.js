@@ -56,6 +56,7 @@ export default function Advisory({ advisories }) {
             src={alertIcon}
             aria-label="park access status"
             className="park-overview-icon"
+            alt=""
           />
         }
         title={

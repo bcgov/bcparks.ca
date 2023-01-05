@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
+import Seo from "../components/seo"
 import AdvisoryFilter from "../components/advisories/advisoryFilter"
 import AdvisoryList from "../components/advisories/advisoryList"
 import AdvisoryPageNav from "../components/advisories/advisoryPageNav"
@@ -340,9 +341,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
   return (
     <>
-      <Helmet>
-        <title>Active advisories | BC Parks</title>
-      </Helmet>
+      <Seo title="Active advisories" description="Up-to-date information to help you plan your visit to a park in British Columbia. Get updates on access, closures, hazards, and trail conditions in BC Parks." />
       <Header mode="internal" content={menuContent} />
       <Container>
         <br />
