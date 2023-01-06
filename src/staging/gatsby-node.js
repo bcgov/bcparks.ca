@@ -245,6 +245,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     orcsSiteNumber: String
     locationNotes: String
     description: String
+    isDisplayed: Boolean
     hasDayUsePass: Boolean
     protectedArea: StrapiProtectedArea
     parkActivities: [StrapiParkActivities]
@@ -404,7 +405,7 @@ async function createParkSubPages({ graphql, actions, reporter }) {
 async function createSites({ graphql, actions, reporter }) {
   const siteQuery = `
   {
-    allStrapiSites {
+    allStrapiSites(filter: {isDisplayed: {eq: true}}) {
       nodes {
         id
         slug

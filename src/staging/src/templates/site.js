@@ -356,7 +356,10 @@ export default function ParkTemplate({ data }) {
 
 export const query = graphql`
   query SiteDetails($orcsSiteNumber: String) {
-    strapiSites(orcsSiteNumber: { eq: $orcsSiteNumber }) {
+    strapiSites(
+      isDisplayed: {eq: true}
+      orcsSiteNumber: { eq: $orcsSiteNumber }
+    ) {
       siteName
       siteNumber
       orcsSiteNumber
