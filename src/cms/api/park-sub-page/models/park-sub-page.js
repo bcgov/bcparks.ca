@@ -6,21 +6,19 @@
  */
 
 const regex = new RegExp("^[a-z0-9/]+(?:-[a-z0-9/]+)*$")
-const slugValidator = async (data) => {
+const slugValidator = (data) => {
     if (!regex.test(data.slug)) {
       throw strapi.errors.badRequest('Please enter letters, numbers, hyphens, or slashes for slug. No spaces.');
     }
-}
+};
 
 module.exports = {
     lifecycles: {
         beforeCreate: async (data) => {
           slugValidator(data)
         },
-        beforeUpdate: async (data) => {
-          if (!regex.test(data.slug)) {
-            slugValidator(data)
-          }
+        beforeUpdate: async (params, data) => {
+          slugValidator(data)          
         },
     },
 };
