@@ -102,7 +102,6 @@ export default function ParkAccessStatus({ advisories }) {
   const {
     parkStatusIcon,
     parkStatusText,
-    parkStatusColor,
   } = ParkAccessFromAdvisories(advisories)
 
   // unfortunately, incoming advisories from parks details and explore pages are structured differently.
