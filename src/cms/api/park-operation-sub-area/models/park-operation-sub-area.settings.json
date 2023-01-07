@@ -25,8 +25,8 @@
       "model": "park-operation-sub-area-type"
     },
     "protectedArea": {
-      "model": "protected-area",
-      "via": "parkOperationSubAreas"
+      "via": "parkOperationSubAreas",
+      "model": "protected-area"
     },
     "parkOperationSubAreaDates": {
       "via": "parkOperationSubArea",

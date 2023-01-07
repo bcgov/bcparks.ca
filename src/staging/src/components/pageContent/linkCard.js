@@ -41,7 +41,7 @@ export default function LinkCard({ url, title, subTitle, imageUrl, imageAltText,
       href={url}
       >
       <div className="card-img">
-        <img src={imageUrl} alt={imageAltText ?? null} />
+        <img src={imageUrl} alt={imageAltText ?? ""} />
       </div>
       <div className="card-body">
           <h5 className="card-body-header">{title}</h5>

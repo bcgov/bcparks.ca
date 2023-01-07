@@ -30,6 +30,7 @@ export default function PetsOnLeash({ data }) {
                   variant="square"
                   src={petsOnLeashIcon}
                   aria-label="pets on leash"
+                  alt=""
                 />
               }
               title={<Link to="#park-activity-container">Pet on Leash</Link>}

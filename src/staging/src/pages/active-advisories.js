@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import axios from "axios"
@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
+import Seo from "../components/seo"
 import AdvisoryFilter from "../components/advisories/advisoryFilter"
 import AdvisoryList from "../components/advisories/advisoryList"
 import AdvisoryPageNav from "../components/advisories/advisoryPageNav"
@@ -72,25 +73,37 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const [pageCount, setPageCount] = useState(1) // num pages in current search
 
   /* Advisory Event Types */
-  const defaultAdvisoryEventType = { label: 'All', value: 'all' }
+  const defaultAdvisoryEventType = useMemo(()=> ({ label: 'All', value: 'all' }), [])
   const [eventTypes, setEventTypes] = useState([])
   const [advisoryType, setAdvisoryType] = useState(defaultAdvisoryEventType.value)
 
-  useEffect(async () => {
-    const eventTypesPromise = axios.get(`${apiUrl}/event-types/`)
-    const eventTypesResponse = await Promise.all([eventTypesPromise])
-
-    const formattedEventTypes = eventTypesResponse[0].data.map((obj) => ({ label: obj.eventType, value: obj.eventType.toLowerCase() }))
-    formattedEventTypes.splice(0, 0, defaultAdvisoryEventType)
-    
-    const localeSortEvent  = formattedEventTypes?.sort((a, b) => a.value.localeCompare(b.value, 'en', { sensitivity: 'base' }));
-    
-    setEventTypes(localeSortEvent)
-
-    let eventType = getAdvisoryTypeFromUrl()
-    setAdvisoryType(eventType)
-  }, [])
-
+  useEffect(() => {
+    const fetchEvenType = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/event-types/`);
+  
+        const formattedEventTypes = response.data.map((obj) => ({
+          label: obj.eventType,
+          value: obj.eventType.toLowerCase(),
+        }));
+  
+        formattedEventTypes.splice(0, 0, defaultAdvisoryEventType);
+        const localeSortEvent = formattedEventTypes?.sort((a, b) =>
+          a.value.localeCompare(b.value, "en", { sensitivity: "base" })
+        );
+  
+        setEventTypes(localeSortEvent);
+      } catch (err) {
+        console.error("Fetch Even Type error:", err);
+      }
+    };
+  
+    fetchEvenType();
+  
+    let eventType = getAdvisoryTypeFromUrl();
+    setAdvisoryType(eventType);
+  }, [defaultAdvisoryEventType, apiUrl]);
+  
   // Get advisory type from url params ---------------
   const updatePageTitle = (aType) => {
     if (aType !== 'all') {
@@ -340,9 +353,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
   return (
     <>
-      <Helmet>
-        <title>Active advisories | BC Parks</title>
-      </Helmet>
+      <Seo title="Active advisories" description="Up-to-date information to help you plan your visit to a park in British Columbia. Get updates on access, closures, hazards, and trail conditions in BC Parks." />
       <Header mode="internal" content={menuContent} />
       <Container>
         <br />

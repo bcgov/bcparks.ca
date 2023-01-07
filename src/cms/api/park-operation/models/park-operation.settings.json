@@ -150,8 +150,8 @@
       "type": "text"
     },
     "protectedArea": {
-      "model": "protected-area",
-      "via": "parkOperation"
+      "via": "parkOperation",
+      "model": "protected-area"
     },
     "site": {
       "via": "parkOperation",

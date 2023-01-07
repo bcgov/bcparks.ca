@@ -102,7 +102,6 @@ export default function ParkAccessStatus({ advisories }) {
   const {
     parkStatusIcon,
     parkStatusText,
-    parkStatusColor,
   } = ParkAccessFromAdvisories(advisories)
 
   // unfortunately, incoming advisories from parks details and explore pages are structured differently.
@@ -119,6 +118,7 @@ export default function ParkAccessStatus({ advisories }) {
               src={parkStatusIcon}
               aria-label="park access status"
               className="park-overview-icon"
+              alt=""
             />
           }
           title={parkStatusText}

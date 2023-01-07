@@ -80,7 +80,7 @@ export default function ParkSubPage({ data }) {
     <>
       <Seo
         title={seo?.metaTitle ?? park.protectedAreaName + ": " + page.title}
-        description={seo?.description}
+        description={seo?.metaDescription}
         keywords={seo?.metaKeywords}
       />
       <div className="max-width-override" ref={sectionRefs[0]}>
@@ -96,7 +96,7 @@ export default function ParkSubPage({ data }) {
           <div className="header-image-wrapper">
             <img
               src={header.imageUrl}
-              alt={header.imageAlt ?? null}
+              alt={header.imageAlt ?? ""}
             />
           </div>
         )}

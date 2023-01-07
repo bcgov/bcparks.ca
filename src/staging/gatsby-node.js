@@ -104,6 +104,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkFacilities: [StrapiParkFacilities]
     parkOperation: StrapiParkOperation
     parkOperationSubAreas: [StrapiParkOperationSubAreas]
+    seo: StrapiSeoComponent
   }
 
   type StrapiParkOperationSubAreaDates implements Node {
@@ -245,6 +246,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     locationNotes: String
     description: String
     reservations: String
+    isDisplayed: Boolean
     hasDayUsePass: Boolean
     protectedArea: StrapiProtectedArea
     parkActivities: [StrapiParkActivities]
@@ -404,7 +406,7 @@ async function createParkSubPages({ graphql, actions, reporter }) {
 async function createSites({ graphql, actions, reporter }) {
   const siteQuery = `
   {
-    allStrapiSites {
+    allStrapiSites(filter: {isDisplayed: {eq: true}}) {
       nodes {
         id
         slug
@@ -423,7 +425,7 @@ async function createSites({ graphql, actions, reporter }) {
 
   result.data.allStrapiSites.nodes.forEach(site => {
     // fallback in case site doesn't have a slug
-    const slug = site.slug ?? slugify(site.siteName).toLowerCase()
+    const slug = site.slug || slugify(site.siteName).toLowerCase()
     // fallback in case site doesn't have a relation with protectedArea
     const parkPath = site.protectedArea?.urlPath ?? "no-protected-area"
     const sitePath = `${parkPath}/${slug}`

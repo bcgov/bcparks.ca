@@ -181,6 +181,11 @@
     "parkSubPages": {
       "via": "protectedArea",
       "collection": "park-sub-page"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "parks.seo"
     }
   }
 }

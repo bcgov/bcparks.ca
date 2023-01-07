@@ -55,9 +55,9 @@ const LandingPage = ({ pageContext }) => {
   return (
     <>
       <Seo
-        title={meta.metaTitle}
-        description={meta.description}
-        keywords={meta.metaKeywords}
+        title={meta?.metaTitle || page?.Title}
+        description={meta?.metaDescription}
+        keywords={meta?.metaKeywords}
       />
       <CssBaseline />
       <Header mode="internal" content={menuContent} />
