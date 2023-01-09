@@ -246,7 +246,7 @@ export default function ParkTemplate({ data }) {
       Home
     </Link>,
     <Link key="2" href="/find-a-park">
-      Find a Park
+      Find a park
     </Link>,
     <div key="3" className="breadcrumb-text">
       {parkName}

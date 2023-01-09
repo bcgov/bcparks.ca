@@ -66,7 +66,7 @@ export default function ParkSubPage({ data }) {
       Home
     </Link>,
     <Link key="2" href="/find-a-park">
-      Find a Park
+      Find a park
     </Link>,
     <Link key="3" href={`/${park.slug}`}>
       {park.protectedAreaName}
