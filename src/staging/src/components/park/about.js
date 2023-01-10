@@ -42,7 +42,7 @@ export default function About({
         {(park.totalArea || park.establishedDate) && park.parkContact && <Spacer />}
         {park.parkContact && (
           <>
-            <h3 className="heading">{capitalizeFirstLetter(`${parkType} contact`)}</h3>
+            <h3>{capitalizeFirstLetter(`${parkType} contact`)}</h3>
             <HtmlContent>{park.parkContact}</HtmlContent>
           </>
         )}
