@@ -33,6 +33,7 @@ import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import MapLocation from "../components/park/mapLocation"
 import SafetyInfo from "../components/park/safetyInfo"
+import SpecialNote from "../components/park/specialNote"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
@@ -121,6 +122,7 @@ export default function ParkTemplate({ data }) {
   const advisoryRef = useRef("")
   const parkDatesRef = useRef("")
   const safetyRef = useRef("")
+  const specialRef = useRef("")
   const campingRef = useRef("")
   const facilityRef = useRef("")
   const activityRef = useRef("")
@@ -135,6 +137,7 @@ export default function ParkTemplate({ data }) {
     advisoryRef,
     parkDatesRef,
     safetyRef,
+    specialRef,
     campingRef,
     facilityRef,
     activityRef,
@@ -182,46 +185,52 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 4,
       display: "Safety info",
       link: "#park-safety-info-container",
-      visible: !isNullOrWhiteSpace(park.safetyInfo) || !isNullOrWhiteSpace(park.specialNotes),
+      visible: !isNullOrWhiteSpace(park.safetyInfo),
     },
     {
       sectionIndex: 5,
+      display: "Special notes",
+      link: "#park-special-notes-container",
+      visible: !isNullOrWhiteSpace(park.specialNotes),
+    },
+    {
+      sectionIndex: 6,
       display: "Camping",
       link: "#park-camping-details-container",
       visible: campingFacilities.length > 0,
     },
     {
-      sectionIndex: 6,
+      sectionIndex: 7,
       display: "Facilities",
       link: "#park-facility-container",
       visible: nonCampingFacilities.length > 0,
     },
     {
-      sectionIndex: 7,
+      sectionIndex: 8,
       display: "Activities",
       link: "#park-activity-container",
       visible: activeActivities.length > 0,
     },
     {
-      sectionIndex: 8,
+      sectionIndex: 9,
       display: "Location",
       link: "#park-maps-location-container",
       visible: (park.latitude && park.longitude) || !isNullOrWhiteSpace(park.locationNotes),
     },
     {
-      sectionIndex: 9,
+      sectionIndex: 10,
       display: capitalizeFirstLetter(`${parkType} and activity maps`),
       link: "#park-map-details-container",
       visible: park.maps,
     },
     {
-      sectionIndex: 10,
+      sectionIndex: 11,
       display: capitalizeFirstLetter(`Learn about this ${parkType}`),
       link: "#park-about-container",
       visible: park.totalArea || park.establishedDate || !isNullOrWhiteSpace(park.parkContact) || !isNullOrWhiteSpace(park.natureAndCulture),
     },
     {
-      sectionIndex: 11,
+      sectionIndex: 12,
       display: "Reconciliation with Indigenous peoples",
       link: "#park-reconciliation-container",
       visible: !isNullOrWhiteSpace(park.reconciliationNotes),
@@ -380,10 +389,15 @@ export default function ParkTemplate({ data }) {
               )}
               {menuItems[4].visible && (
                 <div ref={safetyRef} className="full-width">
-                  <SafetyInfo park={park} />
+                  <SafetyInfo safetyInfo={park.safetyInfo} />
                 </div>
               )}
               {menuItems[5].visible && (
+                <div ref={specialRef} className="full-width">
+                  <SpecialNote specialNotes={park.specialNotes} />
+                </div>
+              )}
+              {menuItems[6].visible && (
                 <div ref={campingRef} className="full-width">
                   <CampingDetails
                     data={{
@@ -395,17 +409,17 @@ export default function ParkTemplate({ data }) {
                   />
                 </div>
               )}
-              {menuItems[6].visible && (
+              {menuItems[7].visible && (
                 <div ref={facilityRef} className="full-width">
                   <ParkFacility data={nonCampingFacilities} />
                 </div>
               )}
-              {menuItems[7].visible && (
+              {menuItems[8].visible && (
                 <div ref={activityRef} className="full-width">
                   <ParkActivity data={activeActivities} />
                 </div>
               )}
-              {menuItems[8].visible && (
+              {menuItems[9].visible && (
                 <div ref={mapLocationRef} className="full-width">
                   <div id="park-maps-location-container" className="anchor-link">
                     <MapLocation data={mapData} />
@@ -423,17 +437,17 @@ export default function ParkTemplate({ data }) {
                   </div>
                 </div>
               )}
-              {menuItems[9].visible && (
+              {menuItems[10].visible && (
                 <div ref={activityMapRef} className="full-width">
                   <ParkMapDetails data={park.maps} type={parkType} />
                 </div>
               )}
-              {menuItems[10].visible && (
+              {menuItems[11].visible && (
                 <div ref={aboutRef} className="full-width">
                   <About park={park} />
                 </div>
               )}
-              {menuItems[11].visible && (
+              {menuItems[12].visible && (
                 <div ref={reconciliationRef} className="full-width">
                   <Reconciliation data={park.reconciliationNotes} />
                 </div>
