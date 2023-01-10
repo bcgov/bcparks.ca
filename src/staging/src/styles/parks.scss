@@ -17,12 +17,12 @@ $mediumBreakpoint: 991.98px;
 }
 
 .heading {
-  color: #003366;
+  color: $colorBlue;
 }
 
 #park-activity-container .MuiAccordion-root,
 #park-facility-container .MuiAccordion-root {
-  background-color: #eef1f5;
+  background-color: $colorGrey;
 }
 
 .park-info-header {
@@ -30,7 +30,7 @@ $mediumBreakpoint: 991.98px;
 }
 
 .park-info-header a {
-  color: #003366;
+  color: $colorBlue;
   display: inline-block;
   padding: 0px 0px 0px 8px;
 }
@@ -45,7 +45,7 @@ $mediumBreakpoint: 991.98px;
 }
 
 #park-menu-container a {
-  color: #003366;
+  color: $colorBlue;
   padding: 5px 0px 5px 8px;
   border-left: 3px solid transparent;
 }
@@ -66,14 +66,14 @@ $mediumBreakpoint: 991.98px;
   font-weight: bold;
   box-sizing: border-box;
   padding: 0px 0px 0px 8px;
-  border-left-color: #003366;
+  border-left-color: $colorBlue;
 }
 
 .park-status-top-grid {
   background-color: "#e1ecf4";
 }
 .park-details-shaded {
-  background-color: #eef1f5 !important;
+  background-color: $colorGrey !important;
 }
 
 .MuiTypography-root,
@@ -97,7 +97,7 @@ $mediumBreakpoint: 991.98px;
 }
 
 .blue-alert {
-  background-color: #eef1f5 !important;
+  background-color: $colorGrey !important;
 }
 
 .nested-list,
@@ -108,8 +108,8 @@ $mediumBreakpoint: 991.98px;
 }
 
 .blue-button {
-  color: #ffffff !important;
-  background-color: #003366 !important;
+  color: $colorWhite !important;
+  background-color: $colorBlue !important;
   min-width: 180px !important;
   white-space: nowrap;
   height: 50px;
@@ -117,8 +117,8 @@ $mediumBreakpoint: 991.98px;
 }
 
 .yellow-button {
-  color: #003366 !important;
-  background-color: #fcba19 !important;
+  color: $colorBlue !important;
+  background-color: $colorGold !important;
   min-width: 180px !important;
   white-space: nowrap;
   height: 50px;
@@ -128,8 +128,8 @@ $mediumBreakpoint: 991.98px;
 .blue-button:hover,
 .yellow-button:hover {
   background-color: transparent !important;
-  border: 2px solid #fcba19 !important;
-  color: #003366 !important;
+  border: 2px solid $colorGold !important;
+  color: $colorBlue !important;
   text-decoration: underline;
 }
 
@@ -150,7 +150,7 @@ $mediumBreakpoint: 991.98px;
 
 // TODO: destroy this .grey-background thing up with fire
 .grey-background {
-  background-color: #eef1f5 !important;
+  background-color: $colorGrey !important;
 }
 
 .grey-background .MuiPaper-root,
@@ -158,11 +158,11 @@ $mediumBreakpoint: 991.98px;
   background-color: transparent;
 
   .red-alert {
-    background-color: #eef1f5 !important;
+    background-color: $colorGrey !important;
   }
 
   &.bc-bg-yellow {
-    background-color: #fcba19;
+    background-color: $colorGold;
   }
 }
 
@@ -175,8 +175,8 @@ $mediumBreakpoint: 991.98px;
 #park-facility-container .MuiAccordion-root,
 #park-activity-container .MuiAccordion-root,
 #park-camping-details-container .MuiAccordion-root {
-  background-color: #fff !important;
-  border: 1px solid #1a5a96 !important;
+  background-color: $colorWhite !important;
+  border: 1px solid $colorBlueLight !important;
 }
 
 .park-info-container .MuiAccordionDetails-root {
@@ -188,11 +188,11 @@ $mediumBreakpoint: 991.98px;
 #park-facility-container .MuiAccordion-root:hover,
 #park-activity-container .MuiAccordion-root:hover,
 #park-camping-details-container .MuiAccordion-root:hover {
-  border: 1px solid #fcba19 !important;
+  border: 1px solid $colorGold !important;
 }
 
 .access-icon {
-  color: #003366;
+  color: $colorBlue;
   padding: 5px 0px 5px 8px;
 }
 
@@ -231,7 +231,7 @@ $mediumBreakpoint: 991.98px;
 }
 
 .park-info-container .MuiAccordionSummary-root {
-  color: #003366;
+  color: $colorBlue;
 }
 
 .park-info-container .MuiPaper-elevation1 {
@@ -239,7 +239,7 @@ $mediumBreakpoint: 991.98px;
 }
 
 .park-info-container .MuiLink-root {
-  color: #1a5a96 !important;
+  color: $colorBlueLight !important;
 }
 
 .show-photos {
@@ -262,7 +262,7 @@ $mediumBreakpoint: 991.98px;
 
 .show-photo-text {
   background-color: rgba(0, 0, 0, 0.5);
-  color: white;
+  color: $colorWhite;
   padding: 10px;
   border-radius: 10px;
 }
@@ -313,12 +313,12 @@ $mediumBreakpoint: 991.98px;
 }
 
 .park-menu-mobile {
-  border: 1px solid #003366;
+  border: 1px solid $colorBlue;
   border-radius: 5px;
   padding: 3px 0px !important;
   margin-top: 10px !important;
-  color: #003366 !important;
-  background: #fff;
+  color: $colorBlue !important;
+  background: $colorWhite;
 }
 
 #mapDiv {
