@@ -206,13 +206,29 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
       // only apply filter if there is a keyword
       if (anySearch) {
-        if (advisoryType !== "all") {
-          q += "&" + qs.stringify({ _where: { _or: [
-            { title_contains: searchText },
-            { description_contains: searchText },
-          ]}})
-        } else {
-          q += `&_q=${searchText}`
+        if (useParksFilter || useKeywordFilter) {
+          if (useParksFilter && !useKeywordFilter) {
+            q += "&protectedAreas.protectedAreaName_contains=" + searchText
+          } else if (useKeywordFilter && !useParksFilter) {
+            q += "&" + qs.stringify({
+              _where: {
+                _or: [
+                  { 'title_contains': searchText },
+                  { 'description_contains': searchText }
+                ]
+              }
+            })
+          } else {
+            q += "&" + qs.stringify({
+              _where: {
+                _or: [
+                  { 'title_contains': searchText },
+                  { 'description_contains': searchText },
+                  { 'protectedAreas.protectedAreaName_contains': searchText },
+                ]
+              }
+            })
+          }
         }
       }
 
