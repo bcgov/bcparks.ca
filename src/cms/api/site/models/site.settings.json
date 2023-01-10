@@ -80,6 +80,9 @@
     "locationNotes": {
       "type": "richtext"
     },
+    "reservations": {
+      "type": "richtext"
+    },
     "parkOperation": {
       "via": "site",
       "model": "park-operation"

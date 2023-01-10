@@ -245,6 +245,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     orcsSiteNumber: String
     locationNotes: String
     description: String
+    reservations: String
     isDisplayed: Boolean
     hasDayUsePass: Boolean
     protectedArea: StrapiProtectedArea
