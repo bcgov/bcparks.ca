@@ -1,12 +1,4 @@
-$colorWhite: #fff;
-$colorBluePrimary: #003366;
-$colorGoldPrimary: #fcba19;
-$colorText: #313132;
-$colorLink: #1a5a96;
-$colorNav: #38598a;
-$colorBorder: #96b3cf;
-$colorBackground: #f2f2f2;
-$colorComponent: #606060;
+@import "variables.scss";
 
 .static-content-container.page-breadcrumbs {
   padding-top: 15px;
@@ -23,7 +15,7 @@ $colorComponent: #606060;
   }
 
   .card {
-    border-color: $colorLink !important;
+    border-color: $colorBlueLight !important;
     border-width: 1px !important;
 
     .card-img-wrapper {
@@ -34,7 +26,7 @@ $colorComponent: #606060;
       }
     }
     .card-title {
-      color: $colorLink;
+      color: $colorBlueLight;
     }
     .card-body {
       padding: 0;
@@ -44,7 +36,7 @@ $colorComponent: #606060;
     }
   }
   a:hover {
-    color: $colorGoldPrimary;
+    color: $colorGold;
   }
 }
 
@@ -98,7 +90,7 @@ $colorComponent: #606060;
 /* Note most/all of the following is for backwards compat for older content */
 
 .MuiBreadcrumbs-separator {
-  color: $colorGoldPrimary !important;
+  color: $colorGold !important;
 }
 .content-zone {
   padding: 40px 0 0 0;
@@ -137,14 +129,14 @@ $colorComponent: #606060;
     }
     .card-header {
       background-color: $colorWhite;
-      border: 1px solid $colorLink;
+      border: 1px solid $colorBlueLight;
     }
     .card-body {
       padding: 20px;
-      color: $colorLink;
+      color: $colorBlueLight;
     }
     .collapse-toggle {
-      color: $colorLink;
+      color: $colorBlueLight;
       &:focus {
         outline: unset !important;
       }
@@ -160,13 +152,13 @@ $colorComponent: #606060;
       }
     }
     .card:hover {
-      border: 1px solid $colorGoldPrimary !important;
+      border: 1px solid $colorGold !important;
       cursor: pointer;
     }
   }
   .content-zone-header {
     font-size: 24px;
-    color: $colorLink;
+    color: $colorBlueLight;
     font-weight: bold;
     margin-bottom: 0;
   }
@@ -174,7 +166,7 @@ $colorComponent: #606060;
     > hr {
       margin-top: 5px;
       height: 1px;
-      background-color: $colorGoldPrimary;
+      background-color: $colorGold;
       width: 75px;
       display: inline-block;
     }

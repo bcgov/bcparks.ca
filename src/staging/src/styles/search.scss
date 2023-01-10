@@ -1,30 +1,13 @@
-$globalFont: "BCSans", Verdana, Arial, sans serif;
-$colorBlue: #003366;
-$colorLightBlue: #1a5a96;
-$hoverBlue: #2684ff;
-$colorGrey: #eef1f5;
-$colorWhite: #fff;
-$colorBlack: #000;
-$colorGold: #fcba19;
-$colorTextBlack: #494949;
-$colorDarkGrey: #e9ecef; //needs to be updated when body background colour is changed
-$colorGreen: #008556;
-$colorRed: #D8292F;
-$colorYellow: rgba(252, 186, 25, 1);
-$bodyFont: 16px;
-$headingFont: 2rem;
-
-$mediumBreakpoint: 991.98px;
-$largeStart: 992px;
+@import "variables.scss";
 
 .MuiTypography-root {
-  font-family: $globalFont !important;
+  font-family: $globalFont;
   font-size: $bodyFont !important;
 }
 
 .MuiButton-root {
   text-transform: none !important;
-  font-family: $globalFont !important;
+  font-family: $globalFont;
 }
 
 .search-body {
@@ -48,7 +31,7 @@ $largeStart: 992px;
       background-color: $colorWhite !important;
       border: none !important;
       font-size: $bodyFont !important;
-      font-family: $globalFont !important;
+      font-family: $globalFont;
       height: 50px;
     }
     .MuiOutlinedInput-input {
@@ -95,7 +78,7 @@ $largeStart: 992px;
       border: none !important;
       border-radius: 5px !important;
       font-size: $bodyFont !important;
-      font-family: $globalFont !important;
+      font-family: $globalFont;
     }
     .MuiOutlinedInput-input {
       padding: 10px 7px !important;
@@ -114,7 +97,7 @@ $largeStart: 992px;
   .park-filter-select [class*="-control"] {
     border-radius: 50px !important;
     background-color: $colorWhite !important;
-    font-family: $globalFont !important;
+    font-family: $globalFont;
     font-size: $bodyFont !important;
   }
 }
@@ -128,12 +111,12 @@ $largeStart: 992px;
 }
 
 .park-search {
-  font-family: $globalFont !important;
+  font-family: $globalFont;
   width: 100%;
   position: relative;  
   overflow-y: hidden;    
 
-  @media screen and (min-width: $largeStart) {
+  @media screen and (min-width: $lgBreakpoint) {
     max-height: 636px;
   }
 
@@ -155,7 +138,7 @@ $largeStart: 992px;
     width: 100%;
     text-align: center;
     white-space: nowrap;
-    font-family: $globalFont !important;
+    font-family: $globalFont;
     font-style: normal;
     font-weight: normal;
     font-size: 1.4rem;
@@ -192,7 +175,7 @@ $largeStart: 992px;
       }
     }
 
-    @media screen and (min-width: $largeStart) {
+    @media screen and (min-width: $lgBreakpoint) {
       background: url("../images/u149.svg");
       bottom: 0;
       top: unset;
@@ -204,7 +187,7 @@ $largeStart: 992px;
   }
 
   .park-search-container-inner {
-    @media screen and (min-width: $largeStart) {
+    @media screen and (min-width: $lgBreakpoint) {
       height: 100%;
       > div {
         padding-left: 15%;
@@ -213,13 +196,13 @@ $largeStart: 992px;
   }
 
   .park-search-container-inner-align{
-    @media screen and (min-width: $largeStart) {
+    @media screen and (min-width: $lgBreakpoint) {
       max-width: 500px;
     }
   }
 
   #search-title {
-    font-family: $globalFont !important;
+    font-family: $globalFont;
     font-style: normal;
     font-weight: bold;
     font-size: 2rem;
@@ -229,13 +212,13 @@ $largeStart: 992px;
 }
 
 .park-search-text-wrapper {
-  @media screen and (min-width: $largeStart) {
+  @media screen and (min-width: $lgBreakpoint) {
     padding-left: 40px !important;
   }
 }
 
 .yellow-divider {
-  background-color: $colorYellow;
+  background-color: $colorGold;
   height: 3px;
 }
 
@@ -259,24 +242,24 @@ $largeStart: 992px;
 
 .filter-options-container {
   .MuiTypography-root {
-    color: $colorTextBlack;
+    color: $colorText;
   }
   .MuiIconButton-root .MuiSvgIcon-root {
     font-size: 30px;
-    color: $colorTextBlack;
+    color: $colorText;
   }
 
   .Mui-checked .MuiSvgIcon-root {
-    color: $colorLightBlue !important;
+    color: $colorBlueLight !important;
   }
 }
 
 .park-filter-dialog {
   font-size: $bodyFont !important;
-  font-family: $globalFont !important;
+  font-family: $globalFont;
 
   .park-filter-title {
-    color: $colorTextBlack;
+    color: $colorText;
   }
 
   .park-filter-options {
@@ -290,7 +273,7 @@ $largeStart: 992px;
   }
 
   .park-filter-dialog-content .MuiTypography-root {
-    font-family: $globalFont !important;
+    font-family: $globalFont;
     font-size: $bodyFont !important;
   }
 
@@ -308,7 +291,7 @@ $largeStart: 992px;
   .park-filter-select [class*="-control"] {
     border-radius: 5px !important;
     background-color: $colorWhite !important;
-    font-family: $globalFont !important;
+    font-family: $globalFont;
     font-size: $bodyFont !important;
   }
 
@@ -342,16 +325,9 @@ $largeStart: 992px;
     .MuiOutlinedInput-root {
       border-radius: 5px !important;
       background-color: $colorWhite !important;
-      font-family: $globalFont !important;
+      font-family: $globalFont;
       font-size: $bodyFont !important;
       height: 50px;
-    }
-
-    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
-    .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
-    .park-filter-select [class*="-control"] {
-      border-color: $hoverBlue !important;
-      border-width: 2px !important;
     }
   }
 
@@ -363,7 +339,7 @@ $largeStart: 992px;
 
   div[class$="-placeholder"] {
     color: #9b9b9b !important;
-    font-family: $globalFont !important;
+    font-family: $globalFont;
   }
 
   .park-filter-chip-list-container {
@@ -408,7 +384,7 @@ $largeStart: 992px;
 div[class$="-MenuList"] div[class$="-option"],
 div[class$="-singleValue"] {
   color: $colorBlue !important;
-  font-family: $globalFont !important;
+  font-family: $globalFont;
   font-size: $bodyFont !important;
 }
 
@@ -431,7 +407,7 @@ div[class$="-singleValue"] {
   font-size: $bodyFont !important;
   text-decoration: underline !important;
 
-  @media screen and (min-width: $largeStart) {
+  @media screen and (min-width: $lgBreakpoint) {
     padding-left: 40px !important;
     transform: skewX(-20deg);
   }
@@ -444,7 +420,7 @@ div[class$="-singleValue"] {
     white-space: normal;
   }
 
-  @media screen and (min-width: $largeStart) {
+  @media screen and (min-width: $lgBreakpoint) {
     transform: skewX(-20deg);
     padding-left: 80px !important;
     > h2 {
@@ -595,7 +571,7 @@ div[class$="-singleValue"] {
   color: $colorWhite !important;
   font-style: normal !important;
   background-color: $colorBlue !important;
-  font-family: $globalFont !important;
+  font-family: $globalFont;
 
   @media screen and (max-width: $mediumBreakpoint) {
     font-weight: normal !important;
@@ -612,7 +588,7 @@ div[class$="-singleValue"] {
   color: $colorBlue !important;
   font-style: normal !important;
   background-color: $colorWhite !important;
-  font-family: $globalFont !important;
+  font-family: $globalFont;
   box-shadow: unset !important;
 }
 
@@ -629,7 +605,7 @@ div[class$="-singleValue"] {
   font-style: normal !important;
   background-color: transparent !important;
   border: 1px solid $colorBlue !important;
-  font-family: $globalFont !important;
+  font-family: $globalFont;
   box-shadow: unset !important;
 }
 
@@ -678,27 +654,19 @@ div[class$="-singleValue"] {
 }
 
 .text-black {
-  color: $colorTextBlack !important;
-}
-
-.text-green {
-  color: $colorGreen;
-}
-
-.text-red {
-  color: $colorRed;
+  color: $colorText !important;
 }
 
 .text-light-blue {
-  color: $colorLightBlue !important;
+  color: $colorBlueLight !important;
 
   .MuiTypography-root {
-    color: $colorLightBlue !important;
+    color: $colorBlueLight !important;
   }
 }
 
 .link {
-  color: $colorLightBlue !important;
+  color: $colorBlueLight !important;
 }
 
 .link-white {
@@ -991,7 +959,7 @@ div[class$="-singleValue"] {
 
 .no-results-container {
   min-height: 380px !important;
-  background-color: $colorDarkGrey;
+  background-color: $colorGreyLight;
   display: flex;
   align-items: center;
   text-align: center;

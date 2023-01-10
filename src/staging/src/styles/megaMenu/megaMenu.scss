@@ -8,7 +8,7 @@
 /* header */
 .header-wrapper {
   width: 100%;
-  background: $colorBluePrimary;
+  background: $colorBlue;
 
   .header-nav {
     position: relative;
@@ -57,7 +57,7 @@
 a.btn.book-campsite-btn {
   background-color: $colorWhite;
   border: solid 1px transparent;
-  color: $colorBluePrimary;
+  color: $colorBlue;
   font-size: 13px;
   padding: 0px 30px;
   line-height: 40px;
@@ -65,9 +65,9 @@ a.btn.book-campsite-btn {
   border-radius: 20px;
   &:hover {
     background-color: $colorWhite;
-    color: $colorBluePrimary;
+    color: $colorBlue;
     text-decoration: underline;
-    outline: 1px solid $colorGoldPrimary;
+    outline: 1px solid $colorGold;
   }
   @include media-breakpoint-down(md) {
     margin-right: 50px;
@@ -177,7 +177,7 @@ nav {
       }
     }
     .menu-header {
-      border-left: 10px solid $colorGoldPrimary;
+      border-left: 10px solid $colorGold;
       padding-left: 10px;
       background: #eee;
       a {
@@ -298,10 +298,10 @@ nav {
         }
         li.menu-button--selected {
           background: $colorWhite;
-          border-bottom: 1px solid $colorGoldPrimary;
+          border-bottom: 1px solid $colorGold;
 
           .menu-button__title {
-            color: $colorBluePrimary;
+            color: $colorBlue;
           }
         }
       }
@@ -342,10 +342,10 @@ nav {
     }
 
     .menu-level--1 {
-      border-right: solid 1px $colorGoldPrimary;
+      border-right: solid 1px $colorGold;
 
       .menu-button--selected {
-        border-left: solid 4px $colorGoldPrimary;
+        border-left: solid 4px $colorGold;
         background-color: #eee;
       }
     }
@@ -430,7 +430,7 @@ nav {
 .sitemap-header {
   font-size: 2.6rem;
   font-weight: 700;
-  color: $colorBluePrimary;
+  color: $colorBlue;
   @include media-breakpoint-down(md) {
     font-size: 1.75rem;
   }
@@ -514,15 +514,15 @@ nav {
 
   .menu-button {
     a {
-      color: $colorBluePrimary;
+      color: $colorBlue;
       display: inline;
     }
     a:hover {
-      color: $colorBluePrimary;
+      color: $colorBlue;
     }
   }
   .menu-button__title {
-    color: $colorBluePrimary;
+    color: $colorBlue;
     cursor: pointer;
   }
   .menu-button__title:hover {

@@ -19,7 +19,7 @@
     width: 100%;
   }
   a:hover {
-    color: $colorGoldPrimary;
+    color: $colorGold;
   }
 }
 .page-menu--desktop[section-count="1"] {
@@ -43,7 +43,7 @@
     border-left: none;
     border-right: none;
     padding: 0px 20px;
-    color: $colorBluePrimary;
+    color: $colorBlue;
     background: #fff;
     text-overflow: ellipsis;
   }

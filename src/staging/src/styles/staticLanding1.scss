@@ -1,14 +1,4 @@
-// TODO: global vars file
-$globalFont: "BCSans", verdana, arial, sans serif;
-$bodyFont: 16px;
-$colorLightGrey: #f2f2f2;
-$colorBlue: #036;
-$colorLightBlue: #2464a4;
-$colorGold: #fcba19;
-$colorWhite: #fff;
-$mdBreakpoint: 768px;
-$lgBreakpoint: 992px;
-$xlBreakpoint: 1200px;
+@import "variables.scss";
 
 .bcp-landing-intro {
   max-width: 1440px;
@@ -56,16 +46,7 @@ $xlBreakpoint: 1200px;
     @media screen and (min-width: $mdBreakpoint) {
       order: 1;
       max-width: 50%;
-      padding: 16px 16px 16px calc(calc(max(100vw, $mdBreakpoint) - $mdBreakpoint) / 2);
-    }
-
-    @media screen and (min-width: $lgBreakpoint) {
-      padding-left: calc(calc(max(100vw, $lgBreakpoint) - $lgBreakpoint) / 2);
-    }
-
-    @media screen and (min-width: $xlBreakpoint) {
-      padding-right: 60px;
-      padding-left: calc(calc(max(100vw, $xlBreakpoint) - $xlBreakpoint) / 2);
+      padding: 16px;
     }
 
     @media screen and (min-width: 1440px) {
@@ -76,7 +57,7 @@ $xlBreakpoint: 1200px;
 }
 
 .bcp-landing-links {
-  background-color: $colorLightGrey;
+  background-color: $colorGreyLight;
   padding-bottom: 60px;
   padding-top: 30px;
   width: 100%;
@@ -97,7 +78,7 @@ $xlBreakpoint: 1200px;
 }
 
 .bcp-landing-park-search {
-  background-color: $colorLightBlue;
+  background-color: $colorBlueMed;
   width: 100%;
 
   .container {
@@ -161,7 +142,7 @@ $xlBreakpoint: 1200px;
     border: none !important;
     border-radius: 5px !important;
     font-size: $bodyFont !important;
-    font-family: $globalFont !important;
+    font-family: $globalFont;
   }
 
   .MuiOutlinedInput-input {
@@ -185,6 +166,6 @@ button:focus {
 .park-filter-select [class*="-control"] {
   border-radius: 50px !important;
   background-color: $colorWhite !important;
-  font-family: $globalFont !important;
+  font-family: $globalFont;
   font-size: $bodyFont !important;
 }

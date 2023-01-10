@@ -1,8 +1,8 @@
-@import '../variables.scss';
+@import "../variables.scss";
 
 .link-card {
   border: none;
-  background-color: $colorBluePrimary;
+  background-color: $colorBlue;
   border-radius: 12px;
   overflow: hidden;
   margin: 16px 5%;
@@ -10,7 +10,7 @@
   position: relative;
   text-decoration: none;
   width: 90%;
-  @media screen and (min-width: $desktopBreakpoint) {
+  @media screen and (min-width: $lgBreakpoint) {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
@@ -37,7 +37,7 @@
     flex-direction: column;
     padding: 10px 50px;
 
-    @media screen and (min-width: $desktopBreakpoint) {
+    @media screen and (min-width: $lgBreakpoint) {
       height: 30%;
     }
 
@@ -60,14 +60,14 @@
     font-size: 1rem;
     margin-top: 0;
     text-decoration: none;
-    @media screen and (min-width: $desktopBreakpoint) {
+    @media screen and (min-width: $lgBreakpoint) {
       font-size: 1.2rem;
     }
   }
 
   .card-button {
     background: $colorWhite;
-    color: $colorBluePrimary;
+    color: $colorBlue;
     width: 180px;
     padding: 10px 20px;
     line-height: 30px;
@@ -79,12 +79,12 @@
       margin: auto 0 auto auto;
       font-size: 1rem;
     }
-    @media screen and (max-width: $desktopBreakpoint) {
+    @media screen and (max-width: $lgBreakpoint) {
       display: none;
     }
   }
   &--horz {
-    @media screen and (min-width: $desktopBreakpoint) {
+    @media screen and (min-width: $lgBreakpoint) {
       height: 330px;
       flex-direction: row;
       .card-img {
@@ -106,7 +106,7 @@
         margin-top: auto;
       }
     }
-    @media screen and (max-width: $desktopBreakpoint) {
+    @media screen and (max-width: $lgBreakpoint) {
       .card-body-header {
         font-size: 1.5rem;
       }
@@ -138,7 +138,7 @@
         background:$colorWhite;
 
         .card-body-header {
-            color:$colorBluePrimary;
+            color:$colorBlue;
             font-size: 1.5rem;
             line-height: 2.5rem;
             font-weight: 700;
@@ -150,7 +150,7 @@
             padding:10px 30px;
         }
         .card-button {
-            background: $colorBluePrimary;
+            background: $colorBlue;
             color: $colorWhite;
             margin:10px 30px;
         }
@@ -160,26 +160,26 @@
 
   &--landing-page {
     background-color: $colorWhite;
-    color: $colorBluePrimary;
+    color: $colorBlue;
 
     .card-body-header {
-      color: $colorBluePrimary;
+      color: $colorBlue;
     }
 
     .card-text {
-      color: $colorBluePrimary;
+      color: $colorBlue;
     }
 
     .card-button {
-      border: 2px solid $colorBluePrimary;
+      border: 2px solid $colorBlue;
       transition: border-color 150ms;
     }
 
     .card-img {
       border-radius: 0;
 
-      @media screen and (min-width: $desktopBreakpoint) {
-        border-left: 0 solid $colorGoldPrimary;
+      @media screen and (min-width: $lgBreakpoint) {
+        border-left: 0 solid $colorGold;
       }
     }
   }
@@ -188,11 +188,11 @@
     &.link-card--footer{
 
         .card-body-header {
-            color:$colorBluePrimary;
+            color:$colorBlue;
         }
         .card-button {
-            background: $colorGoldPrimary;
-            color: $colorBluePrimary;
+            background: $colorGold;
+            color: $colorBlue;
         }
         
     }
@@ -207,12 +207,12 @@
     }
 
     .card-button {
-      color: $colorBluePrimary;
-      background: $colorGoldPrimary;
+      color: $colorBlue;
+      background: $colorGold;
     }
 
     &.link-card--horz {
-      background-color: $colorBluePrimary;
+      background-color: $colorBlue;
 
       .card-body-header {
         color: $colorWhite;
@@ -226,20 +226,20 @@
       background-color: $colorWhite;
 
       .card-button {
-        border-color: $colorGoldPrimary;
+        border-color: $colorGold;
       }
 
       .card-body-header {
-        color: $colorBluePrimary;
+        color: $colorBlue;
         text-decoration: none;
       }
 
       .card-text {
-        color: $colorBluePrimary;
+        color: $colorBlue;
       }
 
       .card-img {
-        @media screen and (min-width: $desktopBreakpoint) {
+        @media screen and (min-width: $lgBreakpoint) {
           border-left-width: 8px;
         }
         img {

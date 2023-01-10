@@ -71,7 +71,7 @@ export default function Home({ data }) {
       ) : (
         <div id="home">
           <Seo title="Homepage" description="Official website for BC Parks. Get information on camping and other activities in parks across British Columbia. Learn about our environmental conservation work." />
-          <div className="park-search-container-wrapper home-max-width-override">
+          <div className="park-search-container-wrapper">
             <Header mode="internal" content={menuContent} />
             <div className="park-search">
               <div id="home-parks-search">
@@ -100,8 +100,8 @@ export default function Home({ data }) {
               ))}
             </div>
           </div>
-          <div className="home-max-width-override">
-            <Footer />
+          <div>
+              <Footer />
           </div>
         </div>
       )}

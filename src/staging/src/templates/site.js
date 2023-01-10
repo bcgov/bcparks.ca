@@ -28,7 +28,6 @@ import MapLocation from "../components/park/mapLocation"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
-import "../styles/parks.scss"
 import { useStyles } from "../utils/constants"
 
 const loadAdvisories = async (apiBaseUrl, orcs) => {

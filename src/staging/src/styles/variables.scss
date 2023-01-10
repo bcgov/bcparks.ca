@@ -1,13 +1,24 @@
-$colorWhite: #fff;
-$colorBluePrimary: #003366;
-$colorBlueMed: #2464a4;
-$colorGoldPrimary: #FCBA19;
-$colorText: #313132;
-$colorLink: #1A5A96;
-$colorNav: #38598A;
-$colorBorder: #96b3cf;
-$colorBackground: #F2F2F2;
-$colorComponent: #606060;
+// typography
+$globalFont: 'BCSans', 'Noto Sans', Verdana, Arial, sans-serif !important;
+$bodyFont: 16px;
+$headingFont: 2rem;
 
-$desktopBreakpoint: 992px;
-$tabletBreakpoint: 768px;
+// colours
+$colorBlack: #000;
+$colorWhite: #fff;
+$colorWhiteOpacity: #ffffff90;
+$colorText: #494949;
+$colorGold: #fcba19;
+$colorBlue: #003366;
+$colorBlueMed: #2464a4;
+$colorBlueLight: #1a5a96;
+$colorGrey: #eef1f5;
+$colorGreyLight: #f2f2f2;
+
+// breakpoints
+$smBreakpoint: 576px;
+$mdBreakpoint: 768px;
+$lgBreakpoint: 992px;
+$xlBreakpoint: 1200px;
+
+$mediumBreakpoint: 991.98px;
