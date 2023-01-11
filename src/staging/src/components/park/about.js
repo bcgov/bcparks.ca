@@ -27,16 +27,14 @@ export default function About({
         {(park.totalArea || park.establishedDate) && (
           <>
             <h3>{capitalizeFirstLetter(`${park.type} details`)}</h3>
-            <div className="about-details">
-              <ul>
-                <li>
-                  <strong>Date established:</strong> {formattedEstablishedDate}
-                </li>
-                <li>
-                  <strong>Size:</strong> {park.totalArea} hectares
-                </li>
-              </ul>
-            </div>
+            <ul>
+              <li>
+                <strong>Date established:</strong> {formattedEstablishedDate}
+              </li>
+              <li>
+                <strong>Size:</strong> {park.totalArea} hectares
+              </li>
+            </ul>
           </>
         )}
         {(park.totalArea || park.establishedDate) && park.parkContact && <Spacer />}

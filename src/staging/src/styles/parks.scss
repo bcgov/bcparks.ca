@@ -16,10 +16,6 @@ $mediumBreakpoint: 991.98px;
   padding-top: 90px;
 }
 
-.heading {
-  color: $colorBlue;
-}
-
 #park-activity-container .MuiAccordion-root,
 #park-facility-container .MuiAccordion-root {
   background-color: $colorGrey;
@@ -135,13 +131,6 @@ $mediumBreakpoint: 991.98px;
 
 .raw-html-content {
   max-width: 100%;
-}
-
-.raw-html-content, .about-details {
-  li {
-    display: list-item !important;
-    margin-left: 16px;
-  }
 }
 
 .park-page-footer {

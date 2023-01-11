@@ -7,7 +7,7 @@ export default function Heading(props) {
   return (
     <>
       <Box p={0} m={0}>
-        <h2 className="heading">{props.children}</h2>
+        <h2>{props.children}</h2>
         <LineBar />
       </Box>
     </>
