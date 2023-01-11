@@ -160,11 +160,15 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     // unfiltered count for the header
 
     // exclude unpublished parks
+    // this filter has been removed as a temporary workaround for a Strapi bug.
+    // see https://github.com/bcgov/bcparks.ca/pull/505/files#r1067160153
+
+    // let q = "/public-advisories/count?protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true"
     let q =
       "/public-advisories/count"
 
     if (advisoryType !== "all") {
-      q += `?protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true&eventType.eventType_contains=${advisoryType}`
+      q += `?&eventType.eventType_contains=${advisoryType}`
     }
 
     const newApiCountCall = apiUrl + q
