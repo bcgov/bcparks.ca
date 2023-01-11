@@ -49,14 +49,20 @@ export const query = graphql`
         apiURL
       }
     }
-    allStrapiActivityTypes(sort: { fields: activityName }) {
+    allStrapiActivityTypes(
+      sort: { fields: activityName }
+      filter: { isActive: { eq: true } }
+    ) {
       totalCount
       nodes {
         strapiId
         activityName
       }
     }
-    allStrapiFacilityTypes(sort: { fields: facilityName }) {
+    allStrapiFacilityTypes(
+      sort: { fields: facilityName }
+      filter: { isActive: { eq: true } }      
+    ) {
       totalCount
       nodes {
         strapiId
