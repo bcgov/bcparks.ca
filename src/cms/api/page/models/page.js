@@ -5,15 +5,15 @@
  * to customize this model
  */
 
-const slugValidator = require("../../../config/functions/helpers.js");
+const slugValidator = require("../../../config/functions/slugValidator.js");
 
 module.exports = {
-    lifecycles: {
-        beforeCreate: async (data) => {
-          slugValidator(data.Slug)
-        },
-        beforeUpdate: async (params, data) => {
-          slugValidator(data.Slug)
-        },
+  lifecycles: {
+    beforeCreate: async (data) => {
+      slugValidator(data.Slug)
     },
+    beforeUpdate: async (params, data) => {
+      slugValidator(data.Slug)
+    },
+  },
 };

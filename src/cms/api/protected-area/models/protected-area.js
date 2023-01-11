@@ -5,7 +5,7 @@
  * to customize this model
  */
 
-const slugValidator = require("../../../config/functions/helpers.js");
+const slugValidator = require("../../../config/functions/slugValidator.js");
 
 const saveParkAccessStatus = async (data) => {
   strapi.services["park-access-status"]
