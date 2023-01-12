@@ -458,7 +458,7 @@ async function createPageSlugs(type, query, { graphql, actions, reporter }) {
   }
 }
 
-exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+exports.onCreateWebpackConfig = ({ stage, loaders, actions, getConfig }) => {
   if (stage === "build-html" || stage === "develop-html") {
     actions.setWebpackConfig({
       module: {
@@ -471,5 +471,15 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
       },
       plugins: [new NodePolyfillPlugin()],
     })
+  }
+  if (stage === 'build-javascript' || stage === 'develop') {
+    const config = getConfig()
+    const miniCssExtractPlugin = config.plugins.find(
+      plugin => plugin.constructor.name === 'MiniCssExtractPlugin'
+    )
+    if (miniCssExtractPlugin) {
+      miniCssExtractPlugin.options.ignoreOrder = true
+    }
+    actions.replaceWebpackConfig(config)
   }
 }

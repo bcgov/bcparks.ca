@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react"
-import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import axios from "axios"
 import { Container, CircularProgress } from "@material-ui/core"
