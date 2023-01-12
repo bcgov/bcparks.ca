@@ -72,8 +72,10 @@ const buildQuery =
         builder.where(keywordSearchBuilder(searchTerm));
       } else {
         // default to either
-        builder.where(parkSearchBuilder(searchTerm));
-        builder.orWhere(keywordSearchBuilder(searchTerm));
+        builder.where((orBuilder) => {
+          orBuilder.where(parkSearchBuilder(searchTerm));
+          orBuilder.orWhere(keywordSearchBuilder(searchTerm));
+        })
       }
     }
 
