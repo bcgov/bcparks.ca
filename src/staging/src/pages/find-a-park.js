@@ -155,7 +155,7 @@ export default function FindAPark({ location, data }) {
   const [quickSearch, setQuickSearch] = useState({
     camping: false,
     petFriendly: false,
-    wheelchair: false,
+    accessibility: false,
     marine: false,
     ecoReserve: false,
     electricalHookup: false,
@@ -163,11 +163,11 @@ export default function FindAPark({ location, data }) {
 
   const quickSearchFilters = [
     { label: "Camping", type: "camping" },
-    { label: "Dog friendly", type: "petFriendly" },
-    { label: "Wheelchair accessible", type: "wheelchair" },
-    { label: "Marine park", type: "marine" },
-    { label: "Ecological reserve", type: "ecoReserve" },
-    { label: "Electrical hookups", type: "electricalHookup" },
+    { label: "Dog Friendly", type: "petFriendly" },
+    { label: "Accessibility Information", type: "accessibility" },
+    { label: "Marine Park", type: "marine" },
+    { label: "Ecological Reserve", type: "ecoReserve" },
+    { label: "Electrical Hookups", type: "electricalHookup" },
   ]
 
   const [selectedActivities, setSelectedActivities] = useState(
@@ -212,7 +212,7 @@ export default function FindAPark({ location, data }) {
   const {
     camping,
     petFriendly,
-    wheelchair,
+    accessibility,
     marine,
     ecoReserve,
     electricalHookup,
@@ -330,14 +330,14 @@ export default function FindAPark({ location, data }) {
     if (petFriendly) {
       filters.push({ label: "Dog Friendly", type: "petFriendly" })
     }
-    if (wheelchair) {
-      filters.push({ label: "Wheelchair Accessible", type: "wheelchair" })
+    if (accessibility) {
+      filters.push({ label: "Accessibility Information", type: "accessibility" })
     }
     if (marine) {
       filters.push({ label: "Marine Park", type: "marine" })
     }
     if (ecoReserve) {
-      filters.push({ label: "Ecological reserve", type: "ecoReserve" })
+      filters.push({ label: "Ecological Reserve", type: "ecoReserve" })
     }
     if (electricalHookup) {
       filters.push({ label: "Electrical Hookup", type: "electricalHookup" })
@@ -351,20 +351,20 @@ export default function FindAPark({ location, data }) {
     petFriendly,
     selectedActivities,
     selectedFacilities,
-    wheelchair,
+    accessibility,
   ])
 
   const params = useMemo(() => {
     // TODO: using names is a bit fragile here, all data should have 'codes' and then
     // we can use those instead
-    const wheelchairFacility = data.allStrapiFacilityTypes.nodes.find(
+    const accessibleFacility = data.allStrapiFacilityTypes.nodes.find(
       facility => {
         return (
           facility.facilityName.toLowerCase() === "accessibility information"
         )
       }
     )
-    const wheelchairFacilityId = wheelchairFacility.strapiId
+    const accessibleFacilityId = accessibleFacility.strapiId
     const electricalFacility = data.allStrapiFacilityTypes.nodes.find(
       facility => {
         return facility.facilityName.toLowerCase() === "electrical hookups"
@@ -395,11 +395,11 @@ export default function FindAPark({ location, data }) {
       }
       params.activities.push(petsActivityId)
     }
-    if (quickSearch.wheelchair) {
+    if (quickSearch.accessibility) {
       if (typeof params.facilities === "undefined") {
         params.facilities = []
       }
-      params.facilities.push(wheelchairFacilityId)
+      params.facilities.push(accessibleFacilityId)
     }
     if (quickSearch.marine) {
       params.marineProtectedArea = "Y"
