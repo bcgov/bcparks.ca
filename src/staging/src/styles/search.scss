@@ -496,7 +496,9 @@ div[class$="-singleValue"] {
 }
 
 .m20t {
-  margin-top: 20px !important;
+  & + .m20t {
+    margin-top: 20px !important;
+  }
 }
 
 .m15t {

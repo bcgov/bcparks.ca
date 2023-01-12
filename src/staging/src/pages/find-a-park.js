@@ -850,10 +850,6 @@ export default function FindAPark({ location, data }) {
               </div>
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-list container">
-                  <div className="m10t text-center">
-                    <i className="fa fa-info-circle"></i>{" "}
-                    <em>Park search is limited during beta</em>
-                  </div>
                   {isLoading && (
                     <div className="container mt-5">
                       <LinearProgress />

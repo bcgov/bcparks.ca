@@ -57,9 +57,6 @@ const MainSearch = () => {
           Search
         </Button>
       </div>
-      <div className="mt-1">
-        <i className="fa fa-info-circle"></i> <em>Park search is limited during beta</em>
-      </div>
       <div className="parks-search-filter-link"
         role="button"
         tabIndex={0}
