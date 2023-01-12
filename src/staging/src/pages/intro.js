@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { graphql } from "gatsby"
 
 import Footer from "../components/footer"
@@ -18,10 +18,6 @@ const IntroPage = ({ data }) => {
   const seoContent = pageContent.find(
     item => item.strapi_component === "parks.seo"
   )
-
-  useEffect(() => {
-    sessionStorage.setItem("beta-landing-visited", true)
-  }, [])
 
   return (
     <>
