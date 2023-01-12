@@ -497,6 +497,11 @@ div[class$="-singleValue"] {
 
 .m20t {
   margin-top: 20px !important;
+  @media screen and (min-width: $lgBreakpoint) {
+    &:first-of-type {
+      margin-top: 0 !important;
+    }
+  }
 }
 
 .m15t {
