@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import moment from "moment"
+import _ from "lodash"
 
 import HTMLArea from "../HTMLArea"
 import Row from "react-bootstrap/Row"
@@ -34,11 +35,9 @@ export default function ParkDates({ data }) {
   // If no operations record, show "not available" message
   const hasOperations = parkOperation.isActive // either false, or whole record missing
 
-  const fmt = "MMM D, yyyy" // date format for display
-
   // -------- Operating Dates --------
 
-  const datePhrase = (openDate, closeDate) => {
+  const datePhrase = (openDate, closeDate, fmt, yr) => {
     if (openDate && closeDate) {
       try {
         const open = moment(openDate).format(fmt)
@@ -47,8 +46,8 @@ export default function ParkDates({ data }) {
         // check if dates go from jan 1 to dec 31
         // for puposes of checking if year-round, ignoring year
         const openYearRound =
-          open.indexOf("Jan 1") === 0 && close.indexOf("Dec 31") === 0
-        let output = openYearRound ? "year-round" : open + " - " + close
+          open.indexOf("January 1") === 0 && close.indexOf("December 31") === 0
+        let output = openYearRound ? yr : open + " to " + close
 
         return output
       } catch (err) {
@@ -61,9 +60,68 @@ export default function ParkDates({ data }) {
   }
 
   // Overall operating dates for parks, to display above subareas
-  const parkDates = datePhrase(parkOperation.openDate, parkOperation.closeDate)
+  const fmt = "MMMM D, yyyy"  // date format for overall operating dates
+  const yr = "year-round" // lowercase for overall operating dates
+  const parkDates = datePhrase(parkOperation.openDate, parkOperation.closeDate, fmt, yr)
 
   // ---- Subarea Dates -----
+
+  // get unique date ranges, excluding years in the past, 
+  //sorted chronologically by start date and formatted as date pharses
+  const processDateRanges = (arr) => {
+
+    // split date ranges spanning multiple years into 1 row for each year
+    const newArr = []
+    for (let dateRange of arr) {
+      const startYear = moment(dateRange.start).year();
+      const endYear = moment(dateRange.end).year();
+      if (startYear === endYear) {
+        newArr.push(dateRange);
+      } else if (endYear > startYear) {
+        for (let year = startYear; year <= endYear; year++) {
+          if (year === startYear) {
+            newArr.push({ start: dateRange.start, end: `${year}-12-31` })
+          } else if (year === endYear) {
+            newArr.push({ start: `${year}-01-01`, end: dateRange.end })
+          } else {
+            newArr.push({ start: `${year}-01-01`, end: `${year}-12-31` })
+          }
+        }
+      } else {
+        newArr.push(dateRange) // fallback for invalid date ranges
+      }
+    }
+
+    // get sorted unique dates, omitting past years
+    const sortedUniqueFutureDates = _.uniqWith(newArr, _.isEqual)
+      .filter(dateRange => moment(dateRange.end).year() >= new Date().getFullYear())
+      .sort((a, b) => {
+        return a.start < b.start ? -1 : 1
+      })
+
+    // group dates by year
+    let groupedByYear = []
+    const fmt = "MMMM D" // date format for subareas
+    const yr = "Year-round" // capitalized for subareas
+    let prevYear = 0;
+    let phrase = "";
+    for (let dateRange of sortedUniqueFutureDates) {
+      const year = moment(dateRange.start).year();
+      if (phrase !== "" && year !== prevYear) {
+        groupedByYear.push(phrase);
+      }
+      if (year !== prevYear) {
+        phrase = `${year}: ${datePhrase(dateRange.start, dateRange.end, fmt, yr)}`
+      } else {
+        phrase += `, ${datePhrase(dateRange.start, dateRange.end, fmt, yr)}`
+      }
+      prevYear = year;
+    }
+    if (phrase !== "") {
+      groupedByYear.push(phrase);
+    }
+    return groupedByYear
+  }
 
   for (let idx in subAreas) {
     const subArea = subAreas[idx]
@@ -79,40 +137,36 @@ export default function ParkDates({ data }) {
 
       // Subarea operating dates
       const saDates = subArea.parkOperationSubAreaDates
-      let saDateCount = 0
-      subArea.processedDates = []
+      subArea.offSeasonDates = []
+      subArea.resDates = []
+      subArea.serviceDates = []
+
       for (let dIdx in saDates) {
         const dateRec = saDates[dIdx]
         if (dateRec.isActive) {
-          saDateCount++
-          const serviceDates = datePhrase(
-            dateRec.serviceStartDate,
-            dateRec.serviceEndDate
-          )
-          const resDates = datePhrase(
-            dateRec.reservationStartDate,
-            dateRec.reservationEndDate
-          )
-          const offSeasonDates = datePhrase(
-            dateRec.offSeasonStartDate,
-            dateRec.offSeasonEndDate
-          )
-
-          if (saDateCount === 1) {
-            subArea.serviceDates = serviceDates
-            subArea.resDates = resDates
-            subArea.offSeasonDates = offSeasonDates
-          } else {
-            // more than one date for this subarea, extend sentence
-            subArea.serviceDates += serviceDates ? ", " + serviceDates : ""
-            subArea.resDates += resDates ? ", " + resDates : ""
-            subArea.offSeasonDates += offSeasonDates
-              ? ", " + offSeasonDates
-              : "" // prettier is adding extra line breaks
-          }
+          subArea.serviceDates.push({
+            start: dateRec.serviceStartDate,
+            end: dateRec.serviceEndDate
+          })
+          subArea.resDates.push({
+            start: dateRec.reservationStartDate,
+            end: dateRec.reservationEndDate
+          })
+          subArea.offSeasonDates.push({
+            start: dateRec.offSeasonStartDate,
+            end: dateRec.offSeasonEndDate
+          })
         }
       }
-      subArea.hasDates = saDateCount > 0
+
+      // get distinct date ranges sorted chronologically
+      subArea.serviceDates = processDateRanges(subArea.serviceDates)
+      subArea.resDates = processDateRanges(subArea.resDates)
+      subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates)
+
+      subArea.hasDates = subArea.serviceDates.length > 0
+        || subArea.resDates.length > 0
+        || subArea.offSeasonDates.length > 0
     }
   }
 
@@ -121,17 +175,17 @@ export default function ParkDates({ data }) {
   // Use this to configure which notes show below the subareas, and within each subarea
   // and in what order. Note that "openNote" appears separately above subareas
   const parkOperationsNotesList = [
-    { noteVar: "generalNote", display: "" },
-    { noteVar: "serviceNote", display: "" },
-    { noteVar: "reservationsNote", display: "Reservation Note" },
-    { noteVar: "offSeasonNote", display: "Winter Note" },
+    { noteVar: "generalNote", display: "Note" },
+    { noteVar: "serviceNote", display: "Service note" },
+    { noteVar: "reservationsNote", display: "Reservation note" },
+    { noteVar: "offSeasonNote", display: "Winter note" },
   ]
 
   const subAreasNotesList = [
-    { noteVar: "generalNote", display: "" },
-    { noteVar: "serviceNote", display: "" },
-    { noteVar: "reservationNote", display: "Reservation Note" },
-    { noteVar: "offSeasonNote", display: "Winter Note" },
+    { noteVar: "generalNote", display: "Note" },
+    { noteVar: "serviceNote", display: "Service note" },
+    { noteVar: "reservationNote", display: "Reservation note" },
+    { noteVar: "offSeasonNote", display: "Winter note" },
   ]
 
   // -------- Capacity Counts ----------
@@ -140,92 +194,99 @@ export default function ParkDates({ data }) {
     // Use this to configure which counts show and in what order
     // Don't show if isActive is false
     {
-      display: "reservable frontcountry campsites",
+      display: "Reservable frontcountry sites",
       countVar: "reservableSites",
       isActive: true,
     },
     {
-      display: "vehicle-accessible campsites",
+      display: "Vehicle-accessible sites",
       countVar: "vehicleSites",
       isActive: true,
     },
     {
-      display: "double campsites",
+      display: "Double sites",
       countVar: "doubleSites",
       isActive: true,
     },
     {
-      display: "group campsites",
+      display: "Group sites",
       countVar: "groupSites",
       isActive: true,
     },
     {
-      display: "walk-in campsites",
+      display: "Walk-in sites",
       countVar: "walkInSites",
       isActive: true,
     },
     {
-      display: "backcountry campsites",
+      display: "Backcountry sites",
       countVar: "backcountrySites",
       isActive: true,
     },
     {
-      display: "wilderness campsites",
+      display: "Wilderness sites",
       countVar: "wildernessSites",
       isActive: true,
     },
     {
-      display: "boat-accessible campsites",
+      display: "Boat-accessible sites",
       countVar: "boatAccessSites",
       isActive: true,
     },
     {
-      display: "horse-accessible campsites",
+      display: "Horse-accessible sites",
       countVar: "horseSites",
       isActive: true,
     },
     {
-      display: "RV-accessible campsites",
+      display: "RV-accessible sites",
       countVar: "rvSites",
       isActive: true,
     },
     {
-      display: "pull-through campsites",
+      display: "Pull-through sites",
       countVar: "pullThroughSites",
       isActive: true,
     },
     {
-      display: "campsites with electrical hook-ups",
+      display: "Sites with electrical hook-ups",
       countVar: "electrifiedSites",
       isActive: true,
     },
     {
-      display: "long-stay campsites",
+      display: "Long-stay sites",
       countVar: "longStaySites",
       isActive: true,
     },
-    { display: "cabins", countVar: "cabins", isActive: true },
-    { display: "huts", countVar: "huts", isActive: true },
-    { display: "yurts", countVar: "yurts", isActive: true },
-    { display: "shelters", countVar: "shelters", isActive: true },
-    { display: "boat launches", countVar: "boatLaunches", isActive: true },
+    { display: "Cabins", countVar: "cabins", isActive: true },
+    { display: "Huts", countVar: "huts", isActive: true },
+    { display: "Yurts", countVar: "yurts", isActive: true },
+    { display: "Shelters", countVar: "shelters", isActive: true },
+    { display: "Boat launches", countVar: "boatLaunches", isActive: true },
     {
-      display: "first-come, first-served frontcountry campsites",
+      display: "First-come, first-served frontcountry sites",
       countVar: "nonReservableSites",
       isActive: false,
     },
     {
-      display: "reservable vehicle-accessible campsites",
+      display: "Reservable vehicle-accessible sites",
       countVar: "vehicleSitesReservable",
       isActive: false,
     },
     {
-      display: "reservable RV-accessible campsites",
+      display: "Reservable RV-accessible sites",
       countVar: "rvSitesReservable",
       isActive: false,
     },
     { display: "TOTAL", countVar: "totalCapacity", isActive: false },
   ]
+
+  const isShown = (count, countGroup) => {
+    return countGroup[count.countVar] &&
+      countGroup[count.countVar] !== "0" &&
+      countGroup[count.countVar] !== "*" &&
+      count.isActive;
+  }
 
   return (
     <div id="park-dates-container" className="anchor-link mb-3">
@@ -302,77 +363,129 @@ export default function ParkDates({ data }) {
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
                       <div className="p-4">
-                        {subArea.serviceDates && (
-                          <p>Main Camping Season: {subArea.serviceDates}</p>
-                        )}
-                        {subArea.resDates && (
-                          <p>Reservable dates: {subArea.resDates}</p>
-                        )}
-                        {subArea.offSeasonDates && (
-                          <p>Off-season camping: {subArea.offSeasonDates}</p>
-                        )}
-                        {subArea.facilityName && (
-                          <p>Facility type: {subArea.facilityName}</p>
-                        )}
-                        {subAreasNotesList
-                          .filter(note => subArea[note.noteVar])
-                          .map((note, index) => (
-                            <div key={index} className="mb-2">
-                              {note.display && <>{note.display}: </>}{" "}
-                              <HTMLArea isVisible={true}>
-                                {subArea[note.noteVar]}
-                              </HTMLArea>
-                            </div>
-                          ))}
-                        {countsList
-                          .filter(
-                            count =>
-                              subArea[count.countVar] &&
-                              subArea[count.countVar] !== "0" &&
-                              count.isActive
-                          )
-                          .map((count, index) => (
-                            <div key={index} className="park-operation-count">
-                              Number of {count.display}:{" "}
-                              {subArea[count.countVar] === "*"
-                                ? "undesignated"
-                                : subArea[count.countVar]}
-                            </div>
-                          ))}
+                        <dl>
+                          {subArea.facilityName && (
+                            <>
+                              <dt>Facility type</dt>
+                              <dd>{subArea.facilityName}</dd>
+                            </>
+                          )}
+
+                          {countsList
+                            .filter(count => isShown(count, subArea)).length > 0
+                            && (<>
+                              <dt class="mt-3">Number of campsites</dt>
+                              <dd><ul class="pl-3">
+                                {countsList
+                                  .filter(count => isShown(count, subArea))
+                                  .map((count, index) => (
+                                    <li key={index}>
+                                      {count.display}:{" "}
+                                      {subArea[count.countVar]}
+                                    </li>
+                                  ))}
+                              </ul></dd>
+                            </>
+                            )}
+
+                          {subArea.serviceDates.length > 0 && (
+                            <>
+                              <dt class="mt-3">Main camping season dates</dt>
+                              <dd>
+                                <ul class="pl-3">
+                                  {subArea.serviceDates.map((dateRange, index) =>
+                                    <li key={index}>{dateRange}</li>
+                                  )}
+                                </ul>
+                              </dd>
+                            </>
+                          )}
+
+                          {subArea.resDates.length > 0 && (
+                            <>
+                              <dt class="mt-3">Reservable dates</dt>
+                              <dd>
+                                <ul class="pl-3">
+                                  {subArea.resDates.map((dateRange, index) =>
+                                    <li key={index}>{dateRange}</li>
+                                  )}
+                                </ul>
+                              </dd>
+                            </>
+                          )}
+
+                          {subArea.offSeasonDates.length > 0 && (
+                            <>
+                              <dt class="mt-3">Off season dates</dt>
+                              <dd>
+                                <ul class="pl-3">
+                                  {subArea.offSeasonDates.map((dateRange, index) =>
+                                    <li key={index}>{dateRange}</li>
+                                  )}
+                                </ul>
+                              </dd>
+                            </>
+                          )}
+
+                          {subAreasNotesList
+                            .filter(note => subArea[note.noteVar])
+                            .map((note, index) => (
+                              <div key={index}>
+                                {note.display && (
+                                  <dt class="mt-3">
+                                    {note.display}
+                                  </dt>
+                                )}
+                                <dd>
+                                  <HTMLArea isVisible={true}>
+                                    {subArea[note.noteVar]}
+                                  </HTMLArea>
+                                </dd>
+                              </div>
+                            ))}
+                        </dl>
                       </div>
                     </Accordion.Collapse>
                   </Accordion>
                 ))}
             </>
           )}
-          {parkOperationsNotesList
-            .filter(note => parkOperation[note.noteVar])
-            .map((note, index) => (
-              <div key={index} className="mb-2">
-                {note.display && <>{note.display}: </>}{" "}
-                <HTMLArea isVisible={true}>
-                  {parkOperation[note.noteVar]}
-                </HTMLArea>
-              </div>
-            ))}
-
-          <div className="park-operation-counts my-3">
+          <dl class="mb-0">
+            {parkOperationsNotesList
+              .filter(note => parkOperation[note.noteVar])
+              .map((note, index) => (
+                <div key={index}>
+                  {note.display && (
+                    <dt class="mt-3">
+                      {note.display}
+                    </dt>
+                  )}
+                  <dd>
+                    <HTMLArea isVisible={true}>
+                      {parkOperation[note.noteVar]}
+                    </HTMLArea>
+                  </dd>
+                </div>
+              ))}
             {countsList
               .filter(
                 count =>
-                  parkOperation[count.countVar] &&
-                  parkOperation[count.countVar] !== "0" &&
-                  count.isActive
-              )
-              .map((count, index) => (
-                <div key={index} className="park-operation-count">
-                  Total number of {count.display}:{" "}
-                  {parkOperation[count.countVar] === "*"
-                    ? "undesignated"
-                    : parkOperation[count.countVar]}
-                </div>
-              ))}
-          </div>
+                  isShown(count, parkOperation)).length > 0
+              && subAreas
+                .filter(subArea => subArea.isActive && subArea.hasDates).length > 1
+              && (<>
+                <dt class="mt-3">Total number of campsites</dt>
+                {countsList
+                  .filter(count => isShown(count, parkOperation))
+                  .map((count, index) => (
+                    <dd key={index} class="mb-0">
+                      Total {count.display.toLowerCase()}:{" "}
+                      {parkOperation[count.countVar]}
+                    </dd>
+                  ))}
+              </>
+              )}
+          </dl>
         </Col>
       </Row>
       <div className="m-3">&nbsp;</div>
