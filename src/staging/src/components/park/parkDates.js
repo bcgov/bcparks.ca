@@ -261,8 +261,8 @@ export default function ParkDates({ data }) {
     { display: "Cabins", countVar: "cabins", isActive: true },
     { display: "Huts", countVar: "huts", isActive: true },
     { display: "Yurts", countVar: "yurts", isActive: true },
-    { display: "Shelters", countVar: "shelters", isActive: true },
-    { display: "Boat launches", countVar: "boatLaunches", isActive: true },
+    { display: "Shelters", countVar: "shelters", isActive: false },
+    { display: "Boat launches", countVar: "boatLaunches", isActive: false },
     {
       display: "First-come, first-served frontcountry sites",
       countVar: "nonReservableSites",
