@@ -472,7 +472,7 @@ export default function ParkDates({ data }) {
                 count =>
                   isShown(count, parkOperation)).length > 0
               && subAreas
-                .filter(subArea => subArea.isActive && subArea.hasDates).length > 1
+                .filter(subArea => subArea.isActive && subArea.hasDates).length !== 1
               && (<>
                 <dt class="mt-3">Total number of campsites</dt>
                 {countsList
