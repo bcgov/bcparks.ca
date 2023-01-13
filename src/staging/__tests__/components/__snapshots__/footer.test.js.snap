@@ -59,7 +59,7 @@ exports[`Footer renders correctly 1`] = `
                       className="mt-2"
                     >
                       <a
-                        href="/commercial-use"
+                        href="/commercial-use/"
                       >
                         Commercial use
                       </a>
@@ -70,7 +70,7 @@ exports[`Footer renders correctly 1`] = `
                       className="mt-2"
                     >
                       <a
-                        href="/commercial-use/filming-in-parks"
+                        href="/commercial-use/filming-in-parks/"
                       >
                         Filming in parks
                       </a>
@@ -81,7 +81,7 @@ exports[`Footer renders correctly 1`] = `
                       className="mt-2"
                     >
                       <a
-                        href="/commercial-use/travel-trade"
+                        href="/commercial-use/travel-trade/"
                       >
                         Travel trade
                       </a>
@@ -112,7 +112,7 @@ exports[`Footer renders correctly 1`] = `
                       className="mt-2"
                     >
                       <a
-                        href="/get-involved/donate"
+                        href="/get-involved/donate/"
                       >
                         Donate
                       </a>
@@ -123,7 +123,7 @@ exports[`Footer renders correctly 1`] = `
                       className="mt-2"
                     >
                       <a
-                        href="/get-involved/buy-licence-plate"
+                        href="/get-involved/buy-licence-plate/"
                       >
                         Buy a licence plate
                       </a>
@@ -134,7 +134,7 @@ exports[`Footer renders correctly 1`] = `
                       className="mt-2"
                     >
                       <a
-                        href="/get-involved/volunteer"
+                        href="/get-involved/volunteer/"
                       >
                         Volunteer
                       </a>
@@ -165,7 +165,7 @@ exports[`Footer renders correctly 1`] = `
                       className="mt-2"
                     >
                       <a
-                        href="/contact"
+                        href="/contact/"
                       >
                         Contact us
                       </a>
@@ -230,7 +230,7 @@ exports[`Footer renders correctly 1`] = `
           className="footer-utility-link my-2 mr-4 d-inline-block"
         >
           <a
-            href="/sitemap"
+            href="/sitemap/"
           >
             Sitemap
           </a>

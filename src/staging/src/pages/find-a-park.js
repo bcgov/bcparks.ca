@@ -735,7 +735,7 @@ export default function FindAPark({ location, data }) {
                                   handleActivitiesLengthChange([])
                                 }}
                                 tabIndex="0"
-                                href="#"
+                                role="link"
                               >
                                 {showMoreActivities ? (
                                   <div style={{ color: `#2464A4` }}>
@@ -824,7 +824,7 @@ export default function FindAPark({ location, data }) {
                                   handleFacilitiesLengthChange([])
                                 }}
                                 tabIndex="0"
-                                href="#"
+                                role="link"
                               >
                                 {showMoreFacilities ? (
                                   <div style={{ color: `#2464A4` }}>
@@ -1136,7 +1136,7 @@ export default function FindAPark({ location, data }) {
                                         <div className="col-12 p0 align-center flex-display full-width">
                                           <div className="full-width">
                                             <Link
-                                              href={`/${r.slug}`}
+                                              href={`/${r.slug}/`}
                                               className="park-quick-link link"
                                             >
                                               Visit Park Page
@@ -1154,7 +1154,8 @@ export default function FindAPark({ location, data }) {
                                                 setParkQuickView(r)
                                               }
                                               className="park-quick-link link"
-                                              href="#"
+                                              role="link"
+                                              tabIndex="0"
                                             >
                                               Quick View
                                             </Link>
@@ -1245,7 +1246,8 @@ export default function FindAPark({ location, data }) {
                                     <Link
                                       onClick={handleCloseQuickView}
                                       className="park-quick-link link-white"
-                                      href="#"
+                                      tabIndex="0"
+                                      role="link"
                                     >
                                       Close Quick View
                                     </Link>
