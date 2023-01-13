@@ -388,8 +388,8 @@ export default function ParkDates({ data }) {
                           {countsList
                             .filter(count => isShown(count, subArea)).length > 0
                             && (<>
-                              <dt class="mt-3">Number of campsites</dt>
-                              <dd><ul class="pl-3">
+                              <dt className="mt-3">Number of campsites</dt>
+                              <dd><ul className="pl-3">
                                 {countsList
                                   .filter(count => isShown(count, subArea))
                                   .map((count, index) => (
@@ -404,9 +404,9 @@ export default function ParkDates({ data }) {
 
                           {subArea.serviceDates.length > 0 && (
                             <>
-                              <dt class="mt-3">Main camping season dates</dt>
+                              <dt className="mt-3">Main camping season dates</dt>
                               <dd>
-                                <ul class="pl-3">
+                                <ul className="pl-3">
                                   {subArea.serviceDates.map((dateRange, index) =>
                                     <li key={index}>{dateRange}</li>
                                   )}
@@ -417,9 +417,9 @@ export default function ParkDates({ data }) {
 
                           {subArea.resDates.length > 0 && (
                             <>
-                              <dt class="mt-3">Reservable dates</dt>
+                              <dt className="mt-3">Reservable dates</dt>
                               <dd>
-                                <ul class="pl-3">
+                                <ul className="pl-3">
                                   {subArea.resDates.map((dateRange, index) =>
                                     <li key={index}>{dateRange}</li>
                                   )}
@@ -430,9 +430,9 @@ export default function ParkDates({ data }) {
 
                           {subArea.offSeasonDates.length > 0 && (
                             <>
-                              <dt class="mt-3">Off season dates</dt>
+                              <dt className="mt-3">Off season dates</dt>
                               <dd>
-                                <ul class="pl-3">
+                                <ul className="pl-3">
                                   {subArea.offSeasonDates.map((dateRange, index) =>
                                     <li key={index}>{dateRange}</li>
                                   )}
@@ -446,7 +446,7 @@ export default function ParkDates({ data }) {
                             .map((note, index) => (
                               <div key={index}>
                                 {note.display && (
-                                  <dt class="mt-3">
+                                  <dt className="mt-3">
                                     {note.display}
                                   </dt>
                                 )}
@@ -464,13 +464,13 @@ export default function ParkDates({ data }) {
                 ))}
             </>
           )}
-          <dl class="mb-0">
+          <dl className="mb-0">
             {parkOperationsNotesList
               .filter(note => parkOperation[note.noteVar])
               .map((note, index) => (
                 <div key={index}>
                   {note.display && (
-                    <dt class="mt-3">
+                    <dt className="mt-3">
                       {note.display}
                     </dt>
                   )}
@@ -488,11 +488,11 @@ export default function ParkDates({ data }) {
               && subAreas
                 .filter(subArea => subArea.isActive).length !== 1
               && (<>
-                <dt class="mt-3">Total number of campsites</dt>
+                <dt className="mt-3">Total number of campsites</dt>
                 {countsList
                   .filter(count => isShown(count, parkOperation))
                   .map((count, index) => (
-                    <dd key={index} class="mb-0">
+                    <dd key={index} className="mb-0">
                       Total {count.display.toLowerCase()}:{" "}
                       {parkOperation[count.countVar]}
                     </dd>
