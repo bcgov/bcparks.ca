@@ -177,6 +177,17 @@ const AdvisoryCard = ({ advisory, index }) => {
                             <HTMLArea isVisible>
                               {advisory.description}
                             </HTMLArea>
+                            {advisory.links?.map(({ title, url, id }) => (
+                              <a
+                                href={url}
+                                style={{display: 'block'}}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                key={id}
+                              >
+                                {title}
+                              </a>
+                            ))}
                           </div>
                         </>
                       )}
