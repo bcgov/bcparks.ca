@@ -37,7 +37,7 @@ export default function ParkDates({ data }) {
 
   // -------- Operating Dates --------
 
-  const datePhrase = (openDate, closeDate, fmt, yr) => {
+  const datePhrase = (openDate, closeDate, fmt, yearRoundText) => {
     if (openDate && closeDate) {
       try {
         const open = moment(openDate).format(fmt)
@@ -47,7 +47,7 @@ export default function ParkDates({ data }) {
         // for puposes of checking if year-round, ignoring year
         const openYearRound =
           open.indexOf("January 1") === 0 && close.indexOf("December 31") === 0
-        let output = openYearRound ? yr : open + " to " + close
+        let output = openYearRound ? yearRoundText : open + " to " + close
 
         return output
       } catch (err) {
@@ -62,7 +62,13 @@ export default function ParkDates({ data }) {
   // Overall operating dates for parks, to display above subareas
   const fmt = "MMMM D, yyyy"  // date format for overall operating dates
   const yr = "year-round" // lowercase for overall operating dates
-  const parkDates = datePhrase(parkOperation.openDate, parkOperation.closeDate, fmt, yr)
+  let parkDates = datePhrase(parkOperation.openDate, parkOperation.closeDate, fmt, yr)
+
+  // make sure the parkDates is valid
+  const thisYear = new Date().getFullYear()
+  if (parkDates !== yr && !parkDates.includes(thisYear)) {
+    parkDates = "";
+  }
 
   // ---- Subarea Dates -----
 
@@ -164,9 +170,12 @@ export default function ParkDates({ data }) {
       subArea.resDates = processDateRanges(subArea.resDates)
       subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates)
 
-      subArea.hasDates = subArea.serviceDates.length > 0
-        || subArea.resDates.length > 0
-        || subArea.offSeasonDates.length > 0
+      // add a placeholder if no dates are available for the current year
+      if (subArea.serviceDates.length === 0
+        && subArea.resDates.length === 0
+        && subArea.offSeasonDates.length === 0) {
+        subArea.serviceDates.push(`${new Date().getFullYear()}: Dates are not yet available`)
+      }
     }
   }
 
@@ -309,6 +318,11 @@ export default function ParkDates({ data }) {
                     <h4 className="my-3">Open to public access {parkDates}</h4>
                   </>
                 )}
+                {!parkDates && (
+                  <>
+                    <h4 className="my-3">Operating dates are not yet available</h4>
+                  </>
+                )}
                 <h4 className="my-3">
                   Current status:
                   <img
@@ -331,7 +345,7 @@ export default function ParkDates({ data }) {
                 )}
               </div>
               {subAreas
-                .filter(subArea => subArea.isActive && subArea.hasDates)
+                .filter(subArea => subArea.isActive)
                 .map((subArea, index) => (
                   <Accordion
                     key={"parkActivity" + index}
@@ -472,7 +486,7 @@ export default function ParkDates({ data }) {
                 count =>
                   isShown(count, parkOperation)).length > 0
               && subAreas
-                .filter(subArea => subArea.isActive && subArea.hasDates).length !== 1
+                .filter(subArea => subArea.isActive).length !== 1
               && (<>
                 <dt class="mt-3">Total number of campsites</dt>
                 {countsList
