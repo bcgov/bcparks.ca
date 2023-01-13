@@ -994,11 +994,17 @@ export default function Advisory({
   };
 
   const updateMediaLink = async (media, id, link) => {
+    const checkOnDomain =/(https|http?)/gi;
+
+    const path = media.url?.match(checkOnDomain);
+    const getUrl = path?.length ? media.url : config.REACT_APP_CMS_BASE_URL + media.url 
+    
     const linkRequest = {
       title: link.title ? link.title : media.name,
       type: link.type,
-      url: config.REACT_APP_CMS_BASE_URL + media.url,
+      url: getUrl,
     };
+
     const res = await cmsAxios
       .put(`links/${id}`, linkRequest, {
         headers: { Authorization: `Bearer ${keycloak.token}` },
