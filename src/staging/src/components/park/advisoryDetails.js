@@ -155,7 +155,7 @@ export default function AdvisoryDetails({ advisories }) {
                         {advisory.links?.map(({ title, url, id }) => (
                               <a
                                 href={url}
-                                style={{display: block}}
+                                style={{display: 'block'}}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 key={id}
