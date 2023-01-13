@@ -994,9 +994,9 @@ export default function Advisory({
   };
 
   const updateMediaLink = async (media, id, link) => {
-    const checkOnDomain =/(https|http?)/gi;
+    const isProtocolExist =/(https|http?)/gi;
 
-    const path = media.url?.match(checkOnDomain);
+    const path = media.url?.match(isProtocolExist);
     const getUrl = path?.length ? media.url : config.REACT_APP_CMS_BASE_URL + media.url 
     
     const linkRequest = {
