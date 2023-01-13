@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"
-import { graphql, navigate } from "gatsby"
+import React from "react"
+import { graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 
 import Footer from "../components/footer"
@@ -47,28 +47,7 @@ export default function Home({ data }) {
   const pageContent = data.strapiPages.Content || []
   const menuContent = data?.allStrapiMenus?.nodes || []
 
-  // Fake loading flag to briefly show a blank page while redirecting to the
-  // beta landing page.  The intention is to prevent home page content from
-  // briefly showing before redirecting to the beta landing page.
-  //
-  // The state, useEffect and the conditional render can be removed later
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const visited = sessionStorage.getItem("beta-landing-visited")
-
-    if (!visited) {
-      navigate("/intro")
-    } else {
-      setLoading(false)
-    }
-  }, [])
-
   return (
-    <>
-      {loading ? (
-        <></>
-      ) : (
         <div id="home">
           <Seo title="Home" description="Official website for BC Parks. Get information on camping and other activities in parks across British Columbia. Learn about our environmental conservation work." />
           <div className="park-search-container-wrapper">
@@ -104,7 +83,5 @@ export default function Home({ data }) {
               <Footer />
           </div>
         </div>
-      )}
-    </>
   )
 }
