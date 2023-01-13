@@ -105,7 +105,9 @@ export default function ParkHeader({
 }
 
 ParkHeader.propTypes = {
-  parkName: PropTypes.object.isRequired,
+  parkName: PropTypes.oneOfType([
+    PropTypes.object.isRequired, PropTypes.string.isRequired
+  ]),
   isLoadingAdvisories: PropTypes.bool.isRequired,
   advisoryLoadError: PropTypes.any,
   hasReservations: PropTypes.bool,
