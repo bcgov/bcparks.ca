@@ -150,7 +150,7 @@ export default function ParkTemplate({ data }) {
   const activeSection = useScrollSpy({
     sectionElementRefs: sectionRefs,
     defaultValue: 0,
-    offsetPx: -250,
+    offsetPx: -100,
   })
 
   const menuItems = [
@@ -318,7 +318,7 @@ export default function ParkTemplate({ data }) {
         </div>
       </div>
 
-      <div className="container parks-container">
+      <div className="container parks-container main-container">
         <Container className="park-info-container" maxWidth={false}>
           <Grid container spacing={2}>
             <Grid
