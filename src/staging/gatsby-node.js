@@ -393,7 +393,7 @@ async function createParkSubPages({ graphql, actions, reporter }) {
     const parkPath = parkSubPage.protectedArea?.urlPath
     const parkSubPagePath = `${parkPath}/${parkSubPage.slug}`
     actions.createPage({
-      path: parkSubPagePath,
+      path: parkSubPagePath.replace(/\/$|$/, `/`),
       component: require.resolve(`./src/templates/parkSubPage.js`),
       context: {
         protectedAreaSlug: parkSubPage.protectedArea.slug,
@@ -430,7 +430,7 @@ async function createSites({ graphql, actions, reporter }) {
     const parkPath = site.protectedArea?.urlPath ?? "no-protected-area"
     const sitePath = `${parkPath}/${slug}`
     actions.createPage({
-      path: sitePath,
+      path: sitePath.replace(/\/$|$/, `/`),
       component: require.resolve(`./src/templates/site.js`),
       context: { ...site },
     })
@@ -450,7 +450,7 @@ async function createPageSlugs(type, query, { graphql, actions, reporter }) {
   if (type === "static") {
     result.data.allStrapiPages.nodes.forEach(page => {
       actions.createPage({
-        path: page.Slug,
+        path: page.Slug.replace(/\/$|$/, `/`),
         component: require.resolve(`./src/templates/${page.Template}.js`),
         context: { page },
       })
