@@ -38,7 +38,7 @@ export default function ParkHeader({
                   )}
                   {hasDayUsePass && (
                     <Button className="blue-button" href={dayUsePassURL}>
-                      Get a daypass
+                      Get a day-use pass
                     </Button>
                   )}
                 </>
@@ -93,7 +93,7 @@ export default function ParkHeader({
                   className="blue-button full-width mt-2"
                   href={dayUsePassURL}
                 >
-                  Get a daypass
+                  Get a day-use pass
                 </Button>
               )}
             </Grid>
