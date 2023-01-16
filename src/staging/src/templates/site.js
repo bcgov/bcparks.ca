@@ -51,6 +51,10 @@ export default function ParkTemplate({ data }) {
   const activities = site.parkActivities
   const facilities = site.parkFacilities
   const operations = site.parkOperation || {}
+
+  // function to check if a string contains anything besides html tags and whitespace characters
+  const isNullOrWhiteSpace = (str) => !str || !str.toString().replace(/(<([^>]+)>)|^\s+|\s+$|\s+/g, "");
+
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
 
   const activeActivities = sortBy(
@@ -67,14 +71,27 @@ export default function ParkTemplate({ data }) {
     ["facilityType.rank", "facilityType.facilityName"],
     ["asc"]
   )
+
+  const campingActivities = 
+    activeActivities.filter(
+      activity => activity.activityType.isCamping
+    )
   const campingFacilities = 
     activeFacilities.filter(
-      facility => facility.facilityType.facilityName.toLowerCase().includes("camping")
+      facility => facility.facilityType.isCamping
+    )
+  const nonCampingActivities = 
+    activeActivities.filter(
+      activity => !activity.activityType.isCamping
     )
   const nonCampingFacilities = 
     activeFacilities.filter(
-      facility => !facility.facilityType.facilityName.toLowerCase().includes("camping")
+      facility => !facility.facilityType.isCamping
     )
+  const activeCampings = sortBy(
+    campingActivities.concat(campingFacilities), 
+    ["activityType.activityName", "facilityType.facilityName"]
+  )
 
   const hasReservations = operations.hasReservations
   const hasDayUsePass = site.hasDayUsePass
@@ -142,7 +159,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 0,
       display: "Site overview",
       link: "#park-overview-container",
-      visible: site.description,
+      visible: !isNullOrWhiteSpace(site.description),
     },
     {
       sectionIndex: 1,
@@ -163,7 +180,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 3,
       display: "Camping",
       link: "#park-camping-details-container",
-      visible: campingFacilities.length > 0,
+      visible: activeCampings.length > 0,
     },
     {
       sectionIndex: 4,
@@ -175,13 +192,13 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 5,
       display: "Activities",
       link: "#park-activity-container",
-      visible: activeActivities.length > 0,
+      visible: nonCampingActivities.length > 0,
     },
     {
       sectionIndex: 6,
       display: "Location",
       link: "#park-maps-location-container",
-      visible: (site.latitude && site.longitude) || site.locationNotes,
+      visible: (site.latitude && site.longitude) || !isNullOrWhiteSpace(site.locationNotes),
     },
   ]
 
@@ -327,7 +344,7 @@ export default function ParkTemplate({ data }) {
                 <div ref={campingRef} className="full-width">
                   <CampingDetails
                     data={{
-                      parkFacilities: campingFacilities,
+                      activeCampings: activeCampings,
                       reservations: site.reservations,
                       hasDayUsePass: hasDayUsePass,
                       hasReservations: hasReservations,
@@ -342,7 +359,7 @@ export default function ParkTemplate({ data }) {
               )}
               {menuItems[5].visible && (
                 <div ref={activityRef} className="full-width">
-                  <ParkActivity data={activeActivities} />
+                  <ParkActivity data={nonCampingActivities} />
                 </div>
               )}
               {menuItems[6].visible && (
@@ -405,6 +422,7 @@ export const query = graphql`
           activityName
           activityCode
           isActive
+          isCamping
           icon
           iconNA
           rank
@@ -418,6 +436,7 @@ export const query = graphql`
           facilityName
           facilityCode
           isActive
+          isCamping
           icon
           iconNA
           rank

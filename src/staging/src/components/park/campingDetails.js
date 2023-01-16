@@ -16,13 +16,13 @@ function toCamping() {
 }
 
 export default function CampingDetails({ data }) {
-  const campingFacilities = data.parkFacilities
+  const activeCampings = data.activeCampings
   const [reservationsExpanded, setReservationsExpanded] = useState(false)
   const [expanded, setExpanded] = useState(
-    Array(campingFacilities.length).fill(false)
+    Array(activeCampings.length).fill(false)
   )
 
-  if (campingFacilities.length === 0) return null
+  if (activeCampings.length === 0) return null
 
   const toggleExpand = index => {
     expanded[index] = !expanded[index]
@@ -60,7 +60,7 @@ export default function CampingDetails({ data }) {
       </Row>
       <Row>
         <Col>
-          {campingFacilities.length > 0 && (
+          {activeCampings.length > 0 && (
             <div id="park-camping-list-container" className="anchor-link">
               {data.reservations && (
                 <div key="reservation">
@@ -104,23 +104,23 @@ export default function CampingDetails({ data }) {
       </Row>
       <Row>
         <Col>
-          {campingFacilities.map((facility, index) => (
+          {activeCampings.map((camping, index) => (
             <Accordion
-              key={"campingFacility" + index}
+              key={"camping" + index}
               className="park-details mb-2"
             >
               <Accordion.Toggle
                 as={Container}
-                aria-controls={facility.facilityType.facilityName}
+                aria-controls={camping?.activityType?.activityName || camping?.facilityType?.facilityName}
                 eventKey="0"
                 id={index}
                 onClick={() => toggleExpand(index)}
               >
                 <div className="d-flex justify-content-between p-3 accordion-toggle">
                   <div className="d-flex justify-content-left align-items-center pl-2">
-                    <StaticIcon name={facility.facilityType.icon} size={48} />
+                    <StaticIcon name={camping?.activityType?.icon || camping?.facilityType?.icon} size={48} />
                     <HtmlContent className="pl-3 accordion-header">
-                      {facility.facilityType.facilityName}
+                      {camping?.activityType?.activityName || camping?.facilityType?.facilityName}
                     </HtmlContent>
                   </div>
                   <div className="d-flex align-items-center expand-icon">
@@ -135,7 +135,7 @@ export default function CampingDetails({ data }) {
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
                 <div className="p-4">
-                  <HtmlContent>{facility.description}</HtmlContent>
+                  <HtmlContent>{camping.description}</HtmlContent>
                 </div>
               </Accordion.Collapse>
             </Accordion>

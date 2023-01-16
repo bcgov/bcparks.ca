@@ -80,16 +80,27 @@ export default function ParkTemplate({ data }) {
     ["asc"]
   )
 
+  const campingActivities = 
+    activeActivities.filter(
+      activity => activity.activityType.isCamping
+    )
   const campingFacilities = 
     activeFacilities.filter(
-      facility => facility.facilityType.facilityName.toLowerCase().includes("camping")
+      facility => facility.facilityType.isCamping
     )
-  
+  const nonCampingActivities = 
+    activeActivities.filter(
+      activity => !activity.activityType.isCamping
+    )
   const nonCampingFacilities = 
     activeFacilities.filter(
-      facility => !facility.facilityType.facilityName.toLowerCase().includes("camping")
+      facility => !facility.facilityType.isCamping
     )
-  
+  const activeCampings = sortBy(
+    campingActivities.concat(campingFacilities), 
+    ["activityType.activityName", "facilityType.facilityName"]
+  )
+
   const hasReservations = operations.hasReservations
   const hasDayUsePass = park.hasDayUsePass
 
@@ -197,7 +208,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 6,
       display: "Camping",
       link: "#park-camping-details-container",
-      visible: campingFacilities.length > 0,
+      visible: activeCampings.length > 0,
     },
     {
       sectionIndex: 7,
@@ -209,7 +220,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 8,
       display: "Activities",
       link: "#park-activity-container",
-      visible: activeActivities.length > 0,
+      visible: nonCampingActivities.length > 0,
     },
     {
       sectionIndex: 9,
@@ -401,7 +412,7 @@ export default function ParkTemplate({ data }) {
                 <div ref={campingRef} className="full-width">
                   <CampingDetails
                     data={{
-                      parkFacilities: campingFacilities,
+                      activeCampings: activeCampings,
                       reservations: park.reservations,
                       hasDayUsePass: hasDayUsePass,
                       hasReservations: hasReservations,
@@ -416,7 +427,7 @@ export default function ParkTemplate({ data }) {
               )}
               {menuItems[8].visible && (
                 <div ref={activityRef} className="full-width">
-                  <ParkActivity data={activeActivities} />
+                  <ParkActivity data={nonCampingActivities} />
                 </div>
               )}
               {menuItems[9].visible && (
@@ -503,6 +514,7 @@ export const query = graphql`
           activityName
           activityCode
           isActive
+          isCamping
           icon
           iconNA
           rank
@@ -516,6 +528,7 @@ export const query = graphql`
           facilityName
           facilityCode
           isActive
+          isCamping
           icon
           iconNA
           rank
