@@ -49,7 +49,7 @@ const NotFoundPage = () => {
       <div>
         <div className="not-found-container d-flex align-items-center justify-content-center container">
           <div className="p-3">
-            <div className="m-2">
+            <div className="p-2 mt-5">
               <p>
                 Good catch! You seem to have found a link that’s not working or a page that hasn’t been added to our new
                 website yet. Help us fix things as soon as possible by letting us know at{" "}

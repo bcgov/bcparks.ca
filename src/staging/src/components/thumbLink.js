@@ -29,7 +29,7 @@ export default function ThumbLink({ imageLink, title, navLink }) {
       <button className="btn btn-outline-primary thumb-link" onClick={() => navigate(navLink)}>
         <div>
           <GatsbyImage image={image.childImageSharp.gatsbyImageData} alt={title} />
-          <div className="mt-2 text-left">
+          <div className="mt-4 text-left">
             <h3>{title}</h3>
           </div>
         </div>
