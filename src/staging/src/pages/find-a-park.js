@@ -163,11 +163,11 @@ export default function FindAPark({ location, data }) {
 
   const quickSearchFilters = [
     { label: "Camping", type: "camping" },
-    { label: "Dog Friendly", type: "petFriendly" },
-    { label: "Accessibility Information", type: "accessibility" },
-    { label: "Marine Park", type: "marine" },
-    { label: "Ecological Reserve", type: "ecoReserve" },
-    { label: "Electrical Hookups", type: "electricalHookup" },
+    { label: "Dog friendly", type: "petFriendly" },
+    { label: "Accessibility information", type: "accessibility" },
+    { label: "Marine park", type: "marine" },
+    { label: "Ecological reserve", type: "ecoReserve" },
+    { label: "Electrical hookups", type: "electricalHookup" },
   ]
 
   const [selectedActivities, setSelectedActivities] = useState(
@@ -328,19 +328,19 @@ export default function FindAPark({ location, data }) {
       filters.push({ label: "Camping", type: "camping" })
     }
     if (petFriendly) {
-      filters.push({ label: "Dog Friendly", type: "petFriendly" })
+      filters.push({ label: "Dog friendly", type: "petFriendly" })
     }
     if (accessibility) {
-      filters.push({ label: "Accessibility Information", type: "accessibility" })
+      filters.push({ label: "Accessibility information", type: "accessibility" })
     }
     if (marine) {
-      filters.push({ label: "Marine Park", type: "marine" })
+      filters.push({ label: "Marine park", type: "marine" })
     }
     if (ecoReserve) {
-      filters.push({ label: "Ecological Reserve", type: "ecoReserve" })
+      filters.push({ label: "Ecological reserve", type: "ecoReserve" })
     }
     if (electricalHookup) {
-      filters.push({ label: "Electrical Hookup", type: "electricalHookup" })
+      filters.push({ label: "Electrical hookup", type: "electricalHookup" })
     }
     setFilterSelections([...filters])
   }, [
