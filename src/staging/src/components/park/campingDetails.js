@@ -5,6 +5,8 @@ import Col from "react-bootstrap/Col"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 
+import { isNullOrWhiteSpace } from "../../utils/helpers";
+
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
@@ -104,10 +106,12 @@ export default function CampingDetails({ data }) {
       </Row>
       <Row>
         <Col>
-          {activeCampings.map((camping, index) => (
+          {activeCampings.map((camping, index) => {
+          const isDescription = !isNullOrWhiteSpace(camping.description)
+          return (
             <Accordion
               key={"camping" + index}
-              className={`park-details mb-2 ${!camping.description && "park-details--disabled"}`}
+              className={`park-details mb-2 ${!isDescription && "park-details--disabled"}`}
             >
               <Accordion.Toggle
                 as={Container}
@@ -123,7 +127,7 @@ export default function CampingDetails({ data }) {
                       {camping?.activityType?.activityName || camping?.facilityType?.facilityName}
                     </HtmlContent>
                   </div>
-                  {camping.description && (
+                  {isDescription && (
                   <div className="d-flex align-items-center expand-icon">
                     <i
                       className={
@@ -135,7 +139,7 @@ export default function CampingDetails({ data }) {
                   )}
                 </div>
               </Accordion.Toggle>
-              {camping.description && (
+              {isDescription && (
               <Accordion.Collapse eventKey="0">
                 <div className="p-4">
                   <HtmlContent>{camping.description}</HtmlContent>
@@ -143,7 +147,7 @@ export default function CampingDetails({ data }) {
               </Accordion.Collapse>
               )}
             </Accordion>
-          ))}
+          )})}
         </Col>
       </Row>
     </div>

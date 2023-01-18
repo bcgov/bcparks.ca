@@ -12,6 +12,8 @@ import {
 } from "@material-ui/core"
 import useScrollSpy from "react-use-scrollspy"
 
+import { isNullOrWhiteSpace } from "../utils/helpers";
+
 import Footer from "../components/footer"
 import Header from "../components/header"
 import PageMenu from "../components/pageContent/pageMenu"
@@ -51,9 +53,6 @@ export default function ParkTemplate({ data }) {
   const activities = site.parkActivities
   const facilities = site.parkFacilities
   const operations = site.parkOperation || {}
-
-  // function to check if a string contains anything besides html tags and whitespace characters
-  const isNullOrWhiteSpace = (str) => !str || !str.toString().replace(/(<([^>]+)>)|^\s+|\s+$|\s+/g, "");
 
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
 
