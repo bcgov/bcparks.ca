@@ -12,6 +12,7 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-loadable-components-ssr`,
     {
       resolve: `gatsby-plugin-react-helmet-canonical-urls`,
       options: {

@@ -459,6 +459,24 @@ async function createPageSlugs(type, query, { graphql, actions, reporter }) {
 }
 
 exports.onCreateWebpackConfig = ({ stage, loaders, actions, getConfig }) => {
+  // if (
+  //   stage === "build-javascript" ||
+  //   stage === "develop" ||
+  //   stage === "develop-html"
+  // ) {
+  //   const config = getConfig()
+  //   config.plugins.push(new LoadablePlugin({
+  //     plugins: [
+  //       new LoadablePlugin({
+  //         filename:
+  //           stage === "develop"
+  //             ? `public/loadable-stats.json`
+  //             : "loadable-stats.json",
+  //         writeToDisk: true
+  //       })
+  //     ]
+  //   }))
+  // }
   if (stage === "build-html" || stage === "develop-html") {
     actions.setWebpackConfig({
       module: {

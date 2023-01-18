@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql } from "gatsby"
+import loadable from '@loadable/component'
 import {
   Box,
   Container,
@@ -31,7 +32,6 @@ import ParkHeader from "../components/park/parkHeader"
 import ParkMapDetails from "../components/park/parkMapDetails"
 import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
-import MapLocation from "../components/park/mapLocation"
 import SafetyInfo from "../components/park/safetyInfo"
 import SpecialNote from "../components/park/specialNote"
 import ScrollToTop from "../components/scrollToTop"
@@ -39,6 +39,8 @@ import Seo from "../components/seo"
 
 import "../styles/parks.scss"
 import { PARK_NAME_TYPE, useStyles } from "../utils/constants";
+
+const AsyncMapLocation =  loadable(() => import("../components/park/mapLocation"));
 
 const loadAdvisories = async (apiBaseUrl, orcs) => {
   const params = {
@@ -422,7 +424,7 @@ export default function ParkTemplate({ data }) {
               {menuItems[9].visible && (
                 <div ref={mapLocationRef} className="full-width">
                   <div id="park-maps-location-container" className="anchor-link">
-                    <MapLocation data={mapData} />
+                    <AsyncMapLocation data={mapData} />
                     {park.locationNotes && (
                       <Grid item xs={12} id="park-location-notes-container">
                         <Box mb={8}>
