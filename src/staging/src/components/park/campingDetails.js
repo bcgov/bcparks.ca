@@ -107,7 +107,7 @@ export default function CampingDetails({ data }) {
           {activeCampings.map((camping, index) => (
             <Accordion
               key={"camping" + index}
-              className="park-details mb-2"
+              className={`park-details mb-2 ${!camping.description && "park-details--disabled"}`}
             >
               <Accordion.Toggle
                 as={Container}
@@ -123,6 +123,7 @@ export default function CampingDetails({ data }) {
                       {camping?.activityType?.activityName || camping?.facilityType?.facilityName}
                     </HtmlContent>
                   </div>
+                  {camping.description && (
                   <div className="d-flex align-items-center expand-icon">
                     <i
                       className={
@@ -131,13 +132,16 @@ export default function CampingDetails({ data }) {
                       }
                     ></i>
                   </div>
+                  )}
                 </div>
               </Accordion.Toggle>
+              {camping.description && (
               <Accordion.Collapse eventKey="0">
                 <div className="p-4">
                   <HtmlContent>{camping.description}</HtmlContent>
                 </div>
               </Accordion.Collapse>
+              )}
             </Accordion>
           ))}
         </Col>
