@@ -56,8 +56,10 @@
   }
   #footer-logo {
     height: 60px;
+    margin-bottom: 1.5rem;
     @include media-breakpoint-up(md) {
       height: 90px;
+      margin-bottom: 0;
     }
     img {
       height: 100%;
