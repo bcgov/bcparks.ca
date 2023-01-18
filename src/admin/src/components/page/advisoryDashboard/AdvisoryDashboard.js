@@ -166,15 +166,19 @@ export default function AdvisoryDashboard({
           let regionId = getPageFilterValue(filters, 'region');
           if (regionId) {
             let region = regionsData.find((r) => (r.id === regionId));
-            setSelectedRegionId(regionId);
-            setSelectedRegion(({ label: region.regionName + " Region", value: region.id }));
+            if (region) {
+              setSelectedRegionId(regionId);
+              setSelectedRegion(({ label: region.regionName + " Region", value: region.id }));
+            }
           }
 
           let parkId = getPageFilterValue(filters, 'park');
           if (parkId) {
             let park = parkNamesData.find((p) => (p.id === parkId));
-            setSelectedParkId(parkId);
-            setSelectedPark(({ label: park.parkName, value: park.id }));
+            if (park) {
+              setSelectedParkId(parkId);
+              setSelectedPark(({ label: park.parkName, value: park.id }));
+            }
           }
         }
       }
