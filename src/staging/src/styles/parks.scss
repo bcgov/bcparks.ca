@@ -7,11 +7,8 @@
   max-width: 1370px !important;
   font-size: 15px;
   padding: 0px !important;
-  &.main-container {
-    padding-bottom: 0px !important;
-    @media (min-width: $lgBreakpoint) {
-      padding-bottom: 250px !important;
-    }
+  .makeStyles-parkContent-2 > div:last-of-type { 
+    min-height: 600px;
   }
 }
 

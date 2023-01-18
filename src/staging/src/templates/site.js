@@ -353,9 +353,6 @@ export default function ParkTemplate({ data }) {
                   </div>
                 </div>
               )}
-              <br />
-              <br />
-              <br />
             </Grid>
           </Grid>
         </Container>
