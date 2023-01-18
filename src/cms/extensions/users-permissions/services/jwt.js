@@ -38,6 +38,7 @@ module.exports = {
       return new Promise((resolve, reject) => {
         client.getSigningKey(kid, (err, key) => {
           if (err) {
+            strapi.log.warn(`Keycloak signing key error: ${err}`)
             reject("Signing Key Error:", err);
           } else {
             const signingKey = key.publicKey || key.rsaPublicKey;
