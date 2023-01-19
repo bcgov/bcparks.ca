@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import * as cheerio from "cheerio";
 
 export const useContent = (contentHtml) => {
-  const { introHtml } = contentHtml;
+  const { introHtml={} } = contentHtml;
   const [title, setTitle] = useState("");
-
   let $ = cheerio.load(introHtml);
 
   let getIframe = $("iframe");
