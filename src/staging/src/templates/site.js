@@ -112,7 +112,17 @@ export default function ParkTemplate({ data }) {
     loadAdvisories(apiBaseUrl, park?.orcs)
       .then(response => {
         if (response.status === 200) {
-          setAdvisories([...response.data])
+          // for sites, we want to include all advisories at the park level  
+          // and advisories for this specific site, but we exclude advisories 
+          // for other sites at the same park
+          const advisories = [...response.data].filter(
+            (advisory) => {
+              return advisory.sites.length === 0 ||
+                advisory.sites.some(
+                  (s) => s.orcsSiteNumber === site.orcsSiteNumber
+                )
+            })
+          setAdvisories(advisories)
           setAdvisoryLoadError(false)
         } else {
           setAdvisories([])
@@ -122,7 +132,7 @@ export default function ParkTemplate({ data }) {
       .finally(() => {
         setIsLoadingAdvisories(false)
       })
-  }, [apiBaseUrl, park?.orcs])
+  }, [apiBaseUrl, park?.orcs, site.orcsSiteNumber])
 
   const parkOverviewRef = useRef("")
   const accessibilityRef = useRef("")
