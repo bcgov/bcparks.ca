@@ -127,7 +127,7 @@ export default function ParkTemplate({ data }) {
       .finally(() => {
         setIsLoadingAdvisories(false)
       })
-  }, [apiBaseUrl, park?.orcs])
+  }, [apiBaseUrl, park?.orcs, site.orcsSiteNumber])
 
   const parkOverviewRef = useRef("")
   const accessibilityRef = useRef("")
