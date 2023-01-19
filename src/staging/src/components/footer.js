@@ -7,7 +7,7 @@ import instaIcon from "../images/Instagram_Negative.svg"
 
 import "../styles/footer.scss"
 
-function FooterMenu({ items }) {
+function FooterMenu({ items, menuIndex }) {
   return (
     <>
       <ul className="footer-menu-list list-unstyled pt-3 pl-1 ml-3 ml-md-0 text-white">
@@ -28,6 +28,21 @@ function FooterMenu({ items }) {
             )}
           </li>
         ))}
+        {/* Add social media links if it's menu3 */}
+        {menuIndex === 2 && (
+          <li>
+            <div className="d-inline-block mt-3">
+              <a href="https://www.facebook.com/YourBCParks/">
+                <img src={facebookIcon} alt="Facebook" />
+              </a>
+            </div>
+            <div className="d-inline-block mt-3 ml-3">
+              <a href="https://www.instagram.com/yourbcparks">
+                <img src={instaIcon} alt="Instagram" />
+              </a>
+            </div>
+          </li>
+        )}
       </ul>
     </>
   )
@@ -92,32 +107,17 @@ export default function Footer() {
                   {footerMenu.map((item, index) => (
                     <div className="col col-12 col-sm-4" key={index}>
                       <div>
-                        <FooterMenu items={item}></FooterMenu>
+                        <FooterMenu items={item} menuIndex={index}></FooterMenu>
                       </div>
                     </div>
                   ))}
-                  <div className="col col-8 d-none d-sm-block order-5"></div>
-                  <div className="col col-6 col-sm-4 order-last">
-                    <div className="text-left">
-                      <div className="d-inline-block mt-3 ml-4 ml-md-1">
-                        <a href="https://www.facebook.com/YourBCParks/">
-                          <img src={facebookIcon} alt="Facebook" />
-                        </a>
-                      </div>
-                      <div className="d-inline-block mt-3 ml-4">
-                        <a href="https://www.instagram.com/yourbcparks">
-                          <img src={instaIcon} alt="Instagram" />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
             <div className="text-left text-sm-center py-3 mx-3 mx-md-0 mt-5 border-top border-white">
               {utilityMenu.map((item, index) => (
                 <div
-                  className="footer-utility-link my-2 mr-4 d-inline-block"
+                  className="footer-utility-link d-inline-block"
                   key={index}
                 >
                   <a href={item.link}>{item.display}</a>
