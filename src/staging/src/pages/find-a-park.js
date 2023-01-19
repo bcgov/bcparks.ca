@@ -57,6 +57,7 @@ export const query = graphql`
       nodes {
         strapiId
         activityName
+        activityCode
       }
     }
     allStrapiFacilityTypes(
@@ -67,6 +68,7 @@ export const query = graphql`
       nodes {
         strapiId
         facilityName
+        facilityCode
       }
     }
     allStrapiMenus(
@@ -167,7 +169,7 @@ export default function FindAPark({ location, data }) {
     { label: "Accessibility information", type: "accessibility" },
     { label: "Marine park", type: "marine" },
     { label: "Ecological reserve", type: "ecoReserve" },
-    { label: "Electrical hookups", type: "electricalHookup" },
+    { label: "Electrical hook-ups", type: "electricalHookup" },
   ]
 
   const [selectedActivities, setSelectedActivities] = useState(
@@ -340,7 +342,7 @@ export default function FindAPark({ location, data }) {
       filters.push({ label: "Ecological reserve", type: "ecoReserve" })
     }
     if (electricalHookup) {
-      filters.push({ label: "Electrical hookup", type: "electricalHookup" })
+      filters.push({ label: "Electrical hook-ups", type: "electricalHookup" })
     }
     setFilterSelections([...filters])
   }, [
@@ -355,26 +357,24 @@ export default function FindAPark({ location, data }) {
   ])
 
   const params = useMemo(() => {
-    // TODO: using names is a bit fragile here, all data should have 'codes' and then
-    // we can use those instead
     const accessibleFacility = data.allStrapiFacilityTypes.nodes.find(
       facility => {
         return (
-          facility.facilityName.toLowerCase() === "accessibility information"
+          facility.facilityCode === "accessibility-information"
         )
       }
     )
-    const accessibleFacilityId = accessibleFacility.strapiId
+    const accessibleFacilityId = accessibleFacility?.strapiId
     const electricalFacility = data.allStrapiFacilityTypes.nodes.find(
       facility => {
-        return facility.facilityName.toLowerCase() === "electrical hookups"
+        return facility.facilityCode === "electrical-hookups"
       }
     )
-    const electricalFacilityId = electricalFacility.strapiId
+    const electricalFacilityId = electricalFacility?.strapiId
     const petsActivity = data.allStrapiActivityTypes.nodes.find(activity => {
-      return activity.activityName.toLowerCase() === "pets on leash"
+      return activity.activityCode === "pets-on-leash"
     })
-    const petsActivityId = petsActivity.strapiId
+    const petsActivityId = petsActivity?.strapiId
 
     const params = {
       _q: searchText,
