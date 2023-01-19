@@ -53,6 +53,7 @@ const MegaMenu = ({ content, menuMode }) => {
 
       if (isPageNav) {
         navigate(item.url)
+        setIsMenuOpen(false)
         menuReset()
       } else {
         setSelectedItem(item)
