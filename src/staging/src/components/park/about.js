@@ -47,7 +47,7 @@ export default function About({
         {park.parkContact && park.natureAndCulture && <Spacer />}
         {park.natureAndCulture && (
           <>
-            <h3>Nature & culture</h3>
+            <h3>Nature and culture</h3>
             <HtmlContent>{park.natureAndCulture}</HtmlContent>
           </>
         )}
