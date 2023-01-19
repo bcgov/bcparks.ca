@@ -17,7 +17,7 @@ import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
 import "../../styles/advisories/advisoryDetails.scss"
 
 const formatDate = isoDate => {
-  return isoDate ? format(parseJSON(isoDate), "MMMM dd, yyyy") : ""
+  return isoDate ? format(parseJSON(isoDate), "MMMM d, yyyy") : ""
 }
 
 export default function AdvisoryDetails({ advisories }) {

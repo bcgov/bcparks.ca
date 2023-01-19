@@ -16,7 +16,7 @@ export default function About({
 }) {
   const formattedEstablishedDate = park.establishedDate ? format(
     parseISO(park.establishedDate),
-    "MMMM dd, yyyy"
+    "MMMM d, yyyy"
   ) : null
   const parkType = park.type ?? "park"
 
