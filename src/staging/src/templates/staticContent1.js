@@ -1,18 +1,20 @@
-import React, { useRef } from "react"
-import { graphql, useStaticQuery } from "gatsby"
-import { Breadcrumbs } from "@material-ui/core"
-import useScrollSpy from "react-use-scrollspy"
+import React, { useRef } from "react";
+import { graphql, useStaticQuery } from "gatsby";
 
-import Footer from "../components/footer"
-import Header from "../components/header"
-import HTMLArea from "../components/HTMLArea"
-import Seo from "../components/seo"
-import PageContent from "../components/pageContent/pageContent"
-import PageMenu from "../components/pageContent/pageMenu"
+import { Breadcrumbs } from "@material-ui/core";
+import useScrollSpy from "react-use-scrollspy";
+
+import Footer from "../components/footer";
+import Header from "../components/header";
+import HTMLArea from "../components/HTMLArea";
+import Seo from "../components/seo";
+import PageContent from "../components/pageContent/pageContent";
+import PageMenu from "../components/pageContent/pageMenu";
 
 import { renderBreadcrumbs } from "../utils/helpers";
+import { useContent } from '../hooks/useContent'
 
-import "../styles/staticContent1.scss"
+import "../styles/staticContent1.scss";
 
 export default function StaticContent1({ pageContext }) {
   const queryData = useStaticQuery(graphql`
@@ -42,39 +44,45 @@ export default function StaticContent1({ pageContext }) {
         }
       }
     }
-  `)
+  `);
 
-  const pageContent = pageContext?.page?.Content // array of content components in page
+  const contentHtml = pageContext?.page?.Content.find((item) => item.introHtml);
+
+  const { introHtml } = useContent(contentHtml)
+  console.log(contentHtml)
+  
+  const pageContent = pageContext?.page?.Content; // array of content components in page
+
   const meta =
-    pageContext?.page?.Content.find(c =>
+    pageContext?.page?.Content.find((c) =>
       Boolean(c.strapi_component === "parks.seo")
-    ) || {}
-  const menuContent = queryData?.allStrapiMenus?.nodes || [] // megaMenu
+    ) || {};
+  const menuContent = queryData?.allStrapiMenus?.nodes || []; // megaMenu
 
   // look for PageHeader content
   // if it exists, will affect the layout of the top of the page
   // note that it does not matter what position the component is in, it will appear at the top
   // note that if there are more than one such component, it will pick the first
   const headerContent =
-    pageContext?.page?.Content.find(c =>
+    pageContext?.page?.Content.find((c) =>
       Boolean(c.strapi_component === "parks.page-header")
-    ) || {}
-  const hasPageHeader = headerContent.pageTitle !== undefined
+    ) || {};
+  const hasPageHeader = headerContent.pageTitle !== undefined;
 
   // Get page title from Title field
   // if not there, get title from pageTitle, if there is a PageHeader component
   // otherwise, page title & breadcrumb assumed to be in the content
-  let pageTitle = pageContext.page.Title
+  let pageTitle = pageContext.page.Title;
   if (!pageTitle) {
-    pageTitle = headerContent.pageTitle
+    pageTitle = headerContent.pageTitle;
   }
-  const hasTitle = pageTitle !== undefined
+  const hasTitle = pageTitle !== undefined;
 
   const sections =
-    pageContent.filter(c =>
+    pageContent.filter((c) =>
       Boolean(c.strapi_component === "parks.page-section")
-    ) || []
-  const hasSections = sections.length > 0
+    ) || [];
+  const hasSections = sections.length > 0;
 
   // create page sections for sticky sidebar menu
   // and scrollspy highlighting
@@ -94,36 +102,36 @@ export default function StaticContent1({ pageContext }) {
     useRef(null),
     useRef(null),
     useRef(null),
-  ]
+  ];
 
-  let pageSections = []
+  let pageSections = [];
   if (hasSections) {
-    let firstSectionTitle = pageTitle
+    let firstSectionTitle = pageTitle;
     if (!firstSectionTitle) {
       // get page title, using same method as renderBreadcrumbs
       // this assume the page is in the menu, use metaTitle from SEO otherwise
-      const slug = pageContext?.page?.Slug
-      const current = menuContent.find(mc => mc.url === slug)
-      firstSectionTitle = current ? current.title : meta.metaTitle
+      const slug = pageContext?.page?.Slug;
+      const current = menuContent.find((mc) => mc.url === slug);
+      firstSectionTitle = current ? current.title : meta.metaTitle;
     }
     pageSections = [
       { display: firstSectionTitle, sectionIndex: 0, id: 0, link: "#" },
-    ]
+    ];
 
-    let sectionIndex = 0
+    let sectionIndex = 0;
     for (const c of pageContent) {
-      sectionIndex += 1
+      sectionIndex += 1;
       if (c.strapi_component === "parks.page-section") {
         // each section needs an index to be used for in-page navigation
         // and scrollspy highlighting
-        c.sectionIndex = sectionIndex
+        c.sectionIndex = sectionIndex;
         pageSections.push({
           display: c.sectionTitle,
           sectionIndex: sectionIndex,
           id: c.id,
           link: "#page-section-" + c.id,
-          visible: true // Default
-        })
+          visible: true, // Default
+        });
       }
     }
   }
@@ -135,7 +143,7 @@ export default function StaticContent1({ pageContext }) {
     sectionElementRefs: sectionRefs,
     defaultValue: 0,
     offsetPx: -180,
-  })
+  });
 
   return (
     <>
@@ -162,9 +170,7 @@ export default function StaticContent1({ pageContext }) {
               />
             </div>
           )}
-          <h1 className="header-title">
-            {pageTitle}
-          </h1>
+          <h1 className="header-title">{pageTitle}</h1>
         </div>
       )}
       {hasSections && (
@@ -197,10 +203,10 @@ export default function StaticContent1({ pageContext }) {
                     <div className="page-header--caption">
                       {headerContent.imageCaption}
                     </div>
-                    <HTMLArea isVisible>{headerContent.introHtml}</HTMLArea>
+                    <HTMLArea isVisible>{ introHtml || contentHtml?.introHtml }</HTMLArea>
                   </div>
                 )}
-                {pageContent.map(content => (
+                {pageContent.map((content) => (
                   <div
                     ref={sectionRefs[content.sectionIndex]}
                     key={content.strapi_component + "-" + content.id}
@@ -217,10 +223,10 @@ export default function StaticContent1({ pageContext }) {
             <div>
               {hasPageHeader && (
                 <div className="header-content">
-                  <HTMLArea isVisible>{headerContent.introHtml}</HTMLArea>
+                  <HTMLArea isVisible>{ introHtml || contentHtml?.introHtml }</HTMLArea>
                 </div>
               )}
-              {pageContent.map(content => (
+              {pageContent.map((content) => (
                 <PageContent
                   contentType={content.strapi_component}
                   content={content}
@@ -235,5 +241,5 @@ export default function StaticContent1({ pageContext }) {
         <Footer />
       </div>
     </>
-  )
+  );
 }
