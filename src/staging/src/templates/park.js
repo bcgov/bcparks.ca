@@ -93,7 +93,6 @@ export default function ParkTemplate({ data }) {
     activeFacilities.filter(
       facility => !facility.facilityType.isCamping
     )
-
   const activeCampings = campingActivities.concat(campingFacilities).sort((a, b) => {
     if ((a.activityType?.activityName || a.facilityType?.facilityName) < (b.activityType?.activityName || b.facilityType?.facilityName)) {
       return -1;
@@ -103,7 +102,6 @@ export default function ParkTemplate({ data }) {
     }
     return 0
   })
-
 
   const hasReservations = operations.hasReservations
   const hasDayUsePass = park.hasDayUsePass
