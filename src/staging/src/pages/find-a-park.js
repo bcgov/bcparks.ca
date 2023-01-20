@@ -426,11 +426,11 @@ export default function FindAPark({ location, data }) {
 
   const isActiveSearch =
     params._q ||
-    params.activity ||
-    params.facility ||
+    (params.activities && params.activities.length) ||
+    (params.facilities && params.facilities.length) ||
     params.camping ||
-    params.marine ||
-    params.ecoReserve
+    params.marineProtectedArea ||
+    params.typeCode
 
   useEffect(() => {
     setIsLoading(true)
