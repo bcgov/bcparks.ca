@@ -5,10 +5,11 @@ export const useContent = (contentHtml) => {
   const [title, setTitle] = useState("");
   let video_id;
   let media; 
+  let getIframe
 
   if(contentHtml?.introHtml){
     let $ =  cheerio.load(contentHtml?.introHtml);
-    let getIframe = $("iframe");
+    getIframe = $("iframe");
     media = $(".media");
 
     const getURL = getIframe.attr("src");
