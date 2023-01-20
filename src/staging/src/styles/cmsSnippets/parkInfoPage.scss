@@ -44,16 +44,6 @@
   &:hover{
     border: 1px solid $colorGold;
   }
-
-  &--disabled {
-    &:hover {
-      border: 1px solid $colorBlue;
-    }
-    
-    .accordion-toggle {
-      cursor: default;
-    }
-  }
 }
 
 .accordion-toggle {

@@ -4,8 +4,6 @@ import Col from "react-bootstrap/Col"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 
-import { isNullOrWhiteSpace } from "../../utils/helpers";
-
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
@@ -66,13 +64,11 @@ export default function ParkActivity({ data }) {
       </Row>
       <Row>
         <Col>
-          {activityData.map((activity, index) => {
-            const isDescription = !isNullOrWhiteSpace(activity.description)
-            return (
+          {activityData.map((activity, index) =>  (
             <Accordion
               key={"parkActivity" + index}
               activeKey={expanded[index] ? "parkActivity" + index : null}
-              className={`park-details mb-2 ${!isDescription && "park-details--disabled"}`}
+              className="park-details mb-2"
             >
               <Accordion.Toggle
                 as={Container}
@@ -91,7 +87,6 @@ export default function ParkActivity({ data }) {
                       {activity.activityType.activityName}
                     </HtmlContent>
                   </div>
-                  {isDescription && (
                   <div className="d-flex align-items-center expand-icon">
                     <i
                       className={
@@ -100,18 +95,15 @@ export default function ParkActivity({ data }) {
                       }
                     ></i>
                   </div>
-                  )}
                 </div>
               </Accordion.Toggle>
-              {isDescription && (
               <Accordion.Collapse eventKey={"parkActivity" + index}>
                 <div className="p-4">
                   <HtmlContent>{activity.description}</HtmlContent>
                 </div>
               </Accordion.Collapse>
-              )}
             </Accordion>
-          )})}
+          ))}
         </Col>
       </Row>
     </div>
