@@ -18,6 +18,8 @@ function toCamping() {
 }
 
 export default function CampingDetails({ data }) {
+  console.log('data', data);
+  
   const activeCampings = data.activeCampings
   const [reservationsExpanded, setReservationsExpanded] = useState(false)
   const [expanded, setExpanded] = useState(

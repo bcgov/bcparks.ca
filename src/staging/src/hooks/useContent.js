@@ -2,21 +2,24 @@ import { useState, useEffect } from "react";
 import * as cheerio from "cheerio";
 
 export const useContent = (contentHtml) => {
-  const { introHtml={} } = contentHtml;
   const [title, setTitle] = useState("");
-  let $ = cheerio.load(introHtml);
+  let video_id;
+  let media; 
 
-  let getIframe = $("iframe");
-  let media = $(".media");
+  if(contentHtml?.introHtml){
+    let $ =  cheerio.load(contentHtml?.introHtml);
+    let getIframe = $("iframe");
+    media = $(".media");
 
-  const getURL = getIframe.attr("src");
+    const getURL = getIframe.attr("src");
 
-  const srcId = getURL?.split("/");
-  const id_end = srcId && srcId[srcId?.length - 1];
+    const srcId = getURL?.split("/");
+    video_id = srcId && srcId[srcId?.length - 1];
+  }
 
   useEffect(() => {
-    if (id_end) {
-      const vidurl = `https://www.youtube.com/watch?v=${id_end}`;
+    if (video_id) {
+      const vidurl = `https://www.youtube.com/watch?v=${video_id}`;
 
       fetch(`https://noembed.com/embed?dataType=json&url=${vidurl}`)
         .then((response) => response.json())
@@ -25,21 +28,25 @@ export const useContent = (contentHtml) => {
         })
         .catch((error) => console.error(error));
     }
-  }, [id_end]);
+  }, [video_id]);
 
   if (title) {
     getIframe.attr("id", title);
   }
 
-  const start = introHtml.indexOf("<figure");
-  const end = introHtml.indexOf("</figure>");
+  let content = null;
 
-  const videoMarkup = introHtml.slice(start, end);
+  if(contentHtml?.introHtml && media){
+    const start = contentHtml?.introHtml.indexOf("<figure");
+    const end = contentHtml?.introHtml.indexOf("</figure>");
 
-  const content =
-    start >= 0 &&
-    end >= 0 &&
-    introHtml.replace(videoMarkup, media.html());
+    const videoMarkup = contentHtml?.introHtml.slice(start, end);
+
+    content =
+      start >= 0 &&
+      end >= 0 &&
+      contentHtml?.introHtml.replace(videoMarkup, media.html());
+  }
 
   return { introHtml : content };
 };
