@@ -52,7 +52,6 @@ const loadAdvisories = async (apiBaseUrl, orcs) => {
 
 export default function ParkTemplate({ data }) {
   const classes = useStyles()
-  // console.log(classes)
 
   const apiBaseUrl = data.site.siteMetadata.apiURL
 
@@ -342,7 +341,7 @@ export default function ParkTemplate({ data }) {
               sm={12}
               md={9}
               lg={9}
-              className={`${classes.parkContent} test`}
+              className={classes.parkContent}
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">
