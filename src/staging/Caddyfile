@@ -1,3 +1,12 @@
+www.bcparks.ca:3000 {
+  redir https://bcparks.ca{uri}
+}
+
+#### we need to uncomment this after we do the DNS cutover
+# beta.bcparks.ca:3000 {
+#   redir https://bcparks.ca{uri}
+# }
+
 :3000 {
     header /page-data/* Cache-Control "public, max-age=0, must-revalidate"
     header /static/* Cache-Control "public, max-age=31536000, immutable"
