@@ -318,7 +318,7 @@ export default function ParkTemplate({ data }) {
         </div>
       </div>
 
-      <div className="container parks-container main-container">
+      <div className="container parks-container">
         <Container className="park-info-container" maxWidth={false}>
           <Grid container spacing={2}>
             <Grid
