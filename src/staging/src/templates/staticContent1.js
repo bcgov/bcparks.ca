@@ -201,7 +201,7 @@ export default function StaticContent1({ pageContext }) {
                     <div className="page-header--caption">
                       {headerContent.imageCaption}
                     </div>
-                    <HTMLArea isVisible>{ introHtml || contentHtml?.introHtml }</HTMLArea>
+                    <HTMLArea isVisible>{ introHtml || headerContent.introHtml }</HTMLArea>
                   </div>
                 )}
                 {pageContent.map(content => (
@@ -221,7 +221,7 @@ export default function StaticContent1({ pageContext }) {
             <div>
               {hasPageHeader && (
                 <div className="header-content">
-                  <HTMLArea isVisible>{ introHtml || contentHtml?.introHtml }</HTMLArea>
+                  <HTMLArea isVisible>{ introHtml || headerContent.introHtml }</HTMLArea>
                 </div>
               )}
               {pageContent.map(content => (
