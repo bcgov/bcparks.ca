@@ -1,9 +1,9 @@
-www.bcparks.ca:3000 {
+http://www.bcparks.ca:3000 {
     redir https://bcparks.ca{uri}
 }
 
 #### we need to uncomment this after we do the DNS cutover
-# beta.bcparks.ca:3000 {
+# http://beta.bcparks.ca:3000 {
 #   redir https://bcparks.ca{uri}
 # }
 
