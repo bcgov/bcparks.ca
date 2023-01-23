@@ -11,7 +11,8 @@
     "test": "jest --forceExit --detectOpenHandles",
     "lint": "eslint ./ && prettier --check **/*.js",
     "seed": "node scripts/seed.js",
-    "reimport": "node scripts/reimport.js"
+    "reimport": "node scripts/reimport.js",
+    "loaddates": "node scripts/refresh-dates.js"
   },
   "dependencies": {
     "@babel/plugin-transform-block-scoping": "^7.20.11",
