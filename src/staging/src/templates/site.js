@@ -137,35 +137,25 @@ export default function ParkTemplate({ data }) {
   const parkOverviewRef = useRef("")
   const accessibilityRef = useRef("")
   const advisoryRef = useRef("")
-  const parkDatesRef = useRef("")
-  const safetyRef = useRef("")
   const campingRef = useRef("")
   const facilityRef = useRef("")
   const activityRef = useRef("")
   const mapLocationRef = useRef("")
-  const activityMapRef = useRef("")
-  const aboutRef = useRef("")
-  const reconciliationRef = useRef("")
 
   const sectionRefs = [
     parkOverviewRef,
     accessibilityRef,
     advisoryRef,
-    parkDatesRef,
-    safetyRef,
     campingRef,
     facilityRef,
     activityRef,
     mapLocationRef,
-    activityMapRef,
-    aboutRef,
-    reconciliationRef,
   ]
 
   const activeSection = useScrollSpy({
     sectionElementRefs: sectionRefs,
     defaultValue: 0,
-    offsetPx: -250,
+    offsetPx: -100,
   })
 
   const menuItems = [
@@ -394,9 +384,6 @@ export default function ParkTemplate({ data }) {
                   </div>
                 </div>
               )}
-              <br />
-              <br />
-              <br />
             </Grid>
           </Grid>
         </Container>

@@ -2,13 +2,14 @@
 @import url("https://js.arcgis.com/4.10/esri/css/main.css");
 // @import url("https://governmentofbc.maps.arcgis.com/apps/webappviewer/jimu.js/css/jimu-theme.css");
 
-$mediumBreakpoint: 991.98px;
-
 .parks-container {
   //Added 50px extra to compensate padding
   max-width: 1370px !important;
   font-size: 15px;
   padding: 0px !important;
+  .makeStyles-parkContent-2 > div:last-of-type { 
+    min-height: 600px;
+  }
 }
 
 .anchor-linkx {

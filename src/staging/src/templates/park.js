@@ -163,7 +163,7 @@ export default function ParkTemplate({ data }) {
   const activeSection = useScrollSpy({
     sectionElementRefs: sectionRefs,
     defaultValue: 0,
-    offsetPx: -250,
+    offsetPx: -100,
   })
 
   const menuItems = [
@@ -465,9 +465,6 @@ export default function ParkTemplate({ data }) {
                   <Reconciliation data={park.reconciliationNotes} />
                 </div>
               )}
-              <br />
-              <br />
-              <br />
             </Grid>
           </Grid>
         </Container>
