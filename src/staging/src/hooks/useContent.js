@@ -1,53 +1,55 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import * as cheerio from "cheerio";
 
 export const useContent = (contentHtml) => {
-  const [title, setTitle] = useState("");
-  let video_id;
-  let media; 
-  let getIframe
+  const [list, setList] = useState([]);
 
-  if(contentHtml?.introHtml){
-    let $ =  cheerio.load(contentHtml?.introHtml);
-    getIframe = $("iframe");
-    media = $(".media");
+  let $;
+  const content = contentHtml?.introHtml;
 
-    const getURL = getIframe.attr("src");
-
-    const srcId = getURL?.split("/");
-    video_id = srcId && srcId[srcId?.length - 1];
+  if (content) {
+    $ = cheerio.load(content);
   }
+
+  const fetchData = useCallback(() => {
+    if (content) {
+      const media = $("figure.media");
+
+      return media?.map(async (item, el) => {
+        const $ = cheerio.load(el);
+        const getIframe = $("iframe").attr("src")?.split("/");
+
+        const v_url = getIframe && getIframe[getIframe?.length - 1];
+
+        const fetchVideo = await fetch(
+          `https://noembed.com/embed?dataType=json&url=${`https://www.youtube.com/watch?v=${v_url}`}`
+        );
+        const response = await fetchVideo.json();
+
+        setList((prev) =>
+          prev ? [...prev, response.title] : [response.title]
+        );
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [content]);
 
   useEffect(() => {
-    if (video_id) {
-      const vidurl = `https://www.youtube.com/watch?v=${video_id}`;
+    if (content) fetchData();
+  }, [content, fetchData]);
 
-      fetch(`https://noembed.com/embed?dataType=json&url=${vidurl}`)
-        .then((response) => response.json())
-        .then((data) => {
-            setTitle(data.title);
-        })
-        .catch((error) => console.error(error));
-    }
-  }, [video_id]);
-
-  if (title) {
-    getIframe.attr("id", title);
+  if (content && list.length) {
+    $("body")
+      .toArray()
+      .map((element) => {
+        return $(element)
+          .children("figure.media")
+          .each((i, v) => {
+            const findTitleByIndex = list.filter((e, ind) => +ind === +i);
+            $(v).attr("id", findTitleByIndex);
+          });
+      });
   }
 
-  let content = null;
-
-  if(contentHtml?.introHtml && media){
-    const start = contentHtml?.introHtml.indexOf("<figure");
-    const end = contentHtml?.introHtml.indexOf("</figure>");
-
-    const videoMarkup = contentHtml?.introHtml.slice(start, end);
-
-    content =
-      start >= 0 &&
-      end >= 0 &&
-      contentHtml?.introHtml.replace(videoMarkup, media.html());
-  }
-
-  return { introHtml : content };
+  return { introHtml: $?.html() || null };
 };
