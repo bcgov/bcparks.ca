@@ -46,7 +46,7 @@ module.exports = async (ctx, next) => {
             ctx.state.user = await strapi.plugins[
               "users-permissions"
             ].services.user.fetch({ email: API_USER_EMAIL });
-            strapi.log.warn(`Staff Portal user ${ctx.state.user.email} authenticated with Keycloak`)
+            strapi.log.warn(`Staff Portal user "${keycloakJwtToken.email}" authenticated with Keycloak`)
           } else {
             throw new Error(
               "Invalid token: User role does not have access permissions"
@@ -73,7 +73,10 @@ module.exports = async (ctx, next) => {
             ctx.state.user = await strapi.plugins[
               "users-permissions"
             ].services.user.fetchAuthenticatedUser(id);
-            strapi.log.warn(`${strapiToken.user.email}(user.id=${id}) authenticated with a Strapi token`)
+            strapi.log.warn(
+              `External application user "${strapiToken.user.email
+              }" authenticated with a Strapi token (token_id=${strapiToken.id})`
+            )
           }
         }
       }
