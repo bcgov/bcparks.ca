@@ -43,7 +43,7 @@ export default function BetaBanner() {
       <Box>Welcome to the new BC Parks website</Box>
       <Box className={classes.linkDivider}>|</Box>
       <Box>
-        <a href="https://chefs.nrs.gov.bc.ca/app/form/submit?f=62ae996e-0f0b-4c2c-a8ae-6a32bb1b046f">
+        <a href="https://helpshapebc.gov.bc.ca/new-bcparks-ca-visitor-survey">
           Share your feedback
         </a>
       </Box>
