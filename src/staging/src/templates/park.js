@@ -354,7 +354,7 @@ export default function ParkTemplate({ data }) {
               sm={12}
               md={9}
               lg={9}
-              className={classes.parkContent}
+              className={`${classes.parkContent} main-content`}
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">
