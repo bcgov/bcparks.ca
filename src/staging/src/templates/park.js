@@ -244,7 +244,7 @@ export default function ParkTemplate({ data }) {
     },
     {
       sectionIndex: 12,
-      display: "Reconciliation with Indigenous peoples",
+      display: "Reconciliation with Indigenous Peoples",
       link: "#park-reconciliation-container",
       visible: !isNullOrWhiteSpace(park.reconciliationNotes),
     },

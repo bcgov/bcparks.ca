@@ -14,7 +14,7 @@ export default function Reconciliation({ data }) {
       className="anchor-link"
     >
       <Paper elevation={0}>
-        <Heading>Reconciliation with Indigenous peoples</Heading>
+        <Heading>Reconciliation with Indigenous Peoples</Heading>
         <HtmlContent>{data}</HtmlContent>
         <Spacer />
       </Paper>
