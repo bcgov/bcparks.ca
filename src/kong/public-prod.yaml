@@ -1205,7 +1205,7 @@ services:
           fault_tolerant: true
           hide_client_headers: false
           limit_by: consumer
-          minute: 10
+          minute: 100
           policy: cluster
           header_name: null
           second: null
