@@ -19,6 +19,9 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
     },
+    "& > div:last-of-type": {
+      minHeight: "600px"
+    }
   },
   appBarOffset: theme.mixins.toolbar,
 }))
