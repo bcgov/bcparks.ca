@@ -1223,7 +1223,7 @@ services:
           - ns.bcparks
         enabled: true
         config:
-          origins: []
+          origins: ["*"]
           methods:
             - GET
             - HEAD
