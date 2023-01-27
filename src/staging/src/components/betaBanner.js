@@ -1,5 +1,4 @@
 import React from "react"
-import { Link } from "gatsby"
 import { Box } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -40,14 +39,13 @@ export default function BetaBanner() {
 
   return (
     <Box className={classes.betaHeader + " bc-bg-yellow bc-color-blue-dk"}>
-      <i className={"fa fa-info-circle " + classes.infoIcon}></i>
-      <Box>This site is in<Link to="/intro">beta</Link></Box>
+      <Box>Welcome to the new BC Parks website</Box>
       <Box className={classes.linkDivider}>|</Box>
       <Box>
-        <a href="https://chefs.nrs.gov.bc.ca/app/form/submit?f=62ae996e-0f0b-4c2c-a8ae-6a32bb1b046f">Feedback Form</a>
+        <a href="https://helpshapebc.gov.bc.ca/new-bcparks-ca-visitor-survey">
+          Share your feedback
+        </a>
       </Box>
-      <Box className={classes.linkDivider}>|</Box>
-      <Box>Return to<a href="https://bcparks.ca/">bcparks.ca</a></Box>
     </Box>
   )
 }
