@@ -513,30 +513,34 @@ export default function FindAPark({ location, data }) {
               </div>
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-list container">
-                  {filterSelections.length > 0 && (
-                    <>
-                      <div className="row p20t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                        <div className="col-12">
-                          {filterSelections.map((f, index) => (
-                            <Chip
-                              key={index}
-                              label={f.label}
-                              onDelete={handleFilterDelete(f)}
-                              variant="outlined"
-                              className="park-filter-chip font-weight-bold"
-                              deleteIcon={<CancelIcon className="close-icon" />}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </>
-                  )}
+                  <div className="row p20t d-flex">
+                    <div className="col-8 d-none d-lg-block">
+                      {filterSelections.length > 0 && filterSelections.map((f, index) => (
+                        <Chip
+                          key={index}
+                          label={f.label}
+                          onDelete={handleFilterDelete(f)}
+                          variant="outlined"
+                          className="park-filter-chip font-weight-bold"
+                          deleteIcon={<CancelIcon className="close-icon" />}
+                        />
+                      ))}
+                    </div>
+                    <div className="col col-lg-4 text-lg-right">
+                      <a
+                        className="map-link"
+                        href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000"
+                      >
+                        Find parks on a map
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             <div className="row no-gutters">
               <div className="col-lg-9 col-md-12 col-sm-12">
-                <div className="search-results-quick-filter d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
+                <div className="search-results-quick-filter d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none mt-3">
                   <div className="row no-gutters">
                     <div className="col-12">
                       <TextField
