@@ -808,6 +808,15 @@ div[class$="-singleValue"] {
     padding: 0px !important;
   }
 
+  a.map-link {
+    font-size: 1.25rem;
+    color: $colorBlue;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   .park-filter-select [class*="-control"] {
     border-radius: 5px !important;
   }
