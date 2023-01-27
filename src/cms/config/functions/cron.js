@@ -15,7 +15,9 @@ const boolToYN = (boolVar) => {
 };
 
 module.exports = {
-  "*/5 * * * *": {
+  // Execute the cron at 2 minutes past every hour.
+  // BCGW replication is hourly at 10 minutes past the hour
+  "2 * * * *": {
     task: async () => {
       console.log("CRON STARTING");
 
