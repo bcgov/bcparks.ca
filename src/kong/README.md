@@ -13,7 +13,9 @@ Access to the web UI for creating service accounts can be requested in the `#aps
 
 ## Kong Config Update
 
-If there have been changes to the API endpoints available on Strapi, the following steps need to be taken:
+If there have been changes to the API endpoints available on Strapi, the following steps need to be taken.
+
+The importhing thing to note is in step #6 - once you run through the tools, you **will need to revert changes** or publishing the gateway will fail.
 
 1. Visit [Strapi admin](http://localhost:1337/admin/plugins/documentation) and under Plugins -> Documentation,
    click "Regenerate".
@@ -24,14 +26,12 @@ If there have been changes to the API endpoints available on Strapi, the followi
 5. In the src/kong directory, run (for TEST):
 
    ```sh
-   gwa init -T --api-version=2 --namespace=bcparks --client-id=<ClientID> --client-secret=<ClientSecret>
    gwa new public-documentation.json --route-host=bcparks.api.gov.bc.ca --service-url=bcparks-cms.61d198-test.svc --plugins rate-limiting cors  --outfile=public-test.yaml
    ```
 
    (for PROD):
 
    ```sh
-   gwa init -P --api-version=2 --namespace=bcparks --client-id=<ClientID> --client-secret=<ClientSecret>
    gwa new public-documentation.json --route-host=bcparks.api.gov.bc.ca --service-url=bcparks-cms.61d198-prod.svc --plugins rate-limiting cors  --outfile=public-prod.yaml
    ```
 
@@ -46,7 +46,7 @@ If there have been changes to the API endpoints available on Strapi, the followi
 2. Select the BC Parks namespace
 3. Create a service account with `GatewayConfig.Publish` scope and note down the client id and client secret
 4. Download the GWA CLI from https://github.com/bcgov/gwa-cli/releases
-5. In command prompt run the following commands:
+5. In command prompt run the following commands (the first command create a .env file locally, which will need to be deleted if you need to create one for the other environment):
 
    ```sh
    gwa init -T --api-version=2 --namespace=bcparks --client-id=<ClientID> --client-secret=<ClientSecret>
@@ -61,7 +61,7 @@ If there have been changes to the API endpoints available on Strapi, the followi
 2. Select the BC Parks namespace
 3. Create a service account with `GatewayConfig.Publish` scope and note down the client id and client secret
 4. Download the GWA CLI from https://github.com/bcgov/gwa-cli/releases
-5. In command prompt run the following commands:
+5. In command prompt run the following commands (the first command create a .env file locally, which will need to be deleted if you need to create one for the other environment):
 
    ```sh
    gwa init -P --api-version=2 --namespace=bcparks --client-id=<ClientID> --client-secret=<ClientSecret>
