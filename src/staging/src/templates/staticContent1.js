@@ -48,8 +48,6 @@ export default function StaticContent1({ pageContext }) {
   const pageContent = pageContext?.page?.Content // array of content components in page
   const contentHtml = pageContext?.page?.Content.find((item) => item.introHtml);
   
-  console.log('contentHtml', contentHtml?.introHtml)
-
   const { introHtml } = useContent(contentHtml)
 
   const meta =
