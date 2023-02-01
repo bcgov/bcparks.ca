@@ -1,15 +1,21 @@
+
+
 import { useState, useEffect, useCallback } from "react";
 import * as cheerio from "cheerio";
 
 export const useContent = (contentHtml) => {
   const [list, setList] = useState([]);
+  const [htmlContent, setHtmlContent] = useState('');
 
   let $;
   const content = contentHtml?.introHtml;
 
-  if (content) {
-    $ = cheerio.load(content);
-  }
+  useEffect(() => {
+    if (content) {
+      $ = cheerio.load(content);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const fetchData = useCallback(() => {
     if (content) {
@@ -31,25 +37,28 @@ export const useContent = (contentHtml) => {
         );
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content]);
 
   useEffect(() => {
     if (content) fetchData();
-  }, [content, fetchData]);
 
-  if (content && list.length) {
-    $("body")
-      .toArray()
-      .map((element) => {
-        return $(element)
-          .children("figure.media")
-          .each((i, v) => {
-            const findTitleByIndex = list.filter((e, ind) => +ind === +i);
-            $(v).attr("id", findTitleByIndex);
-          });
-      });
-  }
+    if (content && list.length) {
+      const $ = cheerio.load(content);
+      $("body")
+        .toArray()
+        .map((element) => {
+          return $(element)
+            .children("figure.media")
+            .each((i, v) => {
+              const findTitleByIndex = list.filter((e, ind) => +ind === +i);
+              $(v).attr("id", findTitleByIndex);
+            });
+        });
+        setHtmlContent($?.html())
+    }
+  }, [content, fetchData, list]);
 
-  return { introHtml: $?.html() || null };
+  return { introHtml: htmlContent || null };
 };
+
