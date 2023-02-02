@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { Link, navigate } from "gatsby"
 import { isTablet } from "react-device-detect"
 
-import BCParksLogo from "../images/bcparks-h-rgb-rev.png"
+import BCParksLogo from "../images/logo/BCParks_Primary_Reversed.svg"
 import BCParksWordmark from "../images/BCParks_Wordmark_White.svg"
 
 import "../styles/megaMenu/megaMenu.scss"
