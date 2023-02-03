@@ -5,4 +5,17 @@
  * to customize this model
  */
 
-module.exports = {};
+const validator = require("../../../config/functions/slugValidator.js");
+
+module.exports = {
+    lifecycles: {
+        beforeCreate: async (data) => {
+            validator.slugCharacterValidator(data.slug)
+            validator.slugNoLeadingSlashValidator(data.slug)
+        },
+        beforeUpdate: async (params, data) => {
+            validator.slugCharacterValidator(data.slug)
+            validator.slugNoLeadingSlashValidator(data.slug)
+        },
+    },
+};

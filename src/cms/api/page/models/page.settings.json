@@ -12,7 +12,8 @@
   },
   "attributes": {
     "Slug": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "Title": {
       "type": "string",

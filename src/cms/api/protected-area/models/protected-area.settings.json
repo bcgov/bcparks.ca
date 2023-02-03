@@ -163,7 +163,8 @@
       "type": "richtext"
     },
     "slug": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "isDisplayed": {
       "type": "boolean",
