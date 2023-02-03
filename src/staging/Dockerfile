@@ -4,6 +4,7 @@ ENV APP_ROOT=/usr/share/caddy
 ENV XDG_CONFIG_HOME=/tmp/config
 
 ADD Caddyfile /etc/caddy/Caddyfile
+ADD Caddyfile.redirects /etc/caddy/Caddyfile.redirects
 
 COPY public/. $APP_ROOT/
 

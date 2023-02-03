@@ -30,5 +30,7 @@ http://beta.bcparks.ca:3000 {
         output stdout
         format console
     }
+
+    import Caddyfile.redirects
 }
 
