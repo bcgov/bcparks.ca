@@ -98,16 +98,16 @@ module.exports = {
     {
       resolve: `gatsby-plugin-robots-txt`,
       options: {
-        resolveEnv: () => process.env.ENV_SUFFIX,
+        resolveEnv: () => process.env.ENV_SUFFIX || 'dev',
         env: {
           'dev': {
-            policy: [{userAgent: '*', disallow: '/'}]
+            policy: [{userAgent: '*', disallow: ['/']}]
           },
           'test': {
-            policy: [{userAgent: '*', disallow: '/'}]
+            policy: [{userAgent: '*', disallow: ['/']}]
           },
           'prod': {
-            policy: [{userAgent: '*', allow: '/'}]
+            policy: [{userAgent: '*', allow: ['/']}]
           },
         },
       },
