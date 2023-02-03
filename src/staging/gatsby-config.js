@@ -8,6 +8,7 @@ module.exports = {
     description: `BC Parks`,
     author: `@bcparks`,
     apiURL: process.env.REACT_APP_CMS_BASE_URL,
+    siteUrl: process.env.REACT_APP_SITE_URL,
     image: 'https://nrs.objectstore.gov.bc.ca/kuwyyf/generic_social_1146x600_603acfb441.jpg'
   },
   plugins: [
@@ -16,7 +17,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-react-helmet-canonical-urls`,
       options: {
-        siteUrl: process.env.REACT_APP_CMS_BASE_URL,
+        siteUrl: process.env.REACT_APP_SITE_URL,
       },
     },
     `gatsby-plugin-sass`,
@@ -84,9 +85,16 @@ module.exports = {
       },
     },
     `gatsby-plugin-gatsby-cloud`,
-    `gatsby-plugin-meta-redirect`
+    `gatsby-plugin-meta-redirect`,
+    `gatsby-plugin-sitemap`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-robots-txt`,
+      options: {
+        policy: [{userAgent: '*', allow: '/'}]
+      },
+    },
   ],
 }
