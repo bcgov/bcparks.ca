@@ -17,7 +17,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-react-helmet-canonical-urls`,
       options: {
-        siteUrl: process.env.REACT_APP_SITE_URL,
+        siteUrl: `https://bcparks.ca`,
       },
     },
     `gatsby-plugin-sass`,
@@ -98,7 +98,18 @@ module.exports = {
     {
       resolve: `gatsby-plugin-robots-txt`,
       options: {
-        policy: [{userAgent: '*', allow: '/'}]
+        resolveEnv: () => process.env.ENV_SUFFIX,
+        env: {
+          'dev': {
+            policy: [{userAgent: '*', disallow: '/'}]
+          },
+          'test': {
+            policy: [{userAgent: '*', disallow: '/'}]
+          },
+          'prod': {
+            policy: [{userAgent: '*', allow: '/'}]
+          },
+        },
       },
     },
   ],
