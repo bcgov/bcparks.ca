@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { graphql } from "gatsby"
 import axios from "axios"
+import { orderBy } from "lodash"
 import {
   Checkbox,
   FormGroup,
@@ -114,7 +115,11 @@ export const query = graphql`
 export default function FindAPark({ location, data }) {
   const menuContent = data?.allStrapiMenus?.nodes || []
 
-  const activityItems = data.allStrapiActivityTypes.nodes.map(activity => {
+  const sortedActivityItems = orderBy(
+    data.allStrapiActivityTypes.nodes,
+    [activity => activity.activityName.toLowerCase()], ["asc"]
+  )
+  const activityItems = sortedActivityItems.map(activity => {
     return {
       label: activity.activityName,
       value: activity.strapiId,
@@ -476,6 +481,9 @@ export default function FindAPark({ location, data }) {
   ])
 
  const getParkName = item => item.parkNameType === PARK_NAME_TYPE.Escaped
+
+//  console.log(activityItems)
+//  console.log(filteredActivities)
 
   return (
     <>
