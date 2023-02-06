@@ -51,7 +51,6 @@ export const query = graphql`
       }
     }
     allStrapiActivityTypes(
-      sort: { fields: activityName }
       filter: { isActive: { eq: true } }
     ) {
       totalCount
