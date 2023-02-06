@@ -482,9 +482,6 @@ export default function FindAPark({ location, data }) {
 
  const getParkName = item => item.parkNameType === PARK_NAME_TYPE.Escaped
 
-//  console.log(activityItems)
-//  console.log(filteredActivities)
-
   return (
     <>
       <Seo title="Find a park" description="Search for the webpages of parks and protected areas across British Columbia. Get detailed information on camping and other activities at specific BC Parks." />
