@@ -564,6 +564,9 @@ export default function FindAPark({ location, data }) {
                               <SearchIcon className="search-icon" />
                             </InputAdornment>
                           ),
+                          inputProps: {
+                            "aria-label": "Park search",
+                          }
                         }}
                       />
                     </div>
@@ -629,6 +632,9 @@ export default function FindAPark({ location, data }) {
                                     <SearchIcon className="search-icon" />
                                   </InputAdornment>
                                 ),
+                                inputProps: {
+                                  "aria-label": "Park search",
+                                }
                               }}
                             />
                           </div>
