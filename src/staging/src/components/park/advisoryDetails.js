@@ -72,6 +72,7 @@ export default function AdvisoryDetails({ advisories }) {
       formattedAdvisoryDate: formatDate(advisory.advisoryDate),
       formattedEffectiveDate: formatDate(advisory.effectiveDate),
       formattedEndDate: formatDate(advisory.endDate),
+      formattedUpdatedDate: formatDate(advisory.updatedDate),
       ...advisory,
     }
   })
@@ -186,6 +187,12 @@ export default function AdvisoryDetails({ advisories }) {
                         <>
                           <br />
                           <p>Posted {advisory.formattedAdvisoryDate}</p>
+                        </>
+                      )}
+                    {advisory.isUpdatedDateDisplayed &&
+                      advisory.formattedUpdatedDate && (
+                        <>
+                          <p>Updated {advisory.formattedUpdatedDate}</p>
                         </>
                       )}
                     <br />
