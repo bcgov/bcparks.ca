@@ -10,6 +10,12 @@
   font-family: $globalFont;
 }
 
+.MuiLink-root {
+  &:hover {
+    color: $colorBlue;
+  }
+}
+
 .search-body {
   background-color: $colorGrey !important;
 }
@@ -822,6 +828,12 @@ div[class$="-singleValue"] {
   }
 
   .search-results-quick-filter {
+    .MuiLink-root {
+      &:hover {
+        color: $colorBlueMed;
+      }
+    }
+
     .filter-heading {
       color: $colorBlack;
     }
