@@ -37,6 +37,9 @@
     },
     "isCamping": {
       "type": "boolean"
+    },
+    "defaultDescription": {
+      "type": "richtext"
     }
   }
 }

@@ -100,7 +100,11 @@ export default function ParkFacility({ data }) {
               </Accordion.Toggle>
               <Accordion.Collapse eventKey={"parkFacility" + index}>
                 <div className="p-4">
-                  <HtmlContent>{facility.description}</HtmlContent>
+                  <HtmlContent>
+                    {facility.description ?
+                      facility.description : facility.facilityType.defaultDescription
+                    }
+                  </HtmlContent>
                 </div>
               </Accordion.Collapse>
             </Accordion>

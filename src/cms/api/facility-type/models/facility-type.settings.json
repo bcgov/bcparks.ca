@@ -41,6 +41,9 @@
     "parkOperationSubAreas": {
       "via": "facilityType",
       "collection": "park-operation-sub-area"
+    },
+    "defaultDescription": {
+      "type": "richtext"
     }
   }
 }
