@@ -10,9 +10,12 @@
   font-family: $globalFont;
 }
 
-.MuiLink-root {
+.MuiLink-underlineHover {
   &:hover {
     color: $colorBlue;
+    &:focus {
+      color: inherit;
+    }
   }
 }
 
@@ -828,9 +831,12 @@ div[class$="-singleValue"] {
   }
 
   .search-results-quick-filter {
-    .MuiLink-root {
+    .MuiLink-underlineHover {
       &:hover {
         color: $colorBlueMed;
+        &:focus {
+          color: inherit;
+        }
       }
     }
 
