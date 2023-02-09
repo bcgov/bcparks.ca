@@ -210,6 +210,20 @@
   @media (min-width: $mediumBreakpoint) {
     padding: 0px 25px !important;
   }
+  .MuiGrid-spacing-xs-1 {
+    width: 100%;
+    margin: 0;
+    @media (min-width: $mediumBreakpoint) {
+      width: calc(100% + 8px);
+      margin: -4;
+    }
+    > .MuiGrid-item {
+      padding: 0;
+      @media (min-width: $mediumBreakpoint) {
+        padding: 4px;
+      }
+    }
+  }
 }
 
 .park-info-container .MuiAccordionSummary-root {
