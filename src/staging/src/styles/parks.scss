@@ -351,9 +351,14 @@
     padding-left: 0px;
     padding-top: 20px;
   }
-  .park-overview-html div {
-    float: left !important;
-    margin: 0px !important;
+  .park-overview-html {
+    div {
+      float: left !important;
+      margin: 0px !important; 
+    }
+    figure.media div {
+      float: none !important;
+    }
   }
   #park-advisory-details-container .MuiButtonBase-root {
     padding: 0px !important;
