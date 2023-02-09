@@ -17,6 +17,9 @@ function toCamping() {
 
 export default function CampingDetails({ data }) {
   const activeCampings = data.activeCampings
+  const parkOperation = data.parkOperation
+  const subAreas = data.subAreas || []
+  subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
   const [reservationsExpanded, setReservationsExpanded] = useState(false)
   const [expanded, setExpanded] = useState(
     Array(activeCampings.length).fill(false)
@@ -31,6 +34,105 @@ export default function CampingDetails({ data }) {
 
   const toggleReservations = () => {
     setReservationsExpanded(!reservationsExpanded)
+  }
+
+  // -------- Capacity Counts ----------
+  const countsList = [
+    // Use this to configure which counts show and in what order
+    // Don't show if isActive is false
+    {
+      display: "Reservable frontcountry sites",
+      countVar: "reservableSites",
+      isActive: true,
+    },
+    {
+      display: "Vehicle-accessible sites",
+      countVar: "vehicleSites",
+      isActive: true,
+    },
+    {
+      display: "Double sites",
+      countVar: "doubleSites",
+      isActive: true,
+    },
+    {
+      display: "Group sites",
+      countVar: "groupSites",
+      isActive: true,
+    },
+    {
+      display: "Walk-in sites",
+      countVar: "walkInSites",
+      isActive: true,
+    },
+    {
+      display: "Backcountry sites",
+      countVar: "backcountrySites",
+      isActive: true,
+    },
+    {
+      display: "Wilderness sites",
+      countVar: "wildernessSites",
+      isActive: true,
+    },
+    {
+      display: "Boat-accessible sites",
+      countVar: "boatAccessSites",
+      isActive: true,
+    },
+    {
+      display: "Horse-accessible sites",
+      countVar: "horseSites",
+      isActive: true,
+    },
+    {
+      display: "RV-accessible sites",
+      countVar: "rvSites",
+      isActive: true,
+    },
+    {
+      display: "Pull-through sites",
+      countVar: "pullThroughSites",
+      isActive: true,
+    },
+    {
+      display: "Sites with electrical hook-ups",
+      countVar: "electrifiedSites",
+      isActive: true,
+    },
+    {
+      display: "Long-stay sites",
+      countVar: "longStaySites",
+      isActive: true,
+    },
+    { display: "Cabins", countVar: "cabins", isActive: true },
+    { display: "Huts", countVar: "huts", isActive: true },
+    { display: "Yurts", countVar: "yurts", isActive: true },
+    { display: "Shelters", countVar: "shelters", isActive: false },
+    { display: "Boat launches", countVar: "boatLaunches", isActive: false },
+    {
+      display: "First-come, first-served frontcountry sites",
+      countVar: "nonReservableSites",
+      isActive: false,
+    },
+    {
+      display: "Reservable vehicle-accessible sites",
+      countVar: "vehicleSitesReservable",
+      isActive: false,
+    },
+    {
+      display: "Reservable RV-accessible sites",
+      countVar: "rvSitesReservable",
+      isActive: false,
+    },
+    { display: "TOTAL", countVar: "totalCapacity", isActive: false },
+  ]
+
+  const isShown = (count, countGroup) => {
+    return countGroup[count.countVar] &&
+      countGroup[count.countVar] !== "0" &&
+      countGroup[count.countVar] !== "*" &&
+      count.isActive;
   }
 
   return (
@@ -58,6 +160,32 @@ export default function CampingDetails({ data }) {
           <Heading>Camping</Heading>
         </Col>
       </Row>
+      {parkOperation &&
+      <Row>
+        <Col>
+          <dl>
+            {countsList
+              .filter(
+                count =>
+                  isShown(count, parkOperation)).length > 0
+              && subAreas
+                .filter(subArea => subArea.isActive).length !== 1
+              && (<>
+                <dt>Total number of campsites</dt>
+                {countsList
+                  .filter(count => isShown(count, parkOperation))
+                  .map((count, index) => (
+                    <dd key={index} className="mb-0">
+                      Total {count.display.toLowerCase()}:{" "}
+                      {parkOperation[count.countVar]}
+                    </dd>
+                  ))}
+              </>
+              )}
+          </dl>
+        </Col>
+      </Row>
+      }
       <Row>
         <Col>
           {activeCampings.length > 0 && (
