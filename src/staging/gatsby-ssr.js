@@ -1,3 +1,5 @@
+import React from "react";
+
 /**
  * Implement Gatsby's SSR (Server Side Rendering) APIs in this file.
  *
@@ -20,4 +22,16 @@ export const onPreRenderHTML = ({ getHeadComponents }) => {
             delete el.props.dangerouslySetInnerHTML;
         }
     });
+};
+
+const headStyles = [
+    <style
+        dangerouslySetInnerHTML={{
+            __html:`body {font-size:1.0rem;} img {max-width:100%;}`
+        }}
+    ></style>,
+];
+  
+export const onRenderBody = ({ setHeadComponents }) => {
+    setHeadComponents(headStyles);
 };
