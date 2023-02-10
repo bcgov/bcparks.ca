@@ -475,6 +475,10 @@ export default function FindAPark({ location, data }) {
     setTotalResults,
   ])
 
+  useEffect(() => {
+    window[`scrollTo`]({ top: 0, behavior: `smooth` })
+  }, [currentPage])
+
  const getParkName = item => item.parkNameType === PARK_NAME_TYPE.Escaped
 
   return (
