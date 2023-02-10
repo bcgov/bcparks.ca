@@ -28,7 +28,7 @@ export const countsList = [
     isActive: true,
   },
   {
-    display: "Group sites",
+    display: "Groupsites",
     countVar: "groupSites",
     isActive: true,
   },
