@@ -481,24 +481,6 @@ export default function ParkDates({ data }) {
                   </dd>
                 </div>
               ))}
-            {countsList
-              .filter(
-                count =>
-                  isShown(count, parkOperation)).length > 0
-              && subAreas
-                .filter(subArea => subArea.isActive).length !== 1
-              && (<>
-                <dt className="mt-3">Total number of campsites</dt>
-                {countsList
-                  .filter(count => isShown(count, parkOperation))
-                  .map((count, index) => (
-                    <dd key={index} className="mb-0">
-                      Total {count.display.toLowerCase()}:{" "}
-                      {parkOperation[count.countVar]}
-                    </dd>
-                  ))}
-              </>
-              )}
           </dl>
         </Col>
       </Row>
