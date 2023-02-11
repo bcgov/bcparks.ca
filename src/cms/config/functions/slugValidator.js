@@ -48,6 +48,9 @@ module.exports = {
     if (slug?.slice(-1) === '-') {
       throw strapi.errors.badRequest('Do not add dash to the end of slugs.');
     }
+    if (slug.includes('-/')) {
+      throw strapi.errors.badRequest('Do not add dash before a slash.');
+    }
   },
   // foward slashes are not allowed in the slug
   slugNoSlashValidator: function (slug) {
