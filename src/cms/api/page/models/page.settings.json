@@ -30,13 +30,11 @@
       "type": "dynamiczone",
       "components": [
         "parks.html-area",
-        "parks.image",
         "parks.seo",
         "parks.link-card",
         "parks.page-section",
         "parks.page-header",
-        "parks.card-set",
-        "parks.fancy-link"
+        "parks.card-set"
       ]
     }
   }
