@@ -154,6 +154,7 @@ export default function AdvisoryDetails({ advisories }) {
                           {advisory.description}
                         </HtmlContent>
                         {advisory.links?.map(({ title, url, id }) => (
+                            <p>
                               <a
                                 href={url}
                                 style={{display: 'block'}}
@@ -163,37 +164,30 @@ export default function AdvisoryDetails({ advisories }) {
                               >
                                 {title}
                               </a>
+                            </p>
                             ))}
                       </>
                     )}
                     {advisory.isEffectiveDateDisplayed &&
                       advisory.formattedEffectiveDate && (
-                        <>
-                          <br />
-                          <p>
-                            In effect {advisory.formattedEffectiveDate}
-                            {advisory.isEndDateDisplayed &&
-                              advisory.formattedEndDate && (
-                                <>
-                                  {" to "}
-                                  {advisory.formattedEndDate}
-                                </>
-                              )}
-                          </p>
-                        </>
+                        <p>
+                          In effect {advisory.formattedEffectiveDate}
+                          {advisory.isEndDateDisplayed &&
+                            advisory.formattedEndDate && (
+                              <>
+                                {" to "}
+                                {advisory.formattedEndDate}
+                              </>
+                            )}
+                        </p>
                       )}
                     {advisory.isAdvisoryDateDisplayed &&
                       advisory.formattedAdvisoryDate && (
-                        <>
-                          <br />
-                          <p>Posted {advisory.formattedAdvisoryDate}</p>
-                        </>
+                        <p>Posted {advisory.formattedAdvisoryDate}</p>
                       )}
                     {advisory.isUpdatedDateDisplayed &&
                       advisory.formattedUpdatedDate && (
-                        <>
-                          <p>Updated {advisory.formattedUpdatedDate}</p>
-                        </>
+                        <p>Updated {advisory.formattedUpdatedDate}</p>                        
                       )}
                     <br />
                     <hr></hr>
