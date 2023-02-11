@@ -8,6 +8,7 @@ import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
 
+import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
 export default function ParkActivity({ data }) {
@@ -100,7 +101,7 @@ export default function ParkActivity({ data }) {
               <Accordion.Collapse eventKey={"parkActivity" + index}>
                 <div className="p-4">
                   <HtmlContent>
-                    {activity.description ? 
+                    {!isNullOrWhiteSpace(activity.description) ? 
                       activity.description : activity.activityType.defaultDescription
                     }
                   </HtmlContent>
