@@ -330,17 +330,18 @@ async function createRedirects({ graphql, actions, reporter }) {
     })
   })
   parks.map(park => {
-    let oldUrl = '';
-    try {
-      oldUrl = parseUrl(park.oldUrl);
-      if (oldUrl?.pathname !== `/${park.slug}/`) {
-        return actions.createRedirect({
-          fromPath: oldUrl.pathname,
-          toPath: park.slug,
-        })
+    if (park.oldUrl) {
+      try {
+        const oldUrl = parseUrl(park.oldUrl);
+        if (oldUrl?.pathname !== `/${park.slug}/`) {
+          return actions.createRedirect({
+            fromPath: oldUrl.pathname,
+            toPath: park.slug,
+          })
+        }
+      } catch (error) {
+        reporter.warn(`Field oldUrl for park ${park.protectedAreaName} could not be parsed`)
       }
-    } catch (error) {
-      reporter.warn(`Field oldUrl for park ${park.protectedAreaName} could not be parsed`)
     }
   })
 }
