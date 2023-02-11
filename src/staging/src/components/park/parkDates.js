@@ -218,7 +218,7 @@ export default function ParkDates({ data }) {
       isActive: true,
     },
     {
-      display: "Group sites",
+      display: "Groupsites",
       countVar: "groupSites",
       isActive: true,
     },
