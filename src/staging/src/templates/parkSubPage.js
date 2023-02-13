@@ -9,6 +9,7 @@ import HTMLArea from "../components/HTMLArea"
 import Seo from "../components/seo"
 import PageContent from "../components/pageContent/pageContent"
 import PageMenu from "../components/pageContent/pageMenu"
+import ScrollToTop from "../components/scrollToTop"
 
 import "../styles/staticContent1.scss"
 
@@ -83,6 +84,7 @@ export default function ParkSubPage({ data }) {
         description={seo?.metaDescription}
         keywords={seo?.metaKeywords}
       />
+      <ScrollToTop />
       <div className="max-width-override" ref={sectionRefs[0]}>
         <Header mode="internal" content={menuContent} />
       </div>
