@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react"
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import { graphql } from "gatsby"
 import axios from "axios"
 import {
@@ -202,6 +202,9 @@ export default function FindAPark({ location, data }) {
 
   const [openQuickView, setOpenQuickView] = useState(false)
 
+  const searchRef = useRef(null)
+  const searchMobileRef = useRef(null)
+
   const breadcrumbs = [
     <Link key="1" href="/">
       Home
@@ -296,6 +299,8 @@ export default function FindAPark({ location, data }) {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value)
+    searchRef.current.scrollIntoView({ behavior: 'smooth' })
+    searchMobileRef.current.scrollIntoView({ behavior: 'smooth' })
   }
 
   const handleClickOpenFilter = () => {
@@ -475,9 +480,6 @@ export default function FindAPark({ location, data }) {
     setTotalResults,
   ])
 
-  useEffect(() => {
-    window[`scrollTo`]({ top: 0, behavior: `smooth` })
-  }, [currentPage])
 
  const getParkName = item => item.parkNameType === PARK_NAME_TYPE.Escaped
 
@@ -553,6 +555,7 @@ export default function FindAPark({ location, data }) {
                         placeholder="e.g. Alice Lake Park"
                         className="park-search-text-box h50p"
                         value={inputText}
+                        ref={searchMobileRef}
                         onChange={event => {
                           setInputText(event.target.value)
                         }}
@@ -617,6 +620,7 @@ export default function FindAPark({ location, data }) {
                               placeholder="e.g. Alice Lake Park"
                               className="park-search-text-box h50p"
                               value={inputText}
+                              ref={searchRef}
                               onChange={event => {
                                 setInputText(event.target.value)
                               }}
