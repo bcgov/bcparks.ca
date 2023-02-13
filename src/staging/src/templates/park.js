@@ -658,6 +658,7 @@ export const query = graphql`
           isActive
           icon
           rank
+          isCamping
         }
       }
       
