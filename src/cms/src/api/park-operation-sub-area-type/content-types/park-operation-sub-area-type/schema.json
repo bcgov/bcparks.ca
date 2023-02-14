@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_operation_sub_area_types",
+  "info": {
+    "singularName": "park-operation-sub-area-type",
+    "pluralName": "park-operation-sub-area-types",
+    "displayName": "Park-operation-sub-area-type",
+    "name": "park-operation-sub-area-type"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "subAreaType": {
+      "type": "string"
+    },
+    "subAreaTypeCode": {
+      "type": "string"
+    },
+    "iconUrl": {
+      "type": "string"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "subAreaTypeId": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "parkOperationSubAreas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-operation-sub-area.park-operation-sub-area",
+      "mappedBy": "parkSubAreaType"
+    }
+  }
+}

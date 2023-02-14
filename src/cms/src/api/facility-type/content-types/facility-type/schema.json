@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "facility_types",
+  "info": {
+    "singularName": "facility-type",
+    "pluralName": "facility-types",
+    "displayName": "Facility-type",
+    "name": "facility-type"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "facilityNumber": {
+      "type": "integer"
+    },
+    "facilityName": {
+      "type": "string"
+    },
+    "facilityCode": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "iconNA": {
+      "type": "string"
+    },
+    "rank": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "isCamping": {
+      "type": "boolean"
+    },
+    "parkOperationSubAreas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-operation-sub-area.park-operation-sub-area",
+      "mappedBy": "facilityType"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "fire_centres",
+  "info": {
+    "singularName": "fire-centre",
+    "pluralName": "fire-centres",
+    "displayName": "Fire-centre",
+    "name": "fire-centre"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "fireCentreNumber": {
+      "type": "integer"
+    },
+    "fireCentreName": {
+      "type": "string"
+    },
+    "fireZones": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::fire-zone.fire-zone",
+      "mappedBy": "fireCentre"
+    }
+  }
+}

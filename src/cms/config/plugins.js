@@ -19,4 +19,8 @@ module.exports = ({ env }) => ({
       small: 720,
     },
   },
+  ckeditor5: {
+    enabled: true,
+    resolve: "./src/plugins/strapi-plugin-ckeditor"
+  },
 });

@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "activity_types",
+  "info": {
+    "singularName": "activity-type",
+    "pluralName": "activity-types",
+    "displayName": "Activity-type",
+    "name": "activity-type"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "activityNumber": {
+      "type": "integer"
+    },
+    "activityName": {
+      "type": "string"
+    },
+    "activityCode": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "iconNA": {
+      "type": "string"
+    },
+    "rank": {
+      "type": "integer"
+    },
+    "note": {
+      "type": "string"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "isCamping": {
+      "type": "boolean"
+    }
+  }
+}

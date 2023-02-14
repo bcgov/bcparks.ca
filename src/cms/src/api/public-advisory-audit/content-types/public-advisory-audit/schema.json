@@ -1,0 +1,170 @@
+{
+  "kind": "collectionType",
+  "collectionName": "public_advisory_audits",
+  "info": {
+    "singularName": "public-advisory-audit",
+    "pluralName": "public-advisory-audits",
+    "displayName": "Public-advisory-audit",
+    "name": "public-advisory-audit"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "advisoryNumber": {
+      "type": "integer"
+    },
+    "revisionNumber": {
+      "type": "integer"
+    },
+    "isLatestRevision": {
+      "type": "boolean"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "dcTicketNumber": {
+      "type": "text"
+    },
+    "isSafetyRelated": {
+      "type": "boolean"
+    },
+    "listingRank": {
+      "type": "integer"
+    },
+    "note": {
+      "type": "text"
+    },
+    "latitude": {
+      "type": "float"
+    },
+    "longitude": {
+      "type": "float"
+    },
+    "mapZoom": {
+      "type": "integer"
+    },
+    "isReservationsAffected": {
+      "type": "boolean"
+    },
+    "isAdvisoryDateDisplayed": {
+      "type": "boolean"
+    },
+    "isEffectiveDateDisplayed": {
+      "type": "boolean"
+    },
+    "isEndDateDisplayed": {
+      "type": "boolean"
+    },
+    "isUpdatedDateDisplayed": {
+      "type": "boolean"
+    },
+    "submittedBy": {
+      "type": "string"
+    },
+    "createdDate": {
+      "type": "datetime"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "advisoryDate": {
+      "type": "datetime"
+    },
+    "effectiveDate": {
+      "type": "datetime"
+    },
+    "endDate": {
+      "type": "datetime"
+    },
+    "expiryDate": {
+      "type": "datetime"
+    },
+    "removalDate": {
+      "type": "datetime"
+    },
+    "updatedDate": {
+      "type": "datetime"
+    },
+    "modifiedDate": {
+      "type": "datetime"
+    },
+    "modifiedBy": {
+      "type": "string"
+    },
+    "accessStatus": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::access-status.access-status"
+    },
+    "eventType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::event-type.event-type"
+    },
+    "urgency": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::urgency.urgency"
+    },
+    "advisoryStatus": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::advisory-status.advisory-status"
+    },
+    "protectedAreas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::protected-area.protected-area"
+    },
+    "links": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::link.link",
+      "mappedBy": "publicAdvisoryAudit"
+    },
+    "regions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::region.region"
+    },
+    "sections": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::section.section"
+    },
+    "managementAreas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::management-area.management-area"
+    },
+    "fireZones": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::fire-zone.fire-zone"
+    },
+    "sites": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::site.site"
+    },
+    "fireCentres": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::fire-centre.fire-centre"
+    },
+    "standardMessages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::standard-message.standard-message"
+    },
+    "publishedRevisionNumber": {
+      "type": "integer"
+    }
+  }
+}

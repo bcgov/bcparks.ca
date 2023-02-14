@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_activities",
+  "info": {
+    "name": "ParkActivity",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "isActivityOpen": {
+      "type": "boolean"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "protectedArea": {
+      "via": "parkActivities",
+      "model": "protected-area"
+    },
+    "site": {
+      "via": "parkActivities",
+      "model": "site"
+    },
+    "activityType": {
+      "model": "activity-type"
+    },
+    "modifiedBy": {
+      "type": "string"
+    },
+    "modifiedDate": {
+      "type": "datetime"
+    }
+  }
+}

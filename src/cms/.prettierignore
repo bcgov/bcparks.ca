@@ -13,6 +13,5 @@ exports
 *.cache
 build
 .strapi-updater.json
-plugins/wysiwyg/**
 
 data/**

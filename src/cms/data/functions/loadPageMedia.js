@@ -60,7 +60,7 @@ const loadPageMedia = async () => {
   for await (const file of files) {
     var filename = path.parse(file).base;
     var fileStat = fs.statSync(`${fullMediaPath}/${file}`);
-    const attachment = await strapi.plugins.upload.services.upload.upload({
+    const attachment = await strapi.plugin('upload').services.upload.upload({
       data: {},
       files: {
         path: `${fullMediaPath}/${file}`,

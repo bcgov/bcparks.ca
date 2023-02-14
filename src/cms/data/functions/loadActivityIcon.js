@@ -28,7 +28,7 @@ const loadActivityIcon = async () => {
       });
 
       if (activity) {
-        await strapi.plugins.upload.services.upload.upload({
+        await strapi.plugin("upload").services.upload.upload({
           data: {
             refId: activity.id,
             ref: "activity-type",

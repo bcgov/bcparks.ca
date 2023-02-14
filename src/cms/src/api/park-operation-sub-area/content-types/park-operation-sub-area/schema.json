@@ -1,0 +1,167 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_operation_sub_areas",
+  "info": {
+    "singularName": "park-operation-sub-area",
+    "pluralName": "park-operation-sub-areas",
+    "displayName": "Park-operation-sub-area",
+    "name": "park-operation-sub-area"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "parkSubAreaId": {
+      "type": "integer"
+    },
+    "parkSubAreaTypeId": {
+      "type": "integer"
+    },
+    "parkSubArea": {
+      "type": "string"
+    },
+    "parkSubAreaType": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::park-operation-sub-area-type.park-operation-sub-area-type",
+      "inversedBy": "parkOperationSubAreas"
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "parkOperationSubAreas"
+    },
+    "parkOperationSubAreaDates": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-operation-sub-area-date.park-operation-sub-area-date",
+      "mappedBy": "parkOperationSubArea"
+    },
+    "orcsSiteNumber": {
+      "type": "string"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "isOpen": {
+      "type": "boolean"
+    },
+    "hasReservations": {
+      "type": "boolean"
+    },
+    "hasFirstComeFirstServed": {
+      "type": "boolean"
+    },
+    "hasBackcountryPermits": {
+      "type": "boolean"
+    },
+    "hasBackcountryReservations": {
+      "type": "boolean"
+    },
+    "isCleanAirSite": {
+      "type": "boolean"
+    },
+    "totalCapacity": {
+      "type": "string"
+    },
+    "frontcountrySites": {
+      "type": "string"
+    },
+    "reservableSites": {
+      "type": "string"
+    },
+    "nonReservableSites": {
+      "type": "string"
+    },
+    "vehicleSites": {
+      "type": "string"
+    },
+    "vehicleSitesReservable": {
+      "type": "string"
+    },
+    "doubleSites": {
+      "type": "string"
+    },
+    "pullThroughSites": {
+      "type": "string"
+    },
+    "rvSites": {
+      "type": "string"
+    },
+    "rvSitesReservable": {
+      "type": "string"
+    },
+    "electrifiedSites": {
+      "type": "string"
+    },
+    "longStaySites": {
+      "type": "string"
+    },
+    "walkInSites": {
+      "type": "string"
+    },
+    "walkInSitesReservable": {
+      "type": "string"
+    },
+    "groupSites": {
+      "type": "string"
+    },
+    "groupSitesReservable": {
+      "type": "string"
+    },
+    "backcountrySites": {
+      "type": "string"
+    },
+    "wildernessSites": {
+      "type": "string"
+    },
+    "boatAccessSites": {
+      "type": "string"
+    },
+    "horseSites": {
+      "type": "string"
+    },
+    "cabins": {
+      "type": "string"
+    },
+    "huts": {
+      "type": "string"
+    },
+    "yurts": {
+      "type": "string"
+    },
+    "shelters": {
+      "type": "string"
+    },
+    "boatLaunches": {
+      "type": "string"
+    },
+    "openNote": {
+      "type": "text"
+    },
+    "serviceNote": {
+      "type": "text"
+    },
+    "reservationNote": {
+      "type": "text"
+    },
+    "offSeasonNote": {
+      "type": "text"
+    },
+    "adminNote": {
+      "type": "text"
+    },
+    "parkAccessUnitId": {
+      "type": "integer"
+    },
+    "facilityType": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::facility-type.facility-type",
+      "inversedBy": "parkOperationSubAreas"
+    }
+  }
+}

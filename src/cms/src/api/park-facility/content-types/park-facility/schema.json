@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_facilities",
+  "info": {
+    "singularName": "park-facility",
+    "pluralName": "park-facilities",
+    "displayName": "Park-facility",
+    "name": "park-facility"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "isFacilityOpen": {
+      "type": "boolean"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "parkFacilities"
+    },
+    "site": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::site.site",
+      "inversedBy": "parkFacilities"
+    },
+    "facilityType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::facility-type.facility-type"
+    },
+    "modifiedBy": {
+      "type": "string"
+    },
+    "modifiedDate": {
+      "type": "datetime"
+    }
+  }
+}

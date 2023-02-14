@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "legacy_redirects",
+  "info": {
+    "singularName": "legacy-redirect",
+    "pluralName": "legacy-redirects",
+    "displayName": "Legacy-redirect",
+    "name": "legacy-redirect"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "fromPath": {
+      "type": "string"
+    },
+    "toPath": {
+      "type": "string"
+    }
+  }
+}

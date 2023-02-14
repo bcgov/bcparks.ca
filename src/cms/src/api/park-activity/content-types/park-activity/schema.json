@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_activities",
+  "info": {
+    "singularName": "park-activity",
+    "pluralName": "park-activities",
+    "displayName": "Park-activity",
+    "name": "park-activity"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "isActivityOpen": {
+      "type": "boolean"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "parkActivities"
+    },
+    "site": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::site.site",
+      "inversedBy": "parkActivities"
+    },
+    "activityType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::activity-type.activity-type"
+    },
+    "modifiedBy": {
+      "type": "string"
+    },
+    "modifiedDate": {
+      "type": "datetime"
+    }
+  }
+}

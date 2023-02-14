@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_parks_html_areas",
+  "info": {
+    "icon": "align-justify",
+    "description": "",
+    "displayName": "HTML Area"
+  },
+  "options": {},
+  "attributes": {
+    "HTML": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    }
+  }
+}

@@ -1,3 +1,15 @@
+# To run this Strapi 4 You need 
+
+
+1) download app 
+- connect to DB, create new table 
+2) yarn 
+3) yarn build 
+4) yarn start 
+
+
+
+
 # Backend Development - Strapi Localhost
 
 Building a local version of Strapi is optional, as you can use a remote environment as the datasource. Using a local is useful for testing, and essential for development of new CMS features. If you don't need to run a local version of Strapi, you can skip to the Frontend development section, and ensure you point the .env file to a remote Strapi instance.

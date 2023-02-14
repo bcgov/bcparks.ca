@@ -15,35 +15,26 @@
     "loaddates": "node scripts/refresh-dates.js"
   },
   "dependencies": {
+    "@_sh/strapi-plugin-ckeditor": "^2.0.2",
     "@babel/plugin-transform-block-scoping": "^7.20.11",
-    "@ckeditor/ckeditor5-build-classic": "^29.2.0",
-    "@ckeditor/ckeditor5-react": "^3.0.3",
-    "@ckeditor/ckeditor5-source-editing": "^29.2.0",
-    "@ckeditor/ckeditor5-theme-lark": "^29.2.0",
+    "@ckeditor/ckeditor5-markdown-gfm": "^36.0.0",
+    "@strapi/plugin-documentation": "4.6.0",
+    "@strapi/plugin-graphql": "4.6.0",
+    "@strapi/plugin-users-permissions": "4.6.0",
+    "@strapi/provider-email-nodemailer": "4.6.0",
+    "@strapi/provider-upload-aws-s3": "4.6.0",
+    "@strapi/strapi": "4.6.0",
     "axios": "^0.21.1",
+    "better-sqlite3": "^7.6.2",
     "jwks-rsa": "^2.0.4",
     "knex": "^0.21.19",
     "pg": "^8.5.1",
-    "sqlite3": "^5.0.2",
-    "strapi": "3.6.1",
-    "strapi-admin": "3.6.1",
-    "strapi-connector-bookshelf": "3.6.1",
     "strapi-middleware-cache": "^2.1.7",
-    "strapi-plugin-content-manager": "3.6.1",
-    "strapi-plugin-content-type-builder": "3.6.1",
-    "strapi-plugin-documentation": "^3.6.1",
-    "strapi-plugin-email": "3.6.1",
-    "strapi-plugin-graphql": "^3.6.1",
-    "strapi-plugin-upload": "3.6.1",
-    "strapi-plugin-users-permissions": "3.6.1",
-    "strapi-provider-email-nodemailer": "^3.6.8",
-    "strapi-provider-upload-aws-s3": "^3.6.8",
-    "strapi-utils": "3.6.1",
     "utf8": "^3.0.0"
   },
   "engines": {
-    "node": ">=10.16.0 <=14.x.x",
-    "npm": "^6.0.0"
+    "node": ">=14.19.1 <=16.x.x",
+    "npm": ">=6.0.0"
   },
   "devDependencies": {
     "eslint": "^8.0.0",
@@ -59,5 +50,6 @@
     ],
     "testEnvironment": "node",
     "testTimeout": 60000
-  }
+  },
+  "workspaces": ["./src/plugins/strapi-plugin-ckeditor"]
 }
