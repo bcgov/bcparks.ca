@@ -61,7 +61,7 @@ export default function CampingDetails({ data }) {
               className="btn btn-warning btn-block booking-button p-2"
               onClick={() => toCamping()}
             >
-              Book a campsite
+              Book camping
             </button>
           </Col>
         )}
