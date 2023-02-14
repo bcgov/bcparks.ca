@@ -42,7 +42,7 @@ import parksLogo from "../images/Mask_Group_5.png"
 
 import "../styles/search.scss"
 import { PARK_NAME_TYPE } from "../utils/constants";
-import { renderHTML } from "../utils/helpers";
+import { renderHTML, addPrefix, handleImgError  } from "../utils/helpers";
 
 export const query = graphql`
   query {
@@ -912,7 +912,8 @@ export default function FindAPark({ location, data }) {
                                                 alt="park"
                                                 key={index}
                                                 className="search-result-image"
-                                                src={r.parkPhotos[0]}
+                                                src={addPrefix(r.parkPhotos[0])}
+                                                onError={(e) => {handleImgError(e, r.parkPhotos[0])}}
                                               />
                                             </div>
                                           )}
@@ -934,7 +935,8 @@ export default function FindAPark({ location, data }) {
                                                         alt="park carousel"
                                                         key={index}
                                                         className="search-result-image"
-                                                        src={`${item}`}
+                                                        src={addPrefix(item)}
+                                                        onError={(e) => {handleImgError(e, item)}}
                                                       />
                                                     )
                                                   }
@@ -1107,7 +1109,8 @@ export default function FindAPark({ location, data }) {
                                                 alt="park"
                                                 key={index}
                                                 className="search-result-image"
-                                                src={r.parkPhotos[0]}
+                                                src={addPrefix(r.parkPhotos[0])}
+                                                onError={(e) => {handleImgError(e, r.parkPhotos[0])}}
                                               />
                                             </div>
                                           )}
@@ -1129,7 +1132,8 @@ export default function FindAPark({ location, data }) {
                                                         alt="park carousel"
                                                         key={index}
                                                         className="search-result-image"
-                                                        src={`${item}`}
+                                                        src={addPrefix(item)}
+                                                        onError={(e) => {handleImgError(e, item)}}
                                                       />
                                                     )
                                                   }

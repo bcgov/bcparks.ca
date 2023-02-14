@@ -38,9 +38,6 @@
     "imageUrl": {
       "type": "string"
     },
-    "thumbnailUrl": {
-      "type": "string"
-    },
     "isFeatured": {
       "type": "boolean",
       "default": false,

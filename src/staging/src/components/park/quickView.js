@@ -5,6 +5,8 @@ import Carousel from "react-material-ui-carousel"
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import AdvisorySummary from "../../components/search/advisorySummary";
 
+import { addPrefix, handleImgError } from "../../utils/helpers"
+
 import dayUseIcon from "../../images/park/day-use.png"
 import parksLogo from "../../images/Mask_Group_5.png"
 
@@ -29,7 +31,8 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
                     <img
                         alt="park"
                         className="search-result-image"
-                        src={park.parkPhotos[0]}
+                        src={addPrefix(park.parkPhotos[0])}
+                        onError={(e) => {handleImgError(e, park.parkPhotos[0])}}
                     />
                 </div>
             )}
@@ -50,7 +53,8 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
                                         alt="park carousel"
                                         key={index}
                                         className="search-result-image"
-                                        src={`${item}`}
+                                        src={addPrefix(item)}
+                                        onError={(e) => {handleImgError(e, item)}}
                                     />
                                 )
                             }

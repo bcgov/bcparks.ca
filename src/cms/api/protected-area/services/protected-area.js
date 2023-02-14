@@ -96,12 +96,12 @@ module.exports = {
         // featured and then by sort order (with fallback to date, then id)
         knex.raw(
           `array(
-            SELECT "thumbnailUrl"
+            SELECT "imageUrl"
             FROM park_photos
             WHERE park_photos.orcs = protected_areas.orcs
                 AND park_photos.published_at IS NOT NULL
                 AND park_photos."isActive" = TRUE
-                AND park_photos."thumbnailUrl" IS NOT NULL
+                AND park_photos."imageUrl" IS NOT NULL
             ORDER BY park_photos."isFeatured" DESC NULLS LAST,
                 park_photos."sortOrder" ASC NULLS LAST,
                 park_photos."dateTaken" DESC,

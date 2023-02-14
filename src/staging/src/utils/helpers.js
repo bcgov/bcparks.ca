@@ -30,3 +30,11 @@ export const renderBreadcrumbs = (menuContent, pageContext) => {
         return breadcrumbItems.reverse()
     }
 }
+export const addPrefix = (str) => {
+    const i = str.lastIndexOf("/")
+    return str.substring(0, i+1) + "small_" + str.substring(i+1, str.length)
+}
+export const handleImgError = (e, imgSrc) => {
+    e.target.onError = null
+    e.target.src = imgSrc
+}

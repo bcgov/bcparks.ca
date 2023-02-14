@@ -21,7 +21,6 @@ const loadParkPhoto = async () => {
         dateTaken: loadUtils.formatDate(data.dateTaken),
         photographer: data.photographer,
         imageUrl: data.image,
-        thumbnailUrl: data.thumbnail,
         isActive: data.active === true ? true : false,
       };
 
