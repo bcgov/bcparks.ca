@@ -188,7 +188,7 @@ const MegaMenu = ({ content, menuMode }) => {
           <>
             <nav className={"menu-level menu-level--" + item.treeLevel}>
               <ul className="menu-button-list">
-                <li className="menu-button menu-back">
+                <li className="menu-button menu-back" role="presentation">
                   <span
                     className="menu-button__title"
                     role="button"
@@ -203,8 +203,8 @@ const MegaMenu = ({ content, menuMode }) => {
                     <i className="menu-button__arr fa fa-chevron-left"></i> Back
                   </span>
                 </li>
-                <li className="menu-button menu-header">
-                  <Link className="menu-button__title" to={item.url || "/"}>
+                <li className="menu-button menu-header" role="presentation">
+                  <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
                     {item.title}
                   </Link>
                 </li>
@@ -217,6 +217,7 @@ const MegaMenu = ({ content, menuMode }) => {
                         ? "selected"
                         : "unselected")
                     }
+                    role="presentation"
                   >
                     <span
                       className="menu-button__title"
@@ -272,8 +273,8 @@ const MegaMenu = ({ content, menuMode }) => {
         {!item.hasChildren && (
           <nav>
             <ul>
-              <li className="menu-button menu-header">
-                <Link className="menu-button__title" to={item.url || "/"}>
+              <li className="menu-button menu-header" role="presentation">
+                <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
                   {item.title}
                 </Link>
               </li>

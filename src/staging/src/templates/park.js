@@ -420,6 +420,8 @@ export default function ParkTemplate({ data }) {
                       reservations: park.reservations,
                       hasDayUsePass: hasDayUsePass,
                       hasReservations: hasReservations,
+                      parkOperation: park.parkOperation,
+                      subAreas: park.parkOperationSubAreas,
                     }}
                   />
                 </div>
@@ -656,6 +658,7 @@ export const query = graphql`
           isActive
           icon
           rank
+          isCamping
         }
       }
       

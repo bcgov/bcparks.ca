@@ -9,6 +9,7 @@ import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
 
+import { countsList } from "../../utils/constants"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
 function toCamping() {
@@ -17,6 +18,9 @@ function toCamping() {
 
 export default function CampingDetails({ data }) {
   const activeCampings = data.activeCampings
+  const parkOperation = data.parkOperation
+  const subAreas = data.subAreas || []
+  subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
   const [reservationsExpanded, setReservationsExpanded] = useState(false)
   const [expanded, setExpanded] = useState(
     Array(activeCampings.length).fill(false)
@@ -31,6 +35,13 @@ export default function CampingDetails({ data }) {
 
   const toggleReservations = () => {
     setReservationsExpanded(!reservationsExpanded)
+  }
+
+  const isShown = (count, countGroup) => {
+    return countGroup[count.countVar] &&
+      countGroup[count.countVar] !== "0" &&
+      countGroup[count.countVar] !== "*" &&
+      count.isActive;
   }
 
   return (
@@ -58,6 +69,32 @@ export default function CampingDetails({ data }) {
           <Heading>Camping</Heading>
         </Col>
       </Row>
+      {parkOperation &&
+      <Row>
+        <Col>
+          <dl>
+            {countsList
+              .filter(
+                count =>
+                  isShown(count, parkOperation)).length > 0
+              && subAreas
+                .filter(subArea => subArea.isActive).length !== 1
+              && (<>
+                <dt>Total number of campsites</dt>
+                {countsList
+                  .filter(count => isShown(count, parkOperation))
+                  .map((count, index) => (
+                    <dd key={index} className="mb-0">
+                      Total {count.display.toLowerCase()}:{" "}
+                      {parkOperation[count.countVar]}
+                    </dd>
+                  ))}
+              </>
+              )}
+          </dl>
+        </Col>
+      </Row>
+      }
       <Row>
         <Col>
           {activeCampings.length > 0 && (
