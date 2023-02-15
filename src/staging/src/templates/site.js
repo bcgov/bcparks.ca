@@ -427,6 +427,7 @@ export const query = graphql`
           icon
           iconNA
           rank
+          defaultDescription
         }
       }
       parkFacilities {
@@ -441,6 +442,7 @@ export const query = graphql`
           icon
           iconNA
           rank
+          defaultDescription
         }
       }
       parkOperation {

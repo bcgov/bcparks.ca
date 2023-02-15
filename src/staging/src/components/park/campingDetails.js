@@ -10,6 +10,7 @@ import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
 
 import { countsList } from "../../utils/constants"
+import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
 function toCamping() {
@@ -172,7 +173,11 @@ export default function CampingDetails({ data }) {
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
                 <div className="p-4">
-                  <HtmlContent>{camping.description}</HtmlContent>
+                  <HtmlContent>
+                    {!isNullOrWhiteSpace(camping.description) ? 
+                      camping.description : (camping?.activityType?.defaultDescription || camping?.facilityType?.defaultDescription)
+                    }
+                  </HtmlContent>
                 </div>
               </Accordion.Collapse>
             </Accordion>

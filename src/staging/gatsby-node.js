@@ -54,6 +54,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     activityCode: String
     rank: Int
     isCamping: Boolean
+    defaultDescription: String
   }
 
   type StrapiFacilityTypes implements Node {
@@ -62,6 +63,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     facilityCode: String
     rank: Int
     isCamping: Boolean
+    defaultDescription: String
   }
 
   type StrapiParkAccessStatusParkActivities implements Node {
