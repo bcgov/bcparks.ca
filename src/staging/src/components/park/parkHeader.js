@@ -33,7 +33,7 @@ export default function ParkHeader({
                       className="yellow-button mr-3"
                       href={reservationsURL}
                     >
-                      Book a campsite
+                      Book camping
                     </Button>
                   )}
                   {hasDayUsePass && (
@@ -85,7 +85,7 @@ export default function ParkHeader({
                   className="yellow-button full-width mt-2"
                   href={reservationsURL}
                 >
-                  Book a campsite
+                  Book camping
                 </Button>
               )}
               {hasDayUsePass && (

@@ -306,7 +306,7 @@ const MegaMenu = ({ content, menuMode }) => {
               href="https://camping.bcparks.ca"
               className="btn book-campsite-btn"
             >
-              Book a campsite
+              Book camping
             </a>
           </nav>
         </div>
