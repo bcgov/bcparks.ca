@@ -25,6 +25,7 @@ import CancelIcon from "@material-ui/icons/Cancel"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
 import Carousel from "react-material-ui-carousel"
+import { scrollIntoView } from "seamless-scroll-polyfill";
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -203,8 +204,6 @@ export default function FindAPark({ location, data }) {
   const [openQuickView, setOpenQuickView] = useState(false)
 
   const searchRef = useRef(null)
-  const searchMobileRef = useRef(null)
-
   const breadcrumbs = [
     <Link key="1" href="/">
       Home
@@ -299,8 +298,7 @@ export default function FindAPark({ location, data }) {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value)
-    searchRef.current.scrollIntoView({ behavior: 'smooth' })
-    searchMobileRef.current.scrollIntoView({ behavior: 'smooth' })
+    scrollIntoView(searchRef.current, {behavior: "smooth" })
   }
 
   const handleClickOpenFilter = () => {
@@ -480,7 +478,6 @@ export default function FindAPark({ location, data }) {
     setTotalResults,
   ])
 
-
  const getParkName = item => item.parkNameType === PARK_NAME_TYPE.Escaped
 
   return (
@@ -517,7 +514,7 @@ export default function FindAPark({ location, data }) {
                   <div className="row no-gutters"></div>
                 </div>
               </div>
-              <div className="col-lg-9 col-md-12 col-sm-12">
+              <div className="col-lg-9 col-md-12 col-sm-12" ref={searchRef}>
                 <div className="search-results-list container">
                   <div className="row p20t d-flex">
                     <div className="col-8 d-none d-lg-block">
@@ -555,7 +552,6 @@ export default function FindAPark({ location, data }) {
                         placeholder="e.g. Alice Lake Park"
                         className="park-search-text-box h50p"
                         value={inputText}
-                        ref={searchMobileRef}
                         onChange={event => {
                           setInputText(event.target.value)
                         }}
@@ -620,7 +616,6 @@ export default function FindAPark({ location, data }) {
                               placeholder="e.g. Alice Lake Park"
                               className="park-search-text-box h50p"
                               value={inputText}
-                              ref={searchRef}
                               onChange={event => {
                                 setInputText(event.target.value)
                               }}
