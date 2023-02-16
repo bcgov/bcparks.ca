@@ -1,0 +1,22 @@
+{
+  "parser": "@babel/eslint-parser",
+  "extends": ["eslint:recommended", "prettier"],
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true,
+    "browser": false,
+    "jest": true
+  },
+  "parserOptions": {
+    "requireConfigFile": false,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "globals": {
+    "strapi": true
+  }
+}

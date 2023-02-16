@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_access_statuses-cache",
+  "info": {
+    "singularName": "park-access-status-cache",
+    "pluralName": "park-access-status-caches",
+    "displayName": "Park-access-status-cache",
+    "name": "park-access-status-cache"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "cacheId": {
+      "type": "integer"
+    },
+    "payload": {
+      "type": "json"
+    }
+  }
+}

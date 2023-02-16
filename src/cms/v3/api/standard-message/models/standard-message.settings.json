@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "standard_messages",
+  "info": {
+    "name": "StandardMessage",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "eventType": {
+      "model": "event-type"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_parks_page_sections",
+  "info": {
+    "icon": "book-open",
+    "description": "",
+    "displayName": "PageSection"
+  },
+  "options": {},
+  "attributes": {
+    "sectionTitle": {
+      "type": "string"
+    },
+    "sectionHTML": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    }
+  }
+}

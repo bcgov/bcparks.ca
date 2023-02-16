@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "urgencies",
+  "info": {
+    "name": "Urgency",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "urgency": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "integer"
+    },
+    "color": {
+      "type": "string"
+    }
+  }
+}

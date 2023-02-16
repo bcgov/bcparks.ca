@@ -1,0 +1,5189 @@
+{
+  "parkUrls": [
+    {
+      "orcs": "1094",
+      "url": "https://bcparks.ca/alty-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/alty/"
+    },
+    {
+      "orcs": "1002",
+      "url": "https://bcparks.ca/banks-nii-luutiksm-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/banks_nii_luutiksm/"
+    },
+    {
+      "orcs": "543",
+      "url": "https://bcparks.ca/bear-island-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/bear-isl/"
+    },
+    {
+      "orcs": "1124",
+      "url": "https://bcparks.ca/bella-coola-estuary-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/bella-coola-estuary/"
+    },
+    {
+      "orcs": "1003",
+      "url": "https://bcparks.ca/bishop-bay-monkey-beach-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/bishop_bay_monkey_beach_cons/"
+    },
+    {
+      "orcs": "1125",
+      "url": "https://bcparks.ca/bishop-bay-monkey-beach-corridor-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/bishop_bay_monkey_beach_corridor_cons/"
+    },
+    {
+      "orcs": "1025",
+      "url": "https://bcparks.ca/broughton-archipelago-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/broughton-archipelago/"
+    },
+    {
+      "orcs": "1026",
+      "url": "https://bcparks.ca/burdwood-group-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/burdwood_group/"
+    },
+    {
+      "orcs": "1027",
+      "url": "https://bcparks.ca/burnt-bridge-creek-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/burnt-bridge-crk/"
+    },
+    {
+      "orcs": "545",
+      "url": "https://bcparks.ca/callaghan-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/callaghan/"
+    },
+    {
+      "orcs": "1005",
+      "url": "https://bcparks.ca/calvert-island-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/calvert_is/"
+    },
+    {
+      "orcs": "1029",
+      "url": "https://bcparks.ca/carter-bay-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/carter-bay/"
+    },
+    {
+      "orcs": "1030",
+      "url": "https://bcparks.ca/cascade-sutslem-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/cascade-sutslem/"
+    },
+    {
+      "orcs": "1031",
+      "url": "https://bcparks.ca/catto-creek-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/catto_crk/"
+    },
+    {
+      "orcs": "1065",
+      "url": "https://bcparks.ca/cetan-thurston-bay-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/cetan-thurston_bay/"
+    },
+    {
+      "orcs": "1032",
+      "url": "https://bcparks.ca/clayton-falls-conservancy/",
+      "oldUrl": "https://bcparks.ca/conservancies/clayton-falls/"
+    },
+    {
+      "orcs": "1034",
+      "url": "https://bcparks.ca/clyak-estuary-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/clyak-estuary/"
+    },
+    {
+      "orcs": "1073",
+      "url": "https://bcparks.ca/codville-lagoon-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/codville-lagoon/"
+    },
+    {
+      "orcs": "1007",
+      "url": "https://bcparks.ca/crab-lake-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/crab_lake/"
+    },
+    {
+      "orcs": "1035",
+      "url": "https://bcparks.ca/cranstown-point-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/cranstown-point/"
+    },
+    {
+      "orcs": "562",
+      "url": "https://bcparks.ca/daawuuxusda-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/daawuuxusda/"
+    },
+    {
+      "orcs": "569",
+      "url": "https://bcparks.ca/damaxyaa-heritage-site-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/damaxyaa/"
+    },
+    {
+      "orcs": "1044",
+      "url": "https://bcparks.ca/dean-river-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/dean-river/"
+    },
+    {
+      "orcs": "1108",
+      "url": "https://bcparks.ca/dean-river-corridor-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/dean-river-corridor/"
+    },
+    {
+      "orcs": "559",
+      "url": "https://bcparks.ca/duu-guusd-heritage-site-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/duu_guusd/"
+    },
+    {
+      "orcs": "1049",
+      "url": "https://bcparks.ca/dzawadi-klinaklini-estuary-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/dzawadi_klinaklini_estuary/"
+    },
+    {
+      "orcs": "1068",
+      "url": "https://bcparks.ca/dzawadi-upper-klinaklini-river-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/dzawadi_upper_klinaklini_river/"
+    },
+    {
+      "orcs": "1122",
+      "url": "https://bcparks.ca/ecstall-headwaters-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/ecstall-headwaters/"
+    },
+    {
+      "orcs": "1095",
+      "url": "https://bcparks.ca/ecstall-sparkling-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/ecstall-sparkling/"
+    },
+    {
+      "orcs": "1089",
+      "url": "https://bcparks.ca/ecstall-spokskuut-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/ecstall-spokskuut/"
+    },
+    {
+      "orcs": "1036",
+      "url": "https://bcparks.ca/ellerslie-roscoe-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/ellerslie-roscoe/"
+    },
+    {
+      "orcs": "1037",
+      "url": "https://bcparks.ca/emily-lake-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/emily-lk/"
+    },
+    {
+      "orcs": "556",
+      "url": "https://bcparks.ca/este-tiwilh-sigurd-creek-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/este-tiwilh_sigurd_crk/"
+    },
+    {
+      "orcs": "1091",
+      "url": "https://bcparks.ca/ethelda-bay-tennant-island-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/ethelda_tennant_isl/"
+    },
+    {
+      "orcs": "1092",
+      "url": "https://bcparks.ca/europa-lake-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/europa_lake/"
+    },
+    {
+      "orcs": "343",
+      "url": "https://bcparks.ca/fiordland-conservancy/",
+      "oldUrl": "https://bcparks.ca/conservancies/fiordland/"
+    },
+    {
+      "orcs": "1039",
+      "url": "https://bcparks.ca/forward-harbour-aexeweyem-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/forward_harbour/"
+    },
+    {
+      "orcs": "1011",
+      "url": "https://bcparks.ca/gitxaala-nii-luutiksm-kitkatla-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/gitxaala_nii_luutiksm_kitkatla/"
+    },
+    {
+      "orcs": "1042",
+      "url": "https://bcparks.ca/goat-cove-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/goat-cove/"
+    },
+    {
+      "orcs": "1080",
+      "url": "https://bcparks.ca/golden-gate-xaat-yadi-aani-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/golden-gate/"
+    },
+    {
+      "orcs": "1043",
+      "url": "https://bcparks.ca/goose-bay-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/goose-bay/"
+    },
+    {
+      "orcs": "1096",
+      "url": "https://bcparks.ca/gunboat-harbour-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/gunboat-harbour/"
+    },
+    {
+      "orcs": "547",
+      "url": "https://bcparks.ca/hakai-luxvbalis-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/hakai_luxvbalis/"
+    },
+    {
+      "orcs": "596",
+      "url": "https://bcparks.ca/hanna-tintina-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/hanna-tintina/"
+    },
+    {
+      "orcs": "1072",
+      "url": "https://bcparks.ca/henyemdzi-mekola-yorke-island-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/yorke/"
+    },
+    {
+      "orcs": "1074",
+      "url": "https://bcparks.ca/hot-springs-no-name-creek-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/hotsprings-no-name-crk/"
+    },
+    {
+      "orcs": "9457",
+      "url": "https://bcparks.ca/huchsduwachsdu-nuyem-jees-kitlope-heritage-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kitlope/"
+    },
+    {
+      "orcs": "1000",
+      "url": "https://bcparks.ca/hunwadi-ahnuhati-bald-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/hunwadi/"
+    },
+    {
+      "orcs": "561",
+      "url": "https://bcparks.ca/i7loqaw7-100-lakes-plateau-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/i7loqaw7-100-lks-plat/"
+    },
+    {
+      "orcs": "568",
+      "url": "https://bcparks.ca/indian-lake-hitchcock-creek-at-chini-sha-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/indian-lk/"
+    },
+    {
+      "orcs": "1040",
+      "url": "https://bcparks.ca/jump-across-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/jump-across/"
+    },
+    {
+      "orcs": "563",
+      "url": "https://bcparks.ca/kamdis-heritage-site-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kamdis/"
+    },
+    {
+      "orcs": "1118",
+      "url": "https://bcparks.ca/kdistsausk-turtle-point-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kdistsausk_turtle_point_conservancy/"
+    },
+    {
+      "orcs": "1097",
+      "url": "https://bcparks.ca/kennedy-island-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kennedy-isl/"
+    },
+    {
+      "orcs": "1098",
+      "url": "https://bcparks.ca/khtada-lake-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/khtada-lk/"
+    },
+    {
+      "orcs": "1100",
+      "url": "https://bcparks.ca/khutzeymateen-inlet-conservancy/",
+      "oldUrl": "https://bcparks.ca/conservancies/khutzeymateen-inlet/"
+    },
+    {
+      "orcs": "1078",
+      "url": "https://bcparks.ca/khutzeymateen-inlet-west-conservancy/",
+      "oldUrl": "https://bcparks.ca/conservancies/khutzeymateen-inlet-west/"
+    },
+    {
+      "orcs": "1099",
+      "url": "https://bcparks.ca/khyex-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/khyex/"
+    },
+    {
+      "orcs": "1045",
+      "url": "https://bcparks.ca/kilbella-estuary-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kilbella-estuary/"
+    },
+    {
+      "orcs": "1046",
+      "url": "https://bcparks.ca/kimsquit-estuary-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kimsquit-estuary/"
+    },
+    {
+      "orcs": "1013",
+      "url": "https://bcparks.ca/kitasoo-spirit-bear-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kitasoo_spirit_bear/"
+    },
+    {
+      "orcs": "1093",
+      "url": "https://bcparks.ca/klewnuggit-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/klewnuggit/"
+    },
+    {
+      "orcs": "1014",
+      "url": "https://bcparks.ca/klgaan-klekane-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/klgaan_klekane/"
+    },
+    {
+      "orcs": "1017",
+      "url": "https://bcparks.ca/kmooda-lowe-gamble-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kmooda/"
+    },
+    {
+      "orcs": "1001",
+      "url": "https://bcparks.ca/knabiyaaxl-ashdown-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/knabiyaaxl_ashdown/"
+    },
+    {
+      "orcs": "1016",
+      "url": "https://bcparks.ca/koeye-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/koeye/"
+    },
+    {
+      "orcs": "1012",
+      "url": "https://bcparks.ca/kootz-khutze-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kootze/"
+    },
+    {
+      "orcs": "1114",
+      "url": "https://bcparks.ca/ksgaxl-stephens-island-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/ksgaxl-stephens-is/"
+    },
+    {
+      "orcs": "1101",
+      "url": "https://bcparks.ca/ksi-xanmaas-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/ksi-x-anmaas/"
+    },
+    {
+      "orcs": "1022",
+      "url": "https://bcparks.ca/ksi-xtsatkw-stagoo-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/ksi_xtsatkw_stagoo/"
+    },
+    {
+      "orcs": "1020",
+      "url": "https://bcparks.ca/ktii-racey-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/ktii_racey_inlet/"
+    },
+    {
+      "orcs": "1105",
+      "url": "https://bcparks.ca/ktisgaidz-macdonald-bay-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/ktisgaidz_macdonald_bay/"
+    },
+    {
+      "orcs": "1102",
+      "url": "https://bcparks.ca/ktsmktaani-union-lake-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kts-mkta-ani-union-lk/"
+    },
+    {
+      "orcs": "564",
+      "url": "https://bcparks.ca/kunxalas-heritage-site-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kunxalas/"
+    },
+    {
+      "orcs": "566",
+      "url": "https://bcparks.ca/kuuna-gwaay-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kuuna_gwaay/"
+    },
+    {
+      "orcs": "1123",
+      "url": "https://bcparks.ca/kwaal-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kwaal/"
+    },
+    {
+      "orcs": "1050",
+      "url": "https://bcparks.ca/kwatna-estuary-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kwatna-estuary/"
+    },
+    {
+      "orcs": "552",
+      "url": "https://bcparks.ca/kzuzalt-twin-two-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/kzuzalt/"
+    },
+    {
+      "orcs": "1051",
+      "url": "https://bcparks.ca/lady-douglas-don-penninsula-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/lady-douglas/"
+    },
+    {
+      "orcs": "1103",
+      "url": "https://bcparks.ca/larcom-lagoon-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/larcom-lagoon/"
+    },
+    {
+      "orcs": "1006",
+      "url": "https://bcparks.ca/lax-kagaas-campania-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/lax_kagaas_campania/"
+    },
+    {
+      "orcs": "1004",
+      "url": "https://bcparks.ca/lax-kul-nii-luutiksm-bonilla-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/lax_kul_nii_luutiksm_bonilla/"
+    },
+    {
+      "orcs": "1090",
+      "url": "https://bcparks.ca/lax-kwaxl-dundas-melville-islands-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/lax_kwaxl_dundas_melville_islands/"
+    },
+    {
+      "orcs": "1009",
+      "url": "https://bcparks.ca/lax-kwil-dziidz-fin-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/lax_kwil_dziidz_fin/"
+    },
+    {
+      "orcs": "1056",
+      "url": "https://bcparks.ca/lockhart-gordon-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/lockhart-gordon/"
+    },
+    {
+      "orcs": "541",
+      "url": "https://bcparks.ca/long-island-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/long-isl/"
+    },
+    {
+      "orcs": "1104",
+      "url": "https://bcparks.ca/lucy-islands-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/lucy-isl/"
+    },
+    {
+      "orcs": "1052",
+      "url": "https://bcparks.ca/machmell-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/machmell/"
+    },
+    {
+      "orcs": "1008",
+      "url": "https://bcparks.ca/mahpahkum-ahkwuna-deserters-walker-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/deserters_walker/"
+    },
+    {
+      "orcs": "1106",
+      "url": "https://bcparks.ca/manzanita-cove-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/manzanita-cove/"
+    },
+    {
+      "orcs": "1116",
+      "url": "https://bcparks.ca/maxtaktsmaa-union-passage-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/maxtaktsmaa/"
+    },
+    {
+      "orcs": "557",
+      "url": "https://bcparks.ca/mkwalts-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/mkwalts/"
+    },
+    {
+      "orcs": "1010",
+      "url": "https://bcparks.ca/moksgmol-chapple-cornwall-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/moksgmol_chapple_cornwall/"
+    },
+    {
+      "orcs": "1081",
+      "url": "https://bcparks.ca/monarch-mountain-a-xeegi-deiyi-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/monarch-mt/"
+    },
+    {
+      "orcs": "1018",
+      "url": "https://bcparks.ca/monckton-nii-luutiksm-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/monckton/"
+    },
+    {
+      "orcs": "1079",
+      "url": "https://bcparks.ca/mount-minto-kiyan-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/mt-minto/"
+    },
+    {
+      "orcs": "525",
+      "url": "https://bcparks.ca/nakina-inklin-rivers-kuthai-area-yawu-yaa-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/nakina-inklin-kuthai/"
+    },
+    {
+      "orcs": "523",
+      "url": "https://bcparks.ca/nakina-inklin-rivers-yawu-yaa-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/nakina-inklin-rvs/"
+    },
+    {
+      "orcs": "1053",
+      "url": "https://bcparks.ca/namu-conservancy/",
+      "oldUrl": "https://bcparks.ca/conservancies/namu/"
+    },
+    {
+      "orcs": "549",
+      "url": "https://bcparks.ca/namu-corridor-conservancy/",
+      "oldUrl": "https://bcparks.ca/conservancies/namu-corridor/"
+    },
+    {
+      "orcs": "567",
+      "url": "https://bcparks.ca/nang-xaldangaas-heritage-site-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/nang-xaldangaas/"
+    },
+    {
+      "orcs": "593",
+      "url": "https://bcparks.ca/neah-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/ne-ah/"
+    },
+    {
+      "orcs": "1075",
+      "url": "https://bcparks.ca/negia-nekite-estuary-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/nekite/"
+    },
+    {
+      "orcs": "546",
+      "url": "https://bcparks.ca/nlhaxten-cerise-creek-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/nlhaxten-cerise-crk/"
+    },
+    {
+      "orcs": "1054",
+      "url": "https://bcparks.ca/nooseneck-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/nooseseck/"
+    },
+    {
+      "orcs": "544",
+      "url": "https://bcparks.ca/north-spit-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/north-spit/"
+    },
+    {
+      "orcs": "1055",
+      "url": "https://bcparks.ca/outer-central-coast-islands-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/outer-central-coast-isl/"
+    },
+    {
+      "orcs": "1057",
+      "url": "https://bcparks.ca/owikeno-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/owikeno/"
+    },
+    {
+      "orcs": "1109",
+      "url": "https://bcparks.ca/pa-aat-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/pa-aat/"
+    },
+    {
+      "orcs": "1038",
+      "url": "https://bcparks.ca/palemin-estero-basin-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/estero_basin/"
+    },
+    {
+      "orcs": "1071",
+      "url": "https://bcparks.ca/penrose-ripon-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/penrose-ripon/"
+    },
+    {
+      "orcs": "1058",
+      "url": "https://bcparks.ca/phillips-estuary-nacinuxw-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/phillips/"
+    },
+    {
+      "orcs": "1059",
+      "url": "https://bcparks.ca/polkinghorne-islands-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/polkinghorne_isl/"
+    },
+    {
+      "orcs": "1019",
+      "url": "https://bcparks.ca/pooley-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pooley_is/"
+    },
+    {
+      "orcs": "539",
+      "url": "https://bcparks.ca/port-arthur-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/port-arthur/"
+    },
+    {
+      "orcs": "1015",
+      "url": "https://bcparks.ca/qaltanaas-aaltanhash-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/qaltanaas_aaltanhash_cons/"
+    },
+    {
+      "orcs": "1041",
+      "url": "https://bcparks.ca/qudes-gillard-jimmy-judd-island-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/gillard/"
+    },
+    {
+      "orcs": "553",
+      "url": "https://bcparks.ca/qwalimak-upper-birkenhead-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/qwalimak/"
+    },
+    {
+      "orcs": "1024",
+      "url": "https://bcparks.ca/qwiquallaaq-boat-bay-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/boat_bay/"
+    },
+    {
+      "orcs": "1060",
+      "url": "https://bcparks.ca/rescue-bay-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/rescue-bay/"
+    },
+    {
+      "orcs": "1061",
+      "url": "https://bcparks.ca/restoration-bay-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/restoration-bay/"
+    },
+    {
+      "orcs": "542",
+      "url": "https://bcparks.ca/sanctuary-bay-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/sanctuary-bay/"
+    },
+    {
+      "orcs": "538",
+      "url": "https://bcparks.ca/sand-point-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/sand-point/"
+    },
+    {
+      "orcs": "570",
+      "url": "https://bcparks.ca/sgaay-taw-siiwaay-kadjuu-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/sgaay_taw/"
+    },
+    {
+      "orcs": "1110",
+      "url": "https://bcparks.ca/shearwater-hot-springs-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/shearwater_hot_springs/"
+    },
+    {
+      "orcs": "1063",
+      "url": "https://bcparks.ca/sheemahant-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/sheemahant/"
+    },
+    {
+      "orcs": "1111",
+      "url": "https://bcparks.ca/simpson-lake-east-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/simpson_lk_east/"
+    },
+    {
+      "orcs": "1112",
+      "url": "https://bcparks.ca/skeena-bank-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/skeena-bank/"
+    },
+    {
+      "orcs": "1048",
+      "url": "https://bcparks.ca/smithers-island-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/smithers-isl/"
+    },
+    {
+      "orcs": "1113",
+      "url": "https://bcparks.ca/stair-creek-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/stair_creek/"
+    },
+    {
+      "orcs": "9522",
+      "url": "https://bcparks.ca/taku-river-taku-teix-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/taku-rv/"
+    },
+    {
+      "orcs": "9957",
+      "url": "https://bcparks.ca/tenh-dzetle-conservancy/",
+      "oldUrl": "https://bcparks.ca/conservancies/tenh-dzetle/"
+    },
+    {
+      "orcs": "1033",
+      "url": "https://bcparks.ca/thorsen-creek-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/thorsen-crk/"
+    },
+    {
+      "orcs": "1115",
+      "url": "https://bcparks.ca/thulme-falls-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/thulme-falls/"
+    },
+    {
+      "orcs": "571",
+      "url": "https://bcparks.ca/tlall-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/tlall/"
+    },
+    {
+      "orcs": "1066",
+      "url": "https://bcparks.ca/troup-passage-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/troup-passage/"
+    },
+    {
+      "orcs": "9955",
+      "url": "https://bcparks.ca/tsaa-nuna-conservancy/",
+      "oldUrl": "https://bcparks.ca/conservancies/tsaa-nuna/"
+    },
+    {
+      "orcs": "1021",
+      "url": "https://bcparks.ca/tsa-latl-smokehouse-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/smokehouse/"
+    },
+    {
+      "orcs": "9123",
+      "url": "https://bcparks.ca/tutshi-lake-tooch-aayi-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/tutshi-lk/"
+    },
+    {
+      "orcs": "1028",
+      "url": "https://bcparks.ca/ugwiwa-cape-caution-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/cape_caution/"
+    },
+    {
+      "orcs": "1023",
+      "url": "https://bcparks.ca/ugwiwa-cape-caution-blunden-bay-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/blunden_bay/"
+    },
+    {
+      "orcs": "554",
+      "url": "https://bcparks.ca/upper-elaho-valley-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/upper-elaho-valley/"
+    },
+    {
+      "orcs": "1077",
+      "url": "https://bcparks.ca/upper-gladys-river-watsix-deiyi-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/upper-gladys-rv/"
+    },
+    {
+      "orcs": "1067",
+      "url": "https://bcparks.ca/upper-kimsquit-river-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/upper-kimsquit-rv/"
+    },
+    {
+      "orcs": "555",
+      "url": "https://bcparks.ca/upper-rogers-kolii7-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/upper-rogers-kolii7/"
+    },
+    {
+      "orcs": "558",
+      "url": "https://bcparks.ca/upper-soo-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/upper-soo/"
+    },
+    {
+      "orcs": "1069",
+      "url": "https://bcparks.ca/wahkash-point-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/wahkash_pt/"
+    },
+    {
+      "orcs": "1070",
+      "url": "https://bcparks.ca/wakeman-estuary-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/wakeman_estuary/"
+    },
+    {
+      "orcs": "1119",
+      "url": "https://bcparks.ca/wales-harbour-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/wales-harbour/"
+    },
+    {
+      "orcs": "1062",
+      "url": "https://bcparks.ca/wawley-seymour-estuary-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/seymour_estuary/"
+    },
+    {
+      "orcs": "540",
+      "url": "https://bcparks.ca/wilkinson-wright-bay-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/wilkinson-wright-bay/"
+    },
+    {
+      "orcs": "1083",
+      "url": "https://bcparks.ca/willison-creek-nelson-lake-sit-heeni-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/willison-ck/"
+    },
+    {
+      "orcs": "1120",
+      "url": "https://bcparks.ca/winter-inlet-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/winter-inlet/"
+    },
+    {
+      "orcs": "1117",
+      "url": "https://bcparks.ca/woodworth-lake-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/woodworth-lake/"
+    },
+    {
+      "orcs": "1064",
+      "url": "https://bcparks.ca/xwakwenaxdema-stafford-estuary-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/stafford-estuary/"
+    },
+    {
+      "orcs": "572",
+      "url": "https://bcparks.ca/yaaguun-gandlaay-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/yaaguun_gandlaay/"
+    },
+    {
+      "orcs": "560",
+      "url": "https://bcparks.ca/yaaguun-suu-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/yaaguun_suu/"
+    },
+    {
+      "orcs": "1121",
+      "url": "https://bcparks.ca/zumtela-bay-conservancy/",
+      "oldUrl": "https://bcparks.ca/explore/cnsrvncy/zumtela-bay/"
+    },
+    {
+      "orcs": "3084",
+      "url": "https://bcparks.ca/aleza-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/aleza_er.html"
+    },
+    {
+      "orcs": "3028",
+      "url": "https://bcparks.ca/ambrose-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/ambrose_er.html"
+    },
+    {
+      "orcs": "3013",
+      "url": "https://bcparks.ca/anne-vallee-triangle-island-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/anne_er.html"
+    },
+    {
+      "orcs": "3024",
+      "url": "https://bcparks.ca/baeria-rocks-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/baeria_er.html"
+    },
+    {
+      "orcs": "155",
+      "url": "https://bcparks.ca/ballingall-islets-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/ballingall_er.html"
+    },
+    {
+      "orcs": "3069",
+      "url": "https://bcparks.ca/baynes-island-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/baynes_er.html"
+    },
+    {
+      "orcs": "3086",
+      "url": "https://bcparks.ca/bednesti-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/bednesti_er.html"
+    },
+    {
+      "orcs": "3012",
+      "url": "https://bcparks.ca/beresford-island-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/beresford_er.html"
+    },
+    {
+      "orcs": "3127",
+      "url": "https://bcparks.ca/big-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/bigcreek_er.html"
+    },
+    {
+      "orcs": "3034",
+      "url": "https://bcparks.ca/big-white-mountain-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/bigwhite_er.html"
+    },
+    {
+      "orcs": "3071",
+      "url": "https://bcparks.ca/blackwater-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/blackwater_er.html"
+    },
+    {
+      "orcs": "3058",
+      "url": "https://bcparks.ca/blue-dease-rivers-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/bludease_er.html"
+    },
+    {
+      "orcs": "3048",
+      "url": "https://bcparks.ca/bowen-island-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/bowen_er.html"
+    },
+    {
+      "orcs": "4337",
+      "url": "https://bcparks.ca/bowser-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/bowser_er.html"
+    },
+    {
+      "orcs": "3051",
+      "url": "https://bcparks.ca/browne-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/browne_er.html"
+    },
+    {
+      "orcs": "3006",
+      "url": "https://bcparks.ca/buck-hills-road-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/buckhills_er.html"
+    },
+    {
+      "orcs": "9846",
+      "url": "https://bcparks.ca/burnt-cabin-bog-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/burntcabin_er.html"
+    },
+    {
+      "orcs": "3103",
+      "url": "https://bcparks.ca/byers-conroy-harvey-sinnett-islands-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/bycohasi_er.html"
+    },
+    {
+      "orcs": "3077",
+      "url": "https://bcparks.ca/campbell-brown-kalamalka-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/campbellb_er.html"
+    },
+    {
+      "orcs": "3017",
+      "url": "https://bcparks.ca/canoe-islets-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/canoe_er.html"
+    },
+    {
+      "orcs": "3055",
+      "url": "https://bcparks.ca/cardiff-mountain-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/cardiffmt_er.html"
+    },
+    {
+      "orcs": "4448",
+      "url": "https://bcparks.ca/catherine-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/catherinecrk_er.html"
+    },
+    {
+      "orcs": "3050",
+      "url": "https://bcparks.ca/cecil-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/cecil_er.html"
+    },
+    {
+      "orcs": "3102",
+      "url": "https://bcparks.ca/charlie-cole-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/charlie-cole-creek/"
+    },
+    {
+      "orcs": "3065",
+      "url": "https://bcparks.ca/chasm-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/chasm_er.html"
+    },
+    {
+      "orcs": "3109",
+      "url": "https://bcparks.ca/checleset-bay-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/checleset_er.html"
+    },
+    {
+      "orcs": "3057",
+      "url": "https://bcparks.ca/chickens-neck-mountain-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/chickens_er.html"
+    },
+    {
+      "orcs": "3079",
+      "url": "https://bcparks.ca/chilako-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/chilako_er.html"
+    },
+    {
+      "orcs": "3098",
+      "url": "https://bcparks.ca/chilliwack-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/chilliwackr_er.html"
+    },
+    {
+      "orcs": "3107",
+      "url": "https://bcparks.ca/chunamon-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/chunamon_er.html"
+    },
+    {
+      "orcs": "3082",
+      "url": "https://bcparks.ca/cinema-bog-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/cinemabog_er.html"
+    },
+    {
+      "orcs": "3075",
+      "url": "https://bcparks.ca/clanninick-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/clannickcrk_er.html"
+    },
+    {
+      "orcs": "3126",
+      "url": "https://bcparks.ca/claud-elliott-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/claud_er.html"
+    },
+    {
+      "orcs": "3008",
+      "url": "https://bcparks.ca/clayhurst-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/clayhurst_er.html"
+    },
+    {
+      "orcs": "3001",
+      "url": "https://bcparks.ca/cleland-island-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/cleland_er.html"
+    },
+    {
+      "orcs": "3020",
+      "url": "https://bcparks.ca/columbia-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/columbia_er.html"
+    },
+    {
+      "orcs": "6081",
+      "url": "https://bcparks.ca/comox-lake-bluffs-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/comoxlk_er.html"
+    },
+    {
+      "orcs": "3108",
+      "url": "https://bcparks.ca/cougar-canyon-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/cougarcan_er.html"
+    },
+    {
+      "orcs": "477",
+      "url": "https://bcparks.ca/det-san-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/det_san.html"
+    },
+    {
+      "orcs": "3025",
+      "url": "https://bcparks.ca/dewdney-and-glide-islands-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/dewglid_er.html"
+    },
+    {
+      "orcs": "3101",
+      "url": "https://bcparks.ca/doc-english-bluff-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/doceng_er.html"
+    },
+    {
+      "orcs": "3052",
+      "url": "https://bcparks.ca/drizzle-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/drizzle_er.html"
+    },
+    {
+      "orcs": "3060",
+      "url": "https://bcparks.ca/drywilliam-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/drywilliam_er.html"
+    },
+    {
+      "orcs": "3120",
+      "url": "https://bcparks.ca/duke-of-edinburgh-pine-storm-tree-islets-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/dukeedinb_er.html"
+    },
+    {
+      "orcs": "3002",
+      "url": "https://bcparks.ca/east-redonda-island-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/eastredonda_er.html"
+    },
+    {
+      "orcs": "3134",
+      "url": "https://bcparks.ca/ellis-island-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/ellis_er.html"
+    },
+    {
+      "orcs": "3032",
+      "url": "https://bcparks.ca/evans-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/evans_er.html"
+    },
+    {
+      "orcs": "3033",
+      "url": "https://bcparks.ca/fields-lease-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/fieldsleas_er.html"
+    },
+    {
+      "orcs": "3062",
+      "url": "https://bcparks.ca/fort-nelson-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/fortnels_er.html"
+    },
+    {
+      "orcs": "475",
+      "url": "https://bcparks.ca/francis-point-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/francis_pt_er.html"
+    },
+    {
+      "orcs": "3076",
+      "url": "https://bcparks.ca/fraser-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/fraseriv_er.html"
+    },
+    {
+      "orcs": "3128",
+      "url": "https://bcparks.ca/galiano-island-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/galiano_er.html"
+    },
+    {
+      "orcs": "3133",
+      "url": "https://bcparks.ca/gamble-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/gamblecrk_er.html"
+    },
+    {
+      "orcs": "3104",
+      "url": "https://bcparks.ca/gilnockie-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/gilnockie_er.html"
+    },
+    {
+      "orcs": "3115",
+      "url": "https://bcparks.ca/gingietl-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/gingietl_er.html"
+    },
+    {
+      "orcs": "3068",
+      "url": "https://bcparks.ca/gladys-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/gladys_er.html"
+    },
+    {
+      "orcs": "3056",
+      "url": "https://bcparks.ca/goosegrass-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/goosegras_er.html"
+    },
+    {
+      "orcs": "8312",
+      "url": "https://bcparks.ca/grayling-river-hot-springs-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/grayling_er.html"
+    },
+    {
+      "orcs": "3117",
+      "url": "https://bcparks.ca/haley-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/haley_er.html"
+    },
+    {
+      "orcs": "3100",
+      "url": "https://bcparks.ca/haynes-lease-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/haynes_er.html"
+    },
+    {
+      "orcs": "3087",
+      "url": "https://bcparks.ca/heather-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/heather_er.html"
+    },
+    {
+      "orcs": "3113",
+      "url": "https://bcparks.ca/honeymoon-bay-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/honeymoon_er.html"
+    },
+    {
+      "orcs": "9743",
+      "url": "https://bcparks.ca/hudson-rocks-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/hudson_er.html"
+    },
+    {
+      "orcs": "3064",
+      "url": "https://bcparks.ca/ilgachuz-range-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/ilgachuz_er.html"
+    },
+    {
+      "orcs": "3116",
+      "url": "https://bcparks.ca/katherine-tye-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/kathtye_er.html"
+    },
+    {
+      "orcs": "3040",
+      "url": "https://bcparks.ca/kingcome-river-atlatzi-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/kingatlat_er.html"
+    },
+    {
+      "orcs": "3049",
+      "url": "https://bcparks.ca/kingfisher-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/kingfisher_er.html"
+    },
+    {
+      "orcs": "4460",
+      "url": "https://bcparks.ca/klanawa-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/klanawa_er.html"
+    },
+    {
+      "orcs": "3129",
+      "url": "https://bcparks.ca/klaskish-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/klaskish_er.html"
+    },
+    {
+      "orcs": "8325",
+      "url": "https://bcparks.ca/kotcho-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/kotcho_er.html"
+    },
+    {
+      "orcs": "3004",
+      "url": "https://bcparks.ca/lasqueti-island-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/lasqueti_er.html"
+    },
+    {
+      "orcs": "3093",
+      "url": "https://bcparks.ca/lepas-bay-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/lepas_er.html"
+    },
+    {
+      "orcs": "3031",
+      "url": "https://bcparks.ca/lew-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/lewcrk_er.html"
+    },
+    {
+      "orcs": "3005",
+      "url": "https://bcparks.ca/lily-pad-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/lilypad_er.html"
+    },
+    {
+      "orcs": "9841",
+      "url": "https://bcparks.ca/liumchen-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/liumchen_er.html"
+    },
+    {
+      "orcs": "3036",
+      "url": "https://bcparks.ca/mackinnon-esker-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/macesker_er.html"
+    },
+    {
+      "orcs": "3130",
+      "url": "https://bcparks.ca/mahoney-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/mahoney_er.html"
+    },
+    {
+      "orcs": "3042",
+      "url": "https://bcparks.ca/mara-meadows-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/mara_er.html"
+    },
+    {
+      "orcs": "3110",
+      "url": "https://bcparks.ca/mcqueen-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/mcqueencrk_er.html"
+    },
+    {
+      "orcs": "3105",
+      "url": "https://bcparks.ca/megin-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/megin_er.html"
+    },
+    {
+      "orcs": "3078",
+      "url": "https://bcparks.ca/meridian-road-vanderhoof-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/meridian_er.html"
+    },
+    {
+      "orcs": "9744",
+      "url": "https://bcparks.ca/misty-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/misty_er.html"
+    },
+    {
+      "orcs": "3023",
+      "url": "https://bcparks.ca/moore-mckenny-whitmore-islands-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/moomckwhi_er.html"
+    },
+    {
+      "orcs": "3081",
+      "url": "https://bcparks.ca/morice-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/morice_er.html"
+    },
+    {
+      "orcs": "3123",
+      "url": "https://bcparks.ca/mount-derby-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/mtderby_er.html"
+    },
+    {
+      "orcs": "3125",
+      "url": "https://bcparks.ca/mount-elliot-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/mtelliott_er.html"
+    },
+    {
+      "orcs": "3043",
+      "url": "https://bcparks.ca/mount-griffin-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/mtgriffin_er.html"
+    },
+    {
+      "orcs": "3037",
+      "url": "https://bcparks.ca/mount-griffin-park/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/mtmaxwell_er.html"
+    },
+    {
+      "orcs": "3019",
+      "url": "https://bcparks.ca/mount-sabine-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/mtsabine_er.html"
+    },
+    {
+      "orcs": "3070",
+      "url": "https://bcparks.ca/mount-tinsdale-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/mttinsdale_er.html"
+    },
+    {
+      "orcs": "3016",
+      "url": "https://bcparks.ca/mount-tuam-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/mttuam_er.html"
+    },
+    {
+      "orcs": "3112",
+      "url": "https://bcparks.ca/mount-tzuhalem-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/mttzuhalem_er.html"
+    },
+    {
+      "orcs": "3053",
+      "url": "https://bcparks.ca/narcosli-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/narcosli_er.html"
+    },
+    {
+      "orcs": "3072",
+      "url": "https://bcparks.ca/nechako-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/nechako_er.html"
+    },
+    {
+      "orcs": "3118",
+      "url": "https://bcparks.ca/nimpkish-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/nimpkish_er.html"
+    },
+    {
+      "orcs": "3059",
+      "url": "https://bcparks.ca/ningunsaw-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/ningunsaw_er.html"
+    },
+    {
+      "orcs": "3054",
+      "url": "https://bcparks.ca/nitinat-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/nitinat_er.html"
+    },
+    {
+      "orcs": "3094",
+      "url": "https://bcparks.ca/oak-bay-islands-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/oakbay_er.html"
+    },
+    {
+      "orcs": "8291",
+      "url": "https://bcparks.ca/ospika-cones-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/ospika_er.html"
+    },
+    {
+      "orcs": "3047",
+      "url": "https://bcparks.ca/parker-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/parker_er.html"
+    },
+    {
+      "orcs": "3085",
+      "url": "https://bcparks.ca/patsuk-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/patsuk_er.html"
+    },
+    {
+      "orcs": "3099",
+      "url": "https://bcparks.ca/pitt-polder-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/pitpolder_er.html"
+    },
+    {
+      "orcs": "4232",
+      "url": "https://bcparks.ca/portage-brule-rapids-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/portagbru_er.html"
+    },
+    {
+      "orcs": "3097",
+      "url": "https://bcparks.ca/race-rocks-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/racerocks_er.html"
+    },
+    {
+      "orcs": "3026",
+      "url": "https://bcparks.ca/ram-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/ramcrk_er.html"
+    },
+    {
+      "orcs": "3091",
+      "url": "https://bcparks.ca/raspberry-harbour-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/raspberry_er.html"
+    },
+    {
+      "orcs": "3111",
+      "url": "https://bcparks.ca/robson-bight-michael-bigg-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/robsonb_er.html"
+    },
+    {
+      "orcs": "8123",
+      "url": "https://bcparks.ca/rolla-canyon-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/rollacan_er.html"
+    },
+    {
+      "orcs": "3018",
+      "url": "https://bcparks.ca/rose-islets-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/roseisle_er.html"
+    },
+    {
+      "orcs": "3010",
+      "url": "https://bcparks.ca/rose-spit-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/rosespit_er.html"
+    },
+    {
+      "orcs": "3022",
+      "url": "https://bcparks.ca/ross-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/rosslake_er.html"
+    },
+    {
+      "orcs": "3083",
+      "url": "https://bcparks.ca/san-juan-ridge-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/sanjuan_er.html"
+    },
+    {
+      "orcs": "4361",
+      "url": "https://bcparks.ca/san-juan-river-estuary-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/sanjuanriv_er.html"
+    },
+    {
+      "orcs": "3011",
+      "url": "https://bcparks.ca/sartine-islands-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/sartine_er.html"
+    },
+    {
+      "orcs": "3067",
+      "url": "https://bcparks.ca/satellite-channel-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/satellite_er.html"
+    },
+    {
+      "orcs": "3046",
+      "url": "https://bcparks.ca/sikanni-chief-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/sikanni_er.html"
+    },
+    {
+      "orcs": "3089",
+      "url": "https://bcparks.ca/skagit-river-cottonwoods-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/skagitcot_er.html"
+    },
+    {
+      "orcs": "3021",
+      "url": "https://bcparks.ca/skagit-river-forest-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/skagitfor_er.html"
+    },
+    {
+      "orcs": "3106",
+      "url": "https://bcparks.ca/skagit-river-rhododendrons-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/skagitrho_er.html"
+    },
+    {
+      "orcs": "3063",
+      "url": "https://bcparks.ca/skeena-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/skeena_er.html"
+    },
+    {
+      "orcs": "3092",
+      "url": "https://bcparks.ca/skihist-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/skihist_er.html"
+    },
+    {
+      "orcs": "3088",
+      "url": "https://bcparks.ca/skwaha-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/skwaha_er.html"
+    },
+    {
+      "orcs": "3080",
+      "url": "https://bcparks.ca/smith-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/smith_er.html"
+    },
+    {
+      "orcs": "3003",
+      "url": "https://bcparks.ca/soap-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/soap_er.html"
+    },
+    {
+      "orcs": "3014",
+      "url": "https://bcparks.ca/solander-island-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/solander_er.html"
+    },
+    {
+      "orcs": "3131",
+      "url": "https://bcparks.ca/stoyoma-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/stoyoma_er.html"
+    },
+    {
+      "orcs": "3039",
+      "url": "https://bcparks.ca/sunbeam-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/sunbeam_er.html"
+    },
+    {
+      "orcs": "3090",
+      "url": "https://bcparks.ca/sutton-pass-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/sutton_er.html"
+    },
+    {
+      "orcs": "3041",
+      "url": "https://bcparks.ca/tacheeda-lakes-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/tacheeda_er.html"
+    },
+    {
+      "orcs": "3119",
+      "url": "https://bcparks.ca/tahsish-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/tahsish_er.html"
+    },
+    {
+      "orcs": "3038",
+      "url": "https://bcparks.ca/takla-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/takla_er.html"
+    },
+    {
+      "orcs": "3066",
+      "url": "https://bcparks.ca/ten-mile-point-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/tenmile_er.html"
+    },
+    {
+      "orcs": "3073",
+      "url": "https://bcparks.ca/torkelsen-lake-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/torkelsen_er.html"
+    },
+    {
+      "orcs": "3009",
+      "url": "https://bcparks.ca/tow-hill-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/towhill_er.html"
+    },
+    {
+      "orcs": "3029",
+      "url": "https://bcparks.ca/tranquille-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/tranquille_er.html"
+    },
+    {
+      "orcs": "3132",
+      "url": "https://bcparks.ca/trial-islands-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/trialisle_er.html"
+    },
+    {
+      "orcs": "3007",
+      "url": "https://bcparks.ca/trout-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/troutcrk_er.html"
+    },
+    {
+      "orcs": "3124",
+      "url": "https://bcparks.ca/tsikita-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/tsitikariv_er.html"
+    },
+    {
+      "orcs": "3122",
+      "url": "https://bcparks.ca/tsitika-mountain-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/tsitikamt_er.html"
+    },
+    {
+      "orcs": "3061",
+      "url": "https://bcparks.ca/upper-shuswap-river-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/upshuswap_er.html"
+    },
+    {
+      "orcs": "3030",
+      "url": "https://bcparks.ca/vance-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/vancecrk_er.html"
+    },
+    {
+      "orcs": "3045",
+      "url": "https://bcparks.ca/vladimir-j-krajina-port-chanal-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/vladimir_er.html"
+    },
+    {
+      "orcs": "3035",
+      "url": "https://bcparks.ca/westwick-lakes-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/westwick_er.html"
+    },
+    {
+      "orcs": "3027",
+      "url": "https://bcparks.ca/whipsaw-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/whipsaw_er.html"
+    },
+    {
+      "orcs": "3114",
+      "url": "https://bcparks.ca/williams-creek-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/williamscrk_er.html"
+    },
+    {
+      "orcs": "4455",
+      "url": "https://bcparks.ca/woodley-range-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/woodley_er.html"
+    },
+    {
+      "orcs": "9769",
+      "url": "https://bcparks.ca/yale-garry-oak-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/yalegarry_er.html"
+    },
+    {
+      "orcs": "4471",
+      "url": "https://bcparks.ca/yellow-point-bog-ecological-reserve/",
+      "oldUrl": "https://bcparks.ca/eco_reserve/yellowPointBog.html"
+    },
+    {
+      "orcs": "361",
+      "url": "https://bcparks.ca/adams-lake-bush-creek-site-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/adams_lk_bush_crk/"
+    },
+    {
+      "orcs": "6648",
+      "url": "https://bcparks.ca/adams-lake-marine-park/",
+      "oldUrl": "https://bcparks.ca/parks/adams-lake-marine/"
+    },
+    {
+      "orcs": "338",
+      "url": "https://bcparks.ca/akamina-kishinena-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/akamina/"
+    },
+    {
+      "orcs": "330",
+      "url": "https://bcparks.ca/alexandra-bridge-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/alexandra/"
+    },
+    {
+      "orcs": "90",
+      "url": "https://bcparks.ca/alice-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/alice_lk/"
+    },
+    {
+      "orcs": "520",
+      "url": "https://bcparks.ca/allison-harbour-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/allison_hbr/"
+    },
+    {
+      "orcs": "119",
+      "url": "https://bcparks.ca/allison-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/allison_lk/"
+    },
+    {
+      "orcs": "3931",
+      "url": "https://bcparks.ca/ancient-forest-chun-toh-whudujut-park/",
+      "oldUrl": "https://bcparks.ca/parks/ancient-forest-chun-toh-whudujut/"
+    },
+    {
+      "orcs": "6301",
+      "url": "https://bcparks.ca/anderson-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/anderson_bay/"
+    },
+    {
+      "orcs": "530",
+      "url": "https://bcparks.ca/anderson-flats-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/anderson_flats/"
+    },
+    {
+      "orcs": "9582",
+      "url": "https://bcparks.ca/anstey-hunakwa-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/anstey/"
+    },
+    {
+      "orcs": "49",
+      "url": "https://bcparks.ca/apodaca-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/apodaca/"
+    },
+    {
+      "orcs": "186",
+      "url": "https://bcparks.ca/arbutus-grove-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/arbutus_grove/"
+    },
+    {
+      "orcs": "9453",
+      "url": "https://bcparks.ca/arctic-pacific-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/arctic_pacific_lks/"
+    },
+    {
+      "orcs": "308",
+      "url": "https://bcparks.ca/arrow-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/arrow_lks/"
+    },
+    {
+      "orcs": "9689",
+      "url": "https://bcparks.ca/arrowstone-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/arrowstone/"
+    },
+    {
+      "orcs": "9745",
+      "url": "https://bcparks.ca/artlish-caves-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/artlish_caves/"
+    },
+    {
+      "orcs": "246",
+      "url": "https://bcparks.ca/atlin-aa-tlein-teixi-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/atlin/"
+    },
+    {
+      "orcs": "531",
+      "url": "https://bcparks.ca/atna-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/atna_rv/"
+    },
+    {
+      "orcs": "400",
+      "url": "https://bcparks.ca/babine-lake-marine-park/",
+      "oldUrl": "https://bcparks.ca/parks/babine-lake-marine/"
+    },
+    {
+      "orcs": "329",
+      "url": "https://bcparks.ca/babine-mountains-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/babine_mtn/"
+    },
+    {
+      "orcs": "9584",
+      "url": "https://bcparks.ca/babine-river-corridor-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/babine_rv/"
+    },
+    {
+      "orcs": "117",
+      "url": "https://bcparks.ca/bamberton-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bamberton/"
+    },
+    {
+      "orcs": "9755",
+      "url": "https://bcparks.ca/banana-island-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/banana_is/"
+    },
+    {
+      "orcs": "307",
+      "url": "https://bcparks.ca/bear-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bear_crk/"
+    },
+    {
+      "orcs": "8814",
+      "url": "https://bcparks.ca/bear-glacier-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bear_gl/"
+    },
+    {
+      "orcs": "9783",
+      "url": "https://bcparks.ca/bearhole-lake-park/",
+      "oldUrl": "https://bcparks.ca/parks/bearhole-lake/"
+    },
+    {
+      "orcs": "14",
+      "url": "https://bcparks.ca/beatton-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/beatton/"
+    },
+    {
+      "orcs": "8094",
+      "url": "https://bcparks.ca/beatton-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/beatton_rv/"
+    },
+    {
+      "orcs": "115",
+      "url": "https://bcparks.ca/beaumont-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/beaumont/"
+    },
+    {
+      "orcs": "169",
+      "url": "https://bcparks.ca/beaver-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/beaver_crk/"
+    },
+    {
+      "orcs": "44",
+      "url": "https://bcparks.ca/beaver-point-park/",
+      "oldUrl": "https://bcparks.ca/parks/beaver-point/"
+    },
+    {
+      "orcs": "582",
+      "url": "https://bcparks.ca/beaver-valley-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/beaver_valley/"
+    },
+    {
+      "orcs": "524",
+      "url": "https://bcparks.ca/bechers-prairie-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bechers_prairie/"
+    },
+    {
+      "orcs": "9712",
+      "url": "https://bcparks.ca/bedard-aspen-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bedard_aspen/"
+    },
+    {
+      "orcs": "165",
+      "url": "https://bcparks.ca/bellhouse-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bellhouse/"
+    },
+    {
+      "orcs": "213",
+      "url": "https://bcparks.ca/big-bar-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/big_bar_lk/"
+    },
+    {
+      "orcs": "583",
+      "url": "https://bcparks.ca/big-basin-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/big_basin/"
+    },
+    {
+      "orcs": "8779",
+      "url": "https://bcparks.ca/big-bunsby-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/big_bunsby/"
+    },
+    {
+      "orcs": "9563",
+      "url": "https://bcparks.ca/big-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/big_crk/"
+    },
+    {
+      "orcs": "55",
+      "url": "https://bcparks.ca/bijoux-falls-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bijoux_falls/"
+    },
+    {
+      "orcs": "152",
+      "url": "https://bcparks.ca/birkenhead-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/birkenhead_lk/"
+    },
+    {
+      "orcs": "9565",
+      "url": "https://bcparks.ca/bishop-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bishop_rv/"
+    },
+    {
+      "orcs": "381",
+      "url": "https://bcparks.ca/blackcomb-glacier-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/blackcomb_gl/"
+    },
+    {
+      "orcs": "323",
+      "url": "https://bcparks.ca/blanket-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/blanket_crk/"
+    },
+    {
+      "orcs": "9209",
+      "url": "https://bcparks.ca/bligh-island-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bligh_is/"
+    },
+    {
+      "orcs": "6900",
+      "url": "https://bcparks.ca/blue-earth-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/blue_earth_lk/"
+    },
+    {
+      "orcs": "9713",
+      "url": "https://bcparks.ca/blue-river-black-spruce-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/blue_rv_blackspruce/"
+    },
+    {
+      "orcs": "9714",
+      "url": "https://bcparks.ca/blue-river-pine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/blue_rv_pine/"
+    },
+    {
+      "orcs": "9855",
+      "url": "https://bcparks.ca/bobtail-mountain-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bobtail_mtn/"
+    },
+    {
+      "orcs": "9785",
+      "url": "https://bcparks.ca/bocock-peak-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bocock_peak/"
+    },
+    {
+      "orcs": "9554",
+      "url": "https://bcparks.ca/bodega-ridge-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bodega_ridge/"
+    },
+    {
+      "orcs": "9567",
+      "url": "https://bcparks.ca/bonaparte-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bonaparte/"
+    },
+    {
+      "orcs": "527",
+      "url": "https://bcparks.ca/boothmans-oxbow-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/boothmans_oxbow/"
+    },
+    {
+      "orcs": "427",
+      "url": "https://bcparks.ca/border-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/border_lk/"
+    },
+    {
+      "orcs": "9851",
+      "url": "https://bcparks.ca/boulder-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/boulder_crk/"
+    },
+    {
+      "orcs": "56",
+      "url": "https://bcparks.ca/boundary-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/boundary_crk/"
+    },
+    {
+      "orcs": "129",
+      "url": "https://bcparks.ca/bowron-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bowron_lk/"
+    },
+    {
+      "orcs": "371",
+      "url": "https://bcparks.ca/boyle-point-park/",
+      "oldUrl": "https://bcparks.ca/parks/boyle-point/"
+    },
+    {
+      "orcs": "414",
+      "url": "https://bcparks.ca/brackendale-eagles-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/brackendale_eagles/"
+    },
+    {
+      "orcs": "242",
+      "url": "https://bcparks.ca/brandywine-falls-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/brandywine_falls/"
+    },
+    {
+      "orcs": "166",
+      "url": "https://bcparks.ca/bridal-veil-falls-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bridalveil_falls/"
+    },
+    {
+      "orcs": "57",
+      "url": "https://bcparks.ca/bridge-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bridge_lk/"
+    },
+    {
+      "orcs": "623",
+      "url": "https://bcparks.ca/bridge-river-delta-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bridge_rv/"
+    },
+    {
+      "orcs": "58",
+      "url": "https://bcparks.ca/bromley-rock-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bromley_rock/"
+    },
+    {
+      "orcs": "391",
+      "url": "https://bcparks.ca/broughton-archipelago-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/broughton/"
+    },
+    {
+      "orcs": "456",
+      "url": "https://bcparks.ca/browne-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/browne_lk/"
+    },
+    {
+      "orcs": "372",
+      "url": "https://bcparks.ca/buccaneer-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/buccaneer_bay/"
+    },
+    {
+      "orcs": "214",
+      "url": "https://bcparks.ca/buckinghorse-river-wayside-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/buckinghorse_rv/"
+    },
+    {
+      "orcs": "206",
+      "url": "https://bcparks.ca/bugaboo-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bugaboo/"
+    },
+    {
+      "orcs": "9571",
+      "url": "https://bcparks.ca/bulkley-junction-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bulkley_junction/"
+    },
+    {
+      "orcs": "398",
+      "url": "https://bcparks.ca/bull-canyon-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/bull_canyon/"
+    },
+    {
+      "orcs": "172",
+      "url": "https://bcparks.ca/burges-james-gadsden-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/burges/"
+    },
+    {
+      "orcs": "9868",
+      "url": "https://bcparks.ca/burgoyne-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/burgoyne_bay/"
+    },
+    {
+      "orcs": "532",
+      "url": "https://bcparks.ca/burnie-shea-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/burnie-shea/"
+    },
+    {
+      "orcs": "8555",
+      "url": "https://bcparks.ca/burns-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/burns_lk/"
+    },
+    {
+      "orcs": "9786",
+      "url": "https://bcparks.ca/butler-ridge-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/butler_ridge/"
+    },
+    {
+      "orcs": "9716",
+      "url": "https://bcparks.ca/caligata-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/caligata_lk/"
+    },
+    {
+      "orcs": "9451",
+      "url": "https://bcparks.ca/callaghan-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/callaghan_lk/"
+    },
+    {
+      "orcs": "9847",
+      "url": "https://bcparks.ca/call-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/call_lk/"
+    },
+    {
+      "orcs": "59",
+      "url": "https://bcparks.ca/canim-beach-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/canim_bch/"
+    },
+    {
+      "orcs": "250",
+      "url": "https://bcparks.ca/cape-scott-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cape_scott/"
+    },
+    {
+      "orcs": "9622",
+      "url": "https://bcparks.ca/cariboo-mountains-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cariboo_mt/"
+    },
+    {
+      "orcs": "170",
+      "url": "https://bcparks.ca/cariboo-nature-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cariboo_na/"
+    },
+    {
+      "orcs": "9679",
+      "url": "https://bcparks.ca/cariboo-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cariboo_rv/"
+    },
+    {
+      "orcs": "383",
+      "url": "https://bcparks.ca/carmanah-walbran-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/carmanah/"
+    },
+    {
+      "orcs": "251",
+      "url": "https://bcparks.ca/carp-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/carp_lk/"
+    },
+    {
+      "orcs": "9717",
+      "url": "https://bcparks.ca/castle-rock-hoodoos-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/castle_rock/"
+    },
+    {
+      "orcs": "8778",
+      "url": "https://bcparks.ca/catala-island-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/catala_is/"
+    },
+    {
+      "orcs": "199",
+      "url": "https://bcparks.ca/cathedral-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cathedral/"
+    },
+    {
+      "orcs": "135",
+      "url": "https://bcparks.ca/cedar-point-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cedar_pt/"
+    },
+    {
+      "orcs": "51",
+      "url": "https://bcparks.ca/champion-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/champion_lk/"
+    },
+    {
+      "orcs": "161",
+      "url": "https://bcparks.ca/charlie-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/charlie_lk/"
+    },
+    {
+      "orcs": "435",
+      "url": "https://bcparks.ca/chase-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/chase/"
+    },
+    {
+      "orcs": "26",
+      "url": "https://bcparks.ca/chasm-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/chasm/"
+    },
+    {
+      "orcs": "113",
+      "url": "https://bcparks.ca/chemainus-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/chemainus_rv/"
+    },
+    {
+      "orcs": "124",
+      "url": "https://bcparks.ca/chilliwack-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/chilliwack_rv/"
+    },
+    {
+      "orcs": "428",
+      "url": "https://bcparks.ca/choquette-hot-springs-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/choquette_hs/"
+    },
+    {
+      "orcs": "225",
+      "url": "https://bcparks.ca/christina-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/christina_lk/"
+    },
+    {
+      "orcs": "6860",
+      "url": "https://bcparks.ca/chu-chua-cottonwood-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/chu_chua/"
+    },
+    {
+      "orcs": "85",
+      "url": "https://bcparks.ca/cinnemousun-narrows-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cinnemousun/"
+    },
+    {
+      "orcs": "9469",
+      "url": "https://bcparks.ca/claud-elliott-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/claud_elliott/"
+    },
+    {
+      "orcs": "9502",
+      "url": "https://bcparks.ca/clayoquot-arm-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/clayoquot_arm/"
+    },
+    {
+      "orcs": "9507",
+      "url": "https://bcparks.ca/clayoquot-plateau-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/clayoquot_pl/"
+    },
+    {
+      "orcs": "9768",
+      "url": "https://bcparks.ca/clendinning-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/clendinning/"
+    },
+    {
+      "orcs": "415",
+      "url": "https://bcparks.ca/close-to-the-edge-park/",
+      "oldUrl": "https://bcparks.ca/parks/close-to-the-edge/"
+    },
+    {
+      "orcs": "396",
+      "url": "https://bcparks.ca/codville-lagoon-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/codville_lagoon/"
+    },
+    {
+      "orcs": "185",
+      "url": "https://bcparks.ca/cody-caves-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cody_cvs/"
+    },
+    {
+      "orcs": "334",
+      "url": "https://bcparks.ca/coldwater-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/coldwater_rv/"
+    },
+    {
+      "orcs": "9869",
+      "url": "https://bcparks.ca/collinson-point-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/collinson_pt/"
+    },
+    {
+      "orcs": "362",
+      "url": "https://bcparks.ca/columbia-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/columbia_lk/"
+    },
+    {
+      "orcs": "244",
+      "url": "https://bcparks.ca/conkle-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/conkle_lk/"
+    },
+    {
+      "orcs": "228",
+      "url": "https://bcparks.ca/copeland-islands-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/copeland_is/"
+    },
+    {
+      "orcs": "628",
+      "url": "https://bcparks.ca/copper-johnny-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/copper_johnny/"
+    },
+    {
+      "orcs": "335",
+      "url": "https://bcparks.ca/coquihalla-canyon-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/coquihalla_cyn/"
+    },
+    {
+      "orcs": "336",
+      "url": "https://bcparks.ca/coquihalla-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/coquihalla_rv/"
+    },
+    {
+      "orcs": "390",
+      "url": "https://bcparks.ca/cormorant-channel-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cormorant_ch/"
+    },
+    {
+      "orcs": "9688",
+      "url": "https://bcparks.ca/cornwall-hills-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cornwall_hills/"
+    },
+    {
+      "orcs": "482",
+      "url": "https://bcparks.ca/coste-rocks-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/coste_rocks/"
+    },
+    {
+      "orcs": "60",
+      "url": "https://bcparks.ca/cottonwood-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cottonwood_rv/"
+    },
+    {
+      "orcs": "6161",
+      "url": "https://bcparks.ca/cowichan-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cowichan_rv/"
+    },
+    {
+      "orcs": "629",
+      "url": "https://bcparks.ca/crater-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/crater_lk/"
+    },
+    {
+      "orcs": "177",
+      "url": "https://bcparks.ca/crooked-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/crooked_rv/"
+    },
+    {
+      "orcs": "120",
+      "url": "https://bcparks.ca/crowsnest-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/crowsnest/"
+    },
+    {
+      "orcs": "41",
+      "url": "https://bcparks.ca/cultus-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cultus_lk/"
+    },
+    {
+      "orcs": "9681",
+      "url": "https://bcparks.ca/cummins-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cummins_lk/"
+    },
+    {
+      "orcs": "278",
+      "url": "https://bcparks.ca/cypress-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/cypress/"
+    },
+    {
+      "orcs": "318",
+      "url": "https://bcparks.ca/dahl-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/dahl_lk/"
+    },
+    {
+      "orcs": "483",
+      "url": "https://bcparks.ca/dala-kildala-rivers-estuaries-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/dala_kildala_rv/"
+    },
+    {
+      "orcs": "9828",
+      "url": "https://bcparks.ca/dall-river-old-growth-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/dall_rv/"
+    },
+    {
+      "orcs": "585",
+      "url": "https://bcparks.ca/dantes-inferno-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/dantes_inferno/"
+    },
+    {
+      "orcs": "35",
+      "url": "https://bcparks.ca/darke-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/darke_lk/"
+    },
+    {
+      "orcs": "150",
+      "url": "https://bcparks.ca/davis-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/davis_lk/"
+    },
+    {
+      "orcs": "9500",
+      "url": "https://bcparks.ca/dawley-passage-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/dawley_ps/"
+    },
+    {
+      "orcs": "13",
+      "url": "https://bcparks.ca/dead-mans-island-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/dead-mans-isl/"
+    },
+    {
+      "orcs": "8297",
+      "url": "https://bcparks.ca/denetiah-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/denetiah/"
+    },
+    {
+      "orcs": "4104",
+      "url": "https://bcparks.ca/denison-bonneau-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/denison-bonneau/"
+    },
+    {
+      "orcs": "633",
+      "url": "https://bcparks.ca/denman-island-park/",
+      "oldUrl": "https://bcparks.ca/parks/denman-island/"
+    },
+    {
+      "orcs": "252",
+      "url": "https://bcparks.ca/desolation-sound-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/desolation/"
+    },
+    {
+      "orcs": "299",
+      "url": "https://bcparks.ca/diana-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/diana_lk/"
+    },
+    {
+      "orcs": "384",
+      "url": "https://bcparks.ca/dionisio-point-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/dionisio_pt/"
+    },
+    {
+      "orcs": "237",
+      "url": "https://bcparks.ca/discovery-island-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/discovery_is/"
+    },
+    {
+      "orcs": "9147",
+      "url": "https://bcparks.ca/dixie-cove-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/dixie_cv/"
+    },
+    {
+      "orcs": "586",
+      "url": "https://bcparks.ca/donnely-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/donnely_lk/"
+    },
+    {
+      "orcs": "217",
+      "url": "https://bcparks.ca/downing-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/downing/"
+    },
+    {
+      "orcs": "587",
+      "url": "https://bcparks.ca/dragon-mountain-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/dragon_mt/"
+    },
+    {
+      "orcs": "216",
+      "url": "https://bcparks.ca/drewry-point-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/drewry_pt/"
+    },
+    {
+      "orcs": "192",
+      "url": "https://bcparks.ca/driftwood-canyon-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/driftwood_cyn/"
+    },
+    {
+      "orcs": "226",
+      "url": "https://bcparks.ca/drumbeg-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/drumbeg/"
+    },
+    {
+      "orcs": "61",
+      "url": "https://bcparks.ca/dry-gulch-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/dry_gulch/"
+    },
+    {
+      "orcs": "402",
+      "url": "https://bcparks.ca/duffey-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/duffey_lk/"
+    },
+    {
+      "orcs": "426",
+      "url": "https://bcparks.ca/dune-za-keyih-park-aka-frog-gataga-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/dune_za/"
+    },
+    {
+      "orcs": "484",
+      "url": "https://bcparks.ca/eagle-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/eagle_bay/"
+    },
+    {
+      "orcs": "551",
+      "url": "https://bcparks.ca/eagle-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/eagle-river/"
+    },
+    {
+      "orcs": "9719",
+      "url": "https://bcparks.ca/eakin-creek-canyon-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/eakin_crk_cyn/"
+    },
+    {
+      "orcs": "9720",
+      "url": "https://bcparks.ca/eakin-creek-floodplain-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/eakin_crk_fp/"
+    },
+    {
+      "orcs": "326",
+      "url": "https://bcparks.ca/east-pine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/eastpine/"
+    },
+    {
+      "orcs": "223",
+      "url": "https://bcparks.ca/echo-bay-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/echo_bay/"
+    },
+    {
+      "orcs": "86",
+      "url": "https://bcparks.ca/echo-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/echo_lk/"
+    },
+    {
+      "orcs": "33",
+      "url": "https://bcparks.ca/ec-manning-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/ecmanning/"
+    },
+    {
+      "orcs": "9597",
+      "url": "https://bcparks.ca/ed-bird-estella-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/edbird_estella_lk/"
+    },
+    {
+      "orcs": "9557",
+      "url": "https://bcparks.ca/edge-hills-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/edge_hills/"
+    },
+    {
+      "orcs": "9690",
+      "url": "https://bcparks.ca/elephant-hill-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/elephant_hill/"
+    },
+    {
+      "orcs": "588",
+      "url": "https://bcparks.ca/eleven-sisters-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/eleven_sisters/"
+    },
+    {
+      "orcs": "28",
+      "url": "https://bcparks.ca/elk-falls-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/elk_falls/"
+    },
+    {
+      "orcs": "253",
+      "url": "https://bcparks.ca/elk-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/elk_lk/"
+    },
+    {
+      "orcs": "102",
+      "url": "https://bcparks.ca/elko-park/",
+      "oldUrl": "https://bcparks.ca/parks/elko/"
+    },
+    {
+      "orcs": "121",
+      "url": "https://bcparks.ca/elk-valley-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/elk_valley/"
+    },
+    {
+      "orcs": "139",
+      "url": "https://bcparks.ca/ellison-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/ellison/"
+    },
+    {
+      "orcs": "9691",
+      "url": "https://bcparks.ca/emar-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/emar_lk/"
+    },
+    {
+      "orcs": "81",
+      "url": "https://bcparks.ca/emory-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/emory_crk/"
+    },
+    {
+      "orcs": "8697",
+      "url": "https://bcparks.ca/enderby-cliffs-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/enderby_cliffs/"
+    },
+    {
+      "orcs": "201",
+      "url": "https://bcparks.ca/eneas-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/eneas_lk/"
+    },
+    {
+      "orcs": "457",
+      "url": "https://bcparks.ca/english-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/english_lk/"
+    },
+    {
+      "orcs": "29",
+      "url": "https://bcparks.ca/englishman-river-falls-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/englishman_rv/"
+    },
+    {
+      "orcs": "9781",
+      "url": "https://bcparks.ca/entiako-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/entiako/"
+    },
+    {
+      "orcs": "9499",
+      "url": "https://bcparks.ca/epper-passage-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/epper_ps/"
+    },
+    {
+      "orcs": "6987",
+      "url": "https://bcparks.ca/epsom-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/epsom/"
+    },
+    {
+      "orcs": "416",
+      "url": "https://bcparks.ca/erg-mountain-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/erg_mtn/"
+    },
+    {
+      "orcs": "174",
+      "url": "https://bcparks.ca/erie-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/erie_crk/"
+    },
+    {
+      "orcs": "355",
+      "url": "https://bcparks.ca/eskers-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/eskers/"
+    },
+    {
+      "orcs": "47",
+      "url": "https://bcparks.ca/ethel-f-wilson-memorial-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/ethel_f_wilson/"
+    },
+    {
+      "orcs": "9792",
+      "url": "https://bcparks.ca/evanoff-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/evanoff/"
+    },
+    {
+      "orcs": "137",
+      "url": "https://bcparks.ca/eves-park/",
+      "oldUrl": "https://bcparks.ca/parks/eves/"
+    },
+    {
+      "orcs": "62",
+      "url": "https://bcparks.ca/exchamsiks-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/exchamsiks_rv/"
+    },
+    {
+      "orcs": "151",
+      "url": "https://bcparks.ca/ferry-island-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/ferry_is/"
+    },
+    {
+      "orcs": "290",
+      "url": "https://bcparks.ca/fh-barber-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/fh_barber/"
+    },
+    {
+      "orcs": "48",
+      "url": "https://bcparks.ca/fillongley-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/fillongley/"
+    },
+    {
+      "orcs": "9780",
+      "url": "https://bcparks.ca/finger-tatuk-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/finger/"
+    },
+    {
+      "orcs": "436",
+      "url": "https://bcparks.ca/finlay-russel-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/finlay_russel/"
+    },
+    {
+      "orcs": "6818",
+      "url": "https://bcparks.ca/finn-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/finn_crk/"
+    },
+    {
+      "orcs": "9213",
+      "url": "https://bcparks.ca/fintry-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/fintry/"
+    },
+    {
+      "orcs": "9682",
+      "url": "https://bcparks.ca/flat-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/flat_lk/"
+    },
+    {
+      "orcs": "9497",
+      "url": "https://bcparks.ca/flores-island-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/flores_is/"
+    },
+    {
+      "orcs": "485",
+      "url": "https://bcparks.ca/foch-gilttoyees-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/foch_gilttoyees/"
+    },
+    {
+      "orcs": "8053",
+      "url": "https://bcparks.ca/fort-george-canyon-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/fort_george_cyn/"
+    },
+    {
+      "orcs": "269",
+      "url": "https://bcparks.ca/fossli-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/fossli/"
+    },
+    {
+      "orcs": "469",
+      "url": "https://bcparks.ca/francis-point-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/francis_pt/"
+    },
+    {
+      "orcs": "9778",
+      "url": "https://bcparks.ca/francois-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/francois_lk/"
+    },
+    {
+      "orcs": "9795",
+      "url": "https://bcparks.ca/fraser-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/fraser_rv/"
+    },
+    {
+      "orcs": "4276",
+      "url": "https://bcparks.ca/fraser-river-breaks-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/fraser_rv_breaks/"
+    },
+    {
+      "orcs": "624",
+      "url": "https://bcparks.ca/fred-antoine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/fred_antoine/"
+    },
+    {
+      "orcs": "625",
+      "url": "https://bcparks.ca/french-bar-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/french-bar-crk/"
+    },
+    {
+      "orcs": "262",
+      "url": "https://bcparks.ca/french-beach-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/french_bch/"
+    },
+    {
+      "orcs": "118",
+      "url": "https://bcparks.ca/gabriola-sands-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/gabriola_sands/"
+    },
+    {
+      "orcs": "203",
+      "url": "https://bcparks.ca/garden-bay-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/garden_bay/"
+    },
+    {
+      "orcs": "7",
+      "url": "https://bcparks.ca/garibaldi-park/",
+      "oldUrl": "https://bcparks.ca/parks/garibaldi/"
+    },
+    {
+      "orcs": "635",
+      "url": "https://bcparks.ca/gerald-island-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/gerald_isl/"
+    },
+    {
+      "orcs": "196",
+      "url": "https://bcparks.ca/gibson-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/gibson/"
+    },
+    {
+      "orcs": "9680",
+      "url": "https://bcparks.ca/gilnockie-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/gilnockie/"
+    },
+    {
+      "orcs": "528",
+      "url": "https://bcparks.ca/gilpin-grasslands-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/gilpin_grass/"
+    },
+    {
+      "orcs": "340",
+      "url": "https://bcparks.ca/gitnadoiks-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/gitnadoiks_rv/"
+    },
+    {
+      "orcs": "9549",
+      "url": "https://bcparks.ca/gladstone-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/gladstone/"
+    },
+    {
+      "orcs": "9553",
+      "url": "https://bcparks.ca/goat-range-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/goat_range/"
+    },
+    {
+      "orcs": "8774",
+      "url": "https://bcparks.ca/gods-pocket-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/gods_pocket/"
+    },
+    {
+      "orcs": "8",
+      "url": "https://bcparks.ca/golden-ears-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/golden_ears/"
+    },
+    {
+      "orcs": "9746",
+      "url": "https://bcparks.ca/gold-muchalat-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/gold_muchalat/"
+    },
+    {
+      "orcs": "63",
+      "url": "https://bcparks.ca/goldpan-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/goldpan/"
+    },
+    {
+      "orcs": "96",
+      "url": "https://bcparks.ca/goldstream-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/goldstream/"
+    },
+    {
+      "orcs": "210",
+      "url": "https://bcparks.ca/gordon-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/gordon_bay/"
+    },
+    {
+      "orcs": "9229",
+      "url": "https://bcparks.ca/gowlland-tod-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/gowlland_tod/"
+    },
+    {
+      "orcs": "9797",
+      "url": "https://bcparks.ca/graham-laurier-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/graham_laurier/"
+    },
+    {
+      "orcs": "9548",
+      "url": "https://bcparks.ca/granby-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/granby/"
+    },
+    {
+      "orcs": "442",
+      "url": "https://bcparks.ca/graystokes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/graystokes/"
+    },
+    {
+      "orcs": "431",
+      "url": "https://bcparks.ca/great-glacier-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/great_gl/"
+    },
+    {
+      "orcs": "394",
+      "url": "https://bcparks.ca/green-inlet-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/green_inlet/"
+    },
+    {
+      "orcs": "273",
+      "url": "https://bcparks.ca/green-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/green_lk/"
+    },
+    {
+      "orcs": "9721",
+      "url": "https://bcparks.ca/greenstone-mountain-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/greenstone_mtn/"
+    },
+    {
+      "orcs": "311",
+      "url": "https://bcparks.ca/grohman-narrows-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/grohman_narrows/"
+    },
+    {
+      "orcs": "222",
+      "url": "https://bcparks.ca/gwillim-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/gwillim_lk/"
+    },
+    {
+      "orcs": "626",
+      "url": "https://bcparks.ca/gwyneth-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/gwyneth/"
+    },
+    {
+      "orcs": "8350",
+      "url": "https://bcparks.ca/hai-lake-mount-herman-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/hai_lk/"
+    },
+    {
+      "orcs": "365",
+      "url": "https://bcparks.ca/halkett-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/halkett_bay/"
+    },
+    {
+      "orcs": "34",
+      "url": "https://bcparks.ca/hamber-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/hamber/"
+    },
+    {
+      "orcs": "9722",
+      "url": "https://bcparks.ca/harbour-dudgeon-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/harbour/"
+    },
+    {
+      "orcs": "388",
+      "url": "https://bcparks.ca/hardy-island-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/hardy_is/"
+    },
+    {
+      "orcs": "392",
+      "url": "https://bcparks.ca/harmony-islands-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/harmony_is/"
+    },
+    {
+      "orcs": "9723",
+      "url": "https://bcparks.ca/harry-lake-aspen-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/harry_lk/"
+    },
+    {
+      "orcs": "411",
+      "url": "https://bcparks.ca/hathayim-marine-park-aka-von-donop-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/hathayim/"
+    },
+    {
+      "orcs": "437",
+      "url": "https://bcparks.ca/heather-dina-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/heather_dina_lks/"
+    },
+    {
+      "orcs": "9185",
+      "url": "https://bcparks.ca/height-of-the-rockies-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/height/"
+    },
+    {
+      "orcs": "187",
+      "url": "https://bcparks.ca/helliwell-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/helliwell/"
+    },
+    {
+      "orcs": "310",
+      "url": "https://bcparks.ca/hemer-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/hemer/"
+    },
+    {
+      "orcs": "276",
+      "url": "https://bcparks.ca/herald-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/herald/"
+    },
+    {
+      "orcs": "9493",
+      "url": "https://bcparks.ca/hesquiat-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/hesquiat_lk/"
+    },
+    {
+      "orcs": "9494",
+      "url": "https://bcparks.ca/hesquiat-peninsula-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/hesquiat_pn/"
+    },
+    {
+      "orcs": "9687",
+      "url": "https://bcparks.ca/high-lakes-basin-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/high_lks_basin/"
+    },
+    {
+      "orcs": "9474",
+      "url": "https://bcparks.ca/hitchie-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/hitchie_crk/"
+    },
+    {
+      "orcs": "9800",
+      "url": "https://bcparks.ca/hole-in-the-wall-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/hole_wall/"
+    },
+    {
+      "orcs": "9825",
+      "url": "https://bcparks.ca/homathko-estuary-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/homathko_estuary/"
+    },
+    {
+      "orcs": "220",
+      "url": "https://bcparks.ca/horne-lake-caves-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/horne_lk/"
+    },
+    {
+      "orcs": "9829",
+      "url": "https://bcparks.ca/horneline-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/horneline_crk/"
+    },
+    {
+      "orcs": "268",
+      "url": "https://bcparks.ca/horsefly-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/horsefly_lk/"
+    },
+    {
+      "orcs": "159",
+      "url": "https://bcparks.ca/hyland-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/hyland_rv/"
+    },
+    {
+      "orcs": "64",
+      "url": "https://bcparks.ca/inkaneep-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/inkaneep/"
+    },
+    {
+      "orcs": "6197",
+      "url": "https://bcparks.ca/inland-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/inland_lk/"
+    },
+    {
+      "orcs": "10",
+      "url": "https://bcparks.ca/inonoaklin-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/inonoaklin/"
+    },
+    {
+      "orcs": "432",
+      "url": "https://bcparks.ca/iskut-river-hot-springs-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/iskut_rv_hs/"
+    },
+    {
+      "orcs": "9456",
+      "url": "https://bcparks.ca/itcha-ilgachuz-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/itcha_ilgachuz/"
+    },
+    {
+      "orcs": "9802",
+      "url": "https://bcparks.ca/jackman-flats-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/jackman_flats/"
+    },
+    {
+      "orcs": "393",
+      "url": "https://bcparks.ca/jackson-narrows-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/jackson_narrows/"
+    },
+    {
+      "orcs": "412",
+      "url": "https://bcparks.ca/jaji7em-and-kwulh-marine-park-aka-sandy-island-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sandy_is/"
+    },
+    {
+      "orcs": "293",
+      "url": "https://bcparks.ca/james-chabot-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/james_chabot/"
+    },
+    {
+      "orcs": "9512",
+      "url": "https://bcparks.ca/jedediah-island-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/jedediah_is/"
+    },
+    {
+      "orcs": "319",
+      "url": "https://bcparks.ca/jewel-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/jewel_lk/"
+    },
+    {
+      "orcs": "65",
+      "url": "https://bcparks.ca/jimsmith-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/jimsmith_lk/"
+    },
+    {
+      "orcs": "363",
+      "url": "https://bcparks.ca/joffre-lakes-park/",
+      "oldUrl": "https://bcparks.ca/parks/joffre-lakes/"
+    },
+    {
+      "orcs": "66",
+      "url": "https://bcparks.ca/johnstone-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/johnstone_crk/"
+    },
+    {
+      "orcs": "9398",
+      "url": "https://bcparks.ca/juan-de-fuca-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/juan_de_fuca/"
+    },
+    {
+      "orcs": "9482",
+      "url": "https://bcparks.ca/junction-sheep-range-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/junction/"
+    },
+    {
+      "orcs": "369",
+      "url": "https://bcparks.ca/juniper-beach-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/juniper_bch/"
+    },
+    {
+      "orcs": "345",
+      "url": "https://bcparks.ca/kakwa-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kakwa/"
+    },
+    {
+      "orcs": "277",
+      "url": "https://bcparks.ca/kalamalka-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kalamalka_lk/"
+    },
+    {
+      "orcs": "378",
+      "url": "https://bcparks.ca/kekuli-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kekuli_bay/"
+    },
+    {
+      "orcs": "9504",
+      "url": "https://bcparks.ca/kennedy-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kennedy_lk/"
+    },
+    {
+      "orcs": "9503",
+      "url": "https://bcparks.ca/kennedy-river-bog-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kennedy_rv_bog/"
+    },
+    {
+      "orcs": "306",
+      "url": "https://bcparks.ca/kentucky-alleyne-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kentucky_alleyne/"
+    },
+    {
+      "orcs": "11",
+      "url": "https://bcparks.ca/keremeos-columns-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/keremeos/"
+    },
+    {
+      "orcs": "397",
+      "url": "https://bcparks.ca/khutzeymateen-park-aka-khutzeymateen-ktzim-a-deen-grizzly-sanctuary/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/khutzeymateen/"
+    },
+    {
+      "orcs": "9551",
+      "url": "https://bcparks.ca/kianuko-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kianuko/"
+    },
+    {
+      "orcs": "218",
+      "url": "https://bcparks.ca/kickininee-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kickininee/"
+    },
+    {
+      "orcs": "235",
+      "url": "https://bcparks.ca/kikomun-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kikomun_crk/"
+    },
+    {
+      "orcs": "245",
+      "url": "https://bcparks.ca/kilby-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kilby/"
+    },
+    {
+      "orcs": "356",
+      "url": "https://bcparks.ca/kinaskan-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kinaskan_lk/"
+    },
+    {
+      "orcs": "188",
+      "url": "https://bcparks.ca/kin-beach-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kin_bch/"
+    },
+    {
+      "orcs": "453",
+      "url": "https://bcparks.ca/kingfisher-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kingfisher_crk/"
+    },
+    {
+      "orcs": "17",
+      "url": "https://bcparks.ca/king-george-vi-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/king_george_vi/"
+    },
+    {
+      "orcs": "140",
+      "url": "https://bcparks.ca/kiskatinaw-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kiskatinaw/"
+    },
+    {
+      "orcs": "8097",
+      "url": "https://bcparks.ca/kiskatinaw-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kiskatinaw_rv/"
+    },
+    {
+      "orcs": "4382",
+      "url": "https://bcparks.ca/kitimat-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kitimat_rv/"
+    },
+    {
+      "orcs": "401",
+      "url": "https://bcparks.ca/kitson-island-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kitson_is/"
+    },
+    {
+      "orcs": "38",
+      "url": "https://bcparks.ca/kitsumkalum-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kitsumkalum/"
+    },
+    {
+      "orcs": "36",
+      "url": "https://bcparks.ca/kitty-coleman-beach-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kitty_coleman_bch/"
+    },
+    {
+      "orcs": "9782",
+      "url": "https://bcparks.ca/kitwanga-mountain-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kitwanga_mtn/"
+    },
+    {
+      "orcs": "67",
+      "url": "https://bcparks.ca/kleanza-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kleanza_crk/"
+    },
+    {
+      "orcs": "403",
+      "url": "https://bcparks.ca/klewnuggit-inlet-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/klewnuggit_inlet/"
+    },
+    {
+      "orcs": "421",
+      "url": "https://bcparks.ca/klin-se-za-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/klin_se_za/"
+    },
+    {
+      "orcs": "9956",
+      "url": "https://bcparks.ca/klin-se-za-addition-park/",
+      "oldUrl": "https://bcparks.ca/parks/klin-se-za-addition/"
+    },
+    {
+      "orcs": "7458",
+      "url": "https://bcparks.ca/kluskoil-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kluskoil_lk/"
+    },
+    {
+      "orcs": "52",
+      "url": "https://bcparks.ca/kokanee-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kokanee_crk/"
+    },
+    {
+      "orcs": "4",
+      "url": "https://bcparks.ca/kokanee-glacier-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kokanee_gl/"
+    },
+    {
+      "orcs": "106",
+      "url": "https://bcparks.ca/koksilah-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/koksilah_rv/"
+    },
+    {
+      "orcs": "357",
+      "url": "https://bcparks.ca/kootenay-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kootenay_lk/"
+    },
+    {
+      "orcs": "9820",
+      "url": "https://bcparks.ca/kotcho-lake-village-site-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kotcho_lk/"
+    },
+    {
+      "orcs": "254",
+      "url": "https://bcparks.ca/kwadacha-wilderness-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kwadacha/"
+    },
+    {
+      "orcs": "68",
+      "url": "https://bcparks.ca/lac-la-hache-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/laclahache/"
+    },
+    {
+      "orcs": "69",
+      "url": "https://bcparks.ca/lac-le-jeune-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/laclejeune/"
+    },
+    {
+      "orcs": "70",
+      "url": "https://bcparks.ca/lakelse-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/lakelse_lk/"
+    },
+    {
+      "orcs": "8966",
+      "url": "https://bcparks.ca/lakelse-lake-wetlands-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/lakelse_lk_wetlands/"
+    },
+    {
+      "orcs": "450",
+      "url": "https://bcparks.ca/lanz-and-cox-islands-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/lanz_cox_is/"
+    },
+    {
+      "orcs": "3",
+      "url": "https://bcparks.ca/lau-welnew-john-dean-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/john_dean/"
+    },
+    {
+      "orcs": "8642",
+      "url": "https://bcparks.ca/lava-forks-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/lava_forks/"
+    },
+    {
+      "orcs": "9747",
+      "url": "https://bcparks.ca/lawn-point-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/lawn_pt/"
+    },
+    {
+      "orcs": "8969",
+      "url": "https://bcparks.ca/liard-river-corridor-park/",
+      "oldUrl": "https://bcparks.ca/parks/liard-river-corridor/"
+    },
+    {
+      "orcs": "92",
+      "url": "https://bcparks.ca/liard-river-hot-springs-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/liard_rv_hs/"
+    },
+    {
+      "orcs": "5034",
+      "url": "https://bcparks.ca/liard-river-west-corridor-park/",
+      "oldUrl": "https://bcparks.ca/parks/liard-river-west-corridor/"
+    },
+    {
+      "orcs": "380",
+      "url": "https://bcparks.ca/little-andrews-bay-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/little_andrews_bay/"
+    },
+    {
+      "orcs": "30",
+      "url": "https://bcparks.ca/little-qualicum-falls-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/little_qualicum_falls/"
+    },
+    {
+      "orcs": "12",
+      "url": "https://bcparks.ca/lockhart-beach-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/lockhart_bch/"
+    },
+    {
+      "orcs": "9550",
+      "url": "https://bcparks.ca/lockhart-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/lockhart_crk/"
+    },
+    {
+      "orcs": "589",
+      "url": "https://bcparks.ca/long-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/long_crk/"
+    },
+    {
+      "orcs": "82",
+      "url": "https://bcparks.ca/loon-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/loon_lk/"
+    },
+    {
+      "orcs": "189",
+      "url": "https://bcparks.ca/loveland-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/loveland_bay/"
+    },
+    {
+      "orcs": "405",
+      "url": "https://bcparks.ca/lowe-inlet-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/lowe_inlet/"
+    },
+    {
+      "orcs": "9466",
+      "url": "https://bcparks.ca/lower-nimpkish-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/lower_nimpkish/"
+    },
+    {
+      "orcs": "486",
+      "url": "https://bcparks.ca/lower-skeena-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/lower_skeena_rv/"
+    },
+    {
+      "orcs": "472",
+      "url": "https://bcparks.ca/lower-tsitika-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/lower_tsitika_rv/"
+    },
+    {
+      "orcs": "241",
+      "url": "https://bcparks.ca/mabel-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mabel_lk/"
+    },
+    {
+      "orcs": "39",
+      "url": "https://bcparks.ca/macmillan-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/macmillan/"
+    },
+    {
+      "orcs": "6093",
+      "url": "https://bcparks.ca/main-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/main_lk/"
+    },
+    {
+      "orcs": "6268",
+      "url": "https://bcparks.ca/malaspina-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/malaspina/"
+    },
+    {
+      "orcs": "264",
+      "url": "https://bcparks.ca/mansons-landing-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mansons/"
+    },
+    {
+      "orcs": "50",
+      "url": "https://bcparks.ca/maquinna-marine-park/",
+      "oldUrl": "https://bcparks.ca/parks/maquinna-marine/"
+    },
+    {
+      "orcs": "20",
+      "url": "https://bcparks.ca/mara-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mara/"
+    },
+    {
+      "orcs": "468",
+      "url": "https://bcparks.ca/mara-meadows-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mara-meadows/"
+    },
+    {
+      "orcs": "183",
+      "url": "https://bcparks.ca/marble-canyon-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/marble_can/"
+    },
+    {
+      "orcs": "9485",
+      "url": "https://bcparks.ca/marble-range-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/marble_ran/"
+    },
+    {
+      "orcs": "9465",
+      "url": "https://bcparks.ca/marble-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/marble_rv/"
+    },
+    {
+      "orcs": "130",
+      "url": "https://bcparks.ca/marl-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/marl_crk/"
+    },
+    {
+      "orcs": "404",
+      "url": "https://bcparks.ca/martha-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/martha_crk/"
+    },
+    {
+      "orcs": "328",
+      "url": "https://bcparks.ca/maxhamish-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/maxhamish_lk/"
+    },
+    {
+      "orcs": "6865",
+      "url": "https://bcparks.ca/mcconnell-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mcconnell_lk/"
+    },
+    {
+      "orcs": "324",
+      "url": "https://bcparks.ca/mcdonald-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mcdonald_crk/"
+    },
+    {
+      "orcs": "9824",
+      "url": "https://bcparks.ca/mehatl-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mehatl_crk/"
+    },
+    {
+      "orcs": "37",
+      "url": "https://bcparks.ca/memory-island-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/memory_is/"
+    },
+    {
+      "orcs": "358",
+      "url": "https://bcparks.ca/meziadin-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/meziadin_lk/"
+    },
+    {
+      "orcs": "9806",
+      "url": "https://bcparks.ca/milligan-hills-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/milligan/"
+    },
+    {
+      "orcs": "45",
+      "url": "https://bcparks.ca/miracle-beach-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/miracle_bch/"
+    },
+    {
+      "orcs": "131",
+      "url": "https://bcparks.ca/mitlenatch-island-nature-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mitlenatch_is/"
+    },
+    {
+      "orcs": "181",
+      "url": "https://bcparks.ca/moberly-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/moberly_lk/"
+    },
+    {
+      "orcs": "9693",
+      "url": "https://bcparks.ca/momich-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/momich_lk/"
+    },
+    {
+      "orcs": "143",
+      "url": "https://bcparks.ca/monashee-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/monashee/"
+    },
+    {
+      "orcs": "46",
+      "url": "https://bcparks.ca/monck-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/monck/"
+    },
+    {
+      "orcs": "315",
+      "url": "https://bcparks.ca/monkman-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/monkman/"
+    },
+    {
+      "orcs": "104",
+      "url": "https://bcparks.ca/montague-harbour-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/montague/"
+    },
+    {
+      "orcs": "9726",
+      "url": "https://bcparks.ca/monte-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/monte_crk/"
+    },
+    {
+      "orcs": "71",
+      "url": "https://bcparks.ca/monte-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/monte_lk/"
+    },
+    {
+      "orcs": "9480",
+      "url": "https://bcparks.ca/moose-valley-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/moose_val/"
+    },
+    {
+      "orcs": "231",
+      "url": "https://bcparks.ca/morden-colliery-historic-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/morden/"
+    },
+    {
+      "orcs": "535",
+      "url": "https://bcparks.ca/morice-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/moriceLake/"
+    },
+    {
+      "orcs": "144",
+      "url": "https://bcparks.ca/morrissey-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/morrissey/"
+    },
+    {
+      "orcs": "190",
+      "url": "https://bcparks.ca/morton-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/morton_lk/"
+    },
+    {
+      "orcs": "5",
+      "url": "https://bcparks.ca/mount-assiniboine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_assiniboine/"
+    },
+    {
+      "orcs": "9808",
+      "url": "https://bcparks.ca/mount-blanchet-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_blanchet/"
+    },
+    {
+      "orcs": "238",
+      "url": "https://bcparks.ca/mount-edziza-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_edziza/"
+    },
+    {
+      "orcs": "9761",
+      "url": "https://bcparks.ca/mount-elphinstone-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_elphinstone/"
+    },
+    {
+      "orcs": "529",
+      "url": "https://bcparks.ca/mount-erskine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_erskine/"
+    },
+    {
+      "orcs": "105",
+      "url": "https://bcparks.ca/mount-fernie-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_fernie/"
+    },
+    {
+      "orcs": "9870",
+      "url": "https://bcparks.ca/mount-geoffery-escarpment-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_geoffrey/"
+    },
+    {
+      "orcs": "445",
+      "url": "https://bcparks.ca/mount-griffin-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_griffin/"
+    },
+    {
+      "orcs": "21",
+      "url": "https://bcparks.ca/mount-maxwell-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_maxwell/"
+    },
+    {
+      "orcs": "9809",
+      "url": "https://bcparks.ca/mount-pope-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_pope/"
+    },
+    {
+      "orcs": "9765",
+      "url": "https://bcparks.ca/mount-richardson-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_richardson/"
+    },
+    {
+      "orcs": "2",
+      "url": "https://bcparks.ca/mount-robson-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_robson/"
+    },
+    {
+      "orcs": "9727",
+      "url": "https://bcparks.ca/mount-savona-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_savona/"
+    },
+    {
+      "orcs": "15",
+      "url": "https://bcparks.ca/mount-seymour-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_seymour/"
+    },
+    {
+      "orcs": "325",
+      "url": "https://bcparks.ca/mount-terry-fox-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mt_terry/"
+    },
+    {
+      "orcs": "108",
+      "url": "https://bcparks.ca/moyie-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/moyie_lk/"
+    },
+    {
+      "orcs": "9728",
+      "url": "https://bcparks.ca/mud-lake-delta-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mud_lk/"
+    },
+    {
+      "orcs": "9810",
+      "url": "https://bcparks.ca/mudzenchoot-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/mudzenchoot/"
+    },
+    {
+      "orcs": "93",
+      "url": "https://bcparks.ca/muncho-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/muncho_lk/"
+    },
+    {
+      "orcs": "339",
+      "url": "https://bcparks.ca/muqqiwn-brooks-peninsula-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/brooks_peninsula/"
+    },
+    {
+      "orcs": "141",
+      "url": "https://bcparks.ca/murrin-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/murrin/"
+    },
+    {
+      "orcs": "9864",
+      "url": "https://bcparks.ca/muscovite-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/muscovite_lk/"
+    },
+    {
+      "orcs": "446",
+      "url": "https://bcparks.ca/myra-bellevue-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/myra/"
+    },
+    {
+      "orcs": "536",
+      "url": "https://bcparks.ca/nadina-mountain-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nadina/"
+    },
+    {
+      "orcs": "6998",
+      "url": "https://bcparks.ca/nahatlatch-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nahatlatch/"
+    },
+    {
+      "orcs": "255",
+      "url": "https://bcparks.ca/naikoon-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/naikoon/"
+    },
+    {
+      "orcs": "179",
+      "url": "https://bcparks.ca/nairn-falls-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nairn_falls/"
+    },
+    {
+      "orcs": "488",
+      "url": "https://bcparks.ca/nalbeelah-creek-wetlands-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nalbeelah/"
+    },
+    {
+      "orcs": "232",
+      "url": "https://bcparks.ca/nancy-greene-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nancy/"
+    },
+    {
+      "orcs": "518",
+      "url": "https://bcparks.ca/nation-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nation_lk/"
+    },
+    {
+      "orcs": "9489",
+      "url": "https://bcparks.ca/nazko-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nazko_lk/"
+    },
+    {
+      "orcs": "534",
+      "url": "https://bcparks.ca/nenikekh-nanika-kidprice-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nenikekhNanikaKidprice/"
+    },
+    {
+      "orcs": "9848",
+      "url": "https://bcparks.ca/netalzul-meadows-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/netalzul/"
+    },
+    {
+      "orcs": "22",
+      "url": "https://bcparks.ca/nickel-plate-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nickel_plate/"
+    },
+    {
+      "orcs": "72",
+      "url": "https://bcparks.ca/nicolum-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nicolum/"
+    },
+    {
+      "orcs": "8509",
+      "url": "https://bcparks.ca/nilkitkwa-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nilkitkwa/"
+    },
+    {
+      "orcs": "9532",
+      "url": "https://bcparks.ca/nimpkish-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nimpkish/"
+    },
+    {
+      "orcs": "433",
+      "url": "https://bcparks.ca/ningunsaw-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/ningunsaw/"
+    },
+    {
+      "orcs": "386",
+      "url": "https://bcparks.ca/anhluutukwsim-laxmihl-angwingaasanskwhl-nisgaa-park-aka-nisgaa-memorial-lava-bed-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nisgaa/"
+    },
+    {
+      "orcs": "275",
+      "url": "https://bcparks.ca/niskonlith-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/niskonlith/"
+    },
+    {
+      "orcs": "9748",
+      "url": "https://bcparks.ca/nitinat-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nitinat/"
+    },
+    {
+      "orcs": "98",
+      "url": "https://bcparks.ca/norbury-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/norbury/"
+    },
+    {
+      "orcs": "341",
+      "url": "https://bcparks.ca/northern-rocky-mountains-park/",
+      "oldUrl": "https://bcparks.ca/parks/northern-rocky-mountains/"
+    },
+    {
+      "orcs": "9729",
+      "url": "https://bcparks.ca/north-thompson-islands-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/n_thm_is/"
+    },
+    {
+      "orcs": "9731",
+      "url": "https://bcparks.ca/north-thompson-oxbows-east-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/n_thm_e/"
+    },
+    {
+      "orcs": "9730",
+      "url": "https://bcparks.ca/north-thompson-oxbows-jensen-island-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/n_thm_jn/"
+    },
+    {
+      "orcs": "9732",
+      "url": "https://bcparks.ca/north-thompson-oxbows-manteau-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/n_thm_mn/"
+    },
+    {
+      "orcs": "195",
+      "url": "https://bcparks.ca/north-thompson-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/n_thm_rv/"
+    },
+    {
+      "orcs": "9749",
+      "url": "https://bcparks.ca/nuchatlitz-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nuchatlitz/"
+    },
+    {
+      "orcs": "7668",
+      "url": "https://bcparks.ca/nuntsi-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nuntsi/"
+    },
+    {
+      "orcs": "265",
+      "url": "https://bcparks.ca/octopus-islands-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/octopus/"
+    },
+    {
+      "orcs": "54",
+      "url": "https://bcparks.ca/okanagan-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/okana_lk/"
+    },
+    {
+      "orcs": "259",
+      "url": "https://bcparks.ca/okanagan-mountain-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/okana_mt/"
+    },
+    {
+      "orcs": "294",
+      "url": "https://bcparks.ca/okeover-arm-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/okeover/"
+    },
+    {
+      "orcs": "537",
+      "url": "https://bcparks.ca/old-man-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/oldManLake/"
+    },
+    {
+      "orcs": "395",
+      "url": "https://bcparks.ca/oliver-cove-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/oliver/"
+    },
+    {
+      "orcs": "9812",
+      "url": "https://bcparks.ca/omineca-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/omineca/"
+    },
+    {
+      "orcs": "289",
+      "url": "https://bcparks.ca/one-island-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/one_is_lk/"
+    },
+    {
+      "orcs": "9733",
+      "url": "https://bcparks.ca/oregana-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/oregana-crk/"
+    },
+    {
+      "orcs": "9694",
+      "url": "https://bcparks.ca/oregon-jack-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/oregon_jack/"
+    },
+    {
+      "orcs": "146",
+      "url": "https://bcparks.ca/otter-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/otter_lk/"
+    },
+    {
+      "orcs": "489",
+      "url": "https://bcparks.ca/owyacumish-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/owyacumish/"
+    },
+    {
+      "orcs": "234",
+      "url": "https://bcparks.ca/paarens-beach-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/paarens_bch/"
+    },
+    {
+      "orcs": "9734",
+      "url": "https://bcparks.ca/painted-bluffs-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/painted/"
+    },
+    {
+      "orcs": "1084",
+      "url": "https://bcparks.ca/patterson-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/patterson_lk/"
+    },
+    {
+      "orcs": "127",
+      "url": "https://bcparks.ca/paul-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/paul_lk/"
+    },
+    {
+      "orcs": "23",
+      "url": "https://bcparks.ca/peace-arch-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/peace_arch/"
+    },
+    {
+      "orcs": "9633",
+      "url": "https://bcparks.ca/peace-river-corridor-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/peace_rv/"
+    },
+    {
+      "orcs": "474",
+      "url": "https://bcparks.ca/pennask-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pennask_crk/"
+    },
+    {
+      "orcs": "272",
+      "url": "https://bcparks.ca/pennask-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pennask_lk/"
+    },
+    {
+      "orcs": "389",
+      "url": "https://bcparks.ca/penrose-island-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/penrose_is/"
+    },
+    {
+      "orcs": "43",
+      "url": "https://bcparks.ca/petroglyph-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/petroglyph/"
+    },
+    {
+      "orcs": "9383",
+      "url": "https://bcparks.ca/pillar-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pillar/"
+    },
+    {
+      "orcs": "163",
+      "url": "https://bcparks.ca/pilot-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pilot_bay/"
+    },
+    {
+      "orcs": "9508",
+      "url": "https://bcparks.ca/pinecone-burke-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pinecone/"
+    },
+    {
+      "orcs": "9510",
+      "url": "https://bcparks.ca/pine-le-moray-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pine_lemoray/"
+    },
+    {
+      "orcs": "4351",
+      "url": "https://bcparks.ca/pine-river-breaks-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pine_rv/"
+    },
+    {
+      "orcs": "9813",
+      "url": "https://bcparks.ca/pink-mountain-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pink_mt/"
+    },
+    {
+      "orcs": "211",
+      "url": "https://bcparks.ca/pinnacles-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pinnacles/"
+    },
+    {
+      "orcs": "198",
+      "url": "https://bcparks.ca/pirates-cove-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pirates/"
+    },
+    {
+      "orcs": "116",
+      "url": "https://bcparks.ca/plumper-cove-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/plumper/"
+    },
+    {
+      "orcs": "9695",
+      "url": "https://bcparks.ca/porcupine-meadows-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/porcupine/"
+    },
+    {
+      "orcs": "221",
+      "url": "https://bcparks.ca/porpoise-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/porpoise/"
+    },
+    {
+      "orcs": "314",
+      "url": "https://bcparks.ca/porteau-cove-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/porteau/"
+    },
+    {
+      "orcs": "25",
+      "url": "https://bcparks.ca/premier-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/premier/"
+    },
+    {
+      "orcs": "173",
+      "url": "https://bcparks.ca/princess-louisa-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/princess_louisa/"
+    },
+    {
+      "orcs": "9218",
+      "url": "https://bcparks.ca/pritchard-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pritchard/"
+    },
+    {
+      "orcs": "8288",
+      "url": "https://bcparks.ca/prophet-river-hot-springs-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/prophet_rv_hs/"
+    },
+    {
+      "orcs": "280",
+      "url": "https://bcparks.ca/prophet-river-wayside-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/prophet_rv_ws/"
+    },
+    {
+      "orcs": "162",
+      "url": "https://bcparks.ca/prudhomme-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/prudhomme/"
+    },
+    {
+      "orcs": "9034",
+      "url": "https://bcparks.ca/ptarmigan-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/ptarmigan/"
+    },
+    {
+      "orcs": "447",
+      "url": "https://bcparks.ca/pukeashun-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pukeashun/"
+    },
+    {
+      "orcs": "302",
+      "url": "https://bcparks.ca/puntchesakut-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/puntches/"
+    },
+    {
+      "orcs": "590",
+      "url": "https://bcparks.ca/punti-island-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/punti_isl/"
+    },
+    {
+      "orcs": "9435",
+      "url": "https://bcparks.ca/purcell-wilderness-conservancy-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/purcell/"
+    },
+    {
+      "orcs": "229",
+      "url": "https://bcparks.ca/purden-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/purden_lk/"
+    },
+    {
+      "orcs": "321",
+      "url": "https://bcparks.ca/pure-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pure_lk/"
+    },
+    {
+      "orcs": "9735",
+      "url": "https://bcparks.ca/pyramid-creek-falls-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pyramid/"
+    },
+    {
+      "orcs": "9464",
+      "url": "https://bcparks.ca/quatsino-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/quatsino/"
+    },
+    {
+      "orcs": "591",
+      "url": "https://bcparks.ca/quesnel-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/quesnel_lk/"
+    },
+    {
+      "orcs": "377",
+      "url": "https://bcparks.ca/raft-cove-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/raft_cove/"
+    },
+    {
+      "orcs": "9849",
+      "url": "https://bcparks.ca/rainbow-alley-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/rainbow/"
+    },
+    {
+      "orcs": "584",
+      "url": "https://bcparks.ca/rainbow-qiwentem-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/rainbow-quiwentem/"
+    },
+    {
+      "orcs": "193",
+      "url": "https://bcparks.ca/rathtrevor-beach-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/rathtrevor/"
+    },
+    {
+      "orcs": "9750",
+      "url": "https://bcparks.ca/read-island-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/read_is/"
+    },
+    {
+      "orcs": "385",
+      "url": "https://bcparks.ca/rearguard-falls-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/rearguard/"
+    },
+    {
+      "orcs": "109",
+      "url": "https://bcparks.ca/rebecca-spit-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/rebecca/"
+    },
+    {
+      "orcs": "288",
+      "url": "https://bcparks.ca/red-bluff-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/red_bluff/"
+    },
+    {
+      "orcs": "1087",
+      "url": "https://bcparks.ca/redbrush-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/redbrush/"
+    },
+    {
+      "orcs": "8299",
+      "url": "https://bcparks.ca/redfern-keily-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/redfern/"
+    },
+    {
+      "orcs": "9767",
+      "url": "https://bcparks.ca/rendezvous-island-south-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/rendezvous/"
+    },
+    {
+      "orcs": "40",
+      "url": "https://bcparks.ca/roberts-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/roberts_crk/"
+    },
+    {
+      "orcs": "301",
+      "url": "https://bcparks.ca/roberts-memorial-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/roberts_mem/"
+    },
+    {
+      "orcs": "6892",
+      "url": "https://bcparks.ca/roche-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/roche_lk/"
+    },
+    {
+      "orcs": "9476",
+      "url": "https://bcparks.ca/rock-bay-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/rock_bay/"
+    },
+    {
+      "orcs": "153",
+      "url": "https://bcparks.ca/rock-creek-park/",
+      "oldUrl": "https://bcparks.ca/parks/rock-creek/"
+    },
+    {
+      "orcs": "122",
+      "url": "https://bcparks.ca/rolley-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/rolley_lk/"
+    },
+    {
+      "orcs": "373",
+      "url": "https://bcparks.ca/roscoe-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/roscoe/"
+    },
+    {
+      "orcs": "110",
+      "url": "https://bcparks.ca/rosebery-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/rosebery/"
+    },
+    {
+      "orcs": "87",
+      "url": "https://bcparks.ca/rosewall-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/rosewall/"
+    },
+    {
+      "orcs": "263",
+      "url": "https://bcparks.ca/ross-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/ross_lk/"
+    },
+    {
+      "orcs": "9793",
+      "url": "https://bcparks.ca/rubyrock-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/rubyrock_lk/"
+    },
+    {
+      "orcs": "267",
+      "url": "https://bcparks.ca/ruckle-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/ruckle/"
+    },
+    {
+      "orcs": "374",
+      "url": "https://bcparks.ca/rugged-point-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/rugged_pt/"
+    },
+    {
+      "orcs": "111",
+      "url": "https://bcparks.ca/ruth-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/ruth_lk/"
+    },
+    {
+      "orcs": "112",
+      "url": "https://bcparks.ca/ryan-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/ryan/"
+    },
+    {
+      "orcs": "9506",
+      "url": "https://bcparks.ca/sabine-channel-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sabine/"
+    },
+    {
+      "orcs": "145",
+      "url": "https://bcparks.ca/saltery-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/saltery/"
+    },
+    {
+      "orcs": "366",
+      "url": "https://bcparks.ca/sandwell-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sandwell/"
+    },
+    {
+      "orcs": "6111",
+      "url": "https://bcparks.ca/santa-getrudis-boca-del-infierno-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/santa_bo/"
+    },
+    {
+      "orcs": "379",
+      "url": "https://bcparks.ca/sargeant-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sargeant/"
+    },
+    {
+      "orcs": "200",
+      "url": "https://bcparks.ca/sasquatch-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sasquatch/"
+    },
+    {
+      "orcs": "9509",
+      "url": "https://bcparks.ca/say-nuth-khaw-yum-park-aka-indian-arm-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/say-nuth-khaw-yum/"
+    },
+    {
+      "orcs": "133",
+      "url": "https://bcparks.ca/saysutshun-newcastle-island-marine-park/",
+      "oldUrl": "https://bcparks.ca/parks/saysutshun/"
+    },
+    {
+      "orcs": "9830",
+      "url": "https://bcparks.ca/scatter-river-old-growth-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/scatter/"
+    },
+    {
+      "orcs": "283",
+      "url": "https://bcparks.ca/schoen-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/schoen_lk/"
+    },
+    {
+      "orcs": "9483",
+      "url": "https://bcparks.ca/schoolhouse-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/schoolhouse_lk/"
+    },
+    {
+      "orcs": "303",
+      "url": "https://bcparks.ca/sechelt-inlets-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sechelt/"
+    },
+    {
+      "orcs": "74",
+      "url": "https://bcparks.ca/seeley-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/seeley_lk/"
+    },
+    {
+      "orcs": "233",
+      "url": "https://bcparks.ca/seton-portage-historic-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/seton/"
+    },
+    {
+      "orcs": "8741",
+      "url": "https://bcparks.ca/seven-sisters-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/seven_sis/"
+    },
+    {
+      "orcs": "331",
+      "url": "https://bcparks.ca/shannon-falls-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/shannon/"
+    },
+    {
+      "orcs": "89",
+      "url": "https://bcparks.ca/shuswap-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/shu_lk/"
+    },
+    {
+      "orcs": "300",
+      "url": "https://bcparks.ca/shuswap-lake-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/shu_lk_m/"
+    },
+    {
+      "orcs": "9335",
+      "url": "https://bcparks.ca/shuswap-river-islands-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/shu_rv_is/"
+    },
+    {
+      "orcs": "9842",
+      "url": "https://bcparks.ca/sikanni-chief-canyon-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sikan_cy/"
+    },
+    {
+      "orcs": "9843",
+      "url": "https://bcparks.ca/sikanni-old-growth-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sikan_og/"
+    },
+    {
+      "orcs": "212",
+      "url": "https://bcparks.ca/silver-beach-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/silver_bch/"
+    },
+    {
+      "orcs": "158",
+      "url": "https://bcparks.ca/silver-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/silver_lk/"
+    },
+    {
+      "orcs": "27",
+      "url": "https://bcparks.ca/silver-star-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/silver_star/"
+    },
+    {
+      "orcs": "333",
+      "url": "https://bcparks.ca/simson-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/simson/"
+    },
+    {
+      "orcs": "6",
+      "url": "https://bcparks.ca/sir-alexander-mackenzie-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sir_alex/"
+    },
+    {
+      "orcs": "261",
+      "url": "https://bcparks.ca/skagit-valley-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/skagit/"
+    },
+    {
+      "orcs": "462",
+      "url": "https://bcparks.ca/skaha-bluffs-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/skahaBluffs/"
+    },
+    {
+      "orcs": "75",
+      "url": "https://bcparks.ca/skihist-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/skihist/"
+    },
+    {
+      "orcs": "95",
+      "url": "https://bcparks.ca/skookumchuck-narrows-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/skook_narrows/"
+    },
+    {
+      "orcs": "463",
+      "url": "https://bcparks.ca/skookumchuck-rapids-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/skook_rapids/"
+    },
+    {
+      "orcs": "490",
+      "url": "https://bcparks.ca/sleeping-beauty-mountain-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sleep_beauty_mtn/"
+    },
+    {
+      "orcs": "4214",
+      "url": "https://bcparks.ca/slim-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/slim_crk/"
+    },
+    {
+      "orcs": "9754",
+      "url": "https://bcparks.ca/small-inlet-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/small_inlet/"
+    },
+    {
+      "orcs": "425",
+      "url": "https://bcparks.ca/small-river-caves-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/small_rv/"
+    },
+    {
+      "orcs": "243",
+      "url": "https://bcparks.ca/smelt-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/smelt_bay/"
+    },
+    {
+      "orcs": "8277",
+      "url": "https://bcparks.ca/smith-river-falls-fort-halkett-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/smith_halk/"
+    },
+    {
+      "orcs": "227",
+      "url": "https://bcparks.ca/smuggler-cove-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/smuggler/"
+    },
+    {
+      "orcs": "9",
+      "url": "https://bcparks.ca/sooke-mountain-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sooke_mtn/"
+    },
+    {
+      "orcs": "240",
+      "url": "https://bcparks.ca/sooke-potholes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sooke_potholes/"
+    },
+    {
+      "orcs": "9066",
+      "url": "https://bcparks.ca/south-chilcotin-mountains-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/south_chilcotin_mts/"
+    },
+    {
+      "orcs": "9763",
+      "url": "https://bcparks.ca/south-texada-island-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/s_texada/"
+    },
+    {
+      "orcs": "370",
+      "url": "https://bcparks.ca/sowchea-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sowchea/"
+    },
+    {
+      "orcs": "470",
+      "url": "https://bcparks.ca/spatsizi-headwaters-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/spatsizi_head/"
+    },
+    {
+      "orcs": "279",
+      "url": "https://bcparks.ca/spatsizi-plateau-wilderness-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/spatsizi/"
+    },
+    {
+      "orcs": "154",
+      "url": "https://bcparks.ca/spectacle-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/spectacle/"
+    },
+    {
+      "orcs": "313",
+      "url": "https://bcparks.ca/spider-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/spider_lk/"
+    },
+    {
+      "orcs": "9544",
+      "url": "https://bcparks.ca/spipiyus-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/spipiyus/"
+    },
+    {
+      "orcs": "182",
+      "url": "https://bcparks.ca/sproat-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sproat_lk/"
+    },
+    {
+      "orcs": "367",
+      "url": "https://bcparks.ca/squitty-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/squitty/"
+    },
+    {
+      "orcs": "164",
+      "url": "https://bcparks.ca/stagleap-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/stagleap/"
+    },
+    {
+      "orcs": "31",
+      "url": "https://bcparks.ca/stamp-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/stamp_rv/"
+    },
+    {
+      "orcs": "6328",
+      "url": "https://bcparks.ca/stawamus-chief-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/stawamus/"
+    },
+    {
+      "orcs": "408",
+      "url": "https://bcparks.ca/steelhead-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/steelhead/"
+    },
+    {
+      "orcs": "9458",
+      "url": "https://bcparks.ca/stein-valley-nlakapamux-heritage-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/stein_val/"
+    },
+    {
+      "orcs": "76",
+      "url": "https://bcparks.ca/stemwinder-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/stemwinder/"
+    },
+    {
+      "orcs": "347",
+      "url": "https://bcparks.ca/stikine-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/stikine/"
+    },
+    {
+      "orcs": "256",
+      "url": "https://bcparks.ca/st-marys-alpine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/st_marys/"
+    },
+    {
+      "orcs": "94",
+      "url": "https://bcparks.ca/stone-mountain-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/stone_mt/"
+    },
+    {
+      "orcs": "1",
+      "url": "https://bcparks.ca/strathcona-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/strath/"
+    },
+    {
+      "orcs": "348",
+      "url": "https://bcparks.ca/strathcona-westmin-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/strath_wm/"
+    },
+    {
+      "orcs": "230",
+      "url": "https://bcparks.ca/stuart-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/stuart_lk/"
+    },
+    {
+      "orcs": "9658",
+      "url": "https://bcparks.ca/stuart-lake-marine-park/",
+      "oldUrl": "https://bcparks.ca/parks/stuart-lake-marine/"
+    },
+    {
+      "orcs": "8796",
+      "url": "https://bcparks.ca/stuart-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/stuart_rv/"
+    },
+    {
+      "orcs": "9601",
+      "url": "https://bcparks.ca/sue-channel-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sue_chan/"
+    },
+    {
+      "orcs": "9815",
+      "url": "https://bcparks.ca/sugarbowl-grizzly-den-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sugarbowl/"
+    },
+    {
+      "orcs": "316",
+      "url": "https://bcparks.ca/sukunka-falls-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sukunka/"
+    },
+    {
+      "orcs": "9540",
+      "url": "https://bcparks.ca/sulphur-passage-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sulphur/"
+    },
+    {
+      "orcs": "156",
+      "url": "https://bcparks.ca/summit-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/summit_lk/"
+    },
+    {
+      "orcs": "204",
+      "url": "https://bcparks.ca/sun-oka-beach-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sun_oka/"
+    },
+    {
+      "orcs": "9751",
+      "url": "https://bcparks.ca/surge-narrows-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/surge_nr/"
+    },
+    {
+      "orcs": "9822",
+      "url": "https://bcparks.ca/sustut-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sustut/"
+    },
+    {
+      "orcs": "9777",
+      "url": "https://bcparks.ca/sutherland-river-park/",
+      "oldUrl": "https://bcparks.ca/parks/sutherland-river/"
+    },
+    {
+      "orcs": "16",
+      "url": "https://bcparks.ca/swan-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/swan_lk/"
+    },
+    {
+      "orcs": "9077",
+      "url": "https://bcparks.ca/swan-lake-kispiox-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/swan_k_rv/"
+    },
+    {
+      "orcs": "142",
+      "url": "https://bcparks.ca/swiws-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/swiws/"
+    },
+    {
+      "orcs": "258",
+      "url": "https://bcparks.ca/sxotsaqel-chilliwack-lake-park/",
+      "oldUrl": "https://bcparks.ca/parks/sxotsaqel-chilliwack-lake/"
+    },
+    {
+      "orcs": "73",
+      "url": "https://bcparks.ca/sxwexwnitkw-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/okana_fl/"
+    },
+    {
+      "orcs": "9495",
+      "url": "https://bcparks.ca/sydney-inlet-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sydney/"
+    },
+    {
+      "orcs": "202",
+      "url": "https://bcparks.ca/syringa-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/syringa/"
+    },
+    {
+      "orcs": "178",
+      "url": "https://bcparks.ca/ta-chila-park-aka-boya-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tachila/"
+    },
+    {
+      "orcs": "9459",
+      "url": "https://bcparks.ca/tahsish-kwois-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tahsish/"
+    },
+    {
+      "orcs": "406",
+      "url": "https://bcparks.ca/takla-lake-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/takla_lk/"
+    },
+    {
+      "orcs": "9764",
+      "url": "https://bcparks.ca/tantalus-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tantalus/"
+    },
+    {
+      "orcs": "266",
+      "url": "https://bcparks.ca/tarahne-park/",
+      "oldUrl": "https://bcparks.ca/parks/tarahne/"
+    },
+    {
+      "orcs": "257",
+      "url": "https://bcparks.ca/tatlatui-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tatlatui/"
+    },
+    {
+      "orcs": "410",
+      "url": "https://bcparks.ca/tatshenshini-alsek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tatshens/"
+    },
+    {
+      "orcs": "9696",
+      "url": "https://bcparks.ca/taweel-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/taweel/"
+    },
+    {
+      "orcs": "296",
+      "url": "https://bcparks.ca/taylor-arm-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/taylr_am/"
+    },
+    {
+      "orcs": "286",
+      "url": "https://bcparks.ca/taylor-landing-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/taylr_ld/"
+    },
+    {
+      "orcs": "375",
+      "url": "https://bcparks.ca/teakerne-arm-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/teakerne/"
+    },
+    {
+      "orcs": "136",
+      "url": "https://bcparks.ca/ten-mile-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/ten_mile/"
+    },
+    {
+      "orcs": "9460",
+      "url": "https://bcparks.ca/tetrahedron-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tetrahedron/"
+    },
+    {
+      "orcs": "422",
+      "url": "https://bcparks.ca/three-sisters-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/three_sisters_lks/"
+    },
+    {
+      "orcs": "114",
+      "url": "https://bcparks.ca/thunder-hill-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/thunder/"
+    },
+    {
+      "orcs": "215",
+      "url": "https://bcparks.ca/thurston-bay-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/thurston/"
+    },
+    {
+      "orcs": "592",
+      "url": "https://bcparks.ca/titetown-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/titetown/"
+    },
+    {
+      "orcs": "8284",
+      "url": "https://bcparks.ca/toad-river-hot-springs-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/toad_rv/"
+    },
+    {
+      "orcs": "434",
+      "url": "https://bcparks.ca/todagin-south-slope-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/todagin/"
+    },
+    {
+      "orcs": "160",
+      "url": "https://bcparks.ca/topley-landing-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/topley/"
+    },
+    {
+      "orcs": "247",
+      "url": "https://bcparks.ca/top-of-the-world-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/top_world/"
+    },
+    {
+      "orcs": "9501",
+      "url": "https://bcparks.ca/tranquil-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tranquil/"
+    },
+    {
+      "orcs": "9118",
+      "url": "https://bcparks.ca/trembleur-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/trembleur_lk/"
+    },
+    {
+      "orcs": "6547",
+      "url": "https://bcparks.ca/trepanier-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/trepanier/"
+    },
+    {
+      "orcs": "292",
+      "url": "https://bcparks.ca/tribune-bay-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tribune/"
+    },
+    {
+      "orcs": "409",
+      "url": "https://bcparks.ca/tsilos-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tsilos/"
+    },
+    {
+      "orcs": "9738",
+      "url": "https://bcparks.ca/tsintsunko-lakes-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tsintsun/"
+    },
+    {
+      "orcs": "281",
+      "url": "https://bcparks.ca/tsutswecw-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tsutswecw/"
+    },
+    {
+      "orcs": "317",
+      "url": "https://bcparks.ca/tudyah-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tudyah_lk/"
+    },
+    {
+      "orcs": "6878",
+      "url": "https://bcparks.ca/tunkwa-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tunkwa/"
+    },
+    {
+      "orcs": "438",
+      "url": "https://bcparks.ca/tuya-mountains-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tuya_mts/"
+    },
+    {
+      "orcs": "19",
+      "url": "https://bcparks.ca/tweedsmuir-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tweeds_s/"
+    },
+    {
+      "orcs": "18",
+      "url": "https://bcparks.ca/tweedsmuir-park-north/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tweeds_n/"
+    },
+    {
+      "orcs": "84",
+      "url": "https://bcparks.ca/tyhee-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/tyhee_lk/"
+    },
+    {
+      "orcs": "9866",
+      "url": "https://bcparks.ca/uncha-mountain-red-hills-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/uncha_mt/"
+    },
+    {
+      "orcs": "407",
+      "url": "https://bcparks.ca/union-passage-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/union_ps/"
+    },
+    {
+      "orcs": "9698",
+      "url": "https://bcparks.ca/upper-adams-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/up_adams/"
+    },
+    {
+      "orcs": "9556",
+      "url": "https://bcparks.ca/upper-lillooet-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/up_lillooet/"
+    },
+    {
+      "orcs": "449",
+      "url": "https://bcparks.ca/upper-seymour-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/up_seymour/"
+    },
+    {
+      "orcs": "467",
+      "url": "https://bcparks.ca/upper-violet-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/up_violet_crk/"
+    },
+    {
+      "orcs": "327",
+      "url": "https://bcparks.ca/valhalla-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/valhalla/"
+    },
+    {
+      "orcs": "9498",
+      "url": "https://bcparks.ca/vargas-island-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/vargas_is/"
+    },
+    {
+      "orcs": "77",
+      "url": "https://bcparks.ca/vaseux-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/vaseux_lk/"
+    },
+    {
+      "orcs": "123",
+      "url": "https://bcparks.ca/victor-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/victor_lk/"
+    },
+    {
+      "orcs": "9867",
+      "url": "https://bcparks.ca/wakes-cove-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wakes_cove/"
+    },
+    {
+      "orcs": "9739",
+      "url": "https://bcparks.ca/walhachin-oxbows-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/walhachn/"
+    },
+    {
+      "orcs": "382",
+      "url": "https://bcparks.ca/wallace-island-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wallace/"
+    },
+    {
+      "orcs": "353",
+      "url": "https://bcparks.ca/walloper-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/walloper_lk/"
+    },
+    {
+      "orcs": "376",
+      "url": "https://bcparks.ca/walsh-cove-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/walsh_cv/"
+    },
+    {
+      "orcs": "6610",
+      "url": "https://bcparks.ca/wap-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wap_crk/"
+    },
+    {
+      "orcs": "8109",
+      "url": "https://bcparks.ca/wapiti-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wapiti_lake/"
+    },
+    {
+      "orcs": "282",
+      "url": "https://bcparks.ca/wardner-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wardner/"
+    },
+    {
+      "orcs": "53",
+      "url": "https://bcparks.ca/wasa-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wasa_lk/"
+    },
+    {
+      "orcs": "8379",
+      "url": "https://bcparks.ca/weewanie-hot-springs-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/weewanie/"
+    },
+    {
+      "orcs": "24",
+      "url": "https://bcparks.ca/wells-gray-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wells_gry/"
+    },
+    {
+      "orcs": "32",
+      "url": "https://bcparks.ca/wendle-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wendle/"
+    },
+    {
+      "orcs": "9552",
+      "url": "https://bcparks.ca/west-arm-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/west_arm/"
+    },
+    {
+      "orcs": "305",
+      "url": "https://bcparks.ca/west-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/west_lk/"
+    },
+    {
+      "orcs": "295",
+      "url": "https://bcparks.ca/west-shawnigan-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/w_shawn/"
+    },
+    {
+      "orcs": "9461",
+      "url": "https://bcparks.ca/west-twin-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/west_twin/"
+    },
+    {
+      "orcs": "9752",
+      "url": "https://bcparks.ca/weymer-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/weymr_cr/"
+    },
+    {
+      "orcs": "322",
+      "url": "https://bcparks.ca/whaleboat-island-marine-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/whaleboat/"
+    },
+    {
+      "orcs": "78",
+      "url": "https://bcparks.ca/whiskers-point-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/whiskers/"
+    },
+    {
+      "orcs": "167",
+      "url": "https://bcparks.ca/white-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wht_lk/"
+    },
+    {
+      "orcs": "224",
+      "url": "https://bcparks.ca/white-pelican-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wht_peli/"
+    },
+    {
+      "orcs": "8782",
+      "url": "https://bcparks.ca/white-ridge-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wht_ridg/"
+    },
+    {
+      "orcs": "9753",
+      "url": "https://bcparks.ca/white-river-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wht_river/"
+    },
+    {
+      "orcs": "287",
+      "url": "https://bcparks.ca/whiteswan-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/whtswan/"
+    },
+    {
+      "orcs": "7211",
+      "url": "https://bcparks.ca/windermere-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/windermere_lake/"
+    },
+    {
+      "orcs": "9740",
+      "url": "https://bcparks.ca/wire-cache-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wire_cache/"
+    },
+    {
+      "orcs": "320",
+      "url": "https://bcparks.ca/wistaria-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wistaria/"
+    },
+    {
+      "orcs": "180",
+      "url": "https://bcparks.ca/wood-mountain-ski-park/",
+      "oldUrl": "https://bcparks.ca/parks/wood-mountain-ski/"
+    },
+    {
+      "orcs": "9471",
+      "url": "https://bcparks.ca/woss-lake-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wosslake/"
+    },
+    {
+      "orcs": "9711",
+      "url": "https://bcparks.ca/wrinkly-face-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wrinkly/"
+    },
+    {
+      "orcs": "79",
+      "url": "https://bcparks.ca/yahk-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/yahk/"
+    },
+    {
+      "orcs": "627",
+      "url": "https://bcparks.ca/yalakom-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/yalakom/"
+    },
+    {
+      "orcs": "80",
+      "url": "https://bcparks.ca/yard-creek-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/yard_creek/"
+    },
+    {
+      "orcs": "440",
+      "url": "https://bcparks.ca/anarchist-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/anarchist/"
+    },
+    {
+      "orcs": "9953",
+      "url": "https://bcparks.ca/ancient-forest-chun-toh-whudujut-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/ancient-forest-chun-toh-whudujut/"
+    },
+    {
+      "orcs": "4981",
+      "url": "https://bcparks.ca/bearhole-lake-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/bearhole-lake/"
+    },
+    {
+      "orcs": "632",
+      "url": "https://bcparks.ca/boyle-point-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/boyle-point/"
+    },
+    {
+      "orcs": "9587",
+      "url": "https://bcparks.ca/brent-mountain-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/brent_mtn/"
+    },
+    {
+      "orcs": "481",
+      "url": "https://bcparks.ca/brim-river-hot-springs-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/brim_rv/"
+    },
+    {
+      "orcs": "533",
+      "url": "https://bcparks.ca/burnie-river-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/burnie-river/"
+    },
+    {
+      "orcs": "9715",
+      "url": "https://bcparks.ca/buse-lake-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/buse_lk/"
+    },
+    {
+      "orcs": "4982",
+      "url": "https://bcparks.ca/cathedral-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/cathedral/"
+    },
+    {
+      "orcs": "429",
+      "url": "https://bcparks.ca/chukachida-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/chukachida_rv/"
+    },
+    {
+      "orcs": "9590",
+      "url": "https://bcparks.ca/churn-creek-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/churn_crk/"
+    },
+    {
+      "orcs": "4983",
+      "url": "https://bcparks.ca/close-to-the-edge-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/close-to-the-edge/"
+    },
+    {
+      "orcs": "430",
+      "url": "https://bcparks.ca/craig-headwaters-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/craig_headwaters/"
+    },
+    {
+      "orcs": "4984",
+      "url": "https://bcparks.ca/cummins-river-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/cummins-river/"
+    },
+    {
+      "orcs": "9604",
+      "url": "https://bcparks.ca/damdochax-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/damdochax/"
+    },
+    {
+      "orcs": "4985",
+      "url": "https://bcparks.ca/denetiah-corridor-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/denetiah-corridor/"
+    },
+    {
+      "orcs": "634",
+      "url": "https://bcparks.ca/denman-island-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/denman-island/"
+    },
+    {
+      "orcs": "9762",
+      "url": "https://bcparks.ca/duck-lake-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/duck_lk/"
+    },
+    {
+      "orcs": "5015",
+      "url": "https://bcparks.ca/dune-za-keyih-protected-area-aka-frog-gataga-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/dune-za-keyih/"
+    },
+    {
+      "orcs": "9596",
+      "url": "https://bcparks.ca/dunn-peak-park/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/dunn_peak/"
+    },
+    {
+      "orcs": "9790",
+      "url": "https://bcparks.ca/ekwan-lake-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/ekwan_lk/"
+    },
+    {
+      "orcs": "631",
+      "url": "https://bcparks.ca/elk-falls-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/elk-falls/"
+    },
+    {
+      "orcs": "5039",
+      "url": "https://bcparks.ca/exchamsiks-river-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/exchamsiks-river/"
+    },
+    {
+      "orcs": "5018",
+      "url": "https://bcparks.ca/finlay-russel-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/finlay-russel/"
+    },
+    {
+      "orcs": "3875",
+      "url": "https://bcparks.ca/finn-creek-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/finn-creek/"
+    },
+    {
+      "orcs": "5019",
+      "url": "https://bcparks.ca/fintry-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/fintry/"
+    },
+    {
+      "orcs": "5040",
+      "url": "https://bcparks.ca/foch-gilttoyees-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/foch-gilttoyees/"
+    },
+    {
+      "orcs": "9794",
+      "url": "https://bcparks.ca/foster-arm-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/foster_arm/"
+    },
+    {
+      "orcs": "5020",
+      "url": "https://bcparks.ca/francois-lake-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/francois-lake/"
+    },
+    {
+      "orcs": "9796",
+      "url": "https://bcparks.ca/giscome-portage-trail-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/giscome/"
+    },
+    {
+      "orcs": "5041",
+      "url": "https://bcparks.ca/gitnadoiks-river-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/gitnadoiks-river/"
+    },
+    {
+      "orcs": "4041",
+      "url": "https://bcparks.ca/goguka-creek-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/goguka_crk/"
+    },
+    {
+      "orcs": "9518",
+      "url": "https://bcparks.ca/greenbush-lake-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/greenbush_lk/"
+    },
+    {
+      "orcs": "344",
+      "url": "https://bcparks.ca/hakai-conservation-study-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/hakai-conservation-study-area/"
+    },
+    {
+      "orcs": "9799",
+      "url": "https://bcparks.ca/hay-river-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/hay_rv/"
+    },
+    {
+      "orcs": "511",
+      "url": "https://bcparks.ca/hisnit-river-watershed-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/hisnit-rv/"
+    },
+    {
+      "orcs": "9801",
+      "url": "https://bcparks.ca/holliday-creek-arch-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/holliday_crk/"
+    },
+    {
+      "orcs": "9481",
+      "url": "https://bcparks.ca/homathko-river-tatlayoko-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/homathko_rv/"
+    },
+    {
+      "orcs": "9803",
+      "url": "https://bcparks.ca/jackpine-remnant-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/jackpine/"
+    },
+    {
+      "orcs": "8345",
+      "url": "https://bcparks.ca/jesse-falls-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/jesse_falls/"
+    },
+    {
+      "orcs": "5044",
+      "url": "https://bcparks.ca/kakwa-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/kakwa/"
+    },
+    {
+      "orcs": "491",
+      "url": "https://bcparks.ca/kitsumkalum-lake-north-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kitsumkalum_lk/"
+    },
+    {
+      "orcs": "8330",
+      "url": "https://bcparks.ca/klua-lakes-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/klua_lks/"
+    },
+    {
+      "orcs": "4433",
+      "url": "https://bcparks.ca/lac-du-bois-grasslands-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/lacdubois_grass/"
+    },
+    {
+      "orcs": "5022",
+      "url": "https://bcparks.ca/liard-river-corridor-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/liard-river-corridor/"
+    },
+    {
+      "orcs": "9805",
+      "url": "https://bcparks.ca/lower-raush-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/lower_raush/"
+    },
+    {
+      "orcs": "487",
+      "url": "https://bcparks.ca/lundmark-bog-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/lundmark_bog/"
+    },
+    {
+      "orcs": "5042",
+      "url": "https://bcparks.ca/maquinna-marine-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/maquinna/"
+    },
+    {
+      "orcs": "5023",
+      "url": "https://bcparks.ca/maxhamish-lake-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/maxhamish-lake/"
+    },
+    {
+      "orcs": "5043",
+      "url": "https://bcparks.ca/mount-robson-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/mt-robson/"
+    },
+    {
+      "orcs": "509",
+      "url": "https://bcparks.ca/mount-robson-corridor-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/mt-robson-corridor/"
+    },
+    {
+      "orcs": "5024",
+      "url": "https://bcparks.ca/myra-bellevue-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/myra-bellevue/"
+    },
+    {
+      "orcs": "5025",
+      "url": "https://bcparks.ca/nahatlatch-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/nahatlatch/"
+    },
+    {
+      "orcs": "9779",
+      "url": "https://bcparks.ca/nechako-canyon-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/nechako_canyon/"
+    },
+    {
+      "orcs": "1088",
+      "url": "https://bcparks.ca/nisgaa-memorial-lava-bed-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/nisgaa-memorial-lava-bed/"
+    },
+    {
+      "orcs": "577",
+      "url": "https://bcparks.ca/nisgaa-memorial-lava-bed-corridor-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/nisgaa-memorial-lava-bed-corridor/"
+    },
+    {
+      "orcs": "3932",
+      "url": "https://bcparks.ca/nisgaa-memorial-lava-bed-corridor-protected-area-no2/",
+      "oldUrl": "https://bcparks.ca/protected-areas/nisgaa-memorial-lava-bed-corridor-2/"
+    },
+    {
+      "orcs": "5026",
+      "url": "https://bcparks.ca/northern-rocky-mountains-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/northern-rocky-mountains/"
+    },
+    {
+      "orcs": "5027",
+      "url": "https://bcparks.ca/omineca-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/omineca/"
+    },
+    {
+      "orcs": "598",
+      "url": "https://bcparks.ca/otter-lake-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/otter-lake/"
+    },
+    {
+      "orcs": "8645",
+      "url": "https://bcparks.ca/pitman-river-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/pitman_rv/"
+    },
+    {
+      "orcs": "5028",
+      "url": "https://bcparks.ca/portage-brule-rapids-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/portage/"
+    },
+    {
+      "orcs": "5029",
+      "url": "https://bcparks.ca/ptarmigan-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/ptarmigan/"
+    },
+    {
+      "orcs": "9773",
+      "url": "https://bcparks.ca/purcell-wilderness-conservancy-corridor-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/purcell-wilderness-conservancy-corridor/"
+    },
+    {
+      "orcs": "5030",
+      "url": "https://bcparks.ca/seven-sisters-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/seven-sisters/"
+    },
+    {
+      "orcs": "8306",
+      "url": "https://bcparks.ca/sikanni-chief-falls-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/sikan_fl/"
+    },
+    {
+      "orcs": "9736",
+      "url": "https://bcparks.ca/six-mile-hill-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/six_mile/"
+    },
+    {
+      "orcs": "597",
+      "url": "https://bcparks.ca/small-inlet-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/small-inlet/"
+    },
+    {
+      "orcs": "448",
+      "url": "https://bcparks.ca/snowy-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/snowy/"
+    },
+    {
+      "orcs": "464",
+      "url": "https://bcparks.ca/south-okanagan-grasslands-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/s_ok_grassland/"
+    },
+    {
+      "orcs": "616",
+      "url": "https://bcparks.ca/stawamus-chief-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/stawamus-chief/"
+    },
+    {
+      "orcs": "5031",
+      "url": "https://bcparks.ca/sugarbowl-grizzly-den-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/sugarbowl-grizzly-den/"
+    },
+    {
+      "orcs": "5032",
+      "url": "https://bcparks.ca/sustut-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/sustut/"
+    },
+    {
+      "orcs": "5033",
+      "url": "https://bcparks.ca/sutherland-river-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/sutherland-river/"
+    },
+    {
+      "orcs": "492",
+      "url": "https://bcparks.ca/swan-creek-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/swan_crk/"
+    },
+    {
+      "orcs": "9819",
+      "url": "https://bcparks.ca/thinahtea-north-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/thinahtea-north/"
+    },
+    {
+      "orcs": "5035",
+      "url": "https://bcparks.ca/thinahtea-south-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/thinahtea-south/"
+    },
+    {
+      "orcs": "517",
+      "url": "https://bcparks.ca/thunderbirds-nest-tiitskin-paawats-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/thunderbirds-nest/"
+    },
+    {
+      "orcs": "5036",
+      "url": "https://bcparks.ca/tweedsmuir-corridor-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/tweedsmuir-corridor/"
+    },
+    {
+      "orcs": "1086",
+      "url": "https://bcparks.ca/upper-klinaklini-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/upper-klinaklini/"
+    },
+    {
+      "orcs": "9821",
+      "url": "https://bcparks.ca/upper-raush-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/up_raush/"
+    },
+    {
+      "orcs": "471",
+      "url": "https://bcparks.ca/vaseux-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/vaseux_pa/"
+    },
+    {
+      "orcs": "5037",
+      "url": "https://bcparks.ca/west-twin-protected-area/",
+      "oldUrl": "https://bcparks.ca/protected-areas/west-twin/"
+    },
+    {
+      "orcs": "6624",
+      "url": "https://bcparks.ca/white-lake-grasslands-protected-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/wht_lk_grass/"
+    },
+    {
+      "orcs": "351",
+      "url": "https://bcparks.ca/coquihalla-summit-recreation-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/coquihalla_smt/"
+    },
+    {
+      "orcs": "236",
+      "url": "https://bcparks.ca/kettle-river-recreation-area/",
+      "oldUrl": "https://bcparks.ca/explore/parkpgs/kettle_rv/"
+    }
+  ]
+}

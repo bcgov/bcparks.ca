@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_operation_sub_area_dates",
+  "info": {
+    "singularName": "park-operation-sub-area-date",
+    "pluralName": "park-operation-sub-area-dates",
+    "displayName": "Park-operation-sub-area-date",
+    "name": "park-operation-sub-area-date"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "operatingYear": {
+      "type": "integer"
+    },
+    "parkOperationSubArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::park-operation-sub-area.park-operation-sub-area",
+      "inversedBy": "parkOperationSubAreaDates"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "openDate": {
+      "type": "date"
+    },
+    "closeDate": {
+      "type": "date"
+    },
+    "serviceStartDate": {
+      "type": "date"
+    },
+    "serviceEndDate": {
+      "type": "date"
+    },
+    "reservationStartDate": {
+      "type": "date"
+    },
+    "reservationEndDate": {
+      "type": "date"
+    },
+    "offSeasonStartDate": {
+      "type": "date"
+    },
+    "offSeasonEndDate": {
+      "type": "date"
+    },
+    "adminNote": {
+      "type": "text"
+    }
+  }
+}

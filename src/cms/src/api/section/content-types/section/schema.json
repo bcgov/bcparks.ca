@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sections",
+  "info": {
+    "singularName": "section",
+    "pluralName": "sections",
+    "displayName": "Section",
+    "name": "section"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "sectionNumber": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "sectionName": {
+      "type": "string"
+    },
+    "region": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::region.region",
+      "inversedBy": "sections"
+    },
+    "managementAreas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::management-area.management-area",
+      "mappedBy": "section"
+    }
+  }
+}

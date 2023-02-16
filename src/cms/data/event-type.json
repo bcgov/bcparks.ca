@@ -1,0 +1,184 @@
+{"event-type": 
+  [
+	{
+	  "eventType": "Access restricted"
+	},
+	{
+	  "eventType": "Avalanche"
+	},
+	{
+	  "eventType": "Avalanche hazard"
+	},
+	{
+	  "eventType": "Boil water notice"
+	},
+	{
+	  "eventType": "Campfires"
+	},
+	{
+	  "eventType": "Campground capacity"
+	},
+	{
+	  "eventType": "Campground closure"
+	},
+	{
+	  "eventType": "Campground expansion"
+	},
+	{
+	  "eventType": "Construction"
+	},
+	{
+	  "eventType": "Cultural"
+	},
+	{
+	  "eventType": "Day-use passes"
+	},
+	{
+	  "eventType": "Dock closure"
+	},
+	{
+	  "eventType": "Ecosystem protection"
+	},
+	{
+	  "eventType": "Ecosystem restoration project"
+	},
+	{
+	  "eventType": "Event"
+	},
+	{
+	  "eventType": "Facilities unavailable"
+	},
+	{
+	  "eventType": "Facility closure"
+	},
+	{
+	  "eventType": "Facility out of service"
+	},
+	{
+	  "eventType": "Flood"
+	},
+	{
+	  "eventType": "Flood damage"
+	},
+	{
+	  "eventType": "Freshet"
+	},
+	{
+	  "eventType": "Gate closure"
+	},
+	{
+	  "eventType": "Hazard conditions"
+	},
+	{
+	  "eventType": "Hazard facility"
+	},
+	{
+	  "eventType": "Hazard trees"
+	},
+	{
+	  "eventType": "Hours of operation"
+	},
+	{
+	  "eventType": "Icy Conditions"
+	},
+	{
+	  "eventType": "Landslide"
+	},
+	{
+	  "eventType": "Off-Road Vehicles"
+	},
+	{
+	  "eventType": "Pandemic"
+	},
+	{
+	  "eventType": "Park access"
+	},
+	{
+	  "eventType": "Park closure"
+	},
+	{
+	  "eventType": "Park opening"
+	},
+	{
+	  "eventType": "Parking"
+	},
+	{
+	  "eventType": "Parking lot access"
+	},
+	{
+	  "eventType": "Pets"
+	},
+	{
+	  "eventType": "Prescribed burn"
+	},
+	{
+	  "eventType": "Public safety"
+	},
+	{
+	  "eventType": "Reservations"
+	},
+	{
+	  "eventType": "Road closure"
+	},
+	{
+	  "eventType": "Road conditions"
+	},
+	{
+	  "eventType": "Road hazards"
+	},
+	{
+	  "eventType": "Road inaccessible"
+	},
+	{
+	  "eventType": "Scheduled closure"
+	},
+	{
+	  "eventType": "Spring conditions"
+	},
+	{
+	  "eventType": "Storm damage"
+	},
+	{
+	  "eventType": "Trail closure"
+	},
+	{
+	  "eventType": "Trail construction"
+	},
+	{
+	  "eventType": "Trail maintenance"
+	},
+	{
+	  "eventType": "Tsunami"
+	},
+	{
+	  "eventType": "Volunteer"
+	},
+	{
+	  "eventType": "Weather"
+	},
+	{
+	  "eventType": "Wildfire"
+	},
+	{
+	  "eventType": "Wildfire damage"
+	},
+	{
+	  "eventType": "Wildfire fuel management"
+	},
+	{
+	  "eventType": "Wildfire nearby"
+	},
+	{
+	  "eventType": "Wildlife"
+	},
+	{
+	  "eventType": "Wildlife protection"
+	},
+	{
+	  "eventType": "Windstorm damage"
+	},
+	{
+	  "eventType": "Winter conditions"
+	}
+  ]
+}

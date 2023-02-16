@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "regions",
+  "info": {
+    "singularName": "region",
+    "pluralName": "regions",
+    "displayName": "Region",
+    "name": "region"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "regionNumber": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "regionName": {
+      "type": "string"
+    },
+    "sections": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::section.section",
+      "mappedBy": "region"
+    },
+    "managementAreas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::management-area.management-area",
+      "mappedBy": "region"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_name_types",
+  "info": {
+    "name": "ParkNameType"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nameTypeId": {
+      "type": "integer"
+    },
+    "nameType": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

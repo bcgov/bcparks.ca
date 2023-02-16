@@ -1,0 +1,39 @@
+{"access-status":
+	[
+	   {
+		   "accessStatus": "Full closure",
+		   "precedence": 1,
+		   "color": "red"
+	   },
+	   {
+		   "accessStatus": "Partial closure",
+		   "precedence": 2,
+		   "color": "yellow"
+	   },
+	   {
+		   "accessStatus": "Inaccessible",
+		   "precedence": 3,
+		   "color": "yellow"
+	   },
+	   {
+		   "accessStatus": "Warning",
+		   "precedence": 4,
+		   "color": "yellow"
+	   },
+	   {
+		   "accessStatus": "Closed to the public",
+		   "precedence": 5,
+		   "color": "yellow"
+	   },
+	   {
+		   "accessStatus": "Restricted; permit required",
+		   "precedence": 6,
+		   "color": "yellow"
+	   },
+	   {
+		   "accessStatus": "Open",
+		   "precedence": 99,
+		   "color": "blue"
+	   }
+	 ]
+   } 

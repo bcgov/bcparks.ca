@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/park-access-statuses-cache",
+      "handler": "park-access-status-cache.find",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

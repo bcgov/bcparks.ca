@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "fire_zones",
+  "info": {
+    "singularName": "fire-zone",
+    "pluralName": "fire-zones",
+    "displayName": "Fire-zone",
+    "name": "fire-zone"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "fireZoneNumber": {
+      "type": "integer"
+    },
+    "fireZoneName": {
+      "type": "string"
+    },
+    "headquartersCityName": {
+      "type": "string"
+    },
+    "fireCentre": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::fire-centre.fire-centre",
+      "inversedBy": "fireZones"
+    },
+    "protectedAreas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "fireZones"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "collectionName": "components_parks_link_cards",
+  "info": {
+    "name": "LinkCard",
+    "icon": "window-maximize",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "imageUrl": {
+      "type": "string",
+      "required": true
+    },
+    "imageAltText": {
+      "type": "string"
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Learn more"
+    },
+    "variation": {
+      "type": "enumeration",
+      "enum": [
+        "LandingPage",
+        "Footer",
+        "Home33Width",
+        "Home66Width",
+        "HomeFullWidth"
+      ]
+    }
+  }
+}

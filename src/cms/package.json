@@ -1,0 +1,55 @@
+{
+  "name": "backend",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi",
+    "test": "jest --forceExit --detectOpenHandles",
+    "lint": "eslint ./ && prettier --check **/*.js",
+    "seed": "node scripts/seed.js",
+    "reimport": "node scripts/reimport.js",
+    "loaddates": "node scripts/refresh-dates.js"
+  },
+  "dependencies": {
+    "@_sh/strapi-plugin-ckeditor": "^2.0.2",
+    "@babel/plugin-transform-block-scoping": "^7.20.11",
+    "@ckeditor/ckeditor5-markdown-gfm": "^36.0.0",
+    "@strapi/plugin-documentation": "4.6.0",
+    "@strapi/plugin-graphql": "4.6.0",
+    "@strapi/plugin-users-permissions": "4.6.0",
+    "@strapi/provider-email-nodemailer": "4.6.0",
+    "@strapi/provider-upload-aws-s3": "4.6.0",
+    "@strapi/strapi": "4.6.0",
+    "axios": "^0.21.1",
+    "better-sqlite3": "^7.6.2",
+    "jwks-rsa": "^2.0.4",
+    "knex": "^0.21.19",
+    "pg": "^8.5.1",
+    "strapi-middleware-cache": "^2.1.7",
+    "utf8": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=14.19.1 <=16.x.x",
+    "npm": ">=6.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "jest": "^27.4.7",
+    "supertest": "^6.2.1"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      ".tmp",
+      ".cache"
+    ],
+    "testEnvironment": "node",
+    "testTimeout": 60000
+  },
+  "workspaces": ["./src/plugins/strapi-plugin-ckeditor"]
+}

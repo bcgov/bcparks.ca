@@ -1,0 +1,19 @@
+{
+  "link-type": [
+    {
+      "type": "Closure Order"
+    },
+    {
+      "type": "Map"
+    },
+    {
+      "type": "Evacuation"
+    },
+    {
+      "type": "Information Bulletin"
+    },
+    {
+      "type": "General"
+    }
+  ]
+}

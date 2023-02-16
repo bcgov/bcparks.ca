@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "fire_centres",
+  "info": {
+    "name": "FireCentre",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "fireCentreNumber": {
+      "type": "integer"
+    },
+    "fireCentreName": {
+      "type": "string"
+    },
+    "fireZones": {
+      "via": "fireCentre",
+      "collection": "fire-zone"
+    }
+  }
+}

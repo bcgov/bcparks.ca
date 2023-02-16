@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_sub_pages",
+  "info": {
+    "name": "ParkSubPage",
+    "description": "Park Sub Page"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "slug": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "oldUrl": {
+      "type": "string"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "parks.seo"
+    },
+    "pageHeader": {
+      "type": "component",
+      "repeatable": false,
+      "component": "parks.page-header"
+    },
+    "content": {
+      "type": "dynamiczone",
+      "components": [
+        "parks.html-area",
+        "parks.page-section"
+      ]
+    },
+    "protectedArea": {
+      "model": "protected-area",
+      "via": "parkSubPages",
+      "required": true
+    }
+  }
+}

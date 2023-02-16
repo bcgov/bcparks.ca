@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_parks_images",
+  "info": {
+    "name": "Image",
+    "icon": "address-book"
+  },
+  "options": {},
+  "attributes": {
+    "Media": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": ["images", "files", "videos"],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+	"urgency": [
+		{
+			"urgency": "Low",
+			"code": "LO",
+			"sequence": 1,
+			"color": "blue"
+		},
+		{
+			"urgency": "Medium",
+			"code": "MD",
+			"sequence": 2,
+			"color": "yellow"
+		},
+		{
+			"urgency": "High",
+			"code": "HI",
+			"sequence": 3,
+			"color": "red"
+		}
+	]
+}

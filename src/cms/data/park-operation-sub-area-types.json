@@ -1,0 +1,116 @@
+{
+  "parkOperationSubAreaTypes": [
+    {
+      "subAreaTypeId": 3,
+      "subAreaType": "Backcountry",
+      "subAreaTypeCode": "bc",
+      "iconUrl": "/_shared/images/icons/26x26icons/activity/wilderness-camping.svg",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 9,
+      "subAreaType": "Boat Launch",
+      "subAreaTypeCode": "bl",
+      "iconUrl": "/_shared/images/icons/26x26icons/facility/boat-launch.svg",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 4,
+      "subAreaType": "Cabin",
+      "subAreaTypeCode": "cab",
+      "iconUrl": "/_shared/images/icons/26x26icons/facility/shelter.svg",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 15,
+      "subAreaType": "Day-Use",
+      "subAreaTypeCode": "du",
+      "iconUrl": "/_shared/images/icons/26x26icons/activity/hiking.svg",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 8,
+      "subAreaType": "Day-Use Area",
+      "subAreaTypeCode": "dua",
+      "iconUrl": "/_shared/images/icons/26x26icons/facility/picnic-area.svg",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 14,
+      "subAreaType": "Dock",
+      "subAreaTypeCode": "dock",
+      "iconUrl": "",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 1,
+      "subAreaType": "Frontcountry Campground",
+      "subAreaTypeCode": "fc",
+      "iconUrl": "/_shared/images/icons/26x26icons/facility/vehicle-accessible-camping.svg",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 2,
+      "subAreaType": "Group Campground",
+      "subAreaTypeCode": "grp",
+      "iconUrl": "/_shared/images/icons/26x26icons/facility/group-camping.svg",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 12,
+      "subAreaType": "Hut",
+      "subAreaTypeCode": "hut",
+      "iconUrl": "",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 13,
+      "subAreaType": "Mooring Buoy",
+      "subAreaTypeCode": "buoy",
+      "iconUrl": "",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 5,
+      "subAreaType": "Picnic Area",
+      "subAreaTypeCode": "pica",
+      "iconUrl": "/_shared/images/icons/26x26icons/facility/picnic-area.svg",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 6,
+      "subAreaType": "Picnic Shelter",
+      "subAreaTypeCode": "pics",
+      "iconUrl": "/_shared/images/icons/26x26icons/facility/picnic-area.svg",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 11,
+      "subAreaType": "Resort",
+      "subAreaTypeCode": "res",
+      "iconUrl": "",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 10,
+      "subAreaType": "Trail",
+      "subAreaTypeCode": "tr",
+      "iconUrl": "/_shared/images/icons/26x26icons/activity/hiking.svg",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 7,
+      "subAreaType": "Walk-in Camping",
+      "subAreaTypeCode": "wic",
+      "iconUrl": "/_shared/images/icons/26x26icons/facility/walk-in-camping.svg",
+      "isActive": true
+    },
+    {
+      "subAreaTypeId": 16,
+      "subAreaType": "Wilderness Camping",
+      "subAreaTypeCode": "wc",
+      "iconUrl": "/_shared/images/icons/26x26icons/activity/wilderness-camping.svg",
+      "isActive": true
+    }
+  ]
+}

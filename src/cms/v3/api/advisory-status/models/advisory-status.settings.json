@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "advisory_statuses",
+  "info": {
+    "name": "AdvisoryStatus",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "advisoryStatus": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string"
+    }
+  }
+}

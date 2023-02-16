@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sections",
+  "info": {
+    "name": "Section",
+    "description": "Section"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "sectionNumber": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "sectionName": {
+      "type": "string"
+    },
+    "region": {
+      "via": "sections",
+      "model": "region"
+    },
+    "managementAreas": {
+      "via": "section",
+      "collection": "management-area"
+    }
+  }
+}

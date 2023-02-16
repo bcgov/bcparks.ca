@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "access_statuses",
+  "info": {
+    "singularName": "access-status",
+    "pluralName": "access-statuses",
+    "displayName": "Access-status",
+    "name": "access-status"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "accessStatus": {
+      "type": "string"
+    },
+    "precedence": {
+      "type": "integer"
+    },
+    "color": {
+      "type": "string"
+    }
+  }
+}

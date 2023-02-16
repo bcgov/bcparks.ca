@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "standard_messages",
+  "info": {
+    "singularName": "standard-message",
+    "pluralName": "standard-messages",
+    "displayName": "Standard-message",
+    "name": "standard-message"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "eventType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::event-type.event-type"
+    }
+  }
+}

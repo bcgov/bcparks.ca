@@ -1,0 +1,17 @@
+{
+  "kind": "singleType",
+  "collectionName": "statutory_holidays",
+  "info": {
+    "name": "StatutoryHolidays"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "data": {
+      "type": "json"
+    }
+  }
+}
