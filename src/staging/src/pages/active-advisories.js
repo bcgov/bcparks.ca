@@ -300,19 +300,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
   const protectedArea = data.allStrapiProtectedArea?.nodes
 
-  const advisoriesWithParkNames = advisories.map(item => {
-    const parkNamesList = item.protectedAreas.map(park => {
-      const findParkNames = protectedArea.find(
-        i => i.orcs === park.orcs
-      )
-      return findParkNames.parkNames
-    })
-    return {
-      ...item,
-      parkNames: parkNamesList[0],
-    }
-  })
-
   // Page setter exposed to AdvisortyPageNav
   const setPage = p => {
     setPageIndex(p)
@@ -393,7 +380,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
           <AdvisoryLegend />
           <AdvisoryList
-            advisories={advisoriesWithParkNames}
+            advisories={advisories}
             pageIndex={pageIndex}
             pageLen={pageLen}
           ></AdvisoryList>
