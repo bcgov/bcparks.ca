@@ -298,8 +298,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     [pageIndex, apiCall, apiUrl]
   )
 
-  const protectedArea = data.allStrapiProtectedArea?.nodes
-
   // Page setter exposed to AdvisortyPageNav
   const setPage = p => {
     setPageIndex(p)
@@ -429,17 +427,6 @@ export const query = graphql`
         strapiParent {
           id
           title
-        }
-      }
-    }
-    allStrapiProtectedArea(sort: { fields: parent___internal___type }) {
-      nodes {
-        protectedAreaName
-        orcs
-        parkNames {
-          id
-          parkName
-          parkNameType
         }
       }
     }
