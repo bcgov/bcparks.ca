@@ -8,6 +8,11 @@
 4) yarn start 
 
 
+# Collection that manually was modified/updated
+1. management-area
+2. protected-area-status
+3. 
+
 
 
 # Backend Development - Strapi Localhost
