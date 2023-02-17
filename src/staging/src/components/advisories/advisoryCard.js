@@ -8,13 +8,10 @@ import Row from "react-bootstrap/Row"
 import HTMLArea from "../HTMLArea"
 
 import "../../styles/advisories/advisoryCard.scss"
-import { renderHTML } from "../../utils/helpers"
-import { PARK_NAME_TYPE } from "../../utils/constants"
 
 const AdvisoryCard = ({ advisory, index }) => {
   const [open, setOpen] = useState(false)
 
-  const getParkName = item => item.parkNameType === PARK_NAME_TYPE.Escaped
   return (
     <>
       <Row
@@ -127,10 +124,7 @@ const AdvisoryCard = ({ advisory, index }) => {
                                           .replace(/ /g, "-")
                                   }`}
                                 >
-                                  {renderHTML(
-                                    advisory.parkNames.find(getParkName)
-                                      ?.parkName
-                                  ) || par.protectedAreaName}
+                                  {par.protectedAreaName}
                                 </a>
                               </Badge>
                             ))}
