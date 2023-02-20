@@ -646,7 +646,8 @@ export default function FindAPark({ location, data }) {
                     </div>
                     <div className="col-12 pr-3">
                       <div className="">
-                        <p className="filter-heading p10t">Popular</p>
+                      <fieldset>
+                        <legend className="filter-heading p10t">Popular</legend>
                         <FormGroup className="p10l filter-options-container">
                           {quickSearchFilters.map(item => {
                             return (
@@ -669,7 +670,9 @@ export default function FindAPark({ location, data }) {
                             )
                           })}
                         </FormGroup>
+                        </fieldset>
                         <hr></hr>
+                        <fieldset>
                         <div
                           tabIndex={0}
                           role="button"
@@ -682,7 +685,7 @@ export default function FindAPark({ location, data }) {
                           }}
                         >
                           <div className="col-md-4">
-                            <p className="filter-heading p10t">Activities</p>
+                            <legend className="filter-heading p10t">Activities</legend>
                           </div>
                           <div className="col-md-2 ml-auto">
                             {showActivities ? (
@@ -758,7 +761,9 @@ export default function FindAPark({ location, data }) {
                             <div></div>
                           )}
                         </div>
+                        </fieldset>
                         <hr></hr>
+                        <fieldset>
                         <div
                           tabIndex={0}
                           role="button"
@@ -771,7 +776,7 @@ export default function FindAPark({ location, data }) {
                           }}
                         >
                           <div className="col-md-4">
-                            <p className="filter-heading p10t">Facilities</p>
+                            <legend className="filter-heading p10t">Facilities</legend>
                           </div>
                           <div className="col-md-2 ml-auto">
                             {showFacilities ? (
@@ -847,6 +852,7 @@ export default function FindAPark({ location, data }) {
                             <div></div>
                           )}
                         </div>
+                        </fieldset>
                       </div>
                     </div>
                   </div>
