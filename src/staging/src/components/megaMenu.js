@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react"
 import PropTypes from "prop-types"
 import { Link, navigate } from "gatsby"
+import { isTablet } from "react-device-detect"
 
 import BCParksLogo from "../images/logo/BCParks_Primary_Reversed.svg"
 import BCParksWordmark from "../images/BCParks_Wordmark_White.svg"
@@ -74,6 +75,18 @@ const MegaMenu = ({ content, menuMode }) => {
     } else {
       e.preventDefault();
       menuNavigate(item, menuMode)
+    }
+  }
+
+  const sectionHover = (e, section, menuMode) => {
+    if (window.innerWidth >= 992 && menuMode !== "sitemap" && !isTablet) {
+      // otherwise hover triggered in mobile emulator
+      if (section !== selectedItem) {
+        // don't trigger nav through hovers
+        setSelectedItem(section)
+        let selObj = getSelectionObj(section, {}) // track the selected item at this level and above
+        setSelections(selObj)
+      }
     }
   }
 
@@ -216,6 +229,7 @@ const MegaMenu = ({ content, menuMode }) => {
                       role="button"
                       tabIndex={0}
                       onFocus={e => menuFocus(e, page)}
+                      onMouseOver={e => sectionHover(e, page, menuMode)}
                       onKeyDown={e => {
                         if (e.key === "Enter" || e.key === " ") {
                           navigatePage(e, page, menuMode)
