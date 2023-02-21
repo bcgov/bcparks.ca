@@ -181,6 +181,7 @@ const MegaMenu = ({ content, menuMode }) => {
                 <li className="menu-button menu-back" role="presentation">
                   <a
                     className="menu-button__title"
+                    href="back"
                     role="button"
                     tabIndex={0}
                     onKeyDown={e => {

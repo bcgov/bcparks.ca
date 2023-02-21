@@ -138,7 +138,7 @@ nav {
     box-shadow: 0px 5px 3px 3px rgba(0, 0, 0, 0.3);
 
     .menu-button {
-      padding: 8px 20px;
+      
       width: 100%;
       transition: background-color 0.3s;
       cursor: pointer;
@@ -146,15 +146,15 @@ nav {
       color: #000;
 
       .menu-button__title {
+        color: #000;
         width: 100%;
+        padding: 8px 20px;
         display: block;
         line-height: 40px;
-        height: 40px;
       }
       .menu-button__arr {
         float: right;
         line-height: 40px;
-        height: 40px;
       }
     }
     .menu-button.menu-back {
@@ -180,7 +180,7 @@ nav {
       padding-left: 10px;
       background: #eee;
       a {
-        color: $colorBlueMed;
+        color: $colorBlueMed !important;
         font-size: 1.2rem;
         font-weight: 700;
       }
@@ -255,23 +255,16 @@ nav {
     .menu-level--0 {
       z-index: 5;
 
-      .menu-button__arr {
-        display: none;
-      }
       .menu-button:hover {
         background-color: initial;
       }
       > .menu-button-list {
         z-index: 6;
         display: flex;
-        height: auto;
         height: 65px;
-        flex-grow: 1;
         margin: 0 auto;
 
         > li.menu-button {
-          flex-basis: 100%;
-          height: 100%;
 
           &.menu-back {
             display: none;
@@ -280,8 +273,8 @@ nav {
             display: none;
           }
           .menu-button__title {
-            padding: 0px 10px;
-            color: white;
+            padding: 0px 16px;
+            color: #fff;
             font-size: 1rem;
             transition: background 0.2s, color 0.2s;
             position: relative;
@@ -301,6 +294,9 @@ nav {
 
           .menu-button__title {
             color: $colorBlue;
+            .menu-button__arr {
+              rotate: 270deg;
+            }
           }
         }
       }
@@ -377,16 +373,25 @@ nav {
     .menu-button:hover {
       background-color: #eee;
     }
-    .menu-button {
-      padding: 8px 10px;
-      width: 100%;
-      transition: background-color 0.3s;
-      cursor: pointer;
+    .menu-level--0 {
+      .menu-button__arr {
+        display: none; // remove to enable top-level icons
+        margin-left: 8px;
+        transition: rotate 0.2s;
+        rotate: 90deg;
+        font-size: 0.625rem;
+      }
+    }
+    
 
+    .menu-button {
+      transition: background-color 0.3s;
+      
       .menu-button__title {
         color: #000;
         display: block;
         width: 100%;
+        padding: 8px 10px;
 
         .menu-button__arr {
           float: right;
