@@ -43,15 +43,11 @@
       }
     }
     .MuiOutlinedInput-root:focus {
-      outline: none !important;
       outline-offset: 1px !important;
     }
     .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
       border: 1px solid $colorBlue !important;
     }
-  }
-  button:focus {
-    outline: unset !important;
   }
 
   .search-icon-fab {
@@ -90,9 +86,6 @@
     .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
       border: 1px solid $colorBlue !important;
     }
-  }
-  button:focus {
-    outline: unset !important;
   }
   .park-filter-select [class*="-control"] {
     border-radius: 50px !important;
