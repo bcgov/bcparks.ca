@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react"
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import { graphql } from "gatsby"
 import axios from "axios"
 import { orderBy } from "lodash"
@@ -26,6 +26,7 @@ import CancelIcon from "@material-ui/icons/Cancel"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
 import Carousel from "react-material-ui-carousel"
+import { scrollIntoView } from "seamless-scroll-polyfill";
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -206,6 +207,7 @@ export default function FindAPark({ location, data }) {
 
   const [openQuickView, setOpenQuickView] = useState(false)
 
+  const searchRef = useRef(null)
   const breadcrumbs = [
     <Link key="1" href="/">
       Home
@@ -300,6 +302,7 @@ export default function FindAPark({ location, data }) {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value)
+    scrollIntoView(searchRef.current, {behavior: "smooth" })
   }
 
   const handleClickOpenFilter = () => {
@@ -515,7 +518,7 @@ export default function FindAPark({ location, data }) {
                   <div className="row no-gutters"></div>
                 </div>
               </div>
-              <div className="col-lg-9 col-md-12 col-sm-12">
+              <div className="col-lg-9 col-md-12 col-sm-12" ref={searchRef}>
                 <div className="search-results-list container">
                   <div className="row p20t d-flex">
                     <div className="col-8 d-none d-lg-block">
