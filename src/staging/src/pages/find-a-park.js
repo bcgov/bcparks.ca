@@ -955,7 +955,7 @@ export default function FindAPark({ location, data }) {
                                             className="p10t"
                                           >
                                             <h2 className="park-heading-text">
-                                              {renderHTML(r.parkNames.find(getParkName)?.parkName) || r.protectedAreaName }
+                                              {renderHTML(r.parkNames.find(getParkName)?.parkName || r.protectedAreaName)}
                                             </h2>
                                           </Link>
 
@@ -1150,7 +1150,7 @@ export default function FindAPark({ location, data }) {
                                             className="p10t"
                                           >
                                             <h2 className="park-heading-text">
-                                            {renderHTML(r.parkNames.find(getParkName)?.parkName) || r.protectedAreaName }
+                                            {renderHTML(r.parkNames.find(getParkName)?.parkName || r.protectedAreaName)}
                                             </h2>
                                           </Link>
                                         </div>
