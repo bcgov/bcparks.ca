@@ -240,6 +240,10 @@ nav {
     background: $colorBlueMed;
     color: $colorWhite;
 
+    a:hover {
+      text-decoration: none;
+    }
+
     .menu-wrapper {
       max-width: 1140px;
       margin: 0px auto;
@@ -528,9 +532,6 @@ nav {
   .menu-button__title {
     color: $colorBlue;
     cursor: pointer;
-  }
-  .menu-button__title:hover {
-    text-decoration: underline;
   }
   .menu-button--selected {
     background: #9f9;
