@@ -134,37 +134,6 @@ ol li.lower-alpha {
 
 /* end CKEeditor added styles */
 
-.book-campsite {
-  height: 35px;
-  background-color: $colorGold;
-  border-radius: 40px;
-  width: 189px;
-}
-
-.book-campsite-inner {
-  color: $colorBlue;
-  font-size: 14px;
-
-  @media screen and (min-width: $smBreakpoint) {
-    top: unset;
-  }
-}
-
-.book-campsite-nav {
-  margin-top: 15px;
-  margin-bottom: 10px;
-}
-
-.book-campsite-outer {
-  @media screen and (min-width: $smBreakpoint) {
-    padding-right: 5vw;
-  }
-}
-
-.book-campsite-logo {
-  transform: scale(0.7);
-}
-
 #home-header {
   .nav-item:not(:last-child) {
     border-bottom: 1px solid white;
@@ -177,10 +146,6 @@ ol li.lower-alpha {
       background-color: #7a94a5 !important;
     }
   }
-}
-
-#home-alert span {
-  font-size: 14px !important;
 }
 
 #home-menu {
@@ -226,7 +191,7 @@ li.post-separator {
 }
 
 .alert-content {
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .alert-warning {

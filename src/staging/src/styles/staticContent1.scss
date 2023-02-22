@@ -97,7 +97,7 @@
 
   .content-zone-intro {
     .content-zone-header {
-      font-size: 24px;
+      font-size: 1.5rem;
       color: $colorText;
       font-weight: bold;
       margin-bottom: 0;
@@ -120,7 +120,7 @@
   }
   .hero-credit {
     @media screen and (max-width: 415px) {
-      font-size: 12.8px !important;
+      font-size: 0.8rem !important;
     }
   }
   .accordion-section {
@@ -157,7 +157,7 @@
     }
   }
   .content-zone-header {
-    font-size: 24px;
+    font-size: 1.5rem;
     color: $colorBlueLight;
     font-weight: bold;
     margin-bottom: 0;
