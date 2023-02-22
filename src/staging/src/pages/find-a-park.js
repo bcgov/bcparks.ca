@@ -659,7 +659,8 @@ export default function FindAPark({ location, data }) {
                     </div>
                     <div className="col-12 pr-3">
                       <div className="">
-                        <h4 className="filter-heading p10t">Popular</h4>
+                      <fieldset>
+                        <legend className="filter-heading p10t">Popular</legend>
                         <FormGroup className="p10l filter-options-container">
                           {quickSearchFilters.map(item => {
                             return (
@@ -682,7 +683,9 @@ export default function FindAPark({ location, data }) {
                             )
                           })}
                         </FormGroup>
+                        </fieldset>
                         <hr></hr>
+                        <fieldset>
                         <div
                           tabIndex={0}
                           role="button"
@@ -695,7 +698,7 @@ export default function FindAPark({ location, data }) {
                           }}
                         >
                           <div className="col-md-4">
-                            <h4 className="filter-heading p10t">Activities</h4>
+                            <legend className="filter-heading p10t">Activities</legend>
                           </div>
                           <div className="col-md-2 ml-auto">
                             {showActivities ? (
@@ -771,7 +774,9 @@ export default function FindAPark({ location, data }) {
                             <div></div>
                           )}
                         </div>
+                        </fieldset>
                         <hr></hr>
+                        <fieldset>
                         <div
                           tabIndex={0}
                           role="button"
@@ -784,7 +789,7 @@ export default function FindAPark({ location, data }) {
                           }}
                         >
                           <div className="col-md-4">
-                            <h4 className="filter-heading p10t">Facilities</h4>
+                            <legend className="filter-heading p10t">Facilities</legend>
                           </div>
                           <div className="col-md-2 ml-auto">
                             {showFacilities ? (
@@ -860,6 +865,7 @@ export default function FindAPark({ location, data }) {
                             <div></div>
                           )}
                         </div>
+                        </fieldset>
                       </div>
                     </div>
                   </div>
@@ -948,9 +954,9 @@ export default function FindAPark({ location, data }) {
                                             href={`/${r.slug}/`}
                                             className="p10t"
                                           >
-                                            <h3 className="park-heading-text">
+                                            <h2 className="park-heading-text">
                                               {renderHTML(r.parkNames.find(getParkName)?.parkName) || r.protectedAreaName }
-                                            </h3>
+                                            </h2>
                                           </Link>
 
                                           <div className="row p10t mr5">
@@ -1143,9 +1149,9 @@ export default function FindAPark({ location, data }) {
                                             href={`/${r.slug}/`}
                                             className="p10t"
                                           >
-                                            <h3 className="park-heading-text">
+                                            <h2 className="park-heading-text">
                                             {renderHTML(r.parkNames.find(getParkName)?.parkName) || r.protectedAreaName }
-                                            </h3>
+                                            </h2>
                                           </Link>
                                         </div>
                                       </div>

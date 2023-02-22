@@ -778,6 +778,7 @@ div[class$="-singleValue"] {
 
 .park-heading-text {
   color: $colorBlue;
+  font-size: 1.33882rem;
   margin-top: 10px;
 }
 
@@ -824,6 +825,8 @@ div[class$="-singleValue"] {
   .search-results-quick-filter {
     .filter-heading {
       color: $colorBlack;
+      font-size: 1rem;
+      font-weight: 700;
     }
 
     .select-padding {
