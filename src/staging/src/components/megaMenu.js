@@ -64,6 +64,7 @@ const MegaMenu = ({ content, menuMode }) => {
   }
 
   const navigateBack = (e, item) => {
+    e.preventDefault();
     // go "up" a level by navigating to this item's parent
     menuNavigate(item.parent)
   }
@@ -72,6 +73,7 @@ const MegaMenu = ({ content, menuMode }) => {
     if (menuMode === "sitemap") {
       navigate(item.url)
     } else {
+      e.preventDefault();
       menuNavigate(item, menuMode)
     }
   }
@@ -186,11 +188,13 @@ const MegaMenu = ({ content, menuMode }) => {
       <>
         {item.hasChildren && (
           <>
-            <nav className={"menu-level menu-level--" + item.treeLevel}>
+            <nav className={"menu-level menu-level--" + item.treeLevel} aria-labelledby="mainmenulabel">
+	            <h2 id="mainmenulabel" className="sr-only">Main Menu</h2>
               <ul className="menu-button-list">
                 <li className="menu-button menu-back" role="presentation">
-                  <span
+                  <a
                     className="menu-button__title"
+                    href="back"
                     role="button"
                     tabIndex={0}
                     onKeyDown={e => {
@@ -201,7 +205,7 @@ const MegaMenu = ({ content, menuMode }) => {
                     onClick={e => navigateBack(e, item)}
                   >
                     <i className="menu-button__arr fa fa-chevron-left"></i> Back
-                  </span>
+                  </a>
                 </li>
                 <li className="menu-button menu-header" role="presentation">
                   <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
@@ -219,8 +223,9 @@ const MegaMenu = ({ content, menuMode }) => {
                     }
                     role="presentation"
                   >
-                    <span
+                    <a
                       className="menu-button__title"
+                      href={page.url}
                       role="button"
                       tabIndex={0}
                       onFocus={e => menuFocus(e, page)}
@@ -230,13 +235,22 @@ const MegaMenu = ({ content, menuMode }) => {
                           navigatePage(e, page, menuMode)
                         }
                       }}
-                      onClick={e => navigatePage(e, page, menuMode)}
+                      // if the user command or control clicks, open in a new tab
+                      // it's ok that this won't open a sub-menu as this wouldn't
+                      // be the expected behaviour
+                      onClick={e => {
+                        if (e.metaKey || e.ctrlKey) {
+                          window.open(page.url, '_blank');
+                        } else {
+                          navigatePage(e, page, menuMode)
+                        }
+                      }}
                     >
                       {page.title}
                       {page.hasChildren && (
                         <i className="menu-button__arr fa fa-chevron-right"></i>
                       )}
-                    </span>
+                    </a>
                   </li>
                 ))}
               </ul>
