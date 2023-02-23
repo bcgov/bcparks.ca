@@ -146,6 +146,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    needs: [build-cms]
     # needs: [build-cms, build-admin]
     steps:
       - name: Git Checkout
