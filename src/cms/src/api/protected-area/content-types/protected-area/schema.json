@@ -5,7 +5,8 @@
     "singularName": "protected-area",
     "pluralName": "protected-areas",
     "displayName": "Protected-area",
-    "name": "protected-area"
+    "name": "protected-area",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -254,6 +255,17 @@
       "type": "component",
       "repeatable": false,
       "component": "parks.seo"
+    },
+    "advisories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::public-advisory.public-advisory",
+      "inversedBy": "protectedAreas"
+    },
+    "parkPhotos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-photo.park-photo"
     }
   }
 }

@@ -5,7 +5,8 @@
     "singularName": "public-advisory",
     "pluralName": "public-advisories",
     "displayName": "Public-advisory",
-    "name": "public-advisory"
+    "name": "public-advisory",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -69,9 +70,6 @@
     },
     "createdDate": {
       "type": "datetime"
-    },
-    "createdBy": {
-      "type": "string"
     },
     "advisoryDate": {
       "type": "datetime"
@@ -162,6 +160,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::standard-message.standard-message"
+    },
+    "protectedAreas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::protected-area.protected-area",
+      "mappedBy": "advisories"
     }
   }
 }
