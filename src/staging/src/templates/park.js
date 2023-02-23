@@ -259,7 +259,7 @@ export default function ParkTemplate({ data }) {
     parkOrcs: park.orcs
   }
 
-  const parkName = renderHTML(park.parkNames.find(item=> item.parkNameType === PARK_NAME_TYPE.Escaped)?.parkName);
+  const parkName = renderHTML(park.parkNames.find(item=> item.parkNameType === PARK_NAME_TYPE.Escaped)?.parkName  || park.protectedAreaName);
 
   const parkDescription = park.description?.replace(/(<([^>]+)>)/ig, '');
   const parkDescriptionShort = truncate(parkDescription, { length: 160 });
@@ -304,7 +304,7 @@ export default function ParkTemplate({ data }) {
               </Grid>
               <Grid item xs={12} sm={12}>
                 <ParkHeader
-                  parkName={parkName || park.protectedAreaName}
+                  parkName={parkName}
                   hasReservations={hasReservations}
                   hasDayUsePass={hasDayUsePass}
                   isLoadingAdvisories={isLoadingAdvisories}
