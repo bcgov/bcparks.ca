@@ -51,12 +51,22 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
 };
 
 const getPublishedPublicAdvisories = async () => {
-  return await strapi.services["public-advisory"].find({
-    _publicationState: "live",
-    "accessStatus.precedence_lt": 99,
-    _sort: "id",
-    _limit: -1,
-  });
+  return await strapi.entityService.findMany(
+    "api::public-advisory.public-advisory",
+    {
+      publicationState: "live",
+      sort: "id",
+      limit: -1,
+      populate: "*",
+      filters: {
+        accessStatus: {
+          precedence: {
+            $lt: 99,
+          },
+        },
+      },
+    }
+  );
 };
 
 // custom route for park status view
@@ -65,37 +75,104 @@ const getProtectedAreaStatus = async (ctx) => {
   const { accessStatus, accessStatus_ne, ...query } = ctx.query;
 
   if (accessStatus || accessStatus_ne) {
-    entities = await strapi.services["protected-area"].find({ _limit: -1 });
+    entities = await strapi.entityService.findMany(
+      "api::protected-area.protected-area",
+      {
+        limit: -1,
+        populate: "*",
+      }
+    );
   } else if (ctx.query._q) {
-    entities = await strapi.services["protected-area"].search(ctx.query);
+    entities = await strapi.entityService.findMany(
+      "api::protected-area.protected-area",
+      {
+        ...ctx.query,
+        populate: "*",
+      }
+    );
   } else {
-    entities = await strapi.services["protected-area"].find(query);
+    entities = await strapi.entityService.findMany(
+      "api::protected-area.protected-area",
+      {
+        ...query,
+        populate: "*",
+      }
+    );
   }
 
-  const regionsData = await strapi.services["region"].find({ _limit: -1 });
-  const sectionsData = await strapi.services["section"].find({ _limit: -1 });
-  const fireCentresData = await strapi.services["fire-centre"].find({
-    _limit: -1,
-  });
-  const activityTypesData = await strapi.services["activity-type"].find({
-    _limit: -1,
-  });
-  const facilityTypesData = await strapi.services["facility-type"].find({
-    _limit: -1,
-  });
-  const linkTypesData = await strapi.services["link-type"].find({ _limit: -1 });
-  const parkNamesAliases = await strapi.services["park-name"].find({
-    _limit: -1,
-    "parkNameType.nameType": "Alias",
-  });
+  const regionsData = await strapi.entityService.findMany(
+    "api::region.region",
+    {
+      limit: -1,
+      populate: "*",
+    }
+  );
+  const sectionsData = await strapi.entityService.findMany(
+    "api::section.section",
+    {
+      limit: -1,
+      populate: "*",
+    }
+  );
+  const fireCentresData = await strapi.entityService.findMany(
+    "api::fire-centre.fire-centre",
+    {
+      limit: -1,
+      populate: "*",
+    }
+  );
+  const activityTypesData = await strapi.entityService.findMany(
+    "api::activity-type.activity-type",
+    {
+      limit: -1,
+      populate: "*",
+    }
+  );
+  const facilityTypesData = await strapi.entityService.findMany(
+    "api::facility-type.facility-type",
+    {
+      limit: -1,
+      populate: "*",
+    }
+  );
+  const linkTypesData = await strapi.entityService.findMany(
+    "api::link-type.link-type",
+    {
+      limit: -1,
+      populate: "*",
+    }
+  );
+  const parkNamesAliases = await strapi.entityService.findMany(
+    "api::park-name.park-name",
+    {
+      limit: -1,
+      populate: "*",
+      filters: {
+        parkNameType: {
+          nameType: "Alias",
+        },
+      },
+    }
+  );
 
-  const campfireBanData = await strapi.services["fire-ban-prohibition"].find({
-    _limit: -1,
-    prohibitionDescription_contains: "campfire",
-    fireCentre_null: false,
-  });
+  const campfireBanData = await strapi.entityService.findMany(
+    "api::fire-ban-prohibition.fire-ban-prohibition",
+    {
+      filters: {
+        prohibitionDescription: {
+          $containsi: "campfire",
+        },
+        fireCentre: {
+          id: {
+            $notNull: true,
+          },
+        },
+      },
+      populate: "*",
+    }
+  );
 
-  const publicAdvisories = await getPublishedPublicAdvisories();
+  let publicAdvisories = await getPublishedPublicAdvisories();
 
   let payload = entities.map((protectedArea) => {
     let publicAdvisory = getPublicAdvisory(
@@ -108,7 +185,7 @@ const getProtectedAreaStatus = async (ctx) => {
         protectedArea.managementAreas.map(
           (m) =>
             regionsData.find((region) => region.id === m.region && m.region)
-              .regionName
+              ?.regionName
         )
       ),
     ];
@@ -119,7 +196,7 @@ const getProtectedAreaStatus = async (ctx) => {
           (m) =>
             sectionsData.find(
               (section) => section.id === m.section && m.section
-            ).sectionName
+            )?.sectionName
         )
       ),
     ];

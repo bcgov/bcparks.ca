@@ -21,6 +21,12 @@ module.exports = ({ env }) => ({
   },
   ckeditor5: {
     enabled: true,
-    resolve: "./src/plugins/strapi-plugin-ckeditor"
+    resolve: "./src/plugins/strapi-plugin-ckeditor",
+  },
+  // TODO: need to check
+  "strapi-plugin-populate-deep": {
+    config: {
+      defaultDepth: 3,
+    },
   },
 });

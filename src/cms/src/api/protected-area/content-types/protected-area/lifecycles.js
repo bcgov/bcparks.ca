@@ -6,10 +6,12 @@
  */
 
 const saveParkAccessStatus = async (data) => {
-  strapi.services["park-access-status"]
+  await strapi
+    .service("api::park-access-status.park-access-status")
     .update({ orcs: data.orcs }, { orcs: data.orcs })
     .catch(async () => {
-      strapi.services["park-access-status"]
+      await strapi
+        .service("api::park-access-status.park-access-status")
         .create({ orcs: data.orcs })
         .catch((error) => {
           strapi.log.error(

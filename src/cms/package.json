@@ -19,6 +19,7 @@
     "@babel/plugin-transform-block-scoping": "^7.20.11",
     "@ckeditor/ckeditor5-markdown-gfm": "^36.0.0",
     "@strapi/plugin-documentation": "4.6.0",
+    "@strapi/plugin-gatsby-preview": "^0.1.0",
     "@strapi/plugin-graphql": "4.6.0",
     "@strapi/plugin-users-permissions": "4.6.0",
     "@strapi/provider-email-nodemailer": "4.6.0",
@@ -30,6 +31,7 @@
     "knex": "^0.21.19",
     "pg": "^8.5.1",
     "strapi-middleware-cache": "^2.1.7",
+    "strapi-plugin-populate-deep": "^2.0.0",
     "utf8": "^3.0.0"
   },
   "engines": {

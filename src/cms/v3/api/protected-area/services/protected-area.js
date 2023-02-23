@@ -61,7 +61,7 @@ module.exports = {
     limit,
     offset,
   }) {
-    const knex = strapi.connections[strapi.config.database.defaultConnection];
+    const knex = strapi.db.connection;
 
     // If we have some search text for full text search, drop the similarity threshold
     // Default is 0.3 which misses basic misspellings

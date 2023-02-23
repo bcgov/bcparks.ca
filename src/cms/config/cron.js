@@ -18,7 +18,7 @@ module.exports = {
   // Execute the cron at 2 minutes past every hour.
   // BCGW replication is hourly at 10 minutes past the hour
   "2 * * * *": {
-    task: async () => {
+    async task() {
       console.log("CRON STARTING");
 
       // fetch advisory statuses
@@ -160,7 +160,7 @@ const getPublishedPublicAdvisories = async () => {
 };
 
 const updateProtectedAreaStatusCache = async (ctx) => {
-  let entities = await strapi.services["protected-area"].find({ _limit: 1200});
+  let entities = await strapi.services["protected-area"].find({ _limit: 1200 });
 
   const regionsData = await strapi.services["region"].find({ _limit: -1 });
   const sectionsData = await strapi.services["section"].find({ _limit: -1 });
@@ -365,21 +365,26 @@ const updateProtectedAreaStatusCache = async (ctx) => {
   });
 
   // Store payload into a cached location
-  const results = await strapi.services['park-access-status-cache'].find({ cacheId: 1 });
+  const results = await strapi.services["park-access-status-cache"].find({
+    cacheId: 1,
+  });
   if (results.length === 0) {
-    console.log("Creating cache for the first time.")
-    await strapi.services['park-access-status-cache'].create({
+    console.log("Creating cache for the first time.");
+    await strapi.services["park-access-status-cache"].create({
       cacheId: 1,
-      payload: payload
+      payload: payload,
     });
   } else {
     // Update
-    console.log("Updating park-access-status-cache entry.")
-    await strapi.services['park-access-status-cache'].update({
-      cacheId: 1
-    }, {
-      cacheId: 1,
-      payload: payload
-    });
+    console.log("Updating park-access-status-cache entry.");
+    await strapi.services["park-access-status-cache"].update(
+      {
+        cacheId: 1,
+      },
+      {
+        cacheId: 1,
+        payload: payload,
+      }
+    );
   }
 };
