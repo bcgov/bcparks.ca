@@ -160,7 +160,7 @@ jobs:
 
       - name: Trigger rollout
         run: |
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment bcparks-cms-upgrade
+          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment strapi-cms-upgrade
 
 #          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment bcparks-admin
 #          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment bcparks-landing
