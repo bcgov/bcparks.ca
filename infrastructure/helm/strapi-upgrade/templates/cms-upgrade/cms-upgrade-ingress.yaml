@@ -1,0 +1,21 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.cmsUpgrade.componentName }}
+  labels:
+    component: {{ .Values.cmsUpgrade.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  host: {{ .Release.Name }}-{{ .Values.cmsUpgrade.componentName }}-{{ .Release.Namespace }}.{{ .Values.cluster.domain }}
+  to:
+    kind: Service
+    name: {{ .Release.Name }}-{{ .Values.cmsUpgrade.componentName }}
+    weight: 100
+  port:
+    targetPort: {{ .Values.cmsUpgrade.service.portName }}
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

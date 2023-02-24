@@ -1,0 +1,7 @@
+cluster:
+  ssoAuthUrl: https://dev.oidc.gov.bc.ca/auth
+
+cmsUpgrade:
+  env:
+    externalUrl: https://bcparks-cms-upgrade-61d198-dev.apps.silver.devops.gov.bc.ca
+    databaseName: cms_upgrade
