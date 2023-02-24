@@ -5,6 +5,8 @@
  * to customize this model
  */
 
+const validator = require("../../../../../config/functions/slugValidator.js");
+
 const saveParkAccessStatus = async (data) => {
   await strapi
     .service("api::park-access-status.park-access-status")
@@ -23,10 +25,24 @@ const saveParkAccessStatus = async (data) => {
 };
 
 module.exports = {
+  beforeCreate(event) {
+    const { data, where, select, populate } = event.params;
+    validator.slugCharacterValidator(data.Slug)
+    validator.slugNoLeadingSlashValidator(data.Slug)
+    validator.slugNoLeadingDashValidator(data.Slug)
+    validator.slugNoTrailingDashValidator(data.Slug)
+  },
+  beforeUpdate(event) {
+    const { data, where, select, populate } = event.params;
+    validator.slugCharacterValidator(data.Slug)
+    validator.slugNoLeadingSlashValidator(data.Slug)
+    validator.slugNoLeadingDashValidator(data.Slug)
+    validator.slugNoTrailingDashValidator(data.Slug)
+  },  
   afterCreate: async (data) => {
     saveParkAccessStatus(data);
   },
   afterUpdate: async (data) => {
     saveParkAccessStatus(data);
-  },
+  }
 };
