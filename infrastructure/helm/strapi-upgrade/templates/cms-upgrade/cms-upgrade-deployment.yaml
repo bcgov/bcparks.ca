@@ -54,17 +54,9 @@ spec:
             - name: DATABASE_CLIENT
               value: postgres
             - name: DATABASE_HOST
-            {{- if .Values.pgbouncer.enabled }}
-              value: {{ template "bcparks_pgbouncer_fullname" . }} 
-            {{- else }}
               value: bcparks-patroni
-            {{- end }}
             - name: DATABASE_PORT
-            {{- if .Values.pgbouncer.enabled }}
-              value: {{ .Values.pgbouncer.service.port | quote }}
-            {{- else }}
-              value: {{ .Values.patroni.service.port | quote }}
-            {{- end }}              
+              value: 5432           
             - name: DATABASE_USERNAME
               valueFrom:
                 secretKeyRef:
