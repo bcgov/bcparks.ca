@@ -239,9 +239,7 @@ const MegaMenu = ({ content, menuMode }) => {
                       // it's ok that this won't open a sub-menu as this wouldn't
                       // be the expected behaviour
                       onClick={e => {
-                        if (e.metaKey || e.ctrlKey) {
-                          window.open(page.url, '_blank');
-                        } else {
+                        if (!(e.metaKey || e.ctrlKey)) {
                           navigatePage(e, page, menuMode)
                         }
                       }}
