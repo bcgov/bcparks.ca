@@ -49,6 +49,24 @@ make sure the .env settings are right
 DATABASE_V3_DATABASE=backup
 DATABASE_V4_DATABASE=strapi4
 
+
+*** there is a bug in the script.  Edit /v3-sql-v4-sql/migrate/helpers/migrate.sql \
+*** and manually override the destination for these 3 tables.
+
+  if (destination === 'Pages') {   
+    destination = 'pages'
+  }
+
+  if (destination === 'Pages_components') {
+    destination = 'pages_components'
+  }
+
+  if (destination === 'Websites') {
+    destination = 'websites'
+  }
+
+
+
 yarn 
 yarn start
 
