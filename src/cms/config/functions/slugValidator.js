@@ -27,7 +27,7 @@ module.exports = {
     if (slug?.slice(0, 1) === '-') {
       throw strapi.errors.badRequest('Do not add dash to the beginning of slugs.');
     }
-    if (slug.includes('/-')) {
+    if (slug?.includes('/-')) {
       throw strapi.errors.badRequest('Do not add dash after a slash.');
     }
   },
@@ -48,7 +48,7 @@ module.exports = {
     if (slug?.slice(-1) === '-') {
       throw strapi.errors.badRequest('Do not add dash to the end of slugs.');
     }
-    if (slug.includes('-/')) {
+    if (slug?.includes('-/')) {
       throw strapi.errors.badRequest('Do not add dash before a slash.');
     }
   },
