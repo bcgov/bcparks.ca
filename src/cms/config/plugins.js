@@ -38,6 +38,7 @@ module.exports = ({ env }) => {
 
 
     redis: {
+      // locally - off
       enabled: env.bool("STRAPI_CACHE_ENABLED", false),
       config: {
         connections: {
@@ -58,6 +59,7 @@ module.exports = ({ env }) => {
     },
     // Step 2: Configure the redis cache plugin
     "rest-cache": {
+      // locally - off
       enabled: env.bool("STRAPI_CACHE_ENABLED", false),
       config: {
         provider: {
@@ -68,7 +70,6 @@ module.exports = ({ env }) => {
           },
         },
         strategy: {
-
           enableEtagSupport: true,
           logs: true,
           clearRelatedCache: true,
