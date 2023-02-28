@@ -1,5 +1,4 @@
 import React from "react"
-import { Helmet } from "react-helmet"
 
 import bcParksWordmark from "../images/BCParks_Wordmark_White.svg"
 import facebookIcon from "../images/Facebook_Negative.svg"
@@ -84,13 +83,6 @@ export default function Footer() {
 
   return (
     <>
-      {/* The next 3 lines will load the Snowplow script mounted from OpenShift configmap. */}
-      {process.env.GATSBY_ENABLE_SNOWPLOW === "true" && (
-        <Helmet>
-          <script src="/_scripts/snowplow.js" />
-        </Helmet>
-      )}
-
       <footer id="footer">
         <div className="home-footer" id="home-footer">
           <div className="my-5 by-3">

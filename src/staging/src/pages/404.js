@@ -43,7 +43,6 @@ const NotFoundPage = () => {
 
   return(
   <>
-    <Seo title="404: Not found" />
     <Header mode="internal" content={menuContent} />
     <div className="not-found">
       <div>
@@ -79,3 +78,6 @@ const NotFoundPage = () => {
 
 export default NotFoundPage
 
+export const Head = () => (
+  <Seo title="404: Not found" />
+)

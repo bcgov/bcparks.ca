@@ -46,19 +46,11 @@ const LandingPage = ({ pageContext }) => {
   const menuContent = queryData?.allStrapiMenus?.nodes || []
   const { page } = pageContext
   const components = page?.Content || []
-  const meta =
-    components.find(component => component.strapi_component === "parks.seo") ||
-    {}
   const introContent = components.slice(0, 1)
   const linkContent = components.slice(1)
 
   return (
     <>
-      <Seo
-        title={meta?.metaTitle || page?.Title}
-        description={meta?.metaDescription}
-        keywords={meta?.metaKeywords}
-      />
       <ScrollToTop />
       <CssBaseline />
       <Header mode="internal" content={menuContent} />
@@ -140,3 +132,18 @@ const LandingPage = ({ pageContext }) => {
 }
 
 export default LandingPage
+
+export const Head = ({pageContext}) => {
+  const { page } = pageContext
+  const components = page?.Content || []
+  const meta =
+    components.find(component => component.strapi_component === "parks.seo") || {}
+
+  return (
+    <Seo
+      title={meta?.metaTitle || page?.Title}
+      description={meta?.metaDescription}
+      keywords={meta?.metaKeywords}
+    />
+  )
+}

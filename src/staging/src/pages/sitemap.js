@@ -1,11 +1,11 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 import { Link, Breadcrumbs } from "@material-ui/core"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
 import MegaMenu from "../components/megaMenu.js"
+import Seo from "../components/seo"
 
 import "../styles/staticContent1.scss"
 
@@ -24,9 +24,6 @@ const SitemapPage = ({ data }) => {
 
   return (
     <>
-      <Helmet>
-        <title>Site Map | BC Parks</title>
-      </Helmet>
       <Header mode="internal" content={menuContent} />
 
       <div className="static-content-container">
@@ -47,6 +44,10 @@ const SitemapPage = ({ data }) => {
 }
 
 export default SitemapPage
+
+export const Head = () => (
+  <Seo title="Site Map" />
+)
 
 export const query = graphql`
   {

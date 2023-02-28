@@ -16,7 +16,6 @@ import "../styles/staticContent1.scss"
 export default function ParkSubPage({ data }) {
   const page = data.strapiParkSubPages
   const contents = page.content
-  const seo = page.seo
   const header = page.pageHeader
   const park = page.protectedArea
   const menuContent = data?.allStrapiMenus?.nodes || []
@@ -79,11 +78,6 @@ export default function ParkSubPage({ data }) {
 
   return (
     <>
-      <Seo
-        title={seo?.metaTitle ?? park.protectedAreaName + ": " + page.title}
-        description={seo?.metaDescription}
-        keywords={seo?.metaKeywords}
-      />
       <ScrollToTop />
       <div className="max-width-override" ref={sectionRefs[0]}>
         <Header mode="internal" content={menuContent} />
@@ -174,6 +168,20 @@ export default function ParkSubPage({ data }) {
         <Footer />
       </div>
     </>
+  )
+}
+
+export const Head = ({data}) => {
+  const page = data.strapiParkSubPages
+  const park = page.protectedArea
+  const seo = page.seo
+
+  return (
+    <Seo
+      title={seo?.metaTitle ?? park.protectedAreaName + ": " + page.title}
+      description={seo?.metaDescription}
+      keywords={seo?.metaKeywords}
+    />
   )
 }
 

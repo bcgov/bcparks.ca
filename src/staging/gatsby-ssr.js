@@ -24,14 +24,21 @@ export const onPreRenderHTML = ({ getHeadComponents }) => {
     });
 };
 
-const headStyles = [
+const HtmlAttributes = {
+    lang: "en"
+};
+
+const HeadComponents = [
+    process.env.GATSBY_ENABLE_SNOWPLOW === "true" &&
+    <script src="/_scripts/snowplow.js" />,
     <style
-        dangerouslySetInnerHTML={{
-            __html:`body {font-size:1.0rem;} img {max-width:100%;}`
-        }}
-    ></style>,
+    dangerouslySetInnerHTML={{
+        __html:`body {font-size:1.0rem;} img {max-width:100%;}`
+    }}
+    ></style>
 ];
-  
-export const onRenderBody = ({ setHeadComponents }) => {
-    setHeadComponents(headStyles);
+
+export const onRenderBody = ({ setHtmlAttributes, setHeadComponents }) => {
+    setHtmlAttributes(HtmlAttributes);
+    setHeadComponents(HeadComponents);
 };
