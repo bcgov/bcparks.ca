@@ -1224,7 +1224,8 @@ export default function FindAPark({ location, data }) {
                                 count={numberOfPages}
                                 page={currentPage}
                                 onChange={handlePageChange}
-                                size="small"
+                                siblingCount={0}
+                                size="large"
                                 className="small-pagination"
                               />
                             </div>
