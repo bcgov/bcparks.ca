@@ -5,4 +5,21 @@
  * to customize this model
  */
 
-module.exports = {};
+const validator = require("../../../../../config/functions/slugValidator.js");
+
+module.exports = {
+    beforeCreate(event) {
+        const { data, where, select, populate } = event.params;
+        validator.slugCharacterValidator(data.Slug)
+        validator.slugNoLeadingSlashValidator(data.Slug)
+        validator.slugNoLeadingDashValidator(data.Slug)
+        validator.slugNoTrailingDashValidator(data.Slug)
+    },
+    beforeUpdate(event) {
+        const { data, where, select, populate } = event.params;
+        validator.slugCharacterValidator(data.Slug)
+        validator.slugNoLeadingSlashValidator(data.Slug)
+        validator.slugNoLeadingDashValidator(data.Slug)
+        validator.slugNoTrailingDashValidator(data.Slug)
+    }
+};

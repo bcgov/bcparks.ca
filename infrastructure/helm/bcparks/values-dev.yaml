@@ -8,3 +8,6 @@ cms:
 admin:
   env:
     externalUrl: https://dev-staff.bcparks.ca
+
+patroni:
+  replicas: 1
