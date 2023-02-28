@@ -30,8 +30,10 @@
     "jwks-rsa": "^2.0.4",
     "knex": "^0.21.19",
     "pg": "^8.5.1",
-    "strapi-middleware-cache": "^2.1.7",
     "strapi-plugin-populate-deep": "^2.0.0",
+    "strapi-plugin-redis": "^1.0.1",
+    "strapi-plugin-rest-cache": "^4.2.6",
+    "strapi-provider-rest-cache-redis": "^4.2.6",
     "utf8": "^3.0.0"
   },
   "engines": {
@@ -52,6 +54,5 @@
     ],
     "testEnvironment": "node",
     "testTimeout": 60000
-  },
-  "workspaces": ["./src/plugins/strapi-plugin-ckeditor"]
+  }
 }

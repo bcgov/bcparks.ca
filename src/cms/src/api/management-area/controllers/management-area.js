@@ -11,7 +11,7 @@ module.exports = createCoreController(
   ({ strapi }) => ({
     async findOne(ctx) {
       const { managementAreaNumber } = ctx.params;
-      const entity = await this.find({ managementAreaNumber });
+      const entity = await this.super({ managementAreaNumber }); // super - to extend the origin controller
       const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
 
       return this.transformResponse(sanitizedEntity);

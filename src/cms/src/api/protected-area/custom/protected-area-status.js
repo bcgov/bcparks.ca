@@ -49,7 +49,6 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
 
   return _.sortBy(publicAdvisories, ["precedence"])[0];
 };
-
 const getPublishedPublicAdvisories = async () => {
   return await strapi.entityService.findMany(
     "api::public-advisory.public-advisory",
@@ -58,6 +57,10 @@ const getPublishedPublicAdvisories = async () => {
       sort: "id",
       limit: -1,
       populate: "*",
+
+      // v4 VS v3
+      // "accessStatus.precedence_lt": 99,
+
       filters: {
         accessStatus: {
           precedence: {

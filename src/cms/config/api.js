@@ -1,3 +1,5 @@
+// https://docs.strapi.io/dev-docs/configurations/api
+
 module.exports = {
   rest: {
     defaultLimit: 100,
