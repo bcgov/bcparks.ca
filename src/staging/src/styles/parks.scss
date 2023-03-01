@@ -5,7 +5,6 @@
 .parks-container {
   //Added 50px extra to compensate padding
   max-width: 1370px !important;
-  font-size: 15px;
   padding: 0px !important;
 }
 
@@ -30,7 +29,7 @@
 }
 
 .park-info-header .MuiCardHeader-title {
-  font-size: 14px !important;
+  font-size: 0.875rem !important;
 }
 
 .park-info-header-flex {
@@ -70,10 +69,6 @@
   background-color: $colorGrey !important;
 }
 
-.MuiTypography-root,
-.MuiButton-root {
-  font-family: $globalFont;
-}
 .parks-container {
   .MuiButton-root,
   .MuiLink-root {
@@ -107,7 +102,7 @@
   min-width: 180px !important;
   white-space: nowrap;
   height: 50px;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .yellow-button {
@@ -116,7 +111,7 @@
   min-width: 180px !important;
   white-space: nowrap;
   height: 50px;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .blue-button:hover,
@@ -228,7 +223,7 @@
 
 .park-info-container .MuiAccordionSummary-root {
   padding: 0px 25px !important;
-  font-size: 16px !important;
+  font-size: 1rem !important;
 }
 
 .park-info-container .MuiAccordionSummary-root {
@@ -336,7 +331,7 @@
 
 .MuiBreadcrumbs-separator {
   color: #313132 !important;
-  font-size: 20px !important;
+  font-size: 1.25rem !important;
 }
 
 .park-access {

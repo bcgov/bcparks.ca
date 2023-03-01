@@ -44,7 +44,7 @@ export default function LinkCard({ url, title, subTitle, imageUrl, imageAltText,
         <img src={imageUrl} alt={imageAltText ?? ""} />
       </div>
       <div className="card-body">
-          <h5 className="card-body-header">{title}</h5>
+          <h2 className="card-body-header">{title}</h2>
           {subTitle && <div className="card-body-subtitle">{subTitle}</div>}
           {buttonText && <div className="card-button">
             {buttonText} <i className="fa fa-chevron-circle-right"></i>

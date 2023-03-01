@@ -34,6 +34,15 @@ module.exports = {
       throw new ApplicationError('Do not add dash after a slash.');
     }
   },
+  // a leading dash is not allowed
+  slugNoLeadingDashValidator: function (slug) {
+    if (slug?.slice(0, 1) === '-') {
+      throw strapi.errors.badRequest('Do not add dash to the beginning of slugs.');
+    }
+    if (slug?.includes('/-')) {
+      throw strapi.errors.badRequest('Do not add dash after a slash.');
+    }
+  },
   // a trailing slash is required
   slugTrailingSlashValidator: function (slug) {
     if (slug?.slice(-1) !== '/') {
@@ -53,6 +62,15 @@ module.exports = {
     }
     if (slug.includes('-/')) {
       throw new ApplicationError('Do not add dash before a slash.');
+    }
+  },
+  // a trailing dash is not allowed
+  slugNoTrailingDashValidator: function (slug) {
+    if (slug?.slice(-1) === '-') {
+      throw strapi.errors.badRequest('Do not add dash to the end of slugs.');
+    }
+    if (slug?.includes('-/')) {
+      throw strapi.errors.badRequest('Do not add dash before a slash.');
     }
   },
   // foward slashes are not allowed in the slug

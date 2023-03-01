@@ -8,6 +8,7 @@ import Header from "../components/header"
 import Seo from "../components/seo"
 import MainSearch from "../components/search/mainSearch"
 import PageContent from "../components/pageContent/pageContent"
+import ScrollToTop from "../components/scrollToTop"
 
 import { renderBreadcrumbs } from "../utils/helpers";
 
@@ -58,6 +59,7 @@ const LandingPage = ({ pageContext }) => {
         description={meta?.metaDescription}
         keywords={meta?.metaKeywords}
       />
+      <ScrollToTop />
       <CssBaseline />
       <Header mode="internal" content={menuContent} />
       {linkContent.length > 0 && (

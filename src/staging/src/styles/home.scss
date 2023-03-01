@@ -12,116 +12,6 @@
   }
 }
 
-.v-align-abs {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  > p {
-    &:hover {
-      text-decoration: underline;
-      cursor: pointer;
-    }
-  }
-}
-
-.zone-cards {
-  margin-top: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.zone-cards .card-text {
-  line-height: normal !important;
-}
-
-.zone-content {
-  margin: 0 20px 0 20px;
-}
-
-.zone-header {
-  margin: 40px 20px 0 20px;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  color: $colorBlue;
-
-  @media screen and (min-width: $lgBreakpoint) {
-    font-size: 36px;
-  }
-}
-
-.zone-header-small {
-  margin: 0 40px 0 40px;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  color: $colorBlue !important;
-
-  @media screen and (min-width: $lgBreakpoint) {
-    font-size: 26px;
-  }
-}
-
-.zone-hr > hr {
-  margin: 15px 36px 10px 20px;
-  height: 2px;
-  background-color: $colorGold;
-  width: 75px;
-  display: inline-block;
-
-  @media screen and (min-width: $lgBreakpoint) {
-    margin: 20px;
-  }
-}
-
-.link-override {
-  text-decoration: none;
-  color: $colorBlue !important;
-}
-
-
-
-.round-bl {
-  border-bottom-left-radius: 0.25rem;
-}
-.round-tl {
-  border-top-left-radius: 0.25rem;
-}
-.round-tr {
-  border-top-right-radius: 0.25rem;
-}
-.round-br {
-  border-bottom-right-radius: 0.25rem;
-}
-
-.padded-link {
-  margin-left: 36px;
-}
-
-.home-desktop-card-spacer{
-  display:block;
-  @media screen and (min-width: $lgBreakpoint) {
-    height: 200px;
-  }
-  @media screen and (max-width: $lgBreakpoint) {
-    height: 20px;
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-.underline {
-  text-decoration: underline !important;
-}
-
 #home-alert {
   color: $colorBlue;
   a {
@@ -175,7 +65,7 @@
     .fa {
       color: $colorGold;
       padding-left: 30px;
-      font-size: 20px;
+      font-size: 1.25rem;
     }
     a:hover {
       span { /* otherwise white on white */
@@ -197,7 +87,7 @@
 
       color: $colorGold;
       padding-left: 30px;
-      font-size: 20px;
+      font-size: 1.25rem;
     }
   }
 
@@ -222,7 +112,7 @@
   }
 
   .advisory-content {
-    font-size: 16px;
+    font-size: 1rem;
     color: $colorWhite;
     text-align: center;
     border: 2px solid $colorBlue;
@@ -270,7 +160,7 @@
   background-color: $colorGrey;
 
   .fa-chevron-circle-right {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 
   @media screen and (min-width: $lgBreakpoint) {
@@ -309,7 +199,7 @@
   .carousel-caption {
     > p {
       padding-bottom: 0px !important;
-      font-size: 8px;
+      font-size: 0.5rem;
     }
   }
 
@@ -359,7 +249,7 @@
   @media screen and (min-width: 801px) { 
     position: absolute;
     top: calc(100% - 7.5vh);
-    font-size: 36px;
+    font-size: 2.25rem;
   }
 }
 

@@ -9,6 +9,7 @@ import HTMLArea from "../components/HTMLArea"
 import Seo from "../components/seo"
 import PageContent from "../components/pageContent/pageContent"
 import PageMenu from "../components/pageContent/pageMenu"
+import ScrollToTop from "../components/scrollToTop"
 
 import { renderBreadcrumbs } from "../utils/helpers";
 
@@ -144,6 +145,7 @@ export default function StaticContent1({ pageContext }) {
         description={meta?.metaDescription}
         keywords={meta?.metaKeywords}
       />
+      <ScrollToTop />
       <div className="max-width-override" ref={sectionRefs[0]}>
         <Header mode="internal" content={menuContent} />
       </div>

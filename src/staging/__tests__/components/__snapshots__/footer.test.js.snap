@@ -25,7 +25,7 @@ exports[`Footer renders correctly 1`] = `
               href="/"
             >
               <img
-                alt="BC Parks logo"
+                alt="BC Parks wordmark"
                 src="test-file-stub"
               />
             </a>

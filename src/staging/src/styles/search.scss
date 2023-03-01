@@ -43,15 +43,11 @@
       }
     }
     .MuiOutlinedInput-root:focus {
-      outline: none !important;
       outline-offset: 1px !important;
     }
     .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
       border: 1px solid $colorBlue !important;
     }
-  }
-  button:focus {
-    outline: unset !important;
   }
 
   .search-icon-fab {
@@ -62,7 +58,7 @@
     height: 70px !important;
     .search-icon {
       color: rgba(0, 51, 102, 0.8);
-      font-size: 32px;
+      font-size: 2rem;
     }
   }
 }
@@ -90,9 +86,6 @@
     .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
       border: 1px solid $colorBlue !important;
     }
-  }
-  button:focus {
-    outline: unset !important;
   }
   .park-filter-select [class*="-control"] {
     border-radius: 50px !important;
@@ -155,10 +148,10 @@
 
     @media screen and (max-width: $mediumBreakpoint) {
       h2 {
-        font-size: 37px;
+        font-size: 2.3125rem;
       }
       button > span {
-        font-size: 14px;
+        font-size: 0.875rem;
       }
       .mobile-filter {
         border: 1px solid $colorWhite !important;
@@ -245,7 +238,7 @@
     color: $colorText;
   }
   .MuiIconButton-root .MuiSvgIcon-root {
-    font-size: 30px;
+    font-size: 1.875rem;
     color: $colorText;
   }
 
@@ -416,7 +409,7 @@ div[class$="-singleValue"] {
 .park-search-intro {
   padding: 0 20px 0 20px !important;
   > p {
-    font-size: 16px;
+    font-size: 1rem;
     white-space: normal;
   }
 
@@ -424,7 +417,7 @@ div[class$="-singleValue"] {
     transform: skewX(-20deg);
     padding-left: 80px !important;
     > h2 {
-      font-size: 24px;
+      font-size: 1.5rem;
       padding-right: 20px;
     }
   }
@@ -778,6 +771,7 @@ div[class$="-singleValue"] {
 
 .park-heading-text {
   color: $colorBlue;
+  font-size: 1.33882rem;
   margin-top: 10px;
 }
 
@@ -824,6 +818,8 @@ div[class$="-singleValue"] {
   .search-results-quick-filter {
     .filter-heading {
       color: $colorBlack;
+      font-size: 1rem;
+      font-weight: 700;
     }
 
     .select-padding {
@@ -851,7 +847,7 @@ div[class$="-singleValue"] {
   }
 
   .small-font {
-    font-size: 14px !important;
+    font-size: 0.875rem !important;
   }
 
   .remove-link {
@@ -933,7 +929,7 @@ div[class$="-singleValue"] {
   }
 
   .park-quick-link {
-    font-size: 14px !important;
+    font-size: 0.875rem !important;
     padding: 0px !important;
   }
 

@@ -98,7 +98,7 @@ export default function Footer() {
               <div className="col col-12 col-md-4">
                 <div className="text-center text-md-left" id="footer-logo">
                   <a href="/">
-                    <img alt="BC Parks logo" src={bcParksWordmark} />
+                    <img alt="BC Parks wordmark" src={bcParksWordmark} />
                   </a>
                 </div>
               </div>

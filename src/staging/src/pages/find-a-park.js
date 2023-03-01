@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react"
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import { graphql } from "gatsby"
 import axios from "axios"
 import { orderBy } from "lodash"
@@ -26,6 +26,7 @@ import CancelIcon from "@material-ui/icons/Cancel"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
 import Carousel from "react-material-ui-carousel"
+import { scrollIntoView } from "seamless-scroll-polyfill";
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -206,6 +207,7 @@ export default function FindAPark({ location, data }) {
 
   const [openQuickView, setOpenQuickView] = useState(false)
 
+  const searchRef = useRef(null)
   const breadcrumbs = [
     <Link key="1" href="/">
       Home
@@ -300,6 +302,7 @@ export default function FindAPark({ location, data }) {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value)
+    scrollIntoView(searchRef.current, {behavior: "smooth" })
   }
 
   const handleClickOpenFilter = () => {
@@ -515,7 +518,7 @@ export default function FindAPark({ location, data }) {
                   <div className="row no-gutters"></div>
                 </div>
               </div>
-              <div className="col-lg-9 col-md-12 col-sm-12">
+              <div className="col-lg-9 col-md-12 col-sm-12" ref={searchRef}>
                 <div className="search-results-list container">
                   <div className="row p20t d-flex">
                     <div className="col-8 d-none d-lg-block">
@@ -656,7 +659,8 @@ export default function FindAPark({ location, data }) {
                     </div>
                     <div className="col-12 pr-3">
                       <div className="">
-                        <h4 className="filter-heading p10t">Popular</h4>
+                      <fieldset>
+                        <legend className="filter-heading p10t">Popular</legend>
                         <FormGroup className="p10l filter-options-container">
                           {quickSearchFilters.map(item => {
                             return (
@@ -679,7 +683,9 @@ export default function FindAPark({ location, data }) {
                             )
                           })}
                         </FormGroup>
+                        </fieldset>
                         <hr></hr>
+                        <fieldset>
                         <div
                           tabIndex={0}
                           role="button"
@@ -692,7 +698,7 @@ export default function FindAPark({ location, data }) {
                           }}
                         >
                           <div className="col-md-4">
-                            <h4 className="filter-heading p10t">Activities</h4>
+                            <legend className="filter-heading p10t">Activities</legend>
                           </div>
                           <div className="col-md-2 ml-auto">
                             {showActivities ? (
@@ -768,7 +774,9 @@ export default function FindAPark({ location, data }) {
                             <div></div>
                           )}
                         </div>
+                        </fieldset>
                         <hr></hr>
+                        <fieldset>
                         <div
                           tabIndex={0}
                           role="button"
@@ -781,7 +789,7 @@ export default function FindAPark({ location, data }) {
                           }}
                         >
                           <div className="col-md-4">
-                            <h4 className="filter-heading p10t">Facilities</h4>
+                            <legend className="filter-heading p10t">Facilities</legend>
                           </div>
                           <div className="col-md-2 ml-auto">
                             {showFacilities ? (
@@ -857,6 +865,7 @@ export default function FindAPark({ location, data }) {
                             <div></div>
                           )}
                         </div>
+                        </fieldset>
                       </div>
                     </div>
                   </div>
@@ -945,9 +954,9 @@ export default function FindAPark({ location, data }) {
                                             href={`/${r.slug}/`}
                                             className="p10t"
                                           >
-                                            <h3 className="park-heading-text">
-                                              {renderHTML(r.parkNames.find(getParkName)?.parkName) || r.protectedAreaName }
-                                            </h3>
+                                            <h2 className="park-heading-text">
+                                              {renderHTML(r.parkNames.find(getParkName)?.parkName || r.protectedAreaName)}
+                                            </h2>
                                           </Link>
 
                                           <div className="row p10t mr5">
@@ -1140,9 +1149,9 @@ export default function FindAPark({ location, data }) {
                                             href={`/${r.slug}/`}
                                             className="p10t"
                                           >
-                                            <h3 className="park-heading-text">
-                                            {renderHTML(r.parkNames.find(getParkName)?.parkName) || r.protectedAreaName }
-                                            </h3>
+                                            <h2 className="park-heading-text">
+                                            {renderHTML(r.parkNames.find(getParkName)?.parkName || r.protectedAreaName)}
+                                            </h2>
                                           </Link>
                                         </div>
                                       </div>
