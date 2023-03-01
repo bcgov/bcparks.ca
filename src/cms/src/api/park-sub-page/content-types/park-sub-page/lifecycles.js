@@ -5,7 +5,7 @@
  * to customize this model
  */
 
-const validator = require("../../../../../config/functions/slugValidator.js");
+const validator = require("../../../../helpers/slugValidator.js");
 
 module.exports = {
     beforeCreate(event) {

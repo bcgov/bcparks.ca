@@ -5,7 +5,7 @@
  * to customize this model
  */
 
-const validator = require("../../../../../config/functions/slugValidator.js");
+const validator = require("../../../../helpers/slugValidator.js");
 
 const saveParkAccessStatus = async (data) => {
   await strapi
@@ -38,7 +38,7 @@ module.exports = {
     validator.slugNoLeadingSlashValidator(data.Slug)
     validator.slugNoLeadingDashValidator(data.Slug)
     validator.slugNoTrailingDashValidator(data.Slug)
-  },  
+  },
   afterCreate: async (data) => {
     saveParkAccessStatus(data);
   },
