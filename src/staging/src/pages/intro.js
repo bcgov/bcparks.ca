@@ -15,20 +15,9 @@ const IntroPage = ({ data }) => {
   const htmlContent = pageContent.find(
     item => item.strapi_component === "parks.html-area"
   )
-  const seoContent = pageContent.find(
-    item => item.strapi_component === "parks.seo"
-  )
 
   return (
     <>
-      {seoContent && (
-        <Seo
-          title={seoContent.metaTitle}
-          description={seoContent.description}
-          keywords={seoContent.metaKeywords}
-        />
-      )}
-
       <div className="max-width-override">
         <Header mode="internal" content={menuContent} />
       </div>
@@ -47,6 +36,23 @@ const IntroPage = ({ data }) => {
 }
 
 export default IntroPage
+
+export const Head = ({data}) => {
+  const pageContent = data?.strapiPages?.Content || []
+  const seoContent = pageContent.find(
+    item => item.strapi_component === "parks.seo"
+  )
+
+  return (
+    seoContent && (
+      <Seo
+        title={seoContent.metaTitle}
+        description={seoContent.description}
+        keywords={seoContent.metaKeywords}
+      />
+    )
+  )
+}
 
 export const query = graphql`
   {

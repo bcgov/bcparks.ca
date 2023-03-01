@@ -1,18 +1,15 @@
 import React from "react"
-import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { Box, Grid, Container } from "@material-ui/core"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
+import Seo from "../components/seo"
 
 import "../styles/home.scss"
 
 const ParksPage = ({ data }) => (
   <>
-    <Helmet>
-      <title>BC Parks</title>
-    </Helmet>
     <Header />
     <Container>
       <br />
@@ -45,6 +42,10 @@ const ParksPage = ({ data }) => (
 )
 
 export default ParksPage
+
+export const Head = () => (
+  <Seo title="Parks" />
+)
 
 export const query = graphql`
   {

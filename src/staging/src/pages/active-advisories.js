@@ -345,7 +345,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
   return (
     <>
-      <Seo title="Active advisories" description="Up-to-date information to help you plan your visit to a park in British Columbia. Get updates on access, closures, hazards, and trail conditions in BC Parks." />
       <Header mode="internal" content={menuContent} />
       <Container>
         <br />
@@ -398,6 +397,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 }
 
 export default PublicActiveAdvisoriesPage
+
+export const Head = () => (
+  <Seo title="Active advisories" description="Up-to-date information to help you plan your visit to a park in British Columbia. Get updates on access, closures, hazards, and trail conditions in BC Parks." />
+)
 
 export const query = graphql`
   {

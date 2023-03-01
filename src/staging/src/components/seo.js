@@ -7,9 +7,8 @@
 import * as React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 
-function SEO({ description, lang, meta, title, keywords }) {
+const Seo = ({ description, title, keywords, children }) => {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -31,63 +30,32 @@ function SEO({ description, lang, meta, title, keywords }) {
   const defaultImage = site.siteMetadata?.image
 
   return (
-    <Helmet
-      htmlAttributes={{
-        lang,
-      }}
-      title={title}
-      titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
-      meta={[
-        {
-          name: `description`,
-          content: metaDescription,
-        },
-        {
-          name: `keywords`,
-          content: metaKeywords,
-        },
-        {
-          property: `og:title`,
-          content: `${title} | ${defaultTitle}`,
-        },
-        {
-          property: `og:description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:type`,
-          content: `website`,
-        },
-        {
-          property: `og:site_name`,
-          content: defaultTitle,
-        },
-        {
-          property: `og:image`,
-          content: defaultImage,
-        },
-        {
-          name: `twitter:card`,
-          content: defaultImage,
-        },
-      ].concat(meta)}
-    />
+    <>
+      <title>{title + ' | ' + defaultTitle}</title>
+      <meta name="description" content={metaDescription} />
+      <meta name="keywords" content={metaKeywords} />
+      <meta name="og:title" content={title + ' | ' + defaultTitle} />
+      <meta name="og:description" content={metaDescription} />
+      <meta name="og:site_name" content={defaultTitle} />
+      <meta name="og:type" content="website" />
+      <meta name="og:image" content={defaultImage} />
+      <meta name="twitter:title" content={title + ' | ' + defaultTitle} />
+      <meta name="twitter:description" content={metaDescription} />
+      <meta name="twitter:card" content={defaultImage} />
+      {children}
+    </>
   )
 }
 
-SEO.defaultProps = {
-  lang: `en`,
-  meta: [],
+Seo.defaultProps = {
   description: ``,
   keywords: ''
 }
 
-SEO.propTypes = {
+Seo.propTypes = {
   description: PropTypes.string,
-  lang: PropTypes.string,
-  meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
   keywords: PropTypes.string
 }
 
-export default SEO
+export default Seo
