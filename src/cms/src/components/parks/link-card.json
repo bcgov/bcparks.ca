@@ -16,8 +16,7 @@
       "required": true
     },
     "imageUrl": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "imageAltText": {
       "type": "string"

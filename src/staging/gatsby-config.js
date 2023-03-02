@@ -31,40 +31,26 @@ module.exports = {
     {
       resolve: "gatsby-source-strapi",
       options: {
-        apiURL: process.env.REACT_APP_CMS_BASE_URL,
-        accessToken: process.env.STRAPI_TOKEN,// TODO: we need to add to .env file
+        apiURL: process.env.STRAPI_API_URL,
+        accessToken: process.env.STRAPI_TOKEN,
         collectionTypes: [
           "urgency",
           "protected-area",
           "public-advisory",
           "park-photo",
-          `websites`,
-          `pages`,
-          {
-            singularName: "page",
-            queryParams: {
-              populate: {
-                Content: {
-                  on: {
-                    'parks.card-set': {
-                      populate: "*"
-                    },
-                  },
-                },
-              },
-            },
-          },
-          "activity-types",
-          "facility-types",
-          "menus",
+          "website",
+          "page",
+          "activity-type",
+          "facility-type",
+          "menu",
           "park-operation",
-          "access-statuses",
-          "park-operation-sub-areas",
-          "park-sub-pages",
-          "sites",
+          "access-status",
+          "park-operation-sub-area",
+          "park-sub-page",
+          "site",
           "legacy-redirect",
         ],
-        queryLimit: -1,
+        queryLimit: 1000,
       },
     },
     `gatsby-transformer-sharp`,

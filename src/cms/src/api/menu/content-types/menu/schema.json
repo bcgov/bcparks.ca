@@ -50,9 +50,6 @@
     "show": {
       "type": "boolean",
       "default": false
-    },
-    "imgUrl": {
-      "type": "string"
     }
   }
 }
