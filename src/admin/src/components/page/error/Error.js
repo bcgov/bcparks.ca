@@ -69,6 +69,7 @@ export default function Error({ page: { error } }) {
           again later.
           <br />
           <br />
+            {console.log('error', error)}
           {error.message}
         </p>
       </div>

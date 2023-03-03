@@ -12,7 +12,7 @@ function flattenAttrs(obj) {
     attrs[key] = flatten(obj.attributes[key]);
   }
   return {
-    id: obj.id, 
+    id: obj.id,
     ...attrs
   };
 }
@@ -32,8 +32,8 @@ function flatten(obj) {
 
 async function respond(ctx, next) {
   // This code if you want populate and get the all the depth on all endpoint without delare it in every db transaction
-  // ctx.request.url = `${ctx.request.url}${ctx.request.url.includes("?") ? "&" : "?"}populate=${["menus", "protected-areas"].some(el=>ctx.request.url.includes(el)) ? "deep" : "*"}` 
-     
+  // ctx.request.url = `${ctx.request.url}${ctx.request.url.includes("?") ? "&" : "?"}populate=${["menus", "protected-areas"].some(el=>ctx.request.url.includes(el)) ? "deep" : "*"}`
+
   await next();
   if (!ctx.url.startsWith('/api')) {
     return;

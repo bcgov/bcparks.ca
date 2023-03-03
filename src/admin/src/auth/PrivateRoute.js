@@ -10,6 +10,9 @@ export function PrivateRoute({ component: Component, roles, props, ...rest }) {
   const [isAuthorized, setIsAuthorized] = useState(true);
   const [toError, setToError] = useState(false);
 
+  console.log('keycloak', keycloak)
+  console.log('initialized', initialized)
+
   useEffect(() => {
     if (!initialized) {
       setIsLoading(true);
@@ -23,6 +26,7 @@ export function PrivateRoute({ component: Component, roles, props, ...rest }) {
     }
   }, [setIsAuthorized, setIsLoading, initialized, keycloak, roles]);
 
+
   if (toError) {
     return (
       <Error
@@ -35,7 +39,7 @@ export function PrivateRoute({ component: Component, roles, props, ...rest }) {
       />
     );
   }
-
+  console.log("isAuthorized", isAuthorized)
   return (
     <div>
       {!isLoading && (

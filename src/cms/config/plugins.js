@@ -35,8 +35,6 @@ module.exports = ({ env }) => {
     },
     // Step 1: Configure the redis connection
     // @see https://github.com/strapi-community/strapi-plugin-redis
-
-
     redis: {
       // locally - off
       enabled: env.bool("STRAPI_CACHE_ENABLED", false),
@@ -82,5 +80,54 @@ module.exports = ({ env }) => {
         },
       },
     },
+
+    "transformer": {
+      enabled: true,
+      config: {
+        responseTransforms: {
+          removeAttributesKey: true,
+          removeDataKey: true,
+        },
+        requestTransforms : {
+          wrapBodyWithDataKey: true
+        },
+        hooks: {
+          preResponseTransform : (ctx) => console.log('hello from the preResponseTransform hook!'),
+          postResponseTransform : (ctx) => console.log('hello from the postResponseTransform hook!')
+        },
+        contentTypeFilter: {
+          mode: 'allow',
+          uids: {
+
+            'api::public-advisory-audit.public-advisory-audit': {
+              'GET':true,
+            },
+
+
+            'api::region.region': {
+              'GET':true,
+            },
+
+            'api::management-area.management-area': {
+              'GET':true,
+            },
+
+
+            'api::park-name.park-name': {
+              'GET':true,
+            },
+          }
+        }
+      }
+    },
+
+
+      'users-permissions': {
+        config: {
+          jwt: {
+            expiresIn: '7d',
+          },
+        },
+      },
   }
 }

@@ -44,8 +44,8 @@ module.exports = createCoreService(
           id,
           parkName,
           parkNameType: {
-            nameTypeId: parkNameType.nameTypeId,
-            nameType: parkNameType.nameType,
+            nameTypeId: parkNameType?.nameTypeId,
+            nameType: parkNameType?.nameType,
           },
           protectedArea: {
             orcs: protectedArea?.orcs,

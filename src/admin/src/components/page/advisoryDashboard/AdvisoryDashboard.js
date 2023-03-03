@@ -23,6 +23,7 @@ import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import { SvgIcon } from "@material-ui/core";
 import { decode } from "he";
+import qs from 'qs';
 
 import {
   getRegions,
@@ -55,6 +56,8 @@ export default function AdvisoryDashboard({
   const [originalParkNames, setOriginalParkNames] = useState([]);
 
   if (!keycloak && !initialized) setToError(true);
+
+  console.log('keycloak.token, token is failing', keycloak.token)
 
   useEffect(() => {
     isMounted.current = true;
@@ -100,15 +103,32 @@ export default function AdvisoryDashboard({
   }
   /*-------------------------------------------------------------------------*/
 
+  const query = qs.stringify({
+    pagination: {
+      page: 1,
+      pageSize: 10,
+    },
+    sort: ['advisoryDate:DESC']
+  }, {
+    encodeValuesOnly: true, // prettify URL
+  });
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       if (initialized && keycloak) {
+
         const res = await Promise.all([
           getRegions(cmsData, setCmsData),
           getManagementAreas(cmsData, setCmsData),
           getParkNames(cmsData, setCmsData),
-          cmsAxios.get(`public-advisory-audits?_limit=1500&_sort=advisoryDate:DESC`, { headers: { Authorization: `Bearer ${keycloak.token}` } })
+          // pagination[start]=0&pagination[limit]=150
+          cmsAxios.get(`public-advisory-audits`, {
+              headers: {
+                Authorization: `Bearer ${keycloak.token}` // Authorization: Bearer
+            }
+          }
+          )
         ])
         .catch(() => {
           setError({ status: 500, message: "Error loading data" });
@@ -116,13 +136,23 @@ export default function AdvisoryDashboard({
           setIsLoading(false);
         });
         // Regions
-        const regionsData = res[0];
+        // const regionsData = res[0];
+        const regionsResponse = res;
+
+        console.log('res', res)
+        // console.log('regionsResponse', regionsResponse)
+
+
+        const regionsData = regionsResponse[0]
+
 
         // Management Areas
-        const managementAreasData = res[1];
+        const managementAreasData = res[1]
 
         // Protected Areas
         const parkNamesData = res[2];
+
+        const publicAdvisories = res[3].data;
 
         // Public Advisories
         const regionParksCount = managementAreasData.reduce((region, item) => {
@@ -130,7 +160,6 @@ export default function AdvisoryDashboard({
           return region;
         }, {});
 
-        const publicAdvisories = res[3].data;
         const today = moment(new Date()).tz("America/Vancouver").toISOString();
         const updatedPublicAdvisories = publicAdvisories.map((publicAdvisory) => {
           publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
@@ -190,7 +219,8 @@ export default function AdvisoryDashboard({
     keycloak,
     cmsData,
     setCmsData,
-    setError
+    setError,
+    query
   ]);
 
   const removeDuplicatesById = (arr) => {
@@ -215,6 +245,8 @@ export default function AdvisoryDashboard({
       setPublicAdvisories([...advisories]);
     }
   };
+
+  console.log('++',publicAdvisories)
 
   const filterAdvisoriesByRegionId = (regId) => {
     if (regId) {
@@ -566,6 +598,7 @@ export default function AdvisoryDashboard({
   }
 
   if (toError || hasErrors) {
+    console.log('toError || hasErrors', toError , hasErrors)
     return <Redirect push to="/bcparks/error" />;
   }
   
@@ -640,6 +673,7 @@ export default function AdvisoryDashboard({
           data-testid="AdvisoryDashboard"
         >
           <br />
+
           <div className="container-fluid">
             <DataTable
               key={publicAdvisories.length}
