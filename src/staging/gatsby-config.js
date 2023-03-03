@@ -35,7 +35,7 @@ module.exports = {
         accessToken: process.env.STRAPI_TOKEN,
         collectionTypes: [
           "urgency",
-          "protected-area",
+          // "protected-area",
           "public-advisory",
           "park-photo",
           "website",

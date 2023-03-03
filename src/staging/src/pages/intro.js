@@ -9,8 +9,8 @@ import Seo from "../components/seo"
 import "../styles/betaLanding.scss"
 
 const IntroPage = ({ data }) => {
-  const pageContent = data?.strapiPages?.Content || []
-  const menuContent = data?.allStrapiMenus?.nodes || []
+  const pageContent = data?.strapiPage?.Content || []
+  const menuContent = data?.allStrapiMenu?.nodes || []
 
   const htmlContent = pageContent.find(
     item => item.strapi_component === "parks.html-area"
@@ -38,7 +38,7 @@ const IntroPage = ({ data }) => {
 export default IntroPage
 
 export const Head = ({data}) => {
-  const pageContent = data?.strapiPages?.Content || []
+  const pageContent = data?.strapiPage?.Content || []
   const seoContent = pageContent.find(
     item => item.strapi_component === "parks.seo"
   )
@@ -56,30 +56,45 @@ export const Head = ({data}) => {
 
 export const query = graphql`
   {
-    strapiPages(Slug: { eq: "/beta-landing" }) {
+    strapiPage(Slug: { eq: "/beta-landing" }) {
       id
       Slug
-      Content
+      Content {
+        ... on STRAPI__COMPONENT_PARKS_HTML_AREA {
+          id
+          strapi_component
+          HTML {
+            data {
+              HTML
+            }
+          }
+        }
+        ... on STRAPI__COMPONENT_PARKS_SEO {
+          id
+          strapi_component
+          metaTitle
+          metaKeywords
+          metaDescription
+        }
+      }
     }
-    allStrapiMenus(
+    allStrapiMenu(
       sort: { fields: order, order: ASC }
       filter: { show: { eq: true } }
     ) {
       nodes {
-        strapiId
+        strapi_id
         title
         url
         order
         id
-        imgUrl
-        strapiChildren {
+        strapi_children {
           id
           title
           url
           order
-          parent
         }
-        strapiParent {
+        strapi_parent {
           id
           title
         }
