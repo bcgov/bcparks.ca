@@ -49,6 +49,12 @@ module.exports = {
           "park-sub-page",
           "site",
           "legacy-redirect",
+          // {
+          //   singularName: "page",
+          //   queryParams: {
+          //     populate: "*"
+          //   }
+          // }
         ],
         queryLimit: 1000,
       },

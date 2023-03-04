@@ -12,29 +12,44 @@ import "../styles/home.scss"
 
 export const query = graphql`
   query {
-    strapiPages(Slug: { eq: "/home" }) {
+    strapiPage(Slug: { eq: "/home" }) {
       Slug
-      Content
+      Content {
+        ... on STRAPI__COMPONENT_PARKS_CARD_SET {
+          id
+          strapi_id
+          strapi_component
+        }
+        ... on STRAPI__COMPONENT_PARKS_PAGE_SECTION {
+          id
+          strapi_id
+          strapi_component
+          sectionTitle
+          sectionHTML {
+            data {
+              sectionHTML
+            }
+          }
+        }
+      }
     }
-    allStrapiMenus(
+    allStrapiMenu(
       sort: { fields: order, order: ASC }
       filter: { show: { eq: true } }
     ) {
       nodes {
-        strapiId
+        strapi_id
         title
         url
         order
         id
-        imgUrl
-        strapiChildren {
+        strapi_children {
           id
           title
           url
           order
-          parent
         }
-        strapiParent {
+        strapi_parent {
           id
           title
         }
@@ -44,8 +59,8 @@ export const query = graphql`
 `
 
 export default function Home({ data }) {
-  const pageContent = data.strapiPages.Content || []
-  const menuContent = data?.allStrapiMenus?.nodes || []
+  const pageContent = data.strapiPage.Content || []
+  const menuContent = data?.allStrapiMenu?.nodes || []
 
   return (
         <div id="home">

@@ -6,6 +6,6 @@ export default function HTMLArea(props)
     return null;
   }
     return (
-    <div dangerouslySetInnerHTML={{ __html: props.children.data.HTML}}/>
+    <div dangerouslySetInnerHTML={{ __html: props.children}}/>
   )
 }

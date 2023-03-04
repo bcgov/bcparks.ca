@@ -24,7 +24,7 @@ const IntroPage = ({ data }) => {
 
       {htmlContent && (
         <div className="intro-page">
-          <HTMLArea isVisible={true}>{htmlContent.HTML}</HTMLArea>
+          <HTMLArea isVisible={true}>{htmlContent.HTML.data.HTML}</HTMLArea>
         </div>
       )}
 
