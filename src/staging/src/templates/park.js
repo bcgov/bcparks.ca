@@ -107,7 +107,7 @@ export default function ParkTemplate({ data }) {
   const hasReservations = operations.hasReservations
   const hasDayUsePass = park.hasDayUsePass
 
-  const menuContent = data?.allStrapiMenus?.nodes || []
+  const menuContent = data?.allStrapiMenu?.nodes || []
 
   const [advisoryLoadError, setAdvisoryLoadError] = useState(false)
   const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true)
@@ -680,7 +680,7 @@ export const query = graphql`
       }
       sort: {
         order: [ASC, DESC, DESC]
-        fields: [sortOrder, dateTaken, strapiId]
+        fields: [sortOrder, dateTaken, strapi_id]
       }
     ) {
       nodes {
@@ -696,7 +696,7 @@ export const query = graphql`
       }
       sort: {
         order: [ASC, DESC, DESC]
-        fields: [sortOrder, dateTaken, strapiId]
+        fields: [sortOrder, dateTaken, strapi_id]
       }
     ) {
       nodes {
@@ -704,25 +704,23 @@ export const query = graphql`
         caption
       }
     }
-    allStrapiMenus(
+    allStrapiMenu(
       sort: { fields: order, order: ASC }
       filter: { show: { eq: true } }
     ) {
       nodes {
-        strapiId
+        strapi_id
         title
         url
         order
         id
-        imgUrl
-        strapiChildren {
+        strapi_children {
           id
           title
           url
           order
-          parent
         }
-        strapiParent {
+        strapi_parent {
           id
           title
         }

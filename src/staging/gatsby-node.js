@@ -20,8 +20,7 @@ exports.onPostBuild = ({ reporter }) => {
 }
 
 // exports.createSchemaCustomization = ({ actions }) => {
-//   const { createFieldExtension, createTypes } = actions
-
+//   const { createTypes } = actions
 
 //   const typeDefs = `
 //   type StrapiParkAccessStatus implements Node {
