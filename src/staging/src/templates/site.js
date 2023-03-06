@@ -48,7 +48,7 @@ export default function ParkTemplate({ data }) {
 
   const apiBaseUrl = data.site.siteMetadata.apiURL
 
-  const site = data.strapiSites
+  const site = data.strapiSite
   const park = site.protectedArea
   const activities = site.parkActivities
   const facilities = site.parkFacilities
@@ -387,7 +387,7 @@ export default function ParkTemplate({ data }) {
 }
 
 export const Head = ({data}) => {
-  const site = data.strapiSites
+  const site = data.strapiSite
   const park = site.protectedArea
   const siteDescription = site.description?.replace(/(<([^>]+)>)/ig, '');
   const siteDescriptionShort = truncate(siteDescription, { length: 160 });
@@ -402,7 +402,7 @@ export const Head = ({data}) => {
 
 export const query = graphql`
   query SiteDetails($orcsSiteNumber: String) {
-    strapiSites(
+    strapiSite(
       isDisplayed: {eq: true}
       orcsSiteNumber: { eq: $orcsSiteNumber }
     ) {
@@ -412,9 +412,21 @@ export const query = graphql`
       mapZoom
       longitude
       latitude
-      locationNotes
-      description
-      reservations
+      locationNotes { 
+        data { 
+            locationNotes
+        }
+       }
+      description {
+        data {
+            description
+        }
+      }
+      reservations {
+        data {
+            reservations
+        }
+      }
       hasDayUsePass
       isUnofficialSite
       protectedArea {
@@ -425,7 +437,9 @@ export const query = graphql`
       parkActivities {
         isActive
         isActivityOpen
-        description
+        description {
+            data
+        }
         activityType {
           activityName
           activityCode
@@ -440,7 +454,9 @@ export const query = graphql`
       parkFacilities {
         isActive
         isFacilityOpen
-        description
+        description {
+            data
+        }
         facilityType {
           facilityName
           facilityCode
@@ -455,7 +471,6 @@ export const query = graphql`
       parkOperation {
         hasReservations
       }
-
     }
     # Site photos are split into featured and non-featured in order to sort correctly,
     # with null values last.

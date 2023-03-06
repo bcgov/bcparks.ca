@@ -195,7 +195,29 @@ export const query = graphql`
       slug
       title
       oldUrl
-      content
+      content {
+        ... on STRAPI__COMPONENT_PARKS_HTML_AREA {
+          id
+          strapi_id
+          strapi_component
+          HTML {
+            data {
+              HTML
+            }
+          }
+        }
+        ... on STRAPI__COMPONENT_PARKS_PAGE_SECTION {
+          id
+          strapi_id
+          strapi_component
+          sectionTitle
+          sectionHTML {
+            data {
+              sectionHTML
+            }
+          }
+        }
+      }
       seo {
         metaDescription
         metaKeywords
@@ -205,7 +227,11 @@ export const query = graphql`
         imageAlt
         imageCaption
         imageUrl
-        introHtml
+        introHtml {
+          data {
+            introHtml
+          }
+        }
         pageTitle
       }
       protectedArea {

@@ -59,7 +59,7 @@ exports.onPostBuild = ({ reporter }) => {
 //     description: String
 //     isActive: Boolean
 //     isActivityOpen: Boolean
-//     activityType: StrapiActivityTypes @link(by: "strapiId")
+//     activityType: StrapiActivityType @link(by: "strapiId")
 //   }
 
 //   type StrapiParkFacility implements Node {
@@ -67,7 +67,7 @@ exports.onPostBuild = ({ reporter }) => {
 //     description: String
 //     isActive: Boolean
 //     isFacilityOpen: Boolean
-//     facilityType: StrapiFacilityTypes @link(by: "strapiId")
+//     facilityType: StrapiFacilityType @link(by: "strapiId")
 //   }
 
 //   type StrapiParkPhoto implements Node {
@@ -216,8 +216,8 @@ exports.onPostBuild = ({ reporter }) => {
 //   type StrapiParkSubPage implements Node {
 //     slug: String
 //     title: String
-//     pageHeader: StrapiPageHeaderComponent
-//     seo: StrapiSeoComponent
+//     pageHeader: StrapiComponentParksPageHeader
+//     seo: StrapiComponentParksSeo
 //     protectedArea: StrapiProtectedArea
 //   }
 
@@ -232,8 +232,8 @@ exports.onPostBuild = ({ reporter }) => {
 //     isDisplayed: Boolean
 //     hasDayUsePass: Boolean
 //     protectedArea: StrapiProtectedArea
-//     parkActivities: [StrapiParkActivities]
-//     parkFacilities: [StrapiParkFacilities]
+//     parkActivities: [StrapiParkActivity]
+//     parkFacilities: [StrapiParkFacility]
 //     parkOperation: StrapiParkOperation
 //   }
 
@@ -263,6 +263,16 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           ... on STRAPI__COMPONENT_PARKS_CARD_SET {
             id
             strapi_component
+            cards {
+              id
+              url
+              title
+              subTitle
+              buttonText
+              imageUrl
+              imageAltText
+              variation
+            }
           }
           ... on STRAPI__COMPONENT_PARKS_HTML_AREA {
             id
@@ -278,10 +288,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             strapi_component
             url
             title
-            variation
+            subTitle
             buttonText
             imageUrl
             imageAltText
+            variation
           }
           ... on STRAPI__COMPONENT_PARKS_PAGE_HEADER {
             id

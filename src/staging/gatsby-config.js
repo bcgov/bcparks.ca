@@ -46,13 +46,34 @@ module.exports = {
           "access-status",
           "park-operation-sub-area",
           "park-sub-page",
-          "site",
           "legacy-redirect",
           {
             singularName: "page",
             queryParams: {
               populate: {
                 Content: {
+                  populate: "*"
+                }
+              }
+            }
+          },
+          {
+            singularName: "site",
+            queryParams: {
+              populate: {
+                protectedArea: {
+                  populate: "*"
+                },
+                parkFacilities: {
+                  populate: "*"
+                },
+                parkActivities: {
+                  populate: "*"
+                },
+                parkActivities: {
+                  populate: "*"
+                },
+                parkOperation: {
                   populate: "*"
                 }
               }
