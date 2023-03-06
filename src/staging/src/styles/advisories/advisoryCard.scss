@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 .advisoryCard {
   border-radius: 4px !important;
   border: solid transparent;
@@ -51,6 +53,9 @@
   padding-top: 1.15rem;
   border-radius: 50%;
   text-align: center;
+  &.yellowAlert {
+    color: $colorText;
+  }
 }
 
 .dateDate {

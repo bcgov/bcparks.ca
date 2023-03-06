@@ -13,4 +13,9 @@
   .MuiInputBase-root {
     background: $colorWhite;
   }
+  // required for accessibility
+  .MuiInputBase-input:focus,
+  .MuiInputBase-input:focus-visible {
+    outline: unset !important;
+  }
 }

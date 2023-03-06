@@ -137,7 +137,8 @@
     }
     .collapse-toggle {
       color: $colorBlueLight;
-      &:focus {
+      &:focus,
+      &:focus-visible {
         outline: unset !important;
       }
     }

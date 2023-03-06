@@ -686,6 +686,7 @@ export default function FindAPark({ location, data }) {
                         </fieldset>
                         <hr></hr>
                         <fieldset>
+                        <legend className="sr-only">Activities</legend>
                         <div
                           tabIndex={0}
                           role="button"
@@ -698,7 +699,7 @@ export default function FindAPark({ location, data }) {
                           }}
                         >
                           <div className="col-md-4">
-                            <legend className="filter-heading p10t">Activities</legend>
+                            <div className="filter-heading">Activities</div>
                           </div>
                           <div className="col-md-2 ml-auto">
                             {showActivities ? (
@@ -777,6 +778,7 @@ export default function FindAPark({ location, data }) {
                         </fieldset>
                         <hr></hr>
                         <fieldset>
+                        <legend className="sr-only">Facilities</legend>
                         <div
                           tabIndex={0}
                           role="button"
@@ -789,7 +791,7 @@ export default function FindAPark({ location, data }) {
                           }}
                         >
                           <div className="col-md-4">
-                            <legend className="filter-heading p10t">Facilities</legend>
+                            <div className="filter-heading">Facilities</div>
                           </div>
                           <div className="col-md-2 ml-auto">
                             {showFacilities ? (

@@ -2,8 +2,8 @@ import React, { useState } from "react"
 import Accordion from "react-bootstrap/Accordion"
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
-import Badge from "react-bootstrap/Badge"
 import Row from "react-bootstrap/Row"
+import { Link } from "gatsby"
 
 import HTMLArea from "../HTMLArea"
 
@@ -108,25 +108,20 @@ const AdvisoryCard = ({ advisory, index }) => {
                             .filter(
                               park => park.published_at && park.isDisplayed
                             )
-                            .map((par, index) => (
-                              <Badge
-                                pill
-                                variant="light"
-                                className="parkLink my-2"
+                          .map((par, index) => (
+                              <Link
+                                className="parkLink my-2 badge badge-pill badge-light"
+                                href={`/${
+                                  par.slug
+                                    ? par.slug
+                                    : par.protectedAreaName
+                                        .toLowerCase()
+                                        .replace(/ /g, "-")
+                                }`}
                                 key={index}
                               >
-                                <a
-                                  href={`/${
-                                    par.slug
-                                      ? par.slug
-                                      : par.protectedAreaName
-                                          .toLowerCase()
-                                          .replace(/ /g, "-")
-                                  }`}
-                                >
                                   {par.protectedAreaName}
-                                </a>
-                              </Badge>
+                              </Link>
                             ))}
                       </div>
                       <div>
