@@ -19,6 +19,17 @@ export const query = graphql`
           id
           strapi_id
           strapi_component
+          cards {
+            id
+            strapi_id
+            url
+            title
+            subTitle
+            buttonText
+            imageUrl
+            imageAltText
+            variation
+          }
         }
         ... on STRAPI__COMPONENT_PARKS_PAGE_SECTION {
           id
@@ -94,7 +105,7 @@ export default function Home({ data }) {
             </div>
           </div>
           <div>
-              <Footer />
+            <Footer />
           </div>
         </div>
   )

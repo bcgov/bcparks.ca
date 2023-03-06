@@ -39,7 +39,6 @@ module.exports = {
           "public-advisory",
           "park-photo",
           "website",
-          "page",
           "activity-type",
           "facility-type",
           "menu",
@@ -49,12 +48,16 @@ module.exports = {
           "park-sub-page",
           "site",
           "legacy-redirect",
-          // {
-          //   singularName: "page",
-          //   queryParams: {
-          //     populate: "*"
-          //   }
-          // }
+          {
+            singularName: "page",
+            queryParams: {
+              populate: {
+                Content: {
+                  populate: "*"
+                }
+              }
+            }
+          }
         ],
         queryLimit: 1000,
       },

@@ -33,7 +33,7 @@ export default function PageContent({ contentType, content }) {
   if (contentType === "parks.card-set") {
     return (
       <div className="row">
-        {/* {content.cards.map(card =>
+        {content.cards.map(card =>
           <LinkCard
             key={card.id}
             title={card.title}
@@ -44,7 +44,7 @@ export default function PageContent({ contentType, content }) {
             variation={card.variation}
             buttonText={card.buttonText}
           ></LinkCard>
-        )} */}
+        )}
       </div>
     )
   }
