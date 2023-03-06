@@ -32,6 +32,15 @@ import {
   getAdvisoryStatuses,
 } from "../../../utils/CmsDataUtil";
 
+const query = qs.stringify({
+  pagination: {
+    limit: 1500
+  },
+  sort: ['advisoryDate:DESC']
+}, {
+  encodeValuesOnly: true,
+});
+
 export default function AdvisoryDashboard({
   page: { setError, cmsData, setCmsData },
 }) {
@@ -103,16 +112,6 @@ export default function AdvisoryDashboard({
   }
   /*-------------------------------------------------------------------------*/
 
-  const query = qs.stringify({
-    pagination: {
-      page: 1,
-      pageSize: 10,
-    },
-    sort: ['advisoryDate:DESC']
-  }, {
-    encodeValuesOnly: true, // prettify URL
-  });
-
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -122,10 +121,9 @@ export default function AdvisoryDashboard({
           getRegions(cmsData, setCmsData),
           getManagementAreas(cmsData, setCmsData),
           getParkNames(cmsData, setCmsData),
-          // pagination[start]=0&pagination[limit]=150
-          cmsAxios.get(`public-advisory-audits`, {
+          cmsAxios.get(`public-advisory-audits?${query}`, {
               headers: {
-                Authorization: `Bearer ${keycloak.token}` // Authorization: Bearer
+                // Authorization: `Bearer ${keycloak.token}`
             }
           }
           )
@@ -136,36 +134,30 @@ export default function AdvisoryDashboard({
           setIsLoading(false);
         });
         // Regions
-        // const regionsData = res[0];
-        const regionsResponse = res;
-
-        console.log('res', res)
-        // console.log('regionsResponse', regionsResponse)
-
-
-        const regionsData = regionsResponse[0]
-
-
+        const regionsData = res[0]?.data;
         // Management Areas
-        const managementAreasData = res[1]
+        const managementAreasData = res[1]?.data;
 
         // Protected Areas
         const parkNamesData = res[2];
 
-        const publicAdvisories = res[3].data;
+        const publicAdvisories = res[3]?.data?.data;
 
         // Public Advisories
         const regionParksCount = managementAreasData.reduce((region, item) => {
-          region[item.region.id] = (region[item.region.id] || 0) + item.protectedAreas.length;
-          return region;
+          // Todo:
+          // region[item.region.id] = (region[item.region.id] || 0) + item.protectedAreas.length;
+          // return region;
+          return []
         }, {});
 
         const today = moment(new Date()).tz("America/Vancouver").toISOString();
         const updatedPublicAdvisories = publicAdvisories.map((publicAdvisory) => {
           publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
-          publicAdvisory.associatedParks = publicAdvisory.protectedAreas.map((p) => p.protectedAreaName).join(", ")
-            + publicAdvisory.regions.map((r) => r.regionName).join(", ");
-    
+          // Todo:
+          // publicAdvisory.associatedParks = publicAdvisory.protectedAreas.map((p) => p.protectedAreaName).join(", ")
+          //   + publicAdvisory.regions.map((r) => r.regionName).join(", ");
+          //
           let regionsWithParkCount = [];
           if (publicAdvisory?.regions?.length > 0) {
             publicAdvisory.regions.forEach((region) => {
@@ -683,19 +675,21 @@ export default function AdvisoryDashboard({
                 pageSize: 50,
                 pageSizeOptions: [25, 50, 100],
               }}
-              onFilterChange={(filters) => {
-                const advisoryFilters = JSON.parse(localStorage.getItem('advisoryFilters'));
-                const arrFilters = filters.map((obj) => {
-                  return { 
-                    fieldName: obj.column["field"],
-                    fieldValue: obj.value,
-                    type: 'table'
-                  };
-                });
-                setFilters([...advisoryFilters.filter(o => o.type === 'page'), ...arrFilters]);
-              }}
+              onFilterChange={[]} // // Todo:
+              // onFilterChange={(filters) => {
+              //   const advisoryFilters = JSON.parse(localStorage.getItem('advisoryFilters'));
+              //   const arrFilters = filters.map((obj) => {
+              //     return {
+              //       fieldName: obj.column["field"],
+              //       fieldValue: obj.value,
+              //       type: 'table'
+              //     };
+              //   });
+              //   setFilters([...advisoryFilters.filter(o => o.type === 'page'), ...arrFilters]);
+              // }}
               columns={tableColumns.map((col) => ({ ...col, defaultFilter: getTableFilterValue(col) }))}
-              data={publicAdvisories}
+              data={[]} // // Todo:
+              // data={publicAdvisories}
               title=""
               onRowClick={(event, rowData) => {
                 history.push(`advisory-summary/${rowData.id}`);

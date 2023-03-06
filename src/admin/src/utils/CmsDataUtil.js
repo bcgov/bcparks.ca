@@ -1,4 +1,12 @@
 import { cmsAxios } from "../axios_config";
+const qs = require('qs');
+
+const querySort=(key) => qs.stringify({
+    sort: [key],
+    // limit: -1, //TODO: infinity, needs to be checked
+}, {
+    encodeValuesOnly: true,
+});
 
 export function getProtectedAreas(cmsData, setCmsData) {
   if (!cmsData.protectedAreas) {
@@ -17,7 +25,7 @@ export function getProtectedAreas(cmsData, setCmsData) {
 export function getRegions(cmsData, setCmsData) {
   if (!cmsData.regions) {
     const result = cmsAxios
-      .get(`/regions?_limit=-1&_sort=regionName`)
+      .get(`/regions?${querySort('regionName')}`) // before _limit=-1&_sort=regionName
       .then((res) => {
         const data = cmsData;
         data.regions = res.data;
@@ -33,7 +41,7 @@ export function getRegions(cmsData, setCmsData) {
 export function getSections(cmsData, setCmsData) {
   if (!cmsData.sections) {
     const result = cmsAxios
-      .get(`/sections?_limit=-1&_sort=sectionName`)
+      .get(`/sections?${querySort('sectionName')}`)
       .then((res) => {
         const data = cmsData;
         data.sections = res.data;
@@ -49,7 +57,7 @@ export function getSections(cmsData, setCmsData) {
 export function getManagementAreas(cmsData, setCmsData) {
   if (!cmsData.managementAreas) {
     const result = cmsAxios
-      .get(`/management-areas?_limit=-1&_sort=managementAreaName`)
+      .get(`/management-areas?${querySort('managementAreaName')}`)
       .then((res) => {
         const data = cmsData;
         data.managementAreas = res.data;
@@ -65,7 +73,7 @@ export function getManagementAreas(cmsData, setCmsData) {
 export function getSites(cmsData, setCmsData) {
   if (!cmsData.sites) {
     const result = cmsAxios
-      .get(`/sites?_limit=-1&_sort=siteName`)
+      .get(`/sites?${querySort('siteName')}`)
       .then((res) => {
         const data = cmsData;
         data.sites = res.data;
@@ -81,7 +89,7 @@ export function getSites(cmsData, setCmsData) {
 export function getFireCentres(cmsData, setCmsData) {
   if (!cmsData.fireCentres) {
     const result = cmsAxios
-      .get(`/fire-centres?_limit=-1&_sort=fireCentreName`)
+      .get(`/fire-centres?${querySort('fireCentreName')}`)
       .then((res) => {
         const data = cmsData;
         data.fireCentres = res.data;
@@ -97,7 +105,7 @@ export function getFireCentres(cmsData, setCmsData) {
 export function getFireZones(cmsData, setCmsData) {
   if (!cmsData.fireZones) {
     const result = cmsAxios
-      .get(`/fire-zones?_limit=-1&_sort=fireZoneName`)
+      .get(`/fire-zones?${querySort('fireZoneName')}`)
       .then((res) => {
         const data = cmsData;
         data.fireZones = res.data;
@@ -113,7 +121,7 @@ export function getFireZones(cmsData, setCmsData) {
 export function getEventTypes(cmsData, setCmsData) {
   if (!cmsData.eventTypes) {
     const result = cmsAxios
-      .get(`/event-types?_limit=-1&_sort=eventType`)
+      .get(`/event-types?${querySort('eventType')}`)
       .then((res) => {
         const data = cmsData;
         data.eventTypes = res.data;
@@ -129,7 +137,7 @@ export function getEventTypes(cmsData, setCmsData) {
 export function getAccessStatuses(cmsData, setCmsData) {
   if (!cmsData.accessStatuses) {
     const result = cmsAxios
-      .get(`/access-statuses?_limit=-1&_sort=precedence`)
+      .get(`/access-statuses?${querySort('precedence')}`)
       .then((res) => {
         const data = cmsData;
         data.accessStatuses = res.data;
@@ -145,7 +153,7 @@ export function getAccessStatuses(cmsData, setCmsData) {
 export function getUrgencies(cmsData, setCmsData) {
   if (!cmsData.urgencies) {
     const result = cmsAxios
-      .get(`/urgencies?_limit=-1&_sort=sequence`)
+      .get(`/urgencies?${querySort('sequence')}`)
       .then((res) => {
         const data = cmsData;
         data.urgencies = res.data;
@@ -161,12 +169,12 @@ export function getUrgencies(cmsData, setCmsData) {
 export function getAdvisoryStatuses(cmsData, setCmsData) {
   if (!cmsData.advisoryStatuses) {
     const result = cmsAxios
-      .get(`/advisory-statuses?_limit=-1&_sort=code`)
+      .get(`/advisory-statuses?${querySort('code')}`)
       .then((res) => {
         const data = cmsData;
-        data.advisoryStatuses = res.data;
+        data.advisoryStatuses = res.data?.data;
         setCmsData(data);
-        return res.data;
+        return  res.data?.data;
       });
     return result;
   } else {
@@ -177,7 +185,7 @@ export function getAdvisoryStatuses(cmsData, setCmsData) {
 export function getLinkTypes(cmsData, setCmsData) {
   if (!cmsData.linkTypes) {
     const result = cmsAxios
-      .get(`/link-types?_limit=-1&_sort=id`)
+      .get(`/link-types?${querySort('id')}`)
       .then((res) => {
         const data = cmsData;
         data.linkTypes = res.data;
@@ -191,7 +199,8 @@ export function getLinkTypes(cmsData, setCmsData) {
 }
 
 export function getBusinessHours(cmsData, setCmsData) {
-  const result = cmsAxios.get(`/business-hours`).then((res) => {
+  const result = cmsAxios.get(`/business-hours`)
+      .then((res) => {
     const data = cmsData;
     data.businessHours = res.data;
     setCmsData(data);
@@ -203,7 +212,7 @@ export function getBusinessHours(cmsData, setCmsData) {
 export function getStandardMessages(cmsData, setCmsData) {
   if (!cmsData.standardMessages) {
     const result = cmsAxios
-      .get(`/standard-messages?_limit=-1&_sort=title`)
+      .get(`/standard-messages?${querySort('title')}`)
       .then((res) => {
         const data = cmsData;
         data.standardMessages = res.data;

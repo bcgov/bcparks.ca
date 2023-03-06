@@ -5,7 +5,8 @@
     "singularName": "page",
     "pluralName": "pages",
     "displayName": "Page",
-    "name": "page"
+    "name": "page",
+    "description": ""
   },
   "options": {
     "increments": true,

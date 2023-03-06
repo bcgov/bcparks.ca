@@ -2,6 +2,19 @@ require("dotenv").config({
   path: `.env`,
 })
 
+const strapiConfig = {
+  // ...
+  collectionTypes: [
+    {
+      singularName: "pages",
+      queryParams: {
+        populate: '*',
+      },
+    },
+  ],
+  // ...
+};
+
 module.exports = {
   siteMetadata: {
     title: `BC Parks`,
@@ -31,7 +44,9 @@ module.exports = {
     {
       resolve: "gatsby-source-strapi",
       options: {
+        singleTypes: [],
         apiURL: process.env.REACT_APP_CMS_BASE_URL,
+        accessToken: process.env.STRAPI_TOKEN,
         collectionTypes: [
           "urgency",
           "protected-area",

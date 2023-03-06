@@ -98,36 +98,47 @@ module.exports = ({ env }) => {
         contentTypeFilter: {
           mode: 'allow',
           uids: {
-
             'api::public-advisory-audit.public-advisory-audit': {
               'GET':true,
             },
-
-
             'api::region.region': {
               'GET':true,
             },
-
             'api::management-area.management-area': {
               'GET':true,
             },
-
-
             'api::park-name.park-name': {
               'GET':true,
             },
+            "api::advisory-status.advisory-status":{
+              'GET':true,
+            },
+            'api::standard-message.standard-message"':{
+              'GET':true,
+            },
+            "api::business-hour.business-hour":{
+              'GET':true,
+            },
+            "api::link-type.link-type":{
+              'GET': true,
+            }
           }
         }
       }
     },
-
-
-      'users-permissions': {
+    'users-permissions': {
         config: {
           jwt: {
             expiresIn: '7d',
           },
         },
       },
+
+    // Use case example: http://localhost:1337/api/pages/1?populate=deep
+    'strapi-plugin-populate-deep': {
+      config: {
+        defaultDepth: 3,
+      }
+    },
   }
 }

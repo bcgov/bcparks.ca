@@ -35,6 +35,8 @@ module.exports = createCoreController(
       }
 
       const res = this.sanitizeOutput(entities, ctx);
+      //TODO: ( for the gatsby 4)  transformResponse - If we need to add attributese
+      // entities = this.transformResponse(entities)
       return res;
     },
     async count(ctx) {
