@@ -2,19 +2,6 @@ require("dotenv").config({
   path: `.env`,
 })
 
-const strapiConfig = {
-  // ...
-  collectionTypes: [
-    {
-      singularName: "pages",
-      queryParams: {
-        populate: '*',
-      },
-    },
-  ],
-  // ...
-};
-
 module.exports = {
   siteMetadata: {
     title: `BC Parks`,
