@@ -49,7 +49,6 @@ export default function Home({ data }) {
 
   return (
         <div id="home">
-          <Seo title="Home" description="Official website for BC Parks. Get information on camping and other activities in parks across British Columbia. Learn about our environmental conservation work." />
           <div className="park-search-container-wrapper">
             <Header mode="internal" content={menuContent} />
             <div className="park-search">
@@ -85,3 +84,7 @@ export default function Home({ data }) {
         </div>
   )
 }
+
+export const Head = () => (
+  <Seo title="Home" description="Official website for BC Parks. Get information on camping and other activities in parks across British Columbia. Learn about our environmental conservation work." />
+)

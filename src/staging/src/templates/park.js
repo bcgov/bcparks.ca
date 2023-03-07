@@ -62,7 +62,6 @@ export default function ParkTemplate({ data }) {
 
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
   const operations = park.parkOperation || {}
-  const seo = park.seo
 
   const activeActivities = sortBy(
     park.parkActivities.filter(
@@ -260,10 +259,6 @@ export default function ParkTemplate({ data }) {
   }
 
   const parkName = renderHTML(park.parkNames.find(item=> item.parkNameType === PARK_NAME_TYPE.Escaped)?.parkName  || park.protectedAreaName);
-
-  const parkDescription = park.description?.replace(/(<([^>]+)>)/ig, '');
-  const parkDescriptionShort = truncate(parkDescription, { length: 160 });
-    
   
   const breadcrumbs = [
     <Link key="1" href="/">
@@ -279,11 +274,6 @@ export default function ParkTemplate({ data }) {
 
   return (
     <div className="grey-background">
-      <Seo
-        title={seo?.metaTitle || park.protectedAreaName}
-        description={seo?.metaDescription || parkDescriptionShort}
-        keywords={seo?.metaKeywords}
-      />
       <Header mode="internal" content={menuContent} />
       <ScrollToTop />
       <CssBaseline />
@@ -477,6 +467,21 @@ export default function ParkTemplate({ data }) {
       <Footer />
 
     </div>
+  )
+}
+
+export const Head = ({data}) => {
+  const park = data.strapiProtectedArea
+  const seo = park.seo
+  const parkDescription = park.description?.replace(/(<([^>]+)>)/ig, '');
+  const parkDescriptionShort = truncate(parkDescription, { length: 160 });
+
+  return (
+    <Seo
+      title={seo?.metaTitle || park.protectedAreaName}
+      description={seo?.metaDescription || parkDescriptionShort}
+      keywords={seo?.metaKeywords}
+    />
   )
 }
 

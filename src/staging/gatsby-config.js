@@ -12,10 +12,9 @@ module.exports = {
     image: 'https://nrs.objectstore.gov.bc.ca/kuwyyf/generic_social_1146x600_603acfb441.jpg'
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
     `gatsby-plugin-loadable-components-ssr`,
     {
-      resolve: `gatsby-plugin-react-helmet-canonical-urls`,
+      resolve: `gatsby-plugin-canonical-urls`,
       options: {
         siteUrl: `https://bcparks.ca`,
       },
@@ -84,11 +83,7 @@ module.exports = {
         },
       },
     },
-    `gatsby-plugin-gatsby-cloud`,
     `gatsby-plugin-meta-redirect`,
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {

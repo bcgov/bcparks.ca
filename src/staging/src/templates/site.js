@@ -213,9 +213,6 @@ export default function ParkTemplate({ data }) {
     parkOrcs: site.orcsSiteNumber
   }
 
-  const siteDescription = site.description?.replace(/(<([^>]+)>)/ig, '');
-  const siteDescriptionShort = truncate(siteDescription, { length: 160 });
-
   const breadcrumbs = [
     <Link key="1" href="/">
       Home
@@ -233,10 +230,6 @@ export default function ParkTemplate({ data }) {
 
   return (
     <div className="grey-background">
-      <Seo
-        title={`${park?.protectedAreaName}: ${site.siteName}`}
-        description={siteDescriptionShort}
-      />
       <Header mode="internal" content={menuContent} />
       <ScrollToTop />
       <CssBaseline />
@@ -390,6 +383,20 @@ export default function ParkTemplate({ data }) {
       </div>
       <Footer />
     </div>
+  )
+}
+
+export const Head = ({data}) => {
+  const site = data.strapiSites
+  const park = site.protectedArea
+  const siteDescription = site.description?.replace(/(<([^>]+)>)/ig, '');
+  const siteDescriptionShort = truncate(siteDescription, { length: 160 });
+
+  return (
+    <Seo
+      title={`${park?.protectedAreaName}: ${site.siteName}`}
+      description={siteDescriptionShort}
+    />
   )
 }
 

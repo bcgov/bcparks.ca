@@ -140,11 +140,6 @@ export default function StaticContent1({ pageContext }) {
 
   return (
     <>
-      <Seo
-        title={meta?.metaTitle || pageTitle}
-        description={meta?.metaDescription}
-        keywords={meta?.metaKeywords}
-      />
       <ScrollToTop />
       <div className="max-width-override" ref={sectionRefs[0]}>
         <Header mode="internal" content={menuContent} />
@@ -237,5 +232,30 @@ export default function StaticContent1({ pageContext }) {
         <Footer />
       </div>
     </>
+  )
+}
+
+export const Head = ({pageContext}) => {
+  const meta =
+    pageContext?.page?.Content.find(c =>
+      Boolean(c.strapi_component === "parks.seo")
+    ) || {}
+  
+  const headerContent =
+    pageContext?.page?.Content.find(c =>
+      Boolean(c.strapi_component === "parks.page-header")
+    ) || {}
+
+  let pageTitle = pageContext.page.Title
+  if (!pageTitle) {
+    pageTitle = headerContent.pageTitle
+  }
+
+  return (
+    <Seo
+      title={meta?.metaTitle || pageTitle}
+      description={meta?.metaDescription}
+      keywords={meta?.metaKeywords}
+    />
   )
 }
