@@ -34,12 +34,12 @@ const AdvisoryLegend = () => {
                   &nbsp;
                 </div>
                 <div className="col">
-                  <span className="legend-label font-weight-bold d-md-block">
+                  <strong className="legend-label d-md-block">
                     {legendItem.label}
-                  </span>
-                  <span className="legend-description font-italic ml-2 ml-md-0">
+                  </strong>
+                  <em className="legend-description ml-2 ml-md-0">
                     {legendItem.description}
-                  </span>
+                  </em>
                 </div>
               </div>
             </div>

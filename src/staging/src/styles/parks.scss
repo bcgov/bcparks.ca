@@ -73,7 +73,15 @@
   .MuiButton-root,
   .MuiLink-root {
     border: none !important;
-    outline: none !important;
+  }
+  a {
+    color: $colorBlue;
+    &:hover {
+      color: $colorGold;
+    }
+    &:focus-visible {
+      outline: -webkit-focus-ring-color auto 1px;
+    }
   }
 }
 
@@ -232,10 +240,6 @@
 
 .park-info-container .MuiPaper-elevation1 {
   box-shadow: unset !important;
-}
-
-.park-info-container .MuiLink-root {
-  color: $colorBlueLight !important;
 }
 
 .show-photos {
