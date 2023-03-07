@@ -157,6 +157,7 @@ const AdvisoryFilter = ({
           </label>
           <Autocomplete
             id="advisory-type"
+            aria-label="advisory-type"
             defaultValue={defaultEventType}
             value={getEventType()}
             classes={{
@@ -180,7 +181,7 @@ const AdvisoryFilter = ({
         </div>
         <div className="col-5 col-md-2">
           <label htmlFor="search-button" className={classes.filterLabel}>
-            &nbsp;
+            <span className="sr-only">Search</span> &nbsp;
           </label>
           <Button
             id="search-button"
