@@ -123,7 +123,7 @@ export default function AdvisoryDashboard({
           getParkNames(cmsData, setCmsData),
           cmsAxios.get(`public-advisory-audits?${query}`, {
               headers: {
-                // Authorization: `Bearer ${keycloak.token}`
+                Authorization: `Bearer ${keycloak.token}`
             }
           }
           )
@@ -218,7 +218,7 @@ export default function AdvisoryDashboard({
   const removeDuplicatesById = (arr) => {
     return arr.filter((obj, index, self) => index === self.findIndex((o) => o.id === obj.id));
   };
-  
+
   const filterAdvisoriesByParkId = (pId) => {
     const advisories = selectedRegionId ? regionalPublicAdvisories : originalPublicAdvisories;
 
@@ -254,7 +254,7 @@ export default function AdvisoryDashboard({
 
       // Remove duplicates
       const filteredProtectedAreas = removeDuplicatesById(list);
-      
+
       // Filter advisories in grid
       const filteredPublicAdvsories = [];
 
@@ -286,13 +286,20 @@ export default function AdvisoryDashboard({
     }
   };
 
-  const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
+  const queryParams = (id) => qs.stringify({
+    sort: [`advisoryStatus:${id}`],
+  }, {
+    encodeValuesOnly: true, // prettify URL
+  })
+
+
+const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
     const advisoryStatuses = await getAdvisoryStatuses(cmsData, setCmsData);
     if (advisoryStatuses) {
       const publishedStatus = advisoryStatuses.filter((as) => as.code === "PUB");
       if (publishedStatus?.length > 0) {
         const result = await cmsAxios
-          .get(`/public-advisories?_advisoryStatus=${publishedStatus[0].id}&_limit=-1`)
+          .get(`/public-advisories`) // ${queryParams(publishedStatus[0].id)}
           .catch(() => {
             setHasErrors(true);
           });

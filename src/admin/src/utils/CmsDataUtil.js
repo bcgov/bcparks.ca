@@ -1,5 +1,5 @@
 import { cmsAxios } from "../axios_config";
-const qs = require('qs');
+import qs from'qs';
 
 const querySort=(key) => qs.stringify({
     sort: [key],
