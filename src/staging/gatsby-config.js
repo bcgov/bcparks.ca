@@ -31,9 +31,8 @@ module.exports = {
     {
       resolve: "gatsby-source-strapi",
       options: {
-        singleTypes: [],
         apiURL: process.env.REACT_APP_CMS_BASE_URL,
-        accessToken: process.env.STRAPI_TOKEN,
+        accessToken: process.env.STRAPI_TOKEN,// TODO: we need to add to .env file
         collectionTypes: [
           "urgency",
           "protected-area",
@@ -41,6 +40,20 @@ module.exports = {
           "park-photo",
           `websites`,
           `pages`,
+          {
+            singularName: "page",
+            queryParams: {
+              populate: {
+                Content: {
+                  on: {
+                    'parks.card-set': {
+                      populate: "*"
+                    },
+                  },
+                },
+              },
+            },
+          },
           "activity-types",
           "facility-types",
           "menus",
