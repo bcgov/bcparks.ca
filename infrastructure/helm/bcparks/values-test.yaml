@@ -1,5 +1,5 @@
 cluster:
-  ssoAuthUrl: https://test.oidc.gov.bc.ca/auth
+  ssoAuthUrl: https://test.loginproxy.gov.bc.ca/auth
 
 images:
   strapi:
