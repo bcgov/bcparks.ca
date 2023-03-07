@@ -414,17 +414,17 @@ export const query = graphql`
       latitude
       locationNotes { 
         data { 
-            locationNotes
+          locationNotes
         }
        }
       description {
         data {
-            description
+          description
         }
       }
       reservations {
         data {
-            reservations
+          reservations
         }
       }
       hasDayUsePass
@@ -438,7 +438,7 @@ export const query = graphql`
         isActive
         isActivityOpen
         description {
-            data
+          data
         }
         activityType {
           activityName
@@ -455,7 +455,7 @@ export const query = graphql`
         isActive
         isFacilityOpen
         description {
-            data
+          data
         }
         facilityType {
           facilityName

@@ -489,21 +489,39 @@ export const query = graphql`
   query ProtectedAreaDetails($orcs: Int) {
     strapiProtectedArea(orcs: { eq: $orcs }) {
       protectedAreaName
-      description
+      description {
+        data
+      }
       status
       orcs
       marineArea
       type
       typeCode
       hasDayUsePass
-      locationNotes
-      reconciliationNotes
-      safetyInfo
-      specialNotes
-      parkContact
-      natureAndCulture
-      reservations
-      maps
+      locationNotes {
+        data
+      }
+      reconciliationNotes {
+        data
+      }
+      safetyInfo {
+        data
+      }
+      specialNotes {
+        data
+      }
+      parkContact {
+        data
+      }
+      natureAndCulture {
+        data
+      }
+      reservations {
+        data
+      }
+      maps {
+        data
+      }
       latitude
       longitude
       mapZoom
@@ -517,7 +535,9 @@ export const query = graphql`
       parkActivities {
         isActive
         isActivityOpen
-        description
+        description {
+          data
+        }
         activityType {
           activityName
           activityCode
@@ -532,7 +552,9 @@ export const query = graphql`
       parkFacilities {
         isActive
         isFacilityOpen
-        description
+        description {
+          data
+        }
         facilityType {
           facilityName
           facilityCode

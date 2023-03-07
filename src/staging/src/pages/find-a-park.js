@@ -98,8 +98,8 @@ export const query = graphql`
       sort: {fields: parent___internal___type}
       ){
       nodes {
-        type, 
-        typeCode,
+        type
+        typeCode
         parkNames {
           parkNameType
           parkName
