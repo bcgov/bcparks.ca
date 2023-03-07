@@ -1,4 +1,4 @@
-const Strapi = require("strapi");
+const Strapi = require("@strapi/strapi");
 const http = require("http");
 
 let instance;

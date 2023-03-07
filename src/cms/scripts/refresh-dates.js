@@ -5,7 +5,7 @@
  *   park-operation.json                => ParkOperations
  *   park-operation-sub-area-dates.json => ParkOperationSubAreaDates
  */
-const strapi = require("strapi");
+const strapi = require("@strapi/strapi");
 
 const loader = require("../data/functions/loadOperationData.js");
 
