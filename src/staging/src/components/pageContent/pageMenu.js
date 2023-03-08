@@ -38,6 +38,7 @@ export default function PageMenu({ pageSections, activeSection, menuStyle }) {
         className="section-select"
         value={sectionIndex}
         onChange={handleSectionChange}
+        title="mobile-navigation"
       >
         <option value={0}>Table of Contents</option>
         {pageSections.filter(s => s.visible).map(

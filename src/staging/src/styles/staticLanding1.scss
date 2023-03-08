@@ -109,6 +109,11 @@
   input {
     font-size: 0.85rem;
   }
+  // required for accessibility
+  .MuiInputBase-input:focus,
+  .MuiInputBase-input:focus-visible {
+    outline: unset !important;
+  }
 }
 
 .parks-search-button {

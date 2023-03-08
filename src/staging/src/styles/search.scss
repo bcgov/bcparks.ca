@@ -805,9 +805,10 @@ div[class$="-singleValue"] {
   a.map-link {
     font-size: 1rem;
     color: $colorBlue;
-    text-decoration: none;
+    // this was failing accessibility, so it's been changed to behave like
+    // text links in body copy
     &:hover {
-      text-decoration: underline;
+      color: $colorGold;
     }
   }
 
@@ -820,6 +821,7 @@ div[class$="-singleValue"] {
       color: $colorBlack;
       font-size: 1rem;
       font-weight: 700;
+      padding: 10px 0;
     }
 
     .select-padding {

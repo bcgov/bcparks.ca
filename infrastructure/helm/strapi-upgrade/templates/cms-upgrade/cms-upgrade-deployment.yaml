@@ -56,7 +56,7 @@ spec:
             - name: DATABASE_HOST
               value: bcparks-patroni
             - name: DATABASE_PORT
-              value: 5432           
+              value: "5432"           
             - name: DATABASE_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -100,7 +100,7 @@ spec:
             - name: STRAPI_CACHE_TIMEOUT
               value: {{ .Values.cmsUpgrade.env.cacheTimeout | quote }}
             - name: REDIS_HOST
-              value: {{ .Release.Name }}-{{ .Values.redis.componentName }}
+              value: bcparks-{{ .Values.redis.componentName }}
             - name: REDIS_PORT
               value: {{ .Values.redis.service.port | quote }}
             - name: REDIS_PASSWORD
@@ -108,6 +108,16 @@ spec:
                 secretKeyRef:
                   name: bcparks-{{ .Values.redis.componentName }}-secret
                   key: REDIS_PASSWORD
+            - name: STRAPI_ADMIN_BACKEND_URL
+              value: ""
+            - name: APP_KEYS
+              value: ""
+            - name: API_TOKEN_SALT
+              value: ""
+            - name: ADMIN_JWT_SECRET
+              value: ""
+            - name: JWT_SECRET
+              value: ""
           envFrom:
             - secretRef:
                 name: {{ template "bcparks_cms_secret" . }}

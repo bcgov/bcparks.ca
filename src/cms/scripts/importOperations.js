@@ -1,7 +1,7 @@
 /*
  * Load initial data for park operation objects from json
  */
-const strapi = require("strapi");
+const strapi = require("@strapi/strapi");
 
 const operationDataLoad = require("../data/functions/loadOperationData.js");
 

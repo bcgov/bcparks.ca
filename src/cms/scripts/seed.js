@@ -1,7 +1,7 @@
 /*
  * Load initial data from the PAR API and then from local JSON files.
  */
-const strapi = require("strapi");
+const strapi = require("@strapi/strapi");
 
 const loader = require("../data/functions/seedData.js");
 

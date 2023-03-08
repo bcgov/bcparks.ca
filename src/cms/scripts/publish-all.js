@@ -5,7 +5,7 @@
 
 "use strict";
 
-const strapi = require("strapi")({ serveAdminPanel: false });
+const strapi = require("@strapi/strapi")({ serveAdminPanel: false });
 
 strapi.load().then(async (app) => {
   try {

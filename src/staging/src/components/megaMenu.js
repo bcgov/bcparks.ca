@@ -190,7 +190,7 @@ const MegaMenu = ({ content, menuMode }) => {
           <>
             <nav className={"menu-level menu-level--" + item.treeLevel} aria-labelledby="mainmenulabel">
 	            <h2 id="mainmenulabel" className="sr-only">Main Menu</h2>
-              <ul className="menu-button-list">
+              <ul className="menu-button-list" role="menu">
                 <li className="menu-button menu-back" role="presentation">
                   <a
                     className="menu-button__title"
@@ -221,7 +221,7 @@ const MegaMenu = ({ content, menuMode }) => {
                         ? "selected"
                         : "unselected")
                     }
-                    role="presentation"
+                    role="menuitem"
                   >
                     <a
                       className="menu-button__title"
@@ -284,7 +284,7 @@ const MegaMenu = ({ content, menuMode }) => {
         )}
         {!item.hasChildren && (
           <nav>
-            <ul>
+            <ul role="menu">
               <li className="menu-button menu-header" role="presentation">
                 <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
                   {item.title}
