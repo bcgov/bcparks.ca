@@ -3,9 +3,11 @@ import qs from'qs';
 
 const querySort=(key) => qs.stringify({
     sort: [key],
-    // limit: -1, //TODO: infinity, needs to be checked
 }, {
     encodeValuesOnly: true,
+    pagination: {
+        limit: -1,
+    },
 });
 
 export function getProtectedAreas(cmsData, setCmsData) {
