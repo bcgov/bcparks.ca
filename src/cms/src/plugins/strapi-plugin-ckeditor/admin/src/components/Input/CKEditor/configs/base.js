@@ -298,12 +298,10 @@ const base = {
   },
   table: {
     contentToolbar: [
-      "tableColumn",
-      "tableRow",
-      "mergeTableCells",
-      "tableProperties",
-      "tableCellProperties",
-      "toggleTableCaption",
+      'tableColumn',
+      'tableRow',
+      'mergeTableCells',
+      'tableCellProperties'
     ],
   },
   image: {
@@ -332,16 +330,13 @@ const base = {
       },
     ],
     toolbar: [
-      "imageTextAlternative",
-      "toggleImageCaption",
-      "linkImage",
-      "|",
-      "imageStyle:inline",
-      "imageStyle:wrapText",
-      "imageStyle:breakText",
-      "imageStyle:side",
-      "|",
-      "resizeImage",
+      'linkImage',
+      'imageStyle:inline',
+      'imageStyle:block',//
+      'imageStyle:side',
+      '|',
+      'toggleImageCaption',
+      'imageTextAlternative'
     ],
     insert: {
       integrations: ["insertImageViaUrl"],
@@ -352,22 +347,15 @@ const base = {
       openInNewTab: {
         mode: "manual",
         label: "Open in a new tab",
-        defaultValue: true,
+        defaultValue: false,
         attributes: {
           target: "_blank",
           rel: "noopener noreferrer",
         },
       },
-      toggleDownloadable: {
-        mode: "manual",
-        label: "Downloadable",
-        attributes: {
-          download: "file",
-        },
-      },
     },
-    addTargetToExternalLinks: true,
-    defaultProtocol: "https://",
+    // addTargetToExternalLinks: true,
+    // defaultProtocol: "https://",
   },
   style: {
     definitions: [
@@ -465,20 +453,19 @@ export const toolbarEditorConfig = {
     'style',
     '|',
     'bold', 'italic',
-    '|',
     'underline',
     '|',
     'link',
+    'strapiMediaLib',
     '|',
     'bulletedList', 'numberedList',
     '|',
     'horizontalLine',
-    '|',
     'blockQuote',
     'insertTable',
     'mediaEmbed', '|',
+    // '|', 'undo', 'redo', '|',
     'removeFormat',
-    '|',
     'SourceEditing'
   ],
 }
@@ -491,20 +478,18 @@ export const toolbarBaloonEditorConfig = {
     'style',
     '|',
     'bold', 'italic',
-    '|',
     'underline',
     '|',
     'link',
+    'strapiMediaLib',
     '|',
     'bulletedList', 'numberedList',
     '|',
     'horizontalLine',
-    '|',
     'blockQuote',
     'insertTable',
     'mediaEmbed', '|',
     'removeFormat',
-    '|',
     'SourceEditing'
   ],
 
@@ -536,20 +521,18 @@ export const blockBaloonEditorConfig = {
     'style',
     '|',
     'bold', 'italic',
-    '|',
     'underline',
     '|',
     'link',
+    'strapiMediaLib',
     '|',
     'bulletedList', 'numberedList',
     '|',
     'horizontalLine',
-    '|',
     'blockQuote',
     'insertTable',
     'mediaEmbed', '|',
     'removeFormat',
-    '|',
     'SourceEditing'
   ]
 }
