@@ -20,6 +20,13 @@ jobs:
 
       - run: cd src/cms
 
+      - name: Set env
+        run: |
+          echo "APP_KEYS=unit,test,keys" >> $GITHUB_ENV
+          echo "JWT_SECRET=secret" >> $GITHUB_ENV
+          echo "API_TOKEN_SALT=salt" >> $GITHUB_ENV
+          echo "ADMIN_JWT_SECRET=secret" >> $GITHUB_ENV
+
       - run: yarn install
         working-directory: src/cms
 
