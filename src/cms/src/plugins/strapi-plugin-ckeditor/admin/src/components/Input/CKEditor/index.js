@@ -18,21 +18,21 @@ const Wrapper = styled("div")`${({ editorStyles }) => editorStyles}`;
 const Editor = ({ onChange, name, value, disabled, preset, maxLength }) => {
 
   const [ editorInstance, setEditorInstance ] = useState(false);
-  
+
   const [mediaLibVisible, setMediaLibVisible] = useState(false);
-  
+
   const [uploadPluginConfig, setUploadPluginConfig] = useState(null);
-  
+
   const [config, setConfig] = useState(null);
 
   const [lengthMax, setLengthMax] = useState(false);
 
   const wordCounter = useRef(null);
-  
+
   const handleToggleMediaLib = () => setMediaLibVisible(prev => !prev);
 
   const handleCounter = (number) => number > maxLength ? setLengthMax(true) : setLengthMax(false);
-  
+
   useEffect(() => {
     (async () => {
       const {currentConfig, uploadPluginConfig} = await getConfiguration(preset, handleToggleMediaLib);
@@ -56,7 +56,7 @@ const Editor = ({ onChange, name, value, disabled, preset, maxLength }) => {
             disabled={disabled}
             data={value}
             onReady={(editor) => {
-              
+
               if(config.editorConfig.WordCountPlugin){
                 const wordCountPlugin = editor.plugins.get( 'WordCount' );
                 wordCountPlugin.on( 'update', ( evt, stats ) =>handleCounter(stats.characters));
@@ -65,10 +65,10 @@ const Editor = ({ onChange, name, value, disabled, preset, maxLength }) => {
               }
 
               if(editor.plugins.has( 'ImageUploadEditing' )){
-                editor.plugins.get( 'ImageUploadEditing' ).on( 'uploadComplete', ( evt, { data, imageElement } ) =>    
-                  editor.model.change( writer => writer.setAttribute( 'alt', data.alt, imageElement ) ) ); 
+                editor.plugins.get( 'ImageUploadEditing' ).on( 'uploadComplete', ( evt, { data, imageElement } ) =>
+                  editor.model.change( writer => writer.setAttribute( 'alt', data.alt, imageElement ) ) );
               }
-            
+
               setEditorInstance( editor );
             }}
             onChange={(event, editor) => {
@@ -77,9 +77,9 @@ const Editor = ({ onChange, name, value, disabled, preset, maxLength }) => {
             }}
           />
       }
-      {config && config.editorConfig.WordCountPlugin && 
-          <CounterLoaderBox 
-            color={lengthMax?"danger500":"neutral400"} 
+      {config && config.editorConfig.WordCountPlugin &&
+          <CounterLoaderBox
+            color={lengthMax?"danger500":"neutral400"}
             ref={wordCounter}>
               {!editorInstance && <Loader small>Loading...</Loader>}
           </CounterLoaderBox>
