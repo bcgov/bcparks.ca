@@ -316,12 +316,6 @@
     @media screen and (max-width: $lgBreakpoint) {
       padding:20px;
       text-align:center;
-
-      .parks-search-header{
-        font-size:2rem;
-        font-weight: bold;
-        line-height: 2.5rem;
-      }
     }
     @media screen and (min-width: $lgBreakpoint) {
       text-align: left;      
@@ -329,11 +323,6 @@
       margin: 180px auto 0px auto;
       width: 800px;
       min-height: 200px;
-
-      .parks-search-header{
-        font-size:2rem;
-        font-weight: bold;
-      }
     }
   }
 

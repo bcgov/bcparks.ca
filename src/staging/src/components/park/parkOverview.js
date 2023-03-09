@@ -8,6 +8,8 @@ import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
+// when rewriting this to bootstrap, let's measure the height of the
+// container and animate the window changing size
 const useStyles = makeStyles(theme => ({
   collapsed: {
     maxHeight: "260px",
@@ -16,9 +18,12 @@ const useStyles = makeStyles(theme => ({
     textOverflow: "ellipsis",
   },
   expanded: {
-    maxHeight: "auto",
+    maxHeight: "none",
   },
-  link: { color: "#003366" },
+  link: {
+    color: "#003366",
+    marginTop: "24px",
+  },
 }))
 
 export default function ParkOverview({ data: parkOverview, type }) {
@@ -43,17 +48,18 @@ export default function ParkOverview({ data: parkOverview, type }) {
               {parkOverview}
             </HtmlContent>
           </Box>
-          <Link
-            component="button"
-            href="#park-overview-container"
-            className={classes.link}
-            onClick={() => {
-              setExpanded(!expanded)
-            }}
-          >
-            <br />
-            {isLong && (expanded ? "Read less" : "Read more")}
+          {isLong && 
+            <Link
+              component="button"
+              href="#park-overview-container"
+              className={classes.link}
+              onClick={() => {
+                setExpanded(!expanded)
+              }}
+            >
+            {expanded ? "Read less" : "Read more"}
           </Link>
+          }
           <Spacer />
         </Paper>
       </Grid>

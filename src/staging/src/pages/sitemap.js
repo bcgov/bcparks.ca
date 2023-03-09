@@ -26,7 +26,7 @@ const SitemapPage = ({ data }) => {
     <>
       <Header mode="internal" content={menuContent} />
 
-      <div className="static-content-container">
+      <div id="sr-content" className="static-content-container">
         <Breadcrumbs
           separator="›"
           aria-label="breadcrumb"

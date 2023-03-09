@@ -51,7 +51,7 @@ export default function Home({ data }) {
         <div id="home">
           <div className="park-search-container-wrapper">
             <Header mode="internal" content={menuContent} />
-            <div className="park-search">
+            <div id="sr-content" className="park-search">
               <div id="home-parks-search">
                 <MainSearch />
               </div>
