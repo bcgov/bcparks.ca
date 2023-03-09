@@ -66,6 +66,21 @@ DATABASE_V4_DATABASE=strapi4
   }
 
 
+these two tables didn't have any data 
+
+
+CREATE EXTENSION dblink;
+
+INSERT INTO protected_areas_advisories_links (public_advisory_id, protected_area_id, public_advisory_order, protected_area_order)
+select t1.*, 0, 0  from 
+dblink('dbname=backup options=-csearch_path=','select distinct public_advisory_id, "protected-area_id" from public_advisories__protected_areas') as t1(public_advisory_id int, protected_area_id int)
+
+INSERT INTO public_advisory_audits_protected_areas_links (public_advisory_audit_id, protected_area_id, protected_area_order)
+select t1.*, 0  from 
+dblink('dbname=backup options=-csearch_path=','select distinct public_advisory_audit_id, "protected-area_id" from public_advisory_audits__protected_areas') as t1(public_advisory_id int, protected_area_id int)
+
+
+
 
 yarn 
 yarn start
