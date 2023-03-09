@@ -19,7 +19,7 @@ export const common = css`
     --ck-todo-list-checkmark-size: 16px;
   }
 
-  
+
   .ck.ck-sticky-panel .ck-sticky-panel__content_sticky {
     top: 64px !important;
   }
@@ -28,9 +28,9 @@ export const common = css`
   }
 
   .ck-editor__main {
-    
+
     --ck-font-face: "Source Sans Pro", system-ui, Roboto, "Helvetica Neue", "Helvetica", Arial, sans-serif;
-    
+
     color: var(--ck-color-editor-base-text);
     font-family: var(--ck-font-face);
 
@@ -49,11 +49,14 @@ export const common = css`
     }
 
     h3 {
-      font-size: 1.48em;
+      //font-size: 1.48em;
+      font-size: 20px; // Custom Styles BCPark
+      margin: 0 0 24px 0; // Custom Styles BCPark
     }
 
     h4 {
       font-size: 1.22em;
+      margin: 0 0 24px 0; // Custom Styles BCPark
     }
 
     h5 {
@@ -193,7 +196,7 @@ export const common = css`
     width: 20px !important;
     height: 25px !important;
     margin-left: -2px !important ;
-    
+
     & svg {
       color: var(--ck-color-text) !important;
       position: absolute;

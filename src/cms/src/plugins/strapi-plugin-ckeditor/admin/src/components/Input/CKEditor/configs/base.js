@@ -367,7 +367,7 @@ const base = {
       {
         name: "Primary button",
         element: "a",
-        classes: ["btn", "btn-primary"],
+        classes: ["btn", "btn-primary", 'custom-btn-primary' ],
       },
       {
         name: "Legacy link",
