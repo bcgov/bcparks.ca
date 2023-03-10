@@ -155,7 +155,7 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
         {
           column: "park_name_search_similarity",
           order: "desc",
-        },        
+        },
         {
           column: "protected_area_name_search_similarity",
           order: "desc",
@@ -173,7 +173,34 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
     query.limit(limit);
     query.offset(offset);
 
-    return await query;
+    const results = await query;
+
+    const newResults = [];
+    for (const result of results) {
+      const parkEntity = await strapi.entityService.findOne('api::protected-area.protected-area', result.id, {
+        populate: ['parkFacilities.facilityType', 'parkActivities.activityType']
+      });
+      newResults.push({
+        ...result,
+        parkFacilities: parkEntity.parkFacilities
+          .filter(f => f.isActive && f.facilityType.isActive)
+          .map((f) => {
+            return {
+              facilityType: f.facilityType.id,
+              facilityName: f.facilityType.facilityName
+            }
+          }),
+        parkActivities: parkEntity.parkActivities
+          .filter(a => a.isActive && a.activityType.isActive)
+          .map((a) => {
+            return {
+              activityType: a.activityType.id,
+              activityName: a.activityType.activityName
+            }
+          })
+      });
+    }
+    return newResults;
   },
   async setTextSimilarity(knex) {
     // If we have some search text for full text search, drop the similarity threshold
