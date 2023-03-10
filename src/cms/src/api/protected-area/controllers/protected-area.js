@@ -26,12 +26,7 @@ module.exports = createCoreController(
             ...offset,
           });
       } else {
-        entities = await strapi
-          .service("api::protected-area.protected-area")
-          .find({
-            ...ctx.query,
-            populate: "*",
-          });
+        entities = await super.find(ctx);
       }
 
       const res = this.sanitizeOutput(entities, ctx);
