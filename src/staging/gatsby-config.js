@@ -64,16 +64,38 @@ module.exports = {
                 protectedArea: {
                   populate: "*"
                 },
+                parkActivities: {
+                  populate: "*"
+                },
                 parkFacilities: {
                   populate: "*"
                 },
-                parkActivities: {
+                parkOperation: {
+                  populate: "*"
+                }
+              }
+            }
+          },
+          {
+            singularName: "protected-area",
+            queryParams: {
+              populate: {
+                parkNames: {
                   populate: "*"
                 },
                 parkActivities: {
+                  populate: "*"
+                },
+                parkFacilities: {
                   populate: "*"
                 },
                 parkOperation: {
+                  populate: "*"
+                },
+                parkOperationSubAreas: {
+                  populate: "*"
+                },
+                seo: {
                   populate: "*"
                 }
               }

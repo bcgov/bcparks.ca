@@ -490,7 +490,9 @@ export const query = graphql`
     strapiProtectedArea(orcs: { eq: $orcs }) {
       protectedAreaName
       description {
-        data
+        data {
+          description
+        }
       }
       status
       orcs
@@ -499,28 +501,44 @@ export const query = graphql`
       typeCode
       hasDayUsePass
       locationNotes {
-        data
+        data {
+          locationNotes
+        }
       }
       reconciliationNotes {
-        data
+        data {
+          reconciliationNotes
+        }
       }
       safetyInfo {
-        data
+        data {
+          safetyInfo
+        }
       }
       specialNotes {
-        data
+        data {
+          specialNotes
+        }
       }
       parkContact {
-        data
+        data {
+          parkContact
+        }
       }
       natureAndCulture {
-        data
+        data {
+          natureAndCulture
+        }
       }
       reservations {
-        data
+        data {
+          reservations
+        }
       }
       maps {
-        data
+        data {
+          maps
+        }
       }
       latitude
       longitude
@@ -567,9 +585,14 @@ export const query = graphql`
         }
       }
       parkNames {
-        parkNameType
-        parkName
         id
+        parkName
+        parkNameType {
+          id
+          nameType
+          nameTypeId
+          description
+        }
       }
       parkOperation {
         openDate
@@ -605,11 +628,6 @@ export const query = graphql`
         wildernessSites
         boatAccessSites
         horseSites
-        cabins
-        huts
-        yurts
-        shelters
-        boatLaunches
         cabins
         huts
         yurts

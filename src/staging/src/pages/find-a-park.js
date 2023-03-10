@@ -101,9 +101,14 @@ export const query = graphql`
         type
         typeCode
         parkNames {
-          parkNameType
-          parkName
           id
+          parkName
+          parkNameType {
+            id
+            nameType
+            nameTypeId
+            description
+          }
         }
       }
     }
