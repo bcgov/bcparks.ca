@@ -37,6 +37,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
   }, [expanded])
 
   const isLong = height >= 260
+  const collapsedParkOverview = parkOverview.split('<a').join('<a tabindex="-1"')
 
   return (
     <div id="park-overview-container" className="anchor-link">
@@ -45,7 +46,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
           <Box className={expanded ? classes.expanded : classes.collapsed} ref={ref}>
             <Heading>{capitalizeFirstLetter(`${type} overview`)}</Heading>
             <HtmlContent className="park-overview-html">
-              {parkOverview}
+              {expanded ? parkOverview : collapsedParkOverview}
             </HtmlContent>
           </Box>
           {isLong && 
