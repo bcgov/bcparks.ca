@@ -8,7 +8,7 @@ const { createCoreService } = require("@strapi/strapi").factories;
 
 const TEXT_SIMILARITY_THRESHOLD = 0.3;
 
-module.exports = createCoreService("api::protected-area.protected-area", ({ strapi }) =>  ({
+module.exports = createCoreService("api::protected-area.protected-area", ({ strapi }) => ({
   async items() {
     const results = await strapi.db.query('api::protected-area.protected-area').findMany(
       {
@@ -55,9 +55,10 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
       await this.setTextSimilarity(knex);
     }
 
-    // const applyFilters = this.applyQueryFilters;
+    const applyFilters = this.applyQueryFilters;
 
     const query = knex
+      .from(strapi.getModel('api::protected-area.protected-area').collectionName)
       .select("protected_areas.id",
         "protected_areas.protected_area_name AS protectedAreaName",
         "protected_areas.slug",
@@ -106,17 +107,74 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
               AND has_reservations = TRUE
           ) AS "hasReservations"`
         )
-      )
-      .from("protected_areas");
+      );
 
-    query.orderBy("protectedAreaName", "ASC");
+    applyFilters(knex, query, {
+      searchText,
+      typeCode,
+      camping,
+      marineProtectedArea,
+      activityTypeIds,
+      facilityTypeIds,
+    });
+
+    if (sortCol === "protectedAreaName" && sortDesc) {
+      query.orderBy("protectedAreaName", "DESC");
+    } else if (sortCol === "protectedAreaName" && !sortDesc) {
+      query.orderBy("protectedAreaName", "ASC");
+    } else if (sortCol === "rank" && sortDesc && searchText) {
+      // if we're sorting by relevance, add various rank columns to the query
+      // for sorting:
+      // - protected_area_name_search_similarity: similarity score for the protected area name
+      // - park_name_search_similarity: similarity score for the park name table
+      //
+      // Unfortunately there's no clear way to combine these ranks (as they use different
+      // scales) so we sort by them in order.
+      query.select(
+        knex.raw(
+          'similarity("protected_area_name", ?) AS protected_area_name_search_similarity',
+          [searchText]
+        ),
+        knex.raw(
+          `GREATEST(
+              (
+                SELECT similarity(park_names.park_name, ?) AS name_similarity
+                FROM park_names 
+                INNER JOIN park_names_protected_area_links ON park_names.id = park_names_protected_area_links.park_name_id
+                WHERE park_names_protected_area_links.protected_area_id = protected_areas.id
+                  AND park_names.published_at IS NOT NULL
+                ORDER BY name_similarity DESC
+                LIMIT 1
+              ),
+              0.0
+            ) AS park_name_search_similarity`,
+          [searchText]
+        )
+      );
+      query.orderBy([
+        {
+          column: "park_name_search_similarity",
+          order: "desc",
+        },        
+        {
+          column: "protected_area_name_search_similarity",
+          order: "desc",
+        },
+        {
+          column: "protectedAreaName",
+          order: "asc",
+        },
+      ]);
+    } else {
+      // Fall back to alphabetical (e.g. if no search text)
+      query.orderBy("protectedAreaName", "ASC");
+    }
 
     query.limit(limit);
     query.offset(offset);
 
     return await query;
   },
-
   async setTextSimilarity(knex) {
     // If we have some search text for full text search, drop the similarity threshold
     // Default is 0.3 which misses basic misspellings
@@ -125,8 +183,152 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
     ]);
   },
   /* Apply where clauses to the query given */
-  async applyQueryFilters() {
-    // TODO
-    return ''
-  },
-}));
+  applyQueryFilters(
+    knex,
+    query,
+    {
+      searchText,
+      typeCode,
+      marineProtectedArea,
+      camping,
+      activityTypeIds,
+      facilityTypeIds,
+    }
+  ) {
+    // Only include published & displayed parks
+    query.whereNotNull("protected_areas.published_at");
+    query.where("protected_areas.is_displayed", true);
+
+    if (typeCode) {
+      query.where("protected_areas.type_code", typeCode);
+    }
+
+    if (marineProtectedArea) {
+      query.where("protected_areas.marine_protected_area", marineProtectedArea);
+    }
+
+    if (camping) {
+      query.whereIn("protected_areas.id", (builder) => {
+        builder
+          .select("protected_area_id")
+          .from("park_facilities")
+          .innerJoin(
+            "park_facilities_facility_type_links",
+            "park_facilities.id",
+            "park_facilities_facility_type_links.park_facility_id"
+          )
+          .innerJoin(
+            "facility_types",
+            "park_facilities_facility_type_links.facility_type_id",
+            "facility_types.id"
+          )
+          .innerJoin(
+            "park_facilities_protected_area_links",
+            "park_facilities.id",
+            "park_facilities_protected_area_links.park_facility_id"
+          )
+          .where("park_facilities.is_active", true)
+          .where("facility_types.is_active", true)
+          .whereNotNull("facility_types.published_at")
+          .whereNotNull("park_facilities.published_at")
+          .where("facility_types.is_camping", true);
+      });
+    }
+
+    if (activityTypeIds.length > 0) {
+      query.whereIn("protected_areas.id", (builder) => {
+        builder
+          .select("protected_area_id")
+          .from("park_activities")
+          .innerJoin(
+            "park_activities_activity_type_links",
+            "park_activities.id",
+            "park_activities_activity_type_links.park_activity_id"
+          )
+          .innerJoin(
+            "activity_types",
+            "park_activities_activity_type_links.activity_type_id",
+            "activity_types.id"
+          )
+          .innerJoin(
+            "park_activities_protected_area_links",
+            "park_activities.id",
+            "park_activities_protected_area_links.park_activity_id"
+          )
+          .where("park_activities.is_active", true)
+          .where("activity_types.is_active", true)
+          .whereNotNull("activity_types.published_at")
+          .whereNotNull("park_activities.published_at")
+          .whereIn("activity_type_id", activityTypeIds);
+      });
+    }
+
+    if (facilityTypeIds.length > 0) {
+      query.whereIn("protected_areas.id", (builder) => {
+        builder
+          .select("protected_area_id")
+          .from("park_facilities")
+          .innerJoin(
+            "park_facilities_facility_type_links",
+            "park_facilities.id",
+            "park_facilities_facility_type_links.park_facility_id"
+          )
+          .innerJoin(
+            "facility_types",
+            "park_facilities_facility_type_links.facility_type_id",
+            "facility_types.id"
+          )
+          .innerJoin(
+            "park_facilities_protected_area_links",
+            "park_facilities.id",
+            "park_facilities_protected_area_links.park_facility_id"
+          )
+          .where("park_facilities.is_active", true)
+          .where("facility_types.is_active", true)
+          .whereNotNull("facility_types.published_at")
+          .whereNotNull("park_facilities.published_at")
+          .whereIn("facility_type_id", facilityTypeIds);
+      });
+    }
+
+    if (searchText) {
+      // Run a full text match on our indexed search text column
+      // and the description columns of park_activities and park_facilities
+      // Any match here counts.
+      query.where((builder) => {
+        builder.where("protected_area_name", "ILIKE", `%${searchText}%`);
+        builder.orWhereIn("protected_areas.id", (subqueryBuilder) => {
+          subqueryBuilder
+            .select("protected_area_id")
+            .from("park_names")
+            .innerJoin(
+              "park_names_protected_area_links",
+              "park_names_protected_area_links.park_name_id",
+              "park_names.id"
+            )
+            .innerJoin(
+              "park_names_park_name_type_links",
+              "park_names_park_name_type_links.park_name_id",
+              "park_names.id"
+            )
+            .whereNotNull("park_names.published_at")
+            .whereIn("park_name_type_id", [1, 3, 4, 5, 6])
+            .where((orBuilder) => {
+              orBuilder
+                .where(knex.raw('"park_name" % ?', [searchText]))
+                .orWhere(
+                  knex.raw(
+                    `to_tsvector('english', "park_name") @@ websearch_to_tsquery('english', ?)`,
+                    [searchText]
+                  )
+                )
+                .orWhere(
+                  knex.raw('similarity("park_name", ?) > 0.12', [searchText])
+                );
+            });
+        });
+      });
+    }
+  }
+})
+);
