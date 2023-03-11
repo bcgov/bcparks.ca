@@ -13,17 +13,11 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
     const results = await strapi.db.query('api::protected-area.protected-area').findMany(
       {
         select: ["id", "orcs", "protectedAreaName"],
-        limit: -1,
+        limit: 2000,
         orderBy: ['protectedAreaName'],
       }
     );
     return results;
-  },
-  // custom route for park id and name only
-  async names() {
-    let entities = await strapi.db.query('api::protected-area.protected-area')
-  // TODO
-    return entities;
   },
 
   /*
