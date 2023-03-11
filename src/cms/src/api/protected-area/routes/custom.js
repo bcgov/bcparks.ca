@@ -7,11 +7,6 @@ module.exports = {
     },
     {
       method: "GET",
-      path: "/protected-areas/names",
-      handler: "protected-area.names",
-    },
-    {
-      method: "GET",
       path: "/protected-areas/items",
       handler: "protected-area.items",
     },
