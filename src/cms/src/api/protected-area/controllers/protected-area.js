@@ -47,7 +47,7 @@ module.exports = createCoreController(
           });
       }
       return await strapi
-        .service("api::protected-area.protected-area")
+        .query("api::protected-area.protected-area")
         .count(ctx.query);
     },
     async findOne(ctx) {

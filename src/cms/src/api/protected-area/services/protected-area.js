@@ -202,6 +202,37 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
     }
     return newResults;
   },
+  /*
+   * Park search count handling
+   *
+   * Protected area search is used for the main parks search page on the frontend.
+   * Counting is a bit simpler than data retrieval so we use different queries.
+   *
+   * Full text indexes and the search_text column are created automatically during
+   * bootstrap.
+   */
+  async countSearch(filters) {
+
+    const knex = strapi.db.connection;
+
+    if (filters.searchText) {
+      await this.setTextSimilarity(knex);
+    }
+
+    const applyFilters = this.applyQueryFilters;
+
+    const query = knex
+      .from(strapi.getModel('api::protected-area.protected-area').collectionName).count("id");
+
+    this.applyQueryFilters(knex, query, filters);
+    const result = await query.first();
+
+    if (result) {
+      return parseInt(result.count, 10);
+    }
+
+    return 0;
+  },  
   async setTextSimilarity(knex) {
     // If we have some search text for full text search, drop the similarity threshold
     // Default is 0.3 which misses basic misspellings
