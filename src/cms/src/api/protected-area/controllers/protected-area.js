@@ -57,24 +57,6 @@ module.exports = createCoreController(
         .findOne({ orcs });
       return this.sanitizeOutput(entity, ctx);
     },
-    async names(ctx) {
-      // custom route for basic park details with park names
-      const parkNamesData = await strapi
-        .service("api::park-name.park-name")
-        .names();
-      const entities = await strapi
-        .service("api::protected-area.protected-area")
-        .names(ctx);
-      return entities.map((entity) => {
-        const { id, orcs, type, typeCode, protectedAreaName } = entity;
-        const parkNamesFilter = parkNamesData.filter((x) => x.orcs == orcs);
-
-        const parkNames =
-          parkNamesFilter.length !== 0 ? parkNamesFilter[0].parkNames : [];
-
-        return { id, orcs, type, typeCode, protectedAreaName, parkNames };
-      });
-    },
     async items() {
       // custom route for light weight park details used in client app
       const entities = await strapi
