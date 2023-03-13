@@ -93,24 +93,6 @@ export const query = graphql`
           title
         }
       }
-    },
-    allStrapiProtectedArea(      
-      sort: {fields: parent___internal___type}
-      ){
-      nodes {
-        type
-        typeCode
-        parkNames {
-          id
-          parkName
-          parkNameType {
-            id
-            nameType
-            nameTypeId
-            description
-          }
-        }
-      }
     }
   }
 `

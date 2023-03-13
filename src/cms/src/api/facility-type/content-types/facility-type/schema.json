@@ -5,7 +5,8 @@
     "singularName": "facility-type",
     "pluralName": "facility-types",
     "displayName": "Facility-type",
-    "name": "facility-type"
+    "name": "facility-type",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -39,6 +40,13 @@
     },
     "isCamping": {
       "type": "boolean"
+    },
+    "defaultDescription": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
     },
     "parkOperationSubAreas": {
       "type": "relation",

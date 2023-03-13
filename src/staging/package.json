@@ -33,6 +33,7 @@
     "gatsby-plugin-sitemap": "5.25.0",
     "gatsby-source-filesystem": "^4.25.0",
     "gatsby-source-strapi": "^3.0.5",
+    "gatsby-transformer-remark": "^5.25.1",
     "gatsby-transformer-sharp": "^4.25.0",
     "jquery": "^3.3.1",
     "node-polyfill-webpack-plugin": "^2.0.1",

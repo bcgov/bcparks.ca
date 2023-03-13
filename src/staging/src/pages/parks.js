@@ -8,38 +8,42 @@ import Seo from "../components/seo"
 
 import "../styles/home.scss"
 
-const ParksPage = ({ data }) => (
-  <>
-    <Header />
-    <Container>
-      <br />
-      <h1>Parks</h1>
-      <Box m={4} p={3}>
-        <Grid container spacing={0}>
-          {data.allStrapiProtectedArea.edges.map(document => (
-            <Grid item xs={12} key={document.node.id}>
-              <p>
-                <a
-                  href={`/${(document.node.slug
-                    ? document.node.slug
-                    : document.node.protectedAreaName
-                      .toLowerCase()
-                      .replace(/ /g, "-"))
-                    .replace(/\/$|$/, `/`)
-                    }`}
-                >
-                  {`${document.node.protectedAreaName}`}
-                </a>
-              </p>
-            </Grid>
-          ))}
-          <Grid item xs={12}></Grid>
-        </Grid>
-      </Box>
-    </Container>
-    <Footer />
-  </>
-)
+const ParksPage = ({ data }) => {
+  const parks = data.allStrapiProtectedArea.nodes
+
+  return (
+    <>
+      <Header />
+      <Container>
+        <br />
+        <h1>Parks</h1>
+        <Box m={4} p={3}>
+          <Grid container spacing={0}>
+            {parks.map(park => (
+              <Grid item xs={12} key={park.id}>
+                <p>
+                  <a
+                    href={`/${(park.slug
+                      ? park.slug
+                      : park.protectedAreaName
+                        .toLowerCase()
+                        .replace(/ /g, "-"))
+                      .replace(/\/$|$/, `/`)
+                      }`}
+                  >
+                    {`${park.protectedAreaName}`}
+                  </a>
+                </p>
+              </Grid>
+            ))}
+            <Grid item xs={12}></Grid>
+          </Grid>
+        </Box>
+      </Container>
+      <Footer />
+    </>
+  )
+}
 
 export default ParksPage
 
@@ -50,15 +54,10 @@ export const Head = () => (
 export const query = graphql`
   {
     allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}, sort: { fields: protectedAreaName }) {
-      edges {
-        node {
-          id
-          orcs
-          protectedAreaName
-          typeCode
-          url
-          slug
-        }
+      nodes {
+        id
+        slug
+        protectedAreaName
       }
     }
   }

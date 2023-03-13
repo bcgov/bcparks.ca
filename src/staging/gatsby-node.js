@@ -250,10 +250,9 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const staticQuery = `
+  const pageQuery = `
   {
     allStrapiPage(filter: {Slug: {nin: ["/home", "/active-advisories", "/find-a-park"]}}) {
-      totalCount
       nodes {
         id
         Slug
@@ -326,46 +325,148 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
       }
+      totalCount
+    }
+  }
+  `
+  const parkQuery = `
+  {
+    allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}) {
+      nodes {
+        id
+        orcs
+        slug
+        protectedAreaName
+        url
+        oldUrl
+      }
+      totalCount
+    }
+  }
+  `
+  const siteQuery = `
+  {
+    allStrapiSite(filter: {isDisplayed: {eq: true}}) {
+      nodes {
+        id
+        slug
+        siteName
+        siteNumber
+        orcsSiteNumber
+        protectedArea {
+          slug
+        }
+      }
+      totalCount
+    }
+  }
+  `
+  const parkSubQuery = `
+  {
+    allStrapiParkSubPage {
+      nodes {
+        id
+        slug
+        title
+        protectedArea {
+          slug
+        }
+      }
+    }
+  }
+  `
+  const redirectQuery = `
+  { 
+    allStrapiLegacyRedirect {
+      nodes {
+        toPath
+        fromPath
+      }
     }
   }
   `
 
-  await createParks({ graphql, actions })
-  await createParkSubPages({ graphql, actions })
-  await createSites({ graphql, actions })
-  await createPageSlugs("static", staticQuery, { graphql, actions, reporter })
-  await createRedirects({ graphql, actions, reporter })
+  await createStaticPage(pageQuery, { graphql, actions, reporter })
+  await createParkPage(parkQuery, { graphql, actions, reporter })
+  await createSitePage(siteQuery, { graphql, actions, reporter })
+  await createParkSubPages(parkSubQuery, { graphql, actions, reporter })
+  await createRedirects(parkQuery, redirectQuery, { graphql, actions, reporter })
 }
 
-const parkQuery = `
-{
-  allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}) {
-    nodes {
-      id
-      orcs
-      protectedAreaName
-      slug  
-      url
-      oldUrl
-    }
-    totalCount
+async function createStaticPage(query, { graphql, actions, reporter }) {
+  const result = await graphql(query)
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query - node create page.`)
+    return
   }
+  result.data.allStrapiPage.nodes.forEach(page => {
+    actions.createPage({
+      path: page.Slug.replace(/\/$|$/, `/`),
+      component: require.resolve(`./src/templates/${page.Template}.js`),
+      context: { page },
+    })
+  })
 }
-`
-const staticQueryPath = `
-{ 
-  allStrapiLegacyRedirect {
-    nodes {
-      toPath
-      fromPath
-    }
+  
+async function createParkPage(query, { graphql, actions, reporter }) {
+  const result = await strapiApiRequest(graphql, query)
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query - node create park page.`)
+    return
   }
-}`
+  result.data.allStrapiProtectedArea.nodes.forEach(park => {
+    actions.createPage({
+      path: park.slug.replace(/\/$|$/, `/`),
+      component: require.resolve(`./src/templates/park.js`),
+      context: { ...park },
+    })
+  })
+}
+    
+async function createSitePage(query, { graphql, actions, reporter }) {
+  const result = await strapiApiRequest(graphql, query)
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query - node create site page.`)
+    return
+  }
+  result.data.allStrapiSite.nodes.forEach(site => {
+    // fallback in case site doesn't have a slug
+    const slug = site.slug || slugify(site.siteName).toLowerCase()
+    // fallback in case site doesn't have a relation with protectedArea
+    const parkPath = site.protectedArea?.slug ?? "no-protected-area"
+    const sitePath = `${parkPath}/${slug}`
+    actions.createPage({
+      path: sitePath.replace(/\/$|$/, `/`),
+      component: require.resolve(`./src/templates/site.js`),
+      context: { ...site },
+    })
+  })
+}
 
-async function createRedirects({ graphql, actions, reporter }) {
-  const response = await strapiApiRequest(graphql, staticQueryPath)
+async function createParkSubPages(query, { graphql, actions, reporter }) {
+  const result = await strapiApiRequest(graphql, query)
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query - node create park sub page.`)
+    return
+  }
+  result.data.allStrapiParkSubPage.nodes.forEach(parkSubPage => {
+    // fallback in case site doesn't have a relation with protectedArea
+    const parkPath = parkSubPage.protectedArea?.slug
+    const parkSubPagePath = `${parkPath}/${parkSubPage.slug}`
+    actions.createPage({
+      path: parkSubPagePath.replace(/\/$|$/, `/`),
+      component: require.resolve(`./src/templates/parkSubPage.js`),
+      context: {
+        protectedAreaSlug: parkSubPage.protectedArea.slug,
+        ...parkSubPage 
+      },
+    })
+  })
+}
+
+async function createRedirects(parkQuery, redirectQuery, { graphql, actions, reporter }) {
+  const response = await strapiApiRequest(graphql, redirectQuery)
   const resultPark = await strapiApiRequest(graphql, parkQuery)
-
   const redirects = response.data.allStrapiLegacyRedirect.nodes
   const parks = resultPark.data.allStrapiProtectedArea.nodes
 
@@ -390,119 +491,6 @@ async function createRedirects({ graphql, actions, reporter }) {
       }
     }
   })
-}
-
-async function createParks({ graphql, actions, reporter }) {
-  const parkQuery = `
-  {
-    allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}) {
-      nodes {
-        id
-        orcs
-        protectedAreaName
-        slug  
-      }
-      totalCount
-    }
-  }
-  `
-  const result = await strapiApiRequest(graphql, parkQuery)
-
-  result.data.allStrapiProtectedArea.nodes.forEach(park => {
-    actions.createPage({
-      // add a trailing slash park pages so they are treated as folders
-      // when resolving relative urls (so they can link to their child pages)
-      path: park.slug.replace(/\/$|$/, `/`),
-      component: require.resolve(`./src/templates/park.js`),
-      context: { ...park },
-    })
-  })
-}
-
-async function createParkSubPages({ graphql, actions, reporter }) {
-  const parkSubPageQuery = `
-  {
-    allStrapiParkSubPage {
-      nodes {
-        id
-        slug
-        title
-        protectedArea {
-          slug
-        }
-      }
-    }
-  }
-  `
-  const result = await strapiApiRequest(graphql, parkSubPageQuery)
-
-  result.data.allStrapiParkSubPage.nodes.forEach(parkSubPage => {
-    const parkPath = parkSubPage.protectedArea?.slug
-    const parkSubPagePath = `${parkPath}/${parkSubPage.slug}`
-    actions.createPage({
-      path: parkSubPagePath.replace(/\/$|$/, `/`),
-      component: require.resolve(`./src/templates/parkSubPage.js`),
-      context: {
-        protectedAreaSlug: parkSubPage.protectedArea.slug,
-        ...parkSubPage 
-      },
-    })
-  })
-}
-
-async function createSites({ graphql, actions, reporter }) {
-  const siteQuery = `
-  {
-    allStrapiSite(filter: {isDisplayed: {eq: true}}) {
-      nodes {
-        id
-        slug
-        siteName
-        siteNumber
-        orcsSiteNumber
-        protectedArea {
-          slug
-        }
-      }
-      totalCount
-    }
-  }
-  `
-  const result = await strapiApiRequest(graphql, siteQuery)
-
-  result.data.allStrapiSite.nodes.forEach(site => {
-    // fallback in case site doesn't have a slug
-    const slug = site.slug || slugify(site.siteName).toLowerCase()
-    // fallback in case site doesn't have a relation with protectedArea
-    const parkPath = site.protectedArea?.urlPath ?? "no-protected-area"
-    const sitePath = `${parkPath}/${slug}`
-    actions.createPage({
-      path: sitePath.replace(/\/$|$/, `/`),
-      component: require.resolve(`./src/templates/site.js`),
-      context: { ...site },
-    })
-  })
-}
-
-async function createPageSlugs(type, query, { graphql, actions, reporter }) {
-  const result = await graphql(query)
-  // Handle errors
-  if (result.errors) {
-    reporter.panicOnBuild(
-      `Error while running GraphQL query - node create page.`
-    )
-    return
-  }
-
-  if (type === "static") {
-    result.data.allStrapiPage.nodes.forEach(page => {
-      actions.createPage({
-        path: page.Slug.replace(/\/$|$/, `/`),
-        component: require.resolve(`./src/templates/${page.Template}.js`),
-        context: { page },
-      })
-    })
-  }
 }
 
 exports.onCreateWebpackConfig = ({ stage, loaders, actions, getConfig }) => {

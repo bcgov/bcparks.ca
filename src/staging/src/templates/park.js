@@ -59,9 +59,15 @@ export default function ParkTemplate({ data }) {
 
   const park = data.strapiProtectedArea
   const parkType = park.type ?? "park"
-
-  const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
   const operations = park.parkOperation || {}
+  const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
+
+  const description = park.description.data.description
+  const safetyInfo = park.safetyInfo.data.safetyInfo
+  const specialNotes = park.specialNotes.data.specialNotes
+  const locationNotes = park.locationNotes.data.locationNotes
+  const reconciliationNotes = park.reconciliationNotes.data.reconciliationNotes
+  const maps = park.maps.data.maps
 
   const activeActivities = sortBy(
     park.parkActivities.filter(
@@ -172,7 +178,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 0,
       display: capitalizeFirstLetter(`${parkType} overview`),
       link: "#park-overview-container",
-      visible: !isNullOrWhiteSpace(park.description),
+      visible: !isNullOrWhiteSpace(description),
     },
     {
       sectionIndex: 1,
@@ -193,19 +199,19 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 3,
       display: "Dates of operation",
       link: "#park-dates-container",
-      visible: !isNullOrWhiteSpace(park.parkOperation),
+      visible: park.parkOperation,
     },
     {
       sectionIndex: 4,
       display: "Safety info",
       link: "#park-safety-info-container",
-      visible: !isNullOrWhiteSpace(park.safetyInfo),
+      visible: !isNullOrWhiteSpace(safetyInfo),
     },
     {
       sectionIndex: 5,
       display: "Special notes",
       link: "#park-special-notes-container",
-      visible: !isNullOrWhiteSpace(park.specialNotes),
+      visible: !isNullOrWhiteSpace(specialNotes),
     },
     {
       sectionIndex: 6,
@@ -229,25 +235,29 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 9,
       display: "Location",
       link: "#park-maps-location-container",
-      visible: (park.latitude && park.longitude) || !isNullOrWhiteSpace(park.locationNotes),
+      visible: (park.latitude && park.longitude) || !isNullOrWhiteSpace(locationNotes),
     },
     {
       sectionIndex: 10,
       display: capitalizeFirstLetter(`${parkType} and activity maps`),
       link: "#park-map-details-container",
-      visible: park.maps,
+      visible: !isNullOrWhiteSpace(maps),
     },
     {
       sectionIndex: 11,
       display: capitalizeFirstLetter(`Learn about this ${parkType}`),
       link: "#park-about-container",
-      visible: park.totalArea || park.establishedDate || !isNullOrWhiteSpace(park.parkContact) || !isNullOrWhiteSpace(park.natureAndCulture),
+      visible:
+        park.totalArea ||
+        park.establishedDate ||
+        !isNullOrWhiteSpace(park.parkContact.data.parkContact) ||
+        !isNullOrWhiteSpace(park.natureAndCulture.data.natureAndCulture),
     },
     {
       sectionIndex: 12,
       display: "Reconciliation with Indigenous Peoples",
       link: "#park-reconciliation-container",
-      visible: !isNullOrWhiteSpace(park.reconciliationNotes),
+      visible: !isNullOrWhiteSpace(reconciliationNotes),
     },
   ]
 
@@ -350,7 +360,7 @@ export default function ParkTemplate({ data }) {
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">
-                  <ParkOverview data={park.description} type={parkType} />
+                  <ParkOverview data={description} type={parkType} />
                 </div>
               )}
               {menuItems[1].visible && (
@@ -394,12 +404,12 @@ export default function ParkTemplate({ data }) {
               )}
               {menuItems[4].visible && (
                 <div ref={safetyRef} className="full-width">
-                  <SafetyInfo safetyInfo={park.safetyInfo} />
+                  <SafetyInfo safetyInfo={safetyInfo} />
                 </div>
               )}
               {menuItems[5].visible && (
                 <div ref={specialRef} className="full-width">
-                  <SpecialNote specialNotes={park.specialNotes} />
+                  <SpecialNote specialNotes={specialNotes} />
                 </div>
               )}
               {menuItems[6].visible && (
@@ -430,12 +440,12 @@ export default function ParkTemplate({ data }) {
                 <div ref={mapLocationRef} className="full-width">
                   <div id="park-maps-location-container" className="anchor-link">
                     <AsyncMapLocation data={mapData} />
-                    {park.locationNotes && (
+                    {locationNotes && (
                       <Grid item xs={12} id="park-location-notes-container">
                         <Box mb={8}>
                           <div
                             dangerouslySetInnerHTML={{
-                              __html: park.locationNotes,
+                              __html: locationNotes,
                             }}
                           ></div>
                         </Box>
@@ -446,7 +456,7 @@ export default function ParkTemplate({ data }) {
               )}
               {menuItems[10].visible && (
                 <div ref={activityMapRef} className="full-width">
-                  <ParkMapDetails data={park.maps} type={parkType} />
+                  <ParkMapDetails data={maps} type={parkType} />
                 </div>
               )}
               {menuItems[11].visible && (
@@ -456,7 +466,7 @@ export default function ParkTemplate({ data }) {
               )}
               {menuItems[12].visible && (
                 <div ref={reconciliationRef} className="full-width">
-                  <Reconciliation data={park.reconciliationNotes} />
+                  <Reconciliation data={reconciliationNotes} />
                 </div>
               )}
             </Grid>
@@ -473,7 +483,8 @@ export default function ParkTemplate({ data }) {
 export const Head = ({data}) => {
   const park = data.strapiProtectedArea
   const seo = park.seo
-  const parkDescription = park.description?.replace(/(<([^>]+)>)/ig, '');
+  const description = park.description.data.description
+  const parkDescription = description.replace(/(<([^>]+)>)/ig, '');
   const parkDescriptionShort = truncate(parkDescription, { length: 160 });
 
   return (
@@ -564,7 +575,9 @@ export const query = graphql`
           icon
           iconNA
           rank
-          defaultDescription
+          defaultDescription {
+            data
+          }
         }
       }
       parkFacilities {
@@ -581,7 +594,9 @@ export const query = graphql`
           icon
           iconNA
           rank
-          defaultDescription
+          defaultDescription {
+            data
+          }
         }
       }
       parkNames {

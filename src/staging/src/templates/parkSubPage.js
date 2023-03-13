@@ -130,7 +130,7 @@ export default function ParkSubPage({ data }) {
                     <div className="page-header--caption">
                       {header.imageCaption}
                     </div>
-                    <HTMLArea isVisible>{header.introHtml}</HTMLArea>
+                    <HTMLArea isVisible>{header.introHtml.data.introHtml}</HTMLArea>
                   </div>
                 )}
                 {contents.map(content => (
@@ -150,7 +150,7 @@ export default function ParkSubPage({ data }) {
             <div>
               {header && (
                 <div className="header-content">
-                  <HTMLArea isVisible>{header.introHtml}</HTMLArea>
+                  <HTMLArea isVisible>{header.introHtml.data.introHtml}</HTMLArea>
                 </div>
               )}
               {contents.map(content => (
