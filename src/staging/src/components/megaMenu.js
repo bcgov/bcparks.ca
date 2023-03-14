@@ -78,7 +78,7 @@ const MegaMenu = ({ content, menuMode }) => {
     }
   }
 
-  const sectionHover = (e, section, menuMode) => {
+  const sectionClick = (e, section, menuMode) => {
     if (window.innerWidth >= 992 && menuMode !== "sitemap" && !isTablet) {
       // otherwise hover triggered in mobile emulator
       if (section !== selectedItem) {
@@ -87,6 +87,9 @@ const MegaMenu = ({ content, menuMode }) => {
         let selObj = getSelectionObj(section, {}) // track the selected item at this level and above
         setSelections(selObj)
       }
+    }
+    if (!(e.metaKey || e.ctrlKey)) {
+      navigatePage(e, section, menuMode)
     }
   }
 
@@ -190,8 +193,8 @@ const MegaMenu = ({ content, menuMode }) => {
           <>
             <nav className={"menu-level menu-level--" + item.treeLevel} aria-labelledby="mainmenulabel">
 	            <h2 id="mainmenulabel" className="sr-only">Main Menu</h2>
-              <ul className="menu-button-list" role="menu">
-                <li className="menu-button menu-back" role="presentation">
+              <ul className="menu-button-list" role="presentation">
+                <li className="menu-button menu-back">
                   <a
                     className="menu-button__title"
                     href="back"
@@ -207,7 +210,7 @@ const MegaMenu = ({ content, menuMode }) => {
                     <i className="menu-button__arr fa fa-chevron-left"></i> Back
                   </a>
                 </li>
-                <li className="menu-button menu-header" role="presentation">
+                <li className="menu-button menu-header">
                   <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
                     {item.title}
                   </Link>
@@ -221,15 +224,15 @@ const MegaMenu = ({ content, menuMode }) => {
                         ? "selected"
                         : "unselected")
                     }
-                    role="menuitem"
                   >
                     <a
-                      className="menu-button__title"
+                      className={`menu-button__title ${
+                        page.hasChildren && "has-children"
+                      }`}
                       href={page.url}
                       role="button"
                       tabIndex={0}
                       onFocus={e => menuFocus(e, page)}
-                      onMouseOver={e => sectionHover(e, page, menuMode)}
                       onKeyDown={e => {
                         if (e.key === "Enter" || e.key === " ") {
                           navigatePage(e, page, menuMode)
@@ -238,11 +241,7 @@ const MegaMenu = ({ content, menuMode }) => {
                       // if the user command or control clicks, open in a new tab
                       // it's ok that this won't open a sub-menu as this wouldn't
                       // be the expected behaviour
-                      onClick={e => {
-                        if (!(e.metaKey || e.ctrlKey)) {
-                          navigatePage(e, page, menuMode)
-                        }
-                      }}
+                      onClick={e => sectionClick(e, page, menuMode)}
                     >
                       {page.title}
                       {page.hasChildren && (
@@ -284,8 +283,8 @@ const MegaMenu = ({ content, menuMode }) => {
         )}
         {!item.hasChildren && (
           <nav>
-            <ul role="menu">
-              <li className="menu-button menu-header" role="presentation">
+            <ul role="presentation">
+              <li className="menu-button menu-header">
                 <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
                   {item.title}
                 </Link>
