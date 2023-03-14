@@ -256,11 +256,11 @@
       "repeatable": false,
       "component": "parks.seo"
     },
-    "advisories": {
+    "publicAdvisories": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::public-advisory.public-advisory",
-      "inversedBy": "protectedAreas"
+      "mappedBy": "protectedArea"
     },
     "parkPhotos": {
       "type": "relation",

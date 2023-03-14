@@ -66,6 +66,32 @@ DATABASE_V4_DATABASE=strapi4
   }
 
 
+
+-- fix unique constraints in links tables
+
+delete from public_advisory_audits__standard_messages
+where id not in (
+	select min(id)
+	from public.public_advisory_audits__standard_messages
+	group by public_advisory_audit_id, "standard-message_id"
+);
+
+delete from public_advisory_audits__protected_areas
+where id not in (
+	select min(id) 
+	from public_advisory_audits__protected_areas
+	group by public_advisory_audit_id, "protected-area_id"
+);
+
+delete from fire_zones_protected_areas__protected_areas_fire_zones
+where id not in (
+	select min(id)
+	from fire_zones_protected_areas__protected_areas_fire_zones
+	group by "fire-zone_id", "protected-area_id"
+);
+
+
+
 these two tables didn't have any data 
 
 
@@ -408,3 +434,6 @@ JWT_SECRET=***
 
 
 Allow the "count" action for the public role in the user-permissions plugin
+
+
+

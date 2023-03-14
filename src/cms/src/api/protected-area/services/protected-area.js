@@ -65,25 +65,25 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
                 public_advisories_advisory_status_links.advisory_status_id
               ) j
             ))
-            FROM protected_areas_advisories_links
+            FROM public_advisories_protected_areas_links
             INNER JOIN public_advisories adv
-              ON adv.id = protected_areas_advisories_links.public_advisory_id
+              ON adv.id = public_advisories_protected_areas_links.public_advisory_id
             INNER JOIN public_advisories_urgency_links 
               ON adv.id = public_advisories_urgency_links.public_advisory_id
             INNER JOIN public_advisories_advisory_status_links
               ON adv.id = public_advisories_advisory_status_links.public_advisory_id
-            WHERE protected_areas_advisories_links.protected_area_id = protected_areas.id
+            WHERE public_advisories_protected_areas_links.protected_area_id = protected_areas.id
               AND adv.published_at IS NOT NULL
           ) AS "advisories"`
         ),
         knex.raw(
           `array(
-            SELECT thumbnail_url
+            SELECT image_url
             FROM park_photos
             WHERE park_photos.orcs = protected_areas.orcs
                 AND park_photos.published_at IS NOT NULL
                 AND park_photos.is_active = TRUE
-                AND park_photos.thumbnail_url IS NOT NULL
+                AND park_photos.image_url IS NOT NULL
             ORDER BY park_photos.is_featured DESC NULLS LAST,
                 park_photos.sort_order ASC NULLS LAST,
                 park_photos.date_taken DESC,
@@ -170,10 +170,14 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
     const results = await query;
 
     const newResults = [];
+
+    const parkEntities = await strapi.entityService.findMany('api::protected-area.protected-area', {
+      filters: { id: results.map((r) => r.id) },
+      populate: ['parkFacilities.facilityType', 'parkActivities.activityType']
+    });
+
     for (const result of results) {
-      const parkEntity = await strapi.entityService.findOne('api::protected-area.protected-area', result.id, {
-        populate: ['parkFacilities.facilityType', 'parkActivities.activityType']
-      });
+      const parkEntity = await parkEntities.find(e => e.id === result.id);
       newResults.push({
         ...result,
         parkFacilities: parkEntity.parkFacilities
@@ -375,7 +379,7 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
                   )
                 )
                 .orWhere(
-                  knex.raw('similarity("park_name", ?) > 0.12', [searchText])
+                  knex.raw(`similarity("park_name", ?) > ${TEXT_SIMILARITY_THRESHOLD}`, [searchText])
                 );
             });
         });
