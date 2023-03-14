@@ -18,6 +18,7 @@
     "@material-ui/styles": "^4.11.4",
     "axios": "^0.22.0",
     "bootstrap": "~4.3.1",
+    "cheerio": "^1.0.0-rc.12",
     "date-fns": "^2.28.0",
     "gatsby": "^4.25.4",
     "gatsby-plugin-canonical-urls": "^4.25.0",

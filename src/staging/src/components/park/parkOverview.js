@@ -8,6 +8,8 @@ import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
+import * as cheerio from 'cheerio';
+
 // when rewriting this to bootstrap, let's measure the height of the
 // container and animate the window changing size
 const useStyles = makeStyles(theme => ({
@@ -37,7 +39,10 @@ export default function ParkOverview({ data: parkOverview, type }) {
   }, [expanded])
 
   const isLong = height >= 260
-  const collapsedParkOverview = parkOverview.split('<a').join('<a tabindex="-1"')
+  
+  const $ = cheerio.load(parkOverview);
+  $('a').attr('tabindex', '-1')
+  const collapsedParkOverview = $.html()
 
   return (
     <div id="park-overview-container" className="anchor-link">
