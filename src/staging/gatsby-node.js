@@ -20,27 +20,7 @@ exports.onPostBuild = ({ reporter }) => {
 }
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createFieldExtension, createTypes } = actions
-
-  // Clean up any incoming slugs
-  // TODO: make slug required in Strapi, after which this can be removed
-  createFieldExtension({
-    name: "parkPath",
-    extend(options, prevFieldConfig) {
-      return {
-        resolve({ slug, protectedAreaName, orcs }) {
-          if (slug) {
-            return slug
-          }
-          // If we don't have a slug, fall back to name, then orcs
-          if (protectedAreaName) {
-            return `parks/${slugify(protectedAreaName)}`
-          }
-          return `parks/park-${orcs}`
-        },
-      }
-    },
-  })
+  const { createTypes } = actions
 
   const typeDefs = `
   type StrapiParkAccessStatus implements Node {
@@ -49,7 +29,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     precedence: String
   }
 
-  type StrapiActivityTypes implements Node {
+  type StrapiActivityType implements Node {
     activityName: String
     activityCode: String
     rank: Int
@@ -57,7 +37,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     defaultDescription: String
   }
 
-  type StrapiFacilityTypes implements Node {
+  type StrapiFacilityType implements Node {
     facilityNumber: Int
     facilityName: String
     facilityCode: String
@@ -66,28 +46,28 @@ exports.createSchemaCustomization = ({ actions }) => {
     defaultDescription: String
   }
 
-  type StrapiParkAccessStatusParkActivities implements Node {
+  type StrapiParkAccessStatusParkActivity implements Node {
     description: String
   }
 
-  type StrapiParkAccessStatusParkFacilities implements Node {
+  type StrapiParkAccessStatusParkFacility implements Node {
     description: String
   }
 
-  type StrapiParkActivities implements Node {
+  type StrapiParkActivity implements Node {
     name: String
     description: String
     isActive: Boolean
     isActivityOpen: Boolean
-    activityType: StrapiActivityTypes @link(by: "strapiId")
+    activityType: StrapiActivityType @link(by: "strapiId")
   }
 
-  type StrapiParkFacilities implements Node {
+  type StrapiParkFacility implements Node {
     name: String
     description: String
     isActive: Boolean
     isFacilityOpen: Boolean
-    facilityType: StrapiFacilityTypes @link(by: "strapiId")
+    facilityType: StrapiFacilityType @link(by: "strapiId")
   }
 
   type StrapiParkPhoto implements Node {
@@ -103,15 +83,15 @@ exports.createSchemaCustomization = ({ actions }) => {
     isDisplayed: Boolean
     parkContact: String
     marineArea: Float
-    urlPath: String @parkPath
-    parkActivities: [StrapiParkActivities]
-    parkFacilities: [StrapiParkFacilities]
+    slug: String
+    parkActivities: [StrapiParkActivity]
+    parkFacilities: [StrapiParkFacility]
     parkOperation: StrapiParkOperation
-    parkOperationSubAreas: [StrapiParkOperationSubAreas]
-    seo: StrapiSeoComponent
+    parkOperationSubAreas: StrapiParkOperationSubArea
+    seo: StrapiComponentParksSeo
   }
 
-  type StrapiParkOperationSubAreaDates implements Node {
+  type StrapiParkOperationSubAreaDate implements Node {
     operatingYear: String
   }
 
@@ -169,7 +149,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     adminNote: String
   }
 
-  type StrapiParkOperationSubAreas implements Node {
+  type StrapiParkOperationSubArea implements Node {
     name: String
     isActive: Boolean
     isActivityOpen: Boolean
@@ -205,7 +185,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     adminNote: String
   }
 
-  type StrapiPublicAdvisoryProtectedAreas implements Node {
+  type StrapiPublicAdvisoryProtectedArea implements Node {
     hasCampfireBan: String
     hasSmokingBan: String
   }
@@ -214,13 +194,12 @@ exports.createSchemaCustomization = ({ actions }) => {
     accessStatus: StrapiParkAccessStatus
   }
 
-  type StrapiMenus implements Node {
+  type StrapiMenu implements Node {
     title: String
     url: String
-    imgUrl: String
   }
 
-  type StrapiPageHeaderComponent implements Node {
+  type StrapiComponentParksPageHeader implements Node {
     pageTitle: String
     introHtml: String
     imageUrl: String
@@ -228,21 +207,21 @@ exports.createSchemaCustomization = ({ actions }) => {
     imageAlt: String
   }
 
-  type StrapiSeoComponent implements Node {
+  type StrapiComponentParksSeo implements Node {
     metaKeywords: String
     metaTitle: String
     metaDescription: String
   }  
 
-  type StrapiParkSubPages implements Node {
+  type StrapiParkSubPage implements Node {
     slug: String
     title: String
-    pageHeader: StrapiPageHeaderComponent
-    seo: StrapiSeoComponent
+    pageHeader: StrapiComponentParksPageHeader
+    seo: StrapiComponentParksSeo
     protectedArea: StrapiProtectedArea
   }
 
-  type StrapiSites implements Node {
+  type StrapiSite implements Node {
     slug: String
     siteName: String
     siteNumber: Int
@@ -253,12 +232,12 @@ exports.createSchemaCustomization = ({ actions }) => {
     isDisplayed: Boolean
     hasDayUsePass: Boolean
     protectedArea: StrapiProtectedArea
-    parkActivities: [StrapiParkActivities]
-    parkFacilities: [StrapiParkFacilities]
+    parkActivities: [StrapiParkActivity]
+    parkFacilities: [StrapiParkFacility]
     parkOperation: StrapiParkOperation
   }
 
-  type StrapiPages implements Node {
+  type StrapiPage implements Node {
     Title: String
   }
 
@@ -271,57 +250,223 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const staticQuery = `
+  const pageQuery = `
   {
-    allStrapiPages(filter: {Slug: {nin: ["/home", "/active-advisories", "/find-a-park"]}}) {
-      totalCount
+    allStrapiPage(filter: {Slug: {nin: ["/home", "/active-advisories", "/find-a-park"]}}) {
       nodes {
         id
         Slug
         Title
         Template
-        Content
+        Content {
+          ... on STRAPI__COMPONENT_PARKS_CARD_SET {
+            id
+            strapi_component
+            cards {
+              id
+              url
+              title
+              subTitle
+              buttonText
+              imageUrl
+              imageAltText
+              variation
+            }
+          }
+          ... on STRAPI__COMPONENT_PARKS_HTML_AREA {
+            id
+            strapi_component
+            HTML {
+              data {
+                HTML
+              }
+            }
+          }
+          ... on STRAPI__COMPONENT_PARKS_LINK_CARD {
+            id
+            strapi_component
+            url
+            title
+            subTitle
+            buttonText
+            imageUrl
+            imageAltText
+            variation
+          }
+          ... on STRAPI__COMPONENT_PARKS_PAGE_HEADER {
+            id
+            strapi_component
+            pageTitle
+            imageUrl
+            imageAlt
+            imageCaption
+            introHtml {
+              data {
+                introHtml
+              }
+            }
+          }
+          ... on STRAPI__COMPONENT_PARKS_PAGE_SECTION {
+            id
+            strapi_component
+            sectionTitle
+            sectionHTML {
+              data {
+                sectionHTML
+              }
+            }
+          }
+          ... on STRAPI__COMPONENT_PARKS_SEO {
+            id
+            strapi_component
+            metaTitle
+            metaKeywords
+            metaDescription
+          }
+        }
+      }
+      totalCount
+    }
+  }
+  `
+  const parkQuery = `
+  {
+    allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}) {
+      nodes {
+        id
+        orcs
+        slug
+        protectedAreaName
+        url
+        oldUrl
+      }
+      totalCount
+    }
+  }
+  `
+  const siteQuery = `
+  {
+    allStrapiSite(filter: {isDisplayed: {eq: true}}) {
+      nodes {
+        id
+        slug
+        siteName
+        siteNumber
+        orcsSiteNumber
+        protectedArea {
+          slug
+        }
+      }
+      totalCount
+    }
+  }
+  `
+  const parkSubQuery = `
+  {
+    allStrapiParkSubPage {
+      nodes {
+        id
+        slug
+        title
+        protectedArea {
+          slug
+        }
+      }
+    }
+  }
+  `
+  const redirectQuery = `
+  { 
+    allStrapiLegacyRedirect {
+      nodes {
+        toPath
+        fromPath
       }
     }
   }
   `
 
-  await createParks({ graphql, actions })
-  await createParkSubPages({ graphql, actions })
-  await createSites({ graphql, actions })
-  await createPageSlugs("static", staticQuery, { graphql, actions, reporter })
-  await createRedirects({ graphql, actions, reporter })
+  await createStaticPage(pageQuery, { graphql, actions, reporter })
+  await createParkPage(parkQuery, { graphql, actions, reporter })
+  await createSitePage(siteQuery, { graphql, actions, reporter })
+  await createParkSubPages(parkSubQuery, { graphql, actions, reporter })
+  await createRedirects(parkQuery, redirectQuery, { graphql, actions, reporter })
 }
 
-const parkQuery = `
-{
-  allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}) {
-    nodes {
-      id
-      orcs
-      protectedAreaName
-      slug  
-      url
-      oldUrl
-    }
-    totalCount
+async function createStaticPage(query, { graphql, actions, reporter }) {
+  const result = await graphql(query)
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query - node create page.`)
+    return
   }
+  result.data.allStrapiPage.nodes.forEach(page => {
+    actions.createPage({
+      path: page.Slug.replace(/\/$|$/, `/`),
+      component: require.resolve(`./src/templates/${page.Template}.js`),
+      context: { page },
+    })
+  })
 }
-`
-const staticQueryPath = `
-{ 
-  allStrapiLegacyRedirect {
-    nodes {
-      toPath
-      fromPath
-    }
+  
+async function createParkPage(query, { graphql, actions, reporter }) {
+  const result = await strapiApiRequest(graphql, query)
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query - node create park page.`)
+    return
   }
-}`
+  result.data.allStrapiProtectedArea.nodes.forEach(park => {
+    actions.createPage({
+      path: park.slug.replace(/\/$|$/, `/`),
+      component: require.resolve(`./src/templates/park.js`),
+      context: { ...park },
+    })
+  })
+}
+    
+async function createSitePage(query, { graphql, actions, reporter }) {
+  const result = await strapiApiRequest(graphql, query)
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query - node create site page.`)
+    return
+  }
+  result.data.allStrapiSite.nodes.forEach(site => {
+    // fallback in case site doesn't have a slug
+    const slug = site.slug || slugify(site.siteName).toLowerCase()
+    // fallback in case site doesn't have a relation with protectedArea
+    const parkPath = site.protectedArea?.slug ?? "no-protected-area"
+    const sitePath = `${parkPath}/${slug}`
+    actions.createPage({
+      path: sitePath.replace(/\/$|$/, `/`),
+      component: require.resolve(`./src/templates/site.js`),
+      context: { ...site },
+    })
+  })
+}
 
-async function createRedirects({ graphql, actions, reporter }) {
-  const response = await strapiApiRequest(graphql, staticQueryPath)
+async function createParkSubPages(query, { graphql, actions, reporter }) {
+  const result = await strapiApiRequest(graphql, query)
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query - node create park sub page.`)
+    return
+  }
+  result.data.allStrapiParkSubPage.nodes.forEach(parkSubPage => {
+    // fallback in case site doesn't have a relation with protectedArea
+    const parkPath = parkSubPage.protectedArea?.slug
+    const parkSubPagePath = `${parkPath}/${parkSubPage.slug}`
+    actions.createPage({
+      path: parkSubPagePath.replace(/\/$|$/, `/`),
+      component: require.resolve(`./src/templates/parkSubPage.js`),
+      context: {
+        protectedAreaSlug: parkSubPage.protectedArea.slug,
+        ...parkSubPage 
+      },
+    })
+  })
+}
+
+async function createRedirects(parkQuery, redirectQuery, { graphql, actions, reporter }) {
+  const response = await strapiApiRequest(graphql, redirectQuery)
   const resultPark = await strapiApiRequest(graphql, parkQuery)
-
   const redirects = response.data.allStrapiLegacyRedirect.nodes
   const parks = resultPark.data.allStrapiProtectedArea.nodes
 
@@ -346,121 +491,6 @@ async function createRedirects({ graphql, actions, reporter }) {
       }
     }
   })
-}
-
-async function createParks({ graphql, actions, reporter }) {
-  const parkQuery = `
-  {
-    allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}) {
-      nodes {
-        id
-        orcs
-        protectedAreaName
-        slug  
-        urlPath
-      }
-      totalCount
-    }
-  }
-  `
-  const result = await strapiApiRequest(graphql, parkQuery)
-
-  result.data.allStrapiProtectedArea.nodes.forEach(park => {
-    actions.createPage({
-      // add a trailing slash park pages so they are treated as folders
-      // when resolving relative urls (so they can link to their child pages)
-      path: park.urlPath.replace(/\/$|$/, `/`),
-      component: require.resolve(`./src/templates/park.js`),
-      context: { ...park },
-    })
-  })
-}
-
-async function createParkSubPages({ graphql, actions, reporter }) {
-  const parkSubPageQuery = `
-  {
-    allStrapiParkSubPages {
-      nodes {
-        id
-        slug
-        title
-        protectedArea {
-          slug
-          urlPath
-        }
-      }
-    }
-  }
-  `
-  const result = await strapiApiRequest(graphql, parkSubPageQuery)
-
-  result.data.allStrapiParkSubPages.nodes.forEach(parkSubPage => {
-    const parkPath = parkSubPage.protectedArea?.urlPath
-    const parkSubPagePath = `${parkPath}/${parkSubPage.slug}`
-    actions.createPage({
-      path: parkSubPagePath.replace(/\/$|$/, `/`),
-      component: require.resolve(`./src/templates/parkSubPage.js`),
-      context: {
-        protectedAreaSlug: parkSubPage.protectedArea.slug,
-        ...parkSubPage 
-      },
-    })
-  })
-}
-
-async function createSites({ graphql, actions, reporter }) {
-  const siteQuery = `
-  {
-    allStrapiSites(filter: {isDisplayed: {eq: true}}) {
-      nodes {
-        id
-        slug
-        siteName
-        siteNumber
-        orcsSiteNumber
-        protectedArea {
-          urlPath
-        }
-      }
-      totalCount
-    }
-  }
-  `
-  const result = await strapiApiRequest(graphql, siteQuery)
-
-  result.data.allStrapiSites.nodes.forEach(site => {
-    // fallback in case site doesn't have a slug
-    const slug = site.slug || slugify(site.siteName).toLowerCase()
-    // fallback in case site doesn't have a relation with protectedArea
-    const parkPath = site.protectedArea?.urlPath ?? "no-protected-area"
-    const sitePath = `${parkPath}/${slug}`
-    actions.createPage({
-      path: sitePath.replace(/\/$|$/, `/`),
-      component: require.resolve(`./src/templates/site.js`),
-      context: { ...site },
-    })
-  })
-}
-
-async function createPageSlugs(type, query, { graphql, actions, reporter }) {
-  const result = await graphql(query)
-  // Handle errors
-  if (result.errors) {
-    reporter.panicOnBuild(
-      `Error while running GraphQL query - node create page.`
-    )
-    return
-  }
-
-  if (type === "static") {
-    result.data.allStrapiPages.nodes.forEach(page => {
-      actions.createPage({
-        path: page.Slug.replace(/\/$|$/, `/`),
-        component: require.resolve(`./src/templates/${page.Template}.js`),
-        context: { page },
-      })
-    })
-  }
 }
 
 exports.onCreateWebpackConfig = ({ stage, loaders, actions, getConfig }) => {

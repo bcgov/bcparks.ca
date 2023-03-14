@@ -18,25 +18,23 @@ import "../styles/staticContent1.scss"
 export default function StaticContent1({ pageContext }) {
   const queryData = useStaticQuery(graphql`
     {
-      allStrapiMenus(
+      allStrapiMenu(
         sort: { fields: order, order: ASC }
         filter: { show: { eq: true } }
       ) {
         nodes {
-          strapiId
+          strapi_id
           title
           url
           order
           id
-          imgUrl
-          strapiChildren {
+          strapi_children {
             id
             title
             url
             order
-            parent
           }
-          strapiParent {
+          strapi_parent {
             id
             title
           }
@@ -45,12 +43,12 @@ export default function StaticContent1({ pageContext }) {
     }
   `)
 
-  const pageContent = pageContext?.page?.Content // array of content components in page
+  const menuContent = queryData?.allStrapiMenu?.nodes || []
+  const pageContent = pageContext?.page?.Content
   const meta =
     pageContext?.page?.Content.find(c =>
       Boolean(c.strapi_component === "parks.seo")
     ) || {}
-  const menuContent = queryData?.allStrapiMenus?.nodes || [] // megaMenu
 
   // look for PageHeader content
   // if it exists, will affect the layout of the top of the page
@@ -194,7 +192,7 @@ export default function StaticContent1({ pageContext }) {
                     <div className="page-header--caption">
                       {headerContent.imageCaption}
                     </div>
-                    <HTMLArea isVisible>{headerContent.introHtml}</HTMLArea>
+                    <HTMLArea isVisible>{headerContent.introHtml.data.introHtml}</HTMLArea>
                   </div>
                 )}
                 {pageContent.map(content => (

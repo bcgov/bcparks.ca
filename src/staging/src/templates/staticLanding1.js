@@ -17,25 +17,23 @@ import "../styles/staticLanding1.scss"
 const LandingPage = ({ pageContext }) => {
   const queryData = useStaticQuery(graphql`
     {
-      allStrapiMenus(
+      allStrapiMenu(
         sort: { fields: order, order: ASC }
         filter: { show: { eq: true } }
       ) {
         nodes {
-          strapiId
+          strapi_id
           title
           url
           order
           id
-          imgUrl
-          strapiChildren {
+          strapi_children {
             id
             title
             url
             order
-            parent
           }
-          strapiParent {
+          strapi_parent {
             id
             title
           }
@@ -43,7 +41,8 @@ const LandingPage = ({ pageContext }) => {
       }
     }
   `)
-  const menuContent = queryData?.allStrapiMenus?.nodes || []
+
+  const menuContent = queryData?.allStrapiMenu?.nodes || []
   const { page } = pageContext
   const components = page?.Content || []
   const introContent = components.slice(0, 1)

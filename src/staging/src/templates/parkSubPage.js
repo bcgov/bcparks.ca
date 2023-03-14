@@ -14,11 +14,11 @@ import ScrollToTop from "../components/scrollToTop"
 import "../styles/staticContent1.scss"
 
 export default function ParkSubPage({ data }) {
-  const page = data.strapiParkSubPages
+  const page = data.strapiParkSubPage
   const contents = page.content
   const header = page.pageHeader
   const park = page.protectedArea
-  const menuContent = data?.allStrapiMenus?.nodes || []
+  const menuContent = data?.allStrapiMenu?.nodes || []
   const sections = contents.filter(content => Boolean(content.strapi_component === "parks.page-section")) || []
   const hasSections = sections.length > 0
 
@@ -130,7 +130,7 @@ export default function ParkSubPage({ data }) {
                     <div className="page-header--caption">
                       {header.imageCaption}
                     </div>
-                    <HTMLArea isVisible>{header.introHtml}</HTMLArea>
+                    <HTMLArea isVisible>{header.introHtml.data.introHtml}</HTMLArea>
                   </div>
                 )}
                 {contents.map(content => (
@@ -150,7 +150,7 @@ export default function ParkSubPage({ data }) {
             <div>
               {header && (
                 <div className="header-content">
-                  <HTMLArea isVisible>{header.introHtml}</HTMLArea>
+                  <HTMLArea isVisible>{header.introHtml.data.introHtml}</HTMLArea>
                 </div>
               )}
               {contents.map(content => (
@@ -172,7 +172,7 @@ export default function ParkSubPage({ data }) {
 }
 
 export const Head = ({data}) => {
-  const page = data.strapiParkSubPages
+  const page = data.strapiParkSubPage
   const park = page.protectedArea
   const seo = page.seo
 
@@ -187,7 +187,7 @@ export const Head = ({data}) => {
 
 export const query = graphql`
   query ParkSubPageDetails($slug: String, $protectedAreaSlug: String) {
-    strapiParkSubPages(
+    strapiParkSubPage(
       slug: { eq: $slug }
       protectedArea: {slug: {eq: $protectedAreaSlug}}
     ) {
@@ -195,7 +195,29 @@ export const query = graphql`
       slug
       title
       oldUrl
-      content
+      content {
+        ... on STRAPI__COMPONENT_PARKS_HTML_AREA {
+          id
+          strapi_id
+          strapi_component
+          HTML {
+            data {
+              HTML
+            }
+          }
+        }
+        ... on STRAPI__COMPONENT_PARKS_PAGE_SECTION {
+          id
+          strapi_id
+          strapi_component
+          sectionTitle
+          sectionHTML {
+            data {
+              sectionHTML
+            }
+          }
+        }
+      }
       seo {
         metaDescription
         metaKeywords
@@ -205,7 +227,11 @@ export const query = graphql`
         imageAlt
         imageCaption
         imageUrl
-        introHtml
+        introHtml {
+          data {
+            introHtml
+          }
+        }
         pageTitle
       }
       protectedArea {
@@ -213,25 +239,23 @@ export const query = graphql`
         protectedAreaName
       }
     }
-    allStrapiMenus(
+    allStrapiMenu(
       sort: { fields: order, order: ASC }
       filter: { show: { eq: true } }
     ) {
       nodes {
-        strapiId
+        strapi_id
         title
         url
         order
         id
-        imgUrl
-        strapiChildren {
+        strapi_children {
           id
           title
           url
           order
-          parent
         }
-        strapiParent {
+        strapi_parent {
           id
           title
         }

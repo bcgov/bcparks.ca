@@ -19,6 +19,8 @@ export default function About({
     "MMMM d, yyyy"
   ) : null
   const parkType = park.type ?? "park"
+  const parkContact = park.parkContact.data.parkContact
+  const natureAndCulture = park.natureAndCulture.data.natureAndCulture
 
   return (
     <Grid item xs={12} id="park-about-container" className="anchor-link">
@@ -37,18 +39,18 @@ export default function About({
             </ul>
           </>
         )}
-        {(park.totalArea || park.establishedDate) && park.parkContact && <Spacer />}
-        {park.parkContact && (
+        {(park.totalArea || park.establishedDate) && parkContact && <Spacer />}
+        {parkContact && (
           <>
             <h3>{capitalizeFirstLetter(`${parkType} contact`)}</h3>
-            <HtmlContent>{park.parkContact}</HtmlContent>
+            <HtmlContent>{parkContact}</HtmlContent>
           </>
         )}
-        {park.parkContact && park.natureAndCulture && <Spacer />}
-        {park.natureAndCulture && (
+        {parkContact && natureAndCulture && <Spacer />}
+        {natureAndCulture && (
           <>
             <h3>Nature and culture</h3>
-            <HtmlContent>{park.natureAndCulture}</HtmlContent>
+            <HtmlContent>{natureAndCulture}</HtmlContent>
           </>
         )}
         <Spacer />

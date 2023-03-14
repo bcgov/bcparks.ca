@@ -23,7 +23,7 @@ const MegaMenu = ({ content, menuMode }) => {
     // i.e. the breadcrumbs back to home
     // this allows us to highlight the selected parents and
     // keep the correct menus open
-    if (item.strapiId === 1) {
+    if (item.strapi_id === 1) {
       // have reached home,
       // add home at level 0 and return, ending he recursion
       obj[0] = item
@@ -123,22 +123,22 @@ const MegaMenu = ({ content, menuMode }) => {
             ? item.parent.orderCode + "." + item.order
             : item.order
 
-        if (item.strapiChildren === undefined) {
+        if (item.strapi_children === undefined) {
           // catch second level where children are not defined
           // get items whose parent is the current item
           let itemChildren = menuContent.filter(
-            child => child.strapiParent?.id === item.id
+            child => child.strapi_parent?.id === item.id
           )
-          item.strapiChildren = itemChildren || []
+          item.strapi_children = itemChildren || []
         }
         if (item.treeLevel < 3) {
           // Enforcing max 3 levels
           // process children
-          item.strapiChildren = sortedTree(item.strapiChildren || [], level + 1) // recurse for each child
-          item.hasChildren = item.strapiChildren.length > 0
+          item.strapi_children = sortedTree(item.strapi_children || [], level + 1) // recurse for each child
+          item.hasChildren = item.strapi_children.length > 0
 
           // add parent
-          item.strapiChildren.map(i => {
+          item.strapi_children.map(i => {
             i.parent = item
             return i
           })
@@ -158,7 +158,7 @@ const MegaMenu = ({ content, menuMode }) => {
     // create sorted + structured menuTree from menuContent
 
     // pick the root of the tree
-    let t = menuContent.filter(item => item.strapiId === 1)
+    let t = menuContent.filter(item => item.strapi_id === 1)
 
     // sort all levels of the menu
     t = sortedTree(t, 0) // pass root at level 0
@@ -176,7 +176,7 @@ const MegaMenu = ({ content, menuMode }) => {
   }, [setMenuContent, content])
 
   // get images for top level sections
-  let sections = content.filter(item => item.strapiParent?.id === 1)
+  let sections = content.filter(item => item.strapi_parent?.id === 1)
   sections.forEach(item => {
     sectionImages[item.order] = item.imgUrl || ""
   })
@@ -212,7 +212,7 @@ const MegaMenu = ({ content, menuMode }) => {
                     {item.title}
                   </Link>
                 </li>
-                {item.strapiChildren.map((page, index) => (
+                {item.strapi_children.map((page, index) => (
                   <li
                     key={index}
                     className={
@@ -253,7 +253,7 @@ const MegaMenu = ({ content, menuMode }) => {
                 ))}
               </ul>
             </nav>
-            {item.strapiChildren.map((page, index) => (
+            {item.strapi_children.map((page, index) => (
               <div
                 key={index}
                 className={
@@ -376,8 +376,8 @@ MegaMenu.propTypes = {
   content: PropTypes.arrayOf(
     PropTypes.shape({
       order: PropTypes.number.isRequired,
-      strapiChildren: PropTypes.array,
-      strapiParent: PropTypes.shape({
+      strapi_children: PropTypes.array,
+      strapi_parent: PropTypes.shape({
         id: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
       }),

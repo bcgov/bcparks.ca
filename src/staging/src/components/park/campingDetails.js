@@ -20,6 +20,7 @@ function toCamping() {
 export default function CampingDetails({ data }) {
   const activeCampings = data.activeCampings
   const parkOperation = data.parkOperation
+  const reservations = data.reservations.data.reservations
   const subAreas = data.subAreas || []
   subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
   const [reservationsExpanded, setReservationsExpanded] = useState(false)
@@ -100,7 +101,7 @@ export default function CampingDetails({ data }) {
         <Col>
           {activeCampings.length > 0 && (
             <div id="park-camping-list-container" className="anchor-link">
-              {data.reservations && (
+              {!isNullOrWhiteSpace(reservations) && (
                 <div key="reservation">
                   <Accordion
                     key="reservations"
@@ -130,7 +131,7 @@ export default function CampingDetails({ data }) {
 
                     <Accordion.Collapse eventKey="0">
                       <div className="p-3 pl-5">
-                        <HtmlContent>{data.reservations}</HtmlContent>
+                        <HtmlContent>{reservations}</HtmlContent>
                       </div>
                     </Accordion.Collapse>
                   </Accordion>
@@ -174,8 +175,10 @@ export default function CampingDetails({ data }) {
               <Accordion.Collapse eventKey="0">
                 <div className="p-4">
                   <HtmlContent>
-                    {!isNullOrWhiteSpace(camping.description) ? 
-                      camping.description : (camping?.activityType?.defaultDescription || camping?.facilityType?.defaultDescription)
+                    {!isNullOrWhiteSpace(camping.description.data) ? 
+                      camping.description.data : (
+                        camping?.activityType?.defaultDescription.data || camping?.facilityType?.defaultDescription.data
+                      )
                     }
                   </HtmlContent>
                 </div>

@@ -31,40 +31,77 @@ module.exports = {
     {
       resolve: "gatsby-source-strapi",
       options: {
-        apiURL: process.env.REACT_APP_CMS_BASE_URL,
-        accessToken: process.env.STRAPI_TOKEN,// TODO: we need to add to .env file
+        apiURL: process.env.STRAPI_API_URL,
+        accessToken: process.env.STRAPI_TOKEN,
         collectionTypes: [
           "urgency",
-          "protected-area",
           "public-advisory",
           "park-photo",
-          `websites`,
-          `pages`,
+          "website",
+          "activity-type",
+          "facility-type",
+          "menu",
+          "park-operation",
+          "access-status",
+          "park-operation-sub-area",
+          "park-sub-page",
+          "legacy-redirect",
           {
             singularName: "page",
             queryParams: {
               populate: {
                 Content: {
-                  on: {
-                    'parks.card-set': {
-                      populate: "*"
-                    },
-                  },
-                },
-              },
-            },
+                  populate: "*"
+                }
+              }
+            }
           },
-          "activity-types",
-          "facility-types",
-          "menus",
-          "park-operation",
-          "access-statuses",
-          "park-operation-sub-areas",
-          "park-sub-pages",
-          "sites",
-          "legacy-redirect",
+          {
+            singularName: "site",
+            queryParams: {
+              populate: {
+                protectedArea: {
+                  populate: "*"
+                },
+                parkActivities: {
+                  populate: "*"
+                },
+                parkFacilities: {
+                  populate: "*"
+                },
+                parkOperation: {
+                  populate: "*"
+                }
+              }
+            }
+          },
+          {
+            singularName: "protected-area",
+            queryParams: {
+              populate: {
+                parkNames: {
+                  populate: "*"
+                },
+                parkActivities: {
+                  populate: "*"
+                },
+                parkFacilities: {
+                  populate: "*"
+                },
+                parkOperation: {
+                  populate: "*"
+                },
+                parkOperationSubAreas: {
+                  populate: "*"
+                },
+                seo: {
+                  populate: "*"
+                }
+              }
+            }
+          }
         ],
-        queryLimit: -1,
+        queryLimit: 1000,
       },
     },
     `gatsby-transformer-sharp`,

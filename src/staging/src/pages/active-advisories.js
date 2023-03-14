@@ -341,7 +341,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     getAdvisoryTotalCount()
   }, [getAdvisoryTotalCount])
 
-  const menuContent = data?.allStrapiMenus?.nodes || []
+  const menuContent = data?.allStrapiMenu?.nodes || []
 
   return (
     <>
@@ -409,25 +409,23 @@ export const query = graphql`
         apiURL
       }
     }
-    allStrapiMenus(
+    allStrapiMenu(
       sort: { fields: order, order: ASC }
       filter: { show: { eq: true } }
     ) {
       nodes {
-        strapiId
+        strapi_id
         title
         url
         order
         id
-        imgUrl
-        strapiChildren {
+        strapi_children {
           id
           title
           url
           order
-          parent
         }
-        strapiParent {
+        strapi_parent {
           id
           title
         }

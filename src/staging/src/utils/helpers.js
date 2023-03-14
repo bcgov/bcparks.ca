@@ -14,17 +14,17 @@ export const renderBreadcrumbs = (menuContent, pageContext) => {
         </div>,
     ]
 
-    let parent = menuContent.find(mc => mc.strapiId === current?.strapiParent?.id)
+    let parent = menuContent.find(mc => mc.strapi_id === current?.strapi_parent?.id)
     return addItems(parent, menuContent, breadcrumbItems)
 
     function addItems(parent, menuContent, breadcrumbItems) {
         if (parent) {
             breadcrumbItems.push(
-                <Link key={parent.strapiId} to={parent?.url ?? "/"}>
+                <Link key={parent.strapi_id} to={parent?.url ?? "/"}>
                     {parent.title}
                 </Link>
             )
-            parent = menuContent.find(mc => mc.strapiId === parent?.strapiParent?.id)
+            parent = menuContent.find(mc => mc.strapi_id === parent?.strapi_parent?.id)
             return addItems(parent, menuContent, breadcrumbItems)
         }
         return breadcrumbItems.reverse()

@@ -102,8 +102,8 @@ export default function ParkFacility({ data }) {
               <Accordion.Collapse eventKey={"parkFacility" + index}>
                 <div className="p-4">
                   <HtmlContent>
-                    {!isNullOrWhiteSpace(facility.description) ?
-                      facility.description : facility.facilityType.defaultDescription
+                    {!isNullOrWhiteSpace(facility.description.data) ?
+                      facility.description.data : facility.facilityType.defaultDescription.data
                     }
                   </HtmlContent>
                 </div>

@@ -9,7 +9,6 @@ import PageSection from "../pageContent/pageSection"
  * PageContent is a generic switch for different strapi content types.
  */
 export default function PageContent({ contentType, content }) {
-
   // this will expand as page components are added
   // note that parks.page-header does not appear here as 
   // that content should be added in the containing page
@@ -50,7 +49,7 @@ export default function PageContent({ contentType, content }) {
     )
   }
     if (contentType === "parks.html-area") {
-        return <HTMLArea isVisible={true}>{content.HTML}</HTMLArea>
+        return <HTMLArea isVisible={true}>{content.HTML.data.HTML}</HTMLArea>
     }
     if (contentType === "parks.page-section") {
         return <PageSection sectionTitle={content.sectionTitle} sectionId={content.id} sectionHtml={content.sectionHTML} />

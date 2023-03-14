@@ -26,15 +26,13 @@ function ParkAccessFromAdvisories(advisories) {
   const data = useStaticQuery(
     graphql`
       {
-        allStrapiAccessStatuses {
-          edges {
-            node {
-              id
-              strapiId
-              color
-              accessStatus
-              precedence
-            }
+        allStrapiAccessStatus {
+          nodes {
+            id
+            strapi_id
+            color
+            accessStatus
+            precedence
           }
         }
       }
@@ -42,7 +40,7 @@ function ParkAccessFromAdvisories(advisories) {
   )
 
   let accessStatuses = []
-  const accessStatusList = data?.allStrapiAccessStatuses.edges
+  const accessStatusList = data?.allStrapiAccessStatus.nodes
 
   let parkStatusIcon = blueStatusIcon
   let parkStatusText = "Open to public access"
@@ -61,15 +59,15 @@ function ParkAccessFromAdvisories(advisories) {
         // advisory is coming from explore page
         // get accessStatus based on precedence
         let thisStatus = accessStatusList.find(status => {
-          return status.node.strapiId === advisory.accessStatus
+          return status.strapi_id === advisory.accessStatus
         })
         if (!thisStatus) {
           break
         } else {
           accessStatuses.push({
-            precedence: thisStatus.node.precedence,
-            color: thisStatus.node.color,
-            text: thisStatus.node.accessStatus,
+            precedence: thisStatus.precedence,
+            color: thisStatus.color,
+            text: thisStatus.accessStatus,
           })
         }
       }

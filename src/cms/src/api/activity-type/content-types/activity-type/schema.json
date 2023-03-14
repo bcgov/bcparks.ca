@@ -5,7 +5,8 @@
     "singularName": "activity-type",
     "pluralName": "activity-types",
     "displayName": "Activity-type",
-    "name": "activity-type"
+    "name": "activity-type",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -39,6 +40,13 @@
     },
     "isCamping": {
       "type": "boolean"
+    },
+    "defaultDescription": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
     }
   }
 }

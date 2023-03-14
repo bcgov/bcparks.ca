@@ -48,13 +48,15 @@ export default function ParkTemplate({ data }) {
 
   const apiBaseUrl = data.site.siteMetadata.apiURL
 
-  const site = data.strapiSites
+  const site = data.strapiSite
   const park = site.protectedArea
   const activities = site.parkActivities
   const facilities = site.parkFacilities
   const operations = site.parkOperation || {}
-
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
+
+  const description = site.description.data.description
+  const locationNotes = site.locationNotes.data.locationNotes
 
   const activeActivities = sortBy(
     activities.filter(
@@ -100,7 +102,7 @@ export default function ParkTemplate({ data }) {
   const hasReservations = operations.hasReservations
   const hasDayUsePass = site.hasDayUsePass
 
-  const menuContent = data?.allStrapiMenus?.nodes || []
+  const menuContent = data?.allStrapiMenu?.nodes || []
 
   const [advisoryLoadError, setAdvisoryLoadError] = useState(false)
   const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true)
@@ -163,7 +165,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 0,
       display: "Site overview",
       link: "#park-overview-container",
-      visible: !isNullOrWhiteSpace(site.description),
+      visible: !isNullOrWhiteSpace(description),
     },
     {
       sectionIndex: 1,
@@ -202,7 +204,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 6,
       display: "Location",
       link: "#park-maps-location-container",
-      visible: (site.latitude && site.longitude) || !isNullOrWhiteSpace(site.locationNotes),
+      visible: (site.latitude && site.longitude) || !isNullOrWhiteSpace(locationNotes),
     },
   ]
 
@@ -306,7 +308,7 @@ export default function ParkTemplate({ data }) {
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">
-                  <ParkOverview data={site.description} type="site" />
+                  <ParkOverview data={description} type="site" />
                 </div>
               )}
               {menuItems[1].visible && (
@@ -363,12 +365,12 @@ export default function ParkTemplate({ data }) {
                 <div ref={mapLocationRef} className="full-width">
                   <div id="park-maps-location-container" className="anchor-link">
                     <MapLocation data={mapData} />
-                    {site.locationNotes && (
+                    {locationNotes && (
                       <Grid item xs={12} id="park-location-notes-container">
                         <Box mb={8}>
                           <div
                             dangerouslySetInnerHTML={{
-                              __html: site.locationNotes,
+                              __html: locationNotes,
                             }}
                           ></div>
                         </Box>
@@ -387,9 +389,10 @@ export default function ParkTemplate({ data }) {
 }
 
 export const Head = ({data}) => {
-  const site = data.strapiSites
+  const site = data.strapiSite
   const park = site.protectedArea
-  const siteDescription = site.description?.replace(/(<([^>]+)>)/ig, '');
+  const description = site.description.data.description
+  const siteDescription = description.replace(/(<([^>]+)>)/ig, '');
   const siteDescriptionShort = truncate(siteDescription, { length: 160 });
 
   return (
@@ -402,7 +405,7 @@ export const Head = ({data}) => {
 
 export const query = graphql`
   query SiteDetails($orcsSiteNumber: String) {
-    strapiSites(
+    strapiSite(
       isDisplayed: {eq: true}
       orcsSiteNumber: { eq: $orcsSiteNumber }
     ) {
@@ -412,9 +415,21 @@ export const query = graphql`
       mapZoom
       longitude
       latitude
-      locationNotes
-      description
-      reservations
+      locationNotes { 
+        data { 
+          locationNotes
+        }
+       }
+      description {
+        data {
+          description
+        }
+      }
+      reservations {
+        data {
+          reservations
+        }
+      }
       hasDayUsePass
       isUnofficialSite
       protectedArea {
@@ -425,7 +440,9 @@ export const query = graphql`
       parkActivities {
         isActive
         isActivityOpen
-        description
+        description {
+          data
+        }
         activityType {
           activityName
           activityCode
@@ -434,13 +451,17 @@ export const query = graphql`
           icon
           iconNA
           rank
-          defaultDescription
+          defaultDescription {
+            data
+          }
         }
       }
       parkFacilities {
         isActive
         isFacilityOpen
-        description
+        description {
+          data
+        }
         facilityType {
           facilityName
           facilityCode
@@ -449,13 +470,14 @@ export const query = graphql`
           icon
           iconNA
           rank
-          defaultDescription
+          defaultDescription {
+            data
+          }
         }
       }
       parkOperation {
         hasReservations
       }
-
     }
     # Site photos are split into featured and non-featured in order to sort correctly,
     # with null values last.
@@ -467,7 +489,7 @@ export const query = graphql`
       }
       sort: {
         order: [ASC, DESC, DESC]
-        fields: [sortOrder, dateTaken, strapiId]
+        fields: [sortOrder, dateTaken, strapi_id]
       }
     ) {
       nodes {
@@ -483,7 +505,7 @@ export const query = graphql`
       }
       sort: {
         order: [ASC, DESC, DESC]
-        fields: [sortOrder, dateTaken, strapiId]
+        fields: [sortOrder, dateTaken, strapi_id]
       }
     ) {
       nodes {
@@ -491,25 +513,23 @@ export const query = graphql`
         caption
       }
     }
-    allStrapiMenus(
+    allStrapiMenu(
       sort: { fields: order, order: ASC }
       filter: { show: { eq: true } }
     ) {
       nodes {
-        strapiId
+        strapi_id
         title
         url
         order
         id
-        imgUrl
-        strapiChildren {
+        strapi_children {
           id
           title
           url
           order
-          parent
         }
-        strapiParent {
+        strapi_parent {
           id
           title
         }

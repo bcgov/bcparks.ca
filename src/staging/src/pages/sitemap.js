@@ -10,7 +10,7 @@ import Seo from "../components/seo"
 import "../styles/staticContent1.scss"
 
 const SitemapPage = ({ data }) => {
-  const menuContent = data?.allStrapiMenus?.nodes || []
+  const menuContent = data?.allStrapiMenu?.nodes || []
 
   const breadcrumbs = [
     // TODO convert MUI breadcrumbs and use gatsby Link
@@ -51,30 +51,23 @@ export const Head = () => (
 
 export const query = graphql`
   {
-    strapiPages(Slug: { eq: "/beta-landing" }) {
-      id
-      Slug
-      Content
-    }
-    allStrapiMenus(
+    allStrapiMenu(
       sort: { fields: order, order: ASC }
       filter: { show: { eq: true } }
     ) {
       nodes {
-        strapiId
+        strapi_id
         title
         url
         order
         id
-        imgUrl
-        strapiChildren {
+        strapi_children {
           id
           title
           url
           order
-          parent
         }
-        strapiParent {
+        strapi_parent {
           id
           title
         }

@@ -12,7 +12,7 @@ const AdvisorySummary = ({ advisories }) => {
       query urgencies {
         urgencies: allStrapiUrgency(sort: { fields: sequence, order: DESC }) {
           nodes {
-            strapiId
+            strapi_id
             color
             code
             sequence
@@ -28,7 +28,7 @@ const AdvisorySummary = ({ advisories }) => {
   const advisoryUrgencies = advisories
     .map(advisory => {
       return urgencies.nodes.find(
-        urgency => urgency.strapiId === advisory.urgency
+        urgency => urgency.strapi_id === advisory.urgency
       )
     })
     .filter(urgency => urgency !== null)
