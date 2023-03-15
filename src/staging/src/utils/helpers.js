@@ -30,3 +30,21 @@ export const renderBreadcrumbs = (menuContent, pageContext) => {
         return breadcrumbItems.reverse()
     }
 }
+export const addSmallImagePrefix = (str) => {
+    let url = str
+    // fallback in case imageUrl has already prefix
+    // remove another prefix from str
+    const prefixes = ["large_", "medium_", "small_"]
+    for (let i = 0; i < prefixes.length; i++) {
+        if (str.includes(prefixes[i])) {
+            url = str.replace(prefixes[i], "")
+        }
+    }
+    const i = url.lastIndexOf("/")
+    return url.substring(0, i + 1) + "small_" + url.substring(i + 1, url.length)
+}
+export const handleImgError = (e, imgSrc) => {
+    e.target.onError = null
+    e.target.src = imgSrc
+    console.clear()
+}
