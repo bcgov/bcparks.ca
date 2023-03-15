@@ -289,6 +289,7 @@ const base = {
       };
     },
   },
+  // doc https://ckeditor.com/docs/ckeditor5/latest/features/lists/lists.html#ordered-and-unordered-lists
   list: {
     properties: {
       styles: true,
@@ -458,13 +459,13 @@ export const toolbarEditorConfig = {
     'link',
     'strapiMediaLib',
     '|',
-    'bulletedList', 'numberedList',
+    'bulletedList',
+    'numberedList',
     '|',
     'horizontalLine',
     'blockQuote',
     'insertTable',
     'mediaEmbed', '|',
-    // '|', 'undo', 'redo', '|',
     'removeFormat',
     'SourceEditing'
   ],
@@ -483,7 +484,8 @@ export const toolbarBaloonEditorConfig = {
     'link',
     'strapiMediaLib',
     '|',
-    'bulletedList', 'numberedList',
+    'bulletedList',
+    'numberedList',
     '|',
     'horizontalLine',
     'blockQuote',
@@ -526,7 +528,8 @@ export const blockBaloonEditorConfig = {
     'link',
     'strapiMediaLib',
     '|',
-    'bulletedList', 'numberedList',
+    'bulletedList',
+    'numberedList',
     '|',
     'horizontalLine',
     'blockQuote',

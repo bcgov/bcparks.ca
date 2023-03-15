@@ -1,3 +1,7 @@
+
+// // https://github.com/strapi/strapi/issues/11637
+// default-src 'none'; connect-src 'self'; script-src 'self'; img-src * data:; style-src 'self' 'unsafe-inline'; frame-src *
+
 module.exports = [
   "strapi::errors",
   "strapi::security",

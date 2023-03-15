@@ -239,6 +239,15 @@ blockquote.callout-box {
   padding: 12px 20px;
 }
 
+.ck-content h3 {
+  font-size: 20px;
+  margin: 0 0 24px 0;
+}
+
+.ck-content h4 {
+  margin: 0 0 24px 0;
+}
+
 .legacy-link {
   background-color: #FFFF00;
 }
