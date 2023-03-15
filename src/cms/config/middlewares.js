@@ -1,10 +1,25 @@
-
-// // https://github.com/strapi/strapi/issues/11637
-// default-src 'none'; connect-src 'self'; script-src 'self'; img-src * data:; style-src 'self' 'unsafe-inline'; frame-src *
-
 module.exports = [
   "strapi::errors",
-  "strapi::security",
+  {
+    name: "strapi::security",
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          "connect-src": ["'self'", "https:"],
+          "default-src": ["none"],
+          "frame-src": "*",
+          "media-src": [
+            "'self'",
+            "data:",
+            "blob:",
+            // `https://${env('AWS_BUCKET')}.s3.${env('AWS_REGION')}.amazonaws.com`// TODO: (working on) loading img from S3
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
   "strapi::cors",
   "strapi::poweredBy",
   {
