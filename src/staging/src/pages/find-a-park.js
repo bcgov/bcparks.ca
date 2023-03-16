@@ -428,7 +428,7 @@ export default function FindAPark({ location, data }) {
     setIsLoading(true)
     setFilters()
 
-    const apiUrl = data.site.siteMetadata.apiURL
+    const apiUrl = `${data.site.siteMetadata.apiURL}/api`
 
     const pageStart = (currentPage - 1) * itemsPerPage
     const pageLimit = itemsPerPage
@@ -466,8 +466,6 @@ export default function FindAPark({ location, data }) {
     setSearchResults,
     setTotalResults,
   ])
-
- const getParkName = item => item.parkNameType === PARK_NAME_TYPE.Escaped
 
   return (
     <>
@@ -942,7 +940,7 @@ export default function FindAPark({ location, data }) {
                                             className="p10t"
                                           >
                                             <h2 className="park-heading-text">
-                                              {renderHTML(r.parkNames.find(getParkName)?.parkName || r.protectedAreaName)}
+                                              {r.protectedAreaName}
                                             </h2>
                                           </Link>
 
@@ -1139,7 +1137,7 @@ export default function FindAPark({ location, data }) {
                                             className="p10t"
                                           >
                                             <h2 className="park-heading-text">
-                                            {renderHTML(r.parkNames.find(getParkName)?.parkName || r.protectedAreaName)}
+                                            {r.protectedAreaName}
                                             </h2>
                                           </Link>
                                         </div>
