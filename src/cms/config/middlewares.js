@@ -6,16 +6,26 @@ module.exports = [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          "connect-src": ["'self'", "https:"],
-          "default-src": ["none"],
-          "frame-src": "*",
-          "media-src": [
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
             "'self'",
-            "data:",
-            "blob:",
-            // `https://${env('AWS_BUCKET')}.s3.${env('AWS_REGION')}.amazonaws.com`// TODO: (working on) loading img from S3
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            `https://nrs.objectstore.gov.bc.ca/`,
+            // TODO:
+            // doc https://strapi.io/blog/how-to-set-up-amazon-s3-upload-provider-plugin-for-our-strapi-app
+            // 'yourBucketName.s3.yourRegion.amazonaws.com', or  `https://${env('AWS_BUCKET')}.s3.${env('AWS_REGION')}.amazonaws.com`
           ],
-          upgradeInsecureRequests: null,
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            `https://nrs.objectstore.gov.bc.ca/`,
+            // TODO:
+            // 'yourBucketName.s3.yourRegion.amazonaws.com',
+          ],
         },
       },
     },

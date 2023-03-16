@@ -60,15 +60,15 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
           `array(
             SELECT to_json((
               SELECT j FROM (
-                SELECT adv."id", 
-                public_advisories_urgency_links.urgency_id, 
+                SELECT adv."id",
+                public_advisories_urgency_links.urgency_id,
                 public_advisories_advisory_status_links.advisory_status_id
               ) j
             ))
             FROM protected_areas_advisories_links
             INNER JOIN public_advisories adv
               ON adv.id = protected_areas_advisories_links.public_advisory_id
-            INNER JOIN public_advisories_urgency_links 
+            INNER JOIN public_advisories_urgency_links
               ON adv.id = public_advisories_urgency_links.public_advisory_id
             INNER JOIN public_advisories_advisory_status_links
               ON adv.id = public_advisories_advisory_status_links.public_advisory_id
@@ -78,12 +78,12 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
         ),
         knex.raw(
           `array(
-            SELECT thumbnail_url
+            SELECT image_url
             FROM park_photos
             WHERE park_photos.orcs = protected_areas.orcs
                 AND park_photos.published_at IS NOT NULL
                 AND park_photos.is_active = TRUE
-                AND park_photos.thumbnail_url IS NOT NULL
+                AND park_photos.image_url IS NOT NULL
             ORDER BY park_photos.is_featured DESC NULLS LAST,
                 park_photos.sort_order ASC NULLS LAST,
                 park_photos.date_taken DESC,
@@ -133,7 +133,7 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
           `GREATEST(
               (
                 SELECT similarity(park_names.park_name, ?) AS name_similarity
-                FROM park_names 
+                FROM park_names
                 INNER JOIN park_names_protected_area_links ON park_names.id = park_names_protected_area_links.park_name_id
                 WHERE park_names_protected_area_links.protected_area_id = protected_areas.id
                   AND park_names.published_at IS NOT NULL
@@ -226,7 +226,7 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
     }
 
     return 0;
-  },  
+  },
   async setTextSimilarity(knex) {
     // If we have some search text for full text search, drop the similarity threshold
     // Default is 0.3 which misses basic misspellings
