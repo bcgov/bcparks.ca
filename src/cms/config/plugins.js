@@ -25,9 +25,11 @@ module.exports = ({ env }) => {
       },
     },
     upload: {
-      breakpoints: {
-        small: 720,
-      },
+      config: {
+        breakpoints: {
+          small: 720,
+        },
+      }
     },
     ckeditor5: {
       enabled: true,

@@ -41,8 +41,7 @@ import dayUseIcon from "../images/park/day-use.png"
 import parksLogo from "../images/Mask_Group_5.png"
 
 import "../styles/search.scss"
-import { PARK_NAME_TYPE } from "../utils/constants";
-import { renderHTML, addSmallImagePrefix, handleImgError } from "../utils/helpers";
+import { addSmallImagePrefix, handleImgError } from "../utils/helpers";
 
 export const query = graphql`
   query {
