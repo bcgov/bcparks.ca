@@ -12,49 +12,49 @@ module.exports = {
   },
   // a leading slash is required
   slugLeadingSlashValidator: function (slug) {
-    if (slug?.slice(0, 1) !== '/') {
+    if (slug && slug.slice(0, 1) !== '/') {
       throw strapi.errors.badRequest('Please add slash to the beginning of slugs.');
     }
   },
   // a leading slash is not allowed
   slugNoLeadingSlashValidator: function (slug) {
-    if (slug?.slice(0, 1) === '/') {
+    if (slug && slug.slice(0, 1) === '/') {
       throw strapi.errors.badRequest('Do not add slash to the beginning of slugs.');
     }
   },
   // a leading dash is not allowed
   slugNoLeadingDashValidator: function (slug) {
-    if (slug?.slice(0, 1) === '-') {
+    if (slug && slug.slice(0, 1) === '-') {
       throw strapi.errors.badRequest('Do not add dash to the beginning of slugs.');
     }
-    if (slug?.includes('/-')) {
+    if (slug && slug.includes('/-')) {
       throw strapi.errors.badRequest('Do not add dash after a slash.');
     }
   },
   // a trailing slash is required
   slugTrailingSlashValidator: function (slug) {
-    if (slug?.slice(-1) !== '/') {
+    if (slug && slug.slice(-1) !== '/') {
       throw strapi.errors.badRequest('Please add slash to the end of slugs.');
     }
   },
   // a trailing slash is not allowed
   slugNoTrailingSlashValidator: function (slug) {
-    if (slug?.slice(-1) === '/') {
+    if (slug && slug.slice(-1) === '/') {
       throw strapi.errors.badRequest('Do not add slash to the end of slugs.');
     }
   },
   // a trailing dash is not allowed
   slugNoTrailingDashValidator: function (slug) {
-    if (slug?.slice(-1) === '-') {
+    if (slug && slug.slice(-1) === '-') {
       throw strapi.errors.badRequest('Do not add dash to the end of slugs.');
     }
-    if (slug?.includes('-/')) {
+    if (slug && slug.includes('-/')) {
       throw strapi.errors.badRequest('Do not add dash before a slash.');
     }
   },
   // foward slashes are not allowed in the slug
   slugNoSlashValidator: function (slug) {
-    if (slug?.includes('/')) {
+    if (slug && slug.includes('/')) {
       throw strapi.errors.badRequest('Do not add slash in slugs.');
     }
   },
