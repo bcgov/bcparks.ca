@@ -229,7 +229,6 @@ const loadAdditionalProtectedAreaInfo = async () => {
       if (p.status === "Active") {
         const protectedArea = {
           url: p.url,
-          hasDayUsePass: p.dayUsePass,
           isFogZone: p.fogZone,
         };
         if (p.latitude !== "") {
@@ -398,7 +397,6 @@ const loadParSomeDefaultValues = async () => {
 
   for (const protectedArea of protectedAreas) {
     const updateData = {
-      hasDayUsePass: protectedArea.hasDayUsePass === true ? true : false,
       isFogZone: protectedArea.isFogZone === true ? true : false,
       hasCampfireBan: protectedArea.hasCampfireBan === true ? true : false,
       hasSmokingBan: protectedArea.hasSmokingBan === true ? true : false,

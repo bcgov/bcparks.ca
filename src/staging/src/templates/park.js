@@ -111,7 +111,7 @@ export default function ParkTemplate({ data }) {
   })
 
   const hasReservations = operations.hasReservations
-  const hasDayUsePass = park.hasDayUsePass
+  const hasDayUsePass = operations.hasDayUsePass
 
   const menuContent = data?.allStrapiMenu?.nodes || []
 
@@ -510,7 +510,6 @@ export const query = graphql`
       marineArea
       type
       typeCode
-      hasDayUsePass
       locationNotes {
         data {
           locationNotes

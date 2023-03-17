@@ -79,7 +79,6 @@ exports.createSchemaCustomization = ({ actions }) => {
 
   type StrapiProtectedArea implements Node {
     orcs: Int
-    hasDayUsePass: Boolean
     isDisplayed: Boolean
     parkContact: String
     marineArea: Float
@@ -230,7 +229,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     description: String
     reservations: String
     isDisplayed: Boolean
-    hasDayUsePass: Boolean
     protectedArea: StrapiProtectedArea
     parkActivities: [StrapiParkActivity]
     parkFacilities: [StrapiParkFacility]

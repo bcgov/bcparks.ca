@@ -100,7 +100,7 @@ export default function ParkTemplate({ data }) {
   })
 
   const hasReservations = operations.hasReservations
-  const hasDayUsePass = site.hasDayUsePass
+  const hasDayUsePass = operations.hasDayUsePass
 
   const menuContent = data?.allStrapiMenu?.nodes || []
 
@@ -430,7 +430,6 @@ export const query = graphql`
           reservations
         }
       }
-      hasDayUsePass
       isUnofficialSite
       protectedArea {
         orcs
@@ -477,6 +476,7 @@ export const query = graphql`
       }
       parkOperation {
         hasReservations
+        hasDayUsePass
       }
     }
     # Site photos are split into featured and non-featured in order to sort correctly,

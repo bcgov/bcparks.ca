@@ -78,9 +78,6 @@
     "note": {
       "type": "string"
     },
-    "hasDayUsePass": {
-      "type": "boolean"
-    },
     "description": {
       "type": "customField",
       "options": {
