@@ -81,9 +81,6 @@
     "mapZoom": {
       "type": "integer"
     },
-    "hasDayUsePass": {
-      "type": "boolean"
-    },
     "isFogZone": {
       "type": "boolean"
     },
