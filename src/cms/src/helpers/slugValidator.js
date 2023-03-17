@@ -34,15 +34,6 @@ module.exports = {
       throw new ApplicationError('Do not add dash after a slash.');
     }
   },
-  // a leading dash is not allowed
-  slugNoLeadingDashValidator: function (slug) {
-    if (slug && slug.slice(0, 1) === '-') {
-      throw new ApplicationError('Do not add dash to the beginning of slugs.');
-    }
-    if (slug && slug.includes('/-')) {
-      throw new ApplicationError('Do not add dash after a slash.');
-    }
-  },
   // a trailing slash is required
   slugTrailingSlashValidator: function (slug) {
     if (slug && slug.slice(-1) !== '/') {
@@ -53,15 +44,6 @@ module.exports = {
   slugNoTrailingSlashValidator: function (slug) {
     if (slug && slug.slice(-1) === '/') {
       throw new ApplicationError('Do not add slash to the end of slugs.');
-    }
-  },
-  // a trailing dash is not allowed
-  slugNoTrailingDashValidator: function (slug) {
-    if (slug && slug.slice(-1) === '-') {
-      throw new ApplicationError('Do not add dash to the end of slugs.');
-    }
-    if (slug && slug.includes('-/')) {
-      throw new ApplicationError('Do not add dash before a slash.');
     }
   },
   // a trailing dash is not allowed

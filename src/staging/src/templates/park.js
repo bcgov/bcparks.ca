@@ -55,7 +55,7 @@ const loadAdvisories = async (apiBaseUrl, orcs) => {
 export default function ParkTemplate({ data }) {
   const classes = useStyles()
 
-  const apiBaseUrl = data.site.siteMetadata.apiURL
+  const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
 
   const park = data.strapiProtectedArea
   const parkType = park.type ?? "park"
