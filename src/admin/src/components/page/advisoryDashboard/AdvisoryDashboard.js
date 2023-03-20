@@ -33,6 +33,16 @@ import {
 } from "../../../utils/CmsDataUtil";
 
 const query = qs.stringify({
+  populate: '*',
+  // todo:
+  // populate: {
+  //   protectedAreas: {
+  //     fields: ['name', 'url'],
+  //   },
+  //   advisoryStatus: {
+  //    }
+  // },
+
   pagination: {
     limit: 1500
   },
@@ -40,6 +50,12 @@ const query = qs.stringify({
 }, {
   encodeValuesOnly: true,
 });
+
+const queryParams = (id) => qs.stringify({
+  sort: [`advisoryStatus:${id}`],
+}, {
+  encodeValuesOnly: true,
+})
 
 export default function AdvisoryDashboard({
   page: { setError, cmsData, setCmsData },
@@ -123,7 +139,7 @@ export default function AdvisoryDashboard({
           getParkNames(cmsData, setCmsData),
           cmsAxios.get(`public-advisory-audits?${query}`, {
               headers: {
-                Authorization: `Bearer ${keycloak.token}`
+                // Authorization: `Bearer ${keycloak.token}`
             }
           }
           )
@@ -146,18 +162,17 @@ export default function AdvisoryDashboard({
         // Public Advisories
         const regionParksCount = managementAreasData.reduce((region, item) => {
           // Todo:
-          // region[item.region.id] = (region[item.region.id] || 0) + item.protectedAreas.length;
-          // return region;
-          return []
+          region[item.region?.id] = (region[item.region?.id] || 0) + item.protectedAreas?.length;
+          return region;
         }, {});
 
         const today = moment(new Date()).tz("America/Vancouver").toISOString();
         const updatedPublicAdvisories = publicAdvisories.map((publicAdvisory) => {
           publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
           // Todo:
-          // publicAdvisory.associatedParks = publicAdvisory.protectedAreas.map((p) => p.protectedAreaName).join(", ")
-          //   + publicAdvisory.regions.map((r) => r.regionName).join(", ");
-          //
+          publicAdvisory.associatedParks = publicAdvisory.protectedAreas.map((p) => p.protectedAreaName).join(", ")
+            + publicAdvisory.regions.map((r) => r.regionName).join(", ");
+
           let regionsWithParkCount = [];
           if (publicAdvisory?.regions?.length > 0) {
             publicAdvisory.regions.forEach((region) => {
@@ -212,7 +227,7 @@ export default function AdvisoryDashboard({
     cmsData,
     setCmsData,
     setError,
-    query
+    // query
   ]);
 
   const removeDuplicatesById = (arr) => {
@@ -286,20 +301,15 @@ export default function AdvisoryDashboard({
     }
   };
 
-  const queryParams = (id) => qs.stringify({
-    sort: [`advisoryStatus:${id}`],
-  }, {
-    encodeValuesOnly: true, // prettify URL
-  })
-
 
 const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
     const advisoryStatuses = await getAdvisoryStatuses(cmsData, setCmsData);
     if (advisoryStatuses) {
       const publishedStatus = advisoryStatuses.filter((as) => as.code === "PUB");
+
       if (publishedStatus?.length > 0) {
         const result = await cmsAxios
-          .get(`/public-advisories`) // ${queryParams(publishedStatus[0].id)}
+          .get(`/public-advisories`) // ?${queryParams(publishedStatus[0].id)}
           .catch(() => {
             setHasErrors(true);
           });
@@ -330,7 +340,8 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
       },
       cellStyle: (e, rowData) => {
         if (rowData.urgency !== null) {
-          switch (rowData.urgency.urgency.toLowerCase()) {
+          // todo:
+          switch (rowData.urgency?.urgency?.toLowerCase()) {
             case "low":
               return {
                 borderLeft: "8px solid #06f542",
@@ -512,12 +523,12 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
       cellStyle: { width: 400 },
       render: (rowData) => {
         const displayCount = 3;
-        const regionsCount = rowData.regions.length;
+        const regionsCount = regions?.length; // todo:
         if (regionsCount > 0) {
-          let regions = rowData.regions.slice(0, displayCount);
+          let regions = rowData?.regions?.slice(0, displayCount);
           return (
             <div>
-              {regions.map((p, i) => (
+              {regions?.map((p, i) => (
                 <span key={i}>
                   {p.regionName} region
                   <Chip
@@ -666,13 +677,14 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
           </div>
         </div>
       </div>
-      {!isLoading && (
+      {(
         <div
           className={styles.AdvisoryDashboard}
           data-testid="AdvisoryDashboard"
         >
           <br />
 
+          {console.log('publicAdvisories', publicAdvisories)}
           <div className="container-fluid">
             <DataTable
               key={publicAdvisories.length}
@@ -682,21 +694,20 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
                 pageSize: 50,
                 pageSizeOptions: [25, 50, 100],
               }}
-              onFilterChange={[]} // // Todo:
-              // onFilterChange={(filters) => {
-              //   const advisoryFilters = JSON.parse(localStorage.getItem('advisoryFilters'));
-              //   const arrFilters = filters.map((obj) => {
-              //     return {
-              //       fieldName: obj.column["field"],
-              //       fieldValue: obj.value,
-              //       type: 'table'
-              //     };
-              //   });
-              //   setFilters([...advisoryFilters.filter(o => o.type === 'page'), ...arrFilters]);
-              // }}
+              onFilterChange={(filters) => {
+                const advisoryFilters = JSON.parse(localStorage.getItem('advisoryFilters'));
+                console.log('filter', advisoryFilters)
+                const arrFilters = filters.map((obj) => {
+                  return {
+                    fieldName: obj.column["field"],
+                    fieldValue: obj.value,
+                    type: 'table'
+                  };
+                });
+                setFilters([...advisoryFilters.filter(o => o.type === 'page'), ...arrFilters]);
+              }}
               columns={tableColumns.map((col) => ({ ...col, defaultFilter: getTableFilterValue(col) }))}
-              data={[]} // // Todo:
-              // data={publicAdvisories}
+              data={publicAdvisories}
               title=""
               onRowClick={(event, rowData) => {
                 history.push(`advisory-summary/${rowData.id}`);

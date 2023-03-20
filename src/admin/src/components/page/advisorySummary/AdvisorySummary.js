@@ -43,7 +43,7 @@ export default function AdvisorySummary({
           getLinkTypes(cmsData, setCmsData),
         ])
           .then((res) => {
-            const advisoryData = res[0].data;
+            const advisoryData = res[0].data.data;
             advisoryData.linkTypes = res[1];
             setIsCurrentlyPublished(advisoryData.advisoryStatus.code === "PUB");
             setCurrentAdvisory(advisoryData);
@@ -103,15 +103,15 @@ export default function AdvisorySummary({
     if (parseInt(id)) {
       Promise.all([
         cmsAxios.get(
-          `public-advisory-audits/${id}?_publicationState=preview`,
-          {
-            headers: { Authorization: `Bearer ${keycloak.token}` },
-          }
+          `public-advisory-audits/${id}?_publicationState=preview&populate=*`,
+          // {
+          //   headers: { Authorization: `Bearer ${keycloak.token}` },
+          // }
         ),
         getLinkTypes(cmsData, setCmsData),
       ])
         .then((res) => {
-          const advisoryData = res[0].data;
+          const advisoryData = res[0].data.data;
           advisoryData.linkTypes = res[1];
           setAdvisory(advisoryData);
           const parkUrlInfo = [];
@@ -241,7 +241,7 @@ export default function AdvisorySummary({
               <Loader page />
             </div>
           )}
-          {!isLoadingPage && (
+          {!isLoadingPage && advisory && (
             <div className="container pt10b30">
               <div className="row ad-wrap-reverse">
                 <div className="container-fluid col-lg-3 col-md-12 col-12">

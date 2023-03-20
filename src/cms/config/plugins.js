@@ -1,5 +1,4 @@
 module.exports = ({ env }) => {
-
   // TODO:
   // const modelsToCache = env(
   //   "STRAPI_CACHE_MODELS",
@@ -17,7 +16,7 @@ module.exports = ({ env }) => {
       providerOptions: {
         host: env("STRAPI_SMTP_HOST", "apps.smtp.gov.bc.ca"),
         port: env.int("STRAPI_SMTP_PORT", 25),
-        tls: {rejectUnauthorized: false}, // Needed because of OCIO cert issue
+        tls: { rejectUnauthorized: false }, // Needed because of OCIO cert issue
       },
       settings: {
         defaultFrom: env("STRAPI_SMTP_FROM", "noreply@gov.bc.ca"),
@@ -81,64 +80,92 @@ module.exports = ({ env }) => {
       },
     },
 
-    "transformer": {
+    transformer: {
       enabled: true,
       config: {
         responseTransforms: {
           removeAttributesKey: true,
           removeDataKey: true,
         },
-        requestTransforms : {
-          wrapBodyWithDataKey: true
+        requestTransforms: {
+          wrapBodyWithDataKey: true,
         },
         hooks: {
           preResponseTransform : (ctx) => console.log('hello from the preResponseTransform hook!'),
           postResponseTransform : (ctx) => console.log('hello from the postResponseTransform hook!')
         },
         contentTypeFilter: {
-          mode: 'allow',
+          mode: "allow",
           uids: {
-            'api::public-advisory-audit.public-advisory-audit': {
-              'GET':true,
+            "api::public-advisory-audit.public-advisory-audit": {
+              GET: true,
             },
-            'api::region.region': {
-              'GET':true,
+            "api::region.region": {
+              GET: true,
             },
-            'api::management-area.management-area': {
-              'GET':true,
+            "api::management-area.management-area": {
+              GET: true,
             },
-            'api::park-name.park-name': {
-              'GET':true,
+            "api::park-name.park-name": {
+              GET: true,
             },
-            "api::advisory-status.advisory-status":{
-              'GET':true,
+            "api::advisory-status.advisory-status": {
+              GET: true,
             },
-            'api::standard-message.standard-message"':{
-              'GET':true,
+            "api::standard-message.standard-message": {
+              GET: true,
             },
-            "api::business-hour.business-hour":{
-              'GET':true,
+            "api::business-hour.business-hour": {
+              GET: true,
             },
-            "api::link-type.link-type":{
-              'GET': true,
-            }
-          }
-        }
-      }
-    },
-    'users-permissions': {
-        config: {
-          jwt: {
-            expiresIn: '7d',
+            "api::link-type.link-type": {
+              GET: true,
+            },
+            "api::statutory-holiday.statutory-holiday": {
+              GET: true,
+              PUT: true,
+            },
+            "api::public-advisory.public-advisory": {
+              GET: true,
+            },
+            "api::urgency.urgency": {
+              GET: true,
+            },
+            "api::access-status.access-status": {
+              GET: true,
+            },
+            "api::site.site": {
+              GET: true,
+            },
+            "api::section.section": {
+              GET: true,
+            },
+            "api::fire-zone.fire-zone": {
+              GET: true,
+            },
+            "api::fire-centre.fire-centre": {
+              GET: true,
+            },
+            "api::event-type.event-type": {
+              GET: true,
+            },
           },
         },
       },
+    },
+    "users-permissions": {
+      config: {
+        jwt: {
+          expiresIn: "7d",
+        },
+      },
+    },
 
     // Use case example: http://localhost:1337/api/pages/1?populate=deep
-    'strapi-plugin-populate-deep': {
+    "strapi-plugin-populate-deep": {
       config: {
         defaultDepth: 3,
-      }
+      },
     },
-  }
-}
+  };
+};

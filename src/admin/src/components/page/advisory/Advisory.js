@@ -147,10 +147,12 @@ export default function Advisory({
         setAdvisoryId(id);
         cmsAxios
           .get(
-            `public-advisory-audits/${id}?_publicationState=preview`,
-            {
-              headers: { Authorization: `Bearer ${keycloak.token}` },
-            }
+              `public-advisory-audits/${id}?_publicationState=preview`,// ${id}?_publicationState=preview
+            // public-advisory-audits/${id}?_publicationState=preview
+
+              // {
+              //   headers: { Authorization: `Bearer ${keycloak.token}` },
+              // }
           )
           .then((res) => {
             linksRef.current = [];
@@ -822,9 +824,11 @@ export default function Advisory({
         };
 
         cmsAxios
-          .post(`public-advisory-audits`, newAdvisory, {
-            headers: { Authorization: `Bearer ${keycloak.token}` },
-          })
+          .post(`public-advisory-audits`)
+            // todo:
+          //   , newAdvisory, {
+          //   headers: { Authorization: `Bearer ${keycloak.token}` },
+          // })
           .then((res) => {
             setAdvisoryId(res.data.id);
             setIsSubmitting(false);
@@ -944,9 +948,11 @@ export default function Advisory({
           };
 
           cmsAxios
-            .put(`public-advisory-audits/${id}`, updatedAdvisory, {
-              headers: { Authorization: `Bearer ${keycloak.token}` },
-            })
+            .put(`public-advisory-audits`)
+            ///${id})
+            // , updatedAdvisory, {
+            //   headers: { Authorization: `Bearer ${keycloak.token}` },
+            // })
             .then((res) => {
               setAdvisoryId(res.data.id);
               setIsSubmitting(false);
