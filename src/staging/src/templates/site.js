@@ -33,20 +33,33 @@ import Seo from "../components/seo"
 
 import { useStyles } from "../utils/constants"
 
-const loadAdvisories = async (apiBaseUrl, orcs) => {
-  const params = {
-    "protectedAreas.orcs_in": orcs,
-    _limit: 100,
-    _sort: "urgency.sequence:DESC",
-  }
+const qs = require('qs')
 
-  return axios.get(`${apiBaseUrl}/public-advisories`, { params })
+const loadAdvisories = async (apiBaseUrl, orcsId) => {
+  const params = qs.stringify ({
+    populate: "*",
+    filters: {
+      protectedAreas: {
+        orcs: {
+          $eq: orcsId
+        }
+      }
+    },
+    pagination: {
+      limit: 100,
+    },
+    sort: ["urgency.sequence:DESC"],
+  }, {
+    encodeValuesOnly: true,
+  })
+
+  return axios.get(`${apiBaseUrl}/public-advisories/?${params}`)
 }
 
 export default function ParkTemplate({ data }) {
   const classes = useStyles()
 
-  const apiBaseUrl = data.site.siteMetadata.apiURL
+  const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
 
   const site = data.strapiSite
   const park = site.protectedArea

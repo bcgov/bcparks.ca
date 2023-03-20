@@ -40,16 +40,28 @@ import Seo from "../components/seo"
 import "../styles/parks.scss"
 import { PARK_NAME_TYPE, useStyles } from "../utils/constants";
 
+const qs = require('qs')
 const AsyncMapLocation =  loadable(() => import("../components/park/mapLocation"));
 
-const loadAdvisories = async (apiBaseUrl, orcs) => {
-  const params = {
-    "protectedAreas.orcs_in": orcs,
-    _limit: 100,
-    _sort: "urgency.sequence:DESC",
-  }
+const loadAdvisories = async (apiBaseUrl, orcsId) => {
+  const params = qs.stringify ({
+    populate: "*",
+    filters: {
+      protectedAreas: {
+        orcs: {
+          $eq: orcsId
+        }
+      }
+    },
+    pagination: {
+      limit: 100,
+    },
+    sort: ["urgency.sequence:DESC"],
+  }, {
+    encodeValuesOnly: true,
+  })
 
-  return axios.get(`${apiBaseUrl}/public-advisories`, { params })
+  return axios.get(`${apiBaseUrl}/public-advisories/?${params}`)
 }
 
 export default function ParkTemplate({ data }) {
@@ -121,11 +133,10 @@ export default function ParkTemplate({ data }) {
 
   useEffect(() => {
     setIsLoadingAdvisories(true)
-
     loadAdvisories(apiBaseUrl, park.orcs)
       .then(response => {
         if (response.status === 200) {
-          setAdvisories([...response.data])
+          setAdvisories(response.data.data)
           setAdvisoryLoadError(false)
         } else {
           setAdvisories([])
