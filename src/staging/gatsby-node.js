@@ -23,13 +23,13 @@ exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
   const typeDefs = `
-  type StrapiParkAccessStatus implements Node {
+  type STRAPI_PARK_ACCESS_STATUS implements Node {
     campfireBanEffectiveDate: Date
     color: String
     precedence: String
   }
 
-  type StrapiActivityType implements Node {
+  type STRAPI_ACTIVITY_TYPE implements Node {
     activityName: String
     activityCode: String
     rank: Int
@@ -37,7 +37,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     defaultDescription: String
   }
 
-  type StrapiFacilityType implements Node {
+  type STRAPI_FACILITY_TYPE implements Node {
     facilityNumber: Int
     facilityName: String
     facilityCode: String
@@ -46,28 +46,28 @@ exports.createSchemaCustomization = ({ actions }) => {
     defaultDescription: String
   }
 
-  type StrapiParkAccessStatusParkActivity implements Node {
+  type STRAPI_PARK_ACCESS_STATUS_PARK_ACTIVITY implements Node {
     description: String
   }
 
-  type StrapiParkAccessStatusParkFacility implements Node {
+  type STRAPI_PARK_ACCESS_STATUS_PARK_FACILITY implements Node {
     description: String
   }
 
-  type StrapiParkActivity implements Node {
+  type STRAPI_PARK_ACTIVITY implements Node {
     name: String
     description: String
     isActive: Boolean
     isActivityOpen: Boolean
-    activityType: StrapiActivityType @link(by: "strapiId")
+    activityType: STRAPI_ACTIVITY_TYPE @link(by: "strapiId")
   }
 
-  type StrapiParkFacility implements Node {
+  type STRAPI_PARK_FACILITY implements Node {
     name: String
     description: String
     isActive: Boolean
     isFacilityOpen: Boolean
-    facilityType: StrapiFacilityType @link(by: "strapiId")
+    facilityType: STRAPI_FACILITY_TYPE @link(by: "strapiId")
   }
 
   type StrapiParkPhoto implements Node {
@@ -77,31 +77,31 @@ exports.createSchemaCustomization = ({ actions }) => {
     isFeatured: Boolean
   }
 
-  type StrapiProtectedArea implements Node {
+  type STRAPI_PROTECTED_AREA implements Node {
     orcs: Int
     isDisplayed: Boolean
     parkContact: String
     marineArea: Float
     slug: String
-    parkActivities: [StrapiParkActivity]
-    parkFacilities: [StrapiParkFacility]
-    parkOperation: StrapiParkOperation
-    parkOperationSubAreas: StrapiParkOperationSubArea
-    seo: StrapiComponentParksSeo
+    parkActivities: [STRAPI_PARK_ACTIVITY]
+    parkFacilities: [STRAPI_PARK_FACILITY]
+    parkOperation: STRAPI_PARK_OPERATION
+    parkOperationSubAreas: STRAPI_PARK_OPERATION_SUB_AREA
+    seo: STRAPI_COMPONENT_PARKS_SEO
   }
 
-  type StrapiParkOperationSubAreaDate implements Node {
+  type STRAPI_PARK_OPERATION_SUB_AREADate implements Node {
     operatingYear: String
   }
 
-  type StrapiParkOperationSubAreaType implements Node {
+  type STRAPI_PARK_OPERATION_SUB_AREAType implements Node {
     isActive: Boolean
     subAreaType: String
     subAreaTypeCode: String
     iconUrl: String
   }
 
-  type StrapiParkOperation implements Node {
+  type STRAPI_PARK_OPERATION implements Node {
     openDate: Date
     closeDate: Date
     isActive: Boolean
@@ -148,7 +148,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     adminNote: String
   }
 
-  type StrapiParkOperationSubArea implements Node {
+  type STRAPI_PARK_OPERATION_SUB_AREA implements Node {
     name: String
     isActive: Boolean
     isActivityOpen: Boolean
@@ -184,21 +184,21 @@ exports.createSchemaCustomization = ({ actions }) => {
     adminNote: String
   }
 
-  type StrapiPublicAdvisoryProtectedArea implements Node {
+  type STRAPI_PUBLIC_ADVISORY_PROTECTED_AREA implements Node {
     hasCampfireBan: String
     hasSmokingBan: String
   }
 
-  type StrapiPublicAdvisory implements Node {
-    accessStatus: StrapiParkAccessStatus
+  type STRAPI_PUBLIC_ADVISORY implements Node {
+    accessStatus: STRAPI_PARK_ACCESS_STATUS
   }
 
-  type StrapiMenu implements Node {
+  type STRAPI_MENU implements Node {
     title: String
     url: String
   }
 
-  type StrapiComponentParksPageHeader implements Node {
+  type STRAPI_COMPONENT_PARKS_PAGE_HEADER implements Node {
     pageTitle: String
     introHtml: String
     imageUrl: String
@@ -206,21 +206,21 @@ exports.createSchemaCustomization = ({ actions }) => {
     imageAlt: String
   }
 
-  type StrapiComponentParksSeo implements Node {
+  type STRAPI_COMPONENT_PARKS_SEO implements Node {
     metaKeywords: String
     metaTitle: String
     metaDescription: String
   }  
 
-  type StrapiParkSubPage implements Node {
+  type STRAPI_PARK_SUB_PAGE implements Node {
     slug: String
     title: String
-    pageHeader: StrapiComponentParksPageHeader
-    seo: StrapiComponentParksSeo
-    protectedArea: StrapiProtectedArea
+    pageHeader: STRAPI_COMPONENT_PARKS_PAGE_HEADER
+    seo: STRAPI_COMPONENT_PARKS_SEO
+    protectedArea: STRAPI_PROTECTED_AREA
   }
 
-  type StrapiSite implements Node {
+  type STRAPI_SITE implements Node {
     slug: String
     siteName: String
     siteNumber: Int
@@ -229,17 +229,17 @@ exports.createSchemaCustomization = ({ actions }) => {
     description: String
     reservations: String
     isDisplayed: Boolean
-    protectedArea: StrapiProtectedArea
-    parkActivities: [StrapiParkActivity]
-    parkFacilities: [StrapiParkFacility]
-    parkOperation: StrapiParkOperation
+    protectedArea: STRAPI_PROTECTED_AREA
+    parkActivities: [STRAPI_PARK_ACTIVITY]
+    parkFacilities: [STRAPI_PARK_FACILITY]
+    parkOperation: STRAPI_PARK_OPERATION
   }
 
-  type StrapiPage implements Node {
+  type STRAPI_PAGE implements Node {
     Title: String
   }
 
-  type StrapiLegacyRedirect implements Node {
+  type STRAPI_LEGACY_REDIRECT implements Node {
     fromPath: String
     toPath: String
   }
