@@ -431,7 +431,7 @@ ADMIN_JWT_SECRET=***
 JWT_SECRET=***
 
 
-Allow the "count" action for the public role in the user-permissions plugin
+Allow the "count" action for the public role in the user-permissions plugin for public-advisory and protected-area
 
 
 RESUME ROLLOUTS IN OPENSHIFT
