@@ -63,18 +63,20 @@ module.exports = createCoreController(
         },
         async find(ctx) {
             let entities;
+            let pagination;
 
             ctx.query = addStandardMessages(ctx.query);
 
             if (ctx.query._q !== undefined) {
-                entities = await strapi.service("api::public-advisory.public-advisory").search(ctx.query);
+                ({ results: entities } = await strapi.service("api::public-advisory.public-advisory").search(ctx.query));
+                pagination = {};
             } else {
-                entities = await strapi.service("api::public-advisory.public-advisory").find(ctx.query);
+                ({ results: entities, pagination } = await strapi.service("api::public-advisory.public-advisory").find(ctx.query));
             }
 
             const sanitizedEntities = await this.sanitizeOutput(entities, ctx);
 
-            const results = sanitizedEntities.results.map((publicAdvisory) => {
+            const results = sanitizedEntities.map((publicAdvisory) => {
                 if (publicAdvisory) {
                     const { description = "", standardMessages } = publicAdvisory;
                     if (standardMessages.length > 0) {
@@ -89,7 +91,10 @@ module.exports = createCoreController(
                 return publicAdvisory;
             });
 
-            return this.transformResponse(results);
+            return {
+                data: this.transformResponse(results)?.data || [],
+                meta: { pagination: pagination }
+            };
         },
         async count(ctx) {
             if (ctx.query._q !== undefined) {
