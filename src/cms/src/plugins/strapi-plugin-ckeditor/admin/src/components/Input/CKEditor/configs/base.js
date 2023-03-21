@@ -292,9 +292,9 @@ const base = {
   // doc https://ckeditor.com/docs/ckeditor5/latest/features/lists/lists.html#ordered-and-unordered-lists
   list: {
     properties: {
-      styles: true,
-      startIndex: true,
-      reversed: true,
+      styles: false,
+      startIndex: false,
+      reversed: false,
     },
   },
   table: {
