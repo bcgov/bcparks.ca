@@ -115,11 +115,6 @@
       "relation": "oneToOne",
       "target": "api::advisory-status.advisory-status"
     },
-    "protectedAreas": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::protected-area.protected-area"
-    },
     "links": {
       "type": "relation",
       "relation": "oneToMany",
@@ -165,7 +160,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::protected-area.protected-area",
-      "mappedBy": "advisories"
+      "inversedBy": "publicAdvisories"
     }
   }
 }

@@ -9,11 +9,12 @@ import Seo from "../components/seo"
 import "../styles/home.scss"
 
 const ParksPage = ({ data }) => {
+  const menuContent = data?.allStrapiMenu?.nodes || []
   const parks = data.allStrapiProtectedArea.nodes
 
   return (
     <>
-      <Header />
+      <Header mode="internal" content={menuContent} />
       <Container>
         <br />
         <h1>Parks</h1>
@@ -58,6 +59,28 @@ export const query = graphql`
         id
         slug
         protectedAreaName
+      }
+    }
+    allStrapiMenu(
+      sort: { fields: order, order: ASC }
+      filter: { show: { eq: true } }
+    ) {
+      nodes {
+        strapi_id
+        title
+        url
+        order
+        id
+        strapi_children {
+          id
+          title
+          url
+          order
+        }
+        strapi_parent {
+          id
+          title
+        }
       }
     }
   }

@@ -26,7 +26,7 @@
     "@strapi/provider-upload-aws-s3": "4.6.0",
     "@strapi/strapi": "4.6.0",
     "axios": "^0.21.1",
-    "codemirror": "5.65.11\n",
+    "codemirror": "5.65.11",
     "jwks-rsa": "^2.0.4",
     "knex": "^0.21.19",
     "pg": "^8.5.1",

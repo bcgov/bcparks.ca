@@ -5,118 +5,106 @@
  */
 
 const getNextAdvisoryNumber = async () => {
-  const result = await strapi.db.query(
-    "api::public-advisory-audit.public-advisory-audit"
-  );
-  // .model.query((qb) => {
-  //   qb.max("advisory_number");
-  // })
-  // .fetch();
-
-  let { max: maxAdvisoryNumber } = await result.toJSON();
-
+  const result = await strapi.db.query('api::public-advisory-audit.public-advisory-audit').findOne({
+    orderBy: {
+      advisoryNumber: 'DESC'
+    }
+  });
+  let { advisoryNumber: maxAdvisoryNumber } = result;
   if (!maxAdvisoryNumber || maxAdvisoryNumber < 0) maxAdvisoryNumber = 0;
   return ++maxAdvisoryNumber;
 };
 
 const getNextRevisionNumber = async (advisoryNumber) => {
-  const result = await strapi.db
-    .query("api::public-advisory-audit.public-advisory-audit")
-    .model.query((qb) => {
-      qb.where("advisory_number", advisoryNumber);
-      qb.max("advisory_number");
-    })
-    .fetch();
-
-  // const result = await strapi.db.query("api::public-advisory-audit.public-advisory-audit")
-  //   .findMany({
-  //     where: { advisoryNumber: advisoryNumber },
-  //     populate: "*",
-  //   });
-
-  let { max: maxRevisionNumber } = await result.toJSON();
+  const result = await strapi.db.query('api::public-advisory-audit.public-advisory-audit').findOne({
+    where: {
+      advisoryNumber
+    },
+    orderBy: {
+      revisionNumber: 'DESC'
+    }
+  });
+  let { revisionNumber: maxRevisionNumber } = result;
   if (!maxRevisionNumber || maxRevisionNumber < 0) maxRevisionNumber = 0;
   return ++maxRevisionNumber;
 };
 
 const getPublishedRevisionNumber = async (advisoryNumber) => {
-  // const publishedAdvisory = await strapi.entityService.findOne("api::public-advisory.public-advisory", 1, {
-  //   // fields: ['advisoryNumber', 'advisoryNumber'], // or advisory_number?
-  //   // sort: { 'advisoryStatus.code': 'PUB' },
-  //   // populate: "*"
-  // });
-
-  const publishedAdvisory = await strapi.entityService.findOne(
-    "api::public-advisory.public-advisory",
-    { advisoryNumber: advisoryNumber },
-    {
-      // limit: -1, // in FE or BE ?
-      populate: "*",
-      // advisoryNumber: advisoryNumber,
-      filters: {
-        advisoryStatus: {
-          code: "PUB",
-        },
-      },
-    }
-  );
-
+  const publishedAdvisory = await strapi.db.query('api::public-advisory.public-advisory').findOne({
+    where: {
+      advisoryNumber,
+      advisoryStatus: {
+        code: 'PUB'
+      }
+    },
+  });
   return publishedAdvisory ? publishedAdvisory.revisionNumber : 0;
 };
 
 const createPublicAdvisoryAudit = async (data) => {
-  data.id = 0;
+  data.id = 0; //TODO:  why is that ?
   data.published_at = null;
   data.isLatestRevision = false;
 
-  strapi.entityService.create(
-    "api::public-advisory-audit.public-advisory-audit",
-    { data }
-  );
-  // strapi.log.error(
-  //   `error creating public-advisory ${publicAdvisory.id}...`,
-  //   error
-  // );
+  try {
+    await strapi.db.query('api::public-advisory-audit.public-advisory-audit').create({data});
+  } catch (error) {
+    strapi.log.error(
+      `error creating public-advisory-audit ${publicAdvisory.id}...`,
+      error
+    );
+  }
 };
 
 const savePublicAdvisory = async (publicAdvisory) => {
   if (publicAdvisory.advisoryStatus.code === "PUB") {
     publicAdvisory.published_at = new Date();
+    const isExist = await strapi.db.query('api::public-advisory.public-advisory').findOne({
+      where: {
+        advisoryNumber
+      }
+    });
 
-    strapi.entityService.update("api::public-advisory.public-advisory", 1, {
-      // .update({ advisoryNumber: publicAdvisory.advisoryNumber }, publicAdvisory)
-      data: {
-        advisoryNumber: publicAdvisory.advisoryNumber,
-        ...publicAdvisory,
-      },
-    });
-    // TODO: if .catch(async () => {
-    strapi.entityService.create("api::public-advisory.public-advisory", {
-      data: publicAdvisory,
-    });
-    // strapi.services["public-advisory"].create(publicAdvisory)
-    //   .catch((error) => {
-    //     strapi.log.error(
-    //       `error creating public-advisory ${publicAdvisory.id}...`,
-    //       error
-    //     );
-    //   });
-    // });
+    if(isExist) {
+      try {
+        await strapi.db.query('api::public-advisory.public-advisory').updateMany({
+          where: {
+            advisoryNumber: publicAdvisory.advisoryNumber,
+          },
+          data: publicAdvisory,
+        });
+      } catch (error) {
+        strapi.log.error(
+          `error updating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
+          error
+        );
+      }
+    } else {
+      try {
+        await strapi.db.query('api::public-advisory.public-advisory').create({
+          data: publicAdvisory
+        });
+      } catch (error) {
+        strapi.log.error(
+          `error creating public-advisory ${publicAdvisory.id}...`,
+          error
+        );
+      }
+    }
   } else {
-    strapi.entityService.delete(
-      "api::public-advisory.public-advisory",
-      publicAdvisory.advisoryNumber
-    );
-    // .delete({
-    //   advisoryNumber: publicAdvisory.advisoryNumber,
-    //   _publicationState: "preview",
-    // })
-    // .catch((error) => {
-    //   strapi.log.error(
-    //     `error deleting public-advisory ${publicAdvisory.id}...`,
-    //     error
-    //   );
-    // });
+    try {
+      await strapi.db.query('api::public-advisory.public-advisory').delete({
+        where: {
+          advisoryNumber: publicAdvisory.advisoryNumber,
+          _publicationState: "preview",// TODO: need to check 'delete', or publicationState
+        }
+      });
+    } catch (error) {
+      strapi.log.error(
+        `error deleting public-advisory ${publicAdvisory.id}...`,
+        error
+      );
+    }
   }
 };
 
@@ -177,7 +165,8 @@ const isAdvisoryEqual = (newData, oldData) => {
 };
 
 module.exports = {
-  beforeCreate: async (data) => {
+  beforeCreate: async (ctx) => {
+    let { data } = ctx.params;
     if (!data.revisionNumber && !data.advisoryNumber) {
       data.advisoryNumber = await getNextAdvisoryNumber();
       data.revisionNumber = 1;
@@ -185,24 +174,24 @@ module.exports = {
       data.published_at = new Date();
     }
   },
-  afterCreate: async (newPublicAdvisory) => {
-    copyToPublicAdvisory(newPublicAdvisory);
+  afterCreate: async (ctx) => {
+    copyToPublicAdvisory(ctx.result);
   },
-  beforeUpdate: async (id, newPublicAdvisory) => {
-    if (!newPublicAdvisory.published_at) return;
+  beforeUpdate: async (ctx) => {
+    let { data: newPublicAdvisory, where: filter } = ctx.params;
+    if (!newPublicAdvisory.publishedAt) return;
 
-    const params = { ...id, _publicationState: "preview" };
-
-    newPublicAdvisory.published_at = new Date();
+    newPublicAdvisory.publishedAt = new Date();
     newPublicAdvisory.isLatestRevision = true;
 
-    const oldPublicAdvisory = await strapi.entityService.findOne(
-      "api::public-advisory-audit.public-advisory-audit",
-      params
-    );
+    const oldPublicAdvisory = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', filter.id, {
+      populate: '*',
+    });
+
+
 
     if (!oldPublicAdvisory) return;
-    if (!oldPublicAdvisory.published_at) return;
+    if (!oldPublicAdvisory.publishedAt) return;
 
     const oldAdvisoryStatus = oldPublicAdvisory.advisoryStatus
       ? oldPublicAdvisory.advisoryStatus.code
@@ -238,7 +227,7 @@ module.exports = {
       return;
     }
   },
-  afterUpdate: async (newPublicAdvisory) => {
-    copyToPublicAdvisory(newPublicAdvisory);
+  afterUpdate: async (ctx) => {
+    copyToPublicAdvisory(ctx.result);
   },
 };

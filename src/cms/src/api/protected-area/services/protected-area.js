@@ -60,19 +60,19 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
           `array(
             SELECT to_json((
               SELECT j FROM (
-                SELECT adv."id",
-                public_advisories_urgency_links.urgency_id,
+                SELECT adv."id", 
+                public_advisories_urgency_links.urgency_id, 
                 public_advisories_advisory_status_links.advisory_status_id
               ) j
             ))
-            FROM protected_areas_advisories_links
+            FROM public_advisories_protected_areas_links
             INNER JOIN public_advisories adv
-              ON adv.id = protected_areas_advisories_links.public_advisory_id
-            INNER JOIN public_advisories_urgency_links
+              ON adv.id = public_advisories_protected_areas_links.public_advisory_id
+            INNER JOIN public_advisories_urgency_links 
               ON adv.id = public_advisories_urgency_links.public_advisory_id
             INNER JOIN public_advisories_advisory_status_links
               ON adv.id = public_advisories_advisory_status_links.public_advisory_id
-            WHERE protected_areas_advisories_links.protected_area_id = protected_areas.id
+            WHERE public_advisories_protected_areas_links.protected_area_id = protected_areas.id
               AND adv.published_at IS NOT NULL
           ) AS "advisories"`
         ),
@@ -133,7 +133,7 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
           `GREATEST(
               (
                 SELECT similarity(park_names.park_name, ?) AS name_similarity
-                FROM park_names
+                FROM park_names 
                 INNER JOIN park_names_protected_area_links ON park_names.id = park_names_protected_area_links.park_name_id
                 WHERE park_names_protected_area_links.protected_area_id = protected_areas.id
                   AND park_names.published_at IS NOT NULL
@@ -170,10 +170,14 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
     const results = await query;
 
     const newResults = [];
+
+    const parkEntities = await strapi.entityService.findMany('api::protected-area.protected-area', {
+      filters: { id: results.map((r) => r.id) },
+      populate: ['parkFacilities.facilityType', 'parkActivities.activityType']
+    });
+
     for (const result of results) {
-      const parkEntity = await strapi.entityService.findOne('api::protected-area.protected-area', result.id, {
-        populate: ['parkFacilities.facilityType', 'parkActivities.activityType']
-      });
+      const parkEntity = await parkEntities.find(e => e.id === result.id);
       newResults.push({
         ...result,
         parkFacilities: parkEntity.parkFacilities
@@ -226,7 +230,7 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
     }
 
     return 0;
-  },
+  },  
   async setTextSimilarity(knex) {
     // If we have some search text for full text search, drop the similarity threshold
     // Default is 0.3 which misses basic misspellings
@@ -375,7 +379,7 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
                   )
                 )
                 .orWhere(
-                  knex.raw('similarity("park_name", ?) > 0.12', [searchText])
+                  knex.raw(`similarity("park_name", ?) > ${TEXT_SIMILARITY_THRESHOLD}`, [searchText])
                 );
             });
         });

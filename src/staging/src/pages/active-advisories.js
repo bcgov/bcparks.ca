@@ -63,7 +63,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const [apiCall, setApiCall] = useState("") // latest advisory fetch call
   const [apiCountCall, setApiCountCall] = useState("") // latest advisory count call
 
-  const apiUrl = data.site.siteMetadata.apiURL // api root
+  const apiUrl = `${data.site.siteMetadata.apiURL}/api` // api root
 
   const [isSearchError, setIsSearchError] = useState(false) // true when api error - show msg
 
