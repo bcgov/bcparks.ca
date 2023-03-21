@@ -22,22 +22,22 @@ export default function Advisory({ advisories }) {
 
   let alertIcon = blueAlertIcon
   if (advisories.length > 0) {
-    const alertLevels = advisories.map(advisory => advisory.attributes.urgency.data.attributes.sequence)
+    const alertLevels = advisories.map(advisory => advisory.urgency.sequence)
     const maxAlertLevel = Math.max(...alertLevels)
     if (maxAlertLevel === 3) alertIcon = redAlertIcon
     if (maxAlertLevel === 2) alertIcon = yellowAlertIcon
     const highAlertGroup = advisories.filter(
-      advisory => advisory.attributes.urgency.data.attributes.sequence === maxAlertLevel
+      advisory => advisory.urgency.sequence === maxAlertLevel
     )
     const advisoryText = []
     const advisoryTextCounts = {}
     highAlertGroup.forEach(advisory => {
-      if (advisory.attributes.eventType.data.attributes) {
-        if (!advisoryText.includes(advisory.attributes.eventType.data.attributes.eventType)) {
-          advisoryText.push(advisory.attributes.eventType.data.attributes.eventType)
-          advisoryTextCounts[advisory.attributes.eventType.data.attributes.eventType] = 1
+      if (advisory.eventType) {
+        if (!advisoryText.includes(advisory.eventType.eventType)) {
+          advisoryText.push(advisory.eventType.eventType)
+          advisoryTextCounts[advisory.eventType.eventType] = 1
         } else {
-          advisoryTextCounts[advisory.attributes.eventType.data.attributes.eventType] += 1
+          advisoryTextCounts[advisory.eventType.eventType] += 1
         }
       }
     })
