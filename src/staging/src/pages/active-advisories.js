@@ -346,7 +346,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   return (
     <>
       <Header mode="internal" content={menuContent} />
-      <Container>
+      <Container id="sr-content">
         <br />
         <h1>{pageTitle}</h1>
         <div className={classes.advisoriesHeader}>

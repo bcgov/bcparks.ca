@@ -42,7 +42,7 @@ const NotFoundPage = () => {
   return (
     <>
       <Header mode="internal" content={menuContent} />
-      <div className="not-found">
+      <div id="sr-content" className="not-found">
         <div>
           <div className="not-found-container d-flex align-items-center justify-content-center container">
             <div className="p-3">

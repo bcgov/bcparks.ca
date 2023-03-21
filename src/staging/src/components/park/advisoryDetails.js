@@ -23,8 +23,8 @@ const formatDate = isoDate => {
 export default function AdvisoryDetails({ advisories }) {
   let expandedsInitial = []
   advisories.sort((a, b) => {
-    return b?.attributes.urgency.data.attributes.sequence - a?.attributes.urgency.data.attributes.sequence
-      || new Date(b.attributes.advisoryDate) - new Date(a.attributes.advisoryDate)
+    return b?.urgency?.sequence - a?.urgency?.sequence
+      || new Date(b.advisoryDate) - new Date(a.advisoryDate)
   }).forEach((advisory, index) => {
     expandedsInitial[index] = false
   })
@@ -48,7 +48,7 @@ export default function AdvisoryDetails({ advisories }) {
   const advisoriesWithFormatting = advisories.map(advisory => {
     let alertIcon
     let alertColorCss
-    switch (advisory.attributes.urgency.data.attributes.color) {
+    switch (advisory.urgency.color) {
       case "blue":
         alertIcon = blueAlertIcon
         alertColorCss = "blue-alert"
@@ -69,10 +69,10 @@ export default function AdvisoryDetails({ advisories }) {
     return {
       alertIcon,
       alertColorCss,
-      formattedAdvisoryDate: formatDate(advisory.attributes.advisoryDate),
-      formattedEffectiveDate: formatDate(advisory.attributes.effectiveDate),
-      formattedEndDate: formatDate(advisory.attributes.endDate),
-      formattedUpdatedDate: formatDate(advisory.attributes.updatedDate),
+      formattedAdvisoryDate: formatDate(advisory.advisoryDate),
+      formattedEffectiveDate: formatDate(advisory.effectiveDate),
+      formattedEndDate: formatDate(advisory.endDate),
+      formattedUpdatedDate: formatDate(advisory.updatedDate),
       ...advisory,
     }
   })
@@ -116,7 +116,7 @@ export default function AdvisoryDetails({ advisories }) {
                 // This is a cheeky way to programmatically open one, some, or all items simultaneously.
                 activeKey={expandeds[index] ? advisory.id : null}
                 key={advisory.id}
-                aria-controls={advisory.attributes.title}
+                aria-controls={advisory.title}
                 className="mb-4"
               >
                 <Accordion.Toggle
@@ -134,7 +134,7 @@ export default function AdvisoryDetails({ advisories }) {
                         className="small mr-3"
                         alt="Alert icon"
                       ></img>
-                      <HtmlContent>{advisory.attributes.title}</HtmlContent>
+                      <HtmlContent>{advisory.title}</HtmlContent>
                     </div>
                     <div className="d-flex align-items-center expand-icon">
                       <i
@@ -148,12 +148,12 @@ export default function AdvisoryDetails({ advisories }) {
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={advisory.id}>
                   <div className="advisory-content p-3">
-                    {advisory.attributes.description && (
+                    {advisory.description && (
                       <>
                         <HtmlContent className="mb-2">
-                          {advisory.attributes.description}
+                          {advisory.description}
                         </HtmlContent>
-                        {advisory.attributes.links?.data.map(({ title, url, id }) => (
+                        {advisory.links?.map(({ title, url, id }) => (
                             <p>
                               <a
                                 href={url}
@@ -168,11 +168,11 @@ export default function AdvisoryDetails({ advisories }) {
                             ))}
                       </>
                     )}
-                    {advisory.attributes.isEffectiveDateDisplayed &&
+                    {advisory.isEffectiveDateDisplayed &&
                       advisory.formattedEffectiveDate && (
                         <p>
                           In effect {advisory.formattedEffectiveDate}
-                          {advisory.attributes.isEndDateDisplayed &&
+                          {advisory.isEndDateDisplayed &&
                             advisory.formattedEndDate && (
                               <>
                                 {" to "}
@@ -181,11 +181,11 @@ export default function AdvisoryDetails({ advisories }) {
                             )}
                         </p>
                       )}
-                    {advisory.attributes.isAdvisoryDateDisplayed &&
+                    {advisory.isAdvisoryDateDisplayed &&
                       advisory.formattedAdvisoryDate && (
                         <p>Posted {advisory.formattedAdvisoryDate}</p>
                       )}
-                    {advisory.attributes.isUpdatedDateDisplayed &&
+                    {advisory.isUpdatedDateDisplayed &&
                       advisory.formattedUpdatedDate && (
                         <p>Updated {advisory.formattedUpdatedDate}</p>                        
                       )}

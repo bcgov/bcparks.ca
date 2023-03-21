@@ -19,9 +19,7 @@ const MainSearch = () => {
 
   return (
     <div className="parks-search-wrapper">
-      <div className="parks-search-header">
-        Find a park
-      </div>
+      <h1 className="text-white">Find a park</h1>
       <div className="parks-search-field">
         <InputLabel className="sr-only" htmlFor="park-search-text">
             Search

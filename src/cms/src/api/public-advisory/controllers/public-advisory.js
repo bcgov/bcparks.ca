@@ -59,7 +59,7 @@ module.exports = createCoreController(
             delete entity.standardMessages;
 
             const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
-            return this.transformResponse(sanitizedEntity);
+            return sanitizedEntity;
         },
         async find(ctx) {
             let entities;
@@ -92,7 +92,7 @@ module.exports = createCoreController(
             });
 
             return {
-                data: this.transformResponse(results)?.data || [],
+                data: results || [],
                 meta: { pagination: pagination }
             };
         },

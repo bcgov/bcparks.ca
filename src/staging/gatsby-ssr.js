@@ -30,8 +30,8 @@ const HtmlAttributes = {
 
 const HeadComponents = [
     process.env.GATSBY_ENABLE_SNOWPLOW === "true" &&
-    <script src="/_scripts/snowplow.js" />,
-    <style
+    <script src="/_scripts/snowplow.js" key="snowplow-js" />,
+    <style key="google-mobile-friendly-test"
     dangerouslySetInnerHTML={{
         __html:`body {font-size:1.0rem;} img {max-width:100%;}`
     }}
