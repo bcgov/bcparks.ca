@@ -26,6 +26,10 @@ module.exports = [
             // TODO:
             // 'yourBucketName.s3.yourRegion.amazonaws.com',
           ],
+          'frame-src': [
+            "'self'",
+            'https://www.youtube.com'
+          ]
         },
       },
     },

@@ -115,6 +115,13 @@ export const common = css`
 
     .table {
       margin: 0;
+      width: 100%; // Custom Styles BCParks
+      table { 
+        width: 100%; // Custom Styles BCParks
+        td, th {
+          vertical-align: middle; // Custom Styles BCParks
+        }
+      } 
     }
 
     ul.todo-list {
