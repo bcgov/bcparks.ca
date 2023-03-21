@@ -56,7 +56,7 @@ const loadAdvisories = async (apiBaseUrl, orcsId) => {
   return axios.get(`${apiBaseUrl}/public-advisories/?${params}`)
 }
 
-export default function ParkTemplate({ data }) {
+export default function SiteTemplate({ data }) {
   const classes = useStyles()
 
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
@@ -130,7 +130,7 @@ export default function ParkTemplate({ data }) {
           // for sites, we want to include all advisories at the park level  
           // and advisories for this specific site, but we exclude advisories 
           // for other sites at the same park
-          const advisories = [...response.data].filter(
+          const advisories = response.data.data.filter(
             (advisory) => {
               return advisory.sites.length === 0 ||
                 advisory.sites.some(
