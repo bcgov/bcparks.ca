@@ -469,7 +469,7 @@ export default function FindAPark({ location, data }) {
   return (
     <>
       <Header content={menuContent} />
-      <div className="search-body">
+      <div id="sr-content" className="search-body">
         <div className="search-results-main container">
           <div className="search-results-container">
             <Breadcrumbs

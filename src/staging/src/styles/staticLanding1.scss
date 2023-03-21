@@ -92,14 +92,6 @@
  */
 .parks-search-wrapper {
   color: $colorWhite;
-
-  @media screen and (min-width: $mdBreakpoint) {
-    .parks-search-header {
-      font-size: 2rem;
-      font-weight: bold;
-      line-height: 2.5rem;
-    }
-  }
 }
 
 .parks-search-field {
