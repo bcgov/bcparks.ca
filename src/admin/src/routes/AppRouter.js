@@ -62,9 +62,10 @@ function AppRouter() {
             component={AdvisorySummary}
             props={{ page: { setError, cmsData, setCmsData } }}
           />
-          <Route path="/bcparks/error">
-            <Error page={{ error }} />
-          </Route>
+          console.log('TODO: remove commit later' )
+          {/*<Route path="/bcparks/error">*/}
+          {/*  /!*<Error page={{ error }} />*!/*/}
+          {/*</Route>*/}
         </Switch>
       </BrowserRouter>
     </div>

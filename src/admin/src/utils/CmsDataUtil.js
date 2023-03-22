@@ -17,7 +17,7 @@ export function getProtectedAreas(cmsData, setCmsData) {
     if (!cmsData.protectedAreas) {
         const result = cmsAxios.get(`/protected-areas/items`).then((res) => {
             const data = cmsData;
-            data.protectedAreas = res.data;
+            data.protectedAreas = res.data;// just for info: data obj just once
             setCmsData(data);
             return res.data;
         });
@@ -33,9 +33,9 @@ export function getRegions(cmsData, setCmsData) {
             .get(`/regions?${querySort("regionName")}`)
             .then((res) => {
                 const data = cmsData;
-                data.regions = res.data;
+                data.regions = res.data.data;
                 setCmsData(data);
-                return res.data;
+                return res.data.data;
             });
         return result;
     } else {
@@ -49,9 +49,9 @@ export function getSections(cmsData, setCmsData) {
             .get(`/sections?${querySort("sectionName")}`)
             .then((res) => {
                 const data = cmsData;
-                data.sections = res.data;
+                data.sections = res.data.data;
                 setCmsData(data);
-                return res.data;
+                return res.data.data;
             });
         return result;
     } else {
@@ -65,9 +65,9 @@ export function getManagementAreas(cmsData, setCmsData) {
             .get(`/management-areas?${querySort("managementAreaName")}&populate=*`)
             .then((res) => {
                 const data = cmsData;
-                data.managementAreas = res.data;
+                data.managementAreas = res.data.data;
                 setCmsData(data);
-                return res.data;
+                return res.data.data;
             });
         return result;
     } else {
@@ -78,12 +78,12 @@ export function getManagementAreas(cmsData, setCmsData) {
 export function getSites(cmsData, setCmsData) {
     if (!cmsData.sites) {
         const result = cmsAxios
-            .get(`/sites?${querySort("siteName")}`)
+            .get(`/sites?${querySort("siteName")}&populate=*`)
             .then((res) => {
                 const data = cmsData;
-                data.sites = res.data;
+                data.sites = res.data.data;
                 setCmsData(data);
-                return res.data;
+                return res.data.data;
             });
         return result;
     } else {
@@ -97,9 +97,9 @@ export function getFireCentres(cmsData, setCmsData) {
             .get(`/fire-centres?${querySort("fireCentreName")}`)
             .then((res) => {
                 const data = cmsData;
-                data.fireCentres = res.data;
+                data.fireCentres = res.data.data;
                 setCmsData(data);
-                return res.data;
+                return res.data.data;
             });
         return result;
     } else {
@@ -113,9 +113,9 @@ export function getFireZones(cmsData, setCmsData) {
             .get(`/fire-zones?${querySort("fireZoneName")}`)
             .then((res) => {
                 const data = cmsData;
-                data.fireZones = res.data;
+                data.fireZones = res.data.data;
                 setCmsData(data);
-                return res.data;
+                return res.data.data;
             });
         return result;
     } else {
@@ -129,9 +129,9 @@ export function getEventTypes(cmsData, setCmsData) {
             .get(`/event-types?${querySort("eventType")}`)
             .then((res) => {
                 const data = cmsData;
-                data.eventTypes = res.data;
+                data.eventTypes = res.data.data;
                 setCmsData(data);
-                return res.data;
+                return res.data.data;
             });
         return result;
     } else {
@@ -145,9 +145,9 @@ export function getAccessStatuses(cmsData, setCmsData) {
             .get(`/access-statuses?${querySort("precedence")}`)
             .then((res) => {
                 const data = cmsData;
-                data.accessStatuses = res.data;
+                data.accessStatuses = res.data.data;
                 setCmsData(data);
-                return res.data;
+                return res.data.data;
             });
         return result;
     } else {
@@ -206,9 +206,9 @@ export function getLinkTypes(cmsData, setCmsData) {
 export function getBusinessHours(cmsData, setCmsData) {
     const result = cmsAxios.get(`/business-hour`).then((res) => {
         const data = cmsData;
-        data.businessHours = res.data;
+        data.businessHours = res.data.data;// added
         setCmsData(data);
-        return res.data;
+        return res.data.data;
     });
     return result;
 }
@@ -219,9 +219,9 @@ export function getStandardMessages(cmsData, setCmsData) {
             .get(`/standard-messages?${querySort("title")}`)
             .then((res) => {
                 const data = cmsData;
-                data.standardMessages = res.data;
+                data.standardMessages = res.data.data;
                 setCmsData(data);
-                return res.data;
+                return res.data.data;
             });
         return result;
     } else {

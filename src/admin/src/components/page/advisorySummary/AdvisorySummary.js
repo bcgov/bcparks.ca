@@ -36,7 +36,7 @@ export default function AdvisorySummary({
   const [currentSiteUrls, setCurrentSiteUrls] = useState("");
 
   useEffect(() => {
-    if (!isLoadingPage && advisory) {
+    if (!isLoadingPage) {
       if (advisory.advisoryStatus.code !== "PUB") {
         Promise.all([
           cmsAxios.get(`/public-advisories/${advisory.advisoryNumber}`),
@@ -226,6 +226,7 @@ export default function AdvisorySummary({
     return <Redirect push to={`/bcparks/update-advisory/${id}`} />;
   }
 
+  console.log('TODO: remove console later', toError )
   if (toError) {
     return <Redirect push to="/bcparks/error" />;
   }
@@ -241,7 +242,7 @@ export default function AdvisorySummary({
               <Loader page />
             </div>
           )}
-          {!isLoadingPage && advisory && (
+          {!isLoadingPage && (
             <div className="container pt10b30">
               <div className="row ad-wrap-reverse">
                 <div className="container-fluid col-lg-3 col-md-12 col-12">
@@ -271,6 +272,7 @@ export default function AdvisorySummary({
                         <br />
                       </>
                     )}
+                    {console.log("+isCurrentlyPublished", isCurrentlyPublished)}
                     {isCurrentlyPublished && (
                       <div className="row">
                         <div className="col-lg-12 col-md-12 col-12 ad-right">
@@ -297,6 +299,7 @@ export default function AdvisorySummary({
                     />
                   </div>
                 )}
+                {console.log("+showOriginalAdvisory", showOriginalAdvisory)}
                 {showOriginalAdvisory && (
                   <div className="container-fluid ad-summary col-lg-9 col-md-12 col-12">
                     <div className="row">

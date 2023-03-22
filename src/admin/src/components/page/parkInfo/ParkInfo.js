@@ -370,6 +370,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
     );
   }
 
+  console.log('TODO: remove console later', toError )
   if (toError) {
     return <Redirect push to="/bcparks/error" />;
   }

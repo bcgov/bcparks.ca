@@ -52,7 +52,11 @@ const query = qs.stringify({
 });
 
 const queryParams = (id) => qs.stringify({
-  sort: [`advisoryStatus:${id}`],
+  filters: {
+    advisoryStatus: {
+      $eq: id,
+    },
+  },
 }, {
   encodeValuesOnly: true,
 })
@@ -81,8 +85,6 @@ export default function AdvisoryDashboard({
   const [originalParkNames, setOriginalParkNames] = useState([]);
 
   if (!keycloak && !initialized) setToError(true);
-
-  console.log('keycloak.token, token is failing', keycloak.token)
 
   useEffect(() => {
     isMounted.current = true;
@@ -150,14 +152,14 @@ export default function AdvisoryDashboard({
           setIsLoading(false);
         });
         // Regions
-        const regionsData = res[0]?.data;
+        const regionsData = res[0];
         // Management Areas
-        const managementAreasData = res[1]?.data;
+        const managementAreasData = res[1];
 
         // Protected Areas
         const parkNamesData = res[2];
 
-        const publicAdvisories = res[3]?.data?.data;
+        const publicAdvisories = res[3]?.data;
 
         // Public Advisories
         const regionParksCount = managementAreasData.reduce((region, item) => {
@@ -309,14 +311,16 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
 
       if (publishedStatus?.length > 0) {
         const result = await cmsAxios
-          .get(`/public-advisories`) // ?${queryParams(publishedStatus[0].id)}
+          .get(`/public-advisories?_advisoryStatus=${publishedStatus[0].id}&populate=*`)
           .catch(() => {
             setHasErrors(true);
           });
 
         let publishedAdvisories = [];
-        if (result?.data?.length > 0) {
-          result.data.forEach((ad) => {
+        const res = result?.data?.data;
+
+        if (res.length > 0) {
+          res.forEach((ad) => {
             publishedAdvisories = [...publishedAdvisories, ad.advisoryNumber];
           });
         }
@@ -606,7 +610,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
   if (toCreate) {
     return <Redirect to="/bcparks/create-advisory" />;
   }
-
+  console.log('TODO: remove console later', toError , hasErrors)
   if (toError || hasErrors) {
     console.log('toError || hasErrors', toError , hasErrors)
     return <Redirect push to="/bcparks/error" />;

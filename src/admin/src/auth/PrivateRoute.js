@@ -26,6 +26,7 @@ export function PrivateRoute({ component: Component, roles, props, ...rest }) {
     }
   }, [setIsAuthorized, setIsLoading, initialized, keycloak, roles]);
 
+  console.log('TODO: remove console later', toError )
 
   if (toError) {
     return (

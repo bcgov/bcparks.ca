@@ -11,7 +11,6 @@ export default function Error({ page: { error } }) {
   if (toHome) {
     return <Redirect to="/bcparks" />;
   }
-
   let errorContent;
   if (!error) {
     errorContent = (

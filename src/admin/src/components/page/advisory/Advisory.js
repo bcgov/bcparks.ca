@@ -147,16 +147,14 @@ export default function Advisory({
         setAdvisoryId(id);
         cmsAxios
           .get(
-              `public-advisory-audits/${id}?_publicationState=preview`,// ${id}?_publicationState=preview
-            // public-advisory-audits/${id}?_publicationState=preview
-
+              `public-advisory-audits/${id}?_publicationState=preview`,
               // {
               //   headers: { Authorization: `Bearer ${keycloak.token}` },
               // }
           )
           .then((res) => {
             linksRef.current = [];
-            const advisoryData = res.data;
+            const advisoryData = res.data.data;
             setAdvisoryNumber(advisoryData.advisoryNumber);
             setRevisionNumber(advisoryData.revisionNumber);
             setHeadline(advisoryData.title || "");
@@ -824,13 +822,11 @@ export default function Advisory({
         };
 
         cmsAxios
-          .post(`public-advisory-audits`)
-            // todo:
-          //   , newAdvisory, {
-          //   headers: { Authorization: `Bearer ${keycloak.token}` },
-          // })
+          .post(`public-advisory-audits`,{ data: newAdvisory }, {
+            headers: { Authorization: `Bearer ${keycloak.token}` },
+          })
           .then((res) => {
-            setAdvisoryId(res.data.id);
+            setAdvisoryId(res.data.data.id);
             setIsSubmitting(false);
             setIsSavingDraft(false);
             setIsConfirmation(true);
@@ -948,13 +944,11 @@ export default function Advisory({
           };
 
           cmsAxios
-            .put(`public-advisory-audits`)
-            ///${id})
-            // , updatedAdvisory, {
-            //   headers: { Authorization: `Bearer ${keycloak.token}` },
-            // })
+            .put(`public-advisory-audits/${id}`, {data: updatedAdvisory}, {
+              // headers: { Authorization: `Bearer ${keycloak.token}` },
+            })
             .then((res) => {
-              setAdvisoryId(res.data.id);
+              setAdvisoryId(res.data.data.id);
               setIsSubmitting(false);
               setIsSavingDraft(false);
               setIsConfirmation(true);
@@ -1076,10 +1070,10 @@ export default function Advisory({
       />
     );
   }
-
-  if (toError) {
-    return <Redirect push to="/bcparks/error" />;
-  }
+  console.log('TODO: remove console later', toError )
+  // if (toError) {
+  //   return <Redirect push to="/bcparks/error" />;
+  // }
 
   if (isConfirmation) {
     return (
