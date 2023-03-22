@@ -6,9 +6,9 @@ module.exports = [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          "connect-src": ["self", "https:"],
+          "connect-src": ["'self'", "https:"],
           "img-src": [
-            "self",
+            "'self'",
             "data:",
             "blob:",
             "dl.airtable.com",
@@ -18,7 +18,7 @@ module.exports = [
             // 'yourBucketName.s3.yourRegion.amazonaws.com', or  `https://${env('AWS_BUCKET')}.s3.${env('AWS_REGION')}.amazonaws.com`
           ],
           "media-src": [
-            "self",
+            "'self'",
             "data:",
             "blob:",
             "dl.airtable.com",
@@ -28,7 +28,7 @@ module.exports = [
           ],
           'frame-src': [
             "'self'",
-            'https://www.youtube.com'
+            "https://www.youtube.com"
           ]
         },
       },
