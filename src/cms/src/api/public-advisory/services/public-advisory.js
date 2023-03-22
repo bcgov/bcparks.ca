@@ -62,7 +62,7 @@ module.exports = createCoreService("api::public-advisory.public-advisory", ({ st
             query.start = ((query.pagination?.page || 1) - 1) * query.limit + 1;
         }
 
-        query.sort = ["publishedAt:desc"];
+        query.sort = ["advisoryDate:DESC"];
 
         const results = await strapi.entityService.findMany("api::public-advisory.public-advisory", query);
         return { results: results };
