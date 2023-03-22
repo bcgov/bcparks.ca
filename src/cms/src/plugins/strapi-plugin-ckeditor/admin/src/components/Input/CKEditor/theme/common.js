@@ -41,30 +41,35 @@ export const common = css`
 
 
     h1 {
-      font-size: 2.3em;
+      //font-size: 2.3em;
+      font-size: 1.95rem; // Custom Styles BCParks
     }
 
     h2 {
-      font-size: 1.84em;
+      //font-size: 1.84em;
+      font-size: 1.55rem; // Custom Styles BCParks
     }
 
     h3 {
       //font-size: 1.48em;
-      font-size: 20px; // Custom Styles BCPark
-      margin: 0 0 24px 0; // Custom Styles BCPark
+      font-size: 1.25rem; // Custom Styles BCParks
+      margin: 0 0 24px 0; // Custom Styles BCParks
     }
 
     h4 {
-      font-size: 1.22em;
-      margin: 0 0 24px 0; // Custom Styles BCPark
+      //font-size: 1.22em;
+      font-size: 1.03rem; // Custom Styles BCParks
+      margin: 0 0 24px 0; // Custom Styles BCParks
     }
 
     h5 {
-      font-size: 1.06em;
+      //font-size: 1.06em;
+      font-size: 0.90rem; // Custom Styles BCParks
     }
 
     h6 {
-      font-size: 1em;
+      //font-size: 1em;
+      font-size: 0.84rem; // Custom Styles BCParks
     }
 
     h1,
@@ -110,6 +115,13 @@ export const common = css`
 
     .table {
       margin: 0;
+      width: 100%; // Custom Styles BCParks
+      table { 
+        width: 100%; // Custom Styles BCParks
+        td, th {
+          vertical-align: middle; // Custom Styles BCParks
+        }
+      } 
     }
 
     ul.todo-list {
