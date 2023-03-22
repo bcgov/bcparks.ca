@@ -81,7 +81,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       try {
         const response = await axios.get(`${apiUrl}/event-types/`);
   
-        const formattedEventTypes = response.data.map((obj) => ({
+        const formattedEventTypes = response.data.data.map((obj) => ({
           label: obj.eventType,
           value: obj.eventType.toLowerCase(),
         }));
@@ -177,10 +177,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
     // let q = "/public-advisories/count?protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true"
     let q =
-      "/public-advisories/count"
+      "/public-advisories/count?populate=*&filters[protectedAreas][publishedAt][$null]=false&filters[protectedAreas][isDisplayed]=true&sort=advisoryDate:DESC&_q="
 
     if (advisoryType !== "all") {
-      q += `?&eventType.eventType_contains=${advisoryType}`
+      q += `&_eventType=${advisoryType}`
     }
 
     const newApiCountCall = apiUrl + q
@@ -197,10 +197,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     advisoryTypeFilter => {
       // Order by date and exclude unpublished parks
       let q =
-        "?_sort=advisoryDate:DESC&protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true"
+        "?populate=*&filters[protectedAreas][publishedAt][$null]=false&filters[protectedAreas][isDisplayed]=true&sort=advisoryDate:DESC&_q="
 
       if (advisoryTypeFilter !== "all") {
-        q += `&eventType.eventType_contains=${advisoryTypeFilter}`
+        q += `&_eventType=${advisoryTypeFilter}`
       }
 
       let useParksFilter = isParksFilter
@@ -230,7 +230,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           } else {
             searchType = "all"
           }
-          q += `&_q=${searchText}`
+          q += `${searchText}`
           q += `&_searchType=${searchType}`
         }
       }
@@ -246,8 +246,8 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
       let newApiCall = apiUrl + `/public-advisories` + q
 
-      newApiCall += "&_limit=" + pageLen // use -1 for unlimited
-      newApiCall += "&_start=" + pageLen * (pageIndex - 1)
+      newApiCall += "&limit=" + pageLen // use -1 for unlimited
+      newApiCall += "&start=" + pageLen * (pageIndex - 1)
 
       if (apiCall !== newApiCall) {
         // Don't repeat the same call
@@ -257,7 +257,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         axios
           .get(newApiCall)
           .then(function (data) {
-            let results = data.data
+            let results = data.data.data
 
             setAdvisories(results) // This will pass advisories to the AdvisoryList
             setIsDataOld(false) // Flag that advisories are updated
@@ -266,7 +266,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
             // Get count
             let apiCount = apiUrl + "/public-advisories/count" + q
-            if (q === "?_sort=advisoryDate:DESC&protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true") {
+            if (q === "?populate=*&filters[protectedAreas][publishedAt][$null]=false&filters[protectedAreas][isDisplayed]=true&sort=advisoryDate:DESC&_q=") {
              apiCount = apiUrl + "/public-advisories/count"
             }
             
