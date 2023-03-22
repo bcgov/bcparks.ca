@@ -1,7 +1,0 @@
-cluster:
-  ssoAuthUrl: https://dev.loginproxy.gov.bc.ca/auth
-
-cmsUpgrade:
-  env:
-    externalUrl: https://strapi-cms-upgrade-61d198-dev.apps.silver.devops.gov.bc.ca
-    databaseName: cms_upgrade

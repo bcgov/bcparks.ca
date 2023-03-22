@@ -12,17 +12,27 @@ The `install` command can be used when deploying to a namespace for the very fir
 
 Run the following commands from the `infrastructure/helm/bcparks` directory.
 
+Objects prefixed with `bcparks-` in OpenShift are from the main branch in GitHub and objects prefixed with `develop-` are from the develop branch. There is no `develop-` for prod because there is only one prod.  
+
 ### Dev
 
-`helm -n 61d198-dev install bcparks . -f values-dev.yaml`
+`helm -n 61d198-dev install bcparks . -f values-dev-main.yaml`
 
 ### Test
 
-`helm -n 61d198-test install bcparks . -f values-test.yaml`
+`helm -n 61d198-test install bcparks . -f values-test-main.yaml`
 
 ### Prod
 
-`helm -n 61d198-prod install bcparks . -f values-prod.yaml`
+`helm -n 61d198-prod install bcparks . -f values-prod-main.yaml`
+
+### Dev (develop branch)
+
+`helm -n 61d198-dev install develop . -f values-dev-develop.yaml`
+
+### Test (develop branch)
+
+`helm -n 61d198-test install develop . -f values-test-develop.yaml`
 
 ## Upgrading
 
@@ -32,15 +42,23 @@ Run the following commands from the `infrastructure/helm/bcparks` directory.
 
 ### Dev
 
-`helm -n 61d198-dev upgrade bcparks . -f values-dev.yaml`
+`helm -n 61d198-dev upgrade bcparks . -f values-dev-main.yaml`
 
 ### Test
 
-`helm -n 61d198-test upgrade bcparks . -f values-test.yaml`
+`helm -n 61d198-test upgrade bcparks . -f values-test-main.yaml`
 
 ### Prod
 
-`helm -n 61d198-prod upgrade bcparks . -f values-prod.yaml`
+`helm -n 61d198-prod upgrade bcparks . -f values-prod-main.yaml`
+
+### Dev (develop branch)
+
+`helm -n 61d198-dev upgrade develop . -f values-dev-develop.yaml`
+
+### Test (develop branch)
+
+`helm -n 61d198-test upgrade develop . -f values-test-develop.yaml`
 
 ## Teardown
 
@@ -59,3 +77,11 @@ Run the following commands from the `infrastructure/helm/bcparks` directory.
 ### Prod
 
 `helm -n 61d198-prod uninstall bcparks`
+
+### Dev (develop branch)
+
+`helm -n 61d198-dev uninstall develop`
+
+### Test (develop branch)
+
+`helm -n 61d198-test uninstall develop`

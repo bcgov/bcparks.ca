@@ -1,0 +1,13 @@
+cluster:
+  ssoAuthUrl: https://dev.loginproxy.gov.bc.ca/auth
+
+cms:
+  env:
+    externalUrl: https://develop-cms-61d198-dev.apps.silver.devops.gov.bc.ca
+
+admin:
+  env:
+    externalUrl: https://develop-admin-61d198-dev.apps.silver.devops.gov.bc.ca
+
+patroni:
+  replicas: 1

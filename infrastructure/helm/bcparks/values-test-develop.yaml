@@ -1,0 +1,60 @@
+cluster:
+  ssoAuthUrl: https://test.loginproxy.gov.bc.ca/auth
+
+images:
+  strapi:
+    tag: test
+  admin:
+    tag: test
+  public:
+    tag: test
+  landing:
+    tag: test
+
+cms:
+  resources:
+    limits:
+      cpu: "1"
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  env:
+    externalUrl: https://develop-cms-61d198-test.apps.silver.devops.gov.bc.ca
+
+  hpa:
+    minReplicas: 1
+    maxReplicas: 1
+
+admin:
+  env:
+    externalUrl: https://develop-admin-61d198-test.apps.silver.devops.gov.bc.ca
+
+patroni:
+  replicas: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  pvc:
+    size: 10Gi
+
+backup:
+  enabled: true
+
+  pvc:
+    size: 10Gi
+
+  enironment:
+    friendlyName: bcparks.ca CMS Postgres Backup [test]
+    name: 61d198-test
+
+public:
+  hpa:
+    minReplicas: 1
+    maxReplicas: 1
