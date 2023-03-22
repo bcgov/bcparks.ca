@@ -177,10 +177,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
     // let q = "/public-advisories/count?protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true"
     let q =
-      "/public-advisories/count?populate=*&filters[protectedAreas][publishedAt][$null]=false&filters[protectedAreas][isDisplayed]=true&sort=advisoryDate:DESC&_q="
+      "/public-advisories/count?populate=*&sort=advisoryDate:DESC&"
 
     if (advisoryType !== "all") {
-      q += `&_eventType=${advisoryType}`
+      q += `_q=&_eventType=${advisoryType}`
     }
 
     const newApiCountCall = apiUrl + q
@@ -197,10 +197,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     advisoryTypeFilter => {
       // Order by date and exclude unpublished parks
       let q =
-        "?populate=*&filters[protectedAreas][publishedAt][$null]=false&filters[protectedAreas][isDisplayed]=true&sort=advisoryDate:DESC&_q="
+        "?populate=*&sort=advisoryDate:DESC&"
 
       if (advisoryTypeFilter !== "all") {
-        q += `&_eventType=${advisoryTypeFilter}`
+        q += `_q=&_eventType=${advisoryTypeFilter}`
       }
 
       let useParksFilter = isParksFilter
@@ -230,7 +230,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           } else {
             searchType = "all"
           }
-          q += `${searchText}`
+          q += `_q=${searchText}`
           q += `&_searchType=${searchType}`
         }
       }
@@ -246,8 +246,8 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
       let newApiCall = apiUrl + `/public-advisories` + q
 
-      newApiCall += "&limit=" + pageLen // use -1 for unlimited
-      newApiCall += "&start=" + pageLen * (pageIndex - 1)
+      newApiCall += "&pagination[limit]=" + pageLen // use -1 for unlimited
+      newApiCall += "&pagination[start]=" + pageLen * (pageIndex - 1)
 
       if (apiCall !== newApiCall) {
         // Don't repeat the same call
@@ -266,7 +266,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
             // Get count
             let apiCount = apiUrl + "/public-advisories/count" + q
-            if (q === "?populate=*&filters[protectedAreas][publishedAt][$null]=false&filters[protectedAreas][isDisplayed]=true&sort=advisoryDate:DESC&_q=") {
+            if (q === "?populate=*&sort=advisoryDate:DESC&") {
              apiCount = apiUrl + "/public-advisories/count"
             }
             
