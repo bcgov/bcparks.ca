@@ -59,7 +59,7 @@ module.exports = createCoreService("api::public-advisory.public-advisory", ({ st
         }
 
         if (query.start === undefined) {
-            query.start = ((query.pagination?.page || 1) - 1) * query.limit + 1;
+            query.start = ((query.pagination?.page || 1) - 1) * query.limit;
         }
 
         query.sort = ["advisoryDate:DESC"];
