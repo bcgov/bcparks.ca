@@ -177,10 +177,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
     // let q = "/public-advisories/count?protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true"
     let q =
-      "/public-advisories/count?populate=*&_q"
+      "/public-advisories/count"
 
     if (advisoryType !== "all") {
-      q += `&_eventType=${advisoryType}`
+      q += `?&_q&_eventType=${advisoryType}`
     }
 
     const newApiCountCall = apiUrl + q
