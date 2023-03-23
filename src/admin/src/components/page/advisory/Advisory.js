@@ -824,7 +824,7 @@ export default function Advisory({
         };
 
         cmsAxios // -audit OR -audits
-          .post(`public-advisory-audit`,{ data: newAdvisory }, {
+          .post(`public-advisory-audits`,{ data: newAdvisory }, {
             // headers: { Authorization: `Bearer ${keycloak.token}` },
           })
           .then((res) => {

@@ -1,11 +1,11 @@
 module.exports = ({ env }) => {
-  // TODO:
-  // const modelsToCache = env(
-  //   "STRAPI_CACHE_MODELS",
-  //   "public-advisory,protected-area"
-  // )
-  //   .split(",")
-  //   .map((item) => item.trim());
+    // TODO:
+    // const modelsToCache = env(
+    //   "STRAPI_CACHE_MODELS",
+    //   "public-advisory,protected-area"
+    // )
+    //   .split(",")
+    //   .map((item) => item.trim());
 
   return {
     graphql: {

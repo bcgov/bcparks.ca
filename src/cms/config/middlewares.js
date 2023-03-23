@@ -37,10 +37,11 @@ module.exports = [
   {
     name: 'strapi::cors',
     config: {
-      headers: ['Strapi-Transformer-Ignore'],
-    },
+      enabled: true,
+      headers: '*',
+      origin:'*'
+    }
   },
-
   "strapi::poweredBy",
   {
     // doc https://docs.strapi.io/dev-docs/configurations/middlewares#cors
