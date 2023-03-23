@@ -183,7 +183,6 @@ module.exports = {
 
     newPublicAdvisory.publishedAt = new Date();
     newPublicAdvisory.isLatestRevision = true;
-
     const oldPublicAdvisory = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', filter.id, {
       populate: '*',
     });

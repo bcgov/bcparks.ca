@@ -101,6 +101,11 @@ module.exports = ({ env }) => {
           uids: {
             "api::public-advisory-audit.public-advisory-audit": {
               GET: true,
+              PUT: true,
+              POST: true,
+            },
+            "api::public-advisory-audit.public-advisory-audit/id": {
+              PUT: true,
             },
             "api::region.region": {
               GET: true,
@@ -151,6 +156,10 @@ module.exports = ({ env }) => {
             "api::event-type.event-type": {
               GET: true,
             },
+            "api::link.link": {
+              POST: true,
+              PUT: true,
+            }
           },
         },
       },

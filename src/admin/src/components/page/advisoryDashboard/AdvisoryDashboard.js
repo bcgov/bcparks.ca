@@ -34,12 +34,13 @@ import {
 
 const query = qs.stringify({
   populate: '*',
-  // todo:
+  // todo: Would be better if we can specify data that what we need, instead of getting all fields, with limit of 1500
   // populate: {
   //   protectedAreas: {
-  //     fields: ['name', 'url'],
+  //     fields: [],
   //   },
   //   advisoryStatus: {
+  //     fields: [],
   //    }
   // },
 
@@ -159,7 +160,7 @@ export default function AdvisoryDashboard({
         // Protected Areas
         const parkNamesData = res[2];
 
-        const publicAdvisories = res[3]?.data;
+        const publicAdvisories = res[3]?.data.data;
 
         // Public Advisories
         const regionParksCount = managementAreasData.reduce((region, item) => {
@@ -229,7 +230,7 @@ export default function AdvisoryDashboard({
     cmsData,
     setCmsData,
     setError,
-    // query
+    query
   ]);
 
   const removeDuplicatesById = (arr) => {
@@ -254,8 +255,6 @@ export default function AdvisoryDashboard({
       setPublicAdvisories([...advisories]);
     }
   };
-
-  console.log('++',publicAdvisories)
 
   const filterAdvisoriesByRegionId = (regId) => {
     if (regId) {
@@ -688,7 +687,6 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
         >
           <br />
 
-          {console.log('publicAdvisories', publicAdvisories)}
           <div className="container-fluid">
             <DataTable
               key={publicAdvisories.length}
@@ -700,7 +698,6 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
               }}
               onFilterChange={(filters) => {
                 const advisoryFilters = JSON.parse(localStorage.getItem('advisoryFilters'));
-                console.log('filter', advisoryFilters)
                 const arrFilters = filters.map((obj) => {
                   return {
                     fieldName: obj.column["field"],

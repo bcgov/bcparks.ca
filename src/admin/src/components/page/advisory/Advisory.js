@@ -147,7 +147,7 @@ export default function Advisory({
         setAdvisoryId(id);
         cmsAxios
           .get(
-              `public-advisory-audits/${id}?_publicationState=preview`,
+              `public-advisory-audits/${id}?_publicationState=preview&populate=*`,
               // {
               //   headers: { Authorization: `Bearer ${keycloak.token}` },
               // }
@@ -308,7 +308,7 @@ export default function Advisory({
               setExistingFireZones([...selFireZones]);
             }
             const links = advisoryData.links;
-            if (links) {
+            if (links.length > 0) {
               links.forEach((l) => {
                 linksRef.current = [
                   ...linksRef.current,
@@ -672,13 +672,15 @@ export default function Advisory({
       return res;
     } else {
       const linkRequest = {
-        title: link.title,
-        url: link.url.startsWith("http") ? link.url : "https://" + link.url,
-        type: link.type,
-      };
+        'data': {
+          title: link.title,
+          url: link.url.startsWith("http") ? link.url : "https://" + link.url,
+          type: link.type,
+        }
+      }
       const res = await cmsAxios
         .post(`links`, linkRequest, {
-          headers: { Authorization: `Bearer ${keycloak.token}` },
+          // headers: { Authorization: `Bearer ${keycloak.token}` },
         })
         .catch((error) => {
           console.log("error occurred", error);
@@ -688,7 +690,7 @@ export default function Advisory({
             message: "Could not process advisory update",
           });
         });
-      return res.data;
+      return res.data.data;
     }
   };
 
@@ -704,7 +706,7 @@ export default function Advisory({
       };
       const res = await cmsAxios
         .put(`links/${id}`, linkRequest, {
-          headers: { Authorization: `Bearer ${keycloak.token}` },
+          // headers: { Authorization: `Bearer ${keycloak.token}` },
         })
         .catch((error) => {
           console.log("error occurred", error);
@@ -823,7 +825,7 @@ export default function Advisory({
 
         cmsAxios
           .post(`public-advisory-audits`,{ data: newAdvisory }, {
-            headers: { Authorization: `Bearer ${keycloak.token}` },
+            // headers: { Authorization: `Bearer ${keycloak.token}` },
           })
           .then((res) => {
             setAdvisoryId(res.data.data.id);
@@ -979,8 +981,8 @@ export default function Advisory({
       title: link.title,
     };
     const res = await cmsAxios
-      .post(`links`, linkRequest, {
-        headers: { Authorization: `Bearer ${keycloak.token}` },
+      .post(`links`,  linkRequest, {
+        // headers: { Authorization: `Bearer ${keycloak.token}` },
       })
       .catch((error) => {
         console.log("error occurred", error);
@@ -990,7 +992,7 @@ export default function Advisory({
           message: "Could not save attachments",
         });
       });
-    return res.data.id;
+    return res.data.data.id;
   };
 
   const updateMediaLink = async (media, id, link) => {
@@ -1007,7 +1009,7 @@ export default function Advisory({
 
     const res = await cmsAxios
       .put(`links/${id}`, linkRequest, {
-        headers: { Authorization: `Bearer ${keycloak.token}` },
+        // headers: { Authorization: `Bearer ${keycloak.token}` },
       })
       .catch((error) => {
         console.log("error occurred", error);
@@ -1017,7 +1019,7 @@ export default function Advisory({
           message: "Could not save attachments",
         });
       });
-    return res.data;
+    return res.data.data;
   };
 
   const saveMediaAttachment = async (id, link) => {
