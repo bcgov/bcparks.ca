@@ -211,7 +211,6 @@ export default function ParkSearch({
     return <Redirect push to={`/bcparks/park-info/${protectedArea}`} />;
   }
 
-  console.log('TODO: remove console later', toError )
   if (toError) {
     return <Redirect push to="/bcparks/error" />;
   }

@@ -164,7 +164,6 @@ export default function AdvisoryDashboard({
 
         // Public Advisories
         const regionParksCount = managementAreasData.reduce((region, item) => {
-          // Todo:
           region[item.region?.id] = (region[item.region?.id] || 0) + item.protectedAreas?.length;
           return region;
         }, {});
@@ -172,7 +171,6 @@ export default function AdvisoryDashboard({
         const today = moment(new Date()).tz("America/Vancouver").toISOString();
         const updatedPublicAdvisories = publicAdvisories.map((publicAdvisory) => {
           publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
-          // Todo:
           publicAdvisory.associatedParks = publicAdvisory.protectedAreas.map((p) => p.protectedAreaName).join(", ")
             + publicAdvisory.regions.map((r) => r.regionName).join(", ");
 
@@ -343,7 +341,6 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
       },
       cellStyle: (e, rowData) => {
         if (rowData.urgency !== null) {
-          // todo:
           switch (rowData.urgency?.urgency?.toLowerCase()) {
             case "low":
               return {
