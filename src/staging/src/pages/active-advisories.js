@@ -177,10 +177,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
     // let q = "/public-advisories/count?protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true"
     let q =
-      "/public-advisories/count?populate=*&sort=advisoryDate:DESC"
+      "/public-advisories/count?populate=*&_q"
 
     if (advisoryType !== "all") {
-      q += `&_q=&_eventType=${advisoryType}`
+      q += `&_eventType=${advisoryType}`
     }
 
     const newApiCountCall = apiUrl + q
@@ -197,11 +197,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     advisoryTypeFilter => {
       // Order by date and exclude unpublished parks
       let q =
-        "?populate=*&sort=advisoryDate:DESC"
-
-      if (advisoryTypeFilter !== "all") {
-        q += `&_q=&_eventType=${advisoryTypeFilter}`
-      }
+        "?populate=*&_q"
 
       let useParksFilter = isParksFilter
       let useKeywordFilter = isKeywordFilter
@@ -230,9 +226,13 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           } else {
             searchType = "all"
           }
-          q += `&_q=${searchText}`
+          q += `=${searchText}`
           q += `&_searchType=${searchType}`
         }
+      }
+
+      if (advisoryTypeFilter !== "all") {
+        q += `&_eventType=${advisoryTypeFilter}`
       }
 
       return q
@@ -246,8 +246,8 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
       let newApiCall = apiUrl + `/public-advisories` + q
 
-      newApiCall += "&pagination[limit]=" + pageLen // use -1 for unlimited
-      newApiCall += "&pagination[start]=" + pageLen * (pageIndex - 1)
+      newApiCall += "&limit=" + pageLen // use -1 for unlimited
+      newApiCall += "&start=" + pageLen * (pageIndex - 1)
 
       if (apiCall !== newApiCall) {
         // Don't repeat the same call
@@ -266,7 +266,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
             // Get count
             let apiCount = apiUrl + "/public-advisories/count" + q
-            if (q === "?populate=*&sort=advisoryDate:DESC") {
+            if (q === "?populate=*&_q") {
              apiCount = apiUrl + "/public-advisories/count"
             }
             
