@@ -177,7 +177,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
     // let q = "/public-advisories/count?protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true"
     let q =
-      "/public-advisories/count?populate=*&filters[protectedAreas][publishedAt][$null]=false&filters[protectedAreas][isDisplayed]=true&sort=advisoryDate:DESC&_q="
+      "/public-advisories/count?populate=*&_q"
 
     if (advisoryType !== "all") {
       q += `&_eventType=${advisoryType}`
@@ -197,11 +197,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     advisoryTypeFilter => {
       // Order by date and exclude unpublished parks
       let q =
-        "?populate=*&filters[protectedAreas][publishedAt][$null]=false&filters[protectedAreas][isDisplayed]=true&sort=advisoryDate:DESC&_q="
-
-      if (advisoryTypeFilter !== "all") {
-        q += `&_eventType=${advisoryTypeFilter}`
-      }
+        "?populate=*&_q"
 
       let useParksFilter = isParksFilter
       let useKeywordFilter = isKeywordFilter
@@ -230,9 +226,13 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           } else {
             searchType = "all"
           }
-          q += `${searchText}`
+          q += `=${searchText}`
           q += `&_searchType=${searchType}`
         }
+      }
+
+      if (advisoryTypeFilter !== "all") {
+        q += `&_eventType=${advisoryTypeFilter}`
       }
 
       return q
@@ -266,7 +266,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
             // Get count
             let apiCount = apiUrl + "/public-advisories/count" + q
-            if (q === "?populate=*&filters[protectedAreas][publishedAt][$null]=false&filters[protectedAreas][isDisplayed]=true&sort=advisoryDate:DESC&_q=") {
+            if (q === "?populate=*&_q") {
              apiCount = apiUrl + "/public-advisories/count"
             }
             
