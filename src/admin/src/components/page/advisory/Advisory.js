@@ -823,8 +823,8 @@ export default function Advisory({
           created_by: keycloak.tokenParsed.name,
         };
 
-        cmsAxios
-          .post(`public-advisory-audits`,{ data: newAdvisory }, {
+        cmsAxios // -audit OR -audits
+          .post(`public-advisory-audit`,{ data: newAdvisory }, {
             // headers: { Authorization: `Bearer ${keycloak.token}` },
           })
           .then((res) => {
@@ -1036,7 +1036,7 @@ export default function Advisory({
     fileForm.append("files", file);
 
     const res = await cmsAxios
-      .post(`upload`, fileForm, {
+      .post(`upload`, fileForm, { // or { 'data': fileForm }
         headers: {
           "Content-Type": "multipart/form-data",
          // Authorization: `Bearer ${keycloak.token}`,
@@ -1050,8 +1050,8 @@ export default function Advisory({
           message: "Could not save attachments",
         });
       });
-    if (res.data.length > 0) {
-      return res.data[0];
+    if (res.data.data.length > 0) {
+      return res.data.data[0];
     } else {
       setToError(true);
       setError({
