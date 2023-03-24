@@ -45,7 +45,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
   useEffect(() => {
     if (initialized && keycloak && loadParkInfo) {
       Promise.all([
-        cmsAxios.get(`/protected-areas/${id}`),
+        cmsAxios.get(`/protected-areas/?&filters[orcs][$eq]=${id}`),
         getRegions(cmsData, setCmsData),
         getSections(cmsData, setCmsData),
       ])

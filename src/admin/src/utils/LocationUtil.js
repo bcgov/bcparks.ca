@@ -10,7 +10,7 @@ export function addProtectedAreasFromArea(
   if (!protectedAreaList) {
     protectedAreaList = [];
   }
-  area[field].forEach((f) => {
+  area[field]?.forEach((f) => {
     const relatedArea = areaList.find((a) => {
       return a.obj.id === f.id;
     });
