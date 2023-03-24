@@ -141,9 +141,9 @@ module.exports = ({ env }) => {
             "api::access-status.access-status": {
               GET: true,
             },
-            "api::site.site": {
-              GET: true,
-            },
+            // "api::site.site": {
+            //   GET: true,
+            // },
             "api::section.section": {
               GET: true,
             },

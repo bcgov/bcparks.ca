@@ -31,6 +31,7 @@ module.exports = {
     {
       resolve: "gatsby-source-strapi",
       options: {
+        skipFileDownloads: true,
         apiURL: process.env.STRAPI_API_URL,
         accessToken: process.env.STRAPI_TOKEN,
         collectionTypes: [
@@ -61,16 +62,16 @@ module.exports = {
             queryParams: {
               populate: {
                 protectedArea: {
-                  populate: "*"
+                  fields: "*"
                 },
                 parkActivities: {
-                  populate: "*"
+                  populate: ["activityType"]
                 },
                 parkFacilities: {
-                  populate: "*"
+                  populate: ["facilityType"]
                 },
                 parkOperation: {
-                  populate: "*"
+                  fields: "*"
                 }
               }
             }
@@ -80,19 +81,19 @@ module.exports = {
             queryParams: {
               populate: {
                 parkNames: {
-                  populate: "*"
+                  populate: ["parkNameType"]
                 },
                 parkActivities: {
-                  populate: "*"
+                  populate: ["activityType"]
                 },
                 parkFacilities: {
-                  populate: "*"
+                  populate: ["facilityType"]
                 },
                 parkOperation: {
-                  populate: "*"
+                  fields: "*"
                 },
                 parkOperationSubAreas: {
-                  populate: "*"
+                  fields: "*"
                 },
                 seo: {
                   populate: "*"
@@ -136,28 +137,28 @@ module.exports = {
       },
     },
     `gatsby-plugin-meta-redirect`,
-    {
-      resolve: `gatsby-plugin-sitemap`,
-      options: {
-        output: '/'
-      }
-    },
-    {
-      resolve: `gatsby-plugin-robots-txt`,
-      options: {
-        resolveEnv: () => process.env.ENV_SUFFIX || 'dev',
-        env: {
-          'dev': {
-            policy: [{userAgent: '*', allow: ['/']}]
-          },
-          'test': {
-            policy: [{userAgent: '*', disallow: ['/']}]
-          },
-          'prod': {
-            policy: [{userAgent: '*', allow: ['/']}]
-          },
-        },
-      },
-    },
+    // {
+    //   resolve: `gatsby-plugin-sitemap`,
+    //   options: {
+    //     output: '/'
+    //   }
+    // },
+    // {
+    //   resolve: `gatsby-plugin-robots-txt`,
+    //   options: {
+    //     resolveEnv: () => process.env.ENV_SUFFIX || 'dev',
+    //     env: {
+    //       'dev': {
+    //         policy: [{userAgent: '*', allow: ['/']}]
+    //       },
+    //       'test': {
+    //         policy: [{userAgent: '*', disallow: ['/']}]
+    //       },
+    //       'prod': {
+    //         policy: [{userAgent: '*', allow: ['/']}]
+    //       },
+    //     },
+    //   },
+    // },
   ],
 }
