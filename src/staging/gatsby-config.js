@@ -137,28 +137,28 @@ module.exports = {
       },
     },
     `gatsby-plugin-meta-redirect`,
-    // {
-    //   resolve: `gatsby-plugin-sitemap`,
-    //   options: {
-    //     output: '/'
-    //   }
-    // },
-    // {
-    //   resolve: `gatsby-plugin-robots-txt`,
-    //   options: {
-    //     resolveEnv: () => process.env.ENV_SUFFIX || 'dev',
-    //     env: {
-    //       'dev': {
-    //         policy: [{userAgent: '*', allow: ['/']}]
-    //       },
-    //       'test': {
-    //         policy: [{userAgent: '*', disallow: ['/']}]
-    //       },
-    //       'prod': {
-    //         policy: [{userAgent: '*', allow: ['/']}]
-    //       },
-    //     },
-    //   },
-    // },
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        output: '/'
+      }
+    },
+    {
+      resolve: `gatsby-plugin-robots-txt`,
+      options: {
+        resolveEnv: () => process.env.ENV_SUFFIX || 'dev',
+        env: {
+          'dev': {
+            policy: [{userAgent: '*', allow: ['/']}]
+          },
+          'test': {
+            policy: [{userAgent: '*', disallow: ['/']}]
+          },
+          'prod': {
+            policy: [{userAgent: '*', allow: ['/']}]
+          },
+        },
+      },
+    },
   ],
 }

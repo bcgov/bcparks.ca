@@ -56,7 +56,10 @@ const getPublishedPublicAdvisories = async () => {
       publicationState: "live",
       sort: "id",
       limit: -1,
-      populate: "*",
+      populate: {
+        protectedAreas: { fields: ["orcs"] },
+        links: { populate: { type: { fields: ["type"] } } }
+      },
 
       // v4 VS v3
       // "accessStatus.precedence_lt": 99,
@@ -133,13 +136,6 @@ const getProtectedAreaStatus = async (ctx) => {
   );
   const facilityTypesData = await strapi.entityService.findMany(
     "api::facility-type.facility-type",
-    {
-      limit: -1,
-      populate: "*",
-    }
-  );
-  const linkTypesData = await strapi.entityService.findMany(
-    "api::link-type.link-type",
     {
       limit: -1,
       populate: "*",
@@ -256,7 +252,7 @@ const getProtectedAreaStatus = async (ctx) => {
     const links = publicAdvisory.links.map((link) => {
       return {
         title: link.title,
-        type: linkTypesData.find((lt) => lt.id === link.type).type,
+        type: link.type.type,
         url: link.url,
       };
     });
