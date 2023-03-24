@@ -6,7 +6,7 @@ const boolToYN = (boolVar) => {
 };
 
 const getHasCampfiresFacility = (parkFacilities) => {
-  return parkFacilities.some((f) => f.name.toLowerCase().includes("campfires"));
+  return parkFacilities.some((f) => f.facilityType.facilityName.toLowerCase().includes("campfires"));
 };
 
 const getPublicAdvisory = (publishedAdvisories, orcs) => {
@@ -80,12 +80,40 @@ const getProtectedAreaStatus = async (ctx) => {
   let entities;
   const { accessStatus, accessStatus_ne, ...query } = ctx.query;
 
+  const protectedAreaPopulateSettings = {
+    fireZones: {  
+      fields: ["fireZoneName"],
+      populate: {
+        fireCentre: { fields: ["id"]}
+      }
+    },
+    managementAreas: {
+      fields: ["managementAreaName"],
+      populate: {
+        region: { fields: ["id"]},
+        section: { fields: ["id"]}
+      }            
+    },
+    parkActivities: {
+      fields: ["description"],
+      populate: { 
+        activityType: { fields: ["activityName", "activityCode", "icon", "iconNA", "rank"] }
+      }
+    },
+    parkFacilities: {
+      fields: ["description"],
+      populate: { 
+        facilityType: { fields: ["facilityName", "facilityCode", "icon", "iconNA", "rank"] }
+      }
+    }
+  };
+
   if (accessStatus || accessStatus_ne) {
     entities = await strapi.entityService.findMany(
       "api::protected-area.protected-area",
       {
         limit: -1,
-        populate: "*",
+        populate: protectedAreaPopulateSettings,
       }
     );
   } else if (ctx.query._q) {
@@ -93,7 +121,7 @@ const getProtectedAreaStatus = async (ctx) => {
       "api::protected-area.protected-area",
       {
         ...ctx.query,
-        populate: "*",
+        populate: protectedAreaPopulateSettings,
       }
     );
   } else {
@@ -101,7 +129,7 @@ const getProtectedAreaStatus = async (ctx) => {
       "api::protected-area.protected-area",
       {
         ...query,
-        populate: "*",
+        populate: protectedAreaPopulateSettings
       }
     );
   }
@@ -122,20 +150,6 @@ const getProtectedAreaStatus = async (ctx) => {
   );
   const fireCentresData = await strapi.entityService.findMany(
     "api::fire-centre.fire-centre",
-    {
-      limit: -1,
-      populate: "*",
-    }
-  );
-  const activityTypesData = await strapi.entityService.findMany(
-    "api::activity-type.activity-type",
-    {
-      limit: -1,
-      populate: "*",
-    }
-  );
-  const facilityTypesData = await strapi.entityService.findMany(
-    "api::facility-type.facility-type",
     {
       limit: -1,
       populate: "*",
@@ -183,7 +197,7 @@ const getProtectedAreaStatus = async (ctx) => {
       ...new Set(
         protectedArea.managementAreas.map(
           (m) =>
-            regionsData.find((region) => region.id === m.region && m.region)
+            regionsData.find((region) => region.id === m.region?.id)
               ?.regionName
         )
       ),
@@ -194,7 +208,7 @@ const getProtectedAreaStatus = async (ctx) => {
         protectedArea.managementAreas.map(
           (m) =>
             sectionsData.find(
-              (section) => section.id === m.section && m.section
+              (section) => section.id === m.section?.id
             )?.sectionName
         )
       ),
@@ -204,7 +218,7 @@ const getProtectedAreaStatus = async (ctx) => {
       ...new Set(
         protectedArea.fireZones.map((fireZone) => {
           const fireCentre = fireCentresData.find(
-            (f) => f.fireZones.length > 0 && f.id === fireZone.fireCentre
+            (f) => f.fireZones.length > 0 && f.id === fireZone.fireCentre?.id
           );
           if (fireCentre) return fireCentre.fireCentreName;
         })
@@ -218,35 +232,25 @@ const getProtectedAreaStatus = async (ctx) => {
     ];
 
     const parkActivities = protectedArea.parkActivities.map((a) => {
-      const activity = activityTypesData.find(
-        (f) => f.id === a.activityType && a.isActive
-      );
-      if (activity) {
-        return {
-          activityName: activity.activityName,
-          activityCode: activity.activityCode,
-          description: a.description,
-          icon: activity.icon,
-          iconNA: activity.iconNA,
-          rank: activity.rank,
-        };
-      }
+      return {
+        activityName: a.activityType.activityName,
+        activityCode: a.activityType.activityCode,
+        description: a.description,
+        icon: a.activityType.icon,
+        iconNA: a.activityType.iconNA,
+        rank: a.activityType.rank,
+      };
     });
 
     const parkFacilities = protectedArea.parkFacilities.map((a) => {
-      const facility = facilityTypesData.find(
-        (f) => f.id === a.facilityType && a.isActive
-      );
-      if (facility) {
-        return {
-          facilityName: facility.facilityName,
-          facilityCode: facility.facilityCode,
-          description: a.description,
-          icon: facility.icon,
-          iconNA: facility.iconNA,
-          rank: facility.rank,
-        };
-      }
+      return {
+        facilityName: a.facilityType.facilityName,
+        facilityCode: a.facilityType.facilityCode,
+        description: a.description,
+        icon: a.facilityType.icon,
+        iconNA: a.facilityType.iconNA,
+        rank: a.facilityType.rank,
+      };
     });
 
     const links = publicAdvisory.links.map((link) => {
