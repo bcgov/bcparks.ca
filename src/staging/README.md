@@ -7,9 +7,9 @@
 - Test:  `REACT_APP_CMS_BASE_URL=http://test-cms.bcparks.ca`
 - Prod: `REACT_APP_CMS_BASE_URL=http://cms.bcparks.ca`
     
-4.  Back in your shell, from /src/staging folder run: `yarn`
+4.  Back in your shell, from /src/staging folder run: `npm install`
     
-5.  Start Gatsby in develop mode by running: `yarn start`. It may take a few minutes to load the required data. When it completes, you should be able to view the site at http://localhost:8000.
+5.  Start Gatsby in develop mode by running: `npm run develop`. It may take a few minutes to load the required data. When it completes, you should be able to view the site at http://localhost:8000.
 
 6. If you are running gatsby in a VM, you can pin the websocket port in order to allow a forwarding rule to work consistently. `export INTERNAL_STATUS_PORT=<port number>` See [this issue](https://github.com/gatsbyjs/gatsby/blob/247b1dc0441fdade52a5ff7a71de8c9340ee05fd/packages/gatsby/src/commands/develop.ts#L213) for more info.
 

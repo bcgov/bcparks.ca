@@ -19,7 +19,7 @@
     "axios": "^0.22.0",
     "bootstrap": "~4.3.1",
     "date-fns": "^2.28.0",
-    "gatsby": "^4.25.4",
+    "gatsby": "^4.25.5",
     "gatsby-plugin-canonical-urls": "^4.25.0",
     "gatsby-plugin-emotion": "^7.25.0",
     "gatsby-plugin-image": "^2.25.0",
@@ -84,5 +84,11 @@
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "overrides": {
+    "gatsby-plugin-material-ui":
+    {
+      "gatsby": "$gatsby"
+    }
   }
 }

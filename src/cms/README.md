@@ -10,12 +10,8 @@ Building a local version of Strapi is optional, as you can use a remote environm
 
 4.  Edit the .env file in a text editor and ensure that this line is set: `DATABASE_HOST=localhost` and `DATABASE_NAME=cms`
 
-5. Run `yarn`.
+5. Run `npm install`.
 
-6. Run `yarn develop` to start a dev server and create the db tables.
+6. Run `npm run develop` to start a dev server and create the db tables.
 
-- This step runs the Strapi server and must be running for the seed step to work. It is also required for admin and staging development servers.
-
-7. Run `yarn seed` to load initial data (takes about 10 minutes). This data is out of date, but it will give you some data to start with.
-
-- Going forward you might want to run `yarn build && yarn develop` to start the server so that you can ensure that webpack picks up any changes.
+- Going forward you might want to run `npm run build && npm run develop` to start the server so that you can ensure that webpack picks up any changes.
