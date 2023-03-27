@@ -606,7 +606,6 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
   if (toCreate) {
     return <Redirect to="/bcparks/create-advisory" />;
   }
-  console.log('TODO: remove console later', toError , hasErrors)
   if (toError || hasErrors) {
     console.log('toError || hasErrors', toError , hasErrors)
     return <Redirect push to="/bcparks/error" />;

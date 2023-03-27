@@ -226,7 +226,6 @@ export default function AdvisorySummary({
     return <Redirect push to={`/bcparks/update-advisory/${id}`} />;
   }
 
-  console.log('TODO: remove console later', toError )
   if (toError) {
     return <Redirect push to="/bcparks/error" />;
   }
@@ -272,7 +271,6 @@ export default function AdvisorySummary({
                         <br />
                       </>
                     )}
-                    {console.log("+isCurrentlyPublished", isCurrentlyPublished)}
                     {isCurrentlyPublished && (
                       <div className="row">
                         <div className="col-lg-12 col-md-12 col-12 ad-right">
@@ -299,7 +297,6 @@ export default function AdvisorySummary({
                     />
                   </div>
                 )}
-                {console.log("+showOriginalAdvisory", showOriginalAdvisory)}
                 {showOriginalAdvisory && (
                   <div className="container-fluid ad-summary col-lg-9 col-md-12 col-12">
                     <div className="row">

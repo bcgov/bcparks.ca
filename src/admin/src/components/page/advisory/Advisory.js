@@ -1072,7 +1072,6 @@ export default function Advisory({
       />
     );
   }
-  console.log('TODO: remove console later', toError )
   // if (toError) {
   //   return <Redirect push to="/bcparks/error" />;
   // }
