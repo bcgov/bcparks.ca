@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { navigate } from "@reach/router"
+// import { navigate } from "@reach/router"
 import {
   Box,
   Button,
@@ -102,7 +102,7 @@ const AdvisoryFilter = ({
     // This changes the URL query str and causes the page to
     // rerender with the type changed
     setType(advisoryType)
-    navigate(`/active-advisories/?type=${advisoryType}`)
+    // navigate(`/active-advisories/?type=${advisoryType}`)
   }
 
   // Checkboxes

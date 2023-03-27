@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Home from "../components/page/home/Home";
-import Error from "../components/page/error/Error";
+// import Error from "../components/page/error/Error";
 import About from "../components/page/about/About";
 import Advisory from "../components/page/advisory/Advisory";
 import AdvisorySummary from "../components/page/advisorySummary/AdvisorySummary";

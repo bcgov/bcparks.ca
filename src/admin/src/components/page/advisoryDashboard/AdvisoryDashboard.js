@@ -52,15 +52,15 @@ const query = qs.stringify({
   encodeValuesOnly: true,
 });
 
-const queryParams = (id) => qs.stringify({
-  filters: {
-    advisoryStatus: {
-      $eq: id,
-    },
-  },
-}, {
-  encodeValuesOnly: true,
-})
+// const queryParams = (id) => qs.stringify({
+//   filters: {
+//     advisoryStatus: {
+//       $eq: id,
+//     },
+//   },
+// }, {
+//   encodeValuesOnly: true,
+// })
 
 export default function AdvisoryDashboard({
   page: { setError, cmsData, setCmsData },
@@ -228,7 +228,6 @@ export default function AdvisoryDashboard({
     cmsData,
     setCmsData,
     setError,
-    query
   ]);
 
   const removeDuplicatesById = (arr) => {
