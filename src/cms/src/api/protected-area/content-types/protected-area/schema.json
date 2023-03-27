@@ -135,6 +135,9 @@
     "hasSmokingBanOverride": {
       "type": "boolean"
     },
+    "campfireBanEffectiveDate": {
+      "type": "date"
+    },
     "campfireBanRescindedDate": {
       "type": "date"
     },

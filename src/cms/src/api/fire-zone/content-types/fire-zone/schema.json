@@ -5,7 +5,8 @@
     "singularName": "fire-zone",
     "pluralName": "fire-zones",
     "displayName": "Fire-zone",
-    "name": "fire-zone"
+    "name": "fire-zone",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -22,7 +23,7 @@
     "headquartersCityName": {
       "type": "string"
     },
-    "fireCentre": {
+    "fireCentreNumber": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::fire-centre.fire-centre",
