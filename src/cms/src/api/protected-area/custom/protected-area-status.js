@@ -218,7 +218,7 @@ const getProtectedAreaStatus = async (ctx) => {
       ...new Set(
         protectedArea.fireZones.map((fireZone) => {
           const fireCentre = fireCentresData.find(
-            (f) => f.fireZones.length > 0 && f.id === fireZone.fireCentreNumber
+            (f) => f.fireZones.length > 0 && f.id === fireZone.fireCentreNumber?.id
           );
           if (fireCentre) return fireCentre.fireCentreName;
         })
