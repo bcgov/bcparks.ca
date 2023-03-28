@@ -317,6 +317,7 @@ export default function ParkTemplate({ data }) {
                   parkName={parkName}
                   hasReservations={hasReservations}
                   hasDayUsePass={hasDayUsePass}
+                  hasCampfireBan={park.hasCampfireBan}
                   isLoadingAdvisories={isLoadingAdvisories}
                   advisoryLoadError={advisoryLoadError}
                   advisories={advisories}
@@ -520,6 +521,7 @@ export const query = graphql`
       marineArea
       type
       typeCode
+      hasCampfireBan
       locationNotes {
         data {
           locationNotes

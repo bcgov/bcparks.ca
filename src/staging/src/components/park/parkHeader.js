@@ -4,10 +4,12 @@ import { Grid, Button, Box, Paper } from "@material-ui/core"
 
 import Advisory from "./advisory"
 import ParkAccessStatus from "./parkAccessStatus"
+import CampfireBan from "./campfireBan"
 export default function ParkHeader({
   parkName,
   hasReservations,
   hasDayUsePass,
+  hasCampfireBan,
   isLoadingAdvisories,
   advisoryLoadError,
   advisories,
@@ -26,7 +28,7 @@ export default function ParkHeader({
           </Grid>
           <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
             <div className="flex-display p10t">
-              <Grid item xs={12} sm={12} md={12} lg={7}>
+              <Grid item xs={12} sm={12} md={12} lg={6}>
                 <>
                   {hasReservations && (
                     <Button
@@ -49,14 +51,18 @@ export default function ParkHeader({
                   xs={12}
                   sm={12}
                   md={12}
-                  lg={5}
+                  lg={6}
                   className="park-info-header-flex"
                 >
-                  <div className="park-info-header park-access">
+                  <div className="park-info-header park-access ml-auto">
                     <ParkAccessStatus advisories={advisories} />
                   </div>
-
-                  <div className="park-info-header ml-auto park-access">
+                  {hasCampfireBan && 
+                    <div className="park-info-header park-access campfire-ban">
+                      <CampfireBan />
+                    </div>
+                  }
+                  <div className="park-info-header park-access">
                     <Advisory advisories={advisories} />
                   </div>
                 </Grid>
@@ -74,6 +80,11 @@ export default function ParkHeader({
               <div className="park-info-header">
                 <ParkAccessStatus advisories={advisories} />
               </div>
+              {hasCampfireBan && 
+                <div className="park-info-header">
+                  <CampfireBan />
+                </div>
+              }
               <div className="park-info-header">
                 <Advisory advisories={advisories} />
               </div>
