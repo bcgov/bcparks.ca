@@ -45,7 +45,7 @@ jobs:
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           event-type: build-public
-          client-payload: '{"env": "${{ env.ENVIRONMENT }}"}'
+          client-payload: '{"env": "${{ env.ENVIRONMENT }}", "branch": "main"}'
 
       - name: Trigger new rollout
         run: |

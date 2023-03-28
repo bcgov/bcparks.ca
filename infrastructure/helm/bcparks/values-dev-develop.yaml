@@ -1,6 +1,16 @@
 cluster:
   ssoAuthUrl: https://dev.loginproxy.gov.bc.ca/auth
 
+images:
+  strapi:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/strapi-develop
+  admin:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/admin-develop
+  public:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/public-develop
+  landing:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/landing-develop
+
 cms:
   env:
     externalUrl: https://develop-cms-61d198-dev.apps.silver.devops.gov.bc.ca

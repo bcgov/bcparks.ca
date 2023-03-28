@@ -3,12 +3,16 @@ cluster:
 
 images:
   strapi:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/strapi-develop  
     tag: test
   admin:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/admin-develop
     tag: test
   public:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/public-develop
     tag: test
   landing:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/landing-develop
     tag: test
 
 cms:

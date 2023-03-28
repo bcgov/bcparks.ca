@@ -1,16 +1,16 @@
-name: Deploy to Prod
+name: Deploy to Test
 
 on:
   workflow_dispatch:
     inputs:
       releaseTag:
-        description: "Tag of version to be promoted to PROD"
+        description: "Tag of version to be promoted to TEST"
         required: true
 
 env:
   TOOLS_NAMESPACE: ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools
-  ENVIRONMENT: prod
-  NAMESPACE: ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-prod
+  ENVIRONMENT: test
+  NAMESPACE: ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-test
 
 jobs:
   deploy:
@@ -27,16 +27,13 @@ jobs:
           echo "::error::Git Tag not found, please double check input"
           exit 1
 
-      - name: Set env
-        run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-
       - name: Login OpenShift
         uses: redhat-actions/oc-login@v1
         with:
           openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
           openshift_token: ${{ secrets.OPENSHIFT_SERVICE_TOKEN }}
 
-      - name: Tag Prod images
+      - name: Tag Test images
         run: |
           oc -n ${{ env.TOOLS_NAMESPACE }} tag admin:${{ github.event.inputs.releaseTag }} admin:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder:${{ github.event.inputs.releaseTag }} public-builder:${{ env.ENVIRONMENT }}
@@ -48,7 +45,7 @@ jobs:
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           event-type: build-public
-          client-payload: '{"env": "${{ env.ENVIRONMENT }}", "branch": "main"}'
+          client-payload: '{"env": "${{ env.ENVIRONMENT }}", "branch": "develop"}'
 
       - name: Trigger new rollout
         run: |
