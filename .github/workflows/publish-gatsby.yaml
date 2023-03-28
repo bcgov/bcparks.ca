@@ -34,8 +34,8 @@ jobs:
       - name: Validate inputs
         run: |
           if [[ "${{ github.event.inputs.branchName }}" == "develop" && "${{ github.event.inputs.buildEnv }}" == "prod" ]]; then
-            console.log("devlop/prod is not a valid environment combo");
-            process.exit(1);
+            echo "devlop/prod is not a valid environment combo"
+            exit 1
           fi
       - name: Set vars
         id: vars
