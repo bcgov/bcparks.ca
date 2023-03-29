@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { cmsAxios } from "../../../axios_config";
 import { Redirect, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -66,7 +66,6 @@ export default function AdvisoryDashboard({
   page: { setError, cmsData, setCmsData },
 }) {
   const history = useHistory();
-  const isMounted = useRef(true);
   const { keycloak, initialized } = useKeycloak();
   const [toError, setToError] = useState(false);
   const [toCreate, setToCreate] = useState(false);
@@ -86,13 +85,6 @@ export default function AdvisoryDashboard({
   const [originalParkNames, setOriginalParkNames] = useState([]);
 
   if (!keycloak && !initialized) setToError(true);
-
-  useEffect(() => {
-    isMounted.current = true;
-    return () => {
-      isMounted.current = false;
-    };
-  }, [isMounted]);
 
   useEffect(() => {
     filterAdvisoriesByRegionId(selectedRegionId);
@@ -132,22 +124,21 @@ export default function AdvisoryDashboard({
   /*-------------------------------------------------------------------------*/
 
   useEffect(() => {
+    let isMounted = true;
+  
     const fetchData = async () => {
       setIsLoading(true);
       if (initialized && keycloak) {
-
         const res = await Promise.all([
           getRegions(cmsData, setCmsData),
           getManagementAreas(cmsData, setCmsData),
           getParkNames(cmsData, setCmsData),
           cmsAxios.get(`public-advisory-audits?${query}`, {
-              headers: {
-                // Authorization: `Bearer ${keycloak.token}`
+            headers: {
+              // Authorization: `Bearer ${keycloak.token}`
             }
-          }
-          )
-        ])
-        .catch(() => {
+          })
+        ]).catch(() => {
           setError({ status: 500, message: "Error loading data" });
           setToError(true);
           setIsLoading(false);
@@ -156,12 +147,9 @@ export default function AdvisoryDashboard({
         const regionsData = res[0];
         // Management Areas
         const managementAreasData = res[1];
-
         // Protected Areas
         const parkNamesData = res[2];
-
         const publicAdvisories = res[3]?.data.data;
-
         // Public Advisories
         const regionParksCount = managementAreasData.reduce((region, item) => {
           region[item.region?.id] = (region[item.region?.id] || 0) + item.protectedAreas?.length;
@@ -184,17 +172,14 @@ export default function AdvisoryDashboard({
           }
           return publicAdvisory;
         });
-
-        // Published Advisories
-        getCurrentPublishedAdvisories(cmsData, setCmsData);
-
-        if (isMounted.current) {
+ 
+        if (isMounted) {
+          // Published Advisories
+          getCurrentPublishedAdvisories(cmsData, setCmsData);
           setRegions([...regionsData]);
           setManagementAreas([...managementAreasData]);
-
           setParkNames([...parkNamesData]);
           setOriginalParkNames([...parkNamesData]);
-
           setPublicAdvisories(updatedPublicAdvisories);
           setOriginalPublicAdvisories(updatedPublicAdvisories);
 
@@ -222,6 +207,10 @@ export default function AdvisoryDashboard({
       setIsLoading(false);
     }
     fetchData();
+
+    return () => {
+      isMounted = false;
+    }
   }, [
     initialized,
     keycloak,
@@ -320,9 +309,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
             publishedAdvisories = [...publishedAdvisories, ad.advisoryNumber];
           });
         }
-        if (isMounted.current) {
-          setPublishedAdvisories([...publishedAdvisories]);
-        }
+        setPublishedAdvisories([...publishedAdvisories]);
       }
     }
   };

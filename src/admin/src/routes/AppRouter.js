@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Home from "../components/page/home/Home";
-// import Error from "../components/page/error/Error";
+import Error from "../components/page/error/Error";
 import About from "../components/page/about/About";
 import Advisory from "../components/page/advisory/Advisory";
 import AdvisorySummary from "../components/page/advisorySummary/AdvisorySummary";
@@ -12,7 +12,7 @@ import CmsContents from "../components/page/cmsContents/CmsContents";
 import ParkAccessStatus from "../components/page/parkAccessStatus/ParkAccessStatus";
 
 function AppRouter() {
-  const [ /*error,*/ setError] = useState({});
+  const [ error, setError] = useState({});
   const [cmsData, setCmsData] = useState({});
 
   return (
@@ -63,9 +63,9 @@ function AppRouter() {
             props={{ page: { setError, cmsData, setCmsData } }}
           />
           {/* TODO: Re-enable error page */}
-          {/*<Route path="/bcparks/error">*/}
-          {/*  /!*<Error page={{ error }} />*!/*/}
-          {/*</Route>*/}
+          <Route path="/bcparks/error">
+            <Error page={{ error }} />
+          </Route>
         </Switch>
       </BrowserRouter>
     </div>

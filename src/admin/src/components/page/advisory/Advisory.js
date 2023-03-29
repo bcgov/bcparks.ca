@@ -97,7 +97,7 @@ export default function Advisory({
   const [notes, setNotes] = useState("");
   const [submittedBy, setSubmittedBy] = useState("");
   const [listingRank, setListingRank] = useState("");
-  const [ /*toError,*/ setToError] = useState(false);
+  const [ toError, setToError] = useState(false);
   const [toDashboard, setToDashboard] = useState(false);
   const { keycloak, initialized } = useKeycloak();
   const [isLoadingPage, setIsLoadingPage] = useState(true);
@@ -1074,9 +1074,9 @@ export default function Advisory({
   }
 
   // TODO: Re-enable error redirection
-  // if (toError) {
-  //   return <Redirect push to="/bcparks/error" />;
-  // }
+  if (toError) {
+    return <Redirect push to="/bcparks/error" />;
+  }
 
   if (isConfirmation) {
     return (
