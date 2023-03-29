@@ -50,8 +50,12 @@ const authenticate = async (ctx) => {
             }
 
             if (roleMatch) {
-              const users = await getService('user').fetchAll({ filters: { email: API_USER_EMAIL }, populate: { role: "*" } });
+              const users = await getService('user').fetchAll({ filters: { email: { $eqi: API_USER_EMAIL } }, populate: { role: "*" } });
               user = users.length ? users[0] : null;
+              if (user === null) {
+                strapi.log.error(`A user with email '${API_USER_EMAIL}' was not found in the User collection-type`);
+                return { error: "API user account does not exist" };
+              }
             } else {
               strapi.log.warn("Invalid credentials: staff-portal role not assigned");
               return { error: "Invalid credentials: staff-portal role not assigned" };
@@ -62,7 +66,6 @@ const authenticate = async (ctx) => {
           }
         } catch (err) {
           strapi.log.error("UnautorizedError:" + err);
-          strapi.log.error(JSON.stringify(err));
           throw new UnauthorizedError(err);
         }
 
@@ -92,7 +95,6 @@ const authenticate = async (ctx) => {
     }
   } catch (err) {
     strapi.log.error("keycloak-users-permissions.js error: " + err);
-    strapi.log.error(JSON.stringify(err));
     return { authenticated: false };
   }
 };
