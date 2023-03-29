@@ -32,6 +32,7 @@ const authenticate = async (ctx) => {
 
         if (ctx.state.user) {
           // request is already authenticated in a different way
+          strapi.log.info("Already authenticated in a different way");
           return { authenticated: true };
         }
 
@@ -60,6 +61,8 @@ const authenticate = async (ctx) => {
             return { error: "Invalid credentials" };
           }
         } catch (err) {
+          strapi.log.error("UnautorizedError:" + err);
+          strapi.log.error(JSON.stringify(err));
           throw new UnauthorizedError(err);
         }
 
@@ -88,6 +91,8 @@ const authenticate = async (ctx) => {
       return await baseAuthenticate(ctx);
     }
   } catch (err) {
+    strapi.log.error("keycloak-users-permissions.js error: " + err);
+    strapi.log.error(JSON.stringify(err));
     return { authenticated: false };
   }
 };
