@@ -44,6 +44,7 @@ const authenticate = async (ctx) => {
             );
 
             if (!API_USER_EMAIL) {
+              strapi.log.warn("API_USER_EMAIL value not set");
               throw new Error("API_USER_EMAIL value not set");
             }
 
@@ -51,17 +52,20 @@ const authenticate = async (ctx) => {
               const users = await getService('user').fetchAll({ filters: { email: API_USER_EMAIL }, populate: { role: "*" } });
               user = users.length ? users[0] : null;
             } else {
-              return { error: 'Invalid credentials: staff-portal role not assigned' };
+              strapi.log.warn("Invalid credentials: staff-portal role not assigned");
+              return { error: "Invalid credentials: staff-portal role not assigned" };
             }
           } else {
-            return { error: 'Invalid credentials' };
+            strapi.log.warn("Invalid credentials");
+            return { error: "Invalid credentials" };
           }
         } catch (err) {
           throw new UnauthorizedError(err);
         }
 
         if (user.blocked) {
-          return { error: 'Invalid credentials: user blocked' };
+          strapi.log.warn("Invalid credentials: user blocked");
+          return { error: "Invalid credentials: user blocked" };
         }
 
         // Fetch user's permissions
