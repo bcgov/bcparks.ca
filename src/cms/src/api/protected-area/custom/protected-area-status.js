@@ -218,7 +218,7 @@ const getProtectedAreaStatus = async (ctx) => {
       ...new Set(
         protectedArea.fireZones.map((fireZone) => {
           const fireCentre = fireCentresData.find(
-            (f) => f.fireZones.length > 0 && f.id === fireZone.fireCentreNumber?.id
+            (f) => f.fireZones.length > 0 && f.id === fireZone.fireCentre?.id
           );
           if (fireCentre) return fireCentre.fireCentreName;
         })
@@ -271,7 +271,7 @@ const getProtectedAreaStatus = async (ctx) => {
     } else {
       for (const fireZone of protectedArea.fireZones) {
         const fireBan = campfireBanData.find(
-          (f) => f.fireCentre.id === fireZone.fireCentreNumber
+          (f) => f.fireCentre.id === fireZone.fireCentre
         );
 
         if (fireBan) {
@@ -289,7 +289,7 @@ const getProtectedAreaStatus = async (ctx) => {
     } else {
       for (const fireZone of protectedArea.fireZones) {
         const fireBan = campfireBanData.find(
-          (f) => f.fireCentre.id === fireZone.fireCentreNumber
+          (f) => f.fireCentre.id === fireZone.fireCentre
         );
 
         if (fireBan) {

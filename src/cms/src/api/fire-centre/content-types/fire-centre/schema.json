@@ -23,7 +23,7 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::fire-zone.fire-zone",
-      "mappedBy": "fireCentreNumber"
+      "mappedBy": "fireCentre"
     }
   }
 }
