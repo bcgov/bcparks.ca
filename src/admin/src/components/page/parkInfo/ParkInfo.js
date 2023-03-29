@@ -263,13 +263,8 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
         activityType: activity.activityType,
       };
       cmsAxios
-<<<<<<< HEAD
         .put(`park-activities/${activityId}`, parkActivity, {
           headers: { Authorization: `Bearer ${keycloak.token}` }
-=======
-        .put(`park-activities/${activityId}`, {data: parkActivity}, {
-          // headers: { Authorization: `Bearer ${keycloak.token}` },
->>>>>>> upstream/migration_strapi_v4
         })
         .then((res) => {
           const currentActivities = submittingActivities.filter(
@@ -381,13 +376,8 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
         facilityType: facility.facilityType,
       };
       cmsAxios
-<<<<<<< HEAD
         .put(`park-facilities/${facilityId}`, parkFacility, {
           headers: { Authorization: `Bearer ${keycloak.token}` }
-=======
-        .put(`park-facilities/${facilityId}`, {data:parkFacility}, {
-          // headers: { Authorization: `Bearer ${keycloak.token}` },
->>>>>>> upstream/migration_strapi_v4
         })
         .then((res) => {
           const currentFacilities = submittingFacilities.filter(
