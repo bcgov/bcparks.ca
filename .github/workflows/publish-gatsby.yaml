@@ -1,4 +1,4 @@
-name: Publish Gatsby
+name: Publish Gatsby (experimental)
 
 on:
   repository_dispatch:
@@ -22,9 +22,6 @@ on:
         - prod
 
 env:
-  IMAGE_NAME: public
-  BUILDER_IMAGE_NAME: public-builder
-  DEPLOYMENT_NAME: public
   GATSBY_ENABLE_SNOWPLOW: true
 
 jobs:
@@ -34,8 +31,21 @@ jobs:
       - name: Validate inputs
         run: |
           if [[ "${{ github.event.inputs.branchName }}" == "develop" && "${{ github.event.inputs.buildEnv }}" == "prod" ]]; then
-            console.log("devlop/prod is not a valid environment combo");
-            process.exit(1);
+            echo "devlop/prod is not a valid environment combo"
+            exit 1
+          fi
+      - name: Set env based on branch
+        run: |
+          if [[ "${{ github.event.client_payload.branch }}" == "main" || "${{ github.event.inputs.branchName }}" == "main" ]]; then
+              echo "BRANCH=main" >> $GITHUB_ENV              
+              echo "BUILDER_IMAGE_NAME=public-builder-main" >> $GITHUB_ENV
+              echo "IMAGE_NAME=public-main" >> $GITHUB_ENV
+              echo "DEPLOYMENT_NAME=main-public" >> $GITHUB_ENV
+          else
+              echo "BRANCH=develop" >> $GITHUB_ENV
+              echo "BUILDER_IMAGE_NAME=public-builder-develop" >> $GITHUB_ENV
+              echo "IMAGE_NAME=public-develop" >> $GITHUB_ENV
+              echo "DEPLOYMENT_NAME=develop-public" >> $GITHUB_ENV
           fi
       - name: Set vars
         id: vars
@@ -46,7 +56,6 @@ jobs:
         run: |
           if [[ "${{ github.event.client_payload.env }}" == "prod" || "${{ github.event.inputs.buildEnv }}" == "prod" ]]; then
               echo "ENV_SUFFIX=prod" >> $GITHUB_ENV
-              echo "BRANCH=main" >> $GITHUB_ENV
               echo "IMAGE_TAG=prod" >> $GITHUB_ENV
               echo "REACT_APP_CMS_BASE_URL=https://bcparks.api.gov.bc.ca" >> $GITHUB_ENV
               echo "REACT_APP_SITE_URL=https://bcparks.ca" >> $GITHUB_ENV
@@ -55,12 +64,10 @@ jobs:
               echo "ENV_SUFFIX=test" >> $GITHUB_ENV
               echo "IMAGE_TAG=test" >> $GITHUB_ENV
               if [[ "${{ github.event.client_payload.branch }}" == "main" || "${{ github.event.inputs.branchName }}" == "main" ]]; then
-                  echo "BRANCH=main" >> $GITHUB_ENV              
                   echo "REACT_APP_CMS_BASE_URL=https://bcparks-api-gov-bc-ca.test.api.gov.bc.ca" >> $GITHUB_ENV
                   echo "REACT_APP_SITE_URL=https://test.bcparks.ca" >> $GITHUB_ENV
                   echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__MAIN_TEST }}" >> $GITHUB_ENV
               else
-                  echo "BRANCH=develop" >> $GITHUB_ENV
                   echo "REACT_APP_CMS_BASE_URL=https://develop-cms-61d198-test.apps.silver.devops.gov.bc.ca" >> $GITHUB_ENV
                   echo "REACT_APP_SITE_URL=https://develop-public-61d198-test.apps.silver.devops.gov.bc.ca" >> $GITHUB_ENV
                   echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__DEVELOP_TEST }}" >> $GITHUB_ENV
@@ -69,12 +76,10 @@ jobs:
               echo "ENV_SUFFIX=dev" >> $GITHUB_ENV
               echo "IMAGE_TAG=latest" >> $GITHUB_ENV
               if [[ "${{ github.event.client_payload.branch }}" == "main" || "${{ github.event.inputs.branchName }}" == "main" ]]; then
-                  echo "BRANCH=main" >> $GITHUB_ENV
                   echo "REACT_APP_CMS_BASE_URL=https://dev-cms.bcparks.ca" >> $GITHUB_ENV
                   echo "REACT_APP_SITE_URL=https://dev.bcparks.ca" >> $GITHUB_ENV
                   echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__MAIN_DEV }}" >> $GITHUB_ENV
               else
-                  echo "BRANCH=develop" >> $GITHUB_ENV
                   echo "REACT_APP_CMS_BASE_URL=https://develop-cms-61d198-dev.apps.silver.devops.gov.bc.ca" >> $GITHUB_ENV
                   echo "REACT_APP_SITE_URL=https://develop-public-61d198-dev.apps.silver.devops.gov.bc.ca" >> $GITHUB_ENV
                   echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__DEVELOP_DEV }}" >> $GITHUB_ENV
@@ -113,7 +118,7 @@ jobs:
       - name: Build static
         run: |
           # Run the builder image as container since you can't directly copy file from an image
-          docker run -e STRAPI_TOKEN='${{ env.STRAPI_TOKEN }}' -d -t --name builder ${{ steps.vars.outputs.registry_builder_image }}:${{ env.IMAGE_TAG }}
+          docker run -d -t --name builder ${{ steps.vars.outputs.registry_builder_image }}:${{ env.IMAGE_TAG }}
           # Copy Gatsby source and packages to local.  Tried to just do the build in the container, but ran into some weird issues with the build
           docker cp builder:/gatsby/. gatsby
           cd gatsby && npm run build
@@ -131,7 +136,7 @@ jobs:
 
       - name: Trigger rollout
         run: |
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-${{ env.ENV_SUFFIX }} rollout restart deployment ${{ env.BRANCH }}-${{ env.DEPLOYMENT_NAME }}
+          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-${{ env.ENV_SUFFIX }} rollout restart deployment ${{ env.DEPLOYMENT_NAME }}
 
   # alert-if-failure:
   #   if: ${{ always() && (needs.build.result=='failure')}}
