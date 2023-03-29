@@ -118,7 +118,7 @@ jobs:
       - name: Build static
         run: |
           # Run the builder image as container since you can't directly copy file from an image
-          docker run -e STRAPI_TOKEN='${{ env.STRAPI_TOKEN }}' -d -t --name builder ${{ steps.vars.outputs.registry_builder_image }}:${{ env.IMAGE_TAG }}
+          docker run -d -t --name builder ${{ steps.vars.outputs.registry_builder_image }}:${{ env.IMAGE_TAG }}
           # Copy Gatsby source and packages to local.  Tried to just do the build in the container, but ran into some weird issues with the build
           docker cp builder:/gatsby/. gatsby
           cd gatsby && npm run build
