@@ -33,17 +33,25 @@ import {
 } from "../../../utils/CmsDataUtil";
 
 const query = qs.stringify({
-  populate: '*',
-  // todo: Would be better if we can specify data that what we need, instead of getting all fields, with limit of 1500
-  // populate: {
-  //   protectedAreas: {
-  //     fields: [],
-  //   },
-  //   advisoryStatus: {
-  //     fields: [],
-  //    }
-  // },
-
+  fields: ['advisoryNumber', 'advisoryDate', 'title', 'effectiveDate', 'endDate', 'expiryDate'],
+  populate: {
+    protectedAreas: {
+      fields: ['protectedAreaName'],
+    },
+    advisoryStatus: {
+      fields: ['advisoryStatus', 'code'],
+    },
+    eventType: {
+      fields: ['eventType'],
+    },
+    urgency: {
+      fields: ['urgency'],
+    },
+    regions: {
+      fields: ['regionName'],
+    }
+  },
+  filters: { isLatestRevision: true },
   pagination: {
     limit: 1500
   },
@@ -51,16 +59,6 @@ const query = qs.stringify({
 }, {
   encodeValuesOnly: true,
 });
-
-// const queryParams = (id) => qs.stringify({
-//   filters: {
-//     advisoryStatus: {
-//       $eq: id,
-//     },
-//   },
-// }, {
-//   encodeValuesOnly: true,
-// })
 
 export default function AdvisoryDashboard({
   page: { setError, cmsData, setCmsData },
