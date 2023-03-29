@@ -141,11 +141,10 @@ export default function AdvisoryDashboard({
           getManagementAreas(cmsData, setCmsData),
           getParkNames(cmsData, setCmsData),
           cmsAxios.get(`public-advisory-audits?${query}`, {
-              headers: {
-                // Authorization: `Bearer ${keycloak.token}`
+            headers: {
+              Authorization: `Bearer ${keycloak.token}`
             }
-          }
-          )
+          })
         ])
         .catch(() => {
           setError({ status: 500, message: "Error loading data" });

@@ -343,7 +343,7 @@ export function calculateIsStatHoliday(
     Promise.resolve(
       cmsAxios
         .get(`statutory-holiday`, {
-          // headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}` }
         })
         .then((res) => {
           const statData = res.data.data.data;
@@ -372,7 +372,7 @@ export function calculateIsStatHoliday(
               // Write Statutory Data to CMS cache
               cmsAxios
                 .put(`statutory-holiday`, res.data, {
-                  // headers: { Authorization: `Bearer ${token}` },
+                  headers: { Authorization: `Bearer ${token}` }
                 })
                 .catch((error) => {
                   console.log(

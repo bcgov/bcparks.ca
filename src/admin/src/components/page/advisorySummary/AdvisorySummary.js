@@ -104,10 +104,9 @@ export default function AdvisorySummary({
       Promise.all([
         cmsAxios.get(
           `public-advisory-audits/${id}?_publicationState=preview&populate=*`,
-          // {
-          //   headers: { Authorization: `Bearer ${keycloak.token}` },
-          // }
-        ),
+          {
+            headers: { Authorization: `Bearer ${keycloak.token}` }
+          }),
         getLinkTypes(cmsData, setCmsData),
       ])
         .then((res) => {
