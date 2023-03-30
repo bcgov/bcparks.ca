@@ -263,7 +263,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
         activityType: activity.activityType,
       };
       cmsAxios
-        .put(`park-activities/${activityId}`, parkActivity, {
+        .put(`park-activities/${activityId}`, {data:parkActivity}, {
           headers: { Authorization: `Bearer ${keycloak.token}` }
         })
         .then((res) => {
@@ -376,7 +376,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
         facilityType: facility.facilityType,
       };
       cmsAxios
-        .put(`park-facilities/${facilityId}`, parkFacility, {
+        .put(`park-facilities/${facilityId}`, {data:parkFacility}, {
           headers: { Authorization: `Bearer ${keycloak.token}` }
         })
         .then((res) => {

@@ -30,11 +30,15 @@ const updateName = async (data) => {
   return data;
 };
 
+// Disabled it since it causes error
+// TODO: Check if it is really necessary
 module.exports = {
-  async beforeCreate(data) {
-    data = await updateName(data);
+  async beforeCreate(event) {
+    const { data, where, select, populate } = event.params;
+    // data = await updateName(data);
   },
-  async beforeUpdate(params, data) {
-    data = await updateName(data);
+  async beforeUpdate(event) {
+    const { data, where, select, populate } = event.params;
+    // data = await updateName(data);
   },
 };
