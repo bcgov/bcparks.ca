@@ -672,7 +672,7 @@ export default function Advisory({
       return res;
     } else {
       const linkRequest = {
-        'data': {
+        data: {
           title: link.title,
           url: link.url.startsWith("http") ? link.url : "https://" + link.url,
           type: link.type,
@@ -700,9 +700,11 @@ export default function Advisory({
       return res;
     } else {
       const linkRequest = {
-        title: link.title,
-        url: link.url.startsWith("http") ? link.url : "https://" + link.url,
-        type: link.type,
+        data: {
+          title: link.title,
+          url: link.url.startsWith("http") ? link.url : "https://" + link.url,
+          type: link.type,
+        }
       };
       const res = await cmsAxios
         .put(`links/${id}`, linkRequest, {
@@ -977,8 +979,10 @@ export default function Advisory({
 
   const preSaveMediaLink = async (link) => {
     const linkRequest = {
-      type: link.type,
-      title: link.title,
+      data: {
+        type: link.type,
+        title: link.title,
+      }
     };
     const res = await cmsAxios
       .post(`links`, linkRequest, {
@@ -1002,9 +1006,11 @@ export default function Advisory({
     const getUrl = path?.length ? media.url : config.REACT_APP_CMS_BASE_URL + media.url 
     
     const linkRequest = {
-      title: link.title ? link.title : media.name,
-      type: link.type,
-      url: getUrl,
+      data: {
+        title: link.title ? link.title : media.name,
+        type: link.type,
+        url: getUrl,
+      }
     };
 
     const res = await cmsAxios
@@ -1029,11 +1035,13 @@ export default function Advisory({
   };
 
   const uploadMedia = async (id, file) => {
+    const data = {};
     const fileForm = new FormData();
-    fileForm.append("refId", id);
-    fileForm.append("ref", "link");
-    fileForm.append("field", "file");
+    data["refId"] = id;
+    data["ref"] = "link";
+    data["field"] = "file";
     fileForm.append("files", file);
+    fileForm.append("data", JSON.stringify(data));
 
     const res = await cmsAxios
       .post(`upload`, fileForm, { // or { 'data': fileForm }
@@ -1050,8 +1058,8 @@ export default function Advisory({
           message: "Could not save attachments",
         });
       });
-    if (res.data.data.length > 0) {
-      return res.data.data[0];
+    if (res.data.length > 0) {
+      return res.data[0];
     } else {
       setToError(true);
       setError({

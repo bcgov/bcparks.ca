@@ -153,10 +153,10 @@ module.exports = ({ env }) => {
             "api::event-type.event-type": {
               GET: true,
             },
-            "api::link.link": {
-              POST: true,
-              PUT: true,
-            }
+            // "api::link.link": {
+            //   POST: true,
+            //   PUT: true,
+            // }
           },
         },
       },
