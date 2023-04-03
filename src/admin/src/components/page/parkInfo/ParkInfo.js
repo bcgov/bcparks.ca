@@ -306,10 +306,10 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
     const currentFacility = parkFacilities.filter(
       (f) => f.id === facilityId
     )[0];
-    const unchangedFacility = protectedArea.parkFacilities.filter(
+    const unchangedFacility = protectedArea.attributes.parkFacilities.data.filter(
       (f) => f.id === facilityId
     )[0];
-    currentFacility.description = unchangedFacility.description;
+    currentFacility.description = unchangedFacility.attributes.description;
     finishEditFacilityDesc(facilityId, true);
   };
 
