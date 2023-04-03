@@ -1,4 +1,4 @@
-name: Publish Gatsby
+name: Publish Gatsby (experimental)
 
 on:
   repository_dispatch:
