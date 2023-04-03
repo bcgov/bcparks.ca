@@ -5,40 +5,37 @@
  * to customize this model
  */
 
-const updateName = async (data) => {
-  data.name = ":";
-  if (data.protectedArea) {
-    const { orcs = { orcs: "" } } = await strapi
-      .service("api::protected-area.protected-area")
-      .findOne(data.protectedArea);
-    data.name = orcs;
+const updateName = async (data, where) => {
+  if (where) {
+    const id = where.id
+    const parkFacility = await strapi.entityService.findOne(
+      "api::park-facility.park-facility", id, { populate: '*'}
+    )
+    const protectedArea = parkFacility.protectedArea
+    const site = parkFacility.site
+    const facilityType = parkFacility.facilityType
+  
+    data.name = ""
+    if (protectedArea) {
+      data.name = protectedArea.orcs
+    }
+    if (site) {
+      data.name = site.orcsSiteNumber
+    }
+    if (facilityType) {
+      data.name += ":"
+      data.name += facilityType.facilityName;
+    }
   }
-  if (data.site) {
-    const { orcsSiteNumber = { orcsSiteNumber: null } } = await strapi
-      .service("api::site.site")
-      .findOne(data.site);
-    if (orcsSiteNumber) data.name = orcsSiteNumber;
-  }
-
-  data.name += ":";
-  if (data.facilityType) {
-    const { facilityName } = await strapi
-      .service("api::facility-type.facility-type")
-      .findOne(data.facilityType);
-    data.name += facilityName;
-  }
-  return data;
+  return data
 };
 
-// Disabled it since it causes error
-// TODO: Check if it is really necessary
 module.exports = {
   async beforeCreate(event) {
-    const { data, where, select, populate } = event.params;
-    // data = await updateName(data);
-  },
+    let { data, where } = event.params;
+    data = await updateName(data, where);  },
   async beforeUpdate(event) {
-    const { data, where, select, populate } = event.params;
-    // data = await updateName(data);
+    let { data, where } = event.params;
+    data = await updateName(data, where);
   },
 };
