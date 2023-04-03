@@ -5,6 +5,7 @@ on:
     inputs:
       releaseTag:
         description: "Tag of version to be promoted to ALPHA-TEST"
+        default: 'latest'
         required: true
 
 env:
@@ -17,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Attempt to checkout tag
+        if: github.event.inputs.releaseTag != 'latest'  # 'latest' is actually an Openshift image tag, not a GitHub tag
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.inputs.releaseTag }}
