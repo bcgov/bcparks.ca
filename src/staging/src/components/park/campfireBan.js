@@ -22,9 +22,9 @@ export default function CampfireBan() {
           <Avatar
             variant="square"
             src={campfireBanIcon}
-            aria-label="no campfire"
+            aria-label="campfires prohibited"
             className="park-overview-icon"
-            alt=""
+            alt="Campfires are prohibited"
           />
         }
         title="No campfires"
