@@ -339,7 +339,12 @@
 }
 
 .park-access {
+  display: flex;
+  align-items: center;
   min-width: 210px !important;
+  &.campfire-ban {
+    min-width: 150px !important;
+  }
 }
 
 @media (max-width: $mediumBreakpoint) {
