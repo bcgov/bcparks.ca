@@ -26,14 +26,14 @@ jobs:
 
       - name: Tag images
         run: |
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin:${{ env.SHORT_SHA }} admin:${{ env.RELEASE_VERSION }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder:${{ env.SHORT_SHA }} public-builder:${{ env.RELEASE_VERSION }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi:${{ env.SHORT_SHA }} strapi:${{ env.RELEASE_VERSION }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag landing:${{ env.SHORT_SHA }} landing:${{ env.RELEASE_VERSION }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin-main:${{ env.SHORT_SHA }} admin-main:${{ env.RELEASE_VERSION }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder-main:${{ env.SHORT_SHA }} public-builder-main:${{ env.RELEASE_VERSION }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi-main:${{ env.SHORT_SHA }} strapi-main:${{ env.RELEASE_VERSION }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag landing-main:${{ env.SHORT_SHA }} landing-main:${{ env.RELEASE_VERSION }}
 
       - name: Delete images tags with commit hash
         run: |
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d admin:${{ env.SHORT_SHA }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d public-builder:${{ env.SHORT_SHA }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d strapi:${{ env.SHORT_SHA }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d landing:${{ env.SHORT_SHA }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d admin-main:${{ env.SHORT_SHA }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d public-builder-main:${{ env.SHORT_SHA }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d strapi-main:${{ env.SHORT_SHA }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d landing-main:${{ env.SHORT_SHA }}
