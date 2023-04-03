@@ -193,10 +193,10 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
     const currentActivity = parkActivities.filter(
       (a) => a.id === activityId
     )[0];
-    const unchangedActivity = protectedArea.parkActivities.filter(
+    const unchangedActivity = protectedArea.attributes.parkActivities.data.filter(
       (a) => a.id === activityId
     )[0];
-    currentActivity.description = unchangedActivity.description;
+    currentActivity.description = unchangedActivity.attributes.description;
     finishEditActivityDesc(activityId, true);
   };
 
