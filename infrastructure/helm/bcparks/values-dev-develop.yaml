@@ -13,11 +13,11 @@ images:
 
 cms:
   env:
-    externalUrl: https://develop-cms-61d198-dev.apps.silver.devops.gov.bc.ca
+    externalUrl: https://alpha-dev-cms.bcparks.ca
 
 admin:
   env:
-    externalUrl: https://develop-admin-61d198-dev.apps.silver.devops.gov.bc.ca
+    externalUrl: https://alpha-dev-staff.bcparks.ca
 
 patroni:
   replicas: 1

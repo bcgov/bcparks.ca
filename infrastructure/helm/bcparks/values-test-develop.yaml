@@ -25,7 +25,7 @@ cms:
       memory: 250Mi
 
   env:
-    externalUrl: https://develop-cms-61d198-test.apps.silver.devops.gov.bc.ca
+    externalUrl: https://alpha-test-cms.bcparks.ca
 
   hpa:
     minReplicas: 1
@@ -33,7 +33,7 @@ cms:
 
 admin:
   env:
-    externalUrl: https://develop-admin-61d198-test.apps.silver.devops.gov.bc.ca
+    externalUrl: https://alpha-test-staff.bcparks.ca
 
 patroni:
   replicas: 1

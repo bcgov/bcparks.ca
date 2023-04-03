@@ -68,8 +68,8 @@ jobs:
                   echo "REACT_APP_SITE_URL=https://test.bcparks.ca" >> $GITHUB_ENV
                   echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__MAIN_TEST }}" >> $GITHUB_ENV
               else
-                  echo "REACT_APP_CMS_BASE_URL=https://develop-cms-61d198-test.apps.silver.devops.gov.bc.ca" >> $GITHUB_ENV
-                  echo "REACT_APP_SITE_URL=https://develop-public-61d198-test.apps.silver.devops.gov.bc.ca" >> $GITHUB_ENV
+                  echo "REACT_APP_CMS_BASE_URL=https://alpha-test-cms.bcparks.ca" >> $GITHUB_ENV
+                  echo "REACT_APP_SITE_URL=https://alpha-test.bcparks.ca" >> $GITHUB_ENV
                   echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__DEVELOP_TEST }}" >> $GITHUB_ENV
               fi
           else
@@ -80,8 +80,8 @@ jobs:
                   echo "REACT_APP_SITE_URL=https://dev.bcparks.ca" >> $GITHUB_ENV
                   echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__MAIN_DEV }}" >> $GITHUB_ENV
               else
-                  echo "REACT_APP_CMS_BASE_URL=https://develop-cms-61d198-dev.apps.silver.devops.gov.bc.ca" >> $GITHUB_ENV
-                  echo "REACT_APP_SITE_URL=https://develop-public-61d198-dev.apps.silver.devops.gov.bc.ca" >> $GITHUB_ENV
+                  echo "REACT_APP_CMS_BASE_URL=https://alpha-dev-cms.bcparks.ca" >> $GITHUB_ENV
+                  echo "REACT_APP_SITE_URL=https://alpha-dev.bcparks.ca" >> $GITHUB_ENV
                   echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__DEVELOP_DEV }}" >> $GITHUB_ENV
               fi
           fi
