@@ -10,16 +10,16 @@ const validator = require("../../../../helpers/slugValidator.js");
 module.exports = {
     beforeCreate(event) {
         const { data, where, select, populate } = event.params;
-        validator.slugCharacterValidator(data.Slug)
-        validator.slugNoLeadingSlashValidator(data.Slug)
-        validator.slugNoLeadingDashValidator(data.Slug)
-        validator.slugNoTrailingDashValidator(data.Slug)
+        validator.slugCharacterValidator(data.slug)
+        validator.slugNoLeadingSlashValidator(data.slug)
+        validator.slugNoLeadingDashValidator(data.slug)
+        validator.slugNoTrailingDashValidator(data.slug)
     },
     beforeUpdate(event) {
         const { data, where, select, populate } = event.params;
-        validator.slugCharacterValidator(data.Slug)
-        validator.slugNoLeadingSlashValidator(data.Slug)
-        validator.slugNoLeadingDashValidator(data.Slug)
-        validator.slugNoTrailingDashValidator(data.Slug)
+        validator.slugCharacterValidator(data.slug)
+        validator.slugNoLeadingSlashValidator(data.slug)
+        validator.slugNoLeadingDashValidator(data.slug)
+        validator.slugNoTrailingDashValidator(data.slug)
     }
 };
