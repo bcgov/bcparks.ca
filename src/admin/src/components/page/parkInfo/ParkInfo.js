@@ -438,7 +438,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
               <br />
               <div className="pt10b30">
                 <div className="container-fluid">
-                  <h3>{protectedArea.protectedAreaName}</h3>
+                  <h3>{protectedArea.attributes.protectedAreaName}</h3>
                   {protectedArea.regionName && (
                     <div>{protectedArea.regionName} Region</div>
                   )}
