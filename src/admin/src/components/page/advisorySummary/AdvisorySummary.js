@@ -37,13 +37,13 @@ export default function AdvisorySummary({
 
   useEffect(() => {
     if (!isLoadingPage) {
-      if (advisory.advisoryStatus.code === "PUB") {
+      if (showOriginalAdvisory) {
         Promise.all([
-          cmsAxios.get(`/public-advisories/${advisory.advisoryNumber}`),
+          cmsAxios.get(`/public-advisories/${advisory.advisoryNumber}?populate=*`),
           getLinkTypes(cmsData, setCmsData),
         ])
           .then((res) => {
-            const advisoryData = res[0].data.data;
+            const advisoryData = res[0].data;
             advisoryData.linkTypes = res[1];
             setIsCurrentlyPublished(advisoryData.advisoryStatus.code === "PUB");
             setCurrentAdvisory(advisoryData);
