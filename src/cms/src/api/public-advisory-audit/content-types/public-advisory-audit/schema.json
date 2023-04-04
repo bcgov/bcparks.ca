@@ -70,9 +70,6 @@
     "createdDate": {
       "type": "datetime"
     },
-    "createdBy": {
-      "type": "string"
-    },
     "advisoryDate": {
       "type": "datetime"
     },
