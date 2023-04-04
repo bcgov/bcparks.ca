@@ -36,7 +36,7 @@ const query = qs.stringify({
   fields: ['advisoryNumber', 'advisoryDate', 'title', 'effectiveDate', 'endDate', 'expiryDate'],
   populate: {
     protectedAreas: {
-      fields: ['protectedAreaName'],
+      fields: ['orcs', 'protectedAreaName'],
     },
     advisoryStatus: {
       fields: ['advisoryStatus', 'code'],
