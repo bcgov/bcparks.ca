@@ -30,7 +30,7 @@ export function getProtectedAreas(cmsData, setCmsData) {
 export function getRegions(cmsData, setCmsData) {
     if (!cmsData.regions) {
         const result = cmsAxios
-            .get(`/regions?${querySort("regionName")}`)
+            .get(`/regions?${querySort("regionName")}&populate=*`)
             .then((res) => {
                 const data = cmsData;
                 data.regions = res.data.data;
@@ -46,7 +46,7 @@ export function getRegions(cmsData, setCmsData) {
 export function getSections(cmsData, setCmsData) {
     if (!cmsData.sections) {
         const result = cmsAxios
-            .get(`/sections?${querySort("sectionName")}`)
+            .get(`/sections?${querySort("sectionName")}&populate=*`)
             .then((res) => {
                 const data = cmsData;
                 data.sections = res.data.data;
