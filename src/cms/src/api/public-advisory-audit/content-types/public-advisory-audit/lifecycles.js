@@ -29,18 +29,6 @@ const getNextRevisionNumber = async (advisoryNumber) => {
   return ++maxRevisionNumber;
 };
 
-const getPublishedRevisionNumber = async (advisoryNumber) => {
-  const publishedAdvisory = await strapi.db.query('api::public-advisory.public-advisory').findOne({
-    where: {
-      advisoryNumber,
-      advisoryStatus: {
-        code: 'PUB'
-      }
-    },
-  });
-  return publishedAdvisory ? publishedAdvisory.revisionNumber : 0;
-};
-
 const createPublicAdvisoryAudit = async (data) => {
   data.id = 0; //TODO:  why is that ?
   data.published_at = null;
@@ -61,7 +49,7 @@ const savePublicAdvisory = async (publicAdvisory) => {
     publicAdvisory.published_at = new Date();
     const isExist = await strapi.db.query('api::public-advisory.public-advisory').findOne({
       where: {
-        advisoryNumber
+        advisoryNumber: publicAdvisory.advisoryNumber
       }
     });
 
@@ -175,7 +163,10 @@ module.exports = {
     }
   },
   afterCreate: async (ctx) => {
-    copyToPublicAdvisory(ctx.result);
+    const newPublicAdvisoryAudit = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', ctx.result.id, {
+      populate: { 'advisoryStatus': { "fields": ["code"] } }
+    });
+    copyToPublicAdvisory(newPublicAdvisoryAudit);
   },
   beforeUpdate: async (ctx) => {
     let { data: newPublicAdvisory, where: filter } = ctx.params;
@@ -184,10 +175,8 @@ module.exports = {
     newPublicAdvisory.publishedAt = new Date();
     newPublicAdvisory.isLatestRevision = true;
     const oldPublicAdvisory = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', filter.id, {
-      populate: '*',
+      populate: { 'advisoryStatus': { "fields": ["code"] } }
     });
-
-
 
     if (!oldPublicAdvisory) return;
     if (!oldPublicAdvisory.publishedAt) return;
@@ -227,6 +216,9 @@ module.exports = {
     }
   },
   afterUpdate: async (ctx) => {
-    copyToPublicAdvisory(ctx.result);
+    const publicAdvisoryAudit = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', ctx.result.id, {
+      populate: { 'advisoryStatus': { "fields": ["code"] } }
+    });
+    copyToPublicAdvisory(publicAdvisoryAudit);
   },
 };
