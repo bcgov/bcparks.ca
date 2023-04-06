@@ -24,7 +24,8 @@ const getNextRevisionNumber = async (advisoryNumber) => {
       revisionNumber: 'DESC'
     }
   });
-  let { revisionNumber: maxRevisionNumber } = result;
+  let { revisionNumber } = result;
+  let  maxRevisionNumber = revisionNumber;
   if (!maxRevisionNumber || maxRevisionNumber < 0) maxRevisionNumber = 0;
   return ++maxRevisionNumber;
 };
@@ -38,7 +39,7 @@ const createPublicAdvisoryAudit = async (data) => {
     await strapi.db.query('api::public-advisory-audit.public-advisory-audit').create({data});
   } catch (error) {
     strapi.log.error(
-      `error creating public-advisory-audit ${publicAdvisory.id}...`,
+      `error creating public-advisory-audit ${data.advisoryNumber}...`,
       error
     );
   }
@@ -169,12 +170,13 @@ module.exports = {
     copyToPublicAdvisory(newPublicAdvisoryAudit);
   },
   beforeUpdate: async (ctx) => {
-    let { data: newPublicAdvisory, where: filter } = ctx.params;
-    if (!newPublicAdvisory.publishedAt) return;
+    let { data, where } = ctx.params;
+    const newPublicAdvisory = data;
+    if (!newPublicAdvisory.published_at) return;
 
-    newPublicAdvisory.publishedAt = new Date();
+    newPublicAdvisory.published_at = new Date();
     newPublicAdvisory.isLatestRevision = true;
-    const oldPublicAdvisory = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', filter.id, {
+    const oldPublicAdvisory = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', where.id, {
       populate: { 'advisoryStatus': { "fields": ["code"] } }
     });
 
@@ -206,7 +208,6 @@ module.exports = {
     }
 
     // flow 3: update published advisory
-    oldAdvisoryStatus;
     if (oldAdvisoryStatus === "PUB") {
       await createPublicAdvisoryAudit(oldPublicAdvisory);
       newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
