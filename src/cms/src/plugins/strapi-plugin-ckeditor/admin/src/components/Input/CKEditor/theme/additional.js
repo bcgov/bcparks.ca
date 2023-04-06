@@ -64,10 +64,6 @@ export const additional = css`
 	--ck-georgia-serif-font-stack: Georgia,Times,Times New Roman,serif;
 }
 
-.ck-content {
-  font-size: 16px;// Custom Styles BCPark
-}
-
 .ck-content h1.document-title {
 	font-family: var(--ck-georgia-serif-font-stack);
 	font-size: 50px;
@@ -214,60 +210,4 @@ export const additional = css`
 	color: #222;
 }
 
-  // Custom Styles BCPark (Start)
-
-img {
-  max-width: 100% !important;
-}
-
-ul {
-  list-style-type: disc !important;
-}
-
-blockquote {
-  color: #003366;
-  font-style: normal;
-  font-size: 20px;
-  border-left: solid 3px #fcba19;
-}
-
-blockquote.callout-box {
-  background-color: #D9EAF7;
-  font-weight: 700;
-  border-radius: 4px;
-  border-left: none;
-  padding: 12px 20px;
-}
-
-.ck-content h3 {
-  font-size: 20px;
-  margin: 0 0 24px 0;
-}
-
-.ck-content h4 {
-  margin: 0 0 24px 0;
-}
-
-.legacy-link {
-  background-color: #FFFF00;
-}
-
-.custom-btn-primary {
-  background-color: #1b3af2;
-  color: #fff;
-}
-
-.ck-dropdown .ck-button.ck-dropdown__button .ck-button__label {
-    width: 6em;
-}
-
-.ck-content ol li.lower-alpha {
-  list-style-type: lower-alpha;
-}
-
-.ck-content .bcp-landing-intro__image {
-  min-height: 300px;
-  background-position: center;
-}
-
-`  // Custom Styles BCPark (End)
+`;

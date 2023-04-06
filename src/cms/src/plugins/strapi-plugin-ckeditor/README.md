@@ -1,3 +1,22 @@
+## BC Parks implementation of CKeditor 5 with Strapi 4 - notes
+
+We're using the CKEditor 5 integration with Strapi from here:
+> https://market.strapi.io/plugins/@_sh-strapi-plugin-ckeditor
+> https://github.com/nshenderov/strapi-plugin-ckeditor
+
+We've created a plugin for it, and copied the package into this directory.
+
+The plugin is based on a [**CKEditor dll build**](https://ckeditor.com/docs/ckeditor5/latest/installation/advanced/alternative-setups/dll-builds.html)
+The purpose of a DLL build is to allow adding plugins to an editor build without having to rebuild (recompile) the build itself.
+
+> 📂 Config for CKeditor [**is here**](admin/src/components/Input/CKEditor/configs/base.js)
+
+> 📂 CSS for editor [**is here**](admin/src/components/Input/CKEditor/theme/common.js)
+
+If you change any other files, please make note in this document.
+
+___
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/nshenderov/strapi-plugin-ckeditor/master/assets/ckeditor5_2_0.png" width="700" />
 </p>

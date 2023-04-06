@@ -1,5 +1,7 @@
 import { css } from "styled-components";
 
+// Add BC Parks Override CSS at the bottom of this file only
+
 export const common = css`
   .ck {
     --ck-color-image-caption-background: hsl(0, 0%, 97%);
@@ -58,7 +60,7 @@ export const common = css`
 
     h4 {
       //font-size: 1.22em;
-      font-size: 1.03rem; // Custom Styles BCParks
+      font-size: 1rem; // Custom Styles BCParks
       margin: 0 0 24px 0; // Custom Styles BCParks
     }
 
@@ -244,4 +246,58 @@ export const common = css`
       }
     }
   }
+  
+  // Custom Styles BC Parks (Start)
+
+  .ck-editor__main {
+    img {
+      max-width: 100% !important;
+    }
+
+    ul {
+      list-style-type: disc !important;
+    }
+
+    blockquote {
+      color: #003366;
+      font-style: normal;
+      font-size: 1.125rem;
+      border-left: solid 3px #fcba19;
+    }
+
+    blockquote.callout-box {
+      background-color: #D9EAF7;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 4px;
+      border-left: none;
+      padding: 12px 20px;
+    }
+
+    .legacy-link {
+      background-color: #FFFF00;
+    }
+
+    a.btn.btn-primary {
+      background-color: #38598a;
+      color: #fff;
+      padding: .375rem .75rem;
+    }
+
+    ol li.lower-alpha {
+      list-style-type: lower-alpha;
+    }
+
+    .bcp-landing-intro__image {
+      min-height: 300px;
+      background-position: center;
+    }
+  }
+
+  .ck.ck-dropdown.ck-heading-dropdown .ck-dropdown__button .ck-button__label {
+      width: 6em;
+  }
+
+  // Custom Styles BC Parks (End)
+
 `;
