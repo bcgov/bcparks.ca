@@ -264,30 +264,58 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
     }
 
     if (camping) {
-      query.whereIn("protected_areas.id", (builder) => {
-        builder
-          .select("protected_area_id")
-          .from("park_facilities")
-          .innerJoin(
-            "park_facilities_facility_type_links",
-            "park_facilities.id",
-            "park_facilities_facility_type_links.park_facility_id"
-          )
-          .innerJoin(
-            "facility_types",
-            "park_facilities_facility_type_links.facility_type_id",
-            "facility_types.id"
-          )
-          .innerJoin(
-            "park_facilities_protected_area_links",
-            "park_facilities.id",
-            "park_facilities_protected_area_links.park_facility_id"
-          )
-          .where("park_facilities.is_active", true)
-          .where("facility_types.is_active", true)
-          .whereNotNull("facility_types.published_at")
-          .whereNotNull("park_facilities.published_at")
-          .where("facility_types.is_camping", true);
+      query.where((orBuilder) => {
+        orBuilder.whereIn("protected_areas.id", (builder) => {
+          builder
+            .select("protected_area_id")
+            .from("park_facilities")
+            .innerJoin(
+              "park_facilities_facility_type_links",
+              "park_facilities.id",
+              "park_facilities_facility_type_links.park_facility_id"
+            )
+            .innerJoin(
+              "facility_types",
+              "park_facilities_facility_type_links.facility_type_id",
+              "facility_types.id"
+            )
+            .innerJoin(
+              "park_facilities_protected_area_links",
+              "park_facilities.id",
+              "park_facilities_protected_area_links.park_facility_id"
+            )
+            .where("park_facilities.is_active", true)
+            .where("facility_types.is_active", true)
+            .whereNotNull("facility_types.published_at")
+            .whereNotNull("park_facilities.published_at")
+            .where("facility_types.is_camping", true);
+        });
+
+        orBuilder.orWhereIn("protected_areas.id", (builder) => {
+          builder
+            .select("protected_area_id")
+            .from("park_activities")
+            .innerJoin(
+              "park_activities_activity_type_links",
+              "park_activities.id",
+              "park_activities_activity_type_links.park_activity_id"
+            )
+            .innerJoin(
+              "activity_types",
+              "park_activities_activity_type_links.activity_type_id",
+              "activity_types.id"
+            )
+            .innerJoin(
+              "park_activities_protected_area_links",
+              "park_activities.id",
+              "park_activities_protected_area_links.park_activity_id"
+            )
+            .where("park_activities.is_active", true)
+            .where("activity_types.is_active", true)
+            .whereNotNull("activity_types.published_at")
+            .whereNotNull("park_activities.published_at")
+            .where("activity_types.is_camping", true);
+        });
       });
     }
 
