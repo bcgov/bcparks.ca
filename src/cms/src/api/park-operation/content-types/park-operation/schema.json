@@ -5,7 +5,8 @@
     "singularName": "park-operation",
     "pluralName": "park-operations",
     "displayName": "Park-operation",
-    "name": "park-operation"
+    "name": "park-operation",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -27,6 +28,9 @@
     },
     "closeDate": {
       "type": "date"
+    },
+    "isDateRangeAnnual": {
+      "type": "boolean"
     },
     "hasFirstComeFirstServed": {
       "type": "boolean"
