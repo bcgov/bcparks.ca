@@ -295,7 +295,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
 
       if (publishedStatus?.length > 0) {
         const result = await cmsAxios
-          .get(`/public-advisories?_advisoryStatus=${publishedStatus[0].id}&populate=*`)
+          .get(`/public-advisories?_advisoryStatus=${publishedStatus[0].id}&sort=createdAt:DESC&populate=*`)
           .catch(() => {
             setHasErrors(true);
           });
