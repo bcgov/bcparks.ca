@@ -6,15 +6,4 @@
 
 const { createCoreController } = require("@strapi/strapi").factories;
 
-module.exports = createCoreController(
-    "api::park-facility.park-facility",
-    ({ strapi }) => ({
-        async update(ctx) {
-            strapi.plugins[
-                "rest-cache"
-            ].services.cacheConfig.clearByUid('api::protected-area.protected-area')
-            const response = await super.update(ctx);
-            return response;
-        }
-    })
-);
+module.exports = createCoreController("api::park-facility.park-facility");
