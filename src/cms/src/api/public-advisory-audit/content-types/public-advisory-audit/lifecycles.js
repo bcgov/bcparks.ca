@@ -31,7 +31,7 @@ const getNextRevisionNumber = async (advisoryNumber) => {
 };
 
 const createPublicAdvisoryAudit = async (data) => {
-  data.id = 0; //TODO:  why is that ?
+  delete data.id;
   data.published_at = null;
   data.isLatestRevision = false;
 
