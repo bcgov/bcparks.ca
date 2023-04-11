@@ -11,8 +11,8 @@ images:
   public:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/public-develop
     tag: test
-  landing:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/landing-develop
+  maintenance:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/maintenance-develop
     tag: test
 
 cms:

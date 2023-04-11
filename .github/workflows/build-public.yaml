@@ -1,4 +1,5 @@
 name: Build Public on main branch
+# TODO: Delete after Strapi4 launch.  Replaced by publish-gatsby.yaml
 
 on:
   repository_dispatch:

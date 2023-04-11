@@ -1,0 +1,71 @@
+cluster:
+  ssoAuthUrl: https://test.loginproxy.gov.bc.ca/auth
+
+images:
+  strapi:
+    tag: test
+  admin:
+    tag: test
+  public:
+    tag: test
+  maintenance:
+    tag: test
+
+cms:
+  resources:
+    limits:
+      cpu: "1"
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  env:
+    ### TODO: revert after Strapi4 launch ###
+    externalUrl: https://main-cms-61d198-test.apps.silver.devops.gov.bc.ca
+    # externalUrl: https://test-cms.bcparks.ca
+
+  hpa:
+    ### TODO: revert after Strapi4 launch ###
+    minReplicas: 1
+    maxReplicas: 1
+    #minReplicas: 2
+    #maxReplicas: 4
+
+admin:
+  env:
+    ### TODO: revert after Strapi4 launch ###
+    externalUrl: https://main-admin-61d198-test.apps.silver.devops.gov.bc.ca
+    # externalUrl: https://test-staff.bcparks.ca
+
+patroni:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+  ### TODO: revert after Strapi4 launch ###
+  replicas: 1
+
+  pvc:
+    size: 10Gi
+
+backup:
+  enabled: true
+
+  pvc:
+    size: 10Gi
+
+  enironment:
+    friendlyName: bcparks.ca CMS Postgres Backup [test]
+    name: 61d198-test
+
+public:
+  hpa:
+    ### TODO: revert after Strapi4 launch ###
+    minReplicas: 1
+    maxReplicas: 1
+    # minReplicas: 1
+    # maxReplicas: 3
