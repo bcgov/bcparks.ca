@@ -20,7 +20,6 @@ export default function About({
   ) : null
   const parkType = park.type ?? "park"
   const parkContact = park.parkContact.data.parkContact
-  const natureAndCulture = park.natureAndCulture.data.natureAndCulture
 
   return (
     <Grid item xs={12} id="park-about-container" className="anchor-link">
@@ -44,13 +43,6 @@ export default function About({
           <>
             <h3>{capitalizeFirstLetter(`${parkType} contact`)}</h3>
             <HtmlContent>{parkContact}</HtmlContent>
-          </>
-        )}
-        {parkContact && natureAndCulture && <Spacer />}
-        {natureAndCulture && (
-          <>
-            <h3>Nature and culture</h3>
-            <HtmlContent>{natureAndCulture}</HtmlContent>
           </>
         )}
         <Spacer />
