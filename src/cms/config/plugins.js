@@ -62,7 +62,7 @@ module.exports = ({ env }) => {
       enabled: env.bool("STRAPI_CACHE_ENABLED", false),
       config: {
         provider: {
-          name: "redis",
+          name: env("STRAPI_CACHE_TYPE", 'memory'),
           options: {
             max: 32767,
             connection: "default",
