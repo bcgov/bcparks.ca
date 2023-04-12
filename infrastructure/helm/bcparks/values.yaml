@@ -6,7 +6,7 @@ cluster:
 
 images:
   strapi:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/strapi
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/strapi-main
     tag: latest
   postgres:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/postgresql
@@ -15,10 +15,10 @@ images:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/pgbouncer
     tag: latest
   admin:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/admin
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/admin-main
     tag: latest
   public:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/public
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/public-main
     tag: latest
   patroni:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/patroni-postgres
@@ -26,8 +26,8 @@ images:
   backup:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/backup-container
     tag: postgres-latest
-  landing:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/landing
+  maintenance:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/maintenance-main
     tag: latest
   redis:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/redis
@@ -206,10 +206,10 @@ backup:
       cpu: 250m
       memory: 250Mi
 
-landing:
+maintenance:
   imagePullPolicy: Always
 
-  componentName: landing
+  componentName: maintenance
 
   resources:
     limits:
@@ -220,7 +220,7 @@ landing:
       memory: 50Mi
 
   service:
-    portName: landing
+    portName: maintenance
     port: 3000
 
 

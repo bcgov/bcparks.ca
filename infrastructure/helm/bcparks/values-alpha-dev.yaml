@@ -8,8 +8,8 @@ images:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/admin-develop
   public:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/public-develop
-  landing:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/landing-develop
+  maintenance:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/maintenance-develop
 
 cms:
   env:

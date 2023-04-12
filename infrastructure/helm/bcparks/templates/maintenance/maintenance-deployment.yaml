@@ -1,16 +1,16 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: {{ .Release.Name }}-{{ .Values.landing.componentName }}
+  name: {{ .Release.Name }}-{{ .Values.maintenance.componentName }}
   labels:
-    component: {{ .Values.landing.componentName }}
+    component: {{ .Values.maintenance.componentName }}
     release: {{ .Release.Name }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     heritage: {{ .Release.Service }}
 spec:
   selector:
     matchLabels:
-      component: {{ .Values.landing.componentName }}
+      component: {{ .Values.maintenance.componentName }}
       release: {{ .Release.Name }}
   replicas: 1
   strategy:
@@ -21,18 +21,18 @@ spec:
   template:
     metadata:
       labels:
-        component: {{ .Values.landing.componentName }}
+        component: {{ .Values.maintenance.componentName }}
         release: {{ .Release.Name }}
     spec:
       containers:
-        - name: {{ .Values.landing.componentName }}
+        - name: {{ .Values.maintenance.componentName }}
           resources:
-{{ toYaml .Values.landing.resources | indent 12 }}
-          image: {{ .Values.images.landing.name }}:{{ .Values.images.landing.tag }}
-          imagePullPolicy: {{ .Values.landing.imagePullPolicy }}
+{{ toYaml .Values.maintenance.resources | indent 12 }}
+          image: {{ .Values.images.maintenance.name }}:{{ .Values.images.maintenance.tag }}
+          imagePullPolicy: {{ .Values.maintenance.imagePullPolicy }}
           ports:
-            - name: {{ .Values.landing.service.portName }}
-              containerPort: {{ .Values.landing.service.port }}
+            - name: {{ .Values.maintenance.service.portName }}
+              containerPort: {{ .Values.maintenance.service.port }}
               protocol: TCP
           readinessProbe:
             httpGet:

@@ -1,15 +1,28 @@
-name: Build dev on develop branch push
+name: Build dev on develop & strapi4 branch push
 
 on:
   push:
     branches:
       - develop
+      - strapi4
 
 jobs:
+  get-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set main branch
+        if: ${{ github.ref_name=='strapi4' }}
+        run: echo "branch=main" >> $GITHUB_OUTPUT
+        id: vars
+
+    outputs:
+      branch: ${{ steps.vars.outputs.branch || github.ref_name }}
+
   build-cms:
+    needs: get-branch
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: strapi-develop
+      IMAGE_NAME: strapi-${{ needs.get-branch.outputs.branch }}
       BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-18:1-32
     steps:
       - name: Git Checkout
@@ -39,9 +52,10 @@ jobs:
         run: docker push --all-tags ${{ steps.build_image.outputs.image }}
 
   build-admin:
+    needs: get-branch
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: admin-develop
+      IMAGE_NAME: admin-${{ needs.get-branch.outputs.branch }}
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -80,9 +94,10 @@ jobs:
         run: docker push --all-tags ${{ env.REGISTRY_IMAGE }}
 
   build-public-builder:
+    needs: get-branch
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: public-builder-develop
+      IMAGE_NAME: public-builder-${{ needs.get-branch.outputs.branch }}
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -114,12 +129,13 @@ jobs:
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           event-type: publish-gatsby
-          client-payload: '{"env": "dev", "branch": "develop"}'
+          client-payload: '{"env": "dev", "branch": "${{ needs.get-branch.outputs.branch }}" }'
 
-  build-landing:
+  build-maintenance:
+    needs: get-branch
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: landing-develop
+      IMAGE_NAME: maintenance-${{ needs.get-branch.outputs.branch }}
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -141,14 +157,14 @@ jobs:
           docker build -t ${{ env.IMAGE_NAME }} .
           docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:latest
           docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:${{ env.SHORT_SHA }}
-        working-directory: src/static-landing
+        working-directory: src/maintenance
 
       - name: Push Docker image
         run: docker push --all-tags ${{ env.REGISTRY_IMAGE }}
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [build-cms, build-admin]
+    needs: [get-branch, build-cms, build-admin]
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -161,6 +177,6 @@ jobs:
 
       - name: Trigger rollout
         run: |
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment develop-admin
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment develop-cms
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment develop-landing
+          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ needs.get-branch.outputs.branch }}-admin
+          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ needs.get-branch.outputs.branch }}-cms
+          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ needs.get-branch.outputs.branch }}-maintenance

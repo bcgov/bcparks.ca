@@ -16,23 +16,23 @@ Objects prefixed with `main-` in OpenShift are from the main branch in GitHub an
 
 ### Dev
 
-`helm -n 61d198-dev install main . -f values-dev-main.yaml`
+`helm -n 61d198-dev install main . -f values-dev.yaml`
 
 ### Test
 
-`helm -n 61d198-test install main . -f values-test-main.yaml`
+`helm -n 61d198-test install main . -f values-test.yaml`
 
 ### Prod
 
-`helm -n 61d198-prod install main . -f values-prod-main.yaml`
+`helm -n 61d198-prod install main . -f values-prod.yaml`
 
-### Dev Alpha (develop branch)
+### Alpha Dev (develop branch)
 
-`helm -n 61d198-dev install develop . -f values-dev-develop.yaml`
+`helm -n 61d198-dev install develop . -f values-alpha-dev.yaml`
 
-### Test Alpha (develop branch)
+### Alpha Test (develop branch)
 
-`helm -n 61d198-test install develop . -f values-test-develop.yaml`
+`helm -n 61d198-test install develop . -f values-alpha-test.yaml`
 
 ## Upgrading
 
@@ -42,23 +42,23 @@ Run the following commands from the `infrastructure/helm/bcparks` directory.
 
 ### Dev
 
-`helm -n 61d198-dev upgrade main . -f values-dev-main.yaml`
+`helm -n 61d198-dev upgrade main . -f values-dev.yaml`
 
 ### Test
 
-`helm -n 61d198-test upgrade main . -f values-test-main.yaml`
+`helm -n 61d198-test upgrade main . -f values-test.yaml`
 
 ### Prod
 
-`helm -n 61d198-prod upgrade main . -f values-prod-main.yaml`
+`helm -n 61d198-prod upgrade main . -f values-prod.yaml`
 
-### Dev Alpha (develop branch)
+### Alpha Dev (develop branch)
 
-`helm -n 61d198-dev upgrade develop . -f values-dev-develop.yaml`
+`helm -n 61d198-dev upgrade develop . -f values-alpha-dev.yaml`
 
-### Test Alpha (develop branch)
+### Alpha Test (develop branch)
 
-`helm -n 61d198-test upgrade develop . -f values-test-develop.yaml`
+`helm -n 61d198-test upgrade develop . -f values-alpha-test.yaml`
 
 ## Teardown
 
@@ -78,10 +78,10 @@ Run the following commands from the `infrastructure/helm/bcparks` directory.
 
 `helm -n 61d198-prod uninstall main`
 
-### Dev Alpha (develop branch)
+### Alpha Dev (develop branch)
 
 `helm -n 61d198-dev uninstall develop`
 
-### Test Alpha (develop branch)
+### Alpha Test (develop branch)
 
 `helm -n 61d198-test uninstall develop`
