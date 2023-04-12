@@ -96,7 +96,7 @@ module.exports = {
         resolveEnv: () => process.env.ENV_SUFFIX || 'dev',
         env: {
           'dev': {
-            policy: [{userAgent: '*', allow: ['/']}]
+            policy: [{userAgent: '*', disallow: ['/']}]
           },
           'test': {
             policy: [{userAgent: '*', disallow: ['/']}]
