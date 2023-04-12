@@ -669,7 +669,7 @@ export default function FindAPark({ location, data }) {
                         <fieldset>
                         <legend className="sr-only">Activities</legend>
                         <div
-                          tabIndex={0}
+                          tabIndex={showActivities ? -1 : 0 }
                           role="button"
                           className="row pointer mr-3"
                           onClick={() => {
@@ -761,7 +761,7 @@ export default function FindAPark({ location, data }) {
                         <fieldset>
                         <legend className="sr-only">Facilities</legend>
                         <div
-                          tabIndex={0}
+                          tabIndex={showActivities ? -1 : 0}
                           role="button"
                           className="row pointer mr-3"
                           onClick={() => {
