@@ -1,12 +1,7 @@
-name: Deploy to Alpha-Test
+name: Deploy Develop to Alpha-Test
 
 on:
-  workflow_dispatch:
-    inputs:
-      releaseTag:
-        description: "Tag of version to be promoted to ALPHA-TEST"
-        default: 'latest'
-        required: true
+  workflow_dispatch
 
 env:
   TOOLS_NAMESPACE: ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools
@@ -17,18 +12,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Attempt to checkout tag
-        if: github.event.inputs.releaseTag != 'latest'  # 'latest' is actually an Openshift image tag, not a GitHub tag
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.inputs.releaseTag }}
-
-      - name: Tag not found
-        if: ${{ failure() }}
-        run: |
-          echo "::error::Git Tag not found, please double check input"
-          exit 1
-
       - name: Login OpenShift
         uses: redhat-actions/oc-login@v1
         with:
@@ -37,10 +20,10 @@ jobs:
 
       - name: Tag Test images
         run: |
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin-develop:${{ github.event.inputs.releaseTag }} admin-develop:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder-develop:${{ github.event.inputs.releaseTag }} public-builder-develop:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi-develop:${{ github.event.inputs.releaseTag }} strapi-develop:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag maintenance-develop:${{ github.event.inputs.releaseTag }} maintenance-develop:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin-develop:latest admin-develop:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder-develop:latest public-builder-develop:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi-develop:latest strapi-develop:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag maintenance-develop:latest maintenance-develop:${{ env.ENVIRONMENT }}
 
       - name: Trigger Gatsby static build workflow
         uses: peter-evans/repository-dispatch@v1

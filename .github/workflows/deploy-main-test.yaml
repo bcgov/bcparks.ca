@@ -1,0 +1,40 @@
+name: Deploy Main to Test
+# TODO: Delete after Strapi4 launch.  Replaced by build-test.yaml
+
+on:
+  workflow_dispatch
+
+env:
+  TOOLS_NAMESPACE: ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools
+  ENVIRONMENT: test
+  NAMESPACE: ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-test
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT_SERVICE_TOKEN }}
+
+      - name: Tag Test images
+        run: |
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin-main:latest admin-main:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder-main:latest public-builder-main:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi-main:latest strapi-main:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag maintenance-main:latest maintenance-main:${{ env.ENVIRONMENT }}
+
+      - name: Trigger Gatsby static build workflow
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          event-type: publish-gatsby
+          client-payload: '{"env": "${{ env.ENVIRONMENT }}", "branch": "main"}'
+
+      - name: Trigger new rollout
+        run: |
+          oc -n ${{ env.NAMESPACE }} rollout restart deployment main-admin
+          oc -n ${{ env.NAMESPACE }} rollout restart deployment main-cms
+          oc -n ${{ env.NAMESPACE }} rollout restart deployment main-maintenance
