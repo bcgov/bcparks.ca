@@ -77,7 +77,8 @@
   a {
     color: $colorBlue;
     &:hover {
-      color: $colorGold;
+      color: $colorBlue;
+      font-weight: bold;
     }
     &:focus-visible {
       outline: -webkit-focus-ring-color auto 1px;
