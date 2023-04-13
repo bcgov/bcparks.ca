@@ -1,8 +1,5 @@
 import React from "react"
-
-import bcParksWordmark from "../images/BCParks_Wordmark_White.svg"
-import facebookIcon from "../images/Facebook_Negative.svg"
-import instaIcon from "../images/Instagram_Negative.svg"
+import { StaticImage } from "gatsby-plugin-image"
 
 import "../styles/footer.scss"
 
@@ -32,12 +29,22 @@ function FooterMenu({ items, menuIndex }) {
           <li>
             <div className="d-inline-block mt-3">
               <a href="https://www.facebook.com/YourBCParks/">
-                <img src={facebookIcon} alt="Facebook" />
+                <StaticImage
+                  src="../images/Facebook_Negative.svg"
+                  placeholder="blurred"
+                  loading="eager"
+                  alt="Facebook"
+                />
               </a>
             </div>
             <div className="d-inline-block mt-3 ml-3">
               <a href="https://www.instagram.com/yourbcparks">
-                <img src={instaIcon} alt="Instagram" />
+                <StaticImage
+                  src="../images/Instagram_Negative.svg"
+                  placeholder="blurred"
+                  loading="eager"
+                  alt="Instagram"
+                />
               </a>
             </div>
           </li>
@@ -90,7 +97,13 @@ export default function Footer() {
               <div className="col col-12 col-md-4">
                 <div className="text-center text-md-left" id="footer-logo">
                   <a href="/">
-                    <img alt="BC Parks wordmark" src={bcParksWordmark} />
+                    <StaticImage
+                      src="../images/BCParks_Wordmark_White.svg"
+                      placeholder="blurred"
+                      loading="eager"
+                      alt="BC Parks wordmark"
+                      className="footer-logo"
+                    />
                   </a>
                 </div>
               </div>

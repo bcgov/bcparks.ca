@@ -45,10 +45,14 @@
     }
 
     .bc-parks-logo--desktop {
-      height: 45px;
+      img {
+        height: 45px;
+      }
     }
     .bc-parks-logo--mobile {
-      height: 50px;
+      img {
+        height: 50px;
+      }
     }
   }
 }

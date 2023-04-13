@@ -2,9 +2,7 @@ import React, { useState, useEffect, useCallback } from "react"
 import PropTypes from "prop-types"
 import { Link, navigate } from "gatsby"
 import { isTablet } from "react-device-detect"
-
-import BCParksLogo from "../images/logo/BCParks_Primary_Reversed.svg"
-import BCParksWordmark from "../images/BCParks_Wordmark_White.svg"
+import { StaticImage } from "gatsby-plugin-image"
 
 import "../styles/megaMenu/megaMenu.scss"
 
@@ -302,15 +300,18 @@ const MegaMenu = ({ content, menuMode }) => {
         <div className="header-wrapper">
           <nav className="header-nav">
             <Link to="/">
-              <img
-                className="bc-parks-logo--desktop d-none d-lg-block"
+              <StaticImage
+                src="../images/logo/BCParks_Primary_Reversed.svg"
+                placeholder="blurred"
+                loading="eager"
                 alt="BC Parks Logo"
-                src={BCParksLogo}
+                className="bc-parks-logo--desktop d-none d-lg-block"
               />
-              <img
+               <StaticImage
+                src="../images/BCParks_Wordmark_White.svg"
+                placeholder="blurred"
+                loading="eager"
                 className="bc-parks-logo--mobile d-block d-lg-none"
-                alt=""
-                src={BCParksWordmark}
               />
             </Link>
             <a

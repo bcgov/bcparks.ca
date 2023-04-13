@@ -23,12 +23,7 @@ exports[`Footer renders correctly 1`] = `
           >
             <a
               href="/"
-            >
-              <img
-                alt="BC Parks wordmark"
-                src="test-file-stub"
-              />
-            </a>
+            />
           </div>
         </div>
         <div
@@ -188,24 +183,14 @@ exports[`Footer renders correctly 1`] = `
                     >
                       <a
                         href="https://www.facebook.com/YourBCParks/"
-                      >
-                        <img
-                          alt="Facebook"
-                          src="test-file-stub"
-                        />
-                      </a>
+                      />
                     </div>
                     <div
                       className="d-inline-block mt-3 ml-3"
                     >
                       <a
                         href="https://www.instagram.com/yourbcparks"
-                      >
-                        <img
-                          alt="Instagram"
-                          src="test-file-stub"
-                        />
-                      </a>
+                      />
                     </div>
                   </li>
                 </ul>
