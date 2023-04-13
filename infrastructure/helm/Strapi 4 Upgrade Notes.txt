@@ -24,7 +24,8 @@ create database strapi4
 cd /tmp
 psql -U postgres -d backup < backup.sql
 
-\connect backup
+psql -U postgres -d backup
+
 alter table protected_areas drop column search_text;
 alter table public_advisories drop column search_text;
 
@@ -44,6 +45,45 @@ from fire_zones_protected_areas__protected_areas_fire_zones
 group by "fire-zone_id", "protected-area_id" 
 having count(*) > 1);
 
+
+POWERSHELL
+
+git checkout f392b1d0c2fa2213f58beb017a3273a73c86bf0d   
+
+cd  \work\bcparks.ca\src\cms
+
+make sure you have the strapi4 .env file and the DATABASE_NAME is set to 'strapi4'
+
+yarn bunvm use 18.14.2
+rmdir node_modules
+del yarn.lock
+
+yarn
+yarn build
+yarn develop
+
+shut down strapi (ctrl-c)
+
+
+WINDOWS SUBSYSTEM FOR LINUX
+
+
+cd /mnt/c/work/migration-scripts/v3-sql-v4-sql
+
+make sure the .env settings are right  
+
+DATABASE_V3_DATABASE=backup
+DATABASE_V4_DATABASE=strapi4
+
+yarn add tar
+yarn
+yarn start
+
+
+DOCKER TERMIMAL
+
+
+psql -U postgres -d strapi4
 
 delete from up_permissions_role_links where permission_id in (select id from up_permissions where action in ('api::access-status.access-status.count',
 'api::advisory-status.advisory-status.count',
@@ -110,45 +150,8 @@ delete from up_permissions where id in (select id from up_permissions where acti
 'api::park-operation-sub-area.park-operation-sub-area.count',
 'api::activity-type.activity-type.count'));
 
+\q
 
-POWERSHELL
-
-git checkout f392b1d0c2fa2213f58beb017a3273a73c86bf0d   
-
-cd  \work\bcparks.ca\src\cms
-
-make sure you have the strapi4 .env file and the DATABASE_NAME is set to 'strapi4'
-
-nvm use 14.21.3
-rmdir node_modules
-del yarn.lock
-
-yarn
-yarn build
-yarn develop
-
-shut down strapi (ctrl-c)
-
-
-WINDOWS SUBSYSTEM FOR LINUX
-
-
-cd /mnt/c/work/migration-scripts/v3-sql-v4-sql
-
-make sure the .env settings are right  
-
-DATABASE_V3_DATABASE=backup
-DATABASE_V4_DATABASE=strapi4
-
-
-su
-
-yarn add tar
-yarn
-yarn start
-
-
-DOCKER TERMIMAL
 
 pg_dump -F t -U postgres -d strapi4 > /tmp/restore.tar
 
@@ -159,11 +162,11 @@ POWERSHELL
 
 cd \work\bcparks.ca\tools\syncdb
 docker cp postgres-docker:/tmp/restore.tar restore.tar
-oc rsh develop-patroni-0
+oc rsh main-patroni-0
 patronictl list  (make sure you are on the Leader)
 exit
-oc cp restore.tar develop-patroni-0:/tmp/restore.tar
-oc rsh develop-patroni-0
+oc cp restore.tar main-patroni-0:/tmp/restore.tar
+oc rsh main-patroni-0
 psql -U postgres
 
 -- kill all db connections because with (force) isn't working
@@ -185,18 +188,17 @@ pg_restore -U postgres -d cms restore.tar
 
 RESTART PATRONI
 
-patronictl restart develop-patroni
+patronictl restart main-patroni
 
 psql -U postgres
 
-\du   to get the username 86E6eDQWcf
-
-GRANT ALL PRIVILEGES ON DATABASE cms TO "user_86E6eDQWcf";
+\du   to get the username
+user_86E6eDQWcf
 
 \connect cms
 
+GRANT ALL PRIVILEGES ON DATABASE cms TO "user_86E6eDQWcf";
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "user_86E6eDQWcf";
-
 CREATE EXTENSION pg_trgm;
 
 
@@ -321,8 +323,6 @@ ORDER BY schemaname, tablename;
  ALTER TABLE public."strapi_ee_store_settings" OWNER TO "user_86E6eDQWcf";
  ALTER TABLE public."strapi_migrations" OWNER TO "user_86E6eDQWcf";
  ALTER TABLE public."strapi_webhooks" OWNER TO "user_86E6eDQWcf";
- ALTER TABLE public."tokens" OWNER TO "user_86E6eDQWcf";
- ALTER TABLE public."tokens_user_links" OWNER TO "user_86E6eDQWcf";
  ALTER TABLE public."up_permissions" OWNER TO "user_86E6eDQWcf";
  ALTER TABLE public."up_permissions_role_links" OWNER TO "user_86E6eDQWcf";
  ALTER TABLE public."up_roles" OWNER TO "user_86E6eDQWcf";
@@ -340,7 +340,6 @@ ORDER BY schemaname, tablename;
 SELECT 'ALTER SEQUENCE public."' || sequence_name ||'" OWNER TO "user_86E6eDQWcf";'
 FROM information_schema.sequences WHERE NOT sequence_schema IN ('pg_catalog', 'information_schema')
 ORDER BY sequence_schema, sequence_name;
-
 
 ALTER SEQUENCE public."access_statuses_id_seq" OWNER TO "user_86E6eDQWcf";
 ALTER SEQUENCE public."activity_types_id_seq" OWNER TO "user_86E6eDQWcf";
@@ -459,8 +458,6 @@ ALTER SEQUENCE public."strapi_database_schema_id_seq" OWNER TO "user_86E6eDQWcf"
 ALTER SEQUENCE public."strapi_ee_store_settings_id_seq" OWNER TO "user_86E6eDQWcf";
 ALTER SEQUENCE public."strapi_migrations_id_seq" OWNER TO "user_86E6eDQWcf";
 ALTER SEQUENCE public."strapi_webhooks_id_seq" OWNER TO "user_86E6eDQWcf";
-ALTER SEQUENCE public."tokens_id_seq" OWNER TO "user_86E6eDQWcf";
-ALTER SEQUENCE public."tokens_user_links_id_seq" OWNER TO "user_86E6eDQWcf";
 ALTER SEQUENCE public."up_permissions_id_seq" OWNER TO "user_86E6eDQWcf";
 ALTER SEQUENCE public."up_permissions_role_links_id_seq" OWNER TO "user_86E6eDQWcf";
 ALTER SEQUENCE public."up_roles_id_seq" OWNER TO "user_86E6eDQWcf";
