@@ -13,6 +13,7 @@ images:
 
 cms:
   env:
+    environment: alpha-dev
     externalUrl: https://alpha-dev-cms.bcparks.ca
 
 admin:

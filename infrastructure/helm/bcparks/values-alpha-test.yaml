@@ -25,6 +25,7 @@ cms:
       memory: 250Mi
 
   env:
+    environment: alpha-test
     externalUrl: https://alpha-test-cms.bcparks.ca
 
   hpa:
