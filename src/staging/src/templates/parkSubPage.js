@@ -181,6 +181,7 @@ export const Head = ({data}) => {
       title={seo?.metaTitle ?? park.protectedAreaName + ": " + page.title}
       description={seo?.metaDescription}
       keywords={seo?.metaKeywords}
+      image={page.pageHeader?.imageUrl}
     />
   )
 }
