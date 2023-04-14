@@ -21,6 +21,7 @@ cms:
       memory: 500Mi
 
   env:
+    environment: prod
     ### TODO: revert after Strapi4 launch ###
     externalUrl: https://main-cms-61d198-prod.apps.silver.devops.gov.bc.ca
     # externalUrl: https://cms.bcparks.ca
