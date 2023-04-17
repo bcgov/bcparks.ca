@@ -167,13 +167,6 @@ module.exports = ({ env }) => {
           expiresIn: "7d",
         },
       },
-    },
-
-    // Use case example: http://localhost:1337/api/pages/1?populate=deep
-    "strapi-plugin-populate-deep": {
-      config: {
-        defaultDepth: 3,
-      },
-    },
+    }
   };
 };
