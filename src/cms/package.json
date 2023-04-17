@@ -25,7 +25,6 @@
     "@strapi/provider-email-nodemailer": "4.8.2",
     "@strapi/provider-upload-aws-s3": "4.8.2",
     "@strapi/strapi": "4.8.2",
-    "axios": "^0.22.0",
     "codemirror": "5.65.11",
     "jwks-rsa": "^2.1.5",
     "knex": "^0.21.21",
