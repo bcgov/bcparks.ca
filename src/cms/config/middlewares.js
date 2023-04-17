@@ -39,7 +39,6 @@ module.exports = [
     // doc https://docs.strapi.io/dev-docs/configurations/middlewares#cors
     name: "strapi::cors",
     config: {
-      enabled: true,
       headers: "*",
       origin: "*",
       methods: "*",
