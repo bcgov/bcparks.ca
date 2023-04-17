@@ -106,7 +106,7 @@ const AdvisoryCard = ({ advisory, index }) => {
                         {advisory.protectedAreas.length > 0 &&
                           advisory.protectedAreas
                             .filter(
-                              park => park.published_at && park.isDisplayed
+                              park => park.publishedAt && park.isDisplayed
                             )
                           .map((par, index) => (
                               <Link
