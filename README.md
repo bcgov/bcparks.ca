@@ -1,6 +1,6 @@
 # BC Parks CMS <!-- omit in toc -->
 
-[![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999)](<Redirect-URL>)
+[![Lifecycle:Stable](https://img.shields.io/badge/Lifecycle-Stable-97ca00)](<Redirect-URL>)
 
 ## Summary <!-- omit in toc -->
 
@@ -26,14 +26,14 @@ This site is built using [Strapi CMS](https://strapi.io), a headless CMS, and [G
 
 The application can be accessed using the links below:
 
-Prod | Test | Dev
---- | --- | ---
-[Staff App](https://staff.bcparks.ca)                  | [Test - Staff App](https://test-staff.bcparks.ca)                  | [Dev - Staff App](https://dev-staff.bcparks.ca)                   |
-[Public](https://beta.bcparks.ca)                      | [Test - Public](https://test.bcparks.ca)                      | [Dev - Public](https://dev.bcparks.ca)                       |
-[CMS](https://cms.bcparks.ca)                          | [Test - CMS](https://test-cms.bcparks.ca)                          | [Dev - CMS](https://dev-cms.bcparks.ca)                           |
-[API Docs](https://cms.bcparks.ca/documentation)       | [Test - API Docs](https://test-cms.bcparks.ca/documentation)       | [Dev - API Docs](https://dev-cms.bcparks.ca/documentation)        |
-[Sample API endpoint](https://cms.bcparks.ca/urgencies)| [Test - Sample API Endpoint](https://test-cms.bcparks.ca/urgencies)| [Dev - Sample API Endpoint](https://dev-cms.bcparks.ca/urgencies) |
-[GraphQL](https://cms.bcparks.ca/graphql)              | [Test - GraphQL](https://test-cms.bcparks.ca/graphql)              | [Dev - GraphQL](https://dev-cms.bcparks.ca/graphql)               |
+Prod | Test | Dev | Alpha-Test | Alpha-Dev
+--- | --- | --- | --- | ---
+[Staff App](https://staff.bcparks.ca)                  | [Test - Staff App](https://test-staff.bcparks.ca)                  | [Dev - Staff App](https://dev-staff.bcparks.ca)                   | [Alpha-Test - Staff App](https://alpha-test-staff.bcparks.ca)                  | [Alpha-Dev - Staff App](https://alpha-dev-staff.bcparks.ca)                   |
+[Public](https://beta.bcparks.ca)                      | [Test - Public](https://test.bcparks.ca)                           | [Dev - Public](https://dev.bcparks.ca)                            | [Alpha-Test - Public](https://alpha-test.bcparks.ca)                           | [Alpha-Dev - Public](https://alpha-dev.bcparks.ca)                       |
+[CMS](https://cms.bcparks.ca)                          | [Test - CMS](https://test-cms.bcparks.ca)                          | [Dev - CMS](https://dev-cms.bcparks.ca)                           | [Alpha-Test - CMS](https://alpha-test-cms.bcparks.ca)                          | [Alpha-Dev - CMS](https://alpha-dev-cms.bcparks.ca)                           |
+[API Docs](https://cms.bcparks.ca/documentation)       | [Test - API Docs](https://test-cms.bcparks.ca/documentation)       | [Dev - API Docs](https://dev-cms.bcparks.ca/documentation)        | [Alpha-Test - API Docs](https://alpha-test-cms.bcparks.ca/documentation)       | [Alpha-Dev - API Docs](https://alpha-dev-cms.bcparks.ca/documentation)        |
+[Sample API endpoint](https://cms.bcparks.ca/api/urgencies)| [Test - Sample API Endpoint](https://test-cms.bcparks.ca/api/urgencies)| [Dev - Sample API Endpoint](https://dev-cms.bcparks.ca/urgencies) | [Alpha-Test - Sample API Endpoint](https://alpha-test-cms.bcparks.ca/api/urgencies)| [Alpha-Dev - Sample API Endpoint](https://alpha-dev-cms.bcparks.ca/urgencies) |
+[GraphQL](https://cms.bcparks.ca/graphql)              | [Test - GraphQL](https://test-cms.bcparks.ca/graphql)              | [Dev - GraphQL](https://dev-cms.bcparks.ca/graphql)               | [Alpha-Test - GraphQL](https://alpha-test-cms.bcparks.ca/graphql)              | [Alpha-Dev - GraphQL](https://alpha-dev-cms.bcparks.ca/graphql)               |
 
 ## Getting Started 
 

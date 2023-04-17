@@ -47,7 +47,7 @@ patroni:
     requests:
       cpu: 250m
       memory: 250Mi
-  ### TODO: revert after Strapi4 launch ###
+  ### TODO: increase to 3 after Strapi4 launch ###
   replicas: 1
 
   pvc:

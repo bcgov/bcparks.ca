@@ -47,17 +47,21 @@ patroni:
     requests:
       cpu: 250m
       memory: 250Mi
-  ### TODO: revert after Strapi4 launch ###
+
   replicas: 1
 
   pvc:
-    size: 10Gi
+    ### TODO: increase after Strapi4 launch ###
+    size: 5Gi
+    # size: 10Gi
 
 backup:
   enabled: true
 
   pvc:
-    size: 10Gi
+    ### TODO: increase after Strapi4 launch ###
+    size: 5Gi
+    # size: 10Gi
 
   enironment:
     friendlyName: bcparks.ca CMS Postgres Backup [test]
