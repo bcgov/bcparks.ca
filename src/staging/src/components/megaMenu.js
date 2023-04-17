@@ -309,7 +309,7 @@ const MegaMenu = ({ content, menuMode }) => {
               />
               <img
                 className="bc-parks-logo--mobile d-block d-lg-none"
-                alt=""
+                alt="BC Parks Wordmark"
                 src={BCParksWordmark}
               />
             </Link>
