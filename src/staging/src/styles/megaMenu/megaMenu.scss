@@ -306,6 +306,8 @@ nav {
                 text-rendering: auto;
                 text-decoration: none;
                 -webkit-font-smoothing: antialiased;
+                rotate: 0deg;
+                transition: rotate 0.5s;
               }
             }
           }
