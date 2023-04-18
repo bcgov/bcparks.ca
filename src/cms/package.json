@@ -10,8 +10,6 @@
     "strapi": "strapi",
     "test": "jest --forceExit --detectOpenHandles",
     "lint": "eslint ./ && prettier --check **/*.js",
-    "seed": "node scripts/seed.js",
-    "reimport": "node scripts/reimport.js",
     "loaddates": "node scripts/refresh-dates.js"
   },
   "dependencies": {
@@ -27,13 +25,11 @@
     "@strapi/strapi": "4.9.1",
     "codemirror": "5.65.11",
     "jwks-rsa": "^2.1.5",
-    "knex": "^0.21.21",
     "pg": "^8.9.0",
     "strapi-plugin-redis": "^1.0.1",
     "strapi-plugin-rest-cache": "^4.2.7",
     "strapi-plugin-transformer": "^3.1.0",
-    "strapi-provider-rest-cache-redis": "^4.2.7",
-    "utf8": "^3.0.0"
+    "strapi-provider-rest-cache-redis": "^4.2.7"
   },
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
