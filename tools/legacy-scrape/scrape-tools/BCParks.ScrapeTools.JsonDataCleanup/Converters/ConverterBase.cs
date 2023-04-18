@@ -39,9 +39,4 @@ public class ConverterBase
         JsonUtils.WriteProcessedFile(newObj, newFilePath);
         Console.WriteLine("");
     }
-
-    public string ProcessHtml(string html)
-    {
-        return HtmlCleanup.Process(html);
-    }
 }
