@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Stripped down version of the original s2i assemble script.  Main purpose is to remove
-# the npm build step for staging.
+# the npm install and npm build steps for the publish-gatsb.yml workflow.
 #
 # Original assemble script:
 # https://github.com/sclorg/s2i-nodejs-container/blob/master/14/s2i/bin/assemble

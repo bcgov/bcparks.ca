@@ -7,7 +7,7 @@
 - Test:  `REACT_APP_CMS_BASE_URL=http://test-cms.bcparks.ca`
 - Prod: `REACT_APP_CMS_BASE_URL=http://cms.bcparks.ca`
     
-4.  Back in your shell, from /src/staging folder run: `npm install`
+4.  Back in your shell, from /src/gatsby folder run: `npm install`
     
 5.  Start Gatsby in develop mode by running: `npm run develop`. It may take a few minutes to load the required data. When it completes, you should be able to view the site at http://localhost:8000.
 
