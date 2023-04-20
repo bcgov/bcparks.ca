@@ -28,7 +28,7 @@ const AdvisorySummary = ({ advisories }) => {
   const advisoryUrgencies = advisories
     .map(advisory => {
       return urgencies.nodes.find(
-        urgency => urgency.strapi_id === advisory.urgency
+        urgency => urgency.strapi_id === advisory.urgency_id
       )
     })
     .filter(urgency => urgency !== null)
