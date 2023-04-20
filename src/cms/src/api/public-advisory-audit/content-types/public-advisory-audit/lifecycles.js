@@ -56,6 +56,7 @@ const savePublicAdvisory = async (publicAdvisory) => {
 
     if(isExist) {
       try {
+        delete publicAdvisory.id;
         await strapi.db.query('api::public-advisory.public-advisory').updateMany({
           where: {
             advisoryNumber: publicAdvisory.advisoryNumber,
@@ -185,15 +186,7 @@ module.exports = {
     newPublicAdvisory.published_at = new Date();
     newPublicAdvisory.isLatestRevision = true;
     const oldPublicAdvisory = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', where.id, {
-      populate: { 
-        'advisoryStatus': { "fields": ["code"] },
-        'links': { populate: {
-          'type': { "fields": ["type"] } 
-        }},
-        'protectedAreas': { "fields": ["id"] },
-        'sites': { "fields": ["id"] },
-        'urgency': { "fields": ["code"] },
-      }
+      populate: "*"
     });
 
     if (!oldPublicAdvisory) return;
@@ -234,15 +227,7 @@ module.exports = {
   },
   afterUpdate: async (ctx) => {
     const publicAdvisoryAudit = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', ctx.result.id, {
-      populate: { 
-        'advisoryStatus': { "fields": ["code"] },
-        'links': { populate: {
-          'type': { "fields": ["type"] } 
-        }},
-        'protectedAreas': { "fields": ["id"] },
-        'sites': { "fields": ["id"] },
-        'urgency': { "fields": ["code"] },
-      }
+      populate: "*"
     });
     copyToPublicAdvisory(publicAdvisoryAudit);
   },
