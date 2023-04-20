@@ -166,7 +166,9 @@ module.exports = {
   afterCreate: async (ctx) => {
     const newPublicAdvisoryAudit = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', ctx.result.id, {
       populate: { 
+        'accessStatus': { "fields": ["id"] },
         'advisoryStatus': { "fields": ["code"] },
+        'eventType': { "fields": ["id"] },
         'links': { populate: {
           'type': { "fields": ["type"] } 
         }},
@@ -186,7 +188,9 @@ module.exports = {
     newPublicAdvisory.isLatestRevision = true;
     const oldPublicAdvisory = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', where.id, {
       populate: { 
+        'accessStatus': { "fields": ["id"] },
         'advisoryStatus': { "fields": ["code"] },
+        'eventType': { "fields": ["id"] },
         'links': { populate: {
           'type': { "fields": ["type"] } 
         }},
@@ -235,7 +239,9 @@ module.exports = {
   afterUpdate: async (ctx) => {
     const publicAdvisoryAudit = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', ctx.result.id, {
       populate: { 
+        'accessStatus': { "fields": ["id"] },
         'advisoryStatus': { "fields": ["code"] },
+        'eventType': { "fields": ["id"] },
         'links': { populate: {
           'type': { "fields": ["type"] } 
         }},
