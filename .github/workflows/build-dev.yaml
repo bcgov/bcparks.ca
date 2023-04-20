@@ -104,7 +104,7 @@ jobs:
           docker build -t ${{ env.IMAGE_NAME }} -f Builder.Dockerfile .
           docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:latest
           docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:${{ env.SHORT_SHA }}
-        working-directory: src/staging
+        working-directory: src/gatsby
 
       - name: Push Docker image
         run: docker push --all-tags ${{ env.REGISTRY_IMAGE }}

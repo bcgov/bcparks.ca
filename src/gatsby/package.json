@@ -1,7 +1,7 @@
 {
-  "name": "bc-parks-staging",
+  "name": "bc-parks-gatsby",
   "private": true,
-  "description": "BC Parks - staging site",
+  "description": "BC Parks - public site",
   "version": "0.1.0",
   "dependencies": {
     "@arcgis/core": "~4.22.2",

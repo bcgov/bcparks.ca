@@ -43,7 +43,7 @@ jobs:
           node-version: "18"
 
       - run: yarn install
-        working-directory: src/staging
+        working-directory: src/gatsby
 
       - run: yarn test
-        working-directory: src/staging
+        working-directory: src/gatsby

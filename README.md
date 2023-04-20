@@ -20,7 +20,7 @@ This site is built using [Strapi CMS](https://strapi.io), a headless CMS, and [G
 - [Deployment](#deployment)
 
 - [Backend Development - Strapi Localhost](src/cms/README.md)
-- [Frontend development - Gatsby/GraphQL](src/staging/README.md)
+- [Frontend development - Gatsby/GraphQL](src/gatsby/README.md)
 
 ## Links
 
