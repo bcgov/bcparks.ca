@@ -47,7 +47,7 @@ export function addProtectedAreas(
     sites.forEach((site) => {
       if (
         !selSites.includes(site.id) &&
-        tempParkList.includes(site.obj.protectedArea.id)
+        tempParkList.includes(site.obj.attributes.protectedArea.data.id)
       ) {
         selSites.push(site.value);
       }
@@ -93,7 +93,7 @@ export function removeProtectedAreas(
   if (sites && sites.length > 0) {
     let siteIds = [];
     sites.forEach((site) => {
-      if (parkIds.includes(site.obj.protectedArea.id)) {
+      if (parkIds.includes(site.obj.attributes.protectedArea.data.id)) {
         siteIds.push(site.value);
       }
     });

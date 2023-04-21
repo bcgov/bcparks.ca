@@ -138,9 +138,6 @@ module.exports = ({ env }) => {
             "api::access-status.access-status": {
               GET: true,
             },
-            // "api::site.site": {
-            //   GET: true,
-            // },
             "api::section.section": {
               GET: true,
             },
@@ -153,10 +150,6 @@ module.exports = ({ env }) => {
             "api::event-type.event-type": {
               GET: true,
             },
-            // "api::link.link": {
-            //   POST: true,
-            //   PUT: true,
-            // }
           },
         },
       },

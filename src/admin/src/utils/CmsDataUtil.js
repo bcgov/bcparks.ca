@@ -94,7 +94,7 @@ export function getSites(cmsData, setCmsData) {
 export function getFireCentres(cmsData, setCmsData) {
     if (!cmsData.fireCentres) {
         const result = cmsAxios
-            .get(`/fire-centres?${querySort("fireCentreName")}`)
+            .get(`/fire-centres?${querySort("fireCentreName")}&populate[fireZones][fields][0]=id`)
             .then((res) => {
                 const data = cmsData;
                 data.fireCentres = res.data.data;
@@ -110,7 +110,7 @@ export function getFireCentres(cmsData, setCmsData) {
 export function getFireZones(cmsData, setCmsData) {
     if (!cmsData.fireZones) {
         const result = cmsAxios
-            .get(`/fire-zones?${querySort("fireZoneName")}`)
+            .get(`/fire-zones?${querySort("fireZoneName")}&populate[protectedAreas][fields][0]=id`)
             .then((res) => {
                 const data = cmsData;
                 data.fireZones = res.data.data;
