@@ -32,7 +32,7 @@ const buildQuery = function (query) {
     }
 
     if (query._eventType && query._eventType.length > 0) {
-        typeSearch = { eventType: { eventType: { $eqi: query._eventType } } };
+        typeSearch = { eventType: { eventType: { $containsi: query._eventType } } };
     }
 
     query.filters = {
