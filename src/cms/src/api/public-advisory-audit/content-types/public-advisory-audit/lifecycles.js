@@ -36,7 +36,7 @@ const createPublicAdvisoryAudit = async (data) => {
   data.isLatestRevision = false;
 
   try {
-    await strapi.db.query('api::public-advisory-audit.public-advisory-audit').create({data});
+    await strapi.entityService.create('api::public-advisory.public-advisory', { data: data })
   } catch (error) {
     strapi.log.error(
       `error creating public-advisory-audit ${data.advisoryNumber}...`,

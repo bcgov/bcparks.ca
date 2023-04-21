@@ -944,9 +944,8 @@ export default function Advisory({
             isEffectiveDateDisplayed: displayStartDate,
             isEndDateDisplayed: displayEndDate,
             isUpdatedDateDisplayed: displayUpdatedDate,
-            published_at: new Date(),
-            isLatestRevision: true,
-            updated_by: keycloak.tokenParsed.name,
+            publishedAt: new Date(),
+            isLatestRevision: true
           };
 
           cmsAxios
