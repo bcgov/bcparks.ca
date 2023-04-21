@@ -56,13 +56,8 @@ const savePublicAdvisory = async (publicAdvisory) => {
 
     if(isExist) {
       try {
-        delete publicAdvisory.id;
-        await strapi.db.query('api::public-advisory.public-advisory').updateMany({
-          where: {
-            advisoryNumber: publicAdvisory.advisoryNumber,
-          },
-          data: publicAdvisory,
-        });
+        publicAdvisory.id = isExist.id;
+        await strapi.entityService.update('api::public-advisory.public-advisory', isExist.id, { data: publicAdvisory })
       } catch (error) {
         strapi.log.error(
           `error updating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
@@ -166,15 +161,7 @@ module.exports = {
   },
   afterCreate: async (ctx) => {
     const newPublicAdvisoryAudit = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', ctx.result.id, {
-      populate: { 
-        'advisoryStatus': { "fields": ["code"] },
-        'links': { populate: {
-          'type': { "fields": ["type"] } 
-        }},
-        'protectedAreas': { "fields": ["id"] },
-        'sites': { "fields": ["id"] },
-        'urgency': { "fields": ["code"] },
-      }
+      populate: "*"
     });
     copyToPublicAdvisory(newPublicAdvisoryAudit);
   },
