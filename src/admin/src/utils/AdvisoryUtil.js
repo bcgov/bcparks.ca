@@ -216,7 +216,7 @@ const removeAreaValues = (
           updatedSites = response.updatedSites;
         } else if (a.type === "site") {
           updatedProtectedAreas = updatedProtectedAreas.filter(
-            (p) => a.obj.protectedArea.id !== p.value
+            (p) => a.obj.attributes.protectedArea.id !== p.value
           );
         } else if (a.type === "region" || a.type === "section") {
           let response = removeProtectedAreasFromArea(
