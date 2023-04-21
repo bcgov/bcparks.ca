@@ -56,12 +56,8 @@ const savePublicAdvisory = async (publicAdvisory) => {
 
     if(isExist) {
       try {
-        await strapi.db.query('api::public-advisory.public-advisory').updateMany({
-          where: {
-            advisoryNumber: publicAdvisory.advisoryNumber,
-          },
-          data: publicAdvisory,
-        });
+        publicAdvisory.id = isExist.id;
+        await strapi.entityService.update('api::public-advisory.public-advisory', isExist.id, { data: publicAdvisory })
       } catch (error) {
         strapi.log.error(
           `error updating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
@@ -165,15 +161,7 @@ module.exports = {
   },
   afterCreate: async (ctx) => {
     const newPublicAdvisoryAudit = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', ctx.result.id, {
-      populate: { 
-        'advisoryStatus': { "fields": ["code"] },
-        'links': { populate: {
-          'type': { "fields": ["type"] } 
-        }},
-        'protectedAreas': { "fields": ["id"] },
-        'sites': { "fields": ["id"] },
-        'urgency': { "fields": ["code"] },
-      }
+      populate: "*"
     });
     copyToPublicAdvisory(newPublicAdvisoryAudit);
   },
@@ -185,15 +173,7 @@ module.exports = {
     newPublicAdvisory.published_at = new Date();
     newPublicAdvisory.isLatestRevision = true;
     const oldPublicAdvisory = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', where.id, {
-      populate: { 
-        'advisoryStatus': { "fields": ["code"] },
-        'links': { populate: {
-          'type': { "fields": ["type"] } 
-        }},
-        'protectedAreas': { "fields": ["id"] },
-        'sites': { "fields": ["id"] },
-        'urgency': { "fields": ["code"] },
-      }
+      populate: "*"
     });
 
     if (!oldPublicAdvisory) return;
@@ -234,15 +214,7 @@ module.exports = {
   },
   afterUpdate: async (ctx) => {
     const publicAdvisoryAudit = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', ctx.result.id, {
-      populate: { 
-        'advisoryStatus': { "fields": ["code"] },
-        'links': { populate: {
-          'type': { "fields": ["type"] } 
-        }},
-        'protectedAreas': { "fields": ["id"] },
-        'sites': { "fields": ["id"] },
-        'urgency': { "fields": ["code"] },
-      }
+      populate: "*"
     });
     copyToPublicAdvisory(publicAdvisoryAudit);
   },

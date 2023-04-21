@@ -8,7 +8,7 @@ const { sanitize } = require('@strapi/utils')
 const { createCoreController } = require("@strapi/strapi").factories;
 
 const addStandardMessages = function (query) {
-    if (query.populate !== "*" && query.populate !== "deep") {
+    if (query.populate !== "*") {
         query = {
             ...query,
             ...{
