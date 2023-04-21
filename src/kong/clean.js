@@ -35,8 +35,8 @@ Object.keys(paths).forEach((item) => {
   });
 });
 
-data.components.schemas.Website.properties.homepage.properties.Content.type =
-  "object";
+// data.components.schemas.Website.properties.homepage.properties.Content.type =
+//   "object";
 data.info.title = "BCParks";
 
 fs.writeFileSync("public-documentation.json", JSON.stringify(data));
