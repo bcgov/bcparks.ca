@@ -67,7 +67,7 @@ module.exports = createCoreController(
 
             ctx.query = addStandardMessages(ctx.query);
 
-            if (ctx.query._q !== undefined) {
+            if (ctx.query.queryText !== undefined) {
                 ({ results: entities } = await strapi.service("api::public-advisory.public-advisory").search(ctx.query));
                 pagination = {};
             } else {
@@ -97,7 +97,7 @@ module.exports = createCoreController(
             };
         },
         async count(ctx) {
-            if (ctx.query._q !== undefined) {
+            if (ctx.query.queryText !== undefined) {
                 return await strapi.service("api::public-advisory.public-advisory").countSearch(ctx.query);
             }
             return (await strapi.service("api::public-advisory.public-advisory").find(ctx.query)).pagination.total;

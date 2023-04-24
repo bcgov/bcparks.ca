@@ -10,22 +10,22 @@ const buildQuery = function (query) {
     let textSearch = {};
     let typeSearch = {};
 
-    if (query._q && query._q.length > 0) {
+    if (query.queryText && query.queryText.length > 0) {
         if (query._searchType === "keyword") {
             textSearch = {
                 $or: [
-                    { title: { $containsi: query._q } },
-                    { description: { $containsi: query._q } }
+                    { title: { $containsi: query.queryText } },
+                    { description: { $containsi: query.queryText } }
                 ]
             };
         } else if (query._searchType === "park") {
-            textSearch = { protectedAreas: { parkNames: { parkName: { $containsi: query._q } } } };
+            textSearch = { protectedAreas: { parkNames: { parkName: { $containsi: query.queryText } } } };
         } else {
             textSearch = {
                 $or: [
-                    { title: { $containsi: query._q } },
-                    { description: { $containsi: query._q } },
-                    { protectedAreas: { parkNames: { parkName: { $containsi: query._q } } } }
+                    { title: { $containsi: query.queryText } },
+                    { description: { $containsi: query.queryText } },
+                    { protectedAreas: { parkNames: { parkName: { $containsi: query.queryText } } } }
                 ]
             };
         }
@@ -39,8 +39,12 @@ const buildQuery = function (query) {
         ...query.filters,
         ...{
             $and: [
-                { protectedAreas: { publishedAt: { $null: false } } },
-                { protectedAreas: { isDisplayed: { $eq: true } } },
+                {
+                    protectedAreas: {
+                        publishedAt: { $null: false },
+                        isDisplayed: { $eq: true }
+                    }
+                },
                 ...[typeSearch],
                 ...[textSearch]
             ]

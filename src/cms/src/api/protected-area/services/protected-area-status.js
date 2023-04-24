@@ -76,7 +76,7 @@ const getProtectedAreaStatus = async (ctx) => {
       limit: -1,
       populate: '*',
     });
-  } else if (ctx.query._q) {
+  } else if (ctx.query.queryText) {
     entities = await strapi.entityService.findMany('api::protected-area.protected-area', {
       ...ctx.query, 
       populate: '*',
