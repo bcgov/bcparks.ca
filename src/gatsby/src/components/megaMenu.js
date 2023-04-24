@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react"
 import PropTypes from "prop-types"
 import { Link, navigate } from "gatsby"
-import { isTablet } from "react-device-detect"
 
 import BCParksLogo from "../images/logo/BCParks_Primary_Reversed.svg"
 import BCParksWordmark from "../images/BCParks_Wordmark_White.svg"
@@ -69,27 +68,21 @@ const MegaMenu = ({ content, menuMode }) => {
     menuNavigate(item.parent)
   }
 
-  const navigatePage = (e, item, menuMode) => {
-    if (menuMode === "sitemap") {
-      navigate(item.url)
-    } else {
-      e.preventDefault();
-      menuNavigate(item, menuMode)
-    }
-  }
-
   const sectionClick = (e, section, menuMode) => {
-    if (window.innerWidth >= 992 && menuMode !== "sitemap" && !isTablet) {
+    if (section.hasChildren) {
+      e.preventDefault()
+    }
+
+    if (menuMode !== "sitemap") {
       // otherwise hover triggered in mobile emulator
       if (section !== selectedItem) {
         // don't trigger nav through hovers
         setSelectedItem(section)
         let selObj = getSelectionObj(section, {}) // track the selected item at this level and above
         setSelections(selObj)
+      } else {
+        menuReset()
       }
-    }
-    if (!(e.metaKey || e.ctrlKey)) {
-      navigatePage(e, section, menuMode)
     }
   }
 
@@ -220,7 +213,7 @@ const MegaMenu = ({ content, menuMode }) => {
                     key={index}
                     className={
                       "menu-button menu-button--" +
-                      (selections[page.treeLevel] === page
+                      (page === selections[page.treeLevel]
                         ? "selected"
                         : "unselected")
                     }
@@ -233,14 +226,6 @@ const MegaMenu = ({ content, menuMode }) => {
                       role="button"
                       tabIndex={0}
                       onFocus={e => menuFocus(e, page)}
-                      onKeyDown={e => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          navigatePage(e, page, menuMode)
-                        }
-                      }}
-                      // if the user command or control clicks, open in a new tab
-                      // it's ok that this won't open a sub-menu as this wouldn't
-                      // be the expected behaviour
                       onClick={e => sectionClick(e, page, menuMode)}
                     >
                       {page.title}
@@ -359,10 +344,9 @@ const MegaMenu = ({ content, menuMode }) => {
             tabIndex={0}
             role="menu"
             onFocus={e => menuFocus(e)}
-            onMouseLeave={e => menuReset(e)}
           >
             {menuTree.map((page, index) => (
-              <div key="index">{generateMenus(page, menuMode)}</div>
+              <div key={index}>{generateMenus(page, menuMode)}</div>
             ))}
           </div>
         </nav>
