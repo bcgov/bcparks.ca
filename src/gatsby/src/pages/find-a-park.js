@@ -368,7 +368,7 @@ export default function FindAPark({ location, data }) {
     const petsActivityId = petsActivity?.strapi_id
 
     const params = {
-      _q: searchText,
+      queryText: searchText,
     }
 
     if (selectedActivities.length > 0) {
@@ -416,7 +416,7 @@ export default function FindAPark({ location, data }) {
   ])
 
   const isActiveSearch =
-    params._q ||
+    params.queryText ||
     (params.activities && params.activities.length) ||
     (params.facilities && params.facilities.length) ||
     params.camping ||

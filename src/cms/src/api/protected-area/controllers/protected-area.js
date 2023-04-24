@@ -12,10 +12,10 @@ module.exports = createCoreController(
   ({ strapi }) => ({
     async find(ctx) {
       let entities;
-      // if _q is present in the query params, trigger search mode
+      // if queryText is present in the query params, trigger search mode
       // which has some custom filters and ordering, and returns
       // extra data in the response
-      if (typeof ctx.query._q !== "undefined") {
+      if (typeof ctx.query.queryText !== "undefined") {
         const filters = parseSearchFilters(ctx.query);
         const ordering = parseSearchOrdering(ctx.query);
         const offset = parseSearchOffset(ctx.query);
@@ -35,10 +35,10 @@ module.exports = createCoreController(
       return res;
     },
     async count(ctx) {
-      // if _q is present in the query params, trigger search mode
+      // if queryText is present in the query params, trigger search mode
       // which has some custom filters and ordering, and returns
       // extra data in the response
-      if (typeof ctx.query._q !== "undefined") {
+      if (typeof ctx.query.queryText !== "undefined") {
         const filters = parseSearchFilters(ctx.query);
         return await strapi
           .service("api::protected-area.protected-area")
@@ -74,7 +74,7 @@ module.exports = createCoreController(
 );
 
 function parseSearchFilters(query) {
-  const searchText = query._q;
+  const searchText = query.queryText;
   const typeCode = query.typeCode || query.typeCode_eq;
   const accessStatus = query.accessStatus || query.accessStatus_eq;
   const marineProtectedArea =

@@ -12,9 +12,7 @@
     "increments": true,
     "timestamps": true,
     "draftAndPublish": true,
-    "privateAttributes": [
-      "search_text"
-    ]
+    "privateAttributes": []
   },
   "attributes": {
     "advisoryNumber": {
