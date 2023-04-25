@@ -351,7 +351,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         <h1>{pageTitle}</h1>
         <div className={classes.advisoriesHeader}>
           <div className={classes.advisoryCountNotice}>
-            {advisoryCount} Active Alerts in BC Parks
+            {filterCount} Active Alerts in BC Parks
           </div>
           <AdvisoryFilter
             defaultEventType={defaultAdvisoryEventType}

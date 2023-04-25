@@ -111,7 +111,7 @@ const AdvisoryCard = ({ advisory, index }) => {
                           .map((par, index) => (
                               <Link
                                 className="parkLink my-2 badge badge-pill badge-light"
-                                href={`/${
+                                to={`/${
                                   par.slug
                                     ? par.slug
                                     : par.protectedAreaName
