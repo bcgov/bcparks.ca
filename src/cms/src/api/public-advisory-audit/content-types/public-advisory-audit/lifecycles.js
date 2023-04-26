@@ -46,7 +46,7 @@ const createPublicAdvisoryAudit = async (data) => {
 };
 
 const savePublicAdvisory = async (publicAdvisory) => {
-  if (publicAdvisory.advisoryStatus.code === "PUB") {
+  if (publicAdvisory.advisoryStatus.code === "PUB" || publicAdvisory.advisoryStatus.code === "INA") {
     publicAdvisory.published_at = new Date();
     const isExist = await strapi.db.query('api::public-advisory.public-advisory').findOne({
       where: {
