@@ -146,6 +146,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-robots-txt`,
       options: {
+        sitemap: "https://bcparks.ca/sitemap-index.xml",
         resolveEnv: () => process.env.ENV_SUFFIX || 'dev',
         env: {
           'dev': {
