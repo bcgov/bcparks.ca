@@ -27,7 +27,13 @@ module.exports = ({ strapi }) => ({
         jwksUri: SSO_JWKSURI,
       });
 
-      const kid = jwt.decode(tokenString, { complete: true }).header.kid;
+      const decoded = jwt.decode(tokenString, { complete: true });
+
+      if (!decoded) {
+        return;
+      }
+
+      const kid = decoded.header.kid;
 
       return new Promise((resolve, reject) => {
         client.getSigningKey(kid, (err, key) => {
