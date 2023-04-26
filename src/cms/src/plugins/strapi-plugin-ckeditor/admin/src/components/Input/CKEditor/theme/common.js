@@ -108,7 +108,7 @@ export const common = css`
 
     a {
       text-decoration: none;
-      color: #1b3af2;
+      color: #1a5a96;
     }
 
     a:hover {
