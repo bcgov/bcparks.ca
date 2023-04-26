@@ -47,6 +47,11 @@ const loadAdvisories = async (apiBaseUrl, orcsId) => {
   const params = qs.stringify ({
     populate: "*",
     filters: {
+      advisoryStatus: {
+        code: {
+          $eq: "PUB"
+        }
+      },
       protectedAreas: {
         orcs: {
           $eq: orcsId

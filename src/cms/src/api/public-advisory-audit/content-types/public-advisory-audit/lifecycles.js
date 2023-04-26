@@ -167,6 +167,14 @@ module.exports = {
   },
   beforeUpdate: async (ctx) => {
     let { data, where } = ctx.params;
+    const now = new Date()
+    const exs = new Date(data.expiryDate)
+
+    // if expiryDate is expired, advisoryStatus should be inactive
+    if (exs.getTime() < now.getTime()) {
+      data.advisoryStatus = 2;
+    }
+
     const newPublicAdvisory = data;
     if (!newPublicAdvisory.published_at) return;
 

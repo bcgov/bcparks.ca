@@ -40,6 +40,9 @@ const buildQuery = function (query) {
         ...{
             $and: [
                 {
+                    advisoryStatus: {
+                        code: { $eq: "PUB" }
+                    },
                     protectedAreas: {
                         publishedAt: { $null: false },
                         isDisplayed: { $eq: true }
