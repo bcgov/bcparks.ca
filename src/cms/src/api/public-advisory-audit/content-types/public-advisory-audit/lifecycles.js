@@ -167,16 +167,9 @@ module.exports = {
   },
   beforeUpdate: async (ctx) => {
     let { data, where } = ctx.params;
-    const now = new Date()
-    const exs = new Date(data.expiryDate)
-
-    // if expiryDate is expired, advisoryStatus should be inactive
-    if (exs.getTime() < now.getTime()) {
-      data.advisoryStatus = 2;
-    }
 
     const newPublicAdvisory = data;
-    if (!newPublicAdvisory.published_at) return;
+    // if (!newPublicAdvisory.published_at) return;
 
     newPublicAdvisory.published_at = new Date();
     newPublicAdvisory.isLatestRevision = true;
@@ -192,6 +185,22 @@ module.exports = {
       : "DFT";
 
     if (isAdvisoryEqual(newPublicAdvisory, oldPublicAdvisory)) return;
+
+    // if expiryDate is expired, advisoryStatus should be inactive
+    if (oldPublicAdvisory.expiryDate) {
+      const now = new Date()
+      const exs = new Date(oldPublicAdvisory.expiryDate)
+      if (exs.getTime() < now.getTime()) {
+        oldPublicAdvisory.advisoryStatus = 2;
+      }
+    }
+    if (newPublicAdvisory.expiryDate) {
+      const now = new Date()
+      const exs = new Date(newPublicAdvisory.expiryDate)
+      if (exs.getTime() < now.getTime()) {
+        newPublicAdvisory.advisoryStatus = 2;
+      }
+    }
 
     // flow 5: system updates
     if (newPublicAdvisory.modifiedBy === "system") {
