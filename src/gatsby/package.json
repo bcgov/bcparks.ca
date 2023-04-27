@@ -4,7 +4,7 @@
   "description": "BC Parks - public site",
   "version": "0.1.0",
   "dependencies": {
-    "@arcgis/core": "~4.26.5",
+    "@arcgis/core": "~4.25.5",
     "@bcgov/bc-sans": "^1.0.1",
     "@bcgov/bootstrap-theme": "https://github.com/bcgov/bootstrap-theme/releases/download/v1.1.1/bcgov-bootstrap-theme-1.1.1.tgz",
     "@emotion/react": "^11.1.5",
