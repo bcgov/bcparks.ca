@@ -77,6 +77,7 @@ module.exports = ({ env }) => {
             // list of Content-Types UID to cache
             "api::protected-area.protected-area",
             "api::public-advisory.public-advisory",
+            "api::park-access-status.park-access-status",
           ],
         },
       },
