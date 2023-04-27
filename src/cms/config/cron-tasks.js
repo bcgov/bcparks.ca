@@ -40,7 +40,7 @@ module.exports = {
           "api::public-advisory-audit.public-advisory-audit", {
             filters: {
               isLatestRevision: true,
-              // advisoryDate_lte: new Date(),
+              advisoryDate: new Date(),
               advisoryStatus: advisoryStatusMap["APR"].id,
             },
             publicationState: "live",
@@ -66,7 +66,7 @@ module.exports = {
         const advisoryToUnpublish = await strapi.entityService.findMany(
           "api::public-advisory.public-advisory", {
             filters: {
-              // expiryDate_lte: new Date(),
+              expiryDate: new Date(),
               advisoryStatus: advisoryStatusMap["PUB"].id,
             },
             publicationState: "live",
