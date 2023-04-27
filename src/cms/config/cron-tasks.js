@@ -17,14 +17,17 @@ const boolToYN = (boolVar) => {
 module.exports = {
   // Execute the cron at 2 minutes past every hour.
   // BCGW replication is hourly at 10 minutes past the hour
-  "2 * * * *": {
-    async task() {
+  cronJob: {
+    task: async ({ strapi }) => {
       console.log("CRON STARTING");
 
       // fetch advisory statuses
-      const advisoryStatus = await strapi.api["advisory-status"].services[
-        "advisory-status"
-      ].find();
+      const advisoryStatus = await strapi.entityService.findMany(
+        "api::advisory-status.advisory-status", {
+          limit: -1,
+          populate: "*",
+        }
+      );
 
       if (advisoryStatus.length > 0) {
         const advisoryStatusMap = {};
@@ -33,64 +36,64 @@ module.exports = {
           return advisoryStatusMap;
         });
         // fetch advisories to publish - audit table
-        const draftAdvisoryToPublishAudit = await strapi.api[
-          "public-advisory-audit"
-        ].services["public-advisory-audit"].find({
-          _publicationState: "live",
-          isLatestRevision: true,
-          advisoryDate_lte: new Date(),
-          advisoryStatus: advisoryStatusMap["APR"].id,
-        });
+        const draftAdvisoryToPublishAudit = await strapi.entityService.findMany(
+          "api::public-advisory-audit.public-advisory-audit", {
+            filters: {
+              _publicationState: "live",
+              isLatestRevision: true,
+              advisoryDate_lte: new Date(),
+              advisoryStatus: advisoryStatusMap["APR"].id,
+            }
+          }
+        );
 
         // publish advisories - audit table
         draftAdvisoryToPublishAudit.forEach(async (advisory) => {
-          await strapi.api["public-advisory-audit"].services[
-            "public-advisory-audit"
-          ].update(
-            { id: advisory.id },
-            {
-              published_at: advisory.advisoryDate,
-              advisoryStatus: advisoryStatusMap["PUB"].id,
-              modifiedBy: "system",
-              modifiedDate: new Date(),
-              removalDate: null,
+          await strapi.entityService.update(
+            "api::public-advisory-audit.public-advisory-audit", advisory.id, {
+              data: {
+                publishedAt: advisory.advisoryDate,
+                advisoryStatus: advisoryStatusMap["PUB"].id,
+                modifiedBy: "system",
+                modifiedDate: new Date(),
+                removalDate: null,
+              }
             }
           );
         });
 
         // fetch advisories to unpublish - public advisory table
-        const advisoryToUnpublish = await strapi.api[
-          "public-advisory"
-        ].services["public-advisory"].find({
-          _publicationState: "live",
-          expiryDate_lte: new Date(),
-          advisoryStatus: advisoryStatusMap["PUB"].id,
+        const advisoryToUnpublish = await strapi.entityService.findMany(
+          "api::public-advisory.public-advisory", {
+            filters: {
+              _publicationState: "live",
+              expiryDate_lte: new Date(),
+              advisoryStatus: advisoryStatusMap["PUB"].id,
+            }
         });
 
         // unpublish advisories - audit table
         advisoryToUnpublish.forEach(async (advisory) => {
-          await strapi.api["public-advisory-audit"].services[
-            "public-advisory-audit"
-          ]
-            .update(
-              {
-                advisoryNumber: advisory.advisoryNumber,
+          await strapi.entityService.update(
+            "api::public-advisory-audit.public-advisory-audit", advisory.advisoryNumber, {
+              filters: {
                 isLatestRevision: true,
               },
-              {
+              data: {
                 published_at: new Date(),
                 advisoryStatus: advisoryStatusMap["INA"].id,
                 removalDate: new Date(),
                 modifiedBy: "system",
                 modifiedDate: new Date(),
               }
-            )
-            .catch((error) => {
-              strapi.log.error(
-                `error updating public-advisory-audit, advisory-number: ${advisory.advisoryNumber}`,
-                error
-              );
-            });
+            }
+          )
+          .catch((error) => {
+            strapi.log.error(
+              `error updating public-advisory-audit, advisory-number: ${advisory.advisoryNumber}`,
+              error
+            );
+          });
         });
       }
 
@@ -100,6 +103,7 @@ module.exports = {
       console.log("CRON FINISHED");
     },
     options: {
+      rule: "*/2 * * * *",
       tz: "America/Vancouver",
     },
   },
