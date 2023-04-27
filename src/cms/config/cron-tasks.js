@@ -80,7 +80,7 @@ module.exports = {
                 isLatestRevision: true,
               },
               data: {
-                published_at: new Date(),
+                publishedAt: null,
                 advisoryStatus: advisoryStatusMap["INA"].id,
                 removalDate: new Date(),
                 modifiedBy: "system",
@@ -98,7 +98,7 @@ module.exports = {
       }
 
       // Update the cache version of park access statuses
-      await updateProtectedAreaStatusCache();
+      //await updateProtectedAreaStatusCache();
 
       console.log("CRON FINISHED");
     },
