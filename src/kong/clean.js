@@ -35,8 +35,7 @@ Object.keys(paths).forEach((item) => {
   });
 });
 
-// data.components.schemas.Website.properties.homepage.properties.Content.type =
-//   "object";
-data.info.title = "BCParks";
+data.components.schemas.Website.properties.homepage.properties.data.properties.attributes.properties.Content.type = "object";
+data.info.title = "BCPARKS";
 
 fs.writeFileSync("public-documentation.json", JSON.stringify(data));

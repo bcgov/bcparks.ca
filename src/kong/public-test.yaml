@@ -8,7 +8,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path-get
+        name: get/access-statuses
         methods:
           - GET
         paths:
@@ -19,18 +19,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_1-get
-        methods:
-          - GET
-        paths:
-          - /access-statuses/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_2-get
+        name: get/access-statuses/{id}
         methods:
           - GET
         paths:
@@ -41,7 +30,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_3-get
+        name: get/activity-types
         methods:
           - GET
         paths:
@@ -52,18 +41,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_4-get
-        methods:
-          - GET
-        paths:
-          - /activity-types/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_5-get
+        name: get/activity-types/{id}
         methods:
           - GET
         paths:
@@ -74,7 +52,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_6-get
+        name: get/advisory-statuses
         methods:
           - GET
         paths:
@@ -85,18 +63,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_7-get
-        methods:
-          - GET
-        paths:
-          - /advisory-statuses/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_8-get
+        name: get/advisory-statuses/{id}
         methods:
           - GET
         paths:
@@ -107,7 +74,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_9-get
+        name: get/asset-types
         methods:
           - GET
         paths:
@@ -118,18 +85,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_10-get
-        methods:
-          - GET
-        paths:
-          - /asset-types/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_11-get
+        name: get/asset-types/{id}
         methods:
           - GET
         paths:
@@ -140,18 +96,18 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_12-get
+        name: get/business-hour
         methods:
           - GET
         paths:
-          - /business-hours
+          - /business-hour
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_13-get
+        name: get/event-types
         methods:
           - GET
         paths:
@@ -162,18 +118,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_14-get
-        methods:
-          - GET
-        paths:
-          - /event-types/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_15-get
+        name: get/event-types/{id}
         methods:
           - GET
         paths:
@@ -184,7 +129,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_16-get
+        name: get/facility-types
         methods:
           - GET
         paths:
@@ -195,18 +140,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_17-get
-        methods:
-          - GET
-        paths:
-          - /facility-types/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_18-get
+        name: get/facility-types/{id}
         methods:
           - GET
         paths:
@@ -217,7 +151,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_19-get
+        name: get/fire-ban-prohibitions
         methods:
           - GET
         paths:
@@ -228,18 +162,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_20-get
-        methods:
-          - GET
-        paths:
-          - /fire-ban-prohibitions/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_21-get
+        name: get/fire-ban-prohibitions/{id}
         methods:
           - GET
         paths:
@@ -250,7 +173,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_22-get
+        name: get/fire-centres
         methods:
           - GET
         paths:
@@ -261,18 +184,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_23-get
-        methods:
-          - GET
-        paths:
-          - /fire-centres/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_24-get
+        name: get/fire-centres/{id}
         methods:
           - GET
         paths:
@@ -283,7 +195,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_25-get
+        name: get/fire-zones
         methods:
           - GET
         paths:
@@ -294,18 +206,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_26-get
-        methods:
-          - GET
-        paths:
-          - /fire-zones/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_27-get
+        name: get/fire-zones/{id}
         methods:
           - GET
         paths:
@@ -316,7 +217,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_28-get
+        name: get/legacy-redirects
         methods:
           - GET
         paths:
@@ -327,18 +228,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_29-get
-        methods:
-          - GET
-        paths:
-          - /legacy-redirects/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_30-get
+        name: get/legacy-redirects/{id}
         methods:
           - GET
         paths:
@@ -349,40 +239,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_31-get
-        methods:
-          - GET
-        paths:
-          - /link-types
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_32-get
-        methods:
-          - GET
-        paths:
-          - /link-types/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_33-get
-        methods:
-          - GET
-        paths:
-          - /link-types/(?<id>\S+)$
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_34-get
+        name: get/links
         methods:
           - GET
         paths:
@@ -393,18 +250,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_35-get
-        methods:
-          - GET
-        paths:
-          - /links/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_36-get
+        name: get/links/{id}
         methods:
           - GET
         paths:
@@ -415,7 +261,29 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_37-get
+        name: get/link-types
+        methods:
+          - GET
+        paths:
+          - /link-types
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get/link-types/{id}
+        methods:
+          - GET
+        paths:
+          - /link-types/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get/management-areas
         methods:
           - GET
         paths:
@@ -426,29 +294,18 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_38-get
+        name: get/management-areas/{id}
         methods:
           - GET
         paths:
-          - /management-areas/count
+          - /management-areas/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_39-get
-        methods:
-          - GET
-        paths:
-          - /management-areas/(?<managementAreaNumber>\S+)$
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_40-get
+        name: get/menus
         methods:
           - GET
         paths:
@@ -459,18 +316,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_41-get
-        methods:
-          - GET
-        paths:
-          - /menus/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_42-get
+        name: get/menus/{id}
         methods:
           - GET
         paths:
@@ -481,7 +327,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_43-get
+        name: get/pages
         methods:
           - GET
         paths:
@@ -492,18 +338,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_44-get
-        methods:
-          - GET
-        paths:
-          - /pages/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_45-get
+        name: get/pages/{id}
         methods:
           - GET
         paths:
@@ -514,18 +349,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_46-get
-        methods:
-          - GET
-        paths:
-          - /park-access-statuses-cache
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_47-get
+        name: get/park-access-statuses
         methods:
           - GET
         paths:
@@ -536,18 +360,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_48-get
-        methods:
-          - GET
-        paths:
-          - /park-access-statuses/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_49-get
+        name: get/park-access-statuses/{id}
         methods:
           - GET
         paths:
@@ -558,7 +371,29 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_50-get
+        name: get/park-access-status-caches
+        methods:
+          - GET
+        paths:
+          - /park-access-status-caches
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get/park-access-status-caches/{id}
+        methods:
+          - GET
+        paths:
+          - /park-access-status-caches/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get/park-activities
         methods:
           - GET
         paths:
@@ -569,18 +404,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_51-get
-        methods:
-          - GET
-        paths:
-          - /park-activities/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_52-get
+        name: get/park-activities/{id}
         methods:
           - GET
         paths:
@@ -591,7 +415,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_53-get
+        name: get/park-facilities
         methods:
           - GET
         paths:
@@ -602,18 +426,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_54-get
-        methods:
-          - GET
-        paths:
-          - /park-facilities/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_55-get
+        name: get/park-facilities/{id}
         methods:
           - GET
         paths:
@@ -624,40 +437,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_56-get
-        methods:
-          - GET
-        paths:
-          - /park-name-types
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_57-get
-        methods:
-          - GET
-        paths:
-          - /park-name-types/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_58-get
-        methods:
-          - GET
-        paths:
-          - /park-name-types/(?<id>\S+)$
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_59-get
+        name: get/park-names
         methods:
           - GET
         paths:
@@ -668,29 +448,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_60-get
-        methods:
-          - GET
-        paths:
-          - /park-names/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_61-get
-        methods:
-          - GET
-        paths:
-          - /park-names/items
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_62-get
+        name: get/park-names/{id}
         methods:
           - GET
         paths:
@@ -701,106 +459,29 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_63-get
+        name: get/park-name-types
         methods:
           - GET
         paths:
-          - /park-operation-sub-area-dates
+          - /park-name-types
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_64-get
+        name: get/park-name-types/{id}
         methods:
           - GET
         paths:
-          - /park-operation-sub-area-dates/count
+          - /park-name-types/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_65-get
-        methods:
-          - GET
-        paths:
-          - /park-operation-sub-area-dates/(?<id>\S+)$
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_66-get
-        methods:
-          - GET
-        paths:
-          - /park-operation-sub-area-types
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_67-get
-        methods:
-          - GET
-        paths:
-          - /park-operation-sub-area-types/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_68-get
-        methods:
-          - GET
-        paths:
-          - /park-operation-sub-area-types/(?<id>\S+)$
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_69-get
-        methods:
-          - GET
-        paths:
-          - /park-operation-sub-areas
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_70-get
-        methods:
-          - GET
-        paths:
-          - /park-operation-sub-areas/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_71-get
-        methods:
-          - GET
-        paths:
-          - /park-operation-sub-areas/(?<id>\S+)$
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_72-get
+        name: get/park-operations
         methods:
           - GET
         paths:
@@ -811,18 +492,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_73-get
-        methods:
-          - GET
-        paths:
-          - /park-operations/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_74-get
+        name: get/park-operations/{id}
         methods:
           - GET
         paths:
@@ -833,7 +503,73 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_75-get
+        name: get/park-operation-sub-areas
+        methods:
+          - GET
+        paths:
+          - /park-operation-sub-areas
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get/park-operation-sub-areas/{id}
+        methods:
+          - GET
+        paths:
+          - /park-operation-sub-areas/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get/park-operation-sub-area-dates
+        methods:
+          - GET
+        paths:
+          - /park-operation-sub-area-dates
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get/park-operation-sub-area-dates/{id}
+        methods:
+          - GET
+        paths:
+          - /park-operation-sub-area-dates/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get/park-operation-sub-area-types
+        methods:
+          - GET
+        paths:
+          - /park-operation-sub-area-types
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get/park-operation-sub-area-types/{id}
+        methods:
+          - GET
+        paths:
+          - /park-operation-sub-area-types/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get/park-photos
         methods:
           - GET
         paths:
@@ -844,18 +580,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_76-get
-        methods:
-          - GET
-        paths:
-          - /park-photos/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_77-get
+        name: get/park-photos/{id}
         methods:
           - GET
         paths:
@@ -866,7 +591,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_78-get
+        name: get/park-sub-pages
         methods:
           - GET
         paths:
@@ -877,18 +602,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_79-get
-        methods:
-          - GET
-        paths:
-          - /park-sub-pages/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_80-get
+        name: get/park-sub-pages/{id}
         methods:
           - GET
         paths:
@@ -899,7 +613,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_81-get
+        name: get/protected-areas
         methods:
           - GET
         paths:
@@ -910,62 +624,18 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_82-get
+        name: get/protected-areas/{id}
         methods:
           - GET
         paths:
-          - /protected-areas/count
+          - /protected-areas/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_83-get
-        methods:
-          - GET
-        paths:
-          - /protected-areas/names
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_84-get
-        methods:
-          - GET
-        paths:
-          - /protected-areas/items
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_85-get
-        methods:
-          - GET
-        paths:
-          - /protected-areas/status
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_86-get
-        methods:
-          - GET
-        paths:
-          - /protected-areas/(?<orcs>\S+)$
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_87-get
+        name: get/public-advisories
         methods:
           - GET
         paths:
@@ -976,29 +646,18 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_88-get
+        name: get/public-advisories/{id}
         methods:
           - GET
         paths:
-          - /public-advisories/count
+          - /public-advisories/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_89-get
-        methods:
-          - GET
-        paths:
-          - /public-advisories/(?<advisoryNumber>\S+)$
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_90-get
+        name: get/regions
         methods:
           - GET
         paths:
@@ -1009,29 +668,18 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_91-get
+        name: get/regions/{id}
         methods:
           - GET
         paths:
-          - /regions/count
+          - /regions/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_92-get
-        methods:
-          - GET
-        paths:
-          - /regions/(?<regionNumber>\S+)$
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_93-get
+        name: get/sections
         methods:
           - GET
         paths:
@@ -1042,29 +690,18 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_94-get
+        name: get/sections/{id}
         methods:
           - GET
         paths:
-          - /sections/count
+          - /sections/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_95-get
-        methods:
-          - GET
-        paths:
-          - /sections/(?<sectionNumber>\S+)$
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_96-get
+        name: get/sites
         methods:
           - GET
         paths:
@@ -1075,29 +712,18 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_97-get
+        name: get/sites/{id}
         methods:
           - GET
         paths:
-          - /sites/count
+          - /sites/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_98-get
-        methods:
-          - GET
-        paths:
-          - /sites/(?<orcsSiteNumber>\S+)$
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_99-get
+        name: get/standard-messages
         methods:
           - GET
         paths:
@@ -1108,18 +734,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_100-get
-        methods:
-          - GET
-        paths:
-          - /standard-messages/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_101-get
+        name: get/standard-messages/{id}
         methods:
           - GET
         paths:
@@ -1130,7 +745,18 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_102-get
+        name: get/statutory-holiday
+        methods:
+          - GET
+        paths:
+          - /statutory-holiday
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get/urgencies
         methods:
           - GET
         paths:
@@ -1141,18 +767,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_103-get
-        methods:
-          - GET
-        paths:
-          - /urgencies/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_104-get
+        name: get/urgencies/{id}
         methods:
           - GET
         paths:
@@ -1163,7 +778,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_105-get
+        name: get/websites
         methods:
           - GET
         paths:
@@ -1174,18 +789,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: BCParks-path_106-get
-        methods:
-          - GET
-        paths:
-          - /websites/count
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: BCParks-path_107-get
+        name: get/websites/{id}
         methods:
           - GET
         paths:

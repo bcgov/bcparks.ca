@@ -18,7 +18,7 @@ If there have been changes to the API endpoints available on Strapi, the followi
 The importhing thing to note is in step #6 - once you run through the tools, you **will need to revert changes** or publishing the gateway will fail.
 
 1. Visit [Strapi admin](http://localhost:1337/admin/plugins/documentation) and under Plugins -> Documentation,
-   click the circular arrow icons which says "Regenerate 1.0.0".
+   click the circular arrow icon which says "Regenerate 1.0.0".
 2. Copy the content of `src/cms/src/extensions/documentation/documentation/1.0.0/full_documentation.json` (the
    generated OpenAPI spec) to `src/kong/public-documentation.json` (overwriting the existing content).
 3. Run `node clean.js` to remove any private API endpoints from the file.
