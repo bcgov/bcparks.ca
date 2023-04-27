@@ -43,6 +43,7 @@ module.exports = {
               advisoryStatus: advisoryStatusMap["APR"].id,
             },
             publicationState: "live",
+            populate: "*",
           }
         );
 
@@ -52,7 +53,9 @@ module.exports = {
             "api::public-advisory-audit.public-advisory-audit", advisory.id, {
               data: {
                 publishedAt: advisory.advisoryDate,
-                advisoryStatus: advisoryStatusMap["PUB"].id,
+                advisoryStatus: {
+                  id: advisoryStatusMap["PUB"].id,
+                },
                 modifiedBy: "system",
                 modifiedDate: new Date(),
                 removalDate: null,
@@ -71,18 +74,18 @@ module.exports = {
               advisoryStatus: advisoryStatusMap["PUB"].id,
             },
             publicationState: "live",
+            populate: "*",
         });
 
         // unpublish advisories - audit table
         advisoryToUnpublish.forEach(async (advisory) => {
           await strapi.entityService.update(
-            "api::public-advisory-audit.public-advisory-audit", advisory.advisoryNumber, {
-              filters: {
-                isLatestRevision: true,
-              },
+            "api::public-advisory-audit.public-advisory-audit", advisory.id, {
               data: {
                 publishedAt: null,
-                advisoryStatus: advisoryStatusMap["INA"].id,
+                advisoryStatus: {
+                  id: advisoryStatusMap["INA"].id
+                },
                 removalDate: new Date(),
                 modifiedBy: "system",
                 modifiedDate: new Date(),
