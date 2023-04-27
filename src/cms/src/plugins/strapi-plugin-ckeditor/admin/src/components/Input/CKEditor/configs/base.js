@@ -194,6 +194,11 @@ const base = {
       },
     },
   },
+  list: {
+    properties: {
+      styles: false
+    }
+  },
   style: {
     definitions: [
       {
@@ -211,11 +216,12 @@ const base = {
         element: "a",
         classes: ["legacy-link"],
       },
-      {
-        name: "Lettered list",
-        element: "li",
-        classes: ["lower-alpha"],
-      },
+      // not working any more, need a new approach
+      // {
+      //   name: "Lettered list",
+      //   element: "li",
+      //   classes: ["lower-alpha"],
+      // },
     ],
   },
 };
