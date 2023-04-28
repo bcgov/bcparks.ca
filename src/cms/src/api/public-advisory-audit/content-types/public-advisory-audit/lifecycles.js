@@ -32,7 +32,7 @@ const getNextRevisionNumber = async (advisoryNumber) => {
 
 const createPublicAdvisoryAudit = async (data) => {
   delete data.id;
-  data.published_at = null;
+  data.publishedAt = null;
   data.isLatestRevision = false;
 
   try {
@@ -47,7 +47,7 @@ const createPublicAdvisoryAudit = async (data) => {
 
 const savePublicAdvisory = async (publicAdvisory) => {
   if (publicAdvisory.advisoryStatus.code === "PUB") {
-    publicAdvisory.published_at = new Date();
+    publicAdvisory.publishedAt = new Date();
     const isExist = await strapi.db.query('api::public-advisory.public-advisory').findOne({
       where: {
         advisoryNumber: publicAdvisory.advisoryNumber
@@ -156,7 +156,7 @@ module.exports = {
       data.advisoryNumber = await getNextAdvisoryNumber();
       data.revisionNumber = 1;
       data.isLatestRevision = true;
-      data.published_at = new Date();
+      data.publishedAt = new Date();
     }
   },
   afterCreate: async (ctx) => {
@@ -168,9 +168,9 @@ module.exports = {
   beforeUpdate: async (ctx) => {
     let { data, where } = ctx.params;
     const newPublicAdvisory = data;
-    if (!newPublicAdvisory.published_at) return;
+    if (!newPublicAdvisory.publishedAt) return;
 
-    newPublicAdvisory.published_at = new Date();
+    newPublicAdvisory.publishedAt = new Date();
     newPublicAdvisory.isLatestRevision = true;
     const oldPublicAdvisory = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', where.id, {
       populate: "*"
