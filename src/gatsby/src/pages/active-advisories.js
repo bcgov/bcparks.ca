@@ -42,7 +42,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const classes = useStyles()
 
   const [advisories, setAdvisories] = useState([]) // array of advisories
-  const [advisoryCount, setAdvisoryCount] = useState(0) // total of of selected type
 
   const [isNewFilter, setIsNewFilter] = useState(true) // true when any part of filter changes
   const [isDataOld, setIsDataOld] = useState(true) // true when new adivsories needed
@@ -186,10 +185,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     const newApiCountCall = apiUrl + q
     if (newApiCountCall !== apiCountCall) {
       setApiCountCall(newApiCountCall)
-
-      axios.get(newApiCountCall).then(function (data) {
-        setAdvisoryCount(data.data)
-      })
     }
   }, [advisoryType, apiUrl, apiCountCall])
 
