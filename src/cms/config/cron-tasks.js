@@ -79,10 +79,18 @@ module.exports = {
 
         // unpublish advisories - audit table
         advisoryToUnpublish.forEach(async (advisory) => {
-          await strapi.entityService.update(
-            "api::public-advisory-audit.public-advisory-audit", advisory.id, {
+          const advisoryAudit = await strapi.entityService.findMany(
+            "api::public-advisory-audit.public-advisory-audit", {
+            filters: {
+              advisoryNumber: advisory.advisoryNumber,
+              isLatestRevision: true
+            }
+          });
+          if (advisoryAudit.length) {
+            await strapi.entityService.update(
+              "api::public-advisory-audit.public-advisory-audit", advisoryAudit[0].id, {
               data: {
-                publishedAt: null,
+                publishedAt: new Date(),
                 advisoryStatus: {
                   id: advisoryStatusMap["INA"].id
                 },
@@ -91,13 +99,14 @@ module.exports = {
                 modifiedDate: new Date(),
               }
             }
-          )
-          .catch((error) => {
-            strapi.log.error(
-              `error updating public-advisory-audit, advisory-number: ${advisory.advisoryNumber}`,
-              error
-            );
-          });
+            )
+              .catch((error) => {
+                strapi.log.error(
+                  `error updating public-advisory-audit, advisory-number: ${advisory.advisoryNumber}`,
+                  error
+                );
+              });
+          }
         });
       }
 
