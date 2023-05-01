@@ -508,7 +508,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
       cellStyle: { width: 400 },
       render: (rowData) => {
         const displayCount = 3;
-        const regionsCount = regions?.length; // todo:
+        const regionsCount = rowData.regions?.length;
         if (regionsCount > 0) {
           let regions = rowData?.regions?.slice(0, displayCount);
           return (
