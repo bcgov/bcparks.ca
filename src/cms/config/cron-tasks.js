@@ -77,12 +77,28 @@ module.exports = {
             populate: "*",
         });
 
-        // unpublish advisories - audit table
+        // unpublish advisories - public advisory table
+        advisoryToUnpublish.forEach(async (advisory) => {
+          await strapi.entityService.update(
+            "api::public-advisory.public-advisory", advisory.id, {
+              data: {
+                publishedAt: null,
+                advisoryStatus: {
+                  id: advisoryStatusMap["INA"].id
+                },
+                removalDate: new Date(),
+                modifiedBy: "system",
+                modifiedDate: new Date(),
+              }
+            }
+          )
+        });
+
+        // inactivate advisories - audit table
         advisoryToUnpublish.forEach(async (advisory) => {
           await strapi.entityService.update(
             "api::public-advisory-audit.public-advisory-audit", advisory.id, {
               data: {
-                publishedAt: null,
                 advisoryStatus: {
                   id: advisoryStatusMap["INA"].id
                 },
