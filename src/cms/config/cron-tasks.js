@@ -77,6 +77,17 @@ module.exports = {
             populate: "*",
         });
 
+        // delete advisories - public advisory table
+        advisoryToUnpublish.forEach(async (advisory) => {
+          console.log("AD",advisory)
+          await strapi.entityService.update(
+            "api::public-advisory.public-advisory", advisory.id, {
+            data: {
+              publishedAt: null,
+            }
+          })
+        })
+
         // unpublish advisories - audit table
         advisoryToUnpublish.forEach(async (advisory) => {
           const advisoryAudit = await strapi.entityService.findMany(
