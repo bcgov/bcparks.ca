@@ -121,11 +121,7 @@ export default function AdvisorySummaryView({
             <div key={p.id}>
               {p.url && (
                 <a
-                  href={
-                    isPublished
-                      ? p.url
-                      : p.url.replace("https://bcparks.ca", parkUrl)
-                  }
+                  href={p.url.replace("https://bcparks.ca", parkUrl)}
                   rel="noreferrer"
                   target="_blank"
                   className="ad-anchor"
@@ -167,11 +163,7 @@ export default function AdvisorySummaryView({
               <div key={s.id}>
                 {s.url && (
                   <a
-                    href={
-                      isPublished
-                        ? s.url
-                        : s.url.replace("bcparks", "www.bcparks")
-                    }
+                    href={s.url.replace("https://bcparks.ca", parkUrl)}
                     rel="noreferrer"
                     target="_blank"
                     className="ad-anchor"
