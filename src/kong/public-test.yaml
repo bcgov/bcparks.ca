@@ -745,17 +745,6 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/statutory-holiday
-        methods:
-          - GET
-        paths:
-          - /statutory-holiday
-        strip_path: false
-        hosts:
-          - bcparks.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
         name: get/urgencies
         methods:
           - GET

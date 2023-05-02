@@ -11,7 +11,7 @@ const data = require("./public-documentation.json");
 
 const pathsToDelete = [
   "/public-advisory-audits",
-  "/statutory-holidays",
+  "/statutory-holiday",
   "/tokens",
   "/email/settings",
   "/upload",
