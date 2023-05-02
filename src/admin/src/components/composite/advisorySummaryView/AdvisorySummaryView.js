@@ -20,6 +20,19 @@ export default function AdvisorySummaryView({
   },
 }) {
   const { ClipboardItem } = window;
+  const apiBaseUrl = process.env.REACT_APP_CMS_BASE_URL;
+  let parkUrl = "";
+  
+  if (apiBaseUrl === "https://cms.bcparks.ca") {
+    parkUrl = "https://bcparks.ca"
+  } else if (apiBaseUrl === "https://test-cms.bcparks.ca") {
+    parkUrl = "https://test.bcparks.ca"
+  } else if (apiBaseUrl === "https://dev-cms.bcparks.ca") {
+    parkUrl = "https://dev.bcparks.ca"
+  } else {
+    parkUrl = "http://localhost:8000"
+  }
+
   return (
     <>
       <div className="row">
@@ -111,7 +124,7 @@ export default function AdvisorySummaryView({
                   href={
                     isPublished
                       ? p.url
-                      : p.url.replace("bcparks", "www.bcparks")
+                      : p.url.replace("https://bcparks.ca", parkUrl)
                   }
                   rel="noreferrer"
                   target="_blank"
