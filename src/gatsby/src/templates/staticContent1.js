@@ -11,6 +11,7 @@ import PageContent from "../components/pageContent/pageContent"
 import PageMenu from "../components/pageContent/pageMenu"
 import ScrollToTop from "../components/scrollToTop"
 
+import { useContent } from '../utils/useContent';
 import { renderBreadcrumbs } from "../utils/helpers";
 
 import "../styles/staticContent1.scss"
@@ -45,6 +46,10 @@ export default function StaticContent1({ pageContext }) {
 
   const menuContent = queryData?.allStrapiMenu?.nodes || []
   const pageContent = pageContext?.page?.Content
+
+  const contentHtml = pageContext?.page?.Content.find((item) => item.introHtml);
+  const {introHtml} = useContent(contentHtml)
+
   const meta =
     pageContext?.page?.Content.find(c =>
       Boolean(c.strapi_component === "parks.seo")
@@ -193,6 +198,7 @@ export default function StaticContent1({ pageContext }) {
                       {headerContent.imageCaption}
                     </div>
                     <HTMLArea isVisible>{headerContent.introHtml.data.introHtml}</HTMLArea>
+                    {/* <HTMLArea isVisible>{ introHtml || headerContent.introHtml.data.introHtml}</HTMLArea> */}
                   </div>
                 )}
                 {pageContent.map(content => (
@@ -213,6 +219,7 @@ export default function StaticContent1({ pageContext }) {
               {hasPageHeader && (
                 <div className="header-content">
                   <HTMLArea isVisible>{headerContent.introHtml}</HTMLArea>
+                  {/* <HTMLArea isVisible>{ introHtml || headerContent.introHtml}</HTMLArea> */}
                 </div>
               )}
               {pageContent.map(content => (
