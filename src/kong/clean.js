@@ -27,12 +27,15 @@ Object.keys(paths).forEach((item) => {
   Object.keys(paths[item])
     .filter((key) => ["post", "delete", "put"].includes(key))
     .forEach((key) => delete paths[item][key]);
-
+  
   pathsToDelete.forEach((match) => {
     if (item.startsWith(match)) {
       delete paths[item];
     }
   });
+
+  // remove special characters from operationId
+  paths[item].get.operationId = paths[item].get.operationId.replace(/[{}]/g, '').replace(/[\W_]+/g, '_');
 });
 
 data.components.schemas.Website.properties.homepage.properties.data.properties.attributes.properties.Content.type = "object";

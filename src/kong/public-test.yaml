@@ -8,7 +8,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/access-statuses
+        name: get_access_statuses
         methods:
           - GET
         paths:
@@ -19,7 +19,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/access-statuses/{id}
+        name: get_access_statuses_id
         methods:
           - GET
         paths:
@@ -30,7 +30,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/activity-types
+        name: get_activity_types
         methods:
           - GET
         paths:
@@ -41,7 +41,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/activity-types/{id}
+        name: get_activity_types_id
         methods:
           - GET
         paths:
@@ -52,7 +52,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/advisory-statuses
+        name: get_advisory_statuses
         methods:
           - GET
         paths:
@@ -63,7 +63,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/advisory-statuses/{id}
+        name: get_advisory_statuses_id
         methods:
           - GET
         paths:
@@ -74,7 +74,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/asset-types
+        name: get_asset_types
         methods:
           - GET
         paths:
@@ -85,7 +85,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/asset-types/{id}
+        name: get_asset_types_id
         methods:
           - GET
         paths:
@@ -96,7 +96,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/business-hour
+        name: get_business_hour
         methods:
           - GET
         paths:
@@ -107,7 +107,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/event-types
+        name: get_event_types
         methods:
           - GET
         paths:
@@ -118,7 +118,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/event-types/{id}
+        name: get_event_types_id
         methods:
           - GET
         paths:
@@ -129,7 +129,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/facility-types
+        name: get_facility_types
         methods:
           - GET
         paths:
@@ -140,7 +140,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/facility-types/{id}
+        name: get_facility_types_id
         methods:
           - GET
         paths:
@@ -151,7 +151,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/fire-ban-prohibitions
+        name: get_fire_ban_prohibitions
         methods:
           - GET
         paths:
@@ -162,7 +162,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/fire-ban-prohibitions/{id}
+        name: get_fire_ban_prohibitions_id
         methods:
           - GET
         paths:
@@ -173,7 +173,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/fire-centres
+        name: get_fire_centres
         methods:
           - GET
         paths:
@@ -184,7 +184,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/fire-centres/{id}
+        name: get_fire_centres_id
         methods:
           - GET
         paths:
@@ -195,7 +195,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/fire-zones
+        name: get_fire_zones
         methods:
           - GET
         paths:
@@ -206,7 +206,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/fire-zones/{id}
+        name: get_fire_zones_id
         methods:
           - GET
         paths:
@@ -217,7 +217,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/legacy-redirects
+        name: get_legacy_redirects
         methods:
           - GET
         paths:
@@ -228,7 +228,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/legacy-redirects/{id}
+        name: get_legacy_redirects_id
         methods:
           - GET
         paths:
@@ -239,7 +239,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/links
+        name: get_links
         methods:
           - GET
         paths:
@@ -250,7 +250,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/links/{id}
+        name: get_links_id
         methods:
           - GET
         paths:
@@ -261,7 +261,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/link-types
+        name: get_link_types
         methods:
           - GET
         paths:
@@ -272,7 +272,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/link-types/{id}
+        name: get_link_types_id
         methods:
           - GET
         paths:
@@ -283,7 +283,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/management-areas
+        name: get_management_areas
         methods:
           - GET
         paths:
@@ -294,7 +294,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/management-areas/{id}
+        name: get_management_areas_id
         methods:
           - GET
         paths:
@@ -305,7 +305,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/menus
+        name: get_menus
         methods:
           - GET
         paths:
@@ -316,7 +316,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/menus/{id}
+        name: get_menus_id
         methods:
           - GET
         paths:
@@ -327,7 +327,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/pages
+        name: get_pages
         methods:
           - GET
         paths:
@@ -338,7 +338,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/pages/{id}
+        name: get_pages_id
         methods:
           - GET
         paths:
@@ -349,7 +349,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-access-statuses
+        name: get_park_access_statuses
         methods:
           - GET
         paths:
@@ -360,7 +360,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-access-statuses/{id}
+        name: get_park_access_statuses_id
         methods:
           - GET
         paths:
@@ -371,7 +371,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-access-status-caches
+        name: get_park_access_status_caches
         methods:
           - GET
         paths:
@@ -382,7 +382,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-access-status-caches/{id}
+        name: get_park_access_status_caches_id
         methods:
           - GET
         paths:
@@ -393,7 +393,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-activities
+        name: get_park_activities
         methods:
           - GET
         paths:
@@ -404,7 +404,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-activities/{id}
+        name: get_park_activities_id
         methods:
           - GET
         paths:
@@ -415,7 +415,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-facilities
+        name: get_park_facilities
         methods:
           - GET
         paths:
@@ -426,7 +426,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-facilities/{id}
+        name: get_park_facilities_id
         methods:
           - GET
         paths:
@@ -437,7 +437,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-names
+        name: get_park_names
         methods:
           - GET
         paths:
@@ -448,7 +448,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-names/{id}
+        name: get_park_names_id
         methods:
           - GET
         paths:
@@ -459,7 +459,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-name-types
+        name: get_park_name_types
         methods:
           - GET
         paths:
@@ -470,7 +470,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-name-types/{id}
+        name: get_park_name_types_id
         methods:
           - GET
         paths:
@@ -481,7 +481,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-operations
+        name: get_park_operations
         methods:
           - GET
         paths:
@@ -492,7 +492,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-operations/{id}
+        name: get_park_operations_id
         methods:
           - GET
         paths:
@@ -503,7 +503,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-operation-sub-areas
+        name: get_park_operation_sub_areas
         methods:
           - GET
         paths:
@@ -514,7 +514,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-operation-sub-areas/{id}
+        name: get_park_operation_sub_areas_id
         methods:
           - GET
         paths:
@@ -525,7 +525,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-operation-sub-area-dates
+        name: get_park_operation_sub_area_dates
         methods:
           - GET
         paths:
@@ -536,7 +536,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-operation-sub-area-dates/{id}
+        name: get_park_operation_sub_area_dates_id
         methods:
           - GET
         paths:
@@ -547,7 +547,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-operation-sub-area-types
+        name: get_park_operation_sub_area_types
         methods:
           - GET
         paths:
@@ -558,7 +558,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-operation-sub-area-types/{id}
+        name: get_park_operation_sub_area_types_id
         methods:
           - GET
         paths:
@@ -569,7 +569,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-photos
+        name: get_park_photos
         methods:
           - GET
         paths:
@@ -580,7 +580,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-photos/{id}
+        name: get_park_photos_id
         methods:
           - GET
         paths:
@@ -591,7 +591,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-sub-pages
+        name: get_park_sub_pages
         methods:
           - GET
         paths:
@@ -602,7 +602,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/park-sub-pages/{id}
+        name: get_park_sub_pages_id
         methods:
           - GET
         paths:
@@ -613,7 +613,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/protected-areas
+        name: get_protected_areas
         methods:
           - GET
         paths:
@@ -624,7 +624,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/protected-areas/{id}
+        name: get_protected_areas_id
         methods:
           - GET
         paths:
@@ -635,7 +635,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/public-advisories
+        name: get_public_advisories
         methods:
           - GET
         paths:
@@ -646,7 +646,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/public-advisories/{id}
+        name: get_public_advisories_id
         methods:
           - GET
         paths:
@@ -657,7 +657,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/regions
+        name: get_regions
         methods:
           - GET
         paths:
@@ -668,7 +668,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/regions/{id}
+        name: get_regions_id
         methods:
           - GET
         paths:
@@ -679,7 +679,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/sections
+        name: get_sections
         methods:
           - GET
         paths:
@@ -690,7 +690,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/sections/{id}
+        name: get_sections_id
         methods:
           - GET
         paths:
@@ -701,7 +701,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/sites
+        name: get_sites
         methods:
           - GET
         paths:
@@ -712,7 +712,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/sites/{id}
+        name: get_sites_id
         methods:
           - GET
         paths:
@@ -723,7 +723,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/standard-messages
+        name: get_standard_messages
         methods:
           - GET
         paths:
@@ -734,7 +734,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/standard-messages/{id}
+        name: get_standard_messages_id
         methods:
           - GET
         paths:
@@ -745,7 +745,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/urgencies
+        name: get_urgencies
         methods:
           - GET
         paths:
@@ -756,7 +756,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/urgencies/{id}
+        name: get_urgencies_id
         methods:
           - GET
         paths:
@@ -767,7 +767,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/websites
+        name: get_websites
         methods:
           - GET
         paths:
@@ -778,7 +778,7 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: get/websites/{id}
+        name: get_websites_id
         methods:
           - GET
         paths:
