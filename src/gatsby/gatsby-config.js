@@ -32,7 +32,7 @@ module.exports = {
       resolve: "gatsby-source-strapi",
       options: {
         skipFileDownloads: true,
-        apiURL: process.env.REACT_APP_CMS_BASE_URL,
+        apiURL: process.env.STRAPI_SOURCE_URL || process.env.REACT_APP_CMS_BASE_URL,
         accessToken: process.env.STRAPI_TOKEN,
         collectionTypes: [
           "urgency",
