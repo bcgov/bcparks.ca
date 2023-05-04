@@ -59,7 +59,6 @@ cms:
     smtpReplyTo: noreply@gov.bc.ca
     cacheEnabled: true
     cacheType: redis
-    cacheModels: public-advisory,protected-area
     cacheTtl: 300000
     cacheTimeout: 10000
 

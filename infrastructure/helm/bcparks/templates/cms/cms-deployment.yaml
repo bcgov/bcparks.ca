@@ -104,8 +104,6 @@ spec:
               value: {{ .Values.cms.env.cacheEnabled | quote }}
             - name: STRAPI_CACHE_TYPE
               value: {{ .Values.cms.env.cacheType }}
-            - name: STRAPI_CACHE_MODELS
-              value: {{ .Values.cms.env.cacheModels }}
             - name: STRAPI_CACHE_TTL
               value: {{ .Values.cms.env.cacheTtl | quote }}
             - name: STRAPI_CACHE_TIMEOUT

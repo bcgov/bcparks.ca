@@ -25,11 +25,8 @@ cms:
     externalUrl: https://test-cms.bcparks.ca
 
   hpa:
-    ### TODO: revert after Strapi4 launch ###
     minReplicas: 1
-    maxReplicas: 1
-    #minReplicas: 2
-    #maxReplicas: 4
+    maxReplicas: 2
 
 admin:
   env:
@@ -47,17 +44,13 @@ patroni:
   replicas: 1
 
   pvc:
-    ### TODO: increase after Strapi4 launch ###
-    size: 5Gi
-    # size: 10Gi
+    size: 10Gi
 
 backup:
   enabled: true
 
   pvc:
-    ### TODO: increase after Strapi4 launch ###
-    size: 5Gi
-    # size: 10Gi
+    size: 10Gi
 
   enironment:
     friendlyName: bcparks.ca CMS Postgres Backup [test]
@@ -65,8 +58,5 @@ backup:
 
 public:
   hpa:
-    ### TODO: revert after Strapi4 launch ###
     minReplicas: 1
-    maxReplicas: 1
-    # minReplicas: 1
-    # maxReplicas: 3
+    maxReplicas: 2
