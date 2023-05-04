@@ -153,7 +153,7 @@ export default function ParkPhotoGallery({ photos }) {
                   {parkPhotos.length > 4 && (
                     <>
                       <Grid item container spacing={1}>
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12} md={6} className="main-park-photo-grid">
                           {parkPhotos
                             .filter(f => f.index === 0)
                             .map((photo, index) => (
