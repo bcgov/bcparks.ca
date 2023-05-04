@@ -11,7 +11,7 @@ const data = require("./public-documentation.json");
 
 const pathsToDelete = [
   "/public-advisory-audits",
-  "/statutory-holidays",
+  "/statutory-holiday",
   "/tokens",
   "/email/settings",
   "/upload",
@@ -27,7 +27,7 @@ Object.keys(paths).forEach((item) => {
   Object.keys(paths[item])
     .filter((key) => ["post", "delete", "put"].includes(key))
     .forEach((key) => delete paths[item][key]);
-
+  
   pathsToDelete.forEach((match) => {
     if (item.startsWith(match)) {
       delete paths[item];
@@ -35,8 +35,7 @@ Object.keys(paths).forEach((item) => {
   });
 });
 
-data.components.schemas.Website.properties.homepage.properties.Content.type =
-  "object";
-data.info.title = "BCParks";
+data.components.schemas.Website.properties.homepage.properties.data.properties.attributes.properties.Content.type = "object";
+data.info.title = "BCPARKS";
 
 fs.writeFileSync("public-documentation.json", JSON.stringify(data));
