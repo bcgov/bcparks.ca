@@ -47,7 +47,8 @@ export default function StaticContent1({ pageContext }) {
   const menuContent = queryData?.allStrapiMenu?.nodes || []
   const pageContent = pageContext?.page?.Content
 
-  const contentHtml = pageContext?.page?.Content.find((item) => item.introHtml);
+  // add id attribute to embedded iframe
+  const contentHtml = pageContent.find((item) => item.introHtml);
   const {introHtml} = useContent(contentHtml)
 
   const meta =
@@ -197,8 +198,7 @@ export default function StaticContent1({ pageContext }) {
                     <div className="page-header--caption">
                       {headerContent.imageCaption}
                     </div>
-                    <HTMLArea isVisible>{headerContent.introHtml.data.introHtml}</HTMLArea>
-                    {/* <HTMLArea isVisible>{ introHtml || headerContent.introHtml.data.introHtml}</HTMLArea> */}
+                    <HTMLArea isVisible>{introHtml || headerContent.introHtml.data.introHtml}</HTMLArea>
                   </div>
                 )}
                 {pageContent.map(content => (
@@ -218,8 +218,7 @@ export default function StaticContent1({ pageContext }) {
             <div>
               {hasPageHeader && (
                 <div className="header-content">
-                  <HTMLArea isVisible>{headerContent.introHtml}</HTMLArea>
-                  {/* <HTMLArea isVisible>{ introHtml || headerContent.introHtml}</HTMLArea> */}
+                  <HTMLArea isVisible>{introHtml || headerContent.introHtml}</HTMLArea>
                 </div>
               )}
               {pageContent.map(content => (

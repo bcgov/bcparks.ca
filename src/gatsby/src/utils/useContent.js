@@ -12,7 +12,7 @@ export const useContent = (contentHtml) => {
     if (content) {
       $ = cheerio.load(content);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchData = useCallback(() => {
@@ -22,11 +22,9 @@ export const useContent = (contentHtml) => {
       return media?.map(async (index, el) => {
         const $ = cheerio.load(el);
         const getIframe = $("iframe").attr("src")?.split("/");
-
-        const v_url = getIframe && getIframe[getIframe?.length - 1];
-
+        const url = getIframe && getIframe[getIframe?.length - 1];
         const fetchVideo = await fetch(
-          `https://noembed.com/embed?dataType=json&url=${`https://www.youtube.com/watch?v=${v_url}`}`
+          `https://noembed.com/embed?dataType=json&url=https://www.youtube.com/watch?v=${url}`
         );
         const response = await fetchVideo.json();
 
@@ -35,7 +33,7 @@ export const useContent = (contentHtml) => {
         );
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content]);
 
   useEffect(() => {
@@ -43,33 +41,19 @@ export const useContent = (contentHtml) => {
 
     if (content && list.length) {
       const $ = cheerio.load(content);
-      // const media = $("figure.media");
-      // media.map((index, el) => {
-      //   const $ = cheerio.load(el);
-      //   $("iframe").attr("id", list[index]);
-      // })
-      // setHtmlContent($?.html())
-      // console.log("htmlContent",htmlContent)
-
       $("body")
         .toArray()
         .map((element) => {
           return $(element)
-            .children("figure.media")
-            .each((index, v) => {
-              console.log("v", v)
-              const findTitleByIndex = list.filter((e, ind) => +ind === +index);
-              // console.log("find",findTitleByIndex)
-
-              $(v).attr("id", findTitleByIndex);
-              // console.log("v", v)
+            .find("iframe")
+            .each((index, video) => {
+              const findTitleByIndex = list.filter((e, i) => +i === +index);
+              $(video).attr("id", findTitleByIndex);
             });
         });
-        setHtmlContent($?.html())
+      setHtmlContent($?.html())
     }
   }, [content, fetchData, list]);
-
-  console.log("htmlContent",htmlContent);
 
   return { introHtml: htmlContent || null };
 };
