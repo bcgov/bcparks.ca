@@ -33,9 +33,6 @@ Object.keys(paths).forEach((item) => {
       delete paths[item];
     }
   });
-
-  // remove special characters from operationId
-  paths[item].get.operationId = paths[item].get.operationId.replace(/[{}]/g, '').replace(/[\W_]+/g, '_');
 });
 
 data.components.schemas.Website.properties.homepage.properties.data.properties.attributes.properties.Content.type = "object";
