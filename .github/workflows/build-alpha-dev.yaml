@@ -1,28 +1,16 @@
-name: Build dev on develop & strapi4 branch push
+name: Build dev on develop & main branch push
 
 on:
   push:
     branches:
       - develop
-      - strapi4
+      - main
 
 jobs:
-  get-branch:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set main branch
-        if: ${{ github.ref_name=='strapi4' }}
-        run: echo "branch=main" >> $GITHUB_OUTPUT
-        id: vars
-
-    outputs:
-      branch: ${{ steps.vars.outputs.branch || github.ref_name }}
-
   build-cms:
-    needs: get-branch
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: strapi-${{ needs.get-branch.outputs.branch }}
+      IMAGE_NAME: strapi-${{ github.ref_name }}
       BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-18:1-32
     steps:
       - name: Git Checkout
@@ -52,10 +40,9 @@ jobs:
         run: docker push --all-tags ${{ steps.build_image.outputs.image }}
 
   build-admin:
-    needs: get-branch
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: admin-${{ needs.get-branch.outputs.branch }}
+      IMAGE_NAME: admin-${{ github.ref_name }}
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -94,10 +81,9 @@ jobs:
         run: docker push --all-tags ${{ env.REGISTRY_IMAGE }}
 
   build-public-builder:
-    needs: get-branch
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: public-builder-${{ needs.get-branch.outputs.branch }}
+      IMAGE_NAME: public-builder-${{ github.ref_name }}
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -129,13 +115,12 @@ jobs:
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           event-type: publish-gatsby
-          client-payload: '{"env": "dev", "branch": "${{ needs.get-branch.outputs.branch }}" }'
+          client-payload: '{"env": "dev", "branch": "${{ github.ref_name }}" }'
 
   build-maintenance:
-    needs: get-branch
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: maintenance-${{ needs.get-branch.outputs.branch }}
+      IMAGE_NAME: maintenance-${{ github.ref_name }}
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -164,7 +149,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [get-branch, build-cms, build-admin]
+    needs: [build-cms, build-admin]
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -177,6 +162,6 @@ jobs:
 
       - name: Trigger rollout
         run: |
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ needs.get-branch.outputs.branch }}-admin
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ needs.get-branch.outputs.branch }}-cms
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ needs.get-branch.outputs.branch }}-maintenance
+          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-admin
+          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-cms
+          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-maintenance
