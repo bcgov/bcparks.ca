@@ -33,6 +33,11 @@ const REACT_APP_STAT_HOLIDAY_API =
   process.env.REACT_APP_STAT_HOLIDAY_API ||
   "https://canada-holidays.ca/api/v1/provinces/BC";
 
+const REACT_APP_PUBLIC_URL =
+  window.REACT_APP_PUBLIC_URL ||
+  process.env.REACT_APP_PUBLIC_URL ||
+  "http://localhost:8000";
+
 const config = {
   REACT_APP_API_BASE_URL,
   REACT_APP_CMS_BASE_URL,
@@ -41,6 +46,7 @@ const config = {
   REACT_APP_KEYCLOAK_REALM,
   REACT_APP_KEYCLOAK_CLIENT_ID,
   REACT_APP_STAT_HOLIDAY_API,
+  REACT_APP_PUBLIC_URL
 };
 
 export default config;

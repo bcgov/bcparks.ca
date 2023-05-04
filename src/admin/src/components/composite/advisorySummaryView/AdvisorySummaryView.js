@@ -8,6 +8,7 @@ import moment from "moment";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
 import AdvisoryHistory from "../advisoryHistory/AdvisoryHistory";
+import config from "../../../utils/config";
 
 export default function AdvisorySummaryView({
   data: {
@@ -20,18 +21,7 @@ export default function AdvisorySummaryView({
   },
 }) {
   const { ClipboardItem } = window;
-  const apiBaseUrl = process.env.REACT_APP_CMS_BASE_URL;
-  let parkUrl = "";
-  
-  if (apiBaseUrl === "https://cms.bcparks.ca") {
-    parkUrl = "https://bcparks.ca"
-  } else if (apiBaseUrl === "https://test-cms.bcparks.ca") {
-    parkUrl = "https://test.bcparks.ca"
-  } else if (apiBaseUrl === "https://dev-cms.bcparks.ca") {
-    parkUrl = "https://dev.bcparks.ca"
-  } else {
-    parkUrl = "http://localhost:8000"
-  }
+  const publicUrl = config.REACT_APP_PUBLIC_URL;
 
   return (
     <>
@@ -121,7 +111,7 @@ export default function AdvisorySummaryView({
             <div key={p.id}>
               {p.url && (
                 <a
-                  href={p.url.replace("https://bcparks.ca", parkUrl)}
+                  href={p.url.replace("https://bcparks.ca", publicUrl)}
                   rel="noreferrer"
                   target="_blank"
                   className="ad-anchor"
@@ -163,7 +153,7 @@ export default function AdvisorySummaryView({
               <div key={s.id}>
                 {s.url && (
                   <a
-                    href={s.url.replace("https://bcparks.ca", parkUrl)}
+                    href={s.url.replace("https://bcparks.ca", publicUrl)}
                     rel="noreferrer"
                     target="_blank"
                     className="ad-anchor"
