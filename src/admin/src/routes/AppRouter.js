@@ -62,7 +62,6 @@ function AppRouter() {
             component={AdvisorySummary}
             props={{ page: { setError, cmsData, setCmsData } }}
           />
-          {/* TODO: Re-enable error page */}
           <Route path="/bcparks/error">
             <Error page={{ error }} />
           </Route>

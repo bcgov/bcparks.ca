@@ -22,22 +22,15 @@ cms:
 
   env:
     environment: prod
-    ### TODO: revert after Strapi4 launch ###
-    externalUrl: https://main-cms-61d198-prod.apps.silver.devops.gov.bc.ca
-    # externalUrl: https://cms.bcparks.ca
+    externalUrl: https://cms.bcparks.ca
 
   hpa:
-    ### TODO: revert after Strapi4 launch ###
-    minReplicas: 1
-    maxReplicas: 1
-    #minReplicas: 2
-    #maxReplicas: 4
+    minReplicas: 2
+    maxReplicas: 4
 
 admin:
   env:
-    ### TODO: revert after Strapi4 launch ###
-    externalUrl: https://main-admin-61d198-prod.apps.silver.devops.gov.bc.ca
-    # externalUrl: https://staff.bcparks.ca
+    externalUrl: https://staff.bcparks.ca
 
 patroni:
   resources:
@@ -47,8 +40,7 @@ patroni:
     requests:
       cpu: 250m
       memory: 250Mi
-  ### TODO: increase to 3 after Strapi4 launch ###
-  replicas: 1
+  replicas: 3
 
   pvc:
     size: 10Gi
@@ -65,8 +57,5 @@ backup:
 
 public:
   hpa:
-    ### TODO: revert after Strapi4 launch ###
-    minReplicas: 1
-    maxReplicas: 2
-    # minReplicas: 2
-    # maxReplicas: 4
+    minReplicas: 2
+    maxReplicas: 4

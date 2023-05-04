@@ -1082,7 +1082,6 @@ export default function Advisory({
     );
   }
 
-  // TODO: Re-enable error redirection
   if (toError) {
     return <Redirect push to="/bcparks/error" />;
   }

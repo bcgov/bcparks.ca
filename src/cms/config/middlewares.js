@@ -12,19 +12,14 @@ module.exports = [
             "data:",
             "blob:",
             "dl.airtable.com",
-            `https://nrs.objectstore.gov.bc.ca/`,
-            // TODO:
-            // doc https://strapi.io/blog/how-to-set-up-amazon-s3-upload-provider-plugin-for-our-strapi-app
-            // 'yourBucketName.s3.yourRegion.amazonaws.com', or  `https://${env('AWS_BUCKET')}.s3.${env('AWS_REGION')}.amazonaws.com`
+            `https://nrs.objectstore.gov.bc.ca/`
           ],
           "media-src": [
             "'self'",
             "data:",
             "blob:",
             "dl.airtable.com",
-            `https://nrs.objectstore.gov.bc.ca/`,
-            // TODO:
-            // 'yourBucketName.s3.yourRegion.amazonaws.com',
+            `https://nrs.objectstore.gov.bc.ca/`
           ],
           'frame-src': [
             "'self'",
