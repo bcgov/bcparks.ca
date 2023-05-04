@@ -1,4 +1,5 @@
 name: Build dev on main branch push
+# TODO: Delete after Strapi4 launch.  Replaced by build-alpha-dev.yaml (which will need to be renamed)
 
 on:
   push:
@@ -10,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: strapi
-      BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-14:1-56
+      BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-18:1-33
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
@@ -103,7 +104,7 @@ jobs:
           docker build -t ${{ env.IMAGE_NAME }} -f Builder.Dockerfile .
           docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:latest
           docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:${{ env.SHORT_SHA }}
-        working-directory: src/staging
+        working-directory: src/gatsby
 
       - name: Push Docker image
         run: docker push --all-tags ${{ env.REGISTRY_IMAGE }}

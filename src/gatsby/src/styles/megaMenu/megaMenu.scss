@@ -1,0 +1,629 @@
+@import "../variables.scss";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+/* ---------------- HEADER ----------------- */
+
+/* header */
+.header-wrapper {
+  width: 100%;
+  background: $colorBlue;
+
+  .header-nav {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    @include media-breakpoint-up(lg) {
+      height: 100px;
+      max-width: 1140px;
+      margin: 0px auto;
+      padding: 0px 20px;
+    }
+    @include media-breakpoint-down(md) {
+      height: 72px;
+      margin: 0px;
+      padding: 0px;
+    }
+    /*@include media-breakpoint-up(lg) {
+      height: 100px;
+      max-width: 1140px;
+      margin: 0px auto;
+      padding: 0px 20px;
+    }
+    @include media-breakpoint-down(md) {
+      height: 72px;
+      margin: 0px;
+      padding: 0px;
+    }*/
+    a {
+      display: block;
+      text-decoration: none;
+    }
+
+    .bc-parks-logo--desktop {
+      height: 45px;
+    }
+    .bc-parks-logo--mobile {
+      height: 50px;
+    }
+  }
+}
+
+a.btn.book-campsite-btn {
+  background-color: $colorWhite;
+  border: solid 1px transparent;
+  color: $colorBlue;
+  font-size: 0.8125rem;
+  padding: 0px 30px;
+  line-height: 40px;
+  height: 40px;
+  border-radius: 20px;
+  &:hover {
+    background-color: $colorWhite;
+    color: $colorBlue;
+    text-decoration: underline;
+    outline: 1px solid $colorGold;
+  }
+  @include media-breakpoint-down(md) {
+    margin-right: 50px;
+    padding: 0px 10px;
+    line-height: 30px;
+    height: 30px;
+    border-radius: 15px;
+  }
+}
+
+/* TODO scope these properly: */
+
+nav {
+  ul,
+  li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  a {
+    display: block;
+    text-decoration: none;
+  }
+}
+
+/* -------------------- START MOBILE STYLING ----------------- */
+@include media-breakpoint-down(md) {
+  .menu-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: $colorWhite;
+    font-size: 1.25rem;
+
+    .menu-open {
+      display: block;
+    }
+    .menu-close {
+      display: none;
+    }
+
+    &.menu-toggle--open {
+      .menu-open {
+        display: none;
+      }
+      .menu-close {
+        display: block;
+      }
+    }
+  }
+
+  .mega-menu.menu-mode--responsive.menu-open {
+    height: 1000px;
+  }
+  .mega-menu.menu-mode--responsive.menu-closed {
+    height: 0px;
+    box-shadow: none;
+    border-bottom: none;
+  }
+  .mega-menu.menu-mode--responsive {
+    overflow: hidden;
+    transition: height 0.5s;
+    width: 100%;
+    background: $colorWhite;
+    top: 72px;
+    position: absolute;
+    z-index: 1300;
+    border-bottom: solid 2px #aaa;
+    box-shadow: 0px 5px 3px 3px rgba(0, 0, 0, 0.3);
+
+    .menu-button {
+      
+      width: 100%;
+      transition: background-color 0.3s;
+      cursor: pointer;
+      border-bottom: 1px solid #ccc;
+      color: #000;
+
+      .menu-button__title {
+        color: #000;
+        width: 100%;
+        padding: 8px 20px;
+        display: block;
+        line-height: 40px;
+      }
+      .menu-button__arr {
+        float: right;
+        line-height: 40px;
+      }
+    }
+    .menu-button.menu-back {
+      .menu-button__arr {
+        float: left;
+        margin-right: 8px;
+      }
+    }
+    .menu-button-list {
+      width: 100%;
+    }
+
+    .menu-level--0 {
+      .menu-back {
+        display: none;
+      }
+      .menu-header {
+        display: none;
+      }
+    }
+    .menu-header {
+      border-left: 10px solid $colorGold;
+      padding-left: 10px;
+      background: #eee;
+      a {
+        color: $colorBlueMed !important;
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+    }
+    .menu-wrapper {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      transition: left 0.3s;
+
+      .menu-children {
+        width: 100%;
+        position: absolute;
+        top: 0px;
+      }
+    }
+    &.menu-selected-level-0 .menu-wrapper {
+      left: 0%;
+    }
+    &.menu-selected-level-1 .menu-wrapper {
+      left: -100%;
+    }
+    &.menu-selected-level-2 .menu-wrapper {
+      left: -200%;
+    }
+    .menu-level-0-children {
+      left: 100%;
+    }
+    .menu-level-1-children {
+      left: 100%;
+    }
+    .menu-children--unselected {
+      display: none;
+    }
+    .menu-children-exist--false {
+      display: none;
+    }
+  }
+}
+.mega-menu-wrapper {
+  position: relative;
+}
+
+/* -------------------- START DESKTOP STYLING ----------------- */
+
+@include media-breakpoint-up(lg) {
+  .menu-toggle {
+    display: none;
+  }
+  .menu-back {
+    display: none;
+  }
+
+  .mega-menu.menu-mode--responsive {
+    width: 100%;
+    background: $colorBlueMed;
+    color: $colorWhite;
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    .menu-wrapper {
+      max-width: 1140px;
+      margin: 0px auto;
+      position: relative;
+      height: 65px;
+    }
+
+    .menu-level {
+      width: 100%;
+      display: flex;
+    }
+
+    .menu-level--0 {
+      z-index: 5;
+
+      .menu-button:hover {
+        background-color: initial;
+      }
+      > .menu-button-list {
+        z-index: 6;
+        display: flex;
+        height: 65px;
+        margin: 0 auto;
+
+        > li.menu-button {
+          display: flex;
+          align-items: center;
+          &.menu-back {
+            display: none;
+          }
+          &.menu-header {
+            display: none;
+          }
+          .menu-button__title {
+            padding: 0px 16px;
+            color: #fff;
+            font-size: 1rem;
+            transition: background 0.2s, color 0.2s;
+            position: relative;
+            z-index: 1;
+            line-height: normal;
+            display: inline-block;
+            text-align: center;
+            &:not(:focus):hover {
+              text-decoration: underline;
+            }
+            &.has-children {
+              padding-right: 32px;
+              &::after {
+                content: "\f078";
+                display: inline-block;
+                position: absolute;
+                top: calc(50% - 4px);
+                right: 16px;
+                font-weight: 900;
+                font-size: 0.5rem;
+                font-style: normal;
+                font-variant: normal;
+                font-family: "Font Awesome 5 Free";
+                text-rendering: auto;
+                text-decoration: none;
+                -webkit-font-smoothing: antialiased;
+                rotate: 0deg;
+                transition: rotate 0.5s;
+              }
+            }
+          }
+        }
+        li.menu-button--selected {
+          background: $colorWhite;
+          border-bottom: 1px solid $colorGold;
+
+          .menu-button__title {
+            color: $colorBlue;
+            .menu-button__arr {
+              rotate: 270deg;
+            }
+            &.has-children {
+              &::after {
+                rotate: 180deg;
+                transition: rotate 0.5s;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .menu-level-0-children {
+      padding: 20px 40px 10px 40px;
+      width: 100%;
+      background: $colorWhite;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      position: absolute;
+      top: 65px;
+      left: 0px;
+      z-index: 1300;
+      display: flex;
+      font-size: 1rem;
+
+      > .menu-level {
+        width: 35%;
+      }
+      > .menu-children {
+        width: 35%;
+      }
+    }
+    .menu-level-0-children.menu-children--unselected {
+      transition: opacity 0.3s, height 0.9s;
+      opacity: 0;
+      height: 0px;
+      padding: 0px;
+      display: block;
+      nav,
+      div {
+        display: none;
+      }
+    }
+    .menu-children-exist--false {
+      display: none;
+    }
+
+    .menu-level--1 {
+      border-right: solid 1px $colorGold;
+
+      .menu-button--selected {
+        border-left: solid 4px $colorGold;
+        background-color: #eee;
+      }
+    }
+    .menu-level--2 {
+      padding-left: 10px;
+      height: 400px;
+
+      .menu-arrow {
+        display: none;
+      }
+    }
+
+    .menu-order,
+    .menu-arrow,
+    .menu-url,
+    .menu-back {
+      display: none;
+    }
+    .menu-level--0 > .menu-button {
+      display: none;
+    }
+    .menu-children {
+      transition: height 0.3s;
+      opacity: 1;
+      height: 475px;
+    }
+    .menu-children--unselected {
+      display: none;
+    }
+    .menu-button:hover {
+      background-color: #eee;
+    }
+    .menu-level--0 {
+      .menu-button__arr {
+        display: none; // remove to enable top-level icons
+        margin-left: 8px;
+        transition: rotate 0.2s;
+        rotate: 90deg;
+        font-size: 0.625rem;
+      }
+    }
+    
+
+    .menu-button {
+      transition: background-color 0.3s;
+      
+      .menu-button__title {
+        color: #000;
+        display: block;
+        width: 100%;
+        padding: 8px 10px;
+
+        .menu-button__arr {
+          float: right;
+          line-height: 22px;
+          height: 22px;
+        }
+      }
+      &.menu-header {
+        .menu-button__title {
+          color: $colorBlueMed;
+          font-weight: bold;
+          margin-bottom: 4px;
+          font-size: 1.25rem;
+        }
+      }
+    }
+    .menu-button-list {
+      width: 100%;
+    }
+    .menu-arrow {
+      color: #000;
+      float: right;
+      display: block;
+    }
+    .menu-children-exist--false {
+      display: none;
+    }
+  }
+  .menu-image {
+    margin-left: auto;
+    width: 30%;
+    img {
+      width: 100%;
+      margin-top: 40px;
+    }
+  }
+}
+/* END DESKTOP */
+
+.sitemap-header {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: $colorBlue;
+  @include media-breakpoint-down(md) {
+    font-size: 1.75rem;
+  }
+}
+.menu-toggle.menu-mode--sitemap {
+  display: none;
+}
+.mega-menu-wrapper.menu-mode--sitemap {
+  .header-wrapper {
+    display: none;
+  }
+}
+.mega-menu.menu-mode--sitemap {
+  margin-top: 60px;
+  margin-bottom: 40px;
+  min-height: 200px;
+
+  .menu-wrapper {
+    position: static;
+  }
+  .menu-toggle {
+    display: none;
+  }
+  .menu-header {
+    font-weight: bold;
+  }
+  .menu-order {
+    display: inline-block;
+    margin: 0px 10px;
+    width: 100px;
+    vertical-align: top;
+  }
+  .menu-title {
+    display: inline-block;
+    margin: 0px 6px;
+    width: 200px;
+    vertical-align: top;
+  }
+  .menu-url {
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: top;
+  }
+  .menu-button__arr {
+    display: none;
+  }
+  .menu-level--0 {
+    display: none;
+  }
+  .menu-level--1 {
+    margin-top: 10px;
+  }
+  .menu-level--2 {
+    margin-top: 10px;
+    padding-left: 12%;
+    .menu-header {
+      margin-bottom: 20px;
+      .menu-button__title {
+        color: $colorBlueMed;
+        margin-left: 0px;
+      }
+    }
+
+    .menu-button__title {
+      color: #000;
+      margin-left: 12%;
+      margin-bottom: 6px;
+      font-size: 1.25rem;
+      color: $colorBlueMed;
+    }
+  }
+  .menu-level--3 {
+    padding-left: 60px;
+  }
+  .menu-children--selected {
+    background: #ffc;
+  }
+  .menu-children--unselected {
+    background: #fff;
+  }
+
+  .menu-button {
+    a {
+      color: $colorBlue;
+      display: inline;
+    }
+    a:hover {
+      color: $colorBlue;
+    }
+  }
+  .menu-button__title {
+    color: $colorBlue;
+    cursor: pointer;
+  }
+  .menu-button--selected {
+    background: #9f9;
+  }
+  .menu-level-0-children {
+    .menu-button a {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+  }
+  .menu-level-1-children.menu-children-exist--false {
+    .menu-button {
+      margin-top: 10px;
+      margin-left: 12%;
+
+      a {
+        color: $colorBlueMed;
+      }
+    }
+  }
+  .menu-level--1 .menu-button {
+    display: none;
+  }
+  .menu-level--1 .menu-button.menu-header {
+    display: block;
+  }
+  .menu-level-2-children {
+    display: none;
+  }
+
+  @include media-breakpoint-down(md) {
+    /* mobile sizing */
+    .menu-back {
+      display: none;
+    }
+    .menu-level-0-children {
+      .menu-button a {
+        font-size: 1.3rem;
+      }
+    }
+    .menu-button__title {
+      font-size: 1.3rem;
+    }
+    .menu-level--1,
+    .menu-level--2 {
+      margin-top: 6px;
+    }
+    .menu-level-1-children.menu-children-exist--false {
+      .menu-button {
+        margin-top: 10px;
+        a {
+          font-size: 1.1rem;
+        }
+      }
+    }
+    .menu-level--2 {
+      .menu-button__title {
+        font-size: 1rem;
+      }
+      .menu-header {
+        margin-bottom: 6px;
+
+        .menu-button__title {
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+}

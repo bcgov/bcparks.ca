@@ -1,10 +1,14 @@
 cluster:
-  ssoAuthUrl: https://dev.oidc.gov.bc.ca/auth
+  ssoAuthUrl: https://dev.loginproxy.gov.bc.ca/auth
 
 cms:
   env:
+    environment: dev
     externalUrl: https://dev-cms.bcparks.ca
 
 admin:
   env:
     externalUrl: https://dev-staff.bcparks.ca
+
+patroni:
+  replicas: 1

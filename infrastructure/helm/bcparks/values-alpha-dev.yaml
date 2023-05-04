@@ -1,0 +1,24 @@
+cluster:
+  ssoAuthUrl: https://dev.loginproxy.gov.bc.ca/auth
+
+images:
+  strapi:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/strapi-develop
+  admin:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/admin-develop
+  public:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/public-develop
+  maintenance:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/maintenance-develop
+
+cms:
+  env:
+    environment: alpha-dev
+    externalUrl: https://alpha-dev-cms.bcparks.ca
+
+admin:
+  env:
+    externalUrl: https://alpha-dev-staff.bcparks.ca
+
+patroni:
+  replicas: 1

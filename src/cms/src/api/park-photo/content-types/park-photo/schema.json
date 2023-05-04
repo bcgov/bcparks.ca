@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_photos",
+  "info": {
+    "singularName": "park-photo",
+    "pluralName": "park-photos",
+    "displayName": "Park-photo",
+    "name": "park-photo"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "orcs": {
+      "type": "integer"
+    },
+    "orcsSiteNumber": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "caption": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "dateTaken": {
+      "type": "date"
+    },
+    "photographer": {
+      "type": "string"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "imageUrl": {
+      "type": "string"
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "sortOrder": {
+      "type": "integer",
+      "required": true,
+      "default": 100
+    }
+  }
+}

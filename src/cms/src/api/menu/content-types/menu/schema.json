@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "menus",
+  "info": {
+    "singularName": "menu",
+    "pluralName": "menus",
+    "displayName": "Menu",
+    "name": "menu"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "unique": false
+    },
+    "url": {
+      "type": "string",
+      "unique": false
+    },
+    "pageType": {
+      "type": "enumeration",
+      "enum": [
+        "Landing",
+        "Unique",
+        "Content",
+        "Form"
+      ]
+    },
+    "order": {
+      "type": "integer",
+      "min": 1,
+      "required": true
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::menu.menu",
+      "inversedBy": "children"
+    },
+    "children": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::menu.menu",
+      "mappedBy": "parent"
+    },
+    "show": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

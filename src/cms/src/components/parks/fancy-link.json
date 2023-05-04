@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_parks_fancy_links",
+  "info": {
+    "icon": "link",
+    "displayName": "FancyLink"
+  },
+  "options": {},
+  "attributes": {
+    "TextToLink": {
+      "type": "string"
+    },
+    "URL": {
+      "type": "string"
+    }
+  }
+}

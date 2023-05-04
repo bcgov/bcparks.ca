@@ -35,7 +35,6 @@ export function PrivateRoute({ component: Component, roles, props, ...rest }) {
       />
     );
   }
-
   return (
     <div>
       {!isLoading && (

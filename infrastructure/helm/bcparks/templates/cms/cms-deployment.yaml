@@ -110,6 +110,8 @@ spec:
               value: {{ .Values.cms.env.cacheTtl | quote }}
             - name: STRAPI_CACHE_TIMEOUT
               value: {{ .Values.cms.env.cacheTimeout | quote }}
+            - name: STRAPI_ADMIN_ENVIRONMENT
+              value: {{ .Values.cms.env.environment }}
             - name: REDIS_HOST
               value: {{ .Release.Name }}-{{ .Values.redis.componentName }}
             - name: REDIS_PORT

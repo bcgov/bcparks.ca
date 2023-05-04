@@ -170,7 +170,7 @@ const setAreaValues = (
           selSites
         );
       } else if (a.type === "site") {
-        selProtectedAreas.push(a.obj.protectedArea.id);
+        selProtectedAreas.push(a.obj.attributes.protectedArea.data.id);
       } else if (a.type === "region" || a.type === "section") {
         addProtectedAreasFromArea(
           a.obj,
@@ -216,7 +216,7 @@ const removeAreaValues = (
           updatedSites = response.updatedSites;
         } else if (a.type === "site") {
           updatedProtectedAreas = updatedProtectedAreas.filter(
-            (p) => a.obj.protectedArea.id !== p.value
+            (p) => a.obj.attributes.protectedArea.id !== p.value
           );
         } else if (a.type === "region" || a.type === "section") {
           let response = removeProtectedAreasFromArea(
@@ -342,11 +342,11 @@ export function calculateIsStatHoliday(
   if (!cmsData.statutoryHolidays) {
     Promise.resolve(
       cmsAxios
-        .get(`statutory-holidays`, {
-          headers: { Authorization: `Bearer ${token}` },
+        .get(`statutory-holiday`, {
+          headers: { Authorization: `Bearer ${token}` }
         })
         .then((res) => {
-          const statData = res.data.data;
+          const statData = res.data.data.data;
           if (
             !statData ||
             Object.keys(statData).length === 0 ||
@@ -365,15 +365,14 @@ export function calculateIsStatHoliday(
           axios
             .get(config.REACT_APP_STAT_HOLIDAY_API)
             .then((res) => {
-              const statInfo = { data: res.data };
               setIsStatHoliday(calculateStatHoliday(res.data));
               const data = cmsData;
               data.statutoryHolidays = res.data;
               setCmsData(data);
               // Write Statutory Data to CMS cache
               cmsAxios
-                .put(`statutory-holidays`, statInfo, {
-                  headers: { Authorization: `Bearer ${token}` },
+                .put(`statutory-holiday`, res.data, {
+                  headers: { Authorization: `Bearer ${token}` }
                 })
                 .catch((error) => {
                   console.log(

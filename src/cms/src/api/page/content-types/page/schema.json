@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
+    "name": "page",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Slug": {
+      "type": "string"
+    },
+    "Title": {
+      "type": "string",
+      "required": false
+    },
+    "Template": {
+      "type": "enumeration",
+      "enum": [
+        "staticLanding1",
+        "staticContent1"
+      ]
+    },
+    "Content": {
+      "type": "dynamiczone",
+      "components": [
+        "parks.html-area",
+        "parks.seo",
+        "parks.link-card",
+        "parks.page-section",
+        "parks.page-header",
+        "parks.card-set"
+      ]
+    }
+  }
+}

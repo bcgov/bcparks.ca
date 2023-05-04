@@ -1,0 +1,394 @@
+@import "variables.scss";
+@import url("https://js.arcgis.com/4.10/esri/css/main.css");
+// @import url("https://governmentofbc.maps.arcgis.com/apps/webappviewer/jimu.js/css/jimu-theme.css");
+
+.parks-container {
+  //Added 50px extra to compensate padding
+  max-width: 1370px !important;
+  padding: 0px !important;
+}
+
+.anchor-linkx {
+  margin-top: -90px;
+  padding-top: 90px;
+}
+
+#park-activity-container .MuiAccordion-root,
+#park-facility-container .MuiAccordion-root {
+  background-color: $colorGrey;
+}
+
+.park-info-header {
+  padding-left: 15px;
+}
+
+.park-info-header a {
+  color: $colorBlue;
+  display: inline-block;
+  padding: 0px 0px 0px 8px;
+}
+
+.park-info-header .MuiCardHeader-title {
+  font-size: 0.875rem !important;
+}
+
+.park-info-header-flex {
+  display: flex;
+  margin-top: 5px;
+}
+
+#park-menu-container a {
+  color: $colorBlue;
+  padding: 5px 0px 5px 8px;
+  border-left: 3px solid transparent;
+}
+
+#park-header-container {
+  padding-top: 20px;
+}
+
+#park-header-container a {
+  text-decoration: none;
+}
+
+#park-header-container a:hover {
+  text-decoration: underline;
+}
+
+#park-menu-container .isCurrent a {
+  font-weight: bold;
+  box-sizing: border-box;
+  padding: 0px 0px 0px 8px;
+  border-left-color: $colorBlue;
+}
+
+.park-status-top-grid {
+  background-color: "#e1ecf4";
+}
+.park-details-shaded {
+  background-color: $colorGrey !important;
+}
+
+.parks-container {
+  .MuiButton-root,
+  .MuiLink-root {
+    border: none !important;
+  }
+  a {
+    color: $colorBlue;
+    &:hover {
+      color: $colorGold;
+    }
+    &:focus-visible {
+      outline: -webkit-focus-ring-color auto 1px;
+    }
+  }
+}
+
+.yellow-alert {
+  background-color: #fff3d6 !important;
+}
+
+.red-alert {
+  background-color: #fbe5e6 !important;
+}
+
+.blue-alert {
+  background-color: $colorGrey !important;
+}
+
+.nested-list,
+.nested-list .MuiTypography-root {
+  padding-left: 20px;
+  font-size: smaller !important;
+  list-style-type: circle !important;
+}
+
+.blue-button {
+  color: $colorWhite !important;
+  background-color: $colorBlue !important;
+  min-width: 180px !important;
+  white-space: nowrap;
+  height: 50px;
+  font-size: 1rem;
+}
+
+.yellow-button {
+  color: $colorBlue !important;
+  background-color: $colorGold !important;
+  min-width: 180px !important;
+  white-space: nowrap;
+  height: 50px;
+  font-size: 1rem;
+}
+
+.blue-button:hover,
+.yellow-button:hover {
+  background-color: transparent !important;
+  border: 2px solid $colorGold !important;
+  color: $colorBlue !important;
+  text-decoration: underline;
+}
+
+.raw-html-content {
+  max-width: 100%;
+}
+
+.park-page-footer {
+  z-index: 10 !important;
+}
+
+// TODO: destroy this .grey-background thing up with fire
+.grey-background {
+  background-color: $colorGrey !important;
+}
+
+.grey-background .MuiPaper-root,
+.grey-background .MuiBox-root {
+  background-color: transparent;
+
+  .red-alert {
+    background-color: $colorGrey !important;
+  }
+
+  &.bc-bg-yellow {
+    background-color: $colorGold;
+  }
+}
+
+.park-overview-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 2px !important;
+}
+
+#park-facility-container .MuiAccordion-root,
+#park-activity-container .MuiAccordion-root,
+#park-camping-details-container .MuiAccordion-root {
+  background-color: $colorWhite !important;
+  border: 1px solid $colorBlueLight !important;
+}
+
+.park-info-container .MuiAccordionDetails-root {
+  padding-left: 25px !important;
+  padding-right: 25px !important;
+  padding-bottom: 15px !important;
+}
+
+#park-facility-container .MuiAccordion-root:hover,
+#park-activity-container .MuiAccordion-root:hover,
+#park-camping-details-container .MuiAccordion-root:hover {
+  border: 1px solid $colorGold !important;
+}
+
+.access-icon {
+  color: $colorBlue;
+  padding: 5px 0px 5px 8px;
+}
+
+.access-icon .MuiCardHeader-title {
+  padding-left: 8px;
+}
+
+#park-header-container .MuiCardHeader-avatar {
+  margin-right: 5px !important;
+}
+
+#park-header-container .MuiCardHeader-root {
+  padding: 0px;
+}
+
+.park-info-container {
+  padding: 0px 25px !important;
+
+  @media (max-width: $mediumBreakpoint) {
+    margin-bottom: 25px;
+    margin-top: 25px;
+  }
+}
+
+.gallery-container .park-info-container {
+  padding: 0px !important;
+  margin: 0px;
+  @media (min-width: $mediumBreakpoint) {
+    padding: 0px 25px !important;
+  }
+  .MuiGrid-spacing-xs-1 {
+    width: 100%;
+    margin: 0;
+    @media (min-width: $mediumBreakpoint) {
+      width: calc(100% + 8px);
+      margin: -4;
+    }
+    > .MuiGrid-item {
+      padding: 0;
+      @media (min-width: $mediumBreakpoint) {
+        padding: 4px;
+      }
+    }
+  }
+}
+
+.park-info-container .MuiAccordionSummary-root {
+  padding: 0px 25px !important;
+  font-size: 1rem !important;
+}
+
+.park-info-container .MuiAccordionSummary-root {
+  color: $colorBlue;
+}
+
+.park-info-container .MuiPaper-elevation1 {
+  box-shadow: unset !important;
+}
+
+.show-photos {
+  text-align: right;
+  margin-top: -70px;
+  margin-right: 30px;
+  position: absolute;
+  z-index: 100;
+  right: 0;
+}
+
+.show-photos-5 {
+  text-align: right;
+  margin-top: 340px;
+  margin-right: 30px;
+  position: absolute;
+  z-index: 100;
+  right: 0;
+}
+
+.show-photo-text {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: $colorWhite;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.show-photo-button {
+  position: relative;
+}
+
+.photo-icon {
+  padding-right: 5px;
+  width: 32px;
+}
+
+.hide-photo {
+  display: none;
+}
+
+.park-photo-container {
+  padding: 0px !important;
+}
+
+.advisory-content,
+.full-width {
+  width: 100% !important;
+}
+
+.no-padding {
+  padding: 0px;
+}
+
+.flex-display {
+  display: flex;
+}
+
+.ml10 {
+  margin-left: 10px !important;
+}
+
+.ml-auto {
+  margin-left: auto !important;
+}
+
+#park-menu-mobile {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0px;
+  z-index: 1000;
+}
+
+.park-menu-mobile {
+  border: 1px solid $colorBlue;
+  border-radius: 5px;
+  padding: 3px 0px !important;
+  margin-top: 10px !important;
+  color: $colorBlue !important;
+  background: $colorWhite;
+}
+
+#mapDiv {
+  padding: 0;
+  margin: 0;
+  height: 500px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.breadcrumb-text {
+  color: #313132 !important;
+}
+
+.MuiBreadcrumbs-separator {
+  color: #313132 !important;
+  font-size: 1.25rem !important;
+}
+
+.park-access {
+  display: flex;
+  align-items: center;
+  min-width: 210px !important;
+  &.campfire-ban {
+    min-width: 150px !important;
+  }
+}
+
+@media (max-width: $mediumBreakpoint) {
+  .park-info-header-flex {
+    display: block !important;
+  }
+  .park-info-header {
+    padding-left: 0px;
+    padding-top: 20px;
+  }
+  .park-overview-html {
+    div {
+      float: left !important;
+      margin: 0px !important; 
+    }
+    figure.media div {
+      float: none !important;
+    }
+  }
+  #park-advisory-details-container .MuiButtonBase-root {
+    padding: 0px !important;
+  }
+}
+
+.park-photo {
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+
+  img {
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    max-width: none;
+    object-fit: cover;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  &--small {
+    height: 196px;
+  }
+}

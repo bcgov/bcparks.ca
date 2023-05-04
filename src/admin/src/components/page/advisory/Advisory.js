@@ -97,7 +97,7 @@ export default function Advisory({
   const [notes, setNotes] = useState("");
   const [submittedBy, setSubmittedBy] = useState("");
   const [listingRank, setListingRank] = useState("");
-  const [toError, setToError] = useState(false);
+  const [ toError, setToError] = useState(false);
   const [toDashboard, setToDashboard] = useState(false);
   const { keycloak, initialized } = useKeycloak();
   const [isLoadingPage, setIsLoadingPage] = useState(true);
@@ -147,14 +147,14 @@ export default function Advisory({
         setAdvisoryId(id);
         cmsAxios
           .get(
-            `public-advisory-audits/${id}?_publicationState=preview`,
+            `public-advisory-audits/${id}?_publicationState=preview&populate=*`,
             {
-              headers: { Authorization: `Bearer ${keycloak.token}` },
+              headers: { Authorization: `Bearer ${keycloak.token}` }
             }
           )
           .then((res) => {
             linksRef.current = [];
-            const advisoryData = res.data;
+            const advisoryData = res.data.data;
             setAdvisoryNumber(advisoryData.advisoryNumber);
             setRevisionNumber(advisoryData.revisionNumber);
             setHeadline(advisoryData.title || "");
@@ -308,7 +308,7 @@ export default function Advisory({
               setExistingFireZones([...selFireZones]);
             }
             const links = advisoryData.links;
-            if (links) {
+            if (links.length > 0) {
               links.forEach((l) => {
                 linksRef.current = [
                   ...linksRef.current,
@@ -445,7 +445,7 @@ export default function Advisory({
           setManagementAreas([...managementAreas]);
           const siteData = res[4];
           const sites = siteData.map((s) => ({
-            label: s?.protectedArea?.protectedAreaName + ": " + s.siteName,
+            label: s?.attributes.protectedArea?.data.attributes.protectedAreaName + ": " + s.attributes.siteName,
             value: s.id,
             type: "site",
             obj: s,
@@ -672,13 +672,15 @@ export default function Advisory({
       return res;
     } else {
       const linkRequest = {
-        title: link.title,
-        url: link.url.startsWith("http") ? link.url : "https://" + link.url,
-        type: link.type,
-      };
+        data: {
+          title: link.title,
+          url: link.url.startsWith("http") ? link.url : "https://" + link.url,
+          type: link.type,
+        }
+      }
       const res = await cmsAxios
         .post(`links`, linkRequest, {
-          headers: { Authorization: `Bearer ${keycloak.token}` },
+          headers: { Authorization: `Bearer ${keycloak.token}` }
         })
         .catch((error) => {
           console.log("error occurred", error);
@@ -688,7 +690,7 @@ export default function Advisory({
             message: "Could not process advisory update",
           });
         });
-      return res.data;
+      return res.data.data;
     }
   };
 
@@ -698,13 +700,15 @@ export default function Advisory({
       return res;
     } else {
       const linkRequest = {
-        title: link.title,
-        url: link.url.startsWith("http") ? link.url : "https://" + link.url,
-        type: link.type,
+        data: {
+          title: link.title,
+          url: link.url.startsWith("http") ? link.url : "https://" + link.url,
+          type: link.type,
+        }
       };
       const res = await cmsAxios
         .put(`links/${id}`, linkRequest, {
-          headers: { Authorization: `Bearer ${keycloak.token}` },
+          headers: { Authorization: `Bearer ${keycloak.token}` }
         })
         .catch((error) => {
           console.log("error occurred", error);
@@ -789,6 +793,7 @@ export default function Advisory({
           title: headline,
           description: description,
           dcTicketNumber: ticketNumber,
+          revisionNumber: revisionNumber,
           isSafetyRelated: isSafetyRelated,
           listingRank: parseInt(listingRank),
           note: notes,
@@ -821,12 +826,12 @@ export default function Advisory({
           created_by: keycloak.tokenParsed.name,
         };
 
-        cmsAxios
-          .post(`public-advisory-audits`, newAdvisory, {
-            headers: { Authorization: `Bearer ${keycloak.token}` },
+        cmsAxios // -audit OR -audits
+          .post(`public-advisory-audits`, { data: newAdvisory }, {
+            headers: { Authorization: `Bearer ${keycloak.token}` }
           })
           .then((res) => {
-            setAdvisoryId(res.data.id);
+            setAdvisoryId(res.data.data.id);
             setIsSubmitting(false);
             setIsSavingDraft(false);
             setIsConfirmation(true);
@@ -909,6 +914,7 @@ export default function Advisory({
             title: headline,
             description: description,
             dcTicketNumber: ticketNumber,
+            revisionNumber: revisionNumber,
             isSafetyRelated: isSafetyRelated,
             listingRank: parseInt(listingRank),
             note: notes,
@@ -938,17 +944,16 @@ export default function Advisory({
             isEffectiveDateDisplayed: displayStartDate,
             isEndDateDisplayed: displayEndDate,
             isUpdatedDateDisplayed: displayUpdatedDate,
-            published_at: new Date(),
-            isLatestRevision: true,
-            updated_by: keycloak.tokenParsed.name,
+            publishedAt: new Date(),
+            isLatestRevision: true
           };
 
           cmsAxios
-            .put(`public-advisory-audits/${id}`, updatedAdvisory, {
-              headers: { Authorization: `Bearer ${keycloak.token}` },
+            .put(`public-advisory-audits/${id}`, { data: updatedAdvisory }, {
+              headers: { Authorization: `Bearer ${keycloak.token}` }
             })
             .then((res) => {
-              setAdvisoryId(res.data.id);
+              setAdvisoryId(res.data.data.id);
               setIsSubmitting(false);
               setIsSavingDraft(false);
               setIsConfirmation(true);
@@ -975,12 +980,14 @@ export default function Advisory({
 
   const preSaveMediaLink = async (link) => {
     const linkRequest = {
-      type: link.type,
-      title: link.title,
+      data: {
+        type: link.type,
+        title: link.title,
+      }
     };
     const res = await cmsAxios
       .post(`links`, linkRequest, {
-        headers: { Authorization: `Bearer ${keycloak.token}` },
+        headers: { Authorization: `Bearer ${keycloak.token}` }
       })
       .catch((error) => {
         console.log("error occurred", error);
@@ -990,7 +997,7 @@ export default function Advisory({
           message: "Could not save attachments",
         });
       });
-    return res.data.id;
+    return res.data.data.id;
   };
 
   const updateMediaLink = async (media, id, link) => {
@@ -1000,14 +1007,16 @@ export default function Advisory({
     const getUrl = path?.length ? media.url : config.REACT_APP_CMS_BASE_URL + media.url 
     
     const linkRequest = {
-      title: link.title ? link.title : media.name,
-      type: link.type,
-      url: getUrl,
+      data: {
+        title: link.title ? link.title : media.name,
+        type: link.type,
+        url: getUrl,
+      }
     };
 
     const res = await cmsAxios
       .put(`links/${id}`, linkRequest, {
-        headers: { Authorization: `Bearer ${keycloak.token}` },
+        headers: { Authorization: `Bearer ${keycloak.token}` }
       })
       .catch((error) => {
         console.log("error occurred", error);
@@ -1017,7 +1026,7 @@ export default function Advisory({
           message: "Could not save attachments",
         });
       });
-    return res.data;
+    return res.data.data;
   };
 
   const saveMediaAttachment = async (id, link) => {
@@ -1027,18 +1036,20 @@ export default function Advisory({
   };
 
   const uploadMedia = async (id, file) => {
+    const data = {};
     const fileForm = new FormData();
-    fileForm.append("refId", id);
-    fileForm.append("ref", "link");
-    fileForm.append("field", "file");
+    data["refId"] = id;
+    data["ref"] = "link";
+    data["field"] = "file";
     fileForm.append("files", file);
+    fileForm.append("data", JSON.stringify(data));
 
     const res = await cmsAxios
-      .post(`upload`, fileForm, {
+      .post(`upload`, fileForm, { // or { 'data': fileForm }
         headers: {
           "Content-Type": "multipart/form-data",
-         // Authorization: `Bearer ${keycloak.token}`,
-        },
+          Authorization: `Bearer ${keycloak.token}`,
+        }
       })
       .catch((error) => {
         console.log("error occurred", error);
@@ -1071,6 +1082,7 @@ export default function Advisory({
     );
   }
 
+  // TODO: Re-enable error redirection
   if (toError) {
     return <Redirect push to="/bcparks/error" />;
   }

@@ -12,17 +12,27 @@ The `install` command can be used when deploying to a namespace for the very fir
 
 Run the following commands from the `infrastructure/helm/bcparks` directory.
 
+Objects prefixed with `main-` in OpenShift are from the main branch in GitHub and objects prefixed with `develop-` are from the develop branch (alpha environments). There is no `develop-` for prod because there is no alpha environment for prod.
+
 ### Dev
 
-`helm -n 61d198-dev install bcparks . -f values-dev.yaml`
+`helm -n 61d198-dev install main . -f values-dev.yaml`
 
 ### Test
 
-`helm -n 61d198-test install bcparks . -f values-test.yaml`
+`helm -n 61d198-test install main . -f values-test.yaml`
 
 ### Prod
 
-`helm -n 61d198-prod install bcparks . -f values-prod.yaml`
+`helm -n 61d198-prod install main . -f values-prod.yaml`
+
+### Alpha Dev (develop branch)
+
+`helm -n 61d198-dev install develop . -f values-alpha-dev.yaml`
+
+### Alpha Test (develop branch)
+
+`helm -n 61d198-test install develop . -f values-alpha-test.yaml`
 
 ## Upgrading
 
@@ -32,15 +42,23 @@ Run the following commands from the `infrastructure/helm/bcparks` directory.
 
 ### Dev
 
-`helm -n 61d198-dev upgrade bcparks . -f values-dev.yaml`
+`helm -n 61d198-dev upgrade main . -f values-dev.yaml`
 
 ### Test
 
-`helm -n 61d198-test upgrade bcparks . -f values-test.yaml`
+`helm -n 61d198-test upgrade main . -f values-test.yaml`
 
 ### Prod
 
-`helm -n 61d198-prod upgrade bcparks . -f values-prod.yaml`
+`helm -n 61d198-prod upgrade main . -f values-prod.yaml`
+
+### Alpha Dev (develop branch)
+
+`helm -n 61d198-dev upgrade develop . -f values-alpha-dev.yaml`
+
+### Alpha Test (develop branch)
+
+`helm -n 61d198-test upgrade develop . -f values-alpha-test.yaml`
 
 ## Teardown
 
@@ -50,12 +68,20 @@ Run the following commands from the `infrastructure/helm/bcparks` directory.
 
 ### Dev
 
-`helm -n 61d198-dev uninstall bcparks`
+`helm -n 61d198-dev uninstall main`
 
 ### Test
 
-`helm -n 61d198-test uninstall bcparks`
+`helm -n 61d198-test uninstall main`
 
 ### Prod
 
-`helm -n 61d198-prod uninstall bcparks`
+`helm -n 61d198-prod uninstall main`
+
+### Alpha Dev (develop branch)
+
+`helm -n 61d198-dev uninstall develop`
+
+### Alpha Test (develop branch)
+
+`helm -n 61d198-test uninstall develop`

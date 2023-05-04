@@ -1,25 +1,12 @@
-const fs = require("fs");
-const { setupStrapi } = require("./helpers/strapi");
+const fs = require('fs');
+const { setupStrapi, cleanupStrapi } = require("./helpers/strapi");
 
-/** this code is called once before any test is called */
 beforeAll(async () => {
-  await setupStrapi(); // singleton so it can be called many times
+  await setupStrapi();
 });
 
-/** this code is called once before all the tested are finished */
 afterAll(async () => {
-  const dbSettings = strapi.config.get("database.connections.default.settings");
-
-  //close server to release the db-file
-  await strapi.destroy();
-
-  //delete test database after all tests
-  if (dbSettings && dbSettings.filename) {
-    const tmpDbFile = `${__dirname}/../${dbSettings.filename}`;
-    if (fs.existsSync(tmpDbFile)) {
-      fs.unlinkSync(tmpDbFile);
-    }
-  }
+  await cleanupStrapi();
 });
 
 it("strapi is defined", () => {

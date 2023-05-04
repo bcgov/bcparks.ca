@@ -98,7 +98,7 @@ export default function ParkSearch({
       }
       if (region && !isEmpty(region)) {
         const filteredSections = sections.filter(
-          (s) => s.obj.region.id === region.value
+          (s) => s.obj.region?.id === region.value
         );
         setFilteredSections([...filteredSections]);
         if (!section) {
@@ -200,7 +200,7 @@ export default function ParkSearch({
 
   const filterRegion = (event) => {
     if (event) {
-      const region = regions.filter((r) => r.value === event.obj.region.id);
+      const region = regions.filter((r) => r.value === event.obj.region?.id);
       if (region.length > 0) {
         setRegion(region[0]);
       }

@@ -1,0 +1,65 @@
+cluster:
+  ssoAuthUrl: https://test.loginproxy.gov.bc.ca/auth
+
+images:
+  strapi:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/strapi-develop  
+    tag: test
+  admin:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/admin-develop
+    tag: test
+  public:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/public-develop
+    tag: test
+  maintenance:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/maintenance-develop
+    tag: test
+
+cms:
+  resources:
+    limits:
+      cpu: "1"
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  env:
+    environment: alpha-test
+    externalUrl: https://alpha-test-cms.bcparks.ca
+
+  hpa:
+    minReplicas: 1
+    maxReplicas: 1
+
+admin:
+  env:
+    externalUrl: https://alpha-test-staff.bcparks.ca
+
+patroni:
+  replicas: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
+
+  pvc:
+    size: 10Gi
+
+backup:
+  enabled: true
+
+  pvc:
+    size: 10Gi
+
+  enironment:
+    friendlyName: bcparks.ca CMS Postgres Backup [test]
+    name: 61d198-test
+
+public:
+  hpa:
+    minReplicas: 1
+    maxReplicas: 1

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { cmsAxios } from "../../../axios_config";
 import { Redirect, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -23,6 +23,7 @@ import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import { SvgIcon } from "@material-ui/core";
 import { decode } from "he";
+import qs from 'qs';
 
 import {
   getRegions,
@@ -31,11 +32,38 @@ import {
   getAdvisoryStatuses,
 } from "../../../utils/CmsDataUtil";
 
+const query = qs.stringify({
+  fields: ['advisoryNumber', 'advisoryDate', 'title', 'effectiveDate', 'endDate', 'expiryDate'],
+  populate: {
+    protectedAreas: {
+      fields: ['orcs', 'protectedAreaName'],
+    },
+    advisoryStatus: {
+      fields: ['advisoryStatus', 'code'],
+    },
+    eventType: {
+      fields: ['eventType'],
+    },
+    urgency: {
+      fields: ['urgency'],
+    },
+    regions: {
+      fields: ['regionName'],
+    }
+  },
+  filters: { isLatestRevision: true },
+  pagination: {
+    limit: 1500
+  },
+  sort: ['advisoryDate:DESC']
+}, {
+  encodeValuesOnly: true,
+});
+
 export default function AdvisoryDashboard({
   page: { setError, cmsData, setCmsData },
 }) {
   const history = useHistory();
-  const isMounted = useRef(true);
   const { keycloak, initialized } = useKeycloak();
   const [toError, setToError] = useState(false);
   const [toCreate, setToCreate] = useState(false);
@@ -55,13 +83,6 @@ export default function AdvisoryDashboard({
   const [originalParkNames, setOriginalParkNames] = useState([]);
 
   if (!keycloak && !initialized) setToError(true);
-
-  useEffect(() => {
-    isMounted.current = true;
-    return () => {
-      isMounted.current = false;
-    };
-  }, [isMounted]);
 
   useEffect(() => {
     filterAdvisoriesByRegionId(selectedRegionId);
@@ -101,6 +122,8 @@ export default function AdvisoryDashboard({
   /*-------------------------------------------------------------------------*/
 
   useEffect(() => {
+    let isMounted = true;
+  
     const fetchData = async () => {
       setIsLoading(true);
       if (initialized && keycloak) {
@@ -108,7 +131,11 @@ export default function AdvisoryDashboard({
           getRegions(cmsData, setCmsData),
           getManagementAreas(cmsData, setCmsData),
           getParkNames(cmsData, setCmsData),
-          cmsAxios.get(`public-advisory-audits?_limit=1500&_sort=advisoryDate:DESC`, { headers: { Authorization: `Bearer ${keycloak.token}` } })
+          cmsAxios.get(`public-advisory-audits?${query}`, {
+            headers: {
+              Authorization: `Bearer ${keycloak.token}`
+            }
+          })
         ])
         .catch(() => {
           setError({ status: 500, message: "Error loading data" });
@@ -117,26 +144,23 @@ export default function AdvisoryDashboard({
         });
         // Regions
         const regionsData = res[0];
-
         // Management Areas
         const managementAreasData = res[1];
-
         // Protected Areas
         const parkNamesData = res[2];
-
+        const publicAdvisories = res[3]?.data.data;
         // Public Advisories
         const regionParksCount = managementAreasData.reduce((region, item) => {
-          region[item.region.id] = (region[item.region.id] || 0) + item.protectedAreas.length;
+          region[item.region?.id] = (region[item.region?.id] || 0) + item.protectedAreas?.length;
           return region;
         }, {});
 
-        const publicAdvisories = res[3].data;
         const today = moment(new Date()).tz("America/Vancouver").toISOString();
         const updatedPublicAdvisories = publicAdvisories.map((publicAdvisory) => {
           publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
           publicAdvisory.associatedParks = publicAdvisory.protectedAreas.map((p) => p.protectedAreaName).join(", ")
             + publicAdvisory.regions.map((r) => r.regionName).join(", ");
-    
+
           let regionsWithParkCount = [];
           if (publicAdvisory?.regions?.length > 0) {
             publicAdvisory.regions.forEach((region) => {
@@ -147,17 +171,14 @@ export default function AdvisoryDashboard({
           }
           return publicAdvisory;
         });
-
-        // Published Advisories
-        getCurrentPublishedAdvisories(cmsData, setCmsData);
-
-        if (isMounted.current) {
+ 
+        if (isMounted) {
+          // Published Advisories
+          getCurrentPublishedAdvisories(cmsData, setCmsData);
           setRegions([...regionsData]);
           setManagementAreas([...managementAreasData]);
-
           setParkNames([...parkNamesData]);
           setOriginalParkNames([...parkNamesData]);
-
           setPublicAdvisories(updatedPublicAdvisories);
           setOriginalPublicAdvisories(updatedPublicAdvisories);
 
@@ -185,18 +206,22 @@ export default function AdvisoryDashboard({
       setIsLoading(false);
     }
     fetchData();
+
+    return () => {
+      isMounted = false;
+    }
   }, [
     initialized,
     keycloak,
     cmsData,
     setCmsData,
-    setError
+    setError,
   ]);
 
   const removeDuplicatesById = (arr) => {
     return arr.filter((obj, index, self) => index === self.findIndex((o) => o.id === obj.id));
   };
-  
+
   const filterAdvisoriesByParkId = (pId) => {
     const advisories = selectedRegionId ? regionalPublicAdvisories : originalPublicAdvisories;
 
@@ -230,7 +255,7 @@ export default function AdvisoryDashboard({
 
       // Remove duplicates
       const filteredProtectedAreas = removeDuplicatesById(list);
-      
+
       // Filter advisories in grid
       const filteredPublicAdvsories = [];
 
@@ -262,26 +287,28 @@ export default function AdvisoryDashboard({
     }
   };
 
-  const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
+
+const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
     const advisoryStatuses = await getAdvisoryStatuses(cmsData, setCmsData);
     if (advisoryStatuses) {
       const publishedStatus = advisoryStatuses.filter((as) => as.code === "PUB");
+
       if (publishedStatus?.length > 0) {
         const result = await cmsAxios
-          .get(`/public-advisories?_advisoryStatus=${publishedStatus[0].id}&_limit=-1`)
+          .get(`/public-advisories?_advisoryStatus=${publishedStatus[0].id}&sort=createdAt:DESC&populate=*`)
           .catch(() => {
             setHasErrors(true);
           });
 
         let publishedAdvisories = [];
-        if (result?.data?.length > 0) {
-          result.data.forEach((ad) => {
+        const res = result?.data?.data;
+
+        if (res.length > 0) {
+          res.forEach((ad) => {
             publishedAdvisories = [...publishedAdvisories, ad.advisoryNumber];
           });
         }
-        if (isMounted.current) {
-          setPublishedAdvisories([...publishedAdvisories]);
-        }
+        setPublishedAdvisories([...publishedAdvisories]);
       }
     }
   };
@@ -299,7 +326,7 @@ export default function AdvisoryDashboard({
       },
       cellStyle: (e, rowData) => {
         if (rowData.urgency !== null) {
-          switch (rowData.urgency.urgency.toLowerCase()) {
+          switch (rowData.urgency?.urgency?.toLowerCase()) {
             case "low":
               return {
                 borderLeft: "8px solid #06f542",
@@ -481,12 +508,12 @@ export default function AdvisoryDashboard({
       cellStyle: { width: 400 },
       render: (rowData) => {
         const displayCount = 3;
-        const regionsCount = rowData.regions.length;
+        const regionsCount = rowData.regions?.length;
         if (regionsCount > 0) {
-          let regions = rowData.regions.slice(0, displayCount);
+          let regions = rowData?.regions?.slice(0, displayCount);
           return (
             <div>
-              {regions.map((p, i) => (
+              {regions?.map((p, i) => (
                 <span key={i}>
                   {p.regionName} region
                   <Chip
@@ -564,8 +591,8 @@ export default function AdvisoryDashboard({
   if (toCreate) {
     return <Redirect to="/bcparks/create-advisory" />;
   }
-
   if (toError || hasErrors) {
+    console.log('toError || hasErrors', toError , hasErrors)
     return <Redirect push to="/bcparks/error" />;
   }
   
@@ -634,12 +661,13 @@ export default function AdvisoryDashboard({
           </div>
         </div>
       </div>
-      {!isLoading && (
+      {(
         <div
           className={styles.AdvisoryDashboard}
           data-testid="AdvisoryDashboard"
         >
           <br />
+
           <div className="container-fluid">
             <DataTable
               key={publicAdvisories.length}
@@ -652,7 +680,7 @@ export default function AdvisoryDashboard({
               onFilterChange={(filters) => {
                 const advisoryFilters = JSON.parse(localStorage.getItem('advisoryFilters'));
                 const arrFilters = filters.map((obj) => {
-                  return { 
+                  return {
                     fieldName: obj.column["field"],
                     fieldValue: obj.value,
                     type: 'table'

@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "management_areas",
+  "info": {
+    "singularName": "management-area",
+    "pluralName": "management-areas",
+    "displayName": "Management-area",
+    "name": "management-area"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "managementAreaNumber": {
+      "type": "integer",
+      "unique": true,
+      "required": true
+    },
+    "managementAreaName": {
+      "type": "string"
+    },
+    "section": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::section.section",
+      "inversedBy": "managementAreas"
+    },
+    "protectedAreas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "managementAreas"
+    },
+    "region": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::region.region",
+      "inversedBy": "managementAreas"
+    }
+  }
+}

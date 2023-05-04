@@ -1,5 +1,5 @@
 cluster:
-  ssoAuthUrl: https://oidc.gov.bc.ca/auth
+  ssoAuthUrl: https://loginproxy.gov.bc.ca/auth
 
 images:
   strapi:
@@ -8,7 +8,7 @@ images:
     tag: prod
   public:
     tag: prod
-  landing:
+  maintenance:
     tag: prod
 
 cms:
@@ -21,15 +21,23 @@ cms:
       memory: 500Mi
 
   env:
-    externalUrl: https://cms.bcparks.ca
+    environment: prod
+    ### TODO: revert after Strapi4 launch ###
+    externalUrl: https://main-cms-61d198-prod.apps.silver.devops.gov.bc.ca
+    # externalUrl: https://cms.bcparks.ca
 
   hpa:
-    minReplicas: 2
-    maxReplicas: 4
+    ### TODO: revert after Strapi4 launch ###
+    minReplicas: 1
+    maxReplicas: 1
+    #minReplicas: 2
+    #maxReplicas: 4
 
 admin:
   env:
-    externalUrl: https://staff.bcparks.ca
+    ### TODO: revert after Strapi4 launch ###
+    externalUrl: https://main-admin-61d198-prod.apps.silver.devops.gov.bc.ca
+    # externalUrl: https://staff.bcparks.ca
 
 patroni:
   resources:
@@ -39,6 +47,8 @@ patroni:
     requests:
       cpu: 250m
       memory: 250Mi
+  ### TODO: increase to 3 after Strapi4 launch ###
+  replicas: 1
 
   pvc:
     size: 10Gi
@@ -55,5 +65,8 @@ backup:
 
 public:
   hpa:
-    minReplicas: 2
-    maxReplicas: 4
+    ### TODO: revert after Strapi4 launch ###
+    minReplicas: 1
+    maxReplicas: 2
+    # minReplicas: 2
+    # maxReplicas: 4

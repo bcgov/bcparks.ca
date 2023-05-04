@@ -36,10 +36,10 @@ export default function AdvisorySummary({
   const [currentSiteUrls, setCurrentSiteUrls] = useState("");
 
   useEffect(() => {
-    if (!isLoadingPage && advisory) {
-      if (advisory.advisoryStatus.code !== "PUB") {
+    if (!isLoadingPage) {
+      if (showOriginalAdvisory) {
         Promise.all([
-          cmsAxios.get(`/public-advisories/${advisory.advisoryNumber}`),
+          cmsAxios.get(`/public-advisories/${advisory.advisoryNumber}?populate=*`),
           getLinkTypes(cmsData, setCmsData),
         ])
           .then((res) => {
@@ -55,7 +55,7 @@ export default function AdvisorySummary({
               if (p.url) {
                 const url = isAdvisoryPublished
                   ? p.url
-                  : p.url.replace("bcparks", "wwwt.bcparks");
+                  : p.url.replace("bcparks", "www.bcparks");
                 return parkUrlInfo.push(
                   "<a href='" + url + "'>" + p.protectedAreaName + "</a>"
                 );
@@ -71,7 +71,7 @@ export default function AdvisorySummary({
               if (s.url) {
                 const url = isAdvisoryPublished
                   ? s.url
-                  : s.url.replace("bcparks", "wwwt.bcparks");
+                  : s.url.replace("bcparks", "www.bcparks");
                 return siteUrlInfo.push(
                   "<a href='" + url + "'>" + s.siteName + "</a>"
                 );
@@ -103,15 +103,14 @@ export default function AdvisorySummary({
     if (parseInt(id)) {
       Promise.all([
         cmsAxios.get(
-          `public-advisory-audits/${id}?_publicationState=preview`,
+          `public-advisory-audits/${id}?_publicationState=preview&populate=*`,
           {
-            headers: { Authorization: `Bearer ${keycloak.token}` },
-          }
-        ),
+            headers: { Authorization: `Bearer ${keycloak.token}` }
+          }),
         getLinkTypes(cmsData, setCmsData),
       ])
         .then((res) => {
-          const advisoryData = res[0].data;
+          const advisoryData = res[0].data.data;
           advisoryData.linkTypes = res[1];
           setAdvisory(advisoryData);
           const parkUrlInfo = [];
@@ -122,7 +121,7 @@ export default function AdvisorySummary({
             if (p.url) {
               const url = isAdvisoryPublished
                 ? p.url
-                : p.url.replace("bcparks", "wwwt.bcparks");
+                : p.url.replace("bcparks", "www.bcparks");
               return parkUrlInfo.push(
                 "<a href='" + url + "'>" + p.protectedAreaName + "</a>"
               );
@@ -139,7 +138,7 @@ export default function AdvisorySummary({
             if (s.url) {
               const url = isAdvisoryPublished
                 ? s.url
-                : s.url.replace("bcparks", "wwwt.bcparks");
+                : s.url.replace("bcparks", "www.bcparks");
               return siteUrlInfo.push(
                 "<a href='" + url + "'>" + s.siteName + "</a>"
               );

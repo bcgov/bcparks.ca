@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "links",
+  "info": {
+    "singularName": "link",
+    "pluralName": "links",
+    "displayName": "Link",
+    "name": "link"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::link-type.link-type"
+    },
+    "file": {
+      "type": "media",
+      "allowedTypes": [
+        "images",
+        "files"
+      ],
+      "multiple": false,
+      "required": false
+    },
+    "publicAdvisoryAudit": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::public-advisory-audit.public-advisory-audit",
+      "inversedBy": "links"
+    },
+    "publicAdvisory": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::public-advisory.public-advisory",
+      "inversedBy": "links"
+    }
+  }
+}

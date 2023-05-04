@@ -16,9 +16,16 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: "14"
+          node-version: "18"
 
       - run: cd src/cms
+
+      - name: Set env
+        run: |
+          echo "APP_KEYS=unit,test,keys" >> $GITHUB_ENV
+          echo "JWT_SECRET=secret" >> $GITHUB_ENV
+          echo "API_TOKEN_SALT=salt" >> $GITHUB_ENV
+          echo "ADMIN_JWT_SECRET=secret" >> $GITHUB_ENV
 
       - run: yarn install
         working-directory: src/cms
@@ -33,10 +40,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: "14"
+          node-version: "18"
 
       - run: yarn install
-        working-directory: src/staging
+        working-directory: src/gatsby
 
       - run: yarn test
-        working-directory: src/staging
+        working-directory: src/gatsby

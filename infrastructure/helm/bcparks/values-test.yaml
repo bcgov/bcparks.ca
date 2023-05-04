@@ -1,5 +1,5 @@
 cluster:
-  ssoAuthUrl: https://test.oidc.gov.bc.ca/auth
+  ssoAuthUrl: https://test.loginproxy.gov.bc.ca/auth
 
 images:
   strapi:
@@ -8,7 +8,7 @@ images:
     tag: test
   public:
     tag: test
-  landing:
+  maintenance:
     tag: test
 
 cms:
@@ -21,11 +21,15 @@ cms:
       memory: 250Mi
 
   env:
+    environment: test
     externalUrl: https://test-cms.bcparks.ca
 
   hpa:
-    minReplicas: 2
-    maxReplicas: 4
+    ### TODO: revert after Strapi4 launch ###
+    minReplicas: 1
+    maxReplicas: 1
+    #minReplicas: 2
+    #maxReplicas: 4
 
 admin:
   env:
@@ -40,14 +44,20 @@ patroni:
       cpu: 250m
       memory: 250Mi
 
+  replicas: 1
+
   pvc:
-    size: 10Gi
+    ### TODO: increase after Strapi4 launch ###
+    size: 5Gi
+    # size: 10Gi
 
 backup:
   enabled: true
 
   pvc:
-    size: 10Gi
+    ### TODO: increase after Strapi4 launch ###
+    size: 5Gi
+    # size: 10Gi
 
   enironment:
     friendlyName: bcparks.ca CMS Postgres Backup [test]
@@ -55,5 +65,8 @@ backup:
 
 public:
   hpa:
+    ### TODO: revert after Strapi4 launch ###
     minReplicas: 1
-    maxReplicas: 3
+    maxReplicas: 1
+    # minReplicas: 1
+    # maxReplicas: 3

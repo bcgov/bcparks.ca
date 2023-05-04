@@ -111,7 +111,7 @@ export default function AdvisorySummaryView({
                   href={
                     isPublished
                       ? p.url
-                      : p.url.replace("bcparks", "wwwt.bcparks")
+                      : p.url.replace("bcparks", "www.bcparks")
                   }
                   rel="noreferrer"
                   target="_blank"
@@ -157,7 +157,7 @@ export default function AdvisorySummaryView({
                     href={
                       isPublished
                         ? s.url
-                        : s.url.replace("bcparks", "wwwt.bcparks")
+                        : s.url.replace("bcparks", "www.bcparks")
                     }
                     rel="noreferrer"
                     target="_blank"

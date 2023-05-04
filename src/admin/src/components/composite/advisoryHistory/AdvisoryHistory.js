@@ -14,10 +14,10 @@ export default function AdvisoryHistory({ data: { advisoryNumber } }) {
     if (initialized && keycloak && advisoryNumber) {
       cmsAxios
         .get(`public-advisory-audits/history/${advisoryNumber}`, {
-          headers: { Authorization: `Bearer ${keycloak.token}` },
+          headers: { Authorization: `Bearer ${keycloak.token}` }
         })
         .then((res) => {
-          const advisories = res.data;
+          const advisories = res.data;// for info: data obj - just once
           const advisoriesHistory = [];
           if (advisories && advisories.length > 0) {
             advisories.forEach((ad) => {

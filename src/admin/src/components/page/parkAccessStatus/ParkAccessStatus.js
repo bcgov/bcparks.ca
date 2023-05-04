@@ -15,7 +15,7 @@ export default function ParkAccessStatus() {
 
   const fetchParkAccessStatus = async ({ queryKey }) => {
     const response = await cmsAxios.get(
-      `/protected-areas/status?_limit=-1&_sort=protectedAreaName`
+      `/protected-areas/status?limit=-1&sort=protectedAreaName`
     );
 
     const data = response.data.map((park) => {

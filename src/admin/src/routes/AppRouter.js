@@ -12,7 +12,7 @@ import CmsContents from "../components/page/cmsContents/CmsContents";
 import ParkAccessStatus from "../components/page/parkAccessStatus/ParkAccessStatus";
 
 function AppRouter() {
-  const [error, setError] = useState({});
+  const [ error, setError] = useState({});
   const [cmsData, setCmsData] = useState({});
 
   return (
@@ -62,6 +62,7 @@ function AppRouter() {
             component={AdvisorySummary}
             props={{ page: { setError, cmsData, setCmsData } }}
           />
+          {/* TODO: Re-enable error page */}
           <Route path="/bcparks/error">
             <Error page={{ error }} />
           </Route>

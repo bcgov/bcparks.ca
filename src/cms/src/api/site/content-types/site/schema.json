@@ -1,0 +1,109 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sites",
+  "info": {
+    "singularName": "site",
+    "pluralName": "sites",
+    "displayName": "Site",
+    "name": "site"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "slug": {
+      "type": "string"
+    },
+    "siteName": {
+      "type": "string",
+      "required": true
+    },
+    "siteNumber": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "string"
+    },
+    "isDisplayed": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "establishedDate": {
+      "type": "date"
+    },
+    "repealedDate": {
+      "type": "date"
+    },
+    "url": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "float"
+    },
+    "longitude": {
+      "type": "float"
+    },
+    "mapZoom": {
+      "type": "integer"
+    },
+    "orcsSiteNumber": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "sites"
+    },
+    "parkActivities": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-activity.park-activity",
+      "mappedBy": "site"
+    },
+    "parkFacilities": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-facility.park-facility",
+      "mappedBy": "site"
+    },
+    "isUnofficialSite": {
+      "type": "boolean"
+    },
+    "note": {
+      "type": "string"
+    },
+    "description": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "locationNotes": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "reservations": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "parkOperation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::park-operation.park-operation",
+      "mappedBy": "site"
+    }
+  }
+}

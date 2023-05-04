@@ -92,6 +92,13 @@
       "isActive": true
     },
     {
+      "subAreaTypeId": 17,
+      "subAreaType": "Shelter",
+      "subAreaTypeCode": "shel",
+      "iconUrl": "/_shared/images/icons/26x26icons/facility/shelter.svg",
+      "isActive": true
+    },
+    {
       "subAreaTypeId": 10,
       "subAreaType": "Trail",
       "subAreaTypeCode": "tr",

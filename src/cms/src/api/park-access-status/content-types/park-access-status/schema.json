@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_access_statuses",
+  "info": {
+    "singularName": "park-access-status",
+    "pluralName": "park-access-statuses",
+    "displayName": "Park-access-status",
+    "name": "park-access-status"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "orcs": {
+      "type": "integer"
+    }
+  }
+}

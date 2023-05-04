@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "fire_ban_prohibitions",
+  "info": {
+    "singularName": "fire-ban-prohibition",
+    "pluralName": "fire-ban-prohibitions",
+    "displayName": "Fire-ban-prohibition",
+    "name": "fire-ban-prohibition"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "type": {
+      "type": "string"
+    },
+    "prohibitionDescription": {
+      "type": "string"
+    },
+    "effectiveDate": {
+      "type": "datetime"
+    },
+    "bulletinURL": {
+      "type": "string"
+    },
+    "fireCentre": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::fire-centre.fire-centre"
+    },
+    "fireZone": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::fire-zone.fire-zone"
+    },
+    "fireCentreSource": {
+      "type": "string"
+    }
+  }
+}
