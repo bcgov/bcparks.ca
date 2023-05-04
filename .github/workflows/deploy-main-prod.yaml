@@ -1,4 +1,5 @@
 name: Deploy Main to Prod
+# TODO: Delete after Strapi4 launch.  Replaced by deploy-prod.yaml
 
 on:
   workflow_dispatch

@@ -1,5 +1,5 @@
 name: Deploy Main to Test
-# TODO: Delete after Strapi4 launch.  Replaced by build-test.yaml
+# TODO: Delete after Strapi4 launch.  Replaced by deploy-test.yaml
 
 on:
   workflow_dispatch
