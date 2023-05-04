@@ -296,6 +296,7 @@ const MegaMenu = ({ content, menuMode }) => {
                 src="../images/BCParks_Wordmark_White.svg"
                 placeholder="blurred"
                 loading="eager"
+                alt="BC Parks Wordmark"
                 className="bc-parks-logo--mobile d-block d-lg-none"
               />
             </Link>

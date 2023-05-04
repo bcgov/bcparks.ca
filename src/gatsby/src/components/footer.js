@@ -101,7 +101,7 @@ export default function Footer() {
                       src="../images/BCParks_Wordmark_White.svg"
                       placeholder="blurred"
                       loading="eager"
-                      alt="BC Parks wordmark"
+                      alt="BC Parks Wordmark"
                       className="footer-logo"
                     />
                   </a>
