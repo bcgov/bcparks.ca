@@ -55,6 +55,8 @@ spec:
               value: {{ .Values.cluster.ssoClientId }}
             - name: REACT_APP_STAT_HOLIDAY_API
               value: {{ .Values.admin.env.statHolidayApi }}
+            - name: REACT_APP_PUBLIC_URL
+              value: {{ .Values.admin.env.publicUrl }}
           readinessProbe:
             httpGet:
               path: /

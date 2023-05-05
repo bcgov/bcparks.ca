@@ -35,6 +35,7 @@ cms:
 admin:
   env:
     externalUrl: https://alpha-test-staff.bcparks.ca
+    publicUrl: https://alpha-test.bcparks.ca
 
 patroni:
   replicas: 1

@@ -8,6 +8,7 @@ import moment from "moment";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
 import AdvisoryHistory from "../advisoryHistory/AdvisoryHistory";
+import config from "../../../utils/config";
 
 export default function AdvisorySummaryView({
   data: {
@@ -20,6 +21,8 @@ export default function AdvisorySummaryView({
   },
 }) {
   const { ClipboardItem } = window;
+  const publicUrl = config.REACT_APP_PUBLIC_URL;
+
   return (
     <>
       <div className="row">
@@ -108,11 +111,7 @@ export default function AdvisorySummaryView({
             <div key={p.id}>
               {p.url && (
                 <a
-                  href={
-                    isPublished
-                      ? p.url
-                      : p.url.replace("bcparks", "www.bcparks")
-                  }
+                  href={p.url.replace("https://bcparks.ca", publicUrl)}
                   rel="noreferrer"
                   target="_blank"
                   className="ad-anchor"
@@ -154,11 +153,7 @@ export default function AdvisorySummaryView({
               <div key={s.id}>
                 {s.url && (
                   <a
-                    href={
-                      isPublished
-                        ? s.url
-                        : s.url.replace("bcparks", "www.bcparks")
-                    }
+                    href={s.url.replace("https://bcparks.ca", publicUrl)}
                     rel="noreferrer"
                     target="_blank"
                     className="ad-anchor"
