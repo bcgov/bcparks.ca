@@ -8,7 +8,7 @@ import * as React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
-const Seo = ({ description, title, keywords, children }) => {
+const Seo = ({ description, title, keywords, image, children }) => {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -27,7 +27,7 @@ const Seo = ({ description, title, keywords, children }) => {
   const metaDescription = description || site.siteMetadata.description
   const metaKeywords = keywords
   const defaultTitle = site.siteMetadata?.title
-  const defaultImage = site.siteMetadata?.image
+  const metaImage = image || site.siteMetadata?.image
 
   return (
     <>
@@ -38,24 +38,25 @@ const Seo = ({ description, title, keywords, children }) => {
       <meta name="og:description" content={metaDescription} />
       <meta name="og:site_name" content={defaultTitle} />
       <meta name="og:type" content="website" />
-      <meta name="og:image" content={defaultImage} />
+      <meta name="og:image" content={metaImage} />
       <meta name="twitter:title" content={title + ' | ' + defaultTitle} />
       <meta name="twitter:description" content={metaDescription} />
-      <meta name="twitter:card" content={defaultImage} />
+      <meta name="twitter:card" content={metaImage} />
       {children}
     </>
   )
 }
 
 Seo.defaultProps = {
-  description: ``,
+  description: '',
   keywords: ''
 }
 
 Seo.propTypes = {
   description: PropTypes.string,
   title: PropTypes.string.isRequired,
-  keywords: PropTypes.string
+  keywords: PropTypes.string,
+  image: PropTypes.string
 }
 
 export default Seo
