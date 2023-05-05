@@ -31,6 +31,7 @@ cms:
 admin:
   env:
     externalUrl: https://staff.bcparks.ca
+    publicUrl: https://bcparks.ca
 
 patroni:
   resources:
