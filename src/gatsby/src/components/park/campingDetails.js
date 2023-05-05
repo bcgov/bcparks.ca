@@ -115,9 +115,12 @@ export default function CampingDetails({ data }) {
                       onClick={() => toggleReservations()}
                     >
                       <div className="d-flex justify-content-between p-3 accordion-toggle">
-                        <HtmlContent className="accordion-header pl-2">
-                          Reservations
-                        </HtmlContent>
+                        <div className="d-flex justify-content-left align-items-center pl-2">
+                          <StaticIcon name="reservations" size={48} />
+                          <HtmlContent className="pl-3 accordion-header">
+                            Reservations
+                          </HtmlContent>
+                        </div>
                         <div className="d-flex align-items-center expand-icon">
                           <i
                             className={
