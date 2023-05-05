@@ -24,4 +24,8 @@ if [ -n "$REACT_APP_STAT_HOLIDAY_API" ]; then
   echo "window.REACT_APP_STAT_HOLIDAY_API = \"$REACT_APP_STAT_HOLIDAY_API\";" >> $APP_ROOT/js/env.js
 fi
 
+if [ -n "$REACT_APP_PUBLIC_URL" ]; then  
+  echo "window.REACT_APP_PUBLIC_URL = \"$REACT_APP_PUBLIC_URL\";" >> $APP_ROOT/js/env.js
+fi
+
 caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
