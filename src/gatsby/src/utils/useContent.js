@@ -49,6 +49,7 @@ export const useContent = (contentHtml) => {
             .each((index, video) => {
               const findTitleByIndex = list.filter((e, i) => +i === +index);
               $(video).attr("id", findTitleByIndex);
+              $(video).attr("title", findTitleByIndex);
             });
         });
       setHtmlContent($?.html())
