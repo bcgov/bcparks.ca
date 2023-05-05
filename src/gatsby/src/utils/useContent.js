@@ -10,9 +10,9 @@ export const useContent = (contentHtml) => {
 
   useEffect(() => {
     if (content) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       $ = cheerio.load(content);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchData = useCallback(() => {
