@@ -736,6 +736,11 @@ export default function FindAPark({ location, data }) {
                                 onClick={() => {
                                   handleActivitiesLengthChange([])
                                 }}
+                                onKeyUp={(e) => {
+                                  if (e.key === " " || e.key === "Enter") {
+                                    handleActivitiesLengthChange([])
+                                  }
+                                }}
                                 tabIndex="0"
                                 role="link"
                               >
@@ -827,6 +832,11 @@ export default function FindAPark({ location, data }) {
                                 className="ml-auto pointer p20"
                                 onClick={() => {
                                   handleFacilitiesLengthChange([])
+                                }}
+                                onKeyUp={(e) => {
+                                  if (e.key === " " || e.key === "Enter") {
+                                    handleFacilitiesLengthChange([])
+                                  }
                                 }}
                                 tabIndex="0"
                                 role="link"
