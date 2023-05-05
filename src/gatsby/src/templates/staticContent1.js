@@ -254,6 +254,7 @@ export const Head = ({pageContext}) => {
       title={meta?.metaTitle || pageTitle}
       description={meta?.metaDescription}
       keywords={meta?.metaKeywords}
+      image={headerContent?.imageUrl}
     />
   )
 }

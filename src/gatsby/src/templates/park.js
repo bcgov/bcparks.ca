@@ -511,12 +511,15 @@ export const Head = ({data}) => {
   const description = park.description.data.description
   const parkDescription = description.replace(/(<([^>]+)>)/ig, '');
   const parkDescriptionShort = truncate(parkDescription, { length: 160 });
+  const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
+  const photoUrl = photos[0]?.imageUrl
 
   return (
     <Seo
       title={seo?.metaTitle || park.protectedAreaName}
       description={seo?.metaDescription || parkDescriptionShort}
       keywords={seo?.metaKeywords}
+      image={photoUrl}
     />
   )
 }

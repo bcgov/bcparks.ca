@@ -407,11 +407,14 @@ export const Head = ({data}) => {
   const description = site.description.data.description
   const siteDescription = description.replace(/(<([^>]+)>)/ig, '');
   const siteDescriptionShort = truncate(siteDescription, { length: 160 });
+  const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
+  const photoUrl = photos[0]?.imageUrl
 
   return (
     <Seo
       title={`${park?.protectedAreaName}: ${site.siteName}`}
       description={siteDescriptionShort}
+      image={photoUrl}
     />
   )
 }
