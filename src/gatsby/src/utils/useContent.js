@@ -1,12 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import * as cheerio from "cheerio";
 
-export const useContent = (contentHtml) => {
+export const useContent = (content) => {
   const [list, setList] = useState([]);
   const [htmlContent, setHtmlContent] = useState('');
-
   let $;
-  const content = contentHtml?.introHtml.data.introHtml;
 
   useEffect(() => {
     if (content) {
@@ -47,7 +45,7 @@ export const useContent = (contentHtml) => {
           return $(element)
             .find("iframe")
             .each((index, video) => {
-              const findTitleByIndex = list.filter((e, i) => +i === +index);
+              const findTitleByIndex = list[index];
               $(video).attr("id", findTitleByIndex);
               $(video).attr("title", findTitleByIndex);
             });
@@ -56,6 +54,5 @@ export const useContent = (contentHtml) => {
     }
   }, [content, fetchData, list]);
 
-  return { introHtml: htmlContent || null };
+  return { htmlContent: htmlContent || null };
 };
-

@@ -11,7 +11,6 @@ import PageContent from "../components/pageContent/pageContent"
 import PageMenu from "../components/pageContent/pageMenu"
 import ScrollToTop from "../components/scrollToTop"
 
-import { useContent } from '../utils/useContent';
 import { renderBreadcrumbs } from "../utils/helpers";
 
 import "../styles/staticContent1.scss"
@@ -46,11 +45,6 @@ export default function StaticContent1({ pageContext }) {
 
   const menuContent = queryData?.allStrapiMenu?.nodes || []
   const pageContent = pageContext?.page?.Content
-
-  // add id attribute to embedded iframe
-  const contentHtml = pageContent.find((item) => item.introHtml);
-  const {introHtml} = useContent(contentHtml)
-
   const meta =
     pageContext?.page?.Content.find(c =>
       Boolean(c.strapi_component === "parks.seo")
@@ -198,7 +192,7 @@ export default function StaticContent1({ pageContext }) {
                     <div className="page-header--caption">
                       {headerContent.imageCaption}
                     </div>
-                    <HTMLArea isVisible>{introHtml || headerContent.introHtml.data.introHtml}</HTMLArea>
+                    <HTMLArea isVisible>{headerContent.introHtml.data.introHtml}</HTMLArea>
                   </div>
                 )}
                 {pageContent.map(content => (
@@ -218,7 +212,7 @@ export default function StaticContent1({ pageContext }) {
             <div>
               {hasPageHeader && (
                 <div className="header-content">
-                  <HTMLArea isVisible>{introHtml || headerContent.introHtml}</HTMLArea>
+                  <HTMLArea isVisible>{headerContent.introHtml}</HTMLArea>
                 </div>
               )}
               {pageContent.map(content => (
