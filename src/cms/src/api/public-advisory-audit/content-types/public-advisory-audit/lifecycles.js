@@ -81,7 +81,6 @@ const savePublicAdvisory = async (publicAdvisory) => {
       await strapi.db.query('api::public-advisory.public-advisory').delete({
         where: {
           advisoryNumber: publicAdvisory.advisoryNumber,
-          publishedAt: null,
         }
       });
     } catch (error) {
