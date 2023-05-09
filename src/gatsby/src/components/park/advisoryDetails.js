@@ -148,26 +148,26 @@ export default function AdvisoryDetails({ advisories }) {
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={advisory.id}>
                   <div className="advisory-content p-3">
-                    {advisory.description && (
-                      <>
+                    <>
+                      {advisory.description && (
                         <HtmlContent className="mb-2">
                           {advisory.description}
                         </HtmlContent>
-                        {advisory.links?.map(({ title, url, id }) => (
-                            <p>
-                              <a
-                                href={url}
-                                style={{display: 'block'}}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                key={id}
-                              >
-                                {title}
-                              </a>
-                            </p>
-                            ))}
-                      </>
-                    )}
+                      )}
+                      {advisory.links?.map(({ title, url, id }) => (
+                          <p>
+                            <a
+                              href={url}
+                              style={{display: 'block'}}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              key={id}
+                            >
+                              {title}
+                            </a>
+                          </p>
+                        ))}
+                    </>
                     {advisory.isEffectiveDateDisplayed &&
                       advisory.formattedEffectiveDate && (
                         <p>
