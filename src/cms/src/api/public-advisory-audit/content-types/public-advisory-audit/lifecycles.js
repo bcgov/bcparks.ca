@@ -66,6 +66,7 @@ const savePublicAdvisory = async (publicAdvisory) => {
       }
     } else {
       try {
+        delete publicAdvisory.id;
         await strapi.db.query('api::public-advisory.public-advisory').create({
           data: publicAdvisory
         });
