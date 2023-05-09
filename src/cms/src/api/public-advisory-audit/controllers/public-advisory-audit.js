@@ -10,8 +10,8 @@ const clearRestCache = async function () {
   const cachePlugin = strapi.plugins["rest-cache"];
   if (cachePlugin) {
     // clear the redis rest-cache when updates are made from the staff portal
-    await cachePlugin.services.cacheStore.clearByUid('api::protected-area.protected-area', {}, true);
-    await cachePlugin.services.cacheStore.clearByUid('api::public-advisory.public-advisory', {}, true);
+    await cachePlugin.services.cacheStore.clearByUid('api::protected-area.protected-area');
+    await cachePlugin.services.cacheStore.clearByUid('api::public-advisory.public-advisory');
   }
 }
 
