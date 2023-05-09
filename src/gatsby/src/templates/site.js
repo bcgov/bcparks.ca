@@ -35,8 +35,8 @@ import { useStyles } from "../utils/constants"
 
 const qs = require('qs')
 
-const loadAdvisories = async (apiBaseUrl, orcsId) => {
-  const params = qs.stringify ({
+const loadAdvisories = (apiBaseUrl, orcsId) => {
+  const params = qs.stringify({
     populate: "*",
     filters: {
       protectedAreas: {

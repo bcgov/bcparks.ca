@@ -43,8 +43,8 @@ import { PARK_NAME_TYPE, useStyles } from "../utils/constants";
 const qs = require('qs')
 const AsyncMapLocation =  loadable(() => import("../components/park/mapLocation"));
 
-const loadAdvisories = async (apiBaseUrl, orcsId) => {
-  const params = qs.stringify ({
+const loadAdvisories = (apiBaseUrl, orcsId) => {
+  const params = qs.stringify({
     populate: "*",
     filters: {
       protectedAreas: {
