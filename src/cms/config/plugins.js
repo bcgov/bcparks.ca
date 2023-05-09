@@ -64,7 +64,7 @@ module.exports = ({ env }) => {
           enableEtagSupport: true,
           logs: true,
           clearRelatedCache: true,
-          maxAge: 3600000,
+          maxAge: env.int("STRAPI_CACHE_TTL", 300000),
           contentTypes: [
             // list of Content-Types UID to cache
             "api::protected-area.protected-area",

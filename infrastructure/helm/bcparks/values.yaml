@@ -60,7 +60,6 @@ cms:
     cacheEnabled: true
     cacheType: redis
     cacheTtl: 300000
-    cacheTimeout: 10000
 
   service:
     portName: strapi
