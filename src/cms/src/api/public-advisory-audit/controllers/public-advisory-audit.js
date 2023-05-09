@@ -11,7 +11,7 @@ const clearRestCache = async function () {
   if (cachePlugin) {
     // clear the redis rest-cache when updates are made from the staff portal
     await cachePlugin.services.cacheStore.clearByUid('api::protected-area.protected-area');
-    await cachePlugin.services.cacheStore.clearByUid('api::public-advisory.public-advisory');
+    // await cachePlugin.services.cacheStore.clearByUid('api::public-advisory.public-advisory');
   }
 }
 
