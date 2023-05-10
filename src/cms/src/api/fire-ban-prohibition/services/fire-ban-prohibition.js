@@ -41,7 +41,7 @@ module.exports = createCoreService(
       const allBans = await strapi.entityService.findMany(
         "api::fire-ban-prohibition.fire-ban-prohibition", {
         sort: { effectiveDate: 'DESC' },
-        filter: { prohibitionDescription: { $containsi: 'campfire' } },
+        filters: { prohibitionDescription: { $containsi: 'campfire' } },
         populate: '*',
       });
 

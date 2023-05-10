@@ -33,6 +33,13 @@ module.exports = createCoreController(
         );
       }
 
+      const cachePlugin = strapi.plugins["rest-cache"];
+      if (cachePlugin) {
+        await cachePlugin.services.cacheStore.clearByUid('api::protected-area.protected-area');
+        await cachePlugin.services.cacheStore.clearByUid('api::park-access-status.park-access-status');
+        // await cachePlugin.services.cacheStore.clearByUid('api::public-advisory.public-advisory');
+      }
+
       ctx.send({
         message: 'Propagation complete!'
       }, 201);
