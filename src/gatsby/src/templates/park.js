@@ -61,7 +61,7 @@ const loadAdvisories = (apiBaseUrl, orcsId) => {
     encodeValuesOnly: true,
   })
 
-  return axios.get(`${apiBaseUrl}/public-advisories/?${params}`)
+  return axios.get(`${apiBaseUrl}/public-advisories?${params}`)
 }
 
 export default function ParkTemplate({ data }) {
