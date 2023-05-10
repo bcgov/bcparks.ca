@@ -104,6 +104,12 @@
       "relation": "oneToOne",
       "target": "api::park-operation.park-operation",
       "mappedBy": "site"
+    },
+    "managementDocuments": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::management-document.management-document",
+      "mappedBy": "sites"
     }
   }
 }

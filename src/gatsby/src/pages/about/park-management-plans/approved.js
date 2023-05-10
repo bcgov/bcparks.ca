@@ -11,7 +11,7 @@ import "../../../styles/listPage.scss"
 
 const ApprovedListPage = ({ data }) => {
   const menuContent = data?.allStrapiMenu?.nodes || []
-  const parks = data.allStrapiProtectedArea.nodes
+  const documents = data.allStrapiManagementDocument.nodes
   const filters = ["All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
   const breadcrumbs = [
     <Link key="1" href="/">
@@ -33,7 +33,7 @@ const ApprovedListPage = ({ data }) => {
     setCurrentFilter(e.target.value)
   }
   const filtering = (char) =>
-    parks.filter(park => park.protectedAreaName.charAt(0) === char)
+    documents.filter(doc => doc.title.charAt(0) === char)
 
   return (
     <>
@@ -84,10 +84,10 @@ const ApprovedListPage = ({ data }) => {
                     {filter !== "All" &&
                       <h3>{filter}</h3>
                     }
-                    {filtering(filter).map(park => (
-                      <p key={park.id}>
-                        <a href={`/${park.slug}`}>
-                          {park.protectedAreaName}
+                    {filtering(filter).map(doc => (
+                      <p key={doc.id}>
+                        <a href={`/${doc.protectedAreas[0].slug}`}>
+                          {doc.title} - {doc.documentType.documentCode} - {doc.documentDate}
                         </a>
                       </p>
                     ))}
@@ -97,11 +97,11 @@ const ApprovedListPage = ({ data }) => {
             ) : (
               <div className="list">
                 <h3>{currentFilter}</h3>
-                {filtering(currentFilter).map(park => {
+                {filtering(currentFilter).map(doc => {
                   return (
-                    <p key={park.id}>
-                      <a href={`/${park.slug}`}>
-                        {park.protectedAreaName}
+                    <p key={doc.id}>
+                      <a href={`/${doc.protectedAreas[0].slug}`}>
+                        {doc.title} - {doc.documentType.documentCode} - {doc.documentDate}
                       </a>
                     </p>
                   )
@@ -126,11 +126,22 @@ export const Head = () => (
 
 export const query = graphql`
   {
-    allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}, sort: { fields: protectedAreaName }) {
+    allStrapiManagementDocument(sort: {fields: title, order: ASC}) {
       nodes {
-        id
-        slug
-        protectedAreaName
+        title
+        description
+        documentDate
+        documentType {
+          documentCode
+          documentType
+        }
+        protectedAreas {
+          slug
+          protectedAreaName
+        }
+        sites {
+          siteName
+        }
       }
     }
     allStrapiMenu(

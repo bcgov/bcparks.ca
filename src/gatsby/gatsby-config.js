@@ -48,6 +48,22 @@ module.exports = {
           "park-sub-page",
           "legacy-redirect",
           {
+            singularName: "management-document",
+            queryParams: {
+              populate: {
+                documentType: {
+                  fields: "*"
+                },
+                protectedAreas: {
+                  fields: "*"
+                },
+                sites: {
+                  fields: "*"
+                }
+              }
+            }
+          },
+          {
             singularName: "page",
             queryParams: {
               populate: {

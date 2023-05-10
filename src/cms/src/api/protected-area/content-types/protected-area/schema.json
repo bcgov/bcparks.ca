@@ -267,6 +267,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::park-photo.park-photo"
+    },
+    "managementDocuments": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::management-document.management-document",
+      "mappedBy": "protectedAreas"
     }
   }
 }
