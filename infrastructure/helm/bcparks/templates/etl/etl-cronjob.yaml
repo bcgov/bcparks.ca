@@ -1,0 +1,46 @@
+{{- if .Values.etl.enabled }}
+kind: "CronJob"
+apiVersion: "batch/v1"
+metadata:
+  name: {{ template "bcparks_etl_fullname" . }}
+  labels:
+    template: {{ template "bcparks_etl_fullname" . }}-cronjob
+    cronjob: {{ template "bcparks_etl_fullname" . }}
+spec:
+  schedule: {{ .Values.etl.schedule }}
+  concurrencyPolicy: "Forbid"
+  successfulJobsHistoryLimit: {{ .Values.etl.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.etl.failedJobsHistoryLimit }}
+  jobTemplate:
+    metadata:
+      labels:
+        template: {{ template "bcparks_etl_fullname" . }}-job
+        cronjob: {{ template "bcparks_etl_fullname" . }}
+    spec:
+      backoffLimit: {{ .Values.etl.backoffLimit }}
+      template:
+        metadata:
+          labels:
+            template: {{ template "bcparks_etl_fullname" . }}-job
+            cronjob: {{ template "bcparks_etl_fullname" . }}
+        spec:
+          containers:
+            - name: {{ template "bcparks_etl_fullname" . }}-cronjob
+              image: {{ .Values.images.etl.name }}:{{ .Values.images.etl.tag }}
+              resources:
+{{ toYaml .Values.etl.resources | indent 16 }}
+              env:
+                - name: BCWFS_BANS_API
+                  value: {{ .Values.etl.env.bcwfsBansApi }}
+                - name: STRAPI_BASE_URL
+                  value: {{ .Values.cms.env.externalUrl }}
+                - name: STRAPI_API_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Release.Name }}-{{ .Values.etl.componentName }}-secret
+                      key: STRAPI_API_TOKEN
+          restartPolicy: "Never"
+          terminationGracePeriodSeconds: 30
+          activeDeadlineSeconds: 1600
+          dnsPolicy: "ClusterFirst"
+{{- end }}

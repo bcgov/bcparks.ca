@@ -2,7 +2,7 @@ apiVersion: template.openshift.io/v1
 kind: Template
 objects:
   - kind: CronJob
-    apiVersion: batch/v1beta1
+    apiVersion: batch/v1
     metadata:
       name: ${NAME}
       labels:

@@ -32,6 +32,9 @@ images:
   redis:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/redis
     tag: 6.2.6-alpine
+  etl:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/etl-main
+    tag: latest
 
 cms:
   componentName: cms
@@ -221,7 +224,6 @@ maintenance:
     portName: maintenance
     port: 3000
 
-
 redis:
   imagePullPolicy: Always
 
@@ -238,3 +240,27 @@ redis:
   service:
     portName: redis
     port: 6379
+
+etl:
+  componentName: etl
+
+  # Enabled by default.  Overriden for aplha-dev and alpha-test
+  enabled: true
+
+  # Run the cron job every hour at 15 minutes past the hour
+  schedule: "15 * * * *"
+
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 2
+  backoffLimit: 0
+
+  env:
+    bcwfsBansApi: https://openmaps.gov.bc.ca/geo/pub/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=WHSE_LAND_AND_NATURAL_RESOURCE.PROT_BANS_AND_PROHIBITIONS_SP&count=50&outputFormat=json
+
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 250Mi
