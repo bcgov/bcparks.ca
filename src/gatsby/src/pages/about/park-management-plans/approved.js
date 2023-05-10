@@ -9,10 +9,31 @@ import ScrollToTop from "../../../components/scrollToTop"
 
 import "../../../styles/listPage.scss"
 
+const DocumentLink = ({ doc }) => {
+  const year = doc.documentDate.split('-').shift()
+  return (
+    <p key={doc.id}>
+      <a href={doc.url}>
+        {`${doc.title} - ${doc.documentType.documentCode}(${year}) [PDF]`}
+      </a>
+    </p>
+  )
+}
+
 const ApprovedListPage = ({ data }) => {
   const menuContent = data?.allStrapiMenu?.nodes || []
   const documents = data.allStrapiManagementDocument.nodes
-  const filters = ["All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+  const filters = [
+    "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+    "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+  ]
+  const [currentFilter, setCurrentFilter] = useState("All")
+  const handleClick = (e) => {
+    setCurrentFilter(e.target.value)
+  }
+  const filtering = (char) =>
+    documents.filter(doc => doc.title.charAt(0) === char)
+
   const breadcrumbs = [
     <Link key="1" href="/">
       Home
@@ -27,13 +48,6 @@ const ApprovedListPage = ({ data }) => {
       Approved management plans
     </div>,
   ]
-
-  const [currentFilter, setCurrentFilter] = useState("All")
-  const handleClick = (e) => {
-    setCurrentFilter(e.target.value)
-  }
-  const filtering = (char) =>
-    documents.filter(doc => doc.title.charAt(0) === char)
 
   return (
     <>
@@ -57,55 +71,39 @@ const ApprovedListPage = ({ data }) => {
           <div>
             <h3>Filter</h3>
             <div className="filters">
-              {filters.map((filter, index) => {
-                return (
-                  <button
-                    key={index}
-                    value={filter}
-                    onClick={(e) => handleClick(e, filter)}
-                    className={
-                      `btn btn-selected--${
-                        currentFilter === filter ? 'true' : 'false'
-                      }`
-                    }
-                  >
-                    {filter}
-                  </button>
-                )
-              })}
+              {filters.map((filter, index) => (
+                <button
+                  key={index}
+                  value={filter}
+                  onClick={(e) => handleClick(e, filter)}
+                  className={
+                    `btn btn-selected--${
+                      currentFilter === filter ? 'true' : 'false'
+                    }`
+                  }
+                >
+                  {filter}
+                </button>
+              ))}
             </div>
           </div>
 
           <div className="lists">
             {currentFilter === "All" ? (
-              filters.map((filter, index) => {
-                return (
-                  <div key={index} className="list">
-                    {filter !== "All" &&
-                      <h3>{filter}</h3>
-                    }
-                    {filtering(filter).map(doc => (
-                      <p key={doc.id}>
-                        <a href={`/${doc.protectedAreas[0].slug}`}>
-                          {doc.title} - {doc.documentType.documentCode} - {doc.documentDate}
-                        </a>
-                      </p>
-                    ))}
-                  </div>
-                )
-              })
+              filters.map((filter, index) => (
+                <div key={index} className="list">
+                  {filter !== "All" && <h3>{filter}</h3>}
+                  {filtering(filter).map(doc => (
+                    <DocumentLink doc={doc} />
+                  ))}
+                </div>
+              ))
             ) : (
               <div className="list">
                 <h3>{currentFilter}</h3>
-                {filtering(currentFilter).map(doc => {
-                  return (
-                    <p key={doc.id}>
-                      <a href={`/${doc.protectedAreas[0].slug}`}>
-                        {doc.title} - {doc.documentType.documentCode} - {doc.documentDate}
-                      </a>
-                    </p>
-                  )
-                })}
+                {filtering(currentFilter).map(doc => (
+                  <DocumentLink doc={doc} />
+                ))}
               </div>
             )}
           </div>
@@ -129,14 +127,15 @@ export const query = graphql`
     allStrapiManagementDocument(sort: {fields: title, order: ASC}) {
       nodes {
         title
+        url
         description
         documentDate
         documentType {
           documentCode
           documentType
+          description
         }
         protectedAreas {
-          slug
           protectedAreaName
         }
         sites {

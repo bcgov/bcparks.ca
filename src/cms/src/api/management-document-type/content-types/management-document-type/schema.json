@@ -4,7 +4,8 @@
   "info": {
     "singularName": "management-document-type",
     "pluralName": "management-document-types",
-    "displayName": "Management-document-type"
+    "displayName": "Management-document-type",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -15,6 +16,9 @@
     },
     "documentType": {
       "type": "string"
+    },
+    "description": {
+      "type": "text"
     }
   }
 }
