@@ -87,6 +87,7 @@ module.exports = createCoreService(
               },
               data: {
                 campfireBanEffectiveDate: ban.effectiveDate?.split('T')[0],
+                campfireBanRescindedDate: null,
                 hasCampfireBan: true
               },
             });
