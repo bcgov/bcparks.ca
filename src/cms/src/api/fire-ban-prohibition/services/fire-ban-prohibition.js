@@ -11,7 +11,7 @@ module.exports = createCoreService(
   ({ strapi }) => ({
     /* Sets the protectedArea.hasCampfireBan to false for all protectedAreas where it is 
      * currently set to true, and sets the campfireBanRescindedDate to now on all records 
-     * being updated.  Protected Areas with hasCampfireBanOverride==true are skipped.
+     * being updated. Protected Areas with hasCampfireBanOverride==true are skipped.
      */
     async rescindAllProtectedAreaFireBans() {
       return await strapi.db.query("api::protected-area.protected-area")
@@ -31,13 +31,13 @@ module.exports = createCoreService(
         });
     },
     /* Loops through all fire-ban-prohibition records and sets the protectedArea.hasCampfireBan
-     * to true for all Protected Areas in firezones associated with a fire ban.   Protected Areas 
+     * to true for all Protected Areas in firezones associated with a fire ban. Protected Areas 
      * with hasCampfireBanOverride==true are skipped.
      * 
      */
     async generateAllProtectedAreaFireBans() {
-      // sort the bans in descending order so the oldest one will be last and the earliest date 
-      // will be applied to the protectedArea when there are multiple bans
+      // sort the bans in descending order so the oldest one will be last and the earliest
+      // date  will be applied to the protectedArea when there are multiple bans
       const allBans = await strapi.entityService.findMany(
         "api::fire-ban-prohibition.fire-ban-prohibition", {
         sort: { effectiveDate: 'DESC' },
@@ -93,7 +93,6 @@ module.exports = createCoreService(
           rowsUpdated += count;
         }
       }
-
       return { count: rowsUpdated };
     }
   })

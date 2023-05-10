@@ -36,7 +36,6 @@ module.exports = createCoreController(
       ctx.send({
         message: 'Propagation complete!'
       }, 201);
-
     }
   })
 );
