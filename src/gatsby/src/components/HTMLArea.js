@@ -1,8 +1,8 @@
 import React from "react"
-import { useContent } from "../utils/useContent"
+import { usePreRenderVideo } from "../utils/usePreRenderVideo"
 
 export default function HTMLArea(props) {
-  const { htmlContent } = useContent(props.children)
+  const { htmlContent } = usePreRenderVideo(props.children)
 
   if (!props.isVisible) {
     return null;

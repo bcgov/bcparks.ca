@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import * as cheerio from "cheerio";
 
-export const useContent = (content) => {
+export const usePreRenderVideo = (content) => {
+  const slugify = require("slugify");
   const [list, setList] = useState([]);
   const [htmlContent, setHtmlContent] = useState('');
   let $;
@@ -46,7 +47,7 @@ export const useContent = (content) => {
             .find("iframe")
             .each((index, video) => {
               const findTitleByIndex = list[index];
-              $(video).attr("id", findTitleByIndex);
+              $(video).attr("id", slugify(findTitleByIndex).toLowerCase());
               $(video).attr("title", findTitleByIndex);
             });
         });
