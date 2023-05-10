@@ -8,29 +8,36 @@
 const validator = require("../../../../helpers/slugValidator.js");
 
 const saveParkAccessStatus = async (data) => {
-  const updateResult = await strapi.db
-    .query(
-      "api::park-access-status.park-access-status"
-    )
-    .updateMany(
-      {
-        where: {
-          orcs: data.result.orcs
-        },
+  try {
+    const updateResult = await strapi.db
+      .query(
+        "api::park-access-status.park-access-status"
+      )
+      .updateMany(
+        {
+          where: {
+            orcs: data.result.orcs
+          },
+          data: {
+            orcs: data.result.orcs,
+            publishedAt: new Date(),
+            updatedAt: new Date()
+          }
+        });
+    if (updateResult.count === 0) {
+      await strapi.entityService.create(
+        "api::park-access-status.park-access-status", {
         data: {
           orcs: data.result.orcs,
-          publishedAt: new Date(),
-          updatedAt: new Date()
+          publishedAt: new Date()
         }
-      });
-  if (updateResult.count === 0) {
-    await strapi.entityService.create(
-      "api::park-access-status.park-access-status", {
-      data: {
-        orcs: data.result.orcs,
-        publishedAt: new Date()
-      }
-    })
+      })
+    }
+  } catch (error) {
+    strapi.log.error(
+      `error saving park-access-status for orcs ${data.result?.orcs}...`,
+      error
+    );
   }
 };
 
