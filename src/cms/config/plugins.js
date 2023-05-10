@@ -65,10 +65,11 @@ module.exports = ({ env }) => {
           logs: true,
           clearRelatedCache: true,
           maxAge: env.int("STRAPI_CACHE_TTL", 300000),
+          hitpass: false, // don't bypass the cache for requests with a cookie or authorization header
           contentTypes: [
             // list of Content-Types UID to cache
             "api::protected-area.protected-area",
-            //"api::public-advisory.public-advisory",
+            "api::public-advisory.public-advisory",
             "api::park-access-status.park-access-status",
           ],
         },
