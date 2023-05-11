@@ -226,7 +226,8 @@
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "slug": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "isDisplayed": {
       "type": "boolean",

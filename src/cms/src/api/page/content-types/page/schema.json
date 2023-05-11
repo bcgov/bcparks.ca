@@ -15,7 +15,8 @@
   },
   "attributes": {
     "Slug": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "Title": {
       "type": "string",
@@ -26,7 +27,8 @@
       "enum": [
         "staticLanding1",
         "staticContent1"
-      ]
+      ],
+      "required": true
     },
     "Content": {
       "type": "dynamiczone",
