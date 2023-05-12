@@ -3,7 +3,7 @@ cluster:
 
 images:
   strapi:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/strapi-develop  
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/strapi-develop
     tag: test
   admin:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/admin-develop
@@ -14,6 +14,8 @@ images:
   maintenance:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/maintenance-develop
     tag: test
+  etl:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/etl-develop
 
 cms:
   resources:
@@ -56,10 +58,13 @@ backup:
     size: 10Gi
 
   enironment:
-    friendlyName: bcparks.ca CMS Postgres Backup [test]
+    friendlyName: bcparks.ca CMS Postgres Backup [alpha-test]
     name: 61d198-test
 
 public:
   hpa:
     minReplicas: 1
     maxReplicas: 1
+
+etl:
+  enabled: false

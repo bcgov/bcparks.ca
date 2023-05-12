@@ -1,0 +1,147 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "WHSE_LAND_AND_NATURAL_RESOURCE.PROT_BANS_AND_PROHIBITIONS_SP.1",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": []
+      },
+      "geometry_name": "SHAPE",
+      "properties": {
+        "PROT_BAP_SYSID": 1,
+        "TYPE": "Partial Prohibition",
+        "ACCESS_PROHIBITION_DESCRIPTION": "Category 2, Category 3",
+        "ACCESS_STATUS_EFFECTIVE_DATE": "2022-07-15Z",
+        "FIRE_CENTRE_NAME": "Cariboo",
+        "FIRE_ZONE_NAME": null,
+        "BULLETIN_URL": "https://www2.gov.bc.ca/gov/content?id=AFEC3F8B5E89438CB0AC9E970CE6EE6F",
+        "FEATURE_AREA_SQM": 82480071771.6249,
+        "FEATURE_LENGTH_M": 2088550.1794,
+        "OBJECTID": 1281,
+        "SE_ANNO_CAD_DATA": null
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "WHSE_LAND_AND_NATURAL_RESOURCE.PROT_BANS_AND_PROHIBITIONS_SP.2",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": []
+      },
+      "geometry_name": "SHAPE",
+      "properties": {
+        "PROT_BAP_SYSID": 2,
+        "TYPE": "Partial Prohibition",
+        "ACCESS_PROHIBITION_DESCRIPTION": "Category 2, Category 3",
+        "ACCESS_STATUS_EFFECTIVE_DATE": "2022-09-07Z",
+        "FIRE_CENTRE_NAME": "Coastal",
+        "FIRE_ZONE_NAME": null,
+        "BULLETIN_URL": "https://www2.gov.bc.ca/gov/content?id=AFEC3F8B5E89438CB0AC9E970CE6EE6F",
+        "FEATURE_AREA_SQM": 116807966352.751,
+        "FEATURE_LENGTH_M": 2778690.6804,
+        "OBJECTID": 1282,
+        "SE_ANNO_CAD_DATA": null
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "WHSE_LAND_AND_NATURAL_RESOURCE.PROT_BANS_AND_PROHIBITIONS_SP.3",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": []
+      },
+      "geometry_name": "SHAPE",
+      "properties": {
+        "PROT_BAP_SYSID": 3,
+        "TYPE": "Full Prohibition",
+        "ACCESS_PROHIBITION_DESCRIPTION": "Category 2, Category 3, Campfires",
+        "ACCESS_STATUS_EFFECTIVE_DATE": "2022-09-07Z",
+        "FIRE_CENTRE_NAME": "Coastal",
+        "FIRE_ZONE_NAME": null,
+        "BULLETIN_URL": "https://www2.gov.bc.ca/gov/content?id=AFEC3F8B5E89438CB0AC9E970CE6EE6F",
+        "FEATURE_AREA_SQM": 86603741600.3939,
+        "FEATURE_LENGTH_M": 2246436.4897,
+        "OBJECTID": 1283,
+        "SE_ANNO_CAD_DATA": null
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "WHSE_LAND_AND_NATURAL_RESOURCE.PROT_BANS_AND_PROHIBITIONS_SP.4",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": []
+      },
+      "geometry_name": "SHAPE",
+      "properties": {
+        "PROT_BAP_SYSID": 4,
+        "TYPE": "Partial Prohibition",
+        "ACCESS_PROHIBITION_DESCRIPTION": "Category 2, Category 3",
+        "ACCESS_STATUS_EFFECTIVE_DATE": "2022-09-02Z",
+        "FIRE_CENTRE_NAME": "Kamloops",
+        "FIRE_ZONE_NAME": null,
+        "BULLETIN_URL": "https://www2.gov.bc.ca/gov/content?id=AFEC3F8B5E89438CB0AC9E970CE6EE6F",
+        "FEATURE_AREA_SQM": 71578836204.0932,
+        "FEATURE_LENGTH_M": 2496595.2103,
+        "OBJECTID": 1284,
+        "SE_ANNO_CAD_DATA": null
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "WHSE_LAND_AND_NATURAL_RESOURCE.PROT_BANS_AND_PROHIBITIONS_SP.5",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": []
+      },
+      "geometry_name": "SHAPE",
+      "properties": {
+        "PROT_BAP_SYSID": 5,
+        "TYPE": "Partial Prohibition",
+        "ACCESS_PROHIBITION_DESCRIPTION": "Category 2, Category 3",
+        "ACCESS_STATUS_EFFECTIVE_DATE": "2022-09-12Z",
+        "FIRE_CENTRE_NAME": "Prince George",
+        "FIRE_ZONE_NAME": null,
+        "BULLETIN_URL": "https://www2.gov.bc.ca/gov/content?id=AFEC3F8B5E89438CB0AC9E970CE6EE6F",
+        "FEATURE_AREA_SQM": 175395935253.822,
+        "FEATURE_LENGTH_M": 2990088.5033,
+        "OBJECTID": 1285,
+        "SE_ANNO_CAD_DATA": null
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "WHSE_LAND_AND_NATURAL_RESOURCE.PROT_BANS_AND_PROHIBITIONS_SP.6",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": []
+      },
+      "geometry_name": "SHAPE",
+      "properties": {
+        "PROT_BAP_SYSID": 6,
+        "TYPE": "Partial Prohibition",
+        "ACCESS_PROHIBITION_DESCRIPTION": "Category 2, Category 3",
+        "ACCESS_STATUS_EFFECTIVE_DATE": "2022-09-02Z",
+        "FIRE_CENTRE_NAME": "Southeast",
+        "FIRE_ZONE_NAME": null,
+        "BULLETIN_URL": "https://www2.gov.bc.ca/gov/content?id=AFEC3F8B5E89438CB0AC9E970CE6EE6F",
+        "FEATURE_AREA_SQM": 82338245231.115,
+        "FEATURE_LENGTH_M": 1952980.5426,
+        "OBJECTID": 1286,
+        "SE_ANNO_CAD_DATA": null
+      }
+    }
+  ],
+  "totalFeatures": 6,
+  "numberMatched": 6,
+  "numberReturned": 6,
+  "timeStamp": "2023-04-27T16:13:22.262Z",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::3005"
+    }
+  }
+}

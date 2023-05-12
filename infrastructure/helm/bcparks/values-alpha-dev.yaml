@@ -10,6 +10,8 @@ images:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/public-develop
   maintenance:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/maintenance-develop
+  etl:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/etl-develop
 
 cms:
   env:
@@ -22,3 +24,13 @@ admin:
 
 patroni:
   replicas: 1
+
+backup:
+  enabled: false
+
+  enironment:
+    friendlyName: bcparks.ca CMS Postgres Backup [alpha-dev]
+
+etl:
+  #todo: this is temporarily true for debugging. change to false
+  enabled: true
