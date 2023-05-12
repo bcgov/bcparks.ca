@@ -27,6 +27,11 @@ const loadData = async function () {
         path: `.env`,
     });
 
+    const httpReqHeaders = {
+        'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
+        'Content-Type': 'application/json'
+    };
+
     const logger = getLogger();
     logger.info("UPDATING FIRE-BAN-PROHIBITIONS...");
 
@@ -34,7 +39,7 @@ const loadData = async function () {
     const fireCentres = {};
     const strapiBans = [];
     const bcwfsBans = [];
-    let bcwfsData = {};
+    let bcwfsData;
 
     if (dataFileSpecified()) {
         // get a list of bans from the local filesystem (for testing purposes)
@@ -55,6 +60,31 @@ const loadData = async function () {
         }
     }
 
+    // get fireZones from Strapi and put them in an object to use as a dictionary
+    try {
+        const response = await axios.get(`${process.env.STRAPI_BASE_URL}/api/fire-zones?fields=fireZoneName`);
+
+        for (const zone of response.data.data) {
+            const name = zone.fireZoneName.replace(/ fire zone(s?)$/ig, '');
+            fireZones[name] = zone.id;
+        }
+    } catch (error) {
+        logger.error(error);
+        process.exit(1);
+    }
+
+    // get fireCentres from Strapi and put them in an object to use as a dictionary
+    try {
+        const response = await axios.get(`${process.env.STRAPI_BASE_URL}/api/fire-centres?fields=fireCentreName`);
+        for (const centre of response.data.data) {
+            const name = centre.fireCentreName.replace(/ fire centre$/ig, '');
+            fireCentres[name] = centre.id;
+        }
+    } catch (error) {
+        logger.error(error);
+        process.exit(1);
+    }
+
     // convert each bcwfs ban to an object that can be imported into strapi
     for (const ban of bcwfsData.features) {
         const attribute = ban.properties;
@@ -71,31 +101,6 @@ const loadData = async function () {
         bcwfsBans.push(bcwfsBan);
     }
 
-    // get a list of fire zones from Strapi
-    try {
-        const response = await axios.get(`${process.env.STRAPI_BASE_URL}/api/fire-zones?fields=fireZoneName`);
-
-        for (const zone of response.data.data) {
-            const name = zone.fireZoneName.replace(/ fire zone(s?)$/ig, '');
-            fireZones[name] = zone.id;
-        }
-    } catch (error) {
-        logger.error(error);
-        process.exit(1);
-    }
-
-    // get a list of fire centres from Strapi
-    try {
-        const response = await axios.get(`${process.env.STRAPI_BASE_URL}/api/fire-centres?fields=fireCentreName`);
-        for (const centre of response.data.data) {
-            const name = centre.fireCentreName.replace(/ fire centre$/ig, '');
-            fireCentres[name] = centre.id;
-        }
-    } catch (error) {
-        logger.error(error);
-        process.exit(1);
-    }
-
     // get a list of existing bans from Strapi
     try {
         const response = await axios.get(`${process.env.STRAPI_BASE_URL}/api/fire-ban-prohibitions?populate[fireCentre][fields][0]=id&populate[fireZone][fields][0]=id`);
@@ -107,11 +112,6 @@ const loadData = async function () {
         logger.error(error);
         process.exit(1);
     }
-
-    const httpReqHeaders = {
-        'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
-        'Content-Type': 'application/json'
-    };
 
     // determine which old or updated bans need to be removed from Strapi
     const deletions = _.differenceWith(strapiBans, bcwfsBans, compareBans);
@@ -138,9 +138,9 @@ const loadData = async function () {
     logger.info(`${insertions.length} bans added to Strapi.`);
     logger.info(`${strapiBans.length - deletions.length} bans unchanged.`);
 
+    // propagate the bans to protected areas in Strapi
     if (insertions.length > 0 || deletions.length > 0) {
         logger.info(`Propagating firebans to protected areas`);
-        // get a list of existing bans from Strapi
         try {
             await axios.post(`${process.env.STRAPI_BASE_URL}/api/fire-ban-prohibitions/propagate`, {}, { headers: httpReqHeaders });
             logger.info(`Propagation complete`);
