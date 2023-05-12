@@ -32,6 +32,8 @@ const getNextRevisionNumber = async (advisoryNumber) => {
 
 const createPublicAdvisoryAudit = async (data) => {
   delete data.id;
+  delete data.updatedBy;
+  delete data.createdBy;
   data.publishedAt = null;
   data.isLatestRevision = false;
 
@@ -46,6 +48,8 @@ const createPublicAdvisoryAudit = async (data) => {
 };
 
 const savePublicAdvisory = async (publicAdvisory) => {
+  delete publicAdvisory.updatedBy;
+  delete publicAdvisory.createdBy;  
   if (publicAdvisory.advisoryStatus.code === "PUB") {
     publicAdvisory.publishedAt = new Date();
     const isExist = await strapi.db.query('api::public-advisory.public-advisory').findOne({
