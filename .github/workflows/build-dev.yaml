@@ -196,4 +196,3 @@ jobs:
           oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-admin
           oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-cms
           oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-maintenance
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-etl
