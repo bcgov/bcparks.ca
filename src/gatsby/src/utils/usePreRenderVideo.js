@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import * as cheerio from "cheerio";
 
+const slugify = require("slugify");
+
 export const usePreRenderVideo = (content) => {
-  const slugify = require("slugify");
   const [list, setList] = useState([]);
   const [htmlContent, setHtmlContent] = useState('');
   let $;
