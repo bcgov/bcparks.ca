@@ -37,6 +37,13 @@ module.exports = createCoreController(
         populate: "*"
       });
 
+      // remove createdBy and updatedBy because it's easier to maintain than 
+      // changing populate: "*" to include everything else but these fields.
+      for (const version of entities.results) {
+        delete version.createdBy;
+        delete version.updatedBy;
+      };
+
       return sanitize.contentAPI.output(entities.results);
     }
   }
