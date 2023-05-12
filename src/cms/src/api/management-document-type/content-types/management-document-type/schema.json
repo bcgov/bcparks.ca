@@ -19,6 +19,12 @@
     },
     "description": {
       "type": "text"
+    },
+    "managementDocuments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::management-document.management-document",
+      "mappedBy": "documentType"
     }
   }
 }

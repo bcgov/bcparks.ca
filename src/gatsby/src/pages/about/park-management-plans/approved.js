@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { graphql } from "gatsby"
+import { graphql, useStaticQuery } from "gatsby"
 import { Breadcrumbs, Link } from "@material-ui/core"
 
 import Header from "../../../components/header"
@@ -21,19 +21,67 @@ const DocumentLink = ({ doc }) => {
 }
 
 const ApprovedListPage = ({ data }) => {
-  const menuContent = data?.allStrapiMenu?.nodes || []
-  const documents = data.allStrapiManagementDocument.nodes
-  const filters = [
-    "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
-    "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
-  ]
+  const queryData = useStaticQuery(graphql`
+    query {
+      allStrapiManagementDocument(sort: {fields: title, order: ASC}) {
+        nodes {
+          title
+          url
+          description
+          documentDate
+          documentType {
+            documentCode
+            documentType
+            description
+          }
+          protectedAreas {
+            protectedAreaName
+          }
+          sites {
+            siteName
+          }
+        }
+      }
+      allStrapiMenu(
+        sort: { fields: order, order: ASC }
+        filter: { show: { eq: true } }
+      ) {
+        nodes {
+          strapi_id
+          title
+          url
+          order
+          id
+          strapi_children {
+            id
+            title
+            url
+            order
+          }
+          strapi_parent {
+            id
+            title
+          }
+        }
+      }
+    }
+  `)
+
+  const menuContent = queryData?.allStrapiMenu?.nodes || []
+  const documents = queryData?.allStrapiManagementDocument?.nodes || []
+
   const [currentFilter, setCurrentFilter] = useState("All")
+
   const handleClick = (e) => {
     setCurrentFilter(e.target.value)
   }
   const filtering = (char) =>
     documents.filter(doc => doc.title.charAt(0) === char)
-
+  
+  const filters = [
+    "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+    "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+  ]
   const breadcrumbs = [
     <Link key="1" href="/">
       Home
@@ -121,49 +169,3 @@ export default ApprovedListPage
 export const Head = () => (
   <Seo title="Approved management plans" />
 )
-
-export const query = graphql`
-  {
-    allStrapiManagementDocument(sort: {fields: title, order: ASC}) {
-      nodes {
-        title
-        url
-        description
-        documentDate
-        documentType {
-          documentCode
-          documentType
-          description
-        }
-        protectedAreas {
-          protectedAreaName
-        }
-        sites {
-          siteName
-        }
-      }
-    }
-    allStrapiMenu(
-      sort: { fields: order, order: ASC }
-      filter: { show: { eq: true } }
-    ) {
-      nodes {
-        strapi_id
-        title
-        url
-        order
-        id
-        strapi_children {
-          id
-          title
-          url
-          order
-        }
-        strapi_parent {
-          id
-          title
-        }
-      }
-    }
-  }
-`

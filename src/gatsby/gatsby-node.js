@@ -61,7 +61,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     title: String
     url: String
     description: String
-    documentDate: Date 
+    documentDate: Date
   }
   `
   createTypes(typeDefs)
