@@ -1,6 +1,6 @@
 {{- if .Values.backup.enabled }}
 kind: "CronJob"
-apiVersion: "batch/v1beta1"
+apiVersion: "batch/v1"
 metadata:
   name: {{ template "bcparks_postgres_backup_fullname" . }}
   labels:

@@ -103,3 +103,7 @@ https://{{ .Release.Name }}-{{ .Values.admin.componentName }}-{{ .Release.Namesp
 {{ define "bcparks_public_external_url" -}}
 https://{{ .Release.Name }}-{{ .Values.public.componentName }}-{{ .Release.Namespace }}.{{ .Values.cluster.domain }}
 {{- end -}}
+
+{{ define "bcparks_etl_fullname" -}}
+{{ .Release.Name }}-{{ .Values.etl.componentName }}
+{{- end -}}

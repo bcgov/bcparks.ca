@@ -1,0 +1,19 @@
+{
+  "name": "bcparks-etl-scripts",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Cron-automated Node.js scripts for importing data into the BC Parks Strapi CMS",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "OXD",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "date-fns": "^2.29.3",
+    "dotenv": "^16.0.3",
+    "lodash": "^4.17.21",
+    "winston": "^3.8.2"
+  }
+}
