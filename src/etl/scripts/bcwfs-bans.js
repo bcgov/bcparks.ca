@@ -4,7 +4,8 @@ import _ from 'lodash';
 import * as dotenv from 'dotenv';
 import { promises as fs } from 'fs';
 
-import { getLogger } from '../helpers/loggerFactory.js';
+import { dataFileSpecified, getDataFilePath } from '../utils/commandLine.js';
+import { getLogger } from '../utils/logging.js';
 
 function compareBans(ban1, ban2) {
     return ban1.attributes.type === ban2.attributes.type
@@ -21,8 +22,6 @@ function compareBans(ban1, ban2) {
         );
 };
 
-
-
 const loadData = async function () {
     dotenv.config({
         path: `.env`,
@@ -37,11 +36,13 @@ const loadData = async function () {
     const bcwfsBans = [];
     let bcwfsData = {};
 
-    if (process.argv.length > 3) {
-        const dataFilePath = process.argv[3];
+    if (dataFileSpecified()) {
+        // get a list of bans from the local filesystem (for testing purposes)
+        const dataFilePath = getDataFilePath();
+        logger.warn(`Using test file ${dataFilePath}`);
         const data = await fs.readFile(dataFilePath);
         bcwfsData = JSON.parse(data);
-        logger.info(`${bcwfsData.features.length} bans found in ${process.argv[3]}`);
+        logger.info(`${bcwfsData.features.length} bans found in ${dataFilePath}`);
     } else {
         // get a list of bans from BC Map Services
         try {
@@ -54,6 +55,7 @@ const loadData = async function () {
         }
     }
 
+    // convert each bcwfs ban to an object that can be imported into strapi
     for (const ban of bcwfsData.features) {
         const attribute = ban.properties;
         const bcwfsBan = {

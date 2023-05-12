@@ -2,7 +2,7 @@ import { createLogger, format, transports } from 'winston';
 
 const { combine, timestamp, printf, colorize } = format;
 
-export const getLogger = () => {
+function getLogger() {
     const myFormat = printf(({ level, message, timestamp }) => {
         return `${timestamp}: [${level}] ${message}`;
     });
@@ -16,3 +16,4 @@ export const getLogger = () => {
     });
 };
 
+export { getLogger };
