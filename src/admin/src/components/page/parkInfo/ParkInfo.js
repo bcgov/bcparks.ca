@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./ParkInfo.css";
 import { Redirect, useParams } from "react-router-dom";
-import { Loader } from "shared-components/build/components/loader/Loader";
+import { Loader } from "../../shared/loader/Loader";
 import { useKeycloak } from "@react-keycloak/web";
 import Header from "../../composite/header/Header";
 import { cmsAxios } from "../../../axios_config";
 import { getRegions, getSections } from "../../../utils/CmsDataUtil";
-import { Button } from "shared-components/build/components/button/Button";
+import { Button } from "../../shared/button/Button";
 import { a11yProps } from "../../../utils/AppUtil";
 import {
   Tab,

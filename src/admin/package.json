@@ -41,7 +41,6 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
     "react-select": "^4.3.0",
-    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.2/shared-components-1.2.2.tgz",
     "web-vitals": "^1.1.1",
     "webpack": "4.44.2"
   },
@@ -109,11 +108,19 @@
     "indent": 4
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "babel-jest": "^26.6.0",
+    "cross-env": "^7.0.3",
+    "jest": "26.6.0"
   },
   "overrides": {
     "@bcgov/bootstrap-theme": {
       "bootstrap": "$bootstrap"
+    },
+    "react-scripts": {
+      "node-sass": "npm:sass@^1.62"
+    },
+    "webpack": {
+      "node-sass": "npm:sass@^1.62"
     }
   }
 }

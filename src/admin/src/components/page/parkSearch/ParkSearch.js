@@ -5,7 +5,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import { Redirect } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
 import Select, { components } from "react-select";
-import { Loader } from "shared-components/build/components/loader/Loader";
+import { Loader } from "../../shared/loader/Loader";
 import { List, ListItem, Divider } from "@material-ui/core";
 import {
   getProtectedAreas,

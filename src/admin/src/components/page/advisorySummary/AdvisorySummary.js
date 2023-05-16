@@ -5,10 +5,10 @@ import { cmsAxios } from "../../../axios_config";
 import { useKeycloak } from "@react-keycloak/web";
 import "./AdvisorySummary.css";
 import Header from "../../composite/header/Header";
-import { Loader } from "shared-components/build/components/loader/Loader";
+import { Loader } from  "../../shared/loader/Loader";
 import Alert from "@material-ui/lab/Alert";
 import { Snackbar, Link } from "@material-ui/core";
-import { Button } from "shared-components/build/components/button/Button";
+import { Button } from  "../../shared/button/Button";
 import { getLinkTypes } from "../../../utils/CmsDataUtil";
 import AdvisorySummaryView from "../../composite/advisorySummaryView/AdvisorySummaryView";
 

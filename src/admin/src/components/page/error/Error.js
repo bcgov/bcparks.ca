@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import "../../page.css";
-import { Button } from "shared-components/build/components/button/Button";
+import { Button } from "../../shared/button/Button";
 import Header from "../../composite/header/Header";
 
 export default function Error({ page: { error } }) {

@@ -1,0 +1,33 @@
+.bcgov-page-loader {
+  height: 60px;
+  width: 60px;
+  color: #494949;
+  border: 7px solid;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: rotate 2s linear infinite;
+  display: inline-block;
+}
+
+.bcgov-btn-loader {
+  height: 15px;
+  width: 15px;
+  color: #ffffff;
+  border: 2px solid;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: rotate 2s linear infinite;
+  display: inline-block;
+  margin-left: 10px;
+  margin-top: 3px;
+  vertical-align: text-top;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
