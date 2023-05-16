@@ -46,8 +46,8 @@
     "webpack": "4.44.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
@@ -107,5 +107,8 @@
     "reportPath": "coverage",
     "reportFile": "test-report.xml",
     "indent": 4
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
