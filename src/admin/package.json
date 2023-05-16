@@ -110,5 +110,10 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3"
+  },
+  "overrides": {
+    "@bcgov/bootstrap-theme": {
+      "bootstrap": "$bootstrap"
+    }
   }
 }
