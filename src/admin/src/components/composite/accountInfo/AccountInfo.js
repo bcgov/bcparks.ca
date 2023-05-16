@@ -1,7 +1,7 @@
 import React from "react";
 import "./AccountInfo.css";
 import { useKeycloak } from "@react-keycloak/web";
-import { Button } from "shared-components/build/components/button/Button";
+import { Button } from "../../shared/button/Button";
 import config from "../../../utils/config";
 
 const AccountInfo = () => {

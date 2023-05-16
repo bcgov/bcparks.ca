@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./AdvisoryForm.css";
-import { Button } from "shared-components/build/components/button/Button";
+import { Button } from "../../shared/button/Button";
 import {
   TextField,
   ButtonGroup,

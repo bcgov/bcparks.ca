@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useKeycloak } from "@react-keycloak/web";
-import { Button } from "shared-components/build/components/button/Button";
+import { Button } from  "../../shared/button/Button";
 import Header from "../../composite/header/Header";
 import styles from "./Home.css";
 import config from "../../../utils/config";
