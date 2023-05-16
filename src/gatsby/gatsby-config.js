@@ -53,12 +53,6 @@ module.exports = {
               populate: {
                 documentType: {
                   fields: "*"
-                },
-                protectedAreas: {
-                  fields: "*"
-                },
-                sites: {
-                  fields: "*"
                 }
               }
             }

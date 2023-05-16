@@ -62,6 +62,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     url: String
     description: String
     documentDate: Date
+    documentType: STRAPI_MANAGEMENT_DOCUMENT_TYPE
   }
   `
   createTypes(typeDefs)

@@ -14,7 +14,7 @@ const DocumentLink = ({ doc }) => {
   return (
     <p key={doc.id}>
       <a href={doc.url}>
-        {`${doc.title} - ${doc.documentType.documentCode}(${year}) [PDF]`}
+        {`${doc.title} - ${doc.documentType?.documentCode}(${year}) [PDF]`}
       </a>
     </p>
   )
@@ -33,12 +33,6 @@ const ApprovedListPage = ({ data }) => {
             documentCode
             documentType
             description
-          }
-          protectedAreas {
-            protectedAreaName
-          }
-          sites {
-            siteName
           }
         }
       }
