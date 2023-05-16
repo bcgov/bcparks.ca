@@ -65,6 +65,20 @@ const loadAdvisories = (apiBaseUrl, orcsId) => {
   return axios.get(`${apiBaseUrl}/public-advisories?${params}`)
 }
 
+const loadProtectedArea = (apiBaseUrl, orcsId) => {
+  const params = qs.stringify({
+    filters: {
+      orcs: {
+        $eq: orcsId
+      }
+    }
+  }, {
+    encodeValuesOnly: true,
+  })
+
+  return axios.get(`${apiBaseUrl}/protected-areas?${params}`)
+}
+
 export default function ParkTemplate({ data }) {
   const classes = useStyles()
 
@@ -132,6 +146,9 @@ export default function ParkTemplate({ data }) {
   const [advisoryLoadError, setAdvisoryLoadError] = useState(false)
   const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true)
   const [advisories, setAdvisories] = useState([])
+  const [protectedAreaLoadError, setProtectedAreaLoadError] = useState(false)
+  const [isLoadingProtectedArea, setIsLoadingProtectedArea] = useState(true)
+  const [hasCampfireBan, setHasCampfireBan] = useState(false)
 
   useEffect(() => {
     setIsLoadingAdvisories(true)
@@ -147,6 +164,21 @@ export default function ParkTemplate({ data }) {
       })
       .finally(() => {
         setIsLoadingAdvisories(false)
+      })
+    setIsLoadingProtectedArea(true)
+    loadProtectedArea(apiBaseUrl, park.orcs)
+      .then(response => {
+        if (response.status === 200) {
+          const park = response.data.data[0]
+          setHasCampfireBan(park.attributes.hasCampfireBan)
+          setProtectedAreaLoadError(false)
+        } else {
+          setHasCampfireBan(false)
+          setProtectedAreaLoadError(true)
+        }
+      })
+      .finally(() => {
+        setIsLoadingProtectedArea(false)
       })
   }, [apiBaseUrl, park.orcs])
 
@@ -321,17 +353,19 @@ export default function ParkTemplate({ data }) {
                   {breadcrumbs}
                 </Breadcrumbs>
               </Grid>
-              <Grid item xs={12} sm={12}>
-                <ParkHeader
-                  parkName={parkName}
-                  hasReservations={hasReservations}
-                  hasDayUsePass={hasDayUsePass}
-                  hasCampfireBan={park.hasCampfireBan}
-                  isLoadingAdvisories={isLoadingAdvisories}
-                  advisoryLoadError={advisoryLoadError}
-                  advisories={advisories}
-                />
-              </Grid>
+              {!isLoadingProtectedArea && !protectedAreaLoadError && (
+                <Grid item xs={12} sm={12}>
+                  <ParkHeader
+                    parkName={parkName}
+                    hasReservations={hasReservations}
+                    hasDayUsePass={hasDayUsePass}
+                    hasCampfireBan={hasCampfireBan}
+                    isLoadingAdvisories={isLoadingAdvisories}
+                    advisoryLoadError={advisoryLoadError}
+                    advisories={advisories}
+                  />
+                </Grid>
+              )}
             </Grid>
           </Container>
         </div>
