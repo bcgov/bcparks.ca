@@ -12,7 +12,7 @@ import "../../../styles/listPage.scss"
 const DocumentLink = ({ doc }) => {
   const year = doc.documentDate.split('-').shift()
   return (
-    <p key={doc.id}>
+    <p>
       <a href={doc.url}>
         {`${doc.title} - ${doc.documentType?.documentCode}(${year}) [PDF]`}
       </a>
@@ -20,7 +20,7 @@ const DocumentLink = ({ doc }) => {
   )
 }
 
-const ApprovedListPage = ({ data }) => {
+const ApprovedListPage = () => {
   const queryData = useStaticQuery(graphql`
     query {
       allStrapiManagementDocument(sort: {fields: title, order: ASC}) {
@@ -135,16 +135,16 @@ const ApprovedListPage = ({ data }) => {
               filters.map((filter, index) => (
                 <div key={index} className="list">
                   {filter !== "All" && <h3>{filter}</h3>}
-                  {filtering(filter).map(doc => (
-                    <DocumentLink doc={doc} />
+                  {filtering(filter).map((doc, index) => (
+                    <DocumentLink doc={doc} key={index} />
                   ))}
                 </div>
               ))
             ) : (
               <div className="list">
                 <h3>{currentFilter}</h3>
-                {filtering(currentFilter).map(doc => (
-                  <DocumentLink doc={doc} />
+                {filtering(currentFilter).map((doc, index) => (
+                  <DocumentLink doc={doc} key={index} />
                 ))}
               </div>
             )}
