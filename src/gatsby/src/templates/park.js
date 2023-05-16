@@ -169,8 +169,8 @@ export default function ParkTemplate({ data }) {
     loadProtectedArea(apiBaseUrl, park.orcs)
       .then(response => {
         if (response.status === 200) {
-          const park = response.data.data[0]
-          setHasCampfireBan(park.attributes.hasCampfireBan)
+          const park = response.data?.data?.length ? response.data.data[0] : {};
+          setHasCampfireBan(park?.attributes?.hasCampfireBan || false)
           setProtectedAreaLoadError(false)
         } else {
           setHasCampfireBan(false)
