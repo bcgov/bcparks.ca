@@ -38,16 +38,25 @@ module.exports = createCoreService(
     async generateAllProtectedAreaFireBans() {
       // sort the bans in descending order so the oldest one will be last and the earliest
       // date  will be applied to the protectedArea when there are multiple bans
-      const allBans = await strapi.entityService.findMany(
+      const campfireBans = await strapi.entityService.findMany(
         "api::fire-ban-prohibition.fire-ban-prohibition", {
         sort: { effectiveDate: 'DESC' },
-        filters: { prohibitionDescription: { $containsi: 'campfire' } },
+        filters: {
+          $or: [
+            {
+              prohibitionDescription: { $containsi: 'campfire' }
+            },
+            {
+              prohibitionDescription: { $containsi: 'category 1' }
+            }
+          ]
+        },
         populate: '*',
       });
 
       let rowsUpdated = 0;
 
-      for (const ban of allBans) {
+      for (const ban of campfireBans) {
 
         let fireZones = [];
         if (ban.fireZone) {
@@ -94,7 +103,10 @@ module.exports = createCoreService(
           rowsUpdated += count;
         }
       }
-      return { count: rowsUpdated };
+      return {
+        campfireBanCount: campfireBans.length,
+        parkCount: rowsUpdated
+      };
     }
   })
 );

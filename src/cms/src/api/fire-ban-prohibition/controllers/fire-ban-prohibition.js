@@ -37,11 +37,11 @@ module.exports = createCoreController(
       if (cachePlugin) {
         await cachePlugin.services.cacheStore.clearByUid('api::protected-area.protected-area');
         await cachePlugin.services.cacheStore.clearByUid('api::park-access-status.park-access-status');
-        // await cachePlugin.services.cacheStore.clearByUid('api::public-advisory.public-advisory');
+        await cachePlugin.services.cacheStore.clearByUid('api::public-advisory.public-advisory');
       }
 
       ctx.send({
-        message: 'Propagation complete!'
+        message: `Propagation complete! ${result.campfireBanCount} campfire bans impacting ${result.parkCount} protected areas.`
       }, 201);
     }
   })
