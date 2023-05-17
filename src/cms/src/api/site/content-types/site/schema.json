@@ -58,7 +58,8 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::protected-area.protected-area",
-      "inversedBy": "sites"
+      "inversedBy": "sites",
+      "required": true
     },
     "parkActivities": {
       "type": "relation",

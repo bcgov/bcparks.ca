@@ -23,7 +23,8 @@
       "type": "string"
     },
     "caption": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "subject": {
       "type": "string"
