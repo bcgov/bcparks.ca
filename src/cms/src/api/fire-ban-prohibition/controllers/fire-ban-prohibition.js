@@ -21,9 +21,11 @@ module.exports = createCoreController(
           error.message
         );
       }
+      
+      let result;
 
       try {
-        await strapi
+        result = await strapi
           .service("api::fire-ban-prohibition.fire-ban-prohibition")
           .generateAllProtectedAreaFireBans();
       } catch (error) {
