@@ -46,18 +46,16 @@
 
     .bc-parks-logo--desktop {
       &.gatsby-image-wrapper {
-        width: 148px;
-      }
-      img {
-        height: 45px;
+        img {
+          width: 170px;
+        }
       }
     }
     .bc-parks-logo--mobile {
       &.gatsby-image-wrapper {
-        width: 136px;
-      }
-      img {
-        height: 50px;
+        img {
+          width: 137px;
+        }
       }
     }
   }
