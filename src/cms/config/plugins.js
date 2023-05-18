@@ -1,7 +1,16 @@
 module.exports = ({ env }) => {
   return {
     graphql: {
-      amountLimit: 2500,
+      config: {
+        shadowCRUD: true,
+        amountLimit: 500,
+        depthLimit: 7,
+        playgroundAlways: process.env.STRAPI_ADMIN_ENVIRONMENT !== "prod",
+        apolloServer: {
+          tracing: false,
+          introspection: true,
+        },
+      }
     },
     email: {
       provider: "nodemailer",
