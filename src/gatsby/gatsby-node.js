@@ -23,7 +23,31 @@ exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
   const typeDefs = `
+  type STRAPI_BIOGEOCLIMATIC_ZONE implements Node {
+    zone: String
+    zoneCode: String
+    protectedAreas: [STRAPI_PROTECTED_AREA]
+  }
+
+  type STRAPI_MARINE_ECOSECTION implements Node {
+    marineEcosectionId: Int
+    marineEcosection: String
+    marineEcosectionCode: String
+    protectedAreas: [STRAPI_PROTECTED_AREA]
+  }
+
+  type STRAPI_TERRESTRIAL_ECOSECTION implements Node {
+    terrestrialEcosectionId: Int
+    terrestrialEcosection: String
+    terrestrialEcosectionCode: String
+    parentEcoregionCode: String
+    protectedAreas: [STRAPI_PROTECTED_AREA]
+  }
+
   type STRAPI_PROTECTED_AREA implements Node {
+    biogeoclimaticZones: [STRAPI_BIOGEOCLIMATIC_ZONE]
+    marineEcosections: [STRAPI_MARINE_ECOSECTION]
+    terrestrialEcosections: [STRAPI_TERRESTRIAL_ECOSECTION]
     seo: STRAPI_COMPONENT_PARKS_SEO
   }
 

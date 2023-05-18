@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "terrestrial_ecosections",
+  "info": {
+    "singularName": "terrestrial-ecosection",
+    "pluralName": "terrestrial-ecosections",
+    "displayName": "Terrestrial-ecosection",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "terrestrialEcosectionId": {
+      "type": "integer"
+    },
+    "terrestrialEcosection": {
+      "type": "string"
+    },
+    "terrestrialEcosectionCode": {
+      "type": "string"
+    },
+    "parentEcoregionCode": {
+      "type": "string"
+    },
+    "protectedAreas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "terrestrialEcosections"
+    }
+  }
+}
