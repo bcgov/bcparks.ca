@@ -609,6 +609,9 @@ export const query = graphql`
         description {
           data
         }
+        appendStandardCalloutOverride {
+          data
+        }
         activityType {
           activityName
           activityCode
@@ -620,12 +623,18 @@ export const query = graphql`
           defaultDescription {
             data
           }
+          appendStandardCalloutText {
+            data
+          }
         }
       }
       parkFacilities {
         isActive
         isFacilityOpen
         description {
+          data
+        }
+        appendStandardCalloutOverride {
           data
         }
         facilityType {
@@ -637,6 +646,9 @@ export const query = graphql`
           iconNA
           rank
           defaultDescription {
+            data
+          }
+          appendStandardCalloutText {
             data
           }
         }
