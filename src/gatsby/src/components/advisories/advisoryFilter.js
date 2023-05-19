@@ -235,7 +235,7 @@ const AdvisoryFilter = ({
               name="parks"
             />
           }
-          label="Park Names"
+          label="Park names"
         />
       </Box>
     </div>

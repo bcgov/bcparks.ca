@@ -5,17 +5,17 @@ const AdvisoryLegend = () => {
   const legendItems = [
     {
       label: "High",
-      description: "Immediate Danger and Closures",
+      description: "Immediate danger and closures",
       color: "#d8292f",
     },
     {
       label: "Medium",
-      description: "Safety and Health Related",
+      description: "Safety and health related",
       color: "#fcba19",
     },
     {
       label: "Low",
-      description: "Discretion and Warnings",
+      description: "Discretion and warnings",
       color: "#2464a4",
     },
   ]
@@ -47,10 +47,15 @@ const AdvisoryLegend = () => {
         })}
       </div>
       <div className="mb-4 mt-3 px-md-5 mx-md-5 font-italic text-center">
-        For most up to date emergencies please visit BC Flood &amp; Wildfire
-        Service and learn how to be prepared for an emergency before it happens.
-        Updated Monday to Friday from 8:30 am to 4:30 pm, excluding statutory
-        holidays.
+        Advisories are updated Monday to Friday 8:30 to 4:30, excluding statutory holidays.<br />
+        Get up-to-date provincial emergency information for wildfires, floods, and highways from:<br />
+        <a href="https://www2.gov.bc.ca/gov/content/safety/wildfire-status">
+          BC Wildfire Service
+        </a>{", "}
+        <a href="https://www2.gov.bc.ca/gov/content/environment/air-land-water/water/drought-flooding-dikes-dams/river-forecast-centre">
+          BC River Forecast Centre
+        </a>{", "}
+        <a href="https://drivebc.ca">Drive BC</a>
       </div>
     </div>
   )

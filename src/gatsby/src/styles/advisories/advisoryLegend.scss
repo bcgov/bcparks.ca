@@ -42,4 +42,11 @@
   .col:last-child {
     padding: 0px;
   }
+
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
