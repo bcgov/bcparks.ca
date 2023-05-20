@@ -13,6 +13,8 @@ import ScrollToTop from "../components/scrollToTop"
 
 import "../styles/staticContent1.scss"
 
+const slugify = require("slugify")
+
 export default function ParkSubPage({ data }) {
   const page = data.strapiParkSubPage
   const contents = page.content
@@ -32,11 +34,12 @@ export default function ParkSubPage({ data }) {
       if (!section.sectionTitle) {
           section.sectionTitle = page.title
       }
+      const titleId = slugify(section.sectionTitle).toLowerCase()
       pageSections.push({
         display: section.sectionTitle,
         sectionIndex: sectionIndex,
         id: section.id,
-        link: "#page-section-" + section.id,
+        link: "#" + titleId,
         visible: true
       })
     }

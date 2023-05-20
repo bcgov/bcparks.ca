@@ -15,6 +15,8 @@ import { renderBreadcrumbs } from "../utils/helpers";
 
 import "../styles/staticContent1.scss"
 
+const slugify = require("slugify")
+
 export default function StaticContent1({ pageContext }) {
   const queryData = useStaticQuery(graphql`
     {
@@ -115,12 +117,13 @@ export default function StaticContent1({ pageContext }) {
       if (c.strapi_component === "parks.page-section") {
         // each section needs an index to be used for in-page navigation
         // and scrollspy highlighting
+        const titleId = slugify(c.sectionTitle).toLowerCase()
         c.sectionIndex = sectionIndex
         pageSections.push({
           display: c.sectionTitle,
           sectionIndex: sectionIndex,
           id: c.id,
-          link: "#page-section-" + c.id,
+          link: "#" + titleId,
           visible: true // Default
         })
       }
