@@ -47,16 +47,8 @@ module.exports = {
           "park-operation-sub-area",
           "park-sub-page",
           "legacy-redirect",
-          {
-            singularName: "management-document",
-            queryParams: {
-              populate: {
-                documentType: {
-                  fields: "*"
-                }
-              }
-            }
-          },
+          "management-document",
+          "management-document-type",
           {
             singularName: "page",
             queryParams: {
