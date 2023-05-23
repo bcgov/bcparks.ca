@@ -51,11 +51,18 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkOperation: STRAPI_PARK_OPERATION
   }
 
+  type STRAPI_MANAGEMENT_DOCUMENT_TYPE implements Node {
+    documentCode: String
+    documentType: String
+    description: String
+  }
+
   type STRAPI_MANAGEMENT_DOCUMENT implements Node {
     title: String
     url: String
     description: String
     documentDate: Date
+    documentType: STRAPI_MANAGEMENT_DOCUMENT_TYPE @link(by: "id", from: "documentType___NODE")
   }
   `
   createTypes(typeDefs)
