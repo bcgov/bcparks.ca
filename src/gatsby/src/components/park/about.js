@@ -38,7 +38,7 @@ export default function About({
               <li>
                 <strong>Size:</strong> {park.totalArea} hectares
               </li>
-              {biogeoclimaticZones.length > 0 && (
+              {biogeoclimaticZones?.length > 0 && (
                 <li className="ecological-list">
                   <strong>
                     <a href="https://catalogue.data.gov.bc.ca/dataset/bec-zones-generalized-1-2m-">
@@ -55,7 +55,7 @@ export default function About({
                   </ul>
                 </li>
               )}
-              {terrestrialEcosections.length > 0 && (
+              {terrestrialEcosections?.length > 0 && (
                 <li className="ecological-list">
                   <strong>
                     <a href="https://catalogue.data.gov.bc.ca/dataset/ecosections-ecoregion-ecosystem-classification-of-british-columbia">
@@ -72,7 +72,7 @@ export default function About({
                   </ul>
                 </li>
               )}
-              {marineEcosections.length > 0 && (
+              {marineEcosections?.length > 0 && (
                 <li className="ecological-list">
                   <strong>
                     <a href="https://catalogue.data.gov.bc.ca/dataset/marine-ecosections-coastal-resource-information-management-system-crims">
