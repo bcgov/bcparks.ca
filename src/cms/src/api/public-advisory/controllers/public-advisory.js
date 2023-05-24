@@ -7,7 +7,7 @@
 const { sanitize } = require('@strapi/utils')
 const { createCoreController } = require("@strapi/strapi").factories;
 
-const addStandardMessages = function (query) {
+const populateStandardMessages = function (query) {
     if (query.populate !== "*") {
         query = {
             ...query,
@@ -22,6 +22,20 @@ const addStandardMessages = function (query) {
         };
     }
     return query;
+}
+
+const appendStandardMessages = function(entity) {
+    if (entity) {
+        const { description = "", standardMessages } = entity;
+        if (standardMessages && standardMessages.length > 0) {
+            entity.description = (
+                description +
+                " " +
+                standardMessages.map((m) => m.description).join(" ")
+            ).trim();
+        }
+    }
+    return entity;    
 }
 
 module.exports = createCoreController(
@@ -41,21 +55,12 @@ module.exports = createCoreController(
                 return ctx.badRequest(404);
             }
 
-            ctx.query = addStandardMessages(ctx.query);
+            ctx.query = populateStandardMessages(ctx.query);
 
             const entity = await strapi.service("api::public-advisory.public-advisory").findOne(entities[0].id, ctx.query);
 
             // append the standardMessages to the description and then delete them from the entity
-            if (entity) {
-                const { description = "", standardMessages } = entity;
-                if (standardMessages && standardMessages.length > 0) {
-                    entity.description = (
-                        description +
-                        " " +
-                        standardMessages.map((m) => m.description).join(" ")
-                    ).trim();
-                }
-            }
+            entity = appendStandardMessages(entity);
             delete entity.standardMessages;
 
             const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
@@ -65,7 +70,7 @@ module.exports = createCoreController(
             let entities;
             let pagination;
 
-            ctx.query = addStandardMessages(ctx.query);
+            ctx.query = populateStandardMessages(ctx.query);
 
             if (ctx.query.queryText !== undefined) {
                 ({ results: entities } = await strapi.service("api::public-advisory.public-advisory").search(ctx.query));
@@ -76,19 +81,10 @@ module.exports = createCoreController(
 
             const sanitizedEntities = await this.sanitizeOutput(entities, ctx);
 
-            const results = sanitizedEntities.map((publicAdvisory) => {
-                if (publicAdvisory) {
-                    const { description = "", standardMessages } = publicAdvisory;
-                    if (standardMessages.length > 0) {
-                        publicAdvisory.description = (
-                            description +
-                            " " +
-                            standardMessages.map((m) => m.description).join(" ")
-                        ).trim();
-                    }
-                }
-                delete publicAdvisory.standardMessages;
-                return publicAdvisory;
+            const results = sanitizedEntities.map((entity) => {
+                entity = appendStandardMessages(entity);
+                delete entity.standardMessages;
+                return entity;
             });
 
             return {
@@ -102,6 +98,52 @@ module.exports = createCoreController(
             }
             return (await strapi.service("api::public-advisory.public-advisory").find(ctx.query)).pagination.total;
         },
+        async items(ctx) {
+            let entities;
+            let pagination;
+
+            ctx.query = populateStandardMessages(ctx.query);
+
+            ctx.query.populate = {
+                accessStatus: { fields: '*' },
+                eventType: { fields: '*' },
+                urgency: { fields: '*' },
+                advisoryStatus: { fields: '*' },
+                links: { fields: '*' },
+                regions: { fields: '*' },
+                sections: { fields: '*' },
+                managementAreas: { fields: '*' },
+                fireZones: { fields: '*' },
+                sites: {
+                    fields: [
+                        "id", "siteNumber", "siteName", "orcsSiteNumber", "slug", "status"
+                    ]
+                },
+                fireCentres: { fields: '*' },
+                fireZones: { fields: '*' },
+                protectedAreas: {
+                    fields: [
+                        "id", "orcs", "protectedAreaName", "slug", "type", "status",
+                        "typeCode", "hasCampfireBan", "campfireBanEffectiveDate"
+                    ]
+                }
+            };
+
+            ({ results: entities, pagination } = await strapi.service("api::public-advisory.public-advisory").find(ctx.query));
+
+            const sanitizedEntities = await this.sanitizeOutput(entities, ctx);
+
+            const results = sanitizedEntities.map((entity) => {
+                entity = appendStandardMessages(entity);
+                delete entity.standardMessages;
+                return entity;
+            });
+
+            return {
+                data: results || [],
+                meta: { pagination: pagination }
+            };
+        }
     }
     )
 );
