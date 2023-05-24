@@ -102,8 +102,6 @@ module.exports = createCoreController(
             let entities;
             let pagination;
 
-            ctx.query = populateStandardMessages(ctx.query);
-
             ctx.query.populate = {
                 accessStatus: { fields: '*' },
                 eventType: { fields: '*' },
@@ -114,6 +112,7 @@ module.exports = createCoreController(
                 sections: { fields: '*' },
                 managementAreas: { fields: '*' },
                 fireZones: { fields: '*' },
+                standardMessages: { fields: '*' },
                 sites: {
                     fields: [
                         "id", "siteNumber", "siteName", "orcsSiteNumber", "slug", "status"
@@ -144,6 +143,5 @@ module.exports = createCoreController(
                 meta: { pagination: pagination }
             };
         }
-    }
-    )
+    })
 );
