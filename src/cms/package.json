@@ -16,6 +16,7 @@
     "@_sh/strapi-plugin-ckeditor": "^2.0.4",
     "@babel/plugin-transform-block-scoping": "^7.20.11",
     "@ckeditor/ckeditor5-markdown-gfm": "^36.0.1",
+    "@strapi/plugin-gatsby-preview": "^0.1.0",
     "@strapi/plugin-documentation": "4.10.5",
     "@strapi/plugin-graphql": "4.10.5",
     "@strapi/plugin-users-permissions": "4.10.5",
