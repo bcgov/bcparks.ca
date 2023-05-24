@@ -96,7 +96,7 @@ export default function Advisory({
   const [displayUpdatedDate, setDisplayUpdatedDate] = useState(false);
   const [notes, setNotes] = useState("");
   const [submittedBy, setSubmittedBy] = useState("");
-  const [listingRank, setListingRank] = useState("");
+  const [listingRank, setListingRank] = useState(0);
   const [ toError, setToError] = useState(false);
   const [toDashboard, setToDashboard] = useState(false);
   const { keycloak, initialized } = useKeycloak();

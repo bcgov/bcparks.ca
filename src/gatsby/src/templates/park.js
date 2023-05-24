@@ -14,6 +14,7 @@ import {
 import useScrollSpy from "react-use-scrollspy"
 
 import { capitalizeFirstLetter, renderHTML, isNullOrWhiteSpace } from "../utils/helpers";
+import { loadAdvisories } from '../utils/advisoryHelper';
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -43,27 +44,6 @@ import { PARK_NAME_TYPE, useStyles } from "../utils/constants";
 
 const qs = require('qs')
 const AsyncMapLocation =  loadable(() => import("../components/park/mapLocation"));
-
-const loadAdvisories = (apiBaseUrl, orcsId) => {
-  const params = qs.stringify({
-    populate: "*",
-    filters: {
-      protectedAreas: {
-        orcs: {
-          $eq: orcsId
-        }
-      }
-    },
-    pagination: {
-      limit: 100,
-    },
-    sort: ["urgency.sequence:DESC"],
-  }, {
-    encodeValuesOnly: true,
-  })
-
-  return axios.get(`${apiBaseUrl}/public-advisories?${params}`)
-}
 
 const loadProtectedArea = (apiBaseUrl, orcsId) => {
   const params = qs.stringify({
