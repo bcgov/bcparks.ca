@@ -8,7 +8,8 @@
   "options": {},
   "attributes": {
     "sectionTitle": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "sectionHTML": {
       "type": "customField",
