@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/preset-react": "^7.12.13",
     "@bcgov/bootstrap-theme": "https://github.com/bcgov/bootstrap-theme/releases/download/v1.1.1/bcgov-bootstrap-theme-1.1.1.tgz",
     "@date-io/moment": "^1.3.13",
     "@material-ui/core": "4.11.4",
@@ -16,13 +15,8 @@
     "@storybook/addon-queryparams": "^6.1.21",
     "@storybook/addon-storyshots": "^6.1.21",
     "@storybook/react": "^6.1.21",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^13.0.1",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
-    "babel-loader": "8.1.0",
-    "babel-plugin-transform-export-extensions": "^6.22.0",
     "bootstrap": "^4.6.0",
     "he": "^1.2.0",
     "history": "^5.0.0",
@@ -39,11 +33,22 @@
     "react-moment": "^1.1.1",
     "react-query": "^3.16.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3",
     "react-select": "^4.3.0",
-    "web-vitals": "^1.1.1",
-    "webpack": "4.44.2"
+    "web-vitals": "^1.1.1"
   },
+  "devDependencies": {
+    "@babel/preset-react": "^7.12.13",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^13.0.1",
+    "babel-jest": "^26.6.0",
+    "babel-loader": "8.1.0",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "cross-env": "^7.0.3",
+    "jest": "26.6.0",
+    "react-scripts": "^5.0.1",
+    "webpack": "4.46.0"
+  },  
   "scripts": {
     "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
     "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
@@ -106,11 +111,6 @@
     "reportPath": "coverage",
     "reportFile": "test-report.xml",
     "indent": 4
-  },
-  "devDependencies": {
-    "babel-jest": "^26.6.0",
-    "cross-env": "^7.0.3",
-    "jest": "26.6.0"
   },
   "overrides": {
     "@bcgov/bootstrap-theme": {
