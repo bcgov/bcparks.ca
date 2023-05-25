@@ -164,7 +164,7 @@ export default function Advisory({
               setIsSafetyRelated(advisoryData.isSafetyRelated);
             }
             setListingRank(
-              advisoryData.listingRank ? "" + advisoryData.listingRank : ""
+              advisoryData.listingRank ? advisoryData.listingRank : 0
             );
             setNotes(advisoryData.note || "");
             setSubmittedBy(advisoryData.submittedBy || "");

@@ -1256,7 +1256,7 @@ AdvisoryForm.propTypes = {
     revisionNumber: PropTypes.number,
     ticketNumber: PropTypes.string,
     setTicketNumber: PropTypes.func.isRequired,
-    listingRank: PropTypes.string,
+    listingRank: PropTypes.number,
     setListingRank: PropTypes.func.isRequired,
     headline: PropTypes.string,
     setHeadline: PropTypes.func.isRequired,
