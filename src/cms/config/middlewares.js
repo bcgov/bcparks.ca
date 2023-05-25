@@ -7,6 +7,7 @@ module.exports = [
         useDefaults: true,
         directives: {
           "connect-src": ["'self'", "https:"],
+          "script-src": ["'self'", "'unsafe-inline'"],
           "img-src": [
             "'self'",
             "data:",
@@ -23,7 +24,7 @@ module.exports = [
             "market-assets.strapi.io",
             "nrs.objectstore.gov.bc.ca"
           ],
-          'frame-src': [
+          "frame-src": [
             "'self'",
             "youtube.com",
             "www.youtube.com"
