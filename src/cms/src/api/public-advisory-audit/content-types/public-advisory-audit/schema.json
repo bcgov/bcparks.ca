@@ -35,7 +35,9 @@
       "type": "boolean"
     },
     "listingRank": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0,
+      "required": true
     },
     "note": {
       "type": "text"

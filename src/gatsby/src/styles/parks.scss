@@ -140,7 +140,7 @@
 
 // TODO: destroy this .grey-background thing up with fire
 .grey-background {
-  background-color: $colorGrey !important;
+  background-color: $colorGreyLight !important;
 }
 
 .grey-background .MuiPaper-root,
@@ -154,6 +154,10 @@
   &.bc-bg-yellow {
     background-color: $colorGold;
   }
+}
+
+.MuiPaper-root {
+  color: $colorText;
 }
 
 .park-overview-icon {
@@ -224,6 +228,9 @@
       padding: 0;
       @media (min-width: $mediumBreakpoint) {
         padding: 4px;
+        &.main-park-photo-grid {
+          padding: 8px 0;
+        }
       }
     }
   }

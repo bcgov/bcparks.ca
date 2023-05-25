@@ -1,3 +1,6 @@
+import axios from "axios"
+const qs = require('qs');
+
 const getAdvisoryTypeFromUrl = () => {
     let aType = "all", thisUrl = "", params
   
@@ -12,6 +15,27 @@ const getAdvisoryTypeFromUrl = () => {
     return aType
 }
 
+const loadAdvisories = (apiBaseUrl, orcsId) => {
+  const params = qs.stringify({
+    filters: {
+      protectedAreas: {
+        orcs: {
+          $eq: orcsId
+        }
+      }
+    },
+    pagination: {
+      limit: 100,
+    },
+    sort: ["urgency.sequence:DESC", "listingRank:DESC", "advisoryDate:DESC"],
+  }, {
+    encodeValuesOnly: true,
+  })
+
+  return axios.get(`${apiBaseUrl}/public-advisories/items?${params}`)
+}
+
 export {
+    loadAdvisories,
     getAdvisoryTypeFromUrl
 }

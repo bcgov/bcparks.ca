@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./AdvisoryForm.css";
-import { Button } from "shared-components/build/components/button/Button";
+import { Button } from "../../shared/button/Button";
 import {
   TextField,
   ButtonGroup,
@@ -148,7 +148,7 @@ export default function AdvisoryForm({
   const [listingRankError, setListingRankError] = useState("");
 
   const advisoryData = {
-    listingRank: { value: listingRank, setError: setListingRankError },
+    listingRank: { value: listingRank, setError: setListingRankError, text: "listing rank" },
     ticketNumber: { value: ticketNumber, setError: setTicketNumberError },
     headline: { value: headline, setError: setHeadlineError, text: "headline" },
     eventType: {
@@ -228,7 +228,7 @@ export default function AdvisoryForm({
 
   const listingRankInput = {
     id: "listing",
-    required: false,
+    required: true,
     placeholder: "Listing Rank",
   };
 

@@ -77,7 +77,8 @@ export function validateDate(field) {
 
 export function validAdvisoryData(advisoryData, validateStatus, mode) {
   advisoryData.formError("");
-  const validListingRank = validateOptionalNumber(advisoryData.listingRank);
+  const validListingRankNumber = validateOptionalNumber(advisoryData.listingRank);
+  const validListingRankRequired = validateRequiredText(advisoryData.listingRank);
   const validTicketNumber = validateOptionalNumber(advisoryData.ticketNumber);
   const validHeadline = validateRequiredText(advisoryData.headline);
   const validEventType = validateRequiredSelect(advisoryData.eventType);
@@ -89,7 +90,8 @@ export function validAdvisoryData(advisoryData, validateStatus, mode) {
   const validExpiryDate = validateOptionalDate(advisoryData.expiryDate);
   const validSubmittedBy = validateRequiredText(advisoryData.submittedBy);
   let validData =
-    validListingRank &&
+    validListingRankNumber &&
+    validListingRankRequired &&
     validTicketNumber &&
     validHeadline &&
     validEventType &&

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { cmsAxios } from "../../../axios_config";
 import DataTable from "../../composite/dataTable/DataTable";
-import { Loader } from "shared-components/build/components/loader/Loader";
+import { Loader } from "../../shared/loader/Loader";
 import { useQuery } from "react-query";
 import moment from "moment";
 import { exportPdf } from "../../../utils/ExportPdfUtil";

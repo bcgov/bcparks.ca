@@ -21,6 +21,7 @@ cms:
 admin:
   env:
     externalUrl: https://alpha-dev-staff.bcparks.ca
+    publicUrl: https://alpha-dev.bcparks.ca
 
 patroni:
   replicas: 1

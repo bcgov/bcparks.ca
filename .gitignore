@@ -112,7 +112,6 @@ tools/syncdb/*.sql
 **/build
 !**/wysiwyg/admin/src/components/ckeditor5-build-custom/build
 **/.strapi-updater.json
-**/package-lock.json
 **/yarn.lock
 
 ############################
@@ -172,14 +171,12 @@ bcparks.ca-scrape.laccdb
 **/.env.test.local
 **/.env.production.local
 **/generate-react-cli.json
-**/package-lock.json
 **/yarn.lock
 **/npm-debug.log*
 **/yarn-debug.log*
 **/yarn-error.log*
 
 **/cms/data/images/*
-src/staging/package-lock.json
 
 # Don't ignore .s2i bin
 !**/.s2i/bin/

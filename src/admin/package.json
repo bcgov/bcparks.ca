@@ -41,13 +41,12 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
     "react-select": "^4.3.0",
-    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.2/shared-components-1.2.2.tgz",
     "web-vitals": "^1.1.1",
     "webpack": "4.44.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
@@ -107,5 +106,21 @@
     "reportPath": "coverage",
     "reportFile": "test-report.xml",
     "indent": 4
+  },
+  "devDependencies": {
+    "babel-jest": "^26.6.0",
+    "cross-env": "^7.0.3",
+    "jest": "26.6.0"
+  },
+  "overrides": {
+    "@bcgov/bootstrap-theme": {
+      "bootstrap": "$bootstrap"
+    },
+    "react-scripts": {
+      "node-sass": "npm:sass@^1.62"
+    },
+    "webpack": {
+      "node-sass": "npm:sass@^1.62"
+    }
   }
 }

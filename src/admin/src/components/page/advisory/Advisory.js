@@ -16,8 +16,8 @@ import {
 } from "../../../utils/AdvisoryUtil";
 import AdvisoryForm from "../../composite/advisoryForm/AdvisoryForm";
 import Header from "../../composite/header/Header";
-import { Loader } from "shared-components/build/components/loader/Loader";
-import { Button } from "shared-components/build/components/button/Button";
+import { Loader } from "../../shared/loader/Loader";
+import { Button } from "../../shared/button/Button";
 import {
   getProtectedAreas,
   getRegions,
@@ -96,7 +96,7 @@ export default function Advisory({
   const [displayUpdatedDate, setDisplayUpdatedDate] = useState(false);
   const [notes, setNotes] = useState("");
   const [submittedBy, setSubmittedBy] = useState("");
-  const [listingRank, setListingRank] = useState("");
+  const [listingRank, setListingRank] = useState(0);
   const [ toError, setToError] = useState(false);
   const [toDashboard, setToDashboard] = useState(false);
   const { keycloak, initialized } = useKeycloak();

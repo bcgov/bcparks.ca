@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react"
-import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql } from "gatsby"
 import {
@@ -13,6 +12,7 @@ import {
 import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
+import { loadAdvisories } from '../utils/advisoryHelper';
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -32,29 +32,6 @@ import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
 import { useStyles } from "../utils/constants"
-
-const qs = require('qs')
-
-const loadAdvisories = (apiBaseUrl, orcsId) => {
-  const params = qs.stringify({
-    populate: "*",
-    filters: {
-      protectedAreas: {
-        orcs: {
-          $eq: orcsId
-        }
-      }
-    },
-    pagination: {
-      limit: 100,
-    },
-    sort: ["urgency.sequence:DESC"],
-  }, {
-    encodeValuesOnly: true,
-  })
-
-  return axios.get(`${apiBaseUrl}/public-advisories?${params}`)
-}
 
 export default function SiteTemplate({ data }) {
   const classes = useStyles()
@@ -407,11 +384,14 @@ export const Head = ({data}) => {
   const description = site.description.data.description
   const siteDescription = description.replace(/(<([^>]+)>)/ig, '');
   const siteDescriptionShort = truncate(siteDescription, { length: 160 });
+  const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
+  const photoUrl = photos[0]?.imageUrl
 
   return (
     <Seo
       title={`${park?.protectedAreaName}: ${site.siteName}`}
       description={siteDescriptionShort}
+      image={photoUrl}
     />
   )
 }

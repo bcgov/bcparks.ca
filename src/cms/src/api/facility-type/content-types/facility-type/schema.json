@@ -39,8 +39,7 @@
       "type": "boolean"
     },
     "isCamping": {
-      "type": "boolean",
-      "required": true
+      "type": "boolean"
     },
     "defaultDescription": {
       "type": "customField",

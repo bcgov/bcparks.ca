@@ -59,6 +59,7 @@ const getPublishedPublicAdvisories = async () => {
       populate: {
         protectedAreas: { fields: ["orcs"] },
         accessStatus: {fields: ["accessStatus"]},
+        eventType: { fields: ["eventType"] },
         links: { populate: { type: { fields: ["type"] } } }
       },
 

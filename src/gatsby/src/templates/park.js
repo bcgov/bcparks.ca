@@ -14,6 +14,7 @@ import {
 import useScrollSpy from "react-use-scrollspy"
 
 import { capitalizeFirstLetter, renderHTML, isNullOrWhiteSpace } from "../utils/helpers";
+import { loadAdvisories } from '../utils/advisoryHelper';
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -23,6 +24,7 @@ import About from "../components/park/about"
 import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
 import CampingDetails from "../components/park/campingDetails"
+import NatureAndCulture from "../components/park/natureAndCulture"
 import Reconciliation from "../components/park/reconciliation"
 import Heading from "../components/park/heading.js"
 import ParkActivity from "../components/park/parkActivity"
@@ -42,27 +44,6 @@ import { PARK_NAME_TYPE, useStyles } from "../utils/constants";
 
 const qs = require('qs')
 const AsyncMapLocation =  loadable(() => import("../components/park/mapLocation"));
-
-const loadAdvisories = (apiBaseUrl, orcsId) => {
-  const params = qs.stringify({
-    populate: "*",
-    filters: {
-      protectedAreas: {
-        orcs: {
-          $eq: orcsId
-        }
-      }
-    },
-    pagination: {
-      limit: 100,
-    },
-    sort: ["urgency.sequence:DESC"],
-  }, {
-    encodeValuesOnly: true,
-  })
-
-  return axios.get(`${apiBaseUrl}/public-advisories?${params}`)
-}
 
 const loadProtectedArea = (apiBaseUrl, orcsId) => {
   const params = qs.stringify({
@@ -92,6 +73,7 @@ export default function ParkTemplate({ data }) {
   const safetyInfo = park.safetyInfo.data.safetyInfo
   const specialNotes = park.specialNotes.data.specialNotes
   const locationNotes = park.locationNotes.data.locationNotes
+  const natureAndCulture = park.natureAndCulture.data.natureAndCulture
   const reconciliationNotes = park.reconciliationNotes.data.reconciliationNotes
   const maps = park.maps.data.maps
 
@@ -192,6 +174,7 @@ export default function ParkTemplate({ data }) {
   const mapLocationRef = useRef("")
   const activityMapRef = useRef("")
   const aboutRef = useRef("")
+  const natureAndCultureRef = useRef("")
   const reconciliationRef = useRef("")
 
   const sectionRefs = [
@@ -207,6 +190,7 @@ export default function ParkTemplate({ data }) {
     mapLocationRef,
     activityMapRef,
     aboutRef,
+    natureAndCultureRef,
     reconciliationRef,
   ]
 
@@ -293,11 +277,16 @@ export default function ParkTemplate({ data }) {
       visible:
         park.totalArea ||
         park.establishedDate ||
-        !isNullOrWhiteSpace(park.parkContact.data.parkContact) ||
-        !isNullOrWhiteSpace(park.natureAndCulture.data.natureAndCulture),
+        !isNullOrWhiteSpace(park.parkContact.data.parkContact)
     },
     {
       sectionIndex: 12,
+      display: "Nature and culture",
+      link: "#park-nature-and-culture-container",
+      visible: !isNullOrWhiteSpace(natureAndCulture),
+    },
+    {
+      sectionIndex: 13,
       display: "Reconciliation with Indigenous Peoples",
       link: "#park-reconciliation-container",
       visible: !isNullOrWhiteSpace(reconciliationNotes),
@@ -510,6 +499,11 @@ export default function ParkTemplate({ data }) {
                 </div>
               )}
               {menuItems[12].visible && (
+                <div ref={natureAndCultureRef} className="full-width">
+                  <NatureAndCulture data={natureAndCulture} />
+                </div>
+              )}
+              {menuItems[13].visible && (
                 <div ref={reconciliationRef} className="full-width">
                   <Reconciliation data={reconciliationNotes} />
                 </div>
@@ -531,12 +525,15 @@ export const Head = ({data}) => {
   const description = park.description.data.description
   const parkDescription = description.replace(/(<([^>]+)>)/ig, '');
   const parkDescriptionShort = truncate(parkDescription, { length: 160 });
+  const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
+  const photoUrl = photos[0]?.imageUrl
 
   return (
     <Seo
       title={seo?.metaTitle || park.protectedAreaName}
       description={seo?.metaDescription || parkDescriptionShort}
       keywords={seo?.metaKeywords}
+      image={photoUrl}
     />
   )
 }

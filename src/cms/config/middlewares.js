@@ -12,18 +12,21 @@ module.exports = [
             "data:",
             "blob:",
             "dl.airtable.com",
-            `https://nrs.objectstore.gov.bc.ca/`
+            "market-assets.strapi.io",
+            "nrs.objectstore.gov.bc.ca"
           ],
           "media-src": [
             "'self'",
             "data:",
             "blob:",
             "dl.airtable.com",
-            `https://nrs.objectstore.gov.bc.ca/`
+            "market-assets.strapi.io",
+            "nrs.objectstore.gov.bc.ca"
           ],
           'frame-src': [
             "'self'",
-            "https://www.youtube.com"
+            "youtube.com",
+            "www.youtube.com"
           ]
         },
       },

@@ -54,15 +54,18 @@
       -webkit-appearance: none;
     }
   }
-  #footer-logo {
-    height: 60px;
-    margin-bottom: 1.5rem;
-    @include media-breakpoint-up(md) {
-      height: 90px;
-      margin-bottom: 0;
-    }
-    img {
-      height: 100%;
+  .footer-logo {
+    &.gatsby-image-wrapper {
+      img {
+        width: 164px;
+        height: 60px;
+        margin-bottom: 1.5rem;
+        @include media-breakpoint-up(md) {
+          width: 246px;
+          height: 90px;
+          margin-bottom: 0;
+        }
+      }
     }
   }
 
