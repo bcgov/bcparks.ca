@@ -164,7 +164,7 @@ export default function Advisory({
               setIsSafetyRelated(advisoryData.isSafetyRelated);
             }
             setListingRank(
-              advisoryData.listingRank ? "" + advisoryData.listingRank : ""
+              advisoryData.listingRank ? advisoryData.listingRank : 0
             );
             setNotes(advisoryData.note || "");
             setSubmittedBy(advisoryData.submittedBy || "");
@@ -445,7 +445,7 @@ export default function Advisory({
           setManagementAreas([...managementAreas]);
           const siteData = res[4];
           const sites = siteData.map((s) => ({
-            label: s?.attributes.protectedArea?.data.attributes.protectedAreaName + ": " + s.attributes.siteName,
+            label: s?.attributes.protectedArea?.data?.attributes.protectedAreaName + ": " + s.attributes.siteName,
             value: s.id,
             type: "site",
             obj: s,
