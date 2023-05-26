@@ -47,7 +47,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   type STRAPI_PROTECTED_AREA implements Node {
     biogeoclimaticZones: [STRAPI_BIOGEOCLIMATIC_ZONE] @link(by: "id", from: "biogeoclimaticZones___NODE")
     marineEcosections: [STRAPI_MARINE_ECOSECTION] @link(by: "id", from: "marineEcosections___NODE")
-    terrestrialEcosections: [STRAPI_TERRESTRIAL_ECOSECTION]@link(by: "id", from: "terrestrialEcosections___NODE")
+    terrestrialEcosections: [STRAPI_TERRESTRIAL_ECOSECTION] @link(by: "id", from: "terrestrialEcosections___NODE")
     seo: STRAPI_COMPONENT_PARKS_SEO
   }
 
