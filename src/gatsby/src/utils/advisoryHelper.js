@@ -27,7 +27,7 @@ const loadAdvisories = (apiBaseUrl, orcsId) => {
     pagination: {
       limit: 100,
     },
-    sort: ["urgency.sequence:DESC", "listingRank:DESC", "advisoryDate:DESC"],
+    sort: ["listingRank:DESC", "urgency.sequence:DESC", "advisoryDate:DESC"],
   }, {
     encodeValuesOnly: true,
   })
