@@ -6,11 +6,12 @@ import "../../styles/pageContent/pageSection.scss"
 
 const slugify = require("slugify")
 
-export default function PageSection({ sectionTitle, sectionHtml}) {
+export default function PageSection({ sectionTitle, sectionId, sectionHtml}) {
     const titleId = slugify(sectionTitle).toLowerCase()
 
     return (
         <>
+            <span id={`page-section-${sectionId}`}></span>
             <div className="page-section" id={titleId}>
                 <h2 className="page-section-title">{sectionTitle}</h2>
                 <HTMLArea className="page-section-html" isVisible={true}>

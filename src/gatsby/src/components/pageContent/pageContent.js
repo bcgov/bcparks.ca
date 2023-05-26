@@ -52,7 +52,7 @@ export default function PageContent({ contentType, content }) {
         return <HTMLArea isVisible={true}>{content.HTML.data.HTML}</HTMLArea>
     }
     if (contentType === "parks.page-section") {
-        return <PageSection sectionTitle={content.sectionTitle} sectionHtml={content.sectionHTML} />
+        return <PageSection sectionTitle={content.sectionTitle} sectionId={content.id} sectionHtml={content.sectionHTML} />
     }
 
     return null
