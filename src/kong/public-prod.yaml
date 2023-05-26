@@ -810,3 +810,19 @@ services:
           credentials: false
           max_age: null
           preflight_continue: false
+
+  - name: BCPARKS-GRAPHQL
+    host: main-cms.61d198-prod.svc
+    protocol: http
+    port: 1337
+    routes:
+     - name: graphql
+       tags:
+         - ns.bcparks
+       paths:
+         - /graphql
+       strip_path: false
+       hosts:
+         - bcparks.api.gov.bc.ca
+    tags:
+      - ns.bcparks
