@@ -45,8 +45,7 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::protected-area.protected-area",
-      "inversedBy": "parkSubPages",
-      "required": true
+      "inversedBy": "parkSubPages"
     }
   }
 }

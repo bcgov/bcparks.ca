@@ -237,7 +237,8 @@ async function createSitePage(query, { graphql, actions, reporter }) {
   result.data.allStrapiSite.nodes.forEach(site => {
     // fallback in case site doesn't have a slug
     const slug = site.slug || slugify(site.siteName).toLowerCase()
-    const parkPath = site.protectedArea.slug
+    // fallback in case site doesn't have a relation with protectedArea
+    const parkPath = site.protectedArea?.slug ?? "no-protected-area"
     const sitePath = `${parkPath}/${slug}`
     actions.createPage({
       path: sitePath.replace(/\/$|$/, `/`),
@@ -254,7 +255,8 @@ async function createParkSubPages(query, { graphql, actions, reporter }) {
     return
   }
   result.data.allStrapiParkSubPage.nodes.forEach(parkSubPage => {
-    const parkPath = parkSubPage.protectedArea.slug
+    // fallback in case site doesn't have a relation with protectedArea
+    const parkPath = parkSubPage.protectedArea?.slug ?? "no-protected-area"
     const parkSubPagePath = `${parkPath}/${parkSubPage.slug}`
     actions.createPage({
       path: parkSubPagePath.replace(/\/$|$/, `/`),
