@@ -63,6 +63,7 @@ cms:
     cacheEnabled: true
     cacheType: redis
     cacheTtl: 300000
+    enableGraphQLPlayground: true
 
   service:
     portName: strapi

@@ -5,7 +5,7 @@ module.exports = ({ env }) => {
         shadowCRUD: true,
         amountLimit: 500,
         depthLimit: 7,
-        playgroundAlways: process.env.STRAPI_ADMIN_ENVIRONMENT !== "prod",
+        playgroundAlways: process.env.ENABLE_GRAPHQL_PLAYGROUND || false,
         apolloServer: {
           tracing: false,
           introspection: true,
