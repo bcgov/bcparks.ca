@@ -3,7 +3,7 @@ import { isEmpty } from "../utils/AppUtil";
 
 export function validateOptionalNumber(field) {
   field.setError("");
-  if (field.value && isNaN(field.value)) {
+  if (field.value !== 0 && field.value && isNaN(field.value)) {
     field.setError("Please enter a valid number");
     return false;
   }
@@ -12,7 +12,7 @@ export function validateOptionalNumber(field) {
 
 export function validateRequiredText(field) {
   field.setError("");
-  if (!field.value) {
+  if (field.value !== 0 && !field.value) {
     field.setError("Please enter " + field.text);
     return false;
   }
