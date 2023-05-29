@@ -8,7 +8,7 @@
 const validator = require("../../../../helpers/validator.js");
 
 module.exports = {
-    async beforeCreate(event) {
+    beforeCreate(event) {
         const { data, where, select, populate } = event.params;
         validator.protectedAreaConnectValidator(data.protectedArea)
         validator.slugCharacterValidator(data.slug)
@@ -16,7 +16,7 @@ module.exports = {
         validator.slugNoLeadingDashValidator(data.slug)
         validator.slugNoTrailingDashValidator(data.slug)
     },
-    async beforeUpdate(event) {
+    beforeUpdate(event) {
         const { data, where, select, populate } = event.params;
         validator.protectedAreaDisconnectValidator(data.protectedArea)
         validator.slugCharacterValidator(data.slug)
