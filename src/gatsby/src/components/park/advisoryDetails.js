@@ -23,7 +23,8 @@ const formatDate = isoDate => {
 export default function AdvisoryDetails({ advisories }) {
   let expandedsInitial = []
   advisories.sort((a, b) => {
-    return b?.urgency?.sequence - a?.urgency?.sequence
+    return b.listingRank - a.listingRank
+      || b?.urgency?.sequence - a?.urgency?.sequence
       || new Date(b.advisoryDate) - new Date(a.advisoryDate)
   }).forEach((advisory, index) => {
     expandedsInitial[index] = false
