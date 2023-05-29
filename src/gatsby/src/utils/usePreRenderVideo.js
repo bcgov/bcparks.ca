@@ -48,8 +48,10 @@ export const usePreRenderVideo = (content) => {
             .find("iframe")
             .each((index, video) => {
               const findTitleByIndex = list[index];
-              $(video).attr("id", slugify(findTitleByIndex).toLowerCase());
-              $(video).attr("title", findTitleByIndex);
+              if (findTitleByIndex) {
+                $(video).attr("id", slugify(findTitleByIndex)?.toLowerCase());
+                $(video).attr("title", findTitleByIndex);
+              }
             });
         });
       setHtmlContent($?.html())
