@@ -44,6 +44,26 @@ exports.createSchemaCustomization = ({ actions }) => {
     protectedAreas: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "protectedAreas___NODE")
   }
 
+  type DATA {
+    data: String
+  }
+
+  type STRAPI_ACTIVITY_TYPE implements Node {
+    appendStandardCalloutText: DATA
+  }
+
+  type STRAPI_FACILITY_TYPE implements Node {
+    appendStandardCalloutText: DATA
+  }
+
+  type STRAPI_PARK_ACTIVITY implements Node {
+    appendStandardCalloutOverride: DATA
+  }
+  
+  type STRAPI_PARK_FACILITY implements Node {
+    appendStandardCalloutOverride: DATA
+  }
+  
   type STRAPI_PROTECTED_AREA implements Node {
     biogeoclimaticZones: [STRAPI_BIOGEOCLIMATIC_ZONE] @link(by: "id", from: "biogeoclimaticZones___NODE")
     marineEcosections: [STRAPI_MARINE_ECOSECTION] @link(by: "id", from: "marineEcosections___NODE")
