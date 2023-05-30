@@ -13,6 +13,8 @@ import ScrollToTop from "../components/scrollToTop"
 
 import "../styles/staticContent1.scss"
 
+const slugify = require("slugify")
+
 export default function ParkSubPage({ data }) {
   const page = data.strapiParkSubPage
   const contents = page.content
@@ -21,6 +23,10 @@ export default function ParkSubPage({ data }) {
   const menuContent = data?.allStrapiMenu?.nodes || []
   const sections = contents.filter(content => Boolean(content.strapi_component === "parks.page-section")) || []
   const hasSections = sections.length > 0
+  const filteredContent = contents.filter(c =>
+    Boolean(c.strapi_component !== "parks.page-header") &&
+    Boolean(c.strapi_component !== "parks.seo")
+  ) || []
 
   let pageSections = []
   if (hasSections) {
@@ -32,11 +38,12 @@ export default function ParkSubPage({ data }) {
       if (!section.sectionTitle) {
           section.sectionTitle = page.title
       }
+      const titleId = slugify(section.sectionTitle).toLowerCase()
       pageSections.push({
         display: section.sectionTitle,
         sectionIndex: sectionIndex,
         id: section.id,
-        link: "#page-section-" + section.id,
+        link: "#" + titleId,
         visible: true
       })
     }
@@ -127,13 +134,17 @@ export default function ParkSubPage({ data }) {
               <div className="page-content col-md-9 col-12">
                 {header && (
                   <div className="header-content">
-                    <div className="page-header--caption">
-                      {header.imageCaption}
-                    </div>
-                    <HTMLArea isVisible>{header.introHtml.data.introHtml}</HTMLArea>
+                    {header.imageCaption &&
+                      <div className="page-header--caption">
+                        {header.imageCaption}
+                      </div>
+                    }
+                    {header.introHtml.data.introHtml &&                    
+                      <HTMLArea isVisible>{header.introHtml.data.introHtml}</HTMLArea>
+                    }
                   </div>
                 )}
-                {contents.map(content => (
+                {filteredContent.map(content => (
                   <div
                     ref={sectionRefs[content.sectionIndex]}
                     key={content.strapi_component + "-" + content.id}
@@ -148,12 +159,12 @@ export default function ParkSubPage({ data }) {
             </div>
           ) : (
             <div>
-              {header && (
+              {header && header.introHtml.data.introHtml && (
                 <div className="header-content">
                   <HTMLArea isVisible>{header.introHtml.data.introHtml}</HTMLArea>
                 </div>
               )}
-              {contents.map(content => (
+              {filteredContent.map(content => (
                 <PageContent
                   contentType={content.strapi_component}
                   content={content}

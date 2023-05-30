@@ -84,6 +84,12 @@
 .page-content-wrapper {
   .page-content {
     position: relative;
+    .header-content > div {
+      margin-top: 80px;
+    }
+    & > div:last-of-type {
+      min-height: 600px;
+    }
   }
 }
 

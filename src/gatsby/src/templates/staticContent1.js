@@ -15,6 +15,8 @@ import { renderBreadcrumbs } from "../utils/helpers";
 
 import "../styles/staticContent1.scss"
 
+const slugify = require("slugify")
+
 export default function StaticContent1({ pageContext }) {
   const queryData = useStaticQuery(graphql`
     {
@@ -45,6 +47,10 @@ export default function StaticContent1({ pageContext }) {
 
   const menuContent = queryData?.allStrapiMenu?.nodes || []
   const pageContent = pageContext?.page?.Content
+  const filteredContent = pageContent.filter(c =>
+    Boolean(c.strapi_component !== "parks.page-header") &&
+    Boolean(c.strapi_component !== "parks.seo")
+  ) || []
   const meta =
     pageContext?.page?.Content.find(c =>
       Boolean(c.strapi_component === "parks.seo")
@@ -115,12 +121,13 @@ export default function StaticContent1({ pageContext }) {
       if (c.strapi_component === "parks.page-section") {
         // each section needs an index to be used for in-page navigation
         // and scrollspy highlighting
+        const titleId = slugify(c.sectionTitle).toLowerCase()
         c.sectionIndex = sectionIndex
         pageSections.push({
           display: c.sectionTitle,
           sectionIndex: sectionIndex,
           id: c.id,
-          link: "#page-section-" + c.id,
+          link: "#" + titleId,
           visible: true // Default
         })
       }
@@ -189,13 +196,17 @@ export default function StaticContent1({ pageContext }) {
               <div className="page-content col-md-9 col-12">
                 {hasPageHeader && (
                   <div className="header-content">
-                    <div className="page-header--caption">
-                      {headerContent.imageCaption}
-                    </div>
-                    <HTMLArea isVisible>{headerContent.introHtml.data.introHtml}</HTMLArea>
+                    {headerContent.imageCaption &&
+                      <div className="page-header--caption">
+                        {headerContent.imageCaption}
+                      </div>
+                    }
+                    {headerContent.introHtml.data.introHtml &&
+                      <HTMLArea isVisible>{headerContent.introHtml.data.introHtml}</HTMLArea>
+                    }
                   </div>
                 )}
-                {pageContent.map(content => (
+                {filteredContent.map(content => (
                   <div
                     ref={sectionRefs[content.sectionIndex]}
                     key={content.strapi_component + "-" + content.id}
@@ -210,12 +221,12 @@ export default function StaticContent1({ pageContext }) {
             </div>
           ) : (
             <div>
-              {hasPageHeader && (
+              {hasPageHeader && headerContent.introHtml && (
                 <div className="header-content">
                   <HTMLArea isVisible>{headerContent.introHtml}</HTMLArea>
                 </div>
               )}
-              {pageContent.map(content => (
+              {filteredContent.map(content => (
                 <PageContent
                   contentType={content.strapi_component}
                   content={content}

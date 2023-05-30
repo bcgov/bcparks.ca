@@ -4,11 +4,15 @@ import HTMLArea from "../HTMLArea"
 
 import "../../styles/pageContent/pageSection.scss"
 
-export default function PageSection({ sectionId, sectionTitle, sectionHtml})
-{
+const slugify = require("slugify")
+
+export default function PageSection({ sectionTitle, sectionId, sectionHtml}) {
+    const titleId = slugify(sectionTitle).toLowerCase()
+
     return (
         <>
-            <div className="page-section" id={"page-section-" + sectionId}>
+            <span id={`page-section-${sectionId}`}></span>
+            <div className="page-section" id={titleId}>
                 <h2 className="page-section-title">{sectionTitle}</h2>
                 <HTMLArea className="page-section-html" isVisible={true}>
                     {sectionHtml.data.sectionHTML}
