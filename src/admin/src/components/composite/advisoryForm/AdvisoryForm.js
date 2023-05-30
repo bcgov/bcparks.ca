@@ -421,24 +421,17 @@ export default function AdvisoryForm({
               Standard Message(s)
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${
-                  protectedAreaError !== "" ? "bcgov-select-error" : ""
-                }`}
-                error
-              >
-                <Select
-                  options={standardMessages}
-                  value={selectedStandardMessages}
-                  onChange={(e) => {
-                    setSelectedStandardMessages(e);
-                  }}
-                  placeholder="Add standard message"
-                  isMulti="true"
-                  className="bcgov-select"
-                />
-              </FormControl>
+              <Select
+                options={standardMessages}
+                value={selectedStandardMessages}
+                onChange={(e) => {
+                  setSelectedStandardMessages(e);
+                }}
+                placeholder="Add standard message"
+                className="bcgov-select"
+                isMulti
+                isClearable
+              />
             </div>
           </div>
           <div className="row">
