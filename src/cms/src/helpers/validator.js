@@ -10,7 +10,7 @@ module.exports = {
   },
   // removing a protectedArea relation is not allowed
   protectedAreaDisconnectValidator: function (protectedArea) {
-    if (protectedArea.disconnect.length > 0) {
+    if (protectedArea.disconnect.length > 0 && protectedArea.connect.length === 0) {
       throw new ApplicationError('Please add protectedArea relation.');
     }
   },
