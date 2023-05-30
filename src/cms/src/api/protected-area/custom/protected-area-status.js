@@ -58,14 +58,10 @@ const getPublishedPublicAdvisories = async () => {
       limit: -1,
       populate: {
         protectedAreas: { fields: ["orcs"] },
-        accessStatus: {fields: ["accessStatus"]},
+        accessStatus: { fields: ["accessStatus"] },
         eventType: { fields: ["eventType"] },
         links: { populate: { type: { fields: ["type"] } } }
       },
-
-      // v4 VS v3
-      // "accessStatus.precedence_lt": 99,
-
       filters: {
         accessStatus: {
           precedence: {
@@ -73,6 +69,19 @@ const getPublishedPublicAdvisories = async () => {
           },
         },
       },
+    }
+  );
+};
+
+const getPublicAdvisoryAudits = async () => {
+  return await strapi.entityService.findMany(
+    "api::public-advisory-audit.public-advisory-audit",
+    {
+      fields: ["advisoryNumber"],
+      filters: {
+        isLatestRevision: true
+      },
+      sort: "id:DESC"
     }
   );
 };
@@ -188,11 +197,16 @@ const getProtectedAreaStatus = async (ctx) => {
   );
 
   let publicAdvisories = await getPublishedPublicAdvisories();
+  let publicAdvisoryAudits = await getPublicAdvisoryAudits();
 
   let payload = entities.map((protectedArea) => {
     let publicAdvisory = getPublicAdvisory(
       publicAdvisories,
       protectedArea.orcs
+    );
+
+    const publicAdvisoryAudit = publicAdvisoryAudits.find(
+      (f) => f.advisoryNumber === publicAdvisory.advisoryNumber
     );
 
     const regions = [
@@ -353,6 +367,7 @@ const getProtectedAreaStatus = async (ctx) => {
       pepRegionId: null,
       pepRegionName: null,
       publicAdvisoryId: publicAdvisory.id,
+      publicAdvisoryAuditId: publicAdvisoryAudit?.id
     };
   });
 
