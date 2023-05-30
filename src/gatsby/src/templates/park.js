@@ -765,7 +765,15 @@ export const query = graphql`
           isCamping
         }
       }
-      
+      biogeoclimaticZones {
+        zone
+      },
+      marineEcosections {
+        marineEcosection
+      },
+      terrestrialEcosections {
+        terrestrialEcosection
+      }
     }
     # Park photos are split into featured and non-featured in order to sort correctly,
     # with null values last.

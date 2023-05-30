@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "marine_ecosections",
+  "info": {
+    "singularName": "marine-ecosection",
+    "pluralName": "marine-ecosections",
+    "displayName": "Marine-ecosection",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "marineEcosectionId": {
+      "type": "integer"
+    },
+    "marineEcosection": {
+      "type": "string"
+    },
+    "marineEcosectionCode": {
+      "type": "string"
+    },
+    "protectedAreas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "marineEcosections"
+    }
+  }
+}

@@ -273,6 +273,24 @@
       "relation": "manyToMany",
       "target": "api::management-document.management-document",
       "mappedBy": "protectedAreas"
+    },
+    "biogeoclimaticZones": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::biogeoclimatic-zone.biogeoclimatic-zone",
+      "mappedBy": "protectedAreas"
+    },
+    "marineEcosections": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::marine-ecosection.marine-ecosection",
+      "mappedBy": "protectedAreas"
+    },
+    "terrestrialEcosections": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::terrestrial-ecosection.terrestrial-ecosection",
+      "mappedBy": "protectedAreas"
     }
   }
 }

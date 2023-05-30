@@ -49,6 +49,9 @@ module.exports = {
           "legacy-redirect",
           "management-document",
           "management-document-type",
+          "biogeoclimatic-zone",
+          "marine-ecosection",
+          "terrestrial-ecosection",
           {
             singularName: "page",
             queryParams: {
@@ -96,6 +99,15 @@ module.exports = {
                 },
                 parkOperationSubAreas: {
                   fields: "*"
+                },
+                biogeoclimaticZones: {
+                  populate: "*"
+                },
+                marineEcosections: {
+                  populate: "*"
+                },
+                terrestrialEcosections: {
+                  populate: "*"
                 },
                 seo: {
                   populate: "*"

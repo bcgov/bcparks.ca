@@ -20,6 +20,9 @@ export default function About({
   ) : null
   const parkType = park.type ?? "park"
   const parkContact = park.parkContact.data.parkContact
+  const biogeoclimaticZones = park.biogeoclimaticZones
+  const marineEcosections = park.marineEcosections
+  const terrestrialEcosections = park.terrestrialEcosections
 
   return (
     <Grid item xs={12} id="park-about-container" className="anchor-link">
@@ -35,6 +38,57 @@ export default function About({
               <li>
                 <strong>Size:</strong> {park.totalArea} hectares
               </li>
+              {biogeoclimaticZones?.length > 0 && (
+                <li className="ecological-list">
+                  <strong>
+                    <a href="https://catalogue.data.gov.bc.ca/dataset/bec-zones-generalized-1-2m-">
+                      Biogeoclimatic Zone:
+                    </a>
+                  </strong>
+                  <ul>
+                    {biogeoclimaticZones.map((bioZone, index) => (
+                      <li key={index}>
+                        {bioZone.zone}
+                        {biogeoclimaticZones.length > 1 && index+1 !== biogeoclimaticZones.length && (",")}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              )}
+              {terrestrialEcosections?.length > 0 && (
+                <li className="ecological-list">
+                  <strong>
+                    <a href="https://catalogue.data.gov.bc.ca/dataset/ecosections-ecoregion-ecosystem-classification-of-british-columbia">
+                      Terrestrial Ecosections:
+                    </a>
+                  </strong>
+                  <ul>
+                    {terrestrialEcosections.map((terreSection, index) => (
+                      <li key={index}>
+                        {terreSection.terrestrialEcosection}
+                        {terrestrialEcosections.length > 1 && index+1 !== terrestrialEcosections.length && (",")}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              )}
+              {marineEcosections?.length > 0 && (
+                <li className="ecological-list">
+                  <strong>
+                    <a href="https://catalogue.data.gov.bc.ca/dataset/marine-ecosections-coastal-resource-information-management-system-crims">
+                      Marine Ecosections:
+                    </a>
+                  </strong>
+                  <ul>
+                    {marineEcosections.map((marineSection, index) => (
+                      <li key={index}>
+                        {marineSection.marineEcosection}
+                        {marineEcosections.length > 1 && index+1 !== marineEcosections.length && (",")}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              )}
             </ul>
           </>
         )}

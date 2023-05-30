@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "biogeoclimatic_zones",
+  "info": {
+    "singularName": "biogeoclimatic-zone",
+    "pluralName": "biogeoclimatic-zones",
+    "displayName": "Biogeoclimatic-zone",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "zone": {
+      "type": "string"
+    },
+    "zoneCode": {
+      "type": "string"
+    },
+    "protectedAreas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "biogeoclimaticZones"
+    }
+  }
+}
