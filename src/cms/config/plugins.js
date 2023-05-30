@@ -1,7 +1,16 @@
 module.exports = ({ env }) => {
   return {
     graphql: {
-      amountLimit: 2500,
+      config: {
+        shadowCRUD: true,
+        amountLimit: 500,
+        depthLimit: 7,
+        playgroundAlways: process.env.ENABLE_GRAPHQL_PLAYGROUND || false,
+        apolloServer: {
+          tracing: false,
+          introspection: true,
+        },
+      }
     },
     email: {
       provider: "nodemailer",

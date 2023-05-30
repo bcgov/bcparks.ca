@@ -170,6 +170,8 @@ bcparks.ca-scrape.laccdb
 **/.env.development.local
 **/.env.test.local
 **/.env.production.local
+**/.env.prod
+**/.env.test
 **/generate-react-cli.json
 **/yarn.lock
 **/npm-debug.log*
