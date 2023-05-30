@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "management_document_types",
+  "info": {
+    "singularName": "management-document-type",
+    "pluralName": "management-document-types",
+    "displayName": "Management-document-type",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "documentCode": {
+      "type": "string"
+    },
+    "documentType": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "managementDocuments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::management-document.management-document",
+      "mappedBy": "documentType"
+    }
+  }
+}

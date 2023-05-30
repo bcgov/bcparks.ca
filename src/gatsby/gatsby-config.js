@@ -47,6 +47,8 @@ module.exports = {
           "park-operation-sub-area",
           "park-sub-page",
           "legacy-redirect",
+          "management-document",
+          "management-document-type",
           {
             singularName: "page",
             queryParams: {

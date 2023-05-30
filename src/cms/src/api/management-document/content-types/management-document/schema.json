@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "management_documents",
+  "info": {
+    "singularName": "management-document",
+    "pluralName": "management-documents",
+    "displayName": "Management-document",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "documentDate": {
+      "type": "date"
+    },
+    "documentType": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::management-document-type.management-document-type",
+      "inversedBy": "managementDocuments"
+    },
+    "protectedAreas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "managementDocuments"
+    },
+    "sites": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::site.site",
+      "inversedBy": "managementDocuments"
+    }
+  }
+}

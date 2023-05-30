@@ -1,0 +1,42 @@
+@import "variables.scss";
+
+.filters {
+  .btn {
+    width: 42px;
+    height: 42px;
+    color: $colorBlue;
+    font-weight: 700;
+    font-size: 0.75rem;
+    border: 1px solid $colorBlue;
+    border-radius: 0;
+    box-shadow: inset 0px 0px 0px 3px $colorWhite;
+    margin-top: 12px;
+    margin-left: -1px;
+    &:first-child {
+      border-radius: 4px 0 0 4px;
+    }
+    &:last-child {
+      border-radius: 0 4px 4px 0;
+    }
+    &:hover {
+      color: $colorBlue;
+    }
+    &:focus {
+      box-shadow: inset 0px 0px 0px 3px $colorWhite;
+    }
+
+    &-selected--true {
+      color: $colorWhite;
+      background-color: $colorBlue;
+      &:hover {
+        color: $colorWhite;
+      }
+    }
+  }
+}
+
+.lists {
+  .list {
+    margin-top: 48px;
+  }
+}
