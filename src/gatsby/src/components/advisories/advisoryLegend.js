@@ -27,19 +27,21 @@ const AdvisoryLegend = () => {
           return (
             <div key={index} className="col col-12 col-md-4">
               <div className="advisory-legend-item row">
-                <div
-                  style={{ background: legendItem.color }}
-                  className="legend-icon mr-3"
-                >
-                  &nbsp;
+                <div className="col col-auto d-flex align-items-center">
+                  <div
+                    style={{ background: legendItem.color }}
+                    className="legend-icon mr-3"
+                  >
+                    &nbsp;
+                  </div>
                 </div>
                 <div className="col">
                   <strong className="legend-label d-md-block">
                     {legendItem.label}
                   </strong>
-                  <em className="legend-description ml-2 ml-md-0">
+                  <p className="legend-description mt-2 mb-0">
                     {legendItem.description}
-                  </em>
+                  </p>
                 </div>
               </div>
             </div>
