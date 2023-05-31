@@ -7,7 +7,6 @@ import Fullscreen from "@arcgis/core/widgets/Fullscreen"
 import Locate from "@arcgis/core/widgets/Locate"
  
 import Heading from "./heading"
-import Spacer from "./spacer"
 
 export default function MapLocation({ data }) {
   const webMapId = "bdc3d62fffc14e2da2eb85c9a763bac2"
@@ -71,7 +70,6 @@ export default function MapLocation({ data }) {
           <div>
             <div id="mapDiv" ref={mapRef}></div>
             <p><a href={externalLink}>View a more detailed map.</a></p>
-            <Spacer />
           </div>
         )}
       </Paper>

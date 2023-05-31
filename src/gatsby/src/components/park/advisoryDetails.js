@@ -9,6 +9,7 @@ import Row from "react-bootstrap/Row"
 
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
+import Spacer from "./spacer"
 
 import blueAlertIcon from "../../images/park/blue-alert-64.png"
 import redAlertIcon from "../../images/park/red-alert-64.png"
@@ -79,7 +80,7 @@ export default function AdvisoryDetails({ advisories }) {
   })
 
   return (
-    <div id="park-advisory-details-container" className="anchor-link mb-5">
+    <div id="park-advisory-details-container" className="anchor-link">
       <Row>
         <Col>
           <div className="d-flex justify-content-between align-items-flex-start">
@@ -199,6 +200,7 @@ export default function AdvisoryDetails({ advisories }) {
           </Col>
         )}
       </Row>
+      <Spacer />
     </div>
   )
 }

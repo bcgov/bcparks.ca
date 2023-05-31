@@ -36,6 +36,7 @@ import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import SafetyInfo from "../components/park/safetyInfo"
 import SpecialNote from "../components/park/specialNote"
+import Spacer from "../components/park/spacer"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
@@ -476,13 +477,14 @@ export default function ParkTemplate({ data }) {
                     <AsyncMapLocation data={mapData} />
                     {locationNotes && (
                       <Grid item xs={12} id="park-location-notes-container">
-                        <Box mb={8}>
+                        <Box>
                           <div
                             dangerouslySetInnerHTML={{
                               __html: locationNotes,
                             }}
                           ></div>
                         </Box>
+                        <Spacer />
                       </Grid>
                     )}
                   </div>
