@@ -2,6 +2,18 @@ const utils = require('@strapi/utils');
 const { ApplicationError } = utils.errors;
 
 module.exports = {
+  // saving without a protectedArea relation is not allowed
+  protectedAreaConnectValidator: function (protectedArea) {
+    if (protectedArea.connect.length === 0) {
+      throw new ApplicationError('Please add protectedArea relation.');
+    }
+  },
+  // removing a protectedArea relation is not allowed
+  protectedAreaDisconnectValidator: function (protectedArea) {
+    if (protectedArea.disconnect.length > 0 && protectedArea.connect.length === 0) {
+      throw new ApplicationError('Please add protectedArea relation.');
+    }
+  },
   // checks for valid characters and consecutive forward slashes
   slugCharacterValidator: function (slug) {
     const regex = new RegExp("^[a-z0-9\-\/]+(?:-[a-z0-9\-\/]+)*$|^$");

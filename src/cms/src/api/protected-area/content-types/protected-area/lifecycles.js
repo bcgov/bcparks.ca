@@ -5,7 +5,7 @@
  * to customize this model
  */
 
-const validator = require("../../../../helpers/slugValidator.js");
+const validator = require("../../../../helpers/validator.js");
 
 const saveParkAccessStatus = async (data) => {
   try {
