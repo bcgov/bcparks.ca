@@ -421,24 +421,17 @@ export default function AdvisoryForm({
               Standard Message(s)
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${
-                  protectedAreaError !== "" ? "bcgov-select-error" : ""
-                }`}
-                error
-              >
-                <Select
-                  options={standardMessages}
-                  value={selectedStandardMessages}
-                  onChange={(e) => {
-                    setSelectedStandardMessages(e);
-                  }}
-                  placeholder="Add standard message"
-                  isMulti="true"
-                  className="bcgov-select"
-                />
-              </FormControl>
+              <Select
+                options={standardMessages}
+                value={selectedStandardMessages}
+                onChange={(e) => {
+                  setSelectedStandardMessages(e);
+                }}
+                placeholder="Add standard message"
+                className="bcgov-select"
+                isMulti
+                isClearable
+              />
             </div>
           </div>
           <div className="row">
@@ -955,6 +948,8 @@ export default function AdvisoryForm({
                       className="bcgov-input"
                       variant="outlined"
                       InputProps={{ ...linkTitleInput }}
+                      error={((l.file?.url || l.url) && !l.title) !== ""}
+                      helperText={((l.file?.url || l.url) && !l.title) ? "Please enter link title too" : ""}
                     />
                     <TextField
                       value={l.file ? l.file.url : l.url}
@@ -964,6 +959,8 @@ export default function AdvisoryForm({
                       className="bcgov-input"
                       variant="outlined"
                       InputProps={{ ...linkUrlInput }}
+                      error={(l.title && !(l.file?.url || l.url)) !== ""}
+                      helperText={(l.title && !(l.file?.url || l.url)) ? "Please enter URL too" : ""}
                     />
                     <div className="ad-flex">
                       <TextField
