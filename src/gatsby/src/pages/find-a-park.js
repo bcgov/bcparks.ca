@@ -507,6 +507,7 @@ export default function FindAPark({ location, data }) {
                         <Chip
                           key={index}
                           label={f.label}
+                          onClick={handleFilterDelete(f)}
                           onDelete={handleFilterDelete(f)}
                           variant="outlined"
                           className="park-filter-chip font-weight-bold"
