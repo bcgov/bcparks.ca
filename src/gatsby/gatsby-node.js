@@ -171,6 +171,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
           ... on STRAPI__COMPONENT_PARKS_PAGE_SECTION {
             id
+            strapi_id
             strapi_component
             sectionTitle
             sectionHTML {
