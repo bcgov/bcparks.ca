@@ -10,6 +10,7 @@ import Container from "react-bootstrap/Container"
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
+import Spacer from "./spacer"
 import { ParkAccessFromAdvisories } from "../../components/park/parkAccessStatus"
 import { countsList } from "../../utils/constants";
 
@@ -206,7 +207,7 @@ export default function ParkDates({ data }) {
   }
 
   return (
-    <div id="park-dates-container" className="anchor-link mb-3">
+    <div id="park-dates-container" className="anchor-link">
       <Heading>Dates of operation</Heading>
       <Row>
         <Col>
@@ -396,7 +397,7 @@ export default function ParkDates({ data }) {
           </dl>
         </Col>
       </Row>
-      <div className="m-3">&nbsp;</div>
+      <Spacer />
     </div>
   )
 }

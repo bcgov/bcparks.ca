@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row"
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
+import Spacer from "./spacer"
 
 import { countsList } from "../../utils/constants"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
@@ -47,7 +48,7 @@ export default function CampingDetails({ data }) {
   }
 
   return (
-    <div className="mb-5">
+    <div>
       <Row
         id="park-camping-details-container"
         className="anchor-link d-flex justify-content-between"
@@ -190,6 +191,7 @@ export default function CampingDetails({ data }) {
           ))}
         </Col>
       </Row>
+      <Spacer />
     </div>
   )
 }

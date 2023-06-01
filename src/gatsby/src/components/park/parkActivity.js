@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row"
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
+import Spacer from "./spacer"
 
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
@@ -57,7 +58,7 @@ export default function ParkActivity({ data }) {
   if (activityData.length === 0) return null
 
   return (
-    <div className="mb-5">
+    <div>
       <Row id="park-activity-container" className="anchor-link">
         <Col>
           <Heading>Activities</Heading>
@@ -120,6 +121,7 @@ export default function ParkActivity({ data }) {
           ))}
         </Col>
       </Row>
+      <Spacer />
     </div>
   )
 }
