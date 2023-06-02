@@ -10,6 +10,15 @@
   font-family: $globalFont;
 }
 
+.MuiLink-underlineHover {
+  &:hover {
+    color: $colorBlue;
+    &:focus {
+      color: inherit;
+    }
+  }
+}
+
 .search-body {
   background-color: $colorGreyLight !important;
 }
@@ -817,6 +826,15 @@ div[class$="-singleValue"] {
   }
 
   .search-results-quick-filter {
+    .MuiLink-underlineHover {
+      &:hover {
+        color: $colorBlueMed;
+        &:focus {
+          color: inherit;
+        }
+      }
+    }
+    
     .filter-heading {
       color: $colorBlack;
       font-size: 1rem;
