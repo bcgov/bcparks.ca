@@ -68,3 +68,4 @@ public:
   hpa:
     minReplicas: 2
     maxReplicas: 8
+    memoryUtilizationThreshold: 60
