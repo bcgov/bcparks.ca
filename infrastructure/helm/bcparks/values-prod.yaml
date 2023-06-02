@@ -57,6 +57,14 @@ backup:
     name: 61d198-prod
 
 public:
+  resources:
+    limits:
+      cpu: 200m
+      memory: 200Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+
   hpa:
     minReplicas: 2
-    maxReplicas: 4
+    maxReplicas: 8
