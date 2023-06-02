@@ -20,7 +20,7 @@ spec:
         name: memory
         target:
           type: Utilization
-          averageUtilization: 60
+          averageUtilization: {{ .Values.cms.hpa.memoryUtilizationThreshold }}
   behavior:
     scaleUp:
       stabilizationWindowSeconds: 0

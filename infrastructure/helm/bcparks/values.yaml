@@ -73,6 +73,7 @@ cms:
     minReplicas: 1
     # Default to 1 max replica on dev, overriden in test and prod envs
     maxReplicas: 1
+    memoryUtilizationThreshold: 60
 
 patroni:
   componentName: patroni
@@ -167,6 +168,7 @@ public:
     minReplicas: 1
     # Default to 1 max replica on dev, overriden in test and prod envs
     maxReplicas: 1
+    memoryUtilizationThreshold: 75
 
 backup:
   componentName: postgres-backup
