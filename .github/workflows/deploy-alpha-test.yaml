@@ -24,7 +24,7 @@ jobs:
           oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder-develop:latest public-builder-develop:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi-develop:latest strapi-develop:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag maintenance-develop:latest maintenance-develop:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag etl-develop:latest maintenance-develop:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag etl-develop:latest etl-develop:${{ env.ENVIRONMENT }}
 
       - name: Trigger Gatsby static build workflow
         uses: peter-evans/repository-dispatch@v1
