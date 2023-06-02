@@ -887,6 +887,9 @@ div[class$="-singleValue"] {
   .MuiChip-outlined {
     background-color: $colorBlue !important;
     border-radius: 5000px !important;
+    &:hover, &:focus {
+      background-color: #00468b !important;
+    }
   }
 
   .MuiChip-label {
