@@ -40,12 +40,6 @@ export default function BetaBanner() {
   return (
     <Box className={classes.betaHeader + " bc-bg-yellow bc-color-blue-dk"}>
       <Box>Welcome to the new BC Parks website</Box>
-      <Box className={classes.linkDivider}>|</Box>
-      <Box>
-        <a href="https://helpshapebc.gov.bc.ca/new-bcparks-ca-visitor-survey">
-          Share your feedback
-        </a>
-      </Box>
     </Box>
   )
 }
