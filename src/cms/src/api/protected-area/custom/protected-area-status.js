@@ -89,7 +89,19 @@ const getPublicAdvisoryAudits = async () => {
 // custom route for park status view
 const getProtectedAreaStatus = async (ctx) => {
   let entities;
-  const { accessStatus, accessStatus_ne, ...query } = ctx.query;
+  const {
+    accessStatus,
+    accessStatus_ne,
+    accessStatus_contains,
+    eventType,
+    eventType_ne,
+    eventType_contains,
+    limit,
+    pagination,
+    populate,
+    fields,
+    ...query
+  } = ctx.query;
 
   const protectedAreaPopulateSettings = {
     fireZones: {  
@@ -106,32 +118,32 @@ const getProtectedAreaStatus = async (ctx) => {
       }            
     },
     parkActivities: {
-      fields: ["description"],
+      fields: ["id"],
       populate: { 
-        activityType: { fields: ["activityName", "activityCode", "icon", "iconNA", "rank"] }
+        activityType: { fields: ["activityName", "activityCode"] }
       }
     },
     parkFacilities: {
-      fields: ["description"],
+      fields: ["id"],
       populate: { 
-        facilityType: { fields: ["facilityName", "facilityCode", "icon", "iconNA", "rank"] }
+        facilityType: { fields: ["facilityName", "facilityCode"] }
       }
     }
   };
 
-  if (accessStatus || accessStatus_ne) {
+  if (
+    accessStatus
+    || accessStatus_ne
+    || accessStatus_contains
+    || eventType
+    || eventType_ne
+    || eventType_contains
+  ) {
     entities = await strapi.entityService.findMany(
       "api::protected-area.protected-area",
       {
+        ...query,
         limit: -1,
-        populate: protectedAreaPopulateSettings,
-      }
-    );
-  } else if (ctx.query.queryText) {
-    entities = await strapi.entityService.findMany(
-      "api::protected-area.protected-area",
-      {
-        ...ctx.query,
         populate: protectedAreaPopulateSettings,
       }
     );
@@ -139,7 +151,7 @@ const getProtectedAreaStatus = async (ctx) => {
     entities = await strapi.entityService.findMany(
       "api::protected-area.protected-area",
       {
-        ...query,
+        ...ctx.query,
         populate: protectedAreaPopulateSettings
       }
     );
@@ -379,6 +391,22 @@ const getProtectedAreaStatus = async (ctx) => {
   } else if (accessStatus_ne) {
     return (payload = payload.filter(
       (o) => o?.accessStatus?.toLowerCase() != accessStatus_ne.toLowerCase()
+    ));
+  } else if (accessStatus_contains) {
+    return (payload = payload.filter(
+      (o) => o?.accessStatus?.toLowerCase().includes(accessStatus_contains.toLowerCase())
+    ));
+  } else if (eventType) {
+    return (payload = payload.filter(
+      (o) => o?.eventType?.toLowerCase() == eventType.toLowerCase()
+    ));
+  } else if (eventType_ne) {
+    return (payload = payload.filter(
+      (o) => o?.eventType?.toLowerCase() != eventType_ne.toLowerCase()
+    ));
+  } else if (eventType_contains) {
+    return (payload = payload.filter(
+      (o) => o?.eventType?.toLowerCase().includes(eventType_contains.toLowerCase())
     ));
   }
 
