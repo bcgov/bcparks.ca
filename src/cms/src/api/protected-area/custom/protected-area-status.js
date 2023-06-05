@@ -383,31 +383,38 @@ const getProtectedAreaStatus = async (ctx) => {
     };
   });
 
-  // filter accessStatus field
+  // custom filters on accessStatus derived field
   if (accessStatus) {
-    return (payload = payload.filter(
+    payload = payload.filter(
       (o) => o?.accessStatus?.toLowerCase() == accessStatus.toLowerCase()
-    ));
-  } else if (accessStatus_ne) {
-    return (payload = payload.filter(
+    );
+  }
+  if (accessStatus_ne) {
+    payload = payload.filter(
       (o) => o?.accessStatus?.toLowerCase() != accessStatus_ne.toLowerCase()
-    ));
-  } else if (accessStatus_contains) {
-    return (payload = payload.filter(
+    );
+  }
+  if (accessStatus_contains) {
+    payload = payload.filter(
       (o) => o?.accessStatus?.toLowerCase().includes(accessStatus_contains.toLowerCase())
-    ));
-  } else if (eventType) {
-    return (payload = payload.filter(
+    );
+  }
+
+  // custom filters on eventType derived field
+  if (eventType) {
+    payload = payload.filter(
       (o) => o?.eventType?.toLowerCase() == eventType.toLowerCase()
-    ));
-  } else if (eventType_ne) {
-    return (payload = payload.filter(
+    );
+  }
+  if (eventType_ne) {
+    payload = payload.filter(
       (o) => o?.eventType?.toLowerCase() != eventType_ne.toLowerCase()
-    ));
-  } else if (eventType_contains) {
-    return (payload = payload.filter(
+    );
+  }
+  if (eventType_contains) {
+    payload = payload.filter(
       (o) => o?.eventType?.toLowerCase().includes(eventType_contains.toLowerCase())
-    ));
+    );
   }
 
   return payload;
