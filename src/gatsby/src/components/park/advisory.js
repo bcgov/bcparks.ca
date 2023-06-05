@@ -29,6 +29,10 @@ export default function Advisory({ advisories }) {
     const highAlertGroup = advisories.filter(
       advisory => advisory.urgency.sequence === maxAlertLevel
     )
+    // sort by precedence (lower number = higher importance)
+    highAlertGroup.sort(
+      (a, b) => (a.eventType?.precedence || 9999) - (b.eventType?.precedence || 9999)
+    );
     const advisoryText = []
     const advisoryTextCounts = {}
     highAlertGroup.forEach(advisory => {

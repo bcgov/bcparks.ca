@@ -15,6 +15,9 @@
   "attributes": {
     "eventType": {
       "type": "string"
+    },
+    "precedence": {
+      "type": "integer"
     }
   }
 }
