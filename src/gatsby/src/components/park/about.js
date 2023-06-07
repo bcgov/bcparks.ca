@@ -42,7 +42,7 @@ export default function About({
                 <li className="ecological-list">
                   <strong>
                     <a href="https://catalogue.data.gov.bc.ca/dataset/bec-zones-generalized-1-2m-">
-                      Biogeoclimatic Zone:
+                      Biogeoclimatic zone:
                     </a>
                   </strong>
                   <ul>
@@ -59,7 +59,7 @@ export default function About({
                 <li className="ecological-list">
                   <strong>
                     <a href="https://catalogue.data.gov.bc.ca/dataset/ecosections-ecoregion-ecosystem-classification-of-british-columbia">
-                      Terrestrial Ecosections:
+                      Terrestrial ecosection:
                     </a>
                   </strong>
                   <ul>
@@ -76,7 +76,7 @@ export default function About({
                 <li className="ecological-list">
                   <strong>
                     <a href="https://catalogue.data.gov.bc.ca/dataset/marine-ecosections-coastal-resource-information-management-system-crims">
-                      Marine Ecosections:
+                      Marine ecosection:
                     </a>
                   </strong>
                   <ul>
