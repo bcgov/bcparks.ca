@@ -160,7 +160,7 @@ export default function StaticContent1({ pageContext }) {
             <div className="header-image-wrapper">
               <img
                 src={headerContent.imageUrl}
-                alt={headerContent.imageAlt ?? ""}
+                alt=""
               />
             </div>
           )}
@@ -196,11 +196,6 @@ export default function StaticContent1({ pageContext }) {
               <div className="page-content col-md-9 col-12">
                 {hasPageHeader && (
                   <div className="header-content">
-                    {headerContent.imageCaption &&
-                      <div className="page-header--caption">
-                        {headerContent.imageCaption}
-                      </div>
-                    }
                     {headerContent.introHtml.data.introHtml &&
                       <HTMLArea isVisible>{headerContent.introHtml.data.introHtml}</HTMLArea>
                     }
