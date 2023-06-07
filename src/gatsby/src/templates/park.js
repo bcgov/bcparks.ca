@@ -781,10 +781,10 @@ export const query = graphql`
       }
       biogeoclimaticZones {
         zone
-      },
+      }
       marineEcosections {
         marineEcosection
-      },
+      }
       terrestrialEcosections {
         terrestrialEcosection
       }

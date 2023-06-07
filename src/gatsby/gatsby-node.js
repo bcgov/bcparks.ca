@@ -23,20 +23,20 @@ exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
   const typeDefs = `
-  type STRAPI_BIOGEOCLIMATIC_ZONE implements Node {
+  type STRAPI_BIOGEOCLIMATIC_ZONE implements Node @dontInfer {
     zone: String
     zoneCode: String
     protectedAreas: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "protectedAreas___NODE")
   }
 
-  type STRAPI_MARINE_ECOSECTION implements Node {
+  type STRAPI_MARINE_ECOSECTION implements Node @dontInfer {
     marineEcosectionId: Int
     marineEcosection: String
     marineEcosectionCode: String
     protectedAreas: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "protectedAreas___NODE")
   }
 
-  type STRAPI_TERRESTRIAL_ECOSECTION implements Node {
+  type STRAPI_TERRESTRIAL_ECOSECTION implements Node @dontInfer {
     terrestrialEcosectionId: Int
     terrestrialEcosection: String
     terrestrialEcosectionCode: String
@@ -44,7 +44,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     protectedAreas: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "protectedAreas___NODE")
   }
 
-  type DATA {
+  type DATA implements Node {
     data: String
   }
 
@@ -57,10 +57,12 @@ exports.createSchemaCustomization = ({ actions }) => {
   }
 
   type STRAPI_PARK_ACTIVITY implements Node {
+    activityType: STRAPI_ACTIVITY_TYPE
     appendStandardCalloutOverride: DATA
   }
   
   type STRAPI_PARK_FACILITY implements Node {
+    facilityType: STRAPI_FACILITY_TYPE
     appendStandardCalloutOverride: DATA
   }
   
@@ -68,6 +70,8 @@ exports.createSchemaCustomization = ({ actions }) => {
     biogeoclimaticZones: [STRAPI_BIOGEOCLIMATIC_ZONE] @link(by: "id", from: "biogeoclimaticZones___NODE")
     marineEcosections: [STRAPI_MARINE_ECOSECTION] @link(by: "id", from: "marineEcosections___NODE")
     terrestrialEcosections: [STRAPI_TERRESTRIAL_ECOSECTION] @link(by: "id", from: "terrestrialEcosections___NODE")
+    parkActivities: [STRAPI_PARK_ACTIVITY] @link(by: "id", from: "parkActivities___NODE")
+    parkFacilities: [STRAPI_PARK_FACILITY] @link(by: "id", from: "parkFacilities___NODE")
     seo: STRAPI_COMPONENT_PARKS_SEO
   }
 
@@ -93,6 +97,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 
   type STRAPI_SITE implements Node {
     parkOperation: STRAPI_PARK_OPERATION
+    parkActivities: [STRAPI_PARK_ACTIVITY] @link(by: "id", from: "parkActivities___NODE")
+    parkFacilities: [STRAPI_PARK_FACILITY] @link(by: "id", from: "parkFacilities___NODE")
   }
 
   type STRAPI_MANAGEMENT_DOCUMENT_TYPE implements Node {
