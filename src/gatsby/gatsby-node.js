@@ -23,20 +23,20 @@ exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
   const typeDefs = `
-  type STRAPI_BIOGEOCLIMATIC_ZONE implements Node {
+  type STRAPI_BIOGEOCLIMATIC_ZONE implements Node @dontInfer {
     zone: String
     zoneCode: String
     protectedAreas: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "protectedAreas___NODE")
   }
 
-  type STRAPI_MARINE_ECOSECTION implements Node {
+  type STRAPI_MARINE_ECOSECTION implements Node @dontInfer {
     marineEcosectionId: Int
     marineEcosection: String
     marineEcosectionCode: String
     protectedAreas: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "protectedAreas___NODE")
   }
 
-  type STRAPI_TERRESTRIAL_ECOSECTION implements Node {
+  type STRAPI_TERRESTRIAL_ECOSECTION implements Node @dontInfer {
     terrestrialEcosectionId: Int
     terrestrialEcosection: String
     terrestrialEcosectionCode: String
@@ -59,13 +59,11 @@ exports.createSchemaCustomization = ({ actions }) => {
   type STRAPI_PARK_ACTIVITY implements Node {
     activityType: STRAPI_ACTIVITY_TYPE
     appendStandardCalloutOverride: DATA
-    protectedArea: STRAPI_PROTECTED_AREA
   }
   
   type STRAPI_PARK_FACILITY implements Node {
     facilityType: STRAPI_FACILITY_TYPE
     appendStandardCalloutOverride: DATA
-    protectedArea: STRAPI_PROTECTED_AREA
   }
   
   type STRAPI_PROTECTED_AREA implements Node {
