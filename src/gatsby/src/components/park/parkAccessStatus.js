@@ -47,19 +47,19 @@ function ParkAccessFromAdvisories(advisories) {
   let parkStatusColor = "blue"
 
   for (let advisory of advisories) {
-    if (advisory.accessStatus) {
-      if (advisory.accessStatus.precedence) {
+      if (advisory.accessStatus?.precedence) {
         // advisory is coming from parks details page
         accessStatuses.push({
           precedence: advisory.accessStatus.precedence,
           color: advisory.accessStatus.color,
           text: advisory.accessStatus.accessStatus,
         })
-      } else {
-        // advisory is coming from explore page
-        // get accessStatus based on precedence
+      }
+      if (advisory.access_status_id) {
+        // advisory is coming from find-a-park
+        // get accessStatus based on access_status_id
         let thisStatus = accessStatusList.find(status => {
-          return status.strapi_id === advisory.accessStatus
+          return status.strapi_id === advisory.access_status_id
         })
         if (!thisStatus) {
           break
@@ -71,7 +71,6 @@ function ParkAccessFromAdvisories(advisories) {
           })
         }
       }
-    }
   }
 
   accessStatuses.sort((a, b) => {
