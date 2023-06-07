@@ -70,7 +70,7 @@ const ApprovedListPage = () => {
     setCurrentFilter(e.target.value)
   }
   const filtering = (char) =>
-    documents.filter(doc => doc.title.charAt(0) === char)
+    documents.filter(doc => doc.title.charAt(0).toUpperCase() === char)
   
   const filters = [
     "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
