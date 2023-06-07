@@ -62,7 +62,8 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
               SELECT j FROM (
                 SELECT adv."id", 
                 public_advisories_urgency_links.urgency_id, 
-                public_advisories_advisory_status_links.advisory_status_id
+                public_advisories_advisory_status_links.advisory_status_id,
+                public_advisories_access_status_links.access_status_id
               ) j
             ))
             FROM public_advisories_protected_areas_links
@@ -72,6 +73,10 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
               ON adv.id = public_advisories_urgency_links.public_advisory_id
             INNER JOIN public_advisories_advisory_status_links
               ON adv.id = public_advisories_advisory_status_links.public_advisory_id
+            INNER JOIN public_advisories_access_status_links
+              ON adv.id = public_advisories_access_status_links.public_advisory_id
+            INNER JOIN access_statuses
+              ON access_statuses.id = public_advisories_access_status_links.access_status_id
             WHERE public_advisories_protected_areas_links.protected_area_id = protected_areas.id
               AND adv.published_at IS NOT NULL
           ) AS "advisories"`
