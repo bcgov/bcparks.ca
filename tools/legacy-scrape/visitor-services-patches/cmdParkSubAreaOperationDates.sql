@@ -1,3 +1,0 @@
-SELECT qryParkOperatingDatesSub.ParkSubAreaID AS parkSubAreaId, IIf([active]=True,"true","false") AS isActive, qryParkOperatingDatesSub.OperatingYear AS operatingYear, qryParkOperatingDatesSub.openDate, qryParkOperatingDatesSub.closeDate, qryParkOperatingDatesSub.opStartDate AS serviceStartDate, qryParkOperatingDatesSub.opEndDate AS serviceEndDate, qryParkOperatingDatesSub.resStartDate AS reservationStartDate, qryParkOperatingDatesSub.resEndDate AS reservationEndDate, qryParkOperatingDatesSub.winterStart AS offSeasonStartDate, qryParkOperatingDatesSub.winterEnd AS offSeasonEndDate, qryParkOperatingDatesSub.note AS adminNote
-FROM qryParkOperatingDatesSub
-WHERE (((IIf([active]=True,"true","false"))="true") AND ((qryParkOperatingDatesSub.OperatingYear)>=2022));
