@@ -191,23 +191,6 @@ const getProtectedAreaStatus = async (ctx) => {
     }
   );
 
-  const campfireBanData = await strapi.entityService.findMany(
-    "api::fire-ban-prohibition.fire-ban-prohibition",
-    {
-      filters: {
-        prohibitionDescription: {
-          $containsi: "campfire",
-        },
-        fireCentre: {
-          id: {
-            $notNull: true,
-          },
-        },
-      },
-      populate: "*",
-    }
-  );
-
   let publicAdvisories = await getPublishedPublicAdvisories();
   let publicAdvisoryAudits = await getPublicAdvisoryAudits();
 
@@ -290,41 +273,11 @@ const getProtectedAreaStatus = async (ctx) => {
     });
 
     // bans and prohibitions
-    let hasCampfireBan;
     let campfireBanNote = "";
-    let campfireBanEffectiveDate = null;
     if (protectedArea.hasCampfireBanOverride) {
-      hasCampfireBan = protectedArea.hasCampfireBan;
       campfireBanNote = "campfire ban set via manual override";
     } else {
-      for (const fireZone of protectedArea.fireZones) {
-        const fireBan = campfireBanData.find(
-          (f) => f.fireCentre.id === fireZone.fireCentre
-        );
-
-        if (fireBan) {
-          hasCampfireBan = true;
-          campfireBanEffectiveDate = fireBan.effectiveDate;
-          campfireBanNote = "campfire ban set via wildfire service";
-          break;
-        }
-      }
-    }
-
-    let hasSmokingBan;
-    if (protectedArea.hasSmokingBanOverride) {
-      hasSmokingBan = protectedArea.hasSmokingBan;
-    } else {
-      for (const fireZone of protectedArea.fireZones) {
-        const fireBan = campfireBanData.find(
-          (f) => f.fireCentre.id === fireZone.fireCentre
-        );
-
-        if (fireBan) {
-          hasSmokingBan = true;
-          break;
-        }
-      }
+      campfireBanNote = "campfire ban set via wildfire service";
     }
 
     return {
@@ -347,11 +300,11 @@ const getProtectedAreaStatus = async (ctx) => {
         getHasCampfiresFacility(protectedArea.parkFacilities)
       ),
 
-      hasCampfireBan: boolToYN(hasCampfireBan),
-      hasSmokingBan: boolToYN(hasSmokingBan),
+      hasCampfireBan: boolToYN(protectedArea.hasCampfireBan),
+      hasSmokingBan: boolToYN(protectedArea.hasCampfireBan),
       hasCampfireBanOverride: boolToYN(protectedArea.hasCampfireBanOverride),
       hasSmokingBanOverride: boolToYN(protectedArea.hasSmokingBanOverride),
-      campfireBanEffectiveDate: campfireBanEffectiveDate,
+      campfireBanEffectiveDate: protectedArea.campfireBanEffectiveDate,
       campfireBanRescindedDate: protectedArea.campfireBanRescindedDate,
       campfireBanNote: campfireBanNote,
       accessStatusEffectiveDate: publicAdvisory.effectiveDate,
