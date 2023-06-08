@@ -16,7 +16,7 @@ module.exports = {
   // BCGW replication is hourly at 10 minutes past the hour
   cronJob: {
     task: async ({ strapi }) => {
-      console.log("CRON STARTING");
+      const startTime = +new Date();
 
       // fetch advisory statuses
       const advisoryStatus = await strapi.entityService.findMany(
@@ -120,7 +120,7 @@ module.exports = {
         });
       }
 
-      console.log("CRON FINISHED");
+      strapi.log.info(`Strapi cron finished in ${+new Date() - startTime}ms`);
     },
     options: {
       rule: "*/2 * * * *",
