@@ -12,7 +12,6 @@ const AUTH_URL =
   process.env.STRAPI_SSO_AUTH_URL || "https://dev.loginproxy.gov.bc.ca/auth";
 
 const KEYCLOAK_AUTH_ROLES = ["submitter", "approver"];
-const API_USER_EMAIL = process.env.STRAPI_API_USER_EMAIL;
 
 const authenticate = async (ctx) => {
 
@@ -44,16 +43,11 @@ const authenticate = async (ctx) => {
               KEYCLOAK_AUTH_ROLES.includes(e)
             );
 
-            if (!API_USER_EMAIL) {
-              strapi.log.warn("API_USER_EMAIL value not set");
-              throw new Error("API_USER_EMAIL value not set");
-            }
-
             if (roleMatch) {
-              const users = await getService('user').fetchAll({ filters: { email: { $eqi: API_USER_EMAIL } }, populate: { role: "*" } });
+              const users = await getService('user').fetchAll({ filters: { username: { $eq: 'apiuser' } }, populate: { role: "*" } });
               user = users.length ? users[0] : null;
               if (user === null) {
-                strapi.log.error(`A user with email '${API_USER_EMAIL}' was not found in the User collection-type`);
+                strapi.log.error(`A user with usrname 'apiuser' was not found in the User collection-type`);
                 return { error: "API user account does not exist" };
               }
             } else {
