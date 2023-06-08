@@ -13,14 +13,15 @@ This site is built using [Strapi CMS](https://strapi.io), a headless CMS, and [G
 - [Links](#links)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
+  - [Backend Development - Strapi Localhost](#backend-development---strapi-localhost)
+  - [Frontend development - Gatsby](#frontend-development---gatsby)
+  - [Staff Portal development](#staff-portal-development)
 - [Commit/branching](#commitbranching)
 - [Application walkthrough](#application-walkthrough)
 - [Communication Channels](#communication-channels)
 - [Additional Documentation](#additional-documentation)
 - [Deployment](#deployment)
 
-- [Backend Development - Strapi Localhost](src/cms/README.md)
-- [Frontend development - Gatsby/GraphQL](src/gatsby/README.md)
 
 ## Links
 
@@ -43,13 +44,28 @@ IMPORTANT: this process is not currently working on Windows without virtualisati
 
 ### Prerequisites
 
-1.  Ensure you have a command-line shell (like PowerShell, iTerm or the terminal integrated with Visual Studio Code) and Node JS 14 installed (the node version must be 14 - newer versions do not work).
+1.  Ensure you have a command-line shell (like PowerShell, iTerm or the terminal integrated with Visual Studio Code) and Node JS 18 installed.
 
 2. If you're running Strapi locally, you'll need to have [Docker](https://www.docker.com) installed. 
 
 3. Create a fork of the repo from https://github.com/bcgov/bcparks.ca
     
 4.  Clone your forked git repository into a local directory
+
+
+### Backend Development - Strapi Localhost
+
+- [Strapi setup instructions](src/cms/README.md)
+
+
+### Frontend development - Gatsby
+
+- [Gatsby setup instructions](src/gatsby/README.md)
+    
+
+### Staff Portal development
+
+- [Staff portal setup instructions](src/admin/README.md)
 
 
 ## Commit/branching

@@ -9,29 +9,31 @@ const validator = require("../../../../helpers/validator.js");
 
 const saveParkAccessStatus = async (data) => {
   try {
-    const updateResult = await strapi.db
-      .query(
-        "api::park-access-status.park-access-status"
-      )
-      .updateMany(
-        {
-          where: {
-            orcs: data.result.orcs
-          },
+    if (data.result?.orcs) {
+      const updateResult = await strapi.db
+        .query(
+          "api::park-access-status.park-access-status"
+        )
+        .updateMany(
+          {
+            where: {
+              orcs: data.result.orcs
+            },
+            data: {
+              orcs: data.result.orcs,
+              publishedAt: new Date(),
+              updatedAt: new Date()
+            }
+          });
+      if (updateResult.count === 0) {
+        await strapi.entityService.create(
+          "api::park-access-status.park-access-status", {
           data: {
             orcs: data.result.orcs,
-            publishedAt: new Date(),
-            updatedAt: new Date()
+            publishedAt: new Date()
           }
-        });
-    if (updateResult.count === 0) {
-      await strapi.entityService.create(
-        "api::park-access-status.park-access-status", {
-        data: {
-          orcs: data.result.orcs,
-          publishedAt: new Date()
-        }
-      })
+        })
+      }
     }
   } catch (error) {
     strapi.log.error(
