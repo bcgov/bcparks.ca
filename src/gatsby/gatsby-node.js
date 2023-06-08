@@ -167,8 +167,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             strapi_component
             pageTitle
             imageUrl
-            imageAlt
-            imageCaption
             introHtml {
               data {
                 introHtml

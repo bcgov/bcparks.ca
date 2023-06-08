@@ -5,9 +5,8 @@ import React from "react"
 import "../../styles/pageContent/pageHeader.scss"
 
 
-export default function PageHeader({ pageTitle, imageUrl, imageAlt })
+export default function PageHeader({ pageTitle, imageUrl })
 {
-
     return (
        <> 
         <div className="page-header">
@@ -15,14 +14,12 @@ export default function PageHeader({ pageTitle, imageUrl, imageAlt })
                 {pageTitle}
             </div>
                 {imageUrl && <div className="header-image-wrapper">
-                    <img src={imageUrl} alt={imageAlt ?? ""} />
+                    <img src={imageUrl} alt="" />
                 </div>}
             <div className="header-title header-title--mobile d-block d-md-none">
                 {pageTitle}
             </div>
         </div>
-
-
     </>
   )
 }

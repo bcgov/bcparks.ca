@@ -99,7 +99,7 @@ export default function ParkSubPage({ data }) {
           <div className="header-image-wrapper">
             <img
               src={header.imageUrl}
-              alt={header.imageAlt ?? ""}
+              alt=""
             />
           </div>
         )}
@@ -134,11 +134,6 @@ export default function ParkSubPage({ data }) {
               <div className="page-content col-md-9 col-12">
                 {header && (
                   <div className="header-content">
-                    {header.imageCaption &&
-                      <div className="page-header--caption">
-                        {header.imageCaption}
-                      </div>
-                    }
                     {header.introHtml.data.introHtml &&                    
                       <HTMLArea isVisible>{header.introHtml.data.introHtml}</HTMLArea>
                     }
@@ -236,8 +231,6 @@ export const query = graphql`
         metaTitle
       }
       pageHeader {
-        imageAlt
-        imageCaption
         imageUrl
         introHtml {
           data {
