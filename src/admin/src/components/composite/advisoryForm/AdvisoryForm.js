@@ -948,8 +948,8 @@ export default function AdvisoryForm({
                       className="bcgov-input"
                       variant="outlined"
                       InputProps={{ ...linkTitleInput }}
-                      error={((l.file?.url || l.url) && !l.title) !== ""}
-                      helperText={((l.file?.url || l.url) && !l.title) ? "Please enter link title too" : ""}
+                      error={l.url !== "" && l.title === ""}
+                      helperText={(l.url && !l.title) ? "Please enter link title too" : ""}
                     />
                     <TextField
                       value={l.file ? l.file.url : l.url}
@@ -959,8 +959,8 @@ export default function AdvisoryForm({
                       className="bcgov-input"
                       variant="outlined"
                       InputProps={{ ...linkUrlInput }}
-                      error={(l.title && !(l.file?.url || l.url)) !== ""}
-                      helperText={(l.title && !(l.file?.url || l.url)) ? "Please enter URL too" : ""}
+                      error={l.title !== "" && l.url === ""}
+                      helperText={(l.title && !l.url) ? "Please enter URL too" : ""}
                     />
                     <div className="ad-flex">
                       <TextField
@@ -1206,7 +1206,7 @@ export default function AdvisoryForm({
                       label="Create"
                       styling="bcgov-normal-blue btn"
                       onClick={() => {
-                        if (validAdvisoryData(advisoryData, true, mode)) {
+                        if (validAdvisoryData(advisoryData, linksRef, true, mode)) {
                           saveAdvisory();
                         }
                       }}
@@ -1218,7 +1218,7 @@ export default function AdvisoryForm({
                       label="Update"
                       styling="bcgov-normal-blue btn"
                       onClick={() => {
-                        if (validAdvisoryData(advisoryData, true, mode)) {
+                        if (validAdvisoryData(advisoryData, linksRef, true, mode)) {
                           updateAdvisory();
                         }
                       }}
