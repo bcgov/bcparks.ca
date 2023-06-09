@@ -908,6 +908,10 @@ div[class$="-singleValue"] {
     &:hover, &:focus {
       background-color: #00468b !important;
     }
+    &:focus-visible {
+      outline: 2px solid #00468b;
+      outline-offset: 2px;
+    }
   }
 
   .MuiChip-label {
