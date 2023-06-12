@@ -9,14 +9,35 @@ import ScrollToTop from "../../../components/scrollToTop"
 
 import "../../../styles/listPage.scss"
 
-const DocumentLink = ({ doc }) => {
+const DocumentLink = ({ doc, filter }) => {
+  const parks = doc.protectedAreas
+  const sites = doc.sites
   const year = doc.documentDate.split('-').shift()
   return (
-    <p>
-      <a href={doc.url}>
-        {`${doc.title} - ${doc.documentType?.documentCode}(${year}) [PDF]`}
-      </a>
-    </p>
+    sites.length > 0 ? (
+      // display link with siteName if there's a relation with site 
+      parks.map((park, index) => (
+        park.protectedAreaName.charAt(0).toUpperCase() === filter && (
+          sites.map((site, index) => (
+            <p key={index}>
+              <a href={doc.url} target="_blank" rel="noreferrer">
+                {`${park.protectedAreaName} - ${site.siteName} ${(doc.documentType.documentType).toLowerCase()} (${year}) [PDF]`}
+              </a>
+            </p>
+          ))
+        )
+      ))
+    ) : (
+      parks.map((park, index) => (
+        park.protectedAreaName.charAt(0).toUpperCase() === filter && (
+          <p key={index}>
+            <a href={doc.url} target="_blank" rel="noreferrer">
+              {`${park.protectedAreaName} ${(doc.documentType.documentType).toLowerCase()} (${year}) [PDF]`}
+            </a>
+          </p>
+        )
+      ))
+    )
   )
 }
 
@@ -33,6 +54,12 @@ const ApprovedListPage = () => {
             documentCode
             documentType
             description
+          }
+          protectedAreas {
+            protectedAreaName
+          }
+          sites {
+            siteName
           }
         }
       }
@@ -70,8 +97,9 @@ const ApprovedListPage = () => {
     setCurrentFilter(e.target.value)
   }
   const filtering = (char) =>
-    documents.filter(doc => doc.title.charAt(0).toUpperCase() === char)
-  
+    documents.filter(doc => doc.protectedAreas.some(
+      park => park.protectedAreaName.charAt(0).toUpperCase() === char
+    ))
   const filters = [
     "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
     "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
@@ -136,7 +164,7 @@ const ApprovedListPage = () => {
                 <div key={index} className="list">
                   {filter !== "All" && <h3>{filter}</h3>}
                   {filtering(filter).map((doc, index) => (
-                    <DocumentLink doc={doc} key={index} />
+                    <DocumentLink doc={doc} filter={filter} key={index} />
                   ))}
                 </div>
               ))
@@ -144,7 +172,7 @@ const ApprovedListPage = () => {
               <div className="list">
                 <h3>{currentFilter}</h3>
                 {filtering(currentFilter).map((doc, index) => (
-                  <DocumentLink doc={doc} key={index} />
+                  <DocumentLink doc={doc} filter={currentFilter} key={index} />
                 ))}
               </div>
             )}
