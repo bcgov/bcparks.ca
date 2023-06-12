@@ -66,6 +66,7 @@ export function validateRequiredDate(field) {
   field.setError("");
   return validateDate(field);
 }
+
 export function validateDate(field) {
   var date = moment(field.value);
   if (!date.isValid()) {
@@ -75,7 +76,17 @@ export function validateDate(field) {
   return true;
 }
 
-export function validAdvisoryData(advisoryData, validateStatus, mode) {
+export function validateLinks(links) {
+  const checkLinks = links.map((link) => {
+    if ((link.title && !link.url) || (!link.title && link.url)) {
+      return false;
+    }
+    return true;
+  })
+  return checkLinks.every(Boolean);
+}
+
+export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) {
   advisoryData.formError("");
   const validListingRankNumber = validateOptionalNumber(advisoryData.listingRank);
   const validListingRankRequired = validateRequiredText(advisoryData.listingRank);
@@ -89,6 +100,7 @@ export function validAdvisoryData(advisoryData, validateStatus, mode) {
   const validEndDate = validateOptionalDate(advisoryData.endDate);
   const validExpiryDate = validateOptionalDate(advisoryData.expiryDate);
   const validSubmittedBy = validateRequiredText(advisoryData.submittedBy);
+  const validLinks = validateLinks(linksRef.current);
   let validData =
     validListingRankNumber &&
     validListingRankRequired &&
@@ -101,7 +113,8 @@ export function validAdvisoryData(advisoryData, validateStatus, mode) {
     validStartDate &&
     validEndDate &&
     validExpiryDate &&
-    validSubmittedBy;
+    validSubmittedBy &&
+    validLinks;
   if (validateStatus) {
     const validAdvisoryStatus = validateRequiredSelect(
       advisoryData.advisoryStatus
