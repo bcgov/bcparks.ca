@@ -21,9 +21,9 @@ export default function ParkSubPage({ data }) {
   const header = page.pageHeader
   const park = page.protectedArea
   const menuContent = data?.allStrapiMenu?.nodes || []
-  const sections = contents.filter(content => Boolean(content.strapi_component === "parks.page-section")) || []
+  const sections = contents?.filter(content => Boolean(content.strapi_component === "parks.page-section")) || []
   const hasSections = sections.length > 0
-  const filteredContent = contents.filter(c =>
+  const filteredContent = contents?.filter(c =>
     Boolean(c.strapi_component !== "parks.page-header") &&
     Boolean(c.strapi_component !== "parks.seo")
   ) || []
