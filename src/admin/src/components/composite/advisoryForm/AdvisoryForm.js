@@ -9,8 +9,7 @@ import {
   Checkbox,
   FormControl,
   FormHelperText,
-  Button as Btn,
-  Tooltip,
+  Button as Btn
 } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import {
@@ -18,7 +17,6 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import Select from "react-select";
-import { withStyles } from "@material-ui/core/styles";
 import WarningIcon from "@material-ui/icons/Warning";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
@@ -36,6 +34,7 @@ import {
 
 import PrivateElement from "../../../auth/PrivateElement";
 import AdvisoryHistory from "../advisoryHistory/AdvisoryHistory";
+import LightTooltip from "../../shared/tooltip/LightTooltip";
 
 export default function AdvisoryForm({
   mode,
@@ -246,15 +245,6 @@ export default function AdvisoryForm({
     { label: "Weeks", value: "w" },
     { label: "Months", value: "M" },
   ];
-
-  const LightTooltip = withStyles(() => ({
-    tooltip: {
-      backgroundColor: "#fff",
-      color: "rgba(0, 0, 0, 0.87)",
-      boxShadow: "rgba(0, 0, 0, 0.35) 1px 1px 15px",
-      fontSize: 12,
-    },
-  }))(Tooltip);
 
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>

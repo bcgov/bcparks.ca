@@ -60,9 +60,17 @@ export function getSections(cmsData, setCmsData) {
 }
 
 export function getManagementAreas(cmsData, setCmsData) {
+    const fields = qs.stringify({
+        fields: ['id', 'managementAreaName'],
+        populate: {
+            protectedAreas: { fields: ['id', 'protectedAreaName', 'orcs'] },
+            section: { fields: ['id'] },
+            region: { fields: ['id'] }
+        }
+    });
     if (!cmsData.managementAreas) {
         const result = cmsAxios
-            .get(`/management-areas?${querySort("managementAreaName")}&populate=*`)
+            .get(`/management-areas?${querySort("managementAreaName")}&${fields}`)
             .then((res) => {
                 const data = cmsData;
                 data.managementAreas = res.data.data;

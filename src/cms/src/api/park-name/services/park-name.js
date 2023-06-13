@@ -37,6 +37,7 @@ module.exports = createCoreService(
         .query("api::park-name.park-name")
         .findMany({
           populate: true,
+          orderBy: 'parkName',
         });
 
       return parkNameData.map(
