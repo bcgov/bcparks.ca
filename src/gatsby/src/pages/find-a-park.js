@@ -435,7 +435,7 @@ export default function FindAPark({ location, data }) {
     const countPromise = axios.get(`${apiUrl}/protected-areas/count`, {
       params,
     })
-    const resultPromise = axios.get(`${apiUrl}/protected-areas/`, {
+    const resultPromise = axios.get(`${apiUrl}/protected-areas`, {
       params: { ...params, _start: pageStart, _limit: pageLimit },
     })
 
