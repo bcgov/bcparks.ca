@@ -314,6 +314,13 @@ export default function AdvisoryForm({
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
               Event Type
+              <LightTooltip
+                arrow
+                title="Please select the most appropriate event type that your advisory falls under, this does impact the front-end. 
+                For example, freshet and wildfire event types load conditional content to their respective flood and wildfire pages."
+              >
+                <HelpIcon className="helpIcon" />
+              </LightTooltip>
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               <FormControl
@@ -341,6 +348,13 @@ export default function AdvisoryForm({
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
               Park Access Status
+              <LightTooltip
+                arrow
+                title="This applies any applicable symbols or icons relating to the park access status to the advisory.
+                Such as full closure or partial closure icons."
+              >
+                <HelpIcon className="helpIcon" />
+              </LightTooltip>
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               <Select
@@ -356,6 +370,13 @@ export default function AdvisoryForm({
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
               Urgency Level
+              <LightTooltip
+                arrow
+                title="Dependant on your advisory, the urgency level can be used to prioritize your alert above existing alerts for the same park page.
+                Ie, assigning a high urgency re wildfire closure will place that advisory at the top."
+              >
+                <HelpIcon className="helpIcon" />
+              </LightTooltip>
             </div>
             <div className="col-lg-8 col-md-8 col-sm-12">
               <FormControl error>
@@ -419,6 +440,14 @@ export default function AdvisoryForm({
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
               Standard Message(s)
+              <LightTooltip
+                arrow
+                title="Standard messages are chosen from a list of generic, pre-defined and approved messages. 
+                This content will be added below any text entered in the description on the park page.
+                There is no requirement to have both a description and standard messaging."
+              >
+                <HelpIcon className="helpIcon" />
+              </LightTooltip>
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               <Select
@@ -437,6 +466,16 @@ export default function AdvisoryForm({
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12  bcgov-required ad-label">
               Select at least one affected area:
+              <LightTooltip
+                arrow
+                title="Please select the park that your advisory is affecting.
+                There is no need to select additional sites, regions, or sections if your advisory is just for a specific park.
+                Selecting a region (or any other category) will apply your advisory to every park page within that region or other category.              
+                For example, an advisory for Goldstream Park would only need Goldstream selected from the list of parks,
+                you would not need to include West Coast in the regions as this would trigger an alert for all parks in the West Coast."
+              >
+                <HelpIcon className="helpIcon" />
+              </LightTooltip>
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               <FormControl
@@ -681,7 +720,7 @@ export default function AdvisoryForm({
           </div>
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Listing Rank{" "}
+              Listing Rank
               <LightTooltip
                 arrow
                 title="Advisories, by default, are listed by date in descending order. 

@@ -112,6 +112,10 @@
   height: 44px !important;
 }
 
+.helpIcon {
+  margin-left: 4px;
+}
+
 @media (max-width: 767.98px) {
   .ad-label {
     text-align: left !important;
