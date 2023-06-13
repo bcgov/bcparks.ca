@@ -649,7 +649,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
             />
           </div>
           <div className="col-xl-3 col-md-4 col-sm-12">
-            <FormControlLabel style={{ marginLeft: '5px' }} control={
+            <FormControlLabel className="ml-1" control={
               <Checkbox
                 checked={showArchived}
                 onChange={(e) => {
@@ -662,14 +662,14 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
               />
             } label={
               <>
-                <small style={{ paddingRight: '6px' }}>
+                <small>
                   Show archived
                 </small>
                 <LightTooltip
                   arrow
                   title="Unpublished advisories are archived after 30 days of inactivity. Check the box to show
                    the 2000 most recent advisories including archived.">
-                  <HelpIcon className="helpIcon" />
+                  <HelpIcon className="helpIcon ml-1" />
                 </LightTooltip>
               </>
             } />
