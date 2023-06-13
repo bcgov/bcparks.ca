@@ -78,7 +78,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   useEffect(() => {
     const fetchEvenType = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/event-types/`);
+        const response = await axios.get(`${apiUrl}/event-types`);
   
         const formattedEventTypes = response.data.data.map((obj) => ({
           label: obj.eventType,
