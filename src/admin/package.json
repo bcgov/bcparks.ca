@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.12.13",
+    "@craco/craco": "^7.1.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^13.0.1",
@@ -50,10 +51,10 @@
     "webpack": "4.46.0"
   },  
   "scripts": {
-    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
-    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider craco start",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider craco build",
     "test": "jest",
-    "eject": "react-scripts eject",
+    "eject": "craco eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "lint": "eslint .",
