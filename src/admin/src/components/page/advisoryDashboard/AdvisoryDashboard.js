@@ -8,22 +8,23 @@ import { Button } from "../../shared/button/Button";
 import DataTable from "../../composite/dataTable/DataTable";
 import Select from "react-select";
 import Moment from "react-moment";
-import moment from "moment";
 import { Loader } from  "../../shared/loader/Loader";
 import IconButton from "@material-ui/core/IconButton";
 import Chip from "@material-ui/core/Chip";
 import TimerIcon from "@material-ui/icons/Timer";
 import Tooltip from "@material-ui/core/Tooltip";
+import LightTooltip from "../../shared/tooltip/LightTooltip";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import WatchLaterIcon from "@material-ui/icons/WatchLater";
 import EditIcon from "@material-ui/icons/Edit";
 import InfoIcon from "@material-ui/icons/Info";
+import HelpIcon from "@material-ui/icons/Help";
+import ArchiveIcon from "@material-ui/icons/Archive";
 import PublishIcon from "@material-ui/icons/Publish";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
-import { SvgIcon } from "@material-ui/core";
+import { FormControlLabel, Checkbox, SvgIcon } from "@material-ui/core";
 import { decode } from "he";
-import qs from 'qs';
 
 import {
   getRegions,
@@ -32,33 +33,10 @@ import {
   getAdvisoryStatuses,
 } from "../../../utils/CmsDataUtil";
 
-const query = qs.stringify({
-  fields: ['advisoryNumber', 'advisoryDate', 'title', 'effectiveDate', 'endDate', 'expiryDate'],
-  populate: {
-    protectedAreas: {
-      fields: ['orcs', 'protectedAreaName'],
-    },
-    advisoryStatus: {
-      fields: ['advisoryStatus', 'code'],
-    },
-    eventType: {
-      fields: ['eventType'],
-    },
-    urgency: {
-      fields: ['urgency'],
-    },
-    regions: {
-      fields: ['regionName'],
-    }
-  },
-  filters: { isLatestRevision: true },
-  pagination: {
-    limit: 1500
-  },
-  sort: ['advisoryDate:DESC']
-}, {
-  encodeValuesOnly: true,
-});
+import {
+  getLatestPublicAdvisoryAudits,
+  updatePublicAdvisories
+} from "../../../utils/AdvisoryDataUtil";
 
 export default function AdvisoryDashboard({
   page: { setError, cmsData, setCmsData },
@@ -81,6 +59,7 @@ export default function AdvisoryDashboard({
   const [managementAreas, setManagementAreas] = useState([]);
   const [parkNames, setParkNames] = useState([]);
   const [originalParkNames, setOriginalParkNames] = useState([]);
+  const [showArchived, setShowArchived] = useState(false);
 
   if (!keycloak && !initialized) setToError(true);
 
@@ -95,11 +74,13 @@ export default function AdvisoryDashboard({
   }, [selectedParkId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Preserve filters
+  const savedFilters = JSON.parse(localStorage.getItem('advisoryFilters'));
   const defaultPageFilters = [
     { filterName: 'region', filterValue: '', type: 'page'},
-    { filterName: 'park', filterValue: '', type: 'page'}
+    { filterName: 'park', filterValue: '', type: 'page' },
+    { filterName: 'archived', filterValue: false, type: 'page' },
   ];
-  const [filters, setFilters] = useState([...defaultPageFilters]);
+  const [filters, setFilters] = useState([...(savedFilters || defaultPageFilters)]);
 
   useEffect(() => {
     const filters = JSON.parse(localStorage.getItem('advisoryFilters'));
@@ -127,15 +108,14 @@ export default function AdvisoryDashboard({
     const fetchData = async () => {
       setIsLoading(true);
       if (initialized && keycloak) {
+        const filters = JSON.parse(localStorage.getItem('advisoryFilters'));
+        const archived = getPageFilterValue(filters, 'archived');
+        setShowArchived(archived);
         const res = await Promise.all([
           getRegions(cmsData, setCmsData),
           getManagementAreas(cmsData, setCmsData),
           getParkNames(cmsData, setCmsData),
-          cmsAxios.get(`public-advisory-audits?${query}`, {
-            headers: {
-              Authorization: `Bearer ${keycloak.token}`
-            }
-          })
+          getLatestPublicAdvisoryAudits(keycloak, archived)
         ])
         .catch(() => {
           setError({ status: 500, message: "Error loading data" });
@@ -150,28 +130,8 @@ export default function AdvisoryDashboard({
         const parkNamesData = res[2];
         const publicAdvisories = res[3]?.data.data;
         // Public Advisories
-        const regionParksCount = managementAreasData.reduce((region, item) => {
-          region[item.region?.id] = (region[item.region?.id] || 0) + item.protectedAreas?.length;
-          return region;
-        }, {});
+        const updatedPublicAdvisories = updatePublicAdvisories(publicAdvisories, managementAreasData);
 
-        const today = moment(new Date()).tz("America/Vancouver").toISOString();
-        const updatedPublicAdvisories = publicAdvisories.map((publicAdvisory) => {
-          publicAdvisory.expired = publicAdvisory.expiryDate < today ? "Y" : "N";
-          publicAdvisory.associatedParks = publicAdvisory.protectedAreas.map((p) => p.protectedAreaName).join(", ")
-            + publicAdvisory.regions.map((r) => r.regionName).join(", ");
-
-          let regionsWithParkCount = [];
-          if (publicAdvisory?.regions?.length > 0) {
-            publicAdvisory.regions.forEach((region) => {
-              region.count = regionParksCount[region.id];
-              regionsWithParkCount = [...regionsWithParkCount, region];
-            });
-            publicAdvisory.regions = regionsWithParkCount;
-          }
-          return publicAdvisory;
-        });
- 
         if (isMounted) {
           // Published Advisories
           getCurrentPublishedAdvisories(cmsData, setCmsData);
@@ -183,7 +143,6 @@ export default function AdvisoryDashboard({
           setOriginalPublicAdvisories(updatedPublicAdvisories);
 
           // Preserve filters
-          let filters = JSON.parse(localStorage.getItem('advisoryFilters'));
           let regionId = getPageFilterValue(filters, 'region');
           if (regionId) {
             let region = regionsData.find((r) => (r.id === regionId));
@@ -195,7 +154,7 @@ export default function AdvisoryDashboard({
 
           let parkId = getPageFilterValue(filters, 'park');
           if (parkId) {
-            let park = parkNamesData.find((p) => (p.id === parkId));
+            let park = parkNamesData.find((p) => (p.protectedArea.id === parkId));
             if (park) {
               setSelectedParkId(parkId);
               setSelectedPark(({ label: park.parkName, value: park.id }));
@@ -295,7 +254,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
 
       if (publishedStatus?.length > 0) {
         const result = await cmsAxios
-          .get(`/public-advisories?_advisoryStatus=${publishedStatus[0].id}&sort=createdAt:DESC&populate=*`)
+          .get(`/public-advisories?filters[advisoryStatus][code]=PUB&fields[0]=advisoryNumber&pagination[limit]=-1&sort=createdAt:DESC`)
           .catch(() => {
             setHasErrors(true);
           });
@@ -312,6 +271,27 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
       }
     }
   };
+
+  const toggleArchivedAdvisories = async (showArchived) => {
+    setShowArchived(showArchived);
+    setIsLoading(true);
+    setPublicAdvisories([]);
+
+    let res = null;
+    try {
+      res = await getLatestPublicAdvisoryAudits(keycloak, showArchived)
+    } catch {
+      setError({ status: 500, message: "Error loading data" });
+      setToError(true);
+      setIsLoading(false);
+    }
+
+    const publicAdvisories = res?.data.data;
+    const updatedPublicAdvisories = updatePublicAdvisories(publicAdvisories, cmsData.managementAreas);
+    setPublicAdvisories(updatedPublicAdvisories);
+    setOriginalPublicAdvisories(updatedPublicAdvisories);
+    setIsLoading(false);
+  }
 
   const tableColumns = [
     {
@@ -366,7 +346,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
       },
       render: (rowData) => (
         <div className="advisory-status">
-          {rowData.advisoryStatus && (
+          {rowData.advisoryStatus && !rowData.archived &&
             <Tooltip title={rowData.advisoryStatus.advisoryStatus}>
               <span>
                 {publishedAdvisories.includes(rowData.advisoryNumber) && (
@@ -422,6 +402,15 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
                     )}
                   </>
                 )}
+              </span>
+            </Tooltip>
+          }
+          {rowData.archived && (
+            <Tooltip title="Archived">
+              <span>
+                <SvgIcon>
+                  <ArchiveIcon className="archivedIcon" />
+                </SvgIcon>
               </span>
             </Tooltip>
           )}
@@ -615,7 +604,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
           </div>
         </div>
         <div className="row ad-row">
-          <div className="col-lg-6 col-md-4 col-sm-12">
+          <div className="col-xl-4 col-md-4 col-sm-12">
             <Select
               value={selectedRegion}
               options={regions.map((r) => ({ label: r.regionName + " Region", value: r.id }) )}
@@ -638,7 +627,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
               isClearable
             />
           </div>
-          <div className="col-lg-6 col-md-4 col-sm-12">
+          <div className="col-xl-5 col-md-4 col-sm-12">
             <Select
               value={selectedPark}
               options={parkNames
@@ -658,6 +647,32 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
               className="bcgov-select"
               isClearable
             />
+          </div>
+          <div className="col-xl-3 col-md-4 col-sm-12">
+            <FormControlLabel style={{ marginLeft: '5px' }} control={
+              <Checkbox
+                checked={showArchived}
+                onChange={(e) => {
+                  let showArchived = e ? e.target.checked : false;
+                  let arr = [...filters.filter((o) => !(o.type === 'page' && o.filterName === 'archived'))];
+                  setFilters([...arr, { type: 'page', filterName: 'archived', filterValue: showArchived }]);
+                  toggleArchivedAdvisories(showArchived)
+                }}
+                inputProps={{ "aria-label": "archived" }}
+              />
+            } label={
+              <>
+                <small style={{ paddingRight: '6px' }}>
+                  Show archived
+                </small>
+                <LightTooltip
+                  arrow
+                  title="Unpublished advisories are archived after 30 days of inactivity. Check the box to show
+                   the 2000 most recent advisories including archived.">
+                  <HelpIcon className="helpIcon" />
+                </LightTooltip>
+              </>
+            } />
           </div>
         </div>
       </div>
