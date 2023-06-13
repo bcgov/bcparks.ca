@@ -103,7 +103,7 @@ export default function AdvisorySummary({
     if (parseInt(id)) {
       Promise.all([
         cmsAxios.get(
-          `public-advisory-audits/${id}?_publicationState=preview&populate=*`,
+          `public-advisory-audits/${id}?publicationState=preview&populate=*`,
           {
             headers: { Authorization: `Bearer ${keycloak.token}` }
           }),
