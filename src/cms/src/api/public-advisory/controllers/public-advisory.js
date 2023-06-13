@@ -57,7 +57,7 @@ module.exports = createCoreController(
 
             ctx.query = populateStandardMessages(ctx.query);
 
-            const entity = await strapi.service("api::public-advisory.public-advisory").findOne(entities[0].id, ctx.query);
+            let entity = await strapi.service("api::public-advisory.public-advisory").findOne(entities[0].id, ctx.query);
 
             // append the standardMessages to the description and then delete them from the entity
             entity = appendStandardMessages(entity);
