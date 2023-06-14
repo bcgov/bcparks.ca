@@ -12,10 +12,12 @@
   },
   "attributes": {
     "documentCode": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "documentType": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "description": {
       "type": "text"

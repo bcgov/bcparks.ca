@@ -15,25 +15,29 @@
       "type": "string"
     },
     "url": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "description": {
       "type": "text"
     },
     "documentDate": {
-      "type": "date"
+      "type": "date",
+      "required": true
     },
     "documentType": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::management-document-type.management-document-type",
-      "inversedBy": "managementDocuments"
+      "inversedBy": "managementDocuments",
+      "required": true
     },
     "protectedAreas": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::protected-area.protected-area",
-      "inversedBy": "managementDocuments"
+      "inversedBy": "managementDocuments",
+      "required": true
     },
     "sites": {
       "type": "relation",
