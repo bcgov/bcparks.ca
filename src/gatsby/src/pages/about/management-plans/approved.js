@@ -25,7 +25,7 @@ const DocumentLink = ({ doc, filter }) => {
             checkRelation(park.orcs, site.orcsSiteNumber) && (
               <p key={index}>
                 <a href={doc.url} target="_blank" rel="noreferrer">
-                  {`${park.protectedAreaName} - ${site.siteName} ${(doc.documentType.documentType).toLowerCase()} (${year}) [PDF]`}
+                  {`${park.protectedAreaName} - ${site.siteName} ${(doc.documentType?.documentType)?.toLowerCase()} (${year}) [PDF]`}
                 </a>
               </p>
             )
@@ -37,7 +37,7 @@ const DocumentLink = ({ doc, filter }) => {
         park.protectedAreaName.charAt(0).toUpperCase() === filter && (
           <p key={index}>
             <a href={doc.url} target="_blank" rel="noreferrer">
-              {`${park.protectedAreaName} ${(doc.documentType.documentType).toLowerCase()} (${year}) [PDF]`}
+              {`${park.protectedAreaName} ${(doc.documentType?.documentType)?.toLowerCase()} (${year}) [PDF]`}
             </a>
           </p>
         )
@@ -49,7 +49,7 @@ const DocumentLink = ({ doc, filter }) => {
 const ApprovedListPage = () => {
   const queryData = useStaticQuery(graphql`
     query {
-      allStrapiManagementDocument(sort: {fields: title, order: ASC}) {
+      allStrapiManagementDocument(sort: {fields: protectedAreas___protectedAreaName, order: ASC}) {
         nodes {
           title
           url
