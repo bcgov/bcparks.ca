@@ -1,7 +1,7 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
-import { CssBaseline, Breadcrumbs } from "@material-ui/core"
+import { CssBaseline, Breadcrumbs } from "@mui/material"
 
 import Footer from "../components/footer"
 import Header from "../components/header"

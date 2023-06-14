@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "@material-ui/core"
+import { Link } from "@mui/material"
 import Carousel from "react-material-ui-carousel"
 
 import ParkAccessStatus from "../../components/park/parkAccessStatus"

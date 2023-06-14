@@ -1,6 +1,6 @@
 import React, { useRef } from "react"
 import { graphql, useStaticQuery } from "gatsby"
-import { Breadcrumbs } from "@material-ui/core"
+import { Breadcrumbs } from "@mui/material"
 import useScrollSpy from "react-use-scrollspy"
 
 import Footer from "../components/footer"

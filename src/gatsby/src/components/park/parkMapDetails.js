@@ -1,5 +1,5 @@
 import React from "react"
-import { Paper, Grid } from "@material-ui/core"
+import { Paper, Grid } from "@mui/material"
 
 import { capitalizeFirstLetter } from "../../utils/helpers";
 

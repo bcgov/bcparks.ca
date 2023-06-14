@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { Link, Breadcrumbs } from "@material-ui/core"
+import { Link, Breadcrumbs } from "@mui/material"
 
 import Footer from "../components/footer"
 import Header from "../components/header"

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import { Button, Grid, Box, Divider } from "@material-ui/core"
+import { Button, Grid, Box, Divider } from "@mui/material"
 // import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox"
-import PhotoLibraryOutlinedIcon from "@material-ui/icons/PhotoLibraryOutlined"
+import PhotoLibraryOutlinedIcon from "@mui/icons-material/PhotoLibraryOutlined"
 // import { useLightbox } from "simple-react-lightbox"
 
 import ParkPhoto from "./parkPhoto"

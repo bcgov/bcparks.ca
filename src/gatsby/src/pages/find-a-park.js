@@ -19,12 +19,12 @@ import {
   Dialog,
   DialogContent,
   DialogActions,
-} from "@material-ui/core"
-import Pagination from "@material-ui/lab/Pagination"
-import SearchIcon from "@material-ui/icons/Search"
-import CancelIcon from "@material-ui/icons/Cancel"
-import ExpandLess from "@material-ui/icons/ExpandLess"
-import ExpandMore from "@material-ui/icons/ExpandMore"
+} from "@mui/material"
+import Pagination from "@mui/material/Pagination"
+import SearchIcon from "@mui/icons-material/Search"
+import CancelIcon from "@mui/icons-material/Cancel"
+import ExpandLess from "@mui/icons-material/ExpandLess"
+import ExpandMore from "@mui/icons-material/ExpandMore"
 import Carousel from "react-material-ui-carousel"
 import { scrollIntoView } from "seamless-scroll-polyfill";
 

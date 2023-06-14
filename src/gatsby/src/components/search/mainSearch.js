@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { navigate } from "gatsby"
-import { TextField, Button, InputAdornment, InputLabel } from "@material-ui/core"
-import SearchIcon from "@material-ui/icons/Search"
+import { TextField, Button, InputAdornment, InputLabel } from "@mui/material"
+import SearchIcon from "@mui/icons-material/Search"
 
 import "../../styles/search.scss"
   

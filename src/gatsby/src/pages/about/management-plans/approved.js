@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { graphql, useStaticQuery } from "gatsby"
-import { Breadcrumbs, Link } from "@material-ui/core"
+import { Breadcrumbs, Link } from "@mui/material"
 
 import Header from "../../../components/header"
 import Footer from "../../../components/footer"

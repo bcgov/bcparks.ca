@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
-import { Fab } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp"
+import { Fab } from "@mui/material"
+import makeStyles from "@mui/styles/makeStyles"
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
 
 const useStyles = makeStyles(theme => ({
   toTop: {

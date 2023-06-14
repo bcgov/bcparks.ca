@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-// import { navigate } from "@reach/router"
 import {
   Box,
   Button,
@@ -7,10 +6,10 @@ import {
   InputAdornment,
   Checkbox,
   FormControlLabel,
-} from "@material-ui/core"
-import Autocomplete from '@material-ui/lab/Autocomplete'
-import { makeStyles } from "@material-ui/core/styles"
-import SearchIcon from "@material-ui/icons/Search"
+} from "@mui/material"
+import Autocomplete from '@mui/material/Autocomplete'
+import makeStyles from '@mui/styles/makeStyles'
+import SearchIcon from "@mui/icons-material/Search"
 
 import { getAdvisoryTypeFromUrl } from "../../utils/advisoryHelper";
 import "../../styles/advisories/advisoryFilter.scss"

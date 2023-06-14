@@ -10,7 +10,7 @@ import {
   CssBaseline,
   Link,
   Breadcrumbs,
-} from "@material-ui/core"
+} from "@mui/material"
 import useScrollSpy from "react-use-scrollspy"
 
 import { capitalizeFirstLetter, renderHTML, isNullOrWhiteSpace } from "../utils/helpers";

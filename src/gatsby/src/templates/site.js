@@ -8,7 +8,7 @@ import {
   CssBaseline,
   Link,
   Breadcrumbs,
-} from "@material-ui/core"
+} from "@mui/material"
 import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";

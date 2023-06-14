@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { graphql } from "gatsby"
 import axios from "axios"
-import { Container, CircularProgress } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
+import { Container, CircularProgress } from "@mui/material"
+import makeStyles from '@mui/styles/makeStyles'
 
 import Footer from "../components/footer"
 import Header from "../components/header"

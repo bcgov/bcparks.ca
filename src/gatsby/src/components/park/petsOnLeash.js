@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
-import { makeStyles } from "@material-ui/core/styles"
-import { Grid, Card, CardHeader, Avatar } from "@material-ui/core"
+import makeStyles from '@mui/styles/makeStyles'
+import { Grid, Card, CardHeader, Avatar } from "@mui/material"
 
 import petsOnLeashIcon from "../../images/park/pets-on-leash.png"
 

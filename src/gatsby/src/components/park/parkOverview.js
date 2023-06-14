@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
-import { Box, Paper, Link, Grid } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
+import { Box, Paper, Link, Grid } from "@mui/material"
+import makeStyles from '@mui/styles/makeStyles'
 
 import { capitalizeFirstLetter } from "../../utils/helpers";
 

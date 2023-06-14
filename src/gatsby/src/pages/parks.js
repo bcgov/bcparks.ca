@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { Box, Grid, Container } from "@material-ui/core"
+import { Box, Grid, Container } from "@mui/material"
 
 import Footer from "../components/footer"
 import Header from "../components/header"

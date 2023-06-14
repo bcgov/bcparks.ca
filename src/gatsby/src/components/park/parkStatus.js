@@ -1,6 +1,6 @@
 import React from "react"
-import { Grid, Box } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
+import { Grid, Box } from "@mui/material"
+import makeStyles from '@mui/styles/makeStyles'
 
 import Advisory from "./advisory"
 import CampfireBan from "./campfireBan"

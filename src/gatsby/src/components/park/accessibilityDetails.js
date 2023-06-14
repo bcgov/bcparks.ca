@@ -1,5 +1,5 @@
 import React from "react"
-import { Paper, Container, Grid } from "@material-ui/core"
+import { Paper, Container, Grid } from "@mui/material"
 
 import Heading from "./heading"
 import Spacer from "./spacer"
