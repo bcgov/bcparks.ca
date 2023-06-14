@@ -195,7 +195,7 @@ export const Head = ({data}) => {
 export const query = graphql`
   query ParkSubPageDetails($slug: String, $protectedAreaSlug: String) {
     strapiParkSubPage(
-      slug: { eq: $slug }
+      slug: {eq: $slug}
       protectedArea: {slug: {eq: $protectedAreaSlug}}
     ) {
       id
@@ -245,8 +245,8 @@ export const query = graphql`
       }
     }
     allStrapiMenu(
-      sort: { fields: order, order: ASC }
-      filter: { show: { eq: true } }
+      sort: {order: ASC},
+      filter: {show: {eq: true}}
     ) {
       nodes {
         strapi_id

@@ -44,14 +44,14 @@ import "../styles/search.scss"
 import { addSmallImagePrefix, handleImgError } from "../utils/helpers";
 
 export const query = graphql`
-  query {
+  {
     site {
       siteMetadata {
         apiURL
       }
     }
     allStrapiActivityType(
-      filter: { isActive: { eq: true } }
+      filter: {isActive: {eq: true}}
     ) {
       totalCount
       nodes {
@@ -61,8 +61,8 @@ export const query = graphql`
       }
     }
     allStrapiFacilityType(
-      sort: { fields: facilityName }
-      filter: { isActive: { eq: true } }      
+      sort: {facilityName: ASC},
+      filter: {isActive: {eq: true}}
     ) {
       totalCount
       nodes {
@@ -72,8 +72,8 @@ export const query = graphql`
       }
     }
     allStrapiMenu(
-      sort: { fields: order, order: ASC }
-      filter: { show: { eq: true } }
+      sort: {order: ASC},
+      filter: {show: {eq: true}}
     ) {
       nodes {
         strapi_id

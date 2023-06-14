@@ -543,7 +543,7 @@ export const Head = ({data}) => {
 
 export const query = graphql`
   query ProtectedAreaDetails($orcs: Int) {
-    strapiProtectedArea(orcs: { eq: $orcs }) {
+    strapiProtectedArea(orcs: {eq: $orcs}) {
       protectedAreaName
       description {
         data {
@@ -786,18 +786,17 @@ export const query = graphql`
         terrestrialEcosection
       }
     }
-    # Park photos are split into featured and non-featured in order to sort correctly,
-    # with null values last.
     featuredPhotos: allStrapiParkPhoto(
       filter: {
-        orcs: { eq: $orcs }
-        isFeatured: { eq: true }
-        isActive: { eq: true }
+        orcs: {eq: $orcs},
+        isFeatured: {eq: true},
+        isActive: {eq: true}
       }
-      sort: {
-        order: [ASC, DESC, DESC]
-        fields: [sortOrder, dateTaken, strapi_id]
-      }
+      sort: [
+        {sortOrder: ASC},
+        {dateTaken: DESC},
+        {strapi_id: DESC}
+      ]
     ) {
       nodes {
         imageUrl
@@ -806,14 +805,15 @@ export const query = graphql`
     }
     regularPhotos: allStrapiParkPhoto(
       filter: {
-        orcs: { eq: $orcs }
-        isFeatured: { ne: true }
-        isActive: { eq: true }
+        orcs: {eq: $orcs},
+        isFeatured: {ne: true},
+        isActive: {eq: true}
       }
-      sort: {
-        order: [ASC, DESC, DESC]
-        fields: [sortOrder, dateTaken, strapi_id]
-      }
+      sort: [
+        {sortOrder: ASC},
+        {dateTaken: DESC},
+        {strapi_id: DESC}
+      ]
     ) {
       nodes {
         imageUrl
@@ -821,8 +821,8 @@ export const query = graphql`
       }
     }
     allStrapiMenu(
-      sort: { fields: order, order: ASC }
-      filter: { show: { eq: true } }
+      sort: {order: ASC},
+      filter: {show: {eq: true}}
     ) {
       nodes {
         strapi_id

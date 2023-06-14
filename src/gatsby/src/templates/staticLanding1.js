@@ -18,8 +18,8 @@ const LandingPage = ({ pageContext }) => {
   const queryData = useStaticQuery(graphql`
     {
       allStrapiMenu(
-        sort: { fields: order, order: ASC }
-        filter: { show: { eq: true } }
+        sort: {order: ASC},
+        filter: {show: {eq: true}}
       ) {
         nodes {
           strapi_id

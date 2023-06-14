@@ -10,7 +10,7 @@ const AdvisorySummary = ({ advisories }) => {
   const { urgencies } = useStaticQuery(
     graphql`
       query urgencies {
-        urgencies: allStrapiUrgency(sort: { fields: sequence, order: DESC }) {
+        urgencies: allStrapiUrgency(sort: {sequence: DESC}) {
           nodes {
             strapi_id
             color

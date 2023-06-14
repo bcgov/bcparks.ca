@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { Button, Grid, Box, Divider } from "@material-ui/core"
-import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox"
+// import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox"
 import PhotoLibraryOutlinedIcon from "@material-ui/icons/PhotoLibraryOutlined"
-import { useLightbox } from "simple-react-lightbox"
+// import { useLightbox } from "simple-react-lightbox"
 
 import ParkPhoto from "./parkPhoto"
 

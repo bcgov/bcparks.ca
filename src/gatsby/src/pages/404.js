@@ -10,11 +10,10 @@ import "../styles/404.scss"
 
 const NotFoundPage = () => {
 
-  const queryData = useStaticQuery(graphql`
-    query {
+  const queryData = useStaticQuery(graphql`{
       allStrapiMenu(
-        sort: { fields: order, order: ASC }
-        filter: { show: { eq: true } }
+        sort: {order: ASC},
+        filter: {show: {eq: true}}
       ) {
         nodes {
           strapi_id

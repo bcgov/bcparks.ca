@@ -401,8 +401,8 @@ export const Head = ({data}) => {
 export const query = graphql`
   query SiteDetails($orcsSiteNumber: String) {
     strapiSite(
-      isDisplayed: {eq: true}
-      orcsSiteNumber: { eq: $orcsSiteNumber }
+      isDisplayed: {eq: true},
+      orcsSiteNumber: {eq: $orcsSiteNumber}
     ) {
       siteName
       siteNumber
@@ -410,11 +410,11 @@ export const query = graphql`
       mapZoom
       longitude
       latitude
-      locationNotes { 
-        data { 
+      locationNotes {
+        data {
           locationNotes
         }
-       }
+      }
       description {
         data {
           description
@@ -482,18 +482,16 @@ export const query = graphql`
         hasDayUsePass
       }
     }
-    # Site photos are split into featured and non-featured in order to sort correctly,
-    # with null values last.
     featuredPhotos: allStrapiParkPhoto(
       filter: {
-        orcsSiteNumber: { eq: $orcsSiteNumber }
-        isFeatured: { eq: true }
-        isActive: { eq: true }
+        orcsSiteNumber: {eq: $orcsSiteNumber},
+        isFeatured: {eq: true}, isActive: {eq: true}
       }
-      sort: {
-        order: [ASC, DESC, DESC]
-        fields: [sortOrder, dateTaken, strapi_id]
-      }
+      sort: [
+        {sortOrder: ASC},
+        {dateTaken: DESC},
+        {strapi_id: DESC}
+      ]
     ) {
       nodes {
         imageUrl
@@ -502,14 +500,15 @@ export const query = graphql`
     }
     regularPhotos: allStrapiParkPhoto(
       filter: {
-        orcsSiteNumber: { eq: $orcsSiteNumber }
-        isFeatured: { ne: true }
-        isActive: { eq: true }
+        orcsSiteNumber: {eq: $orcsSiteNumber},
+        isFeatured: {ne: true},
+        isActive: {eq: true}
       }
-      sort: {
-        order: [ASC, DESC, DESC]
-        fields: [sortOrder, dateTaken, strapi_id]
-      }
+      sort: [
+        {sortOrder: ASC},
+        {dateTaken: DESC},
+        {strapi_id: DESC}
+      ]
     ) {
       nodes {
         imageUrl
@@ -517,8 +516,8 @@ export const query = graphql`
       }
     }
     allStrapiMenu(
-      sort: { fields: order, order: ASC }
-      filter: { show: { eq: true } }
+      sort: {order: ASC},
+      filter: {show: {eq: true}}
     ) {
       nodes {
         strapi_id
