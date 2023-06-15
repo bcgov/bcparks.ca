@@ -81,6 +81,7 @@ tools/syncdb/*.sql
 **/nbproject
 **/public/uploads/*
 !**/public/uploads/.gitkeep
+src/staging/*
 
 ############################
 # Node.js

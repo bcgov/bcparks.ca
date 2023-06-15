@@ -79,12 +79,10 @@ Prior to creating a PR, it's good practice to sync your fork with the upstream r
 
 Alternatively, you could do this in GitHub, and use the 'Sync fork' button in your forked repo, and then pull it into your local.
 
-For full details on how to create a PR, refer to the instructions on [Confluence](#additional-documentation).
-
  
 ## Application walkthrough
 
-Detailed instructions on how to perform common tasks in the CMS can be found on [Confluence](#additional-documentation).
+For detailed instructions on how to perform common tasks in the CMS, contact [Leah Wilcock](mailto:Leah.Wilcock@gov.bc.ca), Manager of Information Services.
 
  
 ## Communication Channels
@@ -94,11 +92,9 @@ Most communications are handled through the BC Parks Service Transformation Micr
 
 ## Additional Documentation
 
-BCP Web Team Jira Board: https://bcparksdigital.atlassian.net/jira/software/projects/BWT/boards/5
-
-Confluence: https://apps.nrs.gov.bc.ca/int/confluence/pages/viewpage.action?pageId=109185900
+Coming soon.
 
 
 ## Deployment
 
-Deployment and content sync information can be found on the [Confluence](#additional-documentation) page.
+For deployment and content sync information, contact [Leah Wilcock](mailto:Leah.Wilcock@gov.bc.ca), Manager of Information Services.
