@@ -36,8 +36,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::protected-area.protected-area",
-      "inversedBy": "managementDocuments",
-      "required": true
+      "inversedBy": "managementDocuments"
     },
     "sites": {
       "type": "relation",

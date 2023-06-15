@@ -10,7 +10,6 @@ const validator = require("../../../../helpers/validator.js");
 module.exports = {
     beforeCreate(event) {
         const { data } = event.params;
-        validator.protectedAreaConnectValidator(data.protectedAreas)
         validator.documentTypeConnectValidator(data.documentType)
     },
     beforeUpdate(event) {
