@@ -79,12 +79,10 @@ Prior to creating a PR, it's good practice to sync your fork with the upstream r
 
 Alternatively, you could do this in GitHub, and use the 'Sync fork' button in your forked repo, and then pull it into your local.
 
-For full details on how to create a PR, refer to the instructions on [Confluence](#additional-documentation).
-
  
 ## Application walkthrough
 
-Detailed instructions on how to perform common tasks in the CMS can be found on [Confluence](#additional-documentation).
+For detailed instructions on how to perform common tasks in the CMS, contact [Leah Wilcock](mailto:Leah.Wilcock@gov.bc.ca), Manager of Information Services.
 
  
 ## Communication Channels
@@ -99,4 +97,4 @@ Coming soon.
 
 ## Deployment
 
-Deployment and content sync information can be found on the [Confluence](#additional-documentation) page.
+For deployment and content sync information, contact [Leah Wilcock](mailto:Leah.Wilcock@gov.bc.ca), Manager of Information Services.
