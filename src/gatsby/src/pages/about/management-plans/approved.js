@@ -12,19 +12,24 @@ import "../../../styles/listPage.scss"
 const DocumentLink = ({ doc, filter }) => {
   const parks = doc.protectedAreas
   const sites = doc.sites
-  const year = doc.documentDate.split('-').shift()
+  const year = doc.documentDate?.split('-').shift()
+  const checkRelation = (orcs, orcsSite) => {
+    return orcs.toString() === orcsSite.split("-")[0]
+  }
   return (
     sites.length > 0 ? (
       // display link with siteName if there's a relation with site 
       parks.map((park, index) => (
         park.protectedAreaName.charAt(0).toUpperCase() === filter && (
-          sites.map((site, index) => (
-            <p key={index}>
-              <a href={doc.url} target="_blank" rel="noreferrer">
-                {`${park.protectedAreaName} - ${site.siteName} ${(doc.documentType.documentType).toLowerCase()} (${year}) [PDF]`}
-              </a>
-            </p>
-          ))
+          sites.map((site, index) =>
+            checkRelation(park.orcs, site.orcsSiteNumber) && (
+              <p key={index}>
+                <a href={doc.url} target="_blank" rel="noreferrer">
+                  {`${park.protectedAreaName} - ${site.siteName} ${(doc.documentType?.documentType)?.toLowerCase()} (${year}) [PDF]`}
+                </a>
+              </p>
+            )
+          )
         )
       ))
     ) : (
@@ -32,7 +37,7 @@ const DocumentLink = ({ doc, filter }) => {
         park.protectedAreaName.charAt(0).toUpperCase() === filter && (
           <p key={index}>
             <a href={doc.url} target="_blank" rel="noreferrer">
-              {`${park.protectedAreaName} ${(doc.documentType.documentType).toLowerCase()} (${year}) [PDF]`}
+              {`${park.protectedAreaName} ${(doc.documentType?.documentType)?.toLowerCase()} (${year}) [PDF]`}
             </a>
           </p>
         )
@@ -44,7 +49,7 @@ const DocumentLink = ({ doc, filter }) => {
 const ApprovedListPage = () => {
   const queryData = useStaticQuery(graphql`
     query {
-      allStrapiManagementDocument(sort: {fields: title, order: ASC}) {
+      allStrapiManagementDocument(sort: {fields: protectedAreas___protectedAreaName, order: ASC}) {
         nodes {
           title
           url
@@ -56,9 +61,11 @@ const ApprovedListPage = () => {
             description
           }
           protectedAreas {
+            orcs
             protectedAreaName
           }
           sites {
+            orcsSiteNumber
             siteName
           }
         }
