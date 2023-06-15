@@ -94,9 +94,7 @@ Most communications are handled through the BC Parks Service Transformation Micr
 
 ## Additional Documentation
 
-BCP Web Team Jira Board: https://bcparksdigital.atlassian.net/jira/software/projects/BWT/boards/5
-
-Confluence: https://apps.nrs.gov.bc.ca/int/confluence/pages/viewpage.action?pageId=109185900
+Coming soon.
 
 
 ## Deployment
