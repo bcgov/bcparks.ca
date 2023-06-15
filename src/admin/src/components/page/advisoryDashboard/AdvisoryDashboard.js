@@ -59,7 +59,6 @@ export default function AdvisoryDashboard({
   const [managementAreas, setManagementAreas] = useState([]);
   const [parkNames, setParkNames] = useState([]);
   const [originalParkNames, setOriginalParkNames] = useState([]);
-  const [showArchived, setShowArchived] = useState(false);
 
   if (!keycloak && !initialized) setToError(true);
 
@@ -78,9 +77,11 @@ export default function AdvisoryDashboard({
   const defaultPageFilters = [
     { filterName: 'region', filterValue: '', type: 'page'},
     { filterName: 'park', filterValue: '', type: 'page' },
-    { filterName: 'archived', filterValue: false, type: 'page' },
   ];
   const [filters, setFilters] = useState([...(savedFilters || defaultPageFilters)]);
+
+  const archived = sessionStorage.getItem('showArchived') === "true";
+  const [showArchived, setShowArchived] = useState(archived);
 
   useEffect(() => {
     const filters = JSON.parse(localStorage.getItem('advisoryFilters'));
@@ -91,7 +92,8 @@ export default function AdvisoryDashboard({
 
   useEffect(() => {
     localStorage.setItem('advisoryFilters', JSON.stringify(filters));
-  }, [filters]);
+    sessionStorage.setItem('showArchived', showArchived);
+  }, [filters, showArchived]);
 
   const getTableFilterValue = (col) => {
     return filters.find((obj) => obj.type === 'table' && obj.fieldName === col.field)?.fieldValue || '';
@@ -109,7 +111,7 @@ export default function AdvisoryDashboard({
       setIsLoading(true);
       if (initialized && keycloak) {
         const filters = JSON.parse(localStorage.getItem('advisoryFilters'));
-        const archived = getPageFilterValue(filters, 'archived');
+        const archived = sessionStorage.getItem('showArchived') === "true";
         setShowArchived(archived);
         const res = await Promise.all([
           getRegions(cmsData, setCmsData),
@@ -654,8 +656,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
                 checked={showArchived}
                 onChange={(e) => {
                   let showArchived = e ? e.target.checked : false;
-                  let arr = [...filters.filter((o) => !(o.type === 'page' && o.filterName === 'archived'))];
-                  setFilters([...arr, { type: 'page', filterName: 'archived', filterValue: showArchived }]);
+                  sessionStorage.setItem('showArchived', showArchived);
                   toggleArchivedAdvisories(showArchived)
                 }}
                 inputProps={{ "aria-label": "archived" }}
@@ -667,8 +668,8 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
                 </small>
                 <LightTooltip
                   arrow
-                  title="Unpublished advisories are archived after 30 days of inactivity. Check the box to show
-                   the 2000 most recent advisories including archived.">
+                  title="By default only published advisories and advisories modified within the past 30 days are shown.
+                  Check this box to include advisories modified in the past 18 months. Older advisories are available in Strapi.">
                   <HelpIcon className="helpIcon ml-1" />
                 </LightTooltip>
               </>
