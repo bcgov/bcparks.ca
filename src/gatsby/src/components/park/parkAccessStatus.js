@@ -2,14 +2,20 @@ import React from "react"
 import PropTypes from "prop-types"
 import { graphql, useStaticQuery } from "gatsby"
 import { Card, CardHeader, Avatar } from "@mui/material"
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
 
 import blueStatusIcon from "../../images/park/blue-status-64.png"
 import redStatusIcon from "../../images/park/red-status-64.png"
 import yellowStatusIcon from "../../images/park/yellow-status-64.png"
 
-const useStyles = makeStyles({
-  card: {
+const PREFIX = 'parkAccessStatus';
+
+const classes = {
+  card: `${PREFIX}-card`
+};
+
+const StyledCard = styled(Card)({
+  [`&.${classes.card}`]: {
     border: "none",
     boxShadow: "none",
     color: "#00008a",
@@ -95,7 +101,6 @@ function ParkAccessFromAdvisories(advisories) {
 export { ParkAccessFromAdvisories }
 
 export default function ParkAccessStatus({ advisories }) {
-  const classes = useStyles()
   const {
     parkStatusIcon,
     parkStatusText,
@@ -105,8 +110,7 @@ export default function ParkAccessStatus({ advisories }) {
   // we need to differentiate between the two structures.
 
   return (
-    <>
-      <Card className={classes.card}>
+      <StyledCard className={classes.card}>
         <CardHeader
           className="access-icon"
           avatar={
@@ -120,8 +124,7 @@ export default function ParkAccessStatus({ advisories }) {
           }
           title={parkStatusText}
         />
-      </Card>
-    </>
+      </StyledCard>
   )
 }
 

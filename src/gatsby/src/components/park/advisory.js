@@ -1,23 +1,27 @@
 import React from "react"
+import { styled } from '@mui/material/styles';
 import PropTypes from "prop-types";
 import { Link } from "gatsby"
 import { Avatar, Card, CardHeader } from "@mui/material"
-import makeStyles from '@mui/styles/makeStyles';
 
 import blueAlertIcon from "../../images/park/blue-alert-64.png"
 import redAlertIcon from "../../images/park/red-alert-64.png"
 import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
 
-const useStyles = makeStyles({
-  card: {
+const PREFIX = 'advisory';
+
+const classes = {
+  card: `${PREFIX}-card`
+};
+
+const StyledCard = styled(Card)({
+  [`&.${classes.card}`]: {
     border: "none",
     boxShadow: "none",
   },
-})
+});
 
 export default function Advisory({ advisories }) {
-  const classes = useStyles()
-
   let textMap = []
 
   let alertIcon = blueAlertIcon
@@ -52,7 +56,7 @@ export default function Advisory({ advisories }) {
   }
 
   return (
-    <Card className={classes.card}>
+    <StyledCard className={classes.card}>
       <CardHeader
         avatar={
           <Avatar
@@ -84,8 +88,8 @@ export default function Advisory({ advisories }) {
           </>
         }
       />
-    </Card>
-  )
+    </StyledCard>
+  );
 }
 
 Advisory.propTypes = {

@@ -193,7 +193,7 @@ export default function FindAPark({ location, data }) {
 
   const searchRef = useRef(null)
   const breadcrumbs = [
-    <Link key="1" href="/">
+    <Link key="1" href="/" underline="hover">
       Home
     </Link>,
     <div key="2" className="breadcrumb-text">
@@ -744,6 +744,7 @@ export default function FindAPark({ location, data }) {
                                 }}
                                 tabIndex="0"
                                 role="link"
+                                underline="hover"
                               >
                                 {showMoreActivities ? (
                                   <div style={{ color: `#2464A4` }}>
@@ -841,6 +842,7 @@ export default function FindAPark({ location, data }) {
                                 }}
                                 tabIndex="0"
                                 role="link"
+                                underline="hover"
                               >
                                 {showMoreFacilities ? (
                                   <div style={{ color: `#2464A4` }}>
@@ -948,6 +950,7 @@ export default function FindAPark({ location, data }) {
                                           <Link
                                             href={`/${r.slug}/`}
                                             className="p10t"
+                                            underline="hover"
                                           >
                                             <h2 className="park-heading-text">
                                               {r.protectedAreaName}
@@ -960,6 +963,7 @@ export default function FindAPark({ location, data }) {
                                                 r.advisories.length > 0 && (
                                                   <Link
                                                     href={`/${r.slug}#park-advisory-details-container`}
+                                                    underline="hover"
                                                   >
                                                     <AdvisorySummary
                                                       advisories={r.advisories}
@@ -1145,6 +1149,7 @@ export default function FindAPark({ location, data }) {
                                           <Link
                                             href={`/${r.slug}/`}
                                             className="p10t"
+                                            underline="hover"
                                           >
                                             <h2 className="park-heading-text">
                                             {r.protectedAreaName}
@@ -1158,6 +1163,7 @@ export default function FindAPark({ location, data }) {
                                             <Link
                                               href={`/${r.slug}/`}
                                               className="park-quick-link link"
+                                              underline="hover"
                                             >
                                               Visit Park Page
                                             </Link>
@@ -1176,6 +1182,7 @@ export default function FindAPark({ location, data }) {
                                               className="park-quick-link link"
                                               role="link"
                                               tabIndex="0"
+                                              underline="hover"
                                             >
                                               Quick View
                                             </Link>
@@ -1253,6 +1260,7 @@ export default function FindAPark({ location, data }) {
                                     <Link
                                       href={`/${currentPark.slug}`}
                                       className="park-quick-link link-white"
+                                      underline="hover"
                                     >
                                       Visit Park Page
                                     </Link>
@@ -1269,6 +1277,7 @@ export default function FindAPark({ location, data }) {
                                       className="park-quick-link link-white"
                                       tabIndex="0"
                                       role="link"
+                                      underline="hover"
                                     >
                                       Close Quick View
                                     </Link>

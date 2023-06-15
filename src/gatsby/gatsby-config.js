@@ -12,22 +12,8 @@ module.exports = {
     image: 'https://nrs.objectstore.gov.bc.ca/kuwyyf/generic_social_1146x600_603acfb441.jpg'
   },
   plugins: [
-    `gatsby-plugin-loadable-components-ssr`,
-    {
-      resolve: `gatsby-plugin-canonical-urls`,
-      options: {
-        siteUrl: `https://bcparks.ca`,
-      },
-    },
     `gatsby-plugin-sass`,
     `gatsby-plugin-image`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
     {
       resolve: "gatsby-source-strapi",
       options: {
@@ -122,6 +108,13 @@ module.exports = {
         queryLimit: 1000,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`,
+      },
+    },
     `gatsby-transformer-sharp`,
     {
       resolve: `gatsby-plugin-sharp`,
@@ -143,14 +136,6 @@ module.exports = {
         theme_color: `#003366`,
         display: `minimal-ui`,
         icon: `src/images/bcid-favicon-32x32.png`, // This path is relative to the root of the site.
-      },
-    },
-    {
-      resolve: `gatsby-plugin-material-ui`,
-      options: {
-        stylesProvider: {
-          injectFirst: true,
-        },
       },
     },
     `gatsby-plugin-meta-redirect`,

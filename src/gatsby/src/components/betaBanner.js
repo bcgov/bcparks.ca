@@ -1,10 +1,21 @@
 import React from "react"
+import { styled } from '@mui/material/styles';
 import { Box } from "@mui/material"
-import makeStyles from "@mui/styles/makeStyles";
+const PREFIX = 'betaBanner';
 
-const useStyles = makeStyles(theme => ({
+const classes = {
+  betaHeader: `${PREFIX}-betaHeader`,
+  linkDivider: `${PREFIX}-linkDivider`,
+  infoIcon: `${PREFIX}-infoIcon`
+};
+
+const StyledBox = styled(Box)((
+  {
+    theme
+  }
+) => ({
   // This extra styling is so that in mobile the improve link is below the beta message
-  betaHeader: {
+  [`& .${classes.betaHeader}`]: {
     minHeight: '55px',
     fontSize: "1rem",
     display: "flex",
@@ -22,10 +33,10 @@ const useStyles = makeStyles(theme => ({
       padding: "5px"
     }
   },
-  linkDivider: {
+  [`& .${classes.linkDivider}`]: {
     margin: "0px 4px",
   },
-  infoIcon: {
+  [`& .${classes.infoIcon}`]: {
     fontSize: "1.2rem",
     marginRight: "8px",
     [theme.breakpoints.down('sm')]: {
@@ -35,10 +46,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function BetaBanner() {
-  const classes = useStyles();
-
   return (
-    <Box className={classes.betaHeader + " bc-bg-yellow bc-color-blue-dk"}>
+    <StyledBox className={classes.betaHeader + " bc-bg-yellow bc-color-blue-dk"}>
       <Box>Welcome to the new BC Parks website</Box>
       <Box className={classes.linkDivider}>|</Box>
       <Box>
@@ -46,6 +55,6 @@ export default function BetaBanner() {
           Share your feedback
         </a>
       </Box>
-    </Box>
-  )
+    </StyledBox>
+  );
 }

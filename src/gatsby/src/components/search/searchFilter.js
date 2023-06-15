@@ -209,7 +209,7 @@ const SearchFilter = ({
                         //setQuickSearch([])
                       }}
                       tabIndex="0"
-                    >
+                      underline="hover">
                       Reset all
                     </Link>
                   </div>
@@ -290,7 +290,7 @@ const SearchFilter = ({
                           }}
                           tabIndex="0"
                           href="#"
-                        >
+                          underline="hover">
                           Reset
                         </Link>
                       </div>
@@ -374,7 +374,7 @@ const SearchFilter = ({
                           }}
                           tabIndex="0"
                           href="#"
-                        >
+                          underline="hover">
                           Reset
                         </Link>
                       </div>
@@ -458,7 +458,7 @@ const SearchFilter = ({
         </DialogActions>
       </Dialog>
     </div>
-  )
+  );
 }
 
 SearchFilter.propTypes = {

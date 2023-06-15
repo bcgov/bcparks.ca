@@ -10,8 +10,8 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-free": "^5.15.4",
-    "@loadable/babel-plugin": "^5.13.2",
-    "@loadable/component": "^5.15.2",
+    "@loadable/babel-plugin": "^5.15.3",
+    "@loadable/component": "^5.15.3",
     "@loadable/webpack-plugin": "^5.15.2",
     "@mui/material": "^5.13.5",
     "axios": "^0.22.0",
@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "babel-jest": "^27.5.1",
-    "babel-preset-gatsby": "^2.25.0",
+    "babel-preset-gatsby": "^3.10.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
     "prettier": "2.2.1",
@@ -80,13 +80,5 @@
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
-  },
-  "overrides": {
-    "gatsby-plugin-material-ui": {
-      "gatsby": "$gatsby"
-    },
-    "react-server-dom-webpack@0.0.0-experimental-c8b778b7f-20220825": {
-      "react": "^18.2.0"
-    }
   }
 }

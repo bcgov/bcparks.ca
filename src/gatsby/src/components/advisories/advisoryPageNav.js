@@ -1,45 +1,57 @@
 import React from "react"
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
+const PREFIX = 'AdvisoryPageNav';
 
-const useStyles = makeStyles(theme => ({
-  pageNav: {
+const classes = {
+  pageNav: `${PREFIX}-pageNav`,
+  pageNextNav: `${PREFIX}-pageNextNav`,
+  pageNumNav: `${PREFIX}-pageNumNav`,
+  pageNum: `${PREFIX}-pageNum`,
+  selectedPageNum: `${PREFIX}-selectedPageNum`,
+  navDots: `${PREFIX}-navDots`
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled('div')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.pageNav}`]: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     color: "#036",
     margin: "25px 0px"
   },
-  pageNextNav: {
+  [`& .${classes.pageNextNav}`]: {
     cursor: "pointer",
     margin: "0 5px"
   },
-  pageNumNav: {
+  [`& .${classes.pageNumNav}`]: {
     margin: "0 4px",
     width: "25px",
     height: "25px",
     lineHeight: "25px",
     textAlign: "center"
   },
-  pageNum: {
+  [`& .${classes.pageNum}`]: {
     padding: "0 2px",
     cursor: "pointer",
   },
-  selectedPageNum: {
+  [`& .${classes.selectedPageNum}`]: {
     padding: "0 2px",
     background: "#036",
     color: "#fff",
     borderRadius: "5px"
   },
-  navDots: {
+  [`& .${classes.navDots}`]: {
     fontSize: "1rem",
     lineHeight: "1rem"
-  },
+  }
 }));
-    
+
 const AdvisoryPageNav = ({ pageIndex, pageCount, setPage }) => {
-
-  const classes = useStyles();
-
   let pageArray = [];
   let pageStart = 0;
   let pageEnd = 0;
@@ -81,7 +93,7 @@ const AdvisoryPageNav = ({ pageIndex, pageCount, setPage }) => {
   initialize();
     
   return (
-    <>
+    <Root>
       <div className={classes.pageNav}>
         {pageIndex > 1 &&
           <div className={classes.pageNextNav}
@@ -135,9 +147,8 @@ const AdvisoryPageNav = ({ pageIndex, pageCount, setPage }) => {
           onClick={() => pageNext(1)}>Next &gt;</div>
         }
         </div>
-    </>
+    </Root>
   );
-
 }
 
 export default AdvisoryPageNav

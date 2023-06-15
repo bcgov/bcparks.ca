@@ -41,7 +41,7 @@ import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
 import "../styles/parks.scss"
-import { PARK_NAME_TYPE, useStyles } from "../utils/constants";
+import { PARK_NAME_TYPE, classes, StyledGrid } from "../utils/constants";
 
 const qs = require('qs')
 const AsyncMapLocation =  loadable(() => import("../components/park/mapLocation"));
@@ -62,8 +62,6 @@ const loadProtectedArea = (apiBaseUrl, orcsId) => {
 }
 
 export default function ParkTemplate({ data }) {
-  const classes = useStyles()
-
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
 
   const park = data.strapiProtectedArea
@@ -305,10 +303,10 @@ export default function ParkTemplate({ data }) {
   const parkName = renderHTML(park.parkNames.find(item=> item.parkNameType === PARK_NAME_TYPE.Escaped)?.parkName  || park.protectedAreaName);
   
   const breadcrumbs = [
-    <Link key="1" href="/">
+    <Link key="1" href="/" underline="hover">
       Home
     </Link>,
-    <Link key="2" href="/find-a-park">
+    <Link key="2" href="/find-a-park" underline="hover">
       Find a park
     </Link>,
     <div key="3" className="breadcrumb-text">
@@ -386,7 +384,7 @@ export default function ParkTemplate({ data }) {
                 menuStyle="nav"
               />
             </Grid>
-            <Grid
+            <StyledGrid
               item
               xs={12}
               sm={12}
@@ -511,7 +509,7 @@ export default function ParkTemplate({ data }) {
                   <Reconciliation data={reconciliationNotes} />
                 </div>
               )}
-            </Grid>
+            </StyledGrid>
           </Grid>
         </Container>
       </div>

@@ -75,6 +75,7 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
                         <Link
                             href={`/${park.slug}`}
                             className="p10t"
+                            underline="hover"
                         >
                             <h3 className="park-heading-text">
                                 {park.protectedAreaName}
@@ -88,6 +89,7 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
                         {park.advisories && park.advisories.length > 0 && (
                             <Link
                                 href={`/${park.slug}#park-advisory-details-container`}
+                                underline="hover"
                             >
                                 <AdvisorySummary
                                     advisories={park.advisories}
@@ -196,6 +198,5 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
             </div>
 
         </div>
-
-    )
+    );
 }

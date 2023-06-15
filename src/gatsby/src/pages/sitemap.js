@@ -14,7 +14,7 @@ const SitemapPage = ({ data }) => {
 
   const breadcrumbs = [
     // TODO convert MUI breadcrumbs and use gatsby Link
-    <Link key="1" href="/">
+    <Link key="1" href="/" underline="hover">
       Home
     </Link>,
     <div key="2" className="breadcrumb-text">

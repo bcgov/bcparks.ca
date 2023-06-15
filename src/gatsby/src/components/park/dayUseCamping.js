@@ -1,20 +1,25 @@
 import React from "react"
+import { styled } from '@mui/material/styles';
 import { Link } from "gatsby"
 import { Grid, Card, CardHeader, Avatar } from "@mui/material"
-import makeStyles from '@mui/styles/makeStyles';
 
 import dayUseIcon from "../../images/park/day-use.png"
 
-const useStyles = makeStyles({
-  card: {
+const PREFIX = 'dayUseCamping';
+
+const classes = {
+  card: `${PREFIX}-card`
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled('div')({
+  [`& .${classes.card}`]: {
     border: "none",
     boxShadow: "none",
   },
-})
+});
 
 export default function DayUseCamping({ data }) {
-  const classes = useStyles()
-
   const hasCamping = data.parkFacilities.some(facility =>
     facility.facilityType.facilityName.toLowerCase().includes("camping")
   )
@@ -24,7 +29,7 @@ export default function DayUseCamping({ data }) {
   if (hasCamping) title.push("Camping")
 
   return (
-    <>
+    <Root>
       {(hasCamping || data.hasDayUsePass) && (
         <Grid container item xs={12} sm={6} md={4}>
           <Card className={classes.card}>
@@ -46,6 +51,6 @@ export default function DayUseCamping({ data }) {
           </Card>
         </Grid>
       )}
-    </>
-  )
+    </Root>
+  );
 }

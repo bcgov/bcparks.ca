@@ -118,10 +118,10 @@ const ApprovedListPage = () => {
     "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
   ]
   const breadcrumbs = [
-    <Link key="1" href="/">
+    <Link key="1" href="/" underline="hover">
       Home
     </Link>,
-    <Link key="2" href="/about">
+    <Link key="2" href="/about" underline="hover">
       About
     </Link>,
     <Link key="3" href="/about/management-plans">

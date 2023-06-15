@@ -32,11 +32,9 @@ import Spacer from "../components/park/spacer"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
-import { useStyles } from "../utils/constants"
+import { classes, StyledGrid } from "../utils/constants"
 
 export default function SiteTemplate({ data }) {
-  const classes = useStyles()
-
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
 
   const site = data.strapiSite
@@ -207,13 +205,16 @@ export default function SiteTemplate({ data }) {
   }
 
   const breadcrumbs = [
-    <Link key="1" href="/">
+    <Link key="1" href="/" underline="hover">
       Home
     </Link>,
-    <Link key="2" href="/find-a-park">
+    <Link key="2" href="/find-a-park" underline="hover">
       Find a park
     </Link>,
-    <Link key="3" href={`/${park?.slug ? park.slug : 'parks/protected-area'}`}>
+    <Link
+      key="3"
+      href={`/${park?.slug ? park.slug : 'parks/protected-area'}`}
+      underline="hover">
       {park?.protectedAreaName}
     </Link>,
     <div key="4" className="breadcrumb-text">
@@ -289,7 +290,7 @@ export default function SiteTemplate({ data }) {
                 menuStyle="nav"
               />
             </Grid>
-            <Grid
+            <StyledGrid
               item
               xs={12}
               sm={12}
@@ -371,7 +372,7 @@ export default function SiteTemplate({ data }) {
                   </div>
                 </div>
               )}
-            </Grid>
+            </StyledGrid>
           </Grid>
         </Container>
       </div>

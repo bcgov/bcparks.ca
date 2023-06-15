@@ -7,14 +7,14 @@ import PhotoLibraryOutlinedIcon from "@mui/icons-material/PhotoLibraryOutlined"
 import ParkPhoto from "./parkPhoto"
 
 const ShowPhotos = ({ text, setShowPhotos }) => {
-  const { openLightbox } = useLightbox()
+  // const { openLightbox } = useLightbox()
 
   return (
     <Button
       className="show-photo-text"
       onClick={() => {
         setShowPhotos(true)
-        openLightbox()
+        // openLightbox()
       }}
     >
       <PhotoLibraryOutlinedIcon className="photo-icon" />
@@ -76,7 +76,7 @@ export default function ParkPhotoGallery({ photos }) {
             <Box
               id="park-photo-gallery-container"
             >
-              <SimpleReactLightbox>
+              {/* <SimpleReactLightbox>
                 <SRLWrapper options={srlOptions}>
                   {parkPhotos.length === 1 && (
                     <>
@@ -217,7 +217,7 @@ export default function ParkPhotoGallery({ photos }) {
                     </>
                   )}
                 </SRLWrapper>
-              </SimpleReactLightbox>
+              </SimpleReactLightbox> */}
             </Box>
             <br />
             <br />
@@ -240,7 +240,7 @@ export default function ParkPhotoGallery({ photos }) {
             <Box
               id="park-photo-gallery-container"
             >
-              <SimpleReactLightbox>
+              {/* <SimpleReactLightbox>
                 <SRLWrapper options={srlOptions}>
                   <Grid item container spacing={1}>
                     <Grid item xs={12} md={12}>
@@ -275,7 +275,7 @@ export default function ParkPhotoGallery({ photos }) {
                     </Grid>
                   </Grid>
                 </SRLWrapper>
-              </SimpleReactLightbox>
+              </SimpleReactLightbox> */}
             </Box>
           </Grid>
         )}

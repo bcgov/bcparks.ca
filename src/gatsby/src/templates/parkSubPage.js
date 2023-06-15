@@ -69,13 +69,13 @@ export default function ParkSubPage({ data }) {
   })
 
   const breadcrumbs = [
-    <Link key="1" href="/">
+    <Link key="1" href="/" underline="hover">
       Home
     </Link>,
-    <Link key="2" href="/find-a-park">
+    <Link key="2" href="/find-a-park" underline="hover">
       Find a park
     </Link>,
-    <Link key="3" href={`/${park.slug}`}>
+    <Link key="3" href={`/${park.slug}`} underline="hover">
       {park.protectedAreaName}
     </Link>,
     <div key="4" className="breadcrumb-text">

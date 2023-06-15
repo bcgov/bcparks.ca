@@ -1,4 +1,5 @@
-import makeStyles from '@mui/styles/makeStyles';
+import { Grid } from "@mui/material"
+import { styled } from '@mui/material/styles';
 
 export const PARK_NAME_TYPE = {
   Legal: 1,
@@ -102,11 +103,23 @@ export const countsList = [
 
 // for stylings
 const drawerWidth = 230
-export const useStyles = makeStyles(theme => ({
-  root: {
+
+const PREFIX = 'constant';
+
+export const classes = {
+  root: `${PREFIX}-root`,
+  parkContent: `${PREFIX}-parkContent`
+};
+
+export const StyledGrid = styled(Grid)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.root}`]: {
     display: "flex",
   },
-  parkContent: {
+  [`& .${classes.parkContent}`]: {
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
     },
@@ -115,4 +128,4 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   appBarOffset: theme.mixins.toolbar,
-}))
+}));

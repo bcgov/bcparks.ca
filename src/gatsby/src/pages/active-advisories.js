@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react"
+import { styled } from '@mui/material/styles';
 import { graphql } from "gatsby"
 import axios from "axios"
 import { Container, CircularProgress } from "@mui/material"
-import makeStyles from '@mui/styles/makeStyles'
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -16,31 +16,47 @@ import { getAdvisoryTypeFromUrl } from "../utils/advisoryHelper"
 
 import "../styles/home.scss"
 
-const useStyles = makeStyles(theme => ({
-  advisoriesHeader: {
+const PREFIX = 'PublicActiveAdvisoriesPage';
+
+const classes = {
+  advisoriesHeader: `${PREFIX}-advisoriesHeader`,
+  advisoryCountNotice: `${PREFIX}-advisoryCountNotice`,
+  loadingArea: `${PREFIX}-loadingArea`,
+  loadingText: `${PREFIX}-loadingText`,
+  filterResult: `${PREFIX}-filterResult`
+};
+
+const StyledDiv = styled('div')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.advisoriesHeader}`]: {
     marginBottom: "2px",
   },
-  advisoryCountNotice: {
+
+  [`& .${classes.advisoryCountNotice}`]: {
     paddingBottom: "20px",
     "& div": {
       display: "inline",
     },
   },
-  loadingArea: {
+
+  [`& .${classes.loadingArea}`]: {
     display: "flex",
     justifyContent: "left",
   },
-  loadingText: {
+
+  [`& .${classes.loadingText}`]: {
     padding: "8px",
   },
-  filterResult: {
+
+  [`& .${classes.filterResult}`]: {
     paddingBottom: "20px",
-  },
-}))
+  }
+}));
 
 const PublicActiveAdvisoriesPage = ({ data }) => {
-  const classes = useStyles()
-
   const [advisories, setAdvisories] = useState([]) // array of advisories
 
   const [isNewFilter, setIsNewFilter] = useState(true) // true when any part of filter changes
