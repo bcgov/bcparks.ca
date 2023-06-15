@@ -33,7 +33,7 @@ This step should be completed by someone familiar with OpenShift.  It involves r
 
 5. Use `oc project` to switch to the prod project in OpenShift
 
-6. oc cp <name of pod where you did the export>:<export file name>.tar.gz .\prod.tar.gz
+6. oc cp \<name of pod where you did the export>:\<export file name>.tar.gz .\prod.tar.gz
 
 
 ### Importing PROD data
