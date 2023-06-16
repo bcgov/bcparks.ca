@@ -107,6 +107,15 @@ export default function ParkFacility({ data }) {
                       facility.description.data : facility.facilityType.defaultDescription.data
                     }
                   </HtmlContent>
+                  {(facility.appendStandardCalloutOverride.data || facility.facilityType.appendStandardCalloutText.data) && (
+                    <blockquote className="callout-box">
+                      <HtmlContent>
+                        {!isNullOrWhiteSpace(facility.appendStandardCalloutOverride.data) ? 
+                          facility.appendStandardCalloutOverride.data : facility.facilityType.appendStandardCalloutText.data
+                        }
+                      </HtmlContent>
+                    </blockquote>
+                  )}
                 </div>
               </Accordion.Collapse>
             </Accordion>
