@@ -21,7 +21,7 @@ const AdvisoryCard = ({ advisory, index }) => {
           <div
             className={
               (advisory.isFirstInYear || index === 0) &&
-              !advisory.advisoryDateObj.dateUnknown
+                !advisory.advisoryDateObj.dateUnknown
                 ? "yearHeader mt-1"
                 : "hidden"
             }
@@ -100,7 +100,37 @@ const AdvisoryCard = ({ advisory, index }) => {
                       ))}
                   </div>
                   <div>
-                    {open && (
+                    {advisory.protectedAreas.length > 5 ? (
+                      <>
+                        {open && (
+                          <div>
+                            {advisory.protectedAreas
+                              .filter(
+                                park => park.publishedAt && park.isDisplayed
+                              )
+                              .map((par, index) => (
+                                <Link
+                                  className="parkLink badge badge-pill badge-light mb-2 mr-2"
+                                  to={`/${par.slug}`}
+                                  key={index}
+                                >
+                                  {par.protectedAreaName}
+                                </Link>
+                              ))
+                            }
+                          </div>
+                        )}
+                        <button
+                          className="btn btn-link"
+                          onClick={() => setOpen(!open)}
+                        >
+                          {open
+                            ? `Hide parks affected`
+                            : `Show all ${advisory.protectedAreas.length} parks affected`
+                          }
+                        </button>
+                      </>
+                    ) : (
                       <div>
                         {advisory.protectedAreas.length > 0 &&
                           advisory.protectedAreas
@@ -119,15 +149,6 @@ const AdvisoryCard = ({ advisory, index }) => {
                         }
                       </div>
                     )}
-                    <button 
-                      className="btn btn-link"
-                      onClick={() => setOpen(!open)}
-                    >
-                      {open
-                        ? `Hide park${advisory.protectedAreas.length > 1 ? "s" : ""} affected`
-                        : `Show all ${advisory.protectedAreas.length} park${advisory.protectedAreas.length > 1 ? "s" : ""} affected`
-                      }
-                    </button>
                   </div>
                   <div>
                     <HTMLArea isVisible>{advisory.title}</HTMLArea>
