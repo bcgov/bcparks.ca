@@ -45,6 +45,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   }
 
   type STRAPI_PROTECTED_AREA implements Node {
+    managementDocuments:[STRAPI_MANAGEMENT_DOCUMENT] @link(by: "id", from: "managementDocuments___NODE")
     biogeoclimaticZones: [STRAPI_BIOGEOCLIMATIC_ZONE] @link(by: "id", from: "biogeoclimaticZones___NODE")
     marineEcosections: [STRAPI_MARINE_ECOSECTION] @link(by: "id", from: "marineEcosections___NODE")
     terrestrialEcosections: [STRAPI_TERRESTRIAL_ECOSECTION] @link(by: "id", from: "terrestrialEcosections___NODE")
@@ -87,7 +88,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     description: String
     documentDate: Date
     documentType: STRAPI_MANAGEMENT_DOCUMENT_TYPE @link(by: "id", from: "documentType___NODE")
-    protectedAreas: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "protectedAreas___NODE")
     sites: [STRAPI_SITE] @link(by: "id", from: "sites___NODE")
   }
   `

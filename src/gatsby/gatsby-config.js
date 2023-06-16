@@ -100,6 +100,9 @@ module.exports = {
                 parkOperationSubAreas: {
                   fields: "*"
                 },
+                managementDocuments: {
+                  populate: "*"
+                },
                 biogeoclimaticZones: {
                   populate: "*"
                 },
