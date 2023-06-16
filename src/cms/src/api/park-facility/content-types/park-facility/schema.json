@@ -5,8 +5,7 @@
     "singularName": "park-facility",
     "pluralName": "park-facilities",
     "displayName": "Park-facility",
-    "name": "park-facility",
-    "description": ""
+    "name": "park-facility"
   },
   "options": {
     "increments": true,
@@ -18,13 +17,6 @@
       "type": "string"
     },
     "description": {
-      "type": "customField",
-      "options": {
-        "preset": "toolbar"
-      },
-      "customField": "plugin::ckeditor5.CKEditor"
-    },
-    "appendStandardCalloutOverride": {
       "type": "customField",
       "options": {
         "preset": "toolbar"
