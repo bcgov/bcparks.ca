@@ -14,6 +14,18 @@ module.exports = {
       throw new ApplicationError('Please add protectedArea relation.');
     }
   },
+  // saving without a documentType relation is not allowed
+  documentTypeConnectValidator: function (documentType) {
+    if (documentType?.connect?.length === 0) {
+      throw new ApplicationError('Please add documentType relation.');
+    }
+  },
+  // removing a documentType relation is not allowed
+  documentTypeDisconnectValidator: function (documentType) {
+    if (documentType?.disconnect?.length > 0 && documentType?.connect?.length === 0) {
+      throw new ApplicationError('Please add documentType relation.');
+    }
+  },
   // checks for valid characters and consecutive forward slashes
   slugCharacterValidator: function (slug) {
     const regex = new RegExp("^[a-z0-9\-\/]+(?:-[a-z0-9\-\/]+)*$|^$");
