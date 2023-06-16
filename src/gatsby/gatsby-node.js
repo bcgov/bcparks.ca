@@ -88,7 +88,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     description: String
     documentDate: Date
     documentType: STRAPI_MANAGEMENT_DOCUMENT_TYPE @link(by: "id", from: "documentType___NODE")
-    protectedAreas: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "protectedAreas___NODE")
     sites: [STRAPI_SITE] @link(by: "id", from: "sites___NODE")
   }
   `
