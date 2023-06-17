@@ -26,7 +26,7 @@ const classes = {
   filterResult: `${PREFIX}-filterResult`
 };
 
-const StyledDiv = styled('div')((
+const Root = styled('div')((
   {
     theme
   }
@@ -355,7 +355,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const menuContent = data?.allStrapiMenu?.nodes || []
 
   return (
-    <>
+    <Root>
       <Header mode="internal" content={menuContent} />
       <Container id="sr-content">
         <br />
@@ -403,7 +403,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       <br />
       <br />
       <Footer />
-    </>
+    </Root>
   )
 }
 

@@ -12,6 +12,12 @@ module.exports = {
     image: 'https://nrs.objectstore.gov.bc.ca/kuwyyf/generic_social_1146x600_603acfb441.jpg'
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: `https://bcparks.ca`,
+      },
+    },
     `gatsby-plugin-sass`,
     `gatsby-plugin-image`,
     {
