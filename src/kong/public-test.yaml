@@ -305,6 +305,50 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
+        name: get_management_documents
+        methods:
+          - GET
+        paths:
+          - /api/management-documents
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get_management_documents_id
+        methods:
+          - GET
+        paths:
+          - /api/management-documents/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get_management_document_types
+        methods:
+          - GET
+        paths:
+          - /api/management-document-types
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get_management_document_types_id
+        methods:
+          - GET
+        paths:
+          - /api/management-document-types/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
         name: get_menus
         methods:
           - GET
@@ -821,19 +865,34 @@ services:
           credentials: false
           max_age: null
           preflight_continue: false
+      - name: proxy-cache
+        service: BCPARKS
+        tags:
+          - ns.bcparks
+        enabled: true
+        config:
+          response_code:
+            - 200
+          request_method:
+            - GET
+            - HEAD
+          content_type:
+            - application/json; charset=utf-8
+          cache_ttl: 15
+          strategy: memory
 
   - name: BCPARKS-GRAPHQL
     host: main-cms.61d198-test.svc
     protocol: http
     port: 1337
     routes:
-     - name: graphql
-       tags:
-         - ns.bcparks
-       paths:
-         - /graphql
-       strip_path: false
-       hosts:
-         - bcparks.api.gov.bc.ca
+      - name: graphql
+        tags:
+          - ns.bcparks
+        paths:
+          - /graphql
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
     tags:
       - ns.bcparks
