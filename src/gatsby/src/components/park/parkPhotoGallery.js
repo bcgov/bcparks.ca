@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { Button, Grid, Box, Divider } from "@mui/material"
-// import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox"
 import PhotoLibraryOutlinedIcon from "@mui/icons-material/PhotoLibraryOutlined"
-// import { useLightbox } from "simple-react-lightbox"
+import ImageGallery from "react-image-gallery"
+import "react-image-gallery/styles/scss/image-gallery.scss"
 
 import ParkPhoto from "./parkPhoto"
 
@@ -76,8 +76,6 @@ export default function ParkPhotoGallery({ photos }) {
             <Box
               id="park-photo-gallery-container"
             >
-              {/* <SimpleReactLightbox>
-                <SRLWrapper options={srlOptions}>
                   {parkPhotos.length === 1 && (
                     <>
                       <Grid item container spacing={1}>
@@ -216,8 +214,6 @@ export default function ParkPhotoGallery({ photos }) {
                       </Grid>
                     </>
                   )}
-                </SRLWrapper>
-              </SimpleReactLightbox> */}
             </Box>
             <br />
             <br />
@@ -240,8 +236,6 @@ export default function ParkPhotoGallery({ photos }) {
             <Box
               id="park-photo-gallery-container"
             >
-              {/* <SimpleReactLightbox>
-                <SRLWrapper options={srlOptions}>
                   <Grid item container spacing={1}>
                     <Grid item xs={12} md={12}>
                       <ParkPhoto
@@ -274,8 +268,6 @@ export default function ParkPhotoGallery({ photos }) {
                         ))}
                     </Grid>
                   </Grid>
-                </SRLWrapper>
-              </SimpleReactLightbox> */}
             </Box>
           </Grid>
         )}
