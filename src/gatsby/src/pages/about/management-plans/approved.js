@@ -16,7 +16,7 @@ const DocumentLink = ({ park }) => {
     return orcs.toString() === orcsSite.split("-")[0]
   }
   return (
-    docs.map((doc, index) => (
+    docs?.map((doc, index) => (
       doc.sites.length > 0 ? (
         // display link with siteName if there's a relation with site 
         doc.sites.map((site, index) =>
