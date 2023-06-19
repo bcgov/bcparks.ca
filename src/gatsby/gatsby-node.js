@@ -87,6 +87,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     url: String
     description: String
     documentDate: Date
+    publishedAt: Date
     documentType: STRAPI_MANAGEMENT_DOCUMENT_TYPE @link(by: "id", from: "documentType___NODE")
     sites: [STRAPI_SITE] @link(by: "id", from: "sites___NODE")
   }
