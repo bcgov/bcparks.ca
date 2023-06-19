@@ -21,6 +21,12 @@ spec:
         target:
           type: Utilization
           averageUtilization: {{ .Values.cms.hpa.memoryUtilizationThreshold }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.cms.hpa.cpuUtilizationThreshold }}
   behavior:
     scaleUp:
       stabilizationWindowSeconds: 0
