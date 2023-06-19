@@ -9,64 +9,63 @@ import ScrollToTop from "../../../components/scrollToTop"
 
 import "../../../styles/listPage.scss"
 
-const DocumentLink = ({ doc, filter }) => {
-  const parks = doc.protectedAreas
-  const sites = doc.sites
-  const year = doc.documentDate?.split('-').shift()
+const DocumentLink = ({ park }) => {
+  const docs = park.managementDocuments
+  const calcYear = (date) => date.split('-').shift()
   const checkRelation = (orcs, orcsSite) => {
     return orcs.toString() === orcsSite.split("-")[0]
   }
   return (
-    sites.length > 0 ? (
-      // display link with siteName if there's a relation with site 
-      parks.map((park, index) => (
-        park.protectedAreaName.charAt(0).toUpperCase() === filter && (
-          sites.map((site, index) =>
-            checkRelation(park.orcs, site.orcsSiteNumber) && (
-              <p key={index}>
-                <a href={doc.url} target="_blank" rel="noreferrer">
-                  {`${park.protectedAreaName} - ${site.siteName} ${(doc.documentType?.documentType)?.toLowerCase()} (${year}) [PDF]`}
-                </a>
-              </p>
-            )
-          )
-        )
-      ))
-    ) : (
-      parks.map((park, index) => (
-        park.protectedAreaName.charAt(0).toUpperCase() === filter && (
-          <p key={index}>
-            <a href={doc.url} target="_blank" rel="noreferrer">
-              {`${park.protectedAreaName} ${(doc.documentType?.documentType)?.toLowerCase()} (${year}) [PDF]`}
-            </a>
-          </p>
-        )
-      ))
-    )
+    docs?.map((doc, index) => (
+      doc.sites.length > 0 ? (
+        // display link with siteName if there's a relation with site 
+        doc.sites.map((site, index) =>
+          checkRelation(park.orcs, site.orcsSiteNumber) && (
+            <p key={index}>
+              <a href={doc.url} target="_blank" rel="noreferrer">
+                {`
+                  ${park.protectedAreaName} - ${site.siteName}
+                  ${(doc.documentType?.documentType)?.toLowerCase()}
+                  (${calcYear(doc.documentDate)}) [PDF]
+                `}
+              </a>
+            </p>
+          ))
+      ) : (
+        <p key={index}>
+          <a href={doc.url} target="_blank" rel="noreferrer">
+            {`
+              ${park.protectedAreaName}
+              ${(doc.documentType?.documentType)?.toLowerCase()}
+              (${calcYear(doc.documentDate)}) [PDF]
+            `}
+          </a>
+        </p>
+      )
+    ))
   )
 }
 
 const ApprovedListPage = () => {
   const queryData = useStaticQuery(graphql`
     query {
-      allStrapiManagementDocument(sort: {fields: protectedAreas___protectedAreaName, order: ASC}) {
+      allStrapiProtectedArea(
+        sort: {fields: protectedAreaName, order: ASC}
+        filter: {managementDocuments: {elemMatch: {publishedAt: {ne: null}}}}
+      ) {
         nodes {
-          title
-          url
-          description
-          documentDate
-          documentType {
-            documentCode
-            documentType
-            description
-          }
-          protectedAreas {
-            orcs
-            protectedAreaName
-          }
-          sites {
-            orcsSiteNumber
-            siteName
+          orcs
+          protectedAreaName
+          managementDocuments {
+            url
+            documentDate
+            documentType {
+              documentType
+            }
+            sites {
+              orcsSiteNumber
+              siteName
+            }
           }
         }
       }
@@ -96,7 +95,7 @@ const ApprovedListPage = () => {
   `)
 
   const menuContent = queryData?.allStrapiMenu?.nodes || []
-  const documents = queryData?.allStrapiManagementDocument?.nodes || []
+  const parks = queryData?.allStrapiProtectedArea?.nodes || []
 
   const [currentFilter, setCurrentFilter] = useState("All")
 
@@ -104,9 +103,8 @@ const ApprovedListPage = () => {
     setCurrentFilter(e.target.value)
   }
   const filtering = (char) =>
-    documents.filter(doc => doc.protectedAreas.some(
-      park => park.protectedAreaName.charAt(0).toUpperCase() === char
-    ))
+    parks.filter(park => park.protectedAreaName.charAt(0).toUpperCase() === char)
+
   const filters = [
     "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
     "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
@@ -170,16 +168,16 @@ const ApprovedListPage = () => {
               filters.map((filter, index) => (
                 <div key={index} className="list">
                   {filter !== "All" && <h3>{filter}</h3>}
-                  {filtering(filter).map((doc, index) => (
-                    <DocumentLink doc={doc} filter={filter} key={index} />
+                  {filtering(filter).map((park, index) => (
+                    <DocumentLink park={park} key={index} />
                   ))}
                 </div>
               ))
             ) : (
               <div className="list">
                 <h3>{currentFilter}</h3>
-                {filtering(currentFilter).map((doc, index) => (
-                  <DocumentLink doc={doc} filter={currentFilter} key={index} />
+                {filtering(currentFilter).map((park, index) => (
+                  <DocumentLink park={park} key={index} />
                 ))}
               </div>
             )}
