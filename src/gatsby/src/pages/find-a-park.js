@@ -922,6 +922,7 @@ export default function FindAPark({ location, data }) {
                                                 navButtonsAlwaysVisible={true}
                                                 animation="fade"
                                                 timeout={200}
+                                                height="100%"
                                               >
                                                 {r.parkPhotos.map(
                                                   (item, index) => {
@@ -1120,6 +1121,7 @@ export default function FindAPark({ location, data }) {
                                                 navButtonsAlwaysVisible={true}
                                                 animation="fade"
                                                 timeout={200}
+                                                height="100%"
                                               >
                                                 {r.parkPhotos.map(
                                                   (item, index) => {

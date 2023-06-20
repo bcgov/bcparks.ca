@@ -45,6 +45,7 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
                         navButtonsAlwaysVisible={true}
                         animation="fade"
                         timeout={200}
+                        height="100%"
                     >
                         {park.parkPhotos.map(
                             (item, index) => {

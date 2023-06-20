@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { Button, Grid, Box, Divider } from "@mui/material"
 import PhotoLibraryOutlinedIcon from "@mui/icons-material/PhotoLibraryOutlined"
-import ImageGallery from "react-image-gallery"
-import "react-image-gallery/styles/scss/image-gallery.scss"
+// import ImageGallery from "react-image-gallery"
+// import "react-image-gallery/styles/scss/image-gallery.scss"
 
 import ParkPhoto from "./parkPhoto"
 
@@ -32,24 +32,6 @@ export default function ParkPhotoGallery({ photos }) {
       imageUrl: photo.imageUrl,
     }
   })
-
-  const srlOptions = {
-    settings: {
-      overlayColor: "rgb(0, 0, 0)",
-      autoplaySpeed: 1500,
-      transitionSpeed: 900,
-    },
-    thumbnails: {
-      showThumbnails: true,
-    },
-    buttons: {
-      showAutoplayButton: true,
-      showDownloadButton: false,
-      showFullscreenButton: false,
-      showThumbnailsButton: true,
-      size: "40px",
-    },
-  }
 
   return (
     <>
@@ -168,7 +150,6 @@ export default function ParkPhotoGallery({ photos }) {
                           container
                           xs={12}
                           md={6}
-                          spacing={1}
                           className="show-photo-button"
                         >
                           <>

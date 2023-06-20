@@ -279,6 +279,9 @@
 
 .show-photo-button {
   position: relative;
+  .MuiGrid-item {
+    padding: 4px;
+  }
 }
 
 .photo-icon {
