@@ -106,12 +106,11 @@ export default function ParkActivity({ data }) {
                       activity.description.data : activity.activityType.defaultDescription.data
                     }
                   </HtmlContent>
-                  {(activity.appendStandardCalloutOverride.data || activity.activityType.appendStandardCalloutText.data) && (
+                  {!activity.hideAppendStandardCallout &&
+                    !isNullOrWhiteSpace(activity.activityType.appendStandardCalloutText.data) && (
                     <blockquote className="callout-box">
                       <HtmlContent>
-                        {!isNullOrWhiteSpace(activity.appendStandardCalloutOverride.data) ? 
-                          activity.appendStandardCalloutOverride.data : activity.activityType.appendStandardCalloutText.data
-                        }
+                        {activity.activityType.appendStandardCalloutText.data}
                       </HtmlContent>
                     </blockquote>
                   )}

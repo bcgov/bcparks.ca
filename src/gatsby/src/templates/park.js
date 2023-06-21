@@ -608,10 +608,8 @@ export const query = graphql`
       parkActivities {
         isActive
         isActivityOpen
+        hideAppendStandardCallout
         description {
-          data
-        }
-        appendStandardCalloutOverride {
           data
         }
         activityType {
@@ -633,10 +631,8 @@ export const query = graphql`
       parkFacilities {
         isActive
         isFacilityOpen
+        hideAppendStandardCallout
         description {
-          data
-        }
-        appendStandardCalloutOverride {
           data
         }
         facilityType {

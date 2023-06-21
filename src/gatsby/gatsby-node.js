@@ -58,12 +58,12 @@ exports.createSchemaCustomization = ({ actions }) => {
 
   type STRAPI_PARK_ACTIVITY implements Node {
     activityType: STRAPI_ACTIVITY_TYPE
-    appendStandardCalloutOverride: DATA
+    hideAppendStandardCallout: Boolean
   }
   
   type STRAPI_PARK_FACILITY implements Node {
     facilityType: STRAPI_FACILITY_TYPE
-    appendStandardCalloutOverride: DATA
+    hideAppendStandardCallout: Boolean
   }
   
   type STRAPI_PROTECTED_AREA implements Node {
