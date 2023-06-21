@@ -15,10 +15,6 @@ import {
   LinearProgress,
   Breadcrumbs,
   Button,
-  Divider,
-  Dialog,
-  DialogContent,
-  DialogActions,
 } from "@mui/material"
 import Pagination from "@mui/material/Pagination"
 import SearchIcon from "@mui/icons-material/Search"
@@ -32,13 +28,17 @@ import Footer from "../components/footer"
 import Header from "../components/header"
 import Seo from "../components/seo"
 import ParkAccessStatus from "../components/park/parkAccessStatus"
-import QuickView from "../components/park/quickView"
-import AdvisorySummary from "../components/search/advisorySummary"
 import NoSearchResults from "../components/search/noSearchResults"
 import SearchFilter from "../components/search/searchFilter"
 
-import dayUseIcon from "../images/park/day-use.png"
+import CampfireBan from "../components/campfireBan"
 import parksLogo from "../images/Mask_Group_5.png"
+import campingIcon from "../../static/icons/vehicle-accessible-camping.svg"
+import hikingIcon from "../../static/icons/hiking.svg"
+import picincIcon from "../../static/icons/picnic-areas.svg"
+import swimmingIcon from "../../static/icons/swimming.svg"
+import cyclingIcon from "../../static/icons/cycling.svg"
+import petsIcon from "../../static/icons/pets-on-leash.svg"
 
 import "../styles/search.scss"
 import { addSmallImagePrefix, handleImgError } from "../utils/helpers";
@@ -183,13 +183,12 @@ export default function FindAPark({ location, data }) {
   const [numberOfPages, setNumberOfPages] = useState(0)
   const [totalResults, setTotalResults] = useState(0)
 
-  const itemsPerPage = 6
+  const itemsPerPage = 10
+  const iconSize = 32
   const [currentPage, setCurrentPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
 
   const [openFilter, setOpenFilter] = useState(false)
-
-  const [openQuickView, setOpenQuickView] = useState(false)
 
   const searchRef = useRef(null)
   const breadcrumbs = [
@@ -291,17 +290,6 @@ export default function FindAPark({ location, data }) {
 
   const handleClickOpenFilter = () => {
     setOpenFilter(true)
-  }
-
-  const [currentPark, setCurrentPark] = useState({})
-
-  function setParkQuickView(park) {
-    setCurrentPark(park)
-    setOpenQuickView(true)
-  }
-
-  const handleCloseQuickView = () => {
-    setOpenQuickView(false)
   }
 
   const handleSearch = () => {
@@ -422,6 +410,17 @@ export default function FindAPark({ location, data }) {
     params.camping ||
     params.marineProtectedArea ||
     params.typeCode
+
+  const locationLabel = (parkLocation) => {
+    if (parkLocation?.section !== "Haida Gwaii/South Island") {
+      return parkLocation?.section;
+    }
+    if (parkLocation.managementArea === "Haida Gwaii") {
+      return "Haida Gwaii";
+    } else {
+      return ("South Island");
+    }
+  }
 
   useEffect(() => {
     setIsLoading(true)
@@ -918,8 +917,8 @@ export default function FindAPark({ location, data }) {
                                               <Carousel
                                                 className="park-carousel"
                                                 autoPlay={false}
-                                                indicators={false}
-                                                navButtonsAlwaysVisible={true}
+                                                indicators={true}
+                                                navButtonsAlwaysVisible={false}
                                                 animation="fade"
                                                 timeout={200}
                                                 height="100%"
@@ -946,6 +945,9 @@ export default function FindAPark({ location, data }) {
                                               <ParkAccessStatus
                                                 advisories={r.advisories}
                                               />
+                                              {r.hasCampfireBan &&
+                                                <CampfireBan />
+                                              }
                                             </div>
                                           </div>
                                           <Link
@@ -957,124 +959,66 @@ export default function FindAPark({ location, data }) {
                                               {r.protectedAreaName}
                                             </h2>
                                           </Link>
-
+                                          <p>{locationLabel(r.parkLocation)}</p>
                                           <div className="row p10t mr5">
-                                            <div className="col-6">
-                                              {r.advisories &&
-                                                r.advisories.length > 0 && (
-                                                  <Link
-                                                    href={`/${r.slug}#park-advisory-details-container`}
-                                                    underline="hover"
-                                                  >
-                                                    <AdvisorySummary
-                                                      advisories={r.advisories}
-                                                    />
-                                                  </Link>
-                                                )}
-                                            </div>
-
-                                            <div className="col-6">
-                                              {r.hasDayUsePass &&
-                                                r.hasReservations && (
-                                                  <div className="flex-display">
-                                                    <img
-                                                      alt=""
-                                                      className="search-result-icon"
-                                                      src={dayUseIcon}
-                                                    />
-                                                    <div className="pl15 mtm7 text-blue">
-                                                      Day use and camping <br />
-                                                      offered at this park
-                                                    </div>
-                                                  </div>
-                                                )}
-                                            </div>
-                                          </div>
-                                          <div className="row p10t mr5">
-                                            <div className="col-6">
-                                              {r.parkActivities &&
-                                                r.parkActivities.length > 0 && (
-                                                  <>
-                                                    <div className="park-af-list pr3">
-                                                      <b>Activities:</b>
-                                                    </div>
-                                                    {r.parkActivities.map(
-                                                      (
-                                                        parkActivity,
-                                                        index2
-                                                      ) => (
-                                                        <div
-                                                          key={index2}
-                                                          className="park-af-list pr3 text-black"
-                                                        >
-                                                          {index2 < 11 && (
-                                                            <>
-                                                              {
-                                                                activityItemsLabels[
-                                                                  parkActivity
-                                                                    .activityType
-                                                                ]
-                                                              }
-                                                              {index2 === 10
-                                                                ? " ..."
-                                                                : index2 ===
-                                                                  r
-                                                                    .parkActivities
-                                                                    .length -
-                                                                    1
-                                                                ? ""
-                                                                : ", "}
-                                                            </>
-                                                          )}
-                                                        </div>
-                                                      )
-                                                    )}
-                                                    <br />
-                                                  </>
-                                                )}
-                                            </div>
-                                            <div className="col-6">
-                                              {r.parkFacilities &&
-                                                r.parkFacilities.length > 0 && (
-                                                  <>
-                                                    <div className="park-af-list pr3">
-                                                      <b>Facilities:</b>
-                                                    </div>
-
-                                                    {r.parkFacilities.map(
-                                                      (
-                                                        parkFacility,
-                                                        index3
-                                                      ) => (
-                                                        <div
-                                                          key={parkFacility.id}
-                                                          className="park-af-list pr3 text-black"
-                                                        >
-                                                          {index3 < 6 && (
-                                                            <>
-                                                              {
-                                                                facilityItemsLabels[
-                                                                  parkFacility
-                                                                    .facilityType
-                                                                ]
-                                                              }
-                                                              {index3 === 5
-                                                                ? " ..."
-                                                                : index3 ===
-                                                                  r
-                                                                    .parkFacilities
-                                                                    .length -
-                                                                    1
-                                                                ? ""
-                                                                : ", "}
-                                                            </>
-                                                          )}
-                                                        </div>
-                                                      )
-                                                    )}
-                                                    <br />
-                                                  </>
-                                                )}
+                                            <div className="col-12">
+                                              {r.parkFacilities.includes('vehicle-accessible-camping') &&
+                                                <img src={campingIcon}
+                                                  alt="Vehicle accesible camping"
+                                                  aria-label="Vehicle accesible camping"
+                                                  className="mr-1"
+                                                  width={iconSize}
+                                                  height={iconSize}>
+                                                </img>
+                                              }
+                                              {r.parkActivities.includes('hiking') &&
+                                                <img src={hikingIcon}
+                                                  alt="Hiking"
+                                                  aria-label="Hiking"
+                                                  className="mr-1"
+                                                  width={iconSize}
+                                                  height={iconSize}>
+                                                </img>
+                                              }
+                                              {r.parkFacilities.includes('picnic-areas') &&
+                                                <img src={picincIcon}
+                                                  alt="Picnic areas"
+                                                  aria-label="Picnic areas"
+                                                  className="mr-1"
+                                                  width={iconSize}
+                                                  height={iconSize}>
+                                                </img>
+                                              }
+                                              {r.parkActivities.includes('swimming') &&
+                                                <img src={swimmingIcon}
+                                                  alt="Swimming"
+                                                  aria-label="Swimming"
+                                                  className="mr-1"
+                                                  width={iconSize}
+                                                  height={iconSize}>
+                                                </img>
+                                              }
+                                              {r.parkActivities.includes('cycling') &&
+                                                <img src={cyclingIcon}
+                                                  alt="Cycling"
+                                                  aria-label="Cycling"
+                                                  className="mr-1"
+                                                  width={iconSize}
+                                                  height={iconSize}>
+                                                </img>
+                                              }
+                                              {r.parkActivities.includes('pets-on-leash') &&
+                                                <img src={petsIcon}
+                                                  alt="Pets on leash"
+                                                  aria-label="Pets on leash"
+                                                  className="mr-1"
+                                                  width={iconSize}
+                                                  height={iconSize}>
+                                                </img>
+                                              }
+                                              <Link href={`/${r.slug}/`}>
+                                                see all
+                                              </Link>
                                             </div>
                                           </div>
                                         </div>
@@ -1117,8 +1061,8 @@ export default function FindAPark({ location, data }) {
                                               <Carousel
                                                 className="park-carousel-mobile"
                                                 autoPlay={false}
-                                                indicators={false}
-                                                navButtonsAlwaysVisible={true}
+                                                indicators={true}
+                                                navButtonsAlwaysVisible={false}
                                                 animation="fade"
                                                 timeout={200}
                                                 height="100%"
@@ -1157,38 +1101,7 @@ export default function FindAPark({ location, data }) {
                                             {r.protectedAreaName}
                                             </h2>
                                           </Link>
-                                        </div>
-                                      </div>
-                                      <div className="row pb20 p20l pr20">
-                                        <div className="col-12 p0 align-center flex-display full-width">
-                                          <div className="full-width">
-                                            <Link
-                                              href={`/${r.slug}/`}
-                                              className="park-quick-link link"
-                                              underline="hover"
-                                            >
-                                              Visit Park Page
-                                            </Link>
-                                          </div>
-                                          <div className="divider-div align-center">
-                                            <Divider
-                                              orientation="vertical"
-                                              className="vertical-divider align-center"
-                                            />
-                                          </div>
-                                          <div className="full-width">
-                                            <Link
-                                              onClick={() =>
-                                                setParkQuickView(r)
-                                              }
-                                              className="park-quick-link link"
-                                              role="link"
-                                              tabIndex="0"
-                                              underline="hover"
-                                            >
-                                              Quick View
-                                            </Link>
-                                          </div>
+                                          <p>{locationLabel(r.parkLocation)}</p>
                                         </div>
                                       </div>
                                     </div>
@@ -1238,56 +1151,6 @@ export default function FindAPark({ location, data }) {
                           </div>
                           <br />
                           <br />
-
-                          <Dialog
-                            open={openQuickView}
-                            onClose={handleCloseQuickView}
-                            aria-labelledby="park-quick-view-dialog"
-                            className="park-quick-view-dialog"
-                            fullScreen
-                            fullWidth
-                            scroll="paper"
-                          >
-                            <DialogContent className="park-quick-view-dialog-content">
-                              <QuickView
-                                park={currentPark}
-                                activityItemsLabels={activityItemsLabels}
-                                facilityItemsLabels={facilityItemsLabels}
-                              ></QuickView>
-                            </DialogContent>
-                            <DialogActions className="d-block p20 background-blue">
-                              <div className="row">
-                                <div className="col-12 p0 align-center flex-display full-width">
-                                  <div className="full-width">
-                                    <Link
-                                      href={`/${currentPark.slug}`}
-                                      className="park-quick-link link-white"
-                                      underline="hover"
-                                    >
-                                      Visit Park Page
-                                    </Link>
-                                  </div>
-                                  <div className="divider-div align-center">
-                                    <Divider
-                                      orientation="vertical"
-                                      className="vertical-divider align-center"
-                                    />
-                                  </div>
-                                  <div className="full-width">
-                                    <Link
-                                      onClick={handleCloseQuickView}
-                                      className="park-quick-link link-white"
-                                      tabIndex="0"
-                                      role="link"
-                                      underline="hover"
-                                    >
-                                      Close Quick View
-                                    </Link>
-                                  </div>
-                                </div>
-                              </div>
-                            </DialogActions>
-                          </Dialog>
                         </>
                       )}
                     </>

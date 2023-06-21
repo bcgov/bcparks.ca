@@ -30,6 +30,7 @@ function ParkAccessFromAdvisories(advisories) {
             strapi_id
             color
             accessStatus
+            groupLabel
             precedence
           }
         }
@@ -41,7 +42,7 @@ function ParkAccessFromAdvisories(advisories) {
   const accessStatusList = data?.allStrapiAccessStatus.nodes
 
   let parkStatusIcon = blueStatusIcon
-  let parkStatusText = "Open to public access"
+  let parkStatusText = "Open"
   let parkStatusColor = "blue"
 
   for (let advisory of advisories) {
@@ -68,7 +69,22 @@ function ParkAccessFromAdvisories(advisories) {
           text: thisStatus.accessStatus,
         })
       }
-    }
+      if (advisory.access_status_id) {
+        // advisory is coming from find-a-park
+        // get accessStatus based on access_status_id
+        let thisStatus = accessStatusList.find(status => {
+          return status.strapi_id === advisory.access_status_id
+        })
+        if (!thisStatus) {
+          break
+        } else {
+          accessStatuses.push({
+            precedence: thisStatus.precedence,
+            color: thisStatus.color,
+            text: thisStatus.groupLabel,
+          })
+        }
+      }
   }
 
   accessStatuses.sort((a, b) => {

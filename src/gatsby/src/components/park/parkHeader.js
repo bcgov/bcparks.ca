@@ -4,7 +4,7 @@ import { Grid, Button, Box, Paper } from "@mui/material"
 
 import Advisory from "./advisory"
 import ParkAccessStatus from "./parkAccessStatus"
-import CampfireBan from "./campfireBan"
+import CampfireBan from "../campfireBan"
 export default function ParkHeader({
   parkName,
   hasReservations,
