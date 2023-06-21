@@ -124,7 +124,7 @@ const ApprovedListPage = () => {
     <Link key="2" href="/about">
       About
     </Link>,
-    <Link key="3" href="/about/park-management-plans">
+    <Link key="3" href="/about/management-plans">
       Management plans
     </Link>,
     <div key="4" className="breadcrumb-text">
