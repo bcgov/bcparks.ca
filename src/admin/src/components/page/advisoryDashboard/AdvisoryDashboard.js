@@ -205,7 +205,7 @@ export default function AdvisoryDashboard({
   const filterAdvisoriesByRegionId = (regId) => {
     if (regId) {
       const filteredManagementAreas = managementAreas.filter((m) => {
-        return m.region.id === regId;
+        return m.region?.id === regId;
       });
 
       // Filter park names dropdown list
