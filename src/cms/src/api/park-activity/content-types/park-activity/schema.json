@@ -24,18 +24,15 @@
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
-    "appendStandardCalloutOverride": {
-      "type": "customField",
-      "options": {
-        "preset": "toolbar"
-      },
-      "customField": "plugin::ckeditor5.CKEditor"
-    },
     "isActivityOpen": {
       "type": "boolean"
     },
     "isActive": {
       "type": "boolean"
+    },
+    "hideStandardCallout": {
+      "type": "boolean",
+      "default": false
     },
     "protectedArea": {
       "type": "relation",
