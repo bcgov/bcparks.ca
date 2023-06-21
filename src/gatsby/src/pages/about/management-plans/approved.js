@@ -15,33 +15,41 @@ const DocumentLink = ({ park }) => {
   const checkRelation = (orcs, orcsSite) => {
     return orcs.toString() === orcsSite.split("-")[0]
   }
+  // sorting links based on full link text
+  const titles = []
+  docs?.map((doc, index) => (
+    doc.sites.length > 0 ? (
+      // display link with siteName if there's a relation with site
+      doc.sites.map(site =>
+        checkRelation(park.orcs, site.orcsSiteNumber) && (
+          titles.push({
+            index: index,
+            title: `${park.protectedAreaName} - ${site.siteName} ${(doc.documentType?.documentType)?.toLowerCase()} (${calcYear(doc.documentDate)})`
+          })
+        ))
+    ) : (
+      titles.push({
+        index: index,
+        title: `${park.protectedAreaName} ${(doc.documentType?.documentType)?.toLowerCase()} (${calcYear(doc.documentDate)})`
+      })
+    )
+  ))
+  titles.sort((a, b) => {
+    // compare strings without hyphens and spaces
+    const titleA = a.title.replace(/-|\s/g, "").toLowerCase()
+    const titleB = b.title.replace(/-|\s/g, "").toLowerCase()
+    if (titleA < titleB) { return -1 }
+    if (titleA > titleB) { return 1 }
+    return 0;
+  })
+
   return (
-    docs?.map((doc, index) => (
-      doc.sites.length > 0 ? (
-        // display link with siteName if there's a relation with site 
-        doc.sites.map((site, index) =>
-          checkRelation(park.orcs, site.orcsSiteNumber) && (
-            <p key={index}>
-              <a href={doc.url} target="_blank" rel="noreferrer">
-                {`
-                  ${park.protectedAreaName} - ${site.siteName}
-                  ${(doc.documentType?.documentType)?.toLowerCase()}
-                  (${calcYear(doc.documentDate)}) [PDF]
-                `}
-              </a>
-            </p>
-          ))
-      ) : (
-        <p key={index}>
-          <a href={doc.url} target="_blank" rel="noreferrer">
-            {`
-              ${park.protectedAreaName}
-              ${(doc.documentType?.documentType)?.toLowerCase()}
-              (${calcYear(doc.documentDate)}) [PDF]
-            `}
-          </a>
-        </p>
-      )
+    titles.map((title, index) => (
+      <p key={index}>
+        <a href={docs[title.index].url} target="_blank" rel="noreferrer">
+          {`${title.title} [PDF]`}
+        </a>
+      </p>
     ))
   )
 }
@@ -152,8 +160,7 @@ const ApprovedListPage = () => {
                   value={filter}
                   onClick={(e) => handleClick(e, filter)}
                   className={
-                    `btn btn-selected--${
-                      currentFilter === filter ? 'true' : 'false'
+                    `btn btn-selected--${currentFilter === filter ? 'true' : 'false'
                     }`
                   }
                 >
