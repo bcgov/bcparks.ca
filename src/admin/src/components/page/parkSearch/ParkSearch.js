@@ -92,7 +92,7 @@ export default function ParkSearch({
       setFilteredManagementAreas(managementAreas);
       if (section && !isEmpty(section)) {
         const filteredManagementAreas = managementAreas.filter(
-          (m) => m.obj.section.id === section.value
+          (m) => m.obj.section?.id === section.value
         );
         setFilteredManagementAreas([...filteredManagementAreas]);
       }
@@ -103,7 +103,7 @@ export default function ParkSearch({
         setFilteredSections([...filteredSections]);
         if (!section) {
           const filteredManagementAreas = managementAreas.filter(
-            (m) => m.obj.region.id === region.value
+            (m) => m.obj.region?.id === region.value
           );
           setFilteredManagementAreas([...filteredManagementAreas]);
         }
