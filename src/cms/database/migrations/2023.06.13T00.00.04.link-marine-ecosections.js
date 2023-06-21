@@ -2,10 +2,6 @@
 
 async function up(knex) {
     if (await knex.schema.hasTable('marine_ecosections')) {
-        const now = new Date().toISOString();
-
-        await knex('marine_ecosections').insert({ marine_ecosection_id: 19, marine_ecosection: 'Continental Slope', marine_ecosection_code: 'CS', published_at: now });
-
         const protectedAreas = await strapi.db.query("api::protected-area.protected-area").findMany(
             {
                 select: ["id", "orcs"],
