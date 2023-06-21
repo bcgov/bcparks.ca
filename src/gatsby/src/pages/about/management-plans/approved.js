@@ -160,7 +160,8 @@ const ApprovedListPage = () => {
                   value={filter}
                   onClick={(e) => handleClick(e, filter)}
                   className={
-                    `btn btn-selected--${currentFilter === filter ? 'true' : 'false'
+                    `btn btn-selected--${
+                      currentFilter === filter ? 'true' : 'false'
                     }`
                   }
                 >
