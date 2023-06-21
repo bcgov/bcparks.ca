@@ -2,8 +2,6 @@
 
 async function up(knex) {
     if (await knex.schema.hasTable('terrestrial_ecosections')) {
-        const now = new Date().toISOString();
-
         const protectedAreas = await strapi.db.query("api::protected-area.protected-area").findMany(
             {
                 select: ["id", "orcs"],
