@@ -106,7 +106,7 @@ export default function ParkActivity({ data }) {
                       activity.description.data : activity.activityType.defaultDescription.data
                     }
                   </HtmlContent>
-                  {!activity.hideAppendStandardCallout &&
+                  {!activity.hideStandardCallout &&
                     !isNullOrWhiteSpace(activity.activityType.appendStandardCalloutText.data) && (
                     <blockquote className="callout-box">
                       <HtmlContent>

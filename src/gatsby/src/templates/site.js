@@ -434,7 +434,7 @@ export const query = graphql`
       parkActivities {
         isActive
         isActivityOpen
-        hideAppendStandardCallout
+        hideStandardCallout
         description {
           data
         }
@@ -457,7 +457,7 @@ export const query = graphql`
       parkFacilities {
         isActive
         isFacilityOpen
-        hideAppendStandardCallout
+        hideStandardCallout
         description {
           data
         }

@@ -30,7 +30,7 @@
     "isActive": {
       "type": "boolean"
     },
-    "hideAppendStandardCallout": {
+    "hideStandardCallout": {
       "type": "boolean",
       "default": false
     },

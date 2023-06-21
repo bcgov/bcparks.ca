@@ -107,7 +107,7 @@ export default function ParkFacility({ data }) {
                       facility.description.data : facility.facilityType.defaultDescription.data
                     }
                   </HtmlContent>
-                  {!facility.hideAppendStandardCallout &&
+                  {!facility.hideStandardCallout &&
                     !isNullOrWhiteSpace(facility.facilityType.appendStandardCalloutText.data) && (
                     <blockquote className="callout-box">
                       <HtmlContent>
