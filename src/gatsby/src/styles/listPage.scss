@@ -5,7 +5,6 @@
     width: 42px;
     height: 42px;
     color: $colorBlue;
-    font-weight: 700;
     font-size: 0.75rem;
     border: 1px solid $colorBlue;
     border-radius: 0;
@@ -20,16 +19,19 @@
     }
     &:hover {
       color: $colorBlue;
-    }
-    &:focus {
-      box-shadow: inset 0px 0px 0px 3px $colorWhite;
+      background-color: $colorWaterBlue;
+      font-weight: 700;
+      box-shadow: inset 0px 0px 0px 3px $colorWaterBlue;
     }
 
     &-selected--true {
       color: $colorWhite;
       background-color: $colorBlue;
+      font-weight: 700;
       &:hover {
         color: $colorWhite;
+        background-color: $colorBlue;
+        box-shadow: inset 0px 0px 0px 3px $colorWhite;
       }
     }
   }
