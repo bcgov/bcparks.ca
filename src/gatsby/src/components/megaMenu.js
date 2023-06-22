@@ -13,7 +13,10 @@ const MegaMenu = ({ content, menuMode }) => {
   const [selections, setSelections] = useState({}) // the selected item at each level, i.e. selection breadcrumbs
   const [isMenuOpen, setIsMenuOpen] = useState(false) // currently only used for mobile - menu closed at first
   let sectionImages = {}
-  const menuCollection = document.getElementsByClassName("menu-children-exist--true menu-level-0-children")
+  let menuCollection
+  if (typeof window !== "undefined") {
+    menuCollection = document.getElementsByClassName("menu-children-exist--true menu-level-0-children")
+  }
   const menuElements = Array.from(menuCollection)
 
   const getSelectionObj = (item, obj) => {
