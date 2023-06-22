@@ -18,7 +18,7 @@ cms:
       memory: 2Gi
     requests:
       cpu: 250m
-      memory: 500Mi
+      memory: 600Mi
 
   env:
     environment: prod
