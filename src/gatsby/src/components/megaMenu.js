@@ -13,6 +13,8 @@ const MegaMenu = ({ content, menuMode }) => {
   const [selections, setSelections] = useState({}) // the selected item at each level, i.e. selection breadcrumbs
   const [isMenuOpen, setIsMenuOpen] = useState(false) // currently only used for mobile - menu closed at first
   let sectionImages = {}
+  const menuCollection = document.getElementsByClassName("menu-children-exist--true menu-level-0-children")
+  const menuElements = Array.from(menuCollection)
 
   const getSelectionObj = (item, obj) => {
     // this creates an object that indicates all the pages that
@@ -168,6 +170,20 @@ const MegaMenu = ({ content, menuMode }) => {
     // make deep copy of content to process, will trigger useEffect above
     setMenuContent(JSON.parse(JSON.stringify(content)))
   }, [setMenuContent, content])
+
+  useEffect(() => {
+    if (menuElements.length === 0) { return }
+    const handleClick = (e) => {
+      if (!(menuElements.some((el) => el.contains(e.target)))) {
+        menuReset()
+      }
+    }
+    document.addEventListener("click", handleClick)
+    return () => {
+      document.removeEventListener("click", handleClick)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [menuElements])
 
   // get images for top level sections
   let sections = content.filter(item => item.strapi_parent?.id === 1)
