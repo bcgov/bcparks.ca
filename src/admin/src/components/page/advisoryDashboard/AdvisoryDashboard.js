@@ -343,6 +343,9 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
     {
       field: "advisoryStatus.advisoryStatus",
       title: "Status",
+      customSort: (a, b) => a.archived === b.archived
+        ? a.advisoryStatus.advisoryStatus < b.advisoryStatus.advisoryStatus ? -1 : 1
+        : a.archived < b.archived ? 1 : -1,
       cellStyle: {
         textAlign: "center",
       },
@@ -430,6 +433,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
     {
       field: "title",
       title: "Headline",
+      customSort: (a, b) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1,
       headerStyle: { width: 400 },
       cellStyle: { width: 400 },
       render: (rowData) => {
