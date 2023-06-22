@@ -52,7 +52,8 @@ const loadProtectedArea = (apiBaseUrl, orcsId) => {
       orcs: {
         $eq: orcsId
       }
-    }
+    },
+    fields: ['hasCampfireBan']
   }, {
     encodeValuesOnly: true,
   })
