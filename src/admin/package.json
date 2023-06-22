@@ -18,7 +18,6 @@
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
     "bootstrap": "^4.6.0",
-    "he": "^1.2.0",
     "history": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "keycloak-js": "^12.0.4",
