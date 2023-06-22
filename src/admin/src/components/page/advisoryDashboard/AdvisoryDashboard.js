@@ -64,13 +64,13 @@ export default function AdvisoryDashboard({
 
   useEffect(() => {
     filterAdvisoriesByRegionId(selectedRegionId);
-  }, [selectedRegionId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedRegionId, originalPublicAdvisories]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (selectedParkId !== -1) {
       filterAdvisoriesByParkId(selectedParkId);
     }
-  }, [selectedParkId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedParkId, regionalPublicAdvisories]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Preserve filters
   const savedFilters = JSON.parse(localStorage.getItem('advisoryFilters'));
