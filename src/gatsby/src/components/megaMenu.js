@@ -14,10 +14,11 @@ const MegaMenu = ({ content, menuMode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false) // currently only used for mobile - menu closed at first
   let sectionImages = {}
   let menuCollection
+  let menuElements
   if (typeof window !== "undefined") {
     menuCollection = document.getElementsByClassName("menu-children-exist--true menu-level-0-children")
+    menuElements = Array.from(menuCollection)
   }
-  const menuElements = Array.from(menuCollection)
 
   const getSelectionObj = (item, obj) => {
     // this creates an object that indicates all the pages that
