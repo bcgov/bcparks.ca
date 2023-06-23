@@ -21,6 +21,9 @@
     },
     "color": {
       "type": "string"
+    },
+    "groupLabel": {
+      "type": "string"
     }
   }
 }
