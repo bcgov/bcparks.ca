@@ -58,7 +58,7 @@ const ApprovedListPage = () => {
   const queryData = useStaticQuery(graphql`
     query {
       allStrapiProtectedArea(
-        sort: {fields: protectedAreaName, order: ASC}
+        sort: {protectedAreaName: ASC}
         filter: {managementDocuments: {elemMatch: {publishedAt: {ne: null}}}}
       ) {
         nodes {

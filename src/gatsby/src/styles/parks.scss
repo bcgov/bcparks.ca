@@ -271,10 +271,10 @@
 }
 
 .show-photo-text {
-  background-color: rgba(0, 0, 0, 0.5);
-  color: $colorWhite;
-  padding: 10px;
-  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  color: $colorWhite !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
 }
 
 .show-photo-button {
