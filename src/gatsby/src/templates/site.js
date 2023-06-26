@@ -32,7 +32,7 @@ import Spacer from "../components/park/spacer"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
-import { classes, StyledGrid } from "../utils/constants"
+import { StyledGrid } from "../utils/constants"
 
 export default function SiteTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
@@ -296,7 +296,6 @@ export default function SiteTemplate({ data }) {
               sm={12}
               md={9}
               lg={9}
-              className={classes.parkContent}
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">

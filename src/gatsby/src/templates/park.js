@@ -41,7 +41,7 @@ import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
 import "../styles/parks.scss"
-import { PARK_NAME_TYPE, classes, StyledGrid } from "../utils/constants";
+import { PARK_NAME_TYPE, StyledGrid } from "../utils/constants";
 
 const qs = require('qs')
 const AsyncMapLocation =  loadable(() => import("../components/park/mapLocation"));
@@ -390,7 +390,6 @@ export default function ParkTemplate({ data }) {
               sm={12}
               md={9}
               lg={9}
-              className={classes.parkContent}
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">

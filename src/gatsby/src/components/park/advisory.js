@@ -8,17 +8,9 @@ import blueAlertIcon from "../../images/park/blue-alert-64.png"
 import redAlertIcon from "../../images/park/red-alert-64.png"
 import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
 
-const PREFIX = 'advisory';
-
-const classes = {
-  card: `${PREFIX}-card`
-};
-
 const StyledCard = styled(Card)({
-  [`&.${classes.card}`]: {
-    border: "none",
-    boxShadow: "none",
-  },
+  border: "none",
+  boxShadow: "none",
 });
 
 export default function Advisory({ advisories }) {
@@ -56,7 +48,7 @@ export default function Advisory({ advisories }) {
   }
 
   return (
-    <StyledCard className={classes.card}>
+    <StyledCard>
       <CardHeader
         avatar={
           <Avatar

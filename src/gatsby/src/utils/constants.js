@@ -102,30 +102,16 @@ export const countsList = [
 ]
 
 // for stylings
-const drawerWidth = 230
-
-const PREFIX = 'constant';
-
-export const classes = {
-  root: `${PREFIX}-root`,
-  parkContent: `${PREFIX}-parkContent`
-};
-
 export const StyledGrid = styled(Grid)((
   {
     theme
   }
 ) => ({
-  [`& .${classes.root}`]: {
-    display: "flex",
+  [theme.breakpoints.up("sm")]: {
+    width: "calc(100% - 230px)",
   },
-  [`& .${classes.parkContent}`]: {
-    [theme.breakpoints.up("sm")]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-    },
-    "& > div:last-of-type": {
-      minHeight: "600px"
-    }
+  "& > div:last-of-type": {
+    minHeight: "600px",
   },
   appBarOffset: theme.mixins.toolbar,
 }));

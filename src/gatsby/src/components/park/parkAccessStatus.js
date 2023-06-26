@@ -8,18 +8,10 @@ import blueStatusIcon from "../../images/park/blue-status-64.png"
 import redStatusIcon from "../../images/park/red-status-64.png"
 import yellowStatusIcon from "../../images/park/yellow-status-64.png"
 
-const PREFIX = 'parkAccessStatus';
-
-const classes = {
-  card: `${PREFIX}-card`
-};
-
 const StyledCard = styled(Card)({
-  [`&.${classes.card}`]: {
-    border: "none",
-    boxShadow: "none",
-    color: "#00008a",
-  },
+  border: "none",
+  boxShadow: "none",
+  color: "#00008a",
 })
 
 const ICONS = {
@@ -53,30 +45,30 @@ function ParkAccessFromAdvisories(advisories) {
   let parkStatusColor = "blue"
 
   for (let advisory of advisories) {
-      if (advisory.accessStatus?.precedence) {
-        // advisory is coming from parks details page
+    if (advisory.accessStatus?.precedence) {
+      // advisory is coming from parks details page
+      accessStatuses.push({
+        precedence: advisory.accessStatus.precedence,
+        color: advisory.accessStatus.color,
+        text: advisory.accessStatus.accessStatus,
+      })
+    }
+    if (advisory.access_status_id) {
+      // advisory is coming from find-a-park
+      // get accessStatus based on access_status_id
+      let thisStatus = accessStatusList.find(status => {
+        return status.strapi_id === advisory.access_status_id
+      })
+      if (!thisStatus) {
+        break
+      } else {
         accessStatuses.push({
-          precedence: advisory.accessStatus.precedence,
-          color: advisory.accessStatus.color,
-          text: advisory.accessStatus.accessStatus,
+          precedence: thisStatus.precedence,
+          color: thisStatus.color,
+          text: thisStatus.accessStatus,
         })
       }
-      if (advisory.access_status_id) {
-        // advisory is coming from find-a-park
-        // get accessStatus based on access_status_id
-        let thisStatus = accessStatusList.find(status => {
-          return status.strapi_id === advisory.access_status_id
-        })
-        if (!thisStatus) {
-          break
-        } else {
-          accessStatuses.push({
-            precedence: thisStatus.precedence,
-            color: thisStatus.color,
-            text: thisStatus.accessStatus,
-          })
-        }
-      }
+    }
   }
 
   accessStatuses.sort((a, b) => {
@@ -110,21 +102,21 @@ export default function ParkAccessStatus({ advisories }) {
   // we need to differentiate between the two structures.
 
   return (
-      <StyledCard className={classes.card}>
-        <CardHeader
-          className="access-icon"
-          avatar={
-            <Avatar
-              variant="square"
-              src={parkStatusIcon}
-              aria-label="park access status"
-              className="park-overview-icon"
-              alt=""
-            />
-          }
-          title={parkStatusText}
-        />
-      </StyledCard>
+    <StyledCard>
+      <CardHeader
+        className="access-icon"
+        avatar={
+          <Avatar
+            variant="square"
+            src={parkStatusIcon}
+            aria-label="park access status"
+            className="park-overview-icon"
+            alt=""
+          />
+        }
+        title={parkStatusText}
+      />
+    </StyledCard>
   )
 }
 

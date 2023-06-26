@@ -4,22 +4,14 @@ import { Card, CardHeader, Avatar } from "@mui/material"
 
 import campfireBanIcon from "../../images/park/campfire-ban-48.png"
 
-const PREFIX = 'campfireBan';
-
-const classes = {
-  card: `${PREFIX}-card`
-};
-
 const StyledCard = styled(Card)({
-  [`&.${classes.card}`]: {
-    border: "none",
-    boxShadow: "none",
-  },
+  border: "none",
+  boxShadow: "none",
 });
 
 export default function CampfireBan() {
   return (
-    <StyledCard className={classes.card}>
+    <StyledCard>
       <CardHeader
         className="access-icon"
         avatar={
