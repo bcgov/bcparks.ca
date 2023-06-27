@@ -12,7 +12,7 @@ export function getLatestPublicAdvisoryAudits(keycloak, showArchived) {
     if (!showArchived) {
         advisoryFilter = {
             $or: [
-                { advisoryStatus: { code: 'PUB' } },
+                { advisoryStatus: { code: { $ne: 'INA' } } },
                 { updatedAt: { $gt: archiveDate } }
             ]
         };
@@ -83,7 +83,7 @@ export function updatePublicAdvisories(publicAdvisories, managementAreas) {
             publicAdvisory.regions = regionsWithParkCount;
         }
 
-        publicAdvisory.archived = publicAdvisory.advisoryStatus.code !== 'PUB' && publicAdvisory.updatedAt < archiveDate;
+        publicAdvisory.archived = publicAdvisory.advisoryStatus.code === 'INA' && publicAdvisory.updatedAt < archiveDate;
 
         return publicAdvisory;
     });
