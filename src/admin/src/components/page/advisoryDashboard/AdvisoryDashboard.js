@@ -649,8 +649,8 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
                 </small>
                 <LightTooltip
                   arrow
-                  title="By default only published advisories and advisories modified within the past 30 days are shown.
-                  Check this box to include advisories modified in the past 18 months. Older advisories are available in Strapi.">
+                  title="By default, inactive advisories that have not been modified in the past 30 days are hidden. Check this 
+                   box to include inactive advisories modified in the past 18 months. Older advisories are available in Strapi.">
                   <HelpIcon className="helpIcon ml-1" />
                 </LightTooltip>
               </>
