@@ -1016,9 +1016,11 @@ export default function FindAPark({ location, data }) {
                                                   height={iconSize}>
                                                 </img>
                                               }
-                                              <Link href={`/${r.slug}/`}>
-                                                see all
-                                              </Link>
+                                              {(r.parkActivities.length || r.parkFacilities.length) &&
+                                                <Link href={`/${r.slug}/`}>
+                                                  see all
+                                                </Link>
+                                              }
                                             </div>
                                           </div>
                                         </div>
