@@ -11,7 +11,7 @@ import {
   InputAdornment,
   Card,
   CardContent,
-  Link, 
+  Link,
   LinearProgress,
   Breadcrumbs,
   Button,
@@ -21,17 +21,18 @@ import SearchIcon from "@mui/icons-material/Search"
 import CancelIcon from "@mui/icons-material/Cancel"
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import ExpandMore from "@mui/icons-material/ExpandMore"
+import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
 import Carousel from "react-material-ui-carousel"
 import { scrollIntoView } from "seamless-scroll-polyfill";
 
 import Footer from "../components/footer"
 import Header from "../components/header"
 import Seo from "../components/seo"
+import CampfireBan from "../components/campfireBan"
 import ParkAccessStatus from "../components/park/parkAccessStatus"
 import NoSearchResults from "../components/search/noSearchResults"
 import SearchFilter from "../components/search/searchFilter"
 
-import CampfireBan from "../components/campfireBan"
 import parksLogo from "../images/Mask_Group_5.png"
 import campingIcon from "../../static/icons/vehicle-accessible-camping.svg"
 import hikingIcon from "../../static/icons/hiking.svg"
@@ -95,6 +96,18 @@ export const query = graphql`
     }
   }
 `
+
+const Icon = ({src, label, iconSize}) => {
+  return (
+    <img src={src}
+      alt={label}
+      aria-label={label}
+      className="mr-1"
+      width={iconSize}
+      height={iconSize}>
+    </img>
+  )
+}
 
 export default function FindAPark({ location, data }) {
   const menuContent = data?.allStrapiMenu?.nodes || []
@@ -285,7 +298,7 @@ export default function FindAPark({ location, data }) {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value)
-    scrollIntoView(searchRef.current, {behavior: "smooth" })
+    scrollIntoView(searchRef.current, { behavior: "smooth" })
   }
 
   const handleClickOpenFilter = () => {
@@ -669,7 +682,7 @@ export default function FindAPark({ location, data }) {
                         <fieldset>
                         <legend className="sr-only">Activities</legend>
                         <div
-                          tabIndex={showActivities ? -1 : 0 }
+                          tabIndex={showActivities ? -1 : 0}
                           role="button"
                           className="row pointer mr-3"
                           onClick={() => {
@@ -887,10 +900,10 @@ export default function FindAPark({ location, data }) {
                                 <CardContent className="park-card park-card-desktop">
                                   <div className="row search-result-card no-gutters">
                                     <div className="col-12">
-                                      <div className="row">
+                                      <div className="row no-gutters">
                                         {r.parkPhotos &&
                                           r.parkPhotos.length === 0 && (
-                                            <div className="col-lg-5 close-margin park-image-div park-image-logo-div">
+                                            <div className="col-lg-auto close-margin park-image-div park-image-logo-div">
                                               <img
                                                 alt="logo"
                                                 key={index}
@@ -901,19 +914,19 @@ export default function FindAPark({ location, data }) {
                                           )}
                                         {r.parkPhotos &&
                                           r.parkPhotos.length === 1 && (
-                                            <div className="col-lg-5 close-margin park-image-div">
+                                            <div className="col-lg-auto close-margin park-image-div">
                                               <img
                                                 alt="park"
                                                 key={index}
                                                 className="search-result-image"
                                                 src={addSmallImagePrefix(r.parkPhotos[0])}
-                                                onError={(e) => {handleImgError(e, r.parkPhotos[0])}}
+                                                onError={(e) => { handleImgError(e, r.parkPhotos[0]) }}
                                               />
                                             </div>
                                           )}
                                         {r.parkPhotos &&
                                           r.parkPhotos.length > 1 && (
-                                            <div className="col-lg-5 close-margin park-image-div">
+                                            <div className="col-lg-auto close-margin park-image-div">
                                               <Carousel
                                                 className="park-carousel"
                                                 autoPlay={false}
@@ -931,7 +944,7 @@ export default function FindAPark({ location, data }) {
                                                         key={index}
                                                         className="search-result-image"
                                                         src={addSmallImagePrefix(item)}
-                                                        onError={(e) => {handleImgError(e, item)}}                                                      />
+                                                        onError={(e) => { handleImgError(e, item) }} />
                                                     )
                                                   }
                                                 )}
@@ -939,29 +952,21 @@ export default function FindAPark({ location, data }) {
                                             </div>
                                           )}
 
-                                        <div className="col-lg-7 p20t park-content p20l">
-                                          <div className="row">
-                                            <div className="col-12 park-overview-content text-blue small-font p5l">
-                                              <ParkAccessStatus
-                                                advisories={r.advisories}
-                                              />
-                                              {r.hasCampfireBan &&
-                                                <CampfireBan />
-                                              }
-                                            </div>
+                                        <div className="col park-content">
+                                          <div className="park-content-top">
+                                            <Link
+                                              href={`/${r.slug}/`}
+                                              underline="hover"
+                                            >
+                                              <h2 className="park-heading-text">
+                                                {r.protectedAreaName}
+                                                <ExpandCircleDownIcon className="park-heading-icon" />
+                                              </h2>
+                                            </Link>
+                                            <p>{locationLabel(r.parkLocation)}</p>
                                           </div>
-                                          <Link
-                                            href={`/${r.slug}/`}
-                                            className="p10t"
-                                            underline="hover"
-                                          >
-                                            <h2 className="park-heading-text">
-                                              {r.protectedAreaName}
-                                            </h2>
-                                          </Link>
-                                          <p>{locationLabel(r.parkLocation)}</p>
-                                          <div className="row p10t mr5">
-                                            <div className="col-12">
+                                          <div className="park-content-bottom">
+                                            <div className="park-content-bottom--left">
                                               {r.parkFacilities.includes('vehicle-accessible-camping') &&
                                                 <img src={campingIcon}
                                                   alt="Vehicle accesible camping"
@@ -1016,10 +1021,18 @@ export default function FindAPark({ location, data }) {
                                                   height={iconSize}>
                                                 </img>
                                               }
-                                              {(r.parkActivities.length || r.parkFacilities.length) &&
+                                              {(r.parkActivities.length > 0 || r.parkFacilities.length > 0) &&
                                                 <Link href={`/${r.slug}/`}>
-                                                  see all
+                                                  <p>see all</p>
                                                 </Link>
+                                              }
+                                            </div>
+                                            <div className="park-content-bottom--right park-overview-content text-blue">
+                                              <ParkAccessStatus
+                                                advisories={r.advisories}
+                                              />
+                                              {r.hasCampfireBan &&
+                                                <CampfireBan />
                                               }
                                             </div>
                                           </div>
@@ -1053,7 +1066,7 @@ export default function FindAPark({ location, data }) {
                                                 key={index}
                                                 className="search-result-image"
                                                 src={addSmallImagePrefix(r.parkPhotos[0])}
-                                                onError={(e) => {handleImgError(e, r.parkPhotos[0])}}
+                                                onError={(e) => { handleImgError(e, r.parkPhotos[0]) }}
                                               />
                                             </div>
                                           )}
@@ -1077,7 +1090,7 @@ export default function FindAPark({ location, data }) {
                                                         key={index}
                                                         className="search-result-image"
                                                         src={addSmallImagePrefix(item)}
-                                                        onError={(e) => {handleImgError(e, item)}}
+                                                        onError={(e) => { handleImgError(e, item) }}
                                                       />
                                                     )
                                                   }
@@ -1100,7 +1113,8 @@ export default function FindAPark({ location, data }) {
                                             underline="hover"
                                           >
                                             <h2 className="park-heading-text">
-                                            {r.protectedAreaName}
+                                              {r.protectedAreaName}
+                                              <ExpandCircleDownIcon className="park-heading-icon" />
                                             </h2>
                                           </Link>
                                           <p>{locationLabel(r.parkLocation)}</p>

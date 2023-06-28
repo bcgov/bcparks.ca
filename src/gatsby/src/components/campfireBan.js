@@ -13,7 +13,7 @@ export default function CampfireBan() {
   return (
     <StyledCard>
       <CardHeader
-        className="access-icon"
+        className="access-icon campfire-icon"
         avatar={
           <Avatar
             variant="square"
