@@ -13,9 +13,13 @@ const MegaMenu = ({ content, menuMode }) => {
   const [selections, setSelections] = useState({}) // the selected item at each level, i.e. selection breadcrumbs
   const [isMenuOpen, setIsMenuOpen] = useState(false) // currently only used for mobile - menu closed at first
   let sectionImages = {}
+  let menuLinkCollection
+  let menuLinkElements
   let menuCollection
   let menuElements
   if (typeof window !== "undefined") {
+    menuLinkCollection = document.getElementsByClassName("menu-button menu-button--unselected")
+    menuLinkElements = Array.from(menuLinkCollection)
     menuCollection = document.getElementsByClassName("menu-children-exist--true menu-level-0-children")
     menuElements = Array.from(menuCollection)
   }
@@ -178,8 +182,10 @@ const MegaMenu = ({ content, menuMode }) => {
   useEffect(() => {
     if (menuElements.length === 0) { return }
     const handleClick = (e) => {
-      if (!(menuElements.some((el) => el.contains(e.target)))) {
-        menuReset()
+      if (!(menuLinkElements.some((el) => el.contains(e.target)))) {
+        if (!(menuElements.some((el) => el.contains(e.target)))) {
+          menuReset()
+        }
       }
     }
     document.addEventListener("click", handleClick)
@@ -272,16 +278,6 @@ const MegaMenu = ({ content, menuMode }) => {
                 {generateMenus(page, menuMode)}
               </div>
             ))}
-            <div className="menu-image d-none d-lg-block">
-              {menuMode === "responsive" &&
-                item.treeLevel === 1 &&
-                sectionImages[item.order] && (
-                  <>
-                    {item.level}
-                    <img src={sectionImages[item.order]} alt="" />
-                  </>
-                )}
-            </div>
           </>
         )}
         {!item.hasChildren && (
