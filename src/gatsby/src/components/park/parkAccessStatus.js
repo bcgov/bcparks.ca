@@ -66,25 +66,10 @@ function ParkAccessFromAdvisories(advisories) {
         accessStatuses.push({
           precedence: thisStatus.precedence,
           color: thisStatus.color,
-          text: thisStatus.accessStatus,
+          text: thisStatus.groupLabel,
         })
       }
-      if (advisory.access_status_id) {
-        // advisory is coming from find-a-park
-        // get accessStatus based on access_status_id
-        let thisStatus = accessStatusList.find(status => {
-          return status.strapi_id === advisory.access_status_id
-        })
-        if (!thisStatus) {
-          break
-        } else {
-          accessStatuses.push({
-            precedence: thisStatus.precedence,
-            color: thisStatus.color,
-            text: thisStatus.groupLabel,
-          })
-        }
-      }
+    }
   }
 
   accessStatuses.sort((a, b) => {
