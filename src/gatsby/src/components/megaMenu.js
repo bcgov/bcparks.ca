@@ -13,13 +13,9 @@ const MegaMenu = ({ content, menuMode }) => {
   const [selections, setSelections] = useState({}) // the selected item at each level, i.e. selection breadcrumbs
   const [isMenuOpen, setIsMenuOpen] = useState(false) // currently only used for mobile - menu closed at first
   let sectionImages = {}
-  let menuLinkCollection
-  let menuLinkElements
   let menuCollection
   let menuElements
   if (typeof window !== "undefined") {
-    menuLinkCollection = document.getElementsByClassName("menu-button menu-button--unselected")
-    menuLinkElements = Array.from(menuLinkCollection)
     menuCollection = document.getElementsByClassName("menu-children-exist--true menu-level-0-children")
     menuElements = Array.from(menuCollection)
   }
@@ -182,10 +178,8 @@ const MegaMenu = ({ content, menuMode }) => {
   useEffect(() => {
     if (menuElements.length === 0) { return }
     const handleClick = (e) => {
-      if (!(menuLinkElements.some((el) => el.contains(e.target)))) {
-        if (!(menuElements.some((el) => el.contains(e.target)))) {
-          menuReset()
-        }
+      if (!(menuElements.some((el) => el.parentElement.contains(e.target)))) {
+        menuReset()
       }
     }
     document.addEventListener("click", handleClick)
@@ -209,7 +203,7 @@ const MegaMenu = ({ content, menuMode }) => {
         {item.hasChildren && (
           <>
             <nav className={"menu-level menu-level--" + item.treeLevel} aria-labelledby="mainmenulabel">
-	            <h2 id="mainmenulabel" className="sr-only">Main Menu</h2>
+              <h2 id="mainmenulabel" className="sr-only">Main Menu</h2>
               <ul className="menu-button-list" role="presentation">
                 <li className="menu-button menu-back">
                   <a
