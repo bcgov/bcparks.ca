@@ -187,6 +187,7 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
           .filter(f => f.isActive && f.facilityType.isActive)
           .map((f) => {
             return {
+              id: f.id,
               facilityType: f.facilityType.id,
               facilityName: f.facilityType.facilityName
             }
@@ -195,6 +196,7 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
           .filter(a => a.isActive && a.activityType.isActive)
           .map((a) => {
             return {
+              id: a.id,
               activityType: a.activityType.id,
               activityName: a.activityType.activityName
             }
