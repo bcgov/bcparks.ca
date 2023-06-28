@@ -15,11 +15,11 @@ import {
   FormControlLabel,
   Checkbox,
   Link,
-} from "@material-ui/core"
-import SearchIcon from "@material-ui/icons/Search"
-import CancelIcon from "@material-ui/icons/Cancel"
-import ExpandLess from "@material-ui/icons/ExpandLess"
-import ExpandMore from "@material-ui/icons/ExpandMore"
+} from "@mui/material"
+import SearchIcon from "@mui/icons-material/Search"
+import CancelIcon from "@mui/icons-material/Cancel"
+import ExpandLess from "@mui/icons-material/ExpandLess"
+import ExpandMore from "@mui/icons-material/ExpandMore"
 
 import "../../styles/search.scss"
 
@@ -209,7 +209,7 @@ const SearchFilter = ({
                         //setQuickSearch([])
                       }}
                       tabIndex="0"
-                    >
+                      underline="hover">
                       Reset all
                     </Link>
                   </div>
@@ -290,7 +290,7 @@ const SearchFilter = ({
                           }}
                           tabIndex="0"
                           href="#"
-                        >
+                          underline="hover">
                           Reset
                         </Link>
                       </div>
@@ -374,7 +374,7 @@ const SearchFilter = ({
                           }}
                           tabIndex="0"
                           href="#"
-                        >
+                          underline="hover">
                           Reset
                         </Link>
                       </div>
@@ -458,7 +458,7 @@ const SearchFilter = ({
         </DialogActions>
       </Dialog>
     </div>
-  )
+  );
 }
 
 SearchFilter.propTypes = {

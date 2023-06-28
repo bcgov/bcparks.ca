@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-// import { navigate } from "@reach/router"
+import { styled } from '@mui/material/styles';
 import {
   Box,
   Button,
@@ -7,23 +7,38 @@ import {
   InputAdornment,
   Checkbox,
   FormControlLabel,
-} from "@material-ui/core"
-import Autocomplete from '@material-ui/lab/Autocomplete'
-import { makeStyles } from "@material-ui/core/styles"
-import SearchIcon from "@material-ui/icons/Search"
+} from "@mui/material"
+import Autocomplete from '@mui/material/Autocomplete'
+import SearchIcon from "@mui/icons-material/Search"
 
 import { getAdvisoryTypeFromUrl } from "../../utils/advisoryHelper";
 import "../../styles/advisories/advisoryFilter.scss"
 
-const useStyles = makeStyles(theme => ({
-  searchBox: {
+const PREFIX = 'AdvisoryFilter';
+
+const classes = {
+  searchBox: `${PREFIX}-searchBox`,
+  selectEndAdornment: `${PREFIX}-selectEndAdornment`,
+  filterElement: `${PREFIX}-filterElement`,
+  filterSearch: `${PREFIX}-filterSearch`,
+  filterType: `${PREFIX}-filterType`,
+  filterLabel: `${PREFIX}-filterLabel`,
+  filterBy: `${PREFIX}-filterBy`
+};
+
+const Root = styled('div')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.searchBox}`]: {
     marginRight: "10px",
     width: "100%",
   },
-  selectEndAdornment: {
+  [`& .${classes.selectEndAdornment}`]: {
     top: 0
   },
-  filterElement: {
+  [`& .${classes.filterElement}`]: {
     [theme.breakpoints.up("sm")]: {
       marginRight: "4%",
     },
@@ -36,7 +51,7 @@ const useStyles = makeStyles(theme => ({
       },
     },
   },
-  filterSearch: {
+  [`& .${classes.filterSearch}`]: {
     [theme.breakpoints.down("sm")]: {
       width: "99%",
     },
@@ -44,7 +59,7 @@ const useStyles = makeStyles(theme => ({
       width: "25%",
     },
   },
-  filterType: {
+  [`& .${classes.filterType}`]: {
     [theme.breakpoints.down("sm")]: {
       width: "60%",
     },
@@ -52,7 +67,7 @@ const useStyles = makeStyles(theme => ({
       width: "15%",
     },
   },
-  filterLabel: {
+  [`& .${classes.filterLabel}`]: {
     fontWeight: "bold",
     fontSize: "1rem",
     lineHeight: "1.75rem",
@@ -60,22 +75,21 @@ const useStyles = makeStyles(theme => ({
     fontFamily: "unset",
     marginBottom: "0px",
   },
-  filterBy: {
+  [`& .${classes.filterBy}`]: {
     [theme.breakpoints.up("sm")]: {
       display: "inline-flex",
       marginRight: "15px",
       verticalAlign: "middle",
       marginBottom: "10px",
     },
-  },
-}))
+  }
+}));
 
 const AdvisoryFilter = ({
   eventTypes = [],
   defaultEventType = { label: getAdvisoryTypeFromUrl() },
   filterFunctions
 }) => {
-  const classes = useStyles()
 
   // Get parent's filter functions
   const getSearchText = filterFunctions.getSearchText
@@ -121,7 +135,7 @@ const AdvisoryFilter = ({
 
 
   return (
-    <div className="advisory-filter-container">
+    <Root className="advisory-filter-container">
       <div className="row">
         <div className="col-12 col-md-6">
           <label htmlFor="advisory-search-text" className={classes.filterLabel}>
@@ -238,8 +252,8 @@ const AdvisoryFilter = ({
           label="Park names"
         />
       </Box>
-    </div>
-  )
+    </Root>
+  );
 }
 
 export default AdvisoryFilter

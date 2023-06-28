@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "@material-ui/core"
+import { Link } from "@mui/material"
 import Carousel from "react-material-ui-carousel"
 
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
@@ -45,6 +45,7 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
                         navButtonsAlwaysVisible={true}
                         animation="fade"
                         timeout={200}
+                        height="100%"
                     >
                         {park.parkPhotos.map(
                             (item, index) => {
@@ -75,6 +76,7 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
                         <Link
                             href={`/${park.slug}`}
                             className="p10t"
+                            underline="hover"
                         >
                             <h3 className="park-heading-text">
                                 {park.protectedAreaName}
@@ -88,6 +90,7 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
                         {park.advisories && park.advisories.length > 0 && (
                             <Link
                                 href={`/${park.slug}#park-advisory-details-container`}
+                                underline="hover"
                             >
                                 <AdvisorySummary
                                     advisories={park.advisories}
@@ -196,6 +199,5 @@ export default function QuickView({ park, activityItemsLabels, facilityItemsLabe
             </div>
 
         </div>
-
-    )
+    );
 }

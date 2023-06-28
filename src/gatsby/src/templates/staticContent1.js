@@ -1,6 +1,6 @@
 import React, { useRef } from "react"
 import { graphql, useStaticQuery } from "gatsby"
-import { Breadcrumbs } from "@material-ui/core"
+import { Breadcrumbs } from "@mui/material"
 import useScrollSpy from "react-use-scrollspy"
 
 import Footer from "../components/footer"
@@ -21,8 +21,8 @@ export default function StaticContent1({ pageContext }) {
   const queryData = useStaticQuery(graphql`
     {
       allStrapiMenu(
-        sort: { fields: order, order: ASC }
-        filter: { show: { eq: true } }
+        sort: {order: ASC},
+        filter: {show: {eq: true}}
       ) {
         nodes {
           strapi_id

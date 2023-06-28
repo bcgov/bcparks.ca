@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Grid, Button, Box, Paper } from "@material-ui/core"
+import { Grid, Button, Box, Paper } from "@mui/material"
 
 import Advisory from "./advisory"
 import ParkAccessStatus from "./parkAccessStatus"

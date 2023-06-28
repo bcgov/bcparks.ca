@@ -178,7 +178,7 @@ const MegaMenu = ({ content, menuMode }) => {
   useEffect(() => {
     if (menuElements.length === 0) { return }
     const handleClick = (e) => {
-      if (!(menuElements.some((el) => el.contains(e.target)))) {
+      if (!(menuElements.some((el) => el.parentElement.contains(e.target)))) {
         menuReset()
       }
     }
@@ -203,7 +203,7 @@ const MegaMenu = ({ content, menuMode }) => {
         {item.hasChildren && (
           <>
             <nav className={"menu-level menu-level--" + item.treeLevel} aria-labelledby="mainmenulabel">
-	            <h2 id="mainmenulabel" className="sr-only">Main Menu</h2>
+              <h2 id="mainmenulabel" className="sr-only">Main Menu</h2>
               <ul className="menu-button-list" role="presentation">
                 <li className="menu-button menu-back">
                   <a
@@ -272,16 +272,6 @@ const MegaMenu = ({ content, menuMode }) => {
                 {generateMenus(page, menuMode)}
               </div>
             ))}
-            <div className="menu-image d-none d-lg-block">
-              {menuMode === "responsive" &&
-                item.treeLevel === 1 &&
-                sectionImages[item.order] && (
-                  <>
-                    {item.level}
-                    <img src={sectionImages[item.order]} alt="" />
-                  </>
-                )}
-            </div>
           </>
         )}
         {!item.hasChildren && (

@@ -1,20 +1,22 @@
 import React, { useState } from "react"
-import { Button, Grid, Box, Divider } from "@material-ui/core"
-import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox"
-import PhotoLibraryOutlinedIcon from "@material-ui/icons/PhotoLibraryOutlined"
-import { useLightbox } from "simple-react-lightbox"
+import { Button, Grid, Box, Divider } from "@mui/material"
+import PhotoLibraryOutlinedIcon from "@mui/icons-material/PhotoLibraryOutlined"
+import Lightbox from "yet-another-react-lightbox"
+import Captions from "yet-another-react-lightbox/plugins/captions"
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails"
+import "yet-another-react-lightbox/styles.css"
+import "yet-another-react-lightbox/plugins/captions.css"
+import "yet-another-react-lightbox/plugins/thumbnails.css"
 
 import ParkPhoto from "./parkPhoto"
 
-const ShowPhotos = ({ text, setShowPhotos }) => {
-  const { openLightbox } = useLightbox()
-
+const ShowPhotos = ({ text, setShowPhotos, setOpen }) => {
   return (
     <Button
       className="show-photo-text"
       onClick={() => {
         setShowPhotos(true)
-        openLightbox()
+        setOpen(true)
       }}
     >
       <PhotoLibraryOutlinedIcon className="photo-icon" />
@@ -25,6 +27,8 @@ const ShowPhotos = ({ text, setShowPhotos }) => {
 
 export default function ParkPhotoGallery({ photos }) {
   const [showPhoto, setShowPhoto] = useState(false)
+  const [open, setOpen] = useState(false)
+  const photoSlides = []
   const parkPhotos = photos.map((photo, index) => {
     return {
       index: index,
@@ -32,27 +36,22 @@ export default function ParkPhotoGallery({ photos }) {
       imageUrl: photo.imageUrl,
     }
   })
-
-  const srlOptions = {
-    settings: {
-      overlayColor: "rgb(0, 0, 0)",
-      autoplaySpeed: 1500,
-      transitionSpeed: 900,
-    },
-    thumbnails: {
-      showThumbnails: true,
-    },
-    buttons: {
-      showAutoplayButton: true,
-      showDownloadButton: false,
-      showFullscreenButton: false,
-      showThumbnailsButton: true,
-      size: "40px",
-    },
-  }
+  parkPhotos.map((photo) =>
+    photoSlides.push({
+      src: photo.imageUrl,
+      description: photo.caption
+    })
+  )
 
   return (
     <>
+      <Lightbox
+        open={open}
+        close={() => setOpen(false)}
+        slides={photoSlides}
+        plugins={[Captions, Thumbnails]}
+      />
+
       <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
         {parkPhotos.length === 0 && (
           <Grid item xs={12}>
@@ -76,148 +75,146 @@ export default function ParkPhotoGallery({ photos }) {
             <Box
               id="park-photo-gallery-container"
             >
-              <SimpleReactLightbox>
-                <SRLWrapper options={srlOptions}>
-                  {parkPhotos.length === 1 && (
-                    <>
-                      <Grid item container spacing={1}>
-                        <Grid item xs={12} md={6}>
-                          <ParkPhoto
-                            type="small"
-                            src={parkPhotos[0].imageUrl}
-                            alt={parkPhotos[0].caption}
-                          />
-                        </Grid>
-                        <Grid item xs={12} md={6} className="show-photo-button">
-                          <ParkPhoto
-                            type="blur"
-                            src={parkPhotos[0].imageUrl}
-                            alt={parkPhotos[0].caption}
-                          />
-                          <div className="show-photos">
-                            <ShowPhotos
-                              text="Show Photos"
-                              setShowPhotos={setShowPhoto}
-                            />
-                          </div>
-                        </Grid>
+              {parkPhotos.length === 1 && (
+                <>
+                  <Grid item container spacing={1} onClick={() => setOpen(true)}>
+                    <Grid item xs={12} md={6}>
+                      <ParkPhoto
+                        type="small"
+                        src={parkPhotos[0].imageUrl}
+                        alt={parkPhotos[0].caption}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6} className="show-photo-button">
+                      <ParkPhoto
+                        type="blur"
+                        src={parkPhotos[0].imageUrl}
+                        alt={parkPhotos[0].caption}
+                      />
+                      <div className="show-photos">
+                        <ShowPhotos
+                          text="Show Photos"
+                          setShowPhotos={setShowPhoto}
+                          setOpen={setOpen}
+                        />
+                      </div>
+                    </Grid>
+                  </Grid>
+                </>
+              )}
+              {(parkPhotos.length === 2 ||
+                parkPhotos.length === 3 ||
+                parkPhotos.length === 4) && (
+                  <>
+                    <Grid item container spacing={1} onClick={() => setOpen(true)}>
+                      <Grid item xs={12} md={6}>
+                        <ParkPhoto
+                          type="big"
+                          src={parkPhotos[0].imageUrl}
+                          alt={parkPhotos[0].caption}
+                        />
                       </Grid>
-                    </>
-                  )}
-                  {(parkPhotos.length === 2 ||
-                    parkPhotos.length === 3 ||
-                    parkPhotos.length === 4) && (
-                    <>
-                      <Grid item container spacing={1}>
-                        <Grid item xs={12} md={6}>
-                          <ParkPhoto
-                            type="big"
-                            src={parkPhotos[0].imageUrl}
-                            alt={parkPhotos[0].caption}
-                          />
-                        </Grid>
-                        <Grid item xs={12} md={6} className="show-photo-button">
-                          <ParkPhoto
-                            type="big"
-                            src={parkPhotos[1].imageUrl}
-                            alt={parkPhotos[1].caption}
-                          />
+                      <Grid item xs={12} md={6} className="show-photo-button">
+                        <ParkPhoto
+                          type="big"
+                          src={parkPhotos[1].imageUrl}
+                          alt={parkPhotos[1].caption}
+                        />
 
-                          <div className="show-photos">
-                            <ShowPhotos
-                              text="Show Photos"
-                              setShowPhotos={setShowPhoto}
-                            />
-                          </div>
-                          {parkPhotos
-                            .filter(photo => photo.index > 1)
-                            .map((photo, index) => (
-                              <Grid
-                                item
-                                xs={6}
-                                key={index}
-                                className={`${showPhoto}? "" : hide-photo`}
-                              >
-                                <ParkPhoto
-                                  type="small"
-                                  src={photo.imageUrl}
-                                  alt={photo.caption}
-                                  key={index}
-                                />
-                              </Grid>
-                            ))}
-                        </Grid>
-                      </Grid>
-                    </>
-                  )}
-                  {parkPhotos.length > 4 && (
-                    <>
-                      <Grid item container spacing={1}>
-                        <Grid item xs={12} md={6} className="main-park-photo-grid">
-                          {parkPhotos
-                            .filter(f => f.index === 0)
-                            .map((photo, index) => (
+                        <div className="show-photos">
+                          <ShowPhotos
+                            text="Show Photos"
+                            setShowPhotos={setShowPhoto}
+                            setOpen={setOpen}
+                          />
+                        </div>
+                        {parkPhotos
+                          .filter(photo => photo.index > 1)
+                          .map((photo, index) => (
+                            <Grid
+                              item
+                              xs={6}
+                              key={index}
+                              className={`${showPhoto}? "" : hide-photo`}
+                            >
                               <ParkPhoto
-                                type="big"
+                                type="small"
                                 src={photo.imageUrl}
                                 alt={photo.caption}
                                 key={index}
                               />
-                            ))}
-                        </Grid>
-                        <Grid
-                          item
-                          container
-                          xs={12}
-                          md={6}
-                          spacing={1}
-                          className="show-photo-button"
-                        >
-                          <>
-                            {parkPhotos
-                              .filter(
-                                photo => photo.index > 0 && photo.index <= 4
-                              )
-                              .map((photo, index) => (
-                                <Grid item xs={6} key={index}>
-                                  <ParkPhoto
-                                    type="small"
-                                    src={photo.imageUrl}
-                                    alt={photo.caption}
-                                    key={index}
-                                  />
-                                </Grid>
-                              ))}
-                            {parkPhotos
-                              .filter(photo => photo.index > 4)
-                              .map((photo, index) => (
-                                <Grid
-                                  item
-                                  xs={6}
-                                  key={index}
-                                  className={`${showPhoto}? "" : hide-photo`}
-                                >
-                                  <ParkPhoto
-                                    type="small"
-                                    src={photo.imageUrl}
-                                    alt={photo.caption}
-                                    key={index}
-                                  />
-                                </Grid>
-                              ))}
-                            <div className="show-photos-5">
-                              <ShowPhotos
-                                text="Show Photos"
-                                setShowPhotos={setShowPhoto}
-                              />
-                            </div>
-                          </>
-                        </Grid>
+                            </Grid>
+                          ))}
                       </Grid>
-                    </>
-                  )}
-                </SRLWrapper>
-              </SimpleReactLightbox>
+                    </Grid>
+                  </>
+                )}
+              {parkPhotos.length > 4 && (
+                <>
+                  <Grid item container spacing={1} onClick={() => setOpen(true)}>
+                    <Grid item xs={12} md={6} className="main-park-photo-grid">
+                      {parkPhotos
+                        .filter(f => f.index === 0)
+                        .map((photo, index) => (
+                          <ParkPhoto
+                            type="big"
+                            src={photo.imageUrl}
+                            alt={photo.caption}
+                            key={index}                            
+                          />
+                        ))}
+                    </Grid>
+                    <Grid
+                      item
+                      container
+                      xs={12}
+                      md={6}
+                      className="show-photo-button"
+                    >
+                      <>
+                        {parkPhotos
+                          .filter(
+                            photo => photo.index > 0 && photo.index <= 4
+                          )
+                          .map((photo, index) => (
+                            <Grid item xs={6} key={index}>
+                              <ParkPhoto
+                                type="small"
+                                src={photo.imageUrl}
+                                alt={photo.caption}
+                                key={index}
+                              />
+                            </Grid>
+                          ))}
+                        {parkPhotos
+                          .filter(photo => photo.index > 4)
+                          .map((photo, index) => (
+                            <Grid
+                              item
+                              xs={6}
+                              key={index}
+                              className={`${showPhoto}? "" : hide-photo`}
+                            >
+                              <ParkPhoto
+                                type="small"
+                                src={photo.imageUrl}
+                                alt={photo.caption}
+                                key={index}
+                              />
+                            </Grid>
+                          ))}
+                        <div className="show-photos-5">
+                          <ShowPhotos
+                            text="Show Photos"
+                            setShowPhotos={setShowPhoto}
+                            setOpen={setOpen}
+                          />
+                        </div>
+                      </>
+                    </Grid>
+                  </Grid>
+                </>
+              )}
             </Box>
             <br />
             <br />
@@ -240,42 +237,38 @@ export default function ParkPhotoGallery({ photos }) {
             <Box
               id="park-photo-gallery-container"
             >
-              <SimpleReactLightbox>
-                <SRLWrapper options={srlOptions}>
-                  <Grid item container spacing={1}>
-                    <Grid item xs={12} md={12}>
-                      <ParkPhoto
-                        type="big"
-                        src={parkPhotos[0].imageUrl}
-                        alt={parkPhotos[0].caption}
-                      />
-                      <div className="show-photos">
-                        <ShowPhotos
-                          text={parkPhotos.length}
-                          setShowPhotos={setShowPhoto}
+              <Grid item container spacing={1} onClick={() => setOpen(true)}>
+                <Grid item xs={12} md={12}>
+                  <ParkPhoto
+                    type="big"
+                    src={parkPhotos[0].imageUrl}
+                    alt={parkPhotos[0].caption}
+                  />
+                  <div className="show-photos">
+                    <ShowPhotos
+                      text={parkPhotos.length}
+                      setShowPhotos={setShowPhoto}
+                    />
+                  </div>
+                  {parkPhotos
+                    .filter(photo => photo.index > 0)
+                    .map((photo, index) => (
+                      <Grid
+                        item
+                        xs={6}
+                        key={index}
+                        className={`${showPhoto}? "" : hide-photo`}
+                      >
+                        <ParkPhoto
+                          type="small"
+                          src={photo.imageUrl}
+                          alt={photo.caption}
+                          key={index}
                         />
-                      </div>
-                      {parkPhotos
-                        .filter(photo => photo.index > 0)
-                        .map((photo, index) => (
-                          <Grid
-                            item
-                            xs={6}
-                            key={index}
-                            className={`${showPhoto}? "" : hide-photo`}
-                          >
-                            <ParkPhoto
-                              type="small"
-                              src={photo.imageUrl}
-                              alt={photo.caption}
-                              key={index}
-                            />
-                          </Grid>
-                        ))}
-                    </Grid>
-                  </Grid>
-                </SRLWrapper>
-              </SimpleReactLightbox>
+                      </Grid>
+                    ))}
+                </Grid>
+              </Grid>
             </Box>
           </Grid>
         )}

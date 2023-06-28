@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { Box, Grid, Container } from "@material-ui/core"
+import { Box, Grid, Container } from "@mui/material"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -54,7 +54,10 @@ export const Head = () => (
 
 export const query = graphql`
   {
-    allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}, sort: { fields: protectedAreaName }) {
+    allStrapiProtectedArea(
+      filter: {isDisplayed: {eq: true}}
+      sort: {protectedAreaName: ASC}
+    ) {
       nodes {
         id
         slug
@@ -62,8 +65,8 @@ export const query = graphql`
       }
     }
     allStrapiMenu(
-      sort: { fields: order, order: ASC }
-      filter: { show: { eq: true } }
+      sort: {order: ASC},
+      filter: {show: {eq: true}}
     ) {
       nodes {
         strapi_id

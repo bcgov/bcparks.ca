@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
-import { Box, Paper, Link, Grid } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
+import { styled } from '@mui/material/styles';
+import { Box, Paper, Link, Grid } from "@mui/material"
 
 import { capitalizeFirstLetter } from "../../utils/helpers";
 
@@ -10,26 +10,35 @@ import Spacer from "./spacer"
 
 import * as cheerio from 'cheerio';
 
-// when rewriting this to bootstrap, let's measure the height of the
-// container and animate the window changing size
-const useStyles = makeStyles(theme => ({
-  collapsed: {
+const PREFIX = 'parkOverview';
+
+const classes = {
+  collapsed: `${PREFIX}-collapsed`,
+  expanded: `${PREFIX}-expanded`,
+  link: `${PREFIX}-link`
+};
+
+const Root = styled('div')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.collapsed}`]: {
     maxHeight: "260px",
     overflow: "hidden",
     display: "block",
     textOverflow: "ellipsis",
   },
-  expanded: {
+  [`& .${classes.expanded}`]: {
     maxHeight: "none",
   },
-  link: {
+  [`& .${classes.link}`]: {
     color: "#003366",
     marginTop: "24px",
-  },
-}))
+  }
+}));
 
 export default function ParkOverview({ data: parkOverview, type }) {
-  const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
   const [height, setHeight] = useState(0)
   const ref = useRef(null)
@@ -45,7 +54,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
   const collapsedParkOverview = $.html()
 
   return (
-    <div id="park-overview-container" className="anchor-link">
+    <Root id="park-overview-container" className="anchor-link">
       <Grid item xs={12} className="anchor-link">
         <Paper elevation={0}>
           <Box className={expanded ? classes.expanded : classes.collapsed} ref={ref}>
@@ -62,13 +71,13 @@ export default function ParkOverview({ data: parkOverview, type }) {
               onClick={() => {
                 setExpanded(!expanded)
               }}
-            >
+              underline="hover">
             {expanded ? "Read less" : "Read more"}
           </Link>
           }
           <Spacer />
         </Paper>
       </Grid>
-    </div>
-  )
+    </Root>
+  );
 }

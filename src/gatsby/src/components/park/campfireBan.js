@@ -1,21 +1,17 @@
 import React from "react"
-import { Card, CardHeader, Avatar } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
+import { styled } from '@mui/material/styles';
+import { Card, CardHeader, Avatar } from "@mui/material"
 
 import campfireBanIcon from "../../images/park/campfire-ban-48.png"
 
-const useStyles = makeStyles({
-  card: {
-    border: "none",
-    boxShadow: "none",
-  },
-})
+const StyledCard = styled(Card)({
+  border: "none",
+  boxShadow: "none",
+});
 
 export default function CampfireBan() {
-  const classes = useStyles()
-
   return (
-    <Card className={classes.card}>
+    <StyledCard>
       <CardHeader
         className="access-icon"
         avatar={
@@ -29,6 +25,6 @@ export default function CampfireBan() {
         }
         title="No campfires"
       />
-    </Card>
-  )
+    </StyledCard>
+  );
 }

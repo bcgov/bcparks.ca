@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { graphql, useStaticQuery } from "gatsby"
-import { Breadcrumbs, Link } from "@material-ui/core"
+import { Breadcrumbs, Link } from "@mui/material"
 
 import Header from "../../../components/header"
 import Footer from "../../../components/footer"
@@ -58,7 +58,7 @@ const ApprovedListPage = () => {
   const queryData = useStaticQuery(graphql`
     query {
       allStrapiProtectedArea(
-        sort: {fields: protectedAreaName, order: ASC}
+        sort: {protectedAreaName: ASC}
         filter: {managementDocuments: {elemMatch: {publishedAt: {ne: null}}}}
       ) {
         nodes {
@@ -78,8 +78,8 @@ const ApprovedListPage = () => {
         }
       }
       allStrapiMenu(
-        sort: { fields: order, order: ASC }
-        filter: { show: { eq: true } }
+        sort: {order: ASC},
+        filter: {show: {eq: true}}
       ) {
         nodes {
           strapi_id
@@ -118,10 +118,10 @@ const ApprovedListPage = () => {
     "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
   ]
   const breadcrumbs = [
-    <Link key="1" href="/">
+    <Link key="1" href="/" underline="hover">
       Home
     </Link>,
-    <Link key="2" href="/about">
+    <Link key="2" href="/about" underline="hover">
       About
     </Link>,
     <Link key="3" href="/about/management-plans">

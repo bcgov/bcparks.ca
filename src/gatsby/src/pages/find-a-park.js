@@ -19,12 +19,12 @@ import {
   Dialog,
   DialogContent,
   DialogActions,
-} from "@material-ui/core"
-import Pagination from "@material-ui/lab/Pagination"
-import SearchIcon from "@material-ui/icons/Search"
-import CancelIcon from "@material-ui/icons/Cancel"
-import ExpandLess from "@material-ui/icons/ExpandLess"
-import ExpandMore from "@material-ui/icons/ExpandMore"
+} from "@mui/material"
+import Pagination from "@mui/material/Pagination"
+import SearchIcon from "@mui/icons-material/Search"
+import CancelIcon from "@mui/icons-material/Cancel"
+import ExpandLess from "@mui/icons-material/ExpandLess"
+import ExpandMore from "@mui/icons-material/ExpandMore"
 import Carousel from "react-material-ui-carousel"
 import { scrollIntoView } from "seamless-scroll-polyfill";
 
@@ -44,14 +44,14 @@ import "../styles/search.scss"
 import { addSmallImagePrefix, handleImgError } from "../utils/helpers";
 
 export const query = graphql`
-  query {
+  {
     site {
       siteMetadata {
         apiURL
       }
     }
     allStrapiActivityType(
-      filter: { isActive: { eq: true } }
+      filter: {isActive: {eq: true}}
     ) {
       totalCount
       nodes {
@@ -61,8 +61,8 @@ export const query = graphql`
       }
     }
     allStrapiFacilityType(
-      sort: { fields: facilityName }
-      filter: { isActive: { eq: true } }      
+      sort: {facilityName: ASC},
+      filter: {isActive: {eq: true}}
     ) {
       totalCount
       nodes {
@@ -72,8 +72,8 @@ export const query = graphql`
       }
     }
     allStrapiMenu(
-      sort: { fields: order, order: ASC }
-      filter: { show: { eq: true } }
+      sort: {order: ASC},
+      filter: {show: {eq: true}}
     ) {
       nodes {
         strapi_id
@@ -193,7 +193,7 @@ export default function FindAPark({ location, data }) {
 
   const searchRef = useRef(null)
   const breadcrumbs = [
-    <Link key="1" href="/">
+    <Link key="1" href="/" underline="hover">
       Home
     </Link>,
     <div key="2" className="breadcrumb-text">
@@ -744,6 +744,7 @@ export default function FindAPark({ location, data }) {
                                 }}
                                 tabIndex="0"
                                 role="link"
+                                underline="hover"
                               >
                                 {showMoreActivities ? (
                                   <div style={{ color: `#2464A4` }}>
@@ -841,6 +842,7 @@ export default function FindAPark({ location, data }) {
                                 }}
                                 tabIndex="0"
                                 role="link"
+                                underline="hover"
                               >
                                 {showMoreFacilities ? (
                                   <div style={{ color: `#2464A4` }}>
@@ -920,6 +922,7 @@ export default function FindAPark({ location, data }) {
                                                 navButtonsAlwaysVisible={true}
                                                 animation="fade"
                                                 timeout={200}
+                                                height="100%"
                                               >
                                                 {r.parkPhotos.map(
                                                   (item, index) => {
@@ -948,6 +951,7 @@ export default function FindAPark({ location, data }) {
                                           <Link
                                             href={`/${r.slug}/`}
                                             className="p10t"
+                                            underline="hover"
                                           >
                                             <h2 className="park-heading-text">
                                               {r.protectedAreaName}
@@ -960,6 +964,7 @@ export default function FindAPark({ location, data }) {
                                                 r.advisories.length > 0 && (
                                                   <Link
                                                     href={`/${r.slug}#park-advisory-details-container`}
+                                                    underline="hover"
                                                   >
                                                     <AdvisorySummary
                                                       advisories={r.advisories}
@@ -1116,6 +1121,7 @@ export default function FindAPark({ location, data }) {
                                                 navButtonsAlwaysVisible={true}
                                                 animation="fade"
                                                 timeout={200}
+                                                height="100%"
                                               >
                                                 {r.parkPhotos.map(
                                                   (item, index) => {
@@ -1145,6 +1151,7 @@ export default function FindAPark({ location, data }) {
                                           <Link
                                             href={`/${r.slug}/`}
                                             className="p10t"
+                                            underline="hover"
                                           >
                                             <h2 className="park-heading-text">
                                             {r.protectedAreaName}
@@ -1158,6 +1165,7 @@ export default function FindAPark({ location, data }) {
                                             <Link
                                               href={`/${r.slug}/`}
                                               className="park-quick-link link"
+                                              underline="hover"
                                             >
                                               Visit Park Page
                                             </Link>
@@ -1176,6 +1184,7 @@ export default function FindAPark({ location, data }) {
                                               className="park-quick-link link"
                                               role="link"
                                               tabIndex="0"
+                                              underline="hover"
                                             >
                                               Quick View
                                             </Link>
@@ -1253,6 +1262,7 @@ export default function FindAPark({ location, data }) {
                                     <Link
                                       href={`/${currentPark.slug}`}
                                       className="park-quick-link link-white"
+                                      underline="hover"
                                     >
                                       Visit Park Page
                                     </Link>
@@ -1269,6 +1279,7 @@ export default function FindAPark({ location, data }) {
                                       className="park-quick-link link-white"
                                       tabIndex="0"
                                       role="link"
+                                      underline="hover"
                                     >
                                       Close Quick View
                                     </Link>

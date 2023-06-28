@@ -56,7 +56,7 @@ export const Head = ({data}) => {
 
 export const query = graphql`
   {
-    strapiPage(Slug: { eq: "/beta-landing" }) {
+    strapiPage(Slug: {eq: "/beta-landing"}) {
       id
       Slug
       Content {
@@ -79,8 +79,8 @@ export const query = graphql`
       }
     }
     allStrapiMenu(
-      sort: { fields: order, order: ASC }
-      filter: { show: { eq: true } }
+      sort: {order: ASC},
+      filter: {show: {eq: true}}
     ) {
       nodes {
         strapi_id

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react"
-import { Paper, Grid } from "@material-ui/core"
+import { Paper, Grid } from "@mui/material"
 import MapView from "@arcgis/core/views/MapView"
 import WebMap from "@arcgis/core/WebMap"
 import ScaleBar from "@arcgis/core/widgets/ScaleBar"

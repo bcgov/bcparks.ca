@@ -8,7 +8,7 @@ import {
   CssBaseline,
   Link,
   Breadcrumbs,
-} from "@material-ui/core"
+} from "@mui/material"
 import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
@@ -32,11 +32,9 @@ import Spacer from "../components/park/spacer"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
-import { useStyles } from "../utils/constants"
+import { StyledGrid } from "../utils/constants"
 
 export default function SiteTemplate({ data }) {
-  const classes = useStyles()
-
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
 
   const site = data.strapiSite
@@ -207,13 +205,16 @@ export default function SiteTemplate({ data }) {
   }
 
   const breadcrumbs = [
-    <Link key="1" href="/">
+    <Link key="1" href="/" underline="hover">
       Home
     </Link>,
-    <Link key="2" href="/find-a-park">
+    <Link key="2" href="/find-a-park" underline="hover">
       Find a park
     </Link>,
-    <Link key="3" href={`/${park?.slug ? park.slug : 'parks/protected-area'}`}>
+    <Link
+      key="3"
+      href={`/${park?.slug ? park.slug : 'parks/protected-area'}`}
+      underline="hover">
       {park?.protectedAreaName}
     </Link>,
     <div key="4" className="breadcrumb-text">
@@ -289,13 +290,12 @@ export default function SiteTemplate({ data }) {
                 menuStyle="nav"
               />
             </Grid>
-            <Grid
+            <StyledGrid
               item
               xs={12}
               sm={12}
               md={9}
               lg={9}
-              className={classes.parkContent}
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">
@@ -371,7 +371,7 @@ export default function SiteTemplate({ data }) {
                   </div>
                 </div>
               )}
-            </Grid>
+            </StyledGrid>
           </Grid>
         </Container>
       </div>
@@ -401,8 +401,8 @@ export const Head = ({data}) => {
 export const query = graphql`
   query SiteDetails($orcsSiteNumber: String) {
     strapiSite(
-      isDisplayed: {eq: true}
-      orcsSiteNumber: { eq: $orcsSiteNumber }
+      isDisplayed: {eq: true},
+      orcsSiteNumber: {eq: $orcsSiteNumber}
     ) {
       siteName
       siteNumber
@@ -410,11 +410,11 @@ export const query = graphql`
       mapZoom
       longitude
       latitude
-      locationNotes { 
-        data { 
+      locationNotes {
+        data {
           locationNotes
         }
-       }
+      }
       description {
         data {
           description
@@ -482,18 +482,16 @@ export const query = graphql`
         hasDayUsePass
       }
     }
-    # Site photos are split into featured and non-featured in order to sort correctly,
-    # with null values last.
     featuredPhotos: allStrapiParkPhoto(
       filter: {
-        orcsSiteNumber: { eq: $orcsSiteNumber }
-        isFeatured: { eq: true }
-        isActive: { eq: true }
+        orcsSiteNumber: {eq: $orcsSiteNumber},
+        isFeatured: {eq: true}, isActive: {eq: true}
       }
-      sort: {
-        order: [ASC, DESC, DESC]
-        fields: [sortOrder, dateTaken, strapi_id]
-      }
+      sort: [
+        {sortOrder: ASC},
+        {dateTaken: DESC},
+        {strapi_id: DESC}
+      ]
     ) {
       nodes {
         imageUrl
@@ -502,14 +500,15 @@ export const query = graphql`
     }
     regularPhotos: allStrapiParkPhoto(
       filter: {
-        orcsSiteNumber: { eq: $orcsSiteNumber }
-        isFeatured: { ne: true }
-        isActive: { eq: true }
+        orcsSiteNumber: {eq: $orcsSiteNumber},
+        isFeatured: {ne: true},
+        isActive: {eq: true}
       }
-      sort: {
-        order: [ASC, DESC, DESC]
-        fields: [sortOrder, dateTaken, strapi_id]
-      }
+      sort: [
+        {sortOrder: ASC},
+        {dateTaken: DESC},
+        {strapi_id: DESC}
+      ]
     ) {
       nodes {
         imageUrl
@@ -517,8 +516,8 @@ export const query = graphql`
       }
     }
     allStrapiMenu(
-      sort: { fields: order, order: ASC }
-      filter: { show: { eq: true } }
+      sort: {order: ASC},
+      filter: {show: {eq: true}}
     ) {
       nodes {
         strapi_id

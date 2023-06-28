@@ -1,6 +1,6 @@
 import React, { useRef } from "react"
 import { graphql } from "gatsby"
-import { Breadcrumbs, Link } from "@material-ui/core"
+import { Breadcrumbs, Link } from "@mui/material"
 import useScrollSpy from "react-use-scrollspy"
 
 import Footer from "../components/footer"
@@ -69,13 +69,13 @@ export default function ParkSubPage({ data }) {
   })
 
   const breadcrumbs = [
-    <Link key="1" href="/">
+    <Link key="1" href="/" underline="hover">
       Home
     </Link>,
-    <Link key="2" href="/find-a-park">
+    <Link key="2" href="/find-a-park" underline="hover">
       Find a park
     </Link>,
-    <Link key="3" href={`/${park.slug}`}>
+    <Link key="3" href={`/${park.slug}`} underline="hover">
       {park.protectedAreaName}
     </Link>,
     <div key="4" className="breadcrumb-text">
@@ -195,7 +195,7 @@ export const Head = ({data}) => {
 export const query = graphql`
   query ParkSubPageDetails($slug: String, $protectedAreaSlug: String) {
     strapiParkSubPage(
-      slug: { eq: $slug }
+      slug: {eq: $slug}
       protectedArea: {slug: {eq: $protectedAreaSlug}}
     ) {
       id
@@ -245,8 +245,8 @@ export const query = graphql`
       }
     }
     allStrapiMenu(
-      sort: { fields: order, order: ASC }
-      filter: { show: { eq: true } }
+      sort: {order: ASC},
+      filter: {show: {eq: true}}
     ) {
       nodes {
         strapi_id

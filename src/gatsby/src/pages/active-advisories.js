@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react"
+import { styled } from '@mui/material/styles';
 import { graphql } from "gatsby"
 import axios from "axios"
-import { Container, CircularProgress } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
+import { Container, CircularProgress } from "@mui/material"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -16,31 +16,47 @@ import { getAdvisoryTypeFromUrl } from "../utils/advisoryHelper"
 
 import "../styles/home.scss"
 
-const useStyles = makeStyles(theme => ({
-  advisoriesHeader: {
+const PREFIX = 'PublicActiveAdvisoriesPage';
+
+const classes = {
+  advisoriesHeader: `${PREFIX}-advisoriesHeader`,
+  advisoryCountNotice: `${PREFIX}-advisoryCountNotice`,
+  loadingArea: `${PREFIX}-loadingArea`,
+  loadingText: `${PREFIX}-loadingText`,
+  filterResult: `${PREFIX}-filterResult`
+};
+
+const Root = styled('div')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.advisoriesHeader}`]: {
     marginBottom: "2px",
   },
-  advisoryCountNotice: {
+
+  [`& .${classes.advisoryCountNotice}`]: {
     paddingBottom: "20px",
     "& div": {
       display: "inline",
     },
   },
-  loadingArea: {
+
+  [`& .${classes.loadingArea}`]: {
     display: "flex",
     justifyContent: "left",
   },
-  loadingText: {
+
+  [`& .${classes.loadingText}`]: {
     padding: "8px",
   },
-  filterResult: {
+
+  [`& .${classes.filterResult}`]: {
     paddingBottom: "20px",
-  },
-}))
+  }
+}));
 
 const PublicActiveAdvisoriesPage = ({ data }) => {
-  const classes = useStyles()
-
   const [advisories, setAdvisories] = useState([]) // array of advisories
 
   const [isNewFilter, setIsNewFilter] = useState(true) // true when any part of filter changes
@@ -339,7 +355,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const menuContent = data?.allStrapiMenu?.nodes || []
 
   return (
-    <>
+    <Root>
       <Header mode="internal" content={menuContent} />
       <Container id="sr-content">
         <br />
@@ -387,7 +403,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       <br />
       <br />
       <Footer />
-    </>
+    </Root>
   )
 }
 
@@ -405,8 +421,8 @@ export const query = graphql`
       }
     }
     allStrapiMenu(
-      sort: { fields: order, order: ASC }
-      filter: { show: { eq: true } }
+      sort: {order: ASC},
+      filter: {show: {eq: true}}
     ) {
       nodes {
         strapi_id

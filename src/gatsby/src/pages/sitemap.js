@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { Link, Breadcrumbs } from "@material-ui/core"
+import { Link, Breadcrumbs } from "@mui/material"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -14,7 +14,7 @@ const SitemapPage = ({ data }) => {
 
   const breadcrumbs = [
     // TODO convert MUI breadcrumbs and use gatsby Link
-    <Link key="1" href="/">
+    <Link key="1" href="/" underline="hover">
       Home
     </Link>,
     <div key="2" className="breadcrumb-text">
@@ -52,8 +52,8 @@ export const Head = () => (
 export const query = graphql`
   {
     allStrapiMenu(
-      sort: { fields: order, order: ASC }
-      filter: { show: { eq: true } }
+      sort: {order: ASC},
+      filter: {show: {eq: true}}
     ) {
       nodes {
         strapi_id

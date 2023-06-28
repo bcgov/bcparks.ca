@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from "react"
-import { Fab } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp"
+import { styled } from '@mui/material/styles';
+import { Fab } from "@mui/material"
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
 
-const useStyles = makeStyles(theme => ({
-  toTop: {
+const PREFIX = 'scrollToTop';
+
+const classes = {
+  toTop: `${PREFIX}-toTop`
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled('div')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.toTop}`]: {
     zIndex: 100,
     position: "fixed",
     bottom: "2vh",
@@ -24,11 +35,10 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("md")]: {
       right: "2%",
     },
-  },
-}))
+  }
+}));
 
 export default function ScrollToTop() {
-  const classes = useStyles()
   const [isVisible, setIsVisible] = useState(false)
 
   const handleClick = () => {
@@ -50,7 +60,7 @@ export default function ScrollToTop() {
   }, [])
 
   return (
-    <>
+    <Root>
       {isVisible && (
         <Fab
           size="small"
@@ -61,6 +71,6 @@ export default function ScrollToTop() {
           <KeyboardArrowUpIcon />
         </Fab>
       )}
-    </>
-  )
+    </Root>
+  );
 }

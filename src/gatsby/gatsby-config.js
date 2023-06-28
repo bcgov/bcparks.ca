@@ -12,7 +12,6 @@ module.exports = {
     image: 'https://nrs.objectstore.gov.bc.ca/kuwyyf/generic_social_1146x600_603acfb441.jpg'
   },
   plugins: [
-    `gatsby-plugin-loadable-components-ssr`,
     {
       resolve: `gatsby-plugin-canonical-urls`,
       options: {
@@ -143,14 +142,6 @@ module.exports = {
         theme_color: `#003366`,
         display: `minimal-ui`,
         icon: `src/images/bcid-favicon-32x32.png`, // This path is relative to the root of the site.
-      },
-    },
-    {
-      resolve: `gatsby-plugin-material-ui`,
-      options: {
-        stylesProvider: {
-          injectFirst: true,
-        },
       },
     },
     `gatsby-plugin-meta-redirect`,
