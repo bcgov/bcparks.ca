@@ -190,14 +190,21 @@
 .access-icon {
   color: $colorBlue;
   padding: 0 !important;
-  &.campfire-icon {
-    margin-top: 4px;
+  .park-overview-icon {
+    width: 24px;
+    height: 24px;
   }
   .MuiCardHeader-avatar {
     margin-right: 8px;
   }
   .MuiTypography-root {
     font-size: 0.875rem !important;
+  }
+}
+.campfire-ban-icon {
+  margin-top: 8px;
+  img {
+    margin-right: 8px !important;
   }
 }
 

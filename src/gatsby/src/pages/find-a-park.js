@@ -28,7 +28,6 @@ import { scrollIntoView } from "seamless-scroll-polyfill";
 import Footer from "../components/footer"
 import Header from "../components/header"
 import Seo from "../components/seo"
-import CampfireBan from "../components/campfireBan"
 import ParkAccessStatus from "../components/park/parkAccessStatus"
 import NoSearchResults from "../components/search/noSearchResults"
 import SearchFilter from "../components/search/searchFilter"
@@ -40,6 +39,7 @@ import picincIcon from "../../static/icons/picnic-areas.svg"
 import swimmingIcon from "../../static/icons/swimming.svg"
 import cyclingIcon from "../../static/icons/cycling.svg"
 import petsIcon from "../../static/icons/pets-on-leash.svg"
+import campfireBanIcon from "../../static/icons/campfire-ban.svg"
 
 import "../styles/search.scss"
 import { addSmallImagePrefix, handleImgError } from "../utils/helpers";
@@ -935,6 +935,15 @@ export default function FindAPark({ location, data }) {
                                                 animation="fade"
                                                 timeout={200}
                                                 height="200px"
+                                                indicatorContainerProps={{
+                                                  className: "indicator"
+                                                }}
+                                                indicatorIconButtonProps={{
+                                                  className: "indicator-button"
+                                                }}
+                                                activeIndicatorIconButtonProps={{
+                                                  className: "indicator-button--active"
+                                                }}
                                               >
                                                 {r.parkPhotos.map(
                                                   (item, index) => {
@@ -986,8 +995,8 @@ export default function FindAPark({ location, data }) {
                                                 <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
                                               }
                                               {(r.parkActivities.length > 0 || r.parkFacilities.length > 0) &&
-                                                <Link href={`/${r.slug}/`}>
-                                                  <p>see all</p>
+                                                <Link href={`/${r.slug}/#park-camping-details-container`}>
+                                                  <p aria-label="See all facilities and activities">see all</p>
                                                 </Link>
                                               }
                                             </div>
@@ -996,7 +1005,10 @@ export default function FindAPark({ location, data }) {
                                                 advisories={r.advisories}
                                               />
                                               {r.hasCampfireBan &&
-                                                <CampfireBan />
+                                                <div className="campfire-ban-icon">
+                                                  <Icon src={campfireBanIcon} label="Campfire ban" size="24" />
+                                                  <span>No campfires</span>
+                                                </div>
                                               }
                                             </div>
                                           </div>
@@ -1045,6 +1057,15 @@ export default function FindAPark({ location, data }) {
                                                 animation="fade"
                                                 timeout={200}
                                                 height="100%"
+                                                indicatorContainerProps={{
+                                                  className: "indicator"
+                                                }}
+                                                indicatorIconButtonProps={{
+                                                  className: "indicator-button"
+                                                }}
+                                                activeIndicatorIconButtonProps={{
+                                                  className: "indicator-button--active"
+                                                }}
                                               >
                                                 {r.parkPhotos.map(
                                                   (item, index) => {
@@ -1095,17 +1116,20 @@ export default function FindAPark({ location, data }) {
                                               <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
                                             }
                                             {(r.parkActivities.length > 0 || r.parkFacilities.length > 0) &&
-                                              <Link href={`/${r.slug}/`}>
-                                                <p>see all</p>
+                                              <Link href={`/${r.slug}/#park-camping-details-container`}>
+                                                <p aria-label="See all facilities and activities">see all</p>
                                               </Link>
                                             }
                                           </div>
-                                          <div className="text-blue border">
+                                          <div className="text-blue">
                                             <ParkAccessStatus
                                               advisories={r.advisories}
                                             />
                                             {r.hasCampfireBan &&
-                                              <CampfireBan />
+                                              <div className="campfire-ban-icon">
+                                                <Icon src={campfireBanIcon} label="Campfire ban" size="24" />
+                                                <span>No campfires</span>
+                                              </div>
                                             }
                                           </div>
                                         </div>

@@ -731,20 +731,19 @@ div[class$="-singleValue"] {
   height: 100% !important;
 }
 
-.park-carousel .MuiButtonBase-root,
-.park-carousel-mobile .MuiButtonBase-root {
-  margin-top: -80px;
-  z-index: 1;
-  color: rgba($colorWhite, .6);
-  &:hover, &:focus {
-    color: rgba($colorWhite, 1);
+.park-carousel,
+.park-carousel-mobile {
+  .indicator {
+    margin-top: -30px;
+    &-button {
+      z-index: 1;
+      pointer-events: none;
+      color: rgba($colorWhite, .6);
+      &--active {
+        color: rgba($colorWhite, 1);
+      }
+    }
   }
-}
-
-// hide nav buttons on carousel
-[aria-label='Previous'],
-[aria-label='Next'] {
-  display: none;
 }
 
 .search-result-image {
@@ -889,7 +888,7 @@ div[class$="-singleValue"] {
       justify-content: space-between;
       &--left {
         display: flex;
-        align-items: end;
+        align-items: flex-end;
         a.MuiTypography-root {
           color: $colorBlue;
           text-decoration-color: $colorBlue;
