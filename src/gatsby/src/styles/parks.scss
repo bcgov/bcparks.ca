@@ -189,7 +189,7 @@
 
 .access-icon {
   color: $colorBlue;
-  padding: 0;
+  padding: 0 !important;
   &.campfire-icon {
     margin-top: 4px;
   }

@@ -97,14 +97,14 @@ export const query = graphql`
   }
 `
 
-const Icon = ({src, label, iconSize}) => {
+const Icon = ({ src, label, size }) => {
   return (
     <img src={src}
       alt={label}
       aria-label={label}
       className="mr-1"
-      width={iconSize}
-      height={iconSize}>
+      width={size}
+      height={size}>
     </img>
   )
 }
@@ -653,226 +653,226 @@ export default function FindAPark({ location, data }) {
                     </div>
                     <div className="col-12 pr-3">
                       <div className="">
-                      <fieldset>
-                        <legend className="filter-heading p10t">Popular</legend>
-                        <FormGroup className="p10l filter-options-container">
-                          {quickSearchFilters.map(item => {
-                            return (
-                              <FormControlLabel
-                                key={item.label}
-                                control={
-                                  <Checkbox
-                                    checked={quickSearch[item.type]}
-                                    onChange={handleQuickSearchChange}
-                                    name={item.type}
-                                  />
-                                }
-                                label={item.label}
-                                className={
-                                  quickSearch[item.type]
-                                    ? "text-light-blue no-wrap"
-                                    : "no-wrap"
-                                }
-                              />
-                            )
-                          })}
-                        </FormGroup>
+                        <fieldset>
+                          <legend className="filter-heading p10t">Popular</legend>
+                          <FormGroup className="p10l filter-options-container">
+                            {quickSearchFilters.map(item => {
+                              return (
+                                <FormControlLabel
+                                  key={item.label}
+                                  control={
+                                    <Checkbox
+                                      checked={quickSearch[item.type]}
+                                      onChange={handleQuickSearchChange}
+                                      name={item.type}
+                                    />
+                                  }
+                                  label={item.label}
+                                  className={
+                                    quickSearch[item.type]
+                                      ? "text-light-blue no-wrap"
+                                      : "no-wrap"
+                                  }
+                                />
+                              )
+                            })}
+                          </FormGroup>
                         </fieldset>
                         <hr></hr>
                         <fieldset>
-                        <legend className="sr-only">Activities</legend>
-                        <div
-                          tabIndex={showActivities ? -1 : 0}
-                          role="button"
-                          className="row pointer mr-3"
-                          onClick={() => {
-                            setActivityVisibility(!showActivities)
-                          }}
-                          onKeyDown={() => {
-                            setActivityVisibility(!showActivities)
-                          }}
-                        >
-                          <div className="col-md-4">
-                            <div className="filter-heading">Activities</div>
+                          <legend className="sr-only">Activities</legend>
+                          <div
+                            tabIndex={showActivities ? -1 : 0}
+                            role="button"
+                            className="row pointer mr-3"
+                            onClick={() => {
+                              setActivityVisibility(!showActivities)
+                            }}
+                            onKeyDown={() => {
+                              setActivityVisibility(!showActivities)
+                            }}
+                          >
+                            <div className="col-md-4">
+                              <div className="filter-heading">Activities</div>
+                            </div>
+                            <div className="col-md-2 ml-auto">
+                              {showActivities ? (
+                                <ExpandLess
+                                  fontSize="large"
+                                  className="mt-auto"
+                                />
+                              ) : (
+                                <ExpandMore
+                                  fontSize="large"
+                                  className="mt-auto"
+                                />
+                              )}
+                            </div>
                           </div>
-                          <div className="col-md-2 ml-auto">
+                          <div>
                             {showActivities ? (
-                              <ExpandLess
-                                fontSize="large"
-                                className="mt-auto"
-                              />
+                              <div>
+                                <FormGroup className="p10l filter-options-container">
+                                  {filteredActivities.map(a => {
+                                    return (
+                                      <FormControlLabel
+                                        key={a.label}
+                                        control={
+                                          <Checkbox
+                                            checked={
+                                              selectedActivities.filter(
+                                                act => act.value === a.value
+                                              ).length === 1
+                                                ? true
+                                                : false
+                                            }
+                                            onChange={event => {
+                                              handleActivityCheck(a, event)
+                                            }}
+                                            name={a.label}
+                                          />
+                                        }
+                                        label={a.label}
+                                        className={
+                                          selectedActivities.filter(
+                                            act => act.value === a.value
+                                          ).length === 1
+                                            ? "text-light-blue no-wrap"
+                                            : "no-wrap"
+                                        }
+                                      />
+                                    )
+                                  })}
+                                </FormGroup>
+                                <Link
+                                  className="ml-auto pointer p20"
+                                  onClick={() => {
+                                    handleActivitiesLengthChange([])
+                                  }}
+                                  onKeyUp={(e) => {
+                                    if (e.key === " " || e.key === "Enter") {
+                                      handleActivitiesLengthChange([])
+                                    }
+                                  }}
+                                  tabIndex="0"
+                                  role="link"
+                                  underline="hover"
+                                >
+                                  {showMoreActivities ? (
+                                    <div style={{ color: `#2464A4` }}>
+                                      Show all {activityItems.length}
+                                      <ExpandMore fontSize="small" />
+                                    </div>
+                                  ) : (
+                                    <div style={{ color: `#2464A4` }}>
+                                      Show less
+                                      <ExpandLess fontSize="small" />
+                                    </div>
+                                  )}
+                                </Link>
+                              </div>
                             ) : (
-                              <ExpandMore
-                                fontSize="large"
-                                className="mt-auto"
-                              />
+                              <div></div>
                             )}
                           </div>
-                        </div>
-                        <div>
-                          {showActivities ? (
-                            <div>
-                              <FormGroup className="p10l filter-options-container">
-                                {filteredActivities.map(a => {
-                                  return (
-                                    <FormControlLabel
-                                      key={a.label}
-                                      control={
-                                        <Checkbox
-                                          checked={
-                                            selectedActivities.filter(
-                                              act => act.value === a.value
-                                            ).length === 1
-                                              ? true
-                                              : false
-                                          }
-                                          onChange={event => {
-                                            handleActivityCheck(a, event)
-                                          }}
-                                          name={a.label}
-                                        />
-                                      }
-                                      label={a.label}
-                                      className={
-                                        selectedActivities.filter(
-                                          act => act.value === a.value
-                                        ).length === 1
-                                          ? "text-light-blue no-wrap"
-                                          : "no-wrap"
-                                      }
-                                    />
-                                  )
-                                })}
-                              </FormGroup>
-                              <Link
-                                className="ml-auto pointer p20"
-                                onClick={() => {
-                                  handleActivitiesLengthChange([])
-                                }}
-                                onKeyUp={(e) => {
-                                  if (e.key === " " || e.key === "Enter") {
-                                    handleActivitiesLengthChange([])
-                                  }
-                                }}
-                                tabIndex="0"
-                                role="link"
-                                underline="hover"
-                              >
-                                {showMoreActivities ? (
-                                  <div style={{ color: `#2464A4` }}>
-                                    Show all {activityItems.length}
-                                    <ExpandMore fontSize="small" />
-                                  </div>
-                                ) : (
-                                  <div style={{ color: `#2464A4` }}>
-                                    Show less
-                                    <ExpandLess fontSize="small" />
-                                  </div>
-                                )}
-                              </Link>
-                            </div>
-                          ) : (
-                            <div></div>
-                          )}
-                        </div>
                         </fieldset>
                         <hr></hr>
                         <fieldset>
-                        <legend className="sr-only">Facilities</legend>
-                        <div
-                          tabIndex={showActivities ? -1 : 0}
-                          role="button"
-                          className="row pointer mr-3"
-                          onClick={() => {
-                            setFacilityVisibility(!showFacilities)
-                          }}
-                          onKeyDown={() => {
-                            setFacilityVisibility(!showFacilities)
-                          }}
-                        >
-                          <div className="col-md-4">
-                            <div className="filter-heading">Facilities</div>
+                          <legend className="sr-only">Facilities</legend>
+                          <div
+                            tabIndex={showActivities ? -1 : 0}
+                            role="button"
+                            className="row pointer mr-3"
+                            onClick={() => {
+                              setFacilityVisibility(!showFacilities)
+                            }}
+                            onKeyDown={() => {
+                              setFacilityVisibility(!showFacilities)
+                            }}
+                          >
+                            <div className="col-md-4">
+                              <div className="filter-heading">Facilities</div>
+                            </div>
+                            <div className="col-md-2 ml-auto">
+                              {showFacilities ? (
+                                <ExpandLess
+                                  fontSize="large"
+                                  className="mt-auto"
+                                />
+                              ) : (
+                                <ExpandMore
+                                  fontSize="large"
+                                  className="mt-auto"
+                                />
+                              )}
+                            </div>
                           </div>
-                          <div className="col-md-2 ml-auto">
+                          <div>
                             {showFacilities ? (
-                              <ExpandLess
-                                fontSize="large"
-                                className="mt-auto"
-                              />
+                              <div>
+                                <FormGroup className="p10l filter-options-container">
+                                  {filteredFacilities.map(f => {
+                                    return (
+                                      <FormControlLabel
+                                        key={f.label}
+                                        control={
+                                          <Checkbox
+                                            checked={
+                                              selectedFacilities.filter(
+                                                fac => fac.value === f.value
+                                              ).length === 1
+                                                ? true
+                                                : false
+                                            }
+                                            onChange={event => {
+                                              handleFacilityCheck(f, event)
+                                            }}
+                                            name={f.label}
+                                          />
+                                        }
+                                        label={f.label}
+                                        className={
+                                          selectedFacilities.filter(
+                                            fac => fac.value === f.value
+                                          ).length === 1
+                                            ? "text-light-blue no-wrap"
+                                            : "no-wrap"
+                                        }
+                                      />
+                                    )
+                                  })}
+                                </FormGroup>
+                                <Link
+                                  className="ml-auto pointer p20"
+                                  onClick={() => {
+                                    handleFacilitiesLengthChange([])
+                                  }}
+                                  onKeyUp={(e) => {
+                                    if (e.key === " " || e.key === "Enter") {
+                                      handleFacilitiesLengthChange([])
+                                    }
+                                  }}
+                                  tabIndex="0"
+                                  role="link"
+                                  underline="hover"
+                                >
+                                  {showMoreFacilities ? (
+                                    <div style={{ color: `#2464A4` }}>
+                                      Show all {facilityItems.length}
+                                      <ExpandMore fontSize="small" />
+                                    </div>
+                                  ) : (
+                                    <div style={{ color: `#2464A4` }}>
+                                      Show less
+                                      <ExpandLess fontSize="small" />
+                                    </div>
+                                  )}
+                                </Link>
+                              </div>
                             ) : (
-                              <ExpandMore
-                                fontSize="large"
-                                className="mt-auto"
-                              />
+                              <div></div>
                             )}
                           </div>
-                        </div>
-                        <div>
-                          {showFacilities ? (
-                            <div>
-                              <FormGroup className="p10l filter-options-container">
-                                {filteredFacilities.map(f => {
-                                  return (
-                                    <FormControlLabel
-                                      key={f.label}
-                                      control={
-                                        <Checkbox
-                                          checked={
-                                            selectedFacilities.filter(
-                                              fac => fac.value === f.value
-                                            ).length === 1
-                                              ? true
-                                              : false
-                                          }
-                                          onChange={event => {
-                                            handleFacilityCheck(f, event)
-                                          }}
-                                          name={f.label}
-                                        />
-                                      }
-                                      label={f.label}
-                                      className={
-                                        selectedFacilities.filter(
-                                          fac => fac.value === f.value
-                                        ).length === 1
-                                          ? "text-light-blue no-wrap"
-                                          : "no-wrap"
-                                      }
-                                    />
-                                  )
-                                })}
-                              </FormGroup>
-                              <Link
-                                className="ml-auto pointer p20"
-                                onClick={() => {
-                                  handleFacilitiesLengthChange([])
-                                }}
-                                onKeyUp={(e) => {
-                                  if (e.key === " " || e.key === "Enter") {
-                                    handleFacilitiesLengthChange([])
-                                  }
-                                }}
-                                tabIndex="0"
-                                role="link"
-                                underline="hover"
-                              >
-                                {showMoreFacilities ? (
-                                  <div style={{ color: `#2464A4` }}>
-                                    Show all {facilityItems.length}
-                                    <ExpandMore fontSize="small" />
-                                  </div>
-                                ) : (
-                                  <div style={{ color: `#2464A4` }}>
-                                    Show less
-                                    <ExpandLess fontSize="small" />
-                                  </div>
-                                )}
-                              </Link>
-                            </div>
-                          ) : (
-                            <div></div>
-                          )}
-                        </div>
                         </fieldset>
                       </div>
                     </div>
@@ -934,7 +934,7 @@ export default function FindAPark({ location, data }) {
                                                 navButtonsAlwaysVisible={false}
                                                 animation="fade"
                                                 timeout={200}
-                                                height="100%"
+                                                height="200px"
                                               >
                                                 {r.parkPhotos.map(
                                                   (item, index) => {
@@ -968,58 +968,22 @@ export default function FindAPark({ location, data }) {
                                           <div className="park-content-bottom">
                                             <div className="park-content-bottom--left">
                                               {r.parkFacilities.includes('vehicle-accessible-camping') &&
-                                                <img src={campingIcon}
-                                                  alt="Vehicle accesible camping"
-                                                  aria-label="Vehicle accesible camping"
-                                                  className="mr-1"
-                                                  width={iconSize}
-                                                  height={iconSize}>
-                                                </img>
+                                                <Icon src={campingIcon} label="Vehicle accesible camping" size={iconSize} />
                                               }
                                               {r.parkActivities.includes('hiking') &&
-                                                <img src={hikingIcon}
-                                                  alt="Hiking"
-                                                  aria-label="Hiking"
-                                                  className="mr-1"
-                                                  width={iconSize}
-                                                  height={iconSize}>
-                                                </img>
+                                                <Icon src={hikingIcon} label="Hiking" size={iconSize} />
                                               }
                                               {r.parkFacilities.includes('picnic-areas') &&
-                                                <img src={picincIcon}
-                                                  alt="Picnic areas"
-                                                  aria-label="Picnic areas"
-                                                  className="mr-1"
-                                                  width={iconSize}
-                                                  height={iconSize}>
-                                                </img>
+                                                <Icon src={picincIcon} label="Picnic areas" size={iconSize} />
                                               }
                                               {r.parkActivities.includes('swimming') &&
-                                                <img src={swimmingIcon}
-                                                  alt="Swimming"
-                                                  aria-label="Swimming"
-                                                  className="mr-1"
-                                                  width={iconSize}
-                                                  height={iconSize}>
-                                                </img>
+                                                <Icon src={swimmingIcon} label="Swimming" size={iconSize} />
                                               }
                                               {r.parkActivities.includes('cycling') &&
-                                                <img src={cyclingIcon}
-                                                  alt="Cycling"
-                                                  aria-label="Cycling"
-                                                  className="mr-1"
-                                                  width={iconSize}
-                                                  height={iconSize}>
-                                                </img>
+                                                <Icon src={cyclingIcon} label="Cycling" size={iconSize} />
                                               }
                                               {r.parkActivities.includes('pets-on-leash') &&
-                                                <img src={petsIcon}
-                                                  alt="Pets on leash"
-                                                  aria-label="Pets on leash"
-                                                  className="mr-1"
-                                                  width={iconSize}
-                                                  height={iconSize}>
-                                                </img>
+                                                <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
                                               }
                                               {(r.parkActivities.length > 0 || r.parkFacilities.length > 0) &&
                                                 <Link href={`/${r.slug}/`}>
@@ -1027,7 +991,7 @@ export default function FindAPark({ location, data }) {
                                                 </Link>
                                               }
                                             </div>
-                                            <div className="park-content-bottom--right park-overview-content text-blue">
+                                            <div className="park-content-bottom--right text-blue">
                                               <ParkAccessStatus
                                                 advisories={r.advisories}
                                               />
@@ -1046,7 +1010,7 @@ export default function FindAPark({ location, data }) {
                                 <CardContent className="park-card">
                                   <div className="row search-result-card no-gutters">
                                     <div className="col-12">
-                                      <div className="row">
+                                      <div className="row no-gutters">
                                         {r.parkPhotos &&
                                           r.parkPhotos.length === 0 && (
                                             <div className="col-12 close-margin park-image-div-mobile park-image-logo-div">
@@ -1099,14 +1063,7 @@ export default function FindAPark({ location, data }) {
                                             </div>
                                           )}
 
-                                        <div className="col-12 p20t park-content-mobile">
-                                          <div className="row">
-                                            <div className="col-12 park-overview-content text-blue small-font p5l">
-                                              <ParkAccessStatus
-                                                advisories={r.advisories}
-                                              />
-                                            </div>
-                                          </div>
+                                        <div className="col-12 park-content-mobile">
                                           <Link
                                             href={`/${r.slug}/`}
                                             className="p10t"
@@ -1118,6 +1075,39 @@ export default function FindAPark({ location, data }) {
                                             </h2>
                                           </Link>
                                           <p>{locationLabel(r.parkLocation)}</p>
+                                          <div>
+                                            {r.parkFacilities.includes('vehicle-accessible-camping') &&
+                                              <Icon src={campingIcon} label="Vehicle accesible camping" size={iconSize} />
+                                            }
+                                            {r.parkActivities.includes('hiking') &&
+                                              <Icon src={hikingIcon} label="Hiking" size={iconSize} />
+                                            }
+                                            {r.parkFacilities.includes('picnic-areas') &&
+                                              <Icon src={picincIcon} label="Picnic areas" size={iconSize} />
+                                            }
+                                            {r.parkActivities.includes('swimming') &&
+                                              <Icon src={swimmingIcon} label="Swimming" size={iconSize} />
+                                            }
+                                            {r.parkActivities.includes('cycling') &&
+                                              <Icon src={cyclingIcon} label="Cycling" size={iconSize} />
+                                            }
+                                            {r.parkActivities.includes('pets-on-leash') &&
+                                              <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
+                                            }
+                                            {(r.parkActivities.length > 0 || r.parkFacilities.length > 0) &&
+                                              <Link href={`/${r.slug}/`}>
+                                                <p>see all</p>
+                                              </Link>
+                                            }
+                                          </div>
+                                          <div className="text-blue border">
+                                            <ParkAccessStatus
+                                              advisories={r.advisories}
+                                            />
+                                            {r.hasCampfireBan &&
+                                              <CampfireBan />
+                                            }
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
