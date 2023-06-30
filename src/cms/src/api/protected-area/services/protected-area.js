@@ -56,6 +56,7 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
       .select("protected_areas.id",
         "protected_areas.protected_area_name AS protectedAreaName",
         "protected_areas.slug",
+        "protected_areas.has_campfire_ban AS hasCampfireBan",
         knex.raw(
           `array(
             SELECT to_json((
@@ -95,14 +96,26 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
           ) AS "parkPhotos"`
         ),
         knex.raw(
-          `EXISTS(
-            SELECT 1 FROM park_operations
-            INNER JOIN park_operations_protected_area_links
-              ON park_operations.id = park_operations_protected_area_links.park_operation_id
-            WHERE park_operations_protected_area_links.protected_area_id = protected_areas.id
-              AND park_operations.published_at IS NOT NULL
-              AND has_reservations = TRUE
-          ) AS "hasReservations"`
+          `(SELECT to_json((
+            SELECT j FROM (
+            SELECT 
+              regions.region_name as "region",
+              sections.section_name as "section",
+              management_areas.management_area_name as "managementArea"
+            ) j
+          ))
+          FROM regions
+          INNER JOIN sections_region_links srl
+            ON srl.region_id = regions.id
+          INNER JOIN sections
+            ON sections.id = srl.section_id
+          INNER JOIN management_areas_section_links msl
+            ON msl.section_id = srl.section_id
+          INNER JOIN management_areas
+            ON management_areas.id = msl.management_area_id
+          INNER JOIN management_areas_protected_areas_links mpl
+            ON mpl.management_area_id = msl.management_area_id
+          WHERE mpl.protected_area_id = protected_areas.id LIMIT 1) AS "parkLocation"`
         )
       );
 
@@ -181,25 +194,27 @@ module.exports = createCoreService("api::protected-area.protected-area", ({ stra
 
     for (const result of results) {
       const parkEntity = await parkEntities.find(e => e.id === result.id);
+      const showFacilities = [1, 6];
+      const showActivities = [1, 3, 8, 9];
       newResults.push({
         ...result,
         parkFacilities: parkEntity.parkFacilities
-          .filter(f => f.isActive && f.facilityType.isActive)
+          .filter(f =>
+            f.isActive &&
+            f.facilityType.isActive &&
+            showFacilities.includes(f.facilityType.facilityNumber)
+          )
           .map((f) => {
-            return {
-              id: f.id,
-              facilityType: f.facilityType.id,
-              facilityName: f.facilityType.facilityName
-            }
+            return f.facilityType.facilityCode
           }),
         parkActivities: parkEntity.parkActivities
-          .filter(a => a.isActive && a.activityType.isActive)
+          .filter(a =>
+            a.isActive &&
+            a.activityType.isActive &&
+            showActivities.includes(a.activityType.activityNumber)
+          )
           .map((a) => {
-            return {
-              id: a.id,
-              activityType: a.activityType.id,
-              activityName: a.activityType.activityName
-            }
+            return a.activityType.activityCode
           })
       });
     }

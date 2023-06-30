@@ -166,7 +166,6 @@
 .park-overview-icon {
   width: 32px;
   height: 32px;
-  border-radius: 2px !important;
 }
 
 #park-facility-container .MuiAccordion-root,
@@ -190,11 +189,23 @@
 
 .access-icon {
   color: $colorBlue;
-  padding: 5px 0px 5px 8px;
+  padding: 0 !important;
+  .park-overview-icon {
+    width: 24px;
+    height: 24px;
+  }
+  .MuiCardHeader-avatar {
+    margin-right: 8px;
+  }
+  .MuiTypography-root {
+    font-size: 0.875rem !important;
+  }
 }
-
-.access-icon .MuiCardHeader-title {
-  padding-left: 8px;
+.campfire-ban-icon {
+  margin-top: 8px;
+  img {
+    margin-right: 8px !important;
+  }
 }
 
 #park-header-container .MuiCardHeader-avatar {

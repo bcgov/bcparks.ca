@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { graphql, useStaticQuery } from "gatsby"
-import { Card, CardHeader, Avatar } from "@mui/material"
+import { Card, CardHeader, Avatar, Link } from "@mui/material"
 import { styled } from '@mui/material/styles';
 
 import blueStatusIcon from "../../images/park/blue-status-64.png"
@@ -30,6 +30,7 @@ function ParkAccessFromAdvisories(advisories) {
             strapi_id
             color
             accessStatus
+            groupLabel
             precedence
           }
         }
@@ -41,7 +42,7 @@ function ParkAccessFromAdvisories(advisories) {
   const accessStatusList = data?.allStrapiAccessStatus.nodes
 
   let parkStatusIcon = blueStatusIcon
-  let parkStatusText = "Open to public access"
+  let parkStatusText = "Open"
   let parkStatusColor = "blue"
 
   for (let advisory of advisories) {
@@ -65,7 +66,7 @@ function ParkAccessFromAdvisories(advisories) {
         accessStatuses.push({
           precedence: thisStatus.precedence,
           color: thisStatus.color,
-          text: thisStatus.accessStatus,
+          text: thisStatus.groupLabel,
         })
       }
     }
@@ -92,7 +93,7 @@ function ParkAccessFromAdvisories(advisories) {
 }
 export { ParkAccessFromAdvisories }
 
-export default function ParkAccessStatus({ advisories }) {
+export default function ParkAccessStatus({ advisories, slug }) {
   const {
     parkStatusIcon,
     parkStatusText,
@@ -103,19 +104,37 @@ export default function ParkAccessStatus({ advisories }) {
 
   return (
     <StyledCard>
-      <CardHeader
-        className="access-icon"
-        avatar={
-          <Avatar
-            variant="square"
-            src={parkStatusIcon}
-            aria-label="park access status"
-            className="park-overview-icon"
-            alt=""
+      {parkStatusText === "Open" ? (
+          <CardHeader
+            className="access-icon"
+            avatar={
+              <Avatar
+                variant="square"
+                src={parkStatusIcon}
+                aria-label="park access status"
+                className="park-overview-icon"
+                alt=""
+              />
+            }
+            title={parkStatusText}
           />
-        }
-        title={parkStatusText}
-      />
+      ) : (
+        <Link href={`/${slug}/#park-advisory-details-container`}>
+          <CardHeader
+            className="access-icon"
+            avatar={
+              <Avatar
+                variant="square"
+                src={parkStatusIcon}
+                aria-label="park access status"
+                className="park-overview-icon"
+                alt=""
+              />
+            }
+            title={parkStatusText}
+          />
+        </Link>
+      )}
     </StyledCard>
   )
 }

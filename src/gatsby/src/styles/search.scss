@@ -698,8 +698,8 @@ div[class$="-singleValue"] {
 }
 
 .park-image-div {
-  height: 370px !important;
-  width: 400px !important;
+  height: 200px !important;
+  width: 250px !important;
   padding-right: 0px !important;
 }
 
@@ -717,15 +717,11 @@ div[class$="-singleValue"] {
   margin-left: auto;
   margin-right: auto;
   display: block;
-  margin-top: 35% !important;
+  margin-top: 25% !important;
 }
 
 .park-quick-view-dialog-content {
   overflow-x: hidden !important;
-
-  .park-carousel-mobile [class*="Carousel-prev"] {
-    margin-left: -20px !important;
-  }
 }
 
 .park-carousel,
@@ -734,39 +730,27 @@ div[class$="-singleValue"] {
 .CarouselItem div {
   height: 100% !important;
 }
-.park-carousel [class*="Carousel-prev"],
-.park-carousel-mobile [class*="Carousel-prev"] {
-  margin-left: -10px !important;
-}
 
-.park-carousel [class*="Carousel-next"] {
-  margin-right: -25px !important;
-}
-
-.park-carousel-mobile [class*="Carousel-next"] {
-  margin-right: -10px !important;
-}
-
-.park-carousel [class*="Carousel-prev"] button,
-.park-carousel-mobile [class*="Carousel-prev"] button {
-  padding-left: 15px !important;
-}
-
-.park-carousel [class*="Carousel-next"] button,
-.park-carousel-mobile [class*="Carousel-next"] button {
-  padding-right: 15px !important;
-}
-
-.park-carousel .MuiButtonBase-root,
-.park-carousel-mobile .MuiButtonBase-root {
-  background-color: rgba(48, 48, 48, 0.7) !important;
+.park-carousel,
+.park-carousel-mobile {
+  .indicator {
+    margin-top: -30px;
+    &-button {
+      z-index: 1;
+      pointer-events: none;
+      color: rgba($colorWhite, .6);
+      &--active {
+        color: rgba($colorWhite, 1);
+      }
+    }
+  }
 }
 
 .search-result-image {
   width: 100% !important;
   object-fit: cover !important;
   height: 100% !important;
-  object-position: 0% 5%;
+  object-position: center;
 }
 
 .search-result-icon {
@@ -780,8 +764,16 @@ div[class$="-singleValue"] {
 
 .park-heading-text {
   color: $colorBlue;
-  font-size: 1.33882rem;
-  margin-top: 10px;
+  font-size: 1.25rem;
+  line-height: 2rem;
+  margin-bottom: 4px;
+  .park-heading-icon {
+    width: 1rem;
+    height: 1rem;
+    font-size: 1rem;
+    rotate: 270deg;
+    margin: 0 0 4px 8px;
+  }
 }
 
 .search-results-main {
@@ -857,13 +849,10 @@ div[class$="-singleValue"] {
 
   .park-card {
     padding: 0px !important;
-    min-height: 350px !important;
   }
 
   .park-card-desktop {
-    height: 370px !important;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
+    height: 200px !important;
   }
 
   .small-font {
@@ -884,13 +873,52 @@ div[class$="-singleValue"] {
     background-color: $colorWhite !important;
   }
 
-  .park-content-mobile {
-    padding: 0px 30px;
+  .park-content {
+    display: flex;
+    align-content: space-between;
+    flex-wrap: wrap;
+    padding: 16px;
+    width: calc(100%-250px);
+    &-top,
+    &-bottom {
+      width: 100%;
+    }
+    &-bottom {
+      display: flex;
+      justify-content: space-between;
+      &--left {
+        display: flex;
+        align-items: flex-end;
+        a.MuiTypography-root {
+          color: $colorBlue;
+          text-decoration-color: $colorBlue;
+          margin-left: 4px;
+          p {
+            font-size: 0.875rem;
+            margin-bottom: 0;
+          }
+        }
+      }
+      &--right {
+        min-width: 160px;
+        a.MuiTypography-root {
+          text-decoration-color: $colorBlue;
+        }
+      }
+    }
   }
 
-  .park-overview-content {
-    height: 100% !important;
-    top: 20% !important;
+  .park-content-mobile {
+    padding: 16px;
+    a.MuiTypography-root {
+      display: block;
+      color: $colorBlue;
+      text-decoration-color: $colorBlue;
+      margin-top: 8px;
+      p {
+        font-size: 0.875rem;
+      }
+    }
   }
 
   .MuiPaginationItem-page.Mui-selected {
@@ -905,7 +933,8 @@ div[class$="-singleValue"] {
   .MuiChip-outlined {
     background-color: $colorBlue !important;
     border-radius: 5000px !important;
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background-color: #00468b !important;
     }
     &:focus-visible {

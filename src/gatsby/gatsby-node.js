@@ -23,6 +23,10 @@ exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
   const typeDefs = `
+  type STRAPI_ACCESS_STATUS implements Node {
+    groupLabel: String
+  }
+
   type STRAPI_BIOGEOCLIMATIC_ZONE implements Node @dontInfer {
     zone: String
     zoneCode: String

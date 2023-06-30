@@ -11,20 +11,17 @@ import {
   InputAdornment,
   Card,
   CardContent,
-  Link, 
+  Link,
   LinearProgress,
   Breadcrumbs,
   Button,
-  Divider,
-  Dialog,
-  DialogContent,
-  DialogActions,
 } from "@mui/material"
 import Pagination from "@mui/material/Pagination"
 import SearchIcon from "@mui/icons-material/Search"
 import CancelIcon from "@mui/icons-material/Cancel"
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import ExpandMore from "@mui/icons-material/ExpandMore"
+import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
 import Carousel from "react-material-ui-carousel"
 import { scrollIntoView } from "seamless-scroll-polyfill";
 
@@ -32,13 +29,17 @@ import Footer from "../components/footer"
 import Header from "../components/header"
 import Seo from "../components/seo"
 import ParkAccessStatus from "../components/park/parkAccessStatus"
-import QuickView from "../components/park/quickView"
-import AdvisorySummary from "../components/search/advisorySummary"
 import NoSearchResults from "../components/search/noSearchResults"
 import SearchFilter from "../components/search/searchFilter"
 
-import dayUseIcon from "../images/park/day-use.png"
 import parksLogo from "../images/Mask_Group_5.png"
+import campingIcon from "../../static/icons/vehicle-accessible-camping.svg"
+import hikingIcon from "../../static/icons/hiking.svg"
+import picincIcon from "../../static/icons/picnic-areas.svg"
+import swimmingIcon from "../../static/icons/swimming.svg"
+import cyclingIcon from "../../static/icons/cycling.svg"
+import petsIcon from "../../static/icons/pets-on-leash.svg"
+import campfireBanIcon from "../../static/icons/campfire-ban.svg"
 
 import "../styles/search.scss"
 import { addSmallImagePrefix, handleImgError } from "../utils/helpers";
@@ -95,6 +96,18 @@ export const query = graphql`
     }
   }
 `
+
+const Icon = ({ src, label, size }) => {
+  return (
+    <img src={src}
+      alt={label}
+      aria-label={label}
+      className="mr-1"
+      width={size}
+      height={size}>
+    </img>
+  )
+}
 
 export default function FindAPark({ location, data }) {
   const menuContent = data?.allStrapiMenu?.nodes || []
@@ -183,13 +196,12 @@ export default function FindAPark({ location, data }) {
   const [numberOfPages, setNumberOfPages] = useState(0)
   const [totalResults, setTotalResults] = useState(0)
 
-  const itemsPerPage = 6
+  const itemsPerPage = 10
+  const iconSize = 32
   const [currentPage, setCurrentPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
 
   const [openFilter, setOpenFilter] = useState(false)
-
-  const [openQuickView, setOpenQuickView] = useState(false)
 
   const searchRef = useRef(null)
   const breadcrumbs = [
@@ -286,22 +298,11 @@ export default function FindAPark({ location, data }) {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value)
-    scrollIntoView(searchRef.current, {behavior: "smooth" })
+    scrollIntoView(searchRef.current, { behavior: "smooth" })
   }
 
   const handleClickOpenFilter = () => {
     setOpenFilter(true)
-  }
-
-  const [currentPark, setCurrentPark] = useState({})
-
-  function setParkQuickView(park) {
-    setCurrentPark(park)
-    setOpenQuickView(true)
-  }
-
-  const handleCloseQuickView = () => {
-    setOpenQuickView(false)
   }
 
   const handleSearch = () => {
@@ -422,6 +423,17 @@ export default function FindAPark({ location, data }) {
     params.camping ||
     params.marineProtectedArea ||
     params.typeCode
+
+  const locationLabel = (parkLocation) => {
+    if (parkLocation?.section !== "Haida Gwaii/South Island") {
+      return parkLocation?.section;
+    }
+    if (parkLocation.managementArea === "Haida Gwaii") {
+      return "Haida Gwaii";
+    } else {
+      return ("South Island");
+    }
+  }
 
   useEffect(() => {
     setIsLoading(true)
@@ -641,226 +653,226 @@ export default function FindAPark({ location, data }) {
                     </div>
                     <div className="col-12 pr-3">
                       <div className="">
-                      <fieldset>
-                        <legend className="filter-heading p10t">Popular</legend>
-                        <FormGroup className="p10l filter-options-container">
-                          {quickSearchFilters.map(item => {
-                            return (
-                              <FormControlLabel
-                                key={item.label}
-                                control={
-                                  <Checkbox
-                                    checked={quickSearch[item.type]}
-                                    onChange={handleQuickSearchChange}
-                                    name={item.type}
-                                  />
-                                }
-                                label={item.label}
-                                className={
-                                  quickSearch[item.type]
-                                    ? "text-light-blue no-wrap"
-                                    : "no-wrap"
-                                }
-                              />
-                            )
-                          })}
-                        </FormGroup>
+                        <fieldset>
+                          <legend className="filter-heading p10t">Popular</legend>
+                          <FormGroup className="p10l filter-options-container">
+                            {quickSearchFilters.map(item => {
+                              return (
+                                <FormControlLabel
+                                  key={item.label}
+                                  control={
+                                    <Checkbox
+                                      checked={quickSearch[item.type]}
+                                      onChange={handleQuickSearchChange}
+                                      name={item.type}
+                                    />
+                                  }
+                                  label={item.label}
+                                  className={
+                                    quickSearch[item.type]
+                                      ? "text-light-blue no-wrap"
+                                      : "no-wrap"
+                                  }
+                                />
+                              )
+                            })}
+                          </FormGroup>
                         </fieldset>
                         <hr></hr>
                         <fieldset>
-                        <legend className="sr-only">Activities</legend>
-                        <div
-                          tabIndex={showActivities ? -1 : 0 }
-                          role="button"
-                          className="row pointer mr-3"
-                          onClick={() => {
-                            setActivityVisibility(!showActivities)
-                          }}
-                          onKeyDown={() => {
-                            setActivityVisibility(!showActivities)
-                          }}
-                        >
-                          <div className="col-md-4">
-                            <div className="filter-heading">Activities</div>
+                          <legend className="sr-only">Activities</legend>
+                          <div
+                            tabIndex={showActivities ? -1 : 0}
+                            role="button"
+                            className="row pointer mr-3"
+                            onClick={() => {
+                              setActivityVisibility(!showActivities)
+                            }}
+                            onKeyDown={() => {
+                              setActivityVisibility(!showActivities)
+                            }}
+                          >
+                            <div className="col-md-4">
+                              <div className="filter-heading">Activities</div>
+                            </div>
+                            <div className="col-md-2 ml-auto">
+                              {showActivities ? (
+                                <ExpandLess
+                                  fontSize="large"
+                                  className="mt-auto"
+                                />
+                              ) : (
+                                <ExpandMore
+                                  fontSize="large"
+                                  className="mt-auto"
+                                />
+                              )}
+                            </div>
                           </div>
-                          <div className="col-md-2 ml-auto">
+                          <div>
                             {showActivities ? (
-                              <ExpandLess
-                                fontSize="large"
-                                className="mt-auto"
-                              />
+                              <div>
+                                <FormGroup className="p10l filter-options-container">
+                                  {filteredActivities.map(a => {
+                                    return (
+                                      <FormControlLabel
+                                        key={a.label}
+                                        control={
+                                          <Checkbox
+                                            checked={
+                                              selectedActivities.filter(
+                                                act => act.value === a.value
+                                              ).length === 1
+                                                ? true
+                                                : false
+                                            }
+                                            onChange={event => {
+                                              handleActivityCheck(a, event)
+                                            }}
+                                            name={a.label}
+                                          />
+                                        }
+                                        label={a.label}
+                                        className={
+                                          selectedActivities.filter(
+                                            act => act.value === a.value
+                                          ).length === 1
+                                            ? "text-light-blue no-wrap"
+                                            : "no-wrap"
+                                        }
+                                      />
+                                    )
+                                  })}
+                                </FormGroup>
+                                <Link
+                                  className="ml-auto pointer p20"
+                                  onClick={() => {
+                                    handleActivitiesLengthChange([])
+                                  }}
+                                  onKeyUp={(e) => {
+                                    if (e.key === " " || e.key === "Enter") {
+                                      handleActivitiesLengthChange([])
+                                    }
+                                  }}
+                                  tabIndex="0"
+                                  role="link"
+                                  underline="hover"
+                                >
+                                  {showMoreActivities ? (
+                                    <div style={{ color: `#2464A4` }}>
+                                      Show all {activityItems.length}
+                                      <ExpandMore fontSize="small" />
+                                    </div>
+                                  ) : (
+                                    <div style={{ color: `#2464A4` }}>
+                                      Show less
+                                      <ExpandLess fontSize="small" />
+                                    </div>
+                                  )}
+                                </Link>
+                              </div>
                             ) : (
-                              <ExpandMore
-                                fontSize="large"
-                                className="mt-auto"
-                              />
+                              <div></div>
                             )}
                           </div>
-                        </div>
-                        <div>
-                          {showActivities ? (
-                            <div>
-                              <FormGroup className="p10l filter-options-container">
-                                {filteredActivities.map(a => {
-                                  return (
-                                    <FormControlLabel
-                                      key={a.label}
-                                      control={
-                                        <Checkbox
-                                          checked={
-                                            selectedActivities.filter(
-                                              act => act.value === a.value
-                                            ).length === 1
-                                              ? true
-                                              : false
-                                          }
-                                          onChange={event => {
-                                            handleActivityCheck(a, event)
-                                          }}
-                                          name={a.label}
-                                        />
-                                      }
-                                      label={a.label}
-                                      className={
-                                        selectedActivities.filter(
-                                          act => act.value === a.value
-                                        ).length === 1
-                                          ? "text-light-blue no-wrap"
-                                          : "no-wrap"
-                                      }
-                                    />
-                                  )
-                                })}
-                              </FormGroup>
-                              <Link
-                                className="ml-auto pointer p20"
-                                onClick={() => {
-                                  handleActivitiesLengthChange([])
-                                }}
-                                onKeyUp={(e) => {
-                                  if (e.key === " " || e.key === "Enter") {
-                                    handleActivitiesLengthChange([])
-                                  }
-                                }}
-                                tabIndex="0"
-                                role="link"
-                                underline="hover"
-                              >
-                                {showMoreActivities ? (
-                                  <div style={{ color: `#2464A4` }}>
-                                    Show all {activityItems.length}
-                                    <ExpandMore fontSize="small" />
-                                  </div>
-                                ) : (
-                                  <div style={{ color: `#2464A4` }}>
-                                    Show less
-                                    <ExpandLess fontSize="small" />
-                                  </div>
-                                )}
-                              </Link>
-                            </div>
-                          ) : (
-                            <div></div>
-                          )}
-                        </div>
                         </fieldset>
                         <hr></hr>
                         <fieldset>
-                        <legend className="sr-only">Facilities</legend>
-                        <div
-                          tabIndex={showActivities ? -1 : 0}
-                          role="button"
-                          className="row pointer mr-3"
-                          onClick={() => {
-                            setFacilityVisibility(!showFacilities)
-                          }}
-                          onKeyDown={() => {
-                            setFacilityVisibility(!showFacilities)
-                          }}
-                        >
-                          <div className="col-md-4">
-                            <div className="filter-heading">Facilities</div>
+                          <legend className="sr-only">Facilities</legend>
+                          <div
+                            tabIndex={showActivities ? -1 : 0}
+                            role="button"
+                            className="row pointer mr-3"
+                            onClick={() => {
+                              setFacilityVisibility(!showFacilities)
+                            }}
+                            onKeyDown={() => {
+                              setFacilityVisibility(!showFacilities)
+                            }}
+                          >
+                            <div className="col-md-4">
+                              <div className="filter-heading">Facilities</div>
+                            </div>
+                            <div className="col-md-2 ml-auto">
+                              {showFacilities ? (
+                                <ExpandLess
+                                  fontSize="large"
+                                  className="mt-auto"
+                                />
+                              ) : (
+                                <ExpandMore
+                                  fontSize="large"
+                                  className="mt-auto"
+                                />
+                              )}
+                            </div>
                           </div>
-                          <div className="col-md-2 ml-auto">
+                          <div>
                             {showFacilities ? (
-                              <ExpandLess
-                                fontSize="large"
-                                className="mt-auto"
-                              />
+                              <div>
+                                <FormGroup className="p10l filter-options-container">
+                                  {filteredFacilities.map(f => {
+                                    return (
+                                      <FormControlLabel
+                                        key={f.label}
+                                        control={
+                                          <Checkbox
+                                            checked={
+                                              selectedFacilities.filter(
+                                                fac => fac.value === f.value
+                                              ).length === 1
+                                                ? true
+                                                : false
+                                            }
+                                            onChange={event => {
+                                              handleFacilityCheck(f, event)
+                                            }}
+                                            name={f.label}
+                                          />
+                                        }
+                                        label={f.label}
+                                        className={
+                                          selectedFacilities.filter(
+                                            fac => fac.value === f.value
+                                          ).length === 1
+                                            ? "text-light-blue no-wrap"
+                                            : "no-wrap"
+                                        }
+                                      />
+                                    )
+                                  })}
+                                </FormGroup>
+                                <Link
+                                  className="ml-auto pointer p20"
+                                  onClick={() => {
+                                    handleFacilitiesLengthChange([])
+                                  }}
+                                  onKeyUp={(e) => {
+                                    if (e.key === " " || e.key === "Enter") {
+                                      handleFacilitiesLengthChange([])
+                                    }
+                                  }}
+                                  tabIndex="0"
+                                  role="link"
+                                  underline="hover"
+                                >
+                                  {showMoreFacilities ? (
+                                    <div style={{ color: `#2464A4` }}>
+                                      Show all {facilityItems.length}
+                                      <ExpandMore fontSize="small" />
+                                    </div>
+                                  ) : (
+                                    <div style={{ color: `#2464A4` }}>
+                                      Show less
+                                      <ExpandLess fontSize="small" />
+                                    </div>
+                                  )}
+                                </Link>
+                              </div>
                             ) : (
-                              <ExpandMore
-                                fontSize="large"
-                                className="mt-auto"
-                              />
+                              <div></div>
                             )}
                           </div>
-                        </div>
-                        <div>
-                          {showFacilities ? (
-                            <div>
-                              <FormGroup className="p10l filter-options-container">
-                                {filteredFacilities.map(f => {
-                                  return (
-                                    <FormControlLabel
-                                      key={f.label}
-                                      control={
-                                        <Checkbox
-                                          checked={
-                                            selectedFacilities.filter(
-                                              fac => fac.value === f.value
-                                            ).length === 1
-                                              ? true
-                                              : false
-                                          }
-                                          onChange={event => {
-                                            handleFacilityCheck(f, event)
-                                          }}
-                                          name={f.label}
-                                        />
-                                      }
-                                      label={f.label}
-                                      className={
-                                        selectedFacilities.filter(
-                                          fac => fac.value === f.value
-                                        ).length === 1
-                                          ? "text-light-blue no-wrap"
-                                          : "no-wrap"
-                                      }
-                                    />
-                                  )
-                                })}
-                              </FormGroup>
-                              <Link
-                                className="ml-auto pointer p20"
-                                onClick={() => {
-                                  handleFacilitiesLengthChange([])
-                                }}
-                                onKeyUp={(e) => {
-                                  if (e.key === " " || e.key === "Enter") {
-                                    handleFacilitiesLengthChange([])
-                                  }
-                                }}
-                                tabIndex="0"
-                                role="link"
-                                underline="hover"
-                              >
-                                {showMoreFacilities ? (
-                                  <div style={{ color: `#2464A4` }}>
-                                    Show all {facilityItems.length}
-                                    <ExpandMore fontSize="small" />
-                                  </div>
-                                ) : (
-                                  <div style={{ color: `#2464A4` }}>
-                                    Show less
-                                    <ExpandLess fontSize="small" />
-                                  </div>
-                                )}
-                              </Link>
-                            </div>
-                          ) : (
-                            <div></div>
-                          )}
-                        </div>
                         </fieldset>
                       </div>
                     </div>
@@ -888,10 +900,10 @@ export default function FindAPark({ location, data }) {
                                 <CardContent className="park-card park-card-desktop">
                                   <div className="row search-result-card no-gutters">
                                     <div className="col-12">
-                                      <div className="row">
+                                      <div className="row no-gutters">
                                         {r.parkPhotos &&
                                           r.parkPhotos.length === 0 && (
-                                            <div className="col-lg-5 close-margin park-image-div park-image-logo-div">
+                                            <div className="col-lg-auto close-margin park-image-div park-image-logo-div">
                                               <img
                                                 alt="logo"
                                                 key={index}
@@ -902,27 +914,36 @@ export default function FindAPark({ location, data }) {
                                           )}
                                         {r.parkPhotos &&
                                           r.parkPhotos.length === 1 && (
-                                            <div className="col-lg-5 close-margin park-image-div">
+                                            <div className="col-lg-auto close-margin park-image-div">
                                               <img
                                                 alt="park"
                                                 key={index}
                                                 className="search-result-image"
                                                 src={addSmallImagePrefix(r.parkPhotos[0])}
-                                                onError={(e) => {handleImgError(e, r.parkPhotos[0])}}
+                                                onError={(e) => { handleImgError(e, r.parkPhotos[0]) }}
                                               />
                                             </div>
                                           )}
                                         {r.parkPhotos &&
                                           r.parkPhotos.length > 1 && (
-                                            <div className="col-lg-5 close-margin park-image-div">
+                                            <div className="col-lg-auto close-margin park-image-div">
                                               <Carousel
                                                 className="park-carousel"
                                                 autoPlay={false}
-                                                indicators={false}
-                                                navButtonsAlwaysVisible={true}
+                                                indicators={true}
+                                                navButtonsAlwaysVisible={false}
                                                 animation="fade"
                                                 timeout={200}
-                                                height="100%"
+                                                height="200px"
+                                                indicatorContainerProps={{
+                                                  className: "indicator"
+                                                }}
+                                                indicatorIconButtonProps={{
+                                                  className: "indicator-button"
+                                                }}
+                                                activeIndicatorIconButtonProps={{
+                                                  className: "indicator-button--active"
+                                                }}
                                               >
                                                 {r.parkPhotos.map(
                                                   (item, index) => {
@@ -932,7 +953,7 @@ export default function FindAPark({ location, data }) {
                                                         key={index}
                                                         className="search-result-image"
                                                         src={addSmallImagePrefix(item)}
-                                                        onError={(e) => {handleImgError(e, item)}}                                                      />
+                                                        onError={(e) => { handleImgError(e, item) }} />
                                                     )
                                                   }
                                                 )}
@@ -940,141 +961,56 @@ export default function FindAPark({ location, data }) {
                                             </div>
                                           )}
 
-                                        <div className="col-lg-7 p20t park-content p20l">
-                                          <div className="row">
-                                            <div className="col-12 park-overview-content text-blue small-font p5l">
+                                        <div className="col park-content">
+                                          <div className="park-content-top">
+                                            <Link
+                                              href={`/${r.slug}/`}
+                                              underline="hover"
+                                            >
+                                              <h2 className="park-heading-text">
+                                                {r.protectedAreaName}
+                                                <ExpandCircleDownIcon className="park-heading-icon" />
+                                              </h2>
+                                            </Link>
+                                            <p>{locationLabel(r.parkLocation)}</p>
+                                          </div>
+                                          <div className="park-content-bottom">
+                                            <div className="park-content-bottom--left">
+                                              {r.parkFacilities.includes('vehicle-accessible-camping') &&
+                                                <Icon src={campingIcon} label="Vehicle accesible camping" size={iconSize} />
+                                              }
+                                              {r.parkActivities.includes('hiking') &&
+                                                <Icon src={hikingIcon} label="Hiking" size={iconSize} />
+                                              }
+                                              {r.parkFacilities.includes('picnic-areas') &&
+                                                <Icon src={picincIcon} label="Picnic areas" size={iconSize} />
+                                              }
+                                              {r.parkActivities.includes('swimming') &&
+                                                <Icon src={swimmingIcon} label="Swimming" size={iconSize} />
+                                              }
+                                              {r.parkActivities.includes('cycling') &&
+                                                <Icon src={cyclingIcon} label="Cycling" size={iconSize} />
+                                              }
+                                              {r.parkActivities.includes('pets-on-leash') &&
+                                                <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
+                                              }
+                                              {(r.parkActivities.length > 0 || r.parkFacilities.length > 0) &&
+                                                <Link href={`/${r.slug}/#park-camping-details-container`}>
+                                                  <p aria-label="See all facilities and activities">see all</p>
+                                                </Link>
+                                              }
+                                            </div>
+                                            <div className="park-content-bottom--right text-blue">
                                               <ParkAccessStatus
                                                 advisories={r.advisories}
+                                                slug={r.slug}
                                               />
-                                            </div>
-                                          </div>
-                                          <Link
-                                            href={`/${r.slug}/`}
-                                            className="p10t"
-                                            underline="hover"
-                                          >
-                                            <h2 className="park-heading-text">
-                                              {r.protectedAreaName}
-                                            </h2>
-                                          </Link>
-
-                                          <div className="row p10t mr5">
-                                            <div className="col-6">
-                                              {r.advisories &&
-                                                r.advisories.length > 0 && (
-                                                  <Link
-                                                    href={`/${r.slug}#park-advisory-details-container`}
-                                                    underline="hover"
-                                                  >
-                                                    <AdvisorySummary
-                                                      advisories={r.advisories}
-                                                    />
-                                                  </Link>
-                                                )}
-                                            </div>
-
-                                            <div className="col-6">
-                                              {r.hasDayUsePass &&
-                                                r.hasReservations && (
-                                                  <div className="flex-display">
-                                                    <img
-                                                      alt=""
-                                                      className="search-result-icon"
-                                                      src={dayUseIcon}
-                                                    />
-                                                    <div className="pl15 mtm7 text-blue">
-                                                      Day use and camping <br />
-                                                      offered at this park
-                                                    </div>
-                                                  </div>
-                                                )}
-                                            </div>
-                                          </div>
-                                          <div className="row p10t mr5">
-                                            <div className="col-6">
-                                              {r.parkActivities &&
-                                                r.parkActivities.length > 0 && (
-                                                  <>
-                                                    <div className="park-af-list pr3">
-                                                      <b>Activities:</b>
-                                                    </div>
-                                                    {r.parkActivities.map(
-                                                      (
-                                                        parkActivity,
-                                                        index2
-                                                      ) => (
-                                                        <div
-                                                          key={index2}
-                                                          className="park-af-list pr3 text-black"
-                                                        >
-                                                          {index2 < 11 && (
-                                                            <>
-                                                              {
-                                                                activityItemsLabels[
-                                                                  parkActivity
-                                                                    .activityType
-                                                                ]
-                                                              }
-                                                              {index2 === 10
-                                                                ? " ..."
-                                                                : index2 ===
-                                                                  r
-                                                                    .parkActivities
-                                                                    .length -
-                                                                    1
-                                                                ? ""
-                                                                : ", "}
-                                                            </>
-                                                          )}
-                                                        </div>
-                                                      )
-                                                    )}
-                                                    <br />
-                                                  </>
-                                                )}
-                                            </div>
-                                            <div className="col-6">
-                                              {r.parkFacilities &&
-                                                r.parkFacilities.length > 0 && (
-                                                  <>
-                                                    <div className="park-af-list pr3">
-                                                      <b>Facilities:</b>
-                                                    </div>
-
-                                                    {r.parkFacilities.map(
-                                                      (
-                                                        parkFacility,
-                                                        index3
-                                                      ) => (
-                                                        <div
-                                                          key={parkFacility.id}
-                                                          className="park-af-list pr3 text-black"
-                                                        >
-                                                          {index3 < 6 && (
-                                                            <>
-                                                              {
-                                                                facilityItemsLabels[
-                                                                  parkFacility
-                                                                    .facilityType
-                                                                ]
-                                                              }
-                                                              {index3 === 5
-                                                                ? " ..."
-                                                                : index3 ===
-                                                                  r
-                                                                    .parkFacilities
-                                                                    .length -
-                                                                    1
-                                                                ? ""
-                                                                : ", "}
-                                                            </>
-                                                          )}
-                                                        </div>
-                                                      )
-                                                    )}
-                                                    <br />
-                                                  </>
-                                                )}
+                                              {r.hasCampfireBan &&
+                                                <div className="campfire-ban-icon">
+                                                  <Icon src={campfireBanIcon} label="Campfire ban" size="24" />
+                                                  <span>No campfires</span>
+                                                </div>
+                                              }
                                             </div>
                                           </div>
                                         </div>
@@ -1087,7 +1023,7 @@ export default function FindAPark({ location, data }) {
                                 <CardContent className="park-card">
                                   <div className="row search-result-card no-gutters">
                                     <div className="col-12">
-                                      <div className="row">
+                                      <div className="row no-gutters">
                                         {r.parkPhotos &&
                                           r.parkPhotos.length === 0 && (
                                             <div className="col-12 close-margin park-image-div-mobile park-image-logo-div">
@@ -1107,7 +1043,7 @@ export default function FindAPark({ location, data }) {
                                                 key={index}
                                                 className="search-result-image"
                                                 src={addSmallImagePrefix(r.parkPhotos[0])}
-                                                onError={(e) => {handleImgError(e, r.parkPhotos[0])}}
+                                                onError={(e) => { handleImgError(e, r.parkPhotos[0]) }}
                                               />
                                             </div>
                                           )}
@@ -1117,11 +1053,20 @@ export default function FindAPark({ location, data }) {
                                               <Carousel
                                                 className="park-carousel-mobile"
                                                 autoPlay={false}
-                                                indicators={false}
-                                                navButtonsAlwaysVisible={true}
+                                                indicators={true}
+                                                navButtonsAlwaysVisible={false}
                                                 animation="fade"
                                                 timeout={200}
                                                 height="100%"
+                                                indicatorContainerProps={{
+                                                  className: "indicator"
+                                                }}
+                                                indicatorIconButtonProps={{
+                                                  className: "indicator-button"
+                                                }}
+                                                activeIndicatorIconButtonProps={{
+                                                  className: "indicator-button--active"
+                                                }}
                                               >
                                                 {r.parkPhotos.map(
                                                   (item, index) => {
@@ -1131,7 +1076,7 @@ export default function FindAPark({ location, data }) {
                                                         key={index}
                                                         className="search-result-image"
                                                         src={addSmallImagePrefix(item)}
-                                                        onError={(e) => {handleImgError(e, item)}}
+                                                        onError={(e) => { handleImgError(e, item) }}
                                                       />
                                                     )
                                                   }
@@ -1140,54 +1085,53 @@ export default function FindAPark({ location, data }) {
                                             </div>
                                           )}
 
-                                        <div className="col-12 p20t park-content-mobile">
-                                          <div className="row">
-                                            <div className="col-12 park-overview-content text-blue small-font p5l">
-                                              <ParkAccessStatus
-                                                advisories={r.advisories}
-                                              />
-                                            </div>
-                                          </div>
+                                        <div className="col-12 park-content-mobile">
                                           <Link
                                             href={`/${r.slug}/`}
                                             className="p10t"
                                             underline="hover"
                                           >
                                             <h2 className="park-heading-text">
-                                            {r.protectedAreaName}
+                                              {r.protectedAreaName}
+                                              <ExpandCircleDownIcon className="park-heading-icon" />
                                             </h2>
                                           </Link>
-                                        </div>
-                                      </div>
-                                      <div className="row pb20 p20l pr20">
-                                        <div className="col-12 p0 align-center flex-display full-width">
-                                          <div className="full-width">
-                                            <Link
-                                              href={`/${r.slug}/`}
-                                              className="park-quick-link link"
-                                              underline="hover"
-                                            >
-                                              Visit Park Page
-                                            </Link>
+                                          <p>{locationLabel(r.parkLocation)}</p>
+                                          <div>
+                                            {r.parkFacilities.includes('vehicle-accessible-camping') &&
+                                              <Icon src={campingIcon} label="Vehicle accesible camping" size={iconSize} />
+                                            }
+                                            {r.parkActivities.includes('hiking') &&
+                                              <Icon src={hikingIcon} label="Hiking" size={iconSize} />
+                                            }
+                                            {r.parkFacilities.includes('picnic-areas') &&
+                                              <Icon src={picincIcon} label="Picnic areas" size={iconSize} />
+                                            }
+                                            {r.parkActivities.includes('swimming') &&
+                                              <Icon src={swimmingIcon} label="Swimming" size={iconSize} />
+                                            }
+                                            {r.parkActivities.includes('cycling') &&
+                                              <Icon src={cyclingIcon} label="Cycling" size={iconSize} />
+                                            }
+                                            {r.parkActivities.includes('pets-on-leash') &&
+                                              <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
+                                            }
+                                            {(r.parkActivities.length > 0 || r.parkFacilities.length > 0) &&
+                                              <Link href={`/${r.slug}/#park-camping-details-container`}>
+                                                <p aria-label="See all facilities and activities">see all</p>
+                                              </Link>
+                                            }
                                           </div>
-                                          <div className="divider-div align-center">
-                                            <Divider
-                                              orientation="vertical"
-                                              className="vertical-divider align-center"
+                                          <div className="text-blue">
+                                            <ParkAccessStatus
+                                              advisories={r.advisories}
                                             />
-                                          </div>
-                                          <div className="full-width">
-                                            <Link
-                                              onClick={() =>
-                                                setParkQuickView(r)
-                                              }
-                                              className="park-quick-link link"
-                                              role="link"
-                                              tabIndex="0"
-                                              underline="hover"
-                                            >
-                                              Quick View
-                                            </Link>
+                                            {r.hasCampfireBan &&
+                                              <div className="campfire-ban-icon">
+                                                <Icon src={campfireBanIcon} label="Campfire ban" size="24" />
+                                                <span>No campfires</span>
+                                              </div>
+                                            }
                                           </div>
                                         </div>
                                       </div>
@@ -1238,56 +1182,6 @@ export default function FindAPark({ location, data }) {
                           </div>
                           <br />
                           <br />
-
-                          <Dialog
-                            open={openQuickView}
-                            onClose={handleCloseQuickView}
-                            aria-labelledby="park-quick-view-dialog"
-                            className="park-quick-view-dialog"
-                            fullScreen
-                            fullWidth
-                            scroll="paper"
-                          >
-                            <DialogContent className="park-quick-view-dialog-content">
-                              <QuickView
-                                park={currentPark}
-                                activityItemsLabels={activityItemsLabels}
-                                facilityItemsLabels={facilityItemsLabels}
-                              ></QuickView>
-                            </DialogContent>
-                            <DialogActions className="d-block p20 background-blue">
-                              <div className="row">
-                                <div className="col-12 p0 align-center flex-display full-width">
-                                  <div className="full-width">
-                                    <Link
-                                      href={`/${currentPark.slug}`}
-                                      className="park-quick-link link-white"
-                                      underline="hover"
-                                    >
-                                      Visit Park Page
-                                    </Link>
-                                  </div>
-                                  <div className="divider-div align-center">
-                                    <Divider
-                                      orientation="vertical"
-                                      className="vertical-divider align-center"
-                                    />
-                                  </div>
-                                  <div className="full-width">
-                                    <Link
-                                      onClick={handleCloseQuickView}
-                                      className="park-quick-link link-white"
-                                      tabIndex="0"
-                                      role="link"
-                                      underline="hover"
-                                    >
-                                      Close Quick View
-                                    </Link>
-                                  </div>
-                                </div>
-                              </div>
-                            </DialogActions>
-                          </Dialog>
                         </>
                       )}
                     </>
