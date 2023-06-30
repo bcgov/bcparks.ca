@@ -1003,6 +1003,7 @@ export default function FindAPark({ location, data }) {
                                             <div className="park-content-bottom--right text-blue">
                                               <ParkAccessStatus
                                                 advisories={r.advisories}
+                                                slug={r.slug}
                                               />
                                               {r.hasCampfireBan &&
                                                 <div className="campfire-ban-icon">

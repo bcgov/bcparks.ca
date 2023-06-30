@@ -900,7 +900,10 @@ div[class$="-singleValue"] {
         }
       }
       &--right {
-        min-width: 180px;
+        min-width: 160px;
+        a.MuiTypography-root {
+          text-decoration-color: $colorBlue;
+        }
       }
     }
   }
