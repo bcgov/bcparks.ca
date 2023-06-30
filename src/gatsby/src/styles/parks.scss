@@ -200,11 +200,20 @@
   .MuiTypography-root {
     font-size: 0.875rem !important;
   }
+  &.access-status-open {
+    .MuiTypography-root {
+      color: $colorText;
+    }
+  }
 }
 .campfire-ban-icon {
   margin-top: 8px;
   img {
     margin-right: 8px !important;
+  }
+  span {
+    color: $colorText;
+    font-size: 0.875rem;
   }
 }
 

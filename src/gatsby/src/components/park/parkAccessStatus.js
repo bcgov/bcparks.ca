@@ -106,7 +106,7 @@ export default function ParkAccessStatus({ advisories, slug }) {
     <StyledCard>
       {parkStatusText === "Open" ? (
           <CardHeader
-            className="access-icon"
+            className="access-icon access-status-open"
             avatar={
               <Avatar
                 variant="square"
