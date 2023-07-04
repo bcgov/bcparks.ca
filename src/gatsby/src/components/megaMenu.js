@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react"
 import PropTypes from "prop-types"
 import { Link, navigate } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
+import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
 
 import "../styles/megaMenu/megaMenu.scss"
 
@@ -224,6 +225,7 @@ const MegaMenu = ({ content, menuMode }) => {
                 <li className="menu-button menu-header">
                   <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
                     {item.title}
+                    <ExpandCircleDownIcon className="menu-button__title--icon" />
                   </Link>
                 </li>
                 {item.strapi_children.map((page, index) => (
