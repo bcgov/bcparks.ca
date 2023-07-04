@@ -154,11 +154,18 @@ nav {
       color: #000;
 
       .menu-button__title {
-        color: #000;
+        color: $colorBlue;
         width: 100%;
         padding: 8px 20px;
         display: block;
         line-height: 40px;
+        &--icon {
+          width: 1.25rem;
+          height: 1.25rem;
+          font-size: 1.25rem;
+          rotate: 270deg;
+          margin: 0 0 4px 8px;
+        }
       }
       .menu-button__arr {
         float: right;
@@ -188,7 +195,6 @@ nav {
       padding-left: 10px;
       background: #eee;
       a {
-        color: $colorBlueMed !important;
         font-size: 1.2rem;
         font-weight: 700;
       }
@@ -440,17 +446,9 @@ nav {
       &.menu-header {
         .menu-button__title {
           position: relative;
-          color: $colorBlue;
           font-weight: bold;
           font-size: 1.25rem;
           margin-bottom: 4px;
-          &--icon {
-            width: 1.25rem;
-            height: 1.25rem;
-            font-size: 1.25rem;
-            rotate: 270deg;
-            margin: 0 0 4px 8px;
-          }
           &::after {
             position: absolute;
             content: "";
@@ -459,6 +457,13 @@ nav {
             width: 50px;
             left: 10px;
             bottom: 0;
+          }
+          &--icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            font-size: 1.25rem;
+            rotate: 270deg;
+            margin: 0 0 4px 8px;
           }
         }
       }
