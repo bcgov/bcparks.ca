@@ -931,10 +931,16 @@ export default function FindAPark({ location, data }) {
                                                 className="park-carousel"
                                                 autoPlay={false}
                                                 indicators={true}
-                                                navButtonsAlwaysVisible={false}
+                                                navButtonsAlwaysVisible={true}
                                                 animation="fade"
                                                 timeout={200}
                                                 height="200px"
+                                                navButtonsWrapperProps={{
+                                                  className: "carousel-nav"
+                                                }}
+                                                navButtonsProps={{
+                                                  className: "carousel-nav-botton"
+                                                }}
                                                 indicatorContainerProps={{
                                                   className: "indicator"
                                                 }}
@@ -1054,10 +1060,16 @@ export default function FindAPark({ location, data }) {
                                                 className="park-carousel-mobile"
                                                 autoPlay={false}
                                                 indicators={true}
-                                                navButtonsAlwaysVisible={false}
+                                                navButtonsAlwaysVisible={true}
                                                 animation="fade"
                                                 timeout={200}
                                                 height="100%"
+                                                navButtonsWrapperProps={{
+                                                  className: "carousel-nav"
+                                                }}
+                                                navButtonsProps={{
+                                                  className: "carousel-nav-botton"
+                                                }}
                                                 indicatorContainerProps={{
                                                   className: "indicator"
                                                 }}

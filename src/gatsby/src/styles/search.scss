@@ -714,10 +714,14 @@ div[class$="-singleValue"] {
 }
 
 .search-result-logo-image {
+  width: 200px;
+  display: block;
+  margin-top: 125px;
   margin-left: auto;
   margin-right: auto;
-  display: block;
-  margin-top: 25% !important;
+  @media screen and (min-width: $lgBreakpoint) {
+    margin-top: 75px;
+  }
 }
 
 .park-quick-view-dialog-content {
@@ -733,12 +737,35 @@ div[class$="-singleValue"] {
 
 .park-carousel,
 .park-carousel-mobile {
+  .carousel-nav {
+    display: none;
+  }
+  &:hover {
+    .carousel-nav {
+      display: block;
+      &-botton {
+        width: 24px;
+        height: 24px;
+        color: $colorText;
+        background-color: rgba($colorWhite, .72);
+        &:hover, &:focus {
+          color: $colorText;
+          background-color: rgba($colorWhite, .72);
+        }
+      }
+    }
+  }
   .indicator {
     margin-top: -30px;
     &-button {
       z-index: 1;
       pointer-events: none;
       color: rgba($colorWhite, .6);
+      .MuiSvgIcon-root {
+        width: 8px;
+        height: 8px;
+        margin: 0 4px;
+      }
       &--active {
         color: rgba($colorWhite, 1);
       }
@@ -768,9 +795,9 @@ div[class$="-singleValue"] {
   line-height: 2rem;
   margin-bottom: 4px;
   .park-heading-icon {
-    width: 1rem;
-    height: 1rem;
-    font-size: 1rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 1.25rem;
     rotate: 270deg;
     margin: 0 0 4px 8px;
   }
