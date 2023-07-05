@@ -24,7 +24,7 @@ const DocumentLink = ({ park }) => {
         checkRelation(park.orcs, site.orcsSiteNumber) && (
           titles.push({
             index: index,
-            title: `${park.protectedAreaName} - ${site.siteName} ${(doc.documentType?.documentType)?.toLowerCase()} (${calcYear(doc.documentDate)})`
+            title: `${park.protectedAreaName} – ${site.siteName} ${(doc.documentType?.documentType)?.toLowerCase()} (${calcYear(doc.documentDate)})`
           })
         ))
     ) : (
