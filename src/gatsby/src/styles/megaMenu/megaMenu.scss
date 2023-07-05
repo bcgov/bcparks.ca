@@ -409,7 +409,7 @@ nav {
     .menu-children {
       transition: height 0.3s;
       opacity: 1;
-      height: 475px;
+      min-height: 475px;
     }
     .menu-children--unselected {
       display: none;
