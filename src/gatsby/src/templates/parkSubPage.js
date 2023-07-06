@@ -60,6 +60,8 @@ export default function ParkSubPage({ data }) {
     useRef(null),
     useRef(null),
     useRef(null),
+    useRef(null),
+    useRef(null),
   ]
 
   const activeSection = useScrollSpy({
