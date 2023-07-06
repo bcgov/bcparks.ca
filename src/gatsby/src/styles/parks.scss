@@ -403,7 +403,16 @@
 }
 
 .park-photo {
-  height: 400px;
+  height: 150px;
+  @media (min-width: $smBreakpoint) {
+    height: 200px;
+  }
+  @media (min-width: $mdBreakpoint) {
+    height: 300px;
+  }
+  @media (min-width: $lgBreakpoint) {
+    height: 400px;
+  }
   overflow: hidden;
   position: relative;
 
