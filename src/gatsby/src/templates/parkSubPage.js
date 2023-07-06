@@ -89,12 +89,12 @@ export default function ParkSubPage({ data }) {
       <div className="max-width-override" ref={sectionRefs[0]}>
         <Header mode="internal" content={menuContent} />
       </div>
-      <div id="sr-content" className="d-none d-md-block static-content-container page-breadcrumbs">
-        <Breadcrumbs separator="›" aria-label="breadcrumb" className="p20t">
-          {breadcrumbs}
-        </Breadcrumbs>
-      </div>
       <div className="static-content--header">
+        <div id="sr-content" className="page-breadcrumbs">
+          <Breadcrumbs separator="›" aria-label="breadcrumb" className="p20t">
+            {breadcrumbs}
+          </Breadcrumbs>
+        </div>
         {header?.imageUrl && (
           <div className="header-image-wrapper">
             <img

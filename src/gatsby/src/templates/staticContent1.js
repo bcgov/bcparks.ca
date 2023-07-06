@@ -149,13 +149,13 @@ export default function StaticContent1({ pageContext }) {
       <div className="max-width-override" ref={sectionRefs[0]}>
         <Header mode="internal" content={menuContent} />
       </div>
-      <div id="sr-content" className="d-none d-md-block static-content-container page-breadcrumbs">
-        <Breadcrumbs separator="›" aria-label="breadcrumb">
-          {renderBreadcrumbs(menuContent, pageContext?.page)}
-        </Breadcrumbs>
-      </div>
       {hasTitle && (
         <div className="static-content--header">
+          <div id="sr-content" className="page-breadcrumbs">
+            <Breadcrumbs separator="›" aria-label="breadcrumb">
+              {renderBreadcrumbs(menuContent, pageContext?.page)}
+            </Breadcrumbs>
+          </div>
           {headerContent.imageUrl && (
             <div className="header-image-wrapper">
               <img
