@@ -20,7 +20,7 @@ const Root = styled('div')((
     position: "fixed",
     bottom: "2vh",
     color: "#ffffff",
-    opacity: "0.75",
+    opacity: "1",
     backgroundColor: "#003366",
     boxShadow: "none",
     "&:hover, &.Mui-focusVisible": {
@@ -34,6 +34,7 @@ const Root = styled('div')((
     },
     [theme.breakpoints.up("md")]: {
       right: "2%",
+      opacity: "0.75",
     },
   }
 }));
