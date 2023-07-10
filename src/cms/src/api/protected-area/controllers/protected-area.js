@@ -51,11 +51,17 @@ module.exports = createCoreController(
         .count(ctx.query);
     },
     async findOne(ctx) {
-      const { orcs } = ctx.params;
-      const entity = await strapi
-        .service("api::protected-area.protected-area")
-        .findOne({ orcs });
-      return this.sanitizeOutput(entity, ctx);
+      const { id } = ctx.params;
+      // look up the protected area by the orcs
+      const entities = await strapi.entityService.findMany("api::protected-area.protected-area", {
+        filters: { orcs: id },
+        fields: ["id"]
+      });
+      if (entities.length === 0) {
+        return ctx.badRequest(404);
+      }
+      let entity = await strapi.service("api::protected-area.protected-area").findOne(entities[0].id, ctx.query);
+      return await this.sanitizeOutput(entity, ctx);
     },
     async items() {
       // custom route for light weight park details used in client app
