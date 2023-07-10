@@ -360,9 +360,9 @@ nav {
       }
     }
     .menu-level-0-children.menu-children--unselected {
-      transition: opacity 0.3s, height 0.9s;
+      transition: opacity 0.3s, min-height 0.9s;
       opacity: 0;
-      height: 0px;
+      min-height: 0px;
       padding: 0px;
       display: block;
       nav,
@@ -401,9 +401,9 @@ nav {
       display: none;
     }
     .menu-children {
-      transition: height 0.3s;
+      transition: opacity 0.3s, min-height 0.3s;
       opacity: 1;
-      height: 475px;
+      min-height: 475px;
     }
     .menu-children--unselected {
       display: none;
