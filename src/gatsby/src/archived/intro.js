@@ -1,3 +1,6 @@
+// This page is archived
+// If you need to publish this page, you need to move this file to under the pages directry
+
 import React from "react"
 import { graphql } from "gatsby"
 
