@@ -154,11 +154,18 @@ nav {
       color: #000;
 
       .menu-button__title {
-        color: #000;
+        color: $colorBlue;
         width: 100%;
         padding: 8px 20px;
         display: block;
         line-height: 40px;
+        &--icon {
+          width: 1.25rem;
+          height: 1.25rem;
+          font-size: 1.25rem;
+          rotate: 270deg;
+          margin: 0 0 4px 8px;
+        }
       }
       .menu-button__arr {
         float: right;
@@ -188,7 +195,6 @@ nav {
       padding-left: 10px;
       background: #eee;
       a {
-        color: $colorBlueMed !important;
         font-size: 1.2rem;
         font-weight: 700;
       }
@@ -375,7 +381,7 @@ nav {
     }
 
     .menu-level--1 {
-      border-right: solid 1px $colorGold;
+      border-right: solid 2px rgba(0, 0, 0, 0.2);
 
       .menu-button--selected {
         border-left: solid 4px $colorGold;
@@ -426,7 +432,7 @@ nav {
       transition: background-color 0.3s;
       
       .menu-button__title {
-        color: #000;
+        color: $colorBlue;
         display: block;
         width: 100%;
         padding: 8px 10px;
@@ -439,10 +445,26 @@ nav {
       }
       &.menu-header {
         .menu-button__title {
-          color: $colorBlueMed;
+          position: relative;
           font-weight: bold;
-          margin-bottom: 4px;
           font-size: 1.25rem;
+          margin-bottom: 4px;
+          &::after {
+            position: absolute;
+            content: "";
+            background-color: $colorGold;
+            height: 2px;
+            width: 50px;
+            left: 10px;
+            bottom: 0;
+          }
+          &--icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            font-size: 1.25rem;
+            rotate: 270deg;
+            margin: 0 0 4px 8px;
+          }
         }
       }
     }
