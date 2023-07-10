@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { styled } from '@mui/material/styles';
 import { graphql } from "gatsby"
 import axios from "axios"
-import { Container, CircularProgress } from "@mui/material"
+import { Container, Breadcrumbs, Link, CircularProgress } from "@mui/material"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -354,11 +354,24 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
   const menuContent = data?.allStrapiMenu?.nodes || []
 
+  const breadcrumbs = [
+    <Link key="1" href="/" underline="hover">
+      Home
+    </Link>,
+    <div key="2" className="breadcrumb-text">
+      Active advisories
+    </div>
+  ]
+
   return (
     <Root>
       <Header mode="internal" content={menuContent} />
       <Container id="sr-content">
-        <br />
+        <div id="sr-content" className="page-breadcrumbs">
+          <Breadcrumbs separator="›" aria-label="breadcrumb">
+            {breadcrumbs}
+          </Breadcrumbs>
+        </div>
         <h1>{pageTitle}</h1>
         <div className={classes.advisoriesHeader}>
           <div className={classes.advisoryCountNotice}>

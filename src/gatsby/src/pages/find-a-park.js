@@ -487,7 +487,7 @@ export default function FindAPark({ location, data }) {
             <Breadcrumbs
               separator="›"
               aria-label="breadcrumb"
-              className="p10t sm-p10"
+              className="sm-p10"
             >
               {breadcrumbs}
             </Breadcrumbs>
