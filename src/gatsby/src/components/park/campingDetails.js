@@ -88,7 +88,7 @@ export default function CampingDetails({ data }) {
                   .filter(count => isShown(count, parkOperation))
                   .map((count, index) => (
                     <dd key={index} className="mb-0">
-                      Total {count.display.toLowerCase()}:{" "}
+                      Total {count.display.includes("RV") ? count.display : count.display.toLowerCase()}:{" "}
                       {parkOperation[count.countVar]}
                     </dd>
                   ))}
