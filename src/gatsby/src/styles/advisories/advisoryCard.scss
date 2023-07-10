@@ -83,6 +83,7 @@
   background: #f2f2f2 !important;
   a {
     color: $colorBlue;
+    margin-top: 8px;
   }
 }
 
@@ -109,6 +110,7 @@
 
 .btn-link {
   color: $colorBlue;
+  margin-bottom: 8px;
   padding: 0;
   &:hover, &:focus {
     color: $colorBlue !important;
