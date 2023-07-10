@@ -9,6 +9,9 @@ import "../../styles/advisories/advisoryCard.scss"
 
 const AdvisoryCard = ({ advisory, index }) => {
   const [open, setOpen] = useState(false)
+  const checkRelation = (orcs, orcsSite) => {
+    return orcsSite.includes(orcs.toString())
+  }
 
   return (
     <>
@@ -145,6 +148,24 @@ const AdvisoryCard = ({ advisory, index }) => {
                               >
                                 {par.protectedAreaName}
                               </Link>
+                            ))
+                        }
+                        {advisory.sites.length > 0 &&
+                          advisory.sites
+                            .filter(
+                              site => site.publishedAt && site.isDisplayed
+                            )
+                            .map((site, index) => (
+                              advisory.protectedAreas.map((park, index) => (
+                                checkRelation(park.orcs, site.orcsSiteNumber) &&
+                                <Link
+                                  className="parkLink badge badge-pill badge-light mb-2 mr-2"
+                                  to={`/${park.slug}/${site.slug}`}
+                                  key={index}
+                                >
+                                  {park.protectedAreaName} – {site.siteName}
+                                </Link>
+                              ))
                             ))
                         }
                       </div>
