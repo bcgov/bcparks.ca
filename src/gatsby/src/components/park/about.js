@@ -32,12 +32,16 @@ export default function About({
           <>
             <h3>{capitalizeFirstLetter(`${park.type} details`)}</h3>
             <ul>
-              <li>
-                <strong>Date established:</strong> {formattedEstablishedDate}
-              </li>
-              <li>
-                <strong>Size:</strong> {park.totalArea} hectares
-              </li>
+              {park.establishedDate && (
+                <li>
+                  <strong>Date established:</strong> {formattedEstablishedDate}
+                </li>
+              )}
+              {park.totalArea && (
+                <li>
+                  <strong>Size:</strong> {park.totalArea} hectares
+                </li>
+              )}
               {biogeoclimaticZones?.length > 0 && (
                 <li className="ecological-list">
                   <strong>
