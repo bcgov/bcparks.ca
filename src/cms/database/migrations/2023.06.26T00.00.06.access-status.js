@@ -12,7 +12,7 @@ async function up(knex) {
 
         await knex('access_statuses').where({ access_status: 'Partial closure' }).update({ precedence: 4, color: 'yellow', group_label: 'Limited access' });
 
-        await knex('access_statuses').where({ access_status: 'Park is under evacuation alert' }).update({ precedence: 5, color: 'yellow', group_label: 'Visit with caution', access_status: 'Under evacuation alert' });
+        await knex('access_statuses').where({ access_status: 'Park is under evacuation alert' }).update({ precedence: 5, color: 'yellow', group_label: 'Limited access', access_status: 'Under evacuation alert' });
 
         await knex('access_statuses').where({ access_status: 'Park is within a fire perimeter' }).update({ precedence: 6, color: 'yellow', group_label: 'Visit with caution', access_status: 'Within a fire perimeter' });
 
