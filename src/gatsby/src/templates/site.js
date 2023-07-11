@@ -248,6 +248,7 @@ export default function SiteTemplate({ data }) {
             </Grid>
             <Grid item xs={12} sm={12}>
               <ParkHeader
+                slug={`${park.slug}/${site.slug}`}
                 parkName={`${park?.protectedAreaName}: ${site.siteName}`}
                 hasReservations={hasReservations}
                 hasDayUsePass={hasDayUsePass}
@@ -404,6 +405,7 @@ export const query = graphql`
       isDisplayed: {eq: true},
       orcsSiteNumber: {eq: $orcsSiteNumber}
     ) {
+      slug
       siteName
       siteNumber
       orcsSiteNumber

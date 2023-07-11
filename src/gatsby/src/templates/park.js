@@ -336,6 +336,7 @@ export default function ParkTemplate({ data }) {
               {!isLoadingProtectedArea && !protectedAreaLoadError && (
                 <Grid item xs={12} sm={12}>
                   <ParkHeader
+                    slug={park.slug}
                     parkName={parkName}
                     hasReservations={hasReservations}
                     hasDayUsePass={hasDayUsePass}
@@ -541,6 +542,7 @@ export const Head = ({data}) => {
 export const query = graphql`
   query ProtectedAreaDetails($orcs: Int) {
     strapiProtectedArea(orcs: {eq: $orcs}) {
+      slug
       protectedAreaName
       description {
         data {
