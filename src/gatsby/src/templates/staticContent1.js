@@ -140,7 +140,7 @@ export default function StaticContent1({ pageContext }) {
   const activeSection = useScrollSpy({
     sectionElementRefs: sectionRefs,
     defaultValue: 0,
-    offsetPx: -180,
+    offsetPx: -100,
   })
 
   return (

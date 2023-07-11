@@ -67,7 +67,7 @@ export default function ParkSubPage({ data }) {
   const activeSection = useScrollSpy({
     sectionElementRefs: sectionRefs,
     defaultValue: 0,
-    offsetPx: -180,
+    offsetPx: -100,
   })
 
   const breadcrumbs = [
