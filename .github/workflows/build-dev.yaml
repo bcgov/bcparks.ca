@@ -6,6 +6,10 @@ on:
       - develop
       - main
 
+concurrency:
+  group: build-dev-${{ github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   build-cms:
     runs-on: ubuntu-latest

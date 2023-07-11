@@ -21,6 +21,10 @@ on:
         - test
         - prod
 
+concurrency:
+  group: publish-gatsby-${{ github.event.client_payload.branch }}${{ github.event.inputs.branchName }}-${{ github.event.client_payload.env }}${{ github.event.inputs.buildEnv }}
+  cancel-in-progress: true
+
 env:
   GATSBY_ENABLE_SNOWPLOW: true
 
