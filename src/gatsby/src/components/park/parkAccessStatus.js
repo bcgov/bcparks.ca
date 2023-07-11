@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { graphql, useStaticQuery, Link } from "gatsby"
-import { Card, CardHeader, Avatar } from "@mui/material"
+import { graphql, useStaticQuery } from "gatsby"
+import { Card, CardHeader, Avatar, Link } from "@mui/material"
 import { styled } from '@mui/material/styles';
 
 import blueStatusIcon from "../../images/park/blue-status-64.png"
@@ -93,7 +93,7 @@ function ParkAccessFromAdvisories(advisories) {
 }
 export { ParkAccessFromAdvisories }
 
-export default function ParkAccessStatus({ advisories }) {
+export default function ParkAccessStatus({ advisories, slug }) {
   const {
     parkStatusIcon,
     parkStatusText,
@@ -119,7 +119,7 @@ export default function ParkAccessStatus({ advisories }) {
             title={parkStatusText}
           />
       ) : (
-        <Link to="#park-advisory-details-container">
+        <Link href={`/${slug}/#park-advisory-details-container`}>
           <CardHeader
             className="access-icon"
             avatar={

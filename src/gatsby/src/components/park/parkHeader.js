@@ -6,6 +6,7 @@ import Advisory from "./advisory"
 import ParkAccessStatus from "./parkAccessStatus"
 import CampfireBan from "../campfireBan"
 export default function ParkHeader({
+  slug,
   parkName,
   hasReservations,
   hasDayUsePass,
@@ -55,7 +56,7 @@ export default function ParkHeader({
                   className="park-info-header-flex"
                 >
                   <div className="park-info-header park-access ml-auto">
-                    <ParkAccessStatus advisories={advisories} />
+                    <ParkAccessStatus advisories={advisories} slug={slug}/>
                   </div>
                   {hasCampfireBan && 
                     <div className="park-info-header park-access campfire-ban">
@@ -78,7 +79,7 @@ export default function ParkHeader({
               className="park-info-header-flex"
             >
               <div className="park-info-header">
-                <ParkAccessStatus advisories={advisories} />
+                <ParkAccessStatus advisories={advisories} slug={slug}/>
               </div>
               {hasCampfireBan && 
                 <div className="park-info-header">
