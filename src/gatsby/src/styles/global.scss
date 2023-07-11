@@ -217,30 +217,25 @@ li.post-separator {
   }
 
   li {
-    display: flex;
     list-style: none;
   }
 
   a {
     display: block;
     text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .bcp-breadcrumbs__separator {
-    color: $colorGold;
-    margin-left: 8px;
-    margin-right: 8px;
-    position: relative;
+    display: flex;
+    color: #313132;
+    font-size: 1.25rem;
+    margin: 0 4px 2px 8px;
 
     &::before {
-      content: "\f054";
-      display: inline-block;
-      font-family: "Font Awesome 5 Free";
-      font-style: normal;
-      font-variant: normal;
-      font-weight: 900;
-      text-rendering: auto;
-      -webkit-font-smoothing: antialiased;
+      content: "\203A";
     }
   }
 }
