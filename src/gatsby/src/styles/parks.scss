@@ -459,7 +459,7 @@
 .MuiBreadcrumbs-root {
   a {
     color: $colorBlueLight;
-    &:hover {
+    &:hover, &:focus, &:hover:focus {
       color: #0000f3;
     }
   }
