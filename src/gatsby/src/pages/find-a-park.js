@@ -1012,7 +1012,7 @@ export default function FindAPark({ location, data }) {
                                                     </Link>
                                                   ) : (
                                                     <Link href={`/${r.slug}/#park-activity-container`}> 
-                                                      <p aria-label="See all facilities and activities">see al</p>
+                                                      <p aria-label="See all facilities and activities">see all</p>
                                                     </Link>
                                                   )
                                                 )
