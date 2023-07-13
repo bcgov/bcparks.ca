@@ -18,17 +18,17 @@ cms:
       memory: 1250Mi
     requests:
       cpu: 250m
-      memory: 600Mi
+      memory: 700Mi
 
   env:
     environment: prod
     externalUrl: https://cms.bcparks.ca
 
   hpa:
-    minReplicas: 2
+    minReplicas: 3
     maxReplicas: 4
     cpuUtilizationThreshold: 25
-    memoryUtilizationThreshold: 80
+    memoryUtilizationThreshold: 85
 
 admin:
   env:
@@ -38,11 +38,11 @@ admin:
 patroni:
   resources:
     limits:
-      cpu: 500m
+      cpu: 1
       memory: 2Gi
     requests:
       cpu: 250m
-      memory: 500Mi
+      memory: 1Gi
   replicas: 3
 
   pvc:
