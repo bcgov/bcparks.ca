@@ -1000,11 +1000,23 @@ export default function FindAPark({ location, data }) {
                                               {r.parkActivities.includes('pets-on-leash') &&
                                                 <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
                                               }
-                                              {(r.parkActivities.length > 0 || r.parkFacilities.length > 0) &&
+                                              {r.parkFacilities.includes('vehicle-accessible-camping') ? (
                                                 <Link href={`/${r.slug}/#park-camping-details-container`}>
                                                   <p aria-label="See all facilities and activities">see all</p>
                                                 </Link>
-                                              }
+                                              ) : (
+                                                (r.parkActivities.length > 0 || r.parkFacilities.length > 0) && (
+                                                  r.parkFacilities.length > 0 ? (
+                                                    <Link href={`/${r.slug}/#park-facility-container`}> 
+                                                      <p aria-label="See all facilities and activities">see all</p>
+                                                    </Link>
+                                                  ) : (
+                                                    <Link href={`/${r.slug}/#park-activity-container`}> 
+                                                      <p aria-label="See all facilities and activities">see all</p>
+                                                    </Link>
+                                                  )
+                                                )
+                                              )}
                                             </div>
                                             <div className="park-content-bottom--right text-blue">
                                               <ParkAccessStatus
