@@ -110,8 +110,8 @@ module.exports = createCoreController(
                 links: { fields: '*' },
                 standardMessages: { fields: '*' },
                 sites: {
-                    fields: ["orcsSiteNumber", "slug"],
-                    filters: { isDisplayed: true, slug: { $notNull: true } }
+                    fields: ["orcsSiteNumber", "siteName"],
+                    filters: { isDisplayed: true }
                 }
             };
 
