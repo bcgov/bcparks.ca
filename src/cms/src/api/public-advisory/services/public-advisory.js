@@ -19,20 +19,20 @@ const buildQuery = function (query) {
                 ]
             };
         } else if (query._searchType === "park") {
-            textSearch = { protectedAreas: { parkNames: { parkName: { $containsi: query.queryText } } } };
+            textSearch = { protectedAreas: { protectedAreaName: { $containsi: query.queryText } } };
         } else {
             textSearch = {
                 $or: [
                     { title: { $containsi: query.queryText } },
                     { description: { $containsi: query.queryText } },
-                    { protectedAreas: { parkNames: { parkName: { $containsi: query.queryText } } } }
+                    { protectedAreas: { protectedAreaName: { $containsi: query.queryText } } }
                 ]
             };
         }
     }
 
     if (query._eventType && query._eventType.length > 0) {
-        typeSearch = { eventType: { eventType: { $containsi: query._eventType } } };
+        typeSearch = { eventType: { eventType: { $eq: query._eventType } } };
     }
 
     query.filters = {
