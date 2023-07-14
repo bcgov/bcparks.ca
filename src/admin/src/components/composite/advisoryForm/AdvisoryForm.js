@@ -248,7 +248,7 @@ export default function AdvisoryForm({
 
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
-      <form>
+      <form className="mt-5">
         <div className="container-fluid ad-form">
           {advisoryNumber && (
             <>
@@ -456,7 +456,10 @@ export default function AdvisoryForm({
           </div>
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12  bcgov-required ad-label">
-              Select at least one affected area:
+              Affected area:
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <span>Select at least one</span>
               <LightTooltip
                 arrow
                 title="Please select the park that your advisory is affecting.
@@ -467,69 +470,17 @@ export default function AdvisoryForm({
               >
                 <HelpIcon className="helpIcon" />
               </LightTooltip>
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${
-                  protectedAreaError !== "" ? "bcgov-select-error" : ""
-                }`}
-                error
-              >
-                <FormHelperText>{protectedAreaError}</FormHelperText>
-              </FormControl>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">Park(s)</div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${
-                  protectedAreaError !== "" ? "bcgov-select-error" : ""
-                }`}
-                error
-              >
-                <Select
-                  options={protectedAreas}
-                  value={selectedProtectedAreas}
-                  onChange={(e) => {
-                    setSelectedProtectedAreas(e);
-                  }}
-                  placeholder="Select a Park"
-                  isMulti="true"
-                  className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredLocation(advisoryData.protectedArea);
-                  }}
-                />
-              </FormControl>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">Site(s)</div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${
-                  protectedAreaError !== "" ? "bcgov-select-error" : ""
-                }`}
-                error
-              >
-                <Select
-                  options={sites}
-                  value={selectedSites}
-                  onChange={(e) => {
-                    setSelectedSites(e);
-                  }}
-                  placeholder="Select a Site"
-                  isMulti="true"
-                  className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredLocation(advisoryData.protectedArea);
-                  }}
-                />
-              </FormControl>
+              {protectedAreaError &&
+                <FormControl
+                  variant="outlined"
+                  className={`bcgov-select-form ${
+                    protectedAreaError !== "" ? "bcgov-select-error" : ""
+                  }`}
+                  error
+                >
+                  <FormHelperText>{protectedAreaError}</FormHelperText>
+                </FormControl>
+                }
             </div>
           </div>
           <div className="row">
@@ -663,6 +614,62 @@ export default function AdvisoryForm({
                     setSelectedFireZones(e);
                   }}
                   placeholder="Select a Fire Zone"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredLocation(advisoryData.protectedArea);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Park(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  protectedAreaError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  options={protectedAreas}
+                  value={selectedProtectedAreas}
+                  onChange={(e) => {
+                    setSelectedProtectedAreas(e);
+                  }}
+                  placeholder="Select a Park"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredLocation(advisoryData.protectedArea);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+              Site(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${
+                  protectedAreaError !== "" ? "bcgov-select-error" : ""
+                }`}
+                error
+              >
+                <Select
+                  options={sites}
+                  value={selectedSites}
+                  onChange={(e) => {
+                    setSelectedSites(e);
+                  }}
+                  placeholder="Select a Site"
                   isMulti="true"
                   className="bcgov-select"
                   onBlur={() => {

@@ -1112,14 +1112,17 @@ export default function Advisory({
           )}
           {!isLoadingPage && (
             <>
-              <div className="container-fluid">
+              <div className="container-fluid d-sm-flex align-items-center">
                 <Button
                   label="Back"
-                  styling="bcgov-normal-white btn mt10"
+                  styling="bcgov-normal-white btn"
                   onClick={() => {
                     setToBack();
                   }}
                 />
+                <h2 className="mt-3 mt-sm-0 mb-0 ml-sm-3">
+                  Create a new advisory
+                </h2>
               </div>
               <AdvisoryForm
                 mode={mode}
