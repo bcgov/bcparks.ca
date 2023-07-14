@@ -28,7 +28,7 @@ jobs:
           echo "API_TOKEN_SALT=salt" >> $GITHUB_ENV
           echo "ADMIN_JWT_SECRET=secret" >> $GITHUB_ENV
 
-      - run: npm run install
+      - run: npm install
         working-directory: src/cms
 
       - run: npm run test
@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: "18"
 
-      - run: npm run install
+      - run: npm install
         working-directory: src/gatsby
 
       - run: npm run test
