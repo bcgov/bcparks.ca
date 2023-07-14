@@ -103,28 +103,15 @@ module.exports = createCoreController(
             let pagination;
 
             ctx.query.populate = {
-                accessStatus: { fields: '*' },
-                eventType: { fields: '*' },
-                urgency: { fields: '*' },
-                advisoryStatus: { fields: '*' },
+                accessStatus: { fields: ["accessStatus", "precedence", "color", "groupLabel"] },
+                eventType: { fields: ["eventType", "precedence"] },
+                urgency: { fields: ["urgency", "code", "sequence", "color"] },
+                advisoryStatus: { fields: ["advisoryStatus", "code"] },
                 links: { fields: '*' },
-                regions: { fields: '*' },
-                sections: { fields: '*' },
-                managementAreas: { fields: '*' },
-                fireZones: { fields: '*' },
                 standardMessages: { fields: '*' },
                 sites: {
-                    fields: [
-                        "id", "siteNumber", "siteName", "orcsSiteNumber", "slug", "status"
-                    ]
-                },
-                fireCentres: { fields: '*' },
-                fireZones: { fields: '*' },
-                protectedAreas: {
-                    fields: [
-                        "id", "orcs", "protectedAreaName", "slug", "type", "status",
-                        "typeCode", "hasCampfireBan", "campfireBanEffectiveDate"
-                    ]
+                    fields: ["orcsSiteNumber", "slug"],
+                    filters: { isDisplayed: true, slug: { $notNull: true } }
                 }
             };
 
