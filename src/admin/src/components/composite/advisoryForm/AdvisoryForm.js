@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { cmsAxios } from "../../../axios_config";
 import PropTypes from "prop-types";
 import "./AdvisoryForm.css";
 import { Button } from "../../shared/button/Button";
@@ -245,6 +246,166 @@ export default function AdvisoryForm({
     { label: "Weeks", value: "w" },
     { label: "Months", value: "M" },
   ];
+
+  // START line of parks autofill functions
+  const qs = require('qs')
+  const selectedParks = []
+  const selectedManagementAreaNumbers = []
+  const selectedFireZoneNumbers = []
+  const uniqueParksSet = new Set()
+
+  // get parks from managementArea endpoint
+  const getParks = async (number) => {
+    const query = qs.stringify(
+      {
+        filters: {
+          managementAreaNumber: {
+            $eq: number
+          }
+        },
+        populate: ['protectedAreas']
+      },
+      {
+        encodeValuesOnly: true
+      }
+    )
+    const res = await cmsAxios
+      .get(`/management-areas?${query}`)
+      .catch(() => {console.log("error")})
+    const managementArea = res.data.data[0]
+    const parks = managementArea?.protectedAreas
+    parks.map(park => uniqueParksSet.add(park))
+  }
+
+  // get parks from fireZone endpoint
+  const getParksFromFireZone = async(number) => {
+    const query = qs.stringify(
+      {
+        filters: {
+          fireZoneNumber: {
+            $eq: number
+          }
+        },
+        populate: ['protectedAreas']
+      },
+      {
+        encodeValuesOnly: true
+      }
+    )
+    const res = await cmsAxios
+      .get(`/fire-zones?${query}`)
+      .catch(() => {console.log("error")})
+    const fireZone = res.data.data[0]
+    const parks = fireZone?.protectedAreas
+    parks.map(park => uniqueParksSet.add(park))
+  }
+
+  // unselect all jurisdictions (region/section/managementArea/fireCentre/fireZone) for a removed park
+  const removedParkJurisdictions = async(parkOrcs) => {
+    const query = qs.stringify(
+      {
+        populate: {
+          'managementAreas': {
+            populate: ['region', 'section']
+          },
+          'fireZones': {
+            populate: ['fireCentre']
+          }
+        }
+      },
+      {
+        encodeValuesOnly: true
+      }
+    )
+    const res = await cmsAxios
+      .get(`/protected-areas/${parkOrcs}?${query}`)
+      .catch(() => {console.log("error")})
+    const park = res.data
+    const managementArea = park.managementAreas[0]
+    const region = managementArea.region
+    const section = managementArea.section
+    const fireZone = park.fireZones[0]
+    const fireCentre = fireZone.fireCentre
+
+    if (managementArea) {
+      const newManagementAreas = selectedManagementAreas.filter(
+        selectedManagementArea => selectedManagementArea.obj.managementAreaNumber !== managementArea.managementAreaNumber
+      )
+      setSelectedManagementAreas(newManagementAreas)
+    }
+    if (region) {
+      const newRegions = selectedRegions.filter(
+        selectedRegion => selectedRegion.obj.regionNumber !== region.regionNumber
+      )
+      setSelectedRegions(newRegions)
+    }
+    if (section) {
+      const newSections = selectedSections.filter(
+        selectedSection => selectedSection.obj.sectionNumber !== section.sectionNumber
+      )
+      setSelectedSections(newSections)
+    }
+    if (fireZone) {
+      const newFireZones = selectedFireZones.filter(
+        selectedFireZone => selectedFireZone.obj.fireZoneNumber !== fireZone.fireZoneNumber
+      )
+      setSelectedFireZones(newFireZones)
+    }
+    if (fireCentre) {
+      const newFireCentres = selectedFireCentres.filter(
+        selectedFireCentre => selectedFireCentre.obj.fireCentreNumber !== fireCentre.fireCentreNumber
+      )
+      setSelectedFireCentres(newFireCentres)
+    }
+  }
+
+  // fetch parks based on selected areas (region/section/managementArea/fireCentre/fireZone)
+  const fetchParks = async (e, areaType) => {
+    if (areaType === "region" || areaType === "section") {
+      e?.forEach(area => {
+        const managementAreasArray = area.obj.managementAreas
+        managementAreasArray.map(managementArea =>
+          selectedManagementAreaNumbers.push(managementArea.managementAreaNumber)
+        )
+      })
+      await Promise.all(selectedManagementAreaNumbers.map(number => getParks(number)))
+    }
+    if (areaType === "fireCentre") {
+      e?.forEach(area => {
+        const fireZonesArray = area.obj.fireZones
+        fireZonesArray.map(fireZone =>
+          selectedFireZoneNumbers.push(fireZone.fireZoneNumber)
+        )
+      })
+      await Promise.all(selectedFireZoneNumbers.map(number => getParksFromFireZone(number)))
+    }
+    if (areaType === "managementArea" || areaType === "fireZone") {
+      e?.forEach(area => {
+        const parks = area.obj.protectedAreas
+        parks.map(park => uniqueParksSet.add(park))
+      })
+    }
+    // add formatted park objects to selectedProtectedAreas
+    const uniqueParksSetArray = Array.from(uniqueParksSet)
+    uniqueParksSetArray.map(park =>
+      selectedParks.push({
+        label: park.protectedAreaName,
+        value: park.id,
+        type: "protectedArea",
+        orcs: park.orcs
+      })
+    )
+    setSelectedProtectedAreas(selectedParks)
+  }
+
+  // update areas (region/section/managementArea/fireCentre/fireZone) if park is removed
+  const deletePark = async (e) => {
+    const deletedPark = selectedProtectedAreas.filter(park => !e?.includes(park))
+    const deletedParkOrcs = deletedPark[0]?.orcs
+    await removedParkJurisdictions(deletedParkOrcs)
+  }
+
+  // END line of parks autofill functions
 
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -500,6 +661,7 @@ export default function AdvisoryForm({
                   value={selectedRegions}
                   onChange={(e) => {
                     setSelectedRegions(e);
+                    fetchParks(e, "region")
                   }}
                   placeholder="Select a Region"
                   isMulti="true"
@@ -528,6 +690,7 @@ export default function AdvisoryForm({
                   value={selectedSections}
                   onChange={(e) => {
                     setSelectedSections(e);
+                    fetchParks(e, "section")
                   }}
                   placeholder="Select a Section"
                   isMulti="true"
@@ -556,6 +719,7 @@ export default function AdvisoryForm({
                   value={selectedManagementAreas}
                   onChange={(e) => {
                     setSelectedManagementAreas(e);
+                    fetchParks(e, "managementArea")
                   }}
                   placeholder="Select a Management Area"
                   isMulti="true"
@@ -584,6 +748,7 @@ export default function AdvisoryForm({
                   value={selectedFireCentres}
                   onChange={(e) => {
                     setSelectedFireCentres(e);
+                    fetchParks(e, "fireCentre")
                   }}
                   placeholder="Select a Fire Centre"
                   isMulti="true"
@@ -612,6 +777,7 @@ export default function AdvisoryForm({
                   value={selectedFireZones}
                   onChange={(e) => {
                     setSelectedFireZones(e);
+                    fetchParks(e, "fireZone")
                   }}
                   placeholder="Select a Fire Zone"
                   isMulti="true"
@@ -640,6 +806,7 @@ export default function AdvisoryForm({
                   value={selectedProtectedAreas}
                   onChange={(e) => {
                     setSelectedProtectedAreas(e);
+                    deletePark(e);
                   }}
                   placeholder="Select a Park"
                   isMulti="true"

@@ -61,7 +61,7 @@ export function getSections(cmsData, setCmsData) {
 
 export function getManagementAreas(cmsData, setCmsData) {
     const fields = qs.stringify({
-        fields: ['id', 'managementAreaName'],
+        fields: ['id', 'managementAreaNumber', 'managementAreaName'],
         populate: {
             protectedAreas: { fields: ['id', 'protectedAreaName', 'orcs'] },
             section: { fields: ['id'] },
@@ -102,7 +102,7 @@ export function getSites(cmsData, setCmsData) {
 export function getFireCentres(cmsData, setCmsData) {
     if (!cmsData.fireCentres) {
         const result = cmsAxios
-            .get(`/fire-centres?${querySort("fireCentreName")}&populate[fireZones][fields][0]=id`)
+            .get(`/fire-centres?${querySort("fireCentreName")}&populate=*`)
             .then((res) => {
                 const data = cmsData;
                 data.fireCentres = res.data.data;
@@ -118,7 +118,7 @@ export function getFireCentres(cmsData, setCmsData) {
 export function getFireZones(cmsData, setCmsData) {
     if (!cmsData.fireZones) {
         const result = cmsAxios
-            .get(`/fire-zones?${querySort("fireZoneName")}&populate[protectedAreas][fields][0]=id`)
+            .get(`/fire-zones?${querySort("fireZoneName")}&populate=*`)
             .then((res) => {
                 const data = cmsData;
                 data.fireZones = res.data.data;

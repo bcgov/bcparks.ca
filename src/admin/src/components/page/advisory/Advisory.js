@@ -417,6 +417,7 @@ export default function Advisory({
             label: p.protectedAreaName,
             value: p.id,
             type: "protectedArea",
+            orcs: p.orcs
           }));
           setProtectedAreas([...protectedAreas]);
           const regionData = res[1];
