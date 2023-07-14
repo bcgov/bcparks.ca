@@ -116,7 +116,7 @@ const AdvisoryFilter = ({
   }
 
   const getEventType = () => {
-    return eventTypes.find((o) => o.value.toLowerCase() === getType()) || defaultEventType
+    return eventTypes.find((o) => o.value === getType()) || defaultEventType
   }
 
 
