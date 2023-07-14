@@ -62,7 +62,7 @@ cms:
     smtpReplyTo: noreply@gov.bc.ca
     cacheEnabled: true
     cacheType: redis
-    cacheTtl: 300000
+    cacheTtl: 1800000
     enableGraphQLPlayground: true
 
   service:
