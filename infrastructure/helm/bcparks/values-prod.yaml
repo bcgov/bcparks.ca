@@ -25,7 +25,7 @@ cms:
     externalUrl: https://cms.bcparks.ca
 
   hpa:
-    minReplicas: 3
+    minReplicas: 2
     maxReplicas: 4
     cpuUtilizationThreshold: 50
     memoryUtilizationThreshold: 85
