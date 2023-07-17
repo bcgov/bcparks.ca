@@ -179,7 +179,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       "/public-advisories/count"
 
     if (advisoryType !== "all") {
-      q += `?&queryText&_eventType=${advisoryType}`
+      q += `?queryText&_eventType=${advisoryType}`
     }
 
     const newApiCountCall = apiUrl + q
@@ -191,8 +191,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const getApiQuery = useCallback(
     advisoryTypeFilter => {
       // Order by date and exclude unpublished parks
-      let q =
-        "?populate=*&queryText"
+      let q = "?queryText"
 
       let useParksFilter = isParksFilter
       let useKeywordFilter = isKeywordFilter
@@ -261,7 +260,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
             // Get count
             let apiCount = apiUrl + "/public-advisories/count" + q
-            if (q === "?populate=*&queryText") {
+            if (q === "?queryText") {
              apiCount = apiUrl + "/public-advisories/count"
             }
             
