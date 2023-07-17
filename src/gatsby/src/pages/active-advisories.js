@@ -98,7 +98,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   
         const formattedEventTypes = response.data.data.map((obj) => ({
           label: obj.eventType,
-          value: obj.eventType.toLowerCase(),
+          value: obj.eventType,
         }));
   
         formattedEventTypes.splice(0, 0, defaultAdvisoryEventType);

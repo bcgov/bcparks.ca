@@ -28,10 +28,10 @@ jobs:
           echo "API_TOKEN_SALT=salt" >> $GITHUB_ENV
           echo "ADMIN_JWT_SECRET=secret" >> $GITHUB_ENV
 
-      - run: yarn install
+      - run: npm install
         working-directory: src/cms
 
-      - run: yarn test
+      - run: npm run test
         working-directory: src/cms
   test-gatsby:
     runs-on: ubuntu-latest
@@ -43,8 +43,8 @@ jobs:
         with:
           node-version: "18"
 
-      - run: yarn install
+      - run: npm install
         working-directory: src/gatsby
 
-      - run: yarn test
+      - run: npm run test
         working-directory: src/gatsby

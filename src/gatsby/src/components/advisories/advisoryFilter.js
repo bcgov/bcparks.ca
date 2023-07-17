@@ -130,7 +130,7 @@ const AdvisoryFilter = ({
   }
 
   const getEventType = () => {
-    return eventTypes.find((o) => o.value.toLowerCase() === getType()) || defaultEventType
+    return eventTypes.find((o) => o.value === getType()) || defaultEventType
   }
 
 
@@ -181,7 +181,7 @@ const AdvisoryFilter = ({
             options={eventTypes}
             getOptionLabel={(option) => option.label}
             onChange={(event, obj) => {
-                handleTypeFilterChange(obj ? obj.value.toLowerCase() : defaultEventType.value)
+                handleTypeFilterChange(obj ? obj.value : defaultEventType.value)
               }
             }
             renderInput={(params) =>
