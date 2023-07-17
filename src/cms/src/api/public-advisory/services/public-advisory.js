@@ -32,7 +32,7 @@ const buildQuery = function (query) {
     }
 
     if (query._eventType && query._eventType.length > 0) {
-        typeSearch = { eventType: { eventType: { $eq: query._eventType } } };
+        typeSearch = { eventType: { eventType: { $startsWith: query._eventType } } };
     }
 
     query.filters = {
@@ -49,6 +49,22 @@ const buildQuery = function (query) {
                 ...[textSearch]
             ]
         }
+    };
+
+    query.populate = {
+        accessStatus: true,
+        advisoryStatus: true,
+        eventType: true,
+        fireCentres: true,
+        fireZones: true,
+        links: true,
+        managementAreas: true,
+        protectedAreas: { fields: ["protectedAreaName", "slug", "isDisplayed", "publishedAt"] },
+        regions: true,
+        sections: true,
+        sites: { fields: ["siteName", "slug", "isDisplayed", "publishedAt"] },
+        standardMesages: true,
+        urgency: true
     };
 
     return query;
