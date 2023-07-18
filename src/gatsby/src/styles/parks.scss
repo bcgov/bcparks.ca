@@ -126,7 +126,8 @@
 }
 
 .blue-button:hover,
-.yellow-button:hover {
+.yellow-button:hover,
+.yellow-button:focus-visible {
   background-color: transparent !important;
   border: 2px solid $colorGold !important;
   color: $colorBlue !important;
