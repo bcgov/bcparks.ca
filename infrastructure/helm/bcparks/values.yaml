@@ -43,10 +43,10 @@ cms:
 
   resources:
     limits:
-      cpu: "1"
+      cpu: 500m
       memory: 2Gi
     requests:
-      cpu: 250m
+      cpu: 125m
       memory: 250Mi
 
   env:
@@ -62,7 +62,7 @@ cms:
     smtpReplyTo: noreply@gov.bc.ca
     cacheEnabled: true
     cacheType: redis
-    cacheTtl: 300000
+    cacheTtl: 1800000
     enableGraphQLPlayground: true
 
   service:

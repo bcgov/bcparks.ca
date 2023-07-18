@@ -20,10 +20,10 @@ images:
 cms:
   resources:
     limits:
-      cpu: "1"
+      cpu: 500m
       memory: 2Gi
     requests:
-      cpu: 250m
+      cpu: 125m
       memory: 250Mi
 
   env:

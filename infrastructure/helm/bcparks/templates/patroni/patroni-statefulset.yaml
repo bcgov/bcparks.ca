@@ -113,9 +113,11 @@ spec:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           readinessProbe:
-            initialDelaySeconds: 5
-            timeoutSeconds: 5
-            failureThreshold: 4
+            initialDelaySeconds: 10
+            timeoutSeconds: 20
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 5
             exec:
               command:
                 - /usr/share/scripts/patroni/health_check.sh
