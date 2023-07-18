@@ -26,9 +26,9 @@ async function up(knex) {
 
         await knex('access_statuses').where({ id: 6 }).update({ precedence: 99, color: 'blue', group_label: 'Open' });
 
-        await knex('access_statuses').where({ id: 9 }).update({ precedence: 100, color: 'red', group_label: 'Limited access' });
+        //await knex('access_statuses').where({ id: 9 }).update({ precedence: 100, color: 'red', group_label: 'Limited access' });
 
-        await knex('access_statuses').where({ id: 5 }).update({ precedence: 100, color: 'red', group_label: 'Closed' });
+        //await knex('access_statuses').where({ id: 5 }).update({ precedence: 100, color: 'red', group_label: 'Closed' });
     }
 }
 
