@@ -3,7 +3,7 @@ module.exports = ({ env }) => {
     graphql: {
       config: {
         shadowCRUD: true,
-        amountLimit: 500,
+        amountLimit: 2500,
         depthLimit: 7,
         playgroundAlways: process.env.ENABLE_GRAPHQL_PLAYGROUND || false,
         apolloServer: {
