@@ -1165,7 +1165,7 @@ export default function FindAPark({ location, data }) {
                               </Card>
                             </div>
                           ))}
-                          <div className="small-flex-display p20t">
+                          <div className="small-flex-display pagination-text">
                             <div className="small-m-auto">
                               {searchResults.length > 0 && (
                                 <>
@@ -1177,7 +1177,7 @@ export default function FindAPark({ location, data }) {
                                   {currentPage * itemsPerPage > totalResults
                                     ? totalResults
                                     : currentPage * itemsPerPage}{" "}
-                                  of {totalResults}
+                                  of {totalResults} results
                                 </>
                               )}
                               {searchResults.length === 0 && (
