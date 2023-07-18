@@ -1100,3 +1100,8 @@ div[class$="-singleValue"] {
 head {
   display: none !important;
 }
+
+.pagination-text {
+  margin-top: 32px;
+  color: $colorBlue;
+}
