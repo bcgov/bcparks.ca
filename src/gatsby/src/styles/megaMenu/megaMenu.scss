@@ -70,7 +70,7 @@ a.btn.book-campsite-btn {
   line-height: 40px;
   height: 40px;
   border-radius: 20px;
-  &:hover {
+  &:hover, &:focus, &:focus-visible {
     background-color: $colorWhite;
     color: $colorBlue;
     text-decoration: underline;

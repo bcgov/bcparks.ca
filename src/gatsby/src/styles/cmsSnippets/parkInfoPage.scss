@@ -4,7 +4,7 @@
   background-color: $colorGold !important;
   border: 2px solid $colorGold !important;
 
-  &:hover, &:focus-visible{
+  &:hover{
     background-color: transparent !important;
     border: 2px solid $colorGold !important;
     text-decoration: underline;
