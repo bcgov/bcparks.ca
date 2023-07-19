@@ -19,10 +19,14 @@
   }
 }
 
+h3.subtitle {
+  color: $colorGreyDark;
+  font-size: 1.25rem;
+}
+
 .search-body {
   background-color: $colorGreyLight !important;
 }
-
 
 .park-search { 
   .park-search-text-box {
@@ -567,6 +571,10 @@ div[class$="-singleValue"] {
   margin-bottom: 20px;
 }
 
+.mb32 {
+  margin-bottom: 32px;
+}
+
 .h50p,
 .h50p .MuiInputBase-root,
 .h50p [class*="-control"],
@@ -830,13 +838,12 @@ div[class$="-singleValue"] {
     padding: 0px !important;
   }
 
-  a.map-link {
-    font-size: 1rem;
-    color: $colorBlue;
-    // this was failing accessibility, so it's been changed to behave like
-    // text links in body copy
-    &:hover {
-      color: $colorGold;
+  .park-links {
+    a.map-link {
+      margin-left: 8px;
+      svg.MuiSvgIcon-root {
+        font-size: 1rem;
+      }
     }
   }
 
