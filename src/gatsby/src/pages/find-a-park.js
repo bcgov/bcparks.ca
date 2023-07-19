@@ -43,6 +43,7 @@ import campfireBanIcon from "../../static/icons/campfire-ban.svg"
 
 import "../styles/search.scss"
 import { addSmallImagePrefix, handleImgError } from "../utils/helpers";
+import { AnchorLink } from "gatsby-plugin-anchor-links";
 
 export const query = graphql`
   {
@@ -1001,19 +1002,19 @@ export default function FindAPark({ location, data }) {
                                                 <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
                                               }
                                               {r.parkFacilities.includes('vehicle-accessible-camping') ? (
-                                                <Link href={`/${r.slug}/#park-camping-details-container`}>
+                                                <AnchorLink to={`/${r.slug}/#park-camping-details-container`}>
                                                   <p aria-label="See all facilities and activities">see all</p>
-                                                </Link>
+                                                </AnchorLink>
                                               ) : (
                                                 (r.parkActivities.length > 0 || r.parkFacilities.length > 0) && (
                                                   r.parkFacilities.length > 0 ? (
-                                                    <Link href={`/${r.slug}/#park-facility-container`}> 
+                                                    <AnchorLink to={`/${r.slug}/#park-facility-container`}> 
                                                       <p aria-label="See all facilities and activities">see all</p>
-                                                    </Link>
+                                                    </AnchorLink>
                                                   ) : (
-                                                    <Link href={`/${r.slug}/#park-activity-container`}> 
+                                                    <AnchorLink to={`/${r.slug}/#park-activity-container`}> 
                                                       <p aria-label="See all facilities and activities">see all</p>
-                                                    </Link>
+                                                    </AnchorLink>
                                                   )
                                                 )
                                               )}
@@ -1141,9 +1142,9 @@ export default function FindAPark({ location, data }) {
                                               <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
                                             }
                                             {(r.parkActivities.length > 0 || r.parkFacilities.length > 0) &&
-                                              <Link href={`/${r.slug}/#park-camping-details-container`}>
+                                              <AnchorLink to={`/${r.slug}/#park-camping-details-container`}>
                                                 <p aria-label="See all facilities and activities">see all</p>
-                                              </Link>
+                                              </AnchorLink>
                                             }
                                           </div>
                                           <div className="text-blue">
