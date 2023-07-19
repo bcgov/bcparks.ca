@@ -59,10 +59,10 @@ const buildQuery = function (query) {
         fireZones: true,
         links: true,
         managementAreas: true,
-        protectedAreas: { fields: ["protectedAreaName", "slug", "isDisplayed", "publishedAt"] },
+        protectedAreas: { fields: ["protectedAreaName", "slug", "isDisplayed", "publishedAt", "orcs"] },
         regions: true,
         sections: true,
-        sites: { fields: ["siteName", "slug", "isDisplayed", "publishedAt"] },
+        sites: { fields: ["siteName", "slug", "isDisplayed", "publishedAt", "orcsSiteNumber"] },
         standardMesages: true,
         urgency: true
     };
