@@ -51,7 +51,7 @@ function ParkAccessFromAdvisories(advisories) {
       accessStatuses.push({
         precedence: advisory.accessStatus.precedence,
         color: advisory.accessStatus.color,
-        text: advisory.accessStatus.accessStatus,
+        text: advisory.accessStatus.groupLabel,
       })
     }
     if (advisory.access_status_id) {
