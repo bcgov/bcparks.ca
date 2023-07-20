@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from "react"
-import { graphql } from "gatsby"
+import { graphql, Link as GatsbyLink } from "gatsby"
 import axios from "axios"
 import { orderBy } from "lodash"
 import {
@@ -43,7 +43,6 @@ import campfireBanIcon from "../../static/icons/campfire-ban.svg"
 
 import "../styles/search.scss"
 import { addSmallImagePrefix, handleImgError } from "../utils/helpers";
-import { AnchorLink } from "gatsby-plugin-anchor-links";
 
 export const query = graphql`
   {
@@ -1002,19 +1001,19 @@ export default function FindAPark({ location, data }) {
                                                 <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
                                               }
                                               {r.parkFacilities.includes('vehicle-accessible-camping') ? (
-                                                <AnchorLink to={`/${r.slug}/#park-camping-details-container`}>
+                                                <GatsbyLink to={`/${r.slug}/#park-camping-details-container`}>
                                                   <p aria-label="See all facilities and activities">see all</p>
-                                                </AnchorLink>
+                                                </GatsbyLink>
                                               ) : (
                                                 (r.parkActivities.length > 0 || r.parkFacilities.length > 0) && (
                                                   r.parkFacilities.length > 0 ? (
-                                                    <AnchorLink to={`/${r.slug}/#park-facility-container`}> 
+                                                    <GatsbyLink to={`/${r.slug}/#park-facility-container`}> 
                                                       <p aria-label="See all facilities and activities">see all</p>
-                                                    </AnchorLink>
+                                                    </GatsbyLink>
                                                   ) : (
-                                                    <AnchorLink to={`/${r.slug}/#park-activity-container`}> 
+                                                    <GatsbyLink to={`/${r.slug}/#park-activity-container`}> 
                                                       <p aria-label="See all facilities and activities">see all</p>
-                                                    </AnchorLink>
+                                                    </GatsbyLink>
                                                   )
                                                 )
                                               )}
@@ -1141,11 +1140,23 @@ export default function FindAPark({ location, data }) {
                                             {r.parkActivities.includes('pets-on-leash') &&
                                               <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
                                             }
-                                            {(r.parkActivities.length > 0 || r.parkFacilities.length > 0) &&
-                                              <AnchorLink to={`/${r.slug}/#park-camping-details-container`}>
+                                            {r.parkFacilities.includes('vehicle-accessible-camping') ? (
+                                              <GatsbyLink to={`/${r.slug}/#park-camping-details-container`}>
                                                 <p aria-label="See all facilities and activities">see all</p>
-                                              </AnchorLink>
-                                            }
+                                              </GatsbyLink>
+                                            ) : (
+                                              (r.parkActivities.length > 0 || r.parkFacilities.length > 0) && (
+                                                r.parkFacilities.length > 0 ? (
+                                                  <GatsbyLink to={`/${r.slug}/#park-facility-container`}> 
+                                                    <p aria-label="See all facilities and activities">see all</p>
+                                                  </GatsbyLink>
+                                                ) : (
+                                                  <GatsbyLink to={`/${r.slug}/#park-activity-container`}> 
+                                                    <p aria-label="See all facilities and activities">see all</p>
+                                                  </GatsbyLink>
+                                                )
+                                              )
+                                            )}
                                           </div>
                                           <div className="text-blue">
                                             <ParkAccessStatus

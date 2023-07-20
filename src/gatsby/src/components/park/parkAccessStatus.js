@@ -1,9 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { graphql, useStaticQuery } from "gatsby"
+import { graphql, useStaticQuery, Link } from "gatsby"
 import { Card, CardHeader, Avatar } from "@mui/material"
 import { styled } from '@mui/material/styles';
-import { AnchorLink } from "gatsby-plugin-anchor-links";
 
 import blueStatusIcon from "../../images/park/blue-status-64.png"
 import redStatusIcon from "../../images/park/red-status-64.png"
@@ -120,7 +119,7 @@ export default function ParkAccessStatus({ advisories, slug }) {
             title={parkStatusText}
           />
       ) : (
-        <AnchorLink to={`/${slug}/#park-advisory-details-container`}>
+        <Link to={`/${slug}/#park-advisory-details-container`}>
           <CardHeader
             className="access-icon"
             avatar={
@@ -134,7 +133,7 @@ export default function ParkAccessStatus({ advisories, slug }) {
             }
             title={parkStatusText}
           />
-        </AnchorLink>
+        </Link>
       )}
     </StyledCard>
   )

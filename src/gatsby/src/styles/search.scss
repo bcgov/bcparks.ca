@@ -916,7 +916,7 @@ div[class$="-singleValue"] {
       &--left {
         display: flex;
         align-items: flex-end;
-        a.MuiTypography-root {
+        a {
           color: $colorBlue;
           text-decoration-color: $colorBlue;
           margin-left: 4px;
@@ -928,7 +928,7 @@ div[class$="-singleValue"] {
       }
       &--right {
         min-width: 160px;
-        a.MuiTypography-root {
+        a {
           text-decoration-color: $colorBlue;
         }
       }
