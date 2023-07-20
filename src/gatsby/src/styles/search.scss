@@ -260,7 +260,8 @@ h3.subtitle {
   }
 }
 
-.park-filter-dialog {
+.park-filter-dialog,
+.park-links-modal {
   font-size: $bodyFont !important;
   font-family: $globalFont;
 
@@ -435,6 +436,31 @@ div[class$="-singleValue"] {
     }
   }
 }
+.park-links-modal {
+  .container {
+    max-width: 300px;
+    padding: 16px;
+    .bcgov-button {
+      width: 100%;
+      &.link-button {
+        border: 1px solid #c7c7c7 !important;
+        margin-top: 8px;
+        &:hover {
+          color: $colorWhite !important;
+          border: 1px solid $colorBlue !important;
+        }
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+        svg.MuiSvgIcon-root {
+          font-size: 1rem;
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+}
 
 .pb20 {
   padding-bottom: 20px;
@@ -605,6 +631,7 @@ div[class$="-singleValue"] {
   background-color: $colorWhite !important;
   font-family: $globalFont;
   box-shadow: unset !important;
+  border: 1px solid $colorBlue !important;
 }
 
 .bcgov-normal-white:hover {
@@ -836,6 +863,12 @@ div[class$="-singleValue"] {
 
   .search-results-list {
     padding: 0px !important;
+    button {
+      height: 50px;
+      @media screen and (min-width: $mdBreakpoint) {
+        height: 60px;
+      }
+    }
   }
 
   .park-links {
