@@ -1,5 +1,51 @@
 @import "variables.scss";
 
+// font
+h2 {
+  a {
+    color: $colorBlue;
+    text-decoration: none;
+    &:hover {
+      color: $colorBlue !important;
+      text-decoration: underline;
+    }
+    svg.MuiSvgIcon-root {
+      font-size: 1.25rem;
+      rotate: 270deg;
+      margin: 0 0 4px 8px;
+    }
+  }
+}
+h3 {
+  color: #494949;
+  font-size: 1.25rem;
+}
+
+// table
+table {
+  thead {
+    th {
+      border-top: 2px solid #ced4da !important;
+      background-color: $colorGreyLight !important;
+    }
+  }
+  tbody {
+    tr:last-of-type {
+      td {
+        border-bottom: 1px solid #ced4da;
+      }
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      li {
+        list-style: none;
+      }
+    }
+  }
+}
+
+// filter
 .filters {
   .btn {
     width: 42px;
@@ -37,8 +83,12 @@
   }
 }
 
+// list
 .lists {
   .list {
     margin-top: 48px;
+  }
+  .park-list {
+    margin-bottom: 32px;
   }
 }
