@@ -459,8 +459,19 @@
 .MuiBreadcrumbs-root {
   a {
     color: $colorBlueLight;
-    &:hover {
+    &:hover, &:focus, &:hover:focus {
       color: #0000f3;
     }
+  }
+}
+
+// park photo gallery
+.yarl__slide_description_container {
+  bottom: 10%;
+  @media (min-width: $smBreakpoint) {
+    bottom: 0;
+  }
+  .yarl__slide_description {
+    text-align: center;
   }
 }

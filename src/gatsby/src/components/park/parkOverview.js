@@ -47,7 +47,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
     setHeight(ref.current.clientHeight)
   }, [expanded])
 
-  const isLong = height >= 260
+  const isLong = height > 260
 
   const $ = cheerio.load(parkOverview);
   $('a').attr('tabindex', '-1')

@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { graphql, useStaticQuery } from "gatsby"
-import { Card, CardHeader, Avatar, Link } from "@mui/material"
+import { graphql, useStaticQuery, Link } from "gatsby"
+import { Card, CardHeader, Avatar } from "@mui/material"
 import { styled } from '@mui/material/styles';
 
 import blueStatusIcon from "../../images/park/blue-status-64.png"
@@ -51,7 +51,7 @@ function ParkAccessFromAdvisories(advisories) {
       accessStatuses.push({
         precedence: advisory.accessStatus.precedence,
         color: advisory.accessStatus.color,
-        text: advisory.accessStatus.accessStatus,
+        text: advisory.accessStatus.groupLabel,
       })
     }
     if (advisory.access_status_id) {
@@ -119,7 +119,7 @@ export default function ParkAccessStatus({ advisories, slug }) {
             title={parkStatusText}
           />
       ) : (
-        <Link href={`/${slug}/#park-advisory-details-container`}>
+        <Link to={`/${slug}/#park-advisory-details-container`}>
           <CardHeader
             className="access-icon"
             avatar={
