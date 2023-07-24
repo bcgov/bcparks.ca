@@ -292,6 +292,7 @@ export default function AdvisoryForm({
                 }}
                 className="bcgov-input"
                 variant="outlined"
+                inputProps={{ maxLength: 255 }}
                 InputProps={{ ...headlineInput }}
                 error={headlineError !== ""}
                 helperText={headlineError}
