@@ -10,7 +10,7 @@ import "../../styles/advisories/advisoryCard.scss"
 const AdvisoryCard = ({ advisory, index }) => {
   const [open, setOpen] = useState(false)
   const checkRelation = (orcs, orcsSite) => {
-    return orcsSite.includes(orcs.toString())
+    return orcsSite?.includes(orcs?.toString())
   }
 
   return (
