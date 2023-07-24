@@ -1,9 +1,10 @@
 import React, { useState } from "react"
 import { graphql, useStaticQuery, Link as GatsbyLink } from "gatsby"
 import { Breadcrumbs, Link } from "@mui/material"
+import BlockIcon from '@mui/icons-material/Block'
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
-import moment from "moment"
 import _ from "lodash"
+import moment from "moment"
 
 import Header from "../../components/header"
 import Footer from "../../components/footer"
@@ -35,7 +36,7 @@ const ParkLink = ({ park }) => {
     }
   }
 
-  const fmt = "MMMM D, yyyy"
+  const fmt = "MMM D, yyyy"
   const yr = "year-round"
   const thisYear = new Date().getFullYear()
   let parkDates = datePhrase(parkOperation.openDate, parkOperation.closeDate, fmt, yr)
@@ -73,7 +74,7 @@ const ParkLink = ({ park }) => {
       })
 
     let groupedByYear = []
-    const fmt = "MMMM D"
+    const fmt = "MMM D"
     const yr = "Year-round"
     let prevYear = 0
     let phrase = ""
@@ -143,6 +144,7 @@ const ParkLink = ({ park }) => {
         </GatsbyLink>
       </h2>
       <p>This park is open to public access from {parkDates}.</p>
+      {/* display table list if the screen size is bigger than 768 px */}
       <table className="table">
         <thead className="thead-light">
           <tr>
@@ -155,7 +157,21 @@ const ParkLink = ({ park }) => {
         <tbody>
           {subAreas.map((subArea, index) => (
             <tr key={index}>
-              <td>{subArea.parkSubArea}</td>
+              <td>
+                {subArea.parkSubArea}
+                {!subArea.isOpen &&
+                  <>
+                    <br />
+                    {"("}<BlockIcon /> Temporarily closed{")"}
+                  </>
+                }
+                {subArea.isCleanAirSite &&
+                  <>
+                    <br />
+                    {"("}Clean air site{")"}
+                  </>
+                }
+              </td>
               <td>
                 <ul>
                   {subArea.serviceDates.map((dateRange, index) =>
@@ -164,11 +180,15 @@ const ParkLink = ({ park }) => {
                 </ul>
               </td>
               <td>
-                <ul>
-                  {subArea.resDates.map((dateRange, index) =>
-                    <li key={index}>{dateRange}</li>
-                  )}
-                </ul>
+                {subArea.resDates.length > 0 ? (
+                  <ul>
+                    {subArea.resDates.map((dateRange, index) =>
+                      <li key={index}>{dateRange}</li>
+                    )}
+                  </ul>
+                ) : (
+                  <>No {"("}first come, first served{")"}</>
+                )}
               </td>
               <td>
                 {subArea.offSeasonDates.length > 0 ? (
@@ -185,6 +205,56 @@ const ParkLink = ({ park }) => {
           ))}
         </tbody>
       </table>
+      {/* display table list if the screen size is bigger than 768 px */}
+      <div className="card border-secondary">
+        {subAreas.map((subArea, index) => (
+          <div className="card-body" key={index}>
+            <div className="card-title">
+              <h4>{subArea.parkSubArea}</h4>
+              {!subArea.isOpen &&
+                <h5>{"("}<BlockIcon /> Temporarily closed{")"}</h5>
+              }
+              {subArea.isCleanAirSite &&
+                <h5>{"("}Clean air site{")"}</h5>
+              }
+            </div>
+            <ul className="list-group list-group-flush">
+              <li className="list-group-item">
+                <div className="list-group-item--container">
+                  <b>Main Operating season</b>
+                  <ul>
+                    {subArea.serviceDates.map((dateRange, index) =>
+                      <li key={index}>{dateRange}</li>
+                    )}
+                  </ul>
+                </div>
+                <div className="list-group-item--container">
+                  <b>Booking required</b>
+                  {subArea.resDates.length > 0 ? (
+                    <ul>
+                      {subArea.resDates.map((dateRange, index) =>
+                        <li key={index}>{dateRange}</li>
+                      )}
+                    </ul>
+                  ) : (
+                    <>No {"("}first come, first served{")"}</>
+                  )}
+                </div>
+                {subArea.offSeasonDates.length > 0 && (
+                  <div className="list-group-item--container">
+                    <b>Winter season</b>
+                    <ul>
+                      {subArea.offSeasonDates.map((dateRange, index) =>
+                        <li key={index}>{dateRange}</li>
+                      )}
+                    </ul>
+                  </div>
+                )}
+              </li>
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
@@ -208,6 +278,8 @@ const ParkOperatingDatesPage = () => {
             closeDate
           }
           parkOperationSubAreas {
+            isOpen
+            isCleanAirSite
             parkSubArea
             parkOperationSubAreaDates {
               isActive

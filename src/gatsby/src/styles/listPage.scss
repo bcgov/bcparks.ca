@@ -20,9 +20,27 @@ h3 {
   color: #494949;
   font-size: 1.25rem;
 }
+h4 {
+  color: $colorBlue;
+  font-size: 1.125rem;
+  margin-bottom: 0;
+}
+h5 {
+  color: $colorBlue;
+  font-size: 1rem;
+  margin-bottom: 0;
+  svg.MuiSvgIcon-root {
+    font-size: 1rem;
+    color: red;
+  }
+}
 
 // table
 table {
+  display: none;
+  @media (min-width: $mdBreakpoint) {
+    display: table;
+  }
   thead {
     th {
       border-top: 2px solid #ced4da !important;
@@ -40,6 +58,53 @@ table {
       padding: 0;
       li {
         list-style: none;
+      }
+    }
+    svg.MuiSvgIcon-root {
+      color: red;
+    }
+  }
+}
+
+// card
+.card {
+  display: flex;
+  @media (min-width: $mdBreakpoint) {
+    display: none;
+  }
+  .card-body {
+    .card-title {
+      margin-bottom: 0;
+      padding: 24px;
+    }
+    .list-group {
+      .list-group-item {
+        border-top: 0;
+        border-bottom:  1px solid #ced4da;
+        margin: 0 24px;
+        padding: 0 0 24px 0;
+        &--container {
+          b {
+            color: #494949;
+          }
+          ul {
+            margin: 0;
+            padding: 0;
+            li {
+              list-style: none;
+            }
+          }
+          & + .list-group-item--container {
+            margin-top: 8px;
+          }
+        }
+      }
+    }
+    &:last-of-type {
+      .list-group {
+        .list-group-item {
+          border-bottom: 0;
+        }
       }
     }
   }
