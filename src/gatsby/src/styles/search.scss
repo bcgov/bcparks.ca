@@ -19,10 +19,14 @@
   }
 }
 
+h3.subtitle {
+  color: $colorGreyDark;
+  font-size: 1.25rem;
+}
+
 .search-body {
   background-color: $colorGreyLight !important;
 }
-
 
 .park-search { 
   .park-search-text-box {
@@ -256,7 +260,8 @@
   }
 }
 
-.park-filter-dialog {
+.park-filter-dialog,
+.park-links-modal {
   font-size: $bodyFont !important;
   font-family: $globalFont;
 
@@ -431,6 +436,31 @@ div[class$="-singleValue"] {
     }
   }
 }
+.park-links-modal {
+  .container {
+    max-width: 300px;
+    padding: 16px;
+    .bcgov-button {
+      width: 100%;
+      &.link-button {
+        border: 1px solid #c7c7c7 !important;
+        margin-top: 8px;
+        &:hover {
+          color: $colorWhite !important;
+          border: 1px solid $colorBlue !important;
+        }
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+        svg.MuiSvgIcon-root {
+          font-size: 1rem;
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+}
 
 .pb20 {
   padding-bottom: 20px;
@@ -567,6 +597,10 @@ div[class$="-singleValue"] {
   margin-bottom: 20px;
 }
 
+.mb32 {
+  margin-bottom: 32px;
+}
+
 .h50p,
 .h50p .MuiInputBase-root,
 .h50p [class*="-control"],
@@ -597,6 +631,7 @@ div[class$="-singleValue"] {
   background-color: $colorWhite !important;
   font-family: $globalFont;
   box-shadow: unset !important;
+  border: 1px solid $colorBlue !important;
 }
 
 .bcgov-normal-white:hover {
@@ -828,15 +863,20 @@ div[class$="-singleValue"] {
 
   .search-results-list {
     padding: 0px !important;
+    button {
+      height: 50px;
+      @media screen and (min-width: $mdBreakpoint) {
+        height: 60px;
+      }
+    }
   }
 
-  a.map-link {
-    font-size: 1rem;
-    color: $colorBlue;
-    // this was failing accessibility, so it's been changed to behave like
-    // text links in body copy
-    &:hover {
-      color: $colorGold;
+  .park-links {
+    a.map-link {
+      margin-left: 8px;
+      svg.MuiSvgIcon-root {
+        font-size: 1rem;
+      }
     }
   }
 

@@ -22,6 +22,7 @@ import CancelIcon from "@mui/icons-material/Cancel"
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import ExpandMore from "@mui/icons-material/ExpandMore"
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import Carousel from "react-material-ui-carousel"
 import { scrollIntoView } from "seamless-scroll-polyfill";
 
@@ -31,6 +32,7 @@ import Seo from "../components/seo"
 import ParkAccessStatus from "../components/park/parkAccessStatus"
 import NoSearchResults from "../components/search/noSearchResults"
 import SearchFilter from "../components/search/searchFilter"
+import ParkLinksModal from "../components/search/parkLinksModal"
 
 import parksLogo from "../images/Mask_Group_5.png"
 import campingIcon from "../../static/icons/vehicle-accessible-camping.svg"
@@ -202,6 +204,7 @@ export default function FindAPark({ location, data }) {
   const [isLoading, setIsLoading] = useState(true)
 
   const [openFilter, setOpenFilter] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
 
   const searchRef = useRef(null)
   const breadcrumbs = [
@@ -303,6 +306,10 @@ export default function FindAPark({ location, data }) {
 
   const handleClickOpenFilter = () => {
     setOpenFilter(true)
+  }
+
+  const handleClickOpenModal = () => {
+    setOpenModal(true)
   }
 
   const handleSearch = () => {
@@ -514,7 +521,7 @@ export default function FindAPark({ location, data }) {
               <div className="col-lg-9 col-md-12 col-sm-12" ref={searchRef}>
                 <div className="search-results-list container">
                   <div className="row p20t d-flex">
-                    <div className="col-8 d-none d-lg-block">
+                    <div className="col-12 d-none d-lg-block">
                       {filterSelections.length > 0 && filterSelections.map((f, index) => (
                         <Chip
                           key={index}
@@ -526,14 +533,6 @@ export default function FindAPark({ location, data }) {
                           deleteIcon={<CancelIcon className="close-icon" />}
                         />
                       ))}
-                    </div>
-                    <div className="col col-lg-4 text-lg-right">
-                      <a
-                        className="map-link"
-                        href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000"
-                      >
-                        Find parks on a map
-                      </a>
                     </div>
                   </div>
                 </div>
@@ -575,11 +574,11 @@ export default function FindAPark({ location, data }) {
                 </div>
                 <div className="search-results-list container">
                   <div className="row">
-                    <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12 p10t">
+                    <div className="col-md-4 col-sm-12 col-xs-12 mt-3">
                       <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
                         <Button
                           fullWidth
-                          className="bcgov-normal-blue mobile-search-element-height h50p"
+                          className="bcgov-normal-blue mobile-search-element-height"
                           onClick={() => {
                             handleSearch()
                           }}
@@ -588,14 +587,25 @@ export default function FindAPark({ location, data }) {
                         </Button>
                       </div>
                     </div>
-                    <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12 p10t">
+                    <div className="col-md-4 col-sm-12 col-xs-12 mt-3">
                       <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
                         <Button
                           variant="outlined"
                           onClick={handleClickOpenFilter}
-                          className="bcgov-button bcgov-normal-white h50p font-weight-bold"
+                          className="bcgov-button bcgov-normal-white font-weight-bold"
                         >
                           Filter
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="col-md-4 col-sm-12 col-xs-12 mt-3">
+                      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
+                        <Button
+                          variant="outlined"
+                          onClick={handleClickOpenModal}
+                          className="bcgov-button bcgov-normal-white font-weight-bold"
+                        >
+                          More ways to find a park
                         </Button>
                       </div>
                     </div>
@@ -607,9 +617,10 @@ export default function FindAPark({ location, data }) {
               <div className="col-lg-3 col-md-12 col-sm-12">
                 <div className="search-results-quick-filter">
                   <div className="row no-gutters d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                    <div className="col-12">
+                    <div className="col-12 mb32">
+                      <h3 className="subtitle">Search</h3>
                       <div className="search-results-quick-filter">
-                        <div className="row no-gutters pb20">
+                        <div className="row no-gutters">
                           <div className="col-12 park-search-text-box-container d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
                             <TextField
                               id="park-search-text"
@@ -651,7 +662,8 @@ export default function FindAPark({ location, data }) {
                         </div>
                       </div>
                     </div>
-                    <div className="col-12 pr-3">
+                    <div className="col-12 pr-3 mb20">
+                      <h3 className="subtitle">Filter</h3>
                       <div className="">
                         <fieldset>
                           <legend className="filter-heading p10t">Popular</legend>
@@ -874,6 +886,19 @@ export default function FindAPark({ location, data }) {
                             )}
                           </div>
                         </fieldset>
+                      </div>
+                    </div>
+                    <div className="col-12 park-links">
+                      <h3 className="subtitle">More ways to find a park</h3>
+                      <div>
+                        <GatsbyLink to="/parks">A–Z</GatsbyLink>,
+                        <a
+                          className="map-link"
+                          href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000"
+                        >
+                          Map
+                          <OpenInNewIcon />
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -1246,6 +1271,7 @@ export default function FindAPark({ location, data }) {
           setCurrentPage,
         }}
       />
+      <ParkLinksModal data={{openModal, setOpenModal}} />
       <Footer />
     </>
   )
