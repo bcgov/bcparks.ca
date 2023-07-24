@@ -115,11 +115,11 @@ module.exports = {
                   populate: "*"
                 }
               }
-            }
+            },
+            queryLimit: 100
           }
-        ],
-        queryLimit: 1000,
-      },
+        ]
+      }
     },
     `gatsby-transformer-sharp`,
     {
