@@ -14,11 +14,11 @@ images:
 cms:
   resources:
     limits:
-      cpu: 500m
+      cpu: 750m
       memory: 1250Mi
     requests:
       cpu: 125m
-      memory: 750Mi
+      memory: 625Mi
 
   env:
     environment: prod
@@ -28,7 +28,7 @@ cms:
     minReplicas: 2
     maxReplicas: 4
     cpuUtilizationThreshold: 50
-    memoryUtilizationThreshold: 85
+    memoryUtilizationThreshold: 100
 
 admin:
   env:
@@ -41,7 +41,7 @@ patroni:
       cpu: 1
       memory: 2Gi
     requests:
-      cpu: 250m
+      cpu: 200m
       memory: 1Gi
   replicas: 3
 

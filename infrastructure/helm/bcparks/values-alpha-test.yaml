@@ -18,14 +18,6 @@ images:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/etl-develop
 
 cms:
-  resources:
-    limits:
-      cpu: 500m
-      memory: 2Gi
-    requests:
-      cpu: 125m
-      memory: 250Mi
-
   env:
     environment: alpha-test
     externalUrl: https://alpha-test-cms.bcparks.ca
@@ -41,13 +33,6 @@ admin:
 
 patroni:
   replicas: 1
-  resources:
-    limits:
-      cpu: 500m
-      memory: 2Gi
-    requests:
-      cpu: 250m
-      memory: 250Mi
 
   pvc:
     size: 10Gi

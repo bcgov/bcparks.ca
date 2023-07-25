@@ -43,10 +43,10 @@ cms:
 
   resources:
     limits:
-      cpu: 500m
-      memory: 2Gi
+      cpu: 750m
+      memory: 1250Mi
     requests:
-      cpu: 125m
+      cpu: 75m
       memory: 250Mi
 
   env:
@@ -71,10 +71,9 @@ cms:
 
   hpa:
     minReplicas: 1
-    # Default to 1 max replica on dev, overriden in test and prod envs
     maxReplicas: 1
-    cpuUtilizationThreshold: 50
-    memoryUtilizationThreshold: 65
+    cpuUtilizationThreshold: 125
+    memoryUtilizationThreshold: 125
 
 patroni:
   componentName: patroni
@@ -88,9 +87,9 @@ patroni:
   resources:
     limits:
       cpu: 500m
-      memory: 2Gi
+      memory: 1250Mi
     requests:
-      cpu: 250m
+      cpu: 100m
       memory: 250Mi
 
   env:
@@ -167,10 +166,9 @@ public:
 
   hpa:
     minReplicas: 1
-    # Default to 1 max replica on dev, overriden in test and prod envs
     maxReplicas: 1
-    cpuUtilizationThreshold: 50
-    memoryUtilizationThreshold: 75
+    cpuUtilizationThreshold: 125
+    memoryUtilizationThreshold: 125
 
 backup:
   componentName: postgres-backup

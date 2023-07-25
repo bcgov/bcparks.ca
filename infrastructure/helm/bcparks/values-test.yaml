@@ -12,20 +12,11 @@ images:
     tag: test
 
 cms:
-  resources:
-    limits:
-      cpu: 500m
-      memory: 2Gi
-    requests:
-      cpu: 125m
-      memory: 250Mi
-
   env:
     environment: test
     externalUrl: https://test-cms.bcparks.ca
 
   hpa:
-    minReplicas: 1
     maxReplicas: 2
 
 admin:
@@ -34,14 +25,6 @@ admin:
     publicUrl: https://test.bcparks.ca
 
 patroni:
-  resources:
-    limits:
-      cpu: 500m
-      memory: 2Gi
-    requests:
-      cpu: 250m
-      memory: 250Mi
-
   replicas: 1
 
   pvc:
@@ -59,5 +42,4 @@ backup:
 
 public:
   hpa:
-    minReplicas: 1
     maxReplicas: 2
