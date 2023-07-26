@@ -24,8 +24,9 @@
 
 .park-info-header a {
   color: $colorBlue;
-  display: inline-block;
-  padding: 0px 0px 0px 8px;
+  &:hover {
+    color: $colorBlue !important;
+  }
 }
 
 .park-info-header .MuiCardHeader-title {
@@ -190,10 +191,6 @@
 .access-icon {
   color: $colorBlue;
   padding: 0 !important;
-  .park-overview-icon {
-    width: 24px;
-    height: 24px;
-  }
   .MuiCardHeader-avatar {
     margin-right: 8px;
   }
