@@ -787,6 +787,10 @@ div[class$="-singleValue"] {
 
 .search-result-card {
   min-height: 300px !important;
+  .park-overview-icon {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .park-heading-text {
