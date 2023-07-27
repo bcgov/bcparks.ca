@@ -470,10 +470,11 @@
   bottom: 10%;
   padding: 0;
   @media (min-width: $smBreakpoint) {
-    bottom: 0;
+    bottom: 16px;
   }
   .yarl__slide_description {
-    max-width: 800px;
+    width: 900px;
+    max-width: calc(100% - 32px);
     margin: 0 auto;
   }
 }
