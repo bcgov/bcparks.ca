@@ -12,6 +12,10 @@
   .card {
     border-color: $colorBlueLight !important;
     border-width: 1px !important;
+    &.border-secondary {
+      border-color: #ced4da !important;
+      border-width: 2px !important;
+    }
 
     .card-img-wrapper {
       > img {
