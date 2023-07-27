@@ -463,13 +463,43 @@
 }
 
 // park photo gallery
+.yarl__slide_image {
+  max-height: calc(100vh - 300px) !important;
+}
 .yarl__slide_description_container {
   bottom: 10%;
+  padding: 0;
   @media (min-width: $smBreakpoint) {
-    bottom: 0;
+    bottom: 16px;
   }
   .yarl__slide_description {
-    max-width: 800px;
+    width: 900px;
+    max-width: calc(100% - 32px);
     margin: 0 auto;
   }
+}
+.yarl__thumbnails_thumbnail {
+  &:not(.yarl__thumbnails_thumbnail_active) {
+    opacity: .5;
+  }
+}
+.yarl__navigation_prev, .yarl__navigation_next {
+  color: $colorWhite;
+  border: 2px solid $colorWhite;
+  border-radius: 50%;
+  padding: 2px;
+  &:focus {
+    outline: none;
+  }
+  &:focus-visible {
+    color: #000;
+    background-color: $colorWhite;
+    border: 2px solid #000;
+  }
+}
+.yarl__navigation_prev {
+  left: 8px;
+}
+.yarl__navigation_next {
+  right: 8px;
 }

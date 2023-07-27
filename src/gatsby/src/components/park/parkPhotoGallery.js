@@ -42,7 +42,7 @@ export default function ParkPhotoGallery({ photos }) {
   parkPhotos.map((photo) =>
     photoSlides.push({
       src: photo.imageUrl,
-      description: photo.caption
+      description: photo.caption,
     })
   )
 
@@ -52,7 +52,7 @@ export default function ParkPhotoGallery({ photos }) {
         open={open}
         close={() => setOpen(false)}
         slides={photoSlides}
-        captions={{ descriptionTextAlign: "center",}}
+        captions={{ descriptionTextAlign: "center", descriptionMaxLines: 5}}
         thumbnails={{ border: 0 }}
         plugins={[Captions, Thumbnails, Zoom, Slideshow, Fullscreen]}
       />
