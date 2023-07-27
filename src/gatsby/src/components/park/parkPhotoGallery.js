@@ -42,7 +42,8 @@ export default function ParkPhotoGallery({ photos }) {
   parkPhotos.map((photo) =>
     photoSlides.push({
       src: photo.imageUrl,
-      description: photo.caption
+      description: photo.caption,
+      height: 600,
     })
   )
 
