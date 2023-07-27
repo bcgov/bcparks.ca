@@ -463,8 +463,12 @@
 }
 
 // park photo gallery
+.yarl__slide_image {
+  max-height: calc(100vh - 300px) !important;
+}
 .yarl__slide_description_container {
   bottom: 10%;
+  padding: 0;
   @media (min-width: $smBreakpoint) {
     bottom: 0;
   }
