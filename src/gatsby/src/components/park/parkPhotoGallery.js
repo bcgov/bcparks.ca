@@ -4,6 +4,9 @@ import PhotoLibraryOutlinedIcon from "@mui/icons-material/PhotoLibraryOutlined"
 import Lightbox from "yet-another-react-lightbox"
 import Captions from "yet-another-react-lightbox/plugins/captions"
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails"
+import Zoom from "yet-another-react-lightbox/plugins/zoom"
+import Slideshow from "yet-another-react-lightbox/plugins/slideshow"
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen"
 import "yet-another-react-lightbox/styles.css"
 import "yet-another-react-lightbox/plugins/captions.css"
 import "yet-another-react-lightbox/plugins/thumbnails.css"
@@ -39,7 +42,7 @@ export default function ParkPhotoGallery({ photos }) {
   parkPhotos.map((photo) =>
     photoSlides.push({
       src: photo.imageUrl,
-      description: photo.caption
+      description: photo.caption,
     })
   )
 
@@ -49,7 +52,9 @@ export default function ParkPhotoGallery({ photos }) {
         open={open}
         close={() => setOpen(false)}
         slides={photoSlides}
-        plugins={[Captions, Thumbnails]}
+        captions={{ descriptionTextAlign: "center", descriptionMaxLines: 5}}
+        thumbnails={{ border: 0 }}
+        plugins={[Captions, Thumbnails, Zoom, Slideshow, Fullscreen]}
       />
 
       <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
@@ -247,6 +252,7 @@ export default function ParkPhotoGallery({ photos }) {
                   <div className="show-photos">
                     <ShowPhotos
                       text={parkPhotos.length}
+                      setOpen={setOpen}
                       setShowPhotos={setShowPhoto}
                     />
                   </div>
