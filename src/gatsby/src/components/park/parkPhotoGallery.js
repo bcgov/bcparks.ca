@@ -252,6 +252,7 @@ export default function ParkPhotoGallery({ photos }) {
                   <div className="show-photos">
                     <ShowPhotos
                       text={parkPhotos.length}
+                      setOpen={setOpen}
                       setShowPhotos={setShowPhoto}
                     />
                   </div>

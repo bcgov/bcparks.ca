@@ -485,8 +485,9 @@
 }
 .yarl__navigation_prev, .yarl__navigation_next {
   color: $colorWhite;
-  border: 2px solid $colorWhite;
+  background-color: rgba(0, 0, 0, 0.7);
   border-radius: 50%;
+  filter: none;
   padding: 2px;
   &:focus {
     outline: none;
@@ -494,12 +495,14 @@
   &:focus-visible {
     color: #000;
     background-color: $colorWhite;
-    border: 2px solid #000;
+    &:hover {
+      color: #000;
+    }
   }
 }
 .yarl__navigation_prev {
-  left: 8px;
+  left: 16px;
 }
 .yarl__navigation_next {
-  right: 8px;
+  right: 16px;
 }
