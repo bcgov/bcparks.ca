@@ -158,6 +158,7 @@ const ApprovedListPage = () => {
                 <button
                   key={index}
                   value={filter}
+                  aria-label={filter}
                   onClick={(e) => handleClick(e, filter)}
                   className={
                     `btn btn-selected--${
