@@ -1,6 +1,9 @@
 @import "variables.scss";
 
 // font
+h1 {
+  margin-bottom: 0;
+}
 h2 {
   a {
     color: $colorBlue;

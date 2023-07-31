@@ -187,7 +187,7 @@ const ParkLink = ({ park }) => {
                     )}
                   </ul>
                 ) : (
-                  <>No {"("}first come, first served{")"}</>
+                  <>N/A</>
                 )}
               </td>
               <td>
@@ -237,7 +237,7 @@ const ParkLink = ({ park }) => {
                       )}
                     </ul>
                   ) : (
-                    <>No {"("}first come, first served{")"}</>
+                    <>N/A</>
                   )}
                 </div>
                 {subArea.offSeasonDates.length > 0 && (
@@ -356,12 +356,12 @@ const ParkOperatingDatesPage = () => {
       <div className="max-width-override">
         <Header mode="internal" content={menuContent} />
       </div>
-      <div id="sr-content" className="static-content-container page-breadcrumbs">
+      <div id="sr-content" className="static-content--header page-breadcrumbs">
         <Breadcrumbs separator="›" aria-label="breadcrumb">
           {breadcrumbs}
         </Breadcrumbs>
       </div>
-      <div className="static-content--header">
+      <div className="static-content-container">
         <h1 className="header-title">
           Park operating dates
         </h1>
