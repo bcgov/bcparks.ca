@@ -34,6 +34,8 @@ const ParkLinksModal = ({ data: { openModal, setOpenModal } }) => {
           </Button>
           <Button
             variant="outlined"
+            target="_blank"
+            rel="noopener noreferrer"
             className="bcgov-button bcgov-normal-white link-button"
             href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000"
           >
