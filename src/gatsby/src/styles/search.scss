@@ -792,7 +792,7 @@ div[class$="-singleValue"] {
     }
   }
   .indicator {
-    margin-top: -30px;
+    margin-top: -45px;
     &-button {
       z-index: 1;
       pointer-events: none;
@@ -1099,12 +1099,27 @@ div[class$="-singleValue"] {
 }
 
 .no-results-container {
-  min-height: 380px !important;
-  background-color: $colorGreyLight;
   display: flex;
-  align-items: center;
-  text-align: center;
-  border-radius: 8px;
+  justify-content: center;
+  margin: 32px 0;
+  &--left {
+    display: block;
+    padding-right: 16px;
+    @media (max-width: $mediumBreakpoint) {
+      display: none;
+    }
+    svg.MuiSvgIcon-root {
+      font-size: 3rem;
+    }
+  }
+  &--right {
+    h2 {
+      color: #000;
+    }
+    p {
+      margin-bottom: 0;
+    }
+  }
 }
 
 

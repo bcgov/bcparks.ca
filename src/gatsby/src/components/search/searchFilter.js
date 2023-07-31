@@ -26,10 +26,16 @@ import "../../styles/search.scss"
 
 const SearchFilter = ({
   data: {
+    regionItems,
+    campingFacilityItems,
     activityItems,
     facilityItems,
     openFilter,
     setOpenFilter,
+    selectedRegions,
+    setSelectedRegions,
+    selectedCampingFacilities,
+    setSelectedCampingFacilities,
     selectedActivities,
     setSelectedActivities,
     selectedFacilities,
@@ -48,6 +54,28 @@ const SearchFilter = ({
   }
 
   //TODO: Quick Search/Popular
+
+  const handleRegionCheck = (region, event) => {
+    if (event.target.checked) {
+      setSelectedRegions([...selectedRegions, region])
+    } else {
+      setSelectedRegions([
+        ...selectedRegions.filter(r => r.value !== region.value),
+      ])
+    }
+    setCurrentPage(1);
+  }
+
+  const handleCampingFacilityCheck = (camping, event) => {
+    if (event.target.checked) {
+      setSelectedCampingFacilities([...selectedCampingFacilities, camping])
+    } else {
+      setSelectedCampingFacilities([
+        ...selectedCampingFacilities.filter(c => c.value !== camping.value),
+      ])
+    }
+    setCurrentPage(1);
+  }
 
   const handleActivityCheck = (activity, event) => {
     if (event.target.checked) {
@@ -77,6 +105,20 @@ const SearchFilter = ({
     setShowFilter([...tempShowFilter])
   }
 
+  const handleRegionDelete = chipToDelete => {
+    setSelectedRegions(chips =>
+      chips.filter(chip => chip.value !== chipToDelete.value)
+    )
+    setCurrentPage(1)
+  }
+
+  const handleCampingFacilityDelete = chipToDelete => {
+    setSelectedCampingFacilities(chips =>
+      chips.filter(chip => chip.value !== chipToDelete.value)
+    )
+    setCurrentPage(1)
+  }
+
   const handleActivityDelete = chipToDelete => {
     setSelectedActivities(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
@@ -92,7 +134,11 @@ const SearchFilter = ({
   }
 
   const handleFilterDelete = chipToDelete => () => {
-    if (chipToDelete.type === "activity") {
+    if (chipToDelete.type === "region") {
+      handleRegionDelete(chipToDelete)
+    } else if (chipToDelete.type === "campingFacility") {
+      handleCampingFacilityDelete(chipToDelete)
+    } else if (chipToDelete.type === "activity") {
       handleActivityDelete(chipToDelete)
     } else if (chipToDelete.type === "facility") {
       handleFacilityDelete(chipToDelete)
@@ -102,6 +148,12 @@ const SearchFilter = ({
 
   const setFilters = useCallback(() => {
     const filters = []
+    selectedRegions.forEach(r => {
+      filters.push({ ...r, type: "region" })
+    })
+    selectedCampingFacilities.forEach(c => {
+      filters.push({ ...c, type: "campingFacility" })
+    })
     selectedActivities.forEach(a => {
       filters.push({ ...a, type: "activity" })
     })
@@ -112,13 +164,18 @@ const SearchFilter = ({
     filters.sort((a, b) => a.label.localeCompare(b.label))
     setFilterSelections([...filters])
   }, [
+    selectedRegions,
+    selectedCampingFacilities,
     selectedActivities,
-    selectedFacilities,])
+    selectedFacilities,
+  ])
 
   const searchParkFilter = () => {
     setCurrentPage(1);
     navigate("/find-a-park", {
       state: {
+        selectedRegions,
+        selectedCampingFacilities,
         selectedActivities,
         selectedFacilities,
         searchText,
@@ -129,7 +186,14 @@ const SearchFilter = ({
 
   useEffect(() => {
     setFilters()
-  }, [searchText, selectedActivities, selectedFacilities, setFilters])
+  }, [
+    searchText,
+    selectedRegions,
+    selectedCampingFacilities,
+    selectedActivities,
+    selectedFacilities,
+    setFilters
+  ])
 
   return (
     <div>
@@ -203,6 +267,8 @@ const SearchFilter = ({
                     <Link
                       className="ml-auto pointer"
                       onClick={() => {
+                        setSelectedRegions([])
+                        setSelectedCampingFacilities([])
                         setSelectedActivities([])
                         setSelectedFacilities([])
                         //TODO: Quick Search/Popular
@@ -257,6 +323,89 @@ const SearchFilter = ({
               <div className="p20l-filter col-lg-8 col-md-12 col-sm-12">
 
                 {/* TODO: Quick Search/Popular */}
+                <div className="row p20t">
+                  <div className="col-12">
+                    <div className="park-filter-options">
+                      <div className="park-filter-option-label flex-display">
+                        <div
+                          className="flex-display pointer full-width p20"
+                          onClick={() => {
+                            handleShowFilterClick(0)
+                          }}
+                          tabIndex="0"
+                          role="button"
+                          onKeyPress={() => {
+                            handleShowFilterClick(0)
+                          }}
+                        >
+                          {showFilters[0] ? (
+                            <ExpandLess fontSize="large" className="mtm5" />
+                          ) : (
+                            <ExpandMore fontSize="large" className="mtm5" />
+                          )}
+                          <div className="p10l park-select-label">
+                            Region
+                          </div>
+                        </div>
+                        <Link
+                          className="ml-auto pointer p20"
+                          onClick={() => {
+                            setSelectedRegions([])
+                          }}
+                          tabIndex="0"
+                          href="#"
+                          underline="hover">
+                          Reset
+                        </Link>
+                      </div>
+
+                      <Divider className="yellow-divider" />
+                      <Collapse
+                        in={showFilters[0]}
+                        timeout="auto"
+                        unmountOnExit
+                        className="p20"
+                      >
+                        <div className="row container">
+                          <div className="col-lg-6 col-md-12 col-sm-12">
+                            {regionItems.map((item, index) => (
+                              <FormGroup
+                                className="pr30 filter-options-container"
+                                key={index}
+                              >
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      checked={
+                                        selectedRegions.filter(
+                                          region => region.value === item.value
+                                        ).length === 1
+                                          ? true
+                                          : false
+                                      }
+                                      onChange={event => {
+                                        handleRegionCheck(item, event)
+                                      }}
+                                      name={item.label}
+                                    />
+                                  }
+                                  label={item.label}
+                                  className={
+                                    selectedRegions.filter(
+                                      region => region.value === item.value
+                                    ).length === 1
+                                      ? "text-light-blue no-wrap"
+                                      : "no-wrap"
+                                  }
+                                />
+                              </FormGroup>
+                            ))}
+                          </div>
+                        </div>
+                      </Collapse>
+                    </div>
+                  </div>
+                </div>
 
                 <div className="row p20t">
                   <div className="col-12">
@@ -463,12 +612,18 @@ const SearchFilter = ({
 
 SearchFilter.propTypes = {
   data: PropTypes.shape({
+    regionItems: PropTypes.array.isRequired,
+    campingFacilityItems: PropTypes.array.isRequired,
     activityItems: PropTypes.array.isRequired,
     facilityItems: PropTypes.array.isRequired,
     quickSearchFilters: PropTypes.array.isRequired,
     openFilter: PropTypes.bool.isRequired,
     setOpenFilter: PropTypes.func.isRequired,
     quickSearch: PropTypes.object.isRequired,
+    selectedRegions: PropTypes.array.isRequired,
+    setSelectedRegions: PropTypes.func.isRequired,
+    selectedCampingFacilities: PropTypes.array.isRequired,
+    setSelectedCampingFacilities: PropTypes.func.isRequired,
     selectedActivities: PropTypes.array.isRequired,
     setSelectedActivities: PropTypes.func.isRequired,
     selectedFacilities: PropTypes.array.isRequired,

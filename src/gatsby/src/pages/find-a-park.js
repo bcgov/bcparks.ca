@@ -54,6 +54,12 @@ export const query = graphql`
         apiURL
       }
     }
+    allStrapiRegion {
+      nodes {
+        regionName
+        regionNumber
+      }
+    }
     allStrapiActivityType(
       filter: {isActive: {eq: true}}
     ) {
@@ -73,6 +79,7 @@ export const query = graphql`
         facilityName
         facilityCode
         facilityNumber
+        isCamping
       }
     }
     allStrapiMenu(
@@ -163,6 +170,7 @@ const FeatureIcons = ({ park }) => {
 
 export default function FindAPark({ location, data }) {
   const menuContent = data?.allStrapiMenu?.nodes || []
+  const regions = data?.allStrapiRegion?.nodes || []
 
   const sortedActivityItems = orderBy(
     data.allStrapiActivityType.nodes,
@@ -189,12 +197,30 @@ export default function FindAPark({ location, data }) {
 
   const [showMoreActivities, setMoreActivites] = useState(true)
 
-  const facilityItems = data.allStrapiFacilityType.nodes.map(facility => {
+  const regionItems = regions.map(region => {
+    // value can be changed based on how filter works
     return {
-      label: facility.facilityName,
-      value: facility.facilityNumber,
+      label: region.regionName,
+      value: region.regionNumber
     }
   })
+
+  const campingFacilityItems = data.allStrapiFacilityType.nodes
+    .filter(facility => facility.isCamping).map(facility => {
+      return {
+        label: facility.facilityName,
+        value: facility.strapi_id,
+      }
+    })
+
+  const facilityItems = data.allStrapiFacilityType.nodes
+    .filter(facility => !facility.isCamping).map(facility => {
+      return {
+        label: facility.facilityName,
+        value: facility.strapi_id,
+      }
+    })
+
   const facilityItemsLabels = {}
   facilityItems.forEach(item => {
     facilityItemsLabels[item.value] = item.label
@@ -226,6 +252,16 @@ export default function FindAPark({ location, data }) {
     { label: "Electrical hook-ups", type: "electricalHookup" },
   ]
 
+  const [selectedRegions, setSelectedRegions] = useState(
+    location.state && location.state.selectedRegions
+      ? [...location.state.selectedRegions]
+      : []
+  )
+  const [selectedCampingFacilities, setSelectedCampingFacilities] = useState(
+    location.state && location.state.selectedCampingFacilities
+      ? [...location.state.selectedCampingFacilities]
+      : []
+  )
   const [selectedActivities, setSelectedActivities] = useState(
     location.state && location.state.selectedActivities
       ? [...location.state.selectedActivities]
@@ -282,6 +318,26 @@ export default function FindAPark({ location, data }) {
     setCurrentPage(1)
   }
 
+  const handleRegionCheck = (region, event) => {
+    if (event.target.checked) {
+      setSelectedRegions([...selectedRegions, region])
+    } else {
+      setSelectedRegions([
+        ...selectedRegions.filter(r => r.value !== region.value),
+      ])
+    }
+  }
+
+  const handleCampingFacilityCheck = (camping, event) => {
+    if (event.target.checked) {
+      setSelectedCampingFacilities([...selectedCampingFacilities, camping])
+    } else {
+      setSelectedCampingFacilities([
+        ...selectedCampingFacilities.filter(c => c.value !== camping.value),
+      ])
+    }
+  }
+
   const handleActivitiesLengthChange = () => {
     setMoreActivites(!showMoreActivities)
     if (showMoreActivities) {
@@ -320,6 +376,20 @@ export default function FindAPark({ location, data }) {
     }
   }
 
+  const handleRegionDelete = chipToDelete => {
+    setSelectedRegions(chips =>
+      chips.filter(chip => chip.value !== chipToDelete.value)
+    )
+    setCurrentPage(1)
+  }
+
+  const handleCampingFacilityDelete = chipToDelete => {
+    setSelectedCampingFacilities(chips =>
+      chips.filter(chip => chip.value !== chipToDelete.value)
+    )
+    setCurrentPage(1)
+  }
+
   const handleActivityDelete = chipToDelete => {
     setSelectedActivities(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
@@ -335,7 +405,11 @@ export default function FindAPark({ location, data }) {
   }
 
   const handleFilterDelete = chipToDelete => () => {
-    if (chipToDelete.type === "activity") {
+    if (chipToDelete.type === "region") {
+      handleRegionDelete(chipToDelete)
+    } else if (chipToDelete.type === "campingFacility") {
+      handleCampingFacilityDelete(chipToDelete)
+    } else if (chipToDelete.type === "activity") {
       handleActivityDelete(chipToDelete)
     } else if (chipToDelete.type === "facility") {
       handleFacilityDelete(chipToDelete)
@@ -368,6 +442,12 @@ export default function FindAPark({ location, data }) {
 
   const setFilters = useCallback(() => {
     const filters = []
+    selectedRegions.forEach(r => {
+      filters.push({ ...r, type: "region" })
+    })
+    selectedCampingFacilities.forEach(c => {
+      filters.push({ ...c, type: "campingFacility" })
+    })
     selectedActivities.forEach(a => {
       filters.push({ ...a, type: "activity" })
     })
@@ -399,6 +479,8 @@ export default function FindAPark({ location, data }) {
     electricalHookup,
     marine,
     petFriendly,
+    selectedRegions,
+    selectedCampingFacilities,
     selectedActivities,
     selectedFacilities,
     accessibility,
@@ -428,6 +510,12 @@ export default function FindAPark({ location, data }) {
       queryText: searchText,
     }
 
+    if (selectedRegions.length > 0) {
+      params.regions = selectedRegions.map(region => region.value)
+    }
+    if (selectedCampingFacilities.length > 0) {
+      params.camping = selectedCampingFacilities.map(camping => camping.value)
+    }
     if (selectedActivities.length > 0) {
       params.activities = selectedActivities.map(activity => activity.value)
     }
@@ -467,6 +555,8 @@ export default function FindAPark({ location, data }) {
     data.allStrapiActivityType.nodes,
     data.allStrapiFacilityType.nodes,
     searchText,
+    selectedRegions,
+    selectedCampingFacilities,
     selectedActivities,
     selectedFacilities,
     quickSearch,
@@ -589,7 +679,7 @@ export default function FindAPark({ location, data }) {
                       <TextField
                         id="park-search-text"
                         variant="outlined"
-                        placeholder="e.g. Alice Lake Park"
+                        placeholder="Park name"
                         className="park-search-text-box h50p"
                         value={inputText}
                         onChange={event => {
@@ -668,7 +758,7 @@ export default function FindAPark({ location, data }) {
                             <TextField
                               id="park-search-text"
                               variant="outlined"
-                              placeholder="e.g. Alice Lake Park"
+                              placeholder="Park name"
                               className="park-search-text-box h50p"
                               value={inputText}
                               onChange={event => {
@@ -725,6 +815,78 @@ export default function FindAPark({ location, data }) {
                                   label={item.label}
                                   className={
                                     quickSearch[item.type]
+                                      ? "text-light-blue no-wrap"
+                                      : "no-wrap"
+                                  }
+                                />
+                              )
+                            })}
+                          </FormGroup>
+                        </fieldset>
+                        <hr></hr>
+                        <fieldset>
+                          <legend className="filter-heading">Regions</legend>
+                          <FormGroup className="p10l filter-options-container">
+                            {regionItems.map(item => {
+                              return (
+                                <FormControlLabel
+                                  key={item.label}
+                                  control={
+                                    <Checkbox
+                                      checked={
+                                        selectedRegions.filter(
+                                          region => region.value === item.value
+                                        ).length === 1
+                                          ? true
+                                          : false
+                                      }
+                                      onChange={event => {
+                                        handleRegionCheck(item, event)
+                                      }}
+                                      name={item.label}
+                                    />
+                                  }
+                                  label={item.label}
+                                  className={
+                                    selectedRegions.filter(
+                                      region => region.value === item.value
+                                    ).length === 1
+                                      ? "text-light-blue no-wrap"
+                                      : "no-wrap"
+                                  }
+                                />
+                              )
+                            })}
+                          </FormGroup>
+                        </fieldset>
+                        <hr></hr>
+                        <fieldset>
+                          <legend className="filter-heading">Camping</legend>
+                          <FormGroup className="p10l filter-options-container">
+                            {campingFacilityItems.map(item => {
+                              return (
+                                <FormControlLabel
+                                  key={item.label}
+                                  control={
+                                    <Checkbox
+                                      checked={
+                                        selectedCampingFacilities.filter(
+                                          camping => camping.value === item.value
+                                        ).length === 1
+                                          ? true
+                                          : false
+                                      }
+                                      onChange={event => {
+                                        handleCampingFacilityCheck(item, event)
+                                      }}
+                                      name={item.label}
+                                    />
+                                  }
+                                  label={item.label}
+                                  className={
+                                    selectedCampingFacilities.filter(
+                                      camping => camping.value === item.value
+                                    ).length === 1
                                       ? "text-light-blue no-wrap"
                                       : "no-wrap"
                                   }
@@ -1231,12 +1393,18 @@ export default function FindAPark({ location, data }) {
       </div>
       <SearchFilter
         data={{
+          regionItems,
+          campingFacilityItems,
           activityItems,
           facilityItems,
           quickSearchFilters,
           openFilter,
           setOpenFilter,
           quickSearch,
+          selectedRegions,
+          setSelectedRegions,
+          selectedCampingFacilities,
+          setSelectedCampingFacilities,
           selectedActivities,
           setSelectedActivities,
           selectedFacilities,
