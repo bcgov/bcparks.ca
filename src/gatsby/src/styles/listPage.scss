@@ -132,7 +132,7 @@ table {
     &:last-child {
       border-radius: 0 4px 4px 0;
     }
-    &:hover {
+    &:hover, &:focus-visible {
       color: $colorBlue;
       background-color: $colorWaterBlue;
       font-weight: 700;
