@@ -49,6 +49,12 @@
     margin: 0 auto;
     padding: 40px 40px 10px 40px;
   }
+  &.unique-page--header {
+    padding: 10px 40px;
+    @media (min-width: 576px) {
+      padding: 40px 40px 10px 40px;
+    }
+  }
 
   .header-image-wrapper {
     height: 345px;
