@@ -443,6 +443,7 @@ div[class$="-singleValue"] {
     .bcgov-button {
       width: 100%;
       &.link-button {
+        font-size: 1.125rem;
         border: 1px solid #c7c7c7 !important;
         margin-top: 8px;
         &:hover {
@@ -454,7 +455,7 @@ div[class$="-singleValue"] {
           text-decoration: none;
         }
         svg.MuiSvgIcon-root {
-          font-size: 1rem;
+          font-size: inherit;
           margin-left: 4px;
         }
       }
