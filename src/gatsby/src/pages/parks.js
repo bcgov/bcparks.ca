@@ -90,7 +90,7 @@ const ParksPage = () => {
       <div className="max-width-override">
         <Header mode="internal" content={menuContent} />
       </div>
-      <div id="sr-content" className="static-content--header page-breadcrumbs">
+      <div id="sr-content" className="static-content--header unique-page--header page-breadcrumbs">
         <Breadcrumbs separator="›" aria-label="breadcrumb">
           {breadcrumbs}
         </Breadcrumbs>
