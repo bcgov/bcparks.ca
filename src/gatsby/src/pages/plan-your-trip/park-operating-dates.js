@@ -100,6 +100,7 @@ const ParkLink = ({ park }) => {
     const subArea = subAreas[idx]
     const facilityType = subArea.facilityType || {}
     subArea.facilityName = facilityType.facilityName || ""
+    subArea.facilityIsCamping = facilityType.isCamping || false
 
     const saDates = subArea.parkOperationSubAreaDates
     subArea.offSeasonDates = []
@@ -143,13 +144,13 @@ const ParkLink = ({ park }) => {
           <ExpandCircleDownIcon />
         </GatsbyLink>
       </h2>
-      <p>This park is open to public access from {parkDates}.</p>
+      <p>This park gate is open to from {parkDates}.</p>
       {/* display table list if the screen size is bigger than 768 px */}
       <table className="table">
         <thead className="thead-light">
           <tr>
             <th scope="col">Facility</th>
-            <th scope="col">Main Operating season</th>
+            <th scope="col">Main operating season</th>
             <th scope="col">Booking required</th>
             <th scope="col">Winter season</th>
           </tr>
@@ -187,7 +188,11 @@ const ParkLink = ({ park }) => {
                     )}
                   </ul>
                 ) : (
-                  <>N/A</>
+                  subArea.facilityIsCamping ? (
+                    <>No {"("}first come, first served{")"}</>
+                  ):(
+                    <>N/A</>
+                  )
                 )}
               </td>
               <td>
@@ -221,7 +226,7 @@ const ParkLink = ({ park }) => {
             <ul className="list-group list-group-flush">
               <li className="list-group-item">
                 <div className="list-group-item--container">
-                  <b>Main Operating season</b>
+                  <b>Main operating season</b>
                   <ul>
                     {subArea.serviceDates.map((dateRange, index) =>
                       <li key={index}>{dateRange}</li>
@@ -237,9 +242,15 @@ const ParkLink = ({ park }) => {
                       )}
                     </ul>
                   ) : (
-                    <>
-                      <br/>N/A
-                    </>
+                    subArea.facilityIsCamping ? (
+                      <>
+                        <br/>No {"("}first come, first served{")"}
+                      </>
+                    ):(
+                      <>
+                        <br/>N/A
+                      </>
+                    )
                   )}
                 </div>
                 {subArea.offSeasonDates.length > 0 && (
@@ -296,6 +307,7 @@ const ParkOperatingDatesPage = () => {
             }
             facilityType {
               facilityName
+              isCamping
             }
           }
         }
@@ -407,7 +419,6 @@ const ParkOperatingDatesPage = () => {
             {currentFilter === "All" ? (
               filters.map((filter, index) => (
                 <div key={index} className="list">
-                  {filter !== "All" && <h3>{filter}</h3>}
                   {filtering(filter).map((park, index) => (
                     <ParkLink park={park} key={index} />
                   ))}
@@ -415,7 +426,6 @@ const ParkOperatingDatesPage = () => {
               ))
             ) : (
               <div className="list">
-                <h3>{currentFilter}</h3>
                 {filtering(currentFilter).map((park, index) => (
                   <ParkLink park={park} key={index} />
                 ))}
