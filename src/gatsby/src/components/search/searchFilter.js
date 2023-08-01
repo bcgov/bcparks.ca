@@ -410,6 +410,90 @@ const SearchFilter = ({
                 <div className="row p20t">
                   <div className="col-12">
                     <div className="park-filter-options">
+                      <div className="park-filter-option-label flex-display">
+                        <div
+                          className="flex-display pointer full-width p20"
+                          onClick={() => {
+                            handleShowFilterClick(0)
+                          }}
+                          tabIndex="0"
+                          role="button"
+                          onKeyPress={() => {
+                            handleShowFilterClick(0)
+                          }}
+                        >
+                          {showFilters[0] ? (
+                            <ExpandLess fontSize="large" className="mtm5" />
+                          ) : (
+                            <ExpandMore fontSize="large" className="mtm5" />
+                          )}
+                          <div className="p10l park-select-label">
+                            Camping
+                          </div>
+                        </div>
+                        <Link
+                          className="ml-auto pointer p20"
+                          onClick={() => {
+                            setSelectedCampingFacilities([])
+                          }}
+                          tabIndex="0"
+                          href="#"
+                          underline="hover">
+                          Reset
+                        </Link>
+                      </div>
+
+                      <Divider className="yellow-divider" />
+                      <Collapse
+                        in={showFilters[0]}
+                        timeout="auto"
+                        unmountOnExit
+                        className="p20"
+                      >
+                        <div className="row container">
+                          <div className="col-lg-6 col-md-12 col-sm-12">
+                            {campingFacilityItems.map((item, index) => (
+                              <FormGroup
+                                className="pr30 filter-options-container"
+                                key={index}
+                              >
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      checked={
+                                        selectedCampingFacilities.filter(
+                                          camping => camping.value === item.value
+                                        ).length === 1
+                                          ? true
+                                          : false
+                                      }
+                                      onChange={event => {
+                                        handleCampingFacilityCheck(item, event)
+                                      }}
+                                      name={item.label}
+                                    />
+                                  }
+                                  label={item.label}
+                                  className={
+                                    selectedCampingFacilities.filter(
+                                      camping => camping.value === item.value
+                                    ).length === 1
+                                      ? "text-light-blue no-wrap"
+                                      : "no-wrap"
+                                  }
+                                />
+                              </FormGroup>
+                            ))}
+                          </div>
+                        </div>
+                      </Collapse>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row p20t">
+                  <div className="col-12">
+                    <div className="park-filter-options">
 
                       <div className="park-filter-option-label flex-display">
                         <div

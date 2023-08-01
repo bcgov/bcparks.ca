@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import SearchIcon from '@mui/icons-material/Search'
 
 import "../../styles/search.scss"
 
@@ -8,7 +8,7 @@ const NoSearchResults = () => {
     return (
         <div className="no-results-container">
             <div className="no-results-container--left">
-                <TravelExploreIcon />
+                <SearchIcon />
             </div>
             <div className="no-results-container--right">
                 <h2>Sorry...</h2>
