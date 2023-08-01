@@ -24,7 +24,7 @@ const ParkLink = ({ park }) => {
         const close = moment(closeDate).format(fmt)
         const openYearRound =
           open.indexOf("January 1") === 0 && close.indexOf("December 31") === 0
-        let output = openYearRound ? yearRoundText : open + " to " + close
+        let output = openYearRound ? yearRoundText : open + "–" + close
 
         return output
       } catch (err) {
