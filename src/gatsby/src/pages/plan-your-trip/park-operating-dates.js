@@ -237,7 +237,9 @@ const ParkLink = ({ park }) => {
                       )}
                     </ul>
                   ) : (
-                    <>N/A</>
+                    <>
+                      <br/>N/A
+                    </>
                   )}
                 </div>
                 {subArea.offSeasonDates.length > 0 && (
