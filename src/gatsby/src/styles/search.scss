@@ -867,7 +867,8 @@ div[class$="-singleValue"] {
 
   .search-results-list {
     padding: 0px !important;
-    button {
+    button.bcgov-normal-blue,
+    button.bcgov-normal-white {
       height: 50px;
       @media screen and (min-width: $mdBreakpoint) {
         height: 60px;
