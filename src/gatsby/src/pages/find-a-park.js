@@ -1244,8 +1244,6 @@ export default function FindAPark({ location, data }) {
                               />
                             </div>
                           </div>
-                          <br />
-                          <br />
                         </>
                       )}
                     </>
