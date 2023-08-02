@@ -17,14 +17,14 @@ const ParkLink = ({ park }) => {
   const parkOperation = park.parkOperation || []
   const subAreas = park.parkOperationSubAreas || []
 
-  const datePhrase = (openDate, closeDate, fmt, yearRoundText) => {
+  const datePhrase = (openDate, closeDate, fmt, yearRoundText, delimiter, prefix) => {
     if (openDate && closeDate) {
       try {
         const open = moment(openDate).format(fmt)
         const close = moment(closeDate).format(fmt)
         const openYearRound =
-          open.indexOf("January 1") === 0 && close.indexOf("December 31") === 0
-        let output = openYearRound ? yearRoundText : open + "–" + close
+          open.indexOf("Jan 1") === 0 && close.indexOf("Dec 31") === 0
+        let output = openYearRound ? yearRoundText : `${prefix || ""}${open}${delimiter}${close}`
 
         return output
       } catch (err) {
@@ -39,7 +39,7 @@ const ParkLink = ({ park }) => {
   const fmt = "MMM D, yyyy"
   const yr = "year-round"
   const thisYear = new Date().getFullYear()
-  let parkDates = datePhrase(parkOperation.openDate, parkOperation.closeDate, fmt, yr)
+  let parkDates = datePhrase(parkOperation.openDate, parkOperation.closeDate, fmt, yr, " to ", "from ")
 
   if (parkDates !== yr && !parkDates.includes(thisYear)) {
     parkDates = ""
@@ -84,9 +84,9 @@ const ParkLink = ({ park }) => {
         groupedByYear.push(phrase);
       }
       if (year !== prevYear) {
-        phrase = `${year}: ${datePhrase(dateRange.start, dateRange.end, fmt, yr)}`
+        phrase = `${year}: ${datePhrase(dateRange.start, dateRange.end, fmt, yr, "–")}`
       } else {
-        phrase += `, ${datePhrase(dateRange.start, dateRange.end, fmt, yr)}`
+        phrase += `, ${datePhrase(dateRange.start, dateRange.end, fmt, yr, "–")}`
       }
       prevYear = year;
     }
@@ -144,7 +144,7 @@ const ParkLink = ({ park }) => {
           <ExpandCircleDownIcon />
         </GatsbyLink>
       </h2>
-      <p>This park gate is open to from {parkDates}.</p>
+      <p>The park gate is open {parkDates}.</p>
       {/* display table list if the screen size is bigger than 768 px */}
       <table className="table">
         <thead className="thead-light">
