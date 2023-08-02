@@ -58,7 +58,6 @@ const MainSearch = () => {
       <div className="parks-search-filter-link"
         role="button"
         tabIndex={0}
-        onKeyDown={searchParkFilter}
         onClick={searchParkFilter}>
         Search by activity
       </div>
