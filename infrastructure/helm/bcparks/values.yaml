@@ -35,6 +35,9 @@ images:
   etl:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/etl-main
     tag: latest
+  elasticmanager:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/elasticmanager-main
+    tag: latest
 
 cms:
   componentName: cms
@@ -222,7 +225,7 @@ maintenance:
       cpu: 100m
       memory: 100Mi
     requests:
-      cpu: 50m
+      cpu: 20m
       memory: 50Mi
 
   service:
@@ -269,3 +272,16 @@ etl:
     requests:
       cpu: 250m
       memory: 250Mi
+
+elasticmanager:
+  imagePullPolicy: Always
+
+  componentName: elasticmanager
+
+  resources:
+    limits:
+      cpu: 100m
+      memory: 100Mi
+    requests:
+      cpu: 50m
+      memory: 50Mi

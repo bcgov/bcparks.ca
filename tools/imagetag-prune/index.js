@@ -23,10 +23,20 @@ const IMAGETAGS_TO_KEEP = splitAndTrim(process.env.IMAGETAGS_TO_KEEP) || [
   "prod",
 ];
 const IMAGESTRAMS_TO_CLEAN = splitAndTrim(process.env.IMAGESTRAMS_TO_CLEAN) || [
-  "admin",
-  "landing",
-  "public-builder",
-  "strapi",
+  "admin-develop",
+  "admin-main",
+  "etl-develop",
+  "etl-main",
+  "maintenance-develop",
+  "maintenance-main",
+  "public-builder-develop",
+  "public-builder-main",
+  "public-develop",
+  "public-main",
+  "strapi-develop",
+  "strapi-main",
+  "elasticmanager-main",
+  "elasticmanager-develop"
 ];
 
 // Always keep the last "NUM_RELEASES_TO_KEEP" tags

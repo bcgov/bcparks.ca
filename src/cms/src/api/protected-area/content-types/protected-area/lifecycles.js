@@ -1,5 +1,7 @@
 "use strict";
 
+const { indexPark, removePark } = require("../../../../helpers/taskQueue.js");
+
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
  * to customize this model
@@ -7,9 +9,9 @@
 
 const validator = require("../../../../helpers/validator.js");
 
-const saveParkAccessStatus = async (data) => {
+const saveParkAccessStatus = async (ctx) => {
   try {
-    if (data.result?.orcs) {
+    if (ctx.result?.orcs) {
       const updateResult = await strapi.db
         .query(
           "api::park-access-status.park-access-status"
@@ -17,10 +19,10 @@ const saveParkAccessStatus = async (data) => {
         .updateMany(
           {
             where: {
-              orcs: data.result.orcs
+              orcs: ctx.result.orcs
             },
             data: {
-              orcs: data.result.orcs,
+              orcs: ctx.result.orcs,
               publishedAt: new Date(),
               updatedAt: new Date()
             }
@@ -29,7 +31,7 @@ const saveParkAccessStatus = async (data) => {
         await strapi.entityService.create(
           "api::park-access-status.park-access-status", {
           data: {
-            orcs: data.result.orcs,
+            orcs: ctx.result.orcs,
             publishedAt: new Date()
           }
         })
@@ -37,7 +39,7 @@ const saveParkAccessStatus = async (data) => {
     }
   } catch (error) {
     strapi.log.error(
-      `error saving park-access-status for orcs ${data.result?.orcs}...`,
+      `error saving park-access-status for orcs ${ctx.result?.orcs}...`,
       error
     );
   }
@@ -58,10 +60,15 @@ module.exports = {
     validator.slugNoLeadingDashValidator(data.slug)
     validator.slugNoTrailingDashValidator(data.slug)
   },
-  afterCreate: async (data) => {
-    saveParkAccessStatus(data);
+  afterCreate: async (ctx) => {
+    await indexPark(ctx.params?.where?.id);
+    saveParkAccessStatus(ctx);
   },
-  afterUpdate: async (data) => {
-    saveParkAccessStatus(data);
-  }
+  afterUpdate: async (ctx) => {
+    await indexPark(ctx.params?.where?.id);
+    saveParkAccessStatus(ctx);
+  },
+  beforeDelete: async (ctx) => {
+    await removePark(ctx.params?.where?.id);
+  },
 };

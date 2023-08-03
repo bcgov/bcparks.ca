@@ -111,6 +111,52 @@ const Icon = ({ src, label, size }) => {
   )
 }
 
+const FeatureIcons = ({ park }) => {
+  const iconSize = 32;
+  const facilities = park.parkFacilities.filter(f => [1, 6].includes(f.facilityNumber)) || [];
+  const activities = park.parkActivities.filter(a => [1, 3, 8, 9].includes(a.activityNumber)) || [];
+
+  return (
+    <>
+      {facilities.some(x => x.facilityCode === 'vehicle-accessible-camping') &&
+        <Icon src={campingIcon} label="Vehicle accesible camping" size={iconSize} />
+      }
+      {activities.some(x => x.activityCode === 'hiking') &&
+        <Icon src={hikingIcon} label="Hiking" size={iconSize} />
+      }
+      {facilities.some(x => x.facilityCode === 'picnic-areas') &&
+        <Icon src={picincIcon} label="Picnic areas" size={iconSize} />
+      }
+      {activities.some(x => x.activityCode === 'swimming') &&
+        <Icon src={swimmingIcon} label="Swimming" size={iconSize} />
+      }
+      {activities.some(x => x.activityCode === 'cycling') &&
+        <Icon src={cyclingIcon} label="Cycling" size={iconSize} />
+      }
+      {activities.some(x => x.activityCode === 'pets-on-leash') &&
+        <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
+      }
+      {facilities.some(x => x.facilityCode === 'vehicle-accessible-camping') ? (
+        <GatsbyLink href={`/${park.slug}/#park-camping-details-container`}>
+          <p aria-label="See all facilities and activities">see all</p>
+        </GatsbyLink>
+      ) : (
+        (activities.length > 0 || facilities.length > 0) && (
+          facilities.length > 0 ? (
+            <GatsbyLink href={`/${park.slug}/#park-facility-container`}>
+              <p aria-label="See all facilities and activities">see all</p>
+            </GatsbyLink>
+          ) : (
+            <GatsbyLink href={`/${park.slug}/#park-activity-container`}>
+              <p aria-label="See all facilities and activities">see all</p>
+            </GatsbyLink>
+          )
+        )
+      )}
+    </>
+  );
+}
+
 export default function FindAPark({ location, data }) {
   const menuContent = data?.allStrapiMenu?.nodes || []
 
@@ -199,7 +245,6 @@ export default function FindAPark({ location, data }) {
   const [totalResults, setTotalResults] = useState(0)
 
   const itemsPerPage = 10
-  const iconSize = 32
   const [currentPage, setCurrentPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -451,27 +496,21 @@ export default function FindAPark({ location, data }) {
     const pageStart = (currentPage - 1) * itemsPerPage
     const pageLimit = itemsPerPage
 
-    const countPromise = axios.get(`${apiUrl}/protected-areas/count`, {
-      params,
-    })
-    const resultPromise = axios.get(`${apiUrl}/protected-areas`, {
+    axios.get(`${apiUrl}/search/parks`, {
       params: { ...params, _start: pageStart, _limit: pageLimit },
+    }).then(resultResponse => {
+      if (resultResponse.status === 200) {
+        const total = parseInt(resultResponse.data.meta.pagination.total, 10)
+        const pages = Math.ceil(total / itemsPerPage)
+        setSearchResults([...resultResponse.data.data])
+        setTotalResults(total)
+        setNumberOfPages(pages)
+      } else {
+        setSearchResults([])
+        setTotalResults(0)
+        setNumberOfPages(0)
+      }
     })
-
-    Promise.all([countPromise, resultPromise])
-      .then(([countResponse, resultResponse]) => {
-        if (countResponse.status === 200 && resultResponse.status === 200) {
-          const total = parseInt(countResponse.data, 10)
-          const pages = Math.ceil(total / itemsPerPage)
-          setSearchResults([...resultResponse.data])
-          setTotalResults(total)
-          setNumberOfPages(pages)
-        } else {
-          setSearchResults([])
-          setTotalResults(0)
-          setNumberOfPages(0)
-        }
-      })
       .finally(() => {
         setIsLoading(false)
       })
@@ -1005,45 +1044,11 @@ export default function FindAPark({ location, data }) {
                                                 <ExpandCircleDownIcon className="park-heading-icon" />
                                               </h2>
                                             </Link>
-                                            <p>{locationLabel(r.parkLocation)}</p>
+                                            <p>{locationLabel(r.parkLocations.length ? r.parkLocations[0] : {})}</p>
                                           </div>
                                           <div className="park-content-bottom">
                                             <div className="park-content-bottom--left">
-                                              {r.parkFacilities.includes('vehicle-accessible-camping') &&
-                                                <Icon src={campingIcon} label="Vehicle accesible camping" size={iconSize} />
-                                              }
-                                              {r.parkActivities.includes('hiking') &&
-                                                <Icon src={hikingIcon} label="Hiking" size={iconSize} />
-                                              }
-                                              {r.parkFacilities.includes('picnic-areas') &&
-                                                <Icon src={picincIcon} label="Picnic areas" size={iconSize} />
-                                              }
-                                              {r.parkActivities.includes('swimming') &&
-                                                <Icon src={swimmingIcon} label="Swimming" size={iconSize} />
-                                              }
-                                              {r.parkActivities.includes('cycling') &&
-                                                <Icon src={cyclingIcon} label="Cycling" size={iconSize} />
-                                              }
-                                              {r.parkActivities.includes('pets-on-leash') &&
-                                                <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
-                                              }
-                                              {r.parkFacilities.includes('vehicle-accessible-camping') ? (
-                                                <GatsbyLink to={`/${r.slug}/#park-camping-details-container`}>
-                                                  <p aria-label="See all facilities and activities">see all</p>
-                                                </GatsbyLink>
-                                              ) : (
-                                                (r.parkActivities.length > 0 || r.parkFacilities.length > 0) && (
-                                                  r.parkFacilities.length > 0 ? (
-                                                    <GatsbyLink to={`/${r.slug}/#park-facility-container`}> 
-                                                      <p aria-label="See all facilities and activities">see all</p>
-                                                    </GatsbyLink>
-                                                  ) : (
-                                                    <GatsbyLink to={`/${r.slug}/#park-activity-container`}> 
-                                                      <p aria-label="See all facilities and activities">see all</p>
-                                                    </GatsbyLink>
-                                                  )
-                                                )
-                                              )}
+                                              <FeatureIcons park={r}/>
                                             </div>
                                             <div className="park-content-bottom--right text-blue">
                                               <ParkAccessStatus
@@ -1147,43 +1152,9 @@ export default function FindAPark({ location, data }) {
                                               <ExpandCircleDownIcon className="park-heading-icon" />
                                             </h2>
                                           </Link>
-                                          <p>{locationLabel(r.parkLocation)}</p>
+                                          <p>{locationLabel(r.parkLocations.length ? r.parkLocations[0] : {})}</p>
                                           <div>
-                                            {r.parkFacilities.includes('vehicle-accessible-camping') &&
-                                              <Icon src={campingIcon} label="Vehicle accesible camping" size={iconSize} />
-                                            }
-                                            {r.parkActivities.includes('hiking') &&
-                                              <Icon src={hikingIcon} label="Hiking" size={iconSize} />
-                                            }
-                                            {r.parkFacilities.includes('picnic-areas') &&
-                                              <Icon src={picincIcon} label="Picnic areas" size={iconSize} />
-                                            }
-                                            {r.parkActivities.includes('swimming') &&
-                                              <Icon src={swimmingIcon} label="Swimming" size={iconSize} />
-                                            }
-                                            {r.parkActivities.includes('cycling') &&
-                                              <Icon src={cyclingIcon} label="Cycling" size={iconSize} />
-                                            }
-                                            {r.parkActivities.includes('pets-on-leash') &&
-                                              <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
-                                            }
-                                            {r.parkFacilities.includes('vehicle-accessible-camping') ? (
-                                              <GatsbyLink to={`/${r.slug}/#park-camping-details-container`}>
-                                                <p aria-label="See all facilities and activities">see all</p>
-                                              </GatsbyLink>
-                                            ) : (
-                                              (r.parkActivities.length > 0 || r.parkFacilities.length > 0) && (
-                                                r.parkFacilities.length > 0 ? (
-                                                  <GatsbyLink to={`/${r.slug}/#park-facility-container`}> 
-                                                    <p aria-label="See all facilities and activities">see all</p>
-                                                  </GatsbyLink>
-                                                ) : (
-                                                  <GatsbyLink to={`/${r.slug}/#park-activity-container`}> 
-                                                    <p aria-label="See all facilities and activities">see all</p>
-                                                  </GatsbyLink>
-                                                )
-                                              )
-                                            )}
+                                            <FeatureIcons park={r} />
                                           </div>
                                           <div className="text-blue">
                                             <ParkAccessStatus

@@ -82,6 +82,7 @@ tools/syncdb/*.sql
 **/public/uploads/*
 !**/public/uploads/.gitkeep
 src/staging/*
+lastrun.txt
 
 ############################
 # Node.js

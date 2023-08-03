@@ -107,3 +107,12 @@ https://{{ .Release.Name }}-{{ .Values.public.componentName }}-{{ .Release.Names
 {{ define "bcparks_etl_fullname" -}}
 {{ .Release.Name }}-{{ .Values.etl.componentName }}
 {{- end -}}
+
+{{ define "bcparks_elasticsearch_secret" -}}
+{{ .Release.Name }}-elasticsearch-secret
+{{- end -}}
+
+{{ define "bcparks_elasticmanager_fullname" -}}
+{{ .Release.Name }}-{{ .Values.elasticmanager.componentName }}
+{{- end -}}
+

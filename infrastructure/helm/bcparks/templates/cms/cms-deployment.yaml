@@ -123,6 +123,8 @@ spec:
             - secretRef:
                 name: {{ template "bcparks_cms_secret" . }}
             - secretRef:
+                name: {{ template "bcparks_elasticsearch_secret" . }}
+            - secretRef:
                 name: bcparks-object-storage
           readinessProbe:
             httpGet:

@@ -6,7 +6,7 @@ Building a local version of Strapi is optional, as you can use a remote environm
 
 1. Navigate to the bcparks.ca/src/cms directory.
 
-2. Run the postgres instance `docker run --name postgres-docker -e POSTGRES_PASSWORD=postgres -p 5432:5432 -e=POSTGRES_DB=cms -d postgres`
+2. Run the opensearch and postgres instances `docker-compose up -d`
 
 3.  Copy the .env.example file to .env (`cp .env.example .env`). 
 
@@ -49,3 +49,17 @@ This step should be completed by someone familiar with OpenShift.  It involves r
 2. `npm run strapi import "---" -f prod.tar.gz --force`
 
 - Note: This is really slow and may take 1-2 hours
+
+### Indexing data for searching
+
+1. Navigate to the bcparks.ca/src/elastic directory.
+
+2. Copy the .env.example file to .env (`cp .env.example .env`). 
+
+3. Edit the .env file in a text editor and ensure that this line is set: `STRAPI_API_TOKEN` is set
+
+4. Run `npm install`.
+
+5. Run `npm run rebuild` to create the elasticsearch index
+
+6. The cron task will run every 2 minutes on Openshift environments. On your local, you can periodically run `npm run once` to process the indexing jobs in your Strapi Queued-tasks collection. `npm run reindex`, `npm run rebuild` and `npm run deleteindex` scripts are also available on your local and on the terminal of the elasticmanager container (running on OpenShift).
