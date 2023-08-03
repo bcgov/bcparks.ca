@@ -42,7 +42,9 @@ spec:
                   name: {{ .Release.Name }}-{{ .Values.etl.componentName }}-secret
                   key: STRAPI_API_TOKEN
             - name: ELASTIC_PARK_INDEX_NAME
-              value: "bcparks-protected-areas"
+              value: {{ .Values.cms.env.indexName | quote }}
+            - name: BCPARKS_ENVIRONMENT
+              value: {{ .Values.cms.env.environment }}
           livenessProbe: 
             exec: 
               command: 

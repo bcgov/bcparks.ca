@@ -119,6 +119,8 @@ spec:
                   key: REDIS_PASSWORD
             - name: ENABLE_GRAPHQL_PLAYGROUND
               value: {{ .Values.cms.env.enableGraphQLPlayground | quote }}
+            - name: ELASTIC_PARK_INDEX_NAME
+              value: {{ .Values.cms.env.indexName | quote }}
           envFrom:
             - secretRef:
                 name: {{ template "bcparks_cms_secret" . }}

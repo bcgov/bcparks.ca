@@ -67,6 +67,7 @@ cms:
     cacheType: redis
     cacheTtl: 1800000
     enableGraphQLPlayground: true
+    indexName: bcparks-protected-areas    
 
   service:
     portName: strapi
