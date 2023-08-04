@@ -113,7 +113,7 @@ const { queueAll } = require('./scripts/queueAllParks');
         console.log(`FAILURE! lastrun.txt is missing or empty.`);
         process.exit(failure);
       }
-      const dateLastRun = JSON.parse(data)
+      const dateLastRun = new Date(JSON.parse(data))
       const diffMinutes = (new Date().getTime() - dateLastRun.getTime()) / 6000;
       if (diffMinutes >= failureMinutes) {
         console.log(`FAILURE! Last cron run: ${dateLastRun.toLocaleString()}`);
@@ -122,8 +122,9 @@ const { queueAll } = require('./scripts/queueAllParks');
         console.log(`Success! Last cron run: ${dateLastRun.toLocaleString()}`);
         process.exit(success);
       }
-    } catch {
+    } catch (error) {
       console.log(`FAILURE! Exception occured`);
+      console.log(error);
       process.exit(failure);
     }
   }
