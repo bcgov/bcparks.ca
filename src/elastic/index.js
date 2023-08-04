@@ -114,7 +114,7 @@ const { queueAll } = require('./scripts/queueAllParks');
         process.exit(failure);
       }
       const dateLastRun = new Date(JSON.parse(data))
-      const diffMinutes = (new Date().getTime() - dateLastRun.getTime()) / 6000;
+      const diffMinutes = (new Date().getTime() - dateLastRun.getTime()) / 60000;
       if (diffMinutes >= failureMinutes) {
         console.log(`FAILURE! Last cron run: ${dateLastRun.toLocaleString()}`);
         process.exit(failure);
