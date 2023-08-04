@@ -4,6 +4,7 @@ const { createElasticPark } = require('../transformers/park');
 const { readQueue, removeFromQueue } = require('../utils/taskQueue');
 const elasticClient = require('../utils/elasticClient');
 const qs = require('qs');
+const { parkIndexExists } = require('./createParkIndex');
 
 exports.indexParks = async function () {
 
@@ -59,7 +60,9 @@ exports.indexParks = async function () {
     await removeFromQueue(removed);
   } while (removed.length > 0);
 
-  logger.info("DONE!")
+  if (indexed.length || removed.length) {
+    logger.info("DONE!");
+  }
 };
 
 /**

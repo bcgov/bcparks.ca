@@ -38,7 +38,7 @@ const { queueAll } = require('./scripts/queueAllParks');
           await queueAll();
           await indexParks();
         } else {
-          logger.info("Reindexing protectedAreas based on queued-tasks");
+          logger.info("Cron checking queued-tasks");
           await indexParks();
         }
 
@@ -110,16 +110,20 @@ const { queueAll } = require('./scripts/queueAllParks');
     try {
       const data = await readFile("lastrun.txt", "UTF-8");
       if (!data) {
+        console.log(`FAILURE! lastrun.txt is missing or empty.`);
         process.exit(failure);
       }
       const dateLastRun = JSON.parse(data)
       const diffMinutes = (new Date().getTime() - dateLastRun.getTime()) / 6000;
       if (diffMinutes >= failureMinutes) {
+        console.log(`FAILURE! Last cron run: ${dateLastRun.toLocaleString()}`);
         process.exit(failure);
       } else {
+        console.log(`Success! Last cron run: ${dateLastRun.toLocaleString()}`);
         process.exit(success);
       }
     } catch {
+      console.log(`FAILURE! Exception occured`);
       process.exit(failure);
     }
   }
