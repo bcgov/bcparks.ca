@@ -5,7 +5,7 @@ const noCommandLineArgs = function () {
 }
 
 const scriptKeySpecified = function (scriptKey) {
-    return process.argv.length >= 3 || process.argv[2] === scriptKey
+    return process.argv.length >= 3 && process.argv[2].toLowerCase() === scriptKey.toLowerCase();
 }
 
 const dataFileSpecified = function (scriptKey) {

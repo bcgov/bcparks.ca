@@ -1,0 +1,27 @@
+{
+  "name": "bcparks-search-indexer",
+  "type": "commonjs",
+  "version": "1.0.0",
+  "description": "Cron-automated Node.js scripts for indexing elasticsearch",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "cron": "node index.js cron",
+    "once": "node index.js once",
+    "deleteindex": "node index.js deleteindex",
+    "reindex": "node index.js reindex",
+    "rebuild": "node index.js rebuild",
+    "readiness": "node index.js readiness",
+    "liveness": "node index.js liveness"
+  },
+  "author": "mike@oxd.com",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@opensearch-project/opensearch": "^2.3.1",
+    "axios": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "node-schedule": "^2.1.1",
+    "qs": "^6.11.2",
+    "winston": "^3.8.2"
+  }
+}

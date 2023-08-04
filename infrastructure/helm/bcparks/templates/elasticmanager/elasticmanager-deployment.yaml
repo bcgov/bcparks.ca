@@ -1,0 +1,56 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ template "bcparks_elasticmanager_fullname" . }}
+  labels:
+    component: {{ .Values.elasticmanager.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      component: {{ .Values.elasticmanager.componentName }}
+      release: {{ .Release.Name }}
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        component: {{ .Values.elasticmanager.componentName }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Values.elasticmanager.componentName }}
+          resources:
+{{ toYaml .Values.elasticmanager.resources | indent 12 }}
+          image: {{ .Values.images.elasticmanager.name }}:{{ .Values.images.elasticmanager.tag }}
+          imagePullPolicy: {{ .Values.elasticmanager.imagePullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ template "bcparks_elasticsearch_secret" . }}
+          env:
+            - name: STRAPI_BASE_URL
+              value: {{ .Values.cms.env.externalUrl }}
+            - name: STRAPI_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-{{ .Values.etl.componentName }}-secret
+                  key: STRAPI_API_TOKEN
+            - name: ELASTIC_PARK_INDEX_NAME
+              value: {{ .Values.cms.env.indexName | quote }}
+            - name: BCPARKS_ENVIRONMENT
+              value: {{ .Values.cms.env.environment }}
+          livenessProbe: 
+            exec: 
+              command: 
+              - /bin/bash
+              - '-c'
+              - timeout 60 /bin/npm run liveness --prefix ~
+            periodSeconds: 120
+            successThreshold: 1 
+            failureThreshold: 3

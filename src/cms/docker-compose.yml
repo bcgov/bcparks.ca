@@ -1,0 +1,44 @@
+version: '3'
+name: bcparks-website
+services:
+  postgres:
+    container_name: postgres-docker  
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=cms
+    ports:
+      - 5432:5432
+  opensearch:
+    image: opensearchproject/opensearch:2.7.0
+    container_name: opensearch
+    command: >
+      /bin/sh -c "/usr/share/opensearch/bin/opensearch-plugin list | grep -q analysis-icu 
+      || /usr/share/opensearch/bin/opensearch-plugin install analysis-icu; 
+      /usr/share/opensearch/opensearch-docker-entrypoint.sh"    
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true # along with the memlock settings below, disables swapping
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m" # minimum and maximum Java heap size, recommend setting both to 50% of system RAM
+      - DISABLE_SECURITY_PLUGIN=true
+    volumes:
+      - opensearch-data1:/usr/share/opensearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - opensearch-net
+  kibana:
+    image: opensearchproject/opensearch-dashboards:2.7.0
+    ports:
+      - 5601:5601
+    environment:
+      - OPENSEARCH_HOSTS=http://opensearch:9200
+      - DISABLE_SECURITY_DASHBOARDS_PLUGIN=true
+    networks:
+      - opensearch-net
+
+volumes:
+  opensearch-data1:
+
+networks:
+  opensearch-net:

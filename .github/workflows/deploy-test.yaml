@@ -40,6 +40,7 @@ jobs:
           oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi-main:${{ github.event.inputs.releaseTag }} strapi-main:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag maintenance-main:${{ github.event.inputs.releaseTag }} maintenance-main:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag etl-main:${{ github.event.inputs.releaseTag }} etl-main:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag elasticmanager-main:${{ github.event.inputs.releaseTag }} elasticmanager-main:${{ env.ENVIRONMENT }}
 
       - name: Trigger Gatsby static build workflow
         uses: peter-evans/repository-dispatch@v1
@@ -53,3 +54,4 @@ jobs:
           oc -n ${{ env.NAMESPACE }} rollout restart deployment main-admin
           oc -n ${{ env.NAMESPACE }} rollout restart deployment main-cms
           oc -n ${{ env.NAMESPACE }} rollout restart deployment main-maintenance
+          oc -n ${{ env.NAMESPACE }} rollout restart deployment main-elasticmanager

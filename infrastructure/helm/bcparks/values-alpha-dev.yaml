@@ -12,6 +12,8 @@ images:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/maintenance-develop
   etl:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/etl-develop
+  elasticmanager:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/elasticmanager-develop
 
 cms:
   env:

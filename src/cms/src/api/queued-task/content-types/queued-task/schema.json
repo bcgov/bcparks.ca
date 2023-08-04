@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "queued_tasks",
+  "info": {
+    "singularName": "queued-task",
+    "pluralName": "queued-tasks",
+    "displayName": "Queued-task",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "action": {
+      "type": "string",
+      "maxLength": 50,
+      "required": true
+    },
+    "numericData": {
+      "type": "integer"
+    },
+    "jsonData": {
+      "type": "text"
+    }
+  }
+}
