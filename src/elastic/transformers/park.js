@@ -42,10 +42,10 @@ exports.createElasticPark = async function (park) {
   park.nameLowerCase = park.protectedAreaName.toLowerCase();
 
   // convert parkFacilities
-  if (park?.parkFacilities.length) {
+  if (park?.parkFacilities?.length) {
     const parkFacilities = park.parkFacilities
       .filter(f => {
-        return f.isActive && f.facilityType.isActive;
+        return f.isActive && f.facilityType?.isActive;
       })
       .map(f => {
         const { isActive, ...rest } = f.facilityType;
@@ -58,10 +58,10 @@ exports.createElasticPark = async function (park) {
   }
 
   // convert parkActivities
-  if (park?.parkActivities.length) {
+  if (park?.parkActivities?.length) {
     const parkActivities = park.parkActivities
       .filter(f => {
-        return f.isActive && f.activityType.isActive;
+        return f.isActive && f.activityType?.isActive;
       })
       .map(f => {
         const { isActive, ...rest } = f.activityType;
@@ -83,9 +83,9 @@ exports.createElasticPark = async function (park) {
       .map(a => {
         return {
           id: a.id,
-          urgencyId: a.urgency.id,
-          advisoryStatusId: a.advisoryStatus.id,
-          accessStatusId: a.accessStatus.id
+          urgencyId: a.urgency?.id,
+          advisoryStatusId: a.advisoryStatus?.id,
+          accessStatusId: a.accessStatus?.id
         };
       });
     park.advisories = publicAdvisories;

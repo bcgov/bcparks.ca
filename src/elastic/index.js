@@ -22,25 +22,30 @@ const { queueAll } = require('./scripts/queueAllParks');
    * collection in Strapi
    */
   if (noCommandLineArgs() || scriptKeySpecified("cron")) {
-    logger.info("Starting cron");
+    logger.info("Starting cron scheduler");
 
     // record pod readiness for health checks when the cron job first starts
     await writeFile("lastrun.txt", JSON.stringify(new Date()));
 
     // run every 2 minutes on the :00
     schedule.scheduleJob("*/2 * * * *", async () => {
+      try {
+        if (!(await parkIndexExists())) {
+          logger.warn(
+            "The Elasticsearch index is missing. It will be recreated and repopulated"
+          );
+          await createParkIndex();
+          await queueAll();
+          await indexParks();
+        } else {
+          logger.info("Reindexing protectedAreas based on queued-tasks");
+          await indexParks();
+        }
 
-      // record pod liveness for health check every time the job runs
-      await writeFile("lastrun.txt", JSON.stringify(new Date()));
-
-      if (!await parkIndexExists()) {
-        logger.warn("The Elasticsearch index is missing. It will be recreated and repopulated");
-        await createParkIndex();
-        await queueAll()
-        await indexParks();
-      } else {
-        logger.info("Reindexing protectedAreas based on queued-tasks");
-        await indexParks();
+        // record pod liveness for health check every time the job runs
+        await writeFile("lastrun.txt", JSON.stringify(new Date()));
+      } catch (error) {
+        logger.error(`Error running cron task: ${error}`)
       }
     });
   }
