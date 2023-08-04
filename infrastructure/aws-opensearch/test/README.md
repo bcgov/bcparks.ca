@@ -1,0 +1,1 @@
+OpenSearch indexes for TEST are stored on DEV to save costs.
