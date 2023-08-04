@@ -30,8 +30,7 @@ resource "aws_elasticsearch_domain" "bcparks-opensearch" {
         "IpAddress": {
           "aws:SourceIp": [
             "${local.opensearch_secrets.openshift_silver_ip}",
-            "${local.opensearch_secrets.oxd_vpn_ip}",
-			"${local.opensearch_secrets.mike_olund_ip}"
+            "${local.opensearch_secrets.oxd_vpn_ip}"
           ]
         }
       }
