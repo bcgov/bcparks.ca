@@ -48,7 +48,9 @@ spec:
           livenessProbe: 
             exec: 
               command: 
-              - /bin/node /opt/app-root/src/index.js 'liveness'
+                - /bin/bash
+                - '-c'
+                - timeout 60 /opt/app-root/source/livenessProbe.sh
             initialDelaySeconds: 60
             timeoutSeconds: 5
             periodSeconds: 120
