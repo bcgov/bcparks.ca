@@ -54,6 +54,9 @@
     @media (min-width: 576px) {
       padding: 40px 40px 10px 40px;
     }
+    @media screen and (max-width: 415px) {
+      padding: 10px 16px;
+    }
   }
 
   .header-image-wrapper {
