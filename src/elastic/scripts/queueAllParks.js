@@ -17,9 +17,9 @@ exports.queueAll = async function () {
 
   try {
     const allQuery = `${process.env.STRAPI_BASE_URL}/api/search/indexing/all`;
-    await axios.post(allQuery, { headers: httpReqHeaders });
+    await axios.post(allQuery, {}, { headers: httpReqHeaders });
   } catch (error) {
-    logger.error(error);
+    logger.error(`queueAllParks.js failed: ${error}`);
   }
 
   logger.info("Set all parks to require reindexing")

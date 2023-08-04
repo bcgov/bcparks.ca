@@ -6,7 +6,7 @@ const axios = require("axios");
  */
 
 exports.createElasticPark = async function (park) {
-  if (!park.isDisplayed || !park.publishedAt) {
+  if (!park || !park.isDisplayed || !park.publishedAt) {
     return null;
   }
 

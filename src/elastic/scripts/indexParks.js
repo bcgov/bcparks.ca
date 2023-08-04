@@ -21,7 +21,7 @@ exports.indexParks = async function () {
       queue = await readQueue("elastic index park");
       parkList = await getBatch(queue);
     } catch (error) {
-      logger.error(error);
+      logger.error(`indexParks() failed while reading queued tasks: ${error}`);
       process.exit(1);
     }
 
@@ -43,7 +43,7 @@ exports.indexParks = async function () {
     try {
       queue = await readQueue("elastic remove park");
     } catch (error) {
-      logger.error(error);
+      logger.error(`indexParks() failed while reading queued tasks: ${error}`);
       process.exit(1);
     }
 
@@ -66,11 +66,15 @@ exports.indexParks = async function () {
  *  Adds a single park to Elasticsearch
  */
 const indexPark = async function (park) {
+  if (!park) {
+    return false;
+  }
+
   // if the park isn't visible on the website then remove it from 
   // Elasticsearch instead of adding it
   if (!park.isDisplayed || !park.publishedAt) {
     await removePark(park)
-    return;
+    return true;
   }
 
   // transform the Strapi object into an Elasticsearch object
