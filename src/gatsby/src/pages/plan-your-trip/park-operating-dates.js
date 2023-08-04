@@ -144,7 +144,7 @@ const ParkLink = ({ park }) => {
           <ExpandCircleDownIcon />
         </GatsbyLink>
       </h2>
-      <p>The park gate is open {parkDates}.</p>
+      <p>The park { park.marineProtectedArea !== 'Y'? (<>gate</>) : ("") } is open {parkDates}.</p>
       {/* display table list if the screen size is bigger than 768 px */}
       <table className="table">
         <thead className="thead-light">
@@ -203,7 +203,12 @@ const ParkLink = ({ park }) => {
                     )}
                   </ul>
                 ) : (
+                  parkDates === 'year-round' ? (
+                    <>Limited services</>  
+                  ) :
+                  (
                   <>No services</>
+                  )
                 )}
               </td>
             </tr>
@@ -286,6 +291,7 @@ const ParkOperatingDatesPage = () => {
         nodes {
           slug
           protectedAreaName
+          marineProtectedArea
           parkOperation {
             openDate
             closeDate
