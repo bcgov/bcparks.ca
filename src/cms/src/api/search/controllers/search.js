@@ -117,13 +117,13 @@ module.exports = ({ strapi }) => ({
   },
 
   findParkPhotos: async (ctx) => {
-    const photos = await strapi.entityService.findMany("api::park-photo.park-photo", {
-      filters: { orcs: ctx.params.orcs, isActive: true },
-      sort: "sortOrder",
-      limit: 5,
-      fields: ["imageUrl"]
-    });
-    return photos.map(p => { return p.imageUrl });
+    const contentType = strapi.contentType("api::park-photo.park-photo");
+    const query = await sanitize.contentAPI.query(ctx.query, contentType, {});
+    query.fields = ["orcs", "sortOrder", "imageUrl"];
+    query.pagination = {limit : -1 };
+    query.filters = { isActive: true, ... query.filters }
+    const { results } = await strapi.service("api::park-photo.park-photo").find(query);
+    return results;
   },
 
   setAllReindexNeeded: async (ctx) => {

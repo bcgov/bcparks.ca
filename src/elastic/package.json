@@ -5,13 +5,11 @@
   "description": "Cron-automated Node.js scripts for indexing elasticsearch",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "cron": "node index.js cron",
+    "start": "node server.js",
     "once": "node index.js once",
     "deleteindex": "node index.js deleteindex",
     "reindex": "node index.js reindex",
     "rebuild": "node index.js rebuild",
-    "readiness": "node index.js readiness",
     "liveness": "node index.js liveness"
   },
   "author": "mike@oxd.com",

@@ -20,7 +20,7 @@ module.exports = {
     },
     {
       method: 'GET',
-      path: '/search/indexing/photos/:orcs',
+      path: '/search/indexing/photos',
       handler: 'search.findParkPhotos',
       config: {
         policies: [],

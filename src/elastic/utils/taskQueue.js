@@ -9,7 +9,7 @@ const readQueue = async function (actionName) {
       action: `${actionName}`
     },
     pagination: {
-      limit: 100
+      limit: 50
     }
   }, {
     encodeValuesOnly: true,

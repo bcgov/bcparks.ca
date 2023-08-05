@@ -11,6 +11,7 @@ exports.indexParks = async function () {
   const logger = getLogger();
 
   let parkList;
+  let photoList;
   let queue;
 
   // process items from the queue with the action 'elastic index park'
@@ -20,6 +21,8 @@ exports.indexParks = async function () {
     try {
       queue = await readQueue("elastic index park");
       parkList = await getBatch(queue);
+      const orcsList = parkList.map(p => { return p.orcs });
+      photoList = await getPhotos(orcsList);
     } catch (error) {
       logger.error(`indexParks() failed while reading queued tasks: ${error}`);
       process.exit(1);
@@ -27,7 +30,7 @@ exports.indexParks = async function () {
 
     for (const park of parkList) {
       logger.info(`indexing park ${park.id}`);
-      if (await indexPark(park)) {
+      if (await indexPark(park, photoList)) {
         indexed.push(taskId(queue, park.id))
       } else {
         logger.error(`error indexing park ${park.id}`)
@@ -67,7 +70,7 @@ exports.indexParks = async function () {
 /**
  *  Adds a single park to Elasticsearch
  */
-const indexPark = async function (park) {
+const indexPark = async function (park, photos) {
   if (!park) {
     return false;
   }
@@ -80,7 +83,7 @@ const indexPark = async function (park) {
   }
 
   // transform the Strapi object into an Elasticsearch object
-  const doc = await createElasticPark(park);
+  const doc = await createElasticPark(park, photos);
 
   // send the data to elasticsearch
   try {
@@ -125,10 +128,31 @@ const getBatch = async function (queuedTasks) {
   })
   const parksQuery = `${process.env.STRAPI_BASE_URL}/api/search/indexing/parks?${parksFilters}`;
   const response = await axios.get(parksQuery);
-  parkList = response.data.data;
-  getLogger().info(`Got ${parkList.length} parks from Strapi`);
+  const parkList = response.data.data;
+  getLogger().info(`Got ${parkList.length} protected areas from Strapi`);
   return parkList;
 }
+
+const getPhotos = async function (orcsList) {
+  if (orcsList.length === 0) {
+    return [];
+  }
+  const photoFilters = qs.stringify({
+    filters: {
+      orcs: {
+        $in: orcsList,
+      },
+    }
+  }, {
+    encodeValuesOnly: true,
+  })
+  const photosQuery = `${process.env.STRAPI_BASE_URL}/api/search/indexing/photos?${photoFilters}`;
+  const response = await axios.get(photosQuery);
+  const photosList = response.data;
+  getLogger().info(`Got ${photosList.length} park photo records from Strapi`);
+  return photosList;
+}
+
 
 /**
  * Looks up the id of a queued task based on the associated park id
