@@ -45,12 +45,14 @@ spec:
               value: {{ .Values.cms.env.indexName | quote }}
             - name: BCPARKS_ENVIRONMENT
               value: {{ .Values.cms.env.environment }}
-          livenessProbe: 
-            exec: 
-              command: 
-              - /bin/bash
-              - '-c'
-              - timeout 60 /bin/npm run liveness --prefix ~
+          livenessProbe:
+            exec:
+              command:
+                - /bin/node
+                - index.js
+                - liveness
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
             periodSeconds: 120
-            successThreshold: 1 
+            successThreshold: 1
             failureThreshold: 3
