@@ -59,7 +59,9 @@ exports.indexParks = async function () {
     await removeFromQueue(removed);
   } while (removed.length > 0);
 
-  logger.info("DONE!")
+  if (indexed.length || removed.length) {
+    logger.info("DONE!");
+  }
 };
 
 /**
