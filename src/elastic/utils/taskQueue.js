@@ -17,7 +17,9 @@ const readQueue = async function (actionName) {
   const queueQuery = `${process.env.STRAPI_BASE_URL}/api/queued-tasks?${query}`;
   const queueResponse = await axios.get(queueQuery);
   const queuedTasks = queueResponse.data.data;
-  getLogger().info(`Got ${queuedTasks.length} "${actionName}" tasks from the queue`);
+  if (queuedTasks.length > 0) {
+    getLogger().info(`Got ${queuedTasks.length} "${actionName}" tasks from the queue`);
+  }
   return queuedTasks;
 }
 

@@ -20,11 +20,23 @@ exports.indexParks = async function () {
     indexed = [];
     try {
       queue = await readQueue("elastic index park");
+    } catch (error) {
+      logger.error(`indexParks() failed while retrieving 'elastic index park' tasks: ${error}`);
+      process.exit(1);
+    }
+
+    try {
       parkList = await getBatch(queue);
+    } catch (error) {
+      logger.error(`indexParks() failed while retrieving parks: ${error}`);
+      process.exit(1);
+    }
+
+    try {
       const orcsList = parkList.map(p => { return p.orcs });
       photoList = await getPhotos(orcsList);
     } catch (error) {
-      logger.error(`indexParks() failed while reading queued tasks: ${error}`);
+      logger.error(`indexParks() failed while retrieving photos: ${error}`);
       process.exit(1);
     }
 
@@ -36,7 +48,12 @@ exports.indexParks = async function () {
         logger.error(`error indexing park ${park.id}`)
       }
     }
-    await removeFromQueue(indexed);
+    try {
+      await removeFromQueue(indexed);
+    } catch (error) {
+      logger.error(`Failed while removing queued 'elastic index park' tasks: ${error}`);
+      process.exit(1);
+    }
   } while (indexed.length > 0)
 
   // process items from the queue with the action 'elastic remove park'
@@ -46,7 +63,7 @@ exports.indexParks = async function () {
     try {
       queue = await readQueue("elastic remove park");
     } catch (error) {
-      logger.error(`indexParks() failed while reading queued tasks: ${error}`);
+      logger.error(`indexParks() failed while retrieving 'elastic remove park' tasks: ${error}`);
       process.exit(1);
     }
 
@@ -59,7 +76,12 @@ exports.indexParks = async function () {
         logger.error(`error removing park ${id}`);
       }
     }
-    await removeFromQueue(removed);
+    try {
+      await removeFromQueue(removed);
+    } catch (error) {
+      logger.error(`Failed while removing queued 'elastic remove park' tasks: ${error}`);
+      process.exit(1);
+    }
   } while (removed.length > 0);
 
   if (indexed.length || removed.length) {
