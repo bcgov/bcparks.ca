@@ -5,15 +5,16 @@ const axios = require("axios");
  * that is optimized for Elasticsearch
  */
 
-exports.createElasticPark = async function (park) {
+exports.createElasticPark = async function (park, photos) {
   if (!park || !park.isDisplayed || !park.publishedAt) {
     return null;
   }
 
   // get photos
-  const photosQuery = `${process.env.STRAPI_BASE_URL}/api/search/indexing/photos/${park.orcs}`;
-  const response = await axios.get(photosQuery);
-  park.parkPhotos = response.data;
+  park.parkPhotos = photos.filter((p) => p.orcs === park.orcs)
+    .sort((a, b) => { return a.sortOrder > b.sortOrder ? 1 : -1 })
+    .slice(0, 5)
+    .map(p => { return p.imageUrl });
 
   // convert managementAreas to parkLocations
   park.parkLocations = [];
