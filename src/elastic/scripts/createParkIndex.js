@@ -60,9 +60,8 @@ const createParkIndex = async function () {
   try {
     await elasticClient.createParkIndex(config);
   } catch (error) {
-    logger.error("Error creating park index");
-    console.log(error);
-    process.exit(1);
+    logger.error(`createParkIndex() failed: ${error}`);
+    return;
   }
 
   logger.info("Created the park index");
