@@ -22,14 +22,14 @@ exports.indexParks = async function () {
       queue = await readQueue("elastic index park");
     } catch (error) {
       logger.error(`indexParks() failed while retrieving 'elastic index park' tasks: ${error}`);
-      process.exit(1);
+      return;;
     }
 
     try {
       parkList = await getBatch(queue);
     } catch (error) {
       logger.error(`indexParks() failed while retrieving parks: ${error}`);
-      process.exit(1);
+      return;;
     }
 
     try {
@@ -37,7 +37,7 @@ exports.indexParks = async function () {
       photoList = await getPhotos(orcsList);
     } catch (error) {
       logger.error(`indexParks() failed while retrieving photos: ${error}`);
-      process.exit(1);
+      return;;
     }
 
     for (const park of parkList) {
@@ -52,7 +52,7 @@ exports.indexParks = async function () {
       await removeFromQueue(indexed);
     } catch (error) {
       logger.error(`Failed while removing queued 'elastic index park' tasks: ${error}`);
-      process.exit(1);
+      return;;
     }
   } while (indexed.length > 0)
 
@@ -64,7 +64,7 @@ exports.indexParks = async function () {
       queue = await readQueue("elastic remove park");
     } catch (error) {
       logger.error(`indexParks() failed while retrieving 'elastic remove park' tasks: ${error}`);
-      process.exit(1);
+      return;;
     }
 
     for (const task of queue) {
@@ -80,7 +80,7 @@ exports.indexParks = async function () {
       await removeFromQueue(removed);
     } catch (error) {
       logger.error(`Failed while removing queued 'elastic remove park' tasks: ${error}`);
-      process.exit(1);
+      return;;
     }
   } while (removed.length > 0);
 
