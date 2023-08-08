@@ -280,12 +280,12 @@ elasticmanager:
   componentName: elasticmanager
 
   env:
-    batchSize: 50
+    batchSize: 20
 
   resources:
     limits:
       cpu: 100m
-      memory: 100Mi
+      memory: 160Mi
     requests:
-      cpu: 50m
-      memory: 50Mi
+      cpu: 10m
+      memory: 80Mi

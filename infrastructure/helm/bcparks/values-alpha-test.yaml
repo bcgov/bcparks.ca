@@ -16,6 +16,10 @@ images:
     tag: test
   etl:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/etl-develop
+    tag: test
+  elasticmanager:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/elasticmanager-develop
+    tag: test
 
 cms:
   resources:
