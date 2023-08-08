@@ -58,9 +58,9 @@ export const query = graphql`
     ) {
       totalCount
       nodes {
-        strapi_id
         activityName
         activityCode
+        activityNumber
       }
     }
     allStrapiFacilityType(
@@ -69,9 +69,9 @@ export const query = graphql`
     ) {
       totalCount
       nodes {
-        strapi_id
         facilityName
         facilityCode
+        facilityNumber
       }
     }
     allStrapiMenu(
@@ -167,7 +167,7 @@ export default function FindAPark({ location, data }) {
   const activityItems = sortedActivityItems.map(activity => {
     return {
       label: activity.activityName,
-      value: activity.strapi_id,
+      value: activity.activityNumber,
     }
   })
   const activityItemsLabels = {}
@@ -188,7 +188,7 @@ export default function FindAPark({ location, data }) {
   const facilityItems = data.allStrapiFacilityType.nodes.map(facility => {
     return {
       label: facility.facilityName,
-      value: facility.strapi_id,
+      value: facility.facilityNumber,
     }
   })
   const facilityItemsLabels = {}
@@ -408,17 +408,17 @@ export default function FindAPark({ location, data }) {
         )
       }
     )
-    const accessibleFacilityId = accessibleFacility?.strapi_id
+    const accessibleFacilityId = accessibleFacility?.facilityNumber
     const electricalFacility = data.allStrapiFacilityType.nodes.find(
       facility => {
         return facility.facilityCode === "electrical-hookups"
       }
     )
-    const electricalFacilityId = electricalFacility?.strapi_id
+    const electricalFacilityId = electricalFacility?.facilityNumber
     const petsActivity = data.allStrapiActivityType.nodes.find(activity => {
       return activity.activityCode === "pets-on-leash"
     })
-    const petsActivityId = petsActivity?.strapi_id
+    const petsActivityId = petsActivity?.activityNumber
 
     const params = {
       queryText: searchText,
