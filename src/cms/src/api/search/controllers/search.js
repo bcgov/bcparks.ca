@@ -4,7 +4,7 @@ const { sanitize } = require('@strapi/utils');
 
 module.exports = ({ strapi }) => ({
 
-  findParks: async (ctx) => {
+  getParksForIndexing: async (ctx) => {
     const contentType = strapi.contentType("api::protected-area.protected-area");
     const query = await sanitize.contentAPI.query(ctx.query, contentType, {});
 
@@ -116,7 +116,7 @@ module.exports = ({ strapi }) => ({
     }
   },
 
-  findParkPhotos: async (ctx) => {
+  getParkPhotosForIndexing: async (ctx) => {
     const contentType = strapi.contentType("api::park-photo.park-photo");
     const query = await sanitize.contentAPI.query(ctx.query, contentType, {});
     query.fields = ["orcs", "sortOrder", "imageUrl"];
@@ -126,14 +126,14 @@ module.exports = ({ strapi }) => ({
     return results;
   },
 
-  setAllReindexNeeded: async (ctx) => {
+  queueAllParksForIndexing: async (ctx) => {
     try {
       await strapi
         .service("api::search.search")
-        .setAllReindexNeeded();
+        .queueAllParksForIndexing();
     } catch (error) {
       return ctx.internalServerError(
-        "Error in service search:setAllReindexNeeded()",
+        "Error in service search:queueAllParksForIndexing()",
         error.message
       );
     }

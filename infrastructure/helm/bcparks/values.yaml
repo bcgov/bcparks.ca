@@ -279,6 +279,9 @@ elasticmanager:
 
   componentName: elasticmanager
 
+  env:
+    batchSize: 50
+
   resources:
     limits:
       cpu: 100m

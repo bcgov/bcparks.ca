@@ -12,7 +12,7 @@ module.exports = {
     {
       method: 'GET',
       path: '/search/indexing/parks',
-      handler: 'search.findParks',
+      handler: 'search.getParksForIndexing',
       config: {
         policies: [],
         middlewares: [],
@@ -21,7 +21,7 @@ module.exports = {
     {
       method: 'GET',
       path: '/search/indexing/photos',
-      handler: 'search.findParkPhotos',
+      handler: 'search.getParkPhotosForIndexing',
       config: {
         policies: [],
         middlewares: [],
@@ -30,7 +30,7 @@ module.exports = {
     {
       method: 'POST',
       path: '/search/indexing/all',
-      handler: 'search.setAllReindexNeeded',
+      handler: 'search.queueAllParksForIndexing',
       config: {
         policies: [],
         middlewares: [],
