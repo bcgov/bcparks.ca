@@ -66,23 +66,6 @@ module.exports = ({ strapi }) => ({
       ];
     }
 
-    let campingFilter = [];
-
-    if (camping) {
-      campingFilter = [
-        {
-          match: {
-            "parkActivities.isCamping": true
-          }
-        },
-        {
-          match: {
-            "parkFacilities.isCamping": true
-          }
-        }
-      ];
-    }
-
     let mustFilter = [];
 
     for (const typeId of activityTypeIds) {
@@ -93,8 +76,12 @@ module.exports = ({ strapi }) => ({
       mustFilter.push({ match: { "parkFacilities.typeId": typeId } })
     }
 
+    if (camping) {
+      mustFilter.push({ match: { "hasCamping": true } })
+    }
+
     if (marineProtectedArea) {
-      mustFilter.push({ match: { "marineProtectedArea": "Y" } })
+      mustFilter.push({ match: { "marineProtectedArea": true } })
     }
 
     if (typeCode) {
@@ -112,7 +99,6 @@ module.exports = ({ strapi }) => ({
               filter: [
                 {
                   bool: {
-                    should: [...campingFilter],
                     must: [...mustFilter]
                   }
                 }
@@ -127,7 +113,24 @@ module.exports = ({ strapi }) => ({
             "_score",
             "nameLowerCase.keyword"
           ],
-          _source: true
+          _source: true,
+          aggs: {
+            "activities": {
+              "terms": { "field": "parkActivities.activityCode.keyword" }
+            },
+            "facilities": {
+              "terms": { "field": "parkFacilities.facilityCode.keyword" }
+            },
+            "marinePark": {
+              "terms": { "field": "marineProtectedArea" }
+            },
+            "hasCamping": {
+              "terms": { "field": "hasCamping" }
+            },
+            "typeCode": {
+              "terms": { "field": "typeCode.keyword" }
+            },
+          }
         }
       });
       return result;
