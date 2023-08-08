@@ -157,25 +157,25 @@ function parseSearchFilters(query) {
     (query.camping.toLowerCase() === "true" ||
       query.camping.toLowerCase() === "y");
 
-  let activityTypeIds = [];
-  let facilityTypeIds = [];
+  let activityNumbers = [];
+  let facilityNumbers = [];
 
   if (query.activities) {
     if (typeof query.activities === "object") {
-      activityTypeIds = query.activities.map((activityId) =>
-        parseInt(activityId, 10)
+      activityNumbers = query.activities.map((activity) =>
+        parseInt(activity, 10)
       );
     } else {
-      activityTypeIds = [parseInt(query.activities, 10)];
+      activityNumbers = [parseInt(query.activities, 10)];
     }
   }
   if (query.facilities) {
     if (typeof query.facilities === "object") {
-      facilityTypeIds = query.facilities.map((facilityId) =>
-        parseInt(facilityId, 10)
+      facilityNumbers = query.facilities.map((facility) =>
+        parseInt(facility, 10)
       );
     } else {
-      facilityTypeIds = [parseInt(query.facilities, 10)];
+      facilityNumbers = [parseInt(query.facilities, 10)];
     }
   }
 
@@ -185,8 +185,8 @@ function parseSearchFilters(query) {
     accessStatus,
     camping,
     marineProtectedArea,
-    activityTypeIds,
-    facilityTypeIds,
+    activityNumbers,
+    facilityNumbers,
   };
 }
 

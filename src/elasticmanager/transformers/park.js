@@ -55,7 +55,7 @@ exports.createElasticPark = async function (park, photos) {
       .map(f => {
         const { isActive, ...rest } = f.facilityType;
         park.hasCamping = park.hasCamping || rest.isCamping;
-        return { code: rest.facilityCode, num: rest.facilityNumber, type: rest.id };
+        return { code: rest.facilityCode, num: rest.facilityNumber };
       });
     park.parkFacilities = parkFacilities;
   }
@@ -69,7 +69,7 @@ exports.createElasticPark = async function (park, photos) {
       .map(f => {
         const { isActive, ...rest } = f.activityType;
         park.hasCamping = park.hasCamping || rest.isCamping;
-        return { code: rest.activityCode, num: rest.activityNumber, type: rest.id };
+        return { code: rest.activityCode, num: rest.activityNumber };
       });
     park.parkActivities = parkActivities;
   }

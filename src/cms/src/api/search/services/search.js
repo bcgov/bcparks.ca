@@ -13,8 +13,8 @@ module.exports = ({ strapi }) => ({
     typeCode,
     camping,
     marineProtectedArea,
-    activityTypeIds,
-    facilityTypeIds,
+    activityNumbers,
+    facilityNumbers,
     limit,
     offset,
   }) => {
@@ -68,12 +68,12 @@ module.exports = ({ strapi }) => ({
 
     let mustFilter = [];
 
-    for (const typeId of activityTypeIds) {
-      mustFilter.push({ match: { "parkActivities.type": typeId } })
+    for (const activityNum of activityNumbers) {
+      mustFilter.push({ match: { "parkActivities.num": activityNum } })
     }
 
-    for (const typeId of facilityTypeIds) {
-      mustFilter.push({ match: { "parkFacilities.type": typeId } })
+    for (const facilityNum of facilityNumbers) {
+      mustFilter.push({ match: { "parkFacilities.num": facilityNum } })
     }
 
     if (camping) {
