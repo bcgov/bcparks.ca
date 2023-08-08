@@ -91,7 +91,8 @@ module.exports = ({ strapi }) => ({
               pageSize: 10,
               pageCount: Math.ceil(result.total?.value / 10),
               total: result.total?.value
-            }
+            },
+            aggregations: resp?.body?.aggregations
           }
         };
       }
@@ -104,7 +105,8 @@ module.exports = ({ strapi }) => ({
               pageSize: 10,
               pageCount: 0,
               total: 0
-            }
+            },
+            aggregations: {}
           }
         }
       }
@@ -120,8 +122,8 @@ module.exports = ({ strapi }) => ({
     const contentType = strapi.contentType("api::park-photo.park-photo");
     const query = await sanitize.contentAPI.query(ctx.query, contentType, {});
     query.fields = ["orcs", "sortOrder", "imageUrl"];
-    query.pagination = {limit : -1 };
-    query.filters = { isActive: true, ... query.filters }
+    query.pagination = { limit: -1 };
+    query.filters = { isActive: true, ...query.filters }
     const { results } = await strapi.service("api::park-photo.park-photo").find(query);
     return results;
   },

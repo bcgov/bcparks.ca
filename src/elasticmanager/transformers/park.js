@@ -10,6 +10,9 @@ exports.createElasticPark = async function (park, photos) {
     return null;
   }
 
+  // convert marineProtectedArea to bool
+  park.marineProtectedArea = park.marineProtectedArea === 'Y';
+
   // get photos
   park.parkPhotos = photos.filter((p) => p.orcs === park.orcs)
     .sort((a, b) => { return a.sortOrder > b.sortOrder ? 1 : -1 })
@@ -43,6 +46,7 @@ exports.createElasticPark = async function (park, photos) {
   park.nameLowerCase = park.protectedAreaName.toLowerCase();
 
   // convert parkFacilities
+  park.hasCamping = false;
   if (park?.parkFacilities?.length) {
     const parkFacilities = park.parkFacilities
       .filter(f => {
@@ -50,9 +54,10 @@ exports.createElasticPark = async function (park, photos) {
       })
       .map(f => {
         const { isActive, ...rest } = f.facilityType;
-        rest.isCamping = rest.isCamping || false;
+        park.hasCamping = park.hasCamping || rest.isCamping;
         rest.typeId = rest.id;
         delete rest.id;
+        delete rest.isCamping;
         return rest;
       });
     park.parkFacilities = parkFacilities;
@@ -66,9 +71,10 @@ exports.createElasticPark = async function (park, photos) {
       })
       .map(f => {
         const { isActive, ...rest } = f.activityType;
-        rest.isCamping = rest.isCamping || false;
+        park.hasCamping = park.hasCamping || rest.isCamping;
         rest.typeId = rest.id;
         delete rest.id;
+        delete rest.isCamping;
         return rest;
       });
     park.parkActivities = parkActivities;
