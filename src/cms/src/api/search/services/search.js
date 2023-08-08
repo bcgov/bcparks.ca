@@ -54,6 +54,14 @@ module.exports = ({ strapi }) => ({
               "boost": 1
             }
           }
+        },
+        {
+          "multi_match": {
+            "query": searchText,
+            "type": "best_fields",
+            "fields": ["parkNames^2", "protectedAreaName^2"],
+            "operator": "and"
+          }
         }
       ];
     }
