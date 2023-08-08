@@ -10,6 +10,10 @@ images:
     tag: prod
   maintenance:
     tag: prod
+  etl:
+    tag: prod
+  elasticmanager:
+    tag: prod
 
 cms:
   resources:

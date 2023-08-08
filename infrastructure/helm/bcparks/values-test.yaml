@@ -10,6 +10,10 @@ images:
     tag: test
   maintenance:
     tag: test
+  etl:
+    tag: test
+  elasticmanager:
+    tag: test
 
 cms:
   resources:
