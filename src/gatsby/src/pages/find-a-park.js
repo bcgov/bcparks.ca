@@ -113,30 +113,30 @@ const Icon = ({ src, label, size }) => {
 
 const FeatureIcons = ({ park }) => {
   const iconSize = 32;
-  const facilities = park.parkFacilities.filter(f => [1, 6].includes(f.facilityNumber)) || [];
-  const activities = park.parkActivities.filter(a => [1, 3, 8, 9].includes(a.activityNumber)) || [];
+  const facilities = park.parkFacilities.filter(f => [1, 6].includes(f.num)) || [];
+  const activities = park.parkActivities.filter(a => [1, 3, 8, 9].includes(a.num)) || [];
 
   return (
     <>
-      {facilities.some(x => x.facilityCode === 'vehicle-accessible-camping') &&
+      {facilities.some(x => x.code === 'vehicle-accessible-camping') &&
         <Icon src={campingIcon} label="Vehicle accesible camping" size={iconSize} />
       }
-      {activities.some(x => x.activityCode === 'hiking') &&
+      {activities.some(x => x.code === 'hiking') &&
         <Icon src={hikingIcon} label="Hiking" size={iconSize} />
       }
-      {facilities.some(x => x.facilityCode === 'picnic-areas') &&
+      {facilities.some(x => x.code === 'picnic-areas') &&
         <Icon src={picincIcon} label="Picnic areas" size={iconSize} />
       }
-      {activities.some(x => x.activityCode === 'swimming') &&
+      {activities.some(x => x.code === 'swimming') &&
         <Icon src={swimmingIcon} label="Swimming" size={iconSize} />
       }
-      {activities.some(x => x.activityCode === 'cycling') &&
+      {activities.some(x => x.code === 'cycling') &&
         <Icon src={cyclingIcon} label="Cycling" size={iconSize} />
       }
-      {activities.some(x => x.activityCode === 'pets-on-leash') &&
+      {activities.some(x => x.code === 'pets-on-leash') &&
         <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
       }
-      {facilities.some(x => x.facilityCode === 'vehicle-accessible-camping') ? (
+      {facilities.some(x => x.code === 'vehicle-accessible-camping') ? (
         <GatsbyLink href={`/${park.slug}/#park-camping-details-container`}>
           <p aria-label="See all facilities and activities">see all</p>
         </GatsbyLink>
