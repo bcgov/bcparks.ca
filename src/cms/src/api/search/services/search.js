@@ -140,36 +140,36 @@ module.exports = ({ strapi }) => ({
     // items queued to be deleted are okay to be deleted twice because there is a big risk of 
     // missing them if we delete them as well
 
-    const deleteParks = await strapi.entityService.findMany("api::protected-area.protected-area", {
+    const removeParks = await strapi.entityService.findMany("api::protected-area.protected-area", {
       filters: { isDisplayed: { $ne: true } },
       fields: ["id"]
     });
 
-    const indexParks = await strapi.entityService.findMany("api::protected-area.protected-area", {
+    const addParks = await strapi.entityService.findMany("api::protected-area.protected-area", {
       filters: { isDisplayed: true },
       fields: ["id"]
     });
 
-    const deleteList = deleteParks.map(p => {
+    const removeList = removeParks.map(p => {
       return {
         action: 'elastic remove park',
         numericData: p.id
       }
     });
 
-    const indexList = indexParks.map(p => {
+    const addList = addParks.map(p => {
       return {
         action: 'elastic index park',
         numericData: p.id
       }
     });
 
-    if (deleteList.length) {
-      await strapi.db.query("api::queued-task.queued-task").createMany({ data: deleteList });
+    if (removeList.length) {
+      await strapi.db.query("api::queued-task.queued-task").createMany({ data: removeList });
     }
 
-    if (indexList.length) {
-      await strapi.db.query("api::queued-task.queued-task").createMany({ data: indexList });
+    if (addList.length) {
+      await strapi.db.query("api::queued-task.queued-task").createMany({ data: addList });
     }
   }
 

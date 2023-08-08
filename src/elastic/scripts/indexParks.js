@@ -84,6 +84,10 @@ exports.indexParks = async function () {
     }
   } while (removed.length > 0);
 
+  parkList = null;
+  photoList = null;
+  queue = null;
+
   if (indexed.length || removed.length) {
     logger.info("DONE!");
   }

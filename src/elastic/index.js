@@ -64,33 +64,4 @@ const { queueAll } = require('./scripts/queueAllParks');
     logger.info("Reindexing protectedAreas based on queued-tasks");
     await indexParks();
   }
-
-  /**
-   * OpenShift liveness probe health check.
-   * Checks if the cron job is still running by checking if a file was 
-   * written to disk in the last 10 minutes.
-   */
-  if (scriptKeySpecified("liveness")) {
-    const failure = 1;
-    const failureMinutes = 10;
-    try {
-      const data = await readFile("lastrun.txt", "UTF-8");
-      if (!data) {
-        console.log(`FAILURE! lastrun.txt is missing or empty.`);
-        process.exit(failure);
-      }
-      const dateLastRun = new Date(JSON.parse(data))
-      const diffMinutes = (new Date().getTime() - dateLastRun.getTime()) / 60000;
-      if (diffMinutes >= failureMinutes) {
-        console.log(`FAILURE! Last cron run: ${dateLastRun.toLocaleString()} UTC`);
-        process.exit(failure);
-      } else {
-        console.log(`Success! Last cron run: ${dateLastRun.toLocaleString()} UTC`);
-      }
-    } catch (error) {
-      console.log(`FAILURE! Exception occured`);
-      console.log(error);
-      process.exit(failure);
-    }
-  }
 })();

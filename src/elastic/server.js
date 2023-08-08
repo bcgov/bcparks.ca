@@ -25,7 +25,7 @@ const { queueAll } = require('./scripts/queueAllParks');
 
   // record pod readiness for health checks when the cron job first starts
   // (use shell command to prevent file locking)
-  exec(`echo '${JSON.stringify(new Date()).replace('"', '\"')}' > lastrun.txt`)
+  exec('date +%s > lastrun.txt')
 
   // run every 2 minutes on the :00
   schedule.scheduleJob("*/2 * * * *", async () => {
@@ -44,7 +44,7 @@ const { queueAll } = require('./scripts/queueAllParks');
 
       // record pod liveness for health check every time the job runs
       // (use shell command to prevent file locking)
-      exec(`echo '${JSON.stringify(new Date()).replace('"', '\"')}' > lastrun.txt`)
+      exec('date +%s > lastrun.txt')
     } catch (error) {
       logger.error(`Error running cron task: ${error}`)
     }
