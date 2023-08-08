@@ -39,6 +39,8 @@ async function createParkIndex(config) {
       index: parkIndexName()
     });
   } catch (err) {
+    console.log("Error encountered while creating the park index.");
+    console.log(err);
     throw err;
   }
 }
@@ -50,6 +52,8 @@ async function deleteParkIndex() {
   try {
     await client.indices.delete({ index: parkIndexName() });
   } catch (err) {
+    console.log("Error encountered while deleting the park index.");
+    console.log(err);
     throw err;
   }
 }
@@ -102,15 +106,16 @@ async function removePark({ itemId }) {
  */
 async function parkIndexExists() {
   try {
-    const result =  await client.indices.exists({
+    const result = await client.indices.exists({
       index: parkIndexName()
     });
-    return result.statusCode === 200;    
+    return result.statusCode === 200;
   } catch (err) {
     console.log(
       "Error encountered while checking if index exists in ElasticSearch."
     );
   }
+  return false;
 }
 
 

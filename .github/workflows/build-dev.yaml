@@ -204,7 +204,7 @@ jobs:
         id: build_image
         uses: redhat-actions/s2i-build@v2
         with:
-          path_context: "src/elastic"
+          path_context: "src/elasticmanager"
           builder_image: ${{ env.BUILDER_IMAGE }}
           image: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}
           tags: latest ${{ env.SHORT_SHA }}

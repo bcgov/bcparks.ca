@@ -13,8 +13,8 @@ exports.deleteParkIndex = async function () {
     await elasticClient.deleteParkIndex();
   } catch (error) {
     if (!JSON.stringify(error).includes("index_not_found_exception")) {
-      logger.error("Error deleting park index");
-      console.log(error);
+      logger.error(`deleteParkIndex() failed: ${error}`);
+      return;
     }
   }
 
