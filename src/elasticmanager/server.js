@@ -36,7 +36,9 @@ const { queueAll } = require('./scripts/queueAllParks');
         );
         await createParkIndex();
         await queueAll();
-        await indexParks();
+        // the cron job and the one-time indexing tasks process the queue in opposite order
+        // to avoid duplication of effort
+        await indexParks({ descending: true });
       } else {
         logger.info("Starting cron");
         await indexParks();

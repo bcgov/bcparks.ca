@@ -130,7 +130,7 @@ module.exports = ({ strapi }) => ({
     }
   },
 
-  async setAllReindexNeeded() {
+  async queueAllParksForIndexing() {
 
     // clear items that are already queued to be indexed (they don't need to be indexed twice)
     await strapi.db.query("api::queued-task.queued-task").deleteMany({

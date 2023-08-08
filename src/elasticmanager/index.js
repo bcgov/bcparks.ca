@@ -28,7 +28,8 @@ const { queueAll } = require('./scripts/queueAllParks');
     }
     logger.info("Reindexing all protectedAreas")
     await queueAll();
-    await indexParks();
+    // process the queue in the opposite order to the cron job to minimize duplication
+    await indexParks({ descending: true });
   }
 
   /**
@@ -40,7 +41,8 @@ const { queueAll } = require('./scripts/queueAllParks');
     await deleteParkIndex();
     await createParkIndex();
     await queueAll();
-    await indexParks();
+    // process the queue in the opposite order to the cron job to minimize duplication
+    await indexParks({ descending: true });
   }
 
   /**
@@ -62,6 +64,7 @@ const { queueAll } = require('./scripts/queueAllParks');
       await createParkIndex();
     }
     logger.info("Reindexing protectedAreas based on queued-tasks");
-    await indexParks();
+    // process the queue in the opposite order to the cron job to minimize duplication    
+    await indexParks({ descending: true });
   }
 })();

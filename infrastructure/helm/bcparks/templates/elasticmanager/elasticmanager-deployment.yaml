@@ -45,6 +45,8 @@ spec:
               value: {{ .Values.cms.env.indexName | quote }}
             - name: BCPARKS_ENVIRONMENT
               value: {{ .Values.cms.env.environment }}
+            - name: BATCH_SIZE
+              value: {{ .Values.elasticmanager.env.batchSize | quote }}
           livenessProbe:
             exec:
               command:

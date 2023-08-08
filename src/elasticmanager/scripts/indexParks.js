@@ -5,7 +5,7 @@ const { readQueue, removeFromQueue } = require('../utils/taskQueue');
 const elasticClient = require('../utils/elasticClient');
 const qs = require('qs');
 
-exports.indexParks = async function () {
+exports.indexParks = async function (options) {
 
   elasticClient.initializeESClient();
   const logger = getLogger();
@@ -19,14 +19,14 @@ exports.indexParks = async function () {
   do {
     indexed = [];
     try {
-      queue = await readQueue("elastic index park");
+      queue = await readQueue("elastic index park", options);
     } catch (error) {
       logger.error(`indexParks() failed while retrieving 'elastic index park' tasks: ${error}`);
       return;;
     }
 
     try {
-      parkList = await getBatch(queue);
+      parkList = await getBatch(queue, options);
     } catch (error) {
       logger.error(`indexParks() failed while retrieving parks: ${error}`);
       return;;
@@ -61,7 +61,7 @@ exports.indexParks = async function () {
   do {
     removed = [];
     try {
-      queue = await readQueue("elastic remove park");
+      queue = await readQueue("elastic remove park", options);
     } catch (error) {
       logger.error(`indexParks() failed while retrieving 'elastic remove park' tasks: ${error}`);
       return;;
@@ -138,22 +138,28 @@ const removePark = async function (protectedAreaId) {
  * Gets multiple parks from Strapi for indexing based
  * on an array of queuedTasks passed into the function
  */
-const getBatch = async function (queuedTasks) {
+const getBatch = async function (queuedTasks, options) {
   if (queuedTasks.length === 0) {
     return [];
   }
+  const sort = options?.descending ? "id:DESC" : "id";
   const queueParkIds = queuedTasks.map(q => +q.attributes.numericData);
   const parksFilters = qs.stringify({
     filters: {
       id: {
         $in: queueParkIds,
       },
-    }
+    },
+    sort: sort
   }, {
     encodeValuesOnly: true,
-  })
+  });
   const parksQuery = `${process.env.STRAPI_BASE_URL}/api/search/indexing/parks?${parksFilters}`;
-  const response = await axios.get(parksQuery);
+  const httpReqHeaders = {
+    'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
+    'Content-Type': 'application/json'
+  };
+  const response = await axios.get(parksQuery, { headers: httpReqHeaders });
   const parkList = response.data.data;
   getLogger().info(`Got ${parkList.length} protected areas from Strapi`);
   return parkList;
@@ -171,9 +177,13 @@ const getPhotos = async function (orcsList) {
     }
   }, {
     encodeValuesOnly: true,
-  })
+  });
   const photosQuery = `${process.env.STRAPI_BASE_URL}/api/search/indexing/photos?${photoFilters}`;
-  const response = await axios.get(photosQuery);
+  const httpReqHeaders = {
+    'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
+    'Content-Type': 'application/json'
+  };
+  const response = await axios.get(photosQuery, { headers: httpReqHeaders });
   const photosList = response.data;
   getLogger().info(`Got ${photosList.length} park photo records from Strapi`);
   return photosList;
