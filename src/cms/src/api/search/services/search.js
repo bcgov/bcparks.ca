@@ -69,11 +69,11 @@ module.exports = ({ strapi }) => ({
     let mustFilter = [];
 
     for (const typeId of activityTypeIds) {
-      mustFilter.push({ match: { "parkActivities.typeId": typeId } })
+      mustFilter.push({ match: { "parkActivities.type": typeId } })
     }
 
     for (const typeId of facilityTypeIds) {
-      mustFilter.push({ match: { "parkFacilities.typeId": typeId } })
+      mustFilter.push({ match: { "parkFacilities.type": typeId } })
     }
 
     if (camping) {
@@ -116,10 +116,10 @@ module.exports = ({ strapi }) => ({
           _source: true,
           aggs: {
             "activities": {
-              "terms": { "field": "parkActivities.activityCode.keyword" }
+              "terms": { "field": "parkActivities.code.keyword" }
             },
             "facilities": {
-              "terms": { "field": "parkFacilities.facilityCode.keyword" }
+              "terms": { "field": "parkFacilities.code.keyword" }
             },
             "marinePark": {
               "terms": { "field": "marineProtectedArea" }
