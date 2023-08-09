@@ -85,7 +85,7 @@ const ParksPage = () => {
   ]
 
   return (
-    <>
+    <div className="list-page">
       <ScrollToTop />
       <div className="max-width-override">
         <Header mode="internal" content={menuContent} />
@@ -147,7 +147,7 @@ const ParksPage = () => {
       <div className="max-width-override">
         <Footer />
       </div>
-    </>
+    </div>
   )
 }
 

@@ -15,7 +15,7 @@ import "../../styles/listPage.scss"
 
 const ParkLink = ({ park }) => {
   const parkOperation = park.parkOperation || []
-  const subAreas = park.parkOperationSubAreas || []
+  const subAreas = park.parkOperationSubAreas.filter(a => a.isActive) || []
 
   const datePhrase = (openDate, closeDate, fmt, yearRoundText, delimiter, prefix) => {
     if (openDate && closeDate) {
@@ -26,7 +26,7 @@ const ParkLink = ({ park }) => {
           open.indexOf("Jan 1") === 0 && close.indexOf("Dec 31") === 0
         let output = openYearRound ? yearRoundText : `${prefix || ""}${open}${delimiter}${close}`
 
-        return output
+        return output.replace(/ /g, "\u00A0")
       } catch (err) {
         console.error("Err formatting date " + openDate + ", " + closeDate)
         return ""
@@ -144,7 +144,7 @@ const ParkLink = ({ park }) => {
           <ExpandCircleDownIcon />
         </GatsbyLink>
       </h2>
-      <p>The park gate is open {parkDates}.</p>
+      <p>The park { park.marineProtectedArea !== 'Y'? (<>gate</>) : ("") } is open {parkDates}.</p>
       {/* display table list if the screen size is bigger than 768 px */}
       <table className="table">
         <thead className="thead-light">
@@ -203,7 +203,12 @@ const ParkLink = ({ park }) => {
                     )}
                   </ul>
                 ) : (
+                  parkDates === 'year-round' ? (
+                    <>Limited services</>  
+                  ) :
+                  (
                   <>No services</>
+                  )
                 )}
               </td>
             </tr>
@@ -286,6 +291,7 @@ const ParkOperatingDatesPage = () => {
         nodes {
           slug
           protectedAreaName
+          marineProtectedArea
           parkOperation {
             openDate
             closeDate
@@ -294,6 +300,7 @@ const ParkOperatingDatesPage = () => {
             isOpen
             isCleanAirSite
             parkSubArea
+            isActive
             parkOperationSubAreaDates {
               isActive
               openDate
@@ -365,7 +372,7 @@ const ParkOperatingDatesPage = () => {
   ]
 
   return (
-    <>
+    <div className="list-page">
       <ScrollToTop />
       <div className="max-width-override">
         <Header mode="internal" content={menuContent} />
@@ -437,7 +444,7 @@ const ParkOperatingDatesPage = () => {
       <div className="max-width-override">
         <Footer />
       </div>
-    </>
+    </div>
   )
 }
 
