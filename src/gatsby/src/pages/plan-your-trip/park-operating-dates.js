@@ -26,7 +26,7 @@ const ParkLink = ({ park }) => {
           open.indexOf("Jan 1") === 0 && close.indexOf("Dec 31") === 0
         let output = openYearRound ? yearRoundText : `${prefix || ""}${open}${delimiter}${close}`
 
-        return output.replace(/ /g, "\u202F")
+        return output.replace(/ /g, "\u00A0")
       } catch (err) {
         console.error("Err formatting date " + openDate + ", " + closeDate)
         return ""
