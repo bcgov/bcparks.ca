@@ -15,7 +15,7 @@ import "../../styles/listPage.scss"
 
 const ParkLink = ({ park }) => {
   const parkOperation = park.parkOperation || []
-  const subAreas = park.parkOperationSubAreas || []
+  const subAreas = park.parkOperationSubAreas.filter(a => a.isActive) || []
 
   const datePhrase = (openDate, closeDate, fmt, yearRoundText, delimiter, prefix) => {
     if (openDate && closeDate) {
@@ -26,7 +26,7 @@ const ParkLink = ({ park }) => {
           open.indexOf("Jan 1") === 0 && close.indexOf("Dec 31") === 0
         let output = openYearRound ? yearRoundText : `${prefix || ""}${open}${delimiter}${close}`
 
-        return output
+        return output.replace(/ /g, "\u202F")
       } catch (err) {
         console.error("Err formatting date " + openDate + ", " + closeDate)
         return ""
@@ -300,6 +300,7 @@ const ParkOperatingDatesPage = () => {
             isOpen
             isCleanAirSite
             parkSubArea
+            isActive
             parkOperationSubAreaDates {
               isActive
               openDate
