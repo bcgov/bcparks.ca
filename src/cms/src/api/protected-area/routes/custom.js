@@ -10,5 +10,15 @@ module.exports = {
       path: "/protected-areas/status",
       handler: "protected-area.status",
     },
+    {
+      method: "GET",
+      path: "/protected-areas/search",
+      handler: "protected-area.searchParks",
+    },
+    {
+      method: "GET",
+      path: "/protected-areas/searchnames",
+      handler: "protected-area.autocomplete",
+    },
   ],
 };

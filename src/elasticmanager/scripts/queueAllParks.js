@@ -16,7 +16,7 @@ exports.queueAll = async function () {
   };
 
   try {
-    const allQuery = `${process.env.STRAPI_BASE_URL}/api/search/indexing/all`;
+    const allQuery = `${process.env.STRAPI_BASE_URL}/api/search-indexing/all`;
     await axios.post(allQuery, {}, { headers: httpReqHeaders });
   } catch (error) {
     logger.error(`queueAllParks.js failed: ${error}`);

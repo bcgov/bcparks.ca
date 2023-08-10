@@ -24,8 +24,11 @@ exports.createElasticPark = async function (park, photos) {
   if (park?.managementAreas?.length) {
     for (const ma of park.managementAreas) {
       park.parkLocations.push({
+        regionNum: ma.section?.region?.regionNumber,
         region: ma.section?.region?.regionName,
+        sectionNum: ma.section?.sectionNumber,
         section: ma.section?.sectionName,
+        managementAreaNum: ma.managementAreaNumber,
         managementArea: ma.managementAreaName
       });
     }
