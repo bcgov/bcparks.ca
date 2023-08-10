@@ -496,7 +496,7 @@ export default function FindAPark({ location, data }) {
     const pageStart = (currentPage - 1) * itemsPerPage
     const pageLimit = itemsPerPage
 
-    axios.get(`${apiUrl}/search/parks`, {
+    axios.get(`${apiUrl}/protected-areas/search`, {
       params: { ...params, _start: pageStart, _limit: pageLimit },
     }).then(resultResponse => {
       if (resultResponse.status === 200) {
