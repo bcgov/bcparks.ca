@@ -116,10 +116,16 @@ module.exports = ({ strapi }) => ({
           _source: true,
           aggs: {
             "activities": {
-              "terms": { "field": "parkActivities.code.keyword" }
+              "terms": {
+                "field": "parkActivities.code.keyword",
+                "size": 50
+              }
             },
             "facilities": {
-              "terms": { "field": "parkFacilities.code.keyword" }
+              "terms": {
+                "field": "parkFacilities.code.keyword",
+                "size": 50
+              }
             },
             "marinePark": {
               "terms": { "field": "marineProtectedArea" }
