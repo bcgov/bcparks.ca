@@ -158,7 +158,7 @@ const FeatureIcons = ({ park }) => {
               <p aria-label="See all facilities and activities">see all</p>
             </GatsbyLink>
           ) : (
-            <GatsbyLink href={`/${park.slug}/#park-activity-container`}>
+            <GatsbyLink to={`/${park.slug}/#park-activity-container`}>
               <p aria-label="See all facilities and activities">see all</p>
             </GatsbyLink>
           )
@@ -235,21 +235,23 @@ export default function FindAPark({ location, data }) {
   const [showMoreFacilities, setMoreFacilities] = useState(true)
 
   const [quickSearch, setQuickSearch] = useState({
-    camping: false,
-    petFriendly: false,
-    accessibility: false,
-    marine: false,
-    ecoReserve: false,
-    electricalHookup: false,
+    backcountryCamping: false,
+    cycling: false,
+    hiking: false,
+    petsOnLeash: false,
+    picnicAreas: false,
+    swimming: false,
+    vehicleAccessibleCamping: false,
   })
 
   const quickSearchFilters = [
-    { label: "Camping", type: "camping" },
-    { label: "Dog friendly", type: "petFriendly" },
-    { label: "Accessibility information", type: "accessibility" },
-    { label: "Marine park", type: "marine" },
-    { label: "Ecological reserve", type: "ecoReserve" },
-    { label: "Electrical hook-ups", type: "electricalHookup" },
+    { label: "Backcountry camping", type: "backcountryCamping" },
+    { label: "Cycling", type: "cycling" },
+    { label: "Hiking", type: "hiking" },
+    { label: "Pets on leash", type: "petsOnLeash" },
+    { label: "Picnic areas", type: "picnicAreas" },
+    { label: "Swimming", type: "swimming" },
+    { label: "Vehicle-accessible camping", type: "vehicleAccessibleCamping" },
   ]
 
   const [selectedRegions, setSelectedRegions] = useState(
@@ -302,12 +304,13 @@ export default function FindAPark({ location, data }) {
   ]
 
   const {
-    camping,
-    petFriendly,
-    accessibility,
-    marine,
-    ecoReserve,
-    electricalHookup,
+    backcountryCamping,
+    cycling,
+    hiking,
+    petsOnLeash,
+    picnicAreas,
+    swimming,
+    vehicleAccessibleCamping,
   } = quickSearch
 
   const handleQuickSearchChange = event => {
@@ -454,57 +457,81 @@ export default function FindAPark({ location, data }) {
     selectedFacilities.forEach(f => {
       filters.push({ ...f, type: "facility" })
     })
-    if (camping) {
-      filters.push({ label: "Camping", type: "camping" })
+    if (backcountryCamping) {
+      filters.push({ label: "Backcountry camping", type: "backcountryCamping" })
     }
-    if (petFriendly) {
-      filters.push({ label: "Dog friendly", type: "petFriendly" })
+    if (cycling) {
+      filters.push({ label: "Cycling", type: "cycling" })
     }
-    if (accessibility) {
-      filters.push({ label: "Accessibility information", type: "accessibility" })
+    if (hiking) {
+      filters.push({ label: "Hiking", type: "hiking" })
     }
-    if (marine) {
-      filters.push({ label: "Marine park", type: "marine" })
+    if (petsOnLeash) {
+      filters.push({ label: "Pets on leash", type: "petsOnLeash" })
     }
-    if (ecoReserve) {
-      filters.push({ label: "Ecological reserve", type: "ecoReserve" })
+    if (picnicAreas) {
+      filters.push({ label: "Picnic areas", type: "picnicAreas" })
     }
-    if (electricalHookup) {
-      filters.push({ label: "Electrical hook-ups", type: "electricalHookup" })
+    if (swimming) {
+      filters.push({ label: "Swimming", type: "swimming" })
+    }
+    if (vehicleAccessibleCamping) {
+      filters.push({ label: "Vehicle-accessible camping", type: "vehicleAccessibleCamping" })
     }
     setFilterSelections([...filters])
   }, [
-    camping,
-    ecoReserve,
-    electricalHookup,
-    marine,
-    petFriendly,
+    backcountryCamping,
+    cycling,
+    hiking,
+    petsOnLeash,
+    picnicAreas,
+    swimming,
+    vehicleAccessibleCamping,
     selectedRegions,
     selectedCampingFacilities,
     selectedActivities,
     selectedFacilities,
-    accessibility,
   ])
 
   const params = useMemo(() => {
-    const accessibleFacility = data.allStrapiFacilityType.nodes.find(
+    const backcountryCampingFacility = data.allStrapiFacilityType.nodes.find(
       facility => {
         return (
-          facility.facilityCode === "accessibility-information"
+          facility.facilityCode === "backcountry-camping"
         )
       }
     )
-    const accessibleFacilityId = accessibleFacility?.facilityNumber
-    const electricalFacility = data.allStrapiFacilityType.nodes.find(
+    const backcountryCampingFacilityId = backcountryCampingFacility?.facilityNumber
+    const picnicAreasFacility = data.allStrapiFacilityType.nodes.find(
       facility => {
-        return facility.facilityCode === "electrical-hookups"
+        return (
+          facility.facilityCode === "picnic-areas"
+        )
       }
     )
-    const electricalFacilityId = electricalFacility?.facilityNumber
-    const petsActivity = data.allStrapiActivityType.nodes.find(activity => {
+    const picnicAreasFacilityId = picnicAreasFacility?.facilityNumber
+    const vehicleAccessibleCampingFacility = data.allStrapiFacilityType.nodes.find(
+      facility => {
+        return facility.facilityCode === "vehicle-accessible-camping"
+      }
+    )
+    const vehicleAccessibleCampingFacilityId = vehicleAccessibleCampingFacility?.facilityNumber
+    const cyclingActivity = data.allStrapiActivityType.nodes.find(activity => {
+      return activity.activityCode === "cycling"
+    })
+    const cyclingActivityId = cyclingActivity?.activityNumber
+    const hikingActivity = data.allStrapiActivityType.nodes.find(activity => {
+      return activity.activityCode === "hiking"
+    })
+    const hikingActivityId = hikingActivity?.activityNumber
+    const petsOnLeashActivity = data.allStrapiActivityType.nodes.find(activity => {
       return activity.activityCode === "pets-on-leash"
     })
-    const petsActivityId = petsActivity?.activityNumber
+    const petsOnLeashActivityId = petsOnLeashActivity?.activityNumber
+    const swimmingActivity = data.allStrapiActivityType.nodes.find(activity => {
+      return activity.activityCode === "swimming"
+    })
+    const swimmingActivityId = swimmingActivity?.activityNumber
 
     const params = {
       queryText: searchText,
@@ -522,32 +549,47 @@ export default function FindAPark({ location, data }) {
     if (selectedFacilities.length > 0) {
       params.facilities = selectedFacilities.map(facility => facility.value)
     }
-    if (quickSearch.camping) {
-      params.camping = "Y"
+    if (quickSearch.backcountryCamping) {
+      if (typeof params.facilities === "undefined") {
+        params.facilities = []
+      }
+      params.facilities.push(backcountryCampingFacilityId)
     }
-    if (quickSearch.petFriendly) {
+    if (quickSearch.cycling) {
       if (typeof params.activities === "undefined") {
         params.activities = []
       }
-      params.activities.push(petsActivityId)
+      params.activities.push(cyclingActivityId)
     }
-    if (quickSearch.accessibility) {
+    if (quickSearch.hiking) {
+      if (typeof params.activities === "undefined") {
+        params.activities = []
+      }
+      params.activities.push(hikingActivityId)
+    }
+    if (quickSearch.petsOnLeash) {
+      if (typeof params.activities === "undefined") {
+        params.activities = []
+      }
+      params.activities.push(petsOnLeashActivityId)
+    }
+    if (quickSearch.picnicAreas) {
       if (typeof params.facilities === "undefined") {
         params.facilities = []
       }
-      params.facilities.push(accessibleFacilityId)
+      params.facilities.push(picnicAreasFacilityId)
     }
-    if (quickSearch.marine) {
-      params.marineProtectedArea = "Y"
+    if (quickSearch.swimming) {
+      if (typeof params.activities === "undefined") {
+        params.activities = []
+      }
+      params.activities.push(swimmingActivityId)
     }
-    if (quickSearch.ecoReserve) {
-      params.typeCode = "ER"
-    }
-    if (quickSearch.electricalHookup) {
+    if (quickSearch.vehicleAccessibleCamping) {
       if (typeof params.facilities === "undefined") {
         params.facilities = []
       }
-      params.facilities.push(electricalFacilityId)
+      params.facilities.push(vehicleAccessibleCampingFacilityId)
     }
 
     return params

@@ -8,7 +8,6 @@ import {
   DialogActions,
   Button,
   Collapse,
-  Divider,
   Chip,
   InputAdornment,
   FormGroup,
@@ -30,8 +29,10 @@ const SearchFilter = ({
     campingFacilityItems,
     activityItems,
     facilityItems,
+    quickSearchFilters,
     openFilter,
     setOpenFilter,
+    quickSearch,
     selectedRegions,
     setSelectedRegions,
     selectedCampingFacilities,
@@ -40,20 +41,27 @@ const SearchFilter = ({
     setSelectedActivities,
     selectedFacilities,
     setSelectedFacilities,
+    setQuickSearch,
     searchText,
     setSearchText,
     setCurrentPage,
   },
 
 }) => {
-  const [showFilters, setShowFilter] = useState([false, false])
+  const [showFilters, setShowFilter] = useState([false, false, false, false, false])
   const [filterSelections, setFilterSelections] = useState([])
 
   const handleCloseFilter = () => {
     setOpenFilter(false)
   }
 
-  //TODO: Quick Search/Popular
+  const handleQuickSearchChange = event => {
+    setQuickSearch({
+      ...quickSearch,
+      [event.target.name]: event.target.checked,
+    })
+    setCurrentPage(1)
+  }
 
   const handleRegionCheck = (region, event) => {
     if (event.target.checked) {
@@ -258,71 +266,7 @@ const SearchFilter = ({
               </div>
             </div>
             <div className="row p20t no-gutters">
-              <div className="col-lg-4 col-md-12 col-sm-12 pb20">
-                <div className="park-filter-options">
-                  <div className="park-filter-option-label p20 flex-display">
-                    <div className="text-black">
-                      <b>Selected Filters</b>
-                    </div>
-                    <Link
-                      className="ml-auto pointer"
-                      onClick={() => {
-                        setSelectedRegions([])
-                        setSelectedCampingFacilities([])
-                        setSelectedActivities([])
-                        setSelectedFacilities([])
-                        //TODO: Quick Search/Popular
-                        //setQuickSearch([])
-                      }}
-                      tabIndex="0"
-                      underline="hover">
-                      Reset all
-                    </Link>
-                  </div>
-                  <Divider className="grey-divider" />
-                  {filterSelections.length === 0 && (
-                    <div className="no-filters-text">
-                      No search filters selected
-                    </div>
-                  )}
-                  <div>
-                    {filterSelections.length > 0 && (
-                      <>
-                        <div className="row p10t">
-                          <div className="col-12">
-                            {filterSelections.map((f, index) => (
-                              <div
-                                key={index}
-                                className="park-filter-chip-list-container"
-                              >
-                                <Chip
-                                  key={f.label}
-                                  onDelete={handleFilterDelete(f)}
-                                  variant="outlined"
-                                  className="park-filter-chip-list"
-                                  deleteIcon={
-                                    <CancelIcon
-                                      fontSize="large"
-                                      className="close-icon-blue"
-                                    />
-                                  }
-                                />
-                                {f.label}
-                                {filterSelections.length - 1 > index && (
-                                  <Divider className="grey-divider-light" />
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
               <div className="p20l-filter col-lg-8 col-md-12 col-sm-12">
-
-                {/* TODO: Quick Search/Popular */}
                 <div className="row p20t">
                   <div className="col-12">
                     <div className="park-filter-options">
@@ -344,24 +288,73 @@ const SearchFilter = ({
                             <ExpandMore fontSize="large" className="mtm5" />
                           )}
                           <div className="p10l park-select-label">
+                            Popular
+                          </div>
+                        </div>
+                      </div>
+                      <Collapse
+                        in={showFilters[0]}
+                        timeout="auto"
+                        unmountOnExit
+                        className="p20"
+                      >
+                        <div className="row container">
+                          <div className="col-lg-6 col-md-12 col-sm-12">
+                            {quickSearchFilters.map((item, index) => (
+                              <FormGroup
+                                className="pr30 filter-options-container"
+                                key={index}
+                              >
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      checked={quickSearch[item.type]}
+                                      onChange={handleQuickSearchChange}
+                                      name={item.type}
+                                    />
+                                  }
+                                  label={item.label}
+                                  className={
+                                    quickSearch[item.type]
+                                    ? "text-light-blue no-wrap"
+                                    : "no-wrap"
+                                  }
+                                />
+                              </FormGroup>
+                            ))}
+                          </div>
+                        </div>
+                      </Collapse>
+                    </div>
+                  </div>
+                </div>
+                <div className="row p20t">
+                  <div className="col-12">
+                    <div className="park-filter-options">
+                      <div className="park-filter-option-label flex-display">
+                        <div
+                          className="flex-display pointer full-width p20"
+                          onClick={() => {
+                            handleShowFilterClick(1)
+                          }}
+                          tabIndex="0"
+                          role="button"
+                          onKeyPress={() => {
+                            handleShowFilterClick(1)
+                          }}
+                        >
+                          {showFilters[1] ? (
+                            <ExpandLess fontSize="large" className="mtm5" />
+                          ) : (
+                            <ExpandMore fontSize="large" className="mtm5" />
+                          )}
+                          <div className="p10l park-select-label">
                             Region
                           </div>
                         </div>
-                        <Link
-                          className="ml-auto pointer p20"
-                          onClick={() => {
-                            setSelectedRegions([])
-                          }}
-                          tabIndex="0"
-                          href="#"
-                          underline="hover">
-                          Reset
-                        </Link>
                       </div>
-
-                      <Divider className="yellow-divider" />
                       <Collapse
-                        in={showFilters[0]}
+                        in={showFilters[1]}
                         timeout="auto"
                         unmountOnExit
                         className="p20"
@@ -414,15 +407,15 @@ const SearchFilter = ({
                         <div
                           className="flex-display pointer full-width p20"
                           onClick={() => {
-                            handleShowFilterClick(0)
+                            handleShowFilterClick(2)
                           }}
                           tabIndex="0"
                           role="button"
                           onKeyPress={() => {
-                            handleShowFilterClick(0)
+                            handleShowFilterClick(2)
                           }}
                         >
-                          {showFilters[0] ? (
+                          {showFilters[2] ? (
                             <ExpandLess fontSize="large" className="mtm5" />
                           ) : (
                             <ExpandMore fontSize="large" className="mtm5" />
@@ -431,21 +424,9 @@ const SearchFilter = ({
                             Camping
                           </div>
                         </div>
-                        <Link
-                          className="ml-auto pointer p20"
-                          onClick={() => {
-                            setSelectedCampingFacilities([])
-                          }}
-                          tabIndex="0"
-                          href="#"
-                          underline="hover">
-                          Reset
-                        </Link>
                       </div>
-
-                      <Divider className="yellow-divider" />
                       <Collapse
-                        in={showFilters[0]}
+                        in={showFilters[2]}
                         timeout="auto"
                         unmountOnExit
                         className="p20"
@@ -499,15 +480,15 @@ const SearchFilter = ({
                         <div
                           className="flex-display pointer full-width p20"
                           onClick={() => {
-                            handleShowFilterClick(0)
+                            handleShowFilterClick(3)
                           }}
                           tabIndex="0"
                           role="button"
                           onKeyPress={() => {
-                            handleShowFilterClick(0)
+                            handleShowFilterClick(3)
                           }}
                         >
-                          {showFilters[0] ? (
+                          {showFilters[3] ? (
                             <ExpandLess fontSize="large" className="mtm5" />
                           ) : (
                             <ExpandMore fontSize="large" className="mtm5" />
@@ -516,21 +497,9 @@ const SearchFilter = ({
                             Activities
                           </div>
                         </div>
-                        <Link
-                          className="ml-auto pointer p20"
-                          onClick={() => {
-                            setSelectedActivities([])
-                          }}
-                          tabIndex="0"
-                          href="#"
-                          underline="hover">
-                          Reset
-                        </Link>
                       </div>
-
-                      <Divider className="yellow-divider" />
                       <Collapse
-                        in={showFilters[0]}
+                        in={showFilters[3]}
                         timeout="auto"
                         unmountOnExit
                         className="p20"
@@ -583,15 +552,15 @@ const SearchFilter = ({
                         <div
                           className="flex-display pointer full-width p20"
                           onClick={() => {
-                            handleShowFilterClick(1)
+                            handleShowFilterClick(4)
                           }}
                           tabIndex="0"
                           role="button"
                           onKeyPress={() => {
-                            handleShowFilterClick(1)
+                            handleShowFilterClick(4)
                           }}
                         >
-                          {showFilters[1] ? (
+                          {showFilters[4] ? (
                             <ExpandLess fontSize="large" className="mtm5" />
                           ) : (
                             <ExpandMore fontSize="large" className="mtm5" />
@@ -600,21 +569,9 @@ const SearchFilter = ({
                             Facilities
                           </div>
                         </div>
-                        <Link
-                          className="ml-auto pointer p20"
-                          onClick={() => {
-                            setSelectedFacilities([])
-                          }}
-                          tabIndex="0"
-                          href="#"
-                          underline="hover">
-                          Reset
-                        </Link>
                       </div>
-
-                      <Divider className="yellow-divider" />
                       <Collapse
-                        in={showFilters[1]}
+                        in={showFilters[4]}
                         timeout="auto"
                         unmountOnExit
                         className="p20"
