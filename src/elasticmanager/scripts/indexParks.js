@@ -154,7 +154,7 @@ const getBatch = async function (queuedTasks, options) {
   }, {
     encodeValuesOnly: true,
   });
-  const parksQuery = `${process.env.STRAPI_BASE_URL}/api/search/indexing/parks?${parksFilters}`;
+  const parksQuery = `${process.env.STRAPI_BASE_URL}/api/search-indexing/parks?${parksFilters}`;
   const httpReqHeaders = {
     'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
     'Content-Type': 'application/json'
@@ -178,7 +178,7 @@ const getPhotos = async function (orcsList) {
   }, {
     encodeValuesOnly: true,
   });
-  const photosQuery = `${process.env.STRAPI_BASE_URL}/api/search/indexing/photos?${photoFilters}`;
+  const photosQuery = `${process.env.STRAPI_BASE_URL}/api/search-indexing/photos?${photoFilters}`;
   const httpReqHeaders = {
     'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
     'Content-Type': 'application/json'

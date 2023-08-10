@@ -154,22 +154,11 @@ module.exports = ({ strapi }) => ({
 
     let filtersForLongerQueries = [];
 
-    if (searchText.length > 1) {
-      filtersForLongerQueries = [{
-        "multi_match": {
-          "query": searchText,
-          "type": "best_fields",
-          "fields": ["parkNames^2", "protectedAreaName^5"],
-          "operator": "or"
-        }
-      }];
-    }
-
-    if (searchText) {
-      textFilter = [
+    if (searchText.length > 2) {
+      filtersForLongerQueries = [
         {
           "match_phrase_prefix": {
-            "protectedAreaName": {
+            "nameLowerCase": {
               "query": searchText,
               "boost": 4
             }
@@ -179,6 +168,34 @@ module.exports = ({ strapi }) => ({
           "match_phrase_prefix": {
             "parkNames": {
               "query": searchText,
+              "boost": 4
+            }
+          }
+        },
+        {
+          "multi_match": {
+            "query": searchText,
+            "type": "best_fields",
+            "fields": ["parkNames^2", "protectedAreaName^5"],
+            "operator": "or"
+          }
+        }];
+    }
+
+    if (searchText) {
+      textFilter = [
+        {
+          "prefix": {
+            "nameLowerCase.keyword": {
+              "value": searchText.toLowerCase(),
+              "boost": 6
+            }
+          }
+        },
+        {
+          "prefix": {
+            "parkNames": {
+              "value": searchText,
               "boost": 3
             }
           }
@@ -201,8 +218,8 @@ module.exports = ({ strapi }) => ({
           }
         },
         "sort": [
-          "_score",
           "typeCode.keyword:desc",
+          "_score",
           "nameLowerCase.keyword"
         ],
         "_source": [
@@ -220,50 +237,6 @@ module.exports = ({ strapi }) => ({
       throw err;
     }
   },
-
-  async queueAllParksForIndexing() {
-
-    // clear items that are already queued to be indexed (they don't need to be indexed twice)
-    await strapi.db.query("api::queued-task.queued-task").deleteMany({
-      where: { action: 'elastic index park' }
-    });
-
-    // items queued to be deleted are okay to be deleted twice because there is a big risk of 
-    // missing them if we delete them as well
-
-    const removeParks = await strapi.entityService.findMany("api::protected-area.protected-area", {
-      filters: { isDisplayed: { $ne: true } },
-      fields: ["id"]
-    });
-
-    const addParks = await strapi.entityService.findMany("api::protected-area.protected-area", {
-      filters: { isDisplayed: true },
-      fields: ["id"]
-    });
-
-    const removeList = removeParks.map(p => {
-      return {
-        action: 'elastic remove park',
-        numericData: p.id
-      }
-    });
-
-    const addList = addParks.map(p => {
-      return {
-        action: 'elastic index park',
-        numericData: p.id
-      }
-    });
-
-    if (removeList.length) {
-      await strapi.db.query("api::queued-task.queued-task").createMany({ data: removeList });
-    }
-
-    if (addList.length) {
-      await strapi.db.query("api::queued-task.queued-task").createMany({ data: addList });
-    }
-  }
-
 });
 
 const getIndexName = () => {

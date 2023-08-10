@@ -6,6 +6,7 @@
 
 const { createCoreController } = require("@strapi/strapi").factories;
 const customStatus = require("../custom/protected-area-status");
+const customSearch = require("../custom/protected-area-search");
 
 module.exports = createCoreController(
   "api::protected-area.protected-area",
@@ -23,6 +24,7 @@ module.exports = createCoreController(
       let entity = await strapi.service("api::protected-area.protected-area").findOne(entities[0].id, ctx.query);
       return await this.sanitizeOutput(entity, ctx);
     },
+
     async items() {
       // custom route for light weight park details used in client app
       const entities = await strapi
@@ -33,8 +35,17 @@ module.exports = createCoreController(
         return { id, orcs, protectedAreaName };
       });
     },
+
     async status(ctx) {
       return customStatus.getProtectedAreaStatus(ctx);
     },
+
+    async searchParks(ctx) {
+      return await customSearch.searchParks(ctx);
+    },
+
+    async autocomplete(ctx) {
+      return await customSearch.parkAutocomplete(ctx);
+    }
   })
 );
