@@ -258,6 +258,13 @@ h3.subtitle {
   .Mui-checked .MuiSvgIcon-root {
     color: $colorBlueLight !important;
   }
+  .MuiFormControlLabel-root {
+    .MuiCheckbox-root {
+      .MuiSvgIcon-root {
+        font-size: 2rem;
+      }
+    }
+  }
 }
 
 .park-filter-dialog,
@@ -879,7 +886,6 @@ div[class$="-singleValue"] {
 
   .park-links {
     a.map-link {
-      margin-left: 8px;
       svg.MuiSvgIcon-root {
         font-size: 1rem;
       }

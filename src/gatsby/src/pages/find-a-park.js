@@ -292,6 +292,9 @@ export default function FindAPark({ location, data }) {
 
   const [openFilter, setOpenFilter] = useState(false)
   const [openModal, setOpenModal] = useState(false)
+  
+  const [activitiesCount, setActivitiesCount] = useState([])
+  const [facilitiesCount, setFacilitiesCount] = useState([])
 
   const searchRef = useRef(null)
   const breadcrumbs = [
@@ -641,6 +644,8 @@ export default function FindAPark({ location, data }) {
         setSearchResults([...resultResponse.data.data])
         setTotalResults(total)
         setNumberOfPages(pages)
+        setActivitiesCount(resultResponse.data.meta.aggregations.activities.buckets)
+        setFacilitiesCount(resultResponse.data.meta.aggregations.facilities.buckets)
       } else {
         setSearchResults([])
         setTotalResults(0)
@@ -837,10 +842,10 @@ export default function FindAPark({ location, data }) {
                         </div>
                       </div>
                     </div>
-                    <div className="col-12 pr-3 mb20">
+                    <div className="col-12 pr-3 mb32">
                       <h3 className="subtitle">Filter</h3>
                       <div className="">
-                        <fieldset>
+                        <fieldset className="mb-2">
                           <legend className="filter-heading p10t">Popular</legend>
                           <FormGroup className="p10l filter-options-container">
                             {quickSearchFilters.map(item => {
@@ -865,8 +870,7 @@ export default function FindAPark({ location, data }) {
                             })}
                           </FormGroup>
                         </fieldset>
-                        <hr></hr>
-                        <fieldset>
+                        <fieldset className="mb-2">
                           <legend className="filter-heading">Regions</legend>
                           <FormGroup className="p10l filter-options-container">
                             {regionItems.map(item => {
@@ -901,8 +905,7 @@ export default function FindAPark({ location, data }) {
                             })}
                           </FormGroup>
                         </fieldset>
-                        <hr></hr>
-                        <fieldset>
+                        <fieldset className="mb-2">
                           <legend className="filter-heading">Camping</legend>
                           <FormGroup className="p10l filter-options-container">
                             {campingFacilityItems.map(item => {
@@ -937,8 +940,7 @@ export default function FindAPark({ location, data }) {
                             })}
                           </FormGroup>
                         </fieldset>
-                        <hr></hr>
-                        <fieldset>
+                        <fieldset className="mb-2">
                           <legend className="sr-only">Activities</legend>
                           <div
                             tabIndex={showActivities ? -1 : 0}
@@ -1004,7 +1006,7 @@ export default function FindAPark({ location, data }) {
                                   })}
                                 </FormGroup>
                                 <Link
-                                  className="ml-auto pointer p20"
+                                  className="ml-auto pointer"
                                   onClick={() => {
                                     handleActivitiesLengthChange([])
                                   }}
@@ -1035,7 +1037,6 @@ export default function FindAPark({ location, data }) {
                             )}
                           </div>
                         </fieldset>
-                        <hr></hr>
                         <fieldset>
                           <legend className="sr-only">Facilities</legend>
                           <div
@@ -1102,7 +1103,7 @@ export default function FindAPark({ location, data }) {
                                   })}
                                 </FormGroup>
                                 <Link
-                                  className="ml-auto pointer p20"
+                                  className="ml-auto pointer"
                                   onClick={() => {
                                     handleFacilitiesLengthChange([])
                                   }}
@@ -1138,7 +1139,8 @@ export default function FindAPark({ location, data }) {
                     <div className="col-12 park-links">
                       <h3 className="subtitle">More ways to find a park</h3>
                       <div>
-                        <GatsbyLink to="/parks">A–Z</GatsbyLink>,
+                        <GatsbyLink to="/parks">A–Z list</GatsbyLink>
+                        <br />
                         <a
                           target="_blank"
                           rel="noopener noreferrer"
