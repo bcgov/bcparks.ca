@@ -89,7 +89,7 @@ module.exports = ({ strapi }) => ({
     }
 
     try {
-      const result = await doElasticSearch({
+      const query = {
         index: getIndexName(),
         from: offset,
         size: limit,
@@ -132,11 +132,91 @@ module.exports = ({ strapi }) => ({
             },
           }
         }
-      });
+      };
+      const result = await doElasticSearch(query);
       return result;
     }
     catch (err) {
       console.log('Search : search.searchParks : Error encountered while making a search request to ElasticSearch.')
+      throw err;
+    }
+  },
+
+  parkAutocomplete: async ({
+    searchText,
+  }) => {
+
+    if (!searchText) {
+      return [];
+    }
+
+    let textFilter = [];
+
+    let filtersForLongerQueries = [];
+
+    if (searchText.length > 1) {
+      filtersForLongerQueries = [{
+        "multi_match": {
+          "query": searchText,
+          "type": "best_fields",
+          "fields": ["parkNames^2", "protectedAreaName^5"],
+          "operator": "or"
+        }
+      }];
+    }
+
+    if (searchText) {
+      textFilter = [
+        {
+          "match_phrase_prefix": {
+            "protectedAreaName": {
+              "query": searchText,
+              "boost": 4
+            }
+          }
+        },
+        {
+          "match_phrase_prefix": {
+            "parkNames": {
+              "query": searchText,
+              "boost": 3
+            }
+          }
+        },
+        ...filtersForLongerQueries
+      ];
+    }
+
+    try {
+      const query = {
+        from: 0,
+        size: 10,
+        index: getIndexName(),
+        filterPath: "hits.hits._source",
+        body: {
+          query: {
+            bool: {
+              should: [...textFilter]
+            }
+          }
+        },
+        "sort": [
+          "_score",
+          "typeCode.keyword:desc",
+          "nameLowerCase.keyword"
+        ],
+        "_source": [
+          "protectedAreaName",
+          "slug"
+        ]
+      };
+      console.log(JSON.stringify(query))
+
+      const result = await doElasticSearch(query);
+      return result;
+    }
+    catch (err) {
+      console.log('Search : search.parkAutocomplete : Error encountered while making a search request to ElasticSearch.')
       throw err;
     }
   },

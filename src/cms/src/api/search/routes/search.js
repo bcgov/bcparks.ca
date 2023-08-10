@@ -11,6 +11,15 @@ module.exports = {
     },
     {
       method: 'GET',
+      path: '/search/parknames',
+      handler: 'search.parkAutocomplete',
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
+      method: 'GET',
       path: '/search/indexing/parks',
       handler: 'search.getParksForIndexing',
       config: {

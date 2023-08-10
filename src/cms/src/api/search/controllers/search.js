@@ -118,6 +118,38 @@ module.exports = ({ strapi }) => ({
     }
   },
 
+  parkAutocomplete: async (ctx) => {
+    try {
+      const resp = await strapi.service("api::search.search").parkAutocomplete({
+        searchText: (ctx.query.queryText || '').trim(),
+      });
+
+      const result = resp?.body?.hits;
+
+      if (result?.hits) {
+        const filteredMatches = result.hits;
+
+        const data = filteredMatches.map((data) => {
+          return data['_source'];
+        });
+
+        return {
+          data: data,
+        };
+      }
+      else {
+        ctx.body = {
+          data: [],
+        }
+      }
+    } catch (err) {
+      ctx.response.status = 500;
+      ctx.body = "An error was encountered while processing the search request."
+      console.log(`An error was encountered by search autocomplete: ${ctx.query.queryText}`)
+      console.log(err);
+    }
+  },
+
   getParkPhotosForIndexing: async (ctx) => {
     const contentType = strapi.contentType("api::park-photo.park-photo");
     const query = await sanitize.contentAPI.query(ctx.query, contentType, {});
