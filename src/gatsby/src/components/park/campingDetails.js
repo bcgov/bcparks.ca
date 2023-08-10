@@ -120,7 +120,10 @@ export default function CampingDetails({ data }) {
                       id="panel1a-header"
                       onClick={() => toggleReservations()}
                     >
-                      <div className="d-flex justify-content-between p-3 accordion-toggle">
+                      <div 
+                        id="reservations"
+                        className="d-flex justify-content-between p-3 accordion-toggle"
+                      >
                         <div className="d-flex justify-content-left align-items-center pl-2">
                           <StaticIcon name="reservations" size={48} />
                           <HtmlContent className="pl-3 accordion-header">
@@ -164,7 +167,10 @@ export default function CampingDetails({ data }) {
                 id={index}
                 onClick={() => toggleExpand(index)}
               >
-                <div className="d-flex justify-content-between p-3 accordion-toggle">
+                <div
+                  id={camping?.activityType?.activityCode || camping?.facilityType?.facilityCode}
+                  className="d-flex justify-content-between p-3 accordion-toggle"
+                >
                   <div className="d-flex justify-content-left align-items-center pl-2">
                     <StaticIcon name={camping?.activityType?.icon || camping?.facilityType?.icon} size={48} />
                     <HtmlContent className="pl-3 accordion-header">
