@@ -15,6 +15,7 @@ module.exports = ({ strapi }) => ({
     marineProtectedArea,
     activityNumbers,
     facilityNumbers,
+    regionNumbers,
     limit,
     offset,
   }) => {
@@ -88,6 +89,12 @@ module.exports = ({ strapi }) => ({
       mustFilter.push({ match: { "typeCode": typeCode } })
     }
 
+    let regionFilter = [];
+
+    for (const regionNum of regionNumbers) {
+      regionFilter.push({ match: { "parkLocations.regionNum": regionNum } })
+    }
+
     try {
       const query = {
         index: getIndexName(),
@@ -97,15 +104,15 @@ module.exports = ({ strapi }) => ({
           query: {
             bool: {
               filter: [
+                ...mustFilter,
                 {
-                  bool: {
-                    must: [...mustFilter]
-                  }
+                  bool: { should: [...regionFilter] }
                 }
               ],
-              must: [{
-                bool: { should: [...textFilter] }
-              }
+              must: [
+                {
+                  bool: { should: [...textFilter] }
+                }
               ]
             }
           },
@@ -136,6 +143,26 @@ module.exports = ({ strapi }) => ({
             "typeCode": {
               "terms": { "field": "typeCode.keyword" }
             },
+            "all_regions": {
+              "global": {},
+              "aggs": {
+                "filtered": {
+                  "filter": {
+                    bool: {
+                      filter: [...mustFilter],
+                      must: [{ bool: { should: [...textFilter] } }]
+                    }
+                  },
+                  "aggs": {
+                    "regions": {
+                      "terms": {
+                        "field": "parkLocations.region.keyword"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       };
@@ -233,8 +260,6 @@ module.exports = ({ strapi }) => ({
           "slug"
         ]
       };
-      console.log(JSON.stringify(query))
-
       const result = await doElasticSearch(query);
       return result;
     }

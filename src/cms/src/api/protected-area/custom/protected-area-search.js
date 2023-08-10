@@ -101,6 +101,7 @@ function parseSearchFilters(query) {
 
   let activityNumbers = [];
   let facilityNumbers = [];
+  let regionNumbers = [];
 
   if (query.activities) {
     if (typeof query.activities === "object") {
@@ -120,6 +121,15 @@ function parseSearchFilters(query) {
       facilityNumbers = [parseInt(query.facilities, 10)];
     }
   }
+  if (query.regions) {
+    if (typeof query.regions === "object") {
+      regionNumbers = query.regions.map((region) =>
+        parseInt(region, 10)
+      );
+    } else {
+      regionNumbers = [parseInt(query.regions, 10)];
+    }
+  }
 
   return {
     searchText,
@@ -129,6 +139,7 @@ function parseSearchFilters(query) {
     marineProtectedArea,
     activityNumbers,
     facilityNumbers,
+    regionNumbers
   };
 }
 
