@@ -25,43 +25,43 @@ module.exports = ({ strapi }) => ({
     if (searchText) {
       textFilter = [
         {
-          "match_phrase": {
+          match_phrase: {
             "protectedAreaName": {
-              "query": searchText,
-              "boost": 5
+              query: searchText,
+              boost: 5
             }
           }
         },
         {
-          "match_phrase": {
+          match_phrase: {
             "parkNames": {
-              "query": searchText,
-              "boost": 3
+              query: searchText,
+              boost: 3
             }
           }
         },
         {
-          "match_phrase_prefix": {
+          match_phrase_prefix: {
             "protectedAreaName": {
-              "query": searchText,
-              "boost": 1
+              query: searchText,
+              boost: 1
             }
           }
         },
         {
-          "match_phrase_prefix": {
-            "parkNames": {
-              "query": searchText,
-              "boost": 1
+          match_phrase_prefix: {
+            parkNames: {
+              query: searchText,
+              boost: 1
             }
           }
         },
         {
-          "multi_match": {
-            "query": searchText,
-            "type": "best_fields",
-            "fields": ["parkNames^2", "protectedAreaName^2"],
-            "operator": "and"
+          multi_match: {
+            query: searchText,
+            type: "best_fields",
+            fields: ["parkNames^2", "protectedAreaName^2"],
+            operator: "and"
           }
         }
       ];
@@ -116,47 +116,41 @@ module.exports = ({ strapi }) => ({
               ]
             }
           },
-          "sort": [
+          sort: [
             "_score",
             "nameLowerCase.keyword"
           ],
           _source: true,
           aggs: {
-            "activities": {
-              "terms": {
-                "field": "parkActivities.code.keyword",
-                "size": 50
+            activities: {
+              terms: {
+                field: "parkActivities.num",
+                size: 50,
+                min_doc_count: 0
               }
             },
-            "facilities": {
-              "terms": {
-                "field": "parkFacilities.code.keyword",
-                "size": 50
+            facilities: {
+              terms: {
+                field: "parkFacilities.num",
+                size: 50,
+                min_doc_count: 0
               }
             },
-            "marinePark": {
-              "terms": { "field": "marineProtectedArea" }
-            },
-            "hasCamping": {
-              "terms": { "field": "hasCamping" }
-            },
-            "typeCode": {
-              "terms": { "field": "typeCode.keyword" }
-            },
-            "all_regions": {
-              "global": {},
-              "aggs": {
-                "filtered": {
-                  "filter": {
+            all_regions: {
+              global: {},
+              aggs: {
+                filtered: {
+                  filter: {
                     bool: {
                       filter: [...mustFilter],
                       must: [{ bool: { should: [...textFilter] } }]
                     }
                   },
-                  "aggs": {
-                    "regions": {
-                      "terms": {
-                        "field": "parkLocations.region.keyword"
+                  aggs: {
+                    regions: {
+                      terms: {
+                        field: "parkLocations.regionNum",
+                        min_doc_count: 0
                       }
                     }
                   }
@@ -190,27 +184,27 @@ module.exports = ({ strapi }) => ({
     if (searchText.length > 2) {
       filtersForLongerQueries = [
         {
-          "match_phrase_prefix": {
-            "nameLowerCase": {
-              "query": searchText,
-              "boost": 4
+          match_phrase_prefix: {
+            nameLowerCase: {
+              query: searchText,
+              boost: 4
             }
           }
         },
         {
-          "match_phrase_prefix": {
-            "parkNames": {
-              "query": searchText,
-              "boost": 4
+          match_phrase_prefix: {
+            parkNames: {
+              query: searchText,
+              boost: 4
             }
           }
         },
         {
-          "multi_match": {
-            "query": searchText,
-            "type": "best_fields",
-            "fields": ["parkNames^2", "protectedAreaName^5"],
-            "operator": "or"
+          multi_match: {
+            query: searchText,
+            type: "best_fields",
+            fields: ["parkNames^2", "protectedAreaName^5"],
+            operator: "or"
           }
         }];
     }
@@ -218,18 +212,18 @@ module.exports = ({ strapi }) => ({
     if (searchText) {
       textFilter = [
         {
-          "prefix": {
+          prefix: {
             "nameLowerCase.keyword": {
-              "value": searchText.toLowerCase(),
-              "boost": 6
+              value: searchText.toLowerCase(),
+              boost: 6
             }
           }
         },
         {
-          "prefix": {
+          prefix: {
             "parkNames": {
-              "value": searchText,
-              "boost": 3
+              value: searchText,
+              boost: 3
             }
           }
         },
@@ -250,12 +244,12 @@ module.exports = ({ strapi }) => ({
             }
           }
         },
-        "sort": [
+        sort: [
           "typeCode.keyword:desc",
           "_score",
           "nameLowerCase.keyword"
         ],
-        "_source": [
+        _source: [
           "protectedAreaName",
           "slug"
         ]
