@@ -267,37 +267,37 @@ export default function FindAPark({ location, data }) {
   )
 
   const quickSearchFilters = [
-    { 
+    {
       label: "Backcountry camping",
       type: "backcountryCamping",
       count: facilityFilterCount("backcountry-camping")?.doc_count
     },
-    { 
+    {
       label: "Cycling",
       type: "cycling",
       count: activityFilterCount("cycling")?.doc_count
     },
-    { 
+    {
       label: "Hiking",
       type: "hiking",
       count: activityFilterCount("hiking")?.doc_count
     },
-    { 
+    {
       label: "Pets on leash",
       type: "petsOnLeash",
       count: activityFilterCount("pets-on-leash")?.doc_count
     },
-    { 
+    {
       label: "Picnic areas",
       type: "picnicAreas",
       count: facilityFilterCount("picnic-areas")?.doc_count
     },
-    { 
+    {
       label: "Swimming",
       type: "swimming",
       count: activityFilterCount("swimming")?.doc_count
     },
-    { 
+    {
       label: "Vehicle-accessible camping",
       type: "vehicleAccessibleCamping",
       count: facilityFilterCount("vehicle-accessible-camping")?.doc_count
@@ -726,17 +726,23 @@ export default function FindAPark({ location, data }) {
               {breadcrumbs}
             </Breadcrumbs>
             <div className="row no-gutters">
-              <div className="col-12">
+              <div className="col-12 col-lg-3">
                 <h1 className="headline-text p40t sm-p10">
-                  {!isActiveSearch && <>Find a park</>}
-                  {isLoading && isActiveSearch && <>Searching...</>}
-                  {!isLoading && isActiveSearch && (
-                    <>
-                      {totalResults}{" "}
-                      {totalResults === 1 ? " result found" : " results found"}
-                    </>
-                  )}
+                  Find a park
                 </h1>
+              </div>
+              <div className="col-12 col-lg-9 d-flex align-items-end">
+                <p className="result-count-text sm-p10">
+                  <b>
+                    {isLoading && isActiveSearch && <>Searching...</>}
+                    {!isLoading && isActiveSearch && (
+                      <>
+                        {totalResults}{" "}
+                        {totalResults === 1 ? " result" : " results"}
+                      </>
+                    )}
+                  </b>
+                </p>
               </div>
             </div>
             <div className="row no-gutters">
@@ -769,7 +775,7 @@ export default function FindAPark({ location, data }) {
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-quick-filter d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none mt-3">
                   <div className="row no-gutters">
-                    <div className="col-12">
+                    <div className="col-12 col-md-9">
                       <TextField
                         id="park-search-text"
                         variant="outlined"
@@ -797,11 +803,22 @@ export default function FindAPark({ location, data }) {
                         }}
                       />
                     </div>
+                    <div className="col-md-3 d-none d-md-block pl-3">
+                      <Button
+                        fullWidth
+                        className="bcgov-normal-blue mobile-search-element-height h50p"
+                        onClick={() => {
+                          handleSearch()
+                        }}
+                      >
+                        Search
+                      </Button>
+                    </div>
                   </div>
                 </div>
                 <div className="search-results-list container">
                   <div className="row">
-                    <div className="col-md-4 col-sm-12 col-xs-12 mt-3">
+                    <div className="col-md-4 col-sm-12 col-xs-12 mt-3 d-block d-md-none">
                       <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
                         <Button
                           fullWidth
@@ -814,7 +831,7 @@ export default function FindAPark({ location, data }) {
                         </Button>
                       </div>
                     </div>
-                    <div className="col-md-4 col-sm-12 col-xs-12 mt-3">
+                    <div className="col-md-6 col-sm-12 col-xs-12 mt-3">
                       <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
                         <Button
                           variant="outlined"
@@ -825,7 +842,7 @@ export default function FindAPark({ location, data }) {
                         </Button>
                       </div>
                     </div>
-                    <div className="col-md-4 col-sm-12 col-xs-12 mt-3">
+                    <div className="col-md-6 col-sm-12 col-xs-12 mt-3">
                       <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
                         <Button
                           variant="outlined"
@@ -837,6 +854,23 @@ export default function FindAPark({ location, data }) {
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div className="search-results-list container d-block d-lg-none" ref={searchRef}>
+              <div className="row p20t d-flex">
+                <div className="col-12">
+                  {filterSelections.length > 0 && filterSelections.map((f, index) => (
+                    <Chip
+                      key={index}
+                      label={f.label}
+                      onClick={handleFilterDelete(f)}
+                      onDelete={handleFilterDelete(f)}
+                      variant="outlined"
+                      className="park-filter-chip font-weight-bold"
+                      deleteIcon={<CancelIcon className="close-icon" />}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -1305,7 +1339,7 @@ export default function FindAPark({ location, data }) {
                                           </div>
                                           <div className="park-content-bottom">
                                             <div className="park-content-bottom--left">
-                                              <FeatureIcons park={r}/>
+                                              <FeatureIcons park={r} />
                                             </div>
                                             <div className="park-content-bottom--right text-blue">
                                               <ParkAccessStatus
@@ -1506,7 +1540,7 @@ export default function FindAPark({ location, data }) {
           setCurrentPage,
         }}
       />
-      <ParkLinksModal data={{openModal, setOpenModal}} />
+      <ParkLinksModal data={{ openModal, setOpenModal }} />
       <Footer />
     </>
   )

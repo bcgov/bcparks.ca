@@ -2,21 +2,15 @@ import React, { useState, useEffect, useCallback } from "react"
 import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 import {
-  TextField,
   Dialog,
   DialogContent,
   DialogActions,
   Button,
   Collapse,
-  Chip,
-  InputAdornment,
   FormGroup,
   FormControlLabel,
   Checkbox,
-  Link,
 } from "@mui/material"
-import SearchIcon from "@mui/icons-material/Search"
-import CancelIcon from "@mui/icons-material/Cancel"
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import ExpandMore from "@mui/icons-material/ExpandMore"
 
@@ -209,62 +203,11 @@ const SearchFilter = ({
         open={openFilter}
         onClose={handleCloseFilter}
         aria-labelledby="park-filter-dialog"
-        className="park-filter-dialog"
+        className="park-filter-dialog d-block d-lg-none"
         scroll="paper"
       >
         <DialogContent className="park-filter-dialog-content">
           <div className="container p10">
-            <div className="row no-gutters">
-              <div className="col-lg-7 col-md-12 col-sm-12">
-                <TextField
-                  margin="dense"
-                  id="park-filter-text"
-                  className="park-filter-text"
-                  placeholder="Search by name or location"
-                  fullWidth
-                  variant="outlined"
-                  value={searchText}
-                  onChange={event => {
-                    setSearchText(event.target.value)
-                  }}
-                  onKeyPress={ev => {
-                    if (ev.key === "Enter") {
-                      searchParkFilter()
-                      ev.preventDefault()
-                    }
-                  }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon className="search-icon" />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </div>
-              <div className="col-lg-3 col-md-8 col-sm-8 mt8 d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    searchParkFilter()
-                  }}
-                  className="bcgov-button bcgov-normal-blue"
-                >
-                  Search
-                </Button>
-              </div>
-              <div className="col-lg-2 col-md-8 col-sm-4 mt8 p10l d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                <Button
-                  variant="outlined"
-                  onClick={() => {
-                    handleCloseFilter()
-                  }}
-                  className="bcgov-button bcgov-normal-transparent"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </div>
             <div className="row p20t no-gutters">
               <div className="p20l-filter col-lg-8 col-md-12 col-sm-12">
                 <div className="row p20t">
@@ -282,14 +225,14 @@ const SearchFilter = ({
                             handleShowFilterClick(0)
                           }}
                         >
+                          <div className="p10l park-select-label">
+                            Popular
+                          </div>
                           {showFilters[0] ? (
                             <ExpandLess fontSize="large" className="mtm5" />
                           ) : (
                             <ExpandMore fontSize="large" className="mtm5" />
                           )}
-                          <div className="p10l park-select-label">
-                            Popular
-                          </div>
                         </div>
                       </div>
                       <Collapse
@@ -313,11 +256,11 @@ const SearchFilter = ({
                                       name={item.type}
                                     />
                                   }
-                                  label={item.label}
+                                  label={`${item.label} (${item.count})`}
                                   className={
                                     quickSearch[item.type]
-                                    ? "text-light-blue no-wrap"
-                                    : "no-wrap"
+                                      ? "text-light-blue no-wrap"
+                                      : "no-wrap"
                                   }
                                 />
                               </FormGroup>
@@ -343,14 +286,14 @@ const SearchFilter = ({
                             handleShowFilterClick(1)
                           }}
                         >
+                          <div className="p10l park-select-label">
+                            Region
+                          </div>
                           {showFilters[1] ? (
                             <ExpandLess fontSize="large" className="mtm5" />
                           ) : (
                             <ExpandMore fontSize="large" className="mtm5" />
                           )}
-                          <div className="p10l park-select-label">
-                            Region
-                          </div>
                         </div>
                       </div>
                       <Collapse
@@ -382,7 +325,7 @@ const SearchFilter = ({
                                       name={item.label}
                                     />
                                   }
-                                  label={item.label}
+                                  label={`${item.label} ()`}
                                   className={
                                     selectedRegions.filter(
                                       region => region.value === item.value
@@ -415,14 +358,14 @@ const SearchFilter = ({
                             handleShowFilterClick(2)
                           }}
                         >
+                          <div className="p10l park-select-label">
+                            Camping
+                          </div>
                           {showFilters[2] ? (
                             <ExpandLess fontSize="large" className="mtm5" />
                           ) : (
                             <ExpandMore fontSize="large" className="mtm5" />
                           )}
-                          <div className="p10l park-select-label">
-                            Camping
-                          </div>
                         </div>
                       </div>
                       <Collapse
@@ -454,7 +397,7 @@ const SearchFilter = ({
                                       name={item.label}
                                     />
                                   }
-                                  label={item.label}
+                                  label={`${item.label} (${item.count})`}
                                   className={
                                     selectedCampingFacilities.filter(
                                       camping => camping.value === item.value
@@ -488,14 +431,14 @@ const SearchFilter = ({
                             handleShowFilterClick(3)
                           }}
                         >
+                          <div className="p10l park-select-label">
+                            Activities
+                          </div>
                           {showFilters[3] ? (
                             <ExpandLess fontSize="large" className="mtm5" />
                           ) : (
                             <ExpandMore fontSize="large" className="mtm5" />
                           )}
-                          <div className="p10l park-select-label">
-                            Activities
-                          </div>
                         </div>
                       </div>
                       <Collapse
@@ -527,7 +470,7 @@ const SearchFilter = ({
                                       name={a.label}
                                     />
                                   }
-                                  label={a.label}
+                                  label={`${a.label} (${a?.count})`}
                                   className={
                                     selectedActivities.filter(
                                       act => act.value === a.value
@@ -560,14 +503,14 @@ const SearchFilter = ({
                             handleShowFilterClick(4)
                           }}
                         >
+                          <div className="p10l park-select-label">
+                            Facilities
+                          </div>
                           {showFilters[4] ? (
                             <ExpandLess fontSize="large" className="mtm5" />
                           ) : (
                             <ExpandMore fontSize="large" className="mtm5" />
                           )}
-                          <div className="p10l park-select-label">
-                            Facilities
-                          </div>
                         </div>
                       </div>
                       <Collapse
@@ -599,7 +542,7 @@ const SearchFilter = ({
                                       name={f.label}
                                     />
                                   }
-                                  label={f.label}
+                                  label={`${f.label} (${f?.count})`}
                                   className={
                                     selectedFacilities.filter(
                                       fa => fa.value === f.value
