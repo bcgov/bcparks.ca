@@ -147,7 +147,7 @@ module.exports = ({ strapi }) => ({
                   aggs: {
                     regions: {
                       terms: {
-                        field: "parkLocations.region.keyword"
+                        field: "parkLocations.regionNum"
                       }
                     }
                   }
