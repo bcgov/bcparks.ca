@@ -44,7 +44,6 @@ export const addSmallImagePrefix = (str) => {
     return url.substring(0, i + 1) + "small_" + url.substring(i + 1, url.length)
 }
 export const handleImgError = (e, imgSrc) => {
-    e.target.onError = null
-    e.target.src = imgSrc
+    e.target.onError = imgSrc
     console.clear()
 }
