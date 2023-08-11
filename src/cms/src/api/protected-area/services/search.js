@@ -125,13 +125,15 @@ module.exports = ({ strapi }) => ({
             activities: {
               terms: {
                 field: "parkActivities.num",
-                size: 50
+                size: 50,
+                min_doc_count: 0
               }
             },
             facilities: {
               terms: {
                 field: "parkFacilities.num",
-                size: 50
+                size: 50,
+                min_doc_count: 0
               }
             },
             all_regions: {
@@ -147,7 +149,8 @@ module.exports = ({ strapi }) => ({
                   aggs: {
                     regions: {
                       terms: {
-                        field: "parkLocations.regionNum"
+                        field: "parkLocations.regionNum",
+                        min_doc_count: 0
                       }
                     }
                   }
