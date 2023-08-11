@@ -30,7 +30,7 @@ const searchParks = async function (ctx) {
             pageCount: Math.ceil(result.total?.value / 10),
             total: result.total?.value
           },
-          aggregations: resp?.body?.aggregations
+          aggregations: cleanUpAggregations(resp?.body?.aggregations)
         }
       };
     }
@@ -151,6 +151,12 @@ function parseSearchOffset(query) {
     limit,
     offset,
   };
+}
+
+function cleanUpAggregations(aggs) {
+  aggs.regions = aggs.all_regions.filtered.regions;
+  delete aggs.all_regions;
+  return aggs;
 }
 
 module.exports = {
