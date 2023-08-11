@@ -15,6 +15,8 @@ module.exports = ({ strapi }) => ({
       "typeCode",
       "hasCampfireBan",
       "slug",
+      "latitude",
+      "longitude",
       "isDisplayed",
       "publishedAt"
     ];

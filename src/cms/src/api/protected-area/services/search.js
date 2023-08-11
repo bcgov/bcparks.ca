@@ -99,9 +99,9 @@ module.exports = ({ strapi }) => ({
     try {
       const query = {
         index: getIndexName(),
-        from: offset,
-        size: limit,
         body: {
+          from: offset,
+          size: limit,          
           query: {
             bool: {
               filter: [
@@ -244,11 +244,11 @@ module.exports = ({ strapi }) => ({
 
     try {
       const query = {
-        from: 0,
-        size: 10,
         index: getIndexName(),
         filterPath: "hits.hits._source",
         body: {
+          from: 0,
+          size: 10,
           query: {
             bool: {
               should: [...textFilter]
