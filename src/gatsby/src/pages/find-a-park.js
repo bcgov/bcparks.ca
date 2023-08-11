@@ -148,13 +148,13 @@ const FeatureIcons = ({ park }) => {
         <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
       }
       {facilities.some(x => [1, 36].includes(x.num)) ? (
-        <GatsbyLink href={`/${park.slug}/#park-camping-details-container`}>
+        <GatsbyLink to={`/${park.slug}/#park-camping-details-container`}>
           <p aria-label="See all facilities and activities">see all</p>
         </GatsbyLink>
       ) : (
         (activities.length > 0 || facilities.length > 0) && (
           facilities.some(x => x.code === 'picnic-areas') ? (
-            <GatsbyLink href={`/${park.slug}/#park-facility-container`}>
+            <GatsbyLink to={`/${park.slug}/#park-facility-container`}>
               <p aria-label="See all facilities and activities">see all</p>
             </GatsbyLink>
           ) : (
@@ -172,14 +172,21 @@ export default function FindAPark({ location, data }) {
   const menuContent = data?.allStrapiMenu?.nodes || []
   const regions = data?.allStrapiRegion?.nodes || []
 
+  const [activitiesCount, setActivitiesCount] = useState([])
+  const [facilitiesCount, setFacilitiesCount] = useState([])
+
   const sortedActivityItems = orderBy(
     data.allStrapiActivityType.nodes,
     [activity => activity.activityName.toLowerCase()], ["asc"]
   )
   const activityItems = sortedActivityItems.map(activity => {
+    const filterCount = activitiesCount?.find(
+      activityCount => activityCount.key === activity.activityCode
+    )
     return {
       label: activity.activityName,
       value: activity.activityNumber,
+      count: filterCount?.doc_count
     }
   })
   const activityItemsLabels = {}
@@ -207,17 +214,25 @@ export default function FindAPark({ location, data }) {
 
   const campingFacilityItems = data.allStrapiFacilityType.nodes
     .filter(facility => facility.isCamping).map(facility => {
+      const filterCount = facilitiesCount?.find(
+        facilityCount => facilityCount.key === facility.facilityCode
+      )
       return {
         label: facility.facilityName,
-        value: facility.strapi_id,
+        value: facility.facilityNumber,
+        count: filterCount?.doc_count
       }
     })
 
   const facilityItems = data.allStrapiFacilityType.nodes
     .filter(facility => !facility.isCamping).map(facility => {
+      const filterCount = facilitiesCount?.find(
+        facilityCount => facilityCount.key === facility.facilityCode
+      )
       return {
         label: facility.facilityName,
-        value: facility.strapi_id,
+        value: facility.facilityNumber,
+        count: filterCount?.doc_count
       }
     })
 
@@ -244,14 +259,49 @@ export default function FindAPark({ location, data }) {
     vehicleAccessibleCamping: false,
   })
 
+  const facilityFilterCount = (code) => facilitiesCount?.find(
+    facilityCount => facilityCount.key === code
+  )
+  const activityFilterCount = (code) => activitiesCount?.find(
+    activityCount => activityCount.key === code
+  )
+
   const quickSearchFilters = [
-    { label: "Backcountry camping", type: "backcountryCamping" },
-    { label: "Cycling", type: "cycling" },
-    { label: "Hiking", type: "hiking" },
-    { label: "Pets on leash", type: "petsOnLeash" },
-    { label: "Picnic areas", type: "picnicAreas" },
-    { label: "Swimming", type: "swimming" },
-    { label: "Vehicle-accessible camping", type: "vehicleAccessibleCamping" },
+    { 
+      label: "Backcountry camping",
+      type: "backcountryCamping",
+      count: facilityFilterCount("backcountry-camping")?.doc_count
+    },
+    { 
+      label: "Cycling",
+      type: "cycling",
+      count: activityFilterCount("cycling")?.doc_count
+    },
+    { 
+      label: "Hiking",
+      type: "hiking",
+      count: activityFilterCount("hiking")?.doc_count
+    },
+    { 
+      label: "Pets on leash",
+      type: "petsOnLeash",
+      count: activityFilterCount("pets-on-leash")?.doc_count
+    },
+    { 
+      label: "Picnic areas",
+      type: "picnicAreas",
+      count: facilityFilterCount("picnic-areas")?.doc_count
+    },
+    { 
+      label: "Swimming",
+      type: "swimming",
+      count: activityFilterCount("swimming")?.doc_count
+    },
+    { 
+      label: "Vehicle-accessible camping",
+      type: "vehicleAccessibleCamping",
+      count: facilityFilterCount("vehicle-accessible-camping")?.doc_count
+    },
   ]
 
   const [selectedRegions, setSelectedRegions] = useState(
@@ -292,9 +342,6 @@ export default function FindAPark({ location, data }) {
 
   const [openFilter, setOpenFilter] = useState(false)
   const [openModal, setOpenModal] = useState(false)
-  
-  const [activitiesCount, setActivitiesCount] = useState([])
-  const [facilitiesCount, setFacilitiesCount] = useState([])
 
   const searchRef = useRef(null)
   const breadcrumbs = [
@@ -859,7 +906,7 @@ export default function FindAPark({ location, data }) {
                                       name={item.type}
                                     />
                                   }
-                                  label={item.label}
+                                  label={`${item.label} (${item.count})`}
                                   className={
                                     quickSearch[item.type]
                                       ? "text-light-blue no-wrap"
@@ -892,7 +939,7 @@ export default function FindAPark({ location, data }) {
                                       name={item.label}
                                     />
                                   }
-                                  label={item.label}
+                                  label={`${item.label} ()`}
                                   className={
                                     selectedRegions.filter(
                                       region => region.value === item.value
@@ -927,7 +974,7 @@ export default function FindAPark({ location, data }) {
                                       name={item.label}
                                     />
                                   }
-                                  label={item.label}
+                                  label={`${item.label} (${item.count})`}
                                   className={
                                     selectedCampingFacilities.filter(
                                       camping => camping.value === item.value
@@ -993,7 +1040,7 @@ export default function FindAPark({ location, data }) {
                                             name={a.label}
                                           />
                                         }
-                                        label={a.label}
+                                        label={`${a.label} (${a?.count})`}
                                         className={
                                           selectedActivities.filter(
                                             act => act.value === a.value
@@ -1090,7 +1137,7 @@ export default function FindAPark({ location, data }) {
                                             name={f.label}
                                           />
                                         }
-                                        label={f.label}
+                                        label={`${f.label} (${f?.count})`}
                                         className={
                                           selectedFacilities.filter(
                                             fac => fac.value === f.value
