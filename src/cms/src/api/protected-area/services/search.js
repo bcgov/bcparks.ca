@@ -120,7 +120,16 @@ module.exports = ({ strapi }) => ({
             "_score",
             "nameLowerCase.keyword"
           ],
-          _source: true,
+          _source: [
+            "orcs",
+            "protectedAreaName",
+            "hasCampfireBan",
+            "slug",
+            "parkFacilities",
+            "parkActivities",
+            "parkLocations",
+            "advisories"
+          ],
           aggs: {
             activities: {
               terms: {
@@ -221,8 +230,8 @@ module.exports = ({ strapi }) => ({
         },
         {
           prefix: {
-            "parkNames": {
-              value: searchText,
+            "parkNames.keyword": {
+              value: searchText.toLowerCase(),
               boost: 3
             }
           }
