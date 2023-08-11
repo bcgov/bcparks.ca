@@ -105,7 +105,7 @@ const Icon = ({ src, label, size }) => {
     <img src={src}
       alt={label}
       aria-label={label}
-      className="mr-1"
+      className="mr-1 mb-1"
       width={size}
       height={size}>
     </img>
