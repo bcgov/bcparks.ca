@@ -183,11 +183,11 @@ export default function FindAPark({ location, data }) {
   const activityItems = sortedActivityItems.map(activity => {
     const filterCount = activitiesCount?.find(
       activityCount => activityCount.key === activity.activityNumber
-    )
+    )?.doc_count || 0
     return {
       label: activity.activityName,
       value: activity.activityNumber,
-      count: filterCount?.doc_count
+      count: filterCount
     }
   })
   const activityItemsLabels = {}
@@ -208,11 +208,11 @@ export default function FindAPark({ location, data }) {
   const regionItems = regions.map(region => {
     const filterCount = regionsCount?.find(
       regionCount => regionCount.key === region.regionNumber
-    )
+    )?.doc_count || 0
     return {
       label: region.regionName,
       value: region.regionNumber,
-      count: filterCount?.doc_count
+      count: filterCount
     }
   })
 
@@ -220,11 +220,11 @@ export default function FindAPark({ location, data }) {
     .filter(facility => facility.isCamping).map(facility => {
       const filterCount = facilitiesCount?.find(
         facilityCount => facilityCount.key === facility.facilityNumber
-      )
+      )?.doc_count || 0
       return {
         label: facility.facilityName,
         value: facility.facilityNumber,
-        count: filterCount?.doc_count
+        count: filterCount
       }
     })
 
@@ -232,11 +232,11 @@ export default function FindAPark({ location, data }) {
     .filter(facility => !facility.isCamping).map(facility => {
       const filterCount = facilitiesCount?.find(
         facilityCount => facilityCount.key === facility.facilityNumber
-      )
+      )?.doc_count || 0
       return {
         label: facility.facilityName,
         value: facility.facilityNumber,
-        count: filterCount?.doc_count
+        count: filterCount
       }
     })
 
@@ -265,46 +265,46 @@ export default function FindAPark({ location, data }) {
 
   const facilityFilterCount = (number) => facilitiesCount?.find(
     facilityCount => facilityCount.key === number
-  )
+  )?.doc_count || 0
   const activityFilterCount = (number) => activitiesCount?.find(
     activityCount => activityCount.key === number
-  )
+  )?.doc_count || 0
 
   const quickSearchFilters = [
     {
       label: "Backcountry camping",
       type: "backcountryCamping",
-      count: facilityFilterCount(36)?.doc_count
+      count: facilityFilterCount(36)
     },
     {
       label: "Cycling",
       type: "cycling",
-      count: activityFilterCount(9)?.doc_count
+      count: activityFilterCount(9)
     },
     {
       label: "Hiking",
       type: "hiking",
-      count: activityFilterCount(1)?.doc_count
+      count: activityFilterCount(1)
     },
     {
       label: "Pets on leash",
       type: "petsOnLeash",
-      count: activityFilterCount(8)?.doc_count
+      count: activityFilterCount(8)
     },
     {
       label: "Picnic areas",
       type: "picnicAreas",
-      count: facilityFilterCount(6)?.doc_count
+      count: facilityFilterCount(6)
     },
     {
       label: "Swimming",
       type: "swimming",
-      count: activityFilterCount(3)?.doc_count
+      count: activityFilterCount(3)
     },
     {
       label: "Vehicle-accessible camping",
       type: "vehicleAccessibleCamping",
-      count: facilityFilterCount(1)?.doc_count
+      count: facilityFilterCount(1)
     },
   ]
 
@@ -479,11 +479,6 @@ export default function FindAPark({ location, data }) {
     }
   }
 
-  const handlePageChange = (event, value) => {
-    setCurrentPage(value)
-    scrollIntoView(searchRef.current, { behavior: "smooth" })
-  }
-
   const handleClickOpenFilter = () => {
     setOpenFilter(true)
   }
@@ -495,6 +490,10 @@ export default function FindAPark({ location, data }) {
   const handleSearch = () => {
     setCurrentPage(1)
     setSearchText(inputText)
+  }
+
+  const handleLoadMore = () => {
+    setCurrentPage(currentPage + 1)
   }
 
   const setFilters = useCallback(() => {
@@ -692,7 +691,11 @@ export default function FindAPark({ location, data }) {
       if (resultResponse.status === 200) {
         const total = parseInt(resultResponse.data.meta.pagination.total, 10)
         const pages = Math.ceil(total / itemsPerPage)
-        setSearchResults([...resultResponse.data.data])
+        const newResults = resultResponse.data.data
+        const updatedResults = [...searchResults, ...newResults].filter(
+          (value, index, self) => self.findIndex(item => item.id === value.id) === index
+        )
+        setSearchResults(updatedResults)
         setTotalResults(total)
         setNumberOfPages(pages)
         setRegionsCount(resultResponse.data.meta.aggregations.regions.buckets)
@@ -1472,44 +1475,14 @@ export default function FindAPark({ location, data }) {
                               </Card>
                             </div>
                           ))}
-                          <div className="small-flex-display pagination-text">
-                            <div className="small-m-auto">
-                              {searchResults.length > 0 && (
-                                <>
-                                  Showing{" "}
-                                  {currentPage * itemsPerPage -
-                                    itemsPerPage +
-                                    1}{" "}
-                                  -{" "}
-                                  {currentPage * itemsPerPage > totalResults
-                                    ? totalResults
-                                    : currentPage * itemsPerPage}{" "}
-                                  of {totalResults} results
-                                </>
-                              )}
-                              {searchResults.length === 0 && (
-                                <>No parks found</>
-                              )}
-                            </div>
-                          </div>
-                          <div className="small-flex-display p20t">
-                            <div className="p20t small-m-auto">
-                              <Pagination
-                                count={numberOfPages}
-                                page={currentPage}
-                                onChange={handlePageChange}
-                                size="large"
-                                className="large-pagination"
-                              />
-                              <Pagination
-                                count={numberOfPages}
-                                page={currentPage}
-                                onChange={handlePageChange}
-                                siblingCount={0}
-                                size="large"
-                                className="small-pagination"
-                              />
-                            </div>
+                          <div className="load-more-button-container mt-5">
+                            <Button
+                              variant="outlined"
+                              onClick={handleLoadMore}
+                              className="bcgov-button bcgov-normal-white load-more-button"
+                            >
+                              Load more
+                            </Button>
                           </div>
                         </>
                       )}
