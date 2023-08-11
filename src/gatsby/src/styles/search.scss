@@ -962,6 +962,8 @@ div[class$="-singleValue"] {
       &--left {
         display: flex;
         align-items: flex-end;
+        flex-wrap: wrap;
+        margin-right: 8px;
         a {
           color: $colorBlue;
           text-decoration-color: $colorBlue;
