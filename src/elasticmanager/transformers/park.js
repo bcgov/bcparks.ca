@@ -96,9 +96,16 @@ exports.createElasticPark = async function (park, photos) {
   }
   delete park.publicAdvisories;
 
+  // add geo info
+  if (park.latitude && park.longitude) {
+    park.locationGeo = [`${park.latitude},${park.longitude}`];
+  }
+
   // delete fields that are only used for indexing
   delete park.isDisplayed;
   delete park.publishedAt;
+  delete park.latitude;
+  delete park.longitude;
 
   return park;
 };

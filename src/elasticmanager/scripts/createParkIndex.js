@@ -52,6 +52,9 @@ const createParkIndex = async function () {
               ignore_above: 256
             }
           }
+        },
+        locationGeo: {
+          type: "geo_point"
         }
       }
     }
