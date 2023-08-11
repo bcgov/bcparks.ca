@@ -59,6 +59,7 @@ module.exports = ({ strapi }) => ({
         {
           multi_match: {
             query: searchText,
+            fuzziness: "AUTO",
             type: "best_fields",
             fields: ["parkNames^2", "protectedAreaName^2"],
             operator: "and"
@@ -120,7 +121,16 @@ module.exports = ({ strapi }) => ({
             "_score",
             "nameLowerCase.keyword"
           ],
-          _source: true,
+          _source: [
+            "orcs",
+            "protectedAreaName",
+            "hasCampfireBan",
+            "slug",
+            "parkFacilities",
+            "parkActivities",
+            "parkLocations",
+            "advisories"
+          ],
           aggs: {
             activities: {
               terms: {
@@ -202,6 +212,7 @@ module.exports = ({ strapi }) => ({
         {
           multi_match: {
             query: searchText,
+            fuzziness: "AUTO",
             type: "best_fields",
             fields: ["parkNames^2", "protectedAreaName^5"],
             operator: "or"
@@ -221,8 +232,8 @@ module.exports = ({ strapi }) => ({
         },
         {
           prefix: {
-            "parkNames": {
-              value: searchText,
+            "parkNames.keyword": {
+              value: searchText.toLowerCase(),
               boost: 3
             }
           }
