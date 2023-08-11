@@ -172,6 +172,7 @@ export default function FindAPark({ location, data }) {
   const menuContent = data?.allStrapiMenu?.nodes || []
   const regions = data?.allStrapiRegion?.nodes || []
 
+  const [regionsCount, setRegionsCount] = useState([])
   const [activitiesCount, setActivitiesCount] = useState([])
   const [facilitiesCount, setFacilitiesCount] = useState([])
 
@@ -181,7 +182,7 @@ export default function FindAPark({ location, data }) {
   )
   const activityItems = sortedActivityItems.map(activity => {
     const filterCount = activitiesCount?.find(
-      activityCount => activityCount.key === activity.activityCode
+      activityCount => activityCount.key === activity.activityNumber
     )
     return {
       label: activity.activityName,
@@ -205,17 +206,20 @@ export default function FindAPark({ location, data }) {
   const [showMoreActivities, setMoreActivites] = useState(true)
 
   const regionItems = regions.map(region => {
-    // value can be changed based on how filter works
+    const filterCount = regionsCount?.find(
+      regionCount => regionCount.key === region.regionNumber
+    )
     return {
       label: region.regionName,
-      value: region.regionNumber
+      value: region.regionNumber,
+      count: filterCount?.doc_count
     }
   })
 
   const campingFacilityItems = data.allStrapiFacilityType.nodes
     .filter(facility => facility.isCamping).map(facility => {
       const filterCount = facilitiesCount?.find(
-        facilityCount => facilityCount.key === facility.facilityCode
+        facilityCount => facilityCount.key === facility.facilityNumber
       )
       return {
         label: facility.facilityName,
@@ -227,7 +231,7 @@ export default function FindAPark({ location, data }) {
   const facilityItems = data.allStrapiFacilityType.nodes
     .filter(facility => !facility.isCamping).map(facility => {
       const filterCount = facilitiesCount?.find(
-        facilityCount => facilityCount.key === facility.facilityCode
+        facilityCount => facilityCount.key === facility.facilityNumber
       )
       return {
         label: facility.facilityName,
@@ -259,48 +263,48 @@ export default function FindAPark({ location, data }) {
     vehicleAccessibleCamping: false,
   })
 
-  const facilityFilterCount = (code) => facilitiesCount?.find(
-    facilityCount => facilityCount.key === code
+  const facilityFilterCount = (number) => facilitiesCount?.find(
+    facilityCount => facilityCount.key === number
   )
-  const activityFilterCount = (code) => activitiesCount?.find(
-    activityCount => activityCount.key === code
+  const activityFilterCount = (number) => activitiesCount?.find(
+    activityCount => activityCount.key === number
   )
 
   const quickSearchFilters = [
     {
       label: "Backcountry camping",
       type: "backcountryCamping",
-      count: facilityFilterCount("backcountry-camping")?.doc_count
+      count: facilityFilterCount(36)?.doc_count
     },
     {
       label: "Cycling",
       type: "cycling",
-      count: activityFilterCount("cycling")?.doc_count
+      count: activityFilterCount(9)?.doc_count
     },
     {
       label: "Hiking",
       type: "hiking",
-      count: activityFilterCount("hiking")?.doc_count
+      count: activityFilterCount(1)?.doc_count
     },
     {
       label: "Pets on leash",
       type: "petsOnLeash",
-      count: activityFilterCount("pets-on-leash")?.doc_count
+      count: activityFilterCount(8)?.doc_count
     },
     {
       label: "Picnic areas",
       type: "picnicAreas",
-      count: facilityFilterCount("picnic-areas")?.doc_count
+      count: facilityFilterCount(6)?.doc_count
     },
     {
       label: "Swimming",
       type: "swimming",
-      count: activityFilterCount("swimming")?.doc_count
+      count: activityFilterCount(3)?.doc_count
     },
     {
       label: "Vehicle-accessible camping",
       type: "vehicleAccessibleCamping",
-      count: facilityFilterCount("vehicle-accessible-camping")?.doc_count
+      count: facilityFilterCount(1)?.doc_count
     },
   ]
 
@@ -656,10 +660,10 @@ export default function FindAPark({ location, data }) {
 
   const isActiveSearch =
     params.queryText ||
+    (params.regions && params.regions.length) ||
+    (params.camping && params.camping.length) ||
     (params.activities && params.activities.length) ||
     (params.facilities && params.facilities.length) ||
-    params.camping ||
-    params.marineProtectedArea ||
     params.typeCode
 
   const locationLabel = (parkLocation) => {
@@ -691,6 +695,7 @@ export default function FindAPark({ location, data }) {
         setSearchResults([...resultResponse.data.data])
         setTotalResults(total)
         setNumberOfPages(pages)
+        setRegionsCount(resultResponse.data.meta.aggregations.regions.buckets)
         setActivitiesCount(resultResponse.data.meta.aggregations.activities.buckets)
         setFacilitiesCount(resultResponse.data.meta.aggregations.facilities.buckets)
       } else {
@@ -973,7 +978,7 @@ export default function FindAPark({ location, data }) {
                                       name={item.label}
                                     />
                                   }
-                                  label={`${item.label} ()`}
+                                  label={`${item.label} (${item.count})`}
                                   className={
                                     selectedRegions.filter(
                                       region => region.value === item.value
