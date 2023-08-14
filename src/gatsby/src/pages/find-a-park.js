@@ -16,7 +16,6 @@ import {
   Breadcrumbs,
   Button,
 } from "@mui/material"
-import Pagination from "@mui/material/Pagination"
 import SearchIcon from "@mui/icons-material/Search"
 import CancelIcon from "@mui/icons-material/Cancel"
 import ExpandLess from "@mui/icons-material/ExpandLess"
@@ -24,7 +23,6 @@ import ExpandMore from "@mui/icons-material/ExpandMore"
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import Carousel from "react-material-ui-carousel"
-import { scrollIntoView } from "seamless-scroll-polyfill";
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -337,7 +335,6 @@ export default function FindAPark({ location, data }) {
 
   const [filterSelections, setFilterSelections] = useState([])
   const [searchResults, setSearchResults] = useState([])
-  const [numberOfPages, setNumberOfPages] = useState(0)
   const [totalResults, setTotalResults] = useState(0)
 
   const itemsPerPage = 10
@@ -690,21 +687,15 @@ export default function FindAPark({ location, data }) {
     }).then(resultResponse => {
       if (resultResponse.status === 200) {
         const total = parseInt(resultResponse.data.meta.pagination.total, 10)
-        const pages = Math.ceil(total / itemsPerPage)
         const newResults = resultResponse.data.data
-        const updatedResults = [...searchResults, ...newResults].filter(
-          (value, index, self) => self.findIndex(item => item.id === value.id) === index
-        )
-        setSearchResults(updatedResults)
+        setSearchResults(prevResults => [...prevResults, ...newResults]);
         setTotalResults(total)
-        setNumberOfPages(pages)
         setRegionsCount(resultResponse.data.meta.aggregations.regions.buckets)
         setActivitiesCount(resultResponse.data.meta.aggregations.activities.buckets)
         setFacilitiesCount(resultResponse.data.meta.aggregations.facilities.buckets)
       } else {
         setSearchResults([])
         setTotalResults(0)
-        setNumberOfPages(0)
       }
     })
       .finally(() => {
@@ -715,7 +706,6 @@ export default function FindAPark({ location, data }) {
     currentPage,
     data.site.siteMetadata.apiURL,
     setFilters,
-    setNumberOfPages,
     setSearchResults,
     setTotalResults,
   ])
@@ -936,7 +926,7 @@ export default function FindAPark({ location, data }) {
                       <div className="">
                         <fieldset className="mb-2">
                           <legend className="filter-heading p10t">Popular</legend>
-                          <FormGroup className="p10l filter-options-container">
+                          <FormGroup className="filter-options-container">
                             {quickSearchFilters.map(item => {
                               return (
                                 <FormControlLabel
@@ -961,7 +951,7 @@ export default function FindAPark({ location, data }) {
                         </fieldset>
                         <fieldset className="mb-2">
                           <legend className="filter-heading">Regions</legend>
-                          <FormGroup className="p10l filter-options-container">
+                          <FormGroup className="filter-options-container">
                             {regionItems.map(item => {
                               return (
                                 <FormControlLabel
@@ -996,7 +986,7 @@ export default function FindAPark({ location, data }) {
                         </fieldset>
                         <fieldset className="mb-2">
                           <legend className="filter-heading">Camping</legend>
-                          <FormGroup className="p10l filter-options-container">
+                          <FormGroup className="filter-options-container">
                             {campingFacilityItems.map(item => {
                               return (
                                 <FormControlLabel
@@ -1062,7 +1052,7 @@ export default function FindAPark({ location, data }) {
                           <div>
                             {showActivities ? (
                               <div>
-                                <FormGroup className="p10l filter-options-container">
+                                <FormGroup className="filter-options-container">
                                   {filteredActivities.map(a => {
                                     return (
                                       <FormControlLabel
@@ -1159,7 +1149,7 @@ export default function FindAPark({ location, data }) {
                           <div>
                             {showFacilities ? (
                               <div>
-                                <FormGroup className="p10l filter-options-container">
+                                <FormGroup className="filter-options-container">
                                   {filteredFacilities.map(f => {
                                     return (
                                       <FormControlLabel

@@ -259,6 +259,8 @@ h3.subtitle {
     color: $colorBlueLight !important;
   }
   .MuiFormControlLabel-root {
+    margin-left: 0;
+    margin-right: 0;
     .MuiCheckbox-root {
       .MuiSvgIcon-root {
         font-size: 2rem;
@@ -287,6 +289,9 @@ h3.subtitle {
     .flex-display {
       align-items: center;
       justify-content: space-between;
+      svg.MuiSvgIcon-root {
+        font-size: 1.25rem;
+      }
     }
   }
 
@@ -295,8 +300,8 @@ h3.subtitle {
     font-size: $bodyFont !important;
   }
 
-  .park-filter-dialog-content {
-    padding: 10px !important;
+  .park-filter-dialog-content, .park-filter-dialog-action {
+    padding: 16px !important;
   }
 
   .MuiDialog-paperWidthSm {
@@ -304,6 +309,7 @@ h3.subtitle {
     background-color: $colorGrey !important;
     width: 1000px !important;
     max-width: 1000px !important;
+    margin: 16px;
   }
 
   .park-filter-select [class*="-control"] {

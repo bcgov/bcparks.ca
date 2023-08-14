@@ -207,363 +207,338 @@ const SearchFilter = ({
         scroll="paper"
       >
         <DialogContent className="park-filter-dialog-content">
-          <div className="container p10">
-            <div className="row p20t no-gutters">
-              <div className="p20l-filter col-lg-8 col-md-12 col-sm-12">
-                <div className="row p20t">
-                  <div className="col-12">
-                    <div className="park-filter-options">
-                      <div className="park-filter-option-label flex-display">
-                        <div
-                          className="flex-display pointer full-width p20"
-                          onClick={() => {
-                            handleShowFilterClick(0)
-                          }}
-                          tabIndex="0"
-                          role="button"
-                          onKeyPress={() => {
-                            handleShowFilterClick(0)
-                          }}
-                        >
-                          <div className="p10l park-select-label">
-                            Popular
-                          </div>
-                          {showFilters[0] ? (
-                            <ExpandLess fontSize="large" className="mtm5" />
-                          ) : (
-                            <ExpandMore fontSize="large" className="mtm5" />
-                          )}
-                        </div>
-                      </div>
-                      <Collapse
-                        in={showFilters[0]}
-                        timeout="auto"
-                        unmountOnExit
-                        className="p20"
-                      >
-                        <div className="row container">
-                          <div className="col-lg-6 col-md-12 col-sm-12">
-                            {quickSearchFilters.map((item, index) => (
-                              <FormGroup
-                                className="pr30 filter-options-container"
-                                key={index}
-                              >
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      checked={quickSearch[item.type]}
-                                      onChange={handleQuickSearchChange}
-                                      name={item.type}
-                                    />
-                                  }
-                                  label={`${item.label} (${item.count})`}
-                                  className={
-                                    quickSearch[item.type]
-                                      ? "text-light-blue no-wrap"
-                                      : "no-wrap"
-                                  }
-                                />
-                              </FormGroup>
-                            ))}
-                          </div>
-                        </div>
-                      </Collapse>
+          <h1>Filter</h1>
+          <button>Expand all</button>
+          <div className="row p20t">
+            <div className="col-12">
+              <div className="park-filter-options">
+                <div className="park-filter-option-label flex-display">
+                  <div
+                    className="flex-display pointer full-width p-3"
+                    onClick={() => {
+                      handleShowFilterClick(0)
+                    }}
+                    tabIndex="0"
+                    role="button"
+                    onKeyPress={() => {
+                      handleShowFilterClick(0)
+                    }}
+                  >
+                    <div className="park-select-label">
+                      Popular
                     </div>
+                    {showFilters[0] ? (
+                      <ExpandLess fontSize="large" className="mtm5" />
+                    ) : (
+                      <ExpandMore fontSize="large" className="mtm5" />
+                    )}
                   </div>
                 </div>
-                <div className="row p20t">
-                  <div className="col-12">
-                    <div className="park-filter-options">
-                      <div className="park-filter-option-label flex-display">
-                        <div
-                          className="flex-display pointer full-width p20"
-                          onClick={() => {
-                            handleShowFilterClick(1)
-                          }}
-                          tabIndex="0"
-                          role="button"
-                          onKeyPress={() => {
-                            handleShowFilterClick(1)
-                          }}
-                        >
-                          <div className="p10l park-select-label">
-                            Region
-                          </div>
-                          {showFilters[1] ? (
-                            <ExpandLess fontSize="large" className="mtm5" />
-                          ) : (
-                            <ExpandMore fontSize="large" className="mtm5" />
-                          )}
-                        </div>
-                      </div>
-                      <Collapse
-                        in={showFilters[1]}
-                        timeout="auto"
-                        unmountOnExit
-                        className="p20"
-                      >
-                        <div className="row container">
-                          <div className="col-lg-6 col-md-12 col-sm-12">
-                            {regionItems.map((item, index) => (
-                              <FormGroup
-                                className="pr30 filter-options-container"
-                                key={index}
-                              >
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      checked={
-                                        selectedRegions.filter(
-                                          region => region.value === item.value
-                                        ).length === 1
-                                          ? true
-                                          : false
-                                      }
-                                      onChange={event => {
-                                        handleRegionCheck(item, event)
-                                      }}
-                                      name={item.label}
-                                    />
-                                  }
-                                  label={`${item.label} ()`}
-                                  className={
-                                    selectedRegions.filter(
-                                      region => region.value === item.value
-                                    ).length === 1
-                                      ? "text-light-blue no-wrap"
-                                      : "no-wrap"
-                                  }
-                                />
-                              </FormGroup>
-                            ))}
-                          </div>
-                        </div>
-                      </Collapse>
+                <Collapse
+                  in={showFilters[0]}
+                  timeout="auto"
+                  unmountOnExit
+                  className="p-3"
+                >
+                  {quickSearchFilters.map((item, index) => (
+                    <FormGroup
+                      className="filter-options-container"
+                      key={index}
+                    >
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={quickSearch[item.type]}
+                            onChange={handleQuickSearchChange}
+                            name={item.type}
+                          />
+                        }
+                        label={`${item.label} (${item.count})`}
+                        className={
+                          quickSearch[item.type]
+                            ? "text-light-blue no-wrap"
+                            : "no-wrap"
+                        }
+                      />
+                    </FormGroup>
+                  ))}
+                </Collapse>
+              </div>
+            </div>
+          </div>
+          <div className="row p20t">
+            <div className="col-12">
+              <div className="park-filter-options">
+                <div className="park-filter-option-label flex-display">
+                  <div
+                    className="flex-display pointer full-width p-3"
+                    onClick={() => {
+                      handleShowFilterClick(1)
+                    }}
+                    tabIndex="0"
+                    role="button"
+                    onKeyPress={() => {
+                      handleShowFilterClick(1)
+                    }}
+                  >
+                    <div className="park-select-label">
+                      Region
                     </div>
+                    {showFilters[1] ? (
+                      <ExpandLess fontSize="large" className="mtm5" />
+                    ) : (
+                      <ExpandMore fontSize="large" className="mtm5" />
+                    )}
                   </div>
                 </div>
+                <Collapse
+                  in={showFilters[1]}
+                  timeout="auto"
+                  unmountOnExit
+                  className="p-3"
+                >
+                  {regionItems.map((item, index) => (
+                    <FormGroup
+                      className="filter-options-container"
+                      key={index}
+                    >
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={
+                              selectedRegions.filter(
+                                region => region.value === item.value
+                              ).length === 1
+                                ? true
+                                : false
+                            }
+                            onChange={event => {
+                              handleRegionCheck(item, event)
+                            }}
+                            name={item.label}
+                          />
+                        }
+                        label={`${item.label} ()`}
+                        className={
+                          selectedRegions.filter(
+                            region => region.value === item.value
+                          ).length === 1
+                            ? "text-light-blue no-wrap"
+                            : "no-wrap"
+                        }
+                      />
+                    </FormGroup>
+                  ))}
+                </Collapse>
+              </div>
+            </div>
+          </div>
 
-                <div className="row p20t">
-                  <div className="col-12">
-                    <div className="park-filter-options">
-                      <div className="park-filter-option-label flex-display">
-                        <div
-                          className="flex-display pointer full-width p20"
-                          onClick={() => {
-                            handleShowFilterClick(2)
-                          }}
-                          tabIndex="0"
-                          role="button"
-                          onKeyPress={() => {
-                            handleShowFilterClick(2)
-                          }}
-                        >
-                          <div className="p10l park-select-label">
-                            Camping
-                          </div>
-                          {showFilters[2] ? (
-                            <ExpandLess fontSize="large" className="mtm5" />
-                          ) : (
-                            <ExpandMore fontSize="large" className="mtm5" />
-                          )}
-                        </div>
-                      </div>
-                      <Collapse
-                        in={showFilters[2]}
-                        timeout="auto"
-                        unmountOnExit
-                        className="p20"
-                      >
-                        <div className="row container">
-                          <div className="col-lg-6 col-md-12 col-sm-12">
-                            {campingFacilityItems.map((item, index) => (
-                              <FormGroup
-                                className="pr30 filter-options-container"
-                                key={index}
-                              >
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      checked={
-                                        selectedCampingFacilities.filter(
-                                          camping => camping.value === item.value
-                                        ).length === 1
-                                          ? true
-                                          : false
-                                      }
-                                      onChange={event => {
-                                        handleCampingFacilityCheck(item, event)
-                                      }}
-                                      name={item.label}
-                                    />
-                                  }
-                                  label={`${item.label} (${item.count})`}
-                                  className={
-                                    selectedCampingFacilities.filter(
-                                      camping => camping.value === item.value
-                                    ).length === 1
-                                      ? "text-light-blue no-wrap"
-                                      : "no-wrap"
-                                  }
-                                />
-                              </FormGroup>
-                            ))}
-                          </div>
-                        </div>
-                      </Collapse>
+          <div className="row p20t">
+            <div className="col-12">
+              <div className="park-filter-options">
+                <div className="park-filter-option-label flex-display">
+                  <div
+                    className="flex-display pointer full-width p-3"
+                    onClick={() => {
+                      handleShowFilterClick(2)
+                    }}
+                    tabIndex="0"
+                    role="button"
+                    onKeyPress={() => {
+                      handleShowFilterClick(2)
+                    }}
+                  >
+                    <div className="park-select-label">
+                      Camping
                     </div>
+                    {showFilters[2] ? (
+                      <ExpandLess fontSize="large" className="mtm5" />
+                    ) : (
+                      <ExpandMore fontSize="large" className="mtm5" />
+                    )}
                   </div>
                 </div>
+                <Collapse
+                  in={showFilters[2]}
+                  timeout="auto"
+                  unmountOnExit
+                  className="p-3"
+                >
+                  {campingFacilityItems.map((item, index) => (
+                    <FormGroup
+                      className="filter-options-container"
+                      key={index}
+                    >
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={
+                              selectedCampingFacilities.filter(
+                                camping => camping.value === item.value
+                              ).length === 1
+                                ? true
+                                : false
+                            }
+                            onChange={event => {
+                              handleCampingFacilityCheck(item, event)
+                            }}
+                            name={item.label}
+                          />
+                        }
+                        label={`${item.label} (${item.count})`}
+                        className={
+                          selectedCampingFacilities.filter(
+                            camping => camping.value === item.value
+                          ).length === 1
+                            ? "text-light-blue no-wrap"
+                            : "no-wrap"
+                        }
+                      />
+                    </FormGroup>
+                  ))}
+                </Collapse>
+              </div>
+            </div>
+          </div>
 
-                <div className="row p20t">
-                  <div className="col-12">
-                    <div className="park-filter-options">
+          <div className="row p20t">
+            <div className="col-12">
+              <div className="park-filter-options">
 
-                      <div className="park-filter-option-label flex-display">
-                        <div
-                          className="flex-display pointer full-width p20"
-                          onClick={() => {
-                            handleShowFilterClick(3)
-                          }}
-                          tabIndex="0"
-                          role="button"
-                          onKeyPress={() => {
-                            handleShowFilterClick(3)
-                          }}
-                        >
-                          <div className="p10l park-select-label">
-                            Activities
-                          </div>
-                          {showFilters[3] ? (
-                            <ExpandLess fontSize="large" className="mtm5" />
-                          ) : (
-                            <ExpandMore fontSize="large" className="mtm5" />
-                          )}
-                        </div>
-                      </div>
-                      <Collapse
-                        in={showFilters[3]}
-                        timeout="auto"
-                        unmountOnExit
-                        className="p20"
-                      >
-                        <div className="row container">
-                          <div className="col-lg-6 col-md-12 col-sm-12">
-                            {activityItems.map((a, index) => (
-                              <FormGroup
-                                className="pr30 filter-options-container"
-                                key={index}
-                              >
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      checked={
-                                        selectedActivities.filter(
-                                          act => act.value === a.value
-                                        ).length === 1
-                                          ? true
-                                          : false
-                                      }
-                                      onChange={event => {
-                                        handleActivityCheck(a, event)
-                                      }}
-                                      name={a.label}
-                                    />
-                                  }
-                                  label={`${a.label} (${a?.count})`}
-                                  className={
-                                    selectedActivities.filter(
-                                      act => act.value === a.value
-                                    ).length === 1
-                                      ? "text-light-blue no-wrap"
-                                      : "no-wrap"
-                                  }
-                                />
-                              </FormGroup>
-                            ))}
-                          </div>
-
-                        </div>
-                      </Collapse>
+                <div className="park-filter-option-label flex-display">
+                  <div
+                    className="flex-display pointer full-width p-3"
+                    onClick={() => {
+                      handleShowFilterClick(3)
+                    }}
+                    tabIndex="0"
+                    role="button"
+                    onKeyPress={() => {
+                      handleShowFilterClick(3)
+                    }}
+                  >
+                    <div className="park-select-label">
+                      Activities
                     </div>
+                    {showFilters[3] ? (
+                      <ExpandLess fontSize="large" className="mtm5" />
+                    ) : (
+                      <ExpandMore fontSize="large" className="mtm5" />
+                    )}
                   </div>
                 </div>
-                <div className="row p20t">
-                  <div className="col-12">
-                    <div className="park-filter-options">
-                      <div className="park-filter-option-label flex-display">
-                        <div
-                          className="flex-display pointer full-width p20"
-                          onClick={() => {
-                            handleShowFilterClick(4)
-                          }}
-                          tabIndex="0"
-                          role="button"
-                          onKeyPress={() => {
-                            handleShowFilterClick(4)
-                          }}
-                        >
-                          <div className="p10l park-select-label">
-                            Facilities
-                          </div>
-                          {showFilters[4] ? (
-                            <ExpandLess fontSize="large" className="mtm5" />
-                          ) : (
-                            <ExpandMore fontSize="large" className="mtm5" />
-                          )}
-                        </div>
-                      </div>
-                      <Collapse
-                        in={showFilters[4]}
-                        timeout="auto"
-                        unmountOnExit
-                        className="p20"
-                      >
-                        <div className="row container">
-                          <div className="col-lg-6 col-md-12 col-sm-12">
-                            {facilityItems.map((f, index) => (
-                              <FormGroup
-                                className="pr30 filter-options-container"
-                                key={index}
-                              >
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      checked={
-                                        selectedFacilities.filter(
-                                          fa => fa.value === f.value
-                                        ).length === 1
-                                          ? true
-                                          : false
-                                      }
-                                      onChange={event => {
-                                        handleFacilityCheck(f, event)
-                                      }}
-                                      name={f.label}
-                                    />
-                                  }
-                                  label={`${f.label} (${f?.count})`}
-                                  className={
-                                    selectedFacilities.filter(
-                                      fa => fa.value === f.value
-                                    ).length === 1
-                                      ? "text-light-blue no-wrap"
-                                      : "no-wrap"
-                                  }
-                                />
-                              </FormGroup>
-                            ))}
-                          </div>
-                        </div>
-                      </Collapse>
+                <Collapse
+                  in={showFilters[3]}
+                  timeout="auto"
+                  unmountOnExit
+                  className="p-3"
+                >
+                  {activityItems.map((a, index) => (
+                    <FormGroup
+                      className="filter-options-container"
+                      key={index}
+                    >
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={
+                              selectedActivities.filter(
+                                act => act.value === a.value
+                              ).length === 1
+                                ? true
+                                : false
+                            }
+                            onChange={event => {
+                              handleActivityCheck(a, event)
+                            }}
+                            name={a.label}
+                          />
+                        }
+                        label={`${a.label} (${a?.count})`}
+                        className={
+                          selectedActivities.filter(
+                            act => act.value === a.value
+                          ).length === 1
+                            ? "text-light-blue no-wrap"
+                            : "no-wrap"
+                        }
+                      />
+                    </FormGroup>
+                  ))}
+                </Collapse>
+              </div>
+            </div>
+          </div>
+          <div className="row p20t">
+            <div className="col-12">
+              <div className="park-filter-options">
+                <div className="park-filter-option-label flex-display">
+                  <div
+                    className="flex-display pointer full-width p-3"
+                    onClick={() => {
+                      handleShowFilterClick(4)
+                    }}
+                    tabIndex="0"
+                    role="button"
+                    onKeyPress={() => {
+                      handleShowFilterClick(4)
+                    }}
+                  >
+                    <div className="park-select-label">
+                      Facilities
                     </div>
+                    {showFilters[4] ? (
+                      <ExpandLess fontSize="large" className="mtm5" />
+                    ) : (
+                      <ExpandMore fontSize="large" className="mtm5" />
+                    )}
                   </div>
                 </div>
+                <Collapse
+                  in={showFilters[4]}
+                  timeout="auto"
+                  unmountOnExit
+                  className="p-3"
+                >
+                  {facilityItems.map((f, index) => (
+                    <FormGroup
+                      className="filter-options-container"
+                      key={index}
+                    >
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={
+                              selectedFacilities.filter(
+                                fa => fa.value === f.value
+                              ).length === 1
+                                ? true
+                                : false
+                            }
+                            onChange={event => {
+                              handleFacilityCheck(f, event)
+                            }}
+                            name={f.label}
+                          />
+                        }
+                        label={`${f.label} (${f?.count})`}
+                        className={
+                          selectedFacilities.filter(
+                            fa => fa.value === f.value
+                          ).length === 1
+                            ? "text-light-blue no-wrap"
+                            : "no-wrap"
+                        }
+                      />
+                    </FormGroup>
+                  ))}
+                </Collapse>
               </div>
             </div>
           </div>
         </DialogContent>
-        <DialogActions className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none p20 container">
+        <DialogActions className="park-filter-dialog-action d-block">
           <div className="row">
             <div className="col-12 mt8">
               <Button
