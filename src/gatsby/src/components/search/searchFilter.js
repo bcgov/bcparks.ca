@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react"
 import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 import {
+  Link,
   Dialog,
   DialogContent,
   DialogActions,
@@ -19,6 +20,7 @@ import "../../styles/search.scss"
 
 const SearchFilter = ({
   data: {
+    totalResults,
     regionItems,
     campingFacilityItems,
     activityItems,
@@ -44,6 +46,13 @@ const SearchFilter = ({
 }) => {
   const [showFilters, setShowFilter] = useState([false, false, false, false, false])
   const [filterSelections, setFilterSelections] = useState([])
+  const [expandAll, setExpandAll] = useState(false)
+
+  const handleExpandAll = () => {
+    const newShowFilters = Array.from(showFilters, (filter) => !expandAll)
+    setShowFilter(newShowFilters)
+    setExpandAll(!expandAll)
+  }
 
   const handleCloseFilter = () => {
     setOpenFilter(false)
@@ -208,7 +217,15 @@ const SearchFilter = ({
       >
         <DialogContent className="park-filter-dialog-content">
           <h1>Filter</h1>
-          <button>Expand all</button>
+          <Link
+            className="expand-link"
+            onClick={handleExpandAll}
+            tabIndex="0"
+            role="link"
+            underline="hover"
+          >
+            {expandAll ? "Collapse" : "Expand"} all
+          </Link>
           <div className="row p20t">
             <div className="col-12">
               <div className="park-filter-options">
@@ -548,7 +565,7 @@ const SearchFilter = ({
                 }}
                 className="bcgov-button bcgov-normal-blue"
               >
-                Search
+                Show {totalResults} {totalResults > 1 ? "parks" : "park"}
               </Button>
             </div>
             <div className="col-12 mt8">
@@ -557,7 +574,7 @@ const SearchFilter = ({
                 onClick={() => {
                   handleCloseFilter()
                 }}
-                className="bcgov-button bcgov-normal-transparent"
+                className="bcgov-button bcgov-normal-white"
               >
                 Cancel
               </Button>

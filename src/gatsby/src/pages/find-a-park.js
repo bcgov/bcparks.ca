@@ -16,6 +16,7 @@ import {
   Breadcrumbs,
   Button,
 } from "@mui/material"
+import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from "@mui/icons-material/Search"
 import CancelIcon from "@mui/icons-material/Cancel"
 import ExpandLess from "@mui/icons-material/ExpandLess"
@@ -493,6 +494,15 @@ export default function FindAPark({ location, data }) {
     setCurrentPage(currentPage + 1)
   }
 
+  const handleClearFilter = () => {
+    setFilterSelections([])
+    setSelectedRegions([])
+    setSelectedCampingFacilities([])
+    setSelectedActivities([])
+    setSelectedFacilities([])
+    setQuickSearch([])
+  }
+
   const setFilters = useCallback(() => {
     const filters = []
     selectedRegions.forEach(r => {
@@ -751,7 +761,7 @@ export default function FindAPark({ location, data }) {
               </div>
               <div className="col-lg-9 col-md-12 col-sm-12" ref={searchRef}>
                 <div className="search-results-list container">
-                  <div className="row p20t d-flex">
+                  <div className="row d-flex">
                     <div className="col-12 d-none d-lg-block">
                       {filterSelections.length > 0 && filterSelections.map((f, index) => (
                         <Chip
@@ -764,6 +774,16 @@ export default function FindAPark({ location, data }) {
                           deleteIcon={<CancelIcon className="close-icon" />}
                         />
                       ))}
+                      {filterSelections.length > 0 && (
+                        <Link
+                          className="clear-filter-link"
+                          onClick={handleClearFilter}
+                          tabIndex="0"
+                          role="link"
+                        >
+                          Clear filters
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -793,6 +813,15 @@ export default function FindAPark({ location, data }) {
                           startAdornment: (
                             <InputAdornment position="start">
                               <SearchIcon className="search-icon" />
+                            </InputAdornment>
+                          ),
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <ClearIcon
+                                className="clear-icon"
+                                onClick={() => setInputText("")}
+                                sx={{ visibility: inputText ? "visible" : "hidden" }}
+                              />
                             </InputAdornment>
                           ),
                           inputProps: {
@@ -855,8 +884,8 @@ export default function FindAPark({ location, data }) {
                 </div>
               </div>
             </div>
-            <div className="search-results-list container d-block d-lg-none" ref={searchRef}>
-              <div className="row p20t d-flex">
+            <div className="search-results-list container d-block d-lg-none mt-3" ref={searchRef}>
+              <div className="row d-flex">
                 <div className="col-12">
                   {filterSelections.length > 0 && filterSelections.map((f, index) => (
                     <Chip
@@ -869,6 +898,16 @@ export default function FindAPark({ location, data }) {
                       deleteIcon={<CancelIcon className="close-icon" />}
                     />
                   ))}
+                  {filterSelections.length > 0 && (
+                    <Link
+                      className="clear-filter-link"
+                      onClick={handleClearFilter}
+                      tabIndex="0"
+                      role="link"
+                    >
+                      Clear filters
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -877,7 +916,6 @@ export default function FindAPark({ location, data }) {
                 <div className="search-results-quick-filter">
                   <div className="row no-gutters d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
                     <div className="col-12 mb32">
-                      <h3 className="subtitle">Search</h3>
                       <div className="search-results-quick-filter">
                         <div className="row no-gutters">
                           <div className="col-12 park-search-text-box-container d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
@@ -903,6 +941,15 @@ export default function FindAPark({ location, data }) {
                                     <SearchIcon className="search-icon" />
                                   </InputAdornment>
                                 ),
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                    <ClearIcon
+                                      className="clear-icon"
+                                      onClick={() => setInputText("")}
+                                      sx={{ visibility: inputText ? "visible" : "hidden" }}
+                                    />
+                                  </InputAdornment>
+                                ),
                                 inputProps: {
                                   "aria-label": "Park search",
                                 }
@@ -922,7 +969,7 @@ export default function FindAPark({ location, data }) {
                       </div>
                     </div>
                     <div className="col-12 pr-3 mb32">
-                      <h3 className="subtitle">Filter</h3>
+                      <h3 className="subtitle mb-2">Filter</h3>
                       <div className="">
                         <fieldset className="mb-2">
                           <legend className="filter-heading p10t">Popular</legend>
@@ -944,6 +991,7 @@ export default function FindAPark({ location, data }) {
                                       ? "text-light-blue no-wrap"
                                       : "no-wrap"
                                   }
+                                  disabled={item.count === 0}
                                 />
                               )
                             })}
@@ -979,6 +1027,7 @@ export default function FindAPark({ location, data }) {
                                       ? "text-light-blue no-wrap"
                                       : "no-wrap"
                                   }
+                                  disabled={item.count === 0}
                                 />
                               )
                             })}
@@ -1014,6 +1063,7 @@ export default function FindAPark({ location, data }) {
                                       ? "text-light-blue no-wrap"
                                       : "no-wrap"
                                   }
+                                  disabled={item.count === 0}
                                 />
                               )
                             })}
@@ -1080,6 +1130,7 @@ export default function FindAPark({ location, data }) {
                                             ? "text-light-blue no-wrap"
                                             : "no-wrap"
                                         }
+                                        disabled={a?.count === 0}
                                       />
                                     )
                                   })}
@@ -1177,6 +1228,7 @@ export default function FindAPark({ location, data }) {
                                             ? "text-light-blue no-wrap"
                                             : "no-wrap"
                                         }
+                                        disabled={f?.count === 0}
                                       />
                                     )
                                   })}
@@ -1216,7 +1268,7 @@ export default function FindAPark({ location, data }) {
                       </div>
                     </div>
                     <div className="col-12 park-links">
-                      <h3 className="subtitle">More ways to find a park</h3>
+                      <h3 className="subtitle mb-2">More ways to find a park</h3>
                       <div>
                         <GatsbyLink to="/parks">A–Z list</GatsbyLink>
                         <br />
@@ -1486,6 +1538,7 @@ export default function FindAPark({ location, data }) {
       </div>
       <SearchFilter
         data={{
+          totalResults,
           regionItems,
           campingFacilityItems,
           activityItems,
