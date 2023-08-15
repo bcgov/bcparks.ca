@@ -192,6 +192,13 @@ const base = {
           rel: "noopener",
         }
       },
+      makeButton: {
+        mode: 'manual',
+        label: 'Primary button',
+        attributes: {
+            class: 'btn btn-primary'
+        }
+      },
     },
   },
   list: {
