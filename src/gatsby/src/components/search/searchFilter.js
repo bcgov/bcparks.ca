@@ -116,47 +116,6 @@ const SearchFilter = ({
     setShowFilter([...tempShowFilter])
   }
 
-  const handleRegionDelete = chipToDelete => {
-    setSelectedRegions(chips =>
-      chips.filter(chip => chip.value !== chipToDelete.value)
-    )
-    setCurrentPage(1)
-  }
-
-  const handleCampingFacilityDelete = chipToDelete => {
-    setSelectedCampingFacilities(chips =>
-      chips.filter(chip => chip.value !== chipToDelete.value)
-    )
-    setCurrentPage(1)
-  }
-
-  const handleActivityDelete = chipToDelete => {
-    setSelectedActivities(chips =>
-      chips.filter(chip => chip.value !== chipToDelete.value)
-    )
-    setCurrentPage(1);
-  }
-
-  const handleFacilityDelete = chipToDelete => {
-    setSelectedFacilities(chips =>
-      chips.filter(chip => chip.value !== chipToDelete.value)
-    )
-    setCurrentPage(1);
-  }
-
-  const handleFilterDelete = chipToDelete => () => {
-    if (chipToDelete.type === "region") {
-      handleRegionDelete(chipToDelete)
-    } else if (chipToDelete.type === "campingFacility") {
-      handleCampingFacilityDelete(chipToDelete)
-    } else if (chipToDelete.type === "activity") {
-      handleActivityDelete(chipToDelete)
-    } else if (chipToDelete.type === "facility") {
-      handleFacilityDelete(chipToDelete)
-    }
-    setCurrentPage(1);
-  }
-
   const setFilters = useCallback(() => {
     const filters = []
     selectedRegions.forEach(r => {
@@ -588,6 +547,7 @@ const SearchFilter = ({
 
 SearchFilter.propTypes = {
   data: PropTypes.shape({
+    totalResults: PropTypes.number.isRequired,
     regionItems: PropTypes.array.isRequired,
     campingFacilityItems: PropTypes.array.isRequired,
     activityItems: PropTypes.array.isRequired,

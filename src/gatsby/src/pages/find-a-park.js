@@ -174,6 +174,8 @@ export default function FindAPark({ location, data }) {
   const [regionsCount, setRegionsCount] = useState([])
   const [activitiesCount, setActivitiesCount] = useState([])
   const [facilitiesCount, setFacilitiesCount] = useState([])
+  const [truncatedActivityFilterLength, setTruncatedActivityFilterLength] = useState(5)
+  const [truncatedFacilityFilterLength, setTruncatedFacilityFilterLength] = useState(5)
 
   const sortedActivityItems = orderBy(
     data.allStrapiActivityType.nodes,
@@ -194,14 +196,7 @@ export default function FindAPark({ location, data }) {
     activityItemsLabels[item.value] = item.label
   })
 
-  const truncatedFilterLength = 5
-
-  const [filteredActivities, setFilteredActivities] = useState(
-    activityItems.slice(0, truncatedFilterLength)
-  )
-
   const [showActivities, setActivityVisibility] = useState(true)
-
   const [showMoreActivities, setMoreActivites] = useState(true)
 
   const regionItems = regions.map(region => {
@@ -244,12 +239,7 @@ export default function FindAPark({ location, data }) {
     facilityItemsLabels[item.value] = item.label
   })
 
-  const [filteredFacilities, setFilteredFacilities] = useState(
-    facilityItems.slice(0, truncatedFilterLength)
-  )
-
   const [showFacilities, setFacilityVisibility] = useState(true)
-
   const [showMoreFacilities, setMoreFacilities] = useState(true)
 
   const [quickSearch, setQuickSearch] = useState({
@@ -393,15 +383,6 @@ export default function FindAPark({ location, data }) {
     }
   }
 
-  const handleActivitiesLengthChange = () => {
-    setMoreActivites(!showMoreActivities)
-    if (showMoreActivities) {
-      setFilteredActivities(activityItems)
-    } else {
-      setFilteredActivities(activityItems.slice(0, truncatedFilterLength))
-    }
-  }
-
   const handleActivityCheck = (activity, event) => {
     if (event.target.checked) {
       setSelectedActivities([...selectedActivities, activity])
@@ -409,15 +390,6 @@ export default function FindAPark({ location, data }) {
       setSelectedActivities([
         ...selectedActivities.filter(a => a.value !== activity.value),
       ])
-    }
-  }
-
-  const handleFacilitiesLengthChange = () => {
-    setMoreFacilities(!showMoreFacilities)
-    if (showMoreFacilities) {
-      setFilteredFacilities(facilityItems)
-    } else {
-      setFilteredFacilities(facilityItems.slice(0, truncatedFilterLength))
     }
   }
 
@@ -601,7 +573,7 @@ export default function FindAPark({ location, data }) {
       params.regions = selectedRegions.map(region => region.value)
     }
     if (selectedCampingFacilities.length > 0) {
-      params.camping = selectedCampingFacilities.map(camping => camping.value)
+      params.facilities = selectedCampingFacilities.map(camping => camping.value)
     }
     if (selectedActivities.length > 0) {
       params.activities = selectedActivities.map(activity => activity.value)
@@ -667,7 +639,6 @@ export default function FindAPark({ location, data }) {
   const isActiveSearch =
     params.queryText ||
     (params.regions && params.regions.length) ||
-    (params.camping && params.camping.length) ||
     (params.activities && params.activities.length) ||
     (params.facilities && params.facilities.length) ||
     params.typeCode
@@ -719,6 +690,19 @@ export default function FindAPark({ location, data }) {
     setSearchResults,
     setTotalResults,
   ])
+
+  useEffect(() => {
+    if (showMoreActivities) {
+      setTruncatedActivityFilterLength(5)
+    } else {
+      setTruncatedActivityFilterLength(activityItems.length)
+    }
+    if (showMoreFacilities) {
+      setTruncatedFacilityFilterLength(5)
+    } else {
+      setTruncatedFacilityFilterLength(facilityItems.length)
+    }
+  }, [showMoreActivities, activityItems.length, showMoreFacilities, facilityItems.length])
 
   return (
     <>
@@ -1103,7 +1087,7 @@ export default function FindAPark({ location, data }) {
                             {showActivities ? (
                               <div>
                                 <FormGroup className="filter-options-container">
-                                  {filteredActivities.map(a => {
+                                  {activityItems.slice(0, truncatedActivityFilterLength).map(a => {
                                     return (
                                       <FormControlLabel
                                         key={a.label}
@@ -1138,12 +1122,7 @@ export default function FindAPark({ location, data }) {
                                 <Link
                                   className="ml-auto pointer"
                                   onClick={() => {
-                                    handleActivitiesLengthChange([])
-                                  }}
-                                  onKeyUp={(e) => {
-                                    if (e.key === " " || e.key === "Enter") {
-                                      handleActivitiesLengthChange([])
-                                    }
+                                    setMoreActivites(!showMoreActivities)
                                   }}
                                   tabIndex="0"
                                   role="link"
@@ -1201,7 +1180,7 @@ export default function FindAPark({ location, data }) {
                             {showFacilities ? (
                               <div>
                                 <FormGroup className="filter-options-container">
-                                  {filteredFacilities.map(f => {
+                                  {facilityItems.slice(0, truncatedFacilityFilterLength).map(f => {
                                     return (
                                       <FormControlLabel
                                         key={f.label}
@@ -1236,12 +1215,7 @@ export default function FindAPark({ location, data }) {
                                 <Link
                                   className="ml-auto pointer"
                                   onClick={() => {
-                                    handleFacilitiesLengthChange([])
-                                  }}
-                                  onKeyUp={(e) => {
-                                    if (e.key === " " || e.key === "Enter") {
-                                      handleFacilitiesLengthChange([])
-                                    }
+                                    setMoreFacilities(!showMoreFacilities)
                                   }}
                                   tabIndex="0"
                                   role="link"
