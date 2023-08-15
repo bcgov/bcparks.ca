@@ -52,7 +52,8 @@ export default function ParkPhotoGallery({ photos }) {
         open={open}
         close={() => setOpen(false)}
         slides={photoSlides}
-        captions={{ descriptionTextAlign: "center", descriptionMaxLines: 5}}
+        carousel={{ finite: "false" }}
+        captions={{ descriptionTextAlign: "center", descriptionMaxLines: 5 }}
         thumbnails={{ border: 0 }}
         plugins={[Captions, Thumbnails, Zoom, Slideshow, Fullscreen]}
       />
