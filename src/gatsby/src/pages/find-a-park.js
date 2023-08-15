@@ -28,6 +28,7 @@ import Carousel from "react-material-ui-carousel"
 import Footer from "../components/footer"
 import Header from "../components/header"
 import Seo from "../components/seo"
+import ScrollToTop from "../components/scrollToTop"
 import ParkAccessStatus from "../components/park/parkAccessStatus"
 import NoSearchResults from "../components/search/noSearchResults"
 import SearchFilter from "../components/search/searchFilter"
@@ -707,6 +708,7 @@ export default function FindAPark({ location, data }) {
   return (
     <>
       <Header content={menuContent} />
+      <ScrollToTop />
       <div id="sr-content" className="search-body">
         <div className="search-results-main container">
           <div className="search-results-container">

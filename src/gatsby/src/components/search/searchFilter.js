@@ -294,7 +294,7 @@ const SearchFilter = ({
                             name={item.label}
                           />
                         }
-                        label={`${item.label} ()`}
+                        label={`${item.label} (${item.count})`}
                         className={
                           selectedRegions.filter(
                             region => region.value === item.value
