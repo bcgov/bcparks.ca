@@ -11,6 +11,7 @@
   background: $colorBlue;
 
   .header-nav {
+    height: 96px;
     position: relative;
     display: flex;
     flex-wrap: wrap;
@@ -18,45 +19,18 @@
     justify-content: space-between;
 
     @include media-breakpoint-up(lg) {
-      height: 100px;
       max-width: 1140px;
       margin: 0px auto;
       padding: 0px 20px;
     }
     @include media-breakpoint-down(md) {
-      height: 72px;
       margin: 0px;
-      padding: 0px;
+      padding: 0px 30px;
     }
-    /*@include media-breakpoint-up(lg) {
-      height: 100px;
-      max-width: 1140px;
-      margin: 0px auto;
-      padding: 0px 20px;
-    }
-    @include media-breakpoint-down(md) {
-      height: 72px;
-      margin: 0px;
-      padding: 0px;
-    }*/
+
     a {
       display: block;
       text-decoration: none;
-    }
-
-    .bc-parks-logo--desktop {
-      &.gatsby-image-wrapper {
-        img {
-          width: 170px;
-        }
-      }
-    }
-    .bc-parks-logo--mobile {
-      &.gatsby-image-wrapper {
-        img {
-          width: 137px;
-        }
-      }
     }
   }
 }
@@ -77,7 +51,7 @@ a.btn.book-campsite-btn {
     outline: 1px solid $colorGold;
   }
   @include media-breakpoint-down(md) {
-    margin-right: 50px;
+    margin-right: 30px;
     padding: 0px 10px;
     line-height: 30px;
     height: 30px;
@@ -104,8 +78,8 @@ nav {
 @include media-breakpoint-down(md) {
   .menu-toggle {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 32px;
+    right: 30px;
     color: $colorWhite;
     font-size: 1.25rem;
 
@@ -139,7 +113,7 @@ nav {
     transition: height 0.5s;
     width: 100%;
     background: $colorWhite;
-    top: 72px;
+    top: 96px;
     position: absolute;
     z-index: 1300;
     border-bottom: solid 2px #aaa;

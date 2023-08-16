@@ -92,17 +92,17 @@ export default function Footer() {
     <>
       <footer id="footer">
         <div className="home-footer" id="home-footer">
-          <div className="my-5 by-3">
+          <div className="my-5">
             <div className="row">
               <div className="col col-12 col-md-4">
-                <div className="text-center text-md-left" id="footer-logo">
+                <div className="mx-3 mx-md-0 mb-5">
                   <a href="/">
                     <StaticImage
-                      src="../images/BCParks_Wordmark_White.svg"
+                      src="../images/BCParks_Wordmark_White-cropped.svg"
                       placeholder="blurred"
                       loading="eager"
+                      height={48}
                       alt="BC Parks Wordmark"
-                      className="footer-logo"
                     />
                   </a>
                 </div>
