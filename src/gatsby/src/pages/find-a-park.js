@@ -197,7 +197,6 @@ export default function FindAPark({ location, data }) {
     activityItemsLabels[item.value] = item.label
   })
 
-  const [showActivities, setActivityVisibility] = useState(true)
   const [showMoreActivities, setMoreActivites] = useState(true)
 
   const regionItems = regions.map(region => {
@@ -240,63 +239,7 @@ export default function FindAPark({ location, data }) {
     facilityItemsLabels[item.value] = item.label
   })
 
-  const [showFacilities, setFacilityVisibility] = useState(true)
   const [showMoreFacilities, setMoreFacilities] = useState(true)
-
-  const [quickSearch, setQuickSearch] = useState({
-    backcountryCamping: false,
-    cycling: false,
-    hiking: false,
-    petsOnLeash: false,
-    picnicAreas: false,
-    swimming: false,
-    vehicleAccessibleCamping: false,
-  })
-
-  const facilityFilterCount = (number) => facilitiesCount?.find(
-    facilityCount => facilityCount.key === number
-  )?.doc_count || 0
-  const activityFilterCount = (number) => activitiesCount?.find(
-    activityCount => activityCount.key === number
-  )?.doc_count || 0
-
-  const quickSearchFilters = [
-    {
-      label: "Backcountry camping",
-      type: "backcountryCamping",
-      count: facilityFilterCount(36)
-    },
-    {
-      label: "Cycling",
-      type: "cycling",
-      count: activityFilterCount(9)
-    },
-    {
-      label: "Hiking",
-      type: "hiking",
-      count: activityFilterCount(1)
-    },
-    {
-      label: "Pets on leash",
-      type: "petsOnLeash",
-      count: activityFilterCount(8)
-    },
-    {
-      label: "Picnic areas",
-      type: "picnicAreas",
-      count: facilityFilterCount(6)
-    },
-    {
-      label: "Swimming",
-      type: "swimming",
-      count: activityFilterCount(3)
-    },
-    {
-      label: "Vehicle-accessible camping",
-      type: "vehicleAccessibleCamping",
-      count: facilityFilterCount(1)
-    },
-  ]
 
   const [selectedRegions, setSelectedRegions] = useState(
     location.state && location.state.selectedRegions
@@ -345,24 +288,6 @@ export default function FindAPark({ location, data }) {
       Find a park
     </div>,
   ]
-
-  const {
-    backcountryCamping,
-    cycling,
-    hiking,
-    petsOnLeash,
-    picnicAreas,
-    swimming,
-    vehicleAccessibleCamping,
-  } = quickSearch
-
-  const handleQuickSearchChange = event => {
-    setQuickSearch({
-      ...quickSearch,
-      [event.target.name]: event.target.checked,
-    })
-    setCurrentPage(1)
-  }
 
   const handleRegionCheck = (region, event) => {
     if (event.target.checked) {
@@ -442,10 +367,6 @@ export default function FindAPark({ location, data }) {
     } else if (chipToDelete.type === "facility") {
       handleFacilityDelete(chipToDelete)
     } else {
-      setQuickSearch({
-        ...quickSearch,
-        [chipToDelete.type]: false,
-      })
       setCurrentPage(1)
     }
   }
@@ -473,7 +394,6 @@ export default function FindAPark({ location, data }) {
     setSelectedCampingFacilities([])
     setSelectedActivities([])
     setSelectedFacilities([])
-    setQuickSearch([])
   }
 
   const setFilters = useCallback(() => {
@@ -490,36 +410,8 @@ export default function FindAPark({ location, data }) {
     selectedFacilities.forEach(f => {
       filters.push({ ...f, type: "facility" })
     })
-    if (backcountryCamping) {
-      filters.push({ label: "Backcountry camping", type: "backcountryCamping" })
-    }
-    if (cycling) {
-      filters.push({ label: "Cycling", type: "cycling" })
-    }
-    if (hiking) {
-      filters.push({ label: "Hiking", type: "hiking" })
-    }
-    if (petsOnLeash) {
-      filters.push({ label: "Pets on leash", type: "petsOnLeash" })
-    }
-    if (picnicAreas) {
-      filters.push({ label: "Picnic areas", type: "picnicAreas" })
-    }
-    if (swimming) {
-      filters.push({ label: "Swimming", type: "swimming" })
-    }
-    if (vehicleAccessibleCamping) {
-      filters.push({ label: "Vehicle-accessible camping", type: "vehicleAccessibleCamping" })
-    }
     setFilterSelections([...filters])
   }, [
-    backcountryCamping,
-    cycling,
-    hiking,
-    petsOnLeash,
-    picnicAreas,
-    swimming,
-    vehicleAccessibleCamping,
     selectedRegions,
     selectedCampingFacilities,
     selectedActivities,
@@ -527,45 +419,6 @@ export default function FindAPark({ location, data }) {
   ])
 
   const params = useMemo(() => {
-    const backcountryCampingFacility = data.allStrapiFacilityType.nodes.find(
-      facility => {
-        return (
-          facility.facilityCode === "backcountry-camping"
-        )
-      }
-    )
-    const backcountryCampingFacilityId = backcountryCampingFacility?.facilityNumber
-    const picnicAreasFacility = data.allStrapiFacilityType.nodes.find(
-      facility => {
-        return (
-          facility.facilityCode === "picnic-areas"
-        )
-      }
-    )
-    const picnicAreasFacilityId = picnicAreasFacility?.facilityNumber
-    const vehicleAccessibleCampingFacility = data.allStrapiFacilityType.nodes.find(
-      facility => {
-        return facility.facilityCode === "vehicle-accessible-camping"
-      }
-    )
-    const vehicleAccessibleCampingFacilityId = vehicleAccessibleCampingFacility?.facilityNumber
-    const cyclingActivity = data.allStrapiActivityType.nodes.find(activity => {
-      return activity.activityCode === "cycling"
-    })
-    const cyclingActivityId = cyclingActivity?.activityNumber
-    const hikingActivity = data.allStrapiActivityType.nodes.find(activity => {
-      return activity.activityCode === "hiking"
-    })
-    const hikingActivityId = hikingActivity?.activityNumber
-    const petsOnLeashActivity = data.allStrapiActivityType.nodes.find(activity => {
-      return activity.activityCode === "pets-on-leash"
-    })
-    const petsOnLeashActivityId = petsOnLeashActivity?.activityNumber
-    const swimmingActivity = data.allStrapiActivityType.nodes.find(activity => {
-      return activity.activityCode === "swimming"
-    })
-    const swimmingActivityId = swimmingActivity?.activityNumber
-
     const params = {
       queryText: searchText,
     }
@@ -582,59 +435,14 @@ export default function FindAPark({ location, data }) {
     if (selectedFacilities.length > 0) {
       params.facilities = selectedFacilities.map(facility => facility.value)
     }
-    if (quickSearch.backcountryCamping) {
-      if (typeof params.facilities === "undefined") {
-        params.facilities = []
-      }
-      params.facilities.push(backcountryCampingFacilityId)
-    }
-    if (quickSearch.cycling) {
-      if (typeof params.activities === "undefined") {
-        params.activities = []
-      }
-      params.activities.push(cyclingActivityId)
-    }
-    if (quickSearch.hiking) {
-      if (typeof params.activities === "undefined") {
-        params.activities = []
-      }
-      params.activities.push(hikingActivityId)
-    }
-    if (quickSearch.petsOnLeash) {
-      if (typeof params.activities === "undefined") {
-        params.activities = []
-      }
-      params.activities.push(petsOnLeashActivityId)
-    }
-    if (quickSearch.picnicAreas) {
-      if (typeof params.facilities === "undefined") {
-        params.facilities = []
-      }
-      params.facilities.push(picnicAreasFacilityId)
-    }
-    if (quickSearch.swimming) {
-      if (typeof params.activities === "undefined") {
-        params.activities = []
-      }
-      params.activities.push(swimmingActivityId)
-    }
-    if (quickSearch.vehicleAccessibleCamping) {
-      if (typeof params.facilities === "undefined") {
-        params.facilities = []
-      }
-      params.facilities.push(vehicleAccessibleCampingFacilityId)
-    }
 
     return params
   }, [
-    data.allStrapiActivityType.nodes,
-    data.allStrapiFacilityType.nodes,
     searchText,
     selectedRegions,
     selectedCampingFacilities,
     selectedActivities,
     selectedFacilities,
-    quickSearch,
   ])
 
   const isActiveSearch =
@@ -960,27 +768,105 @@ export default function FindAPark({ location, data }) {
                         <fieldset className="mb-2">
                           <legend className="filter-heading p10t">Popular</legend>
                           <FormGroup className="filter-options-container">
-                            {quickSearchFilters.map(item => {
-                              return (
-                                <FormControlLabel
-                                  key={item.label}
-                                  control={
-                                    <Checkbox
-                                      checked={quickSearch[item.type]}
-                                      onChange={handleQuickSearchChange}
-                                      name={item.type}
-                                    />
-                                  }
-                                  label={`${item.label} (${item.count})`}
-                                  className={
-                                    quickSearch[item.type]
-                                      ? "text-light-blue no-wrap"
-                                      : "no-wrap"
-                                  }
-                                  disabled={item.count === 0}
-                                />
-                              )
-                            })}
+                            {campingFacilityItems
+                              .filter(item => item.value === 36 || item.value === 1)
+                              .map(item => {
+                                return (
+                                  <FormControlLabel
+                                    key={item.label}
+                                    control={
+                                      <Checkbox
+                                        checked={
+                                          selectedCampingFacilities.filter(
+                                            camping => camping.value === item.value
+                                          ).length === 1
+                                            ? true
+                                            : false
+                                        }
+                                        onChange={event => {
+                                          handleCampingFacilityCheck(item, event)
+                                        }}
+                                        name={item.label}
+                                      />
+                                    }
+                                    label={`${item.label} (${item.count})`}
+                                    className={
+                                      selectedCampingFacilities.filter(
+                                        camping => camping.value === item.value
+                                      ).length === 1
+                                        ? "text-light-blue no-wrap"
+                                        : "no-wrap"
+                                    }
+                                    disabled={item.count === 0}
+                                  />
+                                )
+                              })}
+                            {activityItems
+                              .filter(a => a.value === 1 || a.value === 3 || a.value === 8 || a.value === 9)
+                              .map(a => {
+                                return (
+                                  <FormControlLabel
+                                    key={a.label}
+                                    control={
+                                      <Checkbox
+                                        checked={
+                                          selectedActivities.filter(
+                                            act => act.value === a.value
+                                          ).length === 1
+                                            ? true
+                                            : false
+                                        }
+                                        onChange={event => {
+                                          handleActivityCheck(a, event)
+                                        }}
+                                        name={a.label}
+                                      />
+                                    }
+                                    label={`${a.label} (${a?.count})`}
+                                    className={
+                                      selectedActivities.filter(
+                                        act => act.value === a.value
+                                      ).length === 1
+                                        ? "text-light-blue no-wrap"
+                                        : "no-wrap"
+                                    }
+                                    disabled={a?.count === 0}
+                                  />
+                                )
+                              })}
+                            {facilityItems
+                              .filter(f => f.value === 6)
+                              .map(f => {
+                                return (
+                                  <FormControlLabel
+                                    key={f.label}
+                                    control={
+                                      <Checkbox
+                                        checked={
+                                          selectedFacilities.filter(
+                                            fac => fac.value === f.value
+                                          ).length === 1
+                                            ? true
+                                            : false
+                                        }
+                                        onChange={event => {
+                                          handleFacilityCheck(f, event)
+                                        }}
+                                        name={f.label}
+                                      />
+                                    }
+                                    label={`${f.label} (${f?.count})`}
+                                    className={
+                                      selectedFacilities.filter(
+                                        fac => fac.value === f.value
+                                      ).length === 1
+                                        ? "text-light-blue no-wrap"
+                                        : "no-wrap"
+                                    }
+                                    disabled={f?.count === 0}
+                                  />
+                                )
+                              })}
                           </FormGroup>
                         </fieldset>
                         <fieldset className="mb-2">
@@ -1056,190 +942,118 @@ export default function FindAPark({ location, data }) {
                           </FormGroup>
                         </fieldset>
                         <fieldset className="mb-2">
-                          <legend className="sr-only">Activities</legend>
-                          <div
-                            tabIndex={showActivities ? -1 : 0}
-                            role="button"
-                            className="row pointer mr-3"
+                          <legend className="filter-heading">Activities</legend>
+                          <FormGroup className="filter-options-container">
+                            {activityItems.slice(0, truncatedActivityFilterLength).map(a => {
+                              return (
+                                <FormControlLabel
+                                  key={a.label}
+                                  control={
+                                    <Checkbox
+                                      checked={
+                                        selectedActivities.filter(
+                                          act => act.value === a.value
+                                        ).length === 1
+                                          ? true
+                                          : false
+                                      }
+                                      onChange={event => {
+                                        handleActivityCheck(a, event)
+                                      }}
+                                      name={a.label}
+                                    />
+                                  }
+                                  label={`${a.label} (${a?.count})`}
+                                  className={
+                                    selectedActivities.filter(
+                                      act => act.value === a.value
+                                    ).length === 1
+                                      ? "text-light-blue no-wrap"
+                                      : "no-wrap"
+                                  }
+                                  disabled={a?.count === 0}
+                                />
+                              )
+                            })}
+                          </FormGroup>
+                          <Link
+                            className="ml-auto pointer"
                             onClick={() => {
-                              setActivityVisibility(!showActivities)
+                              setMoreActivites(!showMoreActivities)
                             }}
-                            onKeyDown={() => {
-                              setActivityVisibility(!showActivities)
-                            }}
+                            tabIndex="0"
+                            role="link"
+                            underline="hover"
                           >
-                            <div className="col-md-4">
-                              <div className="filter-heading">Activities</div>
-                            </div>
-                            <div className="col-md-2 ml-auto">
-                              {showActivities ? (
-                                <ExpandLess
-                                  fontSize="large"
-                                  className="mt-auto"
-                                />
-                              ) : (
-                                <ExpandMore
-                                  fontSize="large"
-                                  className="mt-auto"
-                                />
-                              )}
-                            </div>
-                          </div>
-                          <div>
-                            {showActivities ? (
-                              <div>
-                                <FormGroup className="filter-options-container">
-                                  {activityItems.slice(0, truncatedActivityFilterLength).map(a => {
-                                    return (
-                                      <FormControlLabel
-                                        key={a.label}
-                                        control={
-                                          <Checkbox
-                                            checked={
-                                              selectedActivities.filter(
-                                                act => act.value === a.value
-                                              ).length === 1
-                                                ? true
-                                                : false
-                                            }
-                                            onChange={event => {
-                                              handleActivityCheck(a, event)
-                                            }}
-                                            name={a.label}
-                                          />
-                                        }
-                                        label={`${a.label} (${a?.count})`}
-                                        className={
-                                          selectedActivities.filter(
-                                            act => act.value === a.value
-                                          ).length === 1
-                                            ? "text-light-blue no-wrap"
-                                            : "no-wrap"
-                                        }
-                                        disabled={a?.count === 0}
-                                      />
-                                    )
-                                  })}
-                                </FormGroup>
-                                <Link
-                                  className="ml-auto pointer"
-                                  onClick={() => {
-                                    setMoreActivites(!showMoreActivities)
-                                  }}
-                                  tabIndex="0"
-                                  role="link"
-                                  underline="hover"
-                                >
-                                  {showMoreActivities ? (
-                                    <div style={{ color: `#2464A4` }}>
-                                      Show all {activityItems.length}
-                                      <ExpandMore fontSize="small" />
-                                    </div>
-                                  ) : (
-                                    <div style={{ color: `#2464A4` }}>
-                                      Show less
-                                      <ExpandLess fontSize="small" />
-                                    </div>
-                                  )}
-                                </Link>
+                            {showMoreActivities ? (
+                              <div style={{ color: `#2464A4` }}>
+                                Show all {activityItems.length}
+                                <ExpandMore fontSize="small" />
                               </div>
                             ) : (
-                              <div></div>
+                              <div style={{ color: `#2464A4` }}>
+                                Show less
+                                <ExpandLess fontSize="small" />
+                              </div>
                             )}
-                          </div>
+                          </Link>
                         </fieldset>
                         <fieldset>
-                          <legend className="sr-only">Facilities</legend>
-                          <div
-                            tabIndex={showActivities ? -1 : 0}
-                            role="button"
-                            className="row pointer mr-3"
+                          <legend className="filter-heading">Facilities</legend>
+                          <FormGroup className="filter-options-container">
+                            {facilityItems.slice(0, truncatedFacilityFilterLength).map(f => {
+                              return (
+                                <FormControlLabel
+                                  key={f.label}
+                                  control={
+                                    <Checkbox
+                                      checked={
+                                        selectedFacilities.filter(
+                                          fac => fac.value === f.value
+                                        ).length === 1
+                                          ? true
+                                          : false
+                                      }
+                                      onChange={event => {
+                                        handleFacilityCheck(f, event)
+                                      }}
+                                      name={f.label}
+                                    />
+                                  }
+                                  label={`${f.label} (${f?.count})`}
+                                  className={
+                                    selectedFacilities.filter(
+                                      fac => fac.value === f.value
+                                    ).length === 1
+                                      ? "text-light-blue no-wrap"
+                                      : "no-wrap"
+                                  }
+                                  disabled={f?.count === 0}
+                                />
+                              )
+                            })}
+                          </FormGroup>
+                          <Link
+                            className="ml-auto pointer"
                             onClick={() => {
-                              setFacilityVisibility(!showFacilities)
+                              setMoreFacilities(!showMoreFacilities)
                             }}
-                            onKeyDown={() => {
-                              setFacilityVisibility(!showFacilities)
-                            }}
+                            tabIndex="0"
+                            role="link"
+                            underline="hover"
                           >
-                            <div className="col-md-4">
-                              <div className="filter-heading">Facilities</div>
-                            </div>
-                            <div className="col-md-2 ml-auto">
-                              {showFacilities ? (
-                                <ExpandLess
-                                  fontSize="large"
-                                  className="mt-auto"
-                                />
-                              ) : (
-                                <ExpandMore
-                                  fontSize="large"
-                                  className="mt-auto"
-                                />
-                              )}
-                            </div>
-                          </div>
-                          <div>
-                            {showFacilities ? (
-                              <div>
-                                <FormGroup className="filter-options-container">
-                                  {facilityItems.slice(0, truncatedFacilityFilterLength).map(f => {
-                                    return (
-                                      <FormControlLabel
-                                        key={f.label}
-                                        control={
-                                          <Checkbox
-                                            checked={
-                                              selectedFacilities.filter(
-                                                fac => fac.value === f.value
-                                              ).length === 1
-                                                ? true
-                                                : false
-                                            }
-                                            onChange={event => {
-                                              handleFacilityCheck(f, event)
-                                            }}
-                                            name={f.label}
-                                          />
-                                        }
-                                        label={`${f.label} (${f?.count})`}
-                                        className={
-                                          selectedFacilities.filter(
-                                            fac => fac.value === f.value
-                                          ).length === 1
-                                            ? "text-light-blue no-wrap"
-                                            : "no-wrap"
-                                        }
-                                        disabled={f?.count === 0}
-                                      />
-                                    )
-                                  })}
-                                </FormGroup>
-                                <Link
-                                  className="ml-auto pointer"
-                                  onClick={() => {
-                                    setMoreFacilities(!showMoreFacilities)
-                                  }}
-                                  tabIndex="0"
-                                  role="link"
-                                  underline="hover"
-                                >
-                                  {showMoreFacilities ? (
-                                    <div style={{ color: `#2464A4` }}>
-                                      Show all {facilityItems.length}
-                                      <ExpandMore fontSize="small" />
-                                    </div>
-                                  ) : (
-                                    <div style={{ color: `#2464A4` }}>
-                                      Show less
-                                      <ExpandLess fontSize="small" />
-                                    </div>
-                                  )}
-                                </Link>
+                            {showMoreFacilities ? (
+                              <div style={{ color: `#2464A4` }}>
+                                Show all {facilityItems.length}
+                                <ExpandMore fontSize="small" />
                               </div>
                             ) : (
-                              <div></div>
+                              <div style={{ color: `#2464A4` }}>
+                                Show less
+                                <ExpandLess fontSize="small" />
+                              </div>
                             )}
-                          </div>
+                          </Link>
                         </fieldset>
                       </div>
                     </div>
@@ -1519,10 +1333,8 @@ export default function FindAPark({ location, data }) {
           campingFacilityItems,
           activityItems,
           facilityItems,
-          quickSearchFilters,
           openFilter,
           setOpenFilter,
-          quickSearch,
           selectedRegions,
           setSelectedRegions,
           selectedCampingFacilities,
@@ -1531,9 +1343,7 @@ export default function FindAPark({ location, data }) {
           setSelectedActivities,
           selectedFacilities,
           setSelectedFacilities,
-          setQuickSearch,
           searchText,
-          setSearchText,
           setCurrentPage,
         }}
       />
