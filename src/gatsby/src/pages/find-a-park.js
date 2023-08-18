@@ -54,13 +54,16 @@ export const query = graphql`
         apiURL
       }
     }
-    allStrapiRegion {
+    allStrapiRegion(
+      sort: {regionName: ASC},
+    ) {
       nodes {
         regionName
         regionNumber
       }
     }
     allStrapiActivityType(
+      sort: {activityName: ASC},
       filter: {isActive: {eq: true}}
     ) {
       totalCount
@@ -168,13 +171,48 @@ const FeatureIcons = ({ park }) => {
   );
 }
 
+const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
+  return (
+    <FormGroup className="filter-options-container">
+      {filterItems.map(item =>
+        <FormControlLabel
+          key={item.label}
+          control={
+            <Checkbox
+              checked={
+                selectedFilterItems.filter(
+                  selectedFilterItem =>
+                    selectedFilterItem.value === item.value
+                ).length === 1 ? true : false
+              }
+              onChange={event => {
+                handleFilterCheck(item, event)
+              }}
+              name={item.label}
+            />
+          }
+          label={`${item.label} (${item.count})`}
+          className={
+            selectedFilterItems.filter(
+              selectedFilterItem =>
+                selectedFilterItem.value === item.value
+            ).length === 1 ? "text-light-blue no-wrap" : "no-wrap"
+          }
+          disabled={item.count === 0}
+        />
+      )}
+    </FormGroup>
+  )
+}
+
 export default function FindAPark({ location, data }) {
   const menuContent = data?.allStrapiMenu?.nodes || []
-  const regions = data?.allStrapiRegion?.nodes || []
 
   const [regionsCount, setRegionsCount] = useState([])
   const [activitiesCount, setActivitiesCount] = useState([])
   const [facilitiesCount, setFacilitiesCount] = useState([])
+  const [showMoreActivities, setMoreActivites] = useState(true)
+  const [showMoreFacilities, setMoreFacilities] = useState(true)
   const [truncatedActivityFilterLength, setTruncatedActivityFilterLength] = useState(5)
   const [truncatedFacilityFilterLength, setTruncatedFacilityFilterLength] = useState(5)
 
@@ -182,24 +220,9 @@ export default function FindAPark({ location, data }) {
     data.allStrapiActivityType.nodes,
     [activity => activity.activityName.toLowerCase()], ["asc"]
   )
-  const activityItems = sortedActivityItems.map(activity => {
-    const filterCount = activitiesCount?.find(
-      activityCount => activityCount.key === activity.activityNumber
-    )?.doc_count || 0
-    return {
-      label: activity.activityName,
-      value: activity.activityNumber,
-      count: filterCount
-    }
-  })
-  const activityItemsLabels = {}
-  activityItems.forEach(item => {
-    activityItemsLabels[item.value] = item.label
-  })
 
-  const [showMoreActivities, setMoreActivites] = useState(true)
-
-  const regionItems = regions.map(region => {
+  // filter items
+  const regionItems = data.allStrapiRegion.nodes.map(region => {
     const filterCount = regionsCount?.find(
       regionCount => regionCount.key === region.regionNumber
     )?.doc_count || 0
@@ -209,7 +232,6 @@ export default function FindAPark({ location, data }) {
       count: filterCount
     }
   })
-
   const campingFacilityItems = data.allStrapiFacilityType.nodes
     .filter(facility => facility.isCamping).map(facility => {
       const filterCount = facilitiesCount?.find(
@@ -221,7 +243,16 @@ export default function FindAPark({ location, data }) {
         count: filterCount
       }
     })
-
+  const activityItems = sortedActivityItems.map(activity => {
+    const filterCount = activitiesCount?.find(
+      activityCount => activityCount.key === activity.activityNumber
+    )?.doc_count || 0
+    return {
+      label: activity.activityName,
+      value: activity.activityNumber,
+      count: filterCount
+    }
+  })
   const facilityItems = data.allStrapiFacilityType.nodes
     .filter(facility => !facility.isCamping).map(facility => {
       const filterCount = facilitiesCount?.find(
@@ -234,13 +265,16 @@ export default function FindAPark({ location, data }) {
       }
     })
 
+  const activityItemsLabels = {}
+  activityItems.forEach(item => {
+    activityItemsLabels[item.value] = item.label
+  })
   const facilityItemsLabels = {}
   facilityItems.forEach(item => {
     facilityItemsLabels[item.value] = item.label
   })
 
-  const [showMoreFacilities, setMoreFacilities] = useState(true)
-
+  // selected filter items state
   const [selectedRegions, setSelectedRegions] = useState(
     location.state && location.state.selectedRegions
       ? [...location.state.selectedRegions]
@@ -280,6 +314,7 @@ export default function FindAPark({ location, data }) {
   const [openModal, setOpenModal] = useState(false)
 
   const searchRef = useRef(null)
+
   const breadcrumbs = [
     <Link key="1" href="/" underline="hover">
       Home
@@ -289,6 +324,7 @@ export default function FindAPark({ location, data }) {
     </div>,
   ]
 
+  // event handlers
   const handleRegionCheck = (region, event) => {
     if (event.target.checked) {
       setSelectedRegions([...selectedRegions, region])
@@ -298,7 +334,6 @@ export default function FindAPark({ location, data }) {
       ])
     }
   }
-
   const handleCampingFacilityCheck = (camping, event) => {
     if (event.target.checked) {
       setSelectedCampingFacilities([...selectedCampingFacilities, camping])
@@ -308,7 +343,6 @@ export default function FindAPark({ location, data }) {
       ])
     }
   }
-
   const handleActivityCheck = (activity, event) => {
     if (event.target.checked) {
       setSelectedActivities([...selectedActivities, activity])
@@ -318,7 +352,6 @@ export default function FindAPark({ location, data }) {
       ])
     }
   }
-
   const handleFacilityCheck = (facility, event) => {
     if (event.target.checked) {
       setSelectedFacilities([...selectedFacilities, facility])
@@ -335,21 +368,18 @@ export default function FindAPark({ location, data }) {
     )
     setCurrentPage(1)
   }
-
   const handleCampingFacilityDelete = chipToDelete => {
     setSelectedCampingFacilities(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
     setCurrentPage(1)
   }
-
   const handleActivityDelete = chipToDelete => {
     setSelectedActivities(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
     setCurrentPage(1)
   }
-
   const handleFacilityDelete = chipToDelete => {
     setSelectedFacilities(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
@@ -374,16 +404,13 @@ export default function FindAPark({ location, data }) {
   const handleClickOpenFilter = () => {
     setOpenFilter(true)
   }
-
   const handleClickOpenModal = () => {
     setOpenModal(true)
   }
-
   const handleSearch = () => {
     setCurrentPage(1)
     setSearchText(inputText)
   }
-
   const handleLoadMore = () => {
     setCurrentPage(currentPage + 1)
   }
@@ -422,7 +449,6 @@ export default function FindAPark({ location, data }) {
     const params = {
       queryText: searchText,
     }
-
     if (selectedRegions.length > 0) {
       params.regions = selectedRegions.map(region => region.value)
     }
@@ -435,7 +461,6 @@ export default function FindAPark({ location, data }) {
     if (selectedFacilities.length > 0) {
       params.facilities = selectedFacilities.map(facility => facility.value)
     }
-
     return params
   }, [
     searchText,
@@ -468,7 +493,6 @@ export default function FindAPark({ location, data }) {
     setFilters()
 
     const apiUrl = `${data.site.siteMetadata.apiURL}/api`
-
     const pageStart = (currentPage - 1) * itemsPerPage
     const pageLimit = itemsPerPage
 
@@ -767,215 +791,49 @@ export default function FindAPark({ location, data }) {
                       <div className="">
                         <fieldset className="mb-2">
                           <legend className="filter-heading p10t">Popular</legend>
-                          <FormGroup className="filter-options-container">
-                            {campingFacilityItems
-                              .filter(item => item.value === 36 || item.value === 1)
-                              .map(item => {
-                                return (
-                                  <FormControlLabel
-                                    key={item.label}
-                                    control={
-                                      <Checkbox
-                                        checked={
-                                          selectedCampingFacilities.filter(
-                                            camping => camping.value === item.value
-                                          ).length === 1
-                                            ? true
-                                            : false
-                                        }
-                                        onChange={event => {
-                                          handleCampingFacilityCheck(item, event)
-                                        }}
-                                        name={item.label}
-                                      />
-                                    }
-                                    label={`${item.label} (${item.count})`}
-                                    className={
-                                      selectedCampingFacilities.filter(
-                                        camping => camping.value === item.value
-                                      ).length === 1
-                                        ? "text-light-blue no-wrap"
-                                        : "no-wrap"
-                                    }
-                                    disabled={item.count === 0}
-                                  />
-                                )
-                              })}
-                            {activityItems
-                              .filter(a => a.value === 1 || a.value === 3 || a.value === 8 || a.value === 9)
-                              .map(a => {
-                                return (
-                                  <FormControlLabel
-                                    key={a.label}
-                                    control={
-                                      <Checkbox
-                                        checked={
-                                          selectedActivities.filter(
-                                            act => act.value === a.value
-                                          ).length === 1
-                                            ? true
-                                            : false
-                                        }
-                                        onChange={event => {
-                                          handleActivityCheck(a, event)
-                                        }}
-                                        name={a.label}
-                                      />
-                                    }
-                                    label={`${a.label} (${a?.count})`}
-                                    className={
-                                      selectedActivities.filter(
-                                        act => act.value === a.value
-                                      ).length === 1
-                                        ? "text-light-blue no-wrap"
-                                        : "no-wrap"
-                                    }
-                                    disabled={a?.count === 0}
-                                  />
-                                )
-                              })}
-                            {facilityItems
-                              .filter(f => f.value === 6)
-                              .map(f => {
-                                return (
-                                  <FormControlLabel
-                                    key={f.label}
-                                    control={
-                                      <Checkbox
-                                        checked={
-                                          selectedFacilities.filter(
-                                            fac => fac.value === f.value
-                                          ).length === 1
-                                            ? true
-                                            : false
-                                        }
-                                        onChange={event => {
-                                          handleFacilityCheck(f, event)
-                                        }}
-                                        name={f.label}
-                                      />
-                                    }
-                                    label={`${f.label} (${f?.count})`}
-                                    className={
-                                      selectedFacilities.filter(
-                                        fac => fac.value === f.value
-                                      ).length === 1
-                                        ? "text-light-blue no-wrap"
-                                        : "no-wrap"
-                                    }
-                                    disabled={f?.count === 0}
-                                  />
-                                )
-                              })}
-                          </FormGroup>
+                          <Filter
+                            filterItems={campingFacilityItems.filter(
+                              c => c.value === 36 || c.value === 1
+                            )}
+                            selectedFilterItems={selectedCampingFacilities}
+                            handleFilterCheck={handleCampingFacilityCheck}
+                          />
+                          <Filter
+                            filterItems={activityItems.filter(
+                              a => a.value === 1 || a.value === 3 || a.value === 8 || a.value === 9
+                            )}
+                            selectedFilterItems={selectedActivities}
+                            handleFilterCheck={handleActivityCheck}
+                          />
+                          <Filter
+                            filterItems={facilityItems.filter(f => f.value === 6)}
+                            selectedFilterItems={selectedFacilities}
+                            handleFilterCheck={handleFacilityCheck}
+                          />
                         </fieldset>
                         <fieldset className="mb-2">
                           <legend className="filter-heading">Regions</legend>
-                          <FormGroup className="filter-options-container">
-                            {regionItems.map(item => {
-                              return (
-                                <FormControlLabel
-                                  key={item.label}
-                                  control={
-                                    <Checkbox
-                                      checked={
-                                        selectedRegions.filter(
-                                          region => region.value === item.value
-                                        ).length === 1
-                                          ? true
-                                          : false
-                                      }
-                                      onChange={event => {
-                                        handleRegionCheck(item, event)
-                                      }}
-                                      name={item.label}
-                                    />
-                                  }
-                                  label={`${item.label} (${item.count})`}
-                                  className={
-                                    selectedRegions.filter(
-                                      region => region.value === item.value
-                                    ).length === 1
-                                      ? "text-light-blue no-wrap"
-                                      : "no-wrap"
-                                  }
-                                  disabled={item.count === 0}
-                                />
-                              )
-                            })}
-                          </FormGroup>
+                          <Filter
+                            filterItems={regionItems}
+                            selectedFilterItems={selectedRegions}
+                            handleFilterCheck={handleRegionCheck}
+                          />
                         </fieldset>
                         <fieldset className="mb-2">
                           <legend className="filter-heading">Camping</legend>
-                          <FormGroup className="filter-options-container">
-                            {campingFacilityItems.map(item => {
-                              return (
-                                <FormControlLabel
-                                  key={item.label}
-                                  control={
-                                    <Checkbox
-                                      checked={
-                                        selectedCampingFacilities.filter(
-                                          camping => camping.value === item.value
-                                        ).length === 1
-                                          ? true
-                                          : false
-                                      }
-                                      onChange={event => {
-                                        handleCampingFacilityCheck(item, event)
-                                      }}
-                                      name={item.label}
-                                    />
-                                  }
-                                  label={`${item.label} (${item.count})`}
-                                  className={
-                                    selectedCampingFacilities.filter(
-                                      camping => camping.value === item.value
-                                    ).length === 1
-                                      ? "text-light-blue no-wrap"
-                                      : "no-wrap"
-                                  }
-                                  disabled={item.count === 0}
-                                />
-                              )
-                            })}
-                          </FormGroup>
+                          <Filter
+                            filterItems={campingFacilityItems}
+                            selectedFilterItems={selectedCampingFacilities}
+                            handleFilterCheck={handleCampingFacilityCheck}
+                          />
                         </fieldset>
                         <fieldset className="mb-2">
                           <legend className="filter-heading">Activities</legend>
-                          <FormGroup className="filter-options-container">
-                            {activityItems.slice(0, truncatedActivityFilterLength).map(a => {
-                              return (
-                                <FormControlLabel
-                                  key={a.label}
-                                  control={
-                                    <Checkbox
-                                      checked={
-                                        selectedActivities.filter(
-                                          act => act.value === a.value
-                                        ).length === 1
-                                          ? true
-                                          : false
-                                      }
-                                      onChange={event => {
-                                        handleActivityCheck(a, event)
-                                      }}
-                                      name={a.label}
-                                    />
-                                  }
-                                  label={`${a.label} (${a?.count})`}
-                                  className={
-                                    selectedActivities.filter(
-                                      act => act.value === a.value
-                                    ).length === 1
-                                      ? "text-light-blue no-wrap"
-                                      : "no-wrap"
-                                  }
-                                  disabled={a?.count === 0}
-                                />
-                              )
-                            })}
-                          </FormGroup>
+                          <Filter
+                            filterItems={activityItems.slice(0, truncatedActivityFilterLength)}
+                            selectedFilterItems={selectedActivities}
+                            handleFilterCheck={handleActivityCheck}
+                          />
                           <Link
                             className="ml-auto pointer"
                             onClick={() => {
@@ -1000,39 +858,11 @@ export default function FindAPark({ location, data }) {
                         </fieldset>
                         <fieldset>
                           <legend className="filter-heading">Facilities</legend>
-                          <FormGroup className="filter-options-container">
-                            {facilityItems.slice(0, truncatedFacilityFilterLength).map(f => {
-                              return (
-                                <FormControlLabel
-                                  key={f.label}
-                                  control={
-                                    <Checkbox
-                                      checked={
-                                        selectedFacilities.filter(
-                                          fac => fac.value === f.value
-                                        ).length === 1
-                                          ? true
-                                          : false
-                                      }
-                                      onChange={event => {
-                                        handleFacilityCheck(f, event)
-                                      }}
-                                      name={f.label}
-                                    />
-                                  }
-                                  label={`${f.label} (${f?.count})`}
-                                  className={
-                                    selectedFacilities.filter(
-                                      fac => fac.value === f.value
-                                    ).length === 1
-                                      ? "text-light-blue no-wrap"
-                                      : "no-wrap"
-                                  }
-                                  disabled={f?.count === 0}
-                                />
-                              )
-                            })}
-                          </FormGroup>
+                          <Filter
+                            filterItems={facilityItems.slice(0, truncatedFacilityFilterLength)}
+                            selectedFilterItems={selectedFacilities}
+                            handleFilterCheck={handleFacilityCheck}
+                          />
                           <Link
                             className="ml-auto pointer"
                             onClick={() => {

@@ -17,6 +17,39 @@ import ExpandMore from "@mui/icons-material/ExpandMore"
 
 import "../../styles/search.scss"
 
+const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
+  return (
+    <FormGroup className="filter-options-container">
+      {filterItems.map(item =>
+        <FormControlLabel
+          key={item.label}
+          control={
+            <Checkbox
+              checked={
+                selectedFilterItems.filter(
+                  selectedFilterItem =>
+                    selectedFilterItem.value === item.value
+                ).length === 1 ? true : false
+              }
+              onChange={event => {
+                handleFilterCheck(item, event)
+              }}
+              name={item.label}
+            />
+          }
+          label={`${item.label} (${item.count})`}
+          className={
+            selectedFilterItems.filter(
+              selectedFilterItem =>
+                selectedFilterItem.value === item.value
+            ).length === 1 ? "text-light-blue no-wrap" : "no-wrap"
+          }
+          disabled={item.count === 0}
+        />
+      )}
+    </FormGroup>
+  )
+}
 
 const SearchFilter = ({
   data: {
@@ -172,7 +205,7 @@ const SearchFilter = ({
             {expandAll ? "Collapse" : "Expand"} all
             {expandAll ? (
               <ExpandLess fontSize="small" />
-              ) : (
+            ) : (
               <ExpandMore fontSize="small" />
             )}
           </Link>
@@ -207,109 +240,25 @@ const SearchFilter = ({
                   unmountOnExit
                   className="p-3"
                 >
-                  {campingFacilityItems
-                    .filter(item => item.value === 36 || item.value === 1)
-                    .map((item, index) => (
-                      <FormGroup
-                        className="filter-options-container"
-                        key={index}
-                      >
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={
-                                selectedCampingFacilities.filter(
-                                  camping => camping.value === item.value
-                                ).length === 1
-                                  ? true
-                                  : false
-                              }
-                              onChange={event => {
-                                handleCampingFacilityCheck(item, event)
-                              }}
-                              name={item.label}
-                            />
-                          }
-                          label={`${item.label} (${item.count})`}
-                          className={
-                            selectedCampingFacilities.filter(
-                              camping => camping.value === item.value
-                            ).length === 1
-                              ? "text-light-blue no-wrap"
-                              : "no-wrap"
-                          }
-                        />
-                      </FormGroup>
-                    ))}
-                  {activityItems
-                    .filter(a => a.value === 1 || a.value === 3 || a.value === 8 || a.value === 9)
-                    .map((a, index) => (
-                      <FormGroup
-                        className="filter-options-container"
-                        key={index}
-                      >
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={
-                                selectedActivities.filter(
-                                  act => act.value === a.value
-                                ).length === 1
-                                  ? true
-                                  : false
-                              }
-                              onChange={event => {
-                                handleActivityCheck(a, event)
-                              }}
-                              name={a.label}
-                            />
-                          }
-                          label={`${a.label} (${a?.count})`}
-                          className={
-                            selectedActivities.filter(
-                              act => act.value === a.value
-                            ).length === 1
-                              ? "text-light-blue no-wrap"
-                              : "no-wrap"
-                          }
-                        />
-                      </FormGroup>
-                    ))}
-
-                  {facilityItems
-                    .filter(f => f.value === 6)
-                    .map((f, index) => (
-                      <FormGroup
-                        className="filter-options-container"
-                        key={index}
-                      >
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={
-                                selectedFacilities.filter(
-                                  fa => fa.value === f.value
-                                ).length === 1
-                                  ? true
-                                  : false
-                              }
-                              onChange={event => {
-                                handleFacilityCheck(f, event)
-                              }}
-                              name={f.label}
-                            />
-                          }
-                          label={`${f.label} (${f?.count})`}
-                          className={
-                            selectedFacilities.filter(
-                              fa => fa.value === f.value
-                            ).length === 1
-                              ? "text-light-blue no-wrap"
-                              : "no-wrap"
-                          }
-                        />
-                      </FormGroup>
-                    ))}
+                  <Filter
+                    filterItems={campingFacilityItems.filter(
+                      c => c.value === 36 || c.value === 1
+                    )}
+                    selectedFilterItems={selectedCampingFacilities}
+                    handleFilterCheck={handleCampingFacilityCheck}
+                  />
+                  <Filter
+                    filterItems={activityItems.filter(
+                      a => a.value === 1 || a.value === 3 || a.value === 8 || a.value === 9
+                    )}
+                    selectedFilterItems={selectedActivities}
+                    handleFilterCheck={handleActivityCheck}
+                  />
+                  <Filter
+                    filterItems={facilityItems.filter(f => f.value === 6)}
+                    selectedFilterItems={selectedFacilities}
+                    handleFilterCheck={handleFacilityCheck}
+                  />
                 </Collapse>
               </div>
             </div>
@@ -345,38 +294,11 @@ const SearchFilter = ({
                   unmountOnExit
                   className="p-3"
                 >
-                  {regionItems.map((item, index) => (
-                    <FormGroup
-                      className="filter-options-container"
-                      key={index}
-                    >
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={
-                              selectedRegions.filter(
-                                region => region.value === item.value
-                              ).length === 1
-                                ? true
-                                : false
-                            }
-                            onChange={event => {
-                              handleRegionCheck(item, event)
-                            }}
-                            name={item.label}
-                          />
-                        }
-                        label={`${item.label} (${item.count})`}
-                        className={
-                          selectedRegions.filter(
-                            region => region.value === item.value
-                          ).length === 1
-                            ? "text-light-blue no-wrap"
-                            : "no-wrap"
-                        }
-                      />
-                    </FormGroup>
-                  ))}
+                  <Filter
+                    filterItems={regionItems}
+                    selectedFilterItems={selectedRegions}
+                    handleFilterCheck={handleRegionCheck}
+                  />
                 </Collapse>
               </div>
             </div>
@@ -413,38 +335,11 @@ const SearchFilter = ({
                   unmountOnExit
                   className="p-3"
                 >
-                  {campingFacilityItems.map((item, index) => (
-                    <FormGroup
-                      className="filter-options-container"
-                      key={index}
-                    >
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={
-                              selectedCampingFacilities.filter(
-                                camping => camping.value === item.value
-                              ).length === 1
-                                ? true
-                                : false
-                            }
-                            onChange={event => {
-                              handleCampingFacilityCheck(item, event)
-                            }}
-                            name={item.label}
-                          />
-                        }
-                        label={`${item.label} (${item.count})`}
-                        className={
-                          selectedCampingFacilities.filter(
-                            camping => camping.value === item.value
-                          ).length === 1
-                            ? "text-light-blue no-wrap"
-                            : "no-wrap"
-                        }
-                      />
-                    </FormGroup>
-                  ))}
+                  <Filter
+                    filterItems={campingFacilityItems}
+                    selectedFilterItems={selectedCampingFacilities}
+                    handleFilterCheck={handleCampingFacilityCheck}
+                  />
                 </Collapse>
               </div>
             </div>
@@ -482,38 +377,11 @@ const SearchFilter = ({
                   unmountOnExit
                   className="p-3"
                 >
-                  {activityItems.map((a, index) => (
-                    <FormGroup
-                      className="filter-options-container"
-                      key={index}
-                    >
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={
-                              selectedActivities.filter(
-                                act => act.value === a.value
-                              ).length === 1
-                                ? true
-                                : false
-                            }
-                            onChange={event => {
-                              handleActivityCheck(a, event)
-                            }}
-                            name={a.label}
-                          />
-                        }
-                        label={`${a.label} (${a?.count})`}
-                        className={
-                          selectedActivities.filter(
-                            act => act.value === a.value
-                          ).length === 1
-                            ? "text-light-blue no-wrap"
-                            : "no-wrap"
-                        }
-                      />
-                    </FormGroup>
-                  ))}
+                  <Filter
+                    filterItems={activityItems}
+                    selectedFilterItems={selectedActivities}
+                    handleFilterCheck={handleActivityCheck}
+                  />
                 </Collapse>
               </div>
             </div>
@@ -549,38 +417,11 @@ const SearchFilter = ({
                   unmountOnExit
                   className="p-3"
                 >
-                  {facilityItems.map((f, index) => (
-                    <FormGroup
-                      className="filter-options-container"
-                      key={index}
-                    >
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={
-                              selectedFacilities.filter(
-                                fa => fa.value === f.value
-                              ).length === 1
-                                ? true
-                                : false
-                            }
-                            onChange={event => {
-                              handleFacilityCheck(f, event)
-                            }}
-                            name={f.label}
-                          />
-                        }
-                        label={`${f.label} (${f?.count})`}
-                        className={
-                          selectedFacilities.filter(
-                            fa => fa.value === f.value
-                          ).length === 1
-                            ? "text-light-blue no-wrap"
-                            : "no-wrap"
-                        }
-                      />
-                    </FormGroup>
-                  ))}
+                  <Filter
+                    filterItems={facilityItems}
+                    selectedFilterItems={selectedFacilities}
+                    handleFilterCheck={handleFacilityCheck}
+                  />
                 </Collapse>
               </div>
             </div>
