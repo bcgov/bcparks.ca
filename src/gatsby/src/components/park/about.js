@@ -1,10 +1,8 @@
 import React from "react"
 import { parseISO, format } from "date-fns"
-import { Paper, Grid } from "@mui/material"
 
 import { capitalizeFirstLetter } from "../../utils/helpers";
 
-import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
@@ -25,9 +23,8 @@ export default function About({
   const terrestrialEcosections = park.terrestrialEcosections
 
   return (
-    <Grid item xs={12} id="park-about-container" className="anchor-link">
-      <Paper elevation={0}>
-        <Heading>{capitalizeFirstLetter(`Learn more about this ${parkType}`)}</Heading>
+    <div id="park-about-container" className="anchor-link">
+         <h2 className="section-heading">{capitalizeFirstLetter(`Learn more about this ${parkType}`)}</h2>
         {(park.totalArea || park.establishedDate) && (
           <>
             <h3>{capitalizeFirstLetter(`${park.type} details`)}</h3>
@@ -104,7 +101,6 @@ export default function About({
           </>
         )}
         <Spacer />
-      </Paper>
-    </Grid>
+    </div>
   )
 }

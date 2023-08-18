@@ -21,12 +21,10 @@ import Header from "../components/header"
 import PageMenu from "../components/pageContent/pageMenu"
 
 import About from "../components/park/about"
-import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
 import CampingDetails from "../components/park/campingDetails"
 import NatureAndCulture from "../components/park/natureAndCulture"
 import Reconciliation from "../components/park/reconciliation"
-import Heading from "../components/park/heading.js"
 import ParkActivity from "../components/park/parkActivity"
 import ParkDates from "../components/park/parkDates"
 import ParkFacility from "../components/park/parkFacility"
@@ -216,10 +214,12 @@ export default function ParkTemplate({ data }) {
       visible: !isNullOrWhiteSpace(description),
     },
     {
+      // Depricated, also delete the section if removing
       sectionIndex: 1,
       display: "Accessibility",
       link: "#accessibility-details-container",
-      visible: park.accessibility,
+      visible: false
+      // visible: park.accessibility,
     },
     {
       sectionIndex: 2,
@@ -310,6 +310,8 @@ export default function ParkTemplate({ data }) {
 
   const parkName = renderHTML(park.parkNames.find(item=> item.parkNameType === PARK_NAME_TYPE.Escaped)?.parkName  || park.protectedAreaName);
   
+  console.log(parkName);
+
   const breadcrumbs = [
     <Link key="1" href="/" underline="hover">
       Home
@@ -407,14 +409,14 @@ export default function ParkTemplate({ data }) {
               )}
               {menuItems[1].visible && (
                 <div ref={accessibilityRef} className="full-width">
-                  <AccessibilityDetails />
+                  
                 </div>
               )}
               {menuItems[2].visible && (
                 <div ref={advisoryRef} className="full-width">
                   {isLoadingAdvisories && (
                     <div className="mb-5">
-                      <Heading>{`Advisories`}</Heading>
+                      <h2 className="section-heading">{`Advisories`}</h2>
                       <div className="spinner-border" role="status">
                         <span className="sr-only">Loading...</span>
                       </div>

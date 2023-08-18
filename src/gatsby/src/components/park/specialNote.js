@@ -1,27 +1,19 @@
 import React from "react"
-import { Paper, Grid } from "@mui/material"
 
-import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
 export default function SpecialNote({ specialNotes }) {
   return (
-    <>
-      <Grid
-        item
-        xs={12}
+      <div
         id="park-special-notes-container"
         className="anchor-link"
       >
-        <Paper elevation={0}>
-          <Heading>Special notes</Heading>
+          <h2 className="section-heading">Special notes</h2>
           {specialNotes && (
             <HtmlContent>{specialNotes}</HtmlContent>
           )}
           <Spacer />
-        </Paper>
-      </Grid>
-    </>
+      </div>
   )
 }

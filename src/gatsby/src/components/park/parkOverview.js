@@ -4,7 +4,6 @@ import { Box, Paper, Link, Grid } from "@mui/material"
 
 import { capitalizeFirstLetter } from "../../utils/helpers";
 
-import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
@@ -58,7 +57,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
       <Grid item xs={12} className="anchor-link">
         <Paper elevation={0}>
           <Box className={expanded ? classes.expanded : classes.collapsed} ref={ref}>
-            <Heading>{capitalizeFirstLetter(`${type} overview`)}</Heading>
+            <h2 className="section-heading">{capitalizeFirstLetter(`${type} overview`)}</h2>
             <HtmlContent className="park-overview-html">
               {expanded ? parkOverview : collapsedParkOverview}
             </HtmlContent>

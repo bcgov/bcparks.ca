@@ -22,13 +22,6 @@
   padding-left: 15px;
 }
 
-.park-info-header a {
-  color: $colorBlue;
-  &:hover {
-    color: $colorBlue !important;
-  }
-}
-
 .park-info-header .MuiCardHeader-title {
   font-size: 0.875rem !important;
 }
@@ -48,14 +41,6 @@
   padding-top: 20px;
 }
 
-#park-header-container a {
-  text-decoration: none;
-}
-
-#park-header-container a:hover {
-  text-decoration: underline;
-}
-
 #park-menu-container .isCurrent a {
   font-weight: bold;
   box-sizing: border-box;
@@ -68,25 +53,6 @@
 }
 .park-details-shaded {
   background-color: $colorGrey !important;
-}
-
-.parks-container {
-  .MuiButton-root,
-  .MuiLink-root {
-    border: none !important;
-  }
-  a {
-    color: $colorBlue;
-    &:hover {
-      color: $colorGold;
-    }
-    &:focus-visible {
-      outline: -webkit-focus-ring-color auto 1px;
-    }
-    &.btn-primary {
-      color: $colorWhite;
-    }
-  }
 }
 
 .yellow-alert {
@@ -106,32 +72,6 @@
   padding-left: 20px;
   font-size: smaller !important;
   list-style-type: circle !important;
-}
-
-.blue-button {
-  color: $colorWhite !important;
-  background-color: $colorBlue !important;
-  min-width: 180px !important;
-  white-space: nowrap;
-  height: 50px;
-  font-size: 1rem;
-}
-
-.yellow-button {
-  color: $colorBlue !important;
-  background-color: $colorGold !important;
-  min-width: 180px !important;
-  white-space: nowrap;
-  height: 50px;
-  font-size: 1rem;
-}
-
-.blue-button:hover,
-.yellow-button:hover {
-  background-color: transparent !important;
-  border: 2px solid $colorGold !important;
-  color: $colorBlue !important;
-  text-decoration: underline;
 }
 
 .raw-html-content {
@@ -505,4 +445,78 @@
 }
 .yarl__navigation_next {
   right: 16px;
+}
+
+// Section headers (replacing MUI)
+h2.section-heading {
+  position: relative;
+  padding-bottom: 2rem;
+  &:after {
+    position: absolute;
+    content: '';
+    height: 3px;
+    bottom: 9px;
+    margin: 0;
+    left: 0;
+    right: 0;
+    width: 5rem;
+    background: $colorGold;
+  }
+}
+
+// Park header (replacing MUI)
+
+// remove the !important once MUI is gone
+#park-header-container {
+  .card-parent {
+    .card-child {
+      font-size: 0.875rem !important;
+      img {
+        width: 40px;
+        height: 40px;
+      }
+      a {
+        flex: 1 1 100%;
+        text-decoration: none;
+        font-size: 0.875rem !important;
+      }
+      @media (min-width: $lgBreakpoint) {
+        &:first-child {
+          min-width: 210px;
+        }
+      }
+    }
+  }
+
+  .button-parent {
+    a.btn  {
+      width: 100%;
+      border: 2px solid transparent;
+      @media (min-width: $lgBreakpoint) {
+        width: unset !important;
+      }
+      &.btn-warning {
+        color: $colorBlue;
+        background-color: $colorGold;
+        border-color: $colorGold;
+        &:hover {
+          background-color: $colorWhite;
+        }
+      }
+      &.btn-primary {
+        background-color: $colorBlue;
+        border-color: $colorBlue;
+        &:hover {
+          color: $colorBlue;
+          background-color: $colorWhite;
+        }
+      }
+      &+.btn {
+        margin-bottom: 16px;
+        @media (min-width: $lgBreakpoint) {
+          margin-bottom: 0;
+        };
+      }
+    }
+  }
 }

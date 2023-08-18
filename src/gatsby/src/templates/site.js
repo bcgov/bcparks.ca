@@ -18,10 +18,8 @@ import Footer from "../components/footer"
 import Header from "../components/header"
 import PageMenu from "../components/pageContent/pageMenu"
 
-import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
 import CampingDetails from "../components/park/campingDetails"
-import Heading from "../components/park/heading.js"
 import ParkActivity from "../components/park/parkActivity"
 import ParkFacility from "../components/park/parkFacility"
 import ParkHeader from "../components/park/parkHeader"
@@ -126,7 +124,6 @@ export default function SiteTemplate({ data }) {
   }, [apiBaseUrl, park?.orcs, site.orcsSiteNumber])
 
   const parkOverviewRef = useRef("")
-  const accessibilityRef = useRef("")
   const advisoryRef = useRef("")
   const campingRef = useRef("")
   const facilityRef = useRef("")
@@ -135,7 +132,6 @@ export default function SiteTemplate({ data }) {
 
   const sectionRefs = [
     parkOverviewRef,
-    accessibilityRef,
     advisoryRef,
     campingRef,
     facilityRef,
@@ -156,11 +152,14 @@ export default function SiteTemplate({ data }) {
       link: "#park-overview-container",
       visible: !isNullOrWhiteSpace(description),
     },
+
     {
+      // Depricated, also delete the section if removing
       sectionIndex: 1,
       display: "Accessibility",
       link: "#accessibility-details-container",
-      visible: park?.accessibility,
+      visible: false
+      // visible: park?.accessibility,
     },
     {
       sectionIndex: 2,
@@ -298,21 +297,22 @@ export default function SiteTemplate({ data }) {
               md={9}
               lg={9}
             >
+              
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="full-width">
                   <ParkOverview data={description} type="site" />
                 </div>
               )}
               {menuItems[1].visible && (
-                <div ref={accessibilityRef} className="full-width">
-                  <AccessibilityDetails />
+                <div className="full-width">
+               
                 </div>
               )}
               {menuItems[2].visible && (
                 <div ref={advisoryRef} className="full-width">
                   {isLoadingAdvisories && (
                     <div className="mb-5">
-                      <Heading>{`Advisories`}</Heading>
+                      <h2 className="section-heading">{`Advisories`}</h2>
                       <div className="spinner-border" role="status">
                         <span className="sr-only">Loading...</span>
                       </div>

@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Accordion from "react-bootstrap/Accordion"
 import Container from "react-bootstrap/Container"
-import Heading from "./heading"
+
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
 import Spacer from "./spacer"
@@ -208,7 +208,7 @@ export default function ParkDates({ data }) {
 
   return (
     <div id="park-dates-container" className="anchor-link">
-      <Heading>Dates of operation</Heading>
+      <h2 className="section-heading">Dates of operation</h2>
       <Row>
         <Col>
           {!hasOperations && (

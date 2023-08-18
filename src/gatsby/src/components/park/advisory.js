@@ -1,17 +1,11 @@
 import React from "react"
-import { styled } from '@mui/material/styles';
 import PropTypes from "prop-types";
 import { Link } from "gatsby"
-import { Avatar, Card, CardHeader } from "@mui/material"
 
 import blueAlertIcon from "../../images/park/blue-alert-64.png"
 import redAlertIcon from "../../images/park/red-alert-64.png"
 import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
 
-const StyledCard = styled(Card)({
-  border: "none",
-  boxShadow: "none",
-});
 
 export default function Advisory({ advisories }) {
   let textMap = []
@@ -48,20 +42,10 @@ export default function Advisory({ advisories }) {
   }
 
   return (
-    <StyledCard>
-      <CardHeader
-        avatar={
-          <Avatar
-            variant="square"
-            src={alertIcon}
-            aria-label="park access status"
-            className="park-overview-icon"
-            alt=""
-          />
-        }
-        title={
-          <>
-            {textMap.length === 0 && (
+    <>
+      <div><img src={alertIcon} alt="" class="mr-1" /></div>
+      <div>
+      {textMap.length === 0 && (
               <Link to="#park-advisory-details-container">
                 There are no reported advisories for this park
               </Link>
@@ -77,10 +61,8 @@ export default function Advisory({ advisories }) {
                 ))}
               </>
             )}
-          </>
-        }
-      />
-    </StyledCard>
+      </div>
+    </>
   );
 }
 

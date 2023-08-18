@@ -1,23 +1,17 @@
 import React from "react"
-import { Paper, Grid } from "@mui/material"
 
-import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
 export default function Reconciliation({ data }) {
   return (
-    <Grid
-      item
-      xs={12}
+    <div
       id="park-reconciliation-container"
       className="anchor-link"
     >
-      <Paper elevation={0}>
-        <Heading>Reconciliation with Indigenous Peoples</Heading>
+        <h2 className="section-heading">Reconciliation with Indigenous Peoples</h2>
         <HtmlContent>{data}</HtmlContent>
         <Spacer />
-      </Paper>
-    </Grid>
+    </div>
   )
 }

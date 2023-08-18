@@ -5,7 +5,6 @@ import Col from "react-bootstrap/Col"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 
-import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
 import Spacer from "./spacer"
@@ -74,7 +73,7 @@ export default function CampingDetails({ data }) {
           </Col>
         )}
         <Col md={{ order: "last" }} lg={{ order: "first" }}>
-          <Heading>Camping</Heading>
+          <h2 className="section-heading">Camping</h2>
         </Col>
       </Row>
       {parkOperation &&

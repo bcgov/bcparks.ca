@@ -1,7 +1,5 @@
 import React from "react"
-import { Paper, Grid } from "@mui/material"
 
-import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
@@ -10,21 +8,15 @@ import Spacer from "./spacer"
 // to match spacing
 export default function SafetyInfo({ safetyInfo }) {
   return (
-    <>
-      <Grid
-        item
-        xs={12}
+      <div
         id="park-safety-info-container"
         className="anchor-link"
       >
-        <Paper elevation={0}>
-          <Heading>Safety info</Heading>
+          <h2 className="section-heading">Safety info</h2>
           {safetyInfo && (
             <HtmlContent>{safetyInfo}</HtmlContent>
           )}
           <Spacer />
-        </Paper>
-      </Grid>
-    </>
+      </div>
   )
 }
