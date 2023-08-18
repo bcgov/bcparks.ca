@@ -58,7 +58,13 @@ const MainSearch = () => {
       <div className="parks-search-filter-link"
         role="button"
         tabIndex={0}
-        onClick={searchParkFilter}>
+        onClick={searchParkFilter}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            searchParkFilter()
+          }
+        }}
+      >
         Search by activity
       </div>
     </div>

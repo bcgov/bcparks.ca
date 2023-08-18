@@ -793,14 +793,14 @@ export default function FindAPark({ location, data }) {
                           <legend className="filter-heading p10t">Popular</legend>
                           <Filter
                             filterItems={campingFacilityItems.filter(
-                              c => c.value === 36 || c.value === 1
+                              c => c.value === 36
                             )}
                             selectedFilterItems={selectedCampingFacilities}
                             handleFilterCheck={handleCampingFacilityCheck}
                           />
                           <Filter
                             filterItems={activityItems.filter(
-                              a => a.value === 1 || a.value === 3 || a.value === 8 || a.value === 9
+                              a => a.value === 1 || a.value === 8 || a.value === 9
                             )}
                             selectedFilterItems={selectedActivities}
                             handleFilterCheck={handleActivityCheck}
@@ -809,6 +809,20 @@ export default function FindAPark({ location, data }) {
                             filterItems={facilityItems.filter(f => f.value === 6)}
                             selectedFilterItems={selectedFacilities}
                             handleFilterCheck={handleFacilityCheck}
+                          />
+                          <Filter
+                            filterItems={activityItems.filter(
+                              a => a.value === 3
+                            )}
+                            selectedFilterItems={selectedActivities}
+                            handleFilterCheck={handleActivityCheck}
+                          />
+                          <Filter
+                            filterItems={campingFacilityItems.filter(
+                              c => c.value === 1
+                            )}
+                            selectedFilterItems={selectedCampingFacilities}
+                            handleFilterCheck={handleCampingFacilityCheck}
                           />
                         </fieldset>
                         <fieldset className="mb-2">
