@@ -35,6 +35,18 @@
   }
 }
 
+.MuiTypography-root.expand-link {
+  display: inline-block;
+  cursor: pointer;
+  margin-bottom: 16px;
+  &:hover, &:focus {
+    color: $colorBlue;
+  }
+  i {
+    margin-left: 8px;
+  }
+}
+
 .park-details {
   background-color: white;
   color: $colorBlue;

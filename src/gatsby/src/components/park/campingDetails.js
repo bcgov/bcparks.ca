@@ -19,34 +19,32 @@ function toCamping() {
   navigate("https://camping.bcparks.ca/")
 }
 
-export const AccordionList = props => {
+export const AccordionList = ({eventKey, camping, open}) => {
   const [isShow, setIsShow] = useState(false);
 
   useEffect(() => {
-    setIsShow(props.open)
-  }, [props.open])
+    setIsShow(open)
+  }, [open])
 
   return (
     <Accordion
-      key={"camping" + props.index}
       className="park-details mb-2"
-      activeKey={isShow ? props.eventKey : ''}
+      activeKey={isShow ? eventKey : ''}
     >
       <Accordion.Toggle
         as={Container}
-        aria-controls={props.camping?.activityType?.activityName || props.camping?.facilityType?.facilityName}
-        eventKey={props.eventKey}
-        id={props.index}
+        aria-controls={camping?.activityType?.activityName || camping?.facilityType?.facilityName}
+        eventKey={eventKey}
         onClick={() => setIsShow(!isShow)}
       >
         <div
-          id={props.camping?.activityType?.activityCode || props.camping?.facilityType?.facilityCode}
+          id={camping?.activityType?.activityCode || camping?.facilityType?.facilityCode}
           className="d-flex justify-content-between p-3 accordion-toggle"
         >
           <div className="d-flex justify-content-left align-items-center pl-2">
-            <StaticIcon name={props.camping?.activityType?.icon || props.camping?.facilityType?.icon} size={48} />
+            <StaticIcon name={camping?.activityType?.icon || camping?.facilityType?.icon} size={48} />
             <HtmlContent className="pl-3 accordion-header">
-              {props.camping?.activityType?.activityName || props.camping?.facilityType?.facilityName}
+              {camping?.activityType?.activityName || camping?.facilityType?.facilityName}
             </HtmlContent>
           </div>
           <div className="d-flex align-items-center expand-icon">
@@ -59,12 +57,12 @@ export const AccordionList = props => {
           </div>
         </div>
       </Accordion.Toggle>
-      <Accordion.Collapse eventKey={props.eventKey}>
+      <Accordion.Collapse eventKey={eventKey}>
         <div className="p-4">
           <HtmlContent>
-            {!isNullOrWhiteSpace(props.camping.description.data) ?
-              props.camping.description.data : (
-                props.camping?.activityType?.defaultDescription.data || props.camping?.facilityType?.defaultDescription.data
+            {!isNullOrWhiteSpace(camping.description.data) ?
+              camping.description.data : (
+                camping?.activityType?.defaultDescription.data || camping?.facilityType?.defaultDescription.data
               )
             }
           </HtmlContent>
@@ -208,24 +206,22 @@ export default function CampingDetails({ data }) {
             tabIndex="0"
             underline="hover"
             onClick={() => setOpen(!open)}
+            className="expand-link"
           >
-            {open ? "Collapse all" : "Expand all"}
-            <i
-              className={
-                (open ? "open " : "close ") +
-                "fa fa-angle-down"
-              }
-            ></i>
+            {open ? (<>
+              Collapse all<i className="fa fa-angle-up"></i>
+            </>) : (<>
+              Expand all<i className="fa fa-angle-down"></i>
+            </>)}
           </Link>
           <div>
             {activeCampings.map((camping, index) => (
-              <div key={index}>
-                <AccordionList
-                  eventKey={index.toString()}
-                  camping={camping}
-                  open={open}
-                />
-              </div>
+              <AccordionList
+                key={index}
+                eventKey={index.toString()}
+                camping={camping}
+                open={open}
+              />
             ))}
           </div>
         </Col>
