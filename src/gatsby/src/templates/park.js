@@ -3,14 +3,15 @@ import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql } from "gatsby"
 import loadable from '@loadable/component'
+
 import {
-  Box,
   Container,
   Grid,
   CssBaseline,
   Link,
   Breadcrumbs,
 } from "@mui/material"
+
 import useScrollSpy from "react-use-scrollspy"
 
 import { capitalizeFirstLetter, renderHTML, isNullOrWhiteSpace } from "../utils/helpers";
@@ -329,12 +330,9 @@ export default function ParkTemplate({ data }) {
       <Header mode="internal" content={menuContent} />
       <ScrollToTop />
       <CssBaseline />
-      <div className="d-flex flex-wrap d-md-block">
+      <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
         <div className="container parks-container order-2">
-          <Container id="sr-content" className="park-info-container" maxWidth={false}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12}>
-                <div className="p30t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none" />
+          <div id="sr-content" className="park-info-container pt-4 d-none d-lg-block">
                 <Breadcrumbs
                   separator="›"
                   aria-label="breadcrumb"
@@ -342,9 +340,9 @@ export default function ParkTemplate({ data }) {
                 >
                   {breadcrumbs}
                 </Breadcrumbs>
-              </Grid>
+              </div>
               {!isLoadingProtectedArea && !protectedAreaLoadError && (
-                <Grid item xs={12} sm={12}>
+                <div>
                   <ParkHeader
                     slug={park.slug}
                     parkName={parkName}
@@ -355,13 +353,11 @@ export default function ParkTemplate({ data }) {
                     advisoryLoadError={advisoryLoadError}
                     advisories={advisories}
                   />
-                </Grid>
+                </div>
               )}
-            </Grid>
-          </Container>
         </div>
 
-        <div className="page-menu--mobile w-100 order-3 d-block d-lg-none">
+        <div className="page-menu--mobile d-block d-lg-none pb-4 pb-md-0 order-3">
             <PageMenu
               pageSections={menuItems}
               activeSection={activeSection}
@@ -370,12 +366,11 @@ export default function ParkTemplate({ data }) {
         </div>
         
         <div className="container parks-container gallery-container order-1">
-          <Container className="park-info-container" maxWidth={false}>
-            <Grid item xs={12} sm={12}>
-              <ParkPhotoGallery photos={photos} />
-            </Grid>
-          </Container>
+          <div className="park-info-container">
+            <ParkPhotoGallery photos={photos} />
+            </div>
         </div>
+
       </div>
 
       <div className="container parks-container">
@@ -485,16 +480,14 @@ export default function ParkTemplate({ data }) {
                   <div id="park-maps-location-container" className="anchor-link">
                     <AsyncMapLocation data={mapData} />
                     {locationNotes && (
-                      <Grid item xs={12} id="park-location-notes-container">
-                        <Box>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: locationNotes,
-                            }}
-                          ></div>
-                        </Box>
+                      <>
+                        <div id="park-location-notes-container" 
+                          dangerouslySetInnerHTML={{
+                            __html: locationNotes,
+                          }}
+                        ></div>
                         <Spacer />
-                      </Grid>
+                        </>
                     )}
                   </div>
                 </div>

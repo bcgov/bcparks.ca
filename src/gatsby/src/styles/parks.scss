@@ -3,9 +3,16 @@
 // @import url("https://governmentofbc.maps.arcgis.com/apps/webappviewer/jimu.js/css/jimu-theme.css");
 
 .parks-container {
-  //Added 50px extra to compensate padding
-  max-width: 1370px !important;
-  padding: 0px !important;
+  max-width: 1350px !important;
+}
+
+.gallery-container {
+  padding-left: 0;
+  padding-right: 0;
+  @media (max-width: $mediumBreakpoint) {
+    padding-left: unset;
+    padding-right: unset;
+  }
 }
 
 .anchor-linkx {
@@ -35,10 +42,6 @@
   color: $colorBlue;
   padding: 5px 0px 5px 8px;
   border-left: 3px solid transparent;
-}
-
-#park-header-container {
-  padding-top: 20px;
 }
 
 #park-menu-container .isCurrent a {
@@ -126,74 +129,6 @@
 #park-activity-container .MuiAccordion-root:hover,
 #park-camping-details-container .MuiAccordion-root:hover {
   border: 1px solid $colorGold !important;
-}
-
-.access-icon {
-  color: $colorBlue;
-  padding: 0 !important;
-  .MuiCardHeader-avatar {
-    margin-right: 8px;
-  }
-  .MuiTypography-root {
-    font-size: 0.875rem !important;
-  }
-  &.access-status-open {
-    .MuiTypography-root {
-      color: $colorText;
-    }
-  }
-}
-.campfire-ban-icon {
-  margin-top: 8px;
-  img {
-    margin-right: 8px !important;
-  }
-  span {
-    color: $colorText;
-    font-size: 0.875rem;
-  }
-}
-
-#park-header-container .MuiCardHeader-avatar {
-  margin-right: 5px !important;
-}
-
-#park-header-container .MuiCardHeader-root {
-  padding: 0px;
-}
-
-.park-info-container {
-  padding: 0px 25px !important;
-
-  @media (max-width: $mediumBreakpoint) {
-    margin-bottom: 25px;
-    margin-top: 25px;
-  }
-}
-
-.gallery-container .park-info-container {
-  padding: 0px !important;
-  margin: 0px;
-  @media (min-width: $mediumBreakpoint) {
-    padding: 0px 25px !important;
-  }
-  .MuiGrid-spacing-xs-1 {
-    width: 100%;
-    margin: 0;
-    @media (min-width: $mediumBreakpoint) {
-      width: calc(100% + 8px);
-      margin: -4;
-    }
-    > .MuiGrid-item {
-      padding: 0;
-      @media (min-width: $mediumBreakpoint) {
-        padding: 4px;
-        &.main-park-photo-grid {
-          padding: 8px 0;
-        }
-      }
-    }
-  }
 }
 
 .park-info-container .MuiAccordionSummary-root {
@@ -512,11 +447,27 @@ h2.section-heading {
         }
       }
       &+.btn {
-        margin-bottom: 16px;
+        margin-top: 16px;
         @media (min-width: $lgBreakpoint) {
-          margin-bottom: 0;
+          margin-top: 0;
         };
       }
     }
   }
+}
+
+.park-overview {
+  &.collapsed {
+    max-height: 260px;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+  }
+  &.expanded {
+    max-height: none;
+  }
+}
+.park-overview-link {
+  color: $colorBlue;
+  margin-top: 24px;
 }

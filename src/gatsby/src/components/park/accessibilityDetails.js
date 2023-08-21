@@ -1,5 +1,4 @@
 import React from "react"
-import { Paper, Container, Grid } from "@mui/material"
 
 import Spacer from "./spacer"
 
@@ -11,11 +10,11 @@ export default function AccessibilityDetails({ data }) {
           id="accessibility-details-container"
           className="anchor-link"
         >
-          <h1>ZZZ - AccessibilityDetails</h1>
+          <h1>AccessibilityDetails</h1>
              <h2 className="section-heading">Accessibility</h2>
-            <Container>
+            <div>
               <p>{data}</p>
-            </Container>
+            </div>
             <Spacer />
         </div>
       )}

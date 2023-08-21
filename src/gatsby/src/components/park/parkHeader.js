@@ -21,29 +21,32 @@ export default function ParkHeader({
   return (
     <>
       {/* eventually get rid of these zeroed out padding/margin once their properly nested bootstrap structure */}
-      <div className="col-12 px-0" id="park-header-container">
-        <div className="row mx-0"><h1>{parkName}</h1></div>
+      <div className="pt-4" id="park-header-container">
+        <h1>{parkName}</h1>
 
         <div className="row mx-0 pt-2">
-          <div class="col-12 col-lg-6 d-flex justify-content-around flex-column flex-lg-row order-lg-1 card-parent">
-            <div class="row d-flex align-items-center mb-3 mb-lg-0 card-child">
-              <ParkAccessStatus advisories={advisories} slug={slug}/>
+          {!isLoadingAdvisories && !advisoryLoadError && (
+            <div class="col-12 col-lg-6 d-flex justify-content-around flex-column flex-lg-row order-lg-1 card-parent">
+              <div class="row d-flex align-items-center mb-3 mb-lg-0 card-child">
+                <ParkAccessStatus advisories={advisories} slug={slug} />
+              </div>
+              {hasCampfireBan &&
+                <div class="row d-flex align-items-center mb-3 mb-lg-0 card-child">
+                  <CampfireBan />
+                </div>
+              }
+              <div class="row d-flex align-items-center mb-3 mb-lg-0 card-child">
+                <Advisory advisories={advisories} />
+              </div>
             </div>
-            <div class="row d-flex align-items-center mb-3 mb-lg-0 card-child">
-              <CampfireBan />
-            </div>
-            <div class="row d-flex align-items-center mb-3 mb-lg-0 card-child">
-              <Advisory advisories={advisories} />
-            </div>
-          </div>
-
-          <div class="col-12 col-lg-6 button-parent">
+          )}
+          <div class="col-12 col-lg-6 button-parent pb-4 pb-lg-0">
             <div class="row">
             {hasReservations && (
-                <a href="{reservationsURL}" class="btn btn-lg btn-warning mr-lg-3">Book camping</a>
+                <a href={reservationsURL} class="btn btn-lg btn-warning mr-lg-3">Book camping</a>
               )}
               {hasDayUsePass && (
-                <a href="{dayUsePassURL}" class="btn btn-lg btn-primary">Get a day-use pass</a>
+                <a href={dayUsePassURL} class="btn btn-lg btn-primary">Get a day-use pass</a>
               )}
             </div>
           </div>
