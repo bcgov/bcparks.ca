@@ -19,7 +19,7 @@ function toCamping() {
   navigate("https://camping.bcparks.ca/")
 }
 
-export const AccordionList = ({eventKey, camping, open}) => {
+export const AccordionList = ({ eventKey, camping, open }) => {
   const [isShow, setIsShow] = useState(false);
 
   useEffect(() => {
@@ -206,13 +206,10 @@ export default function CampingDetails({ data }) {
             tabIndex="0"
             underline="hover"
             onClick={() => setOpen(!open)}
-            className="expand-link"
+            className="expand-link expand-icon"
           >
-            {open ? (<>
-              Collapse all<i className="fa fa-angle-up"></i>
-            </>) : (<>
-              Expand all<i className="fa fa-angle-down"></i>
-            </>)}
+            {open ? "Collapse all" : "Expand all"}
+            <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
           </Link>
           <div>
             {activeCampings.map((camping, index) => (

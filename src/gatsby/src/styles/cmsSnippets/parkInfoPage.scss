@@ -4,17 +4,17 @@
   background-color: $colorGold !important;
   border: 2px solid $colorGold !important;
 
-  &:hover{
+  &:hover {
     background-color: transparent !important;
     border: 2px solid $colorGold !important;
     text-decoration: underline;
   }
 }
 
-.expand-icon{
+.expand-icon {
   color: rgba(0, 0, 0, 0.54);
 
-  & .open{
+  &.open {
     font-size: 1.5rem;
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
@@ -24,7 +24,7 @@
     transition: 0.3s;
   }
 
-  & .close{
+  &.close {
     font-size: 1.5rem;
     -webkit-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
@@ -39,11 +39,21 @@
   display: inline-block;
   cursor: pointer;
   margin-bottom: 16px;
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     color: $colorBlue;
   }
   i {
+    float: none;
+    color: rgba(0, 0, 0, 0.54);
+    opacity: 1;
     margin-left: 8px;
+    &.open {
+      font-size: 1rem;
+    }
+    &.close {
+      font-size: 1rem;
+    }
   }
 }
 
@@ -53,7 +63,7 @@
   border-radius: 4px;
   border: 1px solid $colorBlue;
 
-  &:hover{
+  &:hover {
     border: 1px solid $colorGold;
   }
 }
