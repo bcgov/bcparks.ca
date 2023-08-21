@@ -1,9 +1,10 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { navigate } from "gatsby"
 import Accordion from "react-bootstrap/Accordion"
 import Col from "react-bootstrap/Col"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
+import { Link } from "@mui/material"
 
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
@@ -18,6 +19,61 @@ function toCamping() {
   navigate("https://camping.bcparks.ca/")
 }
 
+export const AccordionList = props => {
+  const [isShow, setIsShow] = useState(false);
+
+  useEffect(() => {
+    setIsShow(props.open)
+  }, [props.open])
+
+  return (
+    <Accordion
+      key={"camping" + props.index}
+      className="park-details mb-2"
+      activeKey={isShow ? props.eventKey : ''}
+    >
+      <Accordion.Toggle
+        as={Container}
+        aria-controls={props.camping?.activityType?.activityName || props.camping?.facilityType?.facilityName}
+        eventKey={props.eventKey}
+        id={props.index}
+        onClick={() => setIsShow(!isShow)}
+      >
+        <div
+          id={props.camping?.activityType?.activityCode || props.camping?.facilityType?.facilityCode}
+          className="d-flex justify-content-between p-3 accordion-toggle"
+        >
+          <div className="d-flex justify-content-left align-items-center pl-2">
+            <StaticIcon name={props.camping?.activityType?.icon || props.camping?.facilityType?.icon} size={48} />
+            <HtmlContent className="pl-3 accordion-header">
+              {props.camping?.activityType?.activityName || props.camping?.facilityType?.facilityName}
+            </HtmlContent>
+          </div>
+          <div className="d-flex align-items-center expand-icon">
+            <i
+              className={
+                (isShow ? "open " : "close ") +
+                "fa fa-angle-down mx-3"
+              }
+            ></i>
+          </div>
+        </div>
+      </Accordion.Toggle>
+      <Accordion.Collapse eventKey={props.eventKey}>
+        <div className="p-4">
+          <HtmlContent>
+            {!isNullOrWhiteSpace(props.camping.description.data) ?
+              props.camping.description.data : (
+                props.camping?.activityType?.defaultDescription.data || props.camping?.facilityType?.defaultDescription.data
+              )
+            }
+          </HtmlContent>
+        </div>
+      </Accordion.Collapse>
+    </Accordion>
+  )
+}
+
 export default function CampingDetails({ data }) {
   const activeCampings = data.activeCampings
   const parkOperation = data.parkOperation
@@ -25,16 +81,9 @@ export default function CampingDetails({ data }) {
   const subAreas = data.subAreas || []
   subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
   const [reservationsExpanded, setReservationsExpanded] = useState(false)
-  const [expanded, setExpanded] = useState(
-    Array(activeCampings.length).fill(false)
-  )
+  const [open, setOpen] = useState(false)
 
   if (activeCampings.length === 0) return null
-
-  const toggleExpand = index => {
-    expanded[index] = !expanded[index]
-    setExpanded([...expanded])
-  }
 
   const toggleReservations = () => {
     setReservationsExpanded(!reservationsExpanded)
@@ -78,30 +127,30 @@ export default function CampingDetails({ data }) {
         </Col>
       </Row>
       {parkOperation &&
-      <Row>
-        <Col>
-          <dl>
-            {countsList
-              .filter(
-                count =>
-                  isShown(count, parkOperation)).length > 0
-              && subAreas
-                .filter(subArea => subArea.isActive).length !== 1
-              && (<>
-                <dt>Total number of campsites</dt>
-                {countsList
-                  .filter(count => isShown(count, parkOperation))
-                  .map((count, index) => (
-                    <dd key={index} className="mb-0">
-                      Total {checkCountDisplay(count.display.toLowerCase())}:{" "}
-                      {parkOperation[count.countVar]}
-                    </dd>
-                  ))}
-              </>
-              )}
-          </dl>
-        </Col>
-      </Row>
+        <Row>
+          <Col>
+            <dl>
+              {countsList
+                .filter(
+                  count =>
+                    isShown(count, parkOperation)).length > 0
+                && subAreas
+                  .filter(subArea => subArea.isActive).length !== 1
+                && (<>
+                  <dt>Total number of campsites</dt>
+                  {countsList
+                    .filter(count => isShown(count, parkOperation))
+                    .map((count, index) => (
+                      <dd key={index} className="mb-0">
+                        Total {checkCountDisplay(count.display.toLowerCase())}:{" "}
+                        {parkOperation[count.countVar]}
+                      </dd>
+                    ))}
+                </>
+                )}
+            </dl>
+          </Col>
+        </Row>
       }
       <Row>
         <Col>
@@ -120,7 +169,7 @@ export default function CampingDetails({ data }) {
                       id="panel1a-header"
                       onClick={() => toggleReservations()}
                     >
-                      <div 
+                      <div
                         id="reservations"
                         className="d-flex justify-content-between p-3 accordion-toggle"
                       >
@@ -140,7 +189,6 @@ export default function CampingDetails({ data }) {
                         </div>
                       </div>
                     </Accordion.Toggle>
-
                     <Accordion.Collapse eventKey="0">
                       <div className="p-3 pl-5">
                         <HtmlContent>{reservations}</HtmlContent>
@@ -155,51 +203,31 @@ export default function CampingDetails({ data }) {
       </Row>
       <Row>
         <Col>
-          {activeCampings.map((camping, index) => (
-            <Accordion
-              key={"camping" + index}
-              className="park-details mb-2"
-            >
-              <Accordion.Toggle
-                as={Container}
-                aria-controls={camping?.activityType?.activityName || camping?.facilityType?.facilityName}
-                eventKey="0"
-                id={index}
-                onClick={() => toggleExpand(index)}
-              >
-                <div
-                  id={camping?.activityType?.activityCode || camping?.facilityType?.facilityCode}
-                  className="d-flex justify-content-between p-3 accordion-toggle"
-                >
-                  <div className="d-flex justify-content-left align-items-center pl-2">
-                    <StaticIcon name={camping?.activityType?.icon || camping?.facilityType?.icon} size={48} />
-                    <HtmlContent className="pl-3 accordion-header">
-                      {camping?.activityType?.activityName || camping?.facilityType?.facilityName}
-                    </HtmlContent>
-                  </div>
-                  <div className="d-flex align-items-center expand-icon">
-                    <i
-                      className={
-                        (expanded[index] ? "open " : "close ") +
-                        "fa fa-angle-down mx-3"
-                      }
-                    ></i>
-                  </div>
-                </div>
-              </Accordion.Toggle>
-              <Accordion.Collapse eventKey="0">
-                <div className="p-4">
-                  <HtmlContent>
-                    {!isNullOrWhiteSpace(camping.description.data) ? 
-                      camping.description.data : (
-                        camping?.activityType?.defaultDescription.data || camping?.facilityType?.defaultDescription.data
-                      )
-                    }
-                  </HtmlContent>
-                </div>
-              </Accordion.Collapse>
-            </Accordion>
-          ))}
+          <Link
+            role="link"
+            tabIndex="0"
+            underline="hover"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? "Collapse all" : "Expand all"}
+            <i
+              className={
+                (open ? "open " : "close ") +
+                "fa fa-angle-down"
+              }
+            ></i>
+          </Link>
+          <div>
+            {activeCampings.map((camping, index) => (
+              <div key={index}>
+                <AccordionList
+                  eventKey={index.toString()}
+                  camping={camping}
+                  open={open}
+                />
+              </div>
+            ))}
+          </div>
         </Col>
       </Row>
       <Spacer />
