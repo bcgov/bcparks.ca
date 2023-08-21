@@ -310,7 +310,7 @@ const MegaMenu = ({ content, menuMode }) => {
                 placeholder="blurred"
                 loading="eager"
                 height={64}
-                alt="BC Parks Logo Vertical"
+                alt="BC Parks Logo"
                 className="bc-parks-logo--mobile d-block d-lg-none"
               />
             </Link>
