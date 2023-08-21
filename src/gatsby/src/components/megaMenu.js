@@ -298,17 +298,19 @@ const MegaMenu = ({ content, menuMode }) => {
           <nav className="header-nav">
             <Link to="/">
               <StaticImage
-                src="../images/logo/BCParks_Primary_Reversed.svg"
+                src="../images/logo/BCParks_Primary_Reversed-cropped.svg"
                 placeholder="blurred"
                 loading="eager"
+                height={64}
                 alt="BC Parks Logo"
                 className="bc-parks-logo--desktop d-none d-lg-block"
               />
               <StaticImage
-                src="../images/BCParks_Wordmark_White.svg"
+                src="../images/logo/BCParks_Primary_Reversed_Vertical.svg"
                 placeholder="blurred"
                 loading="eager"
-                alt="BC Parks Wordmark"
+                height={64}
+                alt="BC Parks Logo"
                 className="bc-parks-logo--mobile d-block d-lg-none"
               />
             </Link>

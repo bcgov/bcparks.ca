@@ -9,7 +9,7 @@ exports[`Footer renders correctly 1`] = `
     id="home-footer"
   >
     <div
-      className="my-5 by-3"
+      className="my-5"
     >
       <div
         className="row"
@@ -18,8 +18,7 @@ exports[`Footer renders correctly 1`] = `
           className="col col-12 col-md-4"
         >
           <div
-            className="text-center text-md-left"
-            id="footer-logo"
+            className="mx-3 mx-md-0 mb-5"
           >
             <a
               href="/"
