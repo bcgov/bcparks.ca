@@ -135,8 +135,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `bcparks.ca`,
+        short_name: `bcparks.ca`,
         start_url: `/`,
         background_color: `#003366`,
         theme_color: `#003366`,
