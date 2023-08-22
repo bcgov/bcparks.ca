@@ -258,6 +258,15 @@ h3.subtitle {
   .Mui-checked .MuiSvgIcon-root {
     color: $colorBlueLight !important;
   }
+  .MuiFormControlLabel-root {
+    margin-left: 0;
+    margin-right: 0;
+    .MuiCheckbox-root {
+      .MuiSvgIcon-root {
+        font-size: 2rem;
+      }
+    }
+  }
 }
 
 .park-filter-dialog,
@@ -271,12 +280,19 @@ h3.subtitle {
 
   .park-filter-options {
     background-color: $colorWhite !important;
+    border: 1px solid $colorBlue;
     border-radius: 5px;
   }
 
   .park-filter-option-label {
-    height: 60px !important;
-    color: $colorBlue !important;
+    height: 50px !important;
+    .flex-display {
+      align-items: center;
+      justify-content: space-between;
+      svg.MuiSvgIcon-root {
+        font-size: 1.25rem;
+      }
+    }
   }
 
   .park-filter-dialog-content .MuiTypography-root {
@@ -284,8 +300,8 @@ h3.subtitle {
     font-size: $bodyFont !important;
   }
 
-  .park-filter-dialog-content {
-    padding: 10px !important;
+  .park-filter-dialog-content, .park-filter-dialog-action {
+    padding: 16px !important;
   }
 
   .MuiDialog-paperWidthSm {
@@ -293,6 +309,14 @@ h3.subtitle {
     background-color: $colorGrey !important;
     width: 1000px !important;
     max-width: 1000px !important;
+    height: 100%;
+    max-height: 100%;
+    margin: 0px;
+    @media screen and (min-width: $smBreakpoint) {
+      height: auto;
+      max-height: auto;
+      margin: 16px;
+    }
   }
 
   .park-filter-select [class*="-control"] {
@@ -383,8 +407,6 @@ h3.subtitle {
   }
   .park-select-label {
     font-size: $bodyFont !important;
-    padding-bottom: 10px !important;
-    font-weight: bold;
   }
 }
 
@@ -459,6 +481,17 @@ div[class$="-singleValue"] {
           margin-left: 4px;
         }
       }
+    }
+  }
+}
+.load-more-button-container {
+  display: flex;
+  justify-content: center;
+  .load-more-button {
+    border: 1px solid #c7c7c7 !important;
+    @media screen and (min-width: $lgBreakpoint) {
+      height: 50px !important;
+      width: 200px !important;
     }
   }
 }
@@ -721,6 +754,18 @@ div[class$="-singleValue"] {
   cursor: pointer !important;
 }
 
+.clear-filter-link {
+  display: inline-block;
+  color: $colorBlue !important;
+  cursor: pointer;
+  margin: 0 8px !important;
+}
+
+.expand-link {
+  color: $colorBlue !important;
+  cursor: pointer;
+}
+
 .background-blue {
   background-color: $colorBlue;
 }
@@ -879,7 +924,6 @@ div[class$="-singleValue"] {
 
   .park-links {
     a.map-link {
-      margin-left: 8px;
       svg.MuiSvgIcon-root {
         font-size: 1rem;
       }
@@ -1034,6 +1078,12 @@ div[class$="-singleValue"] {
     color: #00468b !important;
   }
 
+  .clear-icon {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   .close-icon {
     color: $colorWhite !important;
   }
@@ -1099,12 +1149,27 @@ div[class$="-singleValue"] {
 }
 
 .no-results-container {
-  min-height: 380px !important;
-  background-color: $colorGreyLight;
   display: flex;
-  align-items: center;
-  text-align: center;
-  border-radius: 8px;
+  justify-content: center;
+  margin: 32px 0;
+  &--left {
+    display: block;
+    padding-right: 16px;
+    @media (max-width: $mediumBreakpoint) {
+      display: none;
+    }
+    svg.MuiSvgIcon-root {
+      font-size: 3rem;
+    }
+  }
+  &--right {
+    h2 {
+      color: #000;
+    }
+    p {
+      margin-bottom: 0;
+    }
+  }
 }
 
 
