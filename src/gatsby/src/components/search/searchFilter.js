@@ -74,7 +74,6 @@ const SearchFilter = ({
 
 }) => {
   const [showFilters, setShowFilter] = useState([false, false, false, false, false])
-  const [filterSelections, setFilterSelections] = useState([])
   const [expandAll, setExpandAll] = useState(false)
 
   const handleExpandAll = () => {
@@ -151,7 +150,6 @@ const SearchFilter = ({
     selectedFacilities.forEach(f => {
       filters.push({ ...f, type: "facility" })
     })
-    setFilterSelections([...filters])
   }, [
     selectedRegions,
     selectedCampingFacilities,

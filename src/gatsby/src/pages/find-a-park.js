@@ -324,8 +324,11 @@ export default function FindAPark({ location, data }) {
     </div>,
   ]
 
+  const searchApiUrl = `${data.site.siteMetadata.apiURL}/api/protected-areas/search`
+
   // event handlers
   const handleRegionCheck = (region, event) => {
+    setCurrentPage(1)
     if (event.target.checked) {
       setSelectedRegions([...selectedRegions, region])
     } else {
@@ -335,6 +338,7 @@ export default function FindAPark({ location, data }) {
     }
   }
   const handleCampingFacilityCheck = (camping, event) => {
+    setCurrentPage(1)
     if (event.target.checked) {
       setSelectedCampingFacilities([...selectedCampingFacilities, camping])
     } else {
@@ -344,6 +348,7 @@ export default function FindAPark({ location, data }) {
     }
   }
   const handleActivityCheck = (activity, event) => {
+    setCurrentPage(1)
     if (event.target.checked) {
       setSelectedActivities([...selectedActivities, activity])
     } else {
@@ -353,6 +358,7 @@ export default function FindAPark({ location, data }) {
     }
   }
   const handleFacilityCheck = (facility, event) => {
+    setCurrentPage(1)
     if (event.target.checked) {
       setSelectedFacilities([...selectedFacilities, facility])
     } else {
@@ -363,28 +369,28 @@ export default function FindAPark({ location, data }) {
   }
 
   const handleRegionDelete = chipToDelete => {
+    setCurrentPage(1)
     setSelectedRegions(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
-    setCurrentPage(1)
   }
   const handleCampingFacilityDelete = chipToDelete => {
+    setCurrentPage(1)
     setSelectedCampingFacilities(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
-    setCurrentPage(1)
   }
   const handleActivityDelete = chipToDelete => {
+    setCurrentPage(1)
     setSelectedActivities(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
-    setCurrentPage(1)
   }
   const handleFacilityDelete = chipToDelete => {
+    setCurrentPage(1)
     setSelectedFacilities(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
-    setCurrentPage(1)
   }
 
   const handleFilterDelete = chipToDelete => () => {
@@ -491,18 +497,13 @@ export default function FindAPark({ location, data }) {
   useEffect(() => {
     setIsLoading(true)
     setFilters()
-
-    const apiUrl = `${data.site.siteMetadata.apiURL}/api`
-    const pageStart = (currentPage - 1) * itemsPerPage
-    const pageLimit = itemsPerPage
-
-    axios.get(`${apiUrl}/protected-areas/search`, {
-      params: { ...params, _start: pageStart, _limit: pageLimit },
+    axios.get(searchApiUrl, {
+      params: { ...params, _start: 0, _limit: itemsPerPage },
     }).then(resultResponse => {
       if (resultResponse.status === 200) {
         const total = parseInt(resultResponse.data.meta.pagination.total, 10)
         const newResults = resultResponse.data.data
-        setSearchResults(prevResults => [...prevResults, ...newResults]);
+        setSearchResults(newResults);
         setTotalResults(total)
         setRegionsCount(resultResponse.data.meta.aggregations.regions.buckets)
         setActivitiesCount(resultResponse.data.meta.aggregations.activities.buckets)
@@ -517,11 +518,31 @@ export default function FindAPark({ location, data }) {
       })
   }, [
     params,
-    currentPage,
-    data.site.siteMetadata.apiURL,
+    searchApiUrl,
     setFilters,
     setSearchResults,
     setTotalResults,
+  ])
+
+  useEffect(() => {
+    if (currentPage !== 1) {
+      const pageStart = (currentPage - 1) * itemsPerPage
+      axios.get(searchApiUrl, {
+        params: { ...params, _start: pageStart, _limit: itemsPerPage },
+      }).then(resultResponse => {
+        if (resultResponse.status === 200) {
+          const newResults = resultResponse.data.data
+          setSearchResults(prevResults => [...prevResults, ...newResults]);
+        }
+      })
+        .finally(() => {
+          setIsLoading(false)
+        })
+    }
+  }, [
+    params,
+    searchApiUrl,
+    currentPage
   ])
 
   useEffect(() => {
@@ -1151,15 +1172,16 @@ export default function FindAPark({ location, data }) {
                               </Card>
                             </div>
                           ))}
-                          <div className="load-more-button-container mt-5">
-                            <Button
-                              variant="outlined"
-                              onClick={handleLoadMore}
-                              className="bcgov-button bcgov-normal-white load-more-button"
-                            >
-                              Load more
-                            </Button>
-                          </div>
+                          {totalResults > searchResults.length && (
+                            <div className="load-more-button-container mt-5">
+                              <Button
+                                variant="outlined"
+                                onClick={handleLoadMore}
+                                className="bcgov-button bcgov-normal-white load-more-button"
+                              >
+                                Load more
+                              </Button>
+                            </div>)}
                         </>
                       )}
                     </>
