@@ -1,18 +1,145 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import moment from "moment"
 import _ from "lodash"
 
-import HTMLArea from "../HTMLArea"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Accordion from "react-bootstrap/Accordion"
 import Container from "react-bootstrap/Container"
+import { Link } from "@mui/material"
+
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
+import HTMLArea from "../HTMLArea"
 import StaticIcon from "./staticIcon"
 import Spacer from "./spacer"
 import { ParkAccessFromAdvisories } from "../../components/park/parkAccessStatus"
-import { countsList } from "../../utils/constants";
+import { countsList } from "../../utils/constants"
+
+export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesList }) => {
+  const [isShow, setIsShow] = useState(false)
+
+  useEffect(() => {
+    setIsShow(open)
+  }, [open])
+
+  return (
+    <Accordion
+      className="park-details mb-2"
+      activeKey={isShow ? eventKey : ''}
+    >
+      <Accordion.Toggle
+        as={Container}
+        aria-controls={subArea.parkSubArea}
+        eventKey={eventKey}
+        onClick={() => setIsShow(!isShow)}
+      >
+        <div className="d-flex justify-content-between p-3 accordion-toggle">
+          <div className="d-flex justify-content-left align-items-center pl-2">
+            <StaticIcon name={subArea.typeIcon} size={48} />
+            <HtmlContent className="pl-3 accordion-header">
+              {subArea.parkSubArea}
+            </HtmlContent>
+          </div>
+          <div className="d-flex align-items-center expand-icon">
+            <i
+              className={
+                (isShow ? "open " : "close ") +
+                "fa fa-angle-down mx-3"
+              }
+            ></i>
+          </div>
+        </div>
+      </Accordion.Toggle>
+      <Accordion.Collapse eventKey={eventKey}>
+        <div className="p-4">
+          <dl>
+            {subArea.facilityName && (
+              <>
+                <dt>Facility type</dt>
+                <dd>{subArea.facilityName}</dd>
+              </>
+            )}
+            {countsList
+              .filter(count => isShown(count, subArea)).length > 0 && (
+                <>
+                  <dt className="mt-3">Number of campsites</dt>
+                  <dd>
+                    <ul className="pl-3">
+                      {countsList
+                        .filter(count => isShown(count, subArea))
+                        .map((count, index) => (
+                          <li key={index}>
+                            {count.display}:{" "}
+                            {subArea[count.countVar]}
+                          </li>
+                        ))}
+                    </ul>
+                  </dd>
+                </>
+              )}
+            {subArea.serviceDates.length > 0 && (
+              <>
+                <dt className="mt-3">
+                  {subArea?.facilityType?.isCamping || false
+                    ? 'Main camping season dates'
+                    : 'Main operating season dates'}
+                </dt>
+                <dd>
+                  <ul className="pl-3">
+                    {subArea.serviceDates.map((dateRange, index) =>
+                      <li key={index}>{dateRange}</li>
+                    )}
+                  </ul>
+                </dd>
+              </>
+            )}
+            {subArea.resDates.length > 0 && (
+              <>
+                <dt className="mt-3">Reservable dates</dt>
+                <dd>
+                  <ul className="pl-3">
+                    {subArea.resDates.map((dateRange, index) =>
+                      <li key={index}>{dateRange}</li>
+                    )}
+                  </ul>
+                </dd>
+              </>
+            )}
+            {subArea.offSeasonDates.length > 0 && (
+              <>
+                <dt className="mt-3">Off season dates</dt>
+                <dd>
+                  <ul className="pl-3">
+                    {subArea.offSeasonDates.map((dateRange, index) =>
+                      <li key={index}>{dateRange}</li>
+                    )}
+                  </ul>
+                </dd>
+              </>
+            )}
+            {subAreasNotesList
+              .filter(note => subArea[note.noteVar])
+              .map((note, index) => (
+                <div key={index}>
+                  {note.display && (
+                    <dt className="mt-3">
+                      {note.display}
+                    </dt>
+                  )}
+                  <dd>
+                    <HTMLArea isVisible={true}>
+                      {subArea[note.noteVar]}
+                    </HTMLArea>
+                  </dd>
+                </div>
+              ))}
+          </dl>
+        </div>
+      </Accordion.Collapse>
+    </Accordion>
+  )
+}
 
 export default function ParkDates({ data }) {
   const dataCopy = JSON.parse(JSON.stringify(data)) // deep copy
@@ -26,12 +153,7 @@ export default function ParkDates({ data }) {
   const parkStatusText = parkStatus.parkStatusText
   const parkStatusIcon = parkStatus.parkStatusIcon
 
-  // Accordion expanded state
-  const [expanded, setExpanded] = useState(Array(subAreas.length).fill(false))
-  const toggleExpand = index => {
-    expanded[index] = !expanded[index]
-    setExpanded([...expanded])
-  }
+  const [open, setOpen] = useState(false)
 
   // Operations record is required, even if subarea records are present
   // If no operations record, show "not available" message
@@ -223,14 +345,10 @@ export default function ParkDates({ data }) {
                   All dates are subject to change without notice.
                 </div>
                 {parkDates && (
-                  <>
-                    <h4 className="my-3">Open to public access {parkDates}</h4>
-                  </>
+                  <h4 className="my-3">Open to public access {parkDates}</h4>
                 )}
                 {!parkDates && (
-                  <>
-                    <h4 className="my-3">Operating dates are not yet available</h4>
-                  </>
+                  <h4 className="my-3">Operating dates are not yet available</h4>
                 )}
                 <h4 className="my-3">
                   Current status:
@@ -253,127 +371,27 @@ export default function ParkDates({ data }) {
                   </div>
                 )}
               </div>
+              <Link
+                role="link"
+                tabIndex="0"
+                underline="hover"
+                onClick={() => setOpen(!open)}
+                className="expand-link expand-icon"
+              >
+                {open ? "Collapse all" : "Expand all"}
+                <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
+              </Link>
               {subAreas
                 .filter(subArea => subArea.isActive)
                 .map((subArea, index) => (
-                  <Accordion
-                    key={"parkActivity" + index}
-                    className="park-details mb-2"
-                  >
-                    <Accordion.Toggle
-                      as={Container}
-                      aria-controls={subArea.parkSubArea}
-                      eventKey="0"
-                      id={index}
-                      onClick={() => toggleExpand(index)}
-                    >
-                      <div className="d-flex justify-content-between p-3 accordion-toggle">
-                        <div className="d-flex justify-content-left align-items-center pl-2">
-                          <StaticIcon name={subArea.typeIcon} size={48} />
-                          <HtmlContent className="pl-3 accordion-header">
-                            {subArea.parkSubArea}
-                          </HtmlContent>
-                        </div>
-                        <div className="d-flex align-items-center expand-icon">
-                          <i
-                            className={
-                              (expanded[index] ? "open " : "close ") +
-                              "fa fa-angle-down mx-3"
-                            }
-                          ></i>
-                        </div>
-                      </div>
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="0">
-                      <div className="p-4">
-                        <dl>
-                          {subArea.facilityName && (
-                            <>
-                              <dt>Facility type</dt>
-                              <dd>{subArea.facilityName}</dd>
-                            </>
-                          )}
-
-                          {countsList
-                            .filter(count => isShown(count, subArea)).length > 0
-                            && (<>
-                              <dt className="mt-3">Number of campsites</dt>
-                              <dd><ul className="pl-3">
-                                {countsList
-                                  .filter(count => isShown(count, subArea))
-                                  .map((count, index) => (
-                                    <li key={index}>
-                                      {count.display}:{" "}
-                                      {subArea[count.countVar]}
-                                    </li>
-                                  ))}
-                              </ul></dd>
-                            </>
-                            )}
-
-                          {subArea.serviceDates.length > 0 && (
-                            <>
-                              <dt className="mt-3">
-                                {subArea?.facilityType?.isCamping || false
-                                  ? 'Main camping season dates'
-                                  : 'Main operating season dates'}
-                              </dt>
-                              <dd>
-                                <ul className="pl-3">
-                                  {subArea.serviceDates.map((dateRange, index) =>
-                                    <li key={index}>{dateRange}</li>
-                                  )}
-                                </ul>
-                              </dd>
-                            </>
-                          )}
-
-                          {subArea.resDates.length > 0 && (
-                            <>
-                              <dt className="mt-3">Reservable dates</dt>
-                              <dd>
-                                <ul className="pl-3">
-                                  {subArea.resDates.map((dateRange, index) =>
-                                    <li key={index}>{dateRange}</li>
-                                  )}
-                                </ul>
-                              </dd>
-                            </>
-                          )}
-
-                          {subArea.offSeasonDates.length > 0 && (
-                            <>
-                              <dt className="mt-3">Off season dates</dt>
-                              <dd>
-                                <ul className="pl-3">
-                                  {subArea.offSeasonDates.map((dateRange, index) =>
-                                    <li key={index}>{dateRange}</li>
-                                  )}
-                                </ul>
-                              </dd>
-                            </>
-                          )}
-
-                          {subAreasNotesList
-                            .filter(note => subArea[note.noteVar])
-                            .map((note, index) => (
-                              <div key={index}>
-                                {note.display && (
-                                  <dt className="mt-3">
-                                    {note.display}
-                                  </dt>
-                                )}
-                                <dd>
-                                  <HTMLArea isVisible={true}>
-                                    {subArea[note.noteVar]}
-                                  </HTMLArea>
-                                </dd>
-                              </div>
-                            ))}
-                        </dl>
-                      </div>
-                    </Accordion.Collapse>
-                  </Accordion>
+                  <AccordionList
+                    key={index}
+                    eventKey={index.toString()}
+                    subArea={subArea}
+                    open={open}
+                    isShown={isShown}
+                    subAreasNotesList={subAreasNotesList}
+                  />
                 ))}
             </>
           )}
