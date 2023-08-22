@@ -2,54 +2,113 @@ import React, { useState, useEffect, useCallback } from "react"
 import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 import {
-  TextField,
+  Link,
   Dialog,
   DialogContent,
   DialogActions,
   Button,
   Collapse,
-  Divider,
-  Chip,
-  InputAdornment,
   FormGroup,
   FormControlLabel,
   Checkbox,
-  Link,
 } from "@mui/material"
-import SearchIcon from "@mui/icons-material/Search"
-import CancelIcon from "@mui/icons-material/Cancel"
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import ExpandMore from "@mui/icons-material/ExpandMore"
 
 import "../../styles/search.scss"
 
+const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
+  return (
+    <FormGroup className="filter-options-container">
+      {filterItems.map(item =>
+        <FormControlLabel
+          key={item.label}
+          control={
+            <Checkbox
+              checked={
+                selectedFilterItems.filter(
+                  selectedFilterItem =>
+                    selectedFilterItem.value === item.value
+                ).length === 1 ? true : false
+              }
+              onChange={event => {
+                handleFilterCheck(item, event)
+              }}
+              name={item.label}
+            />
+          }
+          label={`${item.label} (${item.count})`}
+          className={
+            selectedFilterItems.filter(
+              selectedFilterItem =>
+                selectedFilterItem.value === item.value
+            ).length === 1 ? "text-light-blue no-wrap" : "no-wrap"
+          }
+          disabled={item.count === 0}
+        />
+      )}
+    </FormGroup>
+  )
+}
 
 const SearchFilter = ({
   data: {
+    totalResults,
+    regionItems,
+    campingFacilityItems,
     activityItems,
     facilityItems,
     openFilter,
     setOpenFilter,
+    selectedRegions,
+    setSelectedRegions,
+    selectedCampingFacilities,
+    setSelectedCampingFacilities,
     selectedActivities,
     setSelectedActivities,
     selectedFacilities,
     setSelectedFacilities,
     searchText,
-    setSearchText,
     setCurrentPage,
   },
 
 }) => {
-  const [showFilters, setShowFilter] = useState([false, false])
-  const [filterSelections, setFilterSelections] = useState([])
+  const [showFilters, setShowFilter] = useState([false, false, false, false, false])
+  const [expandAll, setExpandAll] = useState(false)
+
+  const handleExpandAll = () => {
+    const newShowFilters = Array.from(showFilters, (filter) => !expandAll)
+    setShowFilter(newShowFilters)
+    setExpandAll(!expandAll)
+  }
 
   const handleCloseFilter = () => {
     setOpenFilter(false)
   }
 
-  //TODO: Quick Search/Popular
-
+  // event handlers
+  const handleRegionCheck = (region, event) => {
+    setCurrentPage(1)
+    if (event.target.checked) {
+      setSelectedRegions([...selectedRegions, region])
+    } else {
+      setSelectedRegions([
+        ...selectedRegions.filter(r => r.value !== region.value),
+      ])
+    }
+  }
+  const handleCampingFacilityCheck = (camping, event) => {
+    setCurrentPage(1)
+    if (event.target.checked) {
+      setSelectedCampingFacilities([...selectedCampingFacilities, camping])
+    } else {
+      setSelectedCampingFacilities([
+        ...selectedCampingFacilities.filter(c => c.value !== camping.value),
+      ])
+    }
+  }
   const handleActivityCheck = (activity, event) => {
+    setCurrentPage(1)
     if (event.target.checked) {
       setSelectedActivities([...selectedActivities, activity])
     } else {
@@ -57,10 +116,9 @@ const SearchFilter = ({
         ...selectedActivities.filter(a => a.value !== activity.value),
       ])
     }
-    setCurrentPage(1);
   }
-
   const handleFacilityCheck = (facility, event) => {
+    setCurrentPage(1)
     if (event.target.checked) {
       setSelectedFacilities([...selectedFacilities, facility])
     } else {
@@ -68,7 +126,6 @@ const SearchFilter = ({
         ...selectedFacilities.filter(f => f.value !== facility.value),
       ])
     }
-    setCurrentPage(1);
   }
 
   const handleShowFilterClick = index => {
@@ -77,48 +134,33 @@ const SearchFilter = ({
     setShowFilter([...tempShowFilter])
   }
 
-  const handleActivityDelete = chipToDelete => {
-    setSelectedActivities(chips =>
-      chips.filter(chip => chip.value !== chipToDelete.value)
-    )
-    setCurrentPage(1);
-  }
-
-  const handleFacilityDelete = chipToDelete => {
-    setSelectedFacilities(chips =>
-      chips.filter(chip => chip.value !== chipToDelete.value)
-    )
-    setCurrentPage(1);
-  }
-
-  const handleFilterDelete = chipToDelete => () => {
-    if (chipToDelete.type === "activity") {
-      handleActivityDelete(chipToDelete)
-    } else if (chipToDelete.type === "facility") {
-      handleFacilityDelete(chipToDelete)
-    }
-    setCurrentPage(1);
-  }
-
   const setFilters = useCallback(() => {
     const filters = []
+    selectedRegions.forEach(r => {
+      filters.push({ ...r, type: "region" })
+    })
+    selectedCampingFacilities.forEach(c => {
+      filters.push({ ...c, type: "campingFacility" })
+    })
     selectedActivities.forEach(a => {
       filters.push({ ...a, type: "activity" })
     })
     selectedFacilities.forEach(f => {
       filters.push({ ...f, type: "facility" })
     })
-
-    filters.sort((a, b) => a.label.localeCompare(b.label))
-    setFilterSelections([...filters])
   }, [
+    selectedRegions,
+    selectedCampingFacilities,
     selectedActivities,
-    selectedFacilities,])
+    selectedFacilities,
+  ])
 
   const searchParkFilter = () => {
     setCurrentPage(1);
     navigate("/find-a-park", {
       state: {
+        selectedRegions,
+        selectedCampingFacilities,
         selectedActivities,
         selectedFacilities,
         searchText,
@@ -129,7 +171,14 @@ const SearchFilter = ({
 
   useEffect(() => {
     setFilters()
-  }, [searchText, selectedActivities, selectedFacilities, setFilters])
+  }, [
+    searchText,
+    selectedRegions,
+    selectedCampingFacilities,
+    selectedActivities,
+    selectedFacilities,
+    setFilters
+  ])
 
   return (
     <div>
@@ -137,300 +186,258 @@ const SearchFilter = ({
         open={openFilter}
         onClose={handleCloseFilter}
         aria-labelledby="park-filter-dialog"
-        className="park-filter-dialog"
+        className="park-filter-dialog d-block d-lg-none"
         scroll="paper"
       >
         <DialogContent className="park-filter-dialog-content">
-          <div className="container p10">
-            <div className="row no-gutters">
-              <div className="col-lg-7 col-md-12 col-sm-12">
-                <TextField
-                  margin="dense"
-                  id="park-filter-text"
-                  className="park-filter-text"
-                  placeholder="Search by name or location"
-                  fullWidth
-                  variant="outlined"
-                  value={searchText}
-                  onChange={event => {
-                    setSearchText(event.target.value)
-                  }}
-                  onKeyPress={ev => {
-                    if (ev.key === "Enter") {
-                      searchParkFilter()
-                      ev.preventDefault()
-                    }
-                  }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon className="search-icon" />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </div>
-              <div className="col-lg-3 col-md-8 col-sm-8 mt8 d-none d-lg-block">
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    searchParkFilter()
-                  }}
-                  className="bcgov-button bcgov-normal-blue"
-                >
-                  Search
-                </Button>
-              </div>
-              <div className="col-lg-2 col-md-8 col-sm-4 mt8 p10l d-none d-lg-block">
-                <Button
-                  variant="outlined"
-                  onClick={() => {
-                    handleCloseFilter()
-                  }}
-                  className="bcgov-button bcgov-normal-transparent"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </div>
-            <div className="row p20t no-gutters">
-              <div className="col-lg-4 col-md-12 col-sm-12 pb20">
-                <div className="park-filter-options">
-                  <div className="park-filter-option-label p20 flex-display">
-                    <div className="text-black">
-                      <b>Selected Filters</b>
+          <h1>Filter</h1>
+          <Link
+            className="expand-link"
+            onClick={handleExpandAll}
+            tabIndex="0"
+            role="link"
+            underline="hover"
+          >
+            {expandAll ? "Collapse" : "Expand"} all
+            {expandAll ? (
+              <ExpandLess fontSize="small" />
+            ) : (
+              <ExpandMore fontSize="small" />
+            )}
+          </Link>
+          <div className="row p20t">
+            <div className="col-12">
+              <div className="park-filter-options">
+                <div className="park-filter-option-label flex-display">
+                  <div
+                    className="flex-display pointer full-width p-3"
+                    onClick={() => {
+                      handleShowFilterClick(0)
+                    }}
+                    tabIndex="0"
+                    role="button"
+                    onKeyPress={() => {
+                      handleShowFilterClick(0)
+                    }}
+                  >
+                    <div className="park-select-label">
+                      Popular
                     </div>
-                    <Link
-                      className="ml-auto pointer"
-                      onClick={() => {
-                        setSelectedActivities([])
-                        setSelectedFacilities([])
-                        //TODO: Quick Search/Popular
-                        //setQuickSearch([])
-                      }}
-                      tabIndex="0"
-                      underline="hover">
-                      Reset all
-                    </Link>
-                  </div>
-                  <Divider className="grey-divider" />
-                  {filterSelections.length === 0 && (
-                    <div className="no-filters-text">
-                      No search filters selected
-                    </div>
-                  )}
-                  <div>
-                    {filterSelections.length > 0 && (
-                      <>
-                        <div className="row p10t">
-                          <div className="col-12">
-                            {filterSelections.map((f, index) => (
-                              <div
-                                key={index}
-                                className="park-filter-chip-list-container"
-                              >
-                                <Chip
-                                  key={f.label}
-                                  onDelete={handleFilterDelete(f)}
-                                  variant="outlined"
-                                  className="park-filter-chip-list"
-                                  deleteIcon={
-                                    <CancelIcon
-                                      fontSize="large"
-                                      className="close-icon-blue"
-                                    />
-                                  }
-                                />
-                                {f.label}
-                                {filterSelections.length - 1 > index && (
-                                  <Divider className="grey-divider-light" />
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </>
+                    {showFilters[0] ? (
+                      <ExpandLess fontSize="large" className="mtm5" />
+                    ) : (
+                      <ExpandMore fontSize="large" className="mtm5" />
                     )}
                   </div>
                 </div>
+                <Collapse
+                  in={showFilters[0]}
+                  timeout="auto"
+                  unmountOnExit
+                  className="p-3"
+                >
+                  <Filter
+                    filterItems={campingFacilityItems.filter(
+                      c => c.value === 36
+                    )}
+                    selectedFilterItems={selectedCampingFacilities}
+                    handleFilterCheck={handleCampingFacilityCheck}
+                  />
+                  <Filter
+                    filterItems={activityItems.filter(
+                      a => a.value === 1 || a.value === 8 || a.value === 9
+                    )}
+                    selectedFilterItems={selectedActivities}
+                    handleFilterCheck={handleActivityCheck}
+                  />
+                  <Filter
+                    filterItems={facilityItems.filter(f => f.value === 6)}
+                    selectedFilterItems={selectedFacilities}
+                    handleFilterCheck={handleFacilityCheck}
+                  />
+                  <Filter
+                    filterItems={activityItems.filter(
+                      a => a.value === 3
+                    )}
+                    selectedFilterItems={selectedActivities}
+                    handleFilterCheck={handleActivityCheck}
+                  />
+                  <Filter
+                    filterItems={campingFacilityItems.filter(
+                      c => c.value === 1
+                    )}
+                    selectedFilterItems={selectedCampingFacilities}
+                    handleFilterCheck={handleCampingFacilityCheck}
+                  />
+                </Collapse>
               </div>
-              <div className="p20l-filter col-lg-8 col-md-12 col-sm-12">
-
-                {/* TODO: Quick Search/Popular */}
-
-                <div className="row p20t">
-                  <div className="col-12">
-                    <div className="park-filter-options">
-
-                      <div className="park-filter-option-label flex-display">
-                        <div
-                          className="flex-display pointer full-width p20"
-                          onClick={() => {
-                            handleShowFilterClick(0)
-                          }}
-                          tabIndex="0"
-                          role="button"
-                          onKeyPress={() => {
-                            handleShowFilterClick(0)
-                          }}
-                        >
-                          {showFilters[0] ? (
-                            <ExpandLess fontSize="large" className="mtm5" />
-                          ) : (
-                            <ExpandMore fontSize="large" className="mtm5" />
-                          )}
-                          <div className="p10l park-select-label">
-                            Activities
-                          </div>
-                        </div>
-                        <Link
-                          className="ml-auto pointer p20"
-                          onClick={() => {
-                            setSelectedActivities([])
-                          }}
-                          tabIndex="0"
-                          href="#"
-                          underline="hover">
-                          Reset
-                        </Link>
-                      </div>
-
-                      <Divider className="yellow-divider" />
-                      <Collapse
-                        in={showFilters[0]}
-                        timeout="auto"
-                        unmountOnExit
-                        className="p20"
-                      >
-                        <div className="row container">
-                          <div className="col-lg-6 col-md-12 col-sm-12">
-                            {activityItems.map((a, index) => (
-                              <FormGroup
-                                className="pr30 filter-options-container"
-                                key={index}
-                              >
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      checked={
-                                        selectedActivities.filter(
-                                          act => act.value === a.value
-                                        ).length === 1
-                                          ? true
-                                          : false
-                                      }
-                                      onChange={event => {
-                                        handleActivityCheck(a, event)
-                                      }}
-                                      name={a.label}
-                                    />
-                                  }
-                                  label={a.label}
-                                  className={
-                                    selectedActivities.filter(
-                                      act => act.value === a.value
-                                    ).length === 1
-                                      ? "text-light-blue no-wrap"
-                                      : "no-wrap"
-                                  }
-                                />
-                              </FormGroup>
-                            ))}
-                          </div>
-
-                        </div>
-                      </Collapse>
+            </div>
+          </div>
+          <div className="row p20t">
+            <div className="col-12">
+              <div className="park-filter-options">
+                <div className="park-filter-option-label flex-display">
+                  <div
+                    className="flex-display pointer full-width p-3"
+                    onClick={() => {
+                      handleShowFilterClick(1)
+                    }}
+                    tabIndex="0"
+                    role="button"
+                    onKeyPress={() => {
+                      handleShowFilterClick(1)
+                    }}
+                  >
+                    <div className="park-select-label">
+                      Region
                     </div>
+                    {showFilters[1] ? (
+                      <ExpandLess fontSize="large" className="mtm5" />
+                    ) : (
+                      <ExpandMore fontSize="large" className="mtm5" />
+                    )}
                   </div>
                 </div>
-                <div className="row p20t">
-                  <div className="col-12">
-                    <div className="park-filter-options">
-                      <div className="park-filter-option-label flex-display">
-                        <div
-                          className="flex-display pointer full-width p20"
-                          onClick={() => {
-                            handleShowFilterClick(1)
-                          }}
-                          tabIndex="0"
-                          role="button"
-                          onKeyPress={() => {
-                            handleShowFilterClick(1)
-                          }}
-                        >
-                          {showFilters[1] ? (
-                            <ExpandLess fontSize="large" className="mtm5" />
-                          ) : (
-                            <ExpandMore fontSize="large" className="mtm5" />
-                          )}
-                          <div className="p10l park-select-label">
-                            Facilities
-                          </div>
-                        </div>
-                        <Link
-                          className="ml-auto pointer p20"
-                          onClick={() => {
-                            setSelectedFacilities([])
-                          }}
-                          tabIndex="0"
-                          href="#"
-                          underline="hover">
-                          Reset
-                        </Link>
-                      </div>
+                <Collapse
+                  in={showFilters[1]}
+                  timeout="auto"
+                  unmountOnExit
+                  className="p-3"
+                >
+                  <Filter
+                    filterItems={regionItems}
+                    selectedFilterItems={selectedRegions}
+                    handleFilterCheck={handleRegionCheck}
+                  />
+                </Collapse>
+              </div>
+            </div>
+          </div>
 
-                      <Divider className="yellow-divider" />
-                      <Collapse
-                        in={showFilters[1]}
-                        timeout="auto"
-                        unmountOnExit
-                        className="p20"
-                      >
-                        <div className="row container">
-                          <div className="col-lg-6 col-md-12 col-sm-12">
-                            {facilityItems.map((f, index) => (
-                              <FormGroup
-                                className="pr30 filter-options-container"
-                                key={index}
-                              >
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      checked={
-                                        selectedFacilities.filter(
-                                          fa => fa.value === f.value
-                                        ).length === 1
-                                          ? true
-                                          : false
-                                      }
-                                      onChange={event => {
-                                        handleFacilityCheck(f, event)
-                                      }}
-                                      name={f.label}
-                                    />
-                                  }
-                                  label={f.label}
-                                  className={
-                                    selectedFacilities.filter(
-                                      fa => fa.value === f.value
-                                    ).length === 1
-                                      ? "text-light-blue no-wrap"
-                                      : "no-wrap"
-                                  }
-                                />
-                              </FormGroup>
-                            ))}
-                          </div>
-                        </div>
-                      </Collapse>
+          <div className="row p20t">
+            <div className="col-12">
+              <div className="park-filter-options">
+                <div className="park-filter-option-label flex-display">
+                  <div
+                    className="flex-display pointer full-width p-3"
+                    onClick={() => {
+                      handleShowFilterClick(2)
+                    }}
+                    tabIndex="0"
+                    role="button"
+                    onKeyPress={() => {
+                      handleShowFilterClick(2)
+                    }}
+                  >
+                    <div className="park-select-label">
+                      Camping
                     </div>
+                    {showFilters[2] ? (
+                      <ExpandLess fontSize="large" className="mtm5" />
+                    ) : (
+                      <ExpandMore fontSize="large" className="mtm5" />
+                    )}
                   </div>
                 </div>
+                <Collapse
+                  in={showFilters[2]}
+                  timeout="auto"
+                  unmountOnExit
+                  className="p-3"
+                >
+                  <Filter
+                    filterItems={campingFacilityItems}
+                    selectedFilterItems={selectedCampingFacilities}
+                    handleFilterCheck={handleCampingFacilityCheck}
+                  />
+                </Collapse>
+              </div>
+            </div>
+          </div>
+
+          <div className="row p20t">
+            <div className="col-12">
+              <div className="park-filter-options">
+
+                <div className="park-filter-option-label flex-display">
+                  <div
+                    className="flex-display pointer full-width p-3"
+                    onClick={() => {
+                      handleShowFilterClick(3)
+                    }}
+                    tabIndex="0"
+                    role="button"
+                    onKeyPress={() => {
+                      handleShowFilterClick(3)
+                    }}
+                  >
+                    <div className="park-select-label">
+                      Activities
+                    </div>
+                    {showFilters[3] ? (
+                      <ExpandLess fontSize="large" className="mtm5" />
+                    ) : (
+                      <ExpandMore fontSize="large" className="mtm5" />
+                    )}
+                  </div>
+                </div>
+                <Collapse
+                  in={showFilters[3]}
+                  timeout="auto"
+                  unmountOnExit
+                  className="p-3"
+                >
+                  <Filter
+                    filterItems={activityItems}
+                    selectedFilterItems={selectedActivities}
+                    handleFilterCheck={handleActivityCheck}
+                  />
+                </Collapse>
+              </div>
+            </div>
+          </div>
+          <div className="row p20t">
+            <div className="col-12">
+              <div className="park-filter-options">
+                <div className="park-filter-option-label flex-display">
+                  <div
+                    className="flex-display pointer full-width p-3"
+                    onClick={() => {
+                      handleShowFilterClick(4)
+                    }}
+                    tabIndex="0"
+                    role="button"
+                    onKeyPress={() => {
+                      handleShowFilterClick(4)
+                    }}
+                  >
+                    <div className="park-select-label">
+                      Facilities
+                    </div>
+                    {showFilters[4] ? (
+                      <ExpandLess fontSize="large" className="mtm5" />
+                    ) : (
+                      <ExpandMore fontSize="large" className="mtm5" />
+                    )}
+                  </div>
+                </div>
+                <Collapse
+                  in={showFilters[4]}
+                  timeout="auto"
+                  unmountOnExit
+                  className="p-3"
+                >
+                  <Filter
+                    filterItems={facilityItems}
+                    selectedFilterItems={selectedFacilities}
+                    handleFilterCheck={handleFacilityCheck}
+                  />
+                </Collapse>
               </div>
             </div>
           </div>
         </DialogContent>
-        <DialogActions className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none p20 container">
+        <DialogActions className="park-filter-dialog-action d-block">
           <div className="row">
             <div className="col-12 mt8">
               <Button
@@ -440,7 +447,7 @@ const SearchFilter = ({
                 }}
                 className="bcgov-button bcgov-normal-blue"
               >
-                Search
+                Show {totalResults} {totalResults > 1 ? "parks" : "park"}
               </Button>
             </div>
             <div className="col-12 mt8">
@@ -449,7 +456,7 @@ const SearchFilter = ({
                 onClick={() => {
                   handleCloseFilter()
                 }}
-                className="bcgov-button bcgov-normal-transparent"
+                className="bcgov-button bcgov-normal-white"
               >
                 Cancel
               </Button>
@@ -463,19 +470,22 @@ const SearchFilter = ({
 
 SearchFilter.propTypes = {
   data: PropTypes.shape({
+    totalResults: PropTypes.number.isRequired,
+    regionItems: PropTypes.array.isRequired,
+    campingFacilityItems: PropTypes.array.isRequired,
     activityItems: PropTypes.array.isRequired,
     facilityItems: PropTypes.array.isRequired,
-    quickSearchFilters: PropTypes.array.isRequired,
     openFilter: PropTypes.bool.isRequired,
     setOpenFilter: PropTypes.func.isRequired,
-    quickSearch: PropTypes.object.isRequired,
+    selectedRegions: PropTypes.array.isRequired,
+    setSelectedRegions: PropTypes.func.isRequired,
+    selectedCampingFacilities: PropTypes.array.isRequired,
+    setSelectedCampingFacilities: PropTypes.func.isRequired,
     selectedActivities: PropTypes.array.isRequired,
     setSelectedActivities: PropTypes.func.isRequired,
     selectedFacilities: PropTypes.array.isRequired,
     setSelectedFacilities: PropTypes.func.isRequired,
-    setQuickSearch: PropTypes.func.isRequired,
     searchText: PropTypes.string.isRequired,
-    setSearchText: PropTypes.func.isRequired,
     setCurrentPage: PropTypes.func.isRequired
   }),
 }
