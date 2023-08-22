@@ -22,31 +22,31 @@ export default function ParkHeader({
     <>
       {/* eventually get rid of these zeroed out padding/margin once their properly nested bootstrap structure */}
       <div className="pt-4" id="park-header-container">
-        <h1>{parkName}</h1>
+        <h1 className="pt-2">{parkName}</h1>
 
         <div className="row mx-0 pt-2">
           {!isLoadingAdvisories && !advisoryLoadError && (
-            <div class="col-12 col-lg-6 d-flex justify-content-around flex-column flex-lg-row order-lg-1 card-parent">
-              <div class="row d-flex align-items-center mb-3 mb-lg-0 card-child">
+            <div className="col-12 col-lg-6 d-flex justify-content-around flex-column flex-lg-row order-lg-1 card-parent">
+              <div className="row d-flex align-items-center mb-3 mb-lg-0 card-child">
                 <ParkAccessStatus advisories={advisories} slug={slug} />
               </div>
               {hasCampfireBan &&
-                <div class="row d-flex align-items-center mb-3 mb-lg-0 card-child">
+                <div className="row d-flex align-items-center mb-3 mb-lg-0 card-child">
                   <CampfireBan />
                 </div>
               }
-              <div class="row d-flex align-items-center mb-3 mb-lg-0 card-child">
+              <div className="row d-flex align-items-center mb-3 mb-lg-0 card-child">
                 <Advisory advisories={advisories} />
               </div>
             </div>
           )}
-          <div class="col-12 col-lg-6 button-parent pb-4 pb-lg-0">
-            <div class="row">
+          <div className="col-12 col-lg-6 button-parent pb-4 pb-lg-0">
+            <div className="row">
             {hasReservations && (
-                <a href={reservationsURL} class="btn btn-lg btn-warning mr-lg-3">Book camping</a>
+                <a href={reservationsURL} className="btn btn-lg btn-warning mr-lg-3">Book camping</a>
               )}
               {hasDayUsePass && (
-                <a href={dayUsePassURL} class="btn btn-lg btn-primary">Get a day-use pass</a>
+                <a href={dayUsePassURL} className="btn btn-lg btn-primary">Get a day-use pass</a>
               )}
             </div>
           </div>

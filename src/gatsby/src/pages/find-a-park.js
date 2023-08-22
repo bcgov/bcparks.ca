@@ -557,7 +557,7 @@ export default function FindAPark({ location, data }) {
             </div>
             <div className="row no-gutters">
               <div className="col-lg-3 col-md-12 col-sm-12">
-                <div className="search-results-quick-filter m15t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+                <div className="search-results-quick-filter m15t d-none d-lg-block">
                   <div className="row no-gutters"></div>
                 </div>
               </div>
@@ -659,12 +659,12 @@ export default function FindAPark({ location, data }) {
             <div className="row no-gutters">
               <div className="col-lg-3 col-md-12 col-sm-12">
                 <div className="search-results-quick-filter">
-                  <div className="row no-gutters d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+                  <div className="row no-gutters d-none d-lg-block">
                     <div className="col-12 mb32">
                       <h3 className="subtitle">Search</h3>
                       <div className="search-results-quick-filter">
                         <div className="row no-gutters">
-                          <div className="col-12 park-search-text-box-container d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+                          <div className="col-12 park-search-text-box-container d-none d-lg-block">
                             <TextField
                               id="park-search-text"
                               variant="outlined"
@@ -693,7 +693,7 @@ export default function FindAPark({ location, data }) {
                               }}
                             />
                           </div>
-                          <div className="m15t col-12 park-search-text-box-container d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+                          <div className="m15t col-12 park-search-text-box-container d-none d-lg-block">
                             <Button
                               fullWidth
                               className="bcgov-normal-blue mobile-search-element-height h50p"
@@ -966,7 +966,7 @@ export default function FindAPark({ location, data }) {
                         <>
                           {searchResults.map((r, index) => (
                             <div key={index} className="m20t">
-                              <Card className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+                              <Card className="d-none d-lg-block">
                                 <CardContent className="park-card park-card-desktop">
                                   <div className="row search-result-card no-gutters">
                                     <div className="col-12">

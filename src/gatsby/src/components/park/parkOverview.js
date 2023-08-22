@@ -25,8 +25,6 @@ export default function ParkOverview({ data: parkOverview, type }) {
 
   const isLong = height > 259
 
-  console.log(height);
-
   const $ = cheerio.load(parkOverview);
   $('a').attr('tabindex', '-1')
   const collapsedParkOverview = $.html()

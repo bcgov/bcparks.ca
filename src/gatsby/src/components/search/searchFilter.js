@@ -170,7 +170,7 @@ const SearchFilter = ({
                   }}
                 />
               </div>
-              <div className="col-lg-3 col-md-8 col-sm-8 mt8 d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+              <div className="col-lg-3 col-md-8 col-sm-8 mt8 d-none d-lg-block">
                 <Button
                   variant="contained"
                   onClick={() => {
@@ -181,7 +181,7 @@ const SearchFilter = ({
                   Search
                 </Button>
               </div>
-              <div className="col-lg-2 col-md-8 col-sm-4 mt8 p10l d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+              <div className="col-lg-2 col-md-8 col-sm-4 mt8 p10l d-none d-lg-block">
                 <Button
                   variant="outlined"
                   onClick={() => {
