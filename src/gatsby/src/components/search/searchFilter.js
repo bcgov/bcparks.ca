@@ -86,7 +86,9 @@ const SearchFilter = ({
     setOpenFilter(false)
   }
 
+  // event handlers
   const handleRegionCheck = (region, event) => {
+    setCurrentPage(1)
     if (event.target.checked) {
       setSelectedRegions([...selectedRegions, region])
     } else {
@@ -94,10 +96,9 @@ const SearchFilter = ({
         ...selectedRegions.filter(r => r.value !== region.value),
       ])
     }
-    setCurrentPage(1);
   }
-
   const handleCampingFacilityCheck = (camping, event) => {
+    setCurrentPage(1)
     if (event.target.checked) {
       setSelectedCampingFacilities([...selectedCampingFacilities, camping])
     } else {
@@ -105,10 +106,9 @@ const SearchFilter = ({
         ...selectedCampingFacilities.filter(c => c.value !== camping.value),
       ])
     }
-    setCurrentPage(1);
   }
-
   const handleActivityCheck = (activity, event) => {
+    setCurrentPage(1)
     if (event.target.checked) {
       setSelectedActivities([...selectedActivities, activity])
     } else {
@@ -116,10 +116,9 @@ const SearchFilter = ({
         ...selectedActivities.filter(a => a.value !== activity.value),
       ])
     }
-    setCurrentPage(1);
   }
-
   const handleFacilityCheck = (facility, event) => {
+    setCurrentPage(1)
     if (event.target.checked) {
       setSelectedFacilities([...selectedFacilities, facility])
     } else {
@@ -127,7 +126,6 @@ const SearchFilter = ({
         ...selectedFacilities.filter(f => f.value !== facility.value),
       ])
     }
-    setCurrentPage(1);
   }
 
   const handleShowFilterClick = index => {
