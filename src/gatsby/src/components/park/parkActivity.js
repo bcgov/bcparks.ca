@@ -137,16 +137,14 @@ export default function ParkActivity({ data }) {
             {open ? "Collapse all" : "Expand all"}
             <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
           </Link>
-          <div>
-            {activityData.map((activity, index) => (
-              <AccordionList
-                key={index}
-                eventKey={index.toString()}
-                activity={activity}
-                open={open}
-              />
-            ))}
-          </div>
+          {activityData.map((activity, index) => (
+            <AccordionList
+              key={index}
+              eventKey={index.toString()}
+              activity={activity}
+              open={open}
+            />
+          ))}
         </Col>
       </Row>
       <Spacer />

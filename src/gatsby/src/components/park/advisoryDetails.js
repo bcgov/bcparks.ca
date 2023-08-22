@@ -2,10 +2,10 @@ import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { parseJSON, format } from "date-fns"
 import Accordion from "react-bootstrap/Accordion"
-import Button from "react-bootstrap/Button"
 import Col from "react-bootstrap/Col"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
+import { Link } from "@mui/material"
 
 import Heading from "./heading"
 import HtmlContent from "./htmlContent"
@@ -85,17 +85,6 @@ export default function AdvisoryDetails({ advisories }) {
         <Col>
           <div className="d-flex justify-content-between align-items-flex-start">
             <Heading>{`Advisories (${advisories.length})`}</Heading>
-            {advisories.length > 1 && (
-              <Button
-                className="btn btn-outline-primary expand-button"
-                onClick={() => {
-                  expandAll(!allExpanded)
-                  setAllExpanded(!allExpanded)
-                }}
-              >
-                {allExpanded ? "[collapse all]" : "[expand all]"}
-              </Button>
-            )}
           </div>
         </Col>
       </Row>
@@ -109,6 +98,19 @@ export default function AdvisoryDetails({ advisories }) {
         )}
         {advisories.length > 0 && (
           <Col>
+            <Link
+              role="link"
+              tabIndex="0"
+              underline="hover"
+              onClick={() => {
+                expandAll(!allExpanded)
+                setAllExpanded(!allExpanded)
+              }}
+              className="expand-link expand-icon"
+            >
+              {allExpanded ? "Collapse all" : "Expand all"}
+              <i className={`fa fa-angle-down ${allExpanded ? "open" : "close"}`}></i>
+            </Link>
             {advisoriesWithFormatting.map((advisory, index) => (
               <Accordion
                 // React bootstrap accordions are designed to only have 1 item open at a time.
@@ -157,18 +159,18 @@ export default function AdvisoryDetails({ advisories }) {
                         </HtmlContent>
                       )}
                       {advisory.links?.map(({ title, url, id }) => (
-                          <p>
-                            <a
-                              href={url}
-                              style={{display: 'block'}}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              key={id}
-                            >
-                              {title}
-                            </a>
-                          </p>
-                        ))}
+                        <p>
+                          <a
+                            href={url}
+                            style={{ display: 'block' }}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            key={id}
+                          >
+                            {title}
+                          </a>
+                        </p>
+                      ))}
                     </>
                     {advisory.isEffectiveDateDisplayed &&
                       advisory.formattedEffectiveDate && (
@@ -189,7 +191,7 @@ export default function AdvisoryDetails({ advisories }) {
                       )}
                     {advisory.isUpdatedDateDisplayed &&
                       advisory.formattedUpdatedDate && (
-                        <p>Updated {advisory.formattedUpdatedDate}</p>                        
+                        <p>Updated {advisory.formattedUpdatedDate}</p>
                       )}
                     <br />
                     <hr></hr>
