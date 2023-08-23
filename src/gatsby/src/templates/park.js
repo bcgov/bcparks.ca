@@ -163,7 +163,7 @@ export default function ParkTemplate({ data }) {
   }, [apiBaseUrl, park.orcs])
 
   useEffect(() => {
-    if (!isLoadingProtectedArea && !isLoadingAdvisories) {
+    if (window.location.hash && !isLoadingProtectedArea && !isLoadingAdvisories) {
       const href = window.location.href
       window.location.replace(href)
     }
