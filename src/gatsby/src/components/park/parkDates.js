@@ -13,6 +13,7 @@ import StaticIcon from "./staticIcon"
 import Spacer from "./spacer"
 import { ParkAccessFromAdvisories } from "../../components/park/parkAccessStatus"
 import { countsList } from "../../utils/constants"
+import { Link } from "@mui/material"
 
 export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesList }) => {
   const [isShow, setIsShow] = useState(false)
