@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 import {
@@ -8,50 +8,14 @@ import {
   DialogActions,
   Button,
   Collapse,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
 } from "@mui/material"
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import ExpandMore from "@mui/icons-material/ExpandMore"
+import Filter from "./filter"
 
 import "../../styles/search.scss"
 
-const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
-  return (
-    <FormGroup className="filter-options-container">
-      {filterItems.map(item =>
-        <FormControlLabel
-          key={item.label}
-          control={
-            <Checkbox
-              checked={
-                selectedFilterItems.filter(
-                  selectedFilterItem =>
-                    selectedFilterItem.value === item.value
-                ).length === 1 ? true : false
-              }
-              onChange={event => {
-                handleFilterCheck(item, event)
-              }}
-              name={item.label}
-            />
-          }
-          label={`${item.label} (${item.count})`}
-          className={
-            selectedFilterItems.filter(
-              selectedFilterItem =>
-                selectedFilterItem.value === item.value
-            ).length === 1 ? "text-light-blue no-wrap" : "no-wrap"
-          }
-          disabled={item.count === 0}
-        />
-      )}
-    </FormGroup>
-  )
-}
-
-const SearchFilter = ({
+const MobileFilters = ({
   data: {
     totalResults,
     regionItems,
@@ -61,15 +25,16 @@ const SearchFilter = ({
     openFilter,
     setOpenFilter,
     selectedRegions,
-    setSelectedRegions,
     selectedCampingFacilities,
-    setSelectedCampingFacilities,
     selectedActivities,
-    setSelectedActivities,
     selectedFacilities,
-    setSelectedFacilities,
     searchText,
     setCurrentPage,
+    setFilters,
+    handleRegionCheck,
+    handleCampingFacilityCheck,
+    handleActivityCheck,
+    handleFacilityCheck
   },
 
 }) => {
@@ -87,73 +52,11 @@ const SearchFilter = ({
   }
 
   // event handlers
-  const handleRegionCheck = (region, event) => {
-    setCurrentPage(1)
-    if (event.target.checked) {
-      setSelectedRegions([...selectedRegions, region])
-    } else {
-      setSelectedRegions([
-        ...selectedRegions.filter(r => r.value !== region.value),
-      ])
-    }
-  }
-  const handleCampingFacilityCheck = (camping, event) => {
-    setCurrentPage(1)
-    if (event.target.checked) {
-      setSelectedCampingFacilities([...selectedCampingFacilities, camping])
-    } else {
-      setSelectedCampingFacilities([
-        ...selectedCampingFacilities.filter(c => c.value !== camping.value),
-      ])
-    }
-  }
-  const handleActivityCheck = (activity, event) => {
-    setCurrentPage(1)
-    if (event.target.checked) {
-      setSelectedActivities([...selectedActivities, activity])
-    } else {
-      setSelectedActivities([
-        ...selectedActivities.filter(a => a.value !== activity.value),
-      ])
-    }
-  }
-  const handleFacilityCheck = (facility, event) => {
-    setCurrentPage(1)
-    if (event.target.checked) {
-      setSelectedFacilities([...selectedFacilities, facility])
-    } else {
-      setSelectedFacilities([
-        ...selectedFacilities.filter(f => f.value !== facility.value),
-      ])
-    }
-  }
-
   const handleShowFilterClick = index => {
     const tempShowFilter = showFilters
     tempShowFilter[index] = !tempShowFilter[index]
     setShowFilter([...tempShowFilter])
   }
-
-  const setFilters = useCallback(() => {
-    const filters = []
-    selectedRegions.forEach(r => {
-      filters.push({ ...r, type: "region" })
-    })
-    selectedCampingFacilities.forEach(c => {
-      filters.push({ ...c, type: "campingFacility" })
-    })
-    selectedActivities.forEach(a => {
-      filters.push({ ...a, type: "activity" })
-    })
-    selectedFacilities.forEach(f => {
-      filters.push({ ...f, type: "facility" })
-    })
-  }, [
-    selectedRegions,
-    selectedCampingFacilities,
-    selectedActivities,
-    selectedFacilities,
-  ])
 
   const searchParkFilter = () => {
     setCurrentPage(1);
@@ -468,7 +371,7 @@ const SearchFilter = ({
   );
 }
 
-SearchFilter.propTypes = {
+MobileFilters.propTypes = {
   data: PropTypes.shape({
     totalResults: PropTypes.number.isRequired,
     regionItems: PropTypes.array.isRequired,
@@ -478,16 +381,17 @@ SearchFilter.propTypes = {
     openFilter: PropTypes.bool.isRequired,
     setOpenFilter: PropTypes.func.isRequired,
     selectedRegions: PropTypes.array.isRequired,
-    setSelectedRegions: PropTypes.func.isRequired,
     selectedCampingFacilities: PropTypes.array.isRequired,
-    setSelectedCampingFacilities: PropTypes.func.isRequired,
     selectedActivities: PropTypes.array.isRequired,
-    setSelectedActivities: PropTypes.func.isRequired,
     selectedFacilities: PropTypes.array.isRequired,
-    setSelectedFacilities: PropTypes.func.isRequired,
     searchText: PropTypes.string.isRequired,
-    setCurrentPage: PropTypes.func.isRequired
+    setCurrentPage: PropTypes.func.isRequired,
+    setFilters: PropTypes.func.isRequired,
+    handleRegionCheck: PropTypes.func.isRequired,
+    handleCampingFacilityCheck: PropTypes.func.isRequired,
+    handleActivityCheck: PropTypes.func.isRequired,
+    handleFacilityCheck: PropTypes.func.isRequired
   }),
 }
 
-export default SearchFilter
+export default MobileFilters
