@@ -175,13 +175,10 @@ const DesktopFilters = ({
 
 DesktopFilters.propTypes = {
   data: PropTypes.shape({
-    totalResults: PropTypes.number.isRequired,
     regionItems: PropTypes.array.isRequired,
     campingFacilityItems: PropTypes.array.isRequired,
     activityItems: PropTypes.array.isRequired,
     facilityItems: PropTypes.array.isRequired,
-    openFilter: PropTypes.bool.isRequired,
-    setOpenFilter: PropTypes.func.isRequired,
     selectedRegions: PropTypes.array.isRequired,
     selectedCampingFacilities: PropTypes.array.isRequired,
     selectedActivities: PropTypes.array.isRequired,

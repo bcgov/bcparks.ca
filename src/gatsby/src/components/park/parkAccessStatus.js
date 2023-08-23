@@ -54,11 +54,11 @@ function ParkAccessFromAdvisories(advisories) {
         text: advisory.accessStatus.groupLabel,
       })
     }
-    if (advisory.access_status_id) {
+    if (advisory.accessStatusId) {
       // advisory is coming from find-a-park
-      // get accessStatus based on access_status_id
+      // get accessStatus based on accessStatusId
       let thisStatus = accessStatusList.find(status => {
-        return status.strapi_id === advisory.access_status_id
+        return status.strapi_id === advisory.accessStatusId
       })
       if (!thisStatus) {
         break
