@@ -97,6 +97,7 @@ export default function FindAPark({ location, data }) {
   const [regionsCount, setRegionsCount] = useState([])
   const [activitiesCount, setActivitiesCount] = useState([])
   const [facilitiesCount, setFacilitiesCount] = useState([])
+  const [campingsCount, setCampingsCount] = useState([])
 
   const sortedActivityItems = orderBy(
     data.allStrapiActivityType.nodes,
@@ -115,13 +116,13 @@ export default function FindAPark({ location, data }) {
     }
   })
   const campingFacilityItems = data.allStrapiFacilityType.nodes
-    .filter(facility => facility.isCamping).map(facility => {
-      const filterCount = facilitiesCount?.find(
-        facilityCount => facilityCount.key === facility.facilityNumber
+    .filter(facility => facility.isCamping).map(camping => {
+      const filterCount = campingsCount?.find(
+        campingCount => campingCount.key === camping.facilityNumber
       )?.doc_count || 0
       return {
-        label: facility.facilityName,
-        value: facility.facilityNumber,
+        label: camping.facilityName,
+        value: camping.facilityNumber,
         count: filterCount
       }
     })
@@ -341,7 +342,7 @@ export default function FindAPark({ location, data }) {
       params.regions = selectedRegions.map(region => region.value)
     }
     if (selectedCampingFacilities.length > 0) {
-      params.facilities = selectedCampingFacilities.map(camping => camping.value)
+      params.campings = selectedCampingFacilities.map(camping => camping.value)
     }
     if (selectedActivities.length > 0) {
       params.activities = selectedActivities.map(activity => activity.value)
@@ -363,6 +364,7 @@ export default function FindAPark({ location, data }) {
     (params.regions && params.regions.length) ||
     (params.activities && params.activities.length) ||
     (params.facilities && params.facilities.length) ||
+    (params.campings && params.campings.length) ||
     params.typeCode
 
   useEffect(() => {
@@ -379,6 +381,7 @@ export default function FindAPark({ location, data }) {
         setRegionsCount(resultResponse.data.meta.aggregations.regions.buckets)
         setActivitiesCount(resultResponse.data.meta.aggregations.activities.buckets)
         setFacilitiesCount(resultResponse.data.meta.aggregations.facilities.buckets)
+        setCampingsCount(resultResponse.data.meta.aggregations.campings.buckets)
       } else {
         setSearchResults([])
         setTotalResults(0)
