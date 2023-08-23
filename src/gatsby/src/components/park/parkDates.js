@@ -371,16 +371,18 @@ export default function ParkDates({ data }) {
                   </div>
                 )}
               </div>
-              <Link
-                role="link"
-                tabIndex="0"
-                underline="hover"
-                onClick={() => setOpen(!open)}
-                className="expand-link expand-icon"
-              >
-                {open ? "Collapse all" : "Expand all"}
-                <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
-              </Link>
+              {subAreas.length > 1 && (
+                <Link
+                  role="link"
+                  tabIndex="0"
+                  underline="hover"
+                  onClick={() => setOpen(!open)}
+                  className="expand-link expand-icon"
+                >
+                  {open ? "Collapse all" : "Expand all"}
+                  <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
+                </Link>
+              )}
               {subAreas
                 .filter(subArea => subArea.isActive)
                 .map((subArea, index) => (

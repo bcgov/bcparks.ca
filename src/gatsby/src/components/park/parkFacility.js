@@ -127,16 +127,18 @@ export default function ParkFacility({ data }) {
       </Row>
       <Row>
         <Col>
-          <Link
-            role="link"
-            tabIndex="0"
-            underline="hover"
-            onClick={() => setOpen(!open)}
-            className="expand-link expand-icon"
-          >
-            {open ? "Collapse all" : "Expand all"}
-            <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
-          </Link>
+          {facilityData.length > 1 && (
+            <Link
+              role="link"
+              tabIndex="0"
+              underline="hover"
+              onClick={() => setOpen(!open)}
+              className="expand-link expand-icon"
+            >
+              {open ? "Collapse all" : "Expand all"}
+              <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
+            </Link>
+          )}
           {facilityData.map((facility, index) => (
             <AccordionList
               key={index}
