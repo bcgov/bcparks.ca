@@ -50,31 +50,46 @@ exports.createElasticPark = async function (park, photos) {
 
   // convert parkFacilities
   park.hasCamping = false;
+  park.campingFacilities = [];
   if (park?.parkFacilities?.length) {
     const parkFacilities = park.parkFacilities
       .filter(f => {
-        return f.isActive && f.facilityType?.isActive;
+        return f.isActive && f.facilityType?.isActive && !f.facilityType.isCamping;
       })
       .map(f => {
-        const { isActive, ...rest } = f.facilityType;
-        park.hasCamping = park.hasCamping || rest.isCamping;
-        return { code: rest.facilityCode, num: rest.facilityNumber };
+        return {
+          code: f.facilityType.facilityCode,
+          num: f.facilityType.facilityNumber
+        };
       });
+
+    park.campingFacilities = park.parkFacilities
+      .filter(f => {
+        return f.isActive && f.facilityType?.isActive && f.facilityType.isCamping;
+      })
+      .map(f => {
+        park.hasCamping = true;
+        return {
+          code: f.facilityType.facilityCode,
+          num: f.facilityType.facilityNumber
+        };
+      });
+
     park.parkFacilities = parkFacilities;
   }
 
   // convert parkActivities
   if (park?.parkActivities?.length) {
-    const parkActivities = park.parkActivities
-      .filter(f => {
-        return f.isActive && f.activityType?.isActive;
+    park.parkActivities = park.parkActivities
+      .filter(a => {
+        return a.isActive && a.activityType?.isActive;
       })
-      .map(f => {
-        const { isActive, ...rest } = f.activityType;
-        park.hasCamping = park.hasCamping || rest.isCamping;
-        return { code: rest.activityCode, num: rest.activityNumber };
+      .map(a => {
+        return {
+          code: a.activityType.activityCode,
+          num: a.activityType.activityNumber
+        };
       });
-    park.parkActivities = parkActivities;
   }
 
   // convert publicAdvisories
