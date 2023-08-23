@@ -10,6 +10,7 @@ import {
   LinearProgress,
   Breadcrumbs,
   Button,
+  IconButton
 } from "@mui/material"
 import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from "@mui/icons-material/Search"
@@ -454,42 +455,6 @@ export default function FindAPark({ location, data }) {
               </div>
             </div>
             <div className="row no-gutters">
-              <div className="col-lg-3 col-md-12 col-sm-12">
-                <div className="search-results-quick-filter m15t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
-                  <div className="row no-gutters"></div>
-                </div>
-              </div>
-              <div className="col-lg-9 col-md-12 col-sm-12" ref={searchRef}>
-                <div className="search-results-list container">
-                  <div className="row d-flex">
-                    <div className="col-12 d-none d-lg-block">
-                      {filterSelections.length > 0 && filterSelections.map((f, index) => (
-                        <Chip
-                          key={index}
-                          label={f.label}
-                          onClick={handleFilterDelete(f)}
-                          onDelete={handleFilterDelete(f)}
-                          variant="outlined"
-                          className="park-filter-chip font-weight-bold"
-                          deleteIcon={<CancelIcon className="close-icon" />}
-                        />
-                      ))}
-                      {filterSelections.length > 0 && (
-                        <Link
-                          className="clear-filter-link"
-                          onClick={handleClearFilter}
-                          tabIndex="0"
-                          role="link"
-                        >
-                          Clear filters
-                        </Link>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row no-gutters">
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-quick-filter d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none mt-3">
                   <div className="row no-gutters">
@@ -500,10 +465,11 @@ export default function FindAPark({ location, data }) {
                         placeholder="Park name"
                         className="park-search-text-box h50p"
                         value={inputText}
+                        focused={isLoading}
                         onChange={event => {
                           setInputText(event.target.value)
                         }}
-                        onKeyPress={ev => {
+                        onKeyDown={ev => {
                           if (ev.key === "Enter") {
                             setSearchText(inputText)
                             ev.preventDefault()
@@ -517,11 +483,19 @@ export default function FindAPark({ location, data }) {
                           ),
                           endAdornment: (
                             <InputAdornment position="end">
-                              <ClearIcon
-                                className="clear-icon"
+                              <IconButton
+                                className="clear-icon-button"
                                 onClick={() => setInputText("")}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") {
+                                    e.preventDefault()
+                                    setInputText("")
+                                  }
+                                }}
                                 sx={{ visibility: inputText ? "visible" : "hidden" }}
-                              />
+                                aria-label="Clear search">
+                                <ClearIcon className="clear-icon" />
+                              </IconButton>
                             </InputAdornment>
                           ),
                           inputProps: {
@@ -625,10 +599,11 @@ export default function FindAPark({ location, data }) {
                               placeholder="Park name"
                               className="park-search-text-box h50p"
                               value={inputText}
+                              focused={isLoading}
                               onChange={event => {
                                 setInputText(event.target.value)
                               }}
-                              onKeyPress={ev => {
+                              onKeyDown={ev => {
                                 if (ev.key === "Enter") {
                                   setSearchText(inputText)
                                   setCurrentPage(1)
@@ -643,11 +618,19 @@ export default function FindAPark({ location, data }) {
                                 ),
                                 endAdornment: (
                                   <InputAdornment position="end">
-                                    <ClearIcon
-                                      className="clear-icon"
+                                    <IconButton
+                                      className="clear-icon-button"
                                       onClick={() => setInputText("")}
+                                      onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                          e.preventDefault()
+                                          setInputText("")
+                                        }
+                                      }}
                                       sx={{ visibility: inputText ? "visible" : "hidden" }}
-                                    />
+                                      aria-label="Clear search">
+                                      <ClearIcon className="clear-icon" />
+                                    </IconButton>
                                   </InputAdornment>
                                 ),
                                 inputProps: {
@@ -713,7 +696,34 @@ export default function FindAPark({ location, data }) {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-9 col-md-12 col-sm-12">
+              <div className="col-lg-9 col-md-12 col-sm-12" ref={searchRef}>
+                <div className="search-results-list container">
+                  <div className="row d-flex">
+                    <div className="col-12 d-none d-lg-block">
+                      {filterSelections.length > 0 && filterSelections.map((f, index) => (
+                        <Chip
+                          key={index}
+                          label={f.label}
+                          onClick={handleFilterDelete(f)}
+                          onDelete={handleFilterDelete(f)}
+                          variant="outlined"
+                          className="park-filter-chip font-weight-bold"
+                          deleteIcon={<CancelIcon className="close-icon" />}
+                        />
+                      ))}
+                      {filterSelections.length > 0 && (
+                        <Link
+                          className="clear-filter-link"
+                          onClick={handleClearFilter}
+                          tabIndex="0"
+                          role="link"
+                        >
+                          Clear filters
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                </div>
                 <div className="search-results-list container">
                   {isLoading && (
                     <div className="container mt-5">

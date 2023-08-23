@@ -388,7 +388,7 @@ h3.subtitle {
   }
 
   .park-filter-chip {
-    margin: 2px 3px !important;
+    margin: 0 4px 8px 0 !important;
     min-width: 130px;
 
     .MuiChip-label {
@@ -1078,12 +1078,6 @@ div[class$="-singleValue"] {
     color: #00468b !important;
   }
 
-  .clear-icon {
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
   .close-icon {
     color: $colorWhite !important;
   }
@@ -1094,6 +1088,15 @@ div[class$="-singleValue"] {
 
   .close-icon {
     width: 17px !important;
+  }
+
+  .clear-icon-button {
+    height: auto !important;
+    .clear-icon {
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 
   .large-pagination {
@@ -1168,6 +1171,11 @@ div[class$="-singleValue"] {
     }
     p {
       margin-bottom: 0;
+    }
+    a.map-link {
+      svg.MuiSvgIcon-root {
+        font-size: 1rem !important;
+      }
     }
   }
 }
