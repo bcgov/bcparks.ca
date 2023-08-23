@@ -53,9 +53,9 @@ exports[`Footer renders correctly 1`] = `
                       className="mt-2"
                     >
                       <a
-                        href="/commercial-use/"
+                        href="/park-use-permits/"
                       >
-                        Commercial use
+                        Park use permits
                       </a>
                     </div>
                   </li>
@@ -64,7 +64,7 @@ exports[`Footer renders correctly 1`] = `
                       className="mt-2"
                     >
                       <a
-                        href="/commercial-use/filming-in-parks/"
+                        href="/park-use-permits/filming-in-parks/"
                       >
                         Filming in parks
                       </a>
@@ -75,7 +75,7 @@ exports[`Footer renders correctly 1`] = `
                       className="mt-2"
                     >
                       <a
-                        href="/commercial-use/travel-trade/"
+                        href="/park-use-permits/travel-trade/"
                       >
                         Travel trade
                       </a>
