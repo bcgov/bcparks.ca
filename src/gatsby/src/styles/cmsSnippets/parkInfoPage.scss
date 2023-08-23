@@ -35,7 +35,8 @@
   }
 }
 
-.MuiTypography-root.expand-link {
+.MuiTypography-root.expand-link.expand-icon {
+  position: relative;
   display: inline-block;
   cursor: pointer;
   margin-bottom: 16px;
@@ -44,16 +45,13 @@
     color: $colorBlue;
   }
   i {
+    position: absolute;
+    top: 0;
+    right: -24px;
     float: none;
     color: rgba(0, 0, 0, 0.54);
     opacity: 1;
     margin-left: 8px;
-    &.open {
-      font-size: 1rem;
-    }
-    &.close {
-      font-size: 1rem;
-    }
   }
 }
 
