@@ -86,7 +86,13 @@ const MegaMenu = ({ content, menuMode }) => {
         let selObj = getSelectionObj(section, {}) // track the selected item at this level and above
         setSelections(selObj)
       } else {
-        menuReset()
+        if (selections[2]) {
+          const newSelection = {...selections}
+          delete newSelection[2]
+          setSelections(newSelection)
+        } else {
+          menuReset()
+        }
       }
     }
   }
