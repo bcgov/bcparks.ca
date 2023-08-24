@@ -203,7 +203,7 @@
 .yarl__slide_description_container {
   bottom: 10%;
   padding: 0;
-  @media (min-width: $smBreakpoint) {
+  @media (min-width: $mdBreakpoint) {
     bottom: 16px;
   }
   .yarl__slide_description {

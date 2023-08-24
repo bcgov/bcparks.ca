@@ -127,16 +127,18 @@ export default function ParkActivity({ data }) {
       </Row>
       <Row>
         <Col>
-          <Link
-            role="link"
-            tabIndex="0"
-            underline="hover"
-            onClick={() => setOpen(!open)}
-            className="expand-link expand-icon"
-          >
-            {open ? "Collapse all" : "Expand all"}
-            <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
-          </Link>
+          {activityData.length > 1 && (
+            <Link
+              role="link"
+              tabIndex="0"
+              underline="hover"
+              onClick={() => setOpen(!open)}
+              className="expand-link expand-icon"
+            >
+              {open ? "Collapse all" : "Expand all"}
+              <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
+            </Link>
+          )}
           {activityData.map((activity, index) => (
             <AccordionList
               key={index}

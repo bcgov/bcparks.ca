@@ -97,19 +97,21 @@ export default function AdvisoryDetails({ advisories }) {
         )}
         {advisories.length > 0 && (
           <Col>
-            <Link
-              role="link"
-              tabIndex="0"
-              underline="hover"
-              onClick={() => {
-                expandAll(!allExpanded)
-                setAllExpanded(!allExpanded)
-              }}
-              className="expand-link expand-icon"
-            >
-              {allExpanded ? "Collapse all" : "Expand all"}
-              <i className={`fa fa-angle-down ${allExpanded ? "open" : "close"}`}></i>
-            </Link>
+            {advisories.length > 1 && (
+              <Link
+                role="link"
+                tabIndex="0"
+                underline="hover"
+                onClick={() => {
+                  expandAll(!allExpanded)
+                  setAllExpanded(!allExpanded)
+                }}
+                className="expand-link expand-icon"
+              >
+                {allExpanded ? "Collapse all" : "Expand all"}
+                <i className={`fa fa-angle-down ${allExpanded ? "open" : "close"}`}></i>
+              </Link>
+            )}
             {advisoriesWithFormatting.map((advisory, index) => (
               <Accordion
                 // React bootstrap accordions are designed to only have 1 item open at a time.
@@ -158,13 +160,12 @@ export default function AdvisoryDetails({ advisories }) {
                         </HtmlContent>
                       )}
                       {advisory.links?.map(({ title, url, id }) => (
-                        <p>
+                        <p key={id}>
                           <a
                             href={url}
                             style={{ display: 'block' }}
                             target="_blank"
                             rel="noopener noreferrer"
-                            key={id}
                           >
                             {title}
                           </a>

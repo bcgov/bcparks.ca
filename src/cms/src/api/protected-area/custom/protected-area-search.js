@@ -101,6 +101,7 @@ function parseSearchFilters(query) {
 
   let activityNumbers = [];
   let facilityNumbers = [];
+  let campingNumbers = [];
   let regionNumbers = [];
 
   if (query.activities) {
@@ -130,6 +131,15 @@ function parseSearchFilters(query) {
       regionNumbers = [parseInt(query.regions, 10)];
     }
   }
+  if (query.campings) {
+    if (typeof query.campings === "object") {
+      campingNumbers = query.campings.map((camping) =>
+        parseInt(camping, 10)
+      );
+    } else {
+      campingNumbers = [parseInt(query.campings, 10)];
+    }
+  }
 
   return {
     searchText,
@@ -139,7 +149,8 @@ function parseSearchFilters(query) {
     marineProtectedArea,
     activityNumbers,
     facilityNumbers,
-    regionNumbers
+    regionNumbers,
+    campingNumbers
   };
 }
 
@@ -155,6 +166,7 @@ function parseSearchOffset(query) {
 
 function cleanUpAggregations(aggs) {
   aggs.regions = aggs.all_regions.filtered.regions;
+  aggs.campings = aggs.all_regions.filtered.campings;
   delete aggs.all_regions;
   return aggs;
 }

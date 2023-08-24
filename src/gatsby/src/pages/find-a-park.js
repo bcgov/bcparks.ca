@@ -3,9 +3,6 @@ import { graphql, Link as GatsbyLink } from "gatsby"
 import axios from "axios"
 import { orderBy } from "lodash"
 import {
-  Checkbox,
-  FormGroup,
-  FormControlLabel,
   Chip,
   TextField,
   InputAdornment,
@@ -13,12 +10,11 @@ import {
   LinearProgress,
   Breadcrumbs,
   Button,
+  IconButton
 } from "@mui/material"
 import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from "@mui/icons-material/Search"
 import CancelIcon from "@mui/icons-material/Cancel"
-import ExpandLess from "@mui/icons-material/ExpandLess"
-import ExpandMore from "@mui/icons-material/ExpandMore"
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 
 import Footer from "../components/footer"
@@ -26,7 +22,8 @@ import Header from "../components/header"
 import Seo from "../components/seo"
 import ScrollToTop from "../components/scrollToTop"
 import NoSearchResults from "../components/search/noSearchResults"
-import SearchFilter from "../components/search/searchFilter"
+import MobileFilters from "../components/search/mobileFilters"
+import DesktopFilters from "../components/search/desktopFilters"
 import ParkLinksModal from "../components/search/parkLinksModal"
 
 import "../styles/search.scss"
@@ -95,50 +92,13 @@ export const query = graphql`
   }
 `
 
-const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
-  return (
-    <FormGroup className="filter-options-container">
-      {filterItems.map(item =>
-        <FormControlLabel
-          key={item.label}
-          control={
-            <Checkbox
-              checked={
-                selectedFilterItems.filter(
-                  selectedFilterItem =>
-                    selectedFilterItem.value === item.value
-                ).length === 1 ? true : false
-              }
-              onChange={event => {
-                handleFilterCheck(item, event)
-              }}
-              name={item.label}
-            />
-          }
-          label={`${item.label} (${item.count})`}
-          className={
-            selectedFilterItems.filter(
-              selectedFilterItem =>
-                selectedFilterItem.value === item.value
-            ).length === 1 ? "text-light-blue no-wrap" : "no-wrap"
-          }
-          disabled={item.count === 0}
-        />
-      )}
-    </FormGroup>
-  )
-}
-
 export default function FindAPark({ location, data }) {
   const menuContent = data?.allStrapiMenu?.nodes || []
 
   const [regionsCount, setRegionsCount] = useState([])
   const [activitiesCount, setActivitiesCount] = useState([])
   const [facilitiesCount, setFacilitiesCount] = useState([])
-  const [showMoreActivities, setMoreActivites] = useState(true)
-  const [showMoreFacilities, setMoreFacilities] = useState(true)
-  const [truncatedActivityFilterLength, setTruncatedActivityFilterLength] = useState(5)
-  const [truncatedFacilityFilterLength, setTruncatedFacilityFilterLength] = useState(5)
+  const [campingsCount, setCampingsCount] = useState([])
 
   const sortedActivityItems = orderBy(
     data.allStrapiActivityType.nodes,
@@ -157,13 +117,13 @@ export default function FindAPark({ location, data }) {
     }
   })
   const campingFacilityItems = data.allStrapiFacilityType.nodes
-    .filter(facility => facility.isCamping).map(facility => {
-      const filterCount = facilitiesCount?.find(
-        facilityCount => facilityCount.key === facility.facilityNumber
+    .filter(facility => facility.isCamping).map(camping => {
+      const filterCount = campingsCount?.find(
+        campingCount => campingCount.key === camping.facilityNumber
       )?.doc_count || 0
       return {
-        label: facility.facilityName,
-        value: facility.facilityNumber,
+        label: camping.facilityName,
+        value: camping.facilityNumber,
         count: filterCount
       }
     })
@@ -383,7 +343,7 @@ export default function FindAPark({ location, data }) {
       params.regions = selectedRegions.map(region => region.value)
     }
     if (selectedCampingFacilities.length > 0) {
-      params.facilities = selectedCampingFacilities.map(camping => camping.value)
+      params.campings = selectedCampingFacilities.map(camping => camping.value)
     }
     if (selectedActivities.length > 0) {
       params.activities = selectedActivities.map(activity => activity.value)
@@ -405,6 +365,7 @@ export default function FindAPark({ location, data }) {
     (params.regions && params.regions.length) ||
     (params.activities && params.activities.length) ||
     (params.facilities && params.facilities.length) ||
+    (params.campings && params.campings.length) ||
     params.typeCode
 
   useEffect(() => {
@@ -421,6 +382,7 @@ export default function FindAPark({ location, data }) {
         setRegionsCount(resultResponse.data.meta.aggregations.regions.buckets)
         setActivitiesCount(resultResponse.data.meta.aggregations.activities.buckets)
         setFacilitiesCount(resultResponse.data.meta.aggregations.facilities.buckets)
+        setCampingsCount(resultResponse.data.meta.aggregations.campings.buckets)
       } else {
         setSearchResults([])
         setTotalResults(0)
@@ -458,19 +420,6 @@ export default function FindAPark({ location, data }) {
     currentPage
   ])
 
-  useEffect(() => {
-    if (showMoreActivities) {
-      setTruncatedActivityFilterLength(5)
-    } else {
-      setTruncatedActivityFilterLength(activityItems.length)
-    }
-    if (showMoreFacilities) {
-      setTruncatedFacilityFilterLength(5)
-    } else {
-      setTruncatedFacilityFilterLength(facilityItems.length)
-    }
-  }, [showMoreActivities, activityItems.length, showMoreFacilities, facilityItems.length])
-
   return (
     <>
       <Header content={menuContent} />
@@ -506,42 +455,6 @@ export default function FindAPark({ location, data }) {
               </div>
             </div>
             <div className="row no-gutters">
-              <div className="col-lg-3 col-md-12 col-sm-12">
-                <div className="search-results-quick-filter m15t d-none d-lg-block">
-                  <div className="row no-gutters"></div>
-                </div>
-              </div>
-              <div className="col-lg-9 col-md-12 col-sm-12" ref={searchRef}>
-                <div className="search-results-list container">
-                  <div className="row d-flex">
-                    <div className="col-12 d-none d-lg-block">
-                      {filterSelections.length > 0 && filterSelections.map((f, index) => (
-                        <Chip
-                          key={index}
-                          label={f.label}
-                          onClick={handleFilterDelete(f)}
-                          onDelete={handleFilterDelete(f)}
-                          variant="outlined"
-                          className="park-filter-chip font-weight-bold"
-                          deleteIcon={<CancelIcon className="close-icon" />}
-                        />
-                      ))}
-                      {filterSelections.length > 0 && (
-                        <Link
-                          className="clear-filter-link"
-                          onClick={handleClearFilter}
-                          tabIndex="0"
-                          role="link"
-                        >
-                          Clear filters
-                        </Link>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row no-gutters">
               <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-quick-filter d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none mt-3">
                   <div className="row no-gutters">
@@ -552,10 +465,11 @@ export default function FindAPark({ location, data }) {
                         placeholder="Park name"
                         className="park-search-text-box h50p"
                         value={inputText}
+                        focused={isLoading}
                         onChange={event => {
                           setInputText(event.target.value)
                         }}
-                        onKeyPress={ev => {
+                        onKeyDown={ev => {
                           if (ev.key === "Enter") {
                             setSearchText(inputText)
                             ev.preventDefault()
@@ -569,11 +483,19 @@ export default function FindAPark({ location, data }) {
                           ),
                           endAdornment: (
                             <InputAdornment position="end">
-                              <ClearIcon
-                                className="clear-icon"
+                              <IconButton
+                                className="clear-icon-button"
                                 onClick={() => setInputText("")}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") {
+                                    e.preventDefault()
+                                    setInputText("")
+                                  }
+                                }}
                                 sx={{ visibility: inputText ? "visible" : "hidden" }}
-                              />
+                                aria-label="Clear search">
+                                <ClearIcon className="clear-icon" />
+                              </IconButton>
                             </InputAdornment>
                           ),
                           inputProps: {
@@ -677,10 +599,11 @@ export default function FindAPark({ location, data }) {
                               placeholder="Park name"
                               className="park-search-text-box h50p"
                               value={inputText}
+                              focused={isLoading}
                               onChange={event => {
                                 setInputText(event.target.value)
                               }}
-                              onKeyPress={ev => {
+                              onKeyDown={ev => {
                                 if (ev.key === "Enter") {
                                   setSearchText(inputText)
                                   setCurrentPage(1)
@@ -695,11 +618,19 @@ export default function FindAPark({ location, data }) {
                                 ),
                                 endAdornment: (
                                   <InputAdornment position="end">
-                                    <ClearIcon
-                                      className="clear-icon"
+                                    <IconButton
+                                      className="clear-icon-button"
                                       onClick={() => setInputText("")}
+                                      onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                          e.preventDefault()
+                                          setInputText("")
+                                        }
+                                      }}
                                       sx={{ visibility: inputText ? "visible" : "hidden" }}
-                                    />
+                                      aria-label="Clear search">
+                                      <ClearIcon className="clear-icon" />
+                                    </IconButton>
                                   </InputAdornment>
                                 ),
                                 inputProps: {
@@ -722,118 +653,29 @@ export default function FindAPark({ location, data }) {
                     </div>
                     <div className="col-12 pr-3 mb32">
                       <h3 className="subtitle mb-2">Filter</h3>
-                      <div className="">
-                        <fieldset className="mb-2">
-                          <legend className="filter-heading p10t">Popular</legend>
-                          <Filter
-                            filterItems={campingFacilityItems.filter(
-                              c => c.value === 36
-                            )}
-                            selectedFilterItems={selectedCampingFacilities}
-                            handleFilterCheck={handleCampingFacilityCheck}
-                          />
-                          <Filter
-                            filterItems={activityItems.filter(
-                              a => a.value === 1 || a.value === 8 || a.value === 9
-                            )}
-                            selectedFilterItems={selectedActivities}
-                            handleFilterCheck={handleActivityCheck}
-                          />
-                          <Filter
-                            filterItems={facilityItems.filter(f => f.value === 6)}
-                            selectedFilterItems={selectedFacilities}
-                            handleFilterCheck={handleFacilityCheck}
-                          />
-                          <Filter
-                            filterItems={activityItems.filter(
-                              a => a.value === 3
-                            )}
-                            selectedFilterItems={selectedActivities}
-                            handleFilterCheck={handleActivityCheck}
-                          />
-                          <Filter
-                            filterItems={campingFacilityItems.filter(
-                              c => c.value === 1
-                            )}
-                            selectedFilterItems={selectedCampingFacilities}
-                            handleFilterCheck={handleCampingFacilityCheck}
-                          />
-                        </fieldset>
-                        <fieldset className="mb-2">
-                          <legend className="filter-heading">Regions</legend>
-                          <Filter
-                            filterItems={regionItems}
-                            selectedFilterItems={selectedRegions}
-                            handleFilterCheck={handleRegionCheck}
-                          />
-                        </fieldset>
-                        <fieldset className="mb-2">
-                          <legend className="filter-heading">Camping</legend>
-                          <Filter
-                            filterItems={campingFacilityItems}
-                            selectedFilterItems={selectedCampingFacilities}
-                            handleFilterCheck={handleCampingFacilityCheck}
-                          />
-                        </fieldset>
-                        <fieldset className="mb-2">
-                          <legend className="filter-heading">Activities</legend>
-                          <Filter
-                            filterItems={activityItems.slice(0, truncatedActivityFilterLength)}
-                            selectedFilterItems={selectedActivities}
-                            handleFilterCheck={handleActivityCheck}
-                          />
-                          <Link
-                            className="ml-auto pointer"
-                            onClick={() => {
-                              setMoreActivites(!showMoreActivities)
-                            }}
-                            tabIndex="0"
-                            role="link"
-                            underline="hover"
-                          >
-                            {showMoreActivities ? (
-                              <div style={{ color: `#2464A4` }}>
-                                Show all {activityItems.length}
-                                <ExpandMore fontSize="small" />
-                              </div>
-                            ) : (
-                              <div style={{ color: `#2464A4` }}>
-                                Show less
-                                <ExpandLess fontSize="small" />
-                              </div>
-                            )}
-                          </Link>
-                        </fieldset>
-                        <fieldset>
-                          <legend className="filter-heading">Facilities</legend>
-                          <Filter
-                            filterItems={facilityItems.slice(0, truncatedFacilityFilterLength)}
-                            selectedFilterItems={selectedFacilities}
-                            handleFilterCheck={handleFacilityCheck}
-                          />
-                          <Link
-                            className="ml-auto pointer"
-                            onClick={() => {
-                              setMoreFacilities(!showMoreFacilities)
-                            }}
-                            tabIndex="0"
-                            role="link"
-                            underline="hover"
-                          >
-                            {showMoreFacilities ? (
-                              <div style={{ color: `#2464A4` }}>
-                                Show all {facilityItems.length}
-                                <ExpandMore fontSize="small" />
-                              </div>
-                            ) : (
-                              <div style={{ color: `#2464A4` }}>
-                                Show less
-                                <ExpandLess fontSize="small" />
-                              </div>
-                            )}
-                          </Link>
-                        </fieldset>
-                      </div>
+                      <DesktopFilters
+                        data={{
+                          regionItems,
+                          campingFacilityItems,
+                          activityItems,
+                          facilityItems,
+                          selectedRegions,
+                          setSelectedRegions,
+                          selectedCampingFacilities,
+                          setSelectedCampingFacilities,
+                          selectedActivities,
+                          setSelectedActivities,
+                          selectedFacilities,
+                          setSelectedFacilities,
+                          searchText,
+                          setCurrentPage,
+                          setFilters,
+                          handleRegionCheck,
+                          handleCampingFacilityCheck,
+                          handleActivityCheck,
+                          handleFacilityCheck
+                        }}
+                      />
                     </div>
                     <div className="col-12 park-links">
                       <h3 className="subtitle mb-2">More ways to find a park</h3>
@@ -854,7 +696,34 @@ export default function FindAPark({ location, data }) {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-9 col-md-12 col-sm-12">
+              <div className="col-lg-9 col-md-12 col-sm-12" ref={searchRef}>
+                <div className="search-results-list container">
+                  <div className="row d-flex">
+                    <div className="col-12 d-none d-lg-block">
+                      {filterSelections.length > 0 && filterSelections.map((f, index) => (
+                        <Chip
+                          key={index}
+                          label={f.label}
+                          onClick={handleFilterDelete(f)}
+                          onDelete={handleFilterDelete(f)}
+                          variant="outlined"
+                          className="park-filter-chip font-weight-bold"
+                          deleteIcon={<CancelIcon className="close-icon" />}
+                        />
+                      ))}
+                      {filterSelections.length > 0 && (
+                        <Link
+                          className="clear-filter-link"
+                          onClick={handleClearFilter}
+                          tabIndex="0"
+                          role="link"
+                        >
+                          Clear filters
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                </div>
                 <div className="search-results-list container">
                   {isLoading && (
                     <div className="container mt-5">
@@ -892,7 +761,7 @@ export default function FindAPark({ location, data }) {
           </div>
         </div>
       </div>
-      <SearchFilter
+      <MobileFilters
         data={{
           totalResults,
           regionItems,
@@ -911,6 +780,11 @@ export default function FindAPark({ location, data }) {
           setSelectedFacilities,
           searchText,
           setCurrentPage,
+          setFilters,
+          handleRegionCheck,
+          handleCampingFacilityCheck,
+          handleActivityCheck,
+          handleFacilityCheck
         }}
       />
       <ParkLinksModal data={{ openModal, setOpenModal }} />

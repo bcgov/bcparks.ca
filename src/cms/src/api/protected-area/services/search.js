@@ -16,6 +16,7 @@ module.exports = ({ strapi }) => ({
     activityNumbers,
     facilityNumbers,
     regionNumbers,
+    campingNumbers,
     limit,
     offset,
   }) => {
@@ -69,6 +70,7 @@ module.exports = ({ strapi }) => ({
     }
 
     let mustFilter = [];
+    let campingFilter = [];
 
     for (const activityNum of activityNumbers) {
       mustFilter.push({ match: { "parkActivities.num": activityNum } })
@@ -76,6 +78,10 @@ module.exports = ({ strapi }) => ({
 
     for (const facilityNum of facilityNumbers) {
       mustFilter.push({ match: { "parkFacilities.num": facilityNum } })
+    }
+
+    for (const campingNum of campingNumbers) {
+      campingFilter.push({ match: { "campingFacilities.num": campingNum } })
     }
 
     if (camping) {
@@ -101,13 +107,24 @@ module.exports = ({ strapi }) => ({
         index: getIndexName(),
         body: {
           from: offset,
-          size: limit,          
+          size: limit,
           query: {
             bool: {
               filter: [
                 ...mustFilter,
                 {
-                  bool: { should: [...regionFilter] }
+                  bool: {
+                    filter: [
+                      {
+                        bool: { should: [...regionFilter] }
+                      }
+                    ],
+                    must: [
+                      {
+                        bool: { should: [...campingFilter] }
+                      }
+                    ]
+                  }
                 }
               ],
               must: [
@@ -128,6 +145,7 @@ module.exports = ({ strapi }) => ({
             "slug",
             "parkFacilities",
             "parkActivities",
+            "campingFacilities",
             "parkLocations",
             "advisories",
             "parkPhotos"
@@ -161,6 +179,13 @@ module.exports = ({ strapi }) => ({
                     regions: {
                       terms: {
                         field: "parkLocations.regionNum",
+                        min_doc_count: 0
+                      }
+                    },
+                    campings: {
+                      terms: {
+                        field: "campingFacilities.num",
+                        size: 50,
                         min_doc_count: 0
                       }
                     }
