@@ -460,6 +460,13 @@ export default function FindAPark({ location, data }) {
     searchText
   ])
 
+  useEffect(() => {
+    // Focus the TextField element when the component mounts
+    if (searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, [])
+
   return (
     <>
       <Header content={menuContent} />
@@ -506,6 +513,7 @@ export default function FindAPark({ location, data }) {
                         className="park-search-text-box h50p"
                         value={inputText}
                         focused={isLoading}
+                        inputRef={searchRef} 
                         onChange={event => {
                           setInputText(event.target.value)
                         }}
@@ -593,7 +601,7 @@ export default function FindAPark({ location, data }) {
                 </div>
               </div>
             </div>
-            <div className="search-results-list container d-block d-lg-none mt-3" ref={searchRef}>
+            <div className="search-results-list container d-block d-lg-none mt-3">
               <div className="row d-flex">
                 <div className="col-12">
                   {filterSelections.length > 0 && filterSelections.map((f, index) => (
@@ -635,6 +643,7 @@ export default function FindAPark({ location, data }) {
                               className="park-search-text-box h50p"
                               value={inputText}
                               focused={isLoading}
+                              inputRef={searchRef} 
                               onChange={event => {
                                 setInputText(event.target.value)
                               }}
@@ -726,7 +735,7 @@ export default function FindAPark({ location, data }) {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-9 col-md-12 col-sm-12" ref={searchRef}>
+              <div className="col-lg-9 col-md-12 col-sm-12">
                 <div className="search-results-list container">
                   <div className="row d-flex">
                     <div className="col-12 d-none d-lg-block">
