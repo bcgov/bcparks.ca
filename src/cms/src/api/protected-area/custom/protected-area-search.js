@@ -166,8 +166,9 @@ function parseSearchOffset(query) {
 
 function cleanUpAggregations(aggs) {
   aggs.regions = aggs.all_regions.filtered.regions;
-  aggs.campings = aggs.all_regions.filtered.campings;
+  aggs.campings = aggs.all_camping.filtered.campings;
   delete aggs.all_regions;
+  delete aggs.all_camping;
   return aggs;
 }
 

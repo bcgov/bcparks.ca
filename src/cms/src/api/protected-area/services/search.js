@@ -171,7 +171,14 @@ module.exports = ({ strapi }) => ({
                 filtered: {
                   filter: {
                     bool: {
-                      filter: [...mustFilter],
+                      filter: [
+                        ...mustFilter,
+                        {
+                          bool: {
+                            filter: [{ bool: { should: [...campingFilter] } }]
+                          }
+                        }
+                      ],
                       must: [{ bool: { should: [...textFilter] } }]
                     }
                   },
@@ -181,7 +188,29 @@ module.exports = ({ strapi }) => ({
                         field: "parkLocations.regionNum",
                         min_doc_count: 0
                       }
-                    },
+                    }
+                  }
+                }
+              }
+            },
+            all_camping: {
+              global: {},
+              aggs: {
+                filtered: {
+                  filter: {
+                    bool: {
+                      filter: [
+                        ...mustFilter,
+                        {
+                          bool: {
+                            filter: [{ bool: { should: [...regionFilter] } }]
+                          }
+                        }
+                      ],
+                      must: [{ bool: { should: [...textFilter] } }]
+                    }
+                  },
+                  aggs: {
                     campings: {
                       terms: {
                         field: "campingFacilities.num",
