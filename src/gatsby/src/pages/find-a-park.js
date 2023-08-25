@@ -289,6 +289,17 @@ export default function FindAPark({ location, data }) {
     setCurrentPage(1)
     setSearchText(inputText)
   }
+  const handleClickClear = () => {
+    setInputText("")
+    setCurrentPage(1)
+    setSearchText("")
+  }
+  const handleKeyDownClear = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault()
+      handleClickClear()
+    }
+  }   
   const handleLoadMore = () => {
     setCurrentPage(currentPage + 1)
   }
@@ -519,13 +530,8 @@ export default function FindAPark({ location, data }) {
                             <InputAdornment position="end">
                               <IconButton
                                 className="clear-icon-button"
-                                onClick={() => setInputText("")}
-                                onKeyDown={(e) => {
-                                  if (e.key === "Enter") {
-                                    e.preventDefault()
-                                    setInputText("")
-                                  }
-                                }}
+                                onClick={handleClickClear}
+                                onKeyDown={(e) => {handleKeyDownClear(e)}}
                                 sx={{ visibility: inputText ? "visible" : "hidden" }}
                                 aria-label="Clear search">
                                 <ClearIcon className="clear-icon" />
@@ -654,13 +660,8 @@ export default function FindAPark({ location, data }) {
                                   <InputAdornment position="end">
                                     <IconButton
                                       className="clear-icon-button"
-                                      onClick={() => setInputText("")}
-                                      onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
-                                          e.preventDefault()
-                                          setInputText("")
-                                        }
-                                      }}
+                                      onClick={handleClickClear}
+                                      onKeyDown={(e) => {handleKeyDownClear(e)}}
                                       sx={{ visibility: inputText ? "visible" : "hidden" }}
                                       aria-label="Clear search">
                                       <ClearIcon className="clear-icon" />
