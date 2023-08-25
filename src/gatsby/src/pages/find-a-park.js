@@ -179,7 +179,7 @@ export default function FindAPark({ location, data }) {
   const [totalResults, setTotalResults] = useState(0)
 
   const itemsPerPage = 10
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage, currentPageInitialized] = useQueryParamString("p", 1)
   const [isLoading, setIsLoading] = useState(true)
 
   const [openFilter, setOpenFilter] = useState(false)
@@ -290,7 +290,17 @@ export default function FindAPark({ location, data }) {
     setSearchText(inputText)
   }
   const handleLoadMore = () => {
-    setCurrentPage(currentPage + 1)
+    const newPage = +currentPage + 1
+    setCurrentPage(newPage)
+    const pageStart = (newPage - 1) * itemsPerPage
+    axios.get(searchApiUrl, {
+      params: { ...params, _start: pageStart, _limit: itemsPerPage },
+    }).then(resultResponse => {
+      if (resultResponse.status === 200) {
+        const newResults = resultResponse.data.data
+        setSearchResults(prevResults => [...prevResults, ...newResults]);
+      }
+    })
   }
 
   const handleClearFilter = () => {
@@ -357,48 +367,33 @@ export default function FindAPark({ location, data }) {
     params.typeCode
 
   useEffect(() => {
-    setIsLoading(true)
-    setFilters()
-    axios.get(searchApiUrl, {
-      params: { ...params, _start: 0, _limit: itemsPerPage },
-    }).then(resultResponse => {
-      if (resultResponse.status === 200) {
-        const total = parseInt(resultResponse.data.meta.pagination.total, 10)
-        const newResults = resultResponse.data.data
-        setSearchResults(newResults);
-        setTotalResults(total)
-        setRegionsCount(resultResponse.data.meta.aggregations.regions.buckets)
-        setActivitiesCount(resultResponse.data.meta.aggregations.activities.buckets)
-        setFacilitiesCount(resultResponse.data.meta.aggregations.facilities.buckets)
-        setCampingsCount(resultResponse.data.meta.aggregations.campings.buckets)
-      } else {
-        setSearchResults([])
-        setTotalResults(0)
-      }
-    })
-      .finally(() => {
-        setIsLoading(false)
-      })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params])
-
-  useEffect(() => {
-    if (currentPage !== 1) {
-      const pageStart = (currentPage - 1) * itemsPerPage
+    const qs = new URLSearchParams(window.location.search)
+    if (currentPageInitialized || !qs.has('p')) {
+      setIsLoading(true)
+      setFilters()
       axios.get(searchApiUrl, {
-        params: { ...params, _start: pageStart, _limit: itemsPerPage },
+        params: { ...params, _start: 0, _limit: currentPage * itemsPerPage },
       }).then(resultResponse => {
         if (resultResponse.status === 200) {
+          const total = parseInt(resultResponse.data.meta.pagination.total, 10)
           const newResults = resultResponse.data.data
-          setSearchResults(prevResults => [...prevResults, ...newResults]);
+          setSearchResults(newResults);
+          setTotalResults(total)
+          setRegionsCount(resultResponse.data.meta.aggregations.regions.buckets)
+          setActivitiesCount(resultResponse.data.meta.aggregations.activities.buckets)
+          setFacilitiesCount(resultResponse.data.meta.aggregations.facilities.buckets)
+          setCampingsCount(resultResponse.data.meta.aggregations.campings.buckets)
+        } else {
+          setSearchResults([])
+          setTotalResults(0)
         }
       })
         .finally(() => {
           setIsLoading(false)
         })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps    
-  }, [currentPage])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params, currentPageInitialized])
 
   useEffect(() => {
     function arr(list) {
