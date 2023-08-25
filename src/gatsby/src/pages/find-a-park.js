@@ -169,7 +169,9 @@ export default function FindAPark({ location, data }) {
   const [selectedCampingFacilities, setSelectedCampingFacilities] = useState([])
   const [selectedActivities, setSelectedActivities] = useState([])
   const [selectedFacilities, setSelectedFacilities] = useState([])
-  const [searchText, setSearchText] = useQueryParamString("q", "")
+  const [searchText, setSearchText] = useQueryParamString(
+    "q", location.state?.searchText ? location.state.searchText : ""
+  )
   const [inputText, setInputText] = useState("")
 
   const [filterSelections, setFilterSelections] = useState([])
