@@ -1,6 +1,6 @@
 import React from "react"
 import { Link as GatsbyLink } from "gatsby"
-import { Card, CardContent, Link } from "@mui/material"
+import { Card, CardContent } from "@mui/material"
 import Carousel from "react-material-ui-carousel"
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
 
@@ -164,15 +164,15 @@ const ParkCard = ({ r }) => {
 
                 <div className="col park-content">
                   <div className="park-content-top">
-                    <Link
-                      href={`/${r.slug}/`}
-                      underline="hover"
+                    <GatsbyLink
+                      to={`/${r.slug}/`}
+                      className="underline-hover"
                     >
                       <h2 className="park-heading-text">
                         {r.protectedAreaName}
                         <ExpandCircleDownIcon className="park-heading-icon" />
                       </h2>
-                    </Link>
+                    </GatsbyLink>
                     <p>{locationLabel(r.parkLocations.length ? r.parkLocations[0] : {})}</p>
                   </div>
                   <div className="park-content-bottom">
@@ -269,16 +269,15 @@ const ParkCard = ({ r }) => {
                   )}
 
                 <div className="col-12 park-content-mobile">
-                  <Link
-                    href={`/${r.slug}/`}
-                    className="p10t"
-                    underline="hover"
+                  <GatsbyLink
+                    to={`/${r.slug}/`}
+                    className="p10t underline-hover"
                   >
                     <h2 className="park-heading-text">
                       {r.protectedAreaName}
                       <ExpandCircleDownIcon className="park-heading-icon" />
                     </h2>
-                  </Link>
+                  </GatsbyLink>
                   <p>{locationLabel(r.parkLocations.length ? r.parkLocations[0] : {})}</p>
                   <div>
                     <FeatureIcons park={r} />
