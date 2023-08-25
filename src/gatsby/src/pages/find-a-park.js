@@ -16,6 +16,7 @@ import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from "@mui/icons-material/Search"
 import CancelIcon from "@mui/icons-material/Cancel"
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import { useQueryParamString } from 'react-use-query-param-string';
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -159,32 +160,17 @@ export default function FindAPark({ location, data }) {
   })
 
   // selected filter items state
-  const [selectedRegions, setSelectedRegions] = useState(
-    location.state && location.state.selectedRegions
-      ? [...location.state.selectedRegions]
-      : []
-  )
-  const [selectedCampingFacilities, setSelectedCampingFacilities] = useState(
-    location.state && location.state.selectedCampingFacilities
-      ? [...location.state.selectedCampingFacilities]
-      : []
-  )
-  const [selectedActivities, setSelectedActivities] = useState(
-    location.state && location.state.selectedActivities
-      ? [...location.state.selectedActivities]
-      : []
-  )
-  const [selectedFacilities, setSelectedFacilities] = useState(
-    location.state && location.state.selectedFacilities
-      ? [...location.state.selectedFacilities]
-      : []
-  )
-  const [inputText, setInputText] = useState(
-    location.state && location.state.searchText ? location.state.searchText : ""
-  )
-  const [searchText, setSearchText] = useState(
-    location.state && location.state.searchText ? location.state.searchText : ""
-  )
+  const [qsRegions, setQsRegions] = useQueryParamString("r", "")
+  const [qsCampingFacilities, setQsCampingFacilities] = useQueryParamString("c", "")
+  const [qsActivities, setQsActivities] = useQueryParamString("a", "")
+  const [qsFacilities, setQsFacilities] = useQueryParamString("f", "")
+
+  const [selectedRegions, setSelectedRegions] = useState([])
+  const [selectedCampingFacilities, setSelectedCampingFacilities] = useState([])
+  const [selectedActivities, setSelectedActivities] = useState([])
+  const [selectedFacilities, setSelectedFacilities] = useState([])
+  const [searchText, setSearchText] = useQueryParamString("q", "")
+  const [inputText, setInputText] = useState("")
 
   const [filterSelections, setFilterSelections] = useState([])
   const [searchResults, setSearchResults] = useState([])
@@ -391,13 +377,8 @@ export default function FindAPark({ location, data }) {
       .finally(() => {
         setIsLoading(false)
       })
-  }, [
-    params,
-    searchApiUrl,
-    setFilters,
-    setSearchResults,
-    setTotalResults,
-  ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params])
 
   useEffect(() => {
     if (currentPage !== 1) {
@@ -414,10 +395,61 @@ export default function FindAPark({ location, data }) {
           setIsLoading(false)
         })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps    
+  }, [currentPage])
+
+  useEffect(() => {
+    function arr(list) {
+      return list.split("_").map(Number);
+    }
+    if (selectedActivities.length === 0 && qsActivities.length > 0) {
+      setSelectedActivities(activityItems.filter(x => arr(qsActivities).includes(x.value)));
+    }
+    if (selectedCampingFacilities.length === 0 && qsCampingFacilities.length > 0) {
+      setSelectedCampingFacilities(campingFacilityItems.filter(x => arr(qsCampingFacilities).includes(x.value)));
+    }
+    if (selectedFacilities.length === 0 && qsFacilities.length > 0) {
+      setSelectedFacilities(facilityItems.filter(x => arr(qsFacilities).includes(x.value)));
+    }
+    if (selectedRegions.length === 0 && qsRegions.length > 0) {
+      setSelectedRegions(regionItems.filter(x => arr(qsRegions).includes(x.value)));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    params,
-    searchApiUrl,
-    currentPage
+    qsActivities,
+    qsCampingFacilities,
+    qsFacilities,
+    qsRegions
+  ])
+
+  useEffect(() => {
+    function qs(list) {
+      return list.map(x => x.value).sort((a, b) => a - b).join("_");
+    }
+    const activities = qs(selectedActivities);
+    if (qsActivities !== activities) {
+      setQsActivities(activities);
+    }
+    const campingFacilities = qs(selectedCampingFacilities);
+    if (qsCampingFacilities !== campingFacilities) {
+      setQsCampingFacilities(campingFacilities);
+    }
+    const facilities = qs(selectedFacilities);
+    if (qsFacilities !== facilities) {
+      setQsFacilities(facilities);
+    }
+    const regions = qs(selectedRegions);
+    if (qsRegions !== regions) {
+      setQsRegions(regions);
+    }
+    setInputText(searchText)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    selectedActivities,
+    selectedCampingFacilities,
+    selectedFacilities,
+    selectedRegions,
+    searchText
   ])
 
   return (
