@@ -337,9 +337,16 @@ h3.subtitle {
 .park-filter-dialog,
 .search-results-main {
   .MuiCheckbox-root {
+    width: 24px;
+    height: 24px;
     color: $colorBlue !important;
+    border-radius: 5px;
     padding: 0px !important;
-    padding-right: 10px !important;
+    margin-right: 10px;
+    &.Mui-disabled {
+      color: #c7c7c7!important;
+      background-color: #e4e4e4;
+    }
   }
 
   .MuiCheckbox-root:hover {
