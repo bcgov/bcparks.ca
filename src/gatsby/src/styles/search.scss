@@ -92,9 +92,13 @@ h3.subtitle {
     .MuiOutlinedInput-input {
       padding: 10px 7px !important;
     }
-    .MuiOutlinedInput-root:focus {
+    .MuiOutlinedInput-root:focus,
+    .MuiOutlinedInput-root:focus-within  {
       outline: none !important;
-      outline-offset: 1px !important;
+      outline-offset: 1px;
+      .MuiOutlinedInput-notchedOutline {
+        border: 1px solid #000;
+      }
     }
     .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
       border: 1px solid $colorBlue !important;
