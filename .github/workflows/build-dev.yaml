@@ -18,7 +18,7 @@ jobs:
       BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-18:1-32
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set env
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
@@ -49,7 +49,7 @@ jobs:
       IMAGE_NAME: admin-${{ github.ref_name }}
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set env
         run: |
@@ -90,7 +90,7 @@ jobs:
       IMAGE_NAME: public-builder-${{ github.ref_name }}
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set env
         run: |
@@ -127,7 +127,7 @@ jobs:
       IMAGE_NAME: maintenance-${{ github.ref_name }}
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set env
         run: |
@@ -158,7 +158,7 @@ jobs:
       BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-18:1-32
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set env
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
@@ -188,7 +188,7 @@ jobs:
       BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-18:1-32
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set env
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
@@ -217,7 +217,7 @@ jobs:
     needs: [build-cms, build-admin]
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Login OpenShift
         uses: redhat-actions/oc-login@v1
