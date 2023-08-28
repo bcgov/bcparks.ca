@@ -239,3 +239,12 @@ li.post-separator {
     }
   }
 }
+
+a.underline-hover {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    text-decoration-color: $colorBlue
+  }
+}

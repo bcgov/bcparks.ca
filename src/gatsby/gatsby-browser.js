@@ -3,3 +3,7 @@ import "jquery/dist/jquery.slim"
 import "bootstrap/dist/js/bootstrap.bundle"
 import "@fortawesome/fontawesome-free/css/all.min.css"
 import "./src/styles/style.scss"
+
+export const onRouteUpdate = ({ location, prevLocation }) => {
+  sessionStorage.setItem("prevPath", prevLocation ? prevLocation.pathname : null);
+}

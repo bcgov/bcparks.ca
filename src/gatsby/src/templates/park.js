@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import { sortBy, truncate } from "lodash"
-import { graphql } from "gatsby"
+import { graphql, Link as GatsbyLink, navigate } from "gatsby"
 import loadable from '@loadable/component'
 import {
   Box,
   Container,
   Grid,
   CssBaseline,
-  Link,
   Breadcrumbs,
 } from "@mui/material"
 import useScrollSpy from "react-use-scrollspy"
@@ -310,12 +309,21 @@ export default function ParkTemplate({ data }) {
   const parkName = renderHTML(park.parkNames.find(item=> item.parkNameType === PARK_NAME_TYPE.Escaped)?.parkName  || park.protectedAreaName);
   
   const breadcrumbs = [
-    <Link key="1" href="/" underline="hover">
+    <GatsbyLink key="1" to="/" underline="hover">
       Home
-    </Link>,
-    <Link key="2" href="/find-a-park" underline="hover">
+    </GatsbyLink>,
+    <GatsbyLink
+      key="2"
+      to="/find-a-park"
+      underline="hover"
+      onClick={(e) => {
+        if (sessionStorage.getItem("prevPath").includes('find-a-park')) {
+          e.preventDefault();
+          navigate(-1);
+        }
+      }}>
       Find a park
-    </Link>,
+    </GatsbyLink>,
     <div key="3" className="breadcrumb-text">
       {parkName}
     </div>,
