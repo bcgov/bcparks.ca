@@ -92,21 +92,21 @@ jobs:
               fi
           fi
       - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_SA_USERNAME}}
           password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
 
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: "18"
 
       - run: mkdir -p gatsby/public && mkdir gatsby/.cache
 
       - name: Cache Gatsby Cache Folder
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: gatsby-cache-folder
         with:
           path: gatsby/.cache
@@ -114,7 +114,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cache-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
       - name: Cache Gatsby Public Folder
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: gatsby-public-folder
         with:
           path: gatsby/public
