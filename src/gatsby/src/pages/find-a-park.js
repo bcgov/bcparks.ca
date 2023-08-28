@@ -321,6 +321,12 @@ export default function FindAPark({ location, data }) {
     setSelectedActivities([])
     setSelectedFacilities([])
   }
+  const handleKeyDownClearFilter = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault()
+      handleClearFilter()
+    }
+  }
 
   const setFilters = useCallback(() => {
     const filters = []
@@ -619,8 +625,9 @@ export default function FindAPark({ location, data }) {
                     <Link
                       className="clear-filter-link"
                       onClick={handleClearFilter}
+                      onKeyDown={e => handleKeyDownClearFilter(e)}
                       tabIndex="0"
-                      role="link"
+                      role="button"
                     >
                       Clear filters
                     </Link>
@@ -754,8 +761,9 @@ export default function FindAPark({ location, data }) {
                         <Link
                           className="clear-filter-link"
                           onClick={handleClearFilter}
+                          onKeyDown={e => handleKeyDownClearFilter(e)}
                           tabIndex="0"
-                          role="link"
+                          role="button"
                         >
                           Clear filters
                         </Link>

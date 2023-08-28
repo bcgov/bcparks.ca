@@ -30,7 +30,7 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
             selectedFilterItems.filter(
               selectedFilterItem =>
                 selectedFilterItem.value === item.value
-            ).length === 1 && "text-light-blue"
+            ).length === 1 ? "text-light-blue" : ""
           }
           disabled={item.count === 0}
         />
