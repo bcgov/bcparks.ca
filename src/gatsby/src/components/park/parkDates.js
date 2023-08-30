@@ -94,24 +94,24 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
                 </dd>
               </>
             )}
-            {subArea.resDates.length > 0 && (
-              <>
-                <dt className="mt-3">Reservable dates</dt>
-                <dd>
-                  <ul className="pl-3">
-                    {subArea.resDates.map((dateRange, index) =>
-                      <li key={index}>{dateRange}</li>
-                    )}
-                  </ul>
-                </dd>
-              </>
-            )}
             {subArea.offSeasonDates.length > 0 && (
               <>
                 <dt className="mt-3">Off season dates</dt>
                 <dd>
                   <ul className="pl-3">
                     {subArea.offSeasonDates.map((dateRange, index) =>
+                      <li key={index}>{dateRange}</li>
+                    )}
+                  </ul>
+                </dd>
+              </>
+            )}
+            {subArea.resDates.length > 0 && (
+              <>
+                <dt className="mt-3">Reservable dates</dt>
+                <dd>
+                  <ul className="pl-3">
+                    {subArea.resDates.map((dateRange, index) =>
                       <li key={index}>{dateRange}</li>
                     )}
                   </ul>
