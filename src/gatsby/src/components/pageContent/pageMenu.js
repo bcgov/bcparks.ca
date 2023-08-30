@@ -34,22 +34,24 @@ export default function PageMenu({ pageSections, activeSection, menuStyle }) {
     }
 
     return (
-      <select
-        className="section-select"
-        value={sectionIndex}
-        onChange={handleSectionChange}
-        title="mobile-navigation"
-      >
-        <option value={0}>Table of Contents</option>
-        {pageSections.filter(s => s.visible).map(
-          section =>
-            section.sectionIndex > 0 && (
-              <option key={section.sectionIndex} value={section.sectionIndex}>
-                {section.display}
-              </option>
-            )
-        )}
-      </select>
+      <div className="section-select-container">
+        <select
+          className="section-select"
+          value={sectionIndex}
+          onChange={handleSectionChange}
+          title="mobile-navigation"
+        >
+          <option value={0}>Table of Contents</option>
+          {pageSections.filter(s => s.visible).map(
+            section =>
+              section.sectionIndex > 0 && (
+                <option key={section.sectionIndex} value={section.sectionIndex}>
+                  {section.display}
+                </option>
+              )
+          )}
+        </select>
+      </div>
     )
   }
 
