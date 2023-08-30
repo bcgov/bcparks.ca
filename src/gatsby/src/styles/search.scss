@@ -263,6 +263,7 @@ h3.subtitle {
     color: $colorBlueLight !important;
   }
   .MuiFormControlLabel-root {
+    align-items: flex-start;
     margin-left: 0;
     margin-right: 0;
     .MuiCheckbox-root {
