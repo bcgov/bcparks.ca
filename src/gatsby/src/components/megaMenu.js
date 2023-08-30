@@ -13,6 +13,7 @@ const MegaMenu = ({ content, menuMode }) => {
   const [selectedItem, setSelectedItem] = useState([]) // most recent item user has interacted with
   const [selections, setSelections] = useState({}) // the selected item at each level, i.e. selection breadcrumbs
   const [isMenuOpen, setIsMenuOpen] = useState(false) // currently only used for mobile - menu closed at first
+  const [hasKeyEntered, setHasKeyEntered] = useState(false)
   let sectionImages = {}
   let menuCollection
   let menuElements
@@ -108,6 +109,12 @@ const MegaMenu = ({ content, menuMode }) => {
       menuReset() // select the root
     }
     setIsMenuOpen(!isMenuOpen) // toggle open state
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === " ") {     
+      setHasKeyEntered(!hasKeyEntered)
+    }
   }
 
   const sortedTree = useCallback(
@@ -244,9 +251,10 @@ const MegaMenu = ({ content, menuMode }) => {
                       }`}
                       href={page.url}
                       role="button"
-                      tabIndex={0}
+                      tabIndex={(hasKeyEntered && page.treeLevel === 1) ? -1 : 0}
                       onFocus={e => menuFocus(e, page)}
                       onClick={e => sectionClick(e, page, menuMode)}
+                      onKeyDown={e => {handleKeyDown(e)}}
                     >
                       {page.title}
                       {page.hasChildren && (
