@@ -144,15 +144,17 @@ const ParkLink = ({ park }) => {
           <ExpandCircleDownIcon />
         </GatsbyLink>
       </h2>
-      <p>The park { park.marineProtectedArea !== 'Y'? (<>gate</>) : ("") } is open {parkDates}.</p>
+      <p>
+        The park {park.marineProtectedArea !== 'Y' ? (<>gate</>) : ("")} is open {parkDates}.
+      </p>
       {/* display table list if the screen size is bigger than 768 px */}
       <table className="table">
         <thead className="thead-light">
           <tr>
             <th scope="col">Facility</th>
             <th scope="col">Main operating season</th>
-            <th scope="col">Booking required</th>
             <th scope="col">Winter season</th>
+            <th scope="col">Booking required</th>
           </tr>
         </thead>
         <tbody>
@@ -181,6 +183,21 @@ const ParkLink = ({ park }) => {
                 </ul>
               </td>
               <td>
+                {subArea.offSeasonDates.length > 0 ? (
+                  <ul>
+                    {subArea.offSeasonDates.map((dateRange, index) =>
+                      <li key={index}>{dateRange}</li>
+                    )}
+                  </ul>
+                ) : (
+                  parkDates === 'year-round' ? (
+                    <>Limited services</>
+                  ) : (
+                    <>No services</>
+                  )
+                )}
+              </td>
+              <td>
                 {subArea.resDates.length > 0 ? (
                   <ul>
                     {subArea.resDates.map((dateRange, index) =>
@@ -190,24 +207,8 @@ const ParkLink = ({ park }) => {
                 ) : (
                   subArea.facilityIsCamping ? (
                     <>No {"("}first come, first served{")"}</>
-                  ):(
+                  ) : (
                     <>N/A</>
-                  )
-                )}
-              </td>
-              <td>
-                {subArea.offSeasonDates.length > 0 ? (
-                  <ul>
-                    {subArea.offSeasonDates.map((dateRange, index) =>
-                      <li key={index}>{dateRange}</li>
-                    )}
-                  </ul>
-                ) : (
-                  parkDates === 'year-round' ? (
-                    <>Limited services</>  
-                  ) :
-                  (
-                  <>No services</>
                   )
                 )}
               </td>
@@ -239,6 +240,26 @@ const ParkLink = ({ park }) => {
                   </ul>
                 </div>
                 <div className="list-group-item--container">
+                  <b>Winter season</b>
+                  {subArea.offSeasonDates.length > 0 ? (
+                    <ul>
+                      {subArea.offSeasonDates.map((dateRange, index) =>
+                        <li key={index}>{dateRange}</li>
+                      )}
+                    </ul>
+                  ) : (
+                    parkDates === 'year-round' ? (
+                      <>
+                        <br />Limited services
+                      </>
+                    ) : (
+                      <>
+                        <br />No services
+                      </>
+                    )
+                  )}
+                </div>
+                <div className="list-group-item--container">
                   <b>Booking required</b>
                   {subArea.resDates.length > 0 ? (
                     <ul>
@@ -249,25 +270,15 @@ const ParkLink = ({ park }) => {
                   ) : (
                     subArea.facilityIsCamping ? (
                       <>
-                        <br/>No {"("}first come, first served{")"}
+                        <br />No {"("}first come, first served{")"}
                       </>
-                    ):(
+                    ) : (
                       <>
-                        <br/>N/A
+                        <br />N/A
                       </>
                     )
                   )}
                 </div>
-                {subArea.offSeasonDates.length > 0 && (
-                  <div className="list-group-item--container">
-                    <b>Winter season</b>
-                    <ul>
-                      {subArea.offSeasonDates.map((dateRange, index) =>
-                        <li key={index}>{dateRange}</li>
-                      )}
-                    </ul>
-                  </div>
-                )}
               </li>
             </ul>
           </div>
@@ -395,8 +406,8 @@ const ParkOperatingDatesPage = () => {
         </p>
         <ul>
           <li><b>Main operating season:</b> full service and fees.</li>
-          <li><b>Booking required:</b> camping reservation or permit needed.</li>
           <li><b>Winter season:</b> some services and/or fees may be reduced.</li>
+          <li><b>Booking required:</b> camping reservation or permit needed.</li>
         </ul>
       </div>
 
@@ -411,8 +422,7 @@ const ParkOperatingDatesPage = () => {
                   value={filter}
                   onClick={(e) => handleClick(e, filter)}
                   className={
-                    `btn btn-selected--${
-                      currentFilter === filter ? 'true' : 'false'
+                    `btn btn-selected--${currentFilter === filter ? 'true' : 'false'
                     }`
                   }
                 >
