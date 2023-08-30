@@ -447,6 +447,7 @@ export default function ParkTemplate({ data }) {
                       parkOperation: park.parkOperation,
                       subAreas: park.parkOperationSubAreas,
                       advisories: advisories,
+                      marineProtectedArea: park.marineProtectedArea
                     }}
                   />
                 </div>
@@ -615,6 +616,7 @@ export const query = graphql`
       mapZoom
       totalArea
       establishedDate
+      marineProtectedArea
       seo {
         metaDescription
         metaKeywords
