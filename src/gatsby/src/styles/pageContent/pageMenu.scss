@@ -44,10 +44,11 @@
     &::after {
       position: absolute;
       content: "\f078";
-      top: calc(50% - 4px);
-      right: 24px;
+      top: calc(50% - 8px);
+      right: 22px;
+      color: $colorBlue;
       font-weight: 900;
-      font-size: 0.5rem;
+      font-size: 12px;
       font-style: normal;
       font-variant: normal;
       font-family: "Font Awesome 5 Free";
