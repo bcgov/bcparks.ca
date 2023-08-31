@@ -18,6 +18,7 @@
     "@opensearch-project/opensearch": "^2.3.1",
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
+    "lodash": "^4.17.21",
     "node-schedule": "^2.1.1",
     "qs": "^6.11.2",
     "winston": "^3.8.2"

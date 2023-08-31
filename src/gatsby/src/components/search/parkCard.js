@@ -43,15 +43,16 @@ const Icon = ({ src, label, size }) => {
 
 const FeatureIcons = ({ park }) => {
   const iconSize = 32;
-  const facilities = park.parkFacilities.filter(f => [1, 6, 36].includes(f.num)) || [];
+  const facilities = park.parkFacilities.filter(f => [6].includes(f.num)) || [];
   const activities = park.parkActivities.filter(a => [1, 3, 8, 9].includes(a.num)) || [];
+  const campings = park.campingFacilities.filter(c => [1, 36].includes(c.num)) || [];
 
   return (
     <>
-      {facilities.some(x => x.code === 'vehicle-accessible-camping') &&
+      {campings.some(x => x.code === 'vehicle-accessible-camping') &&
         <Icon src={campingIcon} label="Vehicle accesible camping" size={iconSize} />
       }
-      {facilities.some(x => x.code === 'backcountry-camping') &&
+      {campings.some(x => x.code === 'backcountry-camping') &&
         <Icon src={backcountryCampingIcon} label="Backcountry camping" size={iconSize} />
       }
       {activities.some(x => x.code === 'hiking') &&
@@ -69,13 +70,13 @@ const FeatureIcons = ({ park }) => {
       {activities.some(x => x.code === 'pets-on-leash') &&
         <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
       }
-      {facilities.some(x => [1, 36].includes(x.num)) ? (
+      {campings.length ? (
         <GatsbyLink to={`/${park.slug}/#park-camping-details-container`}>
           <p aria-label="See all facilities and activities">see all</p>
         </GatsbyLink>
       ) : (
         (activities.length > 0 || facilities.length > 0) && (
-          facilities.some(x => x.code === 'picnic-areas') ? (
+          facilities.length ? (
             <GatsbyLink to={`/${park.slug}/#park-facility-container`}>
               <p aria-label="See all facilities and activities">see all</p>
             </GatsbyLink>

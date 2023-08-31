@@ -58,7 +58,10 @@ export const query = graphql`
     }
     allStrapiFacilityType(
       sort: {facilityName: ASC},
-      filter: {isActive: {eq: true}}
+      filter: {
+        isActive: {eq: true},
+        facilityCode: {ne: "wilderness-camping"}
+      }
     ) {
       totalCount
       nodes {
