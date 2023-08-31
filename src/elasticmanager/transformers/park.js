@@ -1,4 +1,5 @@
 const axios = require("axios");
+const _ = require("lodash");
 
 /**
  * Transforms a protectedArea retrieved from Strapi into a JSON format
@@ -63,18 +64,25 @@ exports.createElasticPark = async function (park, photos) {
         };
       });
 
-    park.campingFacilities = park.parkFacilities
+    const campingFacilities = park.parkFacilities
       .filter(f => {
         return f.isActive && f.facilityType?.isActive && f.facilityType.isCamping;
       })
       .map(f => {
         park.hasCamping = true;
+        let facilityCode = f.facilityType.facilityCode;
+        let facilityNumber = f.facilityType.facilityNumber;
+        if (facilityCode === 'wilderness-camping') {
+          facilityCode = 'backcountry-camping'
+          facilityNumber = 36
+        }
         return {
-          code: f.facilityType.facilityCode,
-          num: f.facilityType.facilityNumber
+          code: facilityCode,
+          num: facilityNumber
         };
       });
-
+    park.campingFacilities = _.uniqBy(campingFacilities, 'facilityCode');
+    
     park.parkFacilities = parkFacilities;
   }
 
