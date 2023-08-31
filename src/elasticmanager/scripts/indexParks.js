@@ -104,6 +104,7 @@ const indexPark = async function (park, photos) {
   // if the park isn't visible on the website then remove it from 
   // Elasticsearch instead of adding it
   if (!park.isDisplayed || !park.publishedAt) {
+    getLogger().warn(`removing park ${park.id} due to unpublished or undisplayed status`);
     await removePark(park)
     return true;
   }
