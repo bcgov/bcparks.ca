@@ -830,6 +830,25 @@ div[class$="-singleValue"] {
 
 .park-carousel,
 .park-carousel-mobile {
+  .indicator {
+    margin-top: -30px;
+    &-button {
+      z-index: 1;
+      pointer-events: none;
+      color: rgba($colorWhite, .6);
+      .MuiSvgIcon-root {
+        width: 8px;
+        height: 8px;
+        margin: 0 4px;
+      }
+      &--active {
+        color: rgba($colorWhite, 1);
+      }
+    }
+  }
+}
+// display carousel nav with hovering on laptop
+.park-carousel {
   .carousel-nav {
     display: none;
   }
@@ -848,19 +867,19 @@ div[class$="-singleValue"] {
       }
     }
   }
-  .indicator {
-    margin-top: -30px;
-    &-button {
-      z-index: 1;
-      pointer-events: none;
-      color: rgba($colorWhite, .6);
-      .MuiSvgIcon-root {
-        width: 8px;
-        height: 8px;
-        margin: 0 4px;
-      }
-      &--active {
-        color: rgba($colorWhite, 1);
+}
+// display carousel nav without hovering on tablet/mobile
+.park-carousel-mobile  {
+  .carousel-nav {
+    display: block;
+    &-botton {
+      width: 24px;
+      height: 24px;
+      color: $colorText;
+      background-color: rgba($colorWhite, .72);
+      &:hover, &:focus {
+        color: $colorText;
+        background-color: rgba($colorWhite, .72);
       }
     }
   }
