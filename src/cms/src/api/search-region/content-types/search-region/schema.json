@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "search_regions",
+  "info": {
+    "singularName": "search-region",
+    "pluralName": "search-regions",
+    "displayName": "Search-region",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "searchRegionName": {
+      "type": "string"
+    },
+    "rank": {
+      "type": "integer",
+      "unique": true,
+      "required": true
+    },
+    "managementAreas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::management-area.management-area",
+      "mappedBy": "searchRegion"
+    }
+  }
+}
