@@ -1,8 +1,6 @@
 const axios = require('axios');
 const { getLogger } = require('../utils/logging');
 
-
-
 /**
  * Adds all protectedAreas to the queuedTasks so they will 
  * be reindexed by the cron job

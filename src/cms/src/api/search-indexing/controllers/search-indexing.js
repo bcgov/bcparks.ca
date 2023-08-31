@@ -60,7 +60,10 @@ module.exports = ({ strapi }) => ({
           "urgency": { fields: ["id"] },
           "advisoryStatus": { fields: ["id", "code"] }
         }
-      }
+      },
+      geoShape: {
+        fields: ["geometry"],
+      },
     };
     query.publicationState = "preview";
 

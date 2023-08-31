@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "geo_shapes",
+  "info": {
+    "singularName": "geo-shape",
+    "pluralName": "geo-shapes",
+    "displayName": "Geo-shape",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "geometry": {
+      "type": "json"
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "geoShape"
+    },
+    "orcs": {
+      "type": "integer",
+      "unique": true,
+      "required": true
+    },
+    "isEmpty": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

@@ -291,6 +291,12 @@
       "relation": "manyToMany",
       "target": "api::terrestrial-ecosection.terrestrial-ecosection",
       "mappedBy": "protectedAreas"
+    },
+    "geoShape": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::geo-shape.geo-shape",
+      "mappedBy": "protectedArea"
     }
   }
 }

@@ -45,8 +45,17 @@ module.exports = [
   },
   "strapi::logger",
   "strapi::query",
-  "strapi::body",
   "strapi::session",
   "strapi::favicon",
   "strapi::public",
-];
+  {
+    name: 'strapi::body',
+    config: {
+      jsonLimit: '2mb',
+      formLimit: "2mb",
+      textLimit: "2mb",
+      formidable: {
+        maxFileSize: 250 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
+      },
+    },
+  },];
