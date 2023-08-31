@@ -145,7 +145,7 @@ const ParkLink = ({ park }) => {
         </GatsbyLink>
       </h2>
       <p>
-        The park {park.marineProtectedArea !== 'Y' ? (<>gate</>) : ("")} is open {parkDates}.
+        The park {park.marineProtectedArea !== 'Y' && "gate"} is open {parkDates}.
       </p>
       {/* display table list if the screen size is bigger than 768 px */}
       <table className="table">

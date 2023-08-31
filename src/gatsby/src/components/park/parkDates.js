@@ -145,6 +145,7 @@ export default function ParkDates({ data }) {
   const dataCopy = JSON.parse(JSON.stringify(data)) // deep copy
   const parkOperation = dataCopy.parkOperation || {}
   const subAreas = dataCopy.subAreas || []
+  const marineProtectedArea = dataCopy.marineProtectedArea || ""
   subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
 
   const advisories = dataCopy.advisories || []
@@ -345,7 +346,9 @@ export default function ParkDates({ data }) {
                   All dates are subject to change without notice.
                 </div>
                 {parkDates && (
-                  <h4 className="my-3">Open to public access {parkDates}</h4>
+                  <h4 className="my-3">
+                    The park {marineProtectedArea !== 'Y' && "gate"} is open {parkDates}
+                  </h4>
                 )}
                 {!parkDates && (
                   <h4 className="my-3">Operating dates are not yet available</h4>
