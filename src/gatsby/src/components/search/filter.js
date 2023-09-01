@@ -8,17 +8,16 @@ import {
 const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
   return (
     <FormGroup className="filter-options-container">
-      {filterItems.map(item =>
-        <FormControlLabel
+      {filterItems.map(item => {
+        const checked = selectedFilterItems.filter(
+          selectedFilterItem =>
+            selectedFilterItem.value === item.value
+        ).length === 1 ? true : false
+        return (<FormControlLabel
           key={item.label}
           control={
             <Checkbox
-              checked={
-                selectedFilterItems.filter(
-                  selectedFilterItem =>
-                    selectedFilterItem.value === item.value
-                ).length === 1 ? true : false
-              }
+              checked={checked}
               onChange={event => {
                 handleFilterCheck(item, event)
               }}
@@ -32,8 +31,9 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
                 selectedFilterItem.value === item.value
             ).length === 1 ? "text-light-blue" : ""
           }
-          disabled={item.count === 0}
-        />
+          disabled={item.count === 0 && !checked}
+        />)
+      }
       )}
     </FormGroup>
   )

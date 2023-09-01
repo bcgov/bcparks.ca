@@ -44,6 +44,9 @@ module.exports = ({ strapi }) => ({
       managementAreas: {
         fields: ["managementAreaNumber", "managementAreaName"],
         populate: {
+          "searchArea": {
+            fields: ["searchAreaName"],
+          },
           "section": {
             fields: ["sectionNumber", "sectionName"],
             populate: { "region": { fields: ["regionNumber", "regionName"] } }

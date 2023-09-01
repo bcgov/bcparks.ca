@@ -39,10 +39,10 @@
       "target": "api::region.region",
       "inversedBy": "managementAreas"
     },
-    "searchRegion": {
+    "searchArea": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::search-region.search-region",
+      "target": "api::search-area.search-area",
       "inversedBy": "managementAreas"
     }
   }

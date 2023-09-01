@@ -153,6 +153,9 @@ module.exports = ({ env }) => {
             "api::event-type.event-type": {
               GET: true,
             },
+            "api::search-area.search-area": {
+              GET: true,
+            },
           },
         },
       },

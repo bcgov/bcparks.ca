@@ -37,12 +37,12 @@ export const query = graphql`
         apiURL
       }
     }
-    allStrapiRegion(
-      sort: {regionName: ASC},
+    allStrapiSearchArea(
+      sort: {rank: ASC},
     ) {
       nodes {
-        regionName
-        regionNumber
+        searchAreaName
+        strapi_id
       }
     }
     allStrapiActivityType(
@@ -99,7 +99,7 @@ export const query = graphql`
 export default function FindAPark({ location, data }) {
   const menuContent = data?.allStrapiMenu?.nodes || []
 
-  const [regionsCount, setRegionsCount] = useState([])
+  const [areasCount, setAreasCount] = useState([])
   const [activitiesCount, setActivitiesCount] = useState([])
   const [facilitiesCount, setFacilitiesCount] = useState([])
   const [campingsCount, setCampingsCount] = useState([])
@@ -110,13 +110,13 @@ export default function FindAPark({ location, data }) {
   )
 
   // filter items
-  const regionItems = data.allStrapiRegion.nodes.map(region => {
-    const filterCount = regionsCount?.find(
-      regionCount => regionCount.key === region.regionNumber
+  const areaItems = data.allStrapiSearchArea.nodes.map(area => {
+    const filterCount = areasCount?.find(
+      areaCount => areaCount.key === area.strapi_id
     )?.doc_count || 0
     return {
-      label: region.regionName,
-      value: region.regionNumber,
+      label: area.searchAreaName,
+      value: area.strapi_id,
       count: filterCount
     }
   })
@@ -163,12 +163,12 @@ export default function FindAPark({ location, data }) {
   })
 
   // selected filter items state
-  const [qsRegions, setQsRegions] = useQueryParamString("r", "")
+  const [qsAreas, setQsAreas] = useQueryParamString("sa", "")
   const [qsCampingFacilities, setQsCampingFacilities] = useQueryParamString("c", "")
   const [qsActivities, setQsActivities] = useQueryParamString("a", "")
   const [qsFacilities, setQsFacilities] = useQueryParamString("f", "")
 
-  const [selectedRegions, setSelectedRegions] = useState([])
+  const [selectedAreas, setSelectedAreas] = useState([])
   const [selectedCampingFacilities, setSelectedCampingFacilities] = useState([])
   const [selectedActivities, setSelectedActivities] = useState([])
   const [selectedFacilities, setSelectedFacilities] = useState([])
@@ -202,13 +202,13 @@ export default function FindAPark({ location, data }) {
   const searchApiUrl = `${data.site.siteMetadata.apiURL}/api/protected-areas/search`
 
   // event handlers
-  const handleRegionCheck = (region, event) => {
+  const handleAreaCheck = (area, event) => {
     setCurrentPage(1)
     if (event.target.checked) {
-      setSelectedRegions([...selectedRegions, region])
+      setSelectedAreas([...selectedAreas, area])
     } else {
-      setSelectedRegions([
-        ...selectedRegions.filter(r => r.value !== region.value),
+      setSelectedAreas([
+        ...selectedAreas.filter(r => r.value !== area.value),
       ])
     }
   }
@@ -243,9 +243,9 @@ export default function FindAPark({ location, data }) {
     }
   }
 
-  const handleRegionDelete = chipToDelete => {
+  const handleAreaDelete = chipToDelete => {
     setCurrentPage(1)
-    setSelectedRegions(chips =>
+    setSelectedAreas(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
   }
@@ -269,8 +269,8 @@ export default function FindAPark({ location, data }) {
   }
 
   const handleFilterDelete = chipToDelete => () => {
-    if (chipToDelete.type === "region") {
-      handleRegionDelete(chipToDelete)
+    if (chipToDelete.type === "area") {
+      handleAreaDelete(chipToDelete)
     } else if (chipToDelete.type === "campingFacility") {
       handleCampingFacilityDelete(chipToDelete)
     } else if (chipToDelete.type === "activity") {
@@ -319,7 +319,7 @@ export default function FindAPark({ location, data }) {
 
   const handleClearFilter = () => {
     setFilterSelections([])
-    setSelectedRegions([])
+    setSelectedAreas([])
     setSelectedCampingFacilities([])
     setSelectedActivities([])
     setSelectedFacilities([])
@@ -333,8 +333,8 @@ export default function FindAPark({ location, data }) {
 
   const setFilters = useCallback(() => {
     const filters = []
-    selectedRegions.forEach(r => {
-      filters.push({ ...r, type: "region" })
+    selectedAreas.forEach(r => {
+      filters.push({ ...r, type: "area" })
     })
     selectedCampingFacilities.forEach(c => {
       filters.push({ ...c, type: "campingFacility" })
@@ -347,7 +347,7 @@ export default function FindAPark({ location, data }) {
     })
     setFilterSelections([...filters])
   }, [
-    selectedRegions,
+    selectedAreas,
     selectedCampingFacilities,
     selectedActivities,
     selectedFacilities,
@@ -357,8 +357,8 @@ export default function FindAPark({ location, data }) {
     const params = {
       queryText: searchText,
     }
-    if (selectedRegions.length > 0) {
-      params.regions = selectedRegions.map(region => region.value)
+    if (selectedAreas.length > 0) {
+      params.areas = selectedAreas.map(area => area.value)
     }
     if (selectedCampingFacilities.length > 0) {
       params.campings = selectedCampingFacilities.map(camping => camping.value)
@@ -372,7 +372,7 @@ export default function FindAPark({ location, data }) {
     return params
   }, [
     searchText,
-    selectedRegions,
+    selectedAreas,
     selectedCampingFacilities,
     selectedActivities,
     selectedFacilities,
@@ -380,7 +380,7 @@ export default function FindAPark({ location, data }) {
 
   const isActiveSearch =
     params.queryText ||
-    (params.regions && params.regions.length) ||
+    (params.areas && params.areas.length) ||
     (params.activities && params.activities.length) ||
     (params.facilities && params.facilities.length) ||
     (params.campings && params.campings.length) ||
@@ -399,7 +399,7 @@ export default function FindAPark({ location, data }) {
           const newResults = resultResponse.data.data
           setSearchResults(newResults);
           setTotalResults(total)
-          setRegionsCount(resultResponse.data.meta.aggregations.regions.buckets)
+          setAreasCount(resultResponse.data.meta.aggregations.areas.buckets)
           setActivitiesCount(resultResponse.data.meta.aggregations.activities.buckets)
           setFacilitiesCount(resultResponse.data.meta.aggregations.facilities.buckets)
           setCampingsCount(resultResponse.data.meta.aggregations.campings.buckets)
@@ -428,15 +428,15 @@ export default function FindAPark({ location, data }) {
     if (selectedFacilities.length === 0 && qsFacilities.length > 0) {
       setSelectedFacilities(facilityItems.filter(x => arr(qsFacilities).includes(x.value)));
     }
-    if (selectedRegions.length === 0 && qsRegions.length > 0) {
-      setSelectedRegions(regionItems.filter(x => arr(qsRegions).includes(x.value)));
+    if (selectedAreas.length === 0 && qsAreas.length > 0) {
+      setSelectedAreas(areaItems.filter(x => arr(qsAreas).includes(x.value)));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     qsActivities,
     qsCampingFacilities,
     qsFacilities,
-    qsRegions
+    qsAreas
   ])
 
   useEffect(() => {
@@ -455,9 +455,9 @@ export default function FindAPark({ location, data }) {
     if (qsFacilities !== facilities) {
       setQsFacilities(facilities);
     }
-    const regions = qs(selectedRegions);
-    if (qsRegions !== regions) {
-      setQsRegions(regions);
+    const areas = qs(selectedAreas);
+    if (qsAreas !== areas) {
+      setQsAreas(areas);
     }
     setInputText(searchText)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -465,7 +465,7 @@ export default function FindAPark({ location, data }) {
     selectedActivities,
     selectedCampingFacilities,
     selectedFacilities,
-    selectedRegions,
+    selectedAreas,
     searchText
   ])
 
@@ -522,7 +522,7 @@ export default function FindAPark({ location, data }) {
                         className="park-search-text-box h50p"
                         value={inputText}
                         focused={isLoading}
-                        inputRef={searchRef} 
+                        inputRef={searchRef}
                         onChange={event => {
                           setInputText(event.target.value)
                         }}
@@ -543,7 +543,7 @@ export default function FindAPark({ location, data }) {
                               <IconButton
                                 className="clear-icon-button"
                                 onClick={handleClickClear}
-                                onKeyDown={(e) => {handleKeyDownClear(e)}}
+                                onKeyDown={(e) => { handleKeyDownClear(e) }}
                                 sx={{ visibility: inputText ? "visible" : "hidden" }}
                                 aria-label="Clear search">
                                 <ClearIcon className="clear-icon" />
@@ -653,7 +653,7 @@ export default function FindAPark({ location, data }) {
                               className="park-search-text-box h50p"
                               value={inputText}
                               focused={isLoading}
-                              inputRef={searchRef} 
+                              inputRef={searchRef}
                               onChange={event => {
                                 setInputText(event.target.value)
                               }}
@@ -675,7 +675,7 @@ export default function FindAPark({ location, data }) {
                                     <IconButton
                                       className="clear-icon-button"
                                       onClick={handleClickClear}
-                                      onKeyDown={(e) => {handleKeyDownClear(e)}}
+                                      onKeyDown={(e) => { handleKeyDownClear(e) }}
                                       sx={{ visibility: inputText ? "visible" : "hidden" }}
                                       aria-label="Clear search">
                                       <ClearIcon className="clear-icon" />
@@ -704,12 +704,12 @@ export default function FindAPark({ location, data }) {
                       <h3 className="subtitle mb-2">Filter</h3>
                       <DesktopFilters
                         data={{
-                          regionItems,
+                          areaItems,
                           campingFacilityItems,
                           activityItems,
                           facilityItems,
-                          selectedRegions,
-                          setSelectedRegions,
+                          selectedAreas,
+                          setSelectedAreas,
                           selectedCampingFacilities,
                           setSelectedCampingFacilities,
                           selectedActivities,
@@ -719,7 +719,7 @@ export default function FindAPark({ location, data }) {
                           searchText,
                           setCurrentPage,
                           setFilters,
-                          handleRegionCheck,
+                          handleAreaCheck,
                           handleCampingFacilityCheck,
                           handleActivityCheck,
                           handleFacilityCheck
@@ -814,14 +814,14 @@ export default function FindAPark({ location, data }) {
       <MobileFilters
         data={{
           totalResults,
-          regionItems,
+          areaItems,
           campingFacilityItems,
           activityItems,
           facilityItems,
           openFilter,
           setOpenFilter,
-          selectedRegions,
-          setSelectedRegions,
+          selectedAreas,
+          setSelectedAreas,
           selectedCampingFacilities,
           setSelectedCampingFacilities,
           selectedActivities,
@@ -831,7 +831,7 @@ export default function FindAPark({ location, data }) {
           searchText,
           setCurrentPage,
           setFilters,
-          handleRegionCheck,
+          handleAreaCheck,
           handleCampingFacilityCheck,
           handleActivityCheck,
           handleFacilityCheck

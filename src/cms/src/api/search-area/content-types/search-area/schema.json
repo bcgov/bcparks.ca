@@ -1,17 +1,17 @@
 {
   "kind": "collectionType",
-  "collectionName": "search_regions",
+  "collectionName": "search_areas",
   "info": {
-    "singularName": "search-region",
-    "pluralName": "search-regions",
-    "displayName": "Search-region",
+    "singularName": "search-area",
+    "pluralName": "search-areas",
+    "displayName": "Search-area",
     "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "attributes": {
-    "searchRegionName": {
+    "searchAreaName": {
       "type": "string"
     },
     "rank": {
@@ -23,7 +23,7 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::management-area.management-area",
-      "mappedBy": "searchRegion"
+      "mappedBy": "searchArea"
     }
   }
 }

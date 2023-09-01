@@ -25,6 +25,8 @@ exports.createElasticPark = async function (park, photos) {
   if (park?.managementAreas?.length) {
     for (const ma of park.managementAreas) {
       park.parkLocations.push({
+        searchAreaNum: ma.searchArea?.id,
+        searchArea: ma.searchArea?.searchAreaName,
         regionNum: ma.section?.region?.regionNumber,
         region: ma.section?.region?.regionName,
         sectionNum: ma.section?.sectionNumber,
