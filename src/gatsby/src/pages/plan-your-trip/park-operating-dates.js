@@ -103,6 +103,7 @@ const ParkLink = ({ park }) => {
     subArea.facilityIsCamping = facilityType.isCamping || false
 
     const saDates = subArea.parkOperationSubAreaDates
+    subArea.operationDates = []
     subArea.offSeasonDates = []
     subArea.resDates = []
     subArea.serviceDates = []
@@ -110,6 +111,10 @@ const ParkLink = ({ park }) => {
     for (let dIdx in saDates) {
       const dateRec = saDates[dIdx]
       if (dateRec.isActive) {
+        subArea.operationDates.push({
+          start: dateRec.openDate,
+          end: dateRec.closeDate
+        })
         subArea.serviceDates.push({
           start: dateRec.serviceStartDate,
           end: dateRec.serviceEndDate
@@ -125,6 +130,7 @@ const ParkLink = ({ park }) => {
       }
     }
 
+    subArea.operationDates = processDateRanges(subArea.operationDates)
     subArea.serviceDates = processDateRanges(subArea.serviceDates)
     subArea.resDates = processDateRanges(subArea.resDates)
     subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates)
@@ -190,10 +196,10 @@ const ParkLink = ({ park }) => {
                     )}
                   </ul>
                 ) : (
-                  parkDates === 'year-round' ? (
-                    <>Limited services</>
-                  ) : (
-                    <>No services</>
+                  subArea.operationDates.length > 0 && (
+                    <>
+                      {subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
+                    </>
                   )
                 )}
               </td>
@@ -248,13 +254,10 @@ const ParkLink = ({ park }) => {
                       )}
                     </ul>
                   ) : (
-                    parkDates === 'year-round' ? (
+                    subArea.operationDates.length > 0 && (
                       <>
-                        <br />Limited services
-                      </>
-                    ) : (
-                      <>
-                        <br />No services
+                        <br />
+                        {subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
                       </>
                     )
                   )}
