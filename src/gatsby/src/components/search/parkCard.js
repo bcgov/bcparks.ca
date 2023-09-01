@@ -18,15 +18,13 @@ import campfireBanIcon from "../../../static/icons/campfire-ban.svg"
 
 import { addSmallImagePrefix, handleImgError } from "../../utils/helpers"
 
-const locationLabel = (parkLocation) => {
-  if (parkLocation?.section !== "Haida Gwaii/South Island") {
-    return parkLocation?.section;
+const locationLabel = (parkLocations) => {
+  if (!parkLocations || !parkLocations.length) {
+    return "";
   }
-  if (parkLocation.managementArea === "Haida Gwaii") {
-    return "Haida Gwaii";
-  } else {
-    return ("South Island");
-  }
+  const arrList = parkLocations.map(p => { return p.searchArea });
+  const distinctLocations = [...new Set(arrList)]
+  return distinctLocations.join(", ");
 }
 
 const Icon = ({ src, label, size }) => {
@@ -174,7 +172,7 @@ const ParkCard = ({ r }) => {
                         <ExpandCircleDownIcon className="park-heading-icon" />
                       </h2>
                     </GatsbyLink>
-                    <p>{locationLabel(r.parkLocations.length ? r.parkLocations[0] : {})}</p>
+                    <p>{locationLabel(r.parkLocations)}</p>
                   </div>
                   <div className="park-content-bottom">
                     <div className="park-content-bottom--left">
@@ -279,7 +277,7 @@ const ParkCard = ({ r }) => {
                       <ExpandCircleDownIcon className="park-heading-icon" />
                     </h2>
                   </GatsbyLink>
-                  <p>{locationLabel(r.parkLocations.length ? r.parkLocations[0] : {})}</p>
+                  <p>{locationLabel(r.parkLocations)}</p>
                   <div>
                     <FeatureIcons park={r} />
                   </div>

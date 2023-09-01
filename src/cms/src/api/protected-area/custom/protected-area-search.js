@@ -102,7 +102,7 @@ function parseSearchFilters(query) {
   let activityNumbers = [];
   let facilityNumbers = [];
   let campingNumbers = [];
-  let regionNumbers = [];
+  let areaNumbers = [];
 
   if (query.activities) {
     if (typeof query.activities === "object") {
@@ -122,13 +122,13 @@ function parseSearchFilters(query) {
       facilityNumbers = [parseInt(query.facilities, 10)];
     }
   }
-  if (query.regions) {
-    if (typeof query.regions === "object") {
-      regionNumbers = query.regions.map((region) =>
-        parseInt(region, 10)
+  if (query.areas) {
+    if (typeof query.areas === "object") {
+      areaNumbers = query.areas.map((area) =>
+        parseInt(area, 10)
       );
     } else {
-      regionNumbers = [parseInt(query.regions, 10)];
+      areaNumbers = [parseInt(query.areas, 10)];
     }
   }
   if (query.campings) {
@@ -149,7 +149,7 @@ function parseSearchFilters(query) {
     marineProtectedArea,
     activityNumbers,
     facilityNumbers,
-    regionNumbers,
+    areaNumbers,
     campingNumbers
   };
 }
@@ -165,9 +165,9 @@ function parseSearchOffset(query) {
 }
 
 function cleanUpAggregations(aggs) {
-  aggs.regions = aggs.all_regions.filtered.regions;
+  aggs.areas = aggs.all_areas.filtered.areas;
   aggs.campings = aggs.all_camping.filtered.campings;
-  delete aggs.all_regions;
+  delete aggs.all_areas;
   delete aggs.all_camping;
   return aggs;
 }

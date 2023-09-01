@@ -18,20 +18,20 @@ import "../../styles/search.scss"
 const MobileFilters = ({
   data: {
     totalResults,
-    regionItems,
+    areaItems,
     campingFacilityItems,
     activityItems,
     facilityItems,
     openFilter,
     setOpenFilter,
-    selectedRegions,
+    selectedAreas,
     selectedCampingFacilities,
     selectedActivities,
     selectedFacilities,
     searchText,
     setCurrentPage,
     setFilters,
-    handleRegionCheck,
+    handleAreaCheck,
     handleCampingFacilityCheck,
     handleActivityCheck,
     handleFacilityCheck
@@ -40,6 +40,9 @@ const MobileFilters = ({
 }) => {
   const [showFilters, setShowFilter] = useState([false, false, false, false, false])
   const [expandAll, setExpandAll] = useState(false)
+
+  const alphabeticAreaItems = areaItems.slice(0)
+  alphabeticAreaItems.sort((a,b) => { return a.label > b.label ? 1 : -1 })
 
   const handleExpandAll = () => {
     const newShowFilters = Array.from(showFilters, (filter) => !expandAll)
@@ -62,7 +65,7 @@ const MobileFilters = ({
     setCurrentPage(1);
     navigate("/find-a-park", {
       state: {
-        selectedRegions,
+        selectedAreas,
         selectedCampingFacilities,
         selectedActivities,
         selectedFacilities,
@@ -76,7 +79,7 @@ const MobileFilters = ({
     setFilters()
   }, [
     searchText,
-    selectedRegions,
+    selectedAreas,
     selectedCampingFacilities,
     selectedActivities,
     selectedFacilities,
@@ -192,7 +195,7 @@ const MobileFilters = ({
                     }}
                   >
                     <div className="park-select-label">
-                      Region
+                      Area
                     </div>
                     {showFilters[1] ? (
                       <ExpandLess fontSize="large" className="mtm5" />
@@ -208,9 +211,9 @@ const MobileFilters = ({
                   className="p-3"
                 >
                   <Filter
-                    filterItems={regionItems}
-                    selectedFilterItems={selectedRegions}
-                    handleFilterCheck={handleRegionCheck}
+                    filterItems={alphabeticAreaItems}
+                    selectedFilterItems={selectedAreas}
+                    handleFilterCheck={handleAreaCheck}
                   />
                 </Collapse>
               </div>
@@ -374,20 +377,20 @@ const MobileFilters = ({
 MobileFilters.propTypes = {
   data: PropTypes.shape({
     totalResults: PropTypes.number.isRequired,
-    regionItems: PropTypes.array.isRequired,
+    areaItems: PropTypes.array.isRequired,
     campingFacilityItems: PropTypes.array.isRequired,
     activityItems: PropTypes.array.isRequired,
     facilityItems: PropTypes.array.isRequired,
     openFilter: PropTypes.bool.isRequired,
     setOpenFilter: PropTypes.func.isRequired,
-    selectedRegions: PropTypes.array.isRequired,
+    selectedAreas: PropTypes.array.isRequired,
     selectedCampingFacilities: PropTypes.array.isRequired,
     selectedActivities: PropTypes.array.isRequired,
     selectedFacilities: PropTypes.array.isRequired,
     searchText: PropTypes.string.isRequired,
     setCurrentPage: PropTypes.func.isRequired,
     setFilters: PropTypes.func.isRequired,
-    handleRegionCheck: PropTypes.func.isRequired,
+    handleAreaCheck: PropTypes.func.isRequired,
     handleCampingFacilityCheck: PropTypes.func.isRequired,
     handleActivityCheck: PropTypes.func.isRequired,
     handleFacilityCheck: PropTypes.func.isRequired

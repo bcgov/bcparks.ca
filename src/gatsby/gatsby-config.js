@@ -34,49 +34,23 @@ module.exports = {
         apiURL: process.env.STRAPI_SOURCE_URL || process.env.REACT_APP_CMS_BASE_URL,
         accessToken: process.env.STRAPI_TOKEN,
         collectionTypes: [
-          "region",
-          "urgency",
-          "public-advisory",
-          "park-photo",
-          "website",
+          "access-status",
           "activity-type",
           "facility-type",
+          "legacy-redirect",
           "menu",
           "park-operation",
-          "access-status",
           "park-operation-sub-area",
+          "park-photo",
           "park-sub-page",
-          "legacy-redirect",
-          "management-document",
-          "management-document-type",
-          "biogeoclimatic-zone",
-          "marine-ecosection",
-          "terrestrial-ecosection",
+          "public-advisory",
+          "search-area",
           {
             singularName: "page",
             queryParams: {
               populate: {
                 Content: {
                   populate: "*"
-                }
-              }
-            }
-          },
-          {
-            singularName: "site",
-            queryParams: {
-              populate: {
-                protectedArea: {
-                  fields: "*"
-                },
-                parkActivities: {
-                  populate: ["activityType"]
-                },
-                parkFacilities: {
-                  populate: ["facilityType"]
-                },
-                parkOperation: {
-                  fields: "*"
                 }
               }
             }
@@ -118,7 +92,26 @@ module.exports = {
               }
             },
             queryLimit: 100
-          }
+          },
+          {
+            singularName: "site",
+            queryParams: {
+              populate: {
+                protectedArea: {
+                  fields: "*"
+                },
+                parkActivities: {
+                  populate: ["activityType"]
+                },
+                parkFacilities: {
+                  populate: ["facilityType"]
+                },
+                parkOperation: {
+                  fields: "*"
+                }
+              }
+            }
+          },
         ]
       }
     },
@@ -159,13 +152,13 @@ module.exports = {
         resolveEnv: () => process.env.ENV_SUFFIX || 'dev',
         env: {
           'dev': {
-            policy: [{userAgent: '*', disallow: ['/']}]
+            policy: [{ userAgent: '*', disallow: ['/'] }]
           },
           'test': {
-            policy: [{userAgent: '*', disallow: ['/']}]
+            policy: [{ userAgent: '*', disallow: ['/'] }]
           },
           'prod': {
-            policy: [{userAgent: '*', allow: ['/']}]
+            policy: [{ userAgent: '*', allow: ['/'] }]
           },
         },
       },
