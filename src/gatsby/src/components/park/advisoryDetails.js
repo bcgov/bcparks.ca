@@ -107,6 +107,13 @@ export default function AdvisoryDetails({ advisories }) {
                   expandAll(!allExpanded)
                   setAllExpanded(!allExpanded)
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault()
+                    expandAll(!allExpanded)
+                    setAllExpanded(!allExpanded)
+                  }
+                }}
                 className="expand-link expand-icon"
               >
                 {allExpanded ? "Collapse all" : "Expand all"}
