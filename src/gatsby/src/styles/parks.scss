@@ -81,7 +81,7 @@
       color: $colorGold;
     }
     &:focus-visible {
-      outline: -webkit-focus-ring-color auto 1px;
+      outline: -webkit-focus-ring-color auto 2px;
     }
     &.btn-primary {
       color: $colorWhite;
@@ -219,6 +219,7 @@
 }
 
 #park-header-container .MuiCardHeader-root {
+  margin: 2px;
   padding: 0px;
 }
 
