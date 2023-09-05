@@ -192,6 +192,12 @@ export default function CampingDetails({ data }) {
               tabIndex="0"
               underline="hover"
               onClick={() => setOpen(!open)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault()
+                  setOpen(!open)
+                }
+              }}
               className="expand-link expand-icon"
             >
               {open ? "Collapse all" : "Expand all"}
