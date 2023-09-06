@@ -109,12 +109,12 @@
 }
 
 .parks-search-button {
-  background: $colorGold;
-  color: $colorBlue;
-  height: 50px;
-  margin-left: auto;
-  font-size: 1.1rem;
-  padding: 0 25px;
+  background-color: $colorGold !important;
+  color: $colorBlue !important;
+  height: 50px !important;
+  margin-left: auto !important;
+  font-size: 1.1rem !important;
+  padding: 0 25px !important;
 }
 
 .parks-search-filter-link {
@@ -129,7 +129,7 @@
 }
 
 .park-search-text-box {
-  margin-right: 10px;
+  margin-right: 10px !important;
   width: 100% !important;
 
   .MuiOutlinedInput-root {
