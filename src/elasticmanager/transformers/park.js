@@ -83,7 +83,7 @@ exports.createElasticPark = async function (park, photos) {
           num: facilityNumber
         };
       });
-    park.campingFacilities = _.uniqBy(campingFacilities, 'facilityCode');
+    park.campingFacilities = _.uniqBy(campingFacilities, 'code');
     
     park.parkFacilities = parkFacilities;
   }
