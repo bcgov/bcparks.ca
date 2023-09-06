@@ -81,9 +81,7 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
             {subArea.serviceDates.length > 0 && (
               <>
                 <dt className="mt-3">
-                  {subArea?.facilityType?.isCamping || false
-                    ? 'Main camping season dates'
-                    : 'Main operating season dates'}
+                  Main operating season dates
                 </dt>
                 <dd>
                   <ul className="pl-3">
@@ -299,7 +297,7 @@ export default function ParkDates({ data }) {
       if (subArea.serviceDates.length === 0
         && subArea.resDates.length === 0
         && subArea.offSeasonDates.length === 0) {
-        subArea.serviceDates.push(`${new Date().getFullYear()}: Dates are not yet available`)
+        subArea.serviceDates.push(`${new Date().getFullYear()}: Dates unavailable`)
       }
     }
   }
@@ -351,7 +349,7 @@ export default function ParkDates({ data }) {
                   </h4>
                 )}
                 {!parkDates && (
-                  <h4 className="my-3">Operating dates are not yet available</h4>
+                  <h4 className="my-3">Operating dates are unavailable</h4>
                 )}
                 <h4 className="my-3">
                   Current status:

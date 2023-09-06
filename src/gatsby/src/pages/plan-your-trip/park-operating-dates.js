@@ -138,7 +138,7 @@ const ParkLink = ({ park }) => {
     if (subArea.serviceDates.length === 0
       && subArea.resDates.length === 0
       && subArea.offSeasonDates.length === 0) {
-      subArea.serviceDates.push(`${new Date().getFullYear()}: Dates are not yet available`)
+      subArea.serviceDates.push(`${new Date().getFullYear()}: Dates unavailable`)
     }
   }
 
