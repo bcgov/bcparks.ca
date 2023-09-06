@@ -33,7 +33,7 @@ const DesktopFilters = ({
   const [showMoreAreas, setMoreAreas] = useState(true)
   const [truncatedActivityFilterLength, setTruncatedActivityFilterLength] = useState(5)
   const [truncatedFacilityFilterLength, setTruncatedFacilityFilterLength] = useState(5)
-  const [truncatedAreaFilterLength, setTruncatedAreaFilterLength] = useState(5)
+  const [truncatedAreaFilterLength, setTruncatedAreaFilterLength] = useState(6)
 
   useEffect(() => {
     setFilters()
@@ -58,7 +58,7 @@ const DesktopFilters = ({
       setTruncatedFacilityFilterLength(facilityItems.length)
     }
     if (showMoreAreas) {
-      setTruncatedAreaFilterLength(5)
+      setTruncatedAreaFilterLength(6)
     } else {
       setTruncatedAreaFilterLength(areaItems.length)
     }
