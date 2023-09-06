@@ -81,9 +81,7 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
             {subArea.serviceDates.length > 0 && (
               <>
                 <dt className="mt-3">
-                  {subArea?.facilityType?.isCamping || false
-                    ? 'Main camping season dates'
-                    : 'Main operating season dates'}
+                  Main operating season dates
                 </dt>
                 <dd>
                   <ul className="pl-3">
