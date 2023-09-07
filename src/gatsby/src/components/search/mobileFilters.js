@@ -42,7 +42,7 @@ const MobileFilters = ({
   const [expandAll, setExpandAll] = useState(false)
 
   const alphabeticAreaItems = areaItems.slice(0)
-  alphabeticAreaItems.sort((a,b) => { return a.label > b.label ? 1 : -1 })
+  alphabeticAreaItems.sort((a, b) => { return a.label > b.label ? 1 : -1 })
 
   const handleExpandAll = () => {
     const newShowFilters = Array.from(showFilters, (filter) => !expandAll)
@@ -63,15 +63,6 @@ const MobileFilters = ({
 
   const searchParkFilter = () => {
     setCurrentPage(1);
-    navigate("/find-a-park", {
-      state: {
-        selectedAreas,
-        selectedCampingFacilities,
-        selectedActivities,
-        selectedFacilities,
-        searchText,
-      },
-    })
     setOpenFilter(false)
   }
 
