@@ -253,24 +253,17 @@ h3.subtitle {
 .filter-options-container {
   .MuiTypography-root {
     color: $colorText;
+    line-height: 2;
   }
   .MuiIconButton-root .MuiSvgIcon-root {
     font-size: 1.875rem;
     color: $colorText;
   }
 
-  .Mui-checked .MuiSvgIcon-root {
-    color: $colorBlueLight !important;
-  }
   .MuiFormControlLabel-root {
     align-items: flex-start;
     margin-left: 0;
     margin-right: 0;
-    .MuiCheckbox-root {
-      .MuiSvgIcon-root {
-        font-size: 2rem;
-      }
-    }
   }
 }
 
@@ -295,6 +288,7 @@ h3.subtitle {
       align-items: center;
       justify-content: space-between;
       svg.MuiSvgIcon-root {
+        color: #656565;
         font-size: 1.25rem;
       }
     }
@@ -342,15 +336,13 @@ h3.subtitle {
 .park-filter-dialog,
 .search-results-main {
   .MuiCheckbox-root {
-    width: 24px;
-    height: 24px;
     color: $colorBlue !important;
-    border-radius: 5px;
     padding: 0px !important;
     margin-right: 10px;
     &.Mui-disabled {
       color: #c7c7c7!important;
       background-color: #e4e4e4;
+      border-radius: 4px;
     }
   }
 
@@ -776,6 +768,11 @@ div[class$="-singleValue"] {
 .expand-link {
   color: $colorBlue !important;
   cursor: pointer;
+  svg.MuiSvgIcon-root {
+    color: #656565;
+    font-size: 1.5rem;
+    margin: 0 0 2px 8px;
+  }
 }
 
 .background-blue {

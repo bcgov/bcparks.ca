@@ -130,9 +130,9 @@ const MobileFilters = ({
                       Popular
                     </div>
                     {showFilters[0] ? (
-                      <ExpandLess fontSize="large" className="mtm5" />
+                      <ExpandLess fontSize="large" />
                     ) : (
-                      <ExpandMore fontSize="large" className="mtm5" />
+                      <ExpandMore fontSize="large" />
                     )}
                   </div>
                 </div>
@@ -198,9 +198,9 @@ const MobileFilters = ({
                       Area
                     </div>
                     {showFilters[1] ? (
-                      <ExpandLess fontSize="large" className="mtm5" />
+                      <ExpandLess fontSize="large" />
                     ) : (
-                      <ExpandMore fontSize="large" className="mtm5" />
+                      <ExpandMore fontSize="large" />
                     )}
                   </div>
                 </div>
@@ -239,9 +239,9 @@ const MobileFilters = ({
                       Camping
                     </div>
                     {showFilters[2] ? (
-                      <ExpandLess fontSize="large" className="mtm5" />
+                      <ExpandLess fontSize="large" />
                     ) : (
-                      <ExpandMore fontSize="large" className="mtm5" />
+                      <ExpandMore fontSize="large" />
                     )}
                   </div>
                 </div>
@@ -281,9 +281,9 @@ const MobileFilters = ({
                       Activities
                     </div>
                     {showFilters[3] ? (
-                      <ExpandLess fontSize="large" className="mtm5" />
+                      <ExpandLess fontSize="large" />
                     ) : (
-                      <ExpandMore fontSize="large" className="mtm5" />
+                      <ExpandMore fontSize="large" />
                     )}
                   </div>
                 </div>
@@ -321,9 +321,9 @@ const MobileFilters = ({
                       Facilities
                     </div>
                     {showFilters[4] ? (
-                      <ExpandLess fontSize="large" className="mtm5" />
+                      <ExpandLess fontSize="large" />
                     ) : (
-                      <ExpandMore fontSize="large" className="mtm5" />
+                      <ExpandMore fontSize="large" />
                     )}
                   </div>
                 </div>
