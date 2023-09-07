@@ -108,13 +108,13 @@
   }
 }
 
-.parks-search-button {
-  background-color: $colorGold !important;
-  color: $colorBlue !important;
-  height: 50px !important;
-  margin-left: auto !important;
-  font-size: 1.1rem !important;
-  padding: 0 25px !important;
+button.MuiButton-root.parks-search-button {
+  background-color: $colorGold;
+  color: $colorBlue;
+  height: 50px;
+  margin-left: auto;
+  font-size: 1.1rem;
+  padding: 0 25px;
 }
 
 .parks-search-filter-link {
@@ -128,9 +128,9 @@
   cursor: pointer;
 }
 
-.park-search-text-box {
-  margin-right: 10px !important;
-  width: 100% !important;
+.MuiTextField-root.park-search-text-box {
+  margin-right: 10px;
+  width: 100%;
 
   .MuiOutlinedInput-root {
     width: 100% !important;
