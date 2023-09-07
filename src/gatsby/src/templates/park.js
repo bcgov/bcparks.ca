@@ -615,6 +615,8 @@ export const query = graphql`
       longitude
       mapZoom
       totalArea
+      uplandArea
+      marineArea
       establishedDate
       marineProtectedArea
       seo {
