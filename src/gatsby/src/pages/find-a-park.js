@@ -163,16 +163,16 @@ export default function FindAPark({ location, data }) {
   })
 
   // selected filter items state
-  const [qsAreas, setQsAreas] = useQueryParamString("sa", "")
-  const [qsCampingFacilities, setQsCampingFacilities] = useQueryParamString("c", "")
-  const [qsActivities, setQsActivities] = useQueryParamString("a", "")
-  const [qsFacilities, setQsFacilities] = useQueryParamString("f", "")
+  const [qsAreas, setQsAreas, qsAreasInitialized] = useQueryParamString("sa", "")
+  const [qsCampingFacilities, setQsCampingFacilities, qsCampingsInitialized] = useQueryParamString("c", "")
+  const [qsActivities, setQsActivities, qsActivitiesInitialized] = useQueryParamString("a", "")
+  const [qsFacilities, setQsFacilities, qsFacilitiesInitialized] = useQueryParamString("f", "")
 
   const [selectedAreas, setSelectedAreas] = useState([])
   const [selectedCampingFacilities, setSelectedCampingFacilities] = useState([])
   const [selectedActivities, setSelectedActivities] = useState([])
   const [selectedFacilities, setSelectedFacilities] = useState([])
-  const [searchText, setSearchText] = useQueryParamString(
+  const [searchText, setSearchText, searchTextInitialized] = useQueryParamString(
     "q", location.state?.searchText ? location.state.searchText : ""
   )
   const [inputText, setInputText] = useState("")
@@ -302,7 +302,7 @@ export default function FindAPark({ location, data }) {
       e.preventDefault()
       handleClickClear()
     }
-  }   
+  }
   const handleLoadMore = () => {
     const newPage = +currentPage + 1
     setCurrentPage(newPage)
@@ -383,12 +383,23 @@ export default function FindAPark({ location, data }) {
     (params.areas && params.areas.length) ||
     (params.activities && params.activities.length) ||
     (params.facilities && params.facilities.length) ||
-    (params.campings && params.campings.length) ||
-    params.typeCode
+    (params.campings && params.campings.length)
+
+  const queryParamStateSyncComplete = () => {
+    return currentPageInitialized
+      && searchTextInitialized
+      && qsCampingsInitialized
+      && qsActivitiesInitialized
+      && qsAreasInitialized
+      && qsFacilitiesInitialized
+      && Math.sign(qsCampingFacilities.length) === Math.sign(selectedCampingFacilities.length)
+      && Math.sign(qsActivities.length) === Math.sign(selectedActivities.length)
+      && Math.sign(qsAreas.length) === Math.sign(selectedAreas.length)
+      && Math.sign(qsFacilities.length) === Math.sign(selectedFacilities.length);
+  }
 
   useEffect(() => {
-    const qs = new URLSearchParams(window.location.search)
-    if (currentPageInitialized || !qs.has('p')) {
+    if (queryParamStateSyncComplete()) {
       setIsLoading(true)
       setFilters()
       axios.get(searchApiUrl, {
@@ -413,7 +424,15 @@ export default function FindAPark({ location, data }) {
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params, currentPageInitialized])
+  }, [
+    params,
+    qsActivities,
+    qsCampingFacilities,
+    qsFacilities,
+    qsAreas,
+    searchTextInitialized,
+    currentPageInitialized
+  ])
 
   useEffect(() => {
     function arr(list) {
