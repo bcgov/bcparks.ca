@@ -4,6 +4,26 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material"
+import CheckIcon from '@mui/icons-material/Check'
+import { styled } from '@mui/material/styles'
+
+const CheckboxIcon = styled("span")(() => ({
+  borderRadius: 4,
+  width: 32,
+  height: 32,
+  boxShadow: "inset 0 0 0 1px #656565",
+  'input:disabled ~ &': {
+    boxShadow: "inset 0 0 0 1px #c7c7c7",
+  },
+}))
+
+const CheckedIcon = styled(CheckIcon)({
+  borderRadius: 4,
+  width: 32,
+  height: 32,
+  color: "#fff",
+  backgroundColor: "#003366",
+})
 
 const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
   return (
@@ -22,6 +42,9 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
                 handleFilterCheck(item, event)
               }}
               name={item.label}
+              icon={<CheckboxIcon />}
+              checkedIcon={<CheckedIcon />}
+              disableRipple
             />
           }
           label={`${item.label} (${item.count})`}
