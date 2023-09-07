@@ -302,7 +302,7 @@ export default function FindAPark({ location, data }) {
       e.preventDefault()
       handleClickClear()
     }
-  }   
+  }
   const handleLoadMore = () => {
     const newPage = +currentPage + 1
     setCurrentPage(newPage)
@@ -386,7 +386,6 @@ export default function FindAPark({ location, data }) {
     (params.campings && params.campings.length)
 
   useEffect(() => {
-    setIsLoading(true)
     if (currentPageInitialized
       && searchTextInitialized
       && qsCampingsInitialized
@@ -397,6 +396,7 @@ export default function FindAPark({ location, data }) {
       && Math.sign(qsActivities.length) === Math.sign(selectedActivities.length)
       && Math.sign(qsAreas.length) === Math.sign(selectedAreas.length)
       && Math.sign(qsFacilities.length) === Math.sign(selectedFacilities.length)) {
+      setIsLoading(true)
       setFilters()
       axios.get(searchApiUrl, {
         params: { ...params, _start: 0, _limit: currentPage * itemsPerPage },
