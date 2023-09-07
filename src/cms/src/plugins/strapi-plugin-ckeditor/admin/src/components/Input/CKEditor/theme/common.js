@@ -298,6 +298,11 @@ export const common = css`
       width: 6em;
   }
 
+  // autoGrow onStartup
+  .ck.ck-content:not(.ck-comment__input *) { 
+    max-height: 700px !important;
+  }
+
   // Custom Styles BC Parks (End)
 
 `;
