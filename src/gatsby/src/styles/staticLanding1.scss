@@ -108,8 +108,8 @@
   }
 }
 
-.parks-search-button {
-  background: $colorGold;
+button.MuiButton-root.parks-search-button {
+  background-color: $colorGold;
   color: $colorBlue;
   height: 50px;
   margin-left: auto;
@@ -128,9 +128,9 @@
   cursor: pointer;
 }
 
-.park-search-text-box {
+.MuiTextField-root.park-search-text-box {
   margin-right: 10px;
-  width: 100% !important;
+  width: 100%;
 
   .MuiOutlinedInput-root {
     width: 100% !important;
