@@ -125,9 +125,9 @@ const indexPark = async function (park, photos) {
 /**
  *  Removes a single park from Elasticsearch
  */
-const removePark = async function (protectedAreaId) {
+const removePark = async function (park) {
   try {
-    await elasticClient.removePark({ itemId: protectedAreaId });
+    await elasticClient.removePark({ itemId: park.id });
   } catch (error) {
     getLogger().error(error);
     return false;
