@@ -314,12 +314,14 @@ export default function ParkTemplate({ data }) {
     </GatsbyLink>,
     <GatsbyLink
       key="2"
-      to="/find-a-park"
+      to="/find-a-park/"
       underline="hover"
       onClick={(e) => {
         if (sessionStorage.getItem("prevPath").includes('find-a-park')) {
           e.preventDefault();
           navigate(-1);
+        } else if (sessionStorage.getItem("lastSearch")) {
+          navigate('/find-a-park/' + sessionStorage.getItem("lastSearch"))
         }
       }}>
       Find a park
