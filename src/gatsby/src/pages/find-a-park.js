@@ -855,7 +855,8 @@ export default function FindAPark({ location, data }) {
           handleAreaCheck,
           handleCampingFacilityCheck,
           handleActivityCheck,
-          handleFacilityCheck
+          handleFacilityCheck,
+          handleClearFilter
         }}
       />
       <ParkLinksModal data={{ openModal, setOpenModal }} />

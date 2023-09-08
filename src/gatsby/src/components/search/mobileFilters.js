@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
-import { navigate } from "gatsby"
 import {
   Link,
   Dialog,
@@ -9,8 +8,10 @@ import {
   Button,
   Collapse,
 } from "@mui/material"
+import IconButton from '@mui/material/IconButton'
 import ExpandLess from "@mui/icons-material/ExpandLess"
 import ExpandMore from "@mui/icons-material/ExpandMore"
+import CloseIcon from '@mui/icons-material/Close'
 import Filter from "./filter"
 
 import "../../styles/search.scss"
@@ -34,7 +35,8 @@ const MobileFilters = ({
     handleAreaCheck,
     handleCampingFacilityCheck,
     handleActivityCheck,
-    handleFacilityCheck
+    handleFacilityCheck,
+    handleClearFilter
   },
 
 }) => {
@@ -87,7 +89,17 @@ const MobileFilters = ({
         scroll="paper"
       >
         <DialogContent className="park-filter-dialog-content">
-          <h1>Filter</h1>
+          <div className="park-filter-dialog-content--header">
+            <h1>Filter</h1>
+            <IconButton
+              aria-label="close"
+              onClick={() => {
+                handleCloseFilter()
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
           <Link
             className="expand-link"
             onClick={handleExpandAll}
@@ -347,16 +359,15 @@ const MobileFilters = ({
                 Show {totalResults} {totalResults > 1 ? "parks" : "park"}
               </Button>
             </div>
-            <div className="col-12 mt8">
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  handleCloseFilter()
-                }}
-                className="bcgov-button bcgov-normal-white"
+            <div className="col-12 d-flex justify-content-center mt24">
+              <Link
+                className="clear-filter-link"
+                onClick={handleClearFilter}
+                tabIndex="0"
+                role="link"
               >
-                Cancel
-              </Button>
+                Clear filters
+              </Link>
             </div>
           </div>
         </DialogActions>
@@ -384,7 +395,8 @@ MobileFilters.propTypes = {
     handleAreaCheck: PropTypes.func.isRequired,
     handleCampingFacilityCheck: PropTypes.func.isRequired,
     handleActivityCheck: PropTypes.func.isRequired,
-    handleFacilityCheck: PropTypes.func.isRequired
+    handleFacilityCheck: PropTypes.func.isRequired,
+    handleClearFilter: PropTypes.func.isRequired
   }),
 }
 
