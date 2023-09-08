@@ -42,9 +42,18 @@ export default function About({
                 <li>
                   <strong>Size:</strong>
                   {marineProtectedArea === "Y" ?
-                    ` ${park.totalArea} hectares (${park.uplandArea} ha upland and ${park.marineArea} ha foreshore)`
+                    <>
+                      {" "}{park.totalArea} hectares
+                      {(park.uplandArea || park.marineArea) && ' ('}
+                      {park.uplandArea && park.uplandArea + ' ha upland'}
+                      {(park.uplandArea && park.marineArea) && ' and '}
+                      {park.marineArea && park.marineArea + ' ha foreshore'}
+                      {(park.uplandArea || park.marineArea) && ')'}
+                    </>
                    :
-                    ` ${park.totalArea} hectares`
+                    <>
+                      {" "}{park.totalArea} hectares
+                    </>
                   }
                 </li>
               )}
