@@ -404,13 +404,29 @@ const ParkOperatingDatesPage = () => {
       <div className="static-content-container">
         <p>
           This page provides a list of planned operating dates for BC Parks and their facilities.
-          All dates are subject to change without notice. Be sure to check the park for current updates
-          and <GatsbyLink to="/active-advisories">Active Advisories</GatsbyLink> for warnings and closures.
+          All dates are subject to change without notice. Be sure to <GatsbyLink to="/find-a-park">check the park</GatsbyLink> page
+          or the <GatsbyLink to="/active-advisories">active advisories</GatsbyLink> page for warnings and closures.
         </p>
         <ul>
-          <li><b>Main operating season:</b> full service and fees.</li>
-          <li><b>Winter season:</b> some services and/or fees may be reduced.</li>
-          <li><b>Booking required:</b> camping reservation or permit needed.</li>
+          <li>
+            <b>Main operating season: </b>
+            During these dates, the facility is open, and operates with full services.
+            Any fees are charged at the regular rate. Parks may have different services and fees,
+            so <GatsbyLink to="/find-a-park">check the park</GatsbyLink> page for details.
+          </li>
+          <li>
+            <b>Winter season: </b>
+            During these dates, <GatsbyLink to="/reservations">reservations</GatsbyLink> are available,
+            or you must purchase a <GatsbyLink to="/reservations/backcountry-camping/permit-registration">backcountry permit</GatsbyLink>.
+            To find out which booking you need, <GatsbyLink to="/find-a-park">check the park</GatsbyLink> page.
+            If a reservable campground is open outside of these dates, sites are available on a first come, first served basis.
+          </li>
+          <li>
+            <b>Booking required: </b>
+            During these dates, the facility is open, but may offer limited services and charge a reduced winter camping fee.
+            {" "}<GatsbyLink to="/find-a-park">Check the park</GatsbyLink> page for details.
+            When a facility is not operating, there are no fees and no services provided.
+          </li>
         </ul>
       </div>
 
@@ -464,5 +480,8 @@ const ParkOperatingDatesPage = () => {
 export default ParkOperatingDatesPage
 
 export const Head = () => (
-  <Seo title="Park operating dates" />
+  <Seo
+    title="Park operating dates"
+    description="This page provides a list of planned operating dates for BC Parks and their facilities."
+  />
 )
