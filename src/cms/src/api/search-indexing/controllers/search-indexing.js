@@ -44,6 +44,9 @@ module.exports = ({ strapi }) => ({
       managementAreas: {
         fields: ["managementAreaNumber", "managementAreaName"],
         populate: {
+          "searchArea": {
+            fields: ["searchAreaName"],
+          },
           "section": {
             fields: ["sectionNumber", "sectionName"],
             populate: { "region": { fields: ["regionNumber", "regionName"] } }
@@ -59,6 +62,7 @@ module.exports = ({ strapi }) => ({
         }
       }
     };
+    query.publicationState = "preview";
 
     const { results, pagination } = await strapi.service("api::protected-area.protected-area").find(query);
 

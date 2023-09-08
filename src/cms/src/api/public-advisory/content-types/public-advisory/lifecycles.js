@@ -32,13 +32,13 @@ const clearRestCache = async function () {
 module.exports = {
     afterCreate: async (ctx) => {
         await clearRestCache();
-        for (const pa of ctx.result?.protectedAreas || []) {
+        for (const pa of ctx.params?.data?.protectedAreas || []) {
             await indexPark(pa?.id);
         }
     },
     afterUpdate: async (ctx) => {
         await clearRestCache();
-        for (const pa of ctx.result?.protectedAreas || []) {
+        for (const pa of ctx.params?.data?.protectedAreas || []) {
             await indexPark(pa?.id);
         }
     },

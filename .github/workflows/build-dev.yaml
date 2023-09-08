@@ -18,13 +18,13 @@ jobs:
       BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-18:1-32
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set env
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_SA_USERNAME}}
@@ -49,7 +49,7 @@ jobs:
       IMAGE_NAME: admin-${{ github.ref_name }}
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set env
         run: |
@@ -57,14 +57,14 @@ jobs:
           echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
 
       - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_SA_USERNAME}}
           password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
 
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: "18"
 
@@ -90,7 +90,7 @@ jobs:
       IMAGE_NAME: public-builder-${{ github.ref_name }}
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set env
         run: |
@@ -98,7 +98,7 @@ jobs:
           echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
 
       - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_SA_USERNAME}}
@@ -115,7 +115,7 @@ jobs:
         run: docker push --all-tags ${{ env.REGISTRY_IMAGE }}
 
       - name: Trigger Gatsby static build workflow
-        uses: peter-evans/repository-dispatch@v1
+        uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           event-type: publish-gatsby
@@ -127,7 +127,7 @@ jobs:
       IMAGE_NAME: maintenance-${{ github.ref_name }}
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set env
         run: |
@@ -135,7 +135,7 @@ jobs:
           echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
 
       - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_SA_USERNAME}}
@@ -158,13 +158,13 @@ jobs:
       BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-18:1-32
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set env
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_SA_USERNAME}}
@@ -188,13 +188,13 @@ jobs:
       BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-18:1-32
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set env
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_SA_USERNAME}}
@@ -217,7 +217,7 @@ jobs:
     needs: [build-cms, build-admin]
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Login OpenShift
         uses: redhat-actions/oc-login@v1

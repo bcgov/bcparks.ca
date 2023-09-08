@@ -38,6 +38,12 @@
       "relation": "manyToOne",
       "target": "api::region.region",
       "inversedBy": "managementAreas"
+    },
+    "searchArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::search-area.search-area",
+      "inversedBy": "managementAreas"
     }
   }
 }

@@ -40,14 +40,34 @@
   background: #fff;
   width: 100%;
 
-  .section-select {
-    width: 100%;
-    height: 68px !important;
-    border-left: none;
-    border-right: none;
-    padding: 0px 20px;
-    color: $colorBlue;
-    background: #fff;
-    text-overflow: ellipsis;
+  .section-select-container {
+    position: relative;
+    &::after {
+      position: absolute;
+      content: "\f078";
+      top: calc(50% - 8px);
+      right: 22px;
+      color: $colorBlue;
+      font-weight: 900;
+      font-size: 12px;
+      font-style: normal;
+      font-variant: normal;
+      font-family: "Font Awesome 5 Free";
+      text-rendering: auto;
+      text-decoration: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .section-select {
+      width: 100%;
+      height: 68px !important;
+      border-left: none;
+      border-right: none;
+      padding: 0px 20px;
+      color: $colorBlue;
+      background: #fff;
+      text-overflow: ellipsis;
+      appearance: none;
+    }
   }
 }

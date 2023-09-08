@@ -25,7 +25,7 @@ const getNextRevisionNumber = async (advisoryNumber) => {
     }
   });
   let { revisionNumber } = result;
-  let  maxRevisionNumber = revisionNumber;
+  let maxRevisionNumber = revisionNumber;
   if (!maxRevisionNumber || maxRevisionNumber < 0) maxRevisionNumber = 0;
   return ++maxRevisionNumber;
 };
@@ -49,16 +49,15 @@ const createPublicAdvisoryAudit = async (data) => {
 
 const savePublicAdvisory = async (publicAdvisory) => {
   delete publicAdvisory.updatedBy;
-  delete publicAdvisory.createdBy;  
+  delete publicAdvisory.createdBy;
+  const isExist = await strapi.db.query('api::public-advisory.public-advisory').findOne({
+    where: {
+      advisoryNumber: publicAdvisory.advisoryNumber
+    }
+  });
   if (publicAdvisory.advisoryStatus.code === "PUB") {
     publicAdvisory.publishedAt = new Date();
-    const isExist = await strapi.db.query('api::public-advisory.public-advisory').findOne({
-      where: {
-        advisoryNumber: publicAdvisory.advisoryNumber
-      }
-    });
-
-    if(isExist) {
+    if (isExist) {
       try {
         publicAdvisory.id = isExist.id;
         await strapi.entityService.update('api::public-advisory.public-advisory', isExist.id, { data: publicAdvisory })
@@ -71,7 +70,7 @@ const savePublicAdvisory = async (publicAdvisory) => {
     } else {
       try {
         delete publicAdvisory.id;
-        await strapi.db.query('api::public-advisory.public-advisory').create({
+        await strapi.entityService.create('api::public-advisory.public-advisory', {
           data: publicAdvisory
         });
       } catch (error) {
@@ -81,13 +80,9 @@ const savePublicAdvisory = async (publicAdvisory) => {
         );
       }
     }
-  } else {
+  } else if (isExist) {
     try {
-      await strapi.db.query('api::public-advisory.public-advisory').delete({
-        where: {
-          advisoryNumber: publicAdvisory.advisoryNumber,
-        }
-      });
+      await strapi.entityService.delete('api::public-advisory.public-advisory', isExist.id);
     } catch (error) {
       strapi.log.error(
         `error deleting public-advisory ${publicAdvisory.id}...`,

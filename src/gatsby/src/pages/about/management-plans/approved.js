@@ -18,7 +18,7 @@ const DocumentLink = ({ park }) => {
   // sorting links based on full link text
   const titles = []
   docs?.map((doc, index) => (
-    doc.sites.length > 0 ? (
+    doc.sites && doc.sites.length > 0 ? (
       // display link with siteName if there's a relation with site
       doc.sites.map(site =>
         checkRelation(park.orcs, site.orcsSiteNumber) && (

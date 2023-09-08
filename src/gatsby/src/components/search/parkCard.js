@@ -1,6 +1,6 @@
 import React from "react"
 import { Link as GatsbyLink } from "gatsby"
-import { Card, CardContent, Link } from "@mui/material"
+import { Card, CardContent } from "@mui/material"
 import Carousel from "react-material-ui-carousel"
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
 
@@ -18,15 +18,13 @@ import campfireBanIcon from "../../../static/icons/campfire-ban.svg"
 
 import { addSmallImagePrefix, handleImgError } from "../../utils/helpers"
 
-const locationLabel = (parkLocation) => {
-  if (parkLocation?.section !== "Haida Gwaii/South Island") {
-    return parkLocation?.section;
+const locationLabel = (parkLocations) => {
+  if (!parkLocations || !parkLocations.length) {
+    return "";
   }
-  if (parkLocation.managementArea === "Haida Gwaii") {
-    return "Haida Gwaii";
-  } else {
-    return ("South Island");
-  }
+  const arrList = parkLocations.map(p => { return p.searchArea });
+  const distinctLocations = [...new Set(arrList)]
+  return distinctLocations.join(", ");
 }
 
 const Icon = ({ src, label, size }) => {
@@ -43,15 +41,16 @@ const Icon = ({ src, label, size }) => {
 
 const FeatureIcons = ({ park }) => {
   const iconSize = 32;
-  const facilities = park.parkFacilities.filter(f => [1, 6, 36].includes(f.num)) || [];
+  const facilities = park.parkFacilities.filter(f => [6].includes(f.num)) || [];
   const activities = park.parkActivities.filter(a => [1, 3, 8, 9].includes(a.num)) || [];
+  const campings = park.campingFacilities.filter(c => [1, 36].includes(c.num)) || [];
 
   return (
     <>
-      {facilities.some(x => x.code === 'vehicle-accessible-camping') &&
+      {campings.some(x => x.code === 'vehicle-accessible-camping') &&
         <Icon src={campingIcon} label="Vehicle accesible camping" size={iconSize} />
       }
-      {facilities.some(x => x.code === 'backcountry-camping') &&
+      {campings.some(x => x.code === 'backcountry-camping') &&
         <Icon src={backcountryCampingIcon} label="Backcountry camping" size={iconSize} />
       }
       {activities.some(x => x.code === 'hiking') &&
@@ -69,13 +68,13 @@ const FeatureIcons = ({ park }) => {
       {activities.some(x => x.code === 'pets-on-leash') &&
         <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
       }
-      {facilities.some(x => [1, 36].includes(x.num)) ? (
+      {campings.length ? (
         <GatsbyLink to={`/${park.slug}/#park-camping-details-container`}>
           <p aria-label="See all facilities and activities">see all</p>
         </GatsbyLink>
       ) : (
         (activities.length > 0 || facilities.length > 0) && (
-          facilities.some(x => x.code === 'picnic-areas') ? (
+          facilities.length ? (
             <GatsbyLink to={`/${park.slug}/#park-facility-container`}>
               <p aria-label="See all facilities and activities">see all</p>
             </GatsbyLink>
@@ -164,16 +163,16 @@ const ParkCard = ({ r }) => {
 
                 <div className="col park-content">
                   <div className="park-content-top">
-                    <Link
-                      href={`/${r.slug}/`}
-                      underline="hover"
+                    <GatsbyLink
+                      to={`/${r.slug}/`}
+                      className="underline-hover"
                     >
                       <h2 className="park-heading-text">
                         {r.protectedAreaName}
                         <ExpandCircleDownIcon className="park-heading-icon" />
                       </h2>
-                    </Link>
-                    <p>{locationLabel(r.parkLocations.length ? r.parkLocations[0] : {})}</p>
+                    </GatsbyLink>
+                    <p>{locationLabel(r.parkLocations)}</p>
                   </div>
                   <div className="park-content-bottom">
                     <div className="park-content-bottom--left">
@@ -269,17 +268,16 @@ const ParkCard = ({ r }) => {
                   )}
 
                 <div className="col-12 park-content-mobile">
-                  <Link
-                    href={`/${r.slug}/`}
-                    className="p10t"
-                    underline="hover"
+                  <GatsbyLink
+                    to={`/${r.slug}/`}
+                    className="p10t underline-hover"
                   >
                     <h2 className="park-heading-text">
                       {r.protectedAreaName}
                       <ExpandCircleDownIcon className="park-heading-icon" />
                     </h2>
-                  </Link>
-                  <p>{locationLabel(r.parkLocations.length ? r.parkLocations[0] : {})}</p>
+                  </GatsbyLink>
+                  <p>{locationLabel(r.parkLocations)}</p>
                   <div>
                     <FeatureIcons park={r} />
                   </div>

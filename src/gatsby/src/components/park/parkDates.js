@@ -80,25 +80,11 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
             {subArea.serviceDates.length > 0 && (
               <>
                 <dt className="mt-3">
-                  {subArea?.facilityType?.isCamping || false
-                    ? 'Main camping season dates'
-                    : 'Main operating season dates'}
+                  Main operating season dates
                 </dt>
                 <dd>
                   <ul className="pl-3">
                     {subArea.serviceDates.map((dateRange, index) =>
-                      <li key={index}>{dateRange}</li>
-                    )}
-                  </ul>
-                </dd>
-              </>
-            )}
-            {subArea.resDates.length > 0 && (
-              <>
-                <dt className="mt-3">Reservable dates</dt>
-                <dd>
-                  <ul className="pl-3">
-                    {subArea.resDates.map((dateRange, index) =>
                       <li key={index}>{dateRange}</li>
                     )}
                   </ul>
@@ -111,6 +97,18 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
                 <dd>
                   <ul className="pl-3">
                     {subArea.offSeasonDates.map((dateRange, index) =>
+                      <li key={index}>{dateRange}</li>
+                    )}
+                  </ul>
+                </dd>
+              </>
+            )}
+            {subArea.resDates.length > 0 && (
+              <>
+                <dt className="mt-3">Reservable dates</dt>
+                <dd>
+                  <ul className="pl-3">
+                    {subArea.resDates.map((dateRange, index) =>
                       <li key={index}>{dateRange}</li>
                     )}
                   </ul>
@@ -144,6 +142,7 @@ export default function ParkDates({ data }) {
   const dataCopy = JSON.parse(JSON.stringify(data)) // deep copy
   const parkOperation = dataCopy.parkOperation || {}
   const subAreas = dataCopy.subAreas || []
+  const marineProtectedArea = dataCopy.marineProtectedArea || ""
   subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
 
   const advisories = dataCopy.advisories || []
@@ -297,7 +296,7 @@ export default function ParkDates({ data }) {
       if (subArea.serviceDates.length === 0
         && subArea.resDates.length === 0
         && subArea.offSeasonDates.length === 0) {
-        subArea.serviceDates.push(`${new Date().getFullYear()}: Dates are not yet available`)
+        subArea.serviceDates.push(`${new Date().getFullYear()}: Dates unavailable`)
       }
     }
   }
@@ -344,10 +343,12 @@ export default function ParkDates({ data }) {
                   All dates are subject to change without notice.
                 </div>
                 {parkDates && (
-                  <h4 className="my-3">Open to public access {parkDates}</h4>
+                  <h4 className="my-3">
+                    The park {marineProtectedArea !== 'Y' && "gate"} is open {parkDates}
+                  </h4>
                 )}
                 {!parkDates && (
-                  <h4 className="my-3">Operating dates are not yet available</h4>
+                  <h4 className="my-3">Operating dates are unavailable</h4>
                 )}
                 <h4 className="my-3">
                   Current status:
@@ -376,6 +377,12 @@ export default function ParkDates({ data }) {
                   tabIndex="0"
                   underline="hover"
                   onClick={() => setOpen(!open)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault()
+                      setOpen(!open)
+                    }
+                  }}
                   className="expand-link expand-icon"
                 >
                   {open ? "Collapse all" : "Expand all"}

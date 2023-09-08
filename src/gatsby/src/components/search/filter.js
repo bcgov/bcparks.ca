@@ -4,25 +4,47 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material"
+import CheckIcon from '@mui/icons-material/Check'
+import { styled } from '@mui/material/styles'
+
+const CheckboxIcon = styled("span")(() => ({
+  borderRadius: 4,
+  width: 32,
+  height: 32,
+  boxShadow: "inset 0 0 0 1px #656565",
+  'input:disabled ~ &': {
+    boxShadow: "inset 0 0 0 1px #c7c7c7",
+  },
+}))
+
+const CheckedIcon = styled(CheckIcon)({
+  borderRadius: 4,
+  width: 32,
+  height: 32,
+  color: "#fff",
+  backgroundColor: "#003366",
+})
 
 const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
   return (
     <FormGroup className="filter-options-container">
-      {filterItems.map(item =>
-        <FormControlLabel
+      {filterItems.map(item => {
+        const checked = selectedFilterItems.filter(
+          selectedFilterItem =>
+            selectedFilterItem.value === item.value
+        ).length === 1 ? true : false
+        return (<FormControlLabel
           key={item.label}
           control={
             <Checkbox
-              checked={
-                selectedFilterItems.filter(
-                  selectedFilterItem =>
-                    selectedFilterItem.value === item.value
-                ).length === 1 ? true : false
-              }
+              checked={checked}
               onChange={event => {
                 handleFilterCheck(item, event)
               }}
               name={item.label}
+              icon={<CheckboxIcon />}
+              checkedIcon={<CheckedIcon />}
+              disableRipple
             />
           }
           label={`${item.label} (${item.count})`}
@@ -30,10 +52,11 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
             selectedFilterItems.filter(
               selectedFilterItem =>
                 selectedFilterItem.value === item.value
-            ).length === 1 ? "text-light-blue no-wrap" : "no-wrap"
+            ).length === 1 ? "text-light-blue" : ""
           }
-          disabled={item.count === 0}
-        />
+          disabled={item.count === 0 && !checked}
+        />)
+      }
       )}
     </FormGroup>
   )

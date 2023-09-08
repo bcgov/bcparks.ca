@@ -4,6 +4,11 @@
 
 .parks-container {
   max-width: 1350px !important;
+  a {
+    &:focus-visible {
+      outline: -webkit-focus-ring-color auto 2px;
+    }
+  }
 }
 
 .gallery-container {

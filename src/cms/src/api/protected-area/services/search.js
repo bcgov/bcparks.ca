@@ -15,7 +15,7 @@ module.exports = ({ strapi }) => ({
     marineProtectedArea,
     activityNumbers,
     facilityNumbers,
-    regionNumbers,
+    areaNumbers,
     campingNumbers,
     limit,
     offset,
@@ -96,10 +96,10 @@ module.exports = ({ strapi }) => ({
       mustFilter.push({ match: { "typeCode": typeCode } })
     }
 
-    let regionFilter = [];
+    let areaFilter = [];
 
-    for (const regionNum of regionNumbers) {
-      regionFilter.push({ match: { "parkLocations.regionNum": regionNum } })
+    for (const areaNum of areaNumbers) {
+      areaFilter.push({ match: { "parkLocations.searchAreaNum": areaNum } })
     }
 
     try {
@@ -116,7 +116,7 @@ module.exports = ({ strapi }) => ({
                   bool: {
                     filter: [
                       {
-                        bool: { should: [...regionFilter] }
+                        bool: { should: [...areaFilter] }
                       }
                     ],
                     must: [
@@ -146,7 +146,8 @@ module.exports = ({ strapi }) => ({
             "parkFacilities",
             "parkActivities",
             "campingFacilities",
-            "parkLocations",
+            "parkLocations.searchArea",
+            "parkLocations.searchAreaNum",
             "advisories",
             "parkPhotos"
           ],
@@ -165,23 +166,53 @@ module.exports = ({ strapi }) => ({
                 min_doc_count: 0
               }
             },
-            all_regions: {
+            all_areas: {
               global: {},
               aggs: {
                 filtered: {
                   filter: {
                     bool: {
-                      filter: [...mustFilter],
+                      filter: [
+                        ...mustFilter,
+                        {
+                          bool: {
+                            filter: [{ bool: { should: [...campingFilter] } }]
+                          }
+                        }
+                      ],
                       must: [{ bool: { should: [...textFilter] } }]
                     }
                   },
                   aggs: {
-                    regions: {
+                    areas: {
                       terms: {
-                        field: "parkLocations.regionNum",
+                        field: "parkLocations.searchAreaNum",
+                        size: 50,
                         min_doc_count: 0
                       }
-                    },
+                    }
+                  }
+                }
+              }
+            },
+            all_camping: {
+              global: {},
+              aggs: {
+                filtered: {
+                  filter: {
+                    bool: {
+                      filter: [
+                        ...mustFilter,
+                        {
+                          bool: {
+                            filter: [{ bool: { should: [...areaFilter] } }]
+                          }
+                        }
+                      ],
+                      must: [{ bool: { should: [...textFilter] } }]
+                    }
+                  },
+                  aggs: {
                     campings: {
                       terms: {
                         field: "campingFacilities.num",

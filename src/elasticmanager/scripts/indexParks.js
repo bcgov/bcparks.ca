@@ -104,6 +104,7 @@ const indexPark = async function (park, photos) {
   // if the park isn't visible on the website then remove it from 
   // Elasticsearch instead of adding it
   if (!park.isDisplayed || !park.publishedAt) {
+    getLogger().warn(`removing park ${park.id} due to unpublished or undisplayed status`);
     await removePark(park)
     return true;
   }
@@ -124,9 +125,9 @@ const indexPark = async function (park, photos) {
 /**
  *  Removes a single park from Elasticsearch
  */
-const removePark = async function (protectedAreaId) {
+const removePark = async function (park) {
   try {
-    await elasticClient.removePark({ itemId: protectedAreaId });
+    await elasticClient.removePark({ itemId: park.id });
   } catch (error) {
     getLogger().error(error);
     return false;

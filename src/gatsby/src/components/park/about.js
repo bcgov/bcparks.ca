@@ -18,6 +18,7 @@ export default function About({
   const biogeoclimaticZones = park.biogeoclimaticZones
   const marineEcosections = park.marineEcosections
   const terrestrialEcosections = park.terrestrialEcosections
+  const marineProtectedArea = park.marineProtectedArea
 
   return (
     <div id="park-about-container" className="anchor-link">
@@ -33,7 +34,12 @@ export default function About({
               )}
               {park.totalArea && (
                 <li>
-                  <strong>Size:</strong> {park.totalArea} hectares
+                  <strong>Size:</strong>
+                  {marineProtectedArea === "Y" ?
+                    ` ${park.totalArea} hectares (${park.uplandArea} ha upland and ${park.marineArea} ha foreshore)`
+                   :
+                    ` ${park.totalArea} hectares`
+                  }
                 </li>
               )}
               {biogeoclimaticZones?.length > 0 && (

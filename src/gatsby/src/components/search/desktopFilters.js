@@ -11,17 +11,17 @@ import "../../styles/search.scss"
 
 const DesktopFilters = ({
   data: {
-    regionItems,
+    areaItems,
     campingFacilityItems,
     activityItems,
     facilityItems,
-    selectedRegions,
+    selectedAreas,
     selectedCampingFacilities,
     selectedActivities,
     selectedFacilities,
     searchText,
     setFilters,
-    handleRegionCheck,
+    handleAreaCheck,
     handleCampingFacilityCheck,
     handleActivityCheck,
     handleFacilityCheck
@@ -30,14 +30,16 @@ const DesktopFilters = ({
 }) => {
   const [showMoreActivities, setMoreActivites] = useState(true)
   const [showMoreFacilities, setMoreFacilities] = useState(true)
+  const [showMoreAreas, setMoreAreas] = useState(true)
   const [truncatedActivityFilterLength, setTruncatedActivityFilterLength] = useState(5)
   const [truncatedFacilityFilterLength, setTruncatedFacilityFilterLength] = useState(5)
+  const [truncatedAreaFilterLength, setTruncatedAreaFilterLength] = useState(6)
 
   useEffect(() => {
     setFilters()
   }, [
     searchText,
-    selectedRegions,
+    selectedAreas,
     selectedCampingFacilities,
     selectedActivities,
     selectedFacilities,
@@ -55,7 +57,15 @@ const DesktopFilters = ({
     } else {
       setTruncatedFacilityFilterLength(facilityItems.length)
     }
-  }, [showMoreActivities, activityItems.length, showMoreFacilities, facilityItems.length])
+    if (showMoreAreas) {
+      setTruncatedAreaFilterLength(6)
+    } else {
+      setTruncatedAreaFilterLength(areaItems.length)
+    }
+  }, [
+    showMoreActivities, activityItems.length, showMoreFacilities,
+    facilityItems.length, showMoreAreas, areaItems.length
+  ])
 
   return (
     <div className="">
@@ -96,12 +106,34 @@ const DesktopFilters = ({
         />
       </fieldset>
       <fieldset className="mb-2">
-        <legend className="filter-heading">Regions</legend>
+        <legend className="filter-heading">Area</legend>
         <Filter
-          filterItems={regionItems}
-          selectedFilterItems={selectedRegions}
-          handleFilterCheck={handleRegionCheck}
+          filterItems={areaItems.slice(0, truncatedAreaFilterLength)}
+          selectedFilterItems={selectedAreas}
+          handleFilterCheck={handleAreaCheck}
         />
+        <Link
+          className="ml-auto pointer"
+          onClick={() => {
+            setMoreAreas(!showMoreAreas)
+          }}
+          tabIndex="0"
+          role="link"
+          underline="hover"
+        >
+          {showMoreAreas ? (
+            <div style={{ color: `#2464A4` }}>
+              Show all {areaItems.length}
+              <ExpandMore fontSize="small" />
+            </div>
+          ) : (
+            <div style={{ color: `#2464A4` }}>
+              Show less
+              <ExpandLess fontSize="small" />
+            </div>
+          )}
+        </Link>
+
       </fieldset>
       <fieldset className="mb-2">
         <legend className="filter-heading">Camping</legend>
@@ -175,17 +207,17 @@ const DesktopFilters = ({
 
 DesktopFilters.propTypes = {
   data: PropTypes.shape({
-    regionItems: PropTypes.array.isRequired,
+    areaItems: PropTypes.array.isRequired,
     campingFacilityItems: PropTypes.array.isRequired,
     activityItems: PropTypes.array.isRequired,
     facilityItems: PropTypes.array.isRequired,
-    selectedRegions: PropTypes.array.isRequired,
+    selectedAreas: PropTypes.array.isRequired,
     selectedCampingFacilities: PropTypes.array.isRequired,
     selectedActivities: PropTypes.array.isRequired,
     selectedFacilities: PropTypes.array.isRequired,
     searchText: PropTypes.string.isRequired,
     setFilters: PropTypes.func.isRequired,
-    handleRegionCheck: PropTypes.func.isRequired,
+    handleAreaCheck: PropTypes.func.isRequired,
     handleCampingFacilityCheck: PropTypes.func.isRequired,
     handleActivityCheck: PropTypes.func.isRequired,
     handleFacilityCheck: PropTypes.func.isRequired

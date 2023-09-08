@@ -86,7 +86,7 @@ async function removePark({ itemId }) {
   } catch (err) {
     if (!JSON.stringify(err).includes("not_found")) {
       console.log(
-        "Error encountered while removing indexed data from ElasticSearch."
+        `Error encountered while removing indexed data from ElasticSearch.\n${JSON.stringify(err)}`
       );
       throw err;
     }

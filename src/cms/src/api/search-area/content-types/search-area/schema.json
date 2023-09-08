@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "search_areas",
+  "info": {
+    "singularName": "search-area",
+    "pluralName": "search-areas",
+    "displayName": "Search-area",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "searchAreaName": {
+      "type": "string"
+    },
+    "rank": {
+      "type": "integer",
+      "unique": true,
+      "required": true
+    },
+    "managementAreas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::management-area.management-area",
+      "mappedBy": "searchArea"
+    }
+  }
+}
