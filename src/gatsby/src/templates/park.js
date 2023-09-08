@@ -321,6 +321,7 @@ export default function ParkTemplate({ data }) {
           e.preventDefault();
           navigate(-1);
         } else if (sessionStorage.getItem("lastSearch")) {
+          e.preventDefault();
           navigate('/find-a-park/' + sessionStorage.getItem("lastSearch"))
         }
       }}>
