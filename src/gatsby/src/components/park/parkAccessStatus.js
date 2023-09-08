@@ -96,16 +96,18 @@ export default function ParkAccessStatus({ advisories, slug }) {
   // we need to differentiate between the two structures.
 
   return (
-    <div className="park-access-status">
+    <div className="access-status-icon">
       {parkStatusText === "Open" ? (
         <>
-          <img src={parkStatusIcon} alt="" class="mr-1" /> {parkStatusText}
+          <img src={parkStatusIcon} alt="" class="mr-2" />
+          {parkStatusText}
         </>
       ) : (
-          <Link to={`/${slug}/#park-advisory-details-container`}>
-            <>
-              <img src={parkStatusIcon} alt="" class="mr-1" /> {parkStatusText}
-            </>
+        <Link to={`/${slug}/#park-advisory-details-container`}>
+          <>
+            <img src={parkStatusIcon} alt="" class="mr-2" />
+            {parkStatusText}
+          </>
         </Link>
       )}
     </div>

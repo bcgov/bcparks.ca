@@ -271,8 +271,8 @@ h2.section-heading {
     .card-child {
       font-size: 0.875rem !important;
       img {
-        width: 40px;
-        height: 40px;
+        width: 32px;
+        height: 32px;
       }
       a {
         flex: 1 1 100%;
@@ -332,6 +332,7 @@ h2.section-heading {
   }
 }
 .park-overview-link {
+  display: inline-block;
   color: $colorBlue;
   margin-top: 24px;
 }
