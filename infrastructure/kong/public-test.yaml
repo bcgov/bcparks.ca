@@ -96,6 +96,28 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
+        name: get_biogeoclimatic_zones
+        methods:
+          - GET
+        paths:
+          - /api/biogeoclimatic-zones
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get_biogeoclimatic_zones_id
+        methods:
+          - GET
+        paths:
+          - /api/biogeoclimatic-zones/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
         name: get_business_hour
         methods:
           - GET
@@ -343,6 +365,28 @@ services:
           - GET
         paths:
           - /api/management-document-types/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get_marine_ecosections
+        methods:
+          - GET
+        paths:
+          - /api/marine-ecosections
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get_marine_ecosections_id
+        methods:
+          - GET
+        paths:
+          - /api/marine-ecosections/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
@@ -816,6 +860,28 @@ services:
           - GET
         paths:
           - /api/standard-messages/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get_terrestrial-ecosections
+        methods:
+          - GET
+        paths:
+          - /api/terrestrial-ecosections
+        strip_path: false
+        hosts:
+          - bcparks.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: get_terrestrial-ecosections_id
+        methods:
+          - GET
+        paths:
+          - /api/terrestrial-ecosections/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.api.gov.bc.ca
