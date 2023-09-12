@@ -84,7 +84,7 @@ export default function Home({ data }) {
               <div className="home-page-search-bg">
                 <StaticImage
                   src="../images/home/search_bg.png"
-                  placeholder="blurred"
+                  placeholder="none"
                   loading="eager"
                   style={{ display: "block" }}
                   alt="Mount Robson Park"

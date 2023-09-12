@@ -299,7 +299,7 @@ const MegaMenu = ({ content, menuMode }) => {
             <Link to="/">
               <StaticImage
                 src="../images/logo/BCParks_Primary_Reversed-cropped.svg"
-                placeholder="blurred"
+                placeholder="none"
                 loading="eager"
                 height={64}
                 alt="BC Parks Logo"
@@ -307,7 +307,7 @@ const MegaMenu = ({ content, menuMode }) => {
               />
               <StaticImage
                 src="../images/logo/BCParks_Primary_Reversed_Vertical.svg"
-                placeholder="blurred"
+                placeholder="none"
                 loading="eager"
                 height={64}
                 alt="BC Parks Logo"
