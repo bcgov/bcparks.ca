@@ -303,6 +303,24 @@ h3.subtitle {
     padding: 16px !important;
   }
 
+  .park-filter-dialog-content {
+    &--header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      h1 {
+        margin-bottom: 0;
+      }
+      button {
+        color: $colorText;
+        &:hover {
+          background-color: none;
+        }
+      }
+    }
+  }
+
   .MuiDialog-paperWidthSm {
     border-radius: 0px !important;
     background-color: $colorGrey !important;
@@ -629,6 +647,10 @@ div[class$="-singleValue"] {
 
 .mt8 {
   margin-top: 8px !important;
+}
+
+.mt24 {
+  margin-top: 24px;
 }
 
 .mb20 {

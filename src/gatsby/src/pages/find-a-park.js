@@ -479,13 +479,15 @@ export default function FindAPark({ location, data }) {
       setQsAreas(areas);
     }
     setInputText(searchText)
+    sessionStorage.setItem("lastSearch", window.location.search);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     selectedActivities,
     selectedCampingFacilities,
     selectedFacilities,
     selectedAreas,
-    searchText
+    searchText,
+    currentPage
   ])
 
   useEffect(() => {
@@ -853,7 +855,8 @@ export default function FindAPark({ location, data }) {
           handleAreaCheck,
           handleCampingFacilityCheck,
           handleActivityCheck,
-          handleFacilityCheck
+          handleFacilityCheck,
+          handleClearFilter
         }}
       />
       <ParkLinksModal data={{ openModal, setOpenModal }} />
