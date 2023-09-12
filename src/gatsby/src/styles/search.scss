@@ -1061,6 +1061,7 @@ div[class$="-singleValue"] {
         margin-right: 8px;
         a {
           color: $colorBlue;
+          text-decoration: underline;
           text-decoration-color: $colorBlue;
           margin-left: 4px;
           p {
@@ -1099,6 +1100,7 @@ div[class$="-singleValue"] {
     a {
       display: block;
       color: $colorBlue;
+      text-decoration: underline;
       text-decoration-color: $colorBlue;
       margin-top: 8px;
       p {

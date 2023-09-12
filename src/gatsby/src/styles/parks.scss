@@ -5,6 +5,7 @@
 .parks-container {
   max-width: 1350px !important;
   a {
+    color: $colorBlue;
     &:focus-visible {
       outline: -webkit-focus-ring-color auto 2px;
     }
