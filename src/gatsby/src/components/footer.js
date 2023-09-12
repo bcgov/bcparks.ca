@@ -31,7 +31,7 @@ function FooterMenu({ items, menuIndex }) {
               <a href="https://www.facebook.com/YourBCParks/">
                 <StaticImage
                   src="../images/Facebook_Negative.svg"
-                  placeholder="blurred"
+                  placeholder="none"
                   loading="eager"
                   alt="Facebook"
                 />
@@ -41,7 +41,7 @@ function FooterMenu({ items, menuIndex }) {
               <a href="https://www.instagram.com/yourbcparks">
                 <StaticImage
                   src="../images/Instagram_Negative.svg"
-                  placeholder="blurred"
+                  placeholder="none"
                   loading="eager"
                   alt="Instagram"
                 />
@@ -99,7 +99,7 @@ export default function Footer() {
                   <a href="/">
                     <StaticImage
                       src="../images/BCParks_Wordmark_White-cropped.svg"
-                      placeholder="blurred"
+                      placeholder="none"
                       loading="eager"
                       height={48}
                       alt="BC Parks Wordmark"
