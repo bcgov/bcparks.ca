@@ -355,12 +355,13 @@ h3.subtitle {
 .search-results-main {
   .MuiCheckbox-root {
     color: $colorBlue !important;
+    background-color: #fff;
+    border-radius: 4px;
     padding: 0px !important;
     margin-right: 10px;
     &.Mui-disabled {
       color: #c7c7c7!important;
       background-color: #e4e4e4;
-      border-radius: 4px;
     }
   }
 

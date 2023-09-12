@@ -44,7 +44,6 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
               name={item.label}
               icon={<CheckboxIcon />}
               checkedIcon={<CheckedIcon />}
-              disableRipple
             />
           }
           label={`${item.label} (${item.count})`}
