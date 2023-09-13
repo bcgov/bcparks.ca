@@ -13,60 +13,46 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
     return orcsSite?.includes(orcs?.toString())
   }
 
+  const showFireCentres = advisory.fireCentres?.length > 0; // 1st priority
+  const showRegions = advisory.regions?.length > 0 && !showFireCentres; // 2nd priority
+  const showSections = advisory.sections?.length > 0 && !showFireCentres && !showRegions;  // 3rd priority
+
   const checkAdditionalParks = () => {
 
     const advisoryFireCentres = advisory.fireCentres.map(c => { return c.id })
     const advisoryRegions = advisory.regions.map(r => { return r.id })
     const advisorySections = advisory.sections.map(s => { return s.id })
 
-    let hasAdditionalParks = false;
-
     const parkCameFromFireCentre = (protectedAreaId) => {
-      if (!advisoryFireCentres.length) {
-        return false;
-      }
       const parkFireCentres = parkInfoHash[protectedAreaId.toString()]?.fireCentres || [];
       return parkFireCentres.filter(value => advisoryFireCentres.includes(value)).length > 0;
     }
 
     const parkCameFromRegion = (protectedAreaId) => {
-      if (!advisoryRegions.length) {
-        return false;
-      }
       const parkRegions = parkInfoHash[protectedAreaId.toString()]?.regions || [];
       return parkRegions.filter(value => advisoryRegions.includes(value)).length > 0;
     }
 
     const parkCameFromSection = (protectedAreaId) => {
-      if (!advisorySections.length) {
-        return false;
-      }
       const parkSections = parkInfoHash[protectedAreaId.toString()]?.sections || [];
       return parkSections.filter(value => advisorySections.includes(value)).length > 0;
     }
 
     for (const pa of advisory.protectedAreas) {
-      if (showFireCentres) {
-        hasAdditionalParks = hasAdditionalParks || !parkCameFromFireCentre(pa.id)
+      if (showFireCentres && !parkCameFromFireCentre(pa.id)) {
+        return true;
       }
-      if (showRegions) {
-        hasAdditionalParks = hasAdditionalParks || !parkCameFromRegion(pa.id)
+      if (showRegions && !parkCameFromRegion(pa.id)) {
+        return true;
       }
-      if (showSections) {
-        hasAdditionalParks = hasAdditionalParks || !parkCameFromSection(pa.id)
-      }
-
-      if (hasAdditionalParks) {
-        break;
+      if (showSections && !parkCameFromSection(pa.id)) {
+        return true;
       }
     }
 
-    return hasAdditionalParks;
+    return false;
   }
 
-  const showFireCentres = advisory.fireCentres?.length > 0; // 1st priority
-  const showRegions = advisory.regions?.length > 0 && !showFireCentres; // 2nd priority
-  const showSections = advisory.sections?.length > 0 && !showFireCentres && !showRegions;  // 3rd priority
   const hasAdditionalParks = checkAdditionalParks();
 
   return (
