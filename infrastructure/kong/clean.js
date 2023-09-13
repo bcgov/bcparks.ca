@@ -37,6 +37,7 @@ Object.keys(paths).forEach((item) => {
   });
 });
 
+delete data.tags;
 data.components.schemas.Website.properties.homepage.properties.data.properties.attributes.properties.Content.type = "object";
 data.info.title = "BCPARKS";
 
