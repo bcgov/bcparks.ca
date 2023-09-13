@@ -117,6 +117,12 @@ const DesktopFilters = ({
           onClick={() => {
             setMoreAreas(!showMoreAreas)
           }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault()
+              setMoreAreas(!showMoreAreas)
+            }
+          }}
           tabIndex="0"
           role="link"
           underline="hover"
@@ -155,6 +161,12 @@ const DesktopFilters = ({
           onClick={() => {
             setMoreActivites(!showMoreActivities)
           }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault()
+              setMoreActivites(!showMoreActivities)
+            }
+          }}
           tabIndex="0"
           role="link"
           underline="hover"
@@ -183,6 +195,12 @@ const DesktopFilters = ({
           className="ml-auto pointer"
           onClick={() => {
             setMoreFacilities(!showMoreFacilities)
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault()
+              setMoreFacilities(!showMoreFacilities)
+            }
           }}
           tabIndex="0"
           role="link"
