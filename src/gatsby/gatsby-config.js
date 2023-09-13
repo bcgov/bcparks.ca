@@ -88,6 +88,12 @@ module.exports = {
                 },
                 seo: {
                   populate: "*"
+                },
+                fireZones: {
+                  populate: "*"
+                },
+                managementAreas: {
+                  populate: "*"
                 }
               }
             },

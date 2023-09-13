@@ -7,11 +7,67 @@ import HTMLArea from "../HTMLArea"
 
 import "../../styles/advisories/advisoryCard.scss"
 
-const AdvisoryCard = ({ advisory, index }) => {
+const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
   const [open, setOpen] = useState(false)
   const checkRelation = (orcs, orcsSite) => {
     return orcsSite?.includes(orcs?.toString())
   }
+
+  const checkAdditionalParks = () => {
+
+    const advisoryFireCentres = advisory.fireCentres.map(c => { return c.id })
+    const advisoryRegions = advisory.regions.map(r => { return r.id })
+    const advisorySections = advisory.sections.map(s => { return s.id })
+
+    let hasAdditionalParks = false;
+
+    const parkCameFromFireCentre = (protectedAreaId) => {
+      if (!advisoryFireCentres.length) {
+        return false;
+      }
+      const parkFireCentres = parkInfoHash[protectedAreaId.toString()]?.fireCentres || [];
+      return parkFireCentres.filter(value => advisoryFireCentres.includes(value)).length > 0;
+    }
+
+    const parkCameFromRegion = (protectedAreaId) => {
+      if (!advisoryRegions.length) {
+        return false;
+      }
+      const parkRegions = parkInfoHash[protectedAreaId.toString()]?.regions || [];
+      return parkRegions.filter(value => advisoryRegions.includes(value)).length > 0;
+    }
+
+    const parkCameFromSection = (protectedAreaId) => {
+      if (!advisorySections.length) {
+        return false;
+      }
+      const parkSections = parkInfoHash[protectedAreaId.toString()]?.sections || [];
+      return parkSections.filter(value => advisorySections.includes(value)).length > 0;
+    }
+
+    for (const pa of advisory.protectedAreas) {
+      if (showFireCentres) {
+        hasAdditionalParks = hasAdditionalParks || !parkCameFromFireCentre(pa.id)
+      }
+      if (showRegions) {
+        hasAdditionalParks = hasAdditionalParks || !parkCameFromRegion(pa.id)
+      }
+      if (showSections) {
+        hasAdditionalParks = hasAdditionalParks || !parkCameFromSection(pa.id)
+      }
+
+      if (hasAdditionalParks) {
+        break;
+      }
+    }
+
+    return hasAdditionalParks;
+  }
+
+  const showFireCentres = advisory.fireCentres?.length > 0; // 1st priority
+  const showRegions = advisory.regions?.length > 0 && !showFireCentres; // 2nd priority
+  const showSections = advisory.sections?.length > 0 && !showFireCentres && !showRegions;  // 3rd priority
+  const hasAdditionalParks = checkAdditionalParks();
 
   return (
     <>
@@ -92,7 +148,7 @@ const AdvisoryCard = ({ advisory, index }) => {
                     </div>
                   )}
                   <div>
-                    {advisory.fireCentres.length > 0 && advisory.fireCentres.map(
+                    {showFireCentres && advisory.fireCentres.map(
                       (fireCentre, index) => (
                         <Link
                           className="parkLink badge badge-pill badge-primary mb-2 mr-2"
@@ -101,6 +157,31 @@ const AdvisoryCard = ({ advisory, index }) => {
                           {fireCentre.fireCentreName}
                         </Link>
                       ))}
+                    {showRegions && advisory.regions.map(
+                      (region, index) => (
+                        <Link
+                          className="parkLink badge badge-pill badge-primary mb-2 mr-2"
+                          key={index}
+                        >
+                          {region.regionName} Region
+                        </Link>
+                      ))}
+                    {showSections && advisory.sections.map(
+                      (section, index) => (
+                        <Link
+                          className="parkLink badge badge-pill badge-primary mb-2 mr-2"
+                          key={index}
+                        >
+                          {section.sectionName} Section
+                        </Link>
+                      ))}
+                    {hasAdditionalParks &&
+                      <Link
+                        className="parkLink badge-pill badge-secondary-light mb-2 mr-2"
+                      >
+                        Additional parks
+                      </Link>
+                    }
                   </div>
                   <div>
                     {advisory.protectedAreas.length > 5 ? (
