@@ -43,16 +43,16 @@ export default function About({
                   <strong>Size:</strong>
                   {marineProtectedArea === "Y" ?
                     <>
-                      {" "}{park.totalArea.toLocaleString()} hectares
+                      {" "}{park.totalArea.toLocaleString("en-CA")} hectares
                       {(park.uplandArea || park.marineArea) && ' ('}
-                      {park.uplandArea && park.uplandArea.toLocaleString() + ' ha upland'}
+                      {park.uplandArea && park.uplandArea.toLocaleString("en-CA") + ' ha upland'}
                       {(park.uplandArea && park.marineArea) && ' and '}
-                      {park.marineArea && park.marineArea.toLocaleString() + ' ha foreshore'}
+                      {park.marineArea && park.marineArea.toLocaleString("en-CA") + ' ha foreshore'}
                       {(park.uplandArea || park.marineArea) && ')'}
                     </>
                    :
                     <>
-                      {" "}{park.totalArea.toLocaleString()} hectares
+                      {" "}{park.totalArea.toLocaleString("en-CA")} hectares
                     </>
                   }
                 </li>
