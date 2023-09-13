@@ -1062,6 +1062,7 @@ div[class$="-singleValue"] {
         margin-right: 8px;
         a {
           color: $colorBlue;
+          text-decoration: underline;
           text-decoration-color: $colorBlue;
           margin-left: 4px;
           p {
@@ -1072,10 +1073,26 @@ div[class$="-singleValue"] {
       }
       &--right {
         min-width: 160px;
-        a {
-          text-decoration-color: $colorBlue;
-        }
       }
+    }
+  }
+
+  // park card icon
+  .access-status-icon, .campfire-ban-icon {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    color: $colorText;
+    a {
+      text-decoration: underline;
+      text-decoration-color: $colorBlue;
+    }
+  }
+
+  .access-status-icon {
+    margin-bottom: 8px;
+    img {
+      width: 24px;
+      height: 24px;
     }
   }
 
@@ -1084,6 +1101,7 @@ div[class$="-singleValue"] {
     a {
       display: block;
       color: $colorBlue;
+      text-decoration: underline;
       text-decoration-color: $colorBlue;
       margin-top: 8px;
       p {

@@ -6,15 +6,14 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Accordion from "react-bootstrap/Accordion"
 import Container from "react-bootstrap/Container"
-import { Link } from "@mui/material"
 
-import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import HTMLArea from "../HTMLArea"
 import StaticIcon from "./staticIcon"
 import Spacer from "./spacer"
 import { ParkAccessFromAdvisories } from "../../components/park/parkAccessStatus"
 import { countsList } from "../../utils/constants"
+import { Link } from "@mui/material"
 
 export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesList }) => {
   const [isShow, setIsShow] = useState(false)
@@ -329,7 +328,7 @@ export default function ParkDates({ data }) {
 
   return (
     <div id="park-dates-container" className="anchor-link">
-      <Heading>Dates of operation</Heading>
+      <h2 className="section-heading">Dates of operation</h2>
       <Row>
         <Col>
           {!hasOperations && (

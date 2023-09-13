@@ -1,9 +1,7 @@
 import React from "react"
-import { Paper, Grid } from "@mui/material"
 
 import { capitalizeFirstLetter } from "../../utils/helpers";
 
-import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
@@ -12,13 +10,9 @@ export default function ParkMapDetails({ data, type }) {
     <>
       {data && (
         <div id="park-map-details-container" className="anchor-link">
-          <Grid item xs={12} className="anchor-link">
-            <Paper elevation={0}>
-              <Heading>{capitalizeFirstLetter(`${type} and activity maps`)}</Heading>
+              <h2 className="section-heading">{capitalizeFirstLetter(`${type} and activity maps`)}</h2>
               <HtmlContent>{data}</HtmlContent>
-            </Paper>
             <Spacer />
-          </Grid>
         </div>
       )}
     </>

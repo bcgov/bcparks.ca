@@ -45,7 +45,7 @@ const config = {
   },
   menu: {
     logo: MenuLogo,
-  },
+  }
 };
 
 const bootstrap = (app) => { };

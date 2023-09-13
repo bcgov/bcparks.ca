@@ -1,0 +1,20 @@
+/** Place any base overrides to Bootstrap in this file
+    Long term, we'll be looking to create a custom
+    bootstrap theme and abstract these overrides
+**/
+
+@import "variables.scss";
+
+// There is debate as to colours for links
+// This is where we start once that's settled
+// These are based on the DigitalSpace Bootstrap 5 Theme
+// https://github.com/digitalspace/bcparks-bootstrap-theme/
+
+a {
+  color: $colorBlueLight;
+  text-decoration: none;
+  &:hover {
+    color: $colorBlueLinkHover;
+    text-decoration: underline;
+  }
+}

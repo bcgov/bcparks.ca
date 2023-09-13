@@ -7,7 +7,6 @@ import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import { Link } from "@mui/material"
 
-import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
@@ -84,7 +83,7 @@ export default function AdvisoryDetails({ advisories }) {
       <Row>
         <Col>
           <div className="d-flex justify-content-between align-items-flex-start">
-            <Heading>{`Advisories (${advisories.length})`}</Heading>
+            <h2 className="section-heading">{`Advisories (${advisories.length})`}</h2>
           </div>
         </Col>
       </Row>

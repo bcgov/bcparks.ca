@@ -1,42 +1,18 @@
 import React, { useState, useEffect, useRef } from "react"
-import { styled } from '@mui/material/styles';
-import { Box, Paper, Link, Grid } from "@mui/material"
 
 import { capitalizeFirstLetter } from "../../utils/helpers";
 
-import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
 import * as cheerio from 'cheerio';
 
-const PREFIX = 'parkOverview';
+const PREFIX = 'park-overview';
 
 const classes = {
-  collapsed: `${PREFIX}-collapsed`,
-  expanded: `${PREFIX}-expanded`,
-  link: `${PREFIX}-link`
+  collapsed: `${PREFIX} collapsed`,
+  expanded: `${PREFIX} expanded`
 };
-
-const Root = styled('div')((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.collapsed}`]: {
-    maxHeight: "260px",
-    overflow: "hidden",
-    display: "block",
-    textOverflow: "ellipsis",
-  },
-  [`& .${classes.expanded}`]: {
-    maxHeight: "none",
-  },
-  [`& .${classes.link}`]: {
-    color: "#003366",
-    marginTop: "24px",
-  }
-}));
 
 export default function ParkOverview({ data: parkOverview, type }) {
   const [expanded, setExpanded] = useState(false)
@@ -54,30 +30,24 @@ export default function ParkOverview({ data: parkOverview, type }) {
   const collapsedParkOverview = $.html()
 
   return (
-    <Root id="park-overview-container" className="anchor-link">
-      <Grid item xs={12} className="anchor-link">
-        <Paper elevation={0}>
-          <Box className={expanded ? classes.expanded : classes.collapsed} ref={ref}>
-            <Heading>{capitalizeFirstLetter(`${type} overview`)}</Heading>
-            <HtmlContent className="park-overview-html">
-              {expanded ? parkOverview : collapsedParkOverview}
-            </HtmlContent>
-          </Box>
-          {isLong && 
-            <Link
-              component="button"
-              href="#park-overview-container"
-              className={classes.link}
-              onClick={() => {
-                setExpanded(!expanded)
-              }}
-              underline="hover">
-            {expanded ? "Read less" : "Read more"}
-          </Link>
-          }
-          <Spacer />
-        </Paper>
-      </Grid>
-    </Root>
+    <div id="park-overview-container" className="anchor-link">
+      <div className={expanded ? classes.expanded : classes.collapsed} ref={ref}>
+        <h2 className="section-heading">{capitalizeFirstLetter(`${type} overview`)}</h2>
+        <HtmlContent className="park-overview-html">
+          {expanded ? parkOverview : collapsedParkOverview}
+        </HtmlContent>
+      </div>
+      {isLong && 
+        <a
+          href="#park-overview-container"
+          className="park-overview-link"
+          onClick={() => {
+            setExpanded(!expanded)
+          }}>
+        {expanded ? "Read less" : "Read more"}
+      </a>
+      }
+      <Spacer />
+      </div>
   );
 }

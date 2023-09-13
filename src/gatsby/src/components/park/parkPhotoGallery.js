@@ -58,7 +58,7 @@ export default function ParkPhotoGallery({ photos }) {
         plugins={[Captions, Thumbnails, Zoom, Slideshow, Fullscreen]}
       />
 
-      <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+      <div className="d-none d-lg-block">
         {parkPhotos.length === 0 && (
           <Grid item xs={12}>
             <br />
@@ -70,7 +70,7 @@ export default function ParkPhotoGallery({ photos }) {
           <Grid
             item
             xs={12}
-            className="park-photo-container this-is-small-photos"
+            className="park-photo-container p-0 this-is-small-photos"
             onClick={() => {
               if (!showPhoto) {
                 setShowPhoto(true)
@@ -141,7 +141,7 @@ export default function ParkPhotoGallery({ photos }) {
                               item
                               xs={6}
                               key={index}
-                              className={`${showPhoto}? "" : hide-photo`}
+                              className={`${showPhoto}? "" : d-none`}
                             >
                               <ParkPhoto
                                 type="small"
@@ -199,7 +199,7 @@ export default function ParkPhotoGallery({ photos }) {
                               item
                               xs={6}
                               key={index}
-                              className={`${showPhoto}? "" : hide-photo`}
+                              className={`${showPhoto}? "" : d-none`}
                             >
                               <ParkPhoto
                                 type="small"
@@ -264,7 +264,7 @@ export default function ParkPhotoGallery({ photos }) {
                         item
                         xs={6}
                         key={index}
-                        className={`${showPhoto}? "" : hide-photo`}
+                        className={`${showPhoto}? "" : d-none`}
                       >
                         <ParkPhoto
                           type="small"

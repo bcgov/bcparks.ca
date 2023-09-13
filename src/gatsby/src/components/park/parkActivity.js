@@ -5,7 +5,7 @@ import Accordion from "react-bootstrap/Accordion"
 import Container from "react-bootstrap/Container"
 import { Link } from "@mui/material"
 
-import Heading from "./heading"
+
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
 import Spacer from "./spacer"
@@ -122,7 +122,7 @@ export default function ParkActivity({ data }) {
     <div>
       <Row id="park-activity-container" className="anchor-link">
         <Col>
-          <Heading>Activities</Heading>
+          <h2 className="section-heading">Activities</h2>
         </Col>
       </Row>
       <Row>

@@ -240,6 +240,16 @@ li.post-separator {
   }
 }
 
+/** New global CSS for non-MUI markup
+    we might want to split these out into individual files eventually
+**/
+
+//buttons
+.btn-lg {
+  font-size: 1rem !important;
+  padding: 0.75rem 2.25rem;
+}
+
 a.underline-hover {
   text-decoration: none;
 

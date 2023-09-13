@@ -1,18 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { graphql, useStaticQuery, Link } from "gatsby"
-import { Card, CardHeader, Avatar } from "@mui/material"
-import { styled } from '@mui/material/styles';
 
 import blueStatusIcon from "../../images/park/blue-status-64.png"
 import redStatusIcon from "../../images/park/red-status-64.png"
 import yellowStatusIcon from "../../images/park/yellow-status-64.png"
 
-const StyledCard = styled(Card)({
-  border: "none",
-  boxShadow: "none",
-  color: "#00008a",
-})
 
 const ICONS = {
   blue: blueStatusIcon,
@@ -103,39 +96,21 @@ export default function ParkAccessStatus({ advisories, slug }) {
   // we need to differentiate between the two structures.
 
   return (
-    <StyledCard>
+    <div className="access-status-icon">
       {parkStatusText === "Open" ? (
-          <CardHeader
-            className="access-icon access-status-open"
-            avatar={
-              <Avatar
-                variant="square"
-                src={parkStatusIcon}
-                aria-label="park access status"
-                className="park-overview-icon"
-                alt=""
-              />
-            }
-            title={parkStatusText}
-          />
+        <>
+          <img src={parkStatusIcon} alt="" class="mr-2" />
+          {parkStatusText}
+        </>
       ) : (
         <Link to={`/${slug}/#park-advisory-details-container`}>
-          <CardHeader
-            className="access-icon"
-            avatar={
-              <Avatar
-                variant="square"
-                src={parkStatusIcon}
-                aria-label="park access status"
-                className="park-overview-icon"
-                alt=""
-              />
-            }
-            title={parkStatusText}
-          />
+          <>
+            <img src={parkStatusIcon} alt="" class="mr-2" />
+            {parkStatusText}
+          </>
         </Link>
       )}
-    </StyledCard>
+    </div>
   )
 }
 

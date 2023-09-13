@@ -1,16 +1,11 @@
 import React from "react"
 import { parseISO, format } from "date-fns"
-import { Paper, Grid } from "@mui/material"
 
 import { capitalizeFirstLetter } from "../../utils/helpers";
 
-import Heading from "./heading"
 import HtmlContent from "./htmlContent"
 import Spacer from "./spacer"
 
-// TODO: this component needs to be converted to bootstrap but
-// it should be done at the same time as the other sections
-// to match spacing
 export default function About({
   park
 }) {
@@ -26,9 +21,8 @@ export default function About({
   const marineProtectedArea = park.marineProtectedArea
 
   return (
-    <Grid item xs={12} id="park-about-container" className="anchor-link">
-      <Paper elevation={0}>
-        <Heading>{capitalizeFirstLetter(`Learn more about this ${parkType}`)}</Heading>
+    <div id="park-about-container" className="anchor-link">
+         <h2 className="section-heading">{capitalizeFirstLetter(`Learn more about this ${parkType}`)}</h2>
         {(park.totalArea || park.establishedDate) && (
           <>
             <h3>{capitalizeFirstLetter(`${park.type} details`)}</h3>
@@ -119,7 +113,6 @@ export default function About({
           </>
         )}
         <Spacer />
-      </Paper>
-    </Grid>
+    </div>
   )
 }

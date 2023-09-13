@@ -3,13 +3,14 @@ import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
 import loadable from '@loadable/component'
+
 import {
-  Box,
   Container,
   Grid,
   CssBaseline,
   Breadcrumbs,
 } from "@mui/material"
+
 import useScrollSpy from "react-use-scrollspy"
 
 import { capitalizeFirstLetter, renderHTML, isNullOrWhiteSpace } from "../utils/helpers";
@@ -20,12 +21,10 @@ import Header from "../components/header"
 import PageMenu from "../components/pageContent/pageMenu"
 
 import About from "../components/park/about"
-import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
 import CampingDetails from "../components/park/campingDetails"
 import NatureAndCulture from "../components/park/natureAndCulture"
 import Reconciliation from "../components/park/reconciliation"
-import Heading from "../components/park/heading.js"
 import ParkActivity from "../components/park/parkActivity"
 import ParkDates from "../components/park/parkDates"
 import ParkFacility from "../components/park/parkFacility"
@@ -214,10 +213,12 @@ export default function ParkTemplate({ data }) {
       visible: !isNullOrWhiteSpace(description),
     },
     {
+      // Depricated, also delete the section if removing
       sectionIndex: 1,
       display: "Accessibility",
       link: "#accessibility-details-container",
-      visible: park.accessibility,
+      visible: false
+      // visible: park.accessibility,
     },
     {
       sectionIndex: 2,
@@ -307,7 +308,7 @@ export default function ParkTemplate({ data }) {
   }
 
   const parkName = renderHTML(park.parkNames.find(item=> item.parkNameType === PARK_NAME_TYPE.Escaped)?.parkName  || park.protectedAreaName);
-  
+
   const breadcrumbs = [
     <GatsbyLink key="1" to="/" underline="hover">
       Home
@@ -337,12 +338,9 @@ export default function ParkTemplate({ data }) {
       <Header mode="internal" content={menuContent} />
       <ScrollToTop />
       <CssBaseline />
-      <div className="d-flex flex-wrap d-md-block">
+      <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
         <div className="container parks-container order-2">
-          <Container id="sr-content" className="park-info-container" maxWidth={false}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12}>
-                <div className="p30t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none" />
+          <div id="sr-content" className="park-info-container pt-4">
                 <Breadcrumbs
                   separator="›"
                   aria-label="breadcrumb"
@@ -350,9 +348,9 @@ export default function ParkTemplate({ data }) {
                 >
                   {breadcrumbs}
                 </Breadcrumbs>
-              </Grid>
+              </div>
               {!isLoadingProtectedArea && !protectedAreaLoadError && (
-                <Grid item xs={12} sm={12}>
+                <div>
                   <ParkHeader
                     slug={park.slug}
                     parkName={parkName}
@@ -363,13 +361,11 @@ export default function ParkTemplate({ data }) {
                     advisoryLoadError={advisoryLoadError}
                     advisories={advisories}
                   />
-                </Grid>
+                </div>
               )}
-            </Grid>
-          </Container>
         </div>
 
-        <div className="page-menu--mobile w-100 order-3 d-block d-lg-none">
+        <div className="page-menu--mobile d-block d-lg-none mb-4 mb-md-0 order-3">
             <PageMenu
               pageSections={menuItems}
               activeSection={activeSection}
@@ -378,12 +374,11 @@ export default function ParkTemplate({ data }) {
         </div>
         
         <div className="container parks-container gallery-container order-1">
-          <Container className="park-info-container" maxWidth={false}>
-            <Grid item xs={12} sm={12}>
-              <ParkPhotoGallery photos={photos} />
-            </Grid>
-          </Container>
+          <div className="park-info-container">
+            <ParkPhotoGallery photos={photos} />
+            </div>
         </div>
+
       </div>
 
       <div className="container parks-container">
@@ -395,7 +390,7 @@ export default function ParkTemplate({ data }) {
               sm={12}
               md={3}
               lg={3}
-              className="page-menu--desktop d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none"
+              className="page-menu--desktop d-none d-lg-block"
             >
               <PageMenu
                 pageSections={menuItems}
@@ -411,20 +406,20 @@ export default function ParkTemplate({ data }) {
               lg={9}
             >
               {menuItems[0].visible && (
-                <div ref={parkOverviewRef} className="full-width">
+                <div ref={parkOverviewRef} className="w-100">
                   <ParkOverview data={description} type={parkType} />
                 </div>
               )}
               {menuItems[1].visible && (
-                <div ref={accessibilityRef} className="full-width">
-                  <AccessibilityDetails />
+                <div ref={accessibilityRef} className="w-100">
+                  
                 </div>
               )}
               {menuItems[2].visible && (
-                <div ref={advisoryRef} className="full-width">
+                <div ref={advisoryRef} className="w-100">
                   {isLoadingAdvisories && (
                     <div className="mb-5">
-                      <Heading>{`Advisories`}</Heading>
+                      <h2 className="section-heading">{`Advisories`}</h2>
                       <div className="spinner-border" role="status">
                         <span className="sr-only">Loading...</span>
                       </div>
@@ -444,7 +439,7 @@ export default function ParkTemplate({ data }) {
                 </div>
               )}
               {menuItems[3].visible && (
-                <div ref={parkDatesRef} className="full-width">
+                <div ref={parkDatesRef} className="w-100">
                   <ParkDates
                     data={{
                       parkOperation: park.parkOperation,
@@ -456,17 +451,17 @@ export default function ParkTemplate({ data }) {
                 </div>
               )}
               {menuItems[4].visible && (
-                <div ref={safetyRef} className="full-width">
+                <div ref={safetyRef} className="w-100">
                   <SafetyInfo safetyInfo={safetyInfo} />
                 </div>
               )}
               {menuItems[5].visible && (
-                <div ref={specialRef} className="full-width">
+                <div ref={specialRef} className="w-100">
                   <SpecialNote specialNotes={specialNotes} />
                 </div>
               )}
               {menuItems[6].visible && (
-                <div ref={campingRef} className="full-width">
+                <div ref={campingRef} className="w-100">
                   <CampingDetails
                     data={{
                       activeCampings: activeCampings,
@@ -480,51 +475,49 @@ export default function ParkTemplate({ data }) {
                 </div>
               )}
               {menuItems[7].visible && (
-                <div ref={facilityRef} className="full-width">
+                <div ref={facilityRef} className="w-100">
                   <ParkFacility data={nonCampingFacilities} />
                 </div>
               )}
               {menuItems[8].visible && (
-                <div ref={activityRef} className="full-width">
+                <div ref={activityRef} className="w-100">
                   <ParkActivity data={nonCampingActivities} />
                 </div>
               )}
               {menuItems[9].visible && (
-                <div ref={mapLocationRef} className="full-width">
+                <div ref={mapLocationRef} className="w-100">
                   <div id="park-maps-location-container" className="anchor-link">
                     <AsyncMapLocation data={mapData} />
                     {locationNotes && (
-                      <Grid item xs={12} id="park-location-notes-container">
-                        <Box>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: locationNotes,
-                            }}
-                          ></div>
-                        </Box>
+                      <>
+                        <div id="park-location-notes-container" 
+                          dangerouslySetInnerHTML={{
+                            __html: locationNotes,
+                          }}
+                        ></div>
                         <Spacer />
-                      </Grid>
+                        </>
                     )}
                   </div>
                 </div>
               )}
               {menuItems[10].visible && (
-                <div ref={activityMapRef} className="full-width">
+                <div ref={activityMapRef} className="w-100">
                   <ParkMapDetails data={maps} type={parkType} />
                 </div>
               )}
               {menuItems[11].visible && (
-                <div ref={aboutRef} className="full-width">
+                <div ref={aboutRef} className="w-100">
                   <About park={park} />
                 </div>
               )}
               {menuItems[12].visible && (
-                <div ref={natureAndCultureRef} className="full-width">
+                <div ref={natureAndCultureRef} className="w-100">
                   <NatureAndCulture data={natureAndCulture} />
                 </div>
               )}
               {menuItems[13].visible && (
-                <div ref={reconciliationRef} className="full-width">
+                <div ref={reconciliationRef} className="w-100">
                   <Reconciliation data={reconciliationNotes} />
                 </div>
               )}

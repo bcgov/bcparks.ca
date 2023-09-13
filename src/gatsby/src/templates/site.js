@@ -18,10 +18,8 @@ import Footer from "../components/footer"
 import Header from "../components/header"
 import PageMenu from "../components/pageContent/pageMenu"
 
-import AccessibilityDetails from "../components/park/accessibilityDetails"
 import AdvisoryDetails from "../components/park/advisoryDetails"
 import CampingDetails from "../components/park/campingDetails"
-import Heading from "../components/park/heading.js"
 import ParkActivity from "../components/park/parkActivity"
 import ParkFacility from "../components/park/parkFacility"
 import ParkHeader from "../components/park/parkHeader"
@@ -126,7 +124,6 @@ export default function SiteTemplate({ data }) {
   }, [apiBaseUrl, park?.orcs, site.orcsSiteNumber])
 
   const parkOverviewRef = useRef("")
-  const accessibilityRef = useRef("")
   const advisoryRef = useRef("")
   const campingRef = useRef("")
   const facilityRef = useRef("")
@@ -135,7 +132,6 @@ export default function SiteTemplate({ data }) {
 
   const sectionRefs = [
     parkOverviewRef,
-    accessibilityRef,
     advisoryRef,
     campingRef,
     facilityRef,
@@ -156,11 +152,14 @@ export default function SiteTemplate({ data }) {
       link: "#park-overview-container",
       visible: !isNullOrWhiteSpace(description),
     },
+
     {
+      // Depricated, also delete the section if removing
       sectionIndex: 1,
       display: "Accessibility",
       link: "#accessibility-details-container",
-      visible: park?.accessibility,
+      visible: false
+      // visible: park?.accessibility,
     },
     {
       sectionIndex: 2,
@@ -237,7 +236,7 @@ export default function SiteTemplate({ data }) {
         <Container id="sr-content" className="park-info-container" maxWidth={false}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
-              <div className="p30t d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none" />
+              <div className="p30t d-none d-lg-block" />
               <Breadcrumbs
                 separator="›"
                 aria-label="breadcrumb"
@@ -273,7 +272,7 @@ export default function SiteTemplate({ data }) {
         <Container className="park-info-container" maxWidth={false}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
-              <div className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
+              <div className="d-none d-lg-block">
                 <ParkPhotoGallery photos={photos} />
               </div>
             </Grid>
@@ -283,7 +282,7 @@ export default function SiteTemplate({ data }) {
               sm={12}
               md={3}
               lg={3}
-              className="page-menu--desktop d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none"
+              className="page-menu--desktop d-none d-lg-block"
             >
               <PageMenu
                 pageSections={menuItems}
@@ -298,21 +297,22 @@ export default function SiteTemplate({ data }) {
               md={9}
               lg={9}
             >
+              
               {menuItems[0].visible && (
-                <div ref={parkOverviewRef} className="full-width">
+                <div ref={parkOverviewRef} className="w-100">
                   <ParkOverview data={description} type="site" />
                 </div>
               )}
               {menuItems[1].visible && (
-                <div ref={accessibilityRef} className="full-width">
-                  <AccessibilityDetails />
+                <div className="w-100">
+               
                 </div>
               )}
               {menuItems[2].visible && (
-                <div ref={advisoryRef} className="full-width">
+                <div ref={advisoryRef} className="w-100">
                   {isLoadingAdvisories && (
                     <div className="mb-5">
-                      <Heading>{`Advisories`}</Heading>
+                      <h2 className="section-heading">{`Advisories`}</h2>
                       <div className="spinner-border" role="status">
                         <span className="sr-only">Loading...</span>
                       </div>
@@ -332,7 +332,7 @@ export default function SiteTemplate({ data }) {
                 </div>
               )}
                {menuItems[3].visible && (
-                <div ref={campingRef} className="full-width">
+                <div ref={campingRef} className="w-100">
                   <CampingDetails
                     data={{
                       activeCampings: activeCampings,
@@ -344,17 +344,17 @@ export default function SiteTemplate({ data }) {
                 </div>
               )}
               {menuItems[4].visible && (
-                <div ref={facilityRef} className="full-width">
+                <div ref={facilityRef} className="w-100">
                   <ParkFacility data={nonCampingFacilities} />
                 </div>
               )}
               {menuItems[5].visible && (
-                <div ref={activityRef} className="full-width">
+                <div ref={activityRef} className="w-100">
                   <ParkActivity data={nonCampingActivities} />
                 </div>
               )}
               {menuItems[6].visible && (
-                <div ref={mapLocationRef} className="full-width">
+                <div ref={mapLocationRef} className="w-100">
                   <div id="park-maps-location-container" className="anchor-link">
                     <MapLocation data={mapData} />
                     {locationNotes && (
