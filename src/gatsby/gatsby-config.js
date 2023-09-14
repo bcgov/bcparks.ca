@@ -90,10 +90,10 @@ module.exports = {
                   populate: "*"
                 },
                 fireZones: {
-                  populate: "*"
+                  populate: ["fireCentre"]
                 },
                 managementAreas: {
-                  populate: "*"
+                  populate: ["region", "section"]
                 }
               }
             },
