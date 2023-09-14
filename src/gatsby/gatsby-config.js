@@ -59,9 +59,6 @@ module.exports = {
             singularName: "protected-area",
             queryParams: {
               populate: {
-                parkNames: {
-                  populate: ["parkNameType"]
-                },
                 parkActivities: {
                   populate: ["activityType"]
                 },
