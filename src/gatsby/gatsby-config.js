@@ -72,16 +72,16 @@ module.exports = {
                   fields: "*"
                 },
                 managementDocuments: {
-                  populate: "*"
+                  populate: ["documentType"]
                 },
                 biogeoclimaticZones: {
-                  populate: "*"
+                  fields: "*"
                 },
                 marineEcosections: {
-                  populate: "*"
+                  fields: "*"
                 },
                 terrestrialEcosections: {
-                  populate: "*"
+                  fields: "*"
                 },
                 seo: {
                   populate: "*"
