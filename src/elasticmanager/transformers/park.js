@@ -38,6 +38,16 @@ exports.createElasticPark = async function (park, photos) {
   }
   delete park.managementAreas;
 
+  // convert parkNames
+  if (park.parkNames?.length) {
+    let parkNames = park.parkNames
+      .filter(n => n.parkNameType?.nameTypeId !== 2)
+      .map(n => {
+        return n.parkName.toLowerCase();
+      });
+    park.parkNames = [...new Set(parkNames || [])];
+  }
+
   // store protectedAreaName as lowercase for sorting
   park.nameLowerCase = park.protectedAreaName.toLowerCase();
 

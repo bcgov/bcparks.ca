@@ -32,17 +32,18 @@ const readQueue = async function (actionName, options) {
 }
 
 const removeFromQueue = async function (queueIds) {
+  if (queueIds?.length > 0) {
+    const httpReqHeaders = {
+      'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
+      'Content-Type': 'application/json'
+    };
 
-  const httpReqHeaders = {
-    'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
-    'Content-Type': 'application/json'
-  };
-
-  try {
-    const deleteQuery = `${process.env.STRAPI_BASE_URL}/api/queued-tasks/bulk-delete`;
-    await axios.post(deleteQuery, queueIds, { headers: httpReqHeaders });
-  } catch (error) {
-    getLogger().error(error);
+    try {
+      const deleteQuery = `${process.env.STRAPI_BASE_URL}/api/queued-tasks/bulk-delete`;
+      await axios.post(deleteQuery, queueIds, { headers: httpReqHeaders });
+    } catch (error) {
+      getLogger().error(error);
+    }
   }
 }
 
