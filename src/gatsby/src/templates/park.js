@@ -13,7 +13,7 @@ import {
 
 import useScrollSpy from "react-use-scrollspy"
 
-import { capitalizeFirstLetter, renderHTML, isNullOrWhiteSpace } from "../utils/helpers";
+import { capitalizeFirstLetter, isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories } from '../utils/advisoryHelper';
 
 import Footer from "../components/footer"
@@ -307,7 +307,7 @@ export default function ParkTemplate({ data }) {
     parkOrcs: park.orcs
   }
 
-  const parkName = renderHTML(park.parkNames.find(item=> item.parkNameType === PARK_NAME_TYPE.Escaped)?.parkName  || park.protectedAreaName);
+  const parkName = park.protectedAreaName;
 
   const breadcrumbs = [
     <GatsbyLink key="1" to="/" underline="hover">
@@ -664,16 +664,6 @@ export const query = graphql`
           appendStandardCalloutText {
             data
           }
-        }
-      }
-      parkNames {
-        id
-        parkName
-        parkNameType {
-          id
-          nameType
-          nameTypeId
-          description
         }
       }
       parkOperation {
