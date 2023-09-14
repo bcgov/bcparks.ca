@@ -315,9 +315,9 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
   // This hashset is used by the advisoryCard.js component to quiclky 
   // determine if the advisoriy is associated with any parks in addition 
-  // to the specified  Fire Centres, Regions, or Sections.
-  // Management Areas and Fire Zones are not currently used for anything but 
-  // are included for completeness. The data comes from GraphQL.
+  // to the specified  Fire Centres, Fire Zones, Regions, or Sections.
+  // Management Areas are not currently used for anything but are included
+  // for completeness. The data comes from GraphQL.
   const buildParkInfoHash = () => {
     const hash = {};
     for (const x of (data?.allStrapiProtectedArea.nodes || [])) {

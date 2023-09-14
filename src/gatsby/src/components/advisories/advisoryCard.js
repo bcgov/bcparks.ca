@@ -14,38 +14,49 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
   }
 
   const showFireCentres = advisory.fireCentres?.length > 0; // 1st priority
-  const showRegions = advisory.regions?.length > 0 && !showFireCentres; // 2nd priority
-  const showSections = advisory.sections?.length > 0 && !showFireCentres && !showRegions;  // 3rd priority
+  const showFireZones = advisory.fireZones?.length > 0 && !showFireCentres; // 2nd priority
+  const showRegions = advisory.regions?.length > 0 && !showFireCentres && !showFireZones; // 3rd priority
+  const showSections = advisory.sections?.length > 0 && !showFireCentres && !showFireZones && !showRegions;  // 4th priority
 
   const checkAdditionalParks = () => {
 
     const advisoryFireCentres = advisory.fireCentres.map(c => { return c.id })
+    const advisoryFireZones = advisory.fireZones.map(z => { return z.id })
     const advisoryRegions = advisory.regions.map(r => { return r.id })
     const advisorySections = advisory.sections.map(s => { return s.id })
 
-    const parkCameFromFireCentre = (protectedAreaId) => {
-      const parkFireCentres = parkInfoHash[protectedAreaId.toString()]?.fireCentres || [];
-      return parkFireCentres.filter(value => advisoryFireCentres.includes(value)).length > 0;
+    const parkCameFromFireCentre = (paKey) => {
+      const parkFireCentres = parkInfoHash[paKey]?.fireCentres || [];
+      return parkFireCentres.some(x => advisoryFireCentres.includes(x))
     }
 
-    const parkCameFromRegion = (protectedAreaId) => {
-      const parkRegions = parkInfoHash[protectedAreaId.toString()]?.regions || [];
-      return parkRegions.filter(value => advisoryRegions.includes(value)).length > 0;
+    const parkCameFromFireZone = (paKey) => {
+      const parkFireZones = parkInfoHash[paKey]?.fireZones || [];
+      return parkFireZones.some(x => advisoryFireZones.includes(x))
     }
 
-    const parkCameFromSection = (protectedAreaId) => {
-      const parkSections = parkInfoHash[protectedAreaId.toString()]?.sections || [];
-      return parkSections.filter(value => advisorySections.includes(value)).length > 0;
+    const parkCameFromRegion = (paKey) => {
+      const parkRegions = parkInfoHash[paKey]?.regions || [];
+      return parkRegions.some(x => advisoryRegions.includes(x))
+    }
+
+    const parkCameFromSection = (paKey) => {
+      const parkSections = parkInfoHash[paKey]?.sections || [];
+      return parkSections.some(x => advisorySections.includes(x))
     }
 
     for (const pa of advisory.protectedAreas) {
-      if (showFireCentres && !parkCameFromFireCentre(pa.id)) {
+      const paKey = pa.id.toString();
+      if (showFireCentres && !parkCameFromFireCentre(paKey)) {
         return true;
       }
-      if (showRegions && !parkCameFromRegion(pa.id)) {
+      if (showFireZones && !parkCameFromFireZone(paKey)) {
         return true;
       }
-      if (showSections && !parkCameFromSection(pa.id)) {
+      if (showRegions && !parkCameFromRegion(paKey)) {
+        return true;
+      }
+      if (showSections && !parkCameFromSection(paKey)) {
         return true;
       }
     }
@@ -141,6 +152,15 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                           key={index}
                         >
                           {fireCentre.fireCentreName}
+                        </Link>
+                      ))}
+                    {showFireZones && advisory.fireZones.map(
+                      (fireZone, index) => (
+                        <Link
+                          className="parkLink badge badge-pill badge-primary mb-2 mr-2"
+                          key={index}
+                        >
+                          {fireZone.fireZoneName}
                         </Link>
                       ))}
                     {showRegions && advisory.regions.map(
