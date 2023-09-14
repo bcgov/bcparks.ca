@@ -7,11 +7,64 @@ import HTMLArea from "../HTMLArea"
 
 import "../../styles/advisories/advisoryCard.scss"
 
-const AdvisoryCard = ({ advisory, index }) => {
+const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
   const [open, setOpen] = useState(false)
   const checkRelation = (orcs, orcsSite) => {
     return orcsSite?.includes(orcs?.toString())
   }
+
+  const showFireCentres = advisory.fireCentres?.length > 0; // 1st priority
+  const showFireZones = advisory.fireZones?.length > 0 && !showFireCentres; // 2nd priority
+  const showRegions = advisory.regions?.length > 0 && !showFireCentres && !showFireZones; // 3rd priority
+  const showSections = advisory.sections?.length > 0 && !showFireCentres && !showFireZones && !showRegions;  // 4th priority
+
+  const checkAdditionalParks = () => {
+
+    const advisoryFireCentres = advisory.fireCentres.map(c => { return c.id })
+    const advisoryFireZones = advisory.fireZones.map(z => { return z.id })
+    const advisoryRegions = advisory.regions.map(r => { return r.id })
+    const advisorySections = advisory.sections.map(s => { return s.id })
+
+    const parkCameFromFireCentre = (paKey) => {
+      const parkFireCentres = parkInfoHash[paKey]?.fireCentres || [];
+      return parkFireCentres.some(x => advisoryFireCentres.includes(x))
+    }
+
+    const parkCameFromFireZone = (paKey) => {
+      const parkFireZones = parkInfoHash[paKey]?.fireZones || [];
+      return parkFireZones.some(x => advisoryFireZones.includes(x))
+    }
+
+    const parkCameFromRegion = (paKey) => {
+      const parkRegions = parkInfoHash[paKey]?.regions || [];
+      return parkRegions.some(x => advisoryRegions.includes(x))
+    }
+
+    const parkCameFromSection = (paKey) => {
+      const parkSections = parkInfoHash[paKey]?.sections || [];
+      return parkSections.some(x => advisorySections.includes(x))
+    }
+
+    for (const pa of advisory.protectedAreas) {
+      const paKey = pa.id.toString();
+      if (showFireCentres && !parkCameFromFireCentre(paKey)) {
+        return true;
+      }
+      if (showFireZones && !parkCameFromFireZone(paKey)) {
+        return true;
+      }
+      if (showRegions && !parkCameFromRegion(paKey)) {
+        return true;
+      }
+      if (showSections && !parkCameFromSection(paKey)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  const hasAdditionalParks = checkAdditionalParks();
 
   return (
     <>
@@ -92,7 +145,7 @@ const AdvisoryCard = ({ advisory, index }) => {
                     </div>
                   )}
                   <div>
-                    {advisory.fireCentres.length > 0 && advisory.fireCentres.map(
+                    {showFireCentres && advisory.fireCentres.map(
                       (fireCentre, index) => (
                         <Link
                           className="parkLink badge badge-pill badge-primary mb-2 mr-2"
@@ -101,6 +154,40 @@ const AdvisoryCard = ({ advisory, index }) => {
                           {fireCentre.fireCentreName}
                         </Link>
                       ))}
+                    {showFireZones && advisory.fireZones.map(
+                      (fireZone, index) => (
+                        <Link
+                          className="parkLink badge badge-pill badge-primary mb-2 mr-2"
+                          key={index}
+                        >
+                          {fireZone.fireZoneName}
+                        </Link>
+                      ))}
+                    {showRegions && advisory.regions.map(
+                      (region, index) => (
+                        <Link
+                          className="parkLink badge badge-pill badge-primary mb-2 mr-2"
+                          key={index}
+                        >
+                          {region.regionName} Region
+                        </Link>
+                      ))}
+                    {showSections && advisory.sections.map(
+                      (section, index) => (
+                        <Link
+                          className="parkLink badge badge-pill badge-primary mb-2 mr-2"
+                          key={index}
+                        >
+                          {section.sectionName} Section
+                        </Link>
+                      ))}
+                    {hasAdditionalParks &&
+                      <Link
+                        className="parkLink badge-pill badge-secondary-light mb-2 mr-2"
+                      >
+                        Additional parks
+                      </Link>
+                    }
                   </div>
                   <div>
                     {advisory.protectedAreas.length > 5 ? (

@@ -3,7 +3,7 @@ import React from "react"
 
 import AdvisoryCard from "../advisories/advisoryCard"
 
-const AdvisoryList = ({ advisories }) => {
+const AdvisoryList = ({ advisories, parkInfoHash }) => {
   // NB when paging was done in front-end, this component
   // had more work to do. However this component still processes
   // visible advisories for dates, alerts, etc.
@@ -113,17 +113,21 @@ const AdvisoryList = ({ advisories }) => {
     return (a);
   }
 
-  processAdvisories(advisories);
+  processAdvisories(advisories, parkInfoHash);
 
   return (
-    <>  
-    { haveAdvisories && (       
-      <div>
+    <>
+      {haveAdvisories && (
+        <div>
           {advisories.map((advisory, index) => (
-           <AdvisoryCard key={index} advisory={advisory} index={index}></AdvisoryCard>
+            <AdvisoryCard key={index}
+              advisory={advisory}
+              index={index}
+              parkInfoHash={parkInfoHash}>
+            </AdvisoryCard>
           ))}
-      </div>
-    )}
+        </div>
+      )}
     </>
   );
 

@@ -313,6 +313,25 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     setPageIndex(p)
   }
 
+  // This hashset is used by the advisoryCard.js component to quiclky 
+  // determine if the advisoriy is associated with any parks in addition 
+  // to the specified  Fire Centres, Fire Zones, Regions, or Sections.
+  // Management Areas are not currently used for anything but are included
+  // for completeness. The data comes from GraphQL.
+  const buildParkInfoHash = () => {
+    const hash = {};
+    for (const x of (data?.allStrapiProtectedArea.nodes || [])) {
+      hash[x?.strapi_id.toString()] = {
+        managementAreas: x.managementAreas.map(m => { return m.strapi_id }),
+        sections: x.managementAreas.map(m => { return m.section?.id }),
+        regions: x.managementAreas.map(m => { return m.region?.id }),
+        fireZones: x.fireZones.map(m => { return m.strapi_id }),
+        fireCentres: x.fireZones.map(m => { return m.fireCentre?.id })
+      };
+    }
+    return hash;
+  }
+
   // If the filter changes, set data as old and get new data
   useEffect(() => {
     if (isNewFilter) {
@@ -352,6 +371,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   }, [getAdvisoryTotalCount])
 
   const menuContent = data?.allStrapiMenu?.nodes || []
+  const parkInfoHash = buildParkInfoHash();
 
   const breadcrumbs = [
     <Link key="1" href="/" underline="hover">
@@ -401,8 +421,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           <AdvisoryLegend />
           <AdvisoryList
             advisories={advisories}
-            pageIndex={pageIndex}
-            pageLen={pageLen}
+            parkInfoHash={parkInfoHash}
           ></AdvisoryList>
 
           <AdvisoryPageNav
@@ -451,6 +470,26 @@ export const query = graphql`
         strapi_parent {
           id
           title
+        }
+      }
+    }
+    allStrapiProtectedArea {
+      nodes {
+        strapi_id
+        managementAreas {
+          strapi_id
+          region {
+            id
+          }
+          section {
+            id
+          }
+        }
+        fireZones {
+          strapi_id
+          fireCentre {
+            id
+          }
         }
       }
     }
