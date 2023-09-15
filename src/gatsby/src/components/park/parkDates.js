@@ -81,7 +81,7 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
             {subArea.serviceDates.length > 0 && (
               <>
                 <dt className="mt-3">
-                  Main operating season dates
+                  Main operating season
                 </dt>
                 <dd>
                   <ul className="pl-3">
