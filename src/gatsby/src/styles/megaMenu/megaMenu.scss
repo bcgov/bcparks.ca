@@ -366,6 +366,9 @@ nav {
     .menu-level--2 {
       padding-left: 10px;
       height: 400px;
+      &.has-clicked-twice--true {
+        display: none;
+      }
 
       .menu-arrow {
         display: none;
