@@ -258,3 +258,15 @@ a.underline-hover {
     text-decoration-color: $colorBlue
   }
 }
+
+// button
+a.btn {
+  &.btn-primary {
+    color: $colorWhite;
+    background-color: #234075;
+    &:hover {
+      color: $colorWhite;
+      background-color: #203458;
+    }
+  }
+}
