@@ -46,6 +46,17 @@
     }
   }
 
+  // intro text
+  .intro-text-container {
+    max-width: 900px;
+    ul {
+      padding-left: 40px;
+      li:not(:last-of-type) {
+        margin-bottom: 8px;
+      }
+    }
+  }
+
   // table
   table {
     display: none;
@@ -63,13 +74,6 @@
       tr:last-of-type {
         td {
           border-bottom: 1px solid #ced4da;
-        }
-      }
-      ul {
-        margin: 0;
-        padding: 0;
-        li {
-          list-style: none;
         }
       }
       svg.MuiSvgIcon-root {
@@ -98,13 +102,6 @@
           &--container {
             b {
               color: #494949;
-            }
-            ul {
-              margin: 0;
-              padding: 0;
-              li {
-                list-style: none;
-              }
             }
             & + .list-group-item--container {
               margin-top: 8px;
