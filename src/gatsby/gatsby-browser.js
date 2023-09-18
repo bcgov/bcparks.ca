@@ -28,5 +28,5 @@ export const shouldUpdateScroll = ({ routerProps: { location }, getSavedScrollPo
       window.scrollTo(...(currentPosition || [0, 0]));
     }, timeout);
   }
-  return false;
+  return location.hash?.length > 0;
 };
