@@ -66,6 +66,11 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
 
   const hasAdditionalParks = checkAdditionalParks();
 
+  const sentenceCase = (areaName, upperCaseWord) => {
+    const lowerCaseWord = upperCaseWord.toLowerCase()
+    return areaName.replace(upperCaseWord, lowerCaseWord)
+  }
+
   return (
     <>
       <Row
@@ -151,16 +156,18 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                           className="parkLink badge badge-pill badge-primary mb-2 mr-2"
                           key={index}
                         >
-                          {fireCentre.fireCentreName}
+                          {sentenceCase(fireCentre.fireCentreName, "Fire Centre")}
                         </Link>
                       ))}
+                  </div>
+                  <div>
                     {showFireZones && advisory.fireZones.map(
                       (fireZone, index) => (
                         <Link
                           className="parkLink badge badge-pill badge-primary mb-2 mr-2"
                           key={index}
                         >
-                          {fireZone.fireZoneName}
+                          {sentenceCase(fireZone.fireZoneName, "Fire Zone")}
                         </Link>
                       ))}
                     {showRegions && advisory.regions.map(
@@ -169,7 +176,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                           className="parkLink badge badge-pill badge-primary mb-2 mr-2"
                           key={index}
                         >
-                          {region.regionName} Region
+                          {region.regionName} region
                         </Link>
                       ))}
                     {showSections && advisory.sections.map(
@@ -178,7 +185,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                           className="parkLink badge badge-pill badge-primary mb-2 mr-2"
                           key={index}
                         >
-                          {section.sectionName} Section
+                          {section.sectionName} section
                         </Link>
                       ))}
                     {hasAdditionalParks &&
