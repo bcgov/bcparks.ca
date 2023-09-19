@@ -105,7 +105,7 @@ const indexPark = async function (park, photos) {
   // Elasticsearch instead of adding it
   if (!park.isDisplayed || !park.publishedAt) {
     getLogger().warn(`removing park ${park.id} due to unpublished or undisplayed status`);
-    await removePark(park)
+    await removePark(park.id)
     return true;
   }
 
@@ -125,9 +125,9 @@ const indexPark = async function (park, photos) {
 /**
  *  Removes a single park from Elasticsearch
  */
-const removePark = async function (park) {
+const removePark = async function (id) {
   try {
-    await elasticClient.removePark({ itemId: park.id });
+    await elasticClient.removePark({ itemId: id });
   } catch (error) {
     getLogger().error(error);
     return false;
