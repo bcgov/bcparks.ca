@@ -122,11 +122,50 @@ img { max-width: 100%; }
 // This is temp as we should be rendering <table class="table"> through CKEditor
 // so that tables pick up standard boostrap styles
 figure.table {
+  &.vertical-heading {
+    // border: 1px solid blue;
+    table {
+      tbody {
+        tr {
+          display: block;
+          width: 100%;
+          @media screen and (min-width: $mdBreakpoint) {
+            width: auto;
+            display: table-row;
+          }
+          th, td {
+            display: block;
+            width: 100%;
+            @media screen and (min-width: $mdBreakpoint) {
+              width: auto;
+              display: table-cell;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.horizontal-heading {
+    // border: 1px solid tomato;
+    overflow-x: auto;
+    table {
+      min-width: 600px;
+    }
+    &::-webkit-scrollbar {
+      height: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba( #000, .2);
+      border-radius: 5px;
+    }
+  }
+
   table {
     width: 100%;
     th {
       background: $colorGreyLight;
-  }
+    }
   }
 }
 
