@@ -45,6 +45,7 @@ module.exports = {
           "park-sub-page",
           "public-advisory",
           "search-area",
+          "management-document",
           {
             singularName: "page",
             queryParams: {
