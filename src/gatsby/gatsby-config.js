@@ -50,7 +50,7 @@ module.exports = {
             queryParams: {
               populate: {
                 Content: {
-                  populate: "*"
+                  populate: ["cards"]
                 }
               }
             }
