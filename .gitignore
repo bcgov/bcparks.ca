@@ -115,6 +115,7 @@ lastrun.txt
 !**/wysiwyg/admin/src/components/ckeditor5-build-custom/build
 **/.strapi-updater.json
 **/yarn.lock
+**/types/generated/*
 
 ############################
 # Terraform
