@@ -23,6 +23,7 @@ const Root = styled('div')((
     opacity: "1",
     backgroundColor: "#003366",
     boxShadow: "none",
+    border: "1px solid #fff",
     "&:hover, &.Mui-focusVisible": {
       transition: "0.3s",
       color: "#ffffff",
