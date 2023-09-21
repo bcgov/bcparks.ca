@@ -26,6 +26,7 @@ import ParkFacility from "../components/park/parkFacility"
 import ParkHeader from "../components/park/parkHeader"
 import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
+import SafetyInfo from "../components/park/safetyInfo"
 import MapLocation from "../components/park/mapLocation"
 import Spacer from "../components/park/spacer"
 import ScrollToTop from "../components/scrollToTop"
@@ -44,6 +45,7 @@ export default function SiteTemplate({ data }) {
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
 
   const description = site.description.data.description
+  const safetyInfo = site.safetyInfo.data.safetyInfo
   const locationNotes = site.locationNotes.data.locationNotes
 
   const activeActivities = sortBy(
@@ -142,6 +144,7 @@ export default function SiteTemplate({ data }) {
 
   const parkOverviewRef = useRef("")
   const advisoryRef = useRef("")
+  const safetyRef = useRef("")
   const campingRef = useRef("")
   const facilityRef = useRef("")
   const activityRef = useRef("")
@@ -188,24 +191,30 @@ export default function SiteTemplate({ data }) {
     },
     {
       sectionIndex: 3,
+      display: "Safety info",
+      link: "#park-safety-info-container",
+      visible: !isNullOrWhiteSpace(safetyInfo),
+    },
+    {
+      sectionIndex: 4,
       display: "Camping",
       link: "#park-camping-details-container",
       visible: activeCampings.length > 0,
     },
     {
-      sectionIndex: 4,
+      sectionIndex: 5,
       display: "Facilities",
       link: "#park-facility-container",
       visible: nonCampingFacilities.length > 0,
     },
     {
-      sectionIndex: 5,
+      sectionIndex: 6,
       display: "Activities",
       link: "#park-activity-container",
       visible: nonCampingActivities.length > 0,
     },
     {
-      sectionIndex: 6,
+      sectionIndex: 7,
       display: "Location",
       link: "#park-maps-location-container",
       visible: (site.latitude && site.longitude) || !isNullOrWhiteSpace(locationNotes),
@@ -349,6 +358,11 @@ export default function SiteTemplate({ data }) {
                 </div>
               )}
               {menuItems[3].visible && (
+                <div ref={safetyRef} className="w-100">
+                  <SafetyInfo safetyInfo={safetyInfo} />
+                </div>
+              )}
+               {menuItems[4].visible && (
                 <div ref={campingRef} className="w-100">
                   <CampingDetails
                     data={{
@@ -360,17 +374,17 @@ export default function SiteTemplate({ data }) {
                   />
                 </div>
               )}
-              {menuItems[4].visible && (
+              {menuItems[5].visible && (
                 <div ref={facilityRef} className="w-100">
                   <ParkFacility data={nonCampingFacilities} />
                 </div>
               )}
-              {menuItems[5].visible && (
+              {menuItems[6].visible && (
                 <div ref={activityRef} className="w-100">
                   <ParkActivity data={nonCampingActivities} />
                 </div>
               )}
-              {menuItems[6].visible && (
+              {menuItems[7].visible && (
                 <div ref={mapLocationRef} className="w-100">
                   <div id="park-maps-location-container" className="anchor-link">
                     <MapLocation data={mapData} />
@@ -437,6 +451,11 @@ export const query = graphql`
       description {
         data {
           description
+        }
+      }
+      safetyInfo {
+        data {
+          safetyInfo
         }
       }
       reservations {
