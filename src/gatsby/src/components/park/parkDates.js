@@ -91,21 +91,27 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
                 </dd>
               </>
             )}
-            {subArea.offSeasonDates.length > 0 && (
-              <>
-                <dt className="mt-3">Off season dates</dt>
-                <dd>
+            <>
+              <dt className="mt-3">Winter season</dt>
+              <dd>
+                {subArea.offSeasonDates.length > 0 ? (
                   <ul className="pl-3">
                     {subArea.offSeasonDates.map((dateRange, index) =>
                       <li key={index}>{dateRange}</li>
                     )}
                   </ul>
-                </dd>
-              </>
-            )}
+                ) : (
+                  subArea.operationDates.length > 0 && (
+                    <>
+                      {subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
+                    </>
+                  )
+                )}
+              </dd>
+            </>
             {subArea.resDates.length > 0 && (
               <>
-                <dt className="mt-3">Reservable dates</dt>
+                <dt className="mt-3">Booking required</dt>
                 <dd>
                   <ul className="pl-3">
                     {subArea.resDates.map((dateRange, index) =>
@@ -265,6 +271,7 @@ export default function ParkDates({ data }) {
 
       // Subarea operating dates
       const saDates = subArea.parkOperationSubAreaDates
+      subArea.operationDates = []
       subArea.offSeasonDates = []
       subArea.resDates = []
       subArea.serviceDates = []
@@ -272,6 +279,10 @@ export default function ParkDates({ data }) {
       for (let dIdx in saDates) {
         const dateRec = saDates[dIdx]
         if (dateRec.isActive) {
+          subArea.operationDates.push({
+            start: dateRec.openDate,
+            end: dateRec.closeDate
+          })
           subArea.serviceDates.push({
             start: dateRec.serviceStartDate,
             end: dateRec.serviceEndDate
@@ -288,6 +299,7 @@ export default function ParkDates({ data }) {
       }
 
       // get distinct date ranges sorted chronologically
+      subArea.operationDates = processDateRanges(subArea.operationDates)
       subArea.serviceDates = processDateRanges(subArea.serviceDates)
       subArea.resDates = processDateRanges(subArea.resDates)
       subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates)
@@ -308,15 +320,15 @@ export default function ParkDates({ data }) {
   const parkOperationsNotesList = [
     { noteVar: "generalNote", display: "Note" },
     { noteVar: "serviceNote", display: "Service note" },
-    { noteVar: "reservationsNote", display: "Reservation note" },
-    { noteVar: "offSeasonNote", display: "Winter note" },
+    { noteVar: "reservationsNote", display: "Booking note" },
+    { noteVar: "offSeasonNote", display: "Winter season note" },
   ]
 
   const subAreasNotesList = [
     { noteVar: "generalNote", display: "Note" },
     { noteVar: "serviceNote", display: "Service note" },
-    { noteVar: "reservationNote", display: "Reservation note" },
-    { noteVar: "offSeasonNote", display: "Winter note" },
+    { noteVar: "reservationNote", display: "Booking note" },
+    { noteVar: "offSeasonNote", display: "Winter season note" },
   ]
 
   const isShown = (count, countGroup) => {
@@ -338,7 +350,7 @@ export default function ParkDates({ data }) {
           )}
           {hasOperations && (
             <>
-              <div className="text-center">
+              <div className="text-center mb-4">
                 <div className="dates-header font-italic">
                   All dates are subject to change without notice.
                 </div>
