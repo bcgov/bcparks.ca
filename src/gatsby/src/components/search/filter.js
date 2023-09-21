@@ -26,8 +26,8 @@ const CheckedIcon = styled(CheckIcon)({
 })
 
 const shortenFilterLabel = (label) => {
-  if (label.includes("-accessible camping")) {
-    return label.replace("-accessible camping", "")
+  if (label.includes("-accessible")) {
+    return label.replace("-accessible", "")
   } else if (label.includes("camping")) {
     return label.replace("camping", "")
   } else {
