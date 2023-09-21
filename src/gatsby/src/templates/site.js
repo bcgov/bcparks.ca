@@ -141,7 +141,7 @@ export default function SiteTemplate({ data }) {
         setIsLoadingAdvisories(false)
       })
     setIsLoadingProtectedArea(true)
-    loadProtectedArea(apiBaseUrl, park.orcs)
+    loadProtectedArea(apiBaseUrl, park?.orcs)
       .then(response => {
         if (response.status === 200) {
           const park = response.data?.data?.length ? response.data.data[0] : {};
