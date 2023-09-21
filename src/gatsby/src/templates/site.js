@@ -33,22 +33,6 @@ import Seo from "../components/seo"
 
 import { StyledGrid } from "../utils/constants"
 
-const qs = require('qs')
-
-const loadProtectedArea = (apiBaseUrl, orcsId) => {
-  const params = qs.stringify({
-    filters: {
-      orcs: {
-        $eq: orcsId
-      }
-    },
-    fields: ['hasCampfireBan']
-  }, {
-    encodeValuesOnly: true,
-  })
-  return axios.get(`${apiBaseUrl}/protected-areas?${params}`)
-}
-
 export default function SiteTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
 
@@ -141,11 +125,10 @@ export default function SiteTemplate({ data }) {
         setIsLoadingAdvisories(false)
       })
     setIsLoadingProtectedArea(true)
-    loadProtectedArea(apiBaseUrl, park?.orcs)
+    axios.get(`${apiBaseUrl}/protected-areas/${park?.orcs}?fields=hasCampfireBan`)
       .then(response => {
         if (response.status === 200) {
-          const park = response.data?.data?.length ? response.data.data[0] : {};
-          setHasCampfireBan(park?.attributes?.hasCampfireBan || false)
+          setHasCampfireBan(response.data.hasCampfireBan)
           setProtectedAreaLoadError(false)
         } else {
           setHasCampfireBan(false)
