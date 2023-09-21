@@ -353,6 +353,16 @@ export default function FindAPark({ location, data }) {
     selectedFacilities,
   ])
 
+  const shortenFilterLabel = (label) => {
+    if (label.includes("-accessible camping")) {
+      return label.replace("-accessible camping", "")
+    } else if (label.includes("camping")) {
+      return label.replace("camping", "")
+    } else {
+      return label
+    }
+  }
+
   const params = useMemo(() => {
     const params = {
       queryText: searchText,
@@ -637,7 +647,7 @@ export default function FindAPark({ location, data }) {
                   {filterSelections.length > 0 && filterSelections.map((f, index) => (
                     <Chip
                       key={index}
-                      label={f.label}
+                      label={shortenFilterLabel(f.label)}
                       onClick={handleFilterDelete(f)}
                       onDelete={handleFilterDelete(f)}
                       variant="outlined"
@@ -773,7 +783,7 @@ export default function FindAPark({ location, data }) {
                       {filterSelections.length > 0 && filterSelections.map((f, index) => (
                         <Chip
                           key={index}
-                          label={f.label}
+                          label={shortenFilterLabel(f.label)}
                           onClick={handleFilterDelete(f)}
                           onDelete={handleFilterDelete(f)}
                           variant="outlined"

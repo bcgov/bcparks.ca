@@ -25,6 +25,16 @@ const CheckedIcon = styled(CheckIcon)({
   backgroundColor: "#003366",
 })
 
+const shortenFilterLabel = (label) => {
+  if (label.includes("-accessible camping")) {
+    return label.replace("-accessible camping", "")
+  } else if (label.includes("camping")) {
+    return label.replace("camping", "")
+  } else {
+    return label
+  }
+}
+
 const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
   return (
     <FormGroup className="filter-options-container">
@@ -46,7 +56,7 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
               checkedIcon={<CheckedIcon />}
             />
           }
-          label={`${item.label} (${item.count})`}
+          label={`${shortenFilterLabel(item.label)} (${item.count})`}
           className={
             selectedFilterItems.filter(
               selectedFilterItem =>
