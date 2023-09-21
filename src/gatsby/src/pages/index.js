@@ -7,6 +7,7 @@ import Header from "../components/header"
 import MainSearch from "../components/search/mainSearch"
 import PageContent from "../components/pageContent/pageContent"
 import Seo from "../components/seo"
+import ScrollToTop from "../components/scrollToTop"
 
 import "../styles/home.scss"
 
@@ -77,6 +78,7 @@ export default function Home({ data }) {
         <div id="home">
           <div className="park-search-container-wrapper">
             <Header mode="internal" content={menuContent} />
+            <ScrollToTop />
             <div id="sr-content" className="park-search">
               <div id="home-parks-search">
                 <MainSearch />

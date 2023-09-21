@@ -11,6 +11,7 @@ import AdvisoryFilter from "../components/advisories/advisoryFilter"
 import AdvisoryList from "../components/advisories/advisoryList"
 import AdvisoryPageNav from "../components/advisories/advisoryPageNav"
 import AdvisoryLegend from "../components/advisories/advisoryLegend"
+import ScrollToTop from "../components/scrollToTop"
 import { capitalizeFirstLetter } from "../utils/helpers"
 import { getAdvisoryTypeFromUrl } from "../utils/advisoryHelper"
 
@@ -385,6 +386,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   return (
     <Root>
       <Header mode="internal" content={menuContent} />
+      <ScrollToTop />
       <Container id="sr-content">
         <div id="sr-content" className="page-breadcrumbs">
           <Breadcrumbs separator="›" aria-label="breadcrumb">
