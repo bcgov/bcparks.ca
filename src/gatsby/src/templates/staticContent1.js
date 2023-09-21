@@ -85,10 +85,12 @@ export default function StaticContent1({ pageContext }) {
   // and scrollspy highlighting
 
   let sectionRefs = [
-    // Creating 10 refs for scrollspy
+    // Creating 12 refs for scrollspy
     // TODO create dynamically without causing error
     // these are created whether or not there are sections
     // as useRef cannot be used conditionally
+    useRef(null),
+    useRef(null),
     useRef(null),
     useRef(null),
     useRef(null),
