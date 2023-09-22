@@ -417,16 +417,16 @@ const ParkOperatingDatesPage = () => {
             </li>
             <li>
               <b>Winter season: </b>
+              During these dates, the facility is open, but may offer limited services and charge a reduced winter camping fee.
+              {" "}<GatsbyLink to="/find-a-park">Check the park</GatsbyLink> page for details.
+              When a facility is not operating, there are no fees and no services provided.
+            </li>
+            <li>
+              <b>Booking required: </b>
               During these dates, <GatsbyLink to="/reservations">reservations</GatsbyLink> are available,
               or you must purchase a <GatsbyLink to="/reservations/backcountry-camping/permit-registration">backcountry permit</GatsbyLink>.
               To find out which booking you need, <GatsbyLink to="/find-a-park">check the park</GatsbyLink> page.
               If a reservable campground is open outside of these dates, sites are available on a first come, first served basis.
-            </li>
-            <li>
-              <b>Booking required: </b>
-              During these dates, the facility is open, but may offer limited services and charge a reduced winter camping fee.
-              {" "}<GatsbyLink to="/find-a-park">Check the park</GatsbyLink> page for details.
-              When a facility is not operating, there are no fees and no services provided.
             </li>
           </ul>
         </div>

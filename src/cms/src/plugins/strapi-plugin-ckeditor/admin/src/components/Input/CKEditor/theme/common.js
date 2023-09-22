@@ -115,6 +115,11 @@ export const common = css`
       text-decoration: underline;
     }
 
+    a:not([href]):not([tabindex]) {
+      text-decoration: none;
+      color: inherit;
+    }
+
     .table {
       margin: 0;
       width: 100%; // Custom Styles BCParks
