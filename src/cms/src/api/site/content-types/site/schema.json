@@ -86,6 +86,13 @@
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
+    "safetyInfo": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
     "locationNotes": {
       "type": "customField",
       "options": {
