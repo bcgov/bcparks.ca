@@ -260,7 +260,13 @@ export const common = css`
     }
 
     ul {
-      list-style-type: disc !important;
+      list-style-type: disc;
+      &ul {
+        list-style-type: circle;
+        &ul {
+          list-style-type: square;
+        }
+      }
     }
 
     blockquote {
