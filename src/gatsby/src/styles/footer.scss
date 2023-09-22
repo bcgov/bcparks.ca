@@ -9,10 +9,13 @@
 }
 
 #home-footer {
-  max-width: 1100px;
+  max-width: 1060px;
   font-size: 0.8rem !important;
-  padding: 0px 20px;
+  padding: 48px 30px;
   margin: 0px auto;
+  @media (min-width: $lgBreakpoint) {
+    padding: 48px 16px;
+  }
 
   .footer-search-container {
     background: none;
@@ -57,20 +60,35 @@
 
   .footer-utility-link {
     font-size: 1rem;
-    margin: 0.5rem 2.5rem 0.5rem 0;
+    min-width: 100px;
+    margin-right: 16px;
+    margin-bottom: 16px;
     &:last-of-type {
       margin-right: 0;
     }
+    @media (min-width: $mdBreakpoint) {
+      margin-bottom: 0;
+    }
   }
 
-  .footer-menu-list {
-    font-size: 1.05rem;
-
-    .footer-menu-divider {
-      margin: 1rem 0;
-      height: 1px;
-      background-color: $colorGold;
-      width: 48px;
+  .footer-menu-container {
+    margin-bottom: 32px;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+    @media (min-width: $smBreakpoint) {
+      margin-bottom: 0;
+    }
+    .footer-menu-list {
+      font-size: 1.05rem;
+      margin-bottom: 0;
+  
+      .footer-menu-divider {
+        margin: 1rem 0;
+        height: 1px;
+        background-color: $colorGold;
+        width: 48px;
+      }
     }
   }
 
