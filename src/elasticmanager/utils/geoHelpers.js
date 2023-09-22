@@ -5,11 +5,10 @@
 const flatten = function (shape, decimalPlaces) {
   const result = [];
   if (shape) {
-    const roundingVal = Math.pow(10, decimalPlaces);
     const flattened = shape.flat(Infinity)
     for (let i = 0; i < flattened.length; i += 2) {
-      const lat = Math.round(flattened[i + 1] * roundingVal) / roundingVal;
-      const lon = Math.round(flattened[i] * roundingVal) / roundingVal;
+      const lat = flattened[i + 1];
+      const lon = flattened[i];
       const point = `${lat.toFixed(decimalPlaces)},${lon.toFixed(decimalPlaces)}`;
       if (result.indexOf(point) === -1) {
         result.push(point);
@@ -24,9 +23,6 @@ const flatten = function (shape, decimalPlaces) {
   reduced to [decimalPlaces] 
 */
 const appendPoint = function (points, lat, lon, decimalPlaces) {
-  const roundingVal = Math.pow(10, decimalPlaces);
-  lat = Math.round(lat * roundingVal) / roundingVal;
-  lon = Math.round(lon * roundingVal) / roundingVal;
   return [
     ...[`${lat.toFixed(decimalPlaces)},${lon.toFixed(decimalPlaces)}`],
     ...points
