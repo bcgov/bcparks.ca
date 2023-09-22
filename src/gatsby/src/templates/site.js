@@ -45,7 +45,7 @@ export default function SiteTemplate({ data }) {
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
 
   const description = site.description.data.description
-  const safetyInfo = site.safetyInfo.data.safetyInfo
+  const safetyInfo = site.safetyInfo?.data?.safetyInfo
   const locationNotes = site.locationNotes.data.locationNotes
 
   const activeActivities = sortBy(
