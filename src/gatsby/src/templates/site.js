@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react"
+import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql } from "gatsby"
 import {
@@ -60,19 +61,19 @@ export default function SiteTemplate({ data }) {
     ["asc"]
   )
 
-  const campingActivities = 
+  const campingActivities =
     activeActivities.filter(
       activity => activity.activityType.isCamping
     )
-  const campingFacilities = 
+  const campingFacilities =
     activeFacilities.filter(
       facility => facility.facilityType.isCamping
     )
-  const nonCampingActivities = 
+  const nonCampingActivities =
     activeActivities.filter(
       activity => !activity.activityType.isCamping
     )
-  const nonCampingFacilities = 
+  const nonCampingFacilities =
     activeFacilities.filter(
       facility => !facility.facilityType.isCamping
     )
@@ -94,10 +95,12 @@ export default function SiteTemplate({ data }) {
   const [advisoryLoadError, setAdvisoryLoadError] = useState(false)
   const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true)
   const [advisories, setAdvisories] = useState([])
+  const [protectedAreaLoadError, setProtectedAreaLoadError] = useState(false)
+  const [isLoadingProtectedArea, setIsLoadingProtectedArea] = useState(true)
+  const [hasCampfireBan, setHasCampfireBan] = useState(false)
 
   useEffect(() => {
     setIsLoadingAdvisories(true)
-
     loadAdvisories(apiBaseUrl, park?.orcs)
       .then(response => {
         if (response.status === 200) {
@@ -120,6 +123,20 @@ export default function SiteTemplate({ data }) {
       })
       .finally(() => {
         setIsLoadingAdvisories(false)
+      })
+    setIsLoadingProtectedArea(true)
+    axios.get(`${apiBaseUrl}/protected-areas/${park?.orcs}?fields=hasCampfireBan`)
+      .then(response => {
+        if (response.status === 200) {
+          setHasCampfireBan(response.data.hasCampfireBan)
+          setProtectedAreaLoadError(false)
+        } else {
+          setHasCampfireBan(false)
+          setProtectedAreaLoadError(true)
+        }
+      })
+      .finally(() => {
+        setIsLoadingProtectedArea(false)
       })
   }, [apiBaseUrl, park?.orcs, site.orcsSiteNumber])
 
@@ -152,7 +169,6 @@ export default function SiteTemplate({ data }) {
       link: "#park-overview-container",
       visible: !isNullOrWhiteSpace(description),
     },
-
     {
       // Depricated, also delete the section if removing
       sectionIndex: 1,
@@ -245,17 +261,20 @@ export default function SiteTemplate({ data }) {
                 {breadcrumbs}
               </Breadcrumbs>
             </Grid>
-            <Grid item xs={12} sm={12}>
-              <ParkHeader
-                slug={`${park.slug}/${site.slug}`}
-                parkName={`${park?.protectedAreaName}: ${site.siteName}`}
-                hasReservations={hasReservations}
-                hasDayUsePass={hasDayUsePass}
-                isLoadingAdvisories={isLoadingAdvisories}
-                advisoryLoadError={advisoryLoadError}
-                advisories={advisories}
-              />
-            </Grid>
+            {!isLoadingProtectedArea && !protectedAreaLoadError && (
+              <Grid item xs={12} sm={12}>
+                <ParkHeader
+                  slug={`${park.slug}/${site.slug}`}
+                  parkName={`${park?.protectedAreaName}: ${site.siteName}`}
+                  hasReservations={hasReservations}
+                  hasDayUsePass={hasDayUsePass}
+                  hasCampfireBan={hasCampfireBan}
+                  isLoadingAdvisories={isLoadingAdvisories}
+                  advisoryLoadError={advisoryLoadError}
+                  advisories={advisories}
+                />
+              </Grid>
+            )}
           </Grid>
         </Container>
       </div>
@@ -297,7 +316,6 @@ export default function SiteTemplate({ data }) {
               md={9}
               lg={9}
             >
-              
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="w-100">
                   <ParkOverview data={description} type="site" />
@@ -305,7 +323,6 @@ export default function SiteTemplate({ data }) {
               )}
               {menuItems[1].visible && (
                 <div className="w-100">
-               
                 </div>
               )}
               {menuItems[2].visible && (
@@ -331,7 +348,7 @@ export default function SiteTemplate({ data }) {
                   )}
                 </div>
               )}
-               {menuItems[3].visible && (
+              {menuItems[3].visible && (
                 <div ref={campingRef} className="w-100">
                   <CampingDetails
                     data={{
@@ -381,7 +398,7 @@ export default function SiteTemplate({ data }) {
   )
 }
 
-export const Head = ({data}) => {
+export const Head = ({ data }) => {
   const site = data.strapiSite
   const park = site.protectedArea
   const description = site.description.data.description
