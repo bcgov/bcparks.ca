@@ -99,13 +99,13 @@ export default function ParkAccessStatus({ advisories, slug }) {
     <div className="access-status-icon">
       {parkStatusText === "Open" ? (
         <>
-          <img src={parkStatusIcon} alt="" class="mr-2" />
+          <img src={parkStatusIcon} alt="" className="mr-2" />
           {parkStatusText}
         </>
       ) : (
         <Link to={`/${slug}/#park-advisory-details-container`}>
           <>
-            <img src={parkStatusIcon} alt="" class="mr-2" />
+            <img src={parkStatusIcon} alt="" className="mr-2" />
             {parkStatusText}
           </>
         </Link>

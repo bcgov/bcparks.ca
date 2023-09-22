@@ -43,7 +43,9 @@ export default function Advisory({ advisories }) {
 
   return (
     <>
-      <div><img src={alertIcon} alt="" class="mr-1" /></div>
+      <div>
+        <img src={alertIcon} alt="" className="mr-1" />
+      </div>
       <div>
       {textMap.length === 0 && (
               <Link to="#park-advisory-details-container">
