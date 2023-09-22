@@ -39,7 +39,7 @@ import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
 import "../styles/parks.scss"
-import { PARK_NAME_TYPE, StyledGrid } from "../utils/constants";
+import { StyledGrid } from "../utils/constants";
 
 const qs = require('qs')
 const AsyncMapLocation =  loadable(() => import("../components/park/mapLocation"));
