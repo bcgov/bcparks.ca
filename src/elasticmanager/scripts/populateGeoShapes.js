@@ -31,7 +31,6 @@ exports.populateGeoShapes = async function () {
   })
 
   let parks;
-
   try {
     const allParks = `${process.env.STRAPI_BASE_URL}/api/protected-areas?${query}&filters[typeCode][$ne]=CS`;
     parks = await axios.get(allParks);
@@ -40,12 +39,9 @@ exports.populateGeoShapes = async function () {
     logger.error(`populateGeoShapes.js failed while getting parks, pa's and er's: ${error}`);
     return;
   }
-
-  await processList(parks)
-
+  await processParkList(parks)
 
   let conservancies;
-
   try {
     const allConservancies = `${process.env.STRAPI_BASE_URL}/api/protected-areas?${query}&filters[typeCode][$eq]=CS`;
     conservancies = await axios.get(allConservancies);
@@ -54,13 +50,10 @@ exports.populateGeoShapes = async function () {
     logger.error(`populateGeoShapes.js failed while getting conservancies: ${error}`);
     return;
   }
-
-  await processList(conservancies)
-
+  await processParkList(conservancies)
 };
 
-
-const processList = async function (parks) {
+const processParkList = async function (parks) {
   const httpReqHeaders = {
     'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
     'Content-Type': 'application/json'
