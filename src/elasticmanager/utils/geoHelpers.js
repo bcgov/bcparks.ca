@@ -10,7 +10,7 @@ const flatten = function (shape, decimalPlaces) {
     for (let i = 0; i < flattened.length; i += 2) {
       const lat = Math.round(flattened[i + 1] * roundingVal) / roundingVal;
       const lon = Math.round(flattened[i] * roundingVal) / roundingVal;
-      const point = `${lat},${lon}`;
+      const point = `${lat.toFixed(decimalPlaces)},${lon.toFixed(decimalPlaces)}`;
       if (result.indexOf(point) === -1) {
         result.push(point);
       }
@@ -28,7 +28,7 @@ const appendPoint = function (points, lat, lon, decimalPlaces) {
   lat = Math.round(lat * roundingVal) / roundingVal;
   lon = Math.round(lon * roundingVal) / roundingVal;
   return [
-    ...[`${lat},${lon}`],
+    ...[`${lat.toFixed(decimalPlaces)},${lon.toFixed(decimalPlaces)}`],
     ...points
   ];
 }
@@ -67,7 +67,7 @@ const outline = function (points) {
       cols[coords[1]] = { max: point, min: point }
     } else {
       const c = cols[coords[1]];
-      cols[coords[0]] = { max: strMax(point, c.max), min: strMin(point, c.min) }
+      cols[coords[1]] = { max: strMax(point, c.max), min: strMin(point, c.min) }
     }
   }
 
