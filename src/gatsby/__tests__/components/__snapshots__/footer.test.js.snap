@@ -9,243 +9,233 @@ exports[`Footer renders correctly 1`] = `
     id="home-footer"
   >
     <div
-      className="my-5"
+      className="row no-gutters"
     >
       <div
-        className="row"
+        className="col col-12 col-md-4"
       >
         <div
-          className="col col-12 col-md-4"
+          className="mb-5"
         >
-          <div
-            className="mx-3 mx-md-0 mb-5"
-          >
-            <a
-              href="/"
-            />
-          </div>
-        </div>
-        <div
-          className="col col-12 col-md-8"
-        >
-          <div
-            className="row"
-          >
-            <div
-              className="col col-12 col-sm-4"
-            >
-              <div>
-                <ul
-                  className="footer-menu-list list-unstyled pt-3 pl-1 ml-3 ml-md-0 text-white"
-                >
-                  <li>
-                    <div
-                      className="font-weight-bold"
-                    >
-                      Get a permit
-                    </div>
-                    <div
-                      className="footer-menu-divider"
-                    />
-                  </li>
-                  <li>
-                    <div
-                      className="mt-2"
-                    >
-                      <a
-                        href="/park-use-permits/"
-                      >
-                        Park use permits
-                      </a>
-                    </div>
-                  </li>
-                  <li>
-                    <div
-                      className="mt-2"
-                    >
-                      <a
-                        href="/park-use-permits/filming-in-parks/"
-                      >
-                        Filming in parks
-                      </a>
-                    </div>
-                  </li>
-                  <li>
-                    <div
-                      className="mt-2"
-                    >
-                      <a
-                        href="/park-use-permits/travel-trade/"
-                      >
-                        Travel trade
-                      </a>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div
-              className="col col-12 col-sm-4"
-            >
-              <div>
-                <ul
-                  className="footer-menu-list list-unstyled pt-3 pl-1 ml-3 ml-md-0 text-white"
-                >
-                  <li>
-                    <div
-                      className="font-weight-bold"
-                    >
-                      Get involved
-                    </div>
-                    <div
-                      className="footer-menu-divider"
-                    />
-                  </li>
-                  <li>
-                    <div
-                      className="mt-2"
-                    >
-                      <a
-                        href="/get-involved/donate/"
-                      >
-                        Donate
-                      </a>
-                    </div>
-                  </li>
-                  <li>
-                    <div
-                      className="mt-2"
-                    >
-                      <a
-                        href="/get-involved/buy-licence-plate/"
-                      >
-                        Buy a licence plate
-                      </a>
-                    </div>
-                  </li>
-                  <li>
-                    <div
-                      className="mt-2"
-                    >
-                      <a
-                        href="/get-involved/volunteer/"
-                      >
-                        Volunteer
-                      </a>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div
-              className="col col-12 col-sm-4"
-            >
-              <div>
-                <ul
-                  className="footer-menu-list list-unstyled pt-3 pl-1 ml-3 ml-md-0 text-white"
-                >
-                  <li>
-                    <div
-                      className="font-weight-bold"
-                    >
-                      Stay connected
-                    </div>
-                    <div
-                      className="footer-menu-divider"
-                    />
-                  </li>
-                  <li>
-                    <div
-                      className="mt-2"
-                    >
-                      <a
-                        href="/contact/"
-                      >
-                        Contact us
-                      </a>
-                    </div>
-                  </li>
-                  <li>
-                    <div
-                      className="mt-2"
-                    >
-                      <a
-                        href="https://engage.gov.bc.ca/bcparksblog/"
-                      >
-                        BC Parks blog
-                      </a>
-                    </div>
-                  </li>
-                  <li>
-                    <div
-                      className="d-inline-block mt-3"
-                    >
-                      <a
-                        href="https://www.facebook.com/YourBCParks/"
-                      />
-                    </div>
-                    <div
-                      className="d-inline-block mt-3 ml-3"
-                    >
-                      <a
-                        href="https://www.instagram.com/yourbcparks"
-                      />
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <a
+            href="/"
+          />
         </div>
       </div>
       <div
-        className="text-left text-sm-center py-3 mx-3 mx-md-0 mt-5 border-top border-white"
+        className="col col-12 col-md-8"
       >
         <div
-          className="footer-utility-link d-inline-block"
+          className="row no-gutters"
         >
-          <a
-            href="/sitemap/"
+          <div
+            className="col col-12 col-sm-4 footer-menu-container"
           >
-            Sitemap
-          </a>
+            <ul
+              className="footer-menu-list list-unstyled text-white"
+            >
+              <li>
+                <div
+                  className="font-weight-bold"
+                >
+                  Get a permit
+                </div>
+                <div
+                  className="footer-menu-divider"
+                />
+              </li>
+              <li>
+                <div
+                  className="mt-2"
+                >
+                  <a
+                    href="/park-use-permits/"
+                  >
+                    Park use permits
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div
+                  className="mt-2"
+                >
+                  <a
+                    href="/park-use-permits/filming-in-parks/"
+                  >
+                    Filming in parks
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div
+                  className="mt-2"
+                >
+                  <a
+                    href="/park-use-permits/travel-trade/"
+                  >
+                    Travel trade
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div
+            className="col col-12 col-sm-4 footer-menu-container"
+          >
+            <ul
+              className="footer-menu-list list-unstyled text-white"
+            >
+              <li>
+                <div
+                  className="font-weight-bold"
+                >
+                  Get involved
+                </div>
+                <div
+                  className="footer-menu-divider"
+                />
+              </li>
+              <li>
+                <div
+                  className="mt-2"
+                >
+                  <a
+                    href="/get-involved/donate/"
+                  >
+                    Donate
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div
+                  className="mt-2"
+                >
+                  <a
+                    href="/get-involved/buy-licence-plate/"
+                  >
+                    Buy a licence plate
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div
+                  className="mt-2"
+                >
+                  <a
+                    href="/get-involved/volunteer/"
+                  >
+                    Volunteer
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div
+            className="col col-12 col-sm-4 footer-menu-container"
+          >
+            <ul
+              className="footer-menu-list list-unstyled text-white"
+            >
+              <li>
+                <div
+                  className="font-weight-bold"
+                >
+                  Stay connected
+                </div>
+                <div
+                  className="footer-menu-divider"
+                />
+              </li>
+              <li>
+                <div
+                  className="mt-2"
+                >
+                  <a
+                    href="/contact/"
+                  >
+                    Contact us
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div
+                  className="mt-2"
+                >
+                  <a
+                    href="https://engage.gov.bc.ca/bcparksblog/"
+                  >
+                    BC Parks blog
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div
+                  className="d-inline-block mt-3"
+                >
+                  <a
+                    href="https://www.facebook.com/YourBCParks/"
+                  />
+                </div>
+                <div
+                  className="d-inline-block mt-3 ml-3"
+                >
+                  <a
+                    href="https://www.instagram.com/yourbcparks"
+                  />
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div
-          className="footer-utility-link d-inline-block"
+      </div>
+    </div>
+    <div
+      className="text-left text-sm-center pt-4 mt-5 border-top border-white"
+    >
+      <div
+        className="footer-utility-link d-inline-block"
+      >
+        <a
+          href="/sitemap/"
         >
-          <a
-            href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
-          >
-            Disclaimer
-          </a>
-        </div>
-        <div
-          className="footer-utility-link d-inline-block"
+          Sitemap
+        </a>
+      </div>
+      <div
+        className="footer-utility-link d-inline-block"
+      >
+        <a
+          href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
         >
-          <a
-            href="https://www2.gov.bc.ca/gov/content/home/privacy"
-          >
-            Privacy
-          </a>
-        </div>
-        <div
-          className="footer-utility-link d-inline-block"
+          Disclaimer
+        </a>
+      </div>
+      <div
+        className="footer-utility-link d-inline-block"
+      >
+        <a
+          href="https://www2.gov.bc.ca/gov/content/home/privacy"
         >
-          <a
-            href="https://www2.gov.bc.ca/gov/content/home/accessible-government"
-          >
-            Accessibility
-          </a>
-        </div>
-        <div
-          className="footer-utility-link d-inline-block"
+          Privacy
+        </a>
+      </div>
+      <div
+        className="footer-utility-link d-inline-block"
+      >
+        <a
+          href="https://www2.gov.bc.ca/gov/content/home/accessible-government"
         >
-          <a
-            href="https://www2.gov.bc.ca/gov/content/home/copyright"
-          >
-            Copyright
-          </a>
-        </div>
+          Accessibility
+        </a>
+      </div>
+      <div
+        className="footer-utility-link d-inline-block"
+      >
+        <a
+          href="https://www2.gov.bc.ca/gov/content/home/copyright"
+        >
+          Copyright
+        </a>
       </div>
     </div>
   </div>

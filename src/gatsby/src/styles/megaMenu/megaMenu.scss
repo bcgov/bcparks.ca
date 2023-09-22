@@ -19,9 +19,9 @@
     justify-content: space-between;
 
     @include media-breakpoint-up(lg) {
-      max-width: 1140px;
+      max-width: 1060px;
       margin: 0px auto;
-      padding: 0px 20px;
+      padding: 0px 16px;
     }
     @include media-breakpoint-down(md) {
       margin: 0px;
@@ -39,9 +39,10 @@ a.btn.book-campsite-btn {
   background-color: $colorWhite;
   border: solid 1px transparent;
   color: $colorBlue;
-  font-size: 0.8125rem;
-  padding: 0px 30px;
-  line-height: 40px;
+  font-size: 0.875rem;
+  padding: 10px 0;
+  line-height: 20px;
+  width: 160px;
   height: 40px;
   border-radius: 20px;
   &:hover, &:focus, &:focus-visible {
@@ -51,11 +52,10 @@ a.btn.book-campsite-btn {
     outline: 1px solid $colorGold;
   }
   @include media-breakpoint-down(md) {
-    margin-right: 30px;
-    padding: 0px 10px;
-    line-height: 30px;
-    height: 30px;
-    border-radius: 15px;
+    margin-right: 40px;
+  }
+  @include media-breakpoint-down(xs) {
+    width: 140px;
   }
 }
 
@@ -78,10 +78,10 @@ nav {
 @include media-breakpoint-down(md) {
   .menu-toggle {
     position: absolute;
-    top: 32px;
+    top: 30px;
     right: 30px;
     color: $colorWhite;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
 
     .menu-open {
       display: block;
@@ -233,7 +233,7 @@ nav {
     }
 
     .menu-wrapper {
-      max-width: 1140px;
+      max-width: 1060px;
       margin: 0px auto;
       position: relative;
       height: 65px;

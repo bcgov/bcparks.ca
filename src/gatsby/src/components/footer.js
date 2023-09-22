@@ -5,52 +5,50 @@ import "../styles/footer.scss"
 
 function FooterMenu({ items, menuIndex }) {
   return (
-    <>
-      <ul className="footer-menu-list list-unstyled pt-3 pl-1 ml-3 ml-md-0 text-white">
-        {items.map((item, index) => (
-          <li key={index}>
-            {item.type === "header" && (
-              <>
-                <div className="font-weight-bold">{item.display}</div>
-                <div className="footer-menu-divider"></div>
-              </>
-            )}
-            {item.type === "link" && (
-              <>
-                <div key={index} className="mt-2">
-                  <a href={item.link}>{item.display}</a>
-                </div>
-              </>
-            )}
-          </li>
-        ))}
-        {/* Add social media links if it's menu3 */}
-        {menuIndex === 2 && (
-          <li>
-            <div className="d-inline-block mt-3">
-              <a href="https://www.facebook.com/YourBCParks/">
-                <StaticImage
-                  src="../images/Facebook_Negative.svg"
-                  placeholder="none"
-                  loading="eager"
-                  alt="Facebook"
-                />
-              </a>
-            </div>
-            <div className="d-inline-block mt-3 ml-3">
-              <a href="https://www.instagram.com/yourbcparks">
-                <StaticImage
-                  src="../images/Instagram_Negative.svg"
-                  placeholder="none"
-                  loading="eager"
-                  alt="Instagram"
-                />
-              </a>
-            </div>
-          </li>
-        )}
-      </ul>
-    </>
+    <ul className="footer-menu-list list-unstyled text-white">
+      {items.map((item, index) => (
+        <li key={index}>
+          {item.type === "header" && (
+            <>
+              <div className="font-weight-bold">{item.display}</div>
+              <div className="footer-menu-divider"></div>
+            </>
+          )}
+          {item.type === "link" && (
+            <>
+              <div key={index} className="mt-2">
+                <a href={item.link}>{item.display}</a>
+              </div>
+            </>
+          )}
+        </li>
+      ))}
+      {/* Add social media links if it's menu3 */}
+      {menuIndex === 2 && (
+        <li>
+          <div className="d-inline-block mt-3">
+            <a href="https://www.facebook.com/YourBCParks/">
+              <StaticImage
+                src="../images/Facebook_Negative.svg"
+                placeholder="none"
+                loading="eager"
+                alt="Facebook"
+              />
+            </a>
+          </div>
+          <div className="d-inline-block mt-3 ml-3">
+            <a href="https://www.instagram.com/yourbcparks">
+              <StaticImage
+                src="../images/Instagram_Negative.svg"
+                placeholder="none"
+                loading="eager"
+                alt="Instagram"
+              />
+            </a>
+          </div>
+        </li>
+      )}
+    </ul>
   )
 }
 
@@ -89,49 +87,43 @@ export default function Footer() {
 
 
   return (
-    <>
-      <footer id="footer">
-        <div className="home-footer" id="home-footer">
-          <div className="my-5">
-            <div className="row">
-              <div className="col col-12 col-md-4">
-                <div className="mx-3 mx-md-0 mb-5">
-                  <a href="/">
-                    <StaticImage
-                      src="../images/BCParks_Wordmark_White-cropped.svg"
-                      placeholder="none"
-                      loading="eager"
-                      height={48}
-                      alt="BC Parks Wordmark"
-                    />
-                  </a>
-                </div>
-              </div>
-              <div className="col col-12 col-md-8">
-                <div className="row">
-                  {footerMenu.map((item, index) => (
-                    <div className="col col-12 col-sm-4" key={index}>
-                      <div>
-                        <FooterMenu items={item} menuIndex={index}></FooterMenu>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+    <footer id="footer">
+      <div className="home-footer" id="home-footer">
+        <div className="row no-gutters">
+          <div className="col col-12 col-md-4">
+            <div className="mb-5">
+              <a href="/">
+                <StaticImage
+                  src="../images/BCParks_Wordmark_White-cropped.svg"
+                  placeholder="none"
+                  loading="eager"
+                  height={48}
+                  alt="BC Parks Wordmark"
+                />
+              </a>
             </div>
-            <div className="text-left text-sm-center py-3 mx-3 mx-md-0 mt-5 border-top border-white">
-              {utilityMenu.map((item, index) => (
-                <div
-                  className="footer-utility-link d-inline-block"
-                  key={index}
-                >
-                  <a href={item.link}>{item.display}</a>
+          </div>
+          <div className="col col-12 col-md-8">
+            <div className="row no-gutters">
+              {footerMenu.map((item, index) => (
+                <div className="col col-12 col-sm-4 footer-menu-container" key={index}>
+                  <FooterMenu items={item} menuIndex={index}></FooterMenu>
                 </div>
               ))}
             </div>
           </div>
         </div>
-      </footer>
-    </>
+        <div className="text-left text-sm-center pt-4 mt-5 border-top border-white">
+          {utilityMenu.map((item, index) => (
+            <div
+              className="footer-utility-link d-inline-block"
+              key={index}
+            >
+              <a href={item.link}>{item.display}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </footer>
   )
 }
