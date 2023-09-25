@@ -988,6 +988,7 @@ div[class$="-singleValue"] {
 
   .search-results-quick-filter {
     .MuiLink-underlineHover {
+      text-decoration-color: $colorBlueMed;
       &:hover {
         color: $colorBlueMed;
         &:focus {
