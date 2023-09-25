@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import { sortBy, truncate } from "lodash"
-import { graphql } from "gatsby"
+import { graphql, Link as GatsbyLink, navigate } from "gatsby"
 import {
   Box,
   Container,
   Grid,
   CssBaseline,
-  Link,
   Breadcrumbs,
 } from "@mui/material"
 import useScrollSpy from "react-use-scrollspy"
@@ -229,18 +228,29 @@ export default function SiteTemplate({ data }) {
   }
 
   const breadcrumbs = [
-    <Link key="1" href="/" underline="hover">
+    <GatsbyLink key="1" to="/">
       Home
-    </Link>,
-    <Link key="2" href="/find-a-park" underline="hover">
+    </GatsbyLink>,
+    <GatsbyLink
+      key="2"
+      to="/find-a-park"
+      onClick={(e) => {
+        if (sessionStorage.getItem("prevPath").includes('find-a-park')) {
+          e.preventDefault();
+          navigate(-1);
+        } else if (sessionStorage.getItem("lastSearch")) {
+          e.preventDefault();
+          navigate('/find-a-park/' + sessionStorage.getItem("lastSearch"))
+        }
+      }}
+    >
       Find a park
-    </Link>,
-    <Link
-      key="3"
-      href={`/${park?.slug ? park.slug : 'parks/protected-area'}`}
-      underline="hover">
+    </GatsbyLink>,
+    <GatsbyLink key="3" 
+      to={`/${park?.slug ? park.slug : 'parks/protected-area'}`}
+    >
       {park?.protectedAreaName}
-    </Link>,
+    </GatsbyLink>,
     <div key="4" className="breadcrumb-text">
       {site.siteName}
     </div>,
@@ -362,7 +372,7 @@ export default function SiteTemplate({ data }) {
                   <SafetyInfo safetyInfo={safetyInfo} />
                 </div>
               )}
-               {menuItems[4].visible && (
+              {menuItems[4].visible && (
                 <div ref={campingRef} className="w-100">
                   <CampingDetails
                     data={{
