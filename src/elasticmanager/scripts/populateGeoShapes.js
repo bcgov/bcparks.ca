@@ -8,6 +8,10 @@ const { isEmpty } = require('lodash');
  */
 exports.populateGeoShapes = async function () {
   const logger = getLogger();
+  const httpReqHeaders = {
+    'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
+    'Content-Type': 'application/json'
+  };
 
   const query = qs.stringify({
     fields: ["orcs", "typeCode"],
@@ -33,7 +37,7 @@ exports.populateGeoShapes = async function () {
   let parks;
   try {
     const allParks = `${process.env.STRAPI_BASE_URL}/api/protected-areas?${query}&filters[typeCode][$ne]=CS`;
-    parks = await axios.get(allParks);
+    parks = await axios.get(allParks, { headers: httpReqHeaders });
     logger.info(`found ${parks.data.data.length} parks, pa's and er's without geo-shapes`)
   } catch (error) {
     logger.error(`populateGeoShapes.js failed while getting parks, pa's and er's: ${error}`);
@@ -44,7 +48,7 @@ exports.populateGeoShapes = async function () {
   let conservancies;
   try {
     const allConservancies = `${process.env.STRAPI_BASE_URL}/api/protected-areas?${query}&filters[typeCode][$eq]=CS`;
-    conservancies = await axios.get(allConservancies);
+    conservancies = await axios.get(allConservancies, { headers: httpReqHeaders });
     logger.info(`found ${conservancies.data.data.length} conservancies without geo-shapes`)
   } catch (error) {
     logger.error(`populateGeoShapes.js failed while getting conservancies: ${error}`);
@@ -107,7 +111,7 @@ const getGeoShape = async function (orcs, typeCode) {
   } else {
     shapeQuery = shapeQuery.replace("{1}", "WHSE_TANTALIS.TA_PARK_ECORES_PA_SVW");
   }
-  const response = await axios.get(shapeQuery, { timeout: 3000 });
+  const response = await axios.get(shapeQuery, { timeout: 10000 });
   if (response.data.features.length) {
     return response.data.features[0].geometry;
   } else {

@@ -19,7 +19,7 @@ exports.indexParks = async function (options) {
   do {
     indexed = [];
 
-    if (options.id) {
+    if (options?.id) {
       queue = [{ attributes: { numericData: options.id } }];
     } else {
       try {
@@ -59,7 +59,7 @@ exports.indexParks = async function (options) {
       logger.error(`Failed while removing queued 'elastic index park' tasks: ${error}`);
       return;;
     }
-  } while (indexed.length > 0 && !options.id)
+  } while (indexed.length > 0 && !options?.id)
 
   // process items from the queue with the action 'elastic remove park'
   let removed;
