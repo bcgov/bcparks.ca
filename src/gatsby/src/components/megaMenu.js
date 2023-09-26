@@ -86,6 +86,9 @@ const MegaMenu = ({ content, menuMode }) => {
         setSelectedItem(section)
         let selObj = getSelectionObj(section, {}) // track the selected item at this level and above
         setSelections(selObj)
+        if (selectedItem.treeLevel === 2) {
+          setHasClickedTwice(false)
+        } 
       } else {
         if (selectedItem.treeLevel === 2) {
           setHasClickedTwice(!hasClickedTwice)
