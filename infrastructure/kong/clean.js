@@ -22,6 +22,7 @@ const pathsToDelete = [
   "/auth",
   "/connect",
   "/email",
+  "/geo-shapes",
 ];
 const paths = data.paths;
 
