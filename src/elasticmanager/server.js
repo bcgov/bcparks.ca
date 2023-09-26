@@ -1,13 +1,12 @@
 const schedule = require("node-schedule");
-const { writeFile } = require('node:fs/promises');
 const dotenv = require('dotenv');
 const { exec } = require("child_process");
 
 const { getLogger } = require('./utils/logging');
-
 const { indexParks } = require('./scripts/indexParks');
 const { createParkIndex, parkIndexExists } = require('./scripts/createParkIndex');
 const { queueAll } = require('./scripts/queueAllParks');
+const { populateGeoShapes } = require('./scripts/populateGeoShapes');
 
 (async () => {
   dotenv.config({
@@ -30,6 +29,7 @@ const { queueAll } = require('./scripts/queueAllParks');
   // run every 2 minutes on the :00
   schedule.scheduleJob("*/2 * * * *", async () => {
     try {
+      await populateGeoShapes({ silent: true });
       if (!(await parkIndexExists())) {
         logger.warn(
           "The Elasticsearch index is missing. It will be recreated and repopulated"

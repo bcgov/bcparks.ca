@@ -6,7 +6,7 @@ const { isEmpty } = require('lodash');
 /**
  * Populates the Geo-shapes collection in Strapi
  */
-exports.populateGeoShapes = async function () {
+exports.populateGeoShapes = async function (options) {
   const logger = getLogger();
   const httpReqHeaders = {
     'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
@@ -38,7 +38,9 @@ exports.populateGeoShapes = async function () {
   try {
     const allParks = `${process.env.STRAPI_BASE_URL}/api/protected-areas?${query}&filters[typeCode][$ne]=CS`;
     parks = await axios.get(allParks, { headers: httpReqHeaders });
-    logger.info(`found ${parks.data.data.length} parks, pa's and er's without geo-shapes`)
+    if (parks.data.data.length > 0 || !options?.silent) {
+      logger.info(`found ${parks.data.data.length} parks, pa's and er's without geo-shapes`)
+    }
   } catch (error) {
     logger.error(`populateGeoShapes.js failed while getting parks, pa's and er's: ${error}`);
     return;
@@ -49,7 +51,9 @@ exports.populateGeoShapes = async function () {
   try {
     const allConservancies = `${process.env.STRAPI_BASE_URL}/api/protected-areas?${query}&filters[typeCode][$eq]=CS`;
     conservancies = await axios.get(allConservancies, { headers: httpReqHeaders });
-    logger.info(`found ${conservancies.data.data.length} conservancies without geo-shapes`)
+    if (conservancies.data.data.length > 0 || !options?.silent) {
+      logger.info(`found ${conservancies.data.data.length} conservancies without geo-shapes`)
+    }
   } catch (error) {
     logger.error(`populateGeoShapes.js failed while getting conservancies: ${error}`);
     return;
