@@ -107,7 +107,7 @@ const getGeoShape = async function (orcs, typeCode) {
   } else {
     shapeQuery = shapeQuery.replace("{1}", "WHSE_TANTALIS.TA_PARK_ECORES_PA_SVW");
   }
-  const response = await axios.get(shapeQuery, { timeout: 3000 });
+  const response = await axios.get(shapeQuery, { timeout: 10000 });
   if (response.data.features.length) {
     return response.data.features[0].geometry;
   } else {
