@@ -235,10 +235,7 @@ export default function SiteTemplate({ data }) {
       key="2"
       to="/find-a-park"
       onClick={(e) => {
-        if (sessionStorage.getItem("prevPath").includes('find-a-park')) {
-          e.preventDefault();
-          navigate(-1);
-        } else if (sessionStorage.getItem("lastSearch")) {
+        if (sessionStorage.getItem("lastSearch")) {
           e.preventDefault();
           navigate('/find-a-park/' + sessionStorage.getItem("lastSearch"))
         }
