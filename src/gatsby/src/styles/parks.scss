@@ -260,7 +260,7 @@ h2.section-heading {
     left: 0;
     right: 0;
     width: 5rem;
-    background: $colorGold;
+    background: #fdb813;
   }
 }
 
@@ -277,7 +277,6 @@ h2.section-heading {
       }
       a {
         flex: 1 1 100%;
-        text-decoration: none;
         font-size: 0.875rem !important;
       }
       @media (min-width: $lgBreakpoint) {
@@ -300,6 +299,7 @@ h2.section-heading {
         background-color: $colorGold;
         border-color: $colorGold;
         &:hover {
+          text-decoration: underline;
           background-color: $colorWhite;
         }
       }
