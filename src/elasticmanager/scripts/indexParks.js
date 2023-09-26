@@ -18,11 +18,16 @@ exports.indexParks = async function (options) {
   let indexed;
   do {
     indexed = [];
-    try {
-      queue = await readQueue("elastic index park", options);
-    } catch (error) {
-      logger.error(`indexParks() failed while retrieving 'elastic index park' tasks: ${error}`);
-      return;;
+
+    if (options.id) {
+      queue = [{ attributes: { numericData: options.id } }];
+    } else {
+      try {
+        queue = await readQueue("elastic index park", options);
+      } catch (error) {
+        logger.error(`indexParks() failed while retrieving 'elastic index park' tasks: ${error}`);
+        return;;
+      }
     }
 
     try {
@@ -45,7 +50,7 @@ exports.indexParks = async function (options) {
       if (await indexPark(park, photoList)) {
         indexed.push(taskId(queue, park.id))
       } else {
-        logger.error(`error indexing park ${park.id}`)
+        logger.error(`error indexing park ${park.id} - ${park.protectedAreaName} ORCS=${park.orcs}`)
       }
     }
     try {
@@ -54,7 +59,7 @@ exports.indexParks = async function (options) {
       logger.error(`Failed while removing queued 'elastic index park' tasks: ${error}`);
       return;;
     }
-  } while (indexed.length > 0)
+  } while (indexed.length > 0 && !options.id)
 
   // process items from the queue with the action 'elastic remove park'
   let removed;
@@ -189,7 +194,6 @@ const getPhotos = async function (orcsList) {
   getLogger().info(`Got ${photosList.length} park photo records from Strapi`);
   return photosList;
 }
-
 
 /**
  * Looks up the id of a queued task based on the associated park id

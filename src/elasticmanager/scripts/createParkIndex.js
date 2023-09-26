@@ -53,9 +53,12 @@ const createParkIndex = async function () {
             }
           }
         },
-        locationGeo: {
+        location: {
           type: "geo_point"
-        }
+        },
+        geoBoundary: {  // this is a work-around because you can't sort by distance to a shape in Elasticsearch
+          type: "geo_point"
+        },
       }
     }
   };

@@ -47,6 +47,8 @@ spec:
               value: {{ .Values.cms.env.environment }}
             - name: BATCH_SIZE
               value: {{ .Values.elasticmanager.env.batchSize | quote }}
+            - name: GEOSHAPE_URL
+              value: {{ .Values.elasticmanager.env.shapeDataApi | quote }}
           livenessProbe:
             exec:
               command:

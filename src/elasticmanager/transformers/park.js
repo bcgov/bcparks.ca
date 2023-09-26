@@ -1,5 +1,6 @@
 const axios = require("axios");
 const _ = require("lodash");
+const { flatten, appendPoint, outline } = require("../utils/geoHelpers")
 
 /**
  * Transforms a protectedArea retrieved from Strapi into a JSON format
@@ -122,15 +123,28 @@ exports.createElasticPark = async function (park, photos) {
   delete park.publicAdvisories;
 
   // add geo info
-  if (park.latitude && park.longitude) {
-    park.locationGeo = [`${park.latitude},${park.longitude}`];
+  let flattenedGeometry = [];
+  if (park.geoShape?.geometry) {
+    flattenedGeometry = flatten(park.geoShape?.geometry.coordinates, 2);
   }
+
+  // add geo center point
+  if (park.latitude && park.longitude) {
+    park.location = `${park.latitude},${park.longitude}`
+    flattenedGeometry = appendPoint(flattenedGeometry, park.latitude, park.longitude, 2);
+  }
+
+  // add the park boundary points 
+  // this is a work-around because you can't sort by distance to a shape
+  // in Elasticsearch
+  park.geoBoundary = outline(flattenedGeometry);
 
   // delete fields that are only used for indexing
   delete park.isDisplayed;
   delete park.publishedAt;
   delete park.latitude;
   delete park.longitude;
+  delete park.geoShape;
 
   return park;
 };

@@ -279,6 +279,7 @@ elasticmanager:
 
   env:
     batchSize: 20
+    shapeDataApi: "https://openmaps.gov.bc.ca/geo/pub/ows?service=WFS&version=2.0.0&request=GetFeature&typeName={1}&outputFormat=json&CQL_FILTER=ORCS_PRIMARY%3D%27{0}%27&SrsName=EPSG%3A4326"
 
   resources:
     limits:
