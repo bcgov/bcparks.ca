@@ -13,6 +13,7 @@ const MegaMenu = ({ content, menuMode }) => {
   const [selectedItem, setSelectedItem] = useState([]) // most recent item user has interacted with
   const [selections, setSelections] = useState({}) // the selected item at each level, i.e. selection breadcrumbs
   const [isMenuOpen, setIsMenuOpen] = useState(false) // currently only used for mobile - menu closed at first
+  const [hasClickedTwice, setHasClickedTwice] = useState(false)
   let sectionImages = {}
   let menuCollection
   let menuElements
@@ -85,8 +86,15 @@ const MegaMenu = ({ content, menuMode }) => {
         setSelectedItem(section)
         let selObj = getSelectionObj(section, {}) // track the selected item at this level and above
         setSelections(selObj)
+        if (selectedItem.treeLevel === 2) {
+          setHasClickedTwice(false)
+        } 
       } else {
-        menuReset()
+        if (selectedItem.treeLevel === 2) {
+          setHasClickedTwice(!hasClickedTwice)
+        } else {
+          menuReset()
+        }
       }
     }
   }
@@ -203,7 +211,13 @@ const MegaMenu = ({ content, menuMode }) => {
       <>
         {item.hasChildren && (
           <>
-            <nav className={"menu-level menu-level--" + item.treeLevel} aria-labelledby="mainmenulabel">
+            <nav
+              className={
+                "menu-level menu-level--" + item.treeLevel +
+                " has-clicked-twice--" + hasClickedTwice
+              }
+              aria-labelledby="mainmenulabel"
+            >
               <h2 id="mainmenulabel" className="sr-only">Main Menu</h2>
               <ul className="menu-button-list" role="presentation">
                 <li className="menu-button menu-back">
