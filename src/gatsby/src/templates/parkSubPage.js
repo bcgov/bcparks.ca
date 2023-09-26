@@ -1,6 +1,6 @@
 import React, { useRef } from "react"
-import { graphql } from "gatsby"
-import { Breadcrumbs, Link } from "@mui/material"
+import { graphql, Link as GatsbyLink, navigate } from "gatsby"
+import { Breadcrumbs } from "@mui/material"
 import useScrollSpy from "react-use-scrollspy"
 
 import Footer from "../components/footer"
@@ -36,7 +36,7 @@ export default function ParkSubPage({ data }) {
       section.sectionIndex = sectionIndex
       // if pageSection doesn't have a sectionTitle, display page title
       if (!section.sectionTitle) {
-          section.sectionTitle = page.title
+        section.sectionTitle = page.title
       }
       const titleId = slugify(section.sectionTitle).toLowerCase()
       pageSections.push({
@@ -72,15 +72,24 @@ export default function ParkSubPage({ data }) {
   })
 
   const breadcrumbs = [
-    <Link key="1" href="/" underline="hover">
+    <GatsbyLink key="1" to="/">
       Home
-    </Link>,
-    <Link key="2" href="/find-a-park" underline="hover">
+    </GatsbyLink>,
+    <GatsbyLink
+      key="2"
+      to="/find-a-park"
+      onClick={(e) => {
+      if (sessionStorage.getItem("lastSearch")) {
+          e.preventDefault();
+          navigate('/find-a-park/' + sessionStorage.getItem("lastSearch"))
+        }
+      }}
+    >
       Find a park
-    </Link>,
-    <Link key="3" href={`/${park.slug}`} underline="hover">
+    </GatsbyLink>,
+    <GatsbyLink key="3" to={`/${park.slug}`}>
       {park.protectedAreaName}
-    </Link>,
+    </GatsbyLink>,
     <div key="4" className="breadcrumb-text">
       {page.title}
     </div>,
@@ -137,7 +146,7 @@ export default function ParkSubPage({ data }) {
               <div className="page-content col-md-9 col-12">
                 {header && (
                   <div className="header-content">
-                    {header.introHtml.data.introHtml &&                    
+                    {header.introHtml.data.introHtml &&
                       <HTMLArea isVisible>{header.introHtml.data.introHtml}</HTMLArea>
                     }
                   </div>
@@ -180,7 +189,7 @@ export default function ParkSubPage({ data }) {
   )
 }
 
-export const Head = ({data}) => {
+export const Head = ({ data }) => {
   const page = data.strapiParkSubPage
   const park = page.protectedArea
   const seo = page.seo

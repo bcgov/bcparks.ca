@@ -293,13 +293,12 @@ export default function ParkTemplate({ data }) {
   const parkName = park.protectedAreaName;
 
   const breadcrumbs = [
-    <GatsbyLink key="1" to="/" underline="hover">
+    <GatsbyLink key="1" to="/">
       Home
     </GatsbyLink>,
     <GatsbyLink
       key="2"
       to="/find-a-park/"
-      underline="hover"
       onClick={(e) => {
         if (sessionStorage.getItem("prevPath").includes('find-a-park')) {
           e.preventDefault();
