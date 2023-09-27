@@ -300,7 +300,7 @@ h2.section-heading {
         border-color: $colorGold;
         &:hover {
           text-decoration: underline;
-          background-color: $colorWhite;
+          background-color: transparent;
         }
       }
       &.btn-primary {
