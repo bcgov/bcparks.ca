@@ -145,10 +145,6 @@ export const common = css`
       margin-left: 2rem;
     }
 
-    ol {
-      list-style: decimal;
-    }
-
     sub {
       vertical-align: sub;
     }
@@ -261,11 +257,15 @@ export const common = css`
 
     ul {
       list-style-type: disc;
-      &ul {
-        list-style-type: circle;
-        &ul {
-          list-style-type: square;
-        }
+      ul {
+        list-style-type: circle !important;
+      }
+    }
+
+    ol {
+      list-style: decimal;
+      ol {
+        list-style-type: decimal !important;
       }
     }
 

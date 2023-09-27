@@ -1,37 +1,42 @@
 @import "../variables.scss";
 
 .page-section {
-    margin-top:80px;
+  margin-top: 80px;
+  ul {
+    list-style-type: disc;
+    ul {
+      list-style-type: circle;
+    }
+  }
 }
 
 h2.page-section-title {
-    position: relative;
-    margin-top: 80px;
-    margin-bottom: 40px;
-    &::after {
-        position: absolute;
-        content: "";
-        background-color: $colorGold;
-        height: 2px;
-        width: 75px;
-        bottom: -12px;
-        left: 0;
-      }
+  position: relative;
+  margin-top: 80px;
+  margin-bottom: 40px;
+  &::after {
+    position: absolute;
+    content: "";
+    background-color: $colorGold;
+    height: 2px;
+    width: 75px;
+    bottom: -12px;
+    left: 0;
+  }
 }
 
 /* style variation for home */
 #home {
-    .page-section {
-        text-align: center;
+  .page-section {
+    text-align: center;
+  }
+  .page-section-title {
+    font-size: 2.25rem;
+    margin-top: 90px;
+    margin-bottom: 80px;
+    &::after {
+      left: calc(50% - 37px);
+      bottom: -36px;
     }
-    .page-section-title {
-        font-size: 2.25rem;
-        margin-top: 90px;
-        margin-bottom: 80px;
-        &::after {
-            left: calc(50% - 37px);
-            bottom: -36px;
-        }
-    }
+  }
 }
-
