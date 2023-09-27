@@ -51,6 +51,7 @@ module.exports = createCoreService(
             }
           ]
         },
+        publicationState: "live",
         populate: '*',
       });
 
