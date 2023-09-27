@@ -150,53 +150,51 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                     </div>
                   )}
                   <div>
-                    {showFireCentres && advisory.fireCentres.map(
-                      (fireCentre, index) => (
+                    <div>
+                      {showFireCentres && advisory.fireCentres.map(
+                        (fireCentre, index) => (
+                          <Link
+                            className="parkLink badge badge-pill badge-primary mb-2 mr-2"
+                            key={index}
+                          >
+                            {sentenceCase(fireCentre.fireCentreName, "Fire Centre")}
+                          </Link>
+                        ))}
+                      {showFireZones && advisory.fireZones.map(
+                        (fireZone, index) => (
+                          <Link
+                            className="parkLink badge badge-pill badge-primary mb-2 mr-2"
+                            key={index}
+                          >
+                            {sentenceCase(fireZone.fireZoneName, "Fire Zone")}
+                          </Link>
+                        ))}
+                      {showRegions && advisory.regions.map(
+                        (region, index) => (
+                          <Link
+                            className="parkLink badge badge-pill badge-primary mb-2 mr-2"
+                            key={index}
+                          >
+                            {region.regionName} region
+                          </Link>
+                        ))}
+                      {showSections && advisory.sections.map(
+                        (section, index) => (
+                          <Link
+                            className="parkLink badge badge-pill badge-primary mb-2 mr-2"
+                            key={index}
+                          >
+                            {section.sectionName} section
+                          </Link>
+                        ))}
+                      {hasAdditionalParks &&
                         <Link
-                          className="parkLink badge badge-pill badge-primary mb-2 mr-2"
-                          key={index}
+                          className="parkLink badge-pill badge-secondary-light mb-2 mr-2"
                         >
-                          {sentenceCase(fireCentre.fireCentreName, "Fire Centre")}
+                          Additional parks
                         </Link>
-                      ))}
-                  </div>
-                  <div>
-                    {showFireZones && advisory.fireZones.map(
-                      (fireZone, index) => (
-                        <Link
-                          className="parkLink badge badge-pill badge-primary mb-2 mr-2"
-                          key={index}
-                        >
-                          {sentenceCase(fireZone.fireZoneName, "Fire Zone")}
-                        </Link>
-                      ))}
-                    {showRegions && advisory.regions.map(
-                      (region, index) => (
-                        <Link
-                          className="parkLink badge badge-pill badge-primary mb-2 mr-2"
-                          key={index}
-                        >
-                          {region.regionName} region
-                        </Link>
-                      ))}
-                    {showSections && advisory.sections.map(
-                      (section, index) => (
-                        <Link
-                          className="parkLink badge badge-pill badge-primary mb-2 mr-2"
-                          key={index}
-                        >
-                          {section.sectionName} section
-                        </Link>
-                      ))}
-                    {hasAdditionalParks &&
-                      <Link
-                        className="parkLink badge-pill badge-secondary-light mb-2 mr-2"
-                      >
-                        Additional parks
-                      </Link>
-                    }
-                  </div>
-                  <div>
+                      }
+                    </div>
                     {advisory.protectedAreas.length > 5 ? (
                       <>
                         {open && (
