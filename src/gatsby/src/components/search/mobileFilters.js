@@ -151,6 +151,7 @@ const MobileFilters = ({
                     )}
                     selectedFilterItems={selectedCampingFacilities}
                     handleFilterCheck={handleCampingFacilityCheck}
+                    filterType="popular"
                   />
                   <Filter
                     filterItems={activityItems.filter(
@@ -177,6 +178,7 @@ const MobileFilters = ({
                     )}
                     selectedFilterItems={selectedCampingFacilities}
                     handleFilterCheck={handleCampingFacilityCheck}
+                    filterType="popular"
                   />
                 </Collapse>
               </div>

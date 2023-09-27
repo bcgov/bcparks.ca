@@ -25,17 +25,25 @@ const CheckedIcon = styled(CheckIcon)({
   backgroundColor: "#003366",
 })
 
-const shortenFilterLabel = (label) => {
-  if (label.includes("-accessible")) {
-    return label.replace("-accessible", "")
-  } else if (label.includes("camping")) {
-    return label.replace("camping", "")
+const shortenFilterLabel = (label, filterType) => {
+  if (filterType === "popular") {
+    if (label.includes("-accessible")) {
+      return label.replace("-accessible", "")
+    } else {
+      return label
+    }
   } else {
-    return label
+    if (label.includes("-accessible camping")) {
+      return label.replace("-accessible camping", "")
+    } else if (label.includes("camping")) {
+      return label.replace("camping", "")
+    } else {
+      return label
+    }
   }
 }
 
-const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
+const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck, filterType }) => {
   return (
     <FormGroup className="filter-options-container">
       {filterItems.map(item => {
@@ -56,7 +64,7 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck }) => {
               checkedIcon={<CheckedIcon />}
             />
           }
-          label={`${shortenFilterLabel(item.label)} (${item.count})`}
+          label={`${shortenFilterLabel(item.label, filterType)} (${item.count})`}
           className={
             selectedFilterItems.filter(
               selectedFilterItem =>
