@@ -77,6 +77,7 @@ const DesktopFilters = ({
           )}
           selectedFilterItems={selectedCampingFacilities}
           handleFilterCheck={handleCampingFacilityCheck}
+          filterType="popular"
         />
         <Filter
           filterItems={activityItems.filter(
@@ -103,6 +104,7 @@ const DesktopFilters = ({
           )}
           selectedFilterItems={selectedCampingFacilities}
           handleFilterCheck={handleCampingFacilityCheck}
+          filterType="popular"
         />
       </fieldset>
       <fieldset className="mb-2">
