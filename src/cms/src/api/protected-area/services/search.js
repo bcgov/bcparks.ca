@@ -19,9 +19,32 @@ module.exports = ({ strapi }) => ({
     campingNumbers,
     limit,
     offset,
+    latitude,
+    longitude
   }) => {
 
     let textFilter = [];
+
+    let sortOrder;
+    if (isNaN(latitude) || isNaN(longitude)) {
+      sortOrder = [
+        "_score",
+        "nameLowerCase.keyword"
+      ];
+    } else {
+      sortOrder = [
+        {
+          _geo_distance: {
+            geoBoundary: `${latitude}, ${longitude}`,
+            order: "asc",
+            unit: "km",
+            mode: "min",
+            distance_type: "arc",
+            ignore_unmapped: true
+          }
+        }
+      ]
+    }
 
     if (searchText) {
       textFilter = [
@@ -134,10 +157,7 @@ module.exports = ({ strapi }) => ({
               ]
             }
           },
-          sort: [
-            "_score",
-            "nameLowerCase.keyword"
-          ],
+          sort: sortOrder,
           _source: [
             "orcs",
             "protectedAreaName",
