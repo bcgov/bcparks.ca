@@ -103,6 +103,8 @@ function parseSearchFilters(query) {
   let facilityNumbers = [];
   let campingNumbers = [];
   let areaNumbers = [];
+  let latitude = NaN;
+  let longitude = NaN;
 
   if (query.activities) {
     if (typeof query.activities === "object") {
@@ -140,6 +142,19 @@ function parseSearchFilters(query) {
       campingNumbers = [parseInt(query.campings, 10)];
     }
   }
+  if (query.near && query.near.indexOf(",") !== -1) {
+    const coords = query.near.split(",");
+    latitude = +coords[0];
+    longitude = +coords[1];
+    // disable radius sorting for points way outside of BC
+    // the API is probably being called incorrectly anyway
+    if (latitude < 47 || latitude > 62) {
+      latitude = NaN;
+    }
+    if (longitude < -135 || longitude > -112) {
+      longitude = NaN;
+    }
+  }
 
   return {
     searchText,
@@ -150,7 +165,9 @@ function parseSearchFilters(query) {
     activityNumbers,
     facilityNumbers,
     areaNumbers,
-    campingNumbers
+    campingNumbers,
+    latitude,
+    longitude
   };
 }
 
