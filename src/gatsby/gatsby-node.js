@@ -100,16 +100,16 @@ exports.createSchemaCustomization = ({ actions }) => {
     metaDescription: String
   }
 
-  type SAFETY_INFO implements Node {
+  type STRAPI_SITE_SAFETYINFO_TEXTNODE implements Node @dontInfer {
     safetyInfo: String
   }
 
-  type SAFETY_INFO_DATA implements Node {
-    data: SAFETY_INFO
+  type STRAPI_SITE_SAFETYINFO {
+    data: STRAPI_SITE_SAFETYINFO_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
   type STRAPI_SITE implements Node {
-    safetyInfo: SAFETY_INFO_DATA
+    safetyInfo: STRAPI_SITE_SAFETYINFO
     parkOperation: STRAPI_PARK_OPERATION
     parkActivities: [STRAPI_PARK_ACTIVITY] @link(by: "id", from: "parkActivities___NODE")
     parkFacilities: [STRAPI_PARK_FACILITY] @link(by: "id", from: "parkFacilities___NODE")
