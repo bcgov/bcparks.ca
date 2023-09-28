@@ -267,7 +267,7 @@ nav {
             display: none;
           }
           .menu-button__title {
-            padding: 0px 16px;
+            padding: 0px 12px;
             color: #fff;
             font-size: 1rem;
             transition: background 0.2s, color 0.2s;
@@ -280,13 +280,13 @@ nav {
               text-decoration: underline;
             }
             &.has-children {
-              padding-right: 32px;
+              padding-right: 28px;
               &::after {
                 content: "\f078";
                 display: inline-block;
                 position: absolute;
                 top: calc(50% - 4px);
-                right: 16px;
+                right: 12px;
                 font-weight: 900;
                 font-size: 0.5rem;
                 font-style: normal;
