@@ -134,6 +134,13 @@ ol li.lower-alpha {
   list-style-type: lower-alpha;
 }
 
+ul {
+  list-style-type: disc;
+  ul {
+    list-style-type: circle;
+  }
+}
+
 /* end CKEeditor added styles */
 
 #home-header {
