@@ -18,19 +18,24 @@ const searchParks = async function (ctx) {
       const filteredMatches = result.hits;
 
       const data = filteredMatches.map((data) => {
-        return data['_source'];
+        const parkResult = data['_source'];
+        if (!isNaN(filters.latitude) && !isNaN(filters.longitude) && data["sort"]?.length > 0) {
+          parkResult.distance = Math.round(data["sort"][0] * 1000) / 1000
+        }
+        return parkResult;
       });
 
       return {
         data: data,
         meta: {
           pagination: {
-            page: 1,
-            pageSize: 10,
-            pageCount: Math.ceil(result.total?.value / 10),
-            total: result.total?.value
+            start: offset.offset,
+            limit: offset.limit,
+            total: result.total?.value || 0
           },
-          aggregations: cleanUpAggregations(resp?.body?.aggregations)
+          aggregations: offset.limit === 0
+            ? {}
+            : cleanUpAggregations(resp?.body?.aggregations)
         }
       };
     }
@@ -39,9 +44,8 @@ const searchParks = async function (ctx) {
         data: [],
         meta: {
           pagination: {
-            page: 1,
-            pageSize: 10,
-            pageCount: 0,
+            start: 1,
+            limit: 10,
             total: 0
           },
           aggregations: {}
@@ -105,6 +109,7 @@ function parseSearchFilters(query) {
   let areaNumbers = [];
   let latitude = NaN;
   let longitude = NaN;
+  let radius = NaN;
 
   if (query.activities) {
     if (typeof query.activities === "object") {
@@ -155,6 +160,9 @@ function parseSearchFilters(query) {
       longitude = NaN;
     }
   }
+  if (query.radius) {
+    radius = parseInt(query.radius)
+  }
 
   return {
     searchText,
@@ -167,14 +175,17 @@ function parseSearchFilters(query) {
     areaNumbers,
     campingNumbers,
     latitude,
-    longitude
+    longitude,
+    radius
   };
 }
 
 function parseSearchOffset(query) {
   const offset = parseInt(query._start, 10) || 0;
-  const limit = parseInt(query._limit, 10) || 10;
-
+  const limit = parseInt(query._limit, 10);
+  if (!limit && limit !== 0) {
+    limit = 10
+  }
   return {
     limit,
     offset,
@@ -182,8 +193,11 @@ function parseSearchOffset(query) {
 }
 
 function cleanUpAggregations(aggs) {
-  aggs.areas = aggs.all_areas.filtered.areas;
-  aggs.campings = aggs.all_camping.filtered.campings;
+  if (aggs === undefined) {
+    aggs = {};
+  }
+  aggs.areas = aggs.all_areas?.filtered.areas;
+  aggs.campings = aggs.all_camping?.filtered.campings;
   delete aggs.all_areas;
   delete aggs.all_camping;
   return aggs;
