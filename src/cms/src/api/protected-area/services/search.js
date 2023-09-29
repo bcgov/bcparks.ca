@@ -20,31 +20,11 @@ module.exports = ({ strapi }) => ({
     limit,
     offset,
     latitude,
-    longitude
+    longitude,
+    radius
   }) => {
 
     let textFilter = [];
-
-    let sortOrder;
-    if (isNaN(latitude) || isNaN(longitude)) {
-      sortOrder = [
-        "_score",
-        "nameLowerCase.keyword"
-      ];
-    } else {
-      sortOrder = [
-        {
-          _geo_distance: {
-            geoBoundary: `${latitude}, ${longitude}`,
-            order: "asc",
-            unit: "km",
-            mode: "min",
-            distance_type: "arc",
-            ignore_unmapped: true
-          }
-        }
-      ]
-    }
 
     if (searchText) {
       textFilter = [
@@ -119,10 +99,118 @@ module.exports = ({ strapi }) => ({
       mustFilter.push({ match: { "typeCode": typeCode } })
     }
 
+    if (!isNaN(latitude) && !isNaN(longitude) && !isNaN(radius)) {
+      mustFilter.push({
+        "geo_distance": {
+          "distance": `${radius}km`,
+          "geoBoundary": `${latitude},${longitude}`
+        }
+      });
+    }
+
     let areaFilter = [];
 
     for (const areaNum of areaNumbers) {
       areaFilter.push({ match: { "parkLocations.searchAreaNum": areaNum } })
+    }
+
+    let sortOrder;
+    if (isNaN(latitude) || isNaN(longitude)) {
+      sortOrder = [
+        "_score",
+        "nameLowerCase.keyword"
+      ];
+    } else {
+      sortOrder = [
+        {
+          _geo_distance: {
+            geoBoundary: `${latitude}, ${longitude}`,
+            order: "asc",
+            unit: "km",
+            mode: "min",
+            distance_type: "arc",
+            ignore_unmapped: true
+          }
+        }
+      ]
+    }
+
+    let aggregations = {};
+    if (limit > 0) {
+      aggregations = {
+        activities: {
+          terms: {
+            field: "parkActivities.num",
+            size: 50,
+            min_doc_count: 0
+          }
+        },
+        facilities: {
+          terms: {
+            field: "parkFacilities.num",
+            size: 50,
+            min_doc_count: 0
+          }
+        },
+        all_areas: {
+          global: {},
+          aggs: {
+            filtered: {
+              filter: {
+                bool: {
+                  filter: [
+                    ...mustFilter,
+                    {
+                      bool: {
+                        filter: [{ bool: { should: [...campingFilter] } }]
+                      }
+                    }
+                  ],
+                  must: [{ bool: { should: [...textFilter] } }]
+                }
+              },
+              aggs: {
+                areas: {
+                  terms: {
+                    field: "parkLocations.searchAreaNum",
+                    size: 50,
+                    min_doc_count: 0
+                  }
+                }
+              }
+            }
+          }
+        },
+        all_camping: {
+          global: {},
+          aggs: {
+            filtered: {
+              filter: {
+                bool: {
+                  filter: [
+                    ...mustFilter,
+                    {
+                      bool: {
+                        filter: [{ bool: { should: [...areaFilter] } }]
+                      }
+                    }
+                  ],
+                  must: [{ bool: { should: [...textFilter] } }]
+                }
+              },
+              aggs: {
+                campings: {
+                  terms: {
+                    field: "campingFacilities.num",
+                    size: 50,
+                    min_doc_count: 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
     try {
@@ -171,80 +259,7 @@ module.exports = ({ strapi }) => ({
             "advisories",
             "parkPhotos"
           ],
-          aggs: {
-            activities: {
-              terms: {
-                field: "parkActivities.num",
-                size: 50,
-                min_doc_count: 0
-              }
-            },
-            facilities: {
-              terms: {
-                field: "parkFacilities.num",
-                size: 50,
-                min_doc_count: 0
-              }
-            },
-            all_areas: {
-              global: {},
-              aggs: {
-                filtered: {
-                  filter: {
-                    bool: {
-                      filter: [
-                        ...mustFilter,
-                        {
-                          bool: {
-                            filter: [{ bool: { should: [...campingFilter] } }]
-                          }
-                        }
-                      ],
-                      must: [{ bool: { should: [...textFilter] } }]
-                    }
-                  },
-                  aggs: {
-                    areas: {
-                      terms: {
-                        field: "parkLocations.searchAreaNum",
-                        size: 50,
-                        min_doc_count: 0
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            all_camping: {
-              global: {},
-              aggs: {
-                filtered: {
-                  filter: {
-                    bool: {
-                      filter: [
-                        ...mustFilter,
-                        {
-                          bool: {
-                            filter: [{ bool: { should: [...areaFilter] } }]
-                          }
-                        }
-                      ],
-                      must: [{ bool: { should: [...textFilter] } }]
-                    }
-                  },
-                  aggs: {
-                    campings: {
-                      terms: {
-                        field: "campingFacilities.num",
-                        size: 50,
-                        min_doc_count: 0
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
+          aggs: aggregations
         }
       };
       const result = await doElasticSearch(query);
