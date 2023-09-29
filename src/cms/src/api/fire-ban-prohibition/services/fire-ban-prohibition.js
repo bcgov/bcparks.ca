@@ -108,6 +108,18 @@ module.exports = createCoreService(
         campfireBanCount: campfireBans.length,
         parkCount: rowsUpdated
       };
+    },
+    /* Gets an array of protected area id's that have fire bans
+     */
+    async getAllProtectedAreaFireBans() {
+      const bans = await strapi.db.query("api::protected-area.protected-area")
+        .findMany({
+          where: {
+            hasCampfireBan: true,
+          },
+          select: ['id']
+        });
+      return bans.map(b => { return b.id });
     }
   })
 );
