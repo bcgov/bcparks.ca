@@ -129,7 +129,7 @@ figure.table {
     }
   }
 
-  &.row-heading {
+  &.vertical-heading {
     table {
       tbody {
         tr {
@@ -149,6 +149,20 @@ figure.table {
           }
         }
       }
+    }
+  }
+
+  &.horizontal-heading {
+    overflow-x: auto;
+    table {
+      min-width: 600px;
+    }
+    &::-webkit-scrollbar {
+      height: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba( #000, .2);
+      border-radius: 5px;
     }
   }
 }
