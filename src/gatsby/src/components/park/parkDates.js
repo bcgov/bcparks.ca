@@ -10,7 +10,6 @@ import Container from "react-bootstrap/Container"
 import HtmlContent from "./htmlContent"
 import HTMLArea from "../HTMLArea"
 import StaticIcon from "./staticIcon"
-import Spacer from "./spacer"
 import { ParkAccessFromAdvisories } from "../../components/park/parkAccessStatus"
 import { countsList } from "../../utils/constants"
 import { Link } from "@mui/material"
@@ -435,7 +434,6 @@ export default function ParkDates({ data }) {
           </dl>
         </Col>
       </Row>
-      <Spacer />
     </div>
   )
 }

@@ -8,7 +8,6 @@ import { Link } from "@mui/material"
 
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
-import Spacer from "./spacer"
 
 import { countsList } from "../../utils/constants"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
@@ -133,11 +132,8 @@ export default function CampingDetails({ data }) {
   }
 
   return (
-    <div>
-      <Row
-        id="park-camping-details-container"
-        className="anchor-link d-flex justify-content-between"
-      >
+    <div id="park-camping-details-container" className="anchor-link">
+      <Row>
         {data.hasReservations && (
           <Col
             lg={{ span: 4, order: "last" }}
@@ -223,7 +219,6 @@ export default function CampingDetails({ data }) {
           ))}
         </Col>
       </Row>
-      <Spacer />
     </div>
   )
 }

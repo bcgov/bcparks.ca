@@ -34,14 +34,13 @@ import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import SafetyInfo from "../components/park/safetyInfo"
 import SpecialNote from "../components/park/specialNote"
-import Spacer from "../components/park/spacer"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
 import "../styles/parks.scss"
 import { StyledGrid } from "../utils/constants";
 
-const AsyncMapLocation =  loadable(() => import("../components/park/mapLocation"));
+const AsyncMapLocation = loadable(() => import("../components/park/mapLocation"));
 
 export default function ParkTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
@@ -74,19 +73,19 @@ export default function ParkTemplate({ data }) {
     ["asc"]
   )
 
-  const campingActivities = 
+  const campingActivities =
     activeActivities.filter(
       activity => activity.activityType.isCamping
     )
-  const campingFacilities = 
+  const campingFacilities =
     activeFacilities.filter(
       facility => facility.facilityType.isCamping
     )
-  const nonCampingActivities = 
+  const nonCampingActivities =
     activeActivities.filter(
       activity => !activity.activityType.isCamping
     )
-  const nonCampingFacilities = 
+  const nonCampingFacilities =
     activeFacilities.filter(
       facility => !facility.facilityType.isCamping
     )
@@ -151,7 +150,6 @@ export default function ParkTemplate({ data }) {
   }, [isLoadingProtectedArea, isLoadingAdvisories])
 
   const parkOverviewRef = useRef("")
-  const accessibilityRef = useRef("")
   const advisoryRef = useRef("")
   const parkDatesRef = useRef("")
   const safetyRef = useRef("")
@@ -167,7 +165,6 @@ export default function ParkTemplate({ data }) {
 
   const sectionRefs = [
     parkOverviewRef,
-    accessibilityRef,
     advisoryRef,
     parkDatesRef,
     safetyRef,
@@ -196,15 +193,7 @@ export default function ParkTemplate({ data }) {
       visible: !isNullOrWhiteSpace(description),
     },
     {
-      // Depricated, also delete the section if removing
       sectionIndex: 1,
-      display: "Accessibility",
-      link: "#accessibility-details-container",
-      visible: false
-      // visible: park.accessibility,
-    },
-    {
-      sectionIndex: 2,
       display:
         !isLoadingAdvisories && !advisoryLoadError
           ? `Advisories (${advisories.length})`
@@ -213,55 +202,55 @@ export default function ParkTemplate({ data }) {
       visible: true,
     },
     {
-      sectionIndex: 3,
+      sectionIndex: 2,
       display: "Dates of operation",
       link: "#park-dates-container",
       visible: park.parkOperation,
     },
     {
-      sectionIndex: 4,
+      sectionIndex: 3,
       display: "Safety info",
       link: "#park-safety-info-container",
       visible: !isNullOrWhiteSpace(safetyInfo),
     },
     {
-      sectionIndex: 5,
+      sectionIndex: 4,
       display: "Special notes",
       link: "#park-special-notes-container",
       visible: !isNullOrWhiteSpace(specialNotes),
     },
     {
-      sectionIndex: 6,
+      sectionIndex: 5,
       display: "Camping",
       link: "#park-camping-details-container",
       visible: activeCampings.length > 0,
     },
     {
-      sectionIndex: 7,
+      sectionIndex: 6,
       display: "Facilities",
       link: "#park-facility-container",
       visible: nonCampingFacilities.length > 0,
     },
     {
-      sectionIndex: 8,
+      sectionIndex: 7,
       display: "Activities",
       link: "#park-activity-container",
       visible: nonCampingActivities.length > 0,
     },
     {
-      sectionIndex: 9,
+      sectionIndex: 8,
       display: "Location",
       link: "#park-maps-location-container",
       visible: (park.latitude && park.longitude) || !isNullOrWhiteSpace(locationNotes),
     },
     {
-      sectionIndex: 10,
+      sectionIndex: 9,
       display: capitalizeFirstLetter(`${parkType} and activity maps`),
       link: "#park-map-details-container",
       visible: !isNullOrWhiteSpace(maps),
     },
     {
-      sectionIndex: 11,
+      sectionIndex: 10,
       display: capitalizeFirstLetter(`Learn about this ${parkType}`),
       link: "#park-about-container",
       visible:
@@ -270,13 +259,13 @@ export default function ParkTemplate({ data }) {
         !isNullOrWhiteSpace(park.parkContact.data.parkContact)
     },
     {
-      sectionIndex: 12,
+      sectionIndex: 11,
       display: "Nature and culture",
       link: "#park-nature-and-culture-container",
       visible: !isNullOrWhiteSpace(natureAndCulture),
     },
     {
-      sectionIndex: 13,
+      sectionIndex: 12,
       display: "Reconciliation with Indigenous Peoples",
       link: "#park-reconciliation-container",
       visible: !isNullOrWhiteSpace(reconciliationNotes),
@@ -323,42 +312,42 @@ export default function ParkTemplate({ data }) {
       <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
         <div className="container parks-container order-2">
           <div id="sr-content" className="park-info-container pt-4">
-                <Breadcrumbs
-                  separator="›"
-                  aria-label="breadcrumb"
-                  className="p20t"
-                >
-                  {breadcrumbs}
-                </Breadcrumbs>
-              </div>
-              {!isLoadingProtectedArea && !protectedAreaLoadError && (
-                <div>
-                  <ParkHeader
-                    slug={park.slug}
-                    parkName={parkName}
-                    hasReservations={hasReservations}
-                    hasDayUsePass={hasDayUsePass}
-                    hasCampfireBan={hasCampfireBan}
-                    isLoadingAdvisories={isLoadingAdvisories}
-                    advisoryLoadError={advisoryLoadError}
-                    advisories={advisories}
-                  />
-                </div>
-              )}
+            <Breadcrumbs
+              separator="›"
+              aria-label="breadcrumb"
+              className="p20t"
+            >
+              {breadcrumbs}
+            </Breadcrumbs>
+          </div>
+          {!isLoadingProtectedArea && !protectedAreaLoadError && (
+            <div>
+              <ParkHeader
+                slug={park.slug}
+                parkName={parkName}
+                hasReservations={hasReservations}
+                hasDayUsePass={hasDayUsePass}
+                hasCampfireBan={hasCampfireBan}
+                isLoadingAdvisories={isLoadingAdvisories}
+                advisoryLoadError={advisoryLoadError}
+                advisories={advisories}
+              />
+            </div>
+          )}
         </div>
 
         <div className="page-menu--mobile d-block d-lg-none mb-4 mb-md-0 order-3">
-            <PageMenu
-              pageSections={menuItems}
-              activeSection={activeSection}
-              menuStyle="select"
-            />
+          <PageMenu
+            pageSections={menuItems}
+            activeSection={activeSection}
+            menuStyle="select"
+          />
         </div>
-        
+
         <div className="container parks-container gallery-container order-1">
           <div className="park-info-container">
             <ParkPhotoGallery photos={photos} />
-            </div>
+          </div>
         </div>
 
       </div>
@@ -393,11 +382,6 @@ export default function ParkTemplate({ data }) {
                 </div>
               )}
               {menuItems[1].visible && (
-                <div ref={accessibilityRef} className="w-100">
-                  
-                </div>
-              )}
-              {menuItems[2].visible && (
                 <div ref={advisoryRef} className="w-100">
                   {isLoadingAdvisories && (
                     <div className="mb-5">
@@ -420,7 +404,7 @@ export default function ParkTemplate({ data }) {
                   )}
                 </div>
               )}
-              {menuItems[3].visible && (
+              {menuItems[2].visible && (
                 <div ref={parkDatesRef} className="w-100">
                   <ParkDates
                     data={{
@@ -432,17 +416,17 @@ export default function ParkTemplate({ data }) {
                   />
                 </div>
               )}
-              {menuItems[4].visible && (
+              {menuItems[3].visible && (
                 <div ref={safetyRef} className="w-100">
                   <SafetyInfo safetyInfo={safetyInfo} />
                 </div>
               )}
-              {menuItems[5].visible && (
+              {menuItems[4].visible && (
                 <div ref={specialRef} className="w-100">
                   <SpecialNote specialNotes={specialNotes} />
                 </div>
               )}
-              {menuItems[6].visible && (
+              {menuItems[5].visible && (
                 <div ref={campingRef} className="w-100">
                   <CampingDetails
                     data={{
@@ -456,49 +440,45 @@ export default function ParkTemplate({ data }) {
                   />
                 </div>
               )}
-              {menuItems[7].visible && (
+              {menuItems[6].visible && (
                 <div ref={facilityRef} className="w-100">
                   <ParkFacility data={nonCampingFacilities} />
                 </div>
               )}
-              {menuItems[8].visible && (
+              {menuItems[7].visible && (
                 <div ref={activityRef} className="w-100">
                   <ParkActivity data={nonCampingActivities} />
                 </div>
               )}
-              {menuItems[9].visible && (
+              {menuItems[8].visible && (
                 <div ref={mapLocationRef} className="w-100">
-                  <div id="park-maps-location-container" className="anchor-link">
-                    <AsyncMapLocation data={mapData} />
-                    {locationNotes && (
-                      <>
-                        <div id="park-location-notes-container" 
-                          dangerouslySetInnerHTML={{
-                            __html: locationNotes,
-                          }}
-                        ></div>
-                        <Spacer />
-                        </>
-                    )}
-                  </div>
+                  <AsyncMapLocation data={mapData} />
+                  {locationNotes && (
+                    <div id="park-location-notes-container"
+                      dangerouslySetInnerHTML={{
+                        __html: locationNotes,
+                      }}
+                    >
+                    </div>
+                  )}
                 </div>
               )}
-              {menuItems[10].visible && (
+              {menuItems[9].visible && (
                 <div ref={activityMapRef} className="w-100">
                   <ParkMapDetails data={maps} type={parkType} />
                 </div>
               )}
-              {menuItems[11].visible && (
+              {menuItems[10].visible && (
                 <div ref={aboutRef} className="w-100">
                   <About park={park} />
                 </div>
               )}
-              {menuItems[12].visible && (
+              {menuItems[11].visible && (
                 <div ref={natureAndCultureRef} className="w-100">
                   <NatureAndCulture data={natureAndCulture} />
                 </div>
               )}
-              {menuItems[13].visible && (
+              {menuItems[12].visible && (
                 <div ref={reconciliationRef} className="w-100">
                   <Reconciliation data={reconciliationNotes} />
                 </div>
@@ -514,7 +494,7 @@ export default function ParkTemplate({ data }) {
   )
 }
 
-export const Head = ({data}) => {
+export const Head = ({ data }) => {
   const park = data.strapiProtectedArea
   const seo = park.seo
   const description = park.description.data.description

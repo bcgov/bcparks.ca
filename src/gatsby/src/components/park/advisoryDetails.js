@@ -8,7 +8,6 @@ import Row from "react-bootstrap/Row"
 import { Link } from "@mui/material"
 
 import HtmlContent from "./htmlContent"
-import Spacer from "./spacer"
 
 import blueAlertIcon from "../../images/park/blue-alert-64.png"
 import redAlertIcon from "../../images/park/red-alert-64.png"
@@ -209,7 +208,6 @@ export default function AdvisoryDetails({ advisories }) {
           </Col>
         )}
       </Row>
-      <Spacer />
     </div>
   )
 }
