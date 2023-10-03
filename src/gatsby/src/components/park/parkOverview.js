@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from "react"
 import { capitalizeFirstLetter } from "../../utils/helpers";
 
 import HtmlContent from "./htmlContent"
-import Spacer from "./spacer"
 
 import * as cheerio from 'cheerio';
 
@@ -47,7 +46,6 @@ export default function ParkOverview({ data: parkOverview, type }) {
         {expanded ? "Read less" : "Read more"}
       </a>
       }
-      <Spacer />
       </div>
   );
 }

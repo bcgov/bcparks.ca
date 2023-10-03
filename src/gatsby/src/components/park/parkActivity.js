@@ -5,10 +5,8 @@ import Accordion from "react-bootstrap/Accordion"
 import Container from "react-bootstrap/Container"
 import { Link } from "@mui/material"
 
-
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
-import Spacer from "./spacer"
 
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
@@ -119,8 +117,8 @@ export default function ParkActivity({ data }) {
   if (activityData.length === 0) return null
 
   return (
-    <div>
-      <Row id="park-activity-container" className="anchor-link">
+    <div id="park-activity-container" className="anchor-link">
+      <Row>
         <Col>
           <h2 className="section-heading">Activities</h2>
         </Col>
@@ -155,7 +153,6 @@ export default function ParkActivity({ data }) {
           ))}
         </Col>
       </Row>
-      <Spacer />
     </div>
   )
 }

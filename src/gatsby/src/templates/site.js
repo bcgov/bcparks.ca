@@ -27,7 +27,6 @@ import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import SafetyInfo from "../components/park/safetyInfo"
 import MapLocation from "../components/park/mapLocation"
-import Spacer from "../components/park/spacer"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
@@ -152,6 +151,7 @@ export default function SiteTemplate({ data }) {
   const sectionRefs = [
     parkOverviewRef,
     advisoryRef,
+    safetyRef,
     campingRef,
     facilityRef,
     activityRef,
@@ -172,15 +172,7 @@ export default function SiteTemplate({ data }) {
       visible: !isNullOrWhiteSpace(description),
     },
     {
-      // Depricated, also delete the section if removing
       sectionIndex: 1,
-      display: "Accessibility",
-      link: "#accessibility-details-container",
-      visible: false
-      // visible: park?.accessibility,
-    },
-    {
-      sectionIndex: 2,
       display:
         !isLoadingAdvisories && !advisoryLoadError
           ? `Advisories (${advisories.length})`
@@ -189,31 +181,31 @@ export default function SiteTemplate({ data }) {
       visible: true,
     },
     {
-      sectionIndex: 3,
+      sectionIndex: 2,
       display: "Safety info",
       link: "#park-safety-info-container",
       visible: !isNullOrWhiteSpace(safetyInfo),
     },
     {
-      sectionIndex: 4,
+      sectionIndex: 3,
       display: "Camping",
       link: "#park-camping-details-container",
       visible: activeCampings.length > 0,
     },
     {
-      sectionIndex: 5,
+      sectionIndex: 4,
       display: "Facilities",
       link: "#park-facility-container",
       visible: nonCampingFacilities.length > 0,
     },
     {
-      sectionIndex: 6,
+      sectionIndex: 5,
       display: "Activities",
       link: "#park-activity-container",
       visible: nonCampingActivities.length > 0,
     },
     {
-      sectionIndex: 7,
+      sectionIndex: 6,
       display: "Location",
       link: "#park-maps-location-container",
       visible: (site.latitude && site.longitude) || !isNullOrWhiteSpace(locationNotes),
@@ -338,10 +330,6 @@ export default function SiteTemplate({ data }) {
                 </div>
               )}
               {menuItems[1].visible && (
-                <div className="w-100">
-                </div>
-              )}
-              {menuItems[2].visible && (
                 <div ref={advisoryRef} className="w-100">
                   {isLoadingAdvisories && (
                     <div className="mb-5">
@@ -364,12 +352,12 @@ export default function SiteTemplate({ data }) {
                   )}
                 </div>
               )}
-              {menuItems[3].visible && (
+              {menuItems[2].visible && (
                 <div ref={safetyRef} className="w-100">
                   <SafetyInfo safetyInfo={safetyInfo} />
                 </div>
               )}
-              {menuItems[4].visible && (
+              {menuItems[3].visible && (
                 <div ref={campingRef} className="w-100">
                   <CampingDetails
                     data={{
@@ -381,33 +369,27 @@ export default function SiteTemplate({ data }) {
                   />
                 </div>
               )}
-              {menuItems[5].visible && (
+              {menuItems[4].visible && (
                 <div ref={facilityRef} className="w-100">
                   <ParkFacility data={nonCampingFacilities} />
                 </div>
               )}
-              {menuItems[6].visible && (
+              {menuItems[5].visible && (
                 <div ref={activityRef} className="w-100">
                   <ParkActivity data={nonCampingActivities} />
                 </div>
               )}
-              {menuItems[7].visible && (
+              {menuItems[6].visible && (
                 <div ref={mapLocationRef} className="w-100">
-                  <div id="park-maps-location-container" className="anchor-link">
-                    <MapLocation data={mapData} />
-                    {locationNotes && (
-                      <Grid item xs={12} id="park-location-notes-container">
-                        <Box>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: locationNotes,
-                            }}
-                          ></div>
-                        </Box>
-                        <Spacer />
-                      </Grid>
-                    )}
-                  </div>
+                  <MapLocation data={mapData} />
+                  {locationNotes && (
+                    <div id="park-location-notes-container"
+                      dangerouslySetInnerHTML={{
+                        __html: locationNotes,
+                      }}
+                    >
+                    </div>
+                  )}
                 </div>
               )}
             </StyledGrid>
@@ -415,7 +397,7 @@ export default function SiteTemplate({ data }) {
         </Container>
       </div>
       <Footer />
-    </div>
+    </div >
   )
 }
 

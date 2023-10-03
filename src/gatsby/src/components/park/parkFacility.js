@@ -8,7 +8,6 @@ import { Link } from "@mui/material"
 
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
-import Spacer from "./spacer"
 
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
@@ -119,8 +118,8 @@ export default function ParkFacility({ data }) {
   if (facilityData.length === 0) return null
 
   return (
-    <div>
-      <Row id="park-facility-container" className="anchor-link">
+    <div id="park-facility-container" className="anchor-link">
+      <Row>
         <Col>
           <h2 className="section-heading">Facilities</h2>
         </Col>
@@ -155,7 +154,6 @@ export default function ParkFacility({ data }) {
           ))}
         </Col>
       </Row>
-      <Spacer />
     </div>
   )
 }
