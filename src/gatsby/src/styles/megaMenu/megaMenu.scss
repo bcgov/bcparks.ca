@@ -156,11 +156,11 @@ nav {
       width: 100%;
     }
 
-    .menu-level--0 {
-      .menu-back {
+    .menu-level--0 > ul.menu-button-list {
+      & > .menu-back {
         display: none;
       }
-      .menu-header {
+      & > .menu-header {
         display: none;
       }
     }
@@ -351,6 +351,11 @@ nav {
         display: none;
       }
     }
+    .menu-level-1-children.menu-children--selected {
+      position: absolute;
+      top: 20px;
+      left: 400px;
+    }
     .menu-children-exist--false {
       display: none;
     }
@@ -360,7 +365,8 @@ nav {
 
       .menu-button--selected {
         border-left: solid 4px $colorGold;
-        background-color: #eee;
+        border-bottom: none !important;
+        background-color: #eee !important;
       }
     }
     .menu-level--2 {
@@ -404,7 +410,13 @@ nav {
         font-size: 0.625rem;
       }
     }
-    
+    .menu-level--1 {
+      .menu-button__arr {
+        display: inline-block;
+        font-size: 1rem;
+        rotate: 0deg !important;
+      }
+    }
 
     .menu-button {
       transition: background-color 0.3s;

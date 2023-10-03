@@ -88,7 +88,7 @@ const MegaMenu = ({ content, menuMode }) => {
         setSelections(selObj)
         if (selectedItem.treeLevel === 2) {
           setHasClickedTwice(false)
-        } 
+        }
       } else {
         if (selectedItem.treeLevel === 2) {
           setHasClickedTwice(!hasClickedTwice)
@@ -210,39 +210,39 @@ const MegaMenu = ({ content, menuMode }) => {
     return (
       <>
         {item.hasChildren && (
-          <>
-            <nav
-              className={
-                "menu-level menu-level--" + item.treeLevel +
-                " has-clicked-twice--" + hasClickedTwice
-              }
-              aria-labelledby="mainmenulabel"
-            >
-              <h2 id="mainmenulabel" className="sr-only">Main Menu</h2>
-              <ul className="menu-button-list" role="presentation">
-                <li className="menu-button menu-back">
-                  <a
-                    className="menu-button__title"
-                    href="back"
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={e => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        navigateBack(e, item)
-                      }
-                    }}
-                    onClick={e => navigateBack(e, item)}
-                  >
-                    <i className="menu-button__arr fa fa-chevron-left"></i> Back
-                  </a>
-                </li>
-                <li className="menu-button menu-header">
-                  <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
-                    {item.title}
-                    <ExpandCircleDownIcon className="menu-button__title--icon" />
-                  </Link>
-                </li>
-                {item.strapi_children.map((page, index) => (
+          <nav
+            className={
+              "menu-level menu-level--" + item.treeLevel +
+              " has-clicked-twice--" + hasClickedTwice
+            }
+            aria-labelledby="mainmenulabel"
+          >
+            <h2 id="mainmenulabel" className="sr-only">Main Menu</h2>
+            <ul className="menu-button-list" role="presentation">
+              <li className="menu-button menu-back">
+                <a
+                  className="menu-button__title"
+                  href="back"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={e => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      navigateBack(e, item)
+                    }
+                  }}
+                  onClick={e => navigateBack(e, item)}
+                >
+                  <i className="menu-button__arr fa fa-chevron-left"></i> Back
+                </a>
+              </li>
+              <li className="menu-button menu-header">
+                <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
+                  {item.title}
+                  <ExpandCircleDownIcon className="menu-button__title--icon" />
+                </Link>
+              </li>
+              {item.strapi_children.map((page, index) => (
+                <>
                   <li
                     key={index}
                     className={
@@ -268,27 +268,25 @@ const MegaMenu = ({ content, menuMode }) => {
                       )}
                     </a>
                   </li>
-                ))}
-              </ul>
-            </nav>
-            {item.strapi_children.map((page, index) => (
-              <div
-                key={index}
-                className={
-                  "menu-children menu-children-exist--" +
-                  page.hasChildren +
-                  " menu-level-" +
-                  item.treeLevel +
-                  "-children menu-children--" +
-                  (page === selections[page.treeLevel]
-                    ? "selected"
-                    : "unselected")
-                }
-              >
-                {generateMenus(page, menuMode)}
-              </div>
-            ))}
-          </>
+                  <div
+                    key={index}
+                    className={
+                      "menu-children menu-children-exist--" +
+                      page.hasChildren +
+                      " menu-level-" +
+                      item.treeLevel +
+                      "-children menu-children--" +
+                      (page === selections[page.treeLevel]
+                        ? "selected"
+                        : "unselected")
+                    }
+                  >
+                    {generateMenus(page, menuMode)}
+                  </div>
+                </>
+              ))}
+            </ul>
+          </nav>
         )}
         {!item.hasChildren && (
           <nav>
