@@ -3,7 +3,6 @@ import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
 import {
-  Box,
   Container,
   Grid,
   CssBaseline,
