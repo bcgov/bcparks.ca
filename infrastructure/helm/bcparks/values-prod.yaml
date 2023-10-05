@@ -18,7 +18,7 @@ images:
 cms:
   resources:
     limits:
-      cpu: 750m
+      cpu: 650m
       memory: 1250Mi
     requests:
       cpu: 125m
@@ -32,7 +32,7 @@ cms:
   hpa:
     minReplicas: 2
     maxReplicas: 4
-    cpuUtilizationThreshold: 50
+    cpuUtilizationThreshold: 65
     memoryUtilizationThreshold: 100
 
 admin:
@@ -43,7 +43,7 @@ admin:
 patroni:
   resources:
     limits:
-      cpu: 1
+      cpu: 750m
       memory: 2Gi
     requests:
       cpu: 200m
@@ -76,4 +76,4 @@ public:
     minReplicas: 2
     maxReplicas: 8
     cpuUtilizationThreshold: 35
-    memoryUtilizationThreshold: 80
+    memoryUtilizationThreshold: 85
