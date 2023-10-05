@@ -96,6 +96,19 @@ export const query = graphql`
   }
 `
 
+const HighlightText = ({ park, input }) => {
+  const words = park.split(" ")
+  return (
+    words.map((word, index) => {
+      if (word.toLowerCase() === input) {
+        return <span key={index}> {word} </span>
+      } else {
+        return <b key={index}> {word} </b>
+      }
+    })
+  )
+}
+
 export default function FindAPark({ location, data }) {
   const menuContent = data?.allStrapiMenu?.nodes || []
 
@@ -176,6 +189,7 @@ export default function FindAPark({ location, data }) {
     "q", location.state?.searchText ? location.state.searchText : ""
   )
   const [inputText, setInputText] = useState("")
+  const [suggestions, setSuggestions] = useState([])
 
   const [filterSelections, setFilterSelections] = useState([])
   const [searchResults, setSearchResults] = useState([])
@@ -297,6 +311,7 @@ export default function FindAPark({ location, data }) {
     setInputText("")
     setCurrentPage(1)
     setSearchText("")
+    setSuggestions([])
   }
   const handleKeyDownClear = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -338,6 +353,21 @@ export default function FindAPark({ location, data }) {
       e.preventDefault()
       handleClearFilter()
     }
+  }
+  const handleSuggestionChange = async (event) => {
+    const inputValue = event.target.value
+    try {
+      const response = await axios.get(`
+        ${data.site.siteMetadata.apiURL}/api/protected-areas/searchnames?queryText=${inputValue}
+      `)
+      setSuggestions(response.data.data)
+    } catch (error) {
+      console.error('Error fetching search names:', error)
+    }
+  }
+  const handleSuggestionClick = (suggestion) => {
+    setInputText(suggestion.protectedAreaName)
+    setSuggestions([])
   }
 
   const setFilters = useCallback(() => {
@@ -572,12 +602,15 @@ export default function FindAPark({ location, data }) {
                         id="park-search-text"
                         variant="outlined"
                         placeholder="Park name"
-                        className="park-search-text-box h50p"
+                        className={`has-suggestion--${suggestions.length > 0 ? 'true' : 'false'
+                          } has-text--${inputText.length > 0 ? 'true' : 'false'
+                          } park-search-text-box h50p`}
                         value={inputText}
                         focused={isLoading}
                         inputRef={searchRef}
                         onChange={event => {
                           setInputText(event.target.value)
+                          handleSuggestionChange(event)
                         }}
                         onKeyDown={ev => {
                           if (ev.key === "Enter") {
@@ -608,6 +641,23 @@ export default function FindAPark({ location, data }) {
                           }
                         }}
                       />
+                      {suggestions.length > 0 &&
+                        <ul className="park-search-suggest-list">
+                          {suggestions.slice(0, 4).map((suggestion, index) => (
+                            <li key={index}>
+                              <button
+                                className="btn btn-link"
+                                onClick={() => handleSuggestionClick(suggestion)}
+                              >
+                                <HighlightText
+                                  park={suggestion.protectedAreaName}
+                                  input={inputText}
+                                />
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      }
                     </div>
                     <div className="col-md-3 d-none d-md-block pl-3">
                       <Button
@@ -703,12 +753,15 @@ export default function FindAPark({ location, data }) {
                               id="park-search-text"
                               variant="outlined"
                               placeholder="Park name"
-                              className="park-search-text-box h50p"
+                              className={`has-suggestion--${suggestions.length > 0 ? 'true' : 'false'
+                                } has-text--${inputText.length > 0 ? 'true' : 'false'
+                                } park-search-text-box h50p`}
                               value={inputText}
                               focused={isLoading}
                               inputRef={searchRef}
                               onChange={event => {
                                 setInputText(event.target.value)
+                                handleSuggestionChange(event)
                               }}
                               onKeyDown={ev => {
                                 if (ev.key === "Enter") {
@@ -740,6 +793,23 @@ export default function FindAPark({ location, data }) {
                                 }
                               }}
                             />
+                            {suggestions.length > 0 &&
+                              <ul className="park-search-suggest-list">
+                                {suggestions.slice(0, 8).map((suggestion, index) => (
+                                  <li key={index}>
+                                    <button
+                                      className="btn btn-link"
+                                      onClick={() => handleSuggestionClick(suggestion)}
+                                    >
+                                      <HighlightText
+                                        park={suggestion.protectedAreaName}
+                                        input={inputText}
+                                      />
+                                    </button>
+                                  </li>
+                                ))}
+                              </ul>
+                            }
                           </div>
                           <div className="m15t col-12 park-search-text-box-container d-none d-lg-block">
                             <Button
