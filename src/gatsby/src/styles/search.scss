@@ -1298,3 +1298,16 @@ head {
   margin-top: 32px;
   color: $colorBlue;
 }
+
+a.desktop-park-link {
+  color: $colorBlue;
+  &:focus-visible {
+    border-radius: 1px;
+    outline-offset: 0;
+    outline: 2px solid Highlight;
+    outline: 2px solid -webkit-focus-ring-color;
+  }
+  &:focus, &:hover {
+    color: $colorBlue;
+  }
+}
