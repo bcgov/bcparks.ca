@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { Link as GatsbyLink } from "gatsby"
 import moment from "moment"
 import _ from "lodash"
 
@@ -146,6 +147,7 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
 export default function ParkDates({ data }) {
   const dataCopy = JSON.parse(JSON.stringify(data)) // deep copy
   const parkOperation = dataCopy.parkOperation || {}
+  const parkType = dataCopy.parkType
   const subAreas = dataCopy.subAreas || []
   const marineProtectedArea = dataCopy.marineProtectedArea || ""
   subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
@@ -350,19 +352,12 @@ export default function ParkDates({ data }) {
           {hasOperations && (
             <>
               <div className="text-center mb-4">
-                <div className="dates-header font-italic">
-                  All dates are subject to change without notice.
+                <div>
+                  <GatsbyLink to="#park-advisory-details-container">Check advisories</GatsbyLink> before visiting.
+                  Dates may change without notice.
                 </div>
-                {parkDates && (
-                  <h4 className="my-3">
-                    The park {marineProtectedArea !== 'Y' && "gate"} is open {parkDates}
-                  </h4>
-                )}
-                {!parkDates && (
-                  <h4 className="my-3">Operating dates are unavailable</h4>
-                )}
                 <h4 className="my-3">
-                  Current status:
+                  {parkType} status:
                   <img
                     src={parkStatusIcon}
                     alt=""
@@ -371,9 +366,14 @@ export default function ParkDates({ data }) {
                   />
                   {parkStatusText}
                 </h4>
-                <div className="font-italic my-3">
-                  Be sure to check advisories above before visiting
-                </div>
+                {parkDates && (
+                  <h4 className="my-3">
+                    The park {marineProtectedArea !== 'Y' && "gate"} is open {parkDates}
+                  </h4>
+                )}
+                {!parkDates && (
+                  <h4 className="my-3">Operating dates are unavailable</h4>
+                )}
                 {parkOperation.openNote && (
                   <div className="dates-open-note">
                     <HTMLArea isVisible={true}>

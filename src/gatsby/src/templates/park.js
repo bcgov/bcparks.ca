@@ -408,6 +408,7 @@ export default function ParkTemplate({ data }) {
                 <div ref={parkDatesRef} className="w-100">
                   <ParkDates
                     data={{
+                      parkType: parkType,
                       parkOperation: park.parkOperation,
                       subAreas: park.parkOperationSubAreas,
                       advisories: advisories,
