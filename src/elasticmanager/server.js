@@ -27,8 +27,14 @@ const { populateGeoShapes } = require('./scripts/populateGeoShapes');
   exec('date +%s > lastrun.txt')
 
   // run every 2 minutes on the :00
-  schedule.scheduleJob("*/2 * * * *", async () => {
+  schedule.scheduleJob("index-parks", "*/1 * * * *", async () => {
+    const runningJobs = schedule.scheduledJobs["index-parks"].running;
+    if (runningJobs > 0) {
+      logger.warn(`Skipping the next cron. A previous job is still running.`)
+      return;
+    }
     try {
+      logger.info("Starting cron");
       await populateGeoShapes({ silent: true });
       if (!(await parkIndexExists())) {
         logger.warn(
@@ -40,7 +46,6 @@ const { populateGeoShapes } = require('./scripts/populateGeoShapes');
         // to avoid duplication of effort
         await indexParks({ descending: true });
       } else {
-        logger.info("Starting cron");
         await indexParks();
       }
 

@@ -1,4 +1,4 @@
-const axios = require('axios');
+const { cmsAxios } = require("../utils/axiosConfig");
 const { getLogger } = require('../utils/logging');
 
 /**
@@ -7,15 +7,8 @@ const { getLogger } = require('../utils/logging');
  */
 exports.queueAll = async function () {
   const logger = getLogger();
-
-  const httpReqHeaders = {
-    'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
-    'Content-Type': 'application/json'
-  };
-
   try {
-    const allQuery = `${process.env.STRAPI_BASE_URL}/api/search-indexing/all`;
-    await axios.post(allQuery, {}, { headers: httpReqHeaders });
+    await cmsAxios.post("/api/search-indexing/all", {});
   } catch (error) {
     logger.error(`queueAllParks.js failed: ${error}`);
   }
