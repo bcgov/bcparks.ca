@@ -1,18 +1,13 @@
 const axios = require('axios');
-const { getLogger } = require('../utils/logging');
 const qs = require('qs');
-const { isEmpty } = require('lodash');
+const { getLogger } = require('../utils/logging');
+const { cmsAxios } = require('../utils/axiosConfig');
 
 /**
  * Populates the Geo-shapes collection in Strapi
  */
 exports.populateGeoShapes = async function (options) {
   const logger = getLogger();
-  const httpReqHeaders = {
-    'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
-    'Content-Type': 'application/json'
-  };
-
   const query = qs.stringify({
     fields: ["orcs", "typeCode"],
     filters: {
@@ -36,8 +31,8 @@ exports.populateGeoShapes = async function (options) {
 
   let parks;
   try {
-    const allParks = `${process.env.STRAPI_BASE_URL}/api/protected-areas?${query}&filters[typeCode][$ne]=CS`;
-    parks = await axios.get(allParks, { headers: httpReqHeaders });
+    const allParks = `/api/protected-areas?${query}&filters[typeCode][$ne]=CS`;
+    parks = await cmsAxios.get(allParks);
     if (parks.data.data.length > 0 || !options?.silent) {
       logger.info(`found ${parks.data.data.length} parks, pa's and er's without geo-shapes`)
     }
@@ -49,8 +44,8 @@ exports.populateGeoShapes = async function (options) {
 
   let conservancies;
   try {
-    const allConservancies = `${process.env.STRAPI_BASE_URL}/api/protected-areas?${query}&filters[typeCode][$eq]=CS`;
-    conservancies = await axios.get(allConservancies, { headers: httpReqHeaders });
+    const allConservancies = `/api/protected-areas?${query}&filters[typeCode][$eq]=CS`;
+    conservancies = await cmsAxios.get(allConservancies);
     if (conservancies.data.data.length > 0 || !options?.silent) {
       logger.info(`found ${conservancies.data.data.length} conservancies without geo-shapes`)
     }
@@ -62,10 +57,6 @@ exports.populateGeoShapes = async function (options) {
 };
 
 const processParkList = async function (parks) {
-  const httpReqHeaders = {
-    'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
-    'Content-Type': 'application/json'
-  };
   const logger = getLogger();
   for (const park of parks.data.data) {
     if (park.attributes.geoShape.data === null) {
@@ -97,7 +88,7 @@ const processParkList = async function (parks) {
           };
         }
         try {
-          await axios.post(`${process.env.STRAPI_BASE_URL}/api/geo-shapes`, { data: geoShape }, { headers: httpReqHeaders });
+          await cmsAxios.post("/api/geo-shapes", { data: geoShape });
         } catch (error) {
           logger.error(`populateGeoShapes.js failed saving geoshape: ${error}`);
           continue;

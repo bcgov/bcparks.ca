@@ -1,4 +1,4 @@
-const axios = require('axios');
+const { cmsAxios } = require("../utils/axiosConfig");
 const { getLogger } = require('../utils/logging');
 const qs = require('qs');
 
@@ -16,14 +16,7 @@ const readQueue = async function (actionName, options) {
   }, {
     encodeValuesOnly: true,
   })
-
-  const httpReqHeaders = {
-    'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
-    'Content-Type': 'application/json'
-  };
-
-  const queueQuery = `${process.env.STRAPI_BASE_URL}/api/queued-tasks?${query}`;
-  const queueResponse = await axios.get(queueQuery, { headers: httpReqHeaders });
+  const queueResponse = await cmsAxios.get(`/api/queued-tasks?${query}`);
   const queuedTasks = queueResponse.data.data;
   if (queuedTasks.length > 0) {
     getLogger().info(`Got ${queuedTasks.length} "${actionName}" tasks from the queue`);
@@ -33,14 +26,9 @@ const readQueue = async function (actionName, options) {
 
 const removeFromQueue = async function (queueIds) {
   if (queueIds?.length > 0) {
-    const httpReqHeaders = {
-      'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
-      'Content-Type': 'application/json'
-    };
-
     try {
-      const deleteQuery = `${process.env.STRAPI_BASE_URL}/api/queued-tasks/bulk-delete`;
-      await axios.post(deleteQuery, queueIds, { headers: httpReqHeaders });
+      const deleteQuery = "/api/queued-tasks/bulk-delete";
+      await cmsAxios.post(deleteQuery, queueIds);
     } catch (error) {
       getLogger().error(error);
     }
