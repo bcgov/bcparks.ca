@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { graphql, useStaticQuery } from "gatsby"
+import { graphql, useStaticQuery, Link as GatsbyLink } from "gatsby"
 import { Breadcrumbs, Link } from "@mui/material"
 
 import Header from "../../../components/header"
@@ -148,6 +148,28 @@ const ApprovedListPage = () => {
           Approved management plans
         </h1>
       </div>
+      <div className="static-content-container">
+        <p>
+          The plans listed below guide management decisions in the respective protected areas.
+          Use the filter to look for documents by park name, then click on the document title to download it.
+        </p>
+        <p>
+          We are in the process of adding all approved management plans to this list.
+          If the plan you are looking for is not listed,
+          the park may not have an approved management plan at this time. Check the {" "}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://nrs.objectstore.gov.bc.ca/kuwyyf/BC_Parks_Approved_management_plans_9b52e294b2.pdf"
+          >
+            archive of approved management plans [PDF]
+          </a>. If an approved plan is listed, contact us for an electronic version to be sent to you.
+        </p>
+        <p>
+          To learn more about what management plans are and how they are developed,
+          visit the <GatsbyLink to="/about/management-plans/planning-process">management planning process</GatsbyLink> page.
+        </p>
+      </div>
 
       <div className="static-content-container">
         <div className="page-content-wrapper">
@@ -203,5 +225,9 @@ const ApprovedListPage = () => {
 export default ApprovedListPage
 
 export const Head = () => (
-  <Seo title="Approved management plans" />
+  <Seo
+    title="Approved management plans"
+    description="The plans listed here guide management decisions in the respective protected areas.
+      Use the filter to look for documents by park name, then click on the document title to download it."
+  />
 )
