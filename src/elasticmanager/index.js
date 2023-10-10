@@ -21,7 +21,6 @@ const { populateGeoShapes } = require('./scripts/populateGeoShapes');
    * (manually triggered via OpenShift terminal)
    */
   if (scriptKeySpecified("reindex")) {
-    await populateGeoShapes();
     if (!await parkIndexExists()) {
       logger.warn("The Elasticsearch index is missing. It will be recreated.");
       await createParkIndex();
@@ -37,7 +36,6 @@ const { populateGeoShapes } = require('./scripts/populateGeoShapes');
    * (manually triggered via OpenShift terminal)
    */
   if (scriptKeySpecified("rebuild")) {
-    await populateGeoShapes();
     logger.info("Recreating the park search index and reindexing all protectedAreas")
     await deleteParkIndex();
     await createParkIndex();
@@ -73,7 +71,6 @@ const { populateGeoShapes } = require('./scripts/populateGeoShapes');
       logger.warn("The Elasticsearch index is missing. It will be recreated.");
       await createParkIndex();
     }
-    await populateGeoShapes();
     logger.info("Reindexing protectedAreas based on queued-tasks");
     // process the queue in the opposite order to the cron job to minimize duplication    
     await indexParks({ descending: true });
