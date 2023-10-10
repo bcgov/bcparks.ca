@@ -163,15 +163,15 @@ const ParkCard = ({ r }) => {
 
                 <div className="col park-content">
                   <div className="park-content-top">
-                    <GatsbyLink
-                      to={`/${r.slug}/`}
-                      className="underline-hover"
-                    >
-                      <h2 className="park-heading-text">
+                    <h2 className="park-heading-text">
+                      <GatsbyLink
+                        to={`/${r.slug}/`}
+                        className="underline-hover desktop-park-link"
+                      >
                         {r.protectedAreaName}
                         <ExpandCircleDownIcon className="park-heading-icon" />
-                      </h2>
-                    </GatsbyLink>
+                      </GatsbyLink>
+                    </h2>
                     <p>{locationLabel(r.parkLocations)}</p>
                   </div>
                   <div className="park-content-bottom">

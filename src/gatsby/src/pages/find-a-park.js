@@ -184,6 +184,7 @@ export default function FindAPark({ location, data }) {
   const itemsPerPage = 10
   const [currentPage, setCurrentPage, currentPageInitialized] = useQueryParamString("p", 1)
   const [isLoading, setIsLoading] = useState(true)
+  const [isKeyDownLoadingMore, setIsKeyDownLoadingMore] = useState(false)
 
   const [openFilter, setOpenFilter] = useState(false)
   const [openModal, setOpenModal] = useState(false)
@@ -315,6 +316,14 @@ export default function FindAPark({ location, data }) {
         setSearchResults(prevResults => [...prevResults, ...newResults]);
       }
     })
+  }
+
+  const handleKeyDownLoadMore = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      setIsKeyDownLoadingMore(true);
+      e.preventDefault()
+      handleLoadMore()
+    }
   }
 
   const handleClearFilter = () => {
@@ -506,6 +515,19 @@ export default function FindAPark({ location, data }) {
       searchRef.current.focus();
     }
   }, [])
+
+  useEffect(() => {
+    if (isKeyDownLoadingMore) {
+      const parkLinks = document.getElementsByClassName('desktop-park-link');
+      if (parkLinks.length > itemsPerPage) {
+        let firstNewIndex = Math.floor((parkLinks.length - 1) / itemsPerPage) * itemsPerPage;
+        parkLinks[firstNewIndex].contentEditable = true;
+        parkLinks[firstNewIndex].focus();
+        parkLinks[firstNewIndex].contentEditable = false;
+      }
+      setIsKeyDownLoadingMore(false)
+    }
+  }, [searchResults])
 
   return (
     <>
@@ -827,6 +849,7 @@ export default function FindAPark({ location, data }) {
                               <Button
                                 variant="outlined"
                                 onClick={handleLoadMore}
+                                onKeyDown={e => handleKeyDownLoadMore(e)}
                                 className="bcgov-button bcgov-normal-white load-more-button"
                               >
                                 Load more
