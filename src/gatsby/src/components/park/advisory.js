@@ -47,22 +47,22 @@ export default function Advisory({ advisories }) {
         <img src={alertIcon} alt="" className="mr-1" />
       </div>
       <div>
-      {textMap.length === 0 && (
-              <Link to="#park-advisory-details-container">
-                There are no reported advisories for this park
-              </Link>
-            )}
-            {textMap.length > 0 && (
-              <>
-                {textMap.map((text, index) => (
-                  <div key={index}>
-                    {index < 2 && (
-                      <Link to="#park-advisory-details-container">{text}</Link>
-                    )}
-                  </div>
-                ))}
-              </>
-            )}
+        {textMap.length === 0 && (
+          <Link to="#park-advisory-details-container">
+            No advisories
+          </Link>
+        )}
+        {textMap.length > 0 && (
+          <>
+            {textMap.map((text, index) => (
+              <div key={index}>
+                {index < 2 && (
+                  <Link to="#park-advisory-details-container">{text}</Link>
+                )}
+              </div>
+            ))}
+          </>
+        )}
       </div>
     </>
   );
