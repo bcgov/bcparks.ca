@@ -2,12 +2,12 @@ import React, { useState } from "react"
 import { graphql, useStaticQuery, Link as GatsbyLink  } from "gatsby"
 import { Breadcrumbs, Link } from "@mui/material"
 
-import Header from "../components/header"
-import Footer from "../components/footer"
-import Seo from "../components/seo"
-import ScrollToTop from "../components/scrollToTop"
+import Header from "../../components/header"
+import Footer from "../../components/footer"
+import Seo from "../../components/seo"
+import ScrollToTop from "../../components/scrollToTop"
 
-import "../styles/listPage.scss"
+import "../../styles/listPage.scss"
 
 const ParkLink = ({ park }) => {
 
@@ -80,7 +80,7 @@ const ParksPage = () => {
       Find a Park
     </Link>,
     <div key="3" className="breadcrumb-text">
-      A–Z
+      A–Z park list
     </div>,
   ]
 
@@ -97,7 +97,7 @@ const ParksPage = () => {
       </div>
       <div className="static-content-container">
         <h1 className="header-title">
-          A–Z park listing
+          A–Z park list
         </h1>
       </div>
 
@@ -154,5 +154,5 @@ const ParksPage = () => {
 export default ParksPage
 
 export const Head = () => (
-  <Seo title="A–Z park listing" />
+  <Seo title="A–Z park list" />
 )
