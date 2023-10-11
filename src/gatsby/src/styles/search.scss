@@ -103,47 +103,12 @@ h3.subtitle {
     .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
       border: 1px solid $colorBlue !important;
     }
-    &.has-text--true {
-      .MuiOutlinedInput-notchedOutline {
-        border-color: #000;
-      }
-    }
-    &.has-suggestion--true {
-      .MuiOutlinedInput-root {
-        border-radius: 5px 5px 0  0 !important;
-      }
-    }
   }
   .park-filter-select [class*="-control"] {
     border-radius: 50px !important;
     background-color: $colorWhite !important;
     font-family: $globalFont;
     font-size: $bodyFont !important;
-  }
-  ul.park-search-suggest-list {
-    background-color: $colorWhite;
-    border: 1px solid #000;
-    border-top: none;
-    border-radius: 0 0 5px 5px;
-    list-style: none;
-    margin: 0;
-    padding: 16px;
-    li {
-      margin-top: 16px;
-      &:first-of-type {
-        margin-top: 0;
-      }
-      button {
-        color: $colorText;
-        text-align: left;
-        text-decoration: none;
-        cursor: pointer;
-        &:hover, &:focus-visible {
-          color: $colorText !important;
-          text-decoration: underline;
-        }
-      }
-    }
   }
 }
 
@@ -1344,5 +1309,44 @@ a.desktop-park-link {
   }
   &:focus, &:hover {
     color: $colorBlue;
+  }
+}
+
+// new park name search form
+.park-search-typeahead {
+  input.form-control {
+    height: 50px;
+    color: $colorText;
+    box-shadow: none;
+    border-color: rgba(0, 0, 0, 0.2);
+    &:hover, &:focus, &:active {
+      border-color: rgba(0, 0, 0);
+    }
+  }
+  &.has-text--true {
+    input.form-control {
+      // border-radius: 5px 5px 0 0;
+      border-color: rgba(0, 0, 0);
+    }
+  }
+  .dropdown-menu {
+    inset: -4px auto auto 0px !important;
+    // border-top: none;
+    border-color: rgba(0, 0, 0);
+    border-radius: 0 0 5px 5px;
+    margin: 0;
+    padding: 16px 12px;
+    a.dropdown-item {
+      margin-top: 16px;
+      padding: 0;
+      &:first-of-type {
+        margin-top: 0;
+      }
+      &:hover, &:focus, &:active, &.active {
+        color: $colorText;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+    }
   }
 }

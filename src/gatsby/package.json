@@ -41,6 +41,7 @@
     "qs": "^6.11.1",
     "react": "^18.2.0",
     "react-bootstrap": "^1.6.6",
+    "react-bootstrap-typeahead": "^6.2.3",
     "react-device-detect": "^2.0.1",
     "react-dom": "^18.2.0",
     "react-material-ui-carousel": "^3.4.2",
