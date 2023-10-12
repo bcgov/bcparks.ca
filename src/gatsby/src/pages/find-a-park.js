@@ -12,7 +12,6 @@ import {
 import CancelIcon from "@mui/icons-material/Cancel"
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { useQueryParamString } from 'react-use-query-param-string'
-import { AsyncTypeahead, ClearButton } from 'react-bootstrap-typeahead'
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -22,10 +21,10 @@ import NoSearchResults from "../components/search/noSearchResults"
 import MobileFilters from "../components/search/mobileFilters"
 import DesktopFilters from "../components/search/desktopFilters"
 import ParkLinksModal from "../components/search/parkLinksModal"
+import ParkCard from "../components/search/parkCard"
+import ParkNameSearch from "../components/search/parkNameSearch"
 
 import "../styles/search.scss"
-import ParkCard from "../components/search/parkCard"
-import 'react-bootstrap-typeahead/css/Typeahead.css'
 
 export const query = graphql`
   {
@@ -92,19 +91,6 @@ export const query = graphql`
     }
   }
 `
-
-const HighlightText = ({ park, input }) => {
-  const words = park.split(" ")
-  return (
-    words.map((word, index) => {
-      if (word.toLowerCase() === input) {
-        return <span key={index}> {word} </span>
-      } else {
-        return <b key={index}> {word} </b>
-      }
-    })
-  )
-}
 
 export default function FindAPark({ location, data }) {
   const menuContent = data?.allStrapiMenu?.nodes || []
@@ -352,21 +338,6 @@ export default function FindAPark({ location, data }) {
     }
   }
 
-  const SEARCH_NAME_URI =
-    `${data.site.siteMetadata.apiURL}/api/protected-areas/searchnames`
-  const handleSearchName = async (query) => {
-    setIsSearchNameLoading(true)
-    try {
-      const response = await axios.get(`
-        ${SEARCH_NAME_URI}?queryText=${query}
-      `)
-      setOptions(response.data.data)
-    } catch (error) {
-      console.error('Error fetching search names:', error)
-    } finally {
-      setIsSearchNameLoading(false)
-    }
-  }
   const handleSearchNameChange = (selected) => {
     if (selected.length) {
       setInputText(selected[0]?.protectedAreaName)
@@ -378,10 +349,6 @@ export default function FindAPark({ location, data }) {
       setInputText(text)
     }
   }
-  useEffect(() => {
-    handleSearchName(inputText)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputText])
 
   const setFilters = useCallback(() => {
     const filters = []
@@ -604,44 +571,14 @@ export default function FindAPark({ location, data }) {
                 <div className="search-results-quick-filter d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none mt-3">
                   <div className="row no-gutters">
                     <div className="col-12 col-md-9">
-                      <AsyncTypeahead
-                        id="park-search-typehead"
-                        // eslint-disable-next-line jsx-a11y/no-autofocus
-                        autoFocus
-                        minLength={1}
-                        isLoading={isSearchNameLoading}
-                        labelKey={option => `${option.protectedAreaName}`}
-                        options={options.slice(0, 4)}
-                        onSearch={handleSearchName}
-                        onChange={handleSearchNameChange}
-                        onInputChange={handleSearchNameInputChange}
-                        placeholder="Park name"
-                        className={`has-text--${inputText.length > 0 ? 'true' : 'false'
-                          } park-search-typeahead`}
-                        renderMenuItemChildren={(option) => (
-                          <HighlightText
-                            park={option.protectedAreaName}
-                            input={inputText}
-                          />
-                        )}
-                      >
-                        {({ onClear, selected }) =>
-                          (!!selected.length || inputText?.length > 0) && (
-                            <div className="rbt-aux">
-                              <ClearButton
-                                onClick={() => {
-                                  onClear()
-                                  handleClickClear()
-                                }}
-                                onKeyDown={(e) => {
-                                  onClear()
-                                  handleKeyDownClear(e)
-                                }}
-                              />
-                            </div>
-                          )
-                        }
-                      </AsyncTypeahead>
+                      <ParkNameSearch
+                        optionLimit={4}
+                        handleChange={handleSearchNameChange}
+                        handleInputChange={handleSearchNameInputChange}
+                        handleClick={handleClickClear}
+                        handleKeyDown={handleKeyDownClear}
+                        searchText={inputText}
+                      />
                     </div>
                     <div className="col-md-3 d-none d-md-block pl-3">
                       <Button
@@ -733,44 +670,14 @@ export default function FindAPark({ location, data }) {
                       <div className="search-results-quick-filter">
                         <div className="row no-gutters">
                           <div className="col-12 park-search-text-box-container d-none d-lg-block">
-                            <AsyncTypeahead
-                              id="park-search-typehead"
-                              // eslint-disable-next-line jsx-a11y/no-autofocus
-                              autoFocus
-                              minLength={1}
-                              isLoading={isSearchNameLoading}
-                              labelKey={option => `${option.protectedAreaName}`}
-                              options={options.slice(0, 8)}
-                              onSearch={handleSearchName}
-                              onChange={handleSearchNameChange}
-                              onInputChange={handleSearchNameInputChange}
-                              placeholder="Park name"
-                              className={`has-text--${inputText.length > 0 ? 'true' : 'false'
-                                } park-search-typeahead`}
-                              renderMenuItemChildren={(option) => (
-                                <HighlightText
-                                  park={option.protectedAreaName}
-                                  input={inputText}
-                                />
-                              )}
-                            >
-                              {({ onClear, selected }) =>
-                                (!!selected.length || inputText?.length > 0) && (
-                                  <div className="rbt-aux">
-                                    <ClearButton
-                                      onClick={() => {
-                                        onClear()
-                                        handleClickClear()
-                                      }}
-                                      onKeyDown={(e) => {
-                                        onClear()
-                                        handleKeyDownClear(e)
-                                      }}
-                                    />
-                                  </div>
-                                )
-                              }
-                            </AsyncTypeahead>
+                            <ParkNameSearch
+                              optionLimit={8}
+                              handleChange={handleSearchNameChange}
+                              handleInputChange={handleSearchNameInputChange}
+                              handleClick={handleClickClear}
+                              handleKeyDown={handleKeyDownClear}
+                              searchText={inputText}
+                            />
                           </div>
                           <div className="m15t col-12 park-search-text-box-container d-none d-lg-block">
                             <Button
