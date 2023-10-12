@@ -322,6 +322,7 @@ export default function SiteTemplate({ data }) {
               sm={12}
               md={9}
               lg={9}
+              className="main-container"
             >
               {menuItems[0].visible && (
                 <div ref={parkOverviewRef} className="w-100">

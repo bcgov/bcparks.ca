@@ -4,10 +4,32 @@
 
 .parks-container {
   max-width: 1350px !important;
+  // link style
   a {
     color: $colorBlue;
     &:focus-visible {
       outline: -webkit-focus-ring-color auto 2px;
+    }
+  }
+  .main-container {
+    a:not(.btn) {
+      color: $colorBlueMed;
+      text-decoration: underline;
+      &:hover {
+        color: $colorBlue;
+      }
+      &:active, &:focus, &:focus-visible {
+        outline: -webkit-focus-ring-color auto 2px;
+      }
+      &.park-overview-link {
+        display: inline-block;
+        text-decoration: none;
+        margin-top: 24px;
+        &:hover {
+          color: $colorBlueMed;
+          text-decoration: underline;
+        }
+      }
     }
   }
 }
@@ -331,11 +353,6 @@ h2.section-heading {
   &.expanded {
     max-height: none;
   }
-}
-.park-overview-link {
-  display: inline-block;
-  color: $colorBlue;
-  margin-top: 24px;
 }
 
 // page section
