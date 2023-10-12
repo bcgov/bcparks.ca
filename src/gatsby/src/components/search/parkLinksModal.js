@@ -30,7 +30,7 @@ const ParkLinksModal = ({ data: { openModal, setOpenModal } }) => {
             variant="outlined"
             className="bcgov-button bcgov-normal-white link-button"
           >
-            <Link to="/parks">A–Z</Link>
+            <Link to="/parks">A–Z park list</Link>
           </Button>
           <Button
             variant="outlined"
