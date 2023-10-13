@@ -782,7 +782,7 @@ export default function FindAPark({ location, data }) {
                     <div className="col-12 park-links">
                       <h3 className="subtitle mb-2">More ways to find a park</h3>
                       <div>
-                        <GatsbyLink to="/parks">A–Z park list</GatsbyLink>
+                        <GatsbyLink to="/find-a-park/a-z-list">A–Z park list</GatsbyLink>
                         <br />
                         <a
                           target="_blank"

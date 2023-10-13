@@ -22,7 +22,7 @@ const NoSearchResults = () => {
         <p><b>Or search using the:</b></p>
         <ul>
           <li>
-            <Link to="/parks">
+            <Link to="/find-a-park/a-z-list">
               A–Z park list
             </Link>
           </li>
