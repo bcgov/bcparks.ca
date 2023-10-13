@@ -26,6 +26,7 @@
     "codemirror": "5.65.12",
     "jwks-rsa": "^2.1.5",
     "pg": "^8.11.3",
+    "semver": "^7.5.4",
     "strapi-plugin-redis": "^1.0.1",
     "strapi-plugin-rest-cache": "^4.2.8",
     "strapi-plugin-transformer": "^3.1.2",
