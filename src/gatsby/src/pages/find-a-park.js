@@ -783,7 +783,12 @@ export default function FindAPark({ location, data }) {
                     <>
                       {!searchResults ||
                         (searchResults.length === 0 && (
-                          <NoSearchResults></NoSearchResults>
+                          <NoSearchResults
+                            hasPark={inputText.length > 0}
+                            hasFilter={filterSelections.length > 0}
+                            handleClickClearPark={handleClickClear}
+                            handleClickClearFilter={handleClearFilter}
+                          />
                         ))}
                       {searchResults && searchResults.length > 0 && (
                         <>

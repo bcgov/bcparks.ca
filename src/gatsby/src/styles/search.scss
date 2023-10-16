@@ -1224,31 +1224,45 @@ div[class$="-singleValue"] {
 }
 
 .no-results-container {
-  display: flex;
-  justify-content: center;
-  margin: 32px 0;
-  &--left {
-    display: block;
-    padding-right: 16px;
-    @media (max-width: $mediumBreakpoint) {
-      display: none;
-    }
+  .no-results-header {
+    display: flex;
+    margin-bottom: 24px;
     svg.MuiSvgIcon-root {
       font-size: 3rem;
+      @media (max-width: $smBreakpoint) {
+        display: none;
+      }
+    }
+    &--right {
+      padding-left: 16px;
+      @media (max-width: $smBreakpoint) {
+        padding-left: 0;
+      }
     }
   }
-  &--right {
-    h2 {
-      color: #000;
+  h2 {
+    color: #000;
+    margin-bottom: 0;
+  }
+  p {
+    margin-bottom: 0;
+  }
+  a, button {
+    color: $colorBlueMed;
+    &:hover {
+      color: $colorBlue;
     }
-    p {
-      margin-bottom: 0;
-    }
-    a.map-link {
+  }
+  a {
+    text-decoration: underline;
+    &.map-link {
       svg.MuiSvgIcon-root {
         font-size: 1rem !important;
       }
     }
+  }
+  button {
+    margin-bottom: 0;
   }
 }
 
