@@ -185,9 +185,6 @@ export default function FindAPark({ location, data }) {
   const [openFilter, setOpenFilter] = useState(false)
   const [openModal, setOpenModal] = useState(false)
 
-  const [options, setOptions] = useState([])
-  const [isSearchNameLoading, setIsSearchNameLoading] = useState(false)
-
   const breadcrumbs = [
     <Link key="1" href="/" underline="hover">
       Home
@@ -294,7 +291,6 @@ export default function FindAPark({ location, data }) {
     setInputText("")
     setCurrentPage(1)
     setSearchText("")
-    setOptions([])
   }
   const handleKeyDownClear = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -530,7 +526,7 @@ export default function FindAPark({ location, data }) {
       }
       setIsKeyDownLoadingMore(false)
     }
-  }, [searchResults])
+  }, [isKeyDownLoadingMore, searchResults])
 
   return (
     <>

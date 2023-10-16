@@ -35,7 +35,6 @@ const ParkNameSearch = ({ optionLimit, handleChange, handleInputChange, handleCl
     `${data.site.siteMetadata.apiURL}/api/protected-areas/searchnames`
   const handleSearchName = async (query) => {
     setIsSearchNameLoading(true)
-    console.log("isSearchNameLoading:", isSearchNameLoading)
     try {
       const response = await axios.get(`
       ${SEARCH_NAME_URI}?queryText=${query}
