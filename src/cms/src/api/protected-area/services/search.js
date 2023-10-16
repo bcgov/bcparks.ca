@@ -307,7 +307,7 @@ module.exports = ({ strapi }) => ({
             fuzziness: 1,
             type: "best_fields",
             fields: ["parkNames^2", "protectedAreaName^5"],
-            operator: "or"
+            operator: "and"
           }
         }];
     }
