@@ -236,16 +236,20 @@ const MegaMenu = ({ content, menuMode }) => {
                 </a>
               </li>
               <li className="menu-button menu-header">
-                <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
-                  {item.title}
-                  <ExpandCircleDownIcon className="menu-button__title--icon" />
-                </Link>
+                {item.url.toLowerCase().startsWith('http') ?
+                  <a className="menu-button__title" href={item.url || "/"} role="menuitem">
+                    {item.title}
+                    <ExpandCircleDownIcon className="menu-button__title--icon" />
+                  </a> :
+                  <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
+                    {item.title}
+                    <ExpandCircleDownIcon className="menu-button__title--icon" />
+                  </Link>
+                }
               </li>
               {item.strapi_children.map((page, index) => (
-                <>
-                  <li
-                    key={index}
-                    className={
+                <React.Fragment key={index}>
+                  <li className={
                       "menu-button menu-button--" +
                       (page === selections[page.treeLevel]
                         ? "selected"
@@ -268,9 +272,7 @@ const MegaMenu = ({ content, menuMode }) => {
                       )}
                     </a>
                   </li>
-                  <div
-                    key={index}
-                    className={
+                  <div className={
                       "menu-children menu-children-exist--" +
                       page.hasChildren +
                       " menu-level-" +
@@ -283,7 +285,7 @@ const MegaMenu = ({ content, menuMode }) => {
                   >
                     {generateMenus(page, menuMode)}
                   </div>
-                </>
+                </React.Fragment>
               ))}
             </ul>
           </nav>
@@ -292,9 +294,14 @@ const MegaMenu = ({ content, menuMode }) => {
           <nav>
             <ul role="presentation">
               <li className="menu-button menu-header">
-                <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
-                  {item.title}
-                </Link>
+                {item.url.toLowerCase().startsWith('http') ?
+                  <a className="menu-button__title" href={item.url || "/"} role="menuitem">
+                    {item.title}
+                  </a> :
+                  <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
+                    {item.title}
+                  </Link>
+                }
               </li>
             </ul>
           </nav>
