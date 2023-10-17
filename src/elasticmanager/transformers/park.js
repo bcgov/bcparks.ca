@@ -49,7 +49,7 @@ exports.createElasticPark = async function (park, photos) {
   }
 
   // store protectedAreaName as lowercase for sorting
-  park.nameLowerCase = park.protectedAreaName.toLowerCase();
+  park.nameLowerCase = park.protectedAreaName.toLowerCase().replace(/\./g, '');
 
   // convert parkFacilities
   park.hasCamping = false;
