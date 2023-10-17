@@ -58,6 +58,7 @@ const ParkNameSearch = ({ optionLimit, handleChange, handleInputChange, handleCl
       // eslint-disable-next-line jsx-a11y/no-autofocus
       autoFocus
       minLength={1}
+      filterBy={() => true}
       isLoading={isSearchNameLoading}
       labelKey={option => `${option.protectedAreaName}`}
       options={options.slice(0, optionLimit)}
