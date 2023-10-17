@@ -368,7 +368,7 @@ export default function ParkDates({ data }) {
                 </h4>
                 {parkDates && (
                   <h4 className="my-3">
-                    The park {marineProtectedArea !== 'Y' && "gate"} is open {parkDates}
+                    The {parkType.toLowerCase()} {marineProtectedArea !== 'Y' && "gate"} is open {parkDates}
                   </h4>
                 )}
                 {!parkDates && (

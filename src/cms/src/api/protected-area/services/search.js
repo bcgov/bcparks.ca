@@ -65,7 +65,7 @@ module.exports = ({ strapi }) => ({
             query: searchText,
             fuzziness: 1,
             type: "best_fields",
-            fields: ["parkNames^2", "protectedAreaName^2"],
+            fields: ["parkNames^2", "protectedAreaName^2", "nameLowerCase"],
             operator: "and"
           }
         }
@@ -306,7 +306,7 @@ module.exports = ({ strapi }) => ({
             query: searchText,
             fuzziness: 1,
             type: "best_fields",
-            fields: ["parkNames^2", "protectedAreaName^5"],
+            fields: ["parkNames^2", "protectedAreaName^5", "nameLowerCase"],
             operator: "and"
           }
         }];

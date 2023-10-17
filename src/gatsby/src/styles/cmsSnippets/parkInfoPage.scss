@@ -38,11 +38,14 @@
 .MuiTypography-root.expand-link.expand-icon {
   position: relative;
   display: inline-block;
+  color: $colorBlueMed !important;
+  text-decoration: none;
   cursor: pointer;
   margin-bottom: 16px;
   &:hover,
   &:focus {
     color: $colorBlue;
+    text-decoration: underline;
   }
   i {
     position: absolute;
