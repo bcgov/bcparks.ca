@@ -62,4 +62,4 @@ This step should be completed by someone familiar with OpenShift.  It involves r
 
 5. Run `npm run rebuild` to create the elasticsearch index
 
-6. The cron task will run every 2 minutes on Openshift environments. On your local, you can periodically run `node index.js once` to process the indexing jobs in your Strapi Queued-tasks collection. `node index.js reindex`, `node index.js rebuild` and `node index.js deleteindex` scripts are also available on your local and on the terminal of the elasticmanager container (running on OpenShift).
+6. The cron task will run every minute on Openshift environments. On your local dev environment you can periodically run `node manage.js once` to process the indexing jobs in your Strapi Queued-tasks collection. For a full list of index management commands available, run `node manage.js help`. These management commands are also intended to be run from the terminal of the Elasticmanager container on Openshift.
