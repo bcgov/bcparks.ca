@@ -795,8 +795,8 @@ export default function FindAPark({ location, data }) {
                           {searchResults.map((r, index) => (
                             <ParkCard r={r} key={index} />
                           ))}
-                          {totalResults > searchResults.length && (
-                            <div className="load-more-button-container mt-5">
+                          <div className="load-more-button-container mt-5">
+                            {totalResults > searchResults.length && (
                               <Button
                                 variant="outlined"
                                 onClick={handleLoadMore}
@@ -805,7 +805,11 @@ export default function FindAPark({ location, data }) {
                               >
                                 Load more
                               </Button>
-                            </div>)}
+                            )}
+                            {totalResults === searchResults.length && (
+                              <p className="mb-0">End results.</p>
+                            )}
+                          </div>
                         </>
                       )}
                     </>
