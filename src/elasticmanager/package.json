@@ -3,14 +3,14 @@
   "type": "commonjs",
   "version": "1.0.0",
   "description": "Cron-automated Node.js scripts for indexing elasticsearch",
-  "main": "index.js",
+  "main": "manage.js",
   "scripts": {
     "start": "node server.js",
-    "once": "node index.js once",
-    "deleteindex": "node index.js deleteindex",
-    "reindex": "node index.js reindex",
-    "rebuild": "node index.js rebuild",
-    "liveness": "node index.js liveness"
+    "once": "node manage.js once",
+    "deleteindex": "node manage.js deleteindex",
+    "reindex": "node manage.js reindex",
+    "rebuild": "node manage.js rebuild",
+    "liveness": "node manage.js liveness"
   },
   "author": "mike@oxd.com",
   "license": "Apache-2.0",

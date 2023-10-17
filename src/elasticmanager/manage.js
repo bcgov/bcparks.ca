@@ -86,7 +86,7 @@ const { populateGeoShapes } = require('./scripts/populateGeoShapes');
 
   if (noCommandLineArgs() || scriptKeySpecified("help")) {
     console.log("\nUsage: \n")
-    console.log("node index.js [command]\n")
+    console.log("node manage.js [command]\n")
     console.log("Command options:\n")
     console.log("help        : show this screen")
     console.log("reindex     : re-index all parks")
