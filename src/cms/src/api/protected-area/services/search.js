@@ -63,9 +63,9 @@ module.exports = ({ strapi }) => ({
         {
           multi_match: {
             query: searchText,
-            fuzziness: "AUTO",
+            fuzziness: 1,
             type: "best_fields",
-            fields: ["parkNames^2", "protectedAreaName^2"],
+            fields: ["parkNames^2", "protectedAreaName^2", "nameLowerCase"],
             operator: "and"
           }
         }
@@ -304,10 +304,10 @@ module.exports = ({ strapi }) => ({
         {
           multi_match: {
             query: searchText,
-            fuzziness: "AUTO",
+            fuzziness: 1,
             type: "best_fields",
-            fields: ["parkNames^2", "protectedAreaName^5"],
-            operator: "or"
+            fields: ["parkNames^2", "protectedAreaName^5", "nameLowerCase"],
+            operator: "and"
           }
         }];
     }
