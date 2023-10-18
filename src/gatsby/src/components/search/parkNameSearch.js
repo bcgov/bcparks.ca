@@ -28,9 +28,11 @@ const ParkNameSearch = ({ optionLimit, handleChange, handleInputChange, handleCl
     }
   `)
 
+  // useState and constants
   const [options, setOptions] = useState([])
   const [isSearchNameLoading, setIsSearchNameLoading] = useState(false)
 
+  // event handlers
   const SEARCH_NAME_URI =
     `${data.site.siteMetadata.apiURL}/api/protected-areas/searchnames`
   const handleSearchName = async (query) => {
@@ -47,6 +49,7 @@ const ParkNameSearch = ({ optionLimit, handleChange, handleInputChange, handleCl
     }
   }
 
+  // useEffects
   useEffect(() => {
     handleSearchName(searchText)
     // eslint-disable-next-line react-hooks/exhaustive-deps
