@@ -25,8 +25,7 @@ module.exports = createCoreController(
         delete version.updatedBy;
       };
 
-      return sanitize.contentAPI.output(entities.results);
+      return this.sanitizeOutput(entities.results, ctx);
     }
-  }
-  )
+  })
 );
