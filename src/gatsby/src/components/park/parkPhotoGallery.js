@@ -33,16 +33,18 @@ export default function ParkPhotoGallery({ photos }) {
   const [open, setOpen] = useState(false)
   const photoSlides = []
   const parkPhotos = photos.map((photo, index) => {
+    const captionText = photo.caption.data?.caption || "";
     return {
       index: index,
-      caption: photo.caption || "",
+      caption: captionText,
+      altText: captionText.replace(/(<([^>]+)>)/ig, ''), // strip html tags
       imageUrl: photo.imageUrl,
     }
   })
   parkPhotos.map((photo) =>
     photoSlides.push({
       src: photo.imageUrl,
-      description: photo.caption,
+      description: React.createElement("div", { dangerouslySetInnerHTML: { __html: photo.caption } })
     })
   )
 
@@ -88,14 +90,14 @@ export default function ParkPhotoGallery({ photos }) {
                       <ParkPhoto
                         type="small"
                         src={parkPhotos[0].imageUrl}
-                        alt={parkPhotos[0].caption}
+                        alt={parkPhotos[0].altText}
                       />
                     </Grid>
                     <Grid item xs={12} md={6} className="show-photo-button">
                       <ParkPhoto
                         type="blur"
                         src={parkPhotos[0].imageUrl}
-                        alt={parkPhotos[0].caption}
+                        alt={parkPhotos[0].altText}
                       />
                       <div className="show-photos">
                         <ShowPhotos
@@ -117,14 +119,14 @@ export default function ParkPhotoGallery({ photos }) {
                         <ParkPhoto
                           type="big"
                           src={parkPhotos[0].imageUrl}
-                          alt={parkPhotos[0].caption}
+                          alt={parkPhotos[0].altText}
                         />
                       </Grid>
                       <Grid item xs={12} md={6} className="show-photo-button">
                         <ParkPhoto
                           type="big"
                           src={parkPhotos[1].imageUrl}
-                          alt={parkPhotos[1].caption}
+                          alt={parkPhotos[1].altText}
                         />
 
                         <div className="show-photos">
@@ -146,7 +148,7 @@ export default function ParkPhotoGallery({ photos }) {
                               <ParkPhoto
                                 type="small"
                                 src={photo.imageUrl}
-                                alt={photo.caption}
+                                alt={photo.altText}
                                 key={index}
                               />
                             </Grid>
@@ -165,8 +167,8 @@ export default function ParkPhotoGallery({ photos }) {
                           <ParkPhoto
                             type="big"
                             src={photo.imageUrl}
-                            alt={photo.caption}
-                            key={index}                            
+                            alt={photo.altText}
+                            key={index}
                           />
                         ))}
                     </Grid>
@@ -187,7 +189,7 @@ export default function ParkPhotoGallery({ photos }) {
                               <ParkPhoto
                                 type="small"
                                 src={photo.imageUrl}
-                                alt={photo.caption}
+                                alt={photo.altText}
                                 key={index}
                               />
                             </Grid>
@@ -204,7 +206,7 @@ export default function ParkPhotoGallery({ photos }) {
                               <ParkPhoto
                                 type="small"
                                 src={photo.imageUrl}
-                                alt={photo.caption}
+                                alt={photo.altText}
                                 key={index}
                               />
                             </Grid>
@@ -248,7 +250,7 @@ export default function ParkPhotoGallery({ photos }) {
                   <ParkPhoto
                     type="big"
                     src={parkPhotos[0].imageUrl}
-                    alt={parkPhotos[0].caption}
+                    alt={parkPhotos[0].altText}
                   />
                   <div className="show-photos">
                     <ShowPhotos
@@ -269,7 +271,7 @@ export default function ParkPhotoGallery({ photos }) {
                         <ParkPhoto
                           type="small"
                           src={photo.imageUrl}
-                          alt={photo.caption}
+                          alt={photo.altText}
                           key={index}
                         />
                       </Grid>

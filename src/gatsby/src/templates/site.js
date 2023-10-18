@@ -522,7 +522,11 @@ export const query = graphql`
     ) {
       nodes {
         imageUrl
-        caption
+        caption {
+          data {
+            caption
+          }
+        }
       }
     }
     regularPhotos: allStrapiParkPhoto(
@@ -539,7 +543,11 @@ export const query = graphql`
     ) {
       nodes {
         imageUrl
-        caption
+        caption {
+          data {
+            caption
+          }
+        }
       }
     }
     allStrapiMenu(

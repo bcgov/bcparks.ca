@@ -23,7 +23,11 @@
       "type": "string"
     },
     "caption": {
-      "type": "string",
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor",
       "required": true
     },
     "subject": {
