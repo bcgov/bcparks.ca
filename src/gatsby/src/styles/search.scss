@@ -1326,8 +1326,9 @@ a.desktop-park-link {
   }
 }
 
-// new park name search form
-.park-search-typeahead {
+// new park/city name search form
+.park-search-typeahead,
+.city-search-typeahead {
   width: 100%;
   input.form-control {
     height: 50px;

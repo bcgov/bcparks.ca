@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { navigate } from "gatsby"
 import { Button } from "@mui/material"
 import ParkNameSearch from "./parkNameSearch"
+import CityNameSearch from "./cityNameSearch"
 import "../../styles/search.scss"
 
 const MainSearch = () => {
@@ -48,6 +49,10 @@ const MainSearch = () => {
           handleClick={handleClickClear}
           handleKeyDown={handleKeyDownClear}
           searchText={searchText}
+        />
+        or
+        <CityNameSearch
+          optionLimit={8}
         />
         <Button
           variant="contained"
