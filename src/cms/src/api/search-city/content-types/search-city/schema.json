@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "search_cities",
+  "info": {
+    "singularName": "search-city",
+    "pluralName": "search-cities",
+    "displayName": "Search-city"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "cityName": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "latitude": {
+      "type": "float"
+    },
+    "longitude": {
+      "type": "float"
+    },
+    "rank": {
+      "type": "integer",
+      "max": 5,
+      "min": 1,
+      "required": true,
+      "default": 5
+    }
+  }
+}

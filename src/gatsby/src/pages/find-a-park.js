@@ -67,6 +67,18 @@ export const query = graphql`
         isCamping
       }
     }
+    allStrapiSearchCity(
+      sort: {rank: ASC},
+      filter: {rank: {lte: 4}}
+    ) {
+      nodes {
+        strapi_id
+        cityName
+        latitude
+        longitude
+        rank
+      }
+    }
     allStrapiMenu(
       sort: {order: ASC},
       filter: {show: {eq: true}}
