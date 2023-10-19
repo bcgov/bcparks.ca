@@ -236,3 +236,61 @@ export function getStandardMessages(cmsData, setCmsData) {
         return cmsData.standardMessages;
     }
 }
+
+export function getParkRelations(parkId) {
+    const query = qs.stringify(
+        {
+            publicationState: "preview",
+            fields: ["id"],
+            filters: {
+                id: parkId
+            },
+            populate: {
+                managementAreas: {
+                    populate: ["region", "section"]
+                },
+                fireZones: {
+                    populate: ["fireCentre"]
+                },
+                sites: {
+                    fields: ["id"]
+                }
+            }
+        },
+        {
+            encodeValuesOnly: true
+        }
+    )
+    const result = cmsAxios
+        .get(`/protected-areas?${query}`)
+        .then((res) => {
+            if (res.data.data.length) {
+                const parkInfo = res.data.data[0].attributes;
+                const managementArea = parkInfo.managementAreas?.data[0];
+                const region = managementArea?.attributes.region?.data;
+                const section = managementArea?.attributes.section?.data;
+                const fireZone = parkInfo.fireZones?.data[0];
+                const fireCentre = fireZone?.attributes.fireCentre?.data;
+                const sites = parkInfo.sites;
+                return {
+                    managementArea: managementArea,
+                    region: region,
+                    section: section,
+                    fireZone: fireZone,
+                    fireCentre: fireCentre,
+                    sites: sites
+                };
+            } else {
+                return {
+                    managementArea: null,
+                    region: null,
+                    section: null,
+                    fireZone: null,
+                    fireCentre: null,
+                    sites: null
+                };
+            }
+        })
+        .catch((err) => { console.log(err) })
+    return result;
+}

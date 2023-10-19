@@ -57,51 +57,6 @@ export function addProtectedAreas(
   return protectedAreaList;
 }
 
-export function removeProtectedAreasFromArea(
-  area,
-  field,
-  updatedProtectedAreas,
-  areaList,
-  sites,
-  updatedSites
-) {
-  let parks = updatedProtectedAreas;
-  area[field].forEach((f) => {
-    const relatedArea = areaList.find((a) => {
-      return a.obj.id === f.id;
-    });
-    let response = removeProtectedAreas(
-      relatedArea.obj.protectedAreas,
-      parks,
-      sites,
-      updatedSites
-    );
-    parks = response.updatedProtectedAreas;
-    updatedSites = response.updatedSites;
-  });
-  return { updatedProtectedAreas: parks, updatedSites: updatedSites };
-}
-
-export function removeProtectedAreas(
-  protectedAreas,
-  parks,
-  sites,
-  updatedSites
-) {
-  const parkIds = protectedAreas.map((p) => p.id);
-  parks = parks.filter((p) => !parkIds.includes(p.value));
-  if (sites && sites.length > 0) {
-    let siteIds = [];
-    sites.forEach((site) => {
-      if (parkIds.includes(site.obj.attributes.protectedArea.data.id)) {
-        siteIds.push(site.value);
-      }
-    });
-    updatedSites = updatedSites.filter((s) => !siteIds.includes(s.value));
-  }
-  return { updatedProtectedAreas: parks, updatedSites: updatedSites };
-}
-
 export function parkNameCompare(a, b) {
   if (a.name < b.name) {
     return -1;

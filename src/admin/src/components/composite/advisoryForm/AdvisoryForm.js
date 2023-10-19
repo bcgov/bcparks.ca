@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { cmsAxios } from "../../../axios_config";
 import PropTypes from "prop-types";
 import "./AdvisoryForm.css";
 import { Button } from "../../shared/button/Button";
@@ -27,7 +26,6 @@ import {
   validateOptionalNumber,
   validateRequiredText,
   validateRequiredSelect,
-  validateRequiredLocation,
   validateRequiredDate,
   validateOptionalDate,
   validAdvisoryData,
@@ -36,6 +34,7 @@ import {
 import PrivateElement from "../../../auth/PrivateElement";
 import AdvisoryHistory from "../advisoryHistory/AdvisoryHistory";
 import LightTooltip from "../../shared/tooltip/LightTooltip";
+import AdvisoryAreaPicker from "../advisoryAreaPicker/AdvisoryAreaPicker";
 
 export default function AdvisoryForm({
   mode,
@@ -247,166 +246,6 @@ export default function AdvisoryForm({
     { label: "Months", value: "M" },
   ];
 
-  // START line of parks autofill functions
-  const qs = require('qs')
-  const selectedParks = []
-  const selectedManagementAreaNumbers = []
-  const selectedFireZoneNumbers = []
-  const uniqueParksSet = new Set()
-
-  // get parks from managementArea endpoint
-  const getParks = async (number) => {
-    const query = qs.stringify(
-      {
-        filters: {
-          managementAreaNumber: {
-            $eq: number
-          }
-        },
-        populate: ['protectedAreas']
-      },
-      {
-        encodeValuesOnly: true
-      }
-    )
-    const res = await cmsAxios
-      .get(`/management-areas?${query}`)
-      .catch(() => {console.log("error")})
-    const managementArea = res.data.data[0]
-    const parks = managementArea?.protectedAreas
-    parks.map(park => uniqueParksSet.add(park))
-  }
-
-  // get parks from fireZone endpoint
-  const getParksFromFireZone = async(number) => {
-    const query = qs.stringify(
-      {
-        filters: {
-          fireZoneNumber: {
-            $eq: number
-          }
-        },
-        populate: ['protectedAreas']
-      },
-      {
-        encodeValuesOnly: true
-      }
-    )
-    const res = await cmsAxios
-      .get(`/fire-zones?${query}`)
-      .catch(() => {console.log("error")})
-    const fireZone = res.data.data[0]
-    const parks = fireZone?.protectedAreas
-    parks.map(park => uniqueParksSet.add(park))
-  }
-
-  // unselect all jurisdictions (region/section/managementArea/fireCentre/fireZone) for a removed park
-  const removedParkJurisdictions = async(parkOrcs) => {
-    const query = qs.stringify(
-      {
-        populate: {
-          'managementAreas': {
-            populate: ['region', 'section']
-          },
-          'fireZones': {
-            populate: ['fireCentre']
-          }
-        }
-      },
-      {
-        encodeValuesOnly: true
-      }
-    )
-    const res = await cmsAxios
-      .get(`/protected-areas/${parkOrcs}?${query}`)
-      .catch(() => {console.log("error")})
-    const park = res.data
-    const managementArea = park.managementAreas[0]
-    const region = managementArea.region
-    const section = managementArea.section
-    const fireZone = park.fireZones[0]
-    const fireCentre = fireZone.fireCentre
-
-    if (managementArea) {
-      const newManagementAreas = selectedManagementAreas.filter(
-        selectedManagementArea => selectedManagementArea.obj.managementAreaNumber !== managementArea.managementAreaNumber
-      )
-      setSelectedManagementAreas(newManagementAreas)
-    }
-    if (region) {
-      const newRegions = selectedRegions.filter(
-        selectedRegion => selectedRegion.obj.regionNumber !== region.regionNumber
-      )
-      setSelectedRegions(newRegions)
-    }
-    if (section) {
-      const newSections = selectedSections.filter(
-        selectedSection => selectedSection.obj.sectionNumber !== section.sectionNumber
-      )
-      setSelectedSections(newSections)
-    }
-    if (fireZone) {
-      const newFireZones = selectedFireZones.filter(
-        selectedFireZone => selectedFireZone.obj.fireZoneNumber !== fireZone.fireZoneNumber
-      )
-      setSelectedFireZones(newFireZones)
-    }
-    if (fireCentre) {
-      const newFireCentres = selectedFireCentres.filter(
-        selectedFireCentre => selectedFireCentre.obj.fireCentreNumber !== fireCentre.fireCentreNumber
-      )
-      setSelectedFireCentres(newFireCentres)
-    }
-  }
-
-  // fetch parks based on selected areas (region/section/managementArea/fireCentre/fireZone)
-  const fetchParks = async (e, areaType) => {
-    if (areaType === "region" || areaType === "section") {
-      e?.forEach(area => {
-        const managementAreasArray = area.obj.managementAreas
-        managementAreasArray.map(managementArea =>
-          selectedManagementAreaNumbers.push(managementArea.managementAreaNumber)
-        )
-      })
-      await Promise.all(selectedManagementAreaNumbers.map(number => getParks(number)))
-    }
-    if (areaType === "fireCentre") {
-      e?.forEach(area => {
-        const fireZonesArray = area.obj.fireZones
-        fireZonesArray.map(fireZone =>
-          selectedFireZoneNumbers.push(fireZone.fireZoneNumber)
-        )
-      })
-      await Promise.all(selectedFireZoneNumbers.map(number => getParksFromFireZone(number)))
-    }
-    if (areaType === "managementArea" || areaType === "fireZone") {
-      e?.forEach(area => {
-        const parks = area.obj.protectedAreas
-        parks.map(park => uniqueParksSet.add(park))
-      })
-    }
-    // add formatted park objects to selectedProtectedAreas
-    const uniqueParksSetArray = Array.from(uniqueParksSet)
-    uniqueParksSetArray.map(park =>
-      selectedParks.push({
-        label: park.protectedAreaName,
-        value: park.id,
-        type: "protectedArea",
-        orcs: park.orcs
-      })
-    )
-    setSelectedProtectedAreas(selectedParks)
-  }
-
-  // update areas (region/section/managementArea/fireCentre/fireZone) if park is removed
-  const deletePark = async (e) => {
-    const deletedPark = selectedProtectedAreas.filter(park => !e?.includes(park))
-    const deletedParkOrcs = deletedPark[0]?.orcs
-    await removedParkJurisdictions(deletedParkOrcs)
-  }
-
-  // END line of parks autofill functions
-
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <form className="mt-5">
@@ -477,9 +316,8 @@ export default function AdvisoryForm({
             <div className="col-lg-7 col-md-8 col-sm-12">
               <FormControl
                 variant="outlined"
-                className={`bcgov-select-form ${
-                  eventTypeError !== "" ? "bcgov-select-error" : ""
-                }`}
+                className={`bcgov-select-form ${eventTypeError !== "" ? "bcgov-select-error" : ""
+                  }`}
                 error
               >
                 <Select
@@ -615,237 +453,33 @@ export default function AdvisoryForm({
               />
             </div>
           </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12  bcgov-required ad-label">
-              Affected area:
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <span>Select at least one</span>
-              <LightTooltip
-                arrow
-                title="Please select the park that your advisory is affecting.
-                There is no need to select additional sites, regions, or sections if your advisory is just for a specific park.
-                Selecting a region (or any other category) will apply your advisory to every park page within that region or other category.              
-                For example, an advisory for Goldstream Park would only need Goldstream selected from the list of parks,
-                you would not need to include West Coast in the regions as this would trigger an alert for all parks in the West Coast."
-              >
-                <HelpIcon className="helpIcon" />
-              </LightTooltip>
-              {protectedAreaError &&
-                <FormControl
-                  variant="outlined"
-                  className={`bcgov-select-form ${
-                    protectedAreaError !== "" ? "bcgov-select-error" : ""
-                  }`}
-                  error
-                >
-                  <FormHelperText>{protectedAreaError}</FormHelperText>
-                </FormControl>
-                }
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Region(s)
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${
-                  protectedAreaError !== "" ? "bcgov-select-error" : ""
-                }`}
-                error
-              >
-                <Select
-                  options={regions}
-                  value={selectedRegions}
-                  onChange={(e) => {
-                    setSelectedRegions(e);
-                    fetchParks(e, "region")
-                  }}
-                  placeholder="Select a Region"
-                  isMulti="true"
-                  className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredLocation(advisoryData.protectedArea);
-                  }}
-                />
-              </FormControl>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Section(s)
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${
-                  protectedAreaError !== "" ? "bcgov-select-error" : ""
-                }`}
-                error
-              >
-                <Select
-                  options={sections}
-                  value={selectedSections}
-                  onChange={(e) => {
-                    setSelectedSections(e);
-                    fetchParks(e, "section")
-                  }}
-                  placeholder="Select a Section"
-                  isMulti="true"
-                  className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredLocation(advisoryData.protectedArea);
-                  }}
-                />
-              </FormControl>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Management Area(s)
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${
-                  protectedAreaError !== "" ? "bcgov-select-error" : ""
-                }`}
-                error
-              >
-                <Select
-                  options={managementAreas}
-                  value={selectedManagementAreas}
-                  onChange={(e) => {
-                    setSelectedManagementAreas(e);
-                    fetchParks(e, "managementArea")
-                  }}
-                  placeholder="Select a Management Area"
-                  isMulti="true"
-                  className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredLocation(advisoryData.protectedArea);
-                  }}
-                />
-              </FormControl>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Fire Centre(s)
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${
-                  protectedAreaError !== "" ? "bcgov-select-error" : ""
-                }`}
-                error
-              >
-                <Select
-                  options={fireCentres}
-                  value={selectedFireCentres}
-                  onChange={(e) => {
-                    setSelectedFireCentres(e);
-                    fetchParks(e, "fireCentre")
-                  }}
-                  placeholder="Select a Fire Centre"
-                  isMulti="true"
-                  className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredLocation(advisoryData.protectedArea);
-                  }}
-                />
-              </FormControl>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Fire Zone(s)
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${
-                  protectedAreaError !== "" ? "bcgov-select-error" : ""
-                }`}
-                error
-              >
-                <Select
-                  options={fireZones}
-                  value={selectedFireZones}
-                  onChange={(e) => {
-                    setSelectedFireZones(e);
-                    fetchParks(e, "fireZone")
-                  }}
-                  placeholder="Select a Fire Zone"
-                  isMulti="true"
-                  className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredLocation(advisoryData.protectedArea);
-                  }}
-                />
-              </FormControl>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Park(s)
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${
-                  protectedAreaError !== "" ? "bcgov-select-error" : ""
-                }`}
-                error
-              >
-                <Select
-                  options={protectedAreas}
-                  value={selectedProtectedAreas}
-                  onChange={(e) => {
-                    setSelectedProtectedAreas(e);
-                    deletePark(e);
-                  }}
-                  placeholder="Select a Park"
-                  isMulti="true"
-                  className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredLocation(advisoryData.protectedArea);
-                  }}
-                />
-              </FormControl>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Site(s)
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${
-                  protectedAreaError !== "" ? "bcgov-select-error" : ""
-                }`}
-                error
-              >
-                <Select
-                  options={sites}
-                  value={selectedSites}
-                  onChange={(e) => {
-                    setSelectedSites(e);
-                  }}
-                  placeholder="Select a Site"
-                  isMulti="true"
-                  className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredLocation(advisoryData.protectedArea);
-                  }}
-                />
-              </FormControl>
-            </div>
-          </div>
+          <AdvisoryAreaPicker
+            data={{
+              protectedAreas,
+              selectedProtectedAreas,
+              setSelectedProtectedAreas,
+              regions,
+              selectedRegions,
+              setSelectedRegions,
+              sections,
+              selectedSections,
+              setSelectedSections,
+              managementAreas,
+              selectedManagementAreas,
+              setSelectedManagementAreas,
+              sites,
+              selectedSites,
+              setSelectedSites,
+              fireCentres,
+              selectedFireCentres,
+              setSelectedFireCentres,
+              fireZones,
+              selectedFireZones,
+              setSelectedFireZones,
+              advisoryData,
+              protectedAreaError
+            }}
+          />
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-6 col-6 ad-label">
               Reservations Affected
@@ -932,11 +566,10 @@ export default function AdvisoryForm({
                               value={advisoryDate}
                               onChange={handleAdvisoryDateChange}
                               format="MMMM DD, yyyy hh:mm A"
-                              className={`bcgov-datepicker-wrapper ${
-                                advisoryDateError !== ""
+                              className={`bcgov-datepicker-wrapper ${advisoryDateError !== ""
                                   ? "bcgov-datepicker-wrapper-error"
                                   : ""
-                              }`}
+                                }`}
                               error={advisoryDateError !== ""}
                               helperText={advisoryDateError}
                               onBlur={() => {
@@ -965,11 +598,10 @@ export default function AdvisoryForm({
                               value={startDate}
                               onChange={setStartDate}
                               format="MMMM DD, yyyy hh:mm A"
-                              className={`bcgov-datepicker-wrapper ${
-                                startDateError !== ""
+                              className={`bcgov-datepicker-wrapper ${startDateError !== ""
                                   ? "bcgov-datepicker-wrapper-error"
                                   : ""
-                              }`}
+                                }`}
                               error={startDateError !== ""}
                               helperText={startDateError}
                               onBlur={() => {
@@ -998,11 +630,10 @@ export default function AdvisoryForm({
                               value={endDate}
                               onChange={setEndDate}
                               format="MMMM DD, yyyy hh:mm A"
-                              className={`bcgov-datepicker-wrapper ${
-                                endDateError !== ""
+                              className={`bcgov-datepicker-wrapper ${endDateError !== ""
                                   ? "bcgov-datepicker-wrapper-error"
                                   : ""
-                              }`}
+                                }`}
                               error={endDateError !== ""}
                               helperText={endDateError}
                               onBlur={() => {
@@ -1034,11 +665,10 @@ export default function AdvisoryForm({
                                 value={updatedDate}
                                 onChange={setUpdatedDate}
                                 format="MMMM DD, yyyy hh:mm A"
-                                className={`bcgov-datepicker-wrapper ${
-                                  updatedDateError !== ""
+                                className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
                                     ? "bcgov-datepicker-wrapper-error"
                                     : ""
-                                }`}
+                                  }`}
                                 error={updatedDateError !== ""}
                                 helperText={updatedDateError}
                                 onBlur={() => {
@@ -1070,11 +700,10 @@ export default function AdvisoryForm({
                               value={expiryDate}
                               onChange={setExpiryDate}
                               format="MMMM DD, yyyy hh:mm A"
-                              className={`bcgov-datepicker-wrapper  mr40 ${
-                                expiryDateError !== ""
+                              className={`bcgov-datepicker-wrapper  mr40 ${expiryDateError !== ""
                                   ? "bcgov-datepicker-wrapper-error"
                                   : ""
-                              }`}
+                                }`}
                               error={expiryDateError !== ""}
                               helperText={expiryDateError}
                               onBlur={() => {
@@ -1255,9 +884,8 @@ export default function AdvisoryForm({
                 <div className="col-lg-7 col-md-8 col-sm-12">
                   <FormControl
                     variant="outlined"
-                    className={`bcgov-select-form ${
-                      advisoryStatusError !== "" ? "bcgov-select-error" : ""
-                    }`}
+                    className={`bcgov-select-form ${advisoryStatusError !== "" ? "bcgov-select-error" : ""
+                      }`}
                     error
                   >
                     <Select

@@ -37,7 +37,7 @@ export function validateRequiredMultiSelect(field) {
   return true;
 }
 
-export function validateRequiredLocation(field) {
+export function validateRequiredAffectedArea(field) {
   field.setError("");
   let valueExists = false;
   if (!isEmpty(field.value)) {
@@ -94,7 +94,7 @@ export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) 
   const validHeadline = validateRequiredText(advisoryData.headline);
   const validEventType = validateRequiredSelect(advisoryData.eventType);
   const validUrgency = validateRequiredSelect(advisoryData.urgency);
-  const validLocations = validateRequiredLocation(advisoryData.protectedArea);
+  const validAffectedArea = validateRequiredAffectedArea(advisoryData.protectedArea);
   const validAdvisoryDate = validateRequiredDate(advisoryData.advisoryDate);
   const validStartDate = validateOptionalDate(advisoryData.startDate);
   const validEndDate = validateOptionalDate(advisoryData.endDate);
@@ -108,7 +108,7 @@ export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) 
     validHeadline &&
     validEventType &&
     validUrgency &&
-    validLocations &&
+    validAffectedArea &&
     validAdvisoryDate &&
     validStartDate &&
     validEndDate &&

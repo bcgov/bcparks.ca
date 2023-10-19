@@ -9,10 +9,8 @@ import { useKeycloak } from "@react-keycloak/web";
 import {
   calculateAfterHours,
   getApproverAdvisoryFields,
-  getLocationSelection,
   getSubmitterAdvisoryFields,
   calculateIsStatHoliday,
-  removeLocations,
 } from "../../../utils/AdvisoryUtil";
 import AdvisoryForm from "../../composite/advisoryForm/AdvisoryForm";
 import Header from "../../composite/header/Header";
@@ -50,22 +48,16 @@ export default function Advisory({
   const [selectedProtectedAreas, setSelectedProtectedAreas] = useState([]);
   const [regions, setRegions] = useState([]);
   const [selectedRegions, setSelectedRegions] = useState([]);
-  const [existingRegions, setExistingRegions] = useState([]);
   const [sections, setSections] = useState([]);
   const [selectedSections, setSelectedSections] = useState([]);
-  const [existingSections, setExistingSections] = useState([]);
   const [managementAreas, setManagementAreas] = useState([]);
   const [selectedManagementAreas, setSelectedManagementAreas] = useState([]);
-  const [existingManagementAreas, setExistingManagementAreas] = useState([]);
   const [sites, setSites] = useState([]);
   const [selectedSites, setSelectedSites] = useState([]);
-  const [existingSites, setExistingSites] = useState([]);
   const [fireCentres, setFireCentres] = useState([]);
   const [selectedFireCentres, setSelectedFireCentres] = useState([]);
-  const [existingFireCentres, setExistingFireCentres] = useState([]);
   const [fireZones, setFireZones] = useState([]);
   const [selectedFireZones, setSelectedFireZones] = useState([]);
-  const [existingFireZones, setExistingFireZones] = useState([]);
   const [eventTypes, setEventTypes] = useState([]);
   const [eventType, setEventType] = useState();
   const [accessStatuses, setAccessStatuses] = useState([]);
@@ -97,7 +89,7 @@ export default function Advisory({
   const [notes, setNotes] = useState("");
   const [submittedBy, setSubmittedBy] = useState("");
   const [listingRank, setListingRank] = useState(0);
-  const [ toError, setToError] = useState(false);
+  const [toError, setToError] = useState(false);
   const [toDashboard, setToDashboard] = useState(false);
   const { keycloak, initialized } = useKeycloak();
   const [isLoadingPage, setIsLoadingPage] = useState(true);
@@ -263,7 +255,6 @@ export default function Advisory({
                 selRegions.push(regions.find((l) => l.value === r.id));
               });
               setSelectedRegions([...selRegions]);
-              setExistingRegions([...selRegions]);
             }
             if (sectionInfo) {
               const selSections = [];
@@ -271,7 +262,6 @@ export default function Advisory({
                 selSections.push(sections.find((l) => l.value === s.id));
               });
               setSelectedSections([...selSections]);
-              setExistingSections([...selSections]);
             }
             if (managementAreaInfo) {
               const selManagementAreas = [];
@@ -281,7 +271,6 @@ export default function Advisory({
                 );
               });
               setSelectedManagementAreas([...selManagementAreas]);
-              setExistingManagementAreas([...selManagementAreas]);
             }
             if (siteInfo) {
               const selSites = [];
@@ -289,7 +278,6 @@ export default function Advisory({
                 selSites.push(sites.find((l) => l.value === s.id));
               });
               setSelectedSites([...selSites]);
-              setExistingSites([...selSites]);
             }
             if (fireCentreInfo) {
               const selFireCentres = [];
@@ -297,7 +285,6 @@ export default function Advisory({
                 selFireCentres.push(fireCentres.find((l) => l.value === f.id));
               });
               setSelectedFireCentres([...selFireCentres]);
-              setExistingFireCentres([...selFireCentres]);
             }
             if (fireZoneInfo) {
               const selFireZones = [];
@@ -305,7 +292,6 @@ export default function Advisory({
                 selFireZones.push(fireZones.find((l) => l.value === f.id));
               });
               setSelectedFireZones([...selFireZones]);
-              setExistingFireZones([...selFireZones]);
             }
             const links = advisoryData.links;
             if (links.length > 0) {
@@ -769,26 +755,15 @@ export default function Advisory({
   const saveAdvisory = (type) => {
     try {
       const { status } = getAdvisoryFields(type);
-      const {
-        selProtectedAreas,
-        selRegions,
-        selSections,
-        selManagementAreas,
-        selSites,
-        selFireCentres,
-        selFireZones,
-      } = getLocationSelection(
-        selectedProtectedAreas,
-        selectedRegions,
-        selectedSections,
-        selectedManagementAreas,
-        selectedSites,
-        selectedFireCentres,
-        selectedFireZones,
-        managementAreas,
-        fireZones,
-        sites
-      );
+
+      const selProtectedAreas = selectedProtectedAreas.map(x => x.value);
+      const selRegions = selectedRegions.map(x => x.value);
+      const selSections = selectedSections.map(x => x.value);
+      const selManagementAreas = selectedManagementAreas.map(x => x.value);
+      const selSites = selectedSites.map(x => x.value);
+      const selFireCentres = selectedFireCentres.map(x => x.value);
+      const selFireZones = selectedFireZones.map(x => x.value);
+
       Promise.resolve(saveLinks()).then((savedLinks) => {
         const newAdvisory = {
           title: headline,
@@ -859,44 +834,13 @@ export default function Advisory({
   const updateAdvisory = (type) => {
     try {
       const { status } = getAdvisoryFields(type);
-      const { updatedProtectedAreas, updatedSites } = removeLocations(
-        selectedProtectedAreas,
-        selectedRegions,
-        existingRegions,
-        selectedSections,
-        existingSections,
-        selectedManagementAreas,
-        existingManagementAreas,
-        selectedSites,
-        existingSites,
-        selectedFireCentres,
-        existingFireCentres,
-        selectedFireZones,
-        existingFireZones,
-        managementAreas,
-        fireZones,
-        sites
-      );
-      const {
-        selProtectedAreas,
-        selRegions,
-        selSections,
-        selManagementAreas,
-        selSites,
-        selFireCentres,
-        selFireZones,
-      } = getLocationSelection(
-        updatedProtectedAreas,
-        selectedRegions,
-        selectedSections,
-        selectedManagementAreas,
-        updatedSites,
-        selectedFireCentres,
-        selectedFireZones,
-        managementAreas,
-        fireZones,
-        sites
-      );
+      const selProtectedAreas = selectedProtectedAreas.map(x => x.value);
+      const selRegions = selectedRegions.map(x => x.value);
+      const selSections = selectedSections.map(x => x.value);
+      const selManagementAreas = selectedManagementAreas.map(x => x.value);
+      const selSites = selectedSites.map(x => x.value);
+      const selFireCentres = selectedFireCentres.map(x => x.value);
+      const selFireZones = selectedFireZones.map(x => x.value);
 
       if (
         (!selProtectedAreas || selProtectedAreas.length === 0) &&
