@@ -1177,7 +1177,7 @@ export default function AdvisoryForm({
                         label="Submit"
                         styling="bcgov-normal-blue btn"
                         onClick={() => {
-                          if (validAdvisoryData(advisoryData, false, mode)) {
+                          if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
                             saveAdvisory("submit");
                           }
                         }}
@@ -1187,7 +1187,7 @@ export default function AdvisoryForm({
                         label="Save Draft"
                         styling="bcgov-normal-light btn"
                         onClick={() => {
-                          if (validAdvisoryData(advisoryData, false, mode)) {
+                          if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
                             saveAdvisory("draft");
                           }
                         }}
@@ -1201,7 +1201,7 @@ export default function AdvisoryForm({
                         label="Submit"
                         styling="bcgov-normal-blue btn"
                         onClick={() => {
-                          if (validAdvisoryData(advisoryData, false, mode)) {
+                          if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
                             updateAdvisory("submit");
                           }
                         }}
@@ -1211,7 +1211,7 @@ export default function AdvisoryForm({
                         label="Save Draft"
                         styling="bcgov-normal-light btn"
                         onClick={() => {
-                          if (validAdvisoryData(advisoryData, false, mode)) {
+                          if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
                             updateAdvisory("draft");
                           }
                         }}
