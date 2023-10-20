@@ -77,6 +77,7 @@ h3.subtitle {
 }
 
 .search-results-main {
+  padding: 32px 0;
   .park-search-text-box {
     width: 100% !important;
 
@@ -955,10 +956,6 @@ div[class$="-singleValue"] {
     text-align: left;
   }
 
-  .search-results-container {
-    padding: 40px 0 !important;
-  }
-
   .text-blue {
     color: $colorBlue;
   }
@@ -1209,10 +1206,6 @@ div[class$="-singleValue"] {
     .small-flex-display {
       display: flex !important;
     }
-    .search-results-quick-filter {
-      padding-right: 10px !important;
-      padding-left: 10px !important;
-    }
     .park-content {
       margin: 0px 10px !important;
     }
@@ -1295,7 +1288,7 @@ div[class$="-singleValue"] {
   }
 
   .search-results-main .search-results-list {
-    padding: 0px 10px !important;
+    padding: 0px 16px !important;
   }
 
   .w50 {
@@ -1326,7 +1319,7 @@ a.desktop-park-link {
   }
 }
 
-// new park/city name search form
+// new park name and city name search form
 .park-search-typeahead,
 .city-search-typeahead {
   width: 100%;
@@ -1362,6 +1355,88 @@ a.desktop-park-link {
         color: $colorText;
         background-color: transparent;
         text-decoration: underline;
+      }
+    }
+  }
+}
+
+// new search header section
+.search-header {
+  min-height: 315px;
+  display: flex;
+  align-items: center;
+  background-color: #C7E3FD;
+  @media screen and (min-width: $mdBreakpoint) {
+    min-height: 150px;
+  }
+  @media screen and (min-width: $lgBreakpoint) {
+    min-height: 96px;
+  }
+  .container {
+    display: block;
+    padding: 0 16px;
+    @media screen and (min-width: $smBreakpoint) {
+      padding: 0;
+    }
+    @media screen and (min-width: $mdBreakpoint) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    @media screen and (min-width: $lgBreakpoint) {
+      flex-wrap: nowrap;
+    }
+    @media (min-width: 1350px) {
+      max-width: 1350px;
+    }
+    .search-header-container {
+      &--left {
+        h1 {
+          font-size: 2rem;
+          margin-bottom: 0;
+        }
+      }
+      &--right {
+        display: block;
+        margin-top: 32px;
+        @media screen and (min-width: $mdBreakpoint) {
+          display: flex;
+          align-items: center;
+          margin-top: 16px;
+        }
+        @media screen and (min-width: $lgBreakpoint) {
+          margin-top: 0;
+        }
+        span {
+          width: 100%;
+          display: inline-block;
+          text-align: center;
+          margin: 8px 0;
+          @media screen and (min-width: $mdBreakpoint) {
+            width: auto;
+            margin: 0 16px;
+          }
+        }
+        .park-search-typeahead, .city-search-typeahead {
+          width: 100%;
+          @media screen and (min-width: $mdBreakpoint) {
+            width: 250px;
+          }
+          @media screen and (min-width: $xlBreakpoint) {
+            width: 320px;
+          }
+        }
+        button.bcgov-normal-blue {
+          width: 100%;
+          margin-top: 16px;
+          margin-left: 0;
+          @media screen and (min-width: $mdBreakpoint) {
+            width: 100px;
+            margin-top: 0;
+            margin-left: 16px;
+          }
+        }
       }
     }
   }

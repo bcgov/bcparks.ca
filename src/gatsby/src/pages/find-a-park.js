@@ -6,7 +6,6 @@ import {
   Chip,
   Link,
   LinearProgress,
-  Breadcrumbs,
   Button,
 } from "@mui/material"
 import CancelIcon from "@mui/icons-material/Cancel"
@@ -23,6 +22,7 @@ import DesktopFilters from "../components/search/desktopFilters"
 import ParkLinksModal from "../components/search/parkLinksModal"
 import ParkCard from "../components/search/parkCard"
 import ParkNameSearch from "../components/search/parkNameSearch"
+import CityNameSearch from "../components/search/cityNameSearch"
 
 import "../styles/search.scss"
 
@@ -544,23 +544,140 @@ export default function FindAPark({ location, data }) {
     <>
       <Header content={menuContent} />
       <ScrollToTop />
+      {/* new search header section */}
+      <div className="search-header">
+        <div className="container">
+          <div className="search-header-container--left">
+            <h1>Find a park</h1>
+          </div>
+          <div className="search-header-container--right">
+            <ParkNameSearch
+              optionLimit={8}
+              handleChange={handleSearchNameChange}
+              handleInputChange={handleSearchNameInputChange}
+              handleClick={handleClickClear}
+              handleKeyDown={handleKeyDownClear}
+              searchText={inputText}
+            />
+            <span>or</span>
+            <CityNameSearch
+              optionLimit={8}
+            />
+            <Button
+              fullWidth
+              className="bcgov-normal-blue mobile-search-element-height h50p"
+              onClick={handleSearch}
+            >
+              Search
+            </Button>
+          </div>
+        </div>
+      </div>
+      {/* main content */}
       <div id="sr-content" className="search-body">
         <div className="search-results-main container">
-          <div className="search-results-container">
-            <Breadcrumbs
-              separator="›"
-              aria-label="breadcrumb"
-              className="sm-p10"
-            >
-              {breadcrumbs}
-            </Breadcrumbs>
-            <div className="row no-gutters">
-              <div className="col-12 col-lg-3">
-                <h1 className="headline-text p40t sm-p10">
-                  Find a park
-                </h1>
+          {/* filter buttons for mobile */}
+          <div className="search-results-list d-block d-lg-none">
+            <div className="row">
+              <div className="col-12 col-md-6">
+                <Button
+                  variant="outlined"
+                  onClick={handleClickOpenFilter}
+                  className="bcgov-button bcgov-normal-white font-weight-bold"
+                >
+                  Filter
+                </Button>
               </div>
-              <div className="col-12 col-lg-9 d-flex align-items-end">
+              <div className="col-12 col-md-6">
+                <Button
+                  variant="outlined"
+                  onClick={handleClickOpenModal}
+                  className="bcgov-button bcgov-normal-white font-weight-bold mt-3 mt-md-0"
+                >
+                  More ways to find a park
+                </Button>
+              </div>
+            </div>
+          </div>
+          {/* filter chips for mobile */}
+          <div className="search-results-list d-block d-lg-none mt-3">
+            <div className="row">
+              <div className="col-12">
+                {filterSelections.length > 0 && filterSelections.map((f, index) => (
+                  <Chip
+                    key={index}
+                    label={shortenFilterLabel(f.label)}
+                    onClick={handleFilterDelete(f)}
+                    onDelete={handleFilterDelete(f)}
+                    variant="outlined"
+                    className="park-filter-chip font-weight-bold"
+                    deleteIcon={<CancelIcon className="close-icon" />}
+                  />
+                ))}
+                {filterSelections.length > 0 && (
+                  <Link
+                    className="clear-filter-link"
+                    onClick={handleClearFilter}
+                    onKeyDown={e => handleKeyDownClearFilter(e)}
+                    tabIndex="0"
+                    role="button"
+                  >
+                    Clear filters
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="row no-gutters">
+            {/* filter checkbox for desktop */}
+            <div className="search-results-quick-filter col-12 col-lg-3 d-none d-lg-block pr-3">
+              <div className="mb32">
+                <h3 className="subtitle mb-2">Filter</h3>
+                <DesktopFilters
+                  data={{
+                    areaItems,
+                    campingFacilityItems,
+                    activityItems,
+                    facilityItems,
+                    selectedAreas,
+                    setSelectedAreas,
+                    selectedCampingFacilities,
+                    setSelectedCampingFacilities,
+                    selectedActivities,
+                    setSelectedActivities,
+                    selectedFacilities,
+                    setSelectedFacilities,
+                    searchText,
+                    setCurrentPage,
+                    setFilters,
+                    handleAreaCheck,
+                    handleCampingFacilityCheck,
+                    handleActivityCheck,
+                    handleFacilityCheck
+                  }}
+                />
+              </div>
+              <div className="park-links">
+                <h3 className="subtitle mb-2">More ways to find a park</h3>
+                <div>
+                  <GatsbyLink to="/find-a-park/a-z-list">A–Z park list</GatsbyLink>
+                  <br />
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="map-link"
+                    href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000"
+                  >
+                    Map
+                    <OpenInNewIcon />
+                  </a>
+                </div>
+              </div>
+            </div>
+            {/* park results */}
+            <div className="col-12 col-lg-9">
+              <div className="search-results-list">
+                {/* park results text */}
                 <p className="result-count-text sm-p10">
                   <b>
                     {isLoading && isActiveSearch && <>Searching...</>}
@@ -572,79 +689,8 @@ export default function FindAPark({ location, data }) {
                     )}
                   </b>
                 </p>
-              </div>
-            </div>
-            <div className="row no-gutters">
-              <div className="col-lg-9 col-md-12 col-sm-12">
-                <div className="search-results-quick-filter d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none mt-3">
-                  <div className="row no-gutters">
-                    <div className="col-12 col-md-9">
-                      <ParkNameSearch
-                        optionLimit={4}
-                        handleChange={handleSearchNameChange}
-                        handleInputChange={handleSearchNameInputChange}
-                        handleClick={handleClickClear}
-                        handleKeyDown={handleKeyDownClear}
-                        searchText={inputText}
-                      />
-                    </div>
-                    <div className="col-md-3 d-none d-md-block pl-3">
-                      <Button
-                        fullWidth
-                        className="bcgov-normal-blue mobile-search-element-height h50p"
-                        onClick={() => {
-                          handleSearch()
-                        }}
-                      >
-                        Search
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-                <div className="search-results-list container">
-                  <div className="row">
-                    <div className="col-md-4 col-sm-12 col-xs-12 mt-3 d-block d-md-none">
-                      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-                        <Button
-                          fullWidth
-                          className="bcgov-normal-blue mobile-search-element-height"
-                          onClick={() => {
-                            handleSearch()
-                          }}
-                        >
-                          Search
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="col-md-6 col-sm-12 col-xs-12 mt-3">
-                      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-                        <Button
-                          variant="outlined"
-                          onClick={handleClickOpenFilter}
-                          className="bcgov-button bcgov-normal-white font-weight-bold"
-                        >
-                          Filter
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="col-md-6 col-sm-12 col-xs-12 mt-3">
-                      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-                        <Button
-                          variant="outlined"
-                          onClick={handleClickOpenModal}
-                          className="bcgov-button bcgov-normal-white font-weight-bold"
-                        >
-                          More ways to find a park
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="search-results-list container d-block d-lg-none mt-3">
-              <div className="row d-flex">
-                <div className="col-12">
+                {/* filter chips for desktop */}
+                <div className="d-none d-lg-block">
                   {filterSelections.length > 0 && filterSelections.map((f, index) => (
                     <Chip
                       key={index}
@@ -669,152 +715,48 @@ export default function FindAPark({ location, data }) {
                   )}
                 </div>
               </div>
-            </div>
-            <div className="row no-gutters">
-              <div className="col-lg-3 col-md-12 col-sm-12">
-                <div className="search-results-quick-filter">
-                  <div className="row no-gutters d-none d-lg-block">
-                    <div className="col-12 mb32">
-                      <div className="search-results-quick-filter">
-                        <div className="row no-gutters">
-                          <div className="col-12 park-search-text-box-container d-none d-lg-block">
-                            <ParkNameSearch
-                              optionLimit={8}
-                              handleChange={handleSearchNameChange}
-                              handleInputChange={handleSearchNameInputChange}
-                              handleClick={handleClickClear}
-                              handleKeyDown={handleKeyDownClear}
-                              searchText={inputText}
-                            />
-                          </div>
-                          <div className="m15t col-12 park-search-text-box-container d-none d-lg-block">
-                            <Button
-                              fullWidth
-                              className="bcgov-normal-blue mobile-search-element-height h50p"
-                              onClick={handleSearch}
-                            >
-                              Search
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-12 pr-3 mb32">
-                      <h3 className="subtitle mb-2">Filter</h3>
-                      <DesktopFilters
-                        data={{
-                          areaItems,
-                          campingFacilityItems,
-                          activityItems,
-                          facilityItems,
-                          selectedAreas,
-                          setSelectedAreas,
-                          selectedCampingFacilities,
-                          setSelectedCampingFacilities,
-                          selectedActivities,
-                          setSelectedActivities,
-                          selectedFacilities,
-                          setSelectedFacilities,
-                          searchText,
-                          setCurrentPage,
-                          setFilters,
-                          handleAreaCheck,
-                          handleCampingFacilityCheck,
-                          handleActivityCheck,
-                          handleFacilityCheck
-                        }}
-                      />
-                    </div>
-                    <div className="col-12 park-links">
-                      <h3 className="subtitle mb-2">More ways to find a park</h3>
-                      <div>
-                        <GatsbyLink to="/find-a-park/a-z-list">A–Z park list</GatsbyLink>
-                        <br />
-                        <a
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="map-link"
-                          href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000"
-                        >
-                          Map
-                          <OpenInNewIcon />
-                        </a>
-                      </div>
-                    </div>
+              <div className="search-results-list">
+                {isLoading && (
+                  <div className="container mt-5">
+                    <LinearProgress />
                   </div>
-                </div>
-              </div>
-              <div className="col-lg-9 col-md-12 col-sm-12">
-                <div className="search-results-list container">
-                  <div className="row d-flex">
-                    <div className="col-12 d-none d-lg-block">
-                      {filterSelections.length > 0 && filterSelections.map((f, index) => (
-                        <Chip
-                          key={index}
-                          label={shortenFilterLabel(f.label)}
-                          onClick={handleFilterDelete(f)}
-                          onDelete={handleFilterDelete(f)}
-                          variant="outlined"
-                          className="park-filter-chip font-weight-bold"
-                          deleteIcon={<CancelIcon className="close-icon" />}
+                )}
+                {!isLoading && (
+                  <>
+                    {!searchResults ||
+                      (searchResults.length === 0 && (
+                        <NoSearchResults
+                          hasPark={inputText.length > 0}
+                          hasFilter={filterSelections.length > 0}
+                          handleClickClearPark={handleClickClear}
+                          handleClickClearFilter={handleClearFilter}
                         />
                       ))}
-                      {filterSelections.length > 0 && (
-                        <Link
-                          className="clear-filter-link"
-                          onClick={handleClearFilter}
-                          onKeyDown={e => handleKeyDownClearFilter(e)}
-                          tabIndex="0"
-                          role="button"
-                        >
-                          Clear filters
-                        </Link>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div className="search-results-list container">
-                  {isLoading && (
-                    <div className="container mt-5">
-                      <LinearProgress />
-                    </div>
-                  )}
-                  {!isLoading && (
-                    <>
-                      {!searchResults ||
-                        (searchResults.length === 0 && (
-                          <NoSearchResults
-                            hasPark={inputText.length > 0}
-                            hasFilter={filterSelections.length > 0}
-                            handleClickClearPark={handleClickClear}
-                            handleClickClearFilter={handleClearFilter}
-                          />
+                    {/* park results cards */}
+                    {searchResults && searchResults.length > 0 && (
+                      <>
+                        {searchResults.map((r, index) => (
+                          <ParkCard r={r} key={index} />
                         ))}
-                      {searchResults && searchResults.length > 0 && (
-                        <>
-                          {searchResults.map((r, index) => (
-                            <ParkCard r={r} key={index} />
-                          ))}
-                          <div className="load-more-button-container mt-5">
-                            {totalResults > searchResults.length && (
-                              <Button
-                                variant="outlined"
-                                onClick={handleLoadMore}
-                                onKeyDown={e => handleKeyDownLoadMore(e)}
-                                className="bcgov-button bcgov-normal-white load-more-button"
-                              >
-                                Load more
-                              </Button>
-                            )}
-                            {totalResults === searchResults.length && (
-                              <p className="mb-0">End results.</p>
-                            )}
-                          </div>
-                        </>
-                      )}
-                    </>
-                  )}
-                </div>
+                        <div className="load-more-button-container mt-5">
+                          {totalResults > searchResults.length && (
+                            <Button
+                              variant="outlined"
+                              onClick={handleLoadMore}
+                              onKeyDown={e => handleKeyDownLoadMore(e)}
+                              className="bcgov-button bcgov-normal-white load-more-button"
+                            >
+                              Load more
+                            </Button>
+                          )}
+                          {totalResults === searchResults.length && (
+                            <p className="mb-0">End results.</p>
+                          )}
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>
