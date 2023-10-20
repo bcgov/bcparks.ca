@@ -197,15 +197,6 @@ export default function FindAPark({ location, data }) {
   const [openFilter, setOpenFilter] = useState(false)
   const [openModal, setOpenModal] = useState(false)
 
-  const breadcrumbs = [
-    <Link key="1" href="/" underline="hover">
-      Home
-    </Link>,
-    <div key="2" className="breadcrumb-text">
-      Find a park
-    </div>,
-  ]
-
   const searchApiUrl = `${data.site.siteMetadata.apiURL}/api/protected-areas/search`
 
   // event handlers
@@ -738,7 +729,7 @@ export default function FindAPark({ location, data }) {
                         {searchResults.map((r, index) => (
                           <ParkCard r={r} key={index} />
                         ))}
-                        <div className="load-more-button-container mt-5">
+                        <div className="load-more-button-container mt32">
                           {totalResults > searchResults.length && (
                             <Button
                               variant="outlined"
