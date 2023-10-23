@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 import { graphql, useStaticQuery } from "gatsby"
 import { AsyncTypeahead, ClearButton } from "react-bootstrap-typeahead"
+import { Form } from "react-bootstrap"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 
 const HighlightText = ({ park, input }) => {
@@ -58,8 +59,6 @@ const ParkNameSearch = ({ optionLimit, handleChange, handleInputChange, handleCl
   return (
     <AsyncTypeahead
       id="park-search-typehead"
-      // eslint-disable-next-line jsx-a11y/no-autofocus
-      autoFocus
       minLength={1}
       filterBy={() => true}
       isLoading={isSearchNameLoading}
@@ -68,9 +67,25 @@ const ParkNameSearch = ({ optionLimit, handleChange, handleInputChange, handleCl
       onSearch={handleSearchName}
       onChange={handleChange}
       onInputChange={handleInputChange}
-      placeholder="By park name"
+      placeholder=" "
       className={`has-text--${searchText.length > 0 ? 'true' : 'false'
         } park-search-typeahead`}
+      renderInput={({ inputRef, referenceElementRef, ...inputProps }) => {
+        return (
+          <Form.Group controlId="park-search-typeahead">
+            <Form.Control
+              {...inputProps}
+              ref={(node) => {
+                inputRef(node)
+                referenceElementRef(node)
+              }}
+            />
+            <label htmlFor="park-search-typeahead">
+              By park name
+            </label>
+          </Form.Group>
+        )
+      }}
       renderMenuItemChildren={(option) => (
         <HighlightText
           park={option.protectedAreaName}

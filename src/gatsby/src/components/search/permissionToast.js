@@ -17,7 +17,7 @@ const PermissionToast = () => {
           </strong>
         </Toast.Header>
         <Toast.Body>
-          BC parks does not have permission to show your location
+          B.C. parks does not have permission to show your location
         </Toast.Body>
       </Toast>
     </div>

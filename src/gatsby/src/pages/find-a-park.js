@@ -550,7 +550,7 @@ export default function FindAPark({ location, data }) {
               handleKeyDown={handleKeyDownClear}
               searchText={inputText}
             />
-            <span>or</span>
+            <span className="or-span">or</span>
             <CityNameSearch
               optionLimit={8}
             />

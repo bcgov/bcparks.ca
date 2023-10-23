@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, { useState, useEffect } from "react"
 import { graphql, useStaticQuery } from "gatsby"
 import { Typeahead, ClearButton, Menu, MenuItem } from "react-bootstrap-typeahead"
+import { Form } from "react-bootstrap"
 import PermissionToast from "./permissionToast"
 import NearMeIcon from "@mui/icons-material/NearMe"
 import "react-bootstrap-typeahead/css/Typeahead.css"
@@ -39,6 +40,7 @@ const CityNameSearch = ({ optionLimit, handleClick, handleKeyDown }) => {
   // useState and constants
   const [selectedCity, setSelectedCity] = useState([])
   const [searchText, setSearchText] = useState("")
+  const [hasResult, setHasResult] = useState(false)
   const [hasPermission, setHasPermission] = useState(true)
   const [latitude, setLatitude] = useState(0)
   const [longitude, setLongitude] = useState(0)
@@ -52,6 +54,16 @@ const CityNameSearch = ({ optionLimit, handleClick, handleKeyDown }) => {
   const cities = data?.allStrapiSearchCity?.nodes || []
 
   // functions
+  const checkResult = (text) => {
+		const results = cities.filter((city) =>
+			city.cityName.toLowerCase().includes(text.toLowerCase())
+		)
+    if (results.length > 0) {
+      setHasResult(true)
+    } else {
+      setHasResult(false)
+    }
+	}
   const showPosition = (position) => {
     setLatitude(position.coords.latitude)
     setLongitude(position.coords.longitude)
@@ -80,6 +92,7 @@ const CityNameSearch = ({ optionLimit, handleClick, handleKeyDown }) => {
   const handleInputChange = (text) => {
     if (text.length) {
       setSearchText(text)
+      checkResult(text)
     }
   }
   const handleClickGetLocation = () => {
@@ -109,6 +122,8 @@ const CityNameSearch = ({ optionLimit, handleClick, handleKeyDown }) => {
     setCurrentLocation(updatedCurrentLocation)
   }, [latitude, longitude])
   // console.log("cities:", cities)
+  // console.log("hasResult", hasResult)
+  // console.log("option:", options)
   // console.log("selected:", selectedCity)
   // console.log(latitude, longitude)
 
@@ -126,9 +141,31 @@ const CityNameSearch = ({ optionLimit, handleClick, handleKeyDown }) => {
         // onSearch={handleSearchName}
         onChange={setSelectedCity}
         onInputChange={handleInputChange}
-        placeholder="Near a city"
-        className="city-search-typeahead"
-        isInvalid={false}
+        placeholder=" "
+        className={`has-text--${searchText.length > 0 ? 'true' : 'false'
+          } has-error--${(searchText.length > 0 && !hasResult) ? 'true' : 'false'
+          } city-search-typeahead`}
+        renderInput={({ inputRef, referenceElementRef, ...inputProps }) => {
+          return (
+            <Form.Group controlId="city-search-typeahead">
+              <Form.Control
+                {...inputProps}
+                ref={(node) => {
+                  inputRef(node)
+                  referenceElementRef(node)
+                }}
+              />
+              <label htmlFor="city-search-typeahead">
+                Near a city
+              </label>
+              {(searchText.length > 0 && !hasResult) && 
+                <small className="helper-text--error">
+                  <b>{searchText}</b> could not be found. Please enter a city in B.C.
+                </small>
+              }
+            </Form.Group>
+          )
+        }}
         renderMenu={(cities, menuProps) => (
           <Menu {...menuProps}>
             {cities.map((city, index) => (

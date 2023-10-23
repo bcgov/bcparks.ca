@@ -1327,28 +1327,82 @@ a.desktop-park-link {
 .park-search-typeahead,
 .city-search-typeahead {
   width: 100%;
-  input.form-control {
-    height: 50px;
-    color: $colorText;
-    box-shadow: none;
-    border-color: rgba(0, 0, 0, 0.2);
-    &:hover, &:focus, &:active {
-      border-color: rgba(0, 0, 0);
+  .form-group {
+    margin: 0;
+    input.form-control {
+      height: 50px;
+      color: $colorText;
+      font-size: 1rem;
+      box-shadow: none;
+      border-color: $colorGreyMed;
+      padding: 8px 16px;
+      &:hover {
+        border-width: 2px;
+      }
+      &:focus {
+        border-width: 3px;
+        padding: 18px 16px 0;
+      }
+      &[aria-expanded="true"] {
+        border-radius: 5px 5px 0 0;
+      }
+      &:focus~label, 
+      &:not(:placeholder-shown)~label {
+        font-size: 0.75rem;
+        opacity: .65;
+        transform: translateY(-0.5rem) translateX(0.15rem);
+      }
+    }
+    label {
+      height: auto;
+      position: absolute;
+      top: 12px;
+      left: 20px;
+      color: $colorGreyMed;
+      border: none;
+      margin: 0;
+      padding: 0;
+      pointer-events: none;
+      transform-origin: 0 0;
+      transition: opacity .1s ease-in-out,transform .1s ease-in-out;
     }
   }
   &.has-text--true {
     input.form-control {
-      // border-radius: 5px 5px 0 0;
-      border-color: rgba(0, 0, 0);
+      border-width: 3px;
+      padding: 18px 16px 0;
+    }
+  }
+  &.has-error--true {
+    input.form-control {
+      &:not([aria-expanded="true"]) {
+        border-color: $colorRed;
+        border-width: 2px;
+      }
+    }
+    .helper-text--error {
+      position: absolute;
+      color: $colorRed;
+      font-size: 0.75rem;
+      white-space: normal;
+      @media screen and (min-width: $mdBreakpoint) {
+        white-space: nowrap;
+      }
+    }
+    & +  button.bcgov-normal-blue {
+      margin-top: 24px !important;
+      @media screen and (min-width: $mdBreakpoint) {
+        margin-top: 0 !important;
+      }
     }
   }
   .dropdown-menu {
-    inset: -4px auto auto 0px !important;
-    // border-top: none;
-    border-color: rgba(0, 0, 0);
+    border-top: none;
+    border-width: 3px;
+    border-color: $colorGreyMed;
     border-radius: 0 0 5px 5px;
     margin: 0;
-    padding: 16px 12px;
+    padding: 16px;
     a.dropdown-item {
       margin-top: 16px;
       padding: 0;
@@ -1412,7 +1466,7 @@ a.desktop-park-link {
         @media screen and (min-width: $lgBreakpoint) {
           margin-top: 0;
         }
-        span {
+        span.or-span {
           width: 100%;
           display: inline-block;
           text-align: center;
@@ -1461,9 +1515,6 @@ a.desktop-park-link {
     padding: 16px 16px 8px;
     button.close {
       margin: 0 !important;
-      span {
-        margin: 0;
-      }
     }
   }
   .toast-body {
