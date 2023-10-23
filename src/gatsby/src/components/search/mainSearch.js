@@ -50,14 +50,13 @@ const MainSearch = () => {
           handleKeyDown={handleKeyDownClear}
           searchText={searchText}
         />
-        or
+        <span className="or-span">or</span>
         <CityNameSearch
           optionLimit={8}
         />
         <Button
-          variant="contained"
-          onClick={searchParkFilter}
           className="parks-search-button"
+          onClick={searchParkFilter}
         >
           Search
         </Button>

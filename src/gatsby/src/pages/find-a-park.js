@@ -538,29 +538,30 @@ export default function FindAPark({ location, data }) {
       {/* new search header section */}
       <div className="search-header">
         <div className="container">
-          <div className="search-header-container--left">
-            <h1>Find a park</h1>
-          </div>
-          <div className="search-header-container--right">
-            <ParkNameSearch
-              optionLimit={8}
-              handleChange={handleSearchNameChange}
-              handleInputChange={handleSearchNameInputChange}
-              handleClick={handleClickClear}
-              handleKeyDown={handleKeyDownClear}
-              searchText={inputText}
-            />
-            <span className="or-span">or</span>
-            <CityNameSearch
-              optionLimit={8}
-            />
-            <Button
-              fullWidth
-              className="bcgov-normal-blue mobile-search-element-height h50p"
-              onClick={handleSearch}
-            >
-              Search
-            </Button>
+          <div className="row no-gutters w-100">
+            <div className="search-header-container--left col-12 col-lg-3">
+              <h1>Find a park</h1>
+            </div>
+            <div className="search-header-container--right col-12 col-lg-9">
+              <ParkNameSearch
+                optionLimit={8}
+                handleChange={handleSearchNameChange}
+                handleInputChange={handleSearchNameInputChange}
+                handleClick={handleClickClear}
+                handleKeyDown={handleKeyDownClear}
+                searchText={inputText}
+              />
+              <span className="or-span">or</span>
+              <CityNameSearch
+                optionLimit={8}
+              />
+              <Button
+                className="bcgov-normal-blue mobile-search-element-height h50p"
+                onClick={handleSearch}
+              >
+                Search
+              </Button>
+            </div>
           </div>
         </div>
       </div>

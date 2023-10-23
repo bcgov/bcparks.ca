@@ -290,79 +290,68 @@
 /* ------------- SEARCH ------------ */
 
 #home-parks-search {
-  position: absolute;
   z-index: 2;
-
-
-
-  @media screen and (max-width: $lgBreakpoint) {
-    bottom: 30px;
-    left: 5%;
-    width: 90%;
-  }
+  width: 100%;
+  position: absolute;
+  top: calc(50% - 160px);
+  left: 16px;
   @media screen and (min-width: $lgBreakpoint) {
-    top: 0px;
-    left: 0px;   
-    width: 100%;
-    height: 100%;
-    margin: 0px auto;  
+    top: calc(50% - 90px);
+    left: calc(50% - 442px);
   }
   .parks-search-wrapper {
-
+    min-height: 180px;
+    width: calc(100% - 32px);
+    color: $colorWhite;
     background: $colorBlue;
-    color: $colorWhite;  
-
-
-    @media screen and (max-width: $lgBreakpoint) {
-      padding:20px;
-      text-align:center;
-    }
+    border-radius: 4px;
+    text-align: center;
+    padding: 24px;
     @media screen and (min-width: $lgBreakpoint) {
+      width: 885px;
       text-align: left;      
       padding: 40px;
-      margin: 180px auto 0px auto;
-      width: 800px;
-      min-height: 180px;
     }
-  }
-
-
-  .parks-search-field{
-    margin-top:15px;   
-    display:flex; 
-    .parks-search-button{
-      margin: 0 0 0 16px;
+    h1.text-white {
+      font-size: 1.5rem;
+      margin-bottom: 0;
     }
-
-    @media screen and (max-width: $lgBreakpoint) {
+    .parks-search-field{
+      display: flex; 
+      flex-grow: 1;
       flex-direction: column;
-      flex-grow:1;
-      .parks-search-button{
-        width:100%;
-        margin: 16px 0 0 0;
+      margin-top: 24px;
+      @media screen and (min-width: $lgBreakpoint) {
+        flex-direction: row;
+      }
+      span.or-span {
+        display: inline-block;
+        font-size: 1.125rem;
+        line-height: 50px;
+        margin: 0;
+        @media screen and (min-width: $lgBreakpoint) {
+          margin: 0 24px;
+        }
+      }
+      .park-search-typeahead, .city-search-typeahead {
+        width: 100%;
+        @media screen and (min-width: $lgBreakpoint) {
+          width: 300px;
+        }
+      }
+      .parks-search-button {
+        height: 50px;
+        width: 100%;
+        color: $colorBlue;
+        background: $colorGold;
+        font-size:1.125rem;
+        margin: 24px 0 0 0;
+        @media screen and (min-width: $lgBreakpoint) {
+          width: 130px;
+          margin: 0 0 0 16px;
+        }
       }
     }
-
-    input {
-      font-size:1rem;
-    }
-  }
-  .parks-search-button{
-    background: $colorGold;
-    color: $colorBlue;
-    height: 50px;
-    margin-left: auto;
-    font-size:1.1rem;
-    padding:0px 25px;
-  }
-  .parks-search-filter-link{
-    font-size:0.9rem;
-    margin-top:15px;
-    color:$colorWhite;
-  }
-  .parks-search-filter-link:hover{
-    text-decoration: underline;
-    cursor: pointer;
   }
 }
 
