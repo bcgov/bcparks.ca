@@ -196,10 +196,12 @@ const ParkLink = ({ park }) => {
                     )}
                   </ul>
                 ) : (
-                  subArea.operationDates.length > 0 && (
+                  subArea.operationDates.length > 0 ? (
                     <>
                       {subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
                     </>
+                  ) : (
+                    <>N/A</>
                   )
                 )}
               </td>
@@ -254,11 +256,12 @@ const ParkLink = ({ park }) => {
                       )}
                     </ul>
                   ) : (
-                    subArea.operationDates.length > 0 && (
+                    subArea.operationDates.length > 0 ? (
                       <>
-                        <br />
                         {subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
                       </>
+                    ) : (
+                      <>N/A</>
                     )
                   )}
                 </div>
