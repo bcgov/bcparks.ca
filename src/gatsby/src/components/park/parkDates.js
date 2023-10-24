@@ -101,10 +101,12 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
                     )}
                   </ul>
                 ) : (
-                  subArea.operationDates.length > 0 && (
+                  subArea.operationDates.length > 0 ? (
                     <>
                       {subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
                     </>
+                  ) : (
+                    <>N/A</>
                   )
                 )}
               </dd>
