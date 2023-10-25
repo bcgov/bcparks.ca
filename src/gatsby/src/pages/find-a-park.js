@@ -407,6 +407,7 @@ export default function FindAPark({ location, data }) {
     const params = {
       queryText: searchText,
       near: qsLocation,
+      radius: 50
     }
     if (selectedAreas.length > 0) {
       params.areas = selectedAreas.map(area => area.value)
@@ -432,6 +433,7 @@ export default function FindAPark({ location, data }) {
 
   const isActiveSearch =
     params.queryText ||
+    params.near ||
     (params.areas && params.areas.length) ||
     (params.activities && params.activities.length) ||
     (params.facilities && params.facilities.length) ||
@@ -728,15 +730,19 @@ export default function FindAPark({ location, data }) {
               <div className="search-results-list">
                 {/* park results text */}
                 <p className="result-count-text sm-p10">
-                  <b>
-                    {isLoading && isActiveSearch && <>Searching...</>}
-                    {!isLoading && isActiveSearch && (
-                      <>
-                        {totalResults}{" "}
-                        {totalResults === 1 ? " result" : " results"}
-                      </>
-                    )}
-                  </b>
+                  {isLoading && isActiveSearch && <>Searching...</>}
+                  {!isLoading && isActiveSearch && (
+                    <>
+                      <b>{totalResults}</b>
+                      {totalResults === 1 ? " result" : " results"}
+                      {searchText &&
+                        <> containing <b>‘{searchText}’</b></>
+                      }
+                      {selectedCity.length > 0 &&
+                        <> within <b>50 km</b> radius of <b>{selectedCity[0].cityName}</b></>
+                      }
+                    </>
+                  )}
                 </p>
                 {/* filter chips for desktop */}
                 <div className="d-none d-lg-block">
