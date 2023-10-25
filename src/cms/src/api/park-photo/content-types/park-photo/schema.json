@@ -25,7 +25,8 @@
     "caption": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "toolbar",
+        "maxLengthCharacters": 255
       },
       "customField": "plugin::ckeditor5.CKEditor",
       "required": true
