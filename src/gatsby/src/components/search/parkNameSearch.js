@@ -18,7 +18,9 @@ const HighlightText = ({ park, input }) => {
   )
 }
 
-const ParkNameSearch = ({ optionLimit, handleChange, handleInputChange, handleClick, handleKeyDown, searchText }) => {
+const ParkNameSearch = ({
+  optionLimit, searchText, handleChange, handleInputChange, handleClick, handleKeyDown
+}) => {
   const data = useStaticQuery(graphql`
     query {
       site {

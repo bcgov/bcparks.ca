@@ -175,14 +175,17 @@ export default function FindAPark({ location, data }) {
   const [qsCampingFacilities, setQsCampingFacilities, qsCampingsInitialized] = useQueryParamString("c", "")
   const [qsActivities, setQsActivities, qsActivitiesInitialized] = useQueryParamString("a", "")
   const [qsFacilities, setQsFacilities, qsFacilitiesInitialized] = useQueryParamString("f", "")
+  const [qsLocation, setQsLocation, qsLocationInitialized] = useQueryParamString(
+    "l", location.state?.qsLocation ? location.state.qsLocation : "")
+  const [searchText, setSearchText, searchTextInitialized] = useQueryParamString(
+    "q", location.state?.searchText ? location.state.searchText : ""
+  )
 
   const [selectedAreas, setSelectedAreas] = useState([])
   const [selectedCampingFacilities, setSelectedCampingFacilities] = useState([])
   const [selectedActivities, setSelectedActivities] = useState([])
   const [selectedFacilities, setSelectedFacilities] = useState([])
-  const [searchText, setSearchText, searchTextInitialized] = useQueryParamString(
-    "q", location.state?.searchText ? location.state.searchText : ""
-  )
+  const [selectedCity, setSelectedCity] = useState([])
   const [inputText, setInputText] = useState("")
 
   const [filterSelections, setFilterSelections] = useState([])
@@ -196,6 +199,16 @@ export default function FindAPark({ location, data }) {
 
   const [openFilter, setOpenFilter] = useState(false)
   const [openModal, setOpenModal] = useState(false)
+
+  const [latitude, setLatitude] = useState(0)
+  const [longitude, setLongitude] = useState(0)
+  const [currentLocation, setCurrentLocation] = useState({
+    strapi_id: 0,
+    cityName: "Current location",
+    latitude: 0,
+    longitude: 0,
+    rank: 1
+  })
 
   const searchApiUrl = `${data.site.siteMetadata.apiURL}/api/protected-areas/search`
 
@@ -289,11 +302,15 @@ export default function FindAPark({ location, data }) {
   const handleSearch = () => {
     setCurrentPage(1)
     setSearchText(inputText)
+    setQsLocation(`${latitude},${longitude}`)
+    // setQsLocation(`${selectedCity[0]?.latitude},${selectedCity[0]?.longitude}`)
   }
   const handleClickClear = () => {
-    setInputText("")
     setCurrentPage(1)
+    setInputText("")
     setSearchText("")
+    setSelectedCity([])
+    setQsLocation("")
   }
   const handleKeyDownClear = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -349,6 +366,11 @@ export default function FindAPark({ location, data }) {
     }
   }
 
+  const showPosition = (position) => {
+    setLatitude(position.coords.latitude)
+    setLongitude(position.coords.longitude)
+  }
+
   const setFilters = useCallback(() => {
     const filters = []
     selectedAreas.forEach(r => {
@@ -384,6 +406,7 @@ export default function FindAPark({ location, data }) {
   const params = useMemo(() => {
     const params = {
       queryText: searchText,
+      near: qsLocation,
     }
     if (selectedAreas.length > 0) {
       params.areas = selectedAreas.map(area => area.value)
@@ -400,6 +423,7 @@ export default function FindAPark({ location, data }) {
     return params
   }, [
     searchText,
+    qsLocation,
     selectedAreas,
     selectedCampingFacilities,
     selectedActivities,
@@ -416,6 +440,7 @@ export default function FindAPark({ location, data }) {
   const queryParamStateSyncComplete = () => {
     return currentPageInitialized
       && searchTextInitialized
+      && qsLocationInitialized
       && qsCampingsInitialized
       && qsActivitiesInitialized
       && qsAreasInitialized
@@ -459,6 +484,7 @@ export default function FindAPark({ location, data }) {
     qsFacilities,
     qsAreas,
     searchTextInitialized,
+    qsLocationInitialized,
     currentPageInitialized
   ])
 
@@ -531,6 +557,31 @@ export default function FindAPark({ location, data }) {
     }
   }, [isKeyDownLoadingMore, searchResults])
 
+  useEffect(() => {
+    if (selectedCity.length) {
+      setLatitude(selectedCity[0].latitude)
+      setLongitude(selectedCity[0].longitude)
+
+      const updatedCurrentLocation = {
+        strapi_id: 0,
+        cityName: "Current location",
+        latitude: selectedCity[0].latitude,
+        longitude: selectedCity[0].longitude,
+        rank: 1,
+      }
+      setCurrentLocation(updatedCurrentLocation)
+    }
+  }, [selectedCity])
+
+  // console.log("params:", params)
+  // console.log("selected:", selectedCity)
+  // console.log("qsLocation:", qsLocation)
+  // console.log("latitude:", latitude)
+  // console.log("longitude:", longitude)
+  // console.log("currentLocation:", currentLocation)
+  // console.log("totalResults:", totalResults)
+
+
   return (
     <>
       <Header content={menuContent} />
@@ -545,15 +596,21 @@ export default function FindAPark({ location, data }) {
             <div className="search-header-container--right col-12 col-lg-9">
               <ParkNameSearch
                 optionLimit={8}
+                searchText={inputText}
                 handleChange={handleSearchNameChange}
                 handleInputChange={handleSearchNameInputChange}
                 handleClick={handleClickClear}
                 handleKeyDown={handleKeyDownClear}
-                searchText={inputText}
               />
               <span className="or-span">or</span>
               <CityNameSearch
+                showPosition={showPosition}
+                currentLocation={currentLocation}
                 optionLimit={8}
+                selectedItems={selectedCity}
+                handleChange={setSelectedCity}
+                handleClick={handleClickClear}
+                handleKeyDown={handleKeyDownClear}
               />
               <Button
                 className="bcgov-normal-blue mobile-search-element-height h50p"

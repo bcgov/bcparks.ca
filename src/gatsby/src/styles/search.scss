@@ -1393,6 +1393,7 @@ a.desktop-park-link {
     }
   }
   .dropdown-menu {
+    width: 100%;
     border-top: none;
     border-width: 3px;
     border-color: $colorGreyMed;
@@ -1503,12 +1504,19 @@ a.desktop-park-link {
 
 // permission toast
 .toast {
-  width: 360px;
+  width: 300px;
   min-height: 100px;
-  position: absolute;
+  position: fixed;
   top: 16px;
-  right: 24px;
+  right: calc(50% - 150px);
+  z-index: 2;
+  border: none;
   border-radius: 0;
+  box-shadow: 0px 4px 8px 0px rgba($colorBlack, .2);
+  @media screen and (min-width: $smBreakpoint) {
+    width: 360px;
+    right: 24px;
+  }
   .toast-header {
     color: $colorText;
     font-size: 1rem;
