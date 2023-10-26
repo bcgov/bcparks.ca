@@ -61,7 +61,7 @@ export function getSections(cmsData, setCmsData) {
 
 export function getManagementAreas(cmsData, setCmsData) {
     const fields = qs.stringify({
-        fields: ['id', 'managementAreaName'],
+        fields: ['id', 'managementAreaNumber', 'managementAreaName'],
         populate: {
             protectedAreas: { fields: ['id', 'protectedAreaName', 'orcs'] },
             section: { fields: ['id'] },
@@ -102,7 +102,7 @@ export function getSites(cmsData, setCmsData) {
 export function getFireCentres(cmsData, setCmsData) {
     if (!cmsData.fireCentres) {
         const result = cmsAxios
-            .get(`/fire-centres?${querySort("fireCentreName")}&populate[fireZones][fields][0]=id`)
+            .get(`/fire-centres?${querySort("fireCentreName")}&populate=*`)
             .then((res) => {
                 const data = cmsData;
                 data.fireCentres = res.data.data;
@@ -118,7 +118,7 @@ export function getFireCentres(cmsData, setCmsData) {
 export function getFireZones(cmsData, setCmsData) {
     if (!cmsData.fireZones) {
         const result = cmsAxios
-            .get(`/fire-zones?${querySort("fireZoneName")}&populate[protectedAreas][fields][0]=id`)
+            .get(`/fire-zones?${querySort("fireZoneName")}&populate=*`)
             .then((res) => {
                 const data = cmsData;
                 data.fireZones = res.data.data;
@@ -235,4 +235,62 @@ export function getStandardMessages(cmsData, setCmsData) {
     } else {
         return cmsData.standardMessages;
     }
+}
+
+export function getParkRelations(parkId) {
+    const query = qs.stringify(
+        {
+            publicationState: "preview",
+            fields: ["id"],
+            filters: {
+                id: parkId
+            },
+            populate: {
+                managementAreas: {
+                    populate: ["region", "section"]
+                },
+                fireZones: {
+                    populate: ["fireCentre"]
+                },
+                sites: {
+                    fields: ["id"]
+                }
+            }
+        },
+        {
+            encodeValuesOnly: true
+        }
+    )
+    const result = cmsAxios
+        .get(`/protected-areas?${query}`)
+        .then((res) => {
+            if (res.data.data.length) {
+                const parkInfo = res.data.data[0].attributes;
+                const managementArea = parkInfo.managementAreas?.data[0];
+                const region = managementArea?.attributes.region?.data;
+                const section = managementArea?.attributes.section?.data;
+                const fireZone = parkInfo.fireZones?.data[0];
+                const fireCentre = fireZone?.attributes.fireCentre?.data;
+                const sites = parkInfo.sites;
+                return {
+                    managementArea: managementArea,
+                    region: region,
+                    section: section,
+                    fireZone: fireZone,
+                    fireCentre: fireCentre,
+                    sites: sites
+                };
+            } else {
+                return {
+                    managementArea: null,
+                    region: null,
+                    section: null,
+                    fireZone: null,
+                    fireCentre: null,
+                    sites: null
+                };
+            }
+        })
+        .catch((err) => { console.log(err) })
+    return result;
 }

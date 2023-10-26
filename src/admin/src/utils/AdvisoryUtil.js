@@ -3,8 +3,6 @@ import { cmsAxios, axios } from "../axios_config";
 import {
   addProtectedAreas,
   addProtectedAreasFromArea,
-  removeProtectedAreas,
-  removeProtectedAreasFromArea,
 } from "./LocationUtil";
 import config from "./config";
 
@@ -72,8 +70,7 @@ export function getApproverAdvisoryFields(code, setConfirmationText) {
   return published;
 }
 
-export function getLocationSelection(
-  selectedProtectedAreas,
+export function generateProtectedAreasListForSelectedRelations(
   selectedRegions,
   selectedSections,
   selectedManagementAreas,
@@ -91,14 +88,6 @@ export function getLocationSelection(
   const selSites = [];
   const selFireCentres = [];
   const selFireZones = [];
-  setAreaValues(
-    selectedProtectedAreas,
-    selProtectedAreas,
-    null,
-    null,
-    null,
-    null
-  );
   setAreaValues(
     selectedRegions,
     selRegions,
@@ -123,7 +112,14 @@ export function getLocationSelection(
     sites,
     null
   );
-  setAreaValues(selectedSites, selSites, selProtectedAreas, null, null, null);
+  setAreaValues(
+    selectedSites,
+    selSites,
+    selProtectedAreas,
+    null,
+    null,
+    null
+  );
   setAreaValues(
     selectedFireCentres,
     selFireCentres,
@@ -140,15 +136,7 @@ export function getLocationSelection(
     sites,
     null
   );
-  return {
-    selProtectedAreas,
-    selRegions,
-    selSections,
-    selManagementAreas,
-    selSites,
-    selFireCentres,
-    selFireZones,
-  };
+  return selProtectedAreas;
 }
 
 const setAreaValues = (
@@ -193,145 +181,6 @@ const setAreaValues = (
     });
   }
 };
-
-const removeAreaValues = (
-  existingAreas,
-  selectedAreas,
-  areaList,
-  sites,
-  updatedProtectedAreas,
-  updatedSites
-) => {
-  if (existingAreas && existingAreas.length > 0) {
-    existingAreas.forEach((a) => {
-      if (!selectedAreas.includes(a)) {
-        if (a.type === "managementArea" || a.type === "fireZone") {
-          let response = removeProtectedAreas(
-            a.obj.protectedAreas,
-            updatedProtectedAreas,
-            sites,
-            updatedSites
-          );
-          updatedProtectedAreas = response.updatedProtectedAreas;
-          updatedSites = response.updatedSites;
-        } else if (a.type === "site") {
-          updatedProtectedAreas = updatedProtectedAreas.filter(
-            (p) => a.obj.attributes.protectedArea.id !== p.value
-          );
-        } else if (a.type === "region" || a.type === "section") {
-          let response = removeProtectedAreasFromArea(
-            a.obj,
-            "managementAreas",
-            updatedProtectedAreas,
-            areaList,
-            sites,
-            updatedSites
-          );
-          updatedProtectedAreas = response.updatedProtectedAreas;
-          updatedSites = response.updatedSites;
-        } else if (a.type === "fireCentre") {
-          let response = removeProtectedAreasFromArea(
-            a.obj,
-            "fireZones",
-            updatedProtectedAreas,
-            areaList,
-            sites,
-            updatedSites
-          );
-          updatedProtectedAreas = response.updatedProtectedAreas;
-          updatedSites = response.updatedSites;
-        }
-      }
-    });
-  }
-  return {
-    updatedProtectedAreas: updatedProtectedAreas,
-    updatedSites: updatedSites,
-  };
-};
-
-export function removeLocations(
-  selectedProtectedAreas,
-  selectedRegions,
-  existingRegions,
-  selectedSections,
-  existingSections,
-  selectedManagementAreas,
-  existingManagementAreas,
-  selectedSites,
-  existingSites,
-  selectedFireCentres,
-  existingFireCentres,
-  selectedFireZones,
-  existingFireZones,
-  managementAreas,
-  fireZones,
-  sites
-) {
-  let updatedProtectedAreas = selectedProtectedAreas;
-  let updatedSites = selectedSites;
-  let response = removeAreaValues(
-    existingRegions,
-    selectedRegions,
-    managementAreas,
-    sites,
-    updatedProtectedAreas,
-    updatedSites
-  );
-  updatedProtectedAreas = response.updatedProtectedAreas;
-  updatedSites = response.updatedSites;
-  response = removeAreaValues(
-    existingSections,
-    selectedSections,
-    managementAreas,
-    sites,
-    updatedProtectedAreas,
-    updatedSites
-  );
-  updatedProtectedAreas = response.updatedProtectedAreas;
-  updatedSites = response.updatedSites;
-  response = removeAreaValues(
-    existingManagementAreas,
-    selectedManagementAreas,
-    null,
-    sites,
-    updatedProtectedAreas,
-    updatedSites
-  );
-  updatedProtectedAreas = response.updatedProtectedAreas;
-  updatedSites = response.updatedSites;
-  response = removeAreaValues(
-    existingSites,
-    selectedSites,
-    null,
-    null,
-    updatedProtectedAreas,
-    updatedSites
-  );
-  updatedProtectedAreas = response.updatedProtectedAreas;
-  updatedSites = response.updatedSites;
-  response = removeAreaValues(
-    existingFireCentres,
-    selectedFireCentres,
-    fireZones,
-    sites,
-    updatedProtectedAreas,
-    updatedSites
-  );
-  updatedProtectedAreas = response.updatedProtectedAreas;
-  updatedSites = response.updatedSites;
-  response = removeAreaValues(
-    existingFireZones,
-    selectedFireZones,
-    null,
-    sites,
-    updatedProtectedAreas,
-    updatedSites
-  );
-  updatedProtectedAreas = response.updatedProtectedAreas;
-  updatedSites = response.updatedSites;
-  return { updatedProtectedAreas, updatedSites };
-}
 
 export function calculateIsStatHoliday(
   setIsStatHoliday,
