@@ -19,7 +19,7 @@ const HighlightText = ({ park, input }) => {
 }
 
 const ParkNameSearch = ({
-  optionLimit, searchText, handleChange, handleInputChange, handleClick, handleKeyDown
+  optionLimit, searchText, handleChange, handleInputChange, handleKeyDownSearch, handleClick, handleKeyDown
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -69,6 +69,7 @@ const ParkNameSearch = ({
       onSearch={handleSearchName}
       onChange={handleChange}
       onInputChange={handleInputChange}
+      onKeyDown={handleKeyDownSearch}
       placeholder=" "
       className={`has-text--${searchText.length > 0 ? 'true' : 'false'
         } park-search-typeahead`}

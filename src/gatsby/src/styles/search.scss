@@ -1339,7 +1339,7 @@ a.desktop-park-link {
         padding: 18px 16px 0;
       }
       &[aria-expanded="true"] {
-        border-radius: 5px 5px 0 0;
+        border-radius: 4px 4px 0 0;
       }
       &:focus~label, 
       &:not(:placeholder-shown)~label {
@@ -1370,23 +1370,29 @@ a.desktop-park-link {
   }
   &.has-error--true {
     input.form-control {
+      border-radius: 4px 4px 0 0;
       &:not([aria-expanded="true"]) {
         border-color: $colorRed;
         border-width: 2px;
       }
     }
-    .helper-text--error {
+    .helper-text-container {
+      width: 100%;
       position: absolute;
-      left: 2px;
-      color: $colorRed;
-      font-size: 0.75rem;
-      white-space: normal;
-      @media screen and (min-width: $mdBreakpoint) {
-        white-space: nowrap;
+      top: 100%;
+      left: 0;
+      background-color: $colorRed;
+      border-radius: 0 0 4px 4px;
+      text-align: left;
+      z-index: 1;
+      padding: 4px 8px;
+      .helper-text {
+        color: $colorWhite;
+        font-size: 0.75rem;
       }
     }
-    & +  button.bcgov-normal-blue {
-      margin-top: 24px !important;
+    & + button.bcgov-normal-blue {
+      margin-top: 48px !important;
       @media screen and (min-width: $mdBreakpoint) {
         margin-top: 0 !important;
       }
@@ -1397,7 +1403,7 @@ a.desktop-park-link {
     border-top: none;
     border-width: 3px;
     border-color: $colorGreyMed;
-    border-radius: 0 0 5px 5px;
+    border-radius: 0 0 4px 4px;
     margin: 0;
     padding: 16px;
     a.dropdown-item {

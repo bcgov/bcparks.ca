@@ -213,6 +213,7 @@ export default function FindAPark({ location, data }) {
   const searchApiUrl = `${data.site.siteMetadata.apiURL}/api/protected-areas/search`
 
   // event handlers
+  // event handlers - for filters
   const handleAreaCheck = (area, event) => {
     setCurrentPage(1)
     if (event.target.checked) {
@@ -253,7 +254,6 @@ export default function FindAPark({ location, data }) {
       ])
     }
   }
-
   const handleAreaDelete = chipToDelete => {
     setCurrentPage(1)
     setSelectedAreas(chips =>
@@ -278,7 +278,6 @@ export default function FindAPark({ location, data }) {
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
   }
-
   const handleFilterDelete = chipToDelete => () => {
     if (chipToDelete.type === "area") {
       handleAreaDelete(chipToDelete)
@@ -292,54 +291,6 @@ export default function FindAPark({ location, data }) {
       setCurrentPage(1)
     }
   }
-
-  const handleClickOpenFilter = () => {
-    setOpenFilter(true)
-  }
-  const handleClickOpenModal = () => {
-    setOpenModal(true)
-  }
-  const handleSearch = () => {
-    setCurrentPage(1)
-    setSearchText(inputText)
-    setQsLocation(`${latitude},${longitude}`)
-    // setQsLocation(`${selectedCity[0]?.latitude},${selectedCity[0]?.longitude}`)
-  }
-  const handleClickClear = () => {
-    setCurrentPage(1)
-    setInputText("")
-    setSearchText("")
-    setSelectedCity([])
-    setQsLocation("")
-  }
-  const handleKeyDownClear = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault()
-      handleClickClear()
-    }
-  }
-  const handleLoadMore = () => {
-    const newPage = +currentPage + 1
-    setCurrentPage(newPage)
-    const pageStart = (newPage - 1) * itemsPerPage
-    axios.get(searchApiUrl, {
-      params: { ...params, _start: pageStart, _limit: itemsPerPage },
-    }).then(resultResponse => {
-      if (resultResponse.status === 200) {
-        const newResults = resultResponse.data.data
-        setSearchResults(prevResults => [...prevResults, ...newResults]);
-      }
-    })
-  }
-
-  const handleKeyDownLoadMore = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      setIsKeyDownLoadingMore(true);
-      e.preventDefault()
-      handleLoadMore()
-    }
-  }
-
   const handleClearFilter = () => {
     setFilterSelections([])
     setSelectedAreas([])
@@ -353,7 +304,24 @@ export default function FindAPark({ location, data }) {
       handleClearFilter()
     }
   }
-
+  // event handlers - for searching
+  const handleSearch = () => {
+    setCurrentPage(1)
+    setSearchText(inputText)
+    setQsLocation(`${latitude},${longitude}`)
+    // setQsLocation(`${selectedCity[0]?.latitude},${selectedCity[0]?.longitude}`)
+  }
+  const handleKeyDownSearchPark = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault()
+      handleSearch()
+    }
+  }
+  const handleKeyDownSearchCity = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault()
+    }
+  }
   const handleSearchNameChange = (selected) => {
     if (selected.length) {
       setInputText(selected[0]?.protectedAreaName)
@@ -365,7 +333,58 @@ export default function FindAPark({ location, data }) {
       setInputText(text)
     }
   }
+  const handleClickClearPark = () => {
+    setCurrentPage(1)
+    setInputText("")
+    setSearchText("")
+  }
+  const handleClickClearCity = () => {
+    setCurrentPage(1)
+    setSelectedCity([])
+    setQsLocation("")
+  }
+  const handleKeyDownClearPark = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault()
+      handleClickClearPark()
+    }
+  }
+  const handleKeyDownClearCity = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault()
+      handleClickClearCity()
+    }
+  }
+  // event handlers - for loading
+  const handleLoadMore = () => {
+    const newPage = +currentPage + 1
+    setCurrentPage(newPage)
+    const pageStart = (newPage - 1) * itemsPerPage
+    axios.get(searchApiUrl, {
+      params: { ...params, _start: pageStart, _limit: itemsPerPage },
+    }).then(resultResponse => {
+      if (resultResponse.status === 200) {
+        const newResults = resultResponse.data.data
+        setSearchResults(prevResults => [...prevResults, ...newResults]);
+      }
+    })
+  }
+  const handleKeyDownLoadMore = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      setIsKeyDownLoadingMore(true);
+      e.preventDefault()
+      handleLoadMore()
+    }
+  }
+  // event handlers - for opening modals
+  const handleClickOpenFilter = () => {
+    setOpenFilter(true)
+  }
+  const handleClickOpenModal = () => {
+    setOpenModal(true)
+  }
 
+  // functions
   const showPosition = (position) => {
     setLatitude(position.coords.latitude)
     setLongitude(position.coords.longitude)
@@ -576,6 +595,8 @@ export default function FindAPark({ location, data }) {
   }, [selectedCity])
 
   // console.log("params:", params)
+  // console.log("inputText:", inputText)
+  // console.log("searchText:", searchText)
   // console.log("selected:", selectedCity)
   // console.log("qsLocation:", qsLocation)
   // console.log("latitude:", latitude)
@@ -601,8 +622,9 @@ export default function FindAPark({ location, data }) {
                 searchText={inputText}
                 handleChange={handleSearchNameChange}
                 handleInputChange={handleSearchNameInputChange}
-                handleClick={handleClickClear}
-                handleKeyDown={handleKeyDownClear}
+                handleKeyDownSearch={handleKeyDownSearchPark}
+                handleClick={handleClickClearPark}
+                handleKeyDown={handleKeyDownClearPark}
               />
               <span className="or-span">or</span>
               <CityNameSearch
@@ -611,8 +633,9 @@ export default function FindAPark({ location, data }) {
                 optionLimit={8}
                 selectedItems={selectedCity}
                 handleChange={setSelectedCity}
-                handleClick={handleClickClear}
-                handleKeyDown={handleKeyDownClear}
+                handleKeyDownSearch={handleKeyDownSearchCity}
+                handleClick={handleClickClearCity}
+                handleKeyDown={handleKeyDownClearCity}
               />
               <Button
                 className="bcgov-normal-blue mobile-search-element-height h50p"
@@ -782,8 +805,10 @@ export default function FindAPark({ location, data }) {
                       (searchResults.length === 0 && (
                         <NoSearchResults
                           hasPark={inputText.length > 0}
+                          hasCity={selectedCity.length > 0}
                           hasFilter={filterSelections.length > 0}
-                          handleClickClearPark={handleClickClear}
+                          handleClickClearPark={handleClickClearPark}
+                          handleClickClearCity={handleClickClearCity}
                           handleClickClearFilter={handleClearFilter}
                         />
                       ))}

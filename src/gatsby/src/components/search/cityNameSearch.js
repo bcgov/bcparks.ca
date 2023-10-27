@@ -20,7 +20,7 @@ const HighlightText = ({ city, input }) => {
 }
 
 const CityNameSearch = ({
-  showPosition, currentLocation, optionLimit, selectedItems, handleChange, handleClick, handleKeyDown
+  showPosition, currentLocation, optionLimit, selectedItems, handleChange, handleKeyDownSearch, handleClick, handleKeyDown
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -109,6 +109,7 @@ const CityNameSearch = ({
         // onSearch={handleSearchName}
         onChange={handleChange}
         onInputChange={handleInputChange}
+        onKeyDown={handleKeyDownSearch}
         placeholder=" "
         className={`has-text--${searchText.length > 0 ? 'true' : 'false'
           } has-error--${(searchText.length > 0 && !hasResult) ? 'true' : 'false'
@@ -126,11 +127,6 @@ const CityNameSearch = ({
               <label htmlFor="city-search-typeahead">
                 Near a city
               </label>
-              {(searchText.length > 0 && !hasResult) &&
-                <small className="helper-text--error">
-                  <b>{searchText}</b> could not be found. Please enter a city in B.C.
-                </small>
-              }
             </Form.Group>
           )
         }}
@@ -159,18 +155,29 @@ const CityNameSearch = ({
       >
         {({ onClear, selected }) =>
           (!!selected.length || searchText?.length > 0) && (
-            <div className="rbt-aux">
-              <ClearButton
-                onClick={() => {
-                  onClear()
-                  handleClick()
-                }}
-                onKeyDown={(e) => {
-                  onClear()
-                  handleKeyDown(e)
-                }}
-              />
-            </div>
+            <>
+              <div className="rbt-aux">
+                <ClearButton
+                  onClick={() => {
+                    onClear()
+                    handleClick()
+                    setSearchText("")
+                  }}
+                  onKeyDown={(e) => {
+                    onClear()
+                    handleKeyDown(e)
+                    setSearchText("")
+                  }}
+                />
+              </div>
+              {!hasResult &&
+                <div className="helper-text-container">
+                  <small className="helper-text">
+                    <b>{searchText}</b> could not be found. Please enter a city in B.C.
+                  </small>
+                </div>
+              }
+            </>
           )
         }
       </Typeahead>
