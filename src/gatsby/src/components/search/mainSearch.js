@@ -3,6 +3,7 @@ import { navigate } from "gatsby"
 import { Button } from "@mui/material"
 import ParkNameSearch from "./parkNameSearch"
 import CityNameSearch from "./cityNameSearch"
+import { useScreenSize } from "../../utils/helpers"
 import "../../styles/search.scss"
 
 const MainSearch = () => {
@@ -83,7 +84,7 @@ const MainSearch = () => {
       <h1 className="text-white">Find a park</h1>
       <div className="parks-search-field">
         <ParkNameSearch
-          optionLimit={8}
+          optionLimit={useScreenSize().width > 767 ? 7 : 4}
           searchText={searchText}
           handleChange={handleSearchNameChange}
           handleInputChange={handleSearchNameInputChange}
@@ -94,7 +95,7 @@ const MainSearch = () => {
         <CityNameSearch
           showPosition={showPosition}
           currentLocation={currentLocation}
-          optionLimit={8}
+          optionLimit={useScreenSize().width > 767 ? 7 : 4}
           selectedItems={selectedCity}
           handleChange={setSelectedCity}
           handleClick={handleClickClear}

@@ -961,6 +961,10 @@ div[class$="-singleValue"] {
 
   .search-results-list {
     padding: 0px !important;
+    .more-result-text {
+      margin-top: 42px;
+      margin-bottom: 0;
+    }
     button.bcgov-normal-blue,
     button.bcgov-normal-white {
       height: 50px;
@@ -1400,6 +1404,7 @@ a.desktop-park-link {
   }
   .dropdown-menu {
     width: 100%;
+    max-height: 360px !important;
     border-top: none;
     border-width: 3px;
     border-color: $colorGreyMed;
@@ -1407,6 +1412,8 @@ a.desktop-park-link {
     margin: 0;
     padding: 16px;
     a.dropdown-item {
+      overflow: visible;
+      white-space: normal;
       margin-top: 16px;
       padding: 0;
       &:first-of-type {
@@ -1417,6 +1424,14 @@ a.desktop-park-link {
         background-color: transparent;
         text-decoration: underline;
       }
+    }
+  }
+  .rbt-aux {
+    width: auto;
+    button.close {
+      width: 44px;
+      height: 44px;
+      margin: 0;
     }
   }
 }

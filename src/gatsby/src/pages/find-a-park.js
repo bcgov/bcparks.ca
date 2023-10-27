@@ -23,6 +23,7 @@ import ParkLinksModal from "../components/search/parkLinksModal"
 import ParkCard from "../components/search/parkCard"
 import ParkNameSearch from "../components/search/parkNameSearch"
 import CityNameSearch from "../components/search/cityNameSearch"
+import { useScreenSize } from "../utils/helpers"
 
 import "../styles/search.scss"
 
@@ -426,7 +427,7 @@ export default function FindAPark({ location, data }) {
     const params = {
       queryText: searchText,
       near: qsLocation,
-      radius: 50
+      radius: 100
     }
     if (selectedAreas.length > 0) {
       params.areas = selectedAreas.map(area => area.value)
@@ -618,7 +619,7 @@ export default function FindAPark({ location, data }) {
             </div>
             <div className="search-header-container--right col-12 col-lg-9">
               <ParkNameSearch
-                optionLimit={8}
+                optionLimit={useScreenSize().width > 767 ? 7 : 4}
                 searchText={inputText}
                 handleChange={handleSearchNameChange}
                 handleInputChange={handleSearchNameInputChange}
@@ -630,7 +631,7 @@ export default function FindAPark({ location, data }) {
               <CityNameSearch
                 showPosition={showPosition}
                 currentLocation={currentLocation}
-                optionLimit={8}
+                optionLimit={useScreenSize().width > 767 ? 7 : 4}
                 selectedItems={selectedCity}
                 handleChange={setSelectedCity}
                 handleKeyDownSearch={handleKeyDownSearchCity}
@@ -815,9 +816,21 @@ export default function FindAPark({ location, data }) {
                     {/* park results cards */}
                     {searchResults && searchResults.length > 0 && (
                       <>
-                        {searchResults.map((r, index) => (
-                          <ParkCard r={r} key={index} />
-                        ))}
+                        {qsLocation.length > 0 ? (
+                          <>
+                            {searchResults.filter(r => r.distance <= 50).map((r, index) => (
+                              <ParkCard r={r} key={index} />
+                            ))}
+                            <h4 className="more-result-text">More results within 100 km radius</h4>
+                            {searchResults.filter(r => r.distance > 50).map((r, index) => (
+                              <ParkCard r={r} key={index} />
+                            ))}
+                          </>
+                        ) : (
+                          searchResults.map((r, index) => (
+                            <ParkCard r={r} key={index} />
+                          ))
+                        )}
                         <div className="load-more-button-container mt32">
                           {totalResults > searchResults.length && (
                             <Button
