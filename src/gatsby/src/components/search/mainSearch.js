@@ -25,7 +25,8 @@ const MainSearch = () => {
     navigate("/find-a-park", {
       state: {
         "searchText": searchText,
-        "qsLocation": `${latitude},${longitude}`
+        "qsLocation": `${latitude},${longitude}`,
+        // "qsCity": JSON.stringify(selectedCity[0])
       },
     })
   }
@@ -62,17 +63,16 @@ const MainSearch = () => {
     if (selectedCity.length) {
       setLatitude(selectedCity[0].latitude)
       setLongitude(selectedCity[0].longitude)
-
-      const updatedCurrentLocation = {
-        strapi_id: 0,
-        cityName: "Current location",
-        latitude: selectedCity[0].latitude,
-        longitude: selectedCity[0].longitude,
-        rank: 1,
-      }
-      setCurrentLocation(updatedCurrentLocation)
     }
   }, [selectedCity])
+
+  useEffect(() => {
+    setCurrentLocation({
+      ...currentLocation,
+      latitude: latitude,
+      longitude: longitude,
+    })
+  }, [latitude, longitude])
 
   // console.log("selected:", selectedCity)
   // console.log("latitude:", latitude)

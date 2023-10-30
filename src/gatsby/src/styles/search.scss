@@ -968,9 +968,6 @@ div[class$="-singleValue"] {
     button.bcgov-normal-blue,
     button.bcgov-normal-white {
       height: 50px;
-      @media screen and (min-width: $mdBreakpoint) {
-        height: 60px;
-      }
     }
   }
 
@@ -1374,31 +1371,9 @@ a.desktop-park-link {
   }
   &.has-error--true {
     input.form-control {
-      border-radius: 4px 4px 0 0;
       &:not([aria-expanded="true"]) {
         border-color: $colorRed;
         border-width: 2px;
-      }
-    }
-    .helper-text-container {
-      width: 100%;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background-color: $colorRed;
-      border-radius: 0 0 4px 4px;
-      text-align: left;
-      z-index: 1;
-      padding: 4px 8px;
-      .helper-text {
-        color: $colorWhite;
-        font-size: 0.75rem;
-      }
-    }
-    & + button.bcgov-normal-blue {
-      margin-top: 48px !important;
-      @media screen and (min-width: $mdBreakpoint) {
-        margin-top: 0 !important;
       }
     }
   }
@@ -1423,6 +1398,10 @@ a.desktop-park-link {
         color: $colorText;
         background-color: transparent;
         text-decoration: underline;
+      }
+      &.no-suggestion-text {
+        cursor: default;
+        text-decoration: none;
       }
     }
   }

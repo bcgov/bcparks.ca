@@ -106,19 +106,20 @@ export const query = graphql`
 `
 
 export default function FindAPark({ location, data }) {
+  // useState and constants
   const menuContent = data?.allStrapiMenu?.nodes || []
+  const searchApiUrl = `${data.site.siteMetadata.apiURL}/api/protected-areas/search`
 
   const [areasCount, setAreasCount] = useState([])
   const [activitiesCount, setActivitiesCount] = useState([])
   const [facilitiesCount, setFacilitiesCount] = useState([])
   const [campingsCount, setCampingsCount] = useState([])
 
+  // constants - filter items
   const sortedActivityItems = orderBy(
     data.allStrapiActivityType.nodes,
     [activity => activity.activityName.toLowerCase()], ["asc"]
   )
-
-  // filter items
   const areaItems = data.allStrapiSearchArea.nodes.map(area => {
     const filterCount = areasCount?.find(
       areaCount => areaCount.key === area.strapi_id
@@ -161,7 +162,7 @@ export default function FindAPark({ location, data }) {
         count: filterCount
       }
     })
-
+  // constants - filter labels
   const activityItemsLabels = {}
   activityItems.forEach(item => {
     activityItemsLabels[item.value] = item.label
@@ -171,7 +172,7 @@ export default function FindAPark({ location, data }) {
     facilityItemsLabels[item.value] = item.label
   })
 
-  // selected filter items state
+  // useState - selected filter items state
   const [qsAreas, setQsAreas, qsAreasInitialized] = useQueryParamString("sa", "")
   const [qsCampingFacilities, setQsCampingFacilities, qsCampingsInitialized] = useQueryParamString("c", "")
   const [qsActivities, setQsActivities, qsActivitiesInitialized] = useQueryParamString("a", "")
@@ -181,6 +182,8 @@ export default function FindAPark({ location, data }) {
   const [searchText, setSearchText, searchTextInitialized] = useQueryParamString(
     "q", location.state?.searchText ? location.state.searchText : ""
   )
+  // const [qsCity, setQsCity, qsCityInitialized] = useQueryParamString(
+  //   "city", location.state?.qsCity ? location.state.qsCity : "")
 
   const [selectedAreas, setSelectedAreas] = useState([])
   const [selectedCampingFacilities, setSelectedCampingFacilities] = useState([])
@@ -210,8 +213,6 @@ export default function FindAPark({ location, data }) {
     longitude: 0,
     rank: 1
   })
-
-  const searchApiUrl = `${data.site.siteMetadata.apiURL}/api/protected-areas/search`
 
   // event handlers
   // event handlers - for filters
@@ -310,6 +311,7 @@ export default function FindAPark({ location, data }) {
     setCurrentPage(1)
     setSearchText(inputText)
     setQsLocation(`${latitude},${longitude}`)
+    // setQsCity(JSON.stringify(selectedCity[0]))
     // setQsLocation(`${selectedCity[0]?.latitude},${selectedCity[0]?.longitude}`)
   }
   const handleKeyDownSearchPark = (e) => {
@@ -343,6 +345,7 @@ export default function FindAPark({ location, data }) {
     setCurrentPage(1)
     setSelectedCity([])
     setQsLocation("")
+    // setQsCity("")
   }
   const handleKeyDownClearPark = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -390,7 +393,23 @@ export default function FindAPark({ location, data }) {
     setLatitude(position.coords.latitude)
     setLongitude(position.coords.longitude)
   }
-
+  const hasParksWithinFifty = (results) => {
+    const newResults = results.filter(r => r.distance <= 50)
+    return newResults.length > 0
+  }
+  const hasParksWithinOneHundred = (results) => {
+    const newResults = results.filter(r => r.distance > 50)
+    return newResults.length > 0
+  }
+  const shortenFilterLabel = (label) => {
+    if (label.includes("-accessible camping")) {
+      return label.replace("-accessible camping", "")
+    } else if (label.includes("camping")) {
+      return label.replace("camping", "")
+    } else {
+      return label
+    }
+  }
   const setFilters = useCallback(() => {
     const filters = []
     selectedAreas.forEach(r => {
@@ -413,19 +432,15 @@ export default function FindAPark({ location, data }) {
     selectedFacilities,
   ])
 
-  const shortenFilterLabel = (label) => {
-    if (label.includes("-accessible camping")) {
-      return label.replace("-accessible camping", "")
-    } else if (label.includes("camping")) {
-      return label.replace("camping", "")
-    } else {
-      return label
-    }
-  }
-
+  // params
   const params = useMemo(() => {
+    // let cityObj
+    // if (qsCity.length) {
+    //   cityObj = JSON.parse(qsCity)
+    // }
     const params = {
       queryText: searchText,
+      // near: `${cityObj?.latitude},${cityObj?.longitude}`,
       near: qsLocation,
       radius: 100
     }
@@ -445,6 +460,7 @@ export default function FindAPark({ location, data }) {
   }, [
     searchText,
     qsLocation,
+    // qsCity,
     selectedAreas,
     selectedCampingFacilities,
     selectedActivities,
@@ -463,6 +479,7 @@ export default function FindAPark({ location, data }) {
     return currentPageInitialized
       && searchTextInitialized
       && qsLocationInitialized
+      // && qsCityInitialized
       && qsCampingsInitialized
       && qsActivitiesInitialized
       && qsAreasInitialized
@@ -473,6 +490,7 @@ export default function FindAPark({ location, data }) {
       && Math.sign(qsFacilities.length) === Math.sign(selectedFacilities.length);
   }
 
+  // useEffect
   useEffect(() => {
     if (queryParamStateSyncComplete()) {
       setIsLoading(true)
@@ -507,6 +525,7 @@ export default function FindAPark({ location, data }) {
     qsAreas,
     searchTextInitialized,
     qsLocationInitialized,
+    // qsCityInitialized,
     currentPageInitialized
   ])
 
@@ -583,22 +602,26 @@ export default function FindAPark({ location, data }) {
     if (selectedCity.length) {
       setLatitude(selectedCity[0].latitude)
       setLongitude(selectedCity[0].longitude)
-
-      const updatedCurrentLocation = {
-        strapi_id: 0,
-        cityName: "Current location",
-        latitude: selectedCity[0].latitude,
-        longitude: selectedCity[0].longitude,
-        rank: 1,
-      }
-      setCurrentLocation(updatedCurrentLocation)
     }
   }, [selectedCity])
 
+  useEffect(() => {
+    setCurrentLocation({
+      ...currentLocation,
+      latitude: latitude,
+      longitude: longitude,
+    })
+  }, [latitude, longitude])
+
   // console.log("params:", params)
+  // console.log("state:", location.state)
   // console.log("inputText:", inputText)
   // console.log("searchText:", searchText)
-  // console.log("selected:", selectedCity)
+  // console.log("selectedCity:", selectedCity)
+  // console.log("qsCity:", qsCity)
+  // if (qsCity.length) {
+  //   console.log("qsCityObj:", JSON.parse(qsCity))
+  // }
   // console.log("qsLocation:", qsLocation)
   // console.log("latitude:", latitude)
   // console.log("longitude:", longitude)
@@ -633,6 +656,7 @@ export default function FindAPark({ location, data }) {
                 currentLocation={currentLocation}
                 optionLimit={useScreenSize().width > 767 ? 7 : 4}
                 selectedItems={selectedCity}
+                // selectedItems={qsCity.length ? [JSON.parse(qsCity)] : selectedCity}
                 handleChange={setSelectedCity}
                 handleKeyDownSearch={handleKeyDownSearchCity}
                 handleClick={handleClickClearCity}
@@ -762,8 +786,12 @@ export default function FindAPark({ location, data }) {
                       {searchText &&
                         <> containing <b>‘{searchText}’</b></>
                       }
-                      {selectedCity.length > 0 &&
-                        <> within <b>50 km</b> radius of <b>{selectedCity[0].cityName}</b></>
+                      {(selectedCity.length > 0 && qsLocation !== "0,0") &&
+                        <>
+                          {" "}within{" "}
+                          <b>{hasParksWithinFifty(searchResults) ? 50 : 100} km </b>
+                          radius of <b>{selectedCity[0].cityName}</b>
+                        </>
                       }
                     </>
                   )}
@@ -816,12 +844,16 @@ export default function FindAPark({ location, data }) {
                     {/* park results cards */}
                     {searchResults && searchResults.length > 0 && (
                       <>
-                        {qsLocation.length > 0 ? (
+                        {(selectedCity.length > 0 && qsLocation !== "0,0") ? (
                           <>
                             {searchResults.filter(r => r.distance <= 50).map((r, index) => (
                               <ParkCard r={r} key={index} />
                             ))}
-                            <h4 className="more-result-text">More results within 100 km radius</h4>
+                            {(hasParksWithinFifty(searchResults) && hasParksWithinOneHundred(searchResults)) &&
+                              <h4 className="more-result-text">
+                                More results within 100 km radius
+                              </h4>
+                            }
                             {searchResults.filter(r => r.distance > 50).map((r, index) => (
                               <ParkCard r={r} key={index} />
                             ))}

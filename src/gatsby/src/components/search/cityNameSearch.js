@@ -140,7 +140,12 @@ const CityNameSearch = ({
                 />
               </MenuItem>
             ))}
-            <MenuItem option={currentLocation} position={cities.length} key={cities.length}>
+            {!hasResult &&
+              <MenuItem position={cities.length} key={cities.length} className="no-suggestion-text">
+                No suggestions, please check your spelling or try a larger city in B.C.
+              </MenuItem>
+            }
+            <MenuItem option={currentLocation} position={cities.length + 1} key={cities.length + 1}>
               <div
                 role="button"
                 tabIndex="0"
@@ -155,29 +160,20 @@ const CityNameSearch = ({
       >
         {({ onClear, selected }) =>
           (!!selected.length || searchText?.length > 0) && (
-            <>
-              <div className="rbt-aux">
-                <ClearButton
-                  onClick={() => {
-                    onClear()
-                    handleClick()
-                    setSearchText("")
-                  }}
-                  onKeyDown={(e) => {
-                    onClear()
-                    handleKeyDown(e)
-                    setSearchText("")
-                  }}
-                />
-              </div>
-              {!hasResult &&
-                <div className="helper-text-container">
-                  <small className="helper-text">
-                    <b>{searchText}</b> could not be found. Please enter a city in B.C.
-                  </small>
-                </div>
-              }
-            </>
+            <div className="rbt-aux">
+              <ClearButton
+                onClick={() => {
+                  onClear()
+                  handleClick()
+                  setSearchText("")
+                }}
+                onKeyDown={(e) => {
+                  onClear()
+                  handleKeyDown(e)
+                  setSearchText("")
+                }}
+              />
+            </div>
           )
         }
       </Typeahead>
