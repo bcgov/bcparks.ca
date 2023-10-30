@@ -106,7 +106,6 @@ const CityNameSearch = ({
         labelKey={city => `${city.cityName}`}
         options={cities.slice(0, optionLimit)}
         selected={selectedItems}
-        // onSearch={handleSearchName}
         onChange={handleChange}
         onInputChange={handleInputChange}
         onKeyDown={handleKeyDownSearch}

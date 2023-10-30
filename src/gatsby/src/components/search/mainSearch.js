@@ -26,7 +26,7 @@ const MainSearch = () => {
       state: {
         "searchText": searchText,
         "qsLocation": `${latitude},${longitude}`,
-        // "qsCity": JSON.stringify(selectedCity[0])
+        "qsCity": selectedCity
       },
     })
   }
@@ -67,17 +67,12 @@ const MainSearch = () => {
   }, [selectedCity])
 
   useEffect(() => {
-    setCurrentLocation({
+    setCurrentLocation(currentLocation => ({
       ...currentLocation,
       latitude: latitude,
       longitude: longitude,
-    })
+    }))
   }, [latitude, longitude])
-
-  // console.log("selected:", selectedCity)
-  // console.log("latitude:", latitude)
-  // console.log("longitude:", longitude)
-  // console.log("currentLocation:", currentLocation)
 
   return (
     <div className="parks-search-wrapper">

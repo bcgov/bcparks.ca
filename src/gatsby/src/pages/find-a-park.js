@@ -182,8 +182,7 @@ export default function FindAPark({ location, data }) {
   const [searchText, setSearchText, searchTextInitialized] = useQueryParamString(
     "q", location.state?.searchText ? location.state.searchText : ""
   )
-  // const [qsCity, setQsCity, qsCityInitialized] = useQueryParamString(
-  //   "city", location.state?.qsCity ? location.state.qsCity : "")
+  const [qsCity, setQsCity] = useState(location.state?.qsCity ? location.state.qsCity : [])
 
   const [selectedAreas, setSelectedAreas] = useState([])
   const [selectedCampingFacilities, setSelectedCampingFacilities] = useState([])
@@ -311,8 +310,6 @@ export default function FindAPark({ location, data }) {
     setCurrentPage(1)
     setSearchText(inputText)
     setQsLocation(`${latitude},${longitude}`)
-    // setQsCity(JSON.stringify(selectedCity[0]))
-    // setQsLocation(`${selectedCity[0]?.latitude},${selectedCity[0]?.longitude}`)
   }
   const handleKeyDownSearchPark = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -345,7 +342,7 @@ export default function FindAPark({ location, data }) {
     setCurrentPage(1)
     setSelectedCity([])
     setQsLocation("")
-    // setQsCity("")
+    setQsCity([])
   }
   const handleKeyDownClearPark = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -434,13 +431,8 @@ export default function FindAPark({ location, data }) {
 
   // params
   const params = useMemo(() => {
-    // let cityObj
-    // if (qsCity.length) {
-    //   cityObj = JSON.parse(qsCity)
-    // }
     const params = {
       queryText: searchText,
-      // near: `${cityObj?.latitude},${cityObj?.longitude}`,
       near: qsLocation,
       radius: 100
     }
@@ -606,28 +598,18 @@ export default function FindAPark({ location, data }) {
   }, [selectedCity])
 
   useEffect(() => {
-    setCurrentLocation({
+    setCurrentLocation(currentLocation => ({
       ...currentLocation,
       latitude: latitude,
       longitude: longitude,
-    })
+    }))
   }, [latitude, longitude])
 
-  // console.log("params:", params)
-  // console.log("state:", location.state)
-  // console.log("inputText:", inputText)
-  // console.log("searchText:", searchText)
-  // console.log("selectedCity:", selectedCity)
-  // console.log("qsCity:", qsCity)
-  // if (qsCity.length) {
-  //   console.log("qsCityObj:", JSON.parse(qsCity))
-  // }
-  // console.log("qsLocation:", qsLocation)
-  // console.log("latitude:", latitude)
-  // console.log("longitude:", longitude)
-  // console.log("currentLocation:", currentLocation)
-  // console.log("totalResults:", totalResults)
-
+  useEffect(() => {
+    if (qsCity.length > 0) {
+      setSelectedCity([qsCity[0]])
+    }
+  }, [qsCity])
 
   return (
     <>
@@ -655,8 +637,7 @@ export default function FindAPark({ location, data }) {
                 showPosition={showPosition}
                 currentLocation={currentLocation}
                 optionLimit={useScreenSize().width > 767 ? 7 : 4}
-                selectedItems={selectedCity}
-                // selectedItems={qsCity.length ? [JSON.parse(qsCity)] : selectedCity}
+                selectedItems={qsCity.length > 0 ? qsCity : selectedCity}
                 handleChange={setSelectedCity}
                 handleKeyDownSearch={handleKeyDownSearchCity}
                 handleClick={handleClickClearCity}
@@ -786,7 +767,7 @@ export default function FindAPark({ location, data }) {
                       {searchText &&
                         <> containing <b>‘{searchText}’</b></>
                       }
-                      {(selectedCity.length > 0 && qsLocation !== "0,0") &&
+                      {(selectedCity.length > 0 && (qsLocation !== "" && qsLocation !== "0,0")) &&
                         <>
                           {" "}within{" "}
                           <b>{hasParksWithinFifty(searchResults) ? 50 : 100} km </b>
@@ -844,7 +825,7 @@ export default function FindAPark({ location, data }) {
                     {/* park results cards */}
                     {searchResults && searchResults.length > 0 && (
                       <>
-                        {(selectedCity.length > 0 && qsLocation !== "0,0") ? (
+                        {(selectedCity.length > 0 && (qsLocation !== "" && qsLocation !== "0,0")) ? (
                           <>
                             {searchResults.filter(r => r.distance <= 50).map((r, index) => (
                               <ParkCard r={r} key={index} />
