@@ -24,28 +24,44 @@ const CityNameSearch = ({
 }) => {
   const data = useStaticQuery(graphql`
     query {
-			allStrapiSearchCity(
-				sort: {rank: ASC},
-				filter: {rank: {lte: 4}}
-			) {
-				nodes {
-					strapi_id
-					cityName
-					latitude
-					longitude
-					rank
-				}
-			}
+      allStrapiSearchCity(
+        sort: {rank: ASC},
+        filter: {rank: {lte: 4}}
+      ) {
+        nodes {
+          strapi_id
+          cityName
+          latitude
+          longitude
+          rank
+        }
+      }
     }
   `)
 
   // useState and constants
-  const [searchText, setSearchText] = useState("")
+  const [cityText, setCityText] = useState("")
   const [hasResult, setHasResult] = useState(false)
   const [hasPermission, setHasPermission] = useState(true)
   const cities = data?.allStrapiSearchCity?.nodes || []
 
   // functions
+  const cityOptions = (optionLimit) => {
+    const cityTextLower = cityText.toLowerCase()
+    const filteredCities = cities.filter(
+      city => city.cityName.toLowerCase().includes(cityTextLower)
+    )
+    const sortedCities = filteredCities.slice().sort((a, b) => {
+      if (a.cityName.toLowerCase().startsWith(cityTextLower) && !b.cityName.toLowerCase().startsWith(cityTextLower)) {
+        return -1
+      } else if (!a.cityName.toLowerCase().startsWith(cityTextLower) && b.cityName.toLowerCase().startsWith(cityTextLower)) {
+        return 1
+      } else {
+        return a.cityName.localeCompare(b.cityName)
+      }
+    })
+    return sortedCities.slice(0, optionLimit)
+  }
   const checkResult = (text) => {
     const results = cities.filter((city) =>
       city.cityName.toLowerCase().includes(text.toLowerCase())
@@ -79,7 +95,7 @@ const CityNameSearch = ({
   // event handlers
   const handleInputChange = (text) => {
     if (text.length) {
-      setSearchText(text)
+      setCityText(text)
       checkResult(text)
     }
   }
@@ -104,14 +120,14 @@ const CityNameSearch = ({
         id="city-search-typehead"
         minLength={1}
         labelKey={city => `${city.cityName}`}
-        options={cities.slice(0, optionLimit)}
+        options={cityOptions(optionLimit)}
         selected={selectedItems}
         onChange={handleChange}
         onInputChange={handleInputChange}
         onKeyDown={handleKeyDownSearch}
         placeholder=" "
-        className={`has-text--${searchText.length > 0 ? 'true' : 'false'
-          } has-error--${(searchText.length > 0 && !hasResult) ? 'true' : 'false'
+        className={`has-text--${cityText.length > 0 ? 'true' : 'false'
+          } has-error--${(cityText.length > 0 && !hasResult) ? 'true' : 'false'
           } city-search-typeahead`}
         renderInput={({ inputRef, referenceElementRef, ...inputProps }) => {
           return (
@@ -135,7 +151,7 @@ const CityNameSearch = ({
               <MenuItem option={city} position={index} key={index}>
                 <HighlightText
                   city={city.cityName}
-                  input={searchText}
+                  input={cityText}
                 />
               </MenuItem>
             ))}
@@ -158,18 +174,18 @@ const CityNameSearch = ({
         )}
       >
         {({ onClear, selected }) =>
-          (!!selected.length || searchText?.length > 0) && (
+          (!!selected.length || cityText?.length > 0) && (
             <div className="rbt-aux">
               <ClearButton
                 onClick={() => {
                   onClear()
                   handleClick()
-                  setSearchText("")
+                  setCityText("")
                 }}
                 onKeyDown={(e) => {
                   onClear()
                   handleKeyDown(e)
-                  setSearchText("")
+                  setCityText("")
                 }}
               />
             </div>

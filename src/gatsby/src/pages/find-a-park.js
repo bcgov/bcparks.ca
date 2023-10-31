@@ -182,6 +182,7 @@ export default function FindAPark({ location, data }) {
   const [filterSelections, setFilterSelections] = useState([])
   const [searchResults, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(0)
+  const [totalResultsWithinFifty, setTotalResultsWithinFifty] = useState(0)
 
   const itemsPerPage = 10
   const [currentPage, setCurrentPage, currentPageInitialized] = useQueryParamString("p", 1)
@@ -489,10 +490,22 @@ export default function FindAPark({ location, data }) {
           setSearchResults([])
           setTotalResults(0)
         }
+      }).finally(() => {
+        setIsLoading(false)
       })
-        .finally(() => {
-          setIsLoading(false)
-        })
+      // get total number of results within 50 km
+      axios.get(searchApiUrl, {
+        params: { ...params, radius: 50, _start: 0, _limit: 0 },
+      }).then(resultResponse => {
+        if (resultResponse.status === 200) {
+          const total = parseInt(resultResponse.data.meta.pagination.total, 10)
+          setTotalResultsWithinFifty(total)
+        } else {
+          setTotalResultsWithinFifty(0)
+        }
+      }).finally(() => {
+        setIsLoading(false)
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -747,7 +760,11 @@ export default function FindAPark({ location, data }) {
                   {isLoading && isActiveSearch && <>Searching...</>}
                   {!isLoading && isActiveSearch && (
                     <>
-                      <b>{totalResults}</b>
+                      <b>
+                        {selectedCity.length > 0 && (qsLocation !== "" && qsLocation !== "0,0") && hasParksWithinFifty(searchResults) ?
+                          totalResultsWithinFifty : totalResults
+                        }
+                      </b>
                       {totalResults === 1 ? " result" : " results"}
                       {searchText &&
                         <> containing <b>‘{searchText}’</b></>
