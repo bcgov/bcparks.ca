@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { graphql, useStaticQuery } from "gatsby"
 import { Typeahead, ClearButton, Menu, MenuItem } from "react-bootstrap-typeahead"
 import { Form } from "react-bootstrap"
@@ -43,7 +43,9 @@ const CityNameSearch = ({
   const [cityText, setCityText] = useState("")
   const [hasResult, setHasResult] = useState(false)
   const [hasPermission, setHasPermission] = useState(true)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const cities = data?.allStrapiSearchCity?.nodes || []
+  const typeaheadRef = useRef(null)
 
   // functions
   const cityOptions = (optionLimit) => {
@@ -60,7 +62,7 @@ const CityNameSearch = ({
         return a.cityName.localeCompare(b.cityName)
       }
     })
-    return sortedCities.slice(0, optionLimit)
+    return cityText ? sortedCities.slice(0, optionLimit) : []
   }
   const checkResult = (text) => {
     const results = cities.filter((city) =>
@@ -112,11 +114,28 @@ const CityNameSearch = ({
       handleClickGetLocation()
     }
   }
+  const handleClickInput = () => {
+    setIsDropdownOpen(!isDropdownOpen)
+  }
+
+  // useEffect
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (typeaheadRef.current && !typeaheadRef.current.inputNode.contains(event.target)) {
+        setIsDropdownOpen(false)
+      }
+    }
+    document.body.addEventListener("click", handleClickOutside)
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside)
+    }
+  }, [])
 
   return (
     <>
       {!hasPermission && <PermissionToast />}
       <Typeahead
+        ref={typeaheadRef}
         id="city-search-typehead"
         minLength={1}
         labelKey={city => `${city.cityName}`}
@@ -125,6 +144,8 @@ const CityNameSearch = ({
         onChange={handleChange}
         onInputChange={handleInputChange}
         onKeyDown={handleKeyDownSearch}
+        open={isDropdownOpen}
+        onToggle={(isOpen) => setIsDropdownOpen(isOpen)}
         placeholder=" "
         className={`has-text--${cityText.length > 0 ? 'true' : 'false'
           } has-error--${(cityText.length > 0 && !hasResult) ? 'true' : 'false'
@@ -138,6 +159,7 @@ const CityNameSearch = ({
                   inputRef(node)
                   referenceElementRef(node)
                 }}
+                onClick={handleClickInput}
               />
               <label htmlFor="city-search-typeahead">
                 Near a city
@@ -155,7 +177,7 @@ const CityNameSearch = ({
                 />
               </MenuItem>
             ))}
-            {!hasResult &&
+            {(!hasResult && cityText) &&
               <MenuItem position={cities.length} key={cities.length} className="no-suggestion-text">
                 No suggestions, please check your spelling or try a larger city in B.C.
               </MenuItem>
