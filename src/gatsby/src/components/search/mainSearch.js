@@ -22,7 +22,7 @@ const MainSearch = () => {
 
   // functions
   const searchParkFilter = () => {
-    navigate("/find-a-park", {
+    navigate(`/find-a-park/?q=${searchText}&l=${latitude},${longitude}`, {
       state: {
         "searchText": searchText,
         "qsLocation": `${latitude},${longitude}`,

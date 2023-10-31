@@ -68,18 +68,6 @@ export const query = graphql`
         isCamping
       }
     }
-    allStrapiSearchCity(
-      sort: {rank: ASC},
-      filter: {rank: {lte: 4}}
-    ) {
-      nodes {
-        strapi_id
-        cityName
-        latitude
-        longitude
-        rank
-      }
-    }
     allStrapiMenu(
       sort: {order: ASC},
       filter: {show: {eq: true}}
@@ -452,7 +440,6 @@ export default function FindAPark({ location, data }) {
   }, [
     searchText,
     qsLocation,
-    // qsCity,
     selectedAreas,
     selectedCampingFacilities,
     selectedActivities,
@@ -471,7 +458,6 @@ export default function FindAPark({ location, data }) {
     return currentPageInitialized
       && searchTextInitialized
       && qsLocationInitialized
-      // && qsCityInitialized
       && qsCampingsInitialized
       && qsActivitiesInitialized
       && qsAreasInitialized
@@ -517,7 +503,6 @@ export default function FindAPark({ location, data }) {
     qsAreas,
     searchTextInitialized,
     qsLocationInitialized,
-    // qsCityInitialized,
     currentPageInitialized
   ])
 
