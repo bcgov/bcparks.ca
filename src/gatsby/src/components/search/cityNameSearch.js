@@ -51,7 +51,7 @@ const CityNameSearch = ({
   const cityOptions = (optionLimit) => {
     const cityTextLower = cityText.toLowerCase()
     const filteredCities = cities.filter(city =>
-      city.cityName.toLowerCase().startsWith(cityTextLower) || city.cityName.toLowerCase().includes(cityTextLower)
+      city.cityName.toLowerCase().startsWith(cityTextLower) || city.cityName.toLowerCase().includes(` ${cityTextLower}`)
     )
     const sortedCities = filteredCities.slice().sort((a, b) => {
       if (a.cityName.toLowerCase().startsWith(cityTextLower) && !b.cityName.toLowerCase().startsWith(cityTextLower)) {
@@ -69,7 +69,7 @@ const CityNameSearch = ({
   const checkResult = (text) => {
     const cityTextLower = text.toLowerCase()
     const results = cities.filter(city =>
-      city.cityName.toLowerCase().startsWith(cityTextLower) || city.cityName.toLowerCase().includes(cityTextLower)
+      city.cityName.toLowerCase().startsWith(cityTextLower) || city.cityName.toLowerCase().includes(` ${cityTextLower}`)
     )
     if (results.length > 0) {
       setHasResult(true)
