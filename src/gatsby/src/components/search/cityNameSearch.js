@@ -50,14 +50,16 @@ const CityNameSearch = ({
   // functions
   const cityOptions = (optionLimit) => {
     const cityTextLower = cityText.toLowerCase()
-    const filteredCities = cities.filter(
-      city => city.cityName.toLowerCase().includes(cityTextLower)
+    const filteredCities = cities.filter(city =>
+      city.cityName.toLowerCase().startsWith(cityTextLower) || city.cityName.toLowerCase().includes(cityTextLower)
     )
     const sortedCities = filteredCities.slice().sort((a, b) => {
       if (a.cityName.toLowerCase().startsWith(cityTextLower) && !b.cityName.toLowerCase().startsWith(cityTextLower)) {
         return -1
       } else if (!a.cityName.toLowerCase().startsWith(cityTextLower) && b.cityName.toLowerCase().startsWith(cityTextLower)) {
         return 1
+      } else if (b.rank !== a.rank) {
+        return b.rank > a.rank ? -1 : 1
       } else {
         return a.cityName.localeCompare(b.cityName)
       }
@@ -65,8 +67,9 @@ const CityNameSearch = ({
     return cityText ? sortedCities.slice(0, optionLimit) : []
   }
   const checkResult = (text) => {
-    const results = cities.filter((city) =>
-      city.cityName.toLowerCase().includes(text.toLowerCase())
+    const cityTextLower = text.toLowerCase()
+    const results = cities.filter(city =>
+      city.cityName.toLowerCase().startsWith(cityTextLower) || city.cityName.toLowerCase().includes(cityTextLower)
     )
     if (results.length > 0) {
       setHasResult(true)
