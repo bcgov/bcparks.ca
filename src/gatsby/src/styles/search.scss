@@ -1416,6 +1416,14 @@ a.desktop-park-link {
       height: 44px;
       margin: 0;
     }
+    .spinner-border {
+      width: 32px;
+      height: 32px;
+      color: rgba($colorGreyMed, .5);
+      border-right-color: rgba($colorGreyMed, .2);
+      border-width: 4px;
+      margin-right: 6px;
+    }
   }
 }
 

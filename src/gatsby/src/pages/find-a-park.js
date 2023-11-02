@@ -187,6 +187,7 @@ export default function FindAPark({ location, data }) {
   const itemsPerPage = 10
   const [currentPage, setCurrentPage, currentPageInitialized] = useQueryParamString("p", 1)
   const [isLoading, setIsLoading] = useState(true)
+  const [isCityNameLoading, setIsCityNameLoading] = useState(false)
   const [isKeyDownLoadingMore, setIsKeyDownLoadingMore] = useState(false)
 
   const [openFilter, setOpenFilter] = useState(false)
@@ -297,7 +298,9 @@ export default function FindAPark({ location, data }) {
   // event handlers - for searching
   const handleSearch = () => {
     setCurrentPage(1)
-    setSearchText(inputText)
+    if (searchText === "") {
+      setSearchText(inputText)
+    }
   }
   const handleKeyDownSearchPark = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -305,15 +308,9 @@ export default function FindAPark({ location, data }) {
       handleSearch()
     }
   }
-  const handleKeyDownSearchCity = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault()
-    }
-  }
   const handleSearchNameChange = (selected) => {
     if (selected.length) {
-      setInputText(selected[0]?.protectedAreaName)
-      handleSearch()
+      setSearchText(selected[0]?.protectedAreaName)
     }
   }
   const handleSearchNameInputChange = (text) => {
@@ -379,6 +376,7 @@ export default function FindAPark({ location, data }) {
   const showPosition = (position) => {
     setLatitude(position.coords.latitude)
     setLongitude(position.coords.longitude)
+    setIsCityNameLoading(false)
   }
   const hasParksWithinFifty = (results) => {
     const newResults = results.filter(r => r.distance <= 50)
@@ -590,19 +588,31 @@ export default function FindAPark({ location, data }) {
   }, [isKeyDownLoadingMore, searchResults])
 
   useEffect(() => {
+    if (searchText) {
+      handleSearch()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchText])
+
+  useEffect(() => {
     if (selectedCity.length) {
       setLatitude(selectedCity[0].latitude)
       setLongitude(selectedCity[0].longitude)
+      if (selectedCity[0].strapi_id === 0 && qsCity.length === 0) {
+        setIsCityNameLoading(true)
+      }
     }
-  }, [selectedCity])
+  }, [selectedCity, qsCity.length])
 
   useEffect(() => {
     setCurrentLocation(currentLocation => ({
       ...currentLocation,
       latitude: latitude,
-      longitude: longitude,
+      longitude: longitude
     }))
-    setQsLocation(`${latitude},${longitude}`)
+    if (qsCity.length === 0) {
+      setQsLocation(`${latitude},${longitude}`)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [latitude, longitude])
 
@@ -635,12 +645,12 @@ export default function FindAPark({ location, data }) {
               />
               <span className="or-span">or</span>
               <CityNameSearch
+                isCityNameLoading={isCityNameLoading}
                 showPosition={showPosition}
                 currentLocation={currentLocation}
                 optionLimit={useScreenSize().width > 767 ? 7 : 4}
                 selectedItems={qsCity.length > 0 ? qsCity : selectedCity}
                 handleChange={setSelectedCity}
-                handleKeyDownSearch={handleKeyDownSearchCity}
                 handleClick={handleClickClearCity}
                 handleKeyDown={handleKeyDownClearCity}
               />

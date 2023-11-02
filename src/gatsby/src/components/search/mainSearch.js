@@ -10,6 +10,7 @@ const MainSearch = () => {
   // useState
   const [inputText, setInputText] = useState("")
   const [searchText, setSearchText] = useState("")
+  const [isCityNameLoading, setIsCityNameLoading] = useState(false)
   const [selectedCity, setSelectedCity] = useState([])
   const [latitude, setLatitude] = useState(0)
   const [longitude, setLongitude] = useState(0)
@@ -23,11 +24,12 @@ const MainSearch = () => {
 
   // functions
   const searchParkFilter = () => {
-    const params = {
-      l: `${latitude},${longitude}`,
-      q: searchText || inputText,
-    }
-    navigate(`/find-a-park/?l=${params.l}&q=${params.q}`, {
+    // const params = {
+    //   l: `${latitude},${longitude}`,
+    //   q: searchText || inputText,
+    // }
+    // navigate(`/find-a-park/?l=${params.l}&q=${params.q}`, {
+    navigate(`/find-a-park`, {
       state: {
         "searchText": searchText || inputText,
         "qsLocation": `${latitude},${longitude}`,
@@ -38,6 +40,7 @@ const MainSearch = () => {
   const showPosition = (position) => {
     setLatitude(position.coords.latitude)
     setLongitude(position.coords.longitude)
+    setIsCityNameLoading(false)
   }
 
   // event handlers
@@ -49,6 +52,12 @@ const MainSearch = () => {
   const handleSearchNameInputChange = (text) => {
     if (text.length) {
       setInputText(text)
+    }
+  }
+  const handleKeyDownSearchPark = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault()
+      searchParkFilter()
     }
   }
   const handleClickClear = () => {
@@ -68,12 +77,16 @@ const MainSearch = () => {
     if (searchText || (latitude !== 0 && longitude !== 0)) {
       searchParkFilter()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText, latitude, longitude])
 
   useEffect(() => {
     if (selectedCity.length) {
       setLatitude(selectedCity[0].latitude)
       setLongitude(selectedCity[0].longitude)
+      if (selectedCity[0].strapi_id === 0) {
+        setIsCityNameLoading(true)
+      }
     }
   }, [selectedCity])
 
@@ -94,12 +107,13 @@ const MainSearch = () => {
           searchText={inputText}
           handleChange={handleSearchNameChange}
           handleInputChange={handleSearchNameInputChange}
-          // handleKeyDownSearch={handleKeyDownSearchPark}
+          handleKeyDownSearch={handleKeyDownSearchPark}
           handleClick={handleClickClear}
           handleKeyDown={handleKeyDownClear}
         />
         <span className="or-span">or</span>
         <CityNameSearch
+          isCityNameLoading={isCityNameLoading}
           showPosition={showPosition}
           currentLocation={currentLocation}
           optionLimit={useScreenSize().width > 767 ? 7 : 4}

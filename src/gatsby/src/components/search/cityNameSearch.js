@@ -20,7 +20,7 @@ const HighlightText = ({ city, input }) => {
 }
 
 const CityNameSearch = ({
-  showPosition, currentLocation, optionLimit, selectedItems, handleChange, handleKeyDownSearch, handleClick, handleKeyDown
+  isCityNameLoading, showPosition, currentLocation, optionLimit, selectedItems, handleChange, handleClick, handleKeyDown
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -141,12 +141,12 @@ const CityNameSearch = ({
         ref={typeaheadRef}
         id="city-search-typehead"
         minLength={1}
+        isLoading={isCityNameLoading}
         labelKey={city => `${city.cityName}`}
         options={cityOptions(optionLimit)}
         selected={selectedItems}
         onChange={handleChange}
         onInputChange={handleInputChange}
-        onKeyDown={handleKeyDownSearch}
         open={isDropdownOpen}
         onToggle={(isOpen) => setIsDropdownOpen(isOpen)}
         placeholder=" "
