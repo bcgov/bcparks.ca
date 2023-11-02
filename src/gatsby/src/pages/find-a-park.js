@@ -298,7 +298,6 @@ export default function FindAPark({ location, data }) {
   const handleSearch = () => {
     setCurrentPage(1)
     setSearchText(inputText)
-    setQsLocation(`${latitude},${longitude}`)
   }
   const handleKeyDownSearchPark = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -594,7 +593,6 @@ export default function FindAPark({ location, data }) {
     if (selectedCity.length) {
       setLatitude(selectedCity[0].latitude)
       setLongitude(selectedCity[0].longitude)
-      setQsLocation(`${selectedCity[0].latitude},${selectedCity[0].longitude}`)
     }
   }, [selectedCity])
 
@@ -604,6 +602,8 @@ export default function FindAPark({ location, data }) {
       latitude: latitude,
       longitude: longitude,
     }))
+    setQsLocation(`${latitude},${longitude}`)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [latitude, longitude])
 
   useEffect(() => {

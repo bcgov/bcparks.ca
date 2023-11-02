@@ -8,6 +8,7 @@ import "../../styles/search.scss"
 
 const MainSearch = () => {
   // useState
+  const [inputText, setInputText] = useState("")
   const [searchText, setSearchText] = useState("")
   const [selectedCity, setSelectedCity] = useState([])
   const [latitude, setLatitude] = useState(0)
@@ -23,12 +24,12 @@ const MainSearch = () => {
   // functions
   const searchParkFilter = () => {
     const params = {
-      q: searchText,
-      l: `${latitude},${longitude}`
+      l: `${latitude},${longitude}`,
+      q: searchText || inputText,
     }
-    navigate(`/find-a-park/?q=${params.q}&l=${params.l}`, {
+    navigate(`/find-a-park/?l=${params.l}&q=${params.q}`, {
       state: {
-        "searchText": searchText,
+        "searchText": searchText || inputText,
         "qsLocation": `${latitude},${longitude}`,
         "qsCity": selectedCity
       },
@@ -43,15 +44,15 @@ const MainSearch = () => {
   const handleSearchNameChange = (selected) => {
     if (selected.length) {
       setSearchText(selected[0]?.protectedAreaName)
-      searchParkFilter()
     }
   }
   const handleSearchNameInputChange = (text) => {
     if (text.length) {
-      setSearchText(text)
+      setInputText(text)
     }
   }
   const handleClickClear = () => {
+    setInputText("")
     setSearchText("")
     setSelectedCity([])
   }
@@ -64,6 +65,12 @@ const MainSearch = () => {
 
   // useEffect
   useEffect(() => {
+    if (searchText || (latitude !== 0 && longitude !== 0)) {
+      searchParkFilter()
+    }
+  }, [searchText, latitude, longitude])
+
+  useEffect(() => {
     if (selectedCity.length) {
       setLatitude(selectedCity[0].latitude)
       setLongitude(selectedCity[0].longitude)
@@ -74,7 +81,7 @@ const MainSearch = () => {
     setCurrentLocation(currentLocation => ({
       ...currentLocation,
       latitude: latitude,
-      longitude: longitude,
+      longitude: longitude
     }))
   }, [latitude, longitude])
 
@@ -84,9 +91,10 @@ const MainSearch = () => {
       <div className="parks-search-field">
         <ParkNameSearch
           optionLimit={useScreenSize().width > 767 ? 7 : 4}
-          searchText={searchText}
+          searchText={inputText}
           handleChange={handleSearchNameChange}
           handleInputChange={handleSearchNameInputChange}
+          // handleKeyDownSearch={handleKeyDownSearchPark}
           handleClick={handleClickClear}
           handleKeyDown={handleKeyDownClear}
         />
