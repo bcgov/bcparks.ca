@@ -1,3 +1,7 @@
+variable "environment" {
+  description = "AWS workload account env (e.g. dev, test, prod, tools)"
+}
+
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "bcparks-opensearch-${var.environment}-terraform-remote-state"
   force_destroy = true
