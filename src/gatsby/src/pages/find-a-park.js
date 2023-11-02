@@ -329,6 +329,8 @@ export default function FindAPark({ location, data }) {
   }
   const handleClickClearCity = () => {
     setCurrentPage(1)
+    setLatitude(0)
+    setLongitude(0)
     setSelectedCity([])
     setQsLocation("")
     setQsCity([])
@@ -592,6 +594,7 @@ export default function FindAPark({ location, data }) {
     if (selectedCity.length) {
       setLatitude(selectedCity[0].latitude)
       setLongitude(selectedCity[0].longitude)
+      setQsLocation(`${selectedCity[0].latitude},${selectedCity[0].longitude}`)
     }
   }, [selectedCity])
 
