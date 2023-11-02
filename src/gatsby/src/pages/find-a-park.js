@@ -819,9 +819,12 @@ export default function FindAPark({ location, data }) {
                           hasPark={inputText.length > 0}
                           hasCity={selectedCity.length > 0}
                           hasFilter={filterSelections.length > 0}
-                          handleClickClearPark={handleClickClearPark}
                           handleClickClearCity={handleClickClearCity}
+                          handleKeyDownClearCity={handleKeyDownClearCity}
+                          handleClickClearPark={handleClickClearPark}
+                          handleKeyDownClearPark={handleKeyDownClearPark}
                           handleClickClearFilter={handleClearFilter}
+                          handleKeyDownClearFilter={handleKeyDownClearFilter}
                         />
                       ))}
                     {/* park results cards */}

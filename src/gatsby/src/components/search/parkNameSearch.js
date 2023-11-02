@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import axios from "axios"
 import { graphql, useStaticQuery } from "gatsby"
 import { AsyncTypeahead, ClearButton } from "react-bootstrap-typeahead"
@@ -34,6 +34,7 @@ const ParkNameSearch = ({
   // useState and constants
   const [options, setOptions] = useState([])
   const [isSearchNameLoading, setIsSearchNameLoading] = useState(false)
+  const typeaheadRef = useRef(null)
 
   // event handlers
   const SEARCH_NAME_URI =
@@ -46,6 +47,7 @@ const ParkNameSearch = ({
     `)
       setOptions(response.data.data)
     } catch (error) {
+      setOptions([])
       console.error('Error fetching search names:', error)
     } finally {
       setIsSearchNameLoading(false)
@@ -54,12 +56,19 @@ const ParkNameSearch = ({
 
   // useEffects
   useEffect(() => {
-    handleSearchName(searchText)
+    if (searchText.length > 0) {
+      handleSearchName(searchText)
+    } else {
+      // clear input field if there is no search text
+      typeaheadRef.current.clear()
+      setOptions([])
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText])
 
   return (
     <AsyncTypeahead
+      ref={typeaheadRef}
       id="park-search-typehead"
       minLength={1}
       filterBy={() => true}

@@ -6,7 +6,15 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import "../../styles/search.scss"
 
 const NoSearchResults = ({
-  hasCity, hasPark, hasFilter, handleClickClearCity, handleClickClearPark, handleClickClearFilter
+  hasCity,
+  hasPark,
+  hasFilter,
+  handleClickClearCity,
+  handleKeyDownClearCity,
+  handleClickClearPark,
+  handleKeyDownClearPark,
+  handleClickClearFilter,
+  handleKeyDownClearFilter,
 }) => {
   return (
     <div className="no-results-container">
@@ -21,21 +29,39 @@ const NoSearchResults = ({
       <ul>
         {hasCity && (
           <li>
-            <button className="btn btn-link" onClick={handleClickClearCity}>
+            <button
+              tabIndex={0}
+              className="btn btn-link"
+              aria-label="Remove city name"
+              onClick={handleClickClearCity}
+              onKeyDown={handleKeyDownClearCity}
+            >
               Remove city
             </button>
           </li>
         )}
         {hasPark && (
           <li>
-            <button className="btn btn-link" onClick={handleClickClearPark}>
+            <button
+              tabIndex={0}
+              className="btn btn-link"
+              aria-label="Remove park name" 
+              onClick={handleClickClearPark}
+              onKeyDown={handleKeyDownClearPark}
+            >
               Remove park name
             </button>
           </li>
         )}
         {hasFilter && (
           <li>
-            <button className="btn btn-link" onClick={handleClickClearFilter}>
+            <button
+              tabIndex={0}
+              className="btn btn-link"
+              aria-label="Clear filters" 
+              onClick={handleClickClearFilter}
+              onKeyDown={handleKeyDownClearFilter}
+            >
               Clear filters
             </button>
           </li>

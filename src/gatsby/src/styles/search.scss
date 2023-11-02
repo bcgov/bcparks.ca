@@ -1256,6 +1256,10 @@ div[class$="-singleValue"] {
   }
   button {
     margin-bottom: 0;
+    &:focus-visible {
+      outline-offset: 1px;
+      outline: -webkit-focus-ring-color auto 1px;
+    }
   }
 }
 
