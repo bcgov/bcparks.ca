@@ -68,6 +68,18 @@ export const query = graphql`
         isCamping
       }
     }
+    allStrapiSearchCity(
+      sort: {rank: ASC},
+      filter: {rank: {lte: 4}}
+    ) {
+      nodes {
+        strapi_id
+        cityName
+        latitude
+        longitude
+        rank
+      }
+    }
     allStrapiMenu(
       sort: {order: ASC},
       filter: {show: {eq: true}}
@@ -96,6 +108,7 @@ export const query = graphql`
 export default function FindAPark({ location, data }) {
   // useState and constants
   const menuContent = data?.allStrapiMenu?.nodes || []
+  const searchCities = data?.allStrapiSearchCity?.nodes || []
   const searchApiUrl = `${data.site.siteMetadata.apiURL}/api/protected-areas/search`
 
   const [areasCount, setAreasCount] = useState([])
@@ -166,7 +179,7 @@ export default function FindAPark({ location, data }) {
   const [qsActivities, setQsActivities, qsActivitiesInitialized] = useQueryParamString("a", "")
   const [qsFacilities, setQsFacilities, qsFacilitiesInitialized] = useQueryParamString("f", "")
   const [qsLocation, setQsLocation, qsLocationInitialized] = useQueryParamString(
-    "l", location.state?.qsLocation ? location.state.qsLocation : null)
+    "l", location.state?.qsLocation ? location.state.qsLocation : "")
   const [searchText, setSearchText, searchTextInitialized] = useQueryParamString(
     "q", location.state?.searchText ? location.state.searchText : ""
   )
@@ -324,7 +337,7 @@ export default function FindAPark({ location, data }) {
   const handleClickClearCity = () => {
     setCurrentPage(1)
     setSelectedCity([])
-    setQsLocation()
+    setQsLocation("")
     setQsCity([])
   }
   const handleKeyDownClearPark = (e) => {
@@ -563,6 +576,11 @@ export default function FindAPark({ location, data }) {
       setQsAreas(areas);
     }
     setInputText(searchText)
+    if (qsLocation !== "0") {
+      setSelectedCity(searchCities.filter(city =>
+        city.strapi_id.toString() === qsLocation
+      ))
+    }
     sessionStorage.setItem("lastSearch", window.location.search);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -571,6 +589,7 @@ export default function FindAPark({ location, data }) {
     selectedFacilities,
     selectedAreas,
     searchText,
+    qsLocation,
     currentPage
   ])
 
@@ -597,7 +616,7 @@ export default function FindAPark({ location, data }) {
   useEffect(() => {
     if (selectedCity.length > 0) {
       if (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) {
-        setQsLocation(selectedCity[0].strapi_id)
+        setQsLocation(selectedCity[0].strapi_id.toString())
       }
       if (selectedCity[0].latitude === 0 || selectedCity[0].longitude === 0) {
         setIsCityNameLoading(true)

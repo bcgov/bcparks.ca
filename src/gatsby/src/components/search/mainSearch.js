@@ -25,7 +25,8 @@ const MainSearch = () => {
     navigate(`/find-a-park`, {
       state: {
         "searchText": searchText || inputText,
-        "qsLocation": selectedCity.length > 0 ? selectedCity[0].strapi_id : null,
+        "qsLocation":
+          selectedCity.length > 0 ? selectedCity[0].strapi_id.toString() : "",
         "qsCity": selectedCity
       },
     })
