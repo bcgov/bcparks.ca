@@ -12,8 +12,6 @@ const MainSearch = () => {
   const [searchText, setSearchText] = useState("")
   const [isCityNameLoading, setIsCityNameLoading] = useState(false)
   const [selectedCity, setSelectedCity] = useState([])
-  const [latitude, setLatitude] = useState(0)
-  const [longitude, setLongitude] = useState(0)
   const [currentLocation, setCurrentLocation] = useState({
     strapi_id: 0,
     cityName: "Current location",
@@ -24,22 +22,20 @@ const MainSearch = () => {
 
   // functions
   const searchParkFilter = () => {
-    // const params = {
-    //   l: `${latitude},${longitude}`,
-    //   q: searchText || inputText,
-    // }
-    // navigate(`/find-a-park/?l=${params.l}&q=${params.q}`, {
     navigate(`/find-a-park`, {
       state: {
         "searchText": searchText || inputText,
-        "qsLocation": `${latitude},${longitude}`,
+        "qsLocation": selectedCity.length > 0 ? selectedCity[0].strapi_id : null,
         "qsCity": selectedCity
       },
     })
   }
   const showPosition = (position) => {
-    setLatitude(position.coords.latitude)
-    setLongitude(position.coords.longitude)
+    setCurrentLocation(currentLocation => ({
+      ...currentLocation,
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude
+    }))
     setIsCityNameLoading(false)
   }
 
@@ -74,29 +70,28 @@ const MainSearch = () => {
 
   // useEffect
   useEffect(() => {
-    if (searchText || (latitude !== 0 && longitude !== 0)) {
+    if (searchText || (selectedCity.length > 0 &&
+      (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0)
+    )) {
       searchParkFilter()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText, latitude, longitude])
+  }, [searchText, selectedCity])
 
   useEffect(() => {
-    if (selectedCity.length) {
-      setLatitude(selectedCity[0].latitude)
-      setLongitude(selectedCity[0].longitude)
+    if (selectedCity.length > 0) {
       if (selectedCity[0].strapi_id === 0) {
         setIsCityNameLoading(true)
       }
+      if (currentLocation.latitude !== 0 || currentLocation.longitude !== 0) {
+        setSelectedCity([currentLocation])
+        if (currentLocation === selectedCity[0]) {
+          searchParkFilter()
+        }
+      }
     }
-  }, [selectedCity])
-
-  useEffect(() => {
-    setCurrentLocation(currentLocation => ({
-      ...currentLocation,
-      latitude: latitude,
-      longitude: longitude
-    }))
-  }, [latitude, longitude])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCity, currentLocation])
 
   return (
     <div className="parks-search-wrapper">
