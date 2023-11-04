@@ -388,7 +388,6 @@ export default function FindAPark({ location, data }) {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
     }))
-    setIsCityNameLoading(false)
   }
   const hasParksWithinFifty = (results) => {
     const newResults = results.filter(r => r.distance <= 50)
@@ -458,14 +457,6 @@ export default function FindAPark({ location, data }) {
     selectedActivities,
     selectedFacilities,
   ])
-
-  const isActiveSearch =
-    params.queryText ||
-    params.near ||
-    (params.areas && params.areas.length) ||
-    (params.activities && params.activities.length) ||
-    (params.facilities && params.facilities.length) ||
-    (params.campings && params.campings.length)
 
   const queryParamStateSyncComplete = () => {
     return currentPageInitialized
@@ -581,6 +572,14 @@ export default function FindAPark({ location, data }) {
         city.strapi_id.toString() === qsLocation
       ))
     }
+    if (qsLocation === "0") {
+      setIsCityNameLoading(true)
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition)
+      } else {
+        console.log("Geolocation is not supported by your browser")
+      }
+    }
     sessionStorage.setItem("lastSearch", window.location.search);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -616,6 +615,7 @@ export default function FindAPark({ location, data }) {
   useEffect(() => {
     if (selectedCity.length > 0) {
       if (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) {
+        setIsCityNameLoading(false)
         setQsLocation(selectedCity[0].strapi_id.toString())
       }
       if (selectedCity[0].latitude === 0 || selectedCity[0].longitude === 0) {
@@ -785,8 +785,8 @@ export default function FindAPark({ location, data }) {
               <div className="search-results-list">
                 {/* park results text */}
                 <p className="result-count-text sm-p10">
-                  {isLoading && isActiveSearch && <>Searching...</>}
-                  {!isLoading && isActiveSearch && (
+                  {(isLoading || isCityNameLoading) && <>Searching...</>}
+                  {(!isLoading && !isCityNameLoading) && (
                     <>
                       <b>
                         {selectedCity.length > 0 &&
@@ -837,12 +837,12 @@ export default function FindAPark({ location, data }) {
                 </div>
               </div>
               <div className="search-results-list">
-                {isLoading && (
+                {(isLoading || isCityNameLoading) && (
                   <div className="container mt-5">
                     <LinearProgress />
                   </div>
                 )}
-                {!isLoading && (
+                {(!isLoading && !isCityNameLoading) && (
                   <>
                     {!searchResults ||
                       (searchResults.length === 0 && (

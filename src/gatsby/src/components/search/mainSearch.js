@@ -37,7 +37,6 @@ const MainSearch = () => {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
     }))
-    setIsCityNameLoading(false)
   }
 
   // event handlers
@@ -74,6 +73,7 @@ const MainSearch = () => {
     if (searchText || (selectedCity.length > 0 &&
       (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0)
     )) {
+      setIsCityNameLoading(false)
       searchParkFilter()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,7 +81,7 @@ const MainSearch = () => {
 
   useEffect(() => {
     if (selectedCity.length > 0) {
-      if (selectedCity[0].strapi_id === 0) {
+      if (selectedCity[0].latitude === 0 || selectedCity[0].longitude === 0) {
         setIsCityNameLoading(true)
       }
       if (currentLocation.latitude !== 0 || currentLocation.longitude !== 0) {
