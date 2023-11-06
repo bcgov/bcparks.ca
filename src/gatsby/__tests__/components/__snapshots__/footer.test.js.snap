@@ -196,9 +196,9 @@ exports[`Footer renders correctly 1`] = `
         className="footer-utility-link d-inline-block"
       >
         <a
-          href="/sitemap/"
+          href="/site-map/"
         >
-          Sitemap
+          Site map
         </a>
       </div>
       <div
