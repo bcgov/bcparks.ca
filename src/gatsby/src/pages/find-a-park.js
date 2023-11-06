@@ -6,7 +6,6 @@ import {
   Chip,
   Link,
   LinearProgress,
-  Breadcrumbs,
   Button,
 } from "@mui/material"
 import CancelIcon from "@mui/icons-material/Cancel"
@@ -23,6 +22,8 @@ import DesktopFilters from "../components/search/desktopFilters"
 import ParkLinksModal from "../components/search/parkLinksModal"
 import ParkCard from "../components/search/parkCard"
 import ParkNameSearch from "../components/search/parkNameSearch"
+import CityNameSearch from "../components/search/cityNameSearch"
+import { useScreenSize } from "../utils/helpers"
 
 import "../styles/search.scss"
 
@@ -105,19 +106,21 @@ export const query = graphql`
 `
 
 export default function FindAPark({ location, data }) {
+  // useState and constants
   const menuContent = data?.allStrapiMenu?.nodes || []
+  const searchCities = data?.allStrapiSearchCity?.nodes || []
+  const searchApiUrl = `${data.site.siteMetadata.apiURL}/api/protected-areas/search`
 
   const [areasCount, setAreasCount] = useState([])
   const [activitiesCount, setActivitiesCount] = useState([])
   const [facilitiesCount, setFacilitiesCount] = useState([])
   const [campingsCount, setCampingsCount] = useState([])
 
+  // constants - filter items
   const sortedActivityItems = orderBy(
     data.allStrapiActivityType.nodes,
     [activity => activity.activityName.toLowerCase()], ["asc"]
   )
-
-  // filter items
   const areaItems = data.allStrapiSearchArea.nodes.map(area => {
     const filterCount = areasCount?.find(
       areaCount => areaCount.key === area.strapi_id
@@ -160,7 +163,7 @@ export default function FindAPark({ location, data }) {
         count: filterCount
       }
     })
-
+  // constants - filter labels
   const activityItemsLabels = {}
   activityItems.forEach(item => {
     activityItemsLabels[item.value] = item.label
@@ -170,45 +173,49 @@ export default function FindAPark({ location, data }) {
     facilityItemsLabels[item.value] = item.label
   })
 
-  // selected filter items state
+  // useState - selected filter items state
   const [qsAreas, setQsAreas, qsAreasInitialized] = useQueryParamString("sa", "")
   const [qsCampingFacilities, setQsCampingFacilities, qsCampingsInitialized] = useQueryParamString("c", "")
   const [qsActivities, setQsActivities, qsActivitiesInitialized] = useQueryParamString("a", "")
   const [qsFacilities, setQsFacilities, qsFacilitiesInitialized] = useQueryParamString("f", "")
+  const [qsLocation, setQsLocation, qsLocationInitialized] = useQueryParamString(
+    "l", location.state?.qsLocation ? location.state.qsLocation : "")
+  const [searchText, setSearchText, searchTextInitialized] = useQueryParamString(
+    "q", location.state?.searchText ? location.state.searchText : ""
+  )
+  const [qsCity, setQsCity] = useState(location.state?.qsCity ? location.state.qsCity : [])
 
   const [selectedAreas, setSelectedAreas] = useState([])
   const [selectedCampingFacilities, setSelectedCampingFacilities] = useState([])
   const [selectedActivities, setSelectedActivities] = useState([])
   const [selectedFacilities, setSelectedFacilities] = useState([])
-  const [searchText, setSearchText, searchTextInitialized] = useQueryParamString(
-    "q", location.state?.searchText ? location.state.searchText : ""
-  )
+  const [selectedCity, setSelectedCity] = useState([])
   const [inputText, setInputText] = useState("")
 
   const [filterSelections, setFilterSelections] = useState([])
   const [searchResults, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(0)
+  const [totalResultsWithinFifty, setTotalResultsWithinFifty] = useState(0)
 
   const itemsPerPage = 10
   const [currentPage, setCurrentPage, currentPageInitialized] = useQueryParamString("p", 1)
   const [isLoading, setIsLoading] = useState(true)
+  const [isCityNameLoading, setIsCityNameLoading] = useState(false)
   const [isKeyDownLoadingMore, setIsKeyDownLoadingMore] = useState(false)
 
   const [openFilter, setOpenFilter] = useState(false)
   const [openModal, setOpenModal] = useState(false)
 
-  const breadcrumbs = [
-    <Link key="1" href="/" underline="hover">
-      Home
-    </Link>,
-    <div key="2" className="breadcrumb-text">
-      Find a park
-    </div>,
-  ]
-
-  const searchApiUrl = `${data.site.siteMetadata.apiURL}/api/protected-areas/search`
+  const [currentLocation, setCurrentLocation] = useState({
+    strapi_id: 0,
+    cityName: "Current location",
+    latitude: 0,
+    longitude: 0,
+    rank: 1
+  })
 
   // event handlers
+  // event handlers - for filters
   const handleAreaCheck = (area, event) => {
     setCurrentPage(1)
     if (event.target.checked) {
@@ -249,7 +256,6 @@ export default function FindAPark({ location, data }) {
       ])
     }
   }
-
   const handleAreaDelete = chipToDelete => {
     setCurrentPage(1)
     setSelectedAreas(chips =>
@@ -274,7 +280,6 @@ export default function FindAPark({ location, data }) {
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
   }
-
   const handleFilterDelete = chipToDelete => () => {
     if (chipToDelete.type === "area") {
       handleAreaDelete(chipToDelete)
@@ -288,50 +293,6 @@ export default function FindAPark({ location, data }) {
       setCurrentPage(1)
     }
   }
-
-  const handleClickOpenFilter = () => {
-    setOpenFilter(true)
-  }
-  const handleClickOpenModal = () => {
-    setOpenModal(true)
-  }
-  const handleSearch = () => {
-    setCurrentPage(1)
-    setSearchText(inputText)
-  }
-  const handleClickClear = () => {
-    setInputText("")
-    setCurrentPage(1)
-    setSearchText("")
-  }
-  const handleKeyDownClear = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault()
-      handleClickClear()
-    }
-  }
-  const handleLoadMore = () => {
-    const newPage = +currentPage + 1
-    setCurrentPage(newPage)
-    const pageStart = (newPage - 1) * itemsPerPage
-    axios.get(searchApiUrl, {
-      params: { ...params, _start: pageStart, _limit: itemsPerPage },
-    }).then(resultResponse => {
-      if (resultResponse.status === 200) {
-        const newResults = resultResponse.data.data
-        setSearchResults(prevResults => [...prevResults, ...newResults]);
-      }
-    })
-  }
-
-  const handleKeyDownLoadMore = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      setIsKeyDownLoadingMore(true);
-      e.preventDefault()
-      handleLoadMore()
-    }
-  }
-
   const handleClearFilter = () => {
     setFilterSelections([])
     setSelectedAreas([])
@@ -345,11 +306,22 @@ export default function FindAPark({ location, data }) {
       handleClearFilter()
     }
   }
-
+  // event handlers - for searching
+  const handleSearch = () => {
+    setCurrentPage(1)
+    if (searchText === "") {
+      setSearchText(inputText)
+    }
+  }
+  const handleKeyDownSearchPark = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault()
+      handleSearch()
+    }
+  }
   const handleSearchNameChange = (selected) => {
     if (selected.length) {
-      setInputText(selected[0]?.protectedAreaName)
-      handleSearch()
+      setSearchText(selected[0]?.protectedAreaName)
     }
   }
   const handleSearchNameInputChange = (text) => {
@@ -357,7 +329,83 @@ export default function FindAPark({ location, data }) {
       setInputText(text)
     }
   }
+  const handleClickClearPark = () => {
+    setCurrentPage(1)
+    setInputText("")
+    setSearchText("")
+  }
+  const handleClickClearCity = () => {
+    setCurrentPage(1)
+    setSelectedCity([])
+    setQsLocation("")
+    setQsCity([])
+  }
+  const handleKeyDownClearPark = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault()
+      handleClickClearPark()
+    }
+  }
+  const handleKeyDownClearCity = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault()
+      handleClickClearCity()
+    }
+  }
+  // event handlers - for loading
+  const handleLoadMore = () => {
+    const newPage = +currentPage + 1
+    setCurrentPage(newPage)
+    const pageStart = (newPage - 1) * itemsPerPage
+    axios.get(searchApiUrl, {
+      params: { ...params, _start: pageStart, _limit: itemsPerPage },
+    }).then(resultResponse => {
+      if (resultResponse.status === 200) {
+        const newResults = resultResponse.data.data
+        setSearchResults(prevResults => [...prevResults, ...newResults]);
+      }
+    })
+  }
+  const handleKeyDownLoadMore = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      setIsKeyDownLoadingMore(true);
+      e.preventDefault()
+      handleLoadMore()
+    }
+  }
+  // event handlers - for opening modals
+  const handleClickOpenFilter = () => {
+    setOpenFilter(true)
+  }
+  const handleClickOpenModal = () => {
+    setOpenModal(true)
+  }
 
+  // functions
+  const showPosition = (position) => {
+    setCurrentLocation(currentLocation => ({
+      ...currentLocation,
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude
+    }))
+  }
+  const hasParksWithinFifty = (results) => {
+    const newResults = results.filter(r => r.distance <= 50)
+    return newResults.length > 0
+  }
+  const hasParksWithinOneHundred = (results) => {
+    const newResults = results.filter(r => r.distance > 50)
+    return newResults.length > 0
+  }
+  const shortenFilterLabel = (label) => {
+    if (label.includes("-accessible camping")) {
+      return label.replace("-accessible camping", "")
+    } else if (label.includes("camping")) {
+      return label.replace("camping", "")
+    } else {
+      return label
+    }
+  }
   const setFilters = useCallback(() => {
     const filters = []
     selectedAreas.forEach(r => {
@@ -380,19 +428,13 @@ export default function FindAPark({ location, data }) {
     selectedFacilities,
   ])
 
-  const shortenFilterLabel = (label) => {
-    if (label.includes("-accessible camping")) {
-      return label.replace("-accessible camping", "")
-    } else if (label.includes("camping")) {
-      return label.replace("camping", "")
-    } else {
-      return label
-    }
-  }
-
+  // params
   const params = useMemo(() => {
     const params = {
       queryText: searchText,
+      near: selectedCity.length > 0 ?
+        `${selectedCity[0].latitude},${selectedCity[0].longitude}` : "0,0",
+      radius: 100
     }
     if (selectedAreas.length > 0) {
       params.areas = selectedAreas.map(area => area.value)
@@ -409,22 +451,17 @@ export default function FindAPark({ location, data }) {
     return params
   }, [
     searchText,
+    selectedCity,
     selectedAreas,
     selectedCampingFacilities,
     selectedActivities,
     selectedFacilities,
   ])
 
-  const isActiveSearch =
-    params.queryText ||
-    (params.areas && params.areas.length) ||
-    (params.activities && params.activities.length) ||
-    (params.facilities && params.facilities.length) ||
-    (params.campings && params.campings.length)
-
   const queryParamStateSyncComplete = () => {
     return currentPageInitialized
       && searchTextInitialized
+      && qsLocationInitialized
       && qsCampingsInitialized
       && qsActivitiesInitialized
       && qsAreasInitialized
@@ -435,6 +472,7 @@ export default function FindAPark({ location, data }) {
       && Math.sign(qsFacilities.length) === Math.sign(selectedFacilities.length);
   }
 
+  // useEffect
   useEffect(() => {
     if (queryParamStateSyncComplete()) {
       setIsLoading(true)
@@ -455,10 +493,22 @@ export default function FindAPark({ location, data }) {
           setSearchResults([])
           setTotalResults(0)
         }
+      }).finally(() => {
+        setIsLoading(false)
       })
-        .finally(() => {
-          setIsLoading(false)
-        })
+      // get total number of results within 50 km
+      axios.get(searchApiUrl, {
+        params: { ...params, radius: 50, _start: 0, _limit: 0 },
+      }).then(resultResponse => {
+        if (resultResponse.status === 200) {
+          const total = parseInt(resultResponse.data.meta.pagination.total, 10)
+          setTotalResultsWithinFifty(total)
+        } else {
+          setTotalResultsWithinFifty(0)
+        }
+      }).finally(() => {
+        setIsLoading(false)
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -468,6 +518,7 @@ export default function FindAPark({ location, data }) {
     qsFacilities,
     qsAreas,
     searchTextInitialized,
+    qsLocationInitialized,
     currentPageInitialized
   ])
 
@@ -516,6 +567,19 @@ export default function FindAPark({ location, data }) {
       setQsAreas(areas);
     }
     setInputText(searchText)
+    if (qsLocation !== "0") {
+      setSelectedCity(searchCities.filter(city =>
+        city.strapi_id.toString() === qsLocation
+      ))
+    }
+    if (qsLocation === "0") {
+      setIsCityNameLoading(true)
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition)
+      } else {
+        console.log("Geolocation is not supported by your browser")
+      }
+    }
     sessionStorage.setItem("lastSearch", window.location.search);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -524,6 +588,7 @@ export default function FindAPark({ location, data }) {
     selectedFacilities,
     selectedAreas,
     searchText,
+    qsLocation,
     currentPage
   ])
 
@@ -540,111 +605,213 @@ export default function FindAPark({ location, data }) {
     }
   }, [isKeyDownLoadingMore, searchResults])
 
+  useEffect(() => {
+    if (searchText) {
+      handleSearch()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchText])
+
+  useEffect(() => {
+    if (selectedCity.length > 0) {
+      if (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) {
+        setIsCityNameLoading(false)
+        setQsLocation(selectedCity[0].strapi_id.toString())
+      }
+      if (selectedCity[0].latitude === 0 || selectedCity[0].longitude === 0) {
+        setIsCityNameLoading(true)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCity])
+
+  useEffect(() => {
+    if (qsCity.length > 0) {
+      setSelectedCity(qsCity)
+    }
+  }, [qsCity])
+
+  useEffect(() => {
+    if (currentLocation.latitude !== 0 || currentLocation.longitude !== 0) {
+      setSelectedCity([currentLocation])
+    }
+  }, [currentLocation])
+
   return (
     <>
       <Header content={menuContent} />
       <ScrollToTop />
+      {/* new search header section */}
+      <div className="search-header">
+        <div className="container">
+          <div className="row no-gutters w-100">
+            <div className="search-header-container--left col-12 col-lg-3">
+              <h1>Find a park</h1>
+            </div>
+            <div className="search-header-container--right col-12 col-lg-9">
+              <ParkNameSearch
+                optionLimit={useScreenSize().width > 767 ? 7 : 4}
+                searchText={inputText}
+                handleChange={handleSearchNameChange}
+                handleInputChange={handleSearchNameInputChange}
+                handleKeyDownSearch={handleKeyDownSearchPark}
+                handleClick={handleClickClearPark}
+                handleKeyDown={handleKeyDownClearPark}
+              />
+              <span className="or-span">or</span>
+              <CityNameSearch
+                isCityNameLoading={isCityNameLoading}
+                showPosition={showPosition}
+                currentLocation={currentLocation}
+                optionLimit={useScreenSize().width > 767 ? 7 : 4}
+                selectedItems={qsCity.length > 0 ? qsCity : selectedCity}
+                handleChange={setSelectedCity}
+                handleClick={handleClickClearCity}
+                handleKeyDown={handleKeyDownClearCity}
+              />
+              <Button
+                className="bcgov-normal-blue mobile-search-element-height h50p"
+                onClick={handleSearch}
+              >
+                Search
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* main content */}
       <div id="sr-content" className="search-body">
         <div className="search-results-main container">
-          <div className="search-results-container">
-            <Breadcrumbs
-              separator="›"
-              aria-label="breadcrumb"
-              className="sm-p10"
-            >
-              {breadcrumbs}
-            </Breadcrumbs>
-            <div className="row no-gutters">
-              <div className="col-12 col-lg-3">
-                <h1 className="headline-text p40t sm-p10">
-                  Find a park
-                </h1>
+          {/* filter buttons for mobile */}
+          <div className="search-results-list d-block d-lg-none">
+            <div className="row">
+              <div className="col-12 col-md-6">
+                <Button
+                  variant="outlined"
+                  onClick={handleClickOpenFilter}
+                  className="bcgov-button bcgov-normal-white font-weight-bold"
+                >
+                  Filter
+                </Button>
               </div>
-              <div className="col-12 col-lg-9 d-flex align-items-end">
+              <div className="col-12 col-md-6">
+                <Button
+                  variant="outlined"
+                  onClick={handleClickOpenModal}
+                  className="bcgov-button bcgov-normal-white font-weight-bold mt-3 mt-md-0"
+                >
+                  More ways to find a park
+                </Button>
+              </div>
+            </div>
+          </div>
+          {/* filter chips for mobile */}
+          <div className="search-results-list d-block d-lg-none mt-3">
+            <div className="row">
+              <div className="col-12">
+                {filterSelections.length > 0 && filterSelections.map((f, index) => (
+                  <Chip
+                    key={index}
+                    label={shortenFilterLabel(f.label)}
+                    onClick={handleFilterDelete(f)}
+                    onDelete={handleFilterDelete(f)}
+                    variant="outlined"
+                    className="park-filter-chip font-weight-bold"
+                    deleteIcon={<CancelIcon className="close-icon" />}
+                  />
+                ))}
+                {filterSelections.length > 0 && (
+                  <Link
+                    className="clear-filter-link"
+                    onClick={handleClearFilter}
+                    onKeyDown={e => handleKeyDownClearFilter(e)}
+                    tabIndex="0"
+                    role="button"
+                  >
+                    Clear filters
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="row no-gutters">
+            {/* filter checkbox for desktop */}
+            <div className="search-results-quick-filter col-12 col-lg-3 d-none d-lg-block pr-3">
+              <div className="mb32">
+                <h3 className="subtitle mb-2">Filter</h3>
+                <DesktopFilters
+                  data={{
+                    areaItems,
+                    campingFacilityItems,
+                    activityItems,
+                    facilityItems,
+                    selectedAreas,
+                    setSelectedAreas,
+                    selectedCampingFacilities,
+                    setSelectedCampingFacilities,
+                    selectedActivities,
+                    setSelectedActivities,
+                    selectedFacilities,
+                    setSelectedFacilities,
+                    searchText,
+                    setCurrentPage,
+                    setFilters,
+                    handleAreaCheck,
+                    handleCampingFacilityCheck,
+                    handleActivityCheck,
+                    handleFacilityCheck
+                  }}
+                />
+              </div>
+              <div className="park-links">
+                <h3 className="subtitle mb-2">More ways to find a park</h3>
+                <div>
+                  <GatsbyLink to="/find-a-park/a-z-list">A–Z park list</GatsbyLink>
+                  <br />
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="map-link"
+                    href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000"
+                  >
+                    Map
+                    <OpenInNewIcon />
+                  </a>
+                </div>
+              </div>
+            </div>
+            {/* park results */}
+            <div className="col-12 col-lg-9">
+              <div className="search-results-list">
+                {/* park results text */}
                 <p className="result-count-text sm-p10">
-                  <b>
-                    {isLoading && isActiveSearch && <>Searching...</>}
-                    {!isLoading && isActiveSearch && (
-                      <>
-                        {totalResults}{" "}
-                        {totalResults === 1 ? " result" : " results"}
-                      </>
-                    )}
-                  </b>
+                  {(isLoading || isCityNameLoading) && <>Searching...</>}
+                  {(!isLoading && !isCityNameLoading) && (
+                    <>
+                      <b>
+                        {selectedCity.length > 0 &&
+                          (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) &&
+                          hasParksWithinFifty(searchResults) ?
+                          totalResultsWithinFifty : totalResults
+                        }
+                      </b>
+                      {totalResults === 1 ? " result" : " results"}
+                      {searchText &&
+                        <> containing <b>‘{searchText}’</b></>
+                      }
+                      {selectedCity.length > 0 &&
+                        (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) &&
+                        <>
+                          {" "}within{" "}
+                          <b>{hasParksWithinFifty(searchResults) ? 50 : 100} km </b>
+                          radius of <b>{selectedCity[0].cityName}</b>
+                        </>
+                      }
+                    </>
+                  )}
                 </p>
-              </div>
-            </div>
-            <div className="row no-gutters">
-              <div className="col-lg-9 col-md-12 col-sm-12">
-                <div className="search-results-quick-filter d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none mt-3">
-                  <div className="row no-gutters">
-                    <div className="col-12 col-md-9">
-                      <ParkNameSearch
-                        optionLimit={4}
-                        handleChange={handleSearchNameChange}
-                        handleInputChange={handleSearchNameInputChange}
-                        handleClick={handleClickClear}
-                        handleKeyDown={handleKeyDownClear}
-                        searchText={inputText}
-                      />
-                    </div>
-                    <div className="col-md-3 d-none d-md-block pl-3">
-                      <Button
-                        fullWidth
-                        className="bcgov-normal-blue mobile-search-element-height h50p"
-                        onClick={() => {
-                          handleSearch()
-                        }}
-                      >
-                        Search
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-                <div className="search-results-list container">
-                  <div className="row">
-                    <div className="col-md-4 col-sm-12 col-xs-12 mt-3 d-block d-md-none">
-                      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-                        <Button
-                          fullWidth
-                          className="bcgov-normal-blue mobile-search-element-height"
-                          onClick={() => {
-                            handleSearch()
-                          }}
-                        >
-                          Search
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="col-md-6 col-sm-12 col-xs-12 mt-3">
-                      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-                        <Button
-                          variant="outlined"
-                          onClick={handleClickOpenFilter}
-                          className="bcgov-button bcgov-normal-white font-weight-bold"
-                        >
-                          Filter
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="col-md-6 col-sm-12 col-xs-12 mt-3">
-                      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-                        <Button
-                          variant="outlined"
-                          onClick={handleClickOpenModal}
-                          className="bcgov-button bcgov-normal-white font-weight-bold"
-                        >
-                          More ways to find a park
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="search-results-list container d-block d-lg-none mt-3">
-              <div className="row d-flex">
-                <div className="col-12">
+                {/* filter chips for desktop */}
+                <div className="d-none d-lg-block">
                   {filterSelections.length > 0 && filterSelections.map((f, index) => (
                     <Chip
                       key={index}
@@ -669,143 +836,70 @@ export default function FindAPark({ location, data }) {
                   )}
                 </div>
               </div>
-            </div>
-            <div className="row no-gutters">
-              <div className="col-lg-3 col-md-12 col-sm-12">
-                <div className="search-results-quick-filter">
-                  <div className="row no-gutters d-none d-lg-block">
-                    <div className="col-12 mb32">
-                      <div className="search-results-quick-filter">
-                        <div className="row no-gutters">
-                          <div className="col-12 park-search-text-box-container d-none d-lg-block">
-                            <ParkNameSearch
-                              optionLimit={8}
-                              handleChange={handleSearchNameChange}
-                              handleInputChange={handleSearchNameInputChange}
-                              handleClick={handleClickClear}
-                              handleKeyDown={handleKeyDownClear}
-                              searchText={inputText}
-                            />
-                          </div>
-                          <div className="m15t col-12 park-search-text-box-container d-none d-lg-block">
-                            <Button
-                              fullWidth
-                              className="bcgov-normal-blue mobile-search-element-height h50p"
-                              onClick={handleSearch}
-                            >
-                              Search
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-12 pr-3 mb32">
-                      <h3 className="subtitle mb-2">Filter</h3>
-                      <DesktopFilters
-                        data={{
-                          areaItems,
-                          campingFacilityItems,
-                          activityItems,
-                          facilityItems,
-                          selectedAreas,
-                          setSelectedAreas,
-                          selectedCampingFacilities,
-                          setSelectedCampingFacilities,
-                          selectedActivities,
-                          setSelectedActivities,
-                          selectedFacilities,
-                          setSelectedFacilities,
-                          searchText,
-                          setCurrentPage,
-                          setFilters,
-                          handleAreaCheck,
-                          handleCampingFacilityCheck,
-                          handleActivityCheck,
-                          handleFacilityCheck
-                        }}
-                      />
-                    </div>
-                    <div className="col-12 park-links">
-                      <h3 className="subtitle mb-2">More ways to find a park</h3>
-                      <div>
-                        <GatsbyLink to="/find-a-park/a-z-list">A–Z park list</GatsbyLink>
-                        <br />
-                        <a
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="map-link"
-                          href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000"
-                        >
-                          Map
-                          <OpenInNewIcon />
-                        </a>
-                      </div>
-                    </div>
+              <div className="search-results-list">
+                {(isLoading || isCityNameLoading) && (
+                  <div className="container mt-5">
+                    <LinearProgress />
                   </div>
-                </div>
-              </div>
-              <div className="col-lg-9 col-md-12 col-sm-12">
-                <div className="search-results-list container">
-                  <div className="row d-flex">
-                    <div className="col-12 d-none d-lg-block">
-                      {filterSelections.length > 0 && filterSelections.map((f, index) => (
-                        <Chip
-                          key={index}
-                          label={shortenFilterLabel(f.label)}
-                          onClick={handleFilterDelete(f)}
-                          onDelete={handleFilterDelete(f)}
-                          variant="outlined"
-                          className="park-filter-chip font-weight-bold"
-                          deleteIcon={<CancelIcon className="close-icon" />}
+                )}
+                {(!isLoading && !isCityNameLoading) && (
+                  <>
+                    {!searchResults ||
+                      (searchResults.length === 0 && (
+                        <NoSearchResults
+                          hasPark={inputText.length > 0}
+                          hasCity={selectedCity.length > 0}
+                          hasFilter={filterSelections.length > 0}
+                          handleClickClearCity={handleClickClearCity}
+                          handleKeyDownClearCity={handleKeyDownClearCity}
+                          handleClickClearPark={handleClickClearPark}
+                          handleKeyDownClearPark={handleKeyDownClearPark}
+                          handleClickClearFilter={handleClearFilter}
+                          handleKeyDownClearFilter={handleKeyDownClearFilter}
                         />
                       ))}
-                      {filterSelections.length > 0 && (
-                        <Link
-                          className="clear-filter-link"
-                          onClick={handleClearFilter}
-                          onKeyDown={e => handleKeyDownClearFilter(e)}
-                          tabIndex="0"
-                          role="button"
-                        >
-                          Clear filters
-                        </Link>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div className="search-results-list container">
-                  {isLoading && (
-                    <div className="container mt-5">
-                      <LinearProgress />
-                    </div>
-                  )}
-                  {!isLoading && (
-                    <>
-                      {!searchResults ||
-                        (searchResults.length === 0 && (
-                          <NoSearchResults></NoSearchResults>
-                        ))}
-                      {searchResults && searchResults.length > 0 && (
-                        <>
-                          {searchResults.map((r, index) => (
+                    {/* park results cards */}
+                    {searchResults && searchResults.length > 0 && (
+                      <>
+                        {selectedCity.length > 0 &&
+                          (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) ? (
+                          <>
+                            {searchResults.filter(r => r.distance <= 50).map((r, index) => (
+                              <ParkCard r={r} key={index} />
+                            ))}
+                            {(hasParksWithinFifty(searchResults) && hasParksWithinOneHundred(searchResults)) &&
+                              <h4 className="more-result-text">
+                                More results within 100 km radius
+                              </h4>
+                            }
+                            {searchResults.filter(r => r.distance > 50).map((r, index) => (
+                              <ParkCard r={r} key={index} />
+                            ))}
+                          </>
+                        ) : (
+                          searchResults.map((r, index) => (
                             <ParkCard r={r} key={index} />
-                          ))}
+                          ))
+                        )}
+                        <div className="load-more-button-container mt32">
                           {totalResults > searchResults.length && (
-                            <div className="load-more-button-container mt-5">
-                              <Button
-                                variant="outlined"
-                                onClick={handleLoadMore}
-                                onKeyDown={e => handleKeyDownLoadMore(e)}
-                                className="bcgov-button bcgov-normal-white load-more-button"
-                              >
-                                Load more
-                              </Button>
-                            </div>)}
-                        </>
-                      )}
-                    </>
-                  )}
-                </div>
+                            <Button
+                              variant="outlined"
+                              onClick={handleLoadMore}
+                              onKeyDown={e => handleKeyDownLoadMore(e)}
+                              className="bcgov-button bcgov-normal-white load-more-button"
+                            >
+                              Load more
+                            </Button>
+                          )}
+                          {totalResults === searchResults.length && (
+                            <p className="mb-0">End results.</p>
+                          )}
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>
