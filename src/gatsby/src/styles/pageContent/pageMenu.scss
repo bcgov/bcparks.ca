@@ -12,14 +12,17 @@
   position: -webkit-sticky;
 
   a {
-    color: $colorBlue;
-    border-radius: 0px;
-    font-size: 1rem;
-    margin-top: 15px;
     width: 100%;
+    color: $colorBlueMed;
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 0px;
+    margin-top: 15px;
     &:hover {
-      color: $colorBlue !important;
-      font-weight: bold;
+      text-decoration: underline;
+    }
+    &:active, &:focus, &:focus-visible {
+      color: $colorBlueMed;
     }
     &:first-of-type {
       margin-top: 64px;
@@ -32,7 +35,7 @@
 .page-menu--desktop [active-section="true"] {
   font-weight: bold;
   box-sizing: border-box;
-  border-left: #036 solid 3px;
+  border-left: $colorBlueMed solid 3px;
 }
 .page-menu--mobile {
   top: 0px;
