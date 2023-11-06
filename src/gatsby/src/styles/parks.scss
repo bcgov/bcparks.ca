@@ -4,6 +4,16 @@
 
 .parks-container {
   max-width: 1350px !important;
+  &.main-container {
+    max-width: 1000px !important;
+    padding: 0 16px;
+    @media (min-width: $smBreakpoint) {
+      padding: 0 20px;
+    }
+    .park-info-container {
+      padding: 0;
+    }
+  }
   // link style
   a {
     color: $colorBlue;
@@ -11,7 +21,7 @@
       outline: -webkit-focus-ring-color auto 2px;
     }
   }
-  .main-container {
+  .page-content {
     a:not(.btn) {
       color: $colorBlueMed;
       text-decoration: underline;
