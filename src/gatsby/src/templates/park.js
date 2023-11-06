@@ -290,7 +290,8 @@ export default function ParkTemplate({ data }) {
           e.preventDefault();
           navigate('/find-a-park/' + sessionStorage.getItem("lastSearch"))
         }
-      }}>
+      }}
+    >
       Find a park
     </GatsbyLink>,
     <div key="3" className="breadcrumb-text">
@@ -329,7 +330,6 @@ export default function ParkTemplate({ data }) {
             </div>
           )}
         </div>
-
         <div className="page-menu--mobile d-block d-lg-none mb-4 mb-md-0 order-3">
           <PageMenu
             pageSections={menuItems}
@@ -337,14 +337,12 @@ export default function ParkTemplate({ data }) {
             menuStyle="select"
           />
         </div>
-
         <div className="container parks-container gallery-container order-1">
           <div className="park-info-container">
             <ParkPhotoGallery photos={photos} />
           </div>
         </div>
       </div>
-
       <div className="container parks-container main-container">
         <div className="row no-gutters park-info-container">
           <div className="page-menu--desktop d-none d-lg-block col-12 col-lg-4">
@@ -466,9 +464,7 @@ export default function ParkTemplate({ data }) {
           </div>
         </div>
       </div>
-
       <Footer />
-
     </div>
   )
 }
