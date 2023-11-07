@@ -5,6 +5,7 @@ import ParkNameSearch from "./parkNameSearch"
 import CityNameSearch from "./cityNameSearch"
 import { useScreenSize } from "../../utils/helpers"
 import "../../styles/search.scss"
+const qs = require('qs');
 
 const MainSearch = () => {
   // useState
@@ -22,11 +23,17 @@ const MainSearch = () => {
 
   // functions
   const searchParkFilter = () => {
-    navigate(`/find-a-park`, {
+    let findAPark = "/find-a-park/";
+    let queryText = searchText || inputText;
+    const queryString = qs.stringify({
+      l: selectedCity[0]?.strapi_id,
+      q: queryText.length ? queryText : undefined
+    })
+    if (queryString.length) {
+      findAPark += `?${queryString}`
+    }
+    navigate(findAPark, {
       state: {
-        "searchText": searchText || inputText,
-        "qsLocation":
-          selectedCity.length > 0 ? selectedCity[0].strapi_id.toString() : "",
         "qsCity": selectedCity
       },
     })
@@ -46,12 +53,10 @@ const MainSearch = () => {
     }
   }
   const handleSearchNameInputChange = (text) => {
-    if (text.length) {
-      setInputText(text)
-    }
+    setInputText(text)
   }
   const handleKeyDownSearchPark = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === "Enter") {
       e.preventDefault()
       searchParkFilter()
     }

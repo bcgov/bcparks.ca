@@ -87,6 +87,7 @@ const ParkNameSearch = ({
           <Form.Group controlId="park-search-typeahead">
             <Form.Control
               {...inputProps}
+              value={searchText}
               ref={(node) => {
                 inputRef(node)
                 referenceElementRef(node)
