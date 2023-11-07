@@ -57,23 +57,23 @@
 }
 
 .bcp-landing-links {
-  background-color: $colorGreyLight;
-  padding-bottom: 60px;
-  padding-top: 30px;
   width: 100%;
+  background-color: $colorGreyLight;
+  padding: 32px 0;
 
   @media screen and (min-width: $mdBreakpoint) {
-    padding-bottom: 98px;
-    padding-top: 72px;
+    padding: 72px 0;
   }
 
-  .content {
-    max-width: 1110px;
-  }
-
-  .col {
-    margin-bottom: 33px;
-    margin-top: 33px;
+  .container {
+    max-width: 1000px;
+    padding: 0 16px;
+    @media screen and (min-width: $mdBreakpoint) {
+      padding: 0 20px;
+    }
+    & > div {
+      margin: 32px 0;
+    }
   }
 }
 
@@ -82,14 +82,11 @@
   width: 100%;
 
   .container {
-    padding-top: 72px;
-    padding-bottom: 72px;
+    max-width: 1000px;
+    padding: 72px 20px;
   }
 }
 
-/* TODO: these styles are pretty clunky and repeated with home /search
- * Search component should be bootstrap based and include styling.
- */
 .parks-search-wrapper {
   color: $colorWhite;
 }
@@ -97,15 +94,6 @@
 .parks-search-field {
   margin-top: 15px;
   display: flex;
-
-  input {
-    font-size: 0.85rem;
-  }
-  // required for accessibility
-  .MuiInputBase-input:focus,
-  .MuiInputBase-input:focus-visible {
-    outline: unset !important;
-  }
 }
 
 button.MuiButton-root.parks-search-button {
@@ -115,49 +103,4 @@ button.MuiButton-root.parks-search-button {
   margin-left: 16px;
   font-size: 1.1rem;
   padding: 0 25px;
-}
-
-.parks-search-filter-link {
-  font-size: 0.9rem;
-  margin-top: 15px;
-  color: $colorWhite;
-}
-
-.parks-search-filter-link:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.MuiTextField-root.park-search-text-box {
-  margin-right: 10px;
-  width: 100%;
-
-  .MuiOutlinedInput-root {
-    width: 100% !important;
-    max-width: 700px !important;
-    background-color: $colorWhite !important;
-    border: none !important;
-    border-radius: 5px !important;
-    font-size: $bodyFont !important;
-    font-family: $globalFont;
-  }
-
-  .MuiOutlinedInput-input {
-    padding: 10px 7px !important;
-  }
-
-  .MuiOutlinedInput-root:focus {
-    outline-offset: 1px !important;
-  }
-
-  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border: 1px solid $colorBlue !important;
-  }
-}
-
-.park-filter-select [class*="-control"] {
-  border-radius: 50px !important;
-  background-color: $colorWhite !important;
-  font-family: $globalFont;
-  font-size: $bodyFont !important;
 }
