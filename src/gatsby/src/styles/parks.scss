@@ -120,9 +120,10 @@
 
 .MuiBreadcrumbs-root {
   a {
-    color: $colorBlueLight;
-    &:hover, &:focus, &:hover:focus {
-      color: #0000f3;
+    color: $colorBlueMed;
+    &:active, &:focus, &:focus-visible {
+      color: $colorBlueMed;
+      outline: -webkit-focus-ring-color auto 2px;
     }
   }
 }
