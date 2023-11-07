@@ -47,6 +47,7 @@ module.exports = {
           "search-area",
           "search-city",
           "management-document",
+          "emergency-alert",
           {
             singularName: "page",
             queryParams: {

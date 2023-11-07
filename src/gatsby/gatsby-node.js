@@ -100,6 +100,11 @@ exports.createSchemaCustomization = ({ actions }) => {
     metaDescription: String
   }
 
+  type STRAPI_COMPONENT_PARKS_TEXT_LINK implements Node {
+    linkText: String
+    url: String
+  }
+
   type STRAPI_SITE_SAFETYINFO_TEXTNODE implements Node @dontInfer {
     safetyInfo: String
   }

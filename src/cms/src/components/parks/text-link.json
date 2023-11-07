@@ -1,8 +1,8 @@
 {
-  "collectionName": "components_parks_fancy_links",
+  "collectionName": "components_parks_text_links",
   "info": {
     "icon": "link",
-    "displayName": "FancyLink",
+    "displayName": "TextLink",
     "description": ""
   },
   "options": {},

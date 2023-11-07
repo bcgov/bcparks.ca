@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "emergency_alerts",
+  "info": {
+    "singularName": "emergency-alert",
+    "pluralName": "emergency-alerts",
+    "displayName": "Emergency-alert ",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "isActive": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "colour": {
+      "type": "enumeration",
+      "enum": [
+        "Red",
+        "Yellow"
+      ],
+      "required": true
+    },
+    "description": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "link": {
+      "type": "component",
+      "repeatable": true,
+      "component": "parks.text-link"
+    }
+  }
+}
