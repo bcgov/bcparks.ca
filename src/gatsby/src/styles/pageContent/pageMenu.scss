@@ -11,6 +11,10 @@
   position: sticky;
   position: -webkit-sticky;
 
+  .navbar {
+    padding: 0;
+  }
+
   a {
     width: 100%;
     color: $colorBlueMed;

@@ -173,7 +173,7 @@ export default function StaticContent1({ pageContext }) {
       )}
       {hasSections && (
         <div className="page-menu--mobile">
-          <div className="d-block d-md-none">
+          <div className="d-block d-lg-none">
             <PageMenu
               pageSections={pageSections}
               activeSection={activeSection}
@@ -185,8 +185,8 @@ export default function StaticContent1({ pageContext }) {
       <div className="static-content-container">
         <div className="page-content-wrapper">
           {hasSections ? (
-            <div className="row">
-              <div className="page-menu--desktop col-md-3 col-12 d-none d-md-block">
+            <div className="row no-gutters">
+              <div className="page-menu--desktop col-lg-4 col-12 d-none d-lg-block">
                 <div className="">
                   <PageMenu
                     pageSections={pageSections}
@@ -195,7 +195,7 @@ export default function StaticContent1({ pageContext }) {
                   />
                 </div>
               </div>
-              <div className="page-content col-md-9 col-12">
+              <div className="page-content col-lg-8 col-12">
                 {hasPageHeader && (
                   <div className="header-content">
                     {headerContent.introHtml.data.introHtml &&
