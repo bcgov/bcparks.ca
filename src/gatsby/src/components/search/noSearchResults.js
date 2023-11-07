@@ -27,6 +27,9 @@ const NoSearchResults = ({
       </div>
       <p><b>You could:</b></p>
       <ul>
+        {(hasCity || hasPark) && (
+          <li>Change your search term</li>
+        )}
         {hasCity && (
           <li>
             <button
