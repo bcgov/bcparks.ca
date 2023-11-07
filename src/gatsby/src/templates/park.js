@@ -4,12 +4,7 @@ import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
 import loadable from '@loadable/component'
 
-import {
-  Container,
-  Grid,
-  CssBaseline,
-  Breadcrumbs,
-} from "@mui/material"
+import { CssBaseline, Breadcrumbs } from "@mui/material"
 
 import useScrollSpy from "react-use-scrollspy"
 
@@ -38,7 +33,6 @@ import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
 import "../styles/parks.scss"
-import { StyledGrid } from "../utils/constants";
 
 const AsyncMapLocation = loadable(() => import("../components/park/mapLocation"));
 
@@ -296,7 +290,8 @@ export default function ParkTemplate({ data }) {
           e.preventDefault();
           navigate('/find-a-park/' + sessionStorage.getItem("lastSearch"))
         }
-      }}>
+      }}
+    >
       Find a park
     </GatsbyLink>,
     <div key="3" className="breadcrumb-text">
@@ -335,7 +330,6 @@ export default function ParkTemplate({ data }) {
             </div>
           )}
         </div>
-
         <div className="page-menu--mobile d-block d-lg-none mb-4 mb-md-0 order-3">
           <PageMenu
             pageSections={menuItems}
@@ -343,155 +337,134 @@ export default function ParkTemplate({ data }) {
             menuStyle="select"
           />
         </div>
-
         <div className="container parks-container gallery-container order-1">
           <div className="park-info-container">
             <ParkPhotoGallery photos={photos} />
           </div>
         </div>
-
       </div>
-
-      <div className="container parks-container">
-        <Container className="park-info-container" maxWidth={false}>
-          <Grid container spacing={2}>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={3}
-              lg={3}
-              className="page-menu--desktop d-none d-lg-block"
-            >
-              <PageMenu
-                pageSections={menuItems}
-                activeSection={activeSection}
-                menuStyle="nav"
-              />
-            </Grid>
-            <StyledGrid
-              item
-              xs={12}
-              sm={12}
-              md={9}
-              lg={9}
-              className="main-container"
-            >
-              {menuItems[0].visible && (
-                <div ref={parkOverviewRef} className="w-100">
-                  <ParkOverview data={description} type={parkType} />
-                </div>
-              )}
-              {menuItems[1].visible && (
-                <div ref={advisoryRef} className="w-100">
-                  {isLoadingAdvisories && (
-                    <div className="mb-5">
-                      <h2 className="section-heading">{`Advisories`}</h2>
-                      <div className="spinner-border" role="status">
-                        <span className="sr-only">Loading...</span>
-                      </div>
+      <div className="container parks-container main-container">
+        <div className="row no-gutters park-info-container">
+          <div className="page-menu--desktop d-none d-lg-block col-12 col-lg-4">
+            <PageMenu
+              pageSections={menuItems}
+              activeSection={activeSection}
+              menuStyle="nav"
+            />
+          </div>
+          <div className="page-content col-12 col-lg-8">
+            {menuItems[0].visible && (
+              <div ref={parkOverviewRef} className="w-100">
+                <ParkOverview data={description} type={parkType} />
+              </div>
+            )}
+            {menuItems[1].visible && (
+              <div ref={advisoryRef} className="w-100">
+                {isLoadingAdvisories && (
+                  <div className="mb-5">
+                    <h2 className="section-heading">{`Advisories`}</h2>
+                    <div className="spinner-border" role="status">
+                      <span className="sr-only">Loading...</span>
                     </div>
-                  )}
-                  {!isLoadingAdvisories && advisoryLoadError && (
-                    <div className="mb-5">
-                      <div className="alert alert-danger" role="alert">
-                        An error occurred while loading current public
-                        advisories.
-                      </div>
+                  </div>
+                )}
+                {!isLoadingAdvisories && advisoryLoadError && (
+                  <div className="mb-5">
+                    <div className="alert alert-danger" role="alert">
+                      An error occurred while loading current public
+                      advisories.
                     </div>
-                  )}
-                  {!isLoadingAdvisories && !advisoryLoadError && (
-                    <AdvisoryDetails advisories={advisories} />
-                  )}
-                </div>
-              )}
-              {menuItems[2].visible && (
-                <div ref={parkDatesRef} className="w-100">
-                  <ParkDates
-                    data={{
-                      parkType: parkType,
-                      parkOperation: park.parkOperation,
-                      subAreas: park.parkOperationSubAreas,
-                      advisories: advisories,
-                      marineProtectedArea: park.marineProtectedArea
+                  </div>
+                )}
+                {!isLoadingAdvisories && !advisoryLoadError && (
+                  <AdvisoryDetails advisories={advisories} />
+                )}
+              </div>
+            )}
+            {menuItems[2].visible && (
+              <div ref={parkDatesRef} className="w-100">
+                <ParkDates
+                  data={{
+                    parkType: parkType,
+                    parkOperation: park.parkOperation,
+                    subAreas: park.parkOperationSubAreas,
+                    advisories: advisories,
+                    marineProtectedArea: park.marineProtectedArea
+                  }}
+                />
+              </div>
+            )}
+            {menuItems[3].visible && (
+              <div ref={safetyRef} className="w-100">
+                <SafetyInfo safetyInfo={safetyInfo} />
+              </div>
+            )}
+            {menuItems[4].visible && (
+              <div ref={specialRef} className="w-100">
+                <SpecialNote specialNotes={specialNotes} />
+              </div>
+            )}
+            {menuItems[5].visible && (
+              <div ref={campingRef} className="w-100">
+                <CampingDetails
+                  data={{
+                    activeCampings: activeCampings,
+                    reservations: park.reservations,
+                    hasDayUsePass: hasDayUsePass,
+                    hasReservations: hasReservations,
+                    parkOperation: park.parkOperation,
+                    subAreas: park.parkOperationSubAreas,
+                  }}
+                />
+              </div>
+            )}
+            {menuItems[6].visible && (
+              <div ref={facilityRef} className="w-100">
+                <ParkFacility data={nonCampingFacilities} />
+              </div>
+            )}
+            {menuItems[7].visible && (
+              <div ref={activityRef} className="w-100">
+                <ParkActivity data={nonCampingActivities} />
+              </div>
+            )}
+            {menuItems[8].visible && (
+              <div ref={mapLocationRef} className="w-100">
+                <AsyncMapLocation data={mapData} />
+                {locationNotes && (
+                  <div id="park-location-notes-container"
+                    dangerouslySetInnerHTML={{
+                      __html: locationNotes,
                     }}
-                  />
-                </div>
-              )}
-              {menuItems[3].visible && (
-                <div ref={safetyRef} className="w-100">
-                  <SafetyInfo safetyInfo={safetyInfo} />
-                </div>
-              )}
-              {menuItems[4].visible && (
-                <div ref={specialRef} className="w-100">
-                  <SpecialNote specialNotes={specialNotes} />
-                </div>
-              )}
-              {menuItems[5].visible && (
-                <div ref={campingRef} className="w-100">
-                  <CampingDetails
-                    data={{
-                      activeCampings: activeCampings,
-                      reservations: park.reservations,
-                      hasDayUsePass: hasDayUsePass,
-                      hasReservations: hasReservations,
-                      parkOperation: park.parkOperation,
-                      subAreas: park.parkOperationSubAreas,
-                    }}
-                  />
-                </div>
-              )}
-              {menuItems[6].visible && (
-                <div ref={facilityRef} className="w-100">
-                  <ParkFacility data={nonCampingFacilities} />
-                </div>
-              )}
-              {menuItems[7].visible && (
-                <div ref={activityRef} className="w-100">
-                  <ParkActivity data={nonCampingActivities} />
-                </div>
-              )}
-              {menuItems[8].visible && (
-                <div ref={mapLocationRef} className="w-100">
-                  <AsyncMapLocation data={mapData} />
-                  {locationNotes && (
-                    <div id="park-location-notes-container"
-                      dangerouslySetInnerHTML={{
-                        __html: locationNotes,
-                      }}
-                    >
-                    </div>
-                  )}
-                </div>
-              )}
-              {menuItems[9].visible && (
-                <div ref={activityMapRef} className="w-100">
-                  <ParkMapDetails data={maps} type={parkType} />
-                </div>
-              )}
-              {menuItems[10].visible && (
-                <div ref={aboutRef} className="w-100">
-                  <About park={park} />
-                </div>
-              )}
-              {menuItems[11].visible && (
-                <div ref={natureAndCultureRef} className="w-100">
-                  <NatureAndCulture data={natureAndCulture} />
-                </div>
-              )}
-              {menuItems[12].visible && (
-                <div ref={reconciliationRef} className="w-100">
-                  <Reconciliation data={reconciliationNotes} />
-                </div>
-              )}
-            </StyledGrid>
-          </Grid>
-        </Container>
+                  >
+                  </div>
+                )}
+              </div>
+            )}
+            {menuItems[9].visible && (
+              <div ref={activityMapRef} className="w-100">
+                <ParkMapDetails data={maps} type={parkType} />
+              </div>
+            )}
+            {menuItems[10].visible && (
+              <div ref={aboutRef} className="w-100">
+                <About park={park} />
+              </div>
+            )}
+            {menuItems[11].visible && (
+              <div ref={natureAndCultureRef} className="w-100">
+                <NatureAndCulture data={natureAndCulture} />
+              </div>
+            )}
+            {menuItems[12].visible && (
+              <div ref={reconciliationRef} className="w-100">
+                <Reconciliation data={reconciliationNotes} />
+              </div>
+            )}
+          </div>
+        </div>
       </div>
-
       <Footer />
-
     </div>
   )
 }
