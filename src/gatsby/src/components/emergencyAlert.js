@@ -27,12 +27,12 @@ const EmergencyAlert = () => {
 
   return (
     alerts.map((alert, index) => (
-      <div key={index} className={`${alert.colour}`}>
-        <div>
+      <div key={index} className={`emergency-alert alert-bg-${alert.colour.toLowerCase()}`}>
+        <div className="alert-container">
           <HtmlContent>{alert.description.data.description}</HtmlContent>
           {alert.link.map((l, index) => (
             <span key={index}>
-              | <a href={l.url}>{l.linkText}</a>
+              |<a href={l.url}>{l.linkText}</a>
             </span>
           ))}
         </div>

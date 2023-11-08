@@ -288,6 +288,35 @@
   }
 }
 
+/* ------------- EMERGENCY ALERT ------------ */
+.emergency-alert {
+  .alert-container {
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+      margin-bottom: 0;
+    }
+    a {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+  &.alert-bg-red {
+    color: $colorWhite;
+    background-color: $colorRed;
+    a {
+      color: $colorWhite;
+    
+    }
+  }
+  &.alert-bg-yellow {
+    color: $colorBlue;
+    background-color: $colorGold;
+  }
+}
+
 /* ------------- SEARCH ------------ */
 
 #home-parks-search {
