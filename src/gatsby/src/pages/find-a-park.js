@@ -891,7 +891,7 @@ export default function FindAPark({ location, data }) {
                             </Button>
                           )}
                           {totalResults === searchResults.length && (
-                            <p className="mb-0">End results.</p>
+                            <p className="mb-0">End of results</p>
                           )}
                         </div>
                       </>
