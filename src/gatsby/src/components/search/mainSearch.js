@@ -7,8 +7,9 @@ import { useScreenSize } from "../../utils/helpers"
 import "../../styles/search.scss"
 const qs = require('qs');
 
-const MainSearch = () => {
-  // useState
+const MainSearch = ({ hasCityNameSearch }) => {
+  // useState and constants
+  const screenSize = useScreenSize()
   const [inputText, setInputText] = useState("")
   const [searchText, setSearchText] = useState("")
   const [isCityNameLoading, setIsCityNameLoading] = useState(false)
@@ -104,7 +105,7 @@ const MainSearch = () => {
       <h1 className="text-white">Find a park</h1>
       <div className="parks-search-field">
         <ParkNameSearch
-          optionLimit={useScreenSize().width > 767 ? 7 : 4}
+          optionLimit={screenSize.width > 767 ? 7 : 4}
           searchText={inputText}
           handleChange={handleSearchNameChange}
           handleInputChange={handleSearchNameInputChange}
@@ -112,17 +113,21 @@ const MainSearch = () => {
           handleClick={handleClickClear}
           handleKeyDown={handleKeyDownClear}
         />
-        <span className="or-span">or</span>
-        <CityNameSearch
-          isCityNameLoading={isCityNameLoading}
-          showPosition={showPosition}
-          currentLocation={currentLocation}
-          optionLimit={useScreenSize().width > 767 ? 7 : 4}
-          selectedItems={selectedCity}
-          handleChange={setSelectedCity}
-          handleClick={handleClickClear}
-          handleKeyDown={handleKeyDownClear}
-        />
+        {hasCityNameSearch && (
+          <>
+            <span className="or-span">or</span>
+            <CityNameSearch
+              isCityNameLoading={isCityNameLoading}
+              showPosition={showPosition}
+              currentLocation={currentLocation}
+              optionLimit={screenSize.width > 767 ? 7 : 4}
+              selectedItems={selectedCity}
+              handleChange={setSelectedCity}
+              handleClick={handleClickClear}
+              handleKeyDown={handleKeyDownClear}
+            />
+          </>
+        )}
         <Button
           className="parks-search-button"
           onClick={searchParkFilter}
