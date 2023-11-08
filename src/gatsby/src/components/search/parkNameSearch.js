@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useRef, useCallback } from "react"
 import axios from "axios"
 import { graphql, useStaticQuery } from "gatsby"
 import { AsyncTypeahead, ClearButton } from "react-bootstrap-typeahead"
@@ -39,32 +39,26 @@ const ParkNameSearch = ({
   // event handlers
   const SEARCH_NAME_URI =
     `${data.site.siteMetadata.apiURL}/api/protected-areas/searchnames`
-  const handleSearchName = async (query) => {
-    setIsSearchNameLoading(true)
-    try {
-      const response = await axios.get(`
-      ${SEARCH_NAME_URI}?queryText=${query}
-    `)
-      setOptions(response.data.data)
-    } catch (error) {
-      setOptions([])
-      console.error('Error fetching search names:', error)
-    } finally {
-      setIsSearchNameLoading(false)
-    }
-  }
-
-  // useEffects
-  useEffect(() => {
-    if (searchText.length > 0) {
-      handleSearchName(searchText)
+  const handleSearchName = useCallback(async (query) => {
+    if (query.length > 0) {
+      setIsSearchNameLoading(true)
+      try {
+        const response = await axios.get(`
+        ${SEARCH_NAME_URI}?queryText=${query}
+      `)
+        setOptions(response.data.data)
+      } catch (error) {
+        setOptions([])
+        console.error('Error fetching search names:', error)
+      } finally {
+        setIsSearchNameLoading(false)
+      }
     } else {
       // clear input field if there is no search text
       typeaheadRef.current.clear()
       setOptions([])
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText])
+  }, [SEARCH_NAME_URI])
 
   return (
     <AsyncTypeahead

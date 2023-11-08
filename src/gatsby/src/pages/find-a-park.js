@@ -325,9 +325,7 @@ export default function FindAPark({ location, data }) {
     }
   }
   const handleSearchNameInputChange = (text) => {
-    if (text.length) {
-      setInputText(text)
-    }
+    setInputText(text)
   }
   const handleClickClearPark = () => {
     setCurrentPage(1)
