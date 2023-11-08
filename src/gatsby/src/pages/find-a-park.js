@@ -314,7 +314,7 @@ export default function FindAPark({ location, data }) {
     }
   }
   const handleKeyDownSearchPark = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === "Enter") {
       e.preventDefault()
       handleSearch()
     }
