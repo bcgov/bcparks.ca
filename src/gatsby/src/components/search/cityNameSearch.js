@@ -20,7 +20,7 @@ const HighlightText = ({ city, input }) => {
 }
 
 const CityNameSearch = ({
-  isCityNameLoading, showPosition, currentLocation, optionLimit, selectedItems, handleChange, handleClick, handleKeyDown
+  isCityNameLoading, showPosition, currentLocation, optionLimit, selectedItems, setSelectedItems, handleChange, handleClick, handleKeyDown
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -44,6 +44,7 @@ const CityNameSearch = ({
   const [hasResult, setHasResult] = useState(false)
   const [hasPermission, setHasPermission] = useState(true)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [hasBeenDenied, setHasBeenDenied] = useState(false)
   const cities = data?.allStrapiSearchCity?.nodes || []
   const typeaheadRef = useRef(null)
 
@@ -81,6 +82,13 @@ const CityNameSearch = ({
     switch (error.code) {
       case error.PERMISSION_DENIED:
         setHasPermission(false)
+        if (!hasPermission) {
+          setHasBeenDenied(true)
+        } else {
+          setHasBeenDenied(false)
+        }
+        // clear input field if user denies current location
+        setSelectedItems([])
         console.log("User denied the request for Geolocation.")
         break
       case error.POSITION_UNAVAILABLE:
@@ -136,7 +144,7 @@ const CityNameSearch = ({
 
   return (
     <>
-      {!hasPermission && <PermissionToast />}
+      {!hasPermission && <PermissionToast hasBeenDenied={hasBeenDenied} />}
       <Typeahead
         ref={typeaheadRef}
         id="city-search-typehead"
@@ -150,7 +158,7 @@ const CityNameSearch = ({
         open={isDropdownOpen}
         onToggle={(isOpen) => setIsDropdownOpen(isOpen)}
         placeholder=" "
-        className={`has-text--${cityText.length > 0 ? 'true' : 'false'
+        className={`has-text--${(cityText.length > 0 || selectedItems.length > 0) ? 'true' : 'false'
           } has-error--${(cityText.length > 0 && !hasResult) ? 'true' : 'false'
           } city-search-typeahead`}
         renderInput={({ inputRef, referenceElementRef, ...inputProps }) => {
@@ -191,6 +199,7 @@ const CityNameSearch = ({
                 tabIndex="0"
                 onClick={handleClickGetLocation}
                 onKeyDown={(e) => handleKeyDownGetLocation(e)}
+                className="current-location-button"
               >
                 <NearMeIcon />{currentLocation.cityName}
               </div>

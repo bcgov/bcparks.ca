@@ -1358,7 +1358,7 @@ a.desktop-park-link {
       height: auto;
       position: absolute;
       top: 12px;
-      left: 20px;
+      left: 18px;
       color: $colorGreyMed;
       border: none;
       margin: 0;
@@ -1407,6 +1407,13 @@ a.desktop-park-link {
       &.no-suggestion-text {
         cursor: default;
         text-decoration: none;
+      }
+      .current-location-button {
+        svg.MuiSvgIcon-root {
+          color: $colorGreyMed;
+          font-size: 1.25rem;
+          margin-right: 8px;
+        }
       }
     }
   }
@@ -1522,7 +1529,7 @@ a.desktop-park-link {
   position: fixed;
   top: 16px;
   right: calc(50% - 150px);
-  z-index: 2;
+  z-index: 10;
   border: none;
   border-radius: 0;
   box-shadow: 0px 4px 8px 0px rgba($colorBlack, .2);
@@ -1534,7 +1541,7 @@ a.desktop-park-link {
     color: $colorText;
     font-size: 1rem;
     border: none;
-    padding: 16px 16px 8px;
+    padding: 16px;
     button.close {
       margin: 0 !important;
     }
