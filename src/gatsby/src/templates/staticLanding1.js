@@ -120,7 +120,7 @@ const LandingPage = ({ pageContext }) => {
               />
             </div>
             <div className="col">
-              <MainSearch />
+              <MainSearch hasCityNameSearch={false} />
             </div>
           </div>
         </div>
