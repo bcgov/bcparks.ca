@@ -6,14 +6,17 @@ import { Form } from "react-bootstrap"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 
 const HighlightText = ({ park, input }) => {
-  const words = park.split(" ")
+  const parkWords = park.toLowerCase().split(" ")
+  const inputWords = input.toLowerCase().split(" ")
   return (
-    words.map((word, index) => {
-      if (word.toLowerCase() === input) {
-        return <span key={index}> {word} </span>
-      } else {
-        return <b key={index}> {word} </b>
-      }
+    parkWords.map((word, index) => {
+      const shouldHighlight = inputWords.includes(word)
+      return (
+        <span key={index}>
+          {shouldHighlight ? word : <b>{word}</b>}
+          {index !== parkWords.length - 1 ? " " : ""}
+        </span>
+      )
     })
   )
 }
