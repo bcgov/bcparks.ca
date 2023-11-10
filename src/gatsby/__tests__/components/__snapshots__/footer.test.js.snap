@@ -51,7 +51,7 @@ exports[`Footer renders correctly 1`] = `
                   <a
                     href="/park-use-permits/"
                   >
-                    Park use permits
+                    Park-use permits
                   </a>
                 </div>
               </li>

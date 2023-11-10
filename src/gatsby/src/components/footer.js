@@ -57,7 +57,7 @@ export default function Footer() {
   // TODO replace with data from Strapi
   const menu1 = [
     { type: "header", display: "Get a permit" },
-    { type: "link", display: "Park use permits", link: "/park-use-permits/" },
+    { type: "link", display: "Park-use permits", link: "/park-use-permits/" },
     { type: "link", display: "Filming in parks", link: "/park-use-permits/filming-in-parks/" },
     { type: "link", display: "Travel trade", link: "/park-use-permits/travel-trade/" },
   ]
