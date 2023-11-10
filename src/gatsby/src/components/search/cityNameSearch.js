@@ -126,6 +126,8 @@ const CityNameSearch = ({
   const handleClickInput = () => {
     setIsDropdownOpen(true)
   }
+  // this prevent selecting the first option with the tab key
+  const handleKeyDownInput = () => { }
 
   // useEffect
   useEffect(() => {
@@ -162,8 +164,10 @@ const CityNameSearch = ({
         onInputChange={handleInputChange}
         open={isDropdownOpen}
         onToggle={(isOpen) => setIsDropdownOpen(isOpen)}
+        onFocus={handleClickInput}
         placeholder=" "
         className={`has-text--${(selectedItems.length > 0 || cityText.length > 0) ? 'true' : 'false'
+          } is-dropdown-open--${isDropdownOpen ? 'true' : 'false'
           } city-search-typeahead`}
         renderInput={({ inputRef, referenceElementRef, ...inputProps }) => {
           return (
@@ -176,6 +180,7 @@ const CityNameSearch = ({
                   referenceElementRef(node)
                 }}
                 onClick={handleClickInput}
+                onKeyDown={handleKeyDownInput}
               />
               <label htmlFor="city-search-typeahead">
                 Near a city
@@ -194,20 +199,24 @@ const CityNameSearch = ({
               </MenuItem>
             ))}
             {(!hasResult && cityText) &&
-              <MenuItem position={cities.length} key={cities.length} className="no-suggestion-text">
+              <MenuItem
+                tabIndex={-1}
+                position={cities.length}
+                key={cities.length}
+                className="no-suggestion-text"
+              >
                 No suggestions, please check your spelling or try a larger city in B.C.
               </MenuItem>
             }
-            <MenuItem option={currentLocation} position={cities.length + 1} key={cities.length + 1}>
-              <div
-                role="button"
-                tabIndex="0"
-                onClick={handleClickGetLocation}
-                onKeyDown={(e) => handleKeyDownGetLocation(e)}
-                className="current-location-button"
-              >
-                <NearMeIcon />{currentLocation.cityName}
-              </div>
+            <MenuItem
+              option={currentLocation}
+              position={cities.length + 1}
+              key={cities.length + 1}
+              onClick={handleClickGetLocation}
+              onKeyDown={(e) => handleKeyDownGetLocation(e)}
+              className="current-location-text"
+            >
+              <NearMeIcon />{currentLocation.cityName}
             </MenuItem>
           </Menu>
         )}

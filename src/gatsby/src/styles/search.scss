@@ -1368,7 +1368,7 @@ a.desktop-park-link {
       transition: opacity .1s ease-in-out,transform .1s ease-in-out;
     }
   }
-  &.has-text--true {
+  &.has-text--true, &.is-dropdown-open--true {
     input.form-control {
       border-width: 3px;
       padding: 18px 16px 0;
@@ -1400,7 +1400,7 @@ a.desktop-park-link {
         cursor: default;
         text-decoration: none;
       }
-      .current-location-button {
+      &.current-location-text {
         svg.MuiSvgIcon-root {
           color: $colorGreyMed;
           font-size: 1.25rem;
