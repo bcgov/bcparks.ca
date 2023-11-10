@@ -1374,14 +1374,6 @@ a.desktop-park-link {
       padding: 18px 16px 0;
     }
   }
-  &.has-error--true {
-    input.form-control {
-      &:not([aria-expanded="true"]) {
-        border-color: $colorRed;
-        border-width: 2px;
-      }
-    }
-  }
   .dropdown-menu {
     width: 100%;
     max-height: 360px !important;

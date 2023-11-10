@@ -107,10 +107,8 @@ const CityNameSearch = ({
 
   // event handlers
   const handleInputChange = (text) => {
-    if (text.length) {
-      setCityText(text)
-      checkResult(text)
-    }
+    setCityText(text)
+    checkResult(text)
   }
   const handleClickGetLocation = () => {
     if (navigator.geolocation) {
@@ -126,7 +124,7 @@ const CityNameSearch = ({
     }
   }
   const handleClickInput = () => {
-    setIsDropdownOpen(!isDropdownOpen)
+    setIsDropdownOpen(true)
   }
 
   // useEffect
@@ -141,6 +139,13 @@ const CityNameSearch = ({
       document.body.removeEventListener("click", handleClickOutside)
     }
   }, [])
+
+  // clear input field if text does not exist in options
+  useEffect(() => {
+    if (!isDropdownOpen && cityText.length > 0 && !hasResult) {
+      setCityText("")
+    }
+  }, [isDropdownOpen, cityText, hasResult])
 
   return (
     <>
@@ -158,14 +163,14 @@ const CityNameSearch = ({
         open={isDropdownOpen}
         onToggle={(isOpen) => setIsDropdownOpen(isOpen)}
         placeholder=" "
-        className={`has-text--${(cityText.length > 0 || selectedItems.length > 0) ? 'true' : 'false'
-          } has-error--${(cityText.length > 0 && !hasResult) ? 'true' : 'false'
+        className={`has-text--${(selectedItems.length > 0 || cityText.length > 0) ? 'true' : 'false'
           } city-search-typeahead`}
         renderInput={({ inputRef, referenceElementRef, ...inputProps }) => {
           return (
             <Form.Group controlId="city-search-typeahead">
               <Form.Control
                 {...inputProps}
+                value={selectedItems.length > 0 ? selectedItems[0].cityName : cityText}
                 ref={(node) => {
                   inputRef(node)
                   referenceElementRef(node)
@@ -215,11 +220,7 @@ const CityNameSearch = ({
                   onClear()
                   handleClick()
                   setCityText("")
-                }}
-                onKeyDown={(e) => {
-                  onClear()
-                  handleKeyDown(e)
-                  setCityText("")
+                  setIsDropdownOpen(false)
                 }}
               />
             </div>

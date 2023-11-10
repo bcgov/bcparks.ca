@@ -111,10 +111,6 @@ const ParkNameSearch = ({
                 onClear()
                 handleClick()
               }}
-              onKeyDown={(e) => {
-                onClear()
-                handleKeyDown(e)
-              }}
             />
           </div>
         )
