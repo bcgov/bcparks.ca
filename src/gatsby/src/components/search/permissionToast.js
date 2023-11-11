@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import Toast from "react-bootstrap/Toast"
 
-const PermissionToast = () => {
+const PermissionToast = ({ hasBeenDenied }) => {
   const [isShow, setIsShow] = useState(true)
   const toggleShow = () => setIsShow(false)
 
@@ -17,8 +17,13 @@ const PermissionToast = () => {
           </strong>
         </Toast.Header>
         <Toast.Body>
-          B.C. parks does not have permission to show your location
+          B.C. parks does not have permission to show your location.
         </Toast.Body>
+        {hasBeenDenied &&
+          <Toast.Body>
+            Please update your location permission and try again.
+          </Toast.Body>
+        }
       </Toast>
     </div>
   )

@@ -619,6 +619,8 @@ export default function FindAPark({ location, data }) {
       if (selectedCity[0].latitude === 0 || selectedCity[0].longitude === 0) {
         setIsCityNameLoading(true)
       }
+    } else {
+      setIsCityNameLoading(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCity])
@@ -663,6 +665,7 @@ export default function FindAPark({ location, data }) {
                 currentLocation={currentLocation}
                 optionLimit={useScreenSize().width > 767 ? 7 : 4}
                 selectedItems={qsCity.length > 0 ? qsCity : selectedCity}
+                setSelectedItems={setSelectedCity}
                 handleChange={setSelectedCity}
                 handleClick={handleClickClearCity}
                 handleKeyDown={handleKeyDownClearCity}

@@ -1358,7 +1358,7 @@ a.desktop-park-link {
       height: auto;
       position: absolute;
       top: 12px;
-      left: 20px;
+      left: 18px;
       color: $colorGreyMed;
       border: none;
       margin: 0;
@@ -1368,18 +1368,10 @@ a.desktop-park-link {
       transition: opacity .1s ease-in-out,transform .1s ease-in-out;
     }
   }
-  &.has-text--true {
+  &.has-text--true, &.is-dropdown-open--true {
     input.form-control {
       border-width: 3px;
       padding: 18px 16px 0;
-    }
-  }
-  &.has-error--true {
-    input.form-control {
-      &:not([aria-expanded="true"]) {
-        border-color: $colorRed;
-        border-width: 2px;
-      }
     }
   }
   .dropdown-menu {
@@ -1407,6 +1399,13 @@ a.desktop-park-link {
       &.no-suggestion-text {
         cursor: default;
         text-decoration: none;
+      }
+      &.current-location-text {
+        svg.MuiSvgIcon-root {
+          color: $colorGreyMed;
+          font-size: 1.25rem;
+          margin-right: 8px;
+        }
       }
     }
   }
@@ -1522,7 +1521,7 @@ a.desktop-park-link {
   position: fixed;
   top: 16px;
   right: calc(50% - 150px);
-  z-index: 2;
+  z-index: 10;
   border: none;
   border-radius: 0;
   box-shadow: 0px 4px 8px 0px rgba($colorBlack, .2);
@@ -1534,7 +1533,7 @@ a.desktop-park-link {
     color: $colorText;
     font-size: 1rem;
     border: none;
-    padding: 16px 16px 8px;
+    padding: 16px;
     button.close {
       margin: 0 !important;
     }

@@ -62,6 +62,8 @@ const ParkNameSearch = ({
       setOptions([])
     }
   }, [SEARCH_NAME_URI])
+    // this prevent selecting the first option with the tab key
+    const handleKeyDownInput = () => { }
 
   return (
     <AsyncTypeahead
@@ -89,6 +91,7 @@ const ParkNameSearch = ({
                 inputRef(node)
                 referenceElementRef(node)
               }}
+              onKeyDown={handleKeyDownInput}
             />
             <label htmlFor="park-search-typeahead">
               By park name
@@ -110,10 +113,6 @@ const ParkNameSearch = ({
               onClick={() => {
                 onClear()
                 handleClick()
-              }}
-              onKeyDown={(e) => {
-                onClear()
-                handleKeyDown(e)
               }}
             />
           </div>
