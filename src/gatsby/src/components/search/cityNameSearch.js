@@ -142,11 +142,19 @@ const CityNameSearch = ({
     }
   }, [])
 
-  // clear input field if text does not exist in options
   useEffect(() => {
+    // clear input field if text does not exist in options
     if (!isDropdownOpen && cityText.length > 0 && !hasResult) {
       setCityText("")
     }
+    // search parks if a user's input is the same as one of the options
+    if (cityText.length > 0 && hasResult) {
+      const enteredCity = cities.filter(city => city.cityName.toLowerCase() === cityText.toLowerCase())
+      if (enteredCity.length > 0) {
+        setSelectedItems(enteredCity)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDropdownOpen, cityText, hasResult])
 
   return (

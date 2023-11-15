@@ -62,8 +62,8 @@ const ParkNameSearch = ({
       setOptions([])
     }
   }, [SEARCH_NAME_URI])
-    // this prevent selecting the first option with the tab key
-    const handleKeyDownInput = () => { }
+  // this prevent selecting the first option with the tab key
+  const handleKeyDownInput = (e) => { handleKeyDownSearch(e) }
 
   return (
     <AsyncTypeahead
@@ -91,7 +91,7 @@ const ParkNameSearch = ({
                 inputRef(node)
                 referenceElementRef(node)
               }}
-              onKeyDown={handleKeyDownInput}
+              onKeyDown={(e) => handleKeyDownInput(e)}
             />
             <label htmlFor="park-search-typeahead">
               By park name
