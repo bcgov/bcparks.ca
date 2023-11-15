@@ -8,12 +8,15 @@ import "react-bootstrap-typeahead/css/Typeahead.css"
 const HighlightText = ({ park, input }) => {
   const parkWords = park.toLowerCase().split(" ")
   const inputWords = input.toLowerCase().split(" ")
+  const camelCase = (word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1)
+  }
   return (
     parkWords.map((word, index) => {
       const shouldHighlight = inputWords.includes(word)
       return (
         <span key={index}>
-          {shouldHighlight ? word : <b>{word}</b>}
+          {shouldHighlight ? camelCase(word) : <b>{camelCase(word)}</b>}
           {index !== parkWords.length - 1 ? " " : ""}
         </span>
       )
