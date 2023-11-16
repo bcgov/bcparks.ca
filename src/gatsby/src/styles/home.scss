@@ -319,10 +319,10 @@
     }
     @media screen and (min-width: $lgBreakpoint) {
       text-align: left;      
-      padding: 40px;
+      padding: 25px 40px;
       margin: 180px auto 0px auto;
       width: 800px;
-      min-height: 180px;
+      min-height: 200px;
     }
   }
 
@@ -330,16 +330,13 @@
   .parks-search-field{
     margin-top:15px;   
     display:flex; 
-    .parks-search-button{
-      margin: 0 0 0 16px;
-    }
 
     @media screen and (max-width: $lgBreakpoint) {
       flex-direction: column;
       flex-grow:1;
       .parks-search-button{
         width:100%;
-        margin: 16px 0 0 0;
+        margin:10px 0px;
       }
     }
 

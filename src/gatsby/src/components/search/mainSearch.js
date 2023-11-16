@@ -1,9 +1,10 @@
 import React, { useState } from "react"
 import { navigate } from "gatsby"
-import { Button } from "@mui/material"
-import ParkNameSearch from "./parkNameSearch"
-import "../../styles/search.scss"
+import { TextField, Button, InputAdornment, InputLabel } from "@mui/material"
+import SearchIcon from "@mui/icons-material/Search"
 
+import "../../styles/search.scss"
+  
 const MainSearch = () => {
 
   const [searchText, setSearchText] = useState("")
@@ -15,47 +16,56 @@ const MainSearch = () => {
       },
     })
   }
-  // event handlers
-  const handleSearchNameChange = (selected) => {
-    if (selected.length) {
-      setSearchText(selected[0]?.protectedAreaName)
-      searchParkFilter()
-    }
-  }
-  const handleSearchNameInputChange = (text) => {
-    if (text.length) {
-      setSearchText(text)
-    }
-  }
-  const handleClickClear = () => {
-    setSearchText("")
-  }
-  const handleKeyDownClear = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault()
-      handleClickClear()
-    }
-  }
 
   return (
     <div className="parks-search-wrapper">
       <h1 className="text-white">Find a park</h1>
       <div className="parks-search-field">
-        <ParkNameSearch
-          optionLimit={8}
-          handleChange={handleSearchNameChange}
-          handleInputChange={handleSearchNameInputChange}
-          handleClick={handleClickClear}
-          handleKeyDown={handleKeyDownClear}
-          searchText={searchText}
+        <InputLabel className="sr-only" htmlFor="park-search-text">
+            Search
+        </InputLabel>
+        <TextField
+          id="park-search-text"
+          variant="outlined"
+          placeholder="Search by park name"
+          className="park-search-text-box h50p"
+          value={searchText}
+          onChange={event => {
+            setSearchText(event.target.value)
+          }}
+          onKeyPress={ev => {
+            if (ev.key === "Enter") {
+              searchParkFilter()
+              ev.preventDefault()
+            }
+          }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon className="search-icon" />
+              </InputAdornment>
+            ),
+          }}
         />
         <Button
-          variant="contained"
-          onClick={searchParkFilter}
-          className="parks-search-button"
+            variant="contained"
+            onClick={searchParkFilter}
+            className="parks-search-button"
         >
           Search
         </Button>
+      </div>
+      <div className="parks-search-filter-link"
+        role="button"
+        tabIndex={0}
+        onClick={searchParkFilter}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            searchParkFilter()
+          }
+        }}
+      >
+        Search by activity
       </div>
     </div>
   )
