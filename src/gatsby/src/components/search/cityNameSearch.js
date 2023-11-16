@@ -20,7 +20,7 @@ const HighlightText = ({ city, input }) => {
 }
 
 const CityNameSearch = ({
-  isCityNameLoading, showPosition, currentLocation, optionLimit, selectedItems, setSelectedItems, handleChange, handleClick, handleKeyDown
+  isCityNameLoading, showPosition, currentLocation, optionLimit, selectedItems, setSelectedItems, handleChange, handleClick
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -126,8 +126,31 @@ const CityNameSearch = ({
   const handleClickInput = () => {
     setIsDropdownOpen(true)
   }
-  // this prevent selecting the first option with the tab key
-  const handleKeyDownInput = () => { }
+  // select an option with arrow keys and search parks with enter key 
+  const handleKeyDownInput = (e) => {
+    const optionsLength = cityOptions(optionLimit).length + 1
+    let activeIndex = typeaheadRef.current.state.activeIndex
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault()
+      if (e.key === 'ArrowUp') {
+        activeIndex = (activeIndex - 1 + optionsLength) % optionsLength
+      } else if (e.key === 'ArrowDown') {
+        activeIndex = (activeIndex + 1) % optionsLength
+      }
+      typeaheadRef.current.setState({ activeIndex })
+    } else if (e.key === 'Enter') {
+      e.preventDefault()
+      const activeOption = cityOptions(optionLimit)[activeIndex]
+      if (activeOption !== undefined) {
+        setSelectedItems([activeOption])
+        setIsDropdownOpen(false)
+      } else {
+        setSelectedItems([currentLocation])
+        handleKeyDownGetLocation(e)
+        setIsDropdownOpen(false)
+      }
+    }
+  }
 
   // useEffect
   useEffect(() => {
@@ -170,9 +193,9 @@ const CityNameSearch = ({
         selected={selectedItems}
         onChange={handleChange}
         onInputChange={handleInputChange}
+        onFocus={handleClickInput}
         open={isDropdownOpen}
         onToggle={(isOpen) => setIsDropdownOpen(isOpen)}
-        onFocus={handleClickInput}
         placeholder=" "
         className={`has-text--${(selectedItems.length > 0 || cityText.length > 0) ? 'true' : 'false'
           } is-dropdown-open--${isDropdownOpen ? 'true' : 'false'
@@ -209,8 +232,8 @@ const CityNameSearch = ({
             {(!hasResult && cityText) &&
               <MenuItem
                 tabIndex={-1}
-                position={cities.length}
-                key={cities.length}
+                position={0}
+                key={0}
                 className="no-suggestion-text"
               >
                 No suggestions, please check your spelling or try a larger city in B.C.
@@ -218,10 +241,10 @@ const CityNameSearch = ({
             }
             <MenuItem
               option={currentLocation}
-              position={cities.length + 1}
-              key={cities.length + 1}
+              position={hasResult ? cities.length : 0}
+              key={hasResult ? cities.length : 0}
               onClick={handleClickGetLocation}
-              onKeyDown={(e) => handleKeyDownGetLocation(e)}
+              onKeyDown={handleKeyDownGetLocation}
               className="current-location-text"
             >
               <NearMeIcon />{currentLocation.cityName}

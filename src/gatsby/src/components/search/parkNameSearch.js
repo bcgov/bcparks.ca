@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import axios from "axios"
 import { graphql, useStaticQuery } from "gatsby"
 import { AsyncTypeahead, ClearButton } from "react-bootstrap-typeahead"
@@ -22,7 +22,7 @@ const HighlightText = ({ park, input }) => {
 }
 
 const ParkNameSearch = ({
-  optionLimit, searchText, handleChange, handleInputChange, handleKeyDownSearch, handleClick, handleKeyDown
+  optionLimit, searchText, handleChange, handleInputChange, handleKeyDownSearch, handleClick
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -37,9 +37,13 @@ const ParkNameSearch = ({
   // useState and constants
   const [options, setOptions] = useState([])
   const [isSearchNameLoading, setIsSearchNameLoading] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const typeaheadRef = useRef(null)
 
   // event handlers
+  const handleClickInput = () => {
+    setIsDropdownOpen(true)
+  }
   const SEARCH_NAME_URI =
     `${data.site.siteMetadata.apiURL}/api/protected-areas/searchnames`
   const handleSearchName = useCallback(async (query) => {
@@ -62,8 +66,43 @@ const ParkNameSearch = ({
       setOptions([])
     }
   }, [SEARCH_NAME_URI])
-  // this prevent selecting the first option with the tab key
-  const handleKeyDownInput = (e) => { handleKeyDownSearch(e) }
+  // select an option with arrow keys and search parks with enter key 
+  const handleKeyDownInput = (e) => {
+    const optionsLength = options.slice(0, optionLimit).length
+    let activeIndex = typeaheadRef.current.state.activeIndex
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault()
+      if (e.key === 'ArrowUp') {
+        activeIndex = (activeIndex - 1 + optionsLength) % optionsLength
+      } else if (e.key === 'ArrowDown') {
+        activeIndex = (activeIndex + 1) % optionsLength
+      }
+      typeaheadRef.current.setState({ activeIndex })
+    } else if (e.key === 'Enter') {
+      e.preventDefault()
+      const activeOption = options[activeIndex]
+      if (activeOption !== undefined) {
+        handleChange([activeOption])
+        setIsDropdownOpen(false)
+      } else {
+        handleKeyDownSearch(e)
+        setIsDropdownOpen(false)
+      }
+    }
+  }
+
+  // useEffect
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (typeaheadRef.current && !typeaheadRef.current.inputNode.contains(event.target)) {
+        setIsDropdownOpen(false)
+      }
+    }
+    document.body.addEventListener("click", handleClickOutside)
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside)
+    }
+  }, [])
 
   return (
     <AsyncTypeahead
@@ -78,6 +117,9 @@ const ParkNameSearch = ({
       onChange={handleChange}
       onInputChange={handleInputChange}
       onKeyDown={handleKeyDownSearch}
+      onFocus={handleClickInput}
+      open={isDropdownOpen}
+      onToggle={(isOpen) => setIsDropdownOpen(isOpen)}
       placeholder=" "
       className={`has-text--${searchText.length > 0 ? 'true' : 'false'
         } park-search-typeahead`}
@@ -91,7 +133,7 @@ const ParkNameSearch = ({
                 inputRef(node)
                 referenceElementRef(node)
               }}
-              onKeyDown={(e) => handleKeyDownInput(e)}
+              onKeyDown={handleKeyDownInput}
             />
             <label htmlFor="park-search-typeahead">
               By park name
@@ -99,7 +141,7 @@ const ParkNameSearch = ({
           </Form.Group>
         )
       }}
-      renderMenuItemChildren={(option) => (
+      renderMenuItemChildren={option => (
         <HighlightText
           park={option.protectedAreaName}
           input={searchText}
@@ -113,6 +155,7 @@ const ParkNameSearch = ({
               onClick={() => {
                 onClear()
                 handleClick()
+                setIsDropdownOpen(false)
               }}
             />
           </div>
