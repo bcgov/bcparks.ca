@@ -1,17 +1,22 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react"
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import { graphql, Link as GatsbyLink } from "gatsby"
 import axios from "axios"
 import { orderBy } from "lodash"
 import {
   Chip,
+  TextField,
+  InputAdornment,
   Link,
   LinearProgress,
   Breadcrumbs,
   Button,
+  IconButton
 } from "@mui/material"
+import ClearIcon from '@mui/icons-material/Clear'
+import SearchIcon from "@mui/icons-material/Search"
 import CancelIcon from "@mui/icons-material/Cancel"
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
-import { useQueryParamString } from 'react-use-query-param-string'
+import { useQueryParamString } from 'react-use-query-param-string';
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -21,10 +26,9 @@ import NoSearchResults from "../components/search/noSearchResults"
 import MobileFilters from "../components/search/mobileFilters"
 import DesktopFilters from "../components/search/desktopFilters"
 import ParkLinksModal from "../components/search/parkLinksModal"
-import ParkCard from "../components/search/parkCard"
-import ParkNameSearch from "../components/search/parkNameSearch"
 
 import "../styles/search.scss"
+import ParkCard from "../components/search/parkCard"
 
 export const query = graphql`
   {
@@ -197,6 +201,8 @@ export default function FindAPark({ location, data }) {
   const [openFilter, setOpenFilter] = useState(false)
   const [openModal, setOpenModal] = useState(false)
 
+  const searchRef = useRef(null)
+
   const breadcrumbs = [
     <Link key="1" href="/" underline="hover">
       Home
@@ -343,18 +349,6 @@ export default function FindAPark({ location, data }) {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault()
       handleClearFilter()
-    }
-  }
-
-  const handleSearchNameChange = (selected) => {
-    if (selected.length) {
-      setInputText(selected[0]?.protectedAreaName)
-      handleSearch()
-    }
-  }
-  const handleSearchNameInputChange = (text) => {
-    if (text.length) {
-      setInputText(text)
     }
   }
 
@@ -528,6 +522,13 @@ export default function FindAPark({ location, data }) {
   ])
 
   useEffect(() => {
+    // Focus the TextField element when the component mounts
+    if (searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, [])
+
+  useEffect(() => {
     if (isKeyDownLoadingMore) {
       const parkLinks = document.getElementsByClassName('desktop-park-link');
       if (parkLinks.length > itemsPerPage) {
@@ -538,7 +539,7 @@ export default function FindAPark({ location, data }) {
       }
       setIsKeyDownLoadingMore(false)
     }
-  }, [isKeyDownLoadingMore, searchResults])
+  }, [searchResults])
 
   return (
     <>
@@ -579,13 +580,45 @@ export default function FindAPark({ location, data }) {
                 <div className="search-results-quick-filter d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none mt-3">
                   <div className="row no-gutters">
                     <div className="col-12 col-md-9">
-                      <ParkNameSearch
-                        optionLimit={4}
-                        handleChange={handleSearchNameChange}
-                        handleInputChange={handleSearchNameInputChange}
-                        handleClick={handleClickClear}
-                        handleKeyDown={handleKeyDownClear}
-                        searchText={inputText}
+                      <TextField
+                        id="park-search-text"
+                        variant="outlined"
+                        placeholder="Park name"
+                        className="park-search-text-box h50p"
+                        value={inputText}
+                        focused={isLoading}
+                        inputRef={searchRef}
+                        onChange={event => {
+                          setInputText(event.target.value)
+                        }}
+                        onKeyDown={ev => {
+                          if (ev.key === "Enter") {
+                            setSearchText(inputText)
+                            ev.preventDefault()
+                          }
+                        }}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <SearchIcon className="search-icon" />
+                            </InputAdornment>
+                          ),
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                className="clear-icon-button"
+                                onClick={handleClickClear}
+                                onKeyDown={(e) => { handleKeyDownClear(e) }}
+                                sx={{ visibility: inputText ? "visible" : "hidden" }}
+                                aria-label="Clear search">
+                                <ClearIcon className="clear-icon" />
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                          inputProps: {
+                            "aria-label": "Park search",
+                          }
+                        }}
                       />
                     </div>
                     <div className="col-md-3 d-none d-md-block pl-3">
@@ -678,13 +711,46 @@ export default function FindAPark({ location, data }) {
                       <div className="search-results-quick-filter">
                         <div className="row no-gutters">
                           <div className="col-12 park-search-text-box-container d-none d-lg-block">
-                            <ParkNameSearch
-                              optionLimit={8}
-                              handleChange={handleSearchNameChange}
-                              handleInputChange={handleSearchNameInputChange}
-                              handleClick={handleClickClear}
-                              handleKeyDown={handleKeyDownClear}
-                              searchText={inputText}
+                            <TextField
+                              id="park-search-text"
+                              variant="outlined"
+                              placeholder="Park name"
+                              className="park-search-text-box h50p"
+                              value={inputText}
+                              focused={isLoading}
+                              inputRef={searchRef}
+                              onChange={event => {
+                                setInputText(event.target.value)
+                              }}
+                              onKeyDown={ev => {
+                                if (ev.key === "Enter") {
+                                  setSearchText(inputText)
+                                  setCurrentPage(1)
+                                  ev.preventDefault()
+                                }
+                              }}
+                              InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <SearchIcon className="search-icon" />
+                                  </InputAdornment>
+                                ),
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                    <IconButton
+                                      className="clear-icon-button"
+                                      onClick={handleClickClear}
+                                      onKeyDown={(e) => { handleKeyDownClear(e) }}
+                                      sx={{ visibility: inputText ? "visible" : "hidden" }}
+                                      aria-label="Clear search">
+                                      <ClearIcon className="clear-icon" />
+                                    </IconButton>
+                                  </InputAdornment>
+                                ),
+                                inputProps: {
+                                  "aria-label": "Park search",
+                                }
+                              }}
                             />
                           </div>
                           <div className="m15t col-12 park-search-text-box-container d-none d-lg-block">
