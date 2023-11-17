@@ -41,7 +41,7 @@ const ParkNameSearch = ({
   const typeaheadRef = useRef(null)
 
   // event handlers
-  const handleClickInput = () => {
+  const handleFocusInput = () => {
     setIsDropdownOpen(true)
   }
   const SEARCH_NAME_URI =
@@ -117,11 +117,12 @@ const ParkNameSearch = ({
       onChange={handleChange}
       onInputChange={handleInputChange}
       onKeyDown={handleKeyDownSearch}
-      onFocus={handleClickInput}
+      onFocus={handleFocusInput}
       open={isDropdownOpen}
       onToggle={(isOpen) => setIsDropdownOpen(isOpen)}
       placeholder=" "
       className={`has-text--${searchText.length > 0 ? 'true' : 'false'
+        } is-dropdown-open--${isDropdownOpen ? 'true' : 'false'
         } park-search-typeahead`}
       renderInput={({ inputRef, referenceElementRef, ...inputProps }) => {
         return (
@@ -155,6 +156,7 @@ const ParkNameSearch = ({
               onClick={() => {
                 onClear()
                 handleClick()
+                setOptions([])
                 setIsDropdownOpen(false)
               }}
             />

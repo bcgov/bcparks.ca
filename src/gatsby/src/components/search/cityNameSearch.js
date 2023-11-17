@@ -123,12 +123,12 @@ const CityNameSearch = ({
       handleClickGetLocation()
     }
   }
-  const handleClickInput = () => {
+  const handleFocusInput = () => {
     setIsDropdownOpen(true)
   }
   // select an option with arrow keys and search parks with enter key 
   const handleKeyDownInput = (e) => {
-    const optionsLength = cityOptions(optionLimit).length + 1
+    const optionsLength = hasResult ? cityOptions(optionLimit).length + 1 : 2
     let activeIndex = typeaheadRef.current.state.activeIndex
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault()
@@ -164,7 +164,6 @@ const CityNameSearch = ({
       document.body.removeEventListener("click", handleClickOutside)
     }
   }, [])
-
   useEffect(() => {
     // clear input field if text does not exist in options
     if (!isDropdownOpen && cityText.length > 0 && !hasResult) {
@@ -193,7 +192,7 @@ const CityNameSearch = ({
         selected={selectedItems}
         onChange={handleChange}
         onInputChange={handleInputChange}
-        onFocus={handleClickInput}
+        onFocus={handleFocusInput}
         open={isDropdownOpen}
         onToggle={(isOpen) => setIsDropdownOpen(isOpen)}
         placeholder=" "
@@ -210,7 +209,6 @@ const CityNameSearch = ({
                   inputRef(node)
                   referenceElementRef(node)
                 }}
-                onClick={handleClickInput}
                 onKeyDown={handleKeyDownInput}
               />
               <label htmlFor="city-search-typeahead">
@@ -232,8 +230,8 @@ const CityNameSearch = ({
             {(!hasResult && cityText) &&
               <MenuItem
                 tabIndex={-1}
-                position={0}
-                key={0}
+                position={cities.length}
+                key={cities.length}
                 className="no-suggestion-text"
               >
                 No suggestions, please check your spelling or try a larger city in B.C.
@@ -241,8 +239,8 @@ const CityNameSearch = ({
             }
             <MenuItem
               option={currentLocation}
-              position={hasResult ? cities.length : 0}
-              key={hasResult ? cities.length : 0}
+              position={hasResult ? cities.length : cities.length + 1}
+              key={hasResult ? cities.length : cities.length + 1}
               onClick={handleClickGetLocation}
               onKeyDown={handleKeyDownGetLocation}
               className="current-location-text"
