@@ -106,7 +106,7 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
                       {subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
                     </>
                   ) : (
-                    <>N/A</>
+                    <>No {"("}first come, first served{")"}</>
                   )
                 )}
               </dd>
