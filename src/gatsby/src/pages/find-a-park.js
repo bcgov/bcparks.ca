@@ -666,7 +666,6 @@ export default function FindAPark({ location, data }) {
                 optionLimit={useScreenSize().width > 767 ? 7 : 4}
                 selectedItems={qsCity.length > 0 ? qsCity : selectedCity}
                 setSelectedItems={setSelectedCity}
-                handleChange={setSelectedCity}
                 handleClick={handleClickClearCity}
                 handleKeyDown={handleKeyDownClearCity}
               />
