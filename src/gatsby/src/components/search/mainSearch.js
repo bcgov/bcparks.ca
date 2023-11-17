@@ -122,7 +122,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
               currentLocation={currentLocation}
               optionLimit={screenSize.width > 767 ? 7 : 4}
               selectedItems={selectedCity}
-              handleChange={setSelectedCity}
+              setSelectedItems={setSelectedCity}
               handleClick={handleClickClear}
               handleKeyDown={handleKeyDownClear}
             />

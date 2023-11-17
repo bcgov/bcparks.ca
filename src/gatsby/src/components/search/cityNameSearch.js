@@ -20,7 +20,7 @@ const HighlightText = ({ city, input }) => {
 }
 
 const CityNameSearch = ({
-  isCityNameLoading, showPosition, currentLocation, optionLimit, selectedItems, setSelectedItems, handleChange, handleClick, handleKeyDown
+  isCityNameLoading, showPosition, currentLocation, optionLimit, selectedItems, setSelectedItems, handleClick
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -123,11 +123,36 @@ const CityNameSearch = ({
       handleClickGetLocation()
     }
   }
-  const handleClickInput = () => {
+  const handleFocusInput = () => {
     setIsDropdownOpen(true)
   }
-  // this prevent selecting the first option with the tab key
-  const handleKeyDownInput = () => { }
+  // select an option with arrow keys and search parks with enter key 
+  const handleKeyDownInput = (e) => {
+    const optionsLength = hasResult ? cityOptions(optionLimit).length + 1 : 2
+    let activeIndex = typeaheadRef.current.state.activeIndex
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault()
+      if (e.key === 'ArrowUp') {
+        activeIndex = (activeIndex - 1 + optionsLength) % optionsLength
+      } else if (e.key === 'ArrowDown') {
+        activeIndex = (activeIndex + 1) % optionsLength
+      }
+      typeaheadRef.current.setState({ activeIndex })
+    } else if (e.key === 'Enter') {
+      e.preventDefault()
+      const activeOption = cityOptions(optionLimit)[activeIndex]
+      if (activeOption !== undefined) {
+        setSelectedItems([activeOption])
+        setIsDropdownOpen(false)
+      } else {
+        setSelectedItems([currentLocation])
+        handleKeyDownGetLocation(e)
+        setIsDropdownOpen(false)
+      }
+    } else if (e.key === 'Tab') {
+      setIsDropdownOpen(false)
+    }
+  }
 
   // useEffect
   useEffect(() => {
@@ -141,7 +166,6 @@ const CityNameSearch = ({
       document.body.removeEventListener("click", handleClickOutside)
     }
   }, [])
-
   useEffect(() => {
     // clear input field if text does not exist in options
     if (!isDropdownOpen && cityText.length > 0 && !hasResult) {
@@ -168,11 +192,11 @@ const CityNameSearch = ({
         labelKey={city => `${city.cityName}`}
         options={cityOptions(optionLimit)}
         selected={selectedItems}
-        onChange={handleChange}
+        onChange={setSelectedItems}
         onInputChange={handleInputChange}
+        onFocus={handleFocusInput}
         open={isDropdownOpen}
         onToggle={(isOpen) => setIsDropdownOpen(isOpen)}
-        onFocus={handleClickInput}
         placeholder=" "
         className={`has-text--${(selectedItems.length > 0 || cityText.length > 0) ? 'true' : 'false'
           } is-dropdown-open--${isDropdownOpen ? 'true' : 'false'
@@ -187,7 +211,6 @@ const CityNameSearch = ({
                   inputRef(node)
                   referenceElementRef(node)
                 }}
-                onClick={handleClickInput}
                 onKeyDown={handleKeyDownInput}
               />
               <label htmlFor="city-search-typeahead">
@@ -218,10 +241,10 @@ const CityNameSearch = ({
             }
             <MenuItem
               option={currentLocation}
-              position={cities.length + 1}
-              key={cities.length + 1}
+              position={hasResult ? cities.length : cities.length + 1}
+              key={hasResult ? cities.length : cities.length + 1}
               onClick={handleClickGetLocation}
-              onKeyDown={(e) => handleKeyDownGetLocation(e)}
+              onKeyDown={handleKeyDownGetLocation}
               className="current-location-text"
             >
               <NearMeIcon />{currentLocation.cityName}
