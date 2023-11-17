@@ -149,6 +149,8 @@ const CityNameSearch = ({
         handleKeyDownGetLocation(e)
         setIsDropdownOpen(false)
       }
+    } else if (e.key === 'Tab') {
+      setIsDropdownOpen(false)
     }
   }
 

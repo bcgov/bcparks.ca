@@ -88,6 +88,8 @@ const ParkNameSearch = ({
         handleKeyDownSearch(e)
         setIsDropdownOpen(false)
       }
+    } else if (e.key === 'Tab') {
+      setIsDropdownOpen(false)
     }
   }
 
