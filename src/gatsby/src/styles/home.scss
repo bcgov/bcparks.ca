@@ -292,9 +292,12 @@
 .emergency-alert {
   .alert-container {
     min-height: 55px;
+    max-width: 1060px;
     display: flex;
-    align-items: center;
+    // align-items: center;
     justify-content: center;
+    margin: 0 auto;
+    padding: 16px;
     p {
       margin-bottom: 0;
     }
@@ -302,18 +305,45 @@
       font-weight: bold;
       text-decoration: underline;
     }
+    span.partition {
+      padding: 0 4px;
+    }
+    svg.MuiSvgIcon-root {
+      font-size: 1.25rem;
+      height: 1.25rem;
+      width: 1.25rem;
+      &.warning-icon {
+        margin-top: 4px;
+        margin-right: 16px;
+      }
+    }
+    button {
+      height: 20px;
+      width: 20px;
+      margin-left: 16px;
+      margin-bottom: 0;
+      &:focus-visible {
+        outline: -webkit-focus-ring-color auto 1px;
+        outline-offset: 1px;
+      }
+    }
   }
   &.alert-bg-red {
     color: $colorWhite;
     background-color: $colorRed;
     a {
       color: $colorWhite;
-    
+    }
+    button {
+      color: $colorWhite;
     }
   }
   &.alert-bg-yellow {
     color: $colorBlue;
     background-color: $colorGold;
+    a {
+      color: $colorBlue;
+    }
   }
 }
 

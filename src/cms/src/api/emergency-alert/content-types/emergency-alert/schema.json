@@ -25,16 +25,12 @@
       "required": true
     },
     "description": {
-      "type": "customField",
-      "options": {
-        "preset": "toolbar"
-      },
-      "customField": "plugin::ckeditor5.CKEditor"
+      "type": "text"
     },
-    "link": {
+    "links": {
       "type": "component",
       "repeatable": true,
-      "component": "parks.text-link"
+      "component": "parks.fancy-link"
     }
   }
 }
