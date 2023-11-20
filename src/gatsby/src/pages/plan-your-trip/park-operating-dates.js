@@ -201,7 +201,7 @@ const ParkLink = ({ park }) => {
                       {subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
                     </>
                   ) : (
-                    <>No {"("}first come, first served{")"}</>
+                    <>Not known</>
                   )
                 )}
               </td>
@@ -261,7 +261,7 @@ const ParkLink = ({ park }) => {
                         {subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
                       </>
                     ) : (
-                      <>No {"("}first come, first served{")"}</>
+                      <>Not known</>
                     )
                   )}
                 </div>
