@@ -8,7 +8,6 @@ import MainSearch from "../components/search/mainSearch"
 import PageContent from "../components/pageContent/pageContent"
 import Seo from "../components/seo"
 import ScrollToTop from "../components/scrollToTop"
-import EmergencyAlert from "../components/emergencyAlert"
 
 import "../styles/home.scss"
 
@@ -78,7 +77,6 @@ export default function Home({ data }) {
   return (
     <div id="home">
       <div className="park-search-container-wrapper">
-        <EmergencyAlert />
         <Header mode="internal" content={menuContent} />
         <ScrollToTop />
         <div id="sr-content" className="park-search">

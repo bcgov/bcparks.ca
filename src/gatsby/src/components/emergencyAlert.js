@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { useStaticQuery, graphql } from "gatsby"
-import ErrorIcon from '@mui/icons-material/Error'
-import CloseIcon from '@mui/icons-material/Close'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCircleExclamation, faXmark } from "@fortawesome/free-solid-svg-icons"
+import "../styles/alert.scss"
 
 const EmergencyAlert = () => {
   const data = useStaticQuery(graphql`
@@ -23,6 +24,16 @@ const EmergencyAlert = () => {
   const alerts = data?.allStrapiEmergencyAlert?.nodes || []
   // display only one alert even if there are multiple active alerts
   const alert = alerts[0]
+  let characterCount = 0
+  // count how many characters are in alert 
+  if (alert) {
+    const descriptionCount = alert.description.length
+    let linkTextCount = 0
+    alert.links?.map(link =>
+      linkTextCount += link.linkText.length
+    )
+    characterCount = descriptionCount + linkTextCount
+  }
   const [show, setShow] = useState(true)
 
   const handleClick = () => {
@@ -35,10 +46,12 @@ const EmergencyAlert = () => {
   }
 
   return (
-    show && (
+    alerts.length > 0 && show && (
       <div className={`emergency-alert alert-bg-${alert.colour.toLowerCase()}`}>
-        <div className="alert-container">
-          <ErrorIcon className="warning-icon" />
+        <div className={`alert-container has-more-characters--${characterCount > 110}`}>
+          <div className="icon">
+            <FontAwesomeIcon icon={faCircleExclamation} className="warning-icon" />
+          </div>
           <p>
             {alert.description}
             {alert.links.map((l, index) => (
@@ -48,14 +61,15 @@ const EmergencyAlert = () => {
               </span>
             ))}
           </p>
-          <button
+          <div
+            role="button"
             tabIndex={0}
             onClick={handleClick}
             onKeyDown={handleKeyDown}
-            className="btn btn-link"
+            className="button"
           >
-            <CloseIcon className="close-icon" />
-          </button>
+            <FontAwesomeIcon icon={faXmark} />
+          </div>
         </div>
       </div>
     )
