@@ -137,6 +137,20 @@
     "boatLaunches": {
       "type": "string"
     },
+    "gateOpenTime": {
+      "type": "time"
+    },
+    "gateOpensAtDawn": {
+      "type": "boolean",
+      "default": false
+    },
+    "gateCloseTime": {
+      "type": "time"
+    },
+    "gateClosesAtDusk": {
+      "type": "boolean",
+      "default": false
+    },
     "openNote": {
       "type": "text"
     },
@@ -147,6 +161,9 @@
       "type": "text"
     },
     "offSeasonNote": {
+      "type": "text"
+    },
+    "gateNote": {
       "type": "text"
     },
     "generalNote": {
