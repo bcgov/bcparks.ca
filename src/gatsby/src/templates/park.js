@@ -330,7 +330,7 @@ export default function ParkTemplate({ data }) {
             </div>
           )}
         </div>
-        <div className="page-menu--mobile d-block d-lg-none mb-4 mb-md-0 order-3">
+        <div className="page-menu--mobile d-block d-md-none order-3">
           <PageMenu
             pageSections={menuItems}
             activeSection={activeSection}
@@ -345,14 +345,14 @@ export default function ParkTemplate({ data }) {
       </div>
       <div className="container parks-container main-container">
         <div className="row no-gutters park-info-container">
-          <div className="page-menu--desktop d-none d-lg-block col-12 col-lg-4">
+          <div className="page-menu--desktop d-none d-md-block col-12 col-md-4">
             <PageMenu
               pageSections={menuItems}
               activeSection={activeSection}
               menuStyle="nav"
             />
           </div>
-          <div className="page-content col-12 col-lg-8">
+          <div className="page-content col-12 col-md-8">
             {menuItems[0].visible && (
               <div ref={parkOverviewRef} className="w-100">
                 <ParkOverview data={description} type={parkType} />

@@ -79,7 +79,7 @@ export default function ParkSubPage({ data }) {
       key="2"
       to="/find-a-park"
       onClick={(e) => {
-      if (sessionStorage.getItem("lastSearch")) {
+        if (sessionStorage.getItem("lastSearch")) {
           e.preventDefault();
           navigate('/find-a-park/' + sessionStorage.getItem("lastSearch"))
         }
@@ -120,30 +120,26 @@ export default function ParkSubPage({ data }) {
         </h1>
       </div>
       {hasSections && (
-        <div className="page-menu--mobile">
-          <div className="d-block d-lg-none">
-            <PageMenu
-              pageSections={pageSections}
-              activeSection={activeSection}
-              menuStyle="select"
-            />
-          </div>
+        <div className="page-menu--mobile d-block d-md-none">
+          <PageMenu
+            pageSections={pageSections}
+            activeSection={activeSection}
+            menuStyle="select"
+          />
         </div>
       )}
       <div className="static-content-container">
         <div className="page-content-wrapper">
           {hasSections ? (
             <div className="row no-gutters">
-              <div className="page-menu--desktop col-lg-4 col-12 d-none d-lg-block">
-                <div className="">
-                  <PageMenu
-                    pageSections={pageSections}
-                    activeSection={activeSection}
-                    menuStyle="nav"
-                  />
-                </div>
+              <div className="page-menu--desktop col-md-4 col-12 d-none d-md-block">
+                <PageMenu
+                  pageSections={pageSections}
+                  activeSection={activeSection}
+                  menuStyle="nav"
+                />
               </div>
-              <div className="page-content col-lg-8 col-12">
+              <div className="page-content col-md-8 col-12">
                 {header && (
                   <div className="header-content">
                     {header.introHtml.data.introHtml &&
