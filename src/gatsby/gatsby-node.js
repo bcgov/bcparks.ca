@@ -135,6 +135,13 @@ exports.createSchemaCustomization = ({ actions }) => {
     documentType: STRAPI_MANAGEMENT_DOCUMENT_TYPE @link(by: "id", from: "documentType___NODE")
     sites: [STRAPI_SITE] @link(by: "id", from: "sites___NODE")
   }
+
+  type STRAPI_EMERGENCY_ALERT implements Node @dontInfer {
+    isActive: Boolean
+    colour: String
+    description: String
+    links: [STRAPI_COMPONENT_PARKS_FANCY_LINK] @link(by: "id", from: "links___NODE")
+  }
   `
   createTypes(typeDefs)
 }

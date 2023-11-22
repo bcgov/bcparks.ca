@@ -25,7 +25,8 @@
       "required": true
     },
     "description": {
-      "type": "text"
+      "type": "text",
+      "required": true
     },
     "links": {
       "type": "component",
