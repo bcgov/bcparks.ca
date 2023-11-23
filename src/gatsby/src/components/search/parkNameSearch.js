@@ -52,6 +52,7 @@ const ParkNameSearch = ({
   const handleSearchName = useCallback(async (query) => {
     if (query.length > 0) {
       setIsSearchNameLoading(true)
+      setIsDropdownOpen(true)
       try {
         const response = await axios.get(`
         ${SEARCH_NAME_URI}?queryText=${query}
@@ -99,7 +100,10 @@ const ParkNameSearch = ({
   // useEffect
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (typeaheadRef.current && !typeaheadRef.current.inputNode.contains(event.target)) {
+      if (typeaheadRef.current
+        && !typeaheadRef.current.inputNode.contains(event.target)
+        && !event.target.closest('#park-search-typeahead')
+      ) {
         setIsDropdownOpen(false)
       }
     }
