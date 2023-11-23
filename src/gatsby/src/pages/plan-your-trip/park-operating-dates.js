@@ -213,11 +213,7 @@ const ParkLink = ({ park }) => {
                     )}
                   </ul>
                 ) : (
-                  subArea.facilityIsCamping ? (
-                    <>No {"("}first come, first served{")"}</>
-                  ) : (
-                    <>N/A</>
-                  )
+                  <>No {"("}first come, first served{")"}</>
                 )}
               </td>
             </tr>
@@ -258,10 +254,12 @@ const ParkLink = ({ park }) => {
                   ) : (
                     subArea.operationDates.length > 0 ? (
                       <>
-                        {subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
+                        <br />{subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
                       </>
                     ) : (
-                      <>Not known</>
+                      <>
+                        <br />Not known
+                      </>
                     )
                   )}
                 </div>
@@ -274,15 +272,9 @@ const ParkLink = ({ park }) => {
                       )}
                     </ul>
                   ) : (
-                    subArea.facilityIsCamping ? (
-                      <>
-                        <br />No {"("}first come, first served{")"}
-                      </>
-                    ) : (
-                      <>
-                        <br />N/A
-                      </>
-                    )
+                    <>
+                      <br />No {"("}first come, first served{")"}
+                    </>
                   )}
                 </div>
               </li>
