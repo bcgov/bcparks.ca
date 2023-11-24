@@ -144,7 +144,7 @@ const CityNameSearch = ({
       if (activeOption !== undefined) {
         setSelectedItems([activeOption])
         setIsDropdownOpen(false)
-      } else {
+      } else if (optionsLength - activeIndex === 1 || optionsLength - activeIndex === 2) {
         setSelectedItems([currentLocation])
         handleKeyDownGetLocation(e)
         setIsDropdownOpen(false)
@@ -172,14 +172,14 @@ const CityNameSearch = ({
       setCityText("")
     }
     // search parks if a user's input is the same as one of the options
-    if (cityText.length > 0 && hasResult) {
+    if (cityText.length > 0 && hasResult && selectedItems.length === 0) {
       const enteredCity = cities.filter(city => city.cityName.toLowerCase() === cityText.toLowerCase())
       if (enteredCity.length > 0) {
         setSelectedItems(enteredCity)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDropdownOpen, cityText, hasResult])
+  }, [isDropdownOpen, cityText, hasResult, selectedItems])
 
   return (
     <>
@@ -244,7 +244,6 @@ const CityNameSearch = ({
               position={hasResult ? cities.length : cities.length + 1}
               key={hasResult ? cities.length : cities.length + 1}
               onClick={handleClickGetLocation}
-              onKeyDown={handleKeyDownGetLocation}
               className="current-location-text"
             >
               <NearMeIcon />{currentLocation.cityName}
