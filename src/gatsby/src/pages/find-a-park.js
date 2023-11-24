@@ -475,31 +475,31 @@ export default function FindAPark({ location, data }) {
     if (queryParamStateSyncComplete()) {
       setIsLoading(true)
       setFilters()
-      axios.get(searchApiUrl, {
+      // first Axios request
+      const request1 = axios.get(searchApiUrl, {
         params: { ...params, _start: 0, _limit: currentPage * itemsPerPage },
-      }).then(resultResponse => {
-        if (resultResponse.status === 200) {
-          const total = parseInt(resultResponse.data.meta.pagination.total, 10)
-          const newResults = resultResponse.data.data
+      })
+      // second Axios request
+      const request2 = axios.get(searchApiUrl, {
+        params: { ...params, radius: 50, _start: 0, _limit: 0 },
+      })
+      Promise.all([request1, request2])
+      .then(([resultResponse1, resultResponse2]) => {
+        if (resultResponse1.status === 200) {
+          const total = parseInt(resultResponse1.data.meta.pagination.total, 10)
+          const newResults = resultResponse1.data.data
           setSearchResults(newResults);
           setTotalResults(total)
-          setAreasCount(resultResponse.data.meta.aggregations.areas.buckets)
-          setActivitiesCount(resultResponse.data.meta.aggregations.activities.buckets)
-          setFacilitiesCount(resultResponse.data.meta.aggregations.facilities.buckets)
-          setCampingsCount(resultResponse.data.meta.aggregations.campings.buckets)
+          setAreasCount(resultResponse1.data.meta.aggregations.areas.buckets)
+          setActivitiesCount(resultResponse1.data.meta.aggregations.activities.buckets)
+          setFacilitiesCount(resultResponse1.data.meta.aggregations.facilities.buckets)
+          setCampingsCount(resultResponse1.data.meta.aggregations.campings.buckets)
         } else {
           setSearchResults([])
           setTotalResults(0)
         }
-      }).finally(() => {
-        setIsLoading(false)
-      })
-      // get total number of results within 50 km
-      axios.get(searchApiUrl, {
-        params: { ...params, radius: 50, _start: 0, _limit: 0 },
-      }).then(resultResponse => {
-        if (resultResponse.status === 200) {
-          const total = parseInt(resultResponse.data.meta.pagination.total, 10)
+        if (resultResponse2.status === 200) {
+          const total = parseInt(resultResponse2.data.meta.pagination.total, 10)
           setTotalResultsWithinFifty(total)
         } else {
           setTotalResultsWithinFifty(0)
