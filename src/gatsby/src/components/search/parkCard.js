@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link as GatsbyLink } from "gatsby"
 import { Card, CardContent } from "@mui/material"
 import Carousel from "react-material-ui-carousel"
@@ -90,6 +90,8 @@ const FeatureIcons = ({ park }) => {
 }
 
 const ParkCard = ({ r }) => {
+  const [hasError, setHasError] = useState(false)
+
   return (
     <div className="m20t">
       <Card className="d-none d-xl-block d-lg-block d-md-none d-sm-none d-xs-none">
@@ -109,18 +111,18 @@ const ParkCard = ({ r }) => {
                   )}
                 {r.parkPhotos &&
                   r.parkPhotos.length === 1 && (
-                    <div className="col-lg-auto close-margin park-image-div">
+                    <div className={`${hasError ? "park-image-logo-div" : ""} col-lg-auto close-margin park-image-div`}>
                       <img
                         alt="park"
-                        className="search-result-image"
-                        src={addSmallImagePrefix(r.parkPhotos[0])}
-                        onError={(e) => { handleImgError(e, r.parkPhotos[0]) }}
+                        className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
+                        src={hasError ? parksLogo : addSmallImagePrefix(r.parkPhotos[0])}
+                        onError={(e) => { handleImgError(e, r.parkPhotos[0], setHasError) }}
                       />
                     </div>
                   )}
                 {r.parkPhotos &&
                   r.parkPhotos.length > 1 && (
-                    <div className="col-lg-auto close-margin park-image-div">
+                    <div className={`${hasError ? "park-image-logo-div" : ""} col-lg-auto close-margin park-image-div`}>
                       <Carousel
                         className="park-carousel"
                         autoPlay={false}
@@ -151,9 +153,9 @@ const ParkCard = ({ r }) => {
                               <img
                                 alt="park carousel"
                                 key={index}
-                                className="search-result-image"
-                                src={addSmallImagePrefix(item)}
-                                onError={(e) => { handleImgError(e, item) }} />
+                                className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
+                                src={hasError ? parksLogo : addSmallImagePrefix(item)}
+                                onError={(e) => { handleImgError(e, item, setHasError) }} />
                             )
                           }
                         )}
@@ -214,18 +216,18 @@ const ParkCard = ({ r }) => {
                   )}
                 {r.parkPhotos &&
                   r.parkPhotos.length === 1 && (
-                    <div className="col-12 close-margin park-image-div-mobile">
+                    <div className={`${hasError ? "park-image-logo-div" : ""} col-12 close-margin park-image-div-mobile`}>
                       <img
                         alt="park"
-                        className="search-result-image"
-                        src={addSmallImagePrefix(r.parkPhotos[0])}
-                        onError={(e) => { handleImgError(e, r.parkPhotos[0]) }}
+                        className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
+                        src={hasError ? parksLogo : addSmallImagePrefix(r.parkPhotos[0])}
+                        onError={(e) => { handleImgError(e, r.parkPhotos[0], setHasError) }}
                       />
                     </div>
                   )}
                 {r.parkPhotos &&
                   r.parkPhotos.length > 1 && (
-                    <div className="col-12 close-margin park-image-div-mobile">
+                    <div className={`${hasError ? "park-image-logo-div" : ""} col-12 close-margin park-image-div-mobile`}>
                       <Carousel
                         className="park-carousel-mobile"
                         autoPlay={false}
@@ -256,9 +258,9 @@ const ParkCard = ({ r }) => {
                               <img
                                 alt="park carousel"
                                 key={index}
-                                className="search-result-image"
-                                src={addSmallImagePrefix(item)}
-                                onError={(e) => { handleImgError(e, item) }}
+                                className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
+                                src={hasError ? parksLogo : addSmallImagePrefix(item)}
+                                onError={(e) => { handleImgError(e, item, setHasError) }}
                               />
                             )
                           }

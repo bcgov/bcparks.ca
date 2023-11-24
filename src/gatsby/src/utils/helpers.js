@@ -43,8 +43,9 @@ export const addSmallImagePrefix = (str) => {
   const i = url.lastIndexOf("/")
   return url.substring(0, i + 1) + "small_" + url.substring(i + 1, url.length)
 }
-export const handleImgError = (e, imgSrc) => {
+export const handleImgError = (e, imgSrc, setHasError) => {
   e.target.onError = imgSrc
+  setHasError(true)
   console.clear()
 }
 export const useScreenSize = () => {
