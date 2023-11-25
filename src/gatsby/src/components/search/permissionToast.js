@@ -1,9 +1,12 @@
 import React, { useState } from "react"
 import Toast from "react-bootstrap/Toast"
 
-const PermissionToast = ({ hasBeenDenied }) => {
+const PermissionToast = ({ setHasPermission, permissionDeniedCount }) => {
   const [isShow, setIsShow] = useState(true)
-  const toggleShow = () => setIsShow(false)
+  const toggleShow = () => {
+    setIsShow(false)
+    setHasPermission(true)
+  }
 
   return (
     <div
@@ -19,7 +22,7 @@ const PermissionToast = ({ hasBeenDenied }) => {
         <Toast.Body>
           B.C. parks does not have permission to show your location.
         </Toast.Body>
-        {hasBeenDenied &&
+        {permissionDeniedCount > 1 &&
           <Toast.Body>
             Please update your location permission and try again.
           </Toast.Body>

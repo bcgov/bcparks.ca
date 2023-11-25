@@ -6,6 +6,8 @@ import PermissionToast from "./permissionToast"
 import NearMeIcon from "@mui/icons-material/NearMe"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 
+let permissionDeniedCount = 0
+
 const HighlightText = ({ city, input }) => {
   const words = city.split(" ")
   return (
@@ -54,7 +56,6 @@ const CityNameSearch = ({
   const [hasResult, setHasResult] = useState(false)
   const [hasPermission, setHasPermission] = useState(true)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [hasBeenDenied, setHasBeenDenied] = useState(false)
   const cities = data?.allStrapiSearchCity?.nodes || []
   const typeaheadRef = useRef(null)
 
@@ -91,12 +92,8 @@ const CityNameSearch = ({
   const showError = (error) => {
     switch (error.code) {
       case error.PERMISSION_DENIED:
+        permissionDeniedCount += 1
         setHasPermission(false)
-        if (!hasPermission) {
-          setHasBeenDenied(true)
-        } else {
-          setHasBeenDenied(false)
-        }
         // clear input field if user denies current location
         setSelectedItems([])
         console.log("User denied the request for Geolocation.")
@@ -180,7 +177,12 @@ const CityNameSearch = ({
 
   return (
     <>
-      {!hasPermission && <PermissionToast hasBeenDenied={hasBeenDenied} />}
+      {!hasPermission &&
+        <PermissionToast
+          setHasPermission={setHasPermission}
+          permissionDeniedCount={permissionDeniedCount}
+        />
+      }
       <Typeahead
         ref={typeaheadRef}
         id="city-search-typehead"
