@@ -20,7 +20,17 @@ const HighlightText = ({ city, input }) => {
 }
 
 const CityNameSearch = ({
-  isCityNameLoading, showPosition, currentLocation, optionLimit, selectedItems, setSelectedItems, handleClick
+  isCityNameLoading,
+  showPosition,
+  currentLocation,
+  optionLimit,
+  selectedItems,
+  setSelectedItems,
+  cityText,
+  setCityText,
+  handleInputChange,
+  handleKeyDownSearch,
+  handleClick
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -40,7 +50,6 @@ const CityNameSearch = ({
   `)
 
   // useState and constants
-  const [cityText, setCityText] = useState("")
   const [hasResult, setHasResult] = useState(false)
   const [hasPermission, setHasPermission] = useState(true)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -106,10 +115,6 @@ const CityNameSearch = ({
   }
 
   // event handlers
-  const handleInputChange = (text) => {
-    setCityText(text)
-    checkResult(text)
-  }
   const handleClickGetLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition, showError)
@@ -148,6 +153,15 @@ const CityNameSearch = ({
         setSelectedItems([currentLocation])
         handleKeyDownGetLocation(e)
         setIsDropdownOpen(false)
+      } else if (optionsLength - activeIndex > 2) {
+        if (cityText.length > 0) {
+          const enteredCity = cities.filter(city =>
+            city.cityName.toLowerCase() === cityText.toLowerCase())
+          if (enteredCity.length > 0) {
+            setSelectedItems(enteredCity)
+            setIsDropdownOpen(false)
+          }
+        }
       }
     } else if (e.key === 'Tab') {
       setIsDropdownOpen(false)
@@ -156,8 +170,8 @@ const CityNameSearch = ({
 
   // useEffect
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (typeaheadRef.current && !typeaheadRef.current.inputNode.contains(event.target)) {
+    const handleClickOutside = (e) => {
+      if (typeaheadRef.current && !typeaheadRef.current.inputNode.contains(e.target)) {
         setIsDropdownOpen(false)
       }
     }
@@ -171,15 +185,12 @@ const CityNameSearch = ({
     if (!isDropdownOpen && cityText.length > 0 && !hasResult) {
       setCityText("")
     }
-    // search parks if a user's input is the same as one of the options
-    if (cityText.length > 0 && hasResult && selectedItems.length === 0) {
-      const enteredCity = cities.filter(city => city.cityName.toLowerCase() === cityText.toLowerCase())
-      if (enteredCity.length > 0) {
-        setSelectedItems(enteredCity)
-      }
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDropdownOpen, cityText, hasResult, selectedItems])
+  }, [isDropdownOpen, cityText, hasResult])
+  useEffect(() => {
+    checkResult(cityText)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cityText])
 
   return (
     <>
@@ -194,6 +205,7 @@ const CityNameSearch = ({
         selected={selectedItems}
         onChange={setSelectedItems}
         onInputChange={handleInputChange}
+        onKeyDown={handleKeyDownSearch}
         onFocus={handleFocusInput}
         open={isDropdownOpen}
         onToggle={(isOpen) => setIsDropdownOpen(isOpen)}

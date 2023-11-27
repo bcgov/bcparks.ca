@@ -191,6 +191,7 @@ export default function FindAPark({ location, data }) {
   const [selectedFacilities, setSelectedFacilities] = useState([])
   const [selectedCity, setSelectedCity] = useState([])
   const [inputText, setInputText] = useState("")
+  const [cityText, setCityText] = useState("")
 
   const [filterSelections, setFilterSelections] = useState([])
   const [searchResults, setSearchResults] = useState([])
@@ -312,6 +313,13 @@ export default function FindAPark({ location, data }) {
     if (searchText === "") {
       setSearchText(inputText)
     }
+    if (cityText.length > 0) {
+      const enteredCity = searchCities.filter(city =>
+        city.cityName.toLowerCase() === cityText.toLowerCase())
+      if (enteredCity.length > 0) {
+        setSelectedCity(enteredCity)
+      }
+    }
   }
   const handleKeyDownSearchPark = (e) => {
     if (e.key === "Enter") {
@@ -326,6 +334,9 @@ export default function FindAPark({ location, data }) {
   }
   const handleSearchNameInputChange = (text) => {
     setInputText(text)
+  }
+  const handleCityNameInputChange = (text) => {
+    setCityText(text)
   }
   const handleClickClearPark = () => {
     setCurrentPage(1)
@@ -484,29 +495,29 @@ export default function FindAPark({ location, data }) {
         params: { ...params, radius: 50, _start: 0, _limit: 0 },
       })
       Promise.all([request1, request2])
-      .then(([resultResponse1, resultResponse2]) => {
-        if (resultResponse1.status === 200) {
-          const total = parseInt(resultResponse1.data.meta.pagination.total, 10)
-          const newResults = resultResponse1.data.data
-          setSearchResults(newResults);
-          setTotalResults(total)
-          setAreasCount(resultResponse1.data.meta.aggregations.areas.buckets)
-          setActivitiesCount(resultResponse1.data.meta.aggregations.activities.buckets)
-          setFacilitiesCount(resultResponse1.data.meta.aggregations.facilities.buckets)
-          setCampingsCount(resultResponse1.data.meta.aggregations.campings.buckets)
-        } else {
-          setSearchResults([])
-          setTotalResults(0)
-        }
-        if (resultResponse2.status === 200) {
-          const total = parseInt(resultResponse2.data.meta.pagination.total, 10)
-          setTotalResultsWithinFifty(total)
-        } else {
-          setTotalResultsWithinFifty(0)
-        }
-      }).finally(() => {
-        setIsLoading(false)
-      })
+        .then(([resultResponse1, resultResponse2]) => {
+          if (resultResponse1.status === 200) {
+            const total = parseInt(resultResponse1.data.meta.pagination.total, 10)
+            const newResults = resultResponse1.data.data
+            setSearchResults(newResults);
+            setTotalResults(total)
+            setAreasCount(resultResponse1.data.meta.aggregations.areas.buckets)
+            setActivitiesCount(resultResponse1.data.meta.aggregations.activities.buckets)
+            setFacilitiesCount(resultResponse1.data.meta.aggregations.facilities.buckets)
+            setCampingsCount(resultResponse1.data.meta.aggregations.campings.buckets)
+          } else {
+            setSearchResults([])
+            setTotalResults(0)
+          }
+          if (resultResponse2.status === 200) {
+            const total = parseInt(resultResponse2.data.meta.pagination.total, 10)
+            setTotalResultsWithinFifty(total)
+          } else {
+            setTotalResultsWithinFifty(0)
+          }
+        }).finally(() => {
+          setIsLoading(false)
+        })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -666,6 +677,10 @@ export default function FindAPark({ location, data }) {
                 optionLimit={useScreenSize().width > 767 ? 7 : 4}
                 selectedItems={qsCity.length > 0 ? qsCity : selectedCity}
                 setSelectedItems={setSelectedCity}
+                cityText={cityText}
+                setCityText={setCityText}
+                handleInputChange={handleCityNameInputChange}
+                handleKeyDownSearch={handleKeyDownSearchPark}
                 handleClick={handleClickClearCity}
                 handleKeyDown={handleKeyDownClearCity}
               />

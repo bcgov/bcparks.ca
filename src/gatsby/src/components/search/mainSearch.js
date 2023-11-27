@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { navigate } from "gatsby"
+import { navigate, graphql, useStaticQuery } from "gatsby"
 import { Button } from "@mui/material"
 import ParkNameSearch from "./parkNameSearch"
 import CityNameSearch from "./cityNameSearch"
@@ -8,10 +8,29 @@ import "../../styles/search.scss"
 const qs = require('qs');
 
 const MainSearch = ({ hasCityNameSearch }) => {
+  const data = useStaticQuery(graphql`
+    query {
+      allStrapiSearchCity(
+        sort: {rank: ASC},
+        filter: {rank: {lte: 4}}
+      ) {
+        nodes {
+          strapi_id
+          cityName
+          latitude
+          longitude
+          rank
+        }
+      }
+    }
+  `)
+
   // useState and constants
   const screenSize = useScreenSize()
+  const searchCities = data?.allStrapiSearchCity?.nodes || []
   const [inputText, setInputText] = useState("")
   const [searchText, setSearchText] = useState("")
+  const [cityText, setCityText] = useState("")
   const [isCityNameLoading, setIsCityNameLoading] = useState(false)
   const [selectedCity, setSelectedCity] = useState([])
   const [currentLocation, setCurrentLocation] = useState({
@@ -26,6 +45,13 @@ const MainSearch = ({ hasCityNameSearch }) => {
   const searchParkFilter = () => {
     let findAPark = "/find-a-park/";
     let queryText = searchText || inputText;
+    if (cityText.length > 0) {
+      const enteredCity = searchCities.filter(city =>
+        city.cityName.toLowerCase() === cityText.toLowerCase())
+      if (enteredCity.length > 0) {
+        setSelectedCity(enteredCity)
+      }
+    }
     const queryString = qs.stringify({
       l: selectedCity[0]?.strapi_id,
       q: queryText.length ? queryText : undefined
@@ -55,6 +81,9 @@ const MainSearch = ({ hasCityNameSearch }) => {
   }
   const handleSearchNameInputChange = (text) => {
     setInputText(text)
+  }
+  const handleCityNameInputChange = (text) => {
+    setCityText(text)
   }
   const handleKeyDownSearchPark = (e) => {
     if (e.key === "Enter") {
@@ -122,6 +151,10 @@ const MainSearch = ({ hasCityNameSearch }) => {
               currentLocation={currentLocation}
               optionLimit={screenSize.width > 767 ? 7 : 4}
               selectedItems={selectedCity}
+              cityText={cityText}
+              setCityText={setCityText}
+              handleInputChange={handleCityNameInputChange}
+              handleKeyDownSearch={handleKeyDownSearchPark}
               setSelectedItems={setSelectedCity}
               handleClick={handleClickClear}
               handleKeyDown={handleKeyDownClear}
