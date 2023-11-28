@@ -256,7 +256,6 @@ const CityNameSearch = ({
                 onClick={() => {
                   onClear()
                   handleClick()
-                  setCityText("")
                   setIsDropdownOpen(false)
                 }}
               />
