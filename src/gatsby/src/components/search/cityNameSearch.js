@@ -30,7 +30,8 @@ const CityNameSearch = ({
   setCityText,
   handleInputChange,
   handleKeyDownSearch,
-  handleClick
+  handleClick,
+  handleSearch
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -122,12 +123,6 @@ const CityNameSearch = ({
       console.log("Geolocation is not supported by your browser")
     }
   }
-  const handleKeyDownGetLocation = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault()
-      handleClickGetLocation()
-    }
-  }
   const handleFocusInput = () => {
     setIsDropdownOpen(true)
   }
@@ -147,22 +142,13 @@ const CityNameSearch = ({
       e.preventDefault()
       const activeOption = cityOptions(optionLimit)[activeIndex]
       if (activeOption !== undefined) {
-        setSelectedItems([activeOption])
-        setIsDropdownOpen(false)
+        handleSearch([activeOption])
       } else if (optionsLength - activeIndex === 1 || optionsLength - activeIndex === 2) {
-        setSelectedItems([currentLocation])
-        handleKeyDownGetLocation(e)
-        setIsDropdownOpen(false)
+        handleSearch([currentLocation])
       } else if (optionsLength - activeIndex > 2) {
-        if (cityText.length > 0) {
-          const enteredCity = cities.filter(city =>
-            city.cityName.toLowerCase() === cityText.toLowerCase())
-          if (enteredCity.length > 0) {
-            setSelectedItems(enteredCity)
-            setIsDropdownOpen(false)
-          }
-        }
+        handleSearch()
       }
+      setIsDropdownOpen(false)
     } else if (e.key === 'Tab') {
       setIsDropdownOpen(false)
     }

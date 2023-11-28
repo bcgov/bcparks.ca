@@ -42,10 +42,12 @@ const MainSearch = ({ hasCityNameSearch }) => {
   })
 
   // functions
-  const searchParkFilter = () => {
+  const searchParkFilter = (clickedCity) => {
     let findAPark = "/find-a-park/";
     let queryText = searchText || inputText;
-    if (cityText.length > 0) {
+    if (clickedCity !== undefined) {
+      setSelectedCity(clickedCity)
+    } else if (cityText.length > 0) {
       const enteredCity = searchCities.filter(city =>
         city.cityName.toLowerCase() === cityText.toLowerCase())
       if (enteredCity.length > 0) {
@@ -158,6 +160,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
               setSelectedItems={setSelectedCity}
               handleClick={handleClickClear}
               handleKeyDown={handleKeyDownClear}
+              handleSearch={searchParkFilter}
             />
           </>
         )}

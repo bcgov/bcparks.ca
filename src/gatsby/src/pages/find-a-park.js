@@ -308,12 +308,14 @@ export default function FindAPark({ location, data }) {
     }
   }
   // event handlers - for searching
-  const handleSearch = () => {
+  const handleSearch = (clickedCity) => {
     setCurrentPage(1)
     if (searchText === "") {
       setSearchText(inputText)
     }
-    if (cityText.length > 0) {
+    if (clickedCity !== undefined) {
+      setSelectedCity(clickedCity)
+    } else if (cityText.length > 0) {
       const enteredCity = searchCities.filter(city =>
         city.cityName.toLowerCase() === cityText.toLowerCase())
       if (enteredCity.length > 0) {
@@ -625,11 +627,11 @@ export default function FindAPark({ location, data }) {
     if (selectedCity.length > 0) {
       if (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) {
         setIsCityNameLoading(false)
-        setQsLocation(selectedCity[0].strapi_id.toString())
       }
       if (selectedCity[0].latitude === 0 || selectedCity[0].longitude === 0) {
         setIsCityNameLoading(true)
       }
+      setQsLocation(selectedCity[0].strapi_id.toString())
     } else {
       setIsCityNameLoading(false)
     }
@@ -683,6 +685,7 @@ export default function FindAPark({ location, data }) {
                 handleKeyDownSearch={handleKeyDownSearchPark}
                 handleClick={handleClickClearCity}
                 handleKeyDown={handleKeyDownClearCity}
+                handleSearch={handleSearch}
               />
               <Button
                 className="bcgov-normal-blue mobile-search-element-height h50p"
