@@ -93,16 +93,13 @@ const MainSearch = ({ hasCityNameSearch }) => {
       searchParkFilter()
     }
   }
-  const handleClickClear = () => {
+  const handleClickClearPark = () => {
     setInputText("")
     setSearchText("")
-    setSelectedCity([])
   }
-  const handleKeyDownClear = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault()
-      handleClickClear()
-    }
+  const handleClickClearCity = () => {
+    setCityText("")
+    setSelectedCity([])
   }
 
   // useEffect
@@ -141,8 +138,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
           handleChange={handleSearchNameChange}
           handleInputChange={handleSearchNameInputChange}
           handleKeyDownSearch={handleKeyDownSearchPark}
-          handleClick={handleClickClear}
-          handleKeyDown={handleKeyDownClear}
+          handleClick={handleClickClearPark}
         />
         {hasCityNameSearch && (
           <>
@@ -153,13 +149,12 @@ const MainSearch = ({ hasCityNameSearch }) => {
               currentLocation={currentLocation}
               optionLimit={screenSize.width > 767 ? 7 : 4}
               selectedItems={selectedCity}
+              setSelectedItems={setSelectedCity}
               cityText={cityText}
               setCityText={setCityText}
               handleInputChange={handleCityNameInputChange}
               handleKeyDownSearch={handleKeyDownSearchPark}
-              setSelectedItems={setSelectedCity}
-              handleClick={handleClickClear}
-              handleKeyDown={handleKeyDownClear}
+              handleClick={handleClickClearCity}
               handleSearch={searchParkFilter}
             />
           </>

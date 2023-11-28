@@ -347,6 +347,7 @@ export default function FindAPark({ location, data }) {
   }
   const handleClickClearCity = () => {
     setCurrentPage(1)
+    setCityText("")
     setSelectedCity([])
     setQsLocation("")
     setQsCity([])
@@ -669,7 +670,6 @@ export default function FindAPark({ location, data }) {
                 handleInputChange={handleSearchNameInputChange}
                 handleKeyDownSearch={handleKeyDownSearchPark}
                 handleClick={handleClickClearPark}
-                handleKeyDown={handleKeyDownClearPark}
               />
               <span className="or-span">or</span>
               <CityNameSearch
@@ -684,7 +684,6 @@ export default function FindAPark({ location, data }) {
                 handleInputChange={handleCityNameInputChange}
                 handleKeyDownSearch={handleKeyDownSearchPark}
                 handleClick={handleClickClearCity}
-                handleKeyDown={handleKeyDownClearCity}
                 handleSearch={handleSearch}
               />
               <Button
