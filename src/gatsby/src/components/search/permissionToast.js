@@ -1,11 +1,9 @@
-import React, { useState } from "react"
+import React from "react"
 import Toast from "react-bootstrap/Toast"
 
-const PermissionToast = ({ setHasPermission, permissionDeniedCount }) => {
-  const [isShow, setIsShow] = useState(true)
+const PermissionToast = ({ isToastOpen, setIsToastOpen, permissionDeniedCount }) => {
   const toggleShow = () => {
-    setIsShow(false)
-    setHasPermission(true)
+    setIsToastOpen(false)
   }
 
   return (
@@ -13,7 +11,7 @@ const PermissionToast = ({ setHasPermission, permissionDeniedCount }) => {
       aria-live="polite"
       aria-atomic="true"
     >
-      <Toast show={isShow} onClose={toggleShow}>
+      <Toast show={isToastOpen} onClose={toggleShow}>
         <Toast.Header>
           <strong className="mr-auto">
             Location permission blocked

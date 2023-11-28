@@ -33,6 +33,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
   const [cityText, setCityText] = useState("")
   const [isCityNameLoading, setIsCityNameLoading] = useState(false)
   const [selectedCity, setSelectedCity] = useState([])
+  const [hasPermission, setHasPermission] = useState(false)
   const [currentLocation, setCurrentLocation] = useState({
     strapi_id: 0,
     cityName: "Current location",
@@ -144,7 +145,9 @@ const MainSearch = ({ hasCityNameSearch }) => {
           <>
             <span className="or-span">or</span>
             <CityNameSearch
-              isCityNameLoading={isCityNameLoading}
+              isCityNameLoading={hasPermission && isCityNameLoading}
+              hasPermission={hasPermission}
+              setHasPermission={setHasPermission}
               showPosition={showPosition}
               currentLocation={currentLocation}
               optionLimit={screenSize.width > 767 ? 7 : 4}

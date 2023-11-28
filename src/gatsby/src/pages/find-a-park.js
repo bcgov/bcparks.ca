@@ -206,6 +206,7 @@ export default function FindAPark({ location, data }) {
 
   const [openFilter, setOpenFilter] = useState(false)
   const [openModal, setOpenModal] = useState(false)
+  const [hasPermission, setHasPermission] = useState(false)
 
   const [currentLocation, setCurrentLocation] = useState({
     strapi_id: 0,
@@ -673,7 +674,9 @@ export default function FindAPark({ location, data }) {
               />
               <span className="or-span">or</span>
               <CityNameSearch
-                isCityNameLoading={isCityNameLoading}
+                isCityNameLoading={hasPermission && isCityNameLoading}
+                hasPermission={hasPermission}
+                setHasPermission={setHasPermission}
                 showPosition={showPosition}
                 currentLocation={currentLocation}
                 optionLimit={useScreenSize().width > 767 ? 7 : 4}

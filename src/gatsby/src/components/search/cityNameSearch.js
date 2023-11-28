@@ -23,6 +23,8 @@ const HighlightText = ({ city, input }) => {
 
 const CityNameSearch = ({
   isCityNameLoading,
+  hasPermission,
+  setHasPermission,
   showPosition,
   currentLocation,
   optionLimit,
@@ -54,8 +56,8 @@ const CityNameSearch = ({
 
   // useState and constants
   const [hasResult, setHasResult] = useState(false)
-  const [hasPermission, setHasPermission] = useState(true)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isToastOpen, setIsToastOpen] = useState(false)
   const cities = data?.allStrapiSearchCity?.nodes || []
   const typeaheadRef = useRef(null)
 
@@ -92,8 +94,9 @@ const CityNameSearch = ({
   const showError = (error) => {
     switch (error.code) {
       case error.PERMISSION_DENIED:
-        permissionDeniedCount += 1
+        setIsToastOpen(true)
         setHasPermission(false)
+        permissionDeniedCount += 1
         // clear input field if user denies current location
         setSelectedItems([])
         console.log("User denied the request for Geolocation.")
@@ -142,6 +145,14 @@ const CityNameSearch = ({
         handleSearch([activeOption])
       } else if (optionsLength - activeIndex === 1 || optionsLength - activeIndex === 2) {
         handleSearch([currentLocation])
+        if (hasPermission) {
+          setSelectedItems([currentLocation])
+          // handleKeyDownGetLocation(e)
+          setIsDropdownOpen(false)
+        } else {
+          setIsToastOpen(true)
+          permissionDeniedCount += 1
+        }
       } else if (optionsLength - activeIndex > 2) {
         handleSearch()
       }
@@ -174,12 +185,26 @@ const CityNameSearch = ({
     checkResult(cityText)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityText])
+  useEffect(() => {
+    // check for location permission when the component mounts
+    if (navigator.permissions) {
+      navigator.permissions.query({ name: 'geolocation' }).then((permissionStatus) => {
+        if (permissionStatus.state === 'granted') {
+          setHasPermission(true)
+        } else {
+          setHasPermission(false)
+        }
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
-      {!hasPermission &&
+      {(isToastOpen && !hasPermission) &&
         <PermissionToast
-          setHasPermission={setHasPermission}
+          isToastOpen={isToastOpen}
+          setIsToastOpen={setIsToastOpen}
           permissionDeniedCount={permissionDeniedCount}
         />
       }
@@ -191,7 +216,7 @@ const CityNameSearch = ({
         labelKey={city => `${city.cityName}`}
         options={cityOptions(optionLimit)}
         selected={selectedItems}
-        onChange={setSelectedItems}
+        onChange={(selected) => { !(!hasPermission && selected[0]?.strapi_id === 0) && setSelectedItems(selected) }}
         onInputChange={handleInputChange}
         onKeyDown={handleKeyDownSearch}
         onFocus={handleFocusInput}
