@@ -153,7 +153,7 @@ export default function StaticContent1({ pageContext }) {
       </div>
       {hasTitle && (
         <div className="static-content--header">
-          <div id="sr-content" className="page-breadcrumbs">
+          <div id="main-content" className="page-breadcrumbs">
             <Breadcrumbs separator="›" aria-label="breadcrumb">
               {renderBreadcrumbs(menuContent, pageContext?.page)}
             </Breadcrumbs>
