@@ -642,7 +642,7 @@ export default function FindAPark({ location, data }) {
       <Header content={menuContent} />
       <ScrollToTop />
       {/* new search header section */}
-      <div id="sr-content" className="search-header">
+      <div id="main-content" className="search-header">
         <div className="container">
           <div className="row no-gutters w-100">
             <div className="search-header-container--left col-12 col-lg-3">

@@ -79,7 +79,7 @@ export default function Home({ data }) {
       <div className="park-search-container-wrapper">
         <Header mode="internal" content={menuContent} />
         <ScrollToTop />
-        <div id="sr-content" className="park-search">
+        <div id="main-content" className="park-search">
           <div id="home-parks-search">
             <MainSearch hasCityNameSearch={true} />
           </div>

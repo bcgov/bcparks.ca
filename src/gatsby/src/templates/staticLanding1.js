@@ -53,7 +53,7 @@ const LandingPage = ({ pageContext }) => {
       <ScrollToTop />
       <CssBaseline />
       <Header mode="internal" content={menuContent} />
-      <div id="sr-content"></div>
+      <div id="main-content"></div>
       {linkContent.length > 0 && (
         <div id="intro-content" className="bcp-landing-intro">
           {introContent.map(content => (

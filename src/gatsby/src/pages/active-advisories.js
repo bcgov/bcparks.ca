@@ -88,7 +88,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const [pageCount, setPageCount] = useState(1) // num pages in current search
 
   /* Advisory Event Types */
-  const defaultAdvisoryEventType = useMemo(()=> ({ label: 'All', value: 'all' }), [])
+  const defaultAdvisoryEventType = useMemo(() => ({ label: 'All', value: 'all' }), [])
   const [eventTypes, setEventTypes] = useState([])
   const [advisoryType, setAdvisoryType] = useState(defaultAdvisoryEventType.value)
 
@@ -387,8 +387,8 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     <Root>
       <Header mode="internal" content={menuContent} />
       <ScrollToTop />
-      <Container id="sr-content">
-        <div id="sr-content" className="page-breadcrumbs">
+      <Container id="main-content">
+        <div className="page-breadcrumbs">
           <Breadcrumbs separator="›" aria-label="breadcrumb">
             {breadcrumbs}
           </Breadcrumbs>

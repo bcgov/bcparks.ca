@@ -102,7 +102,7 @@ export default function ParkSubPage({ data }) {
         <Header mode="internal" content={menuContent} />
       </div>
       <div className="static-content--header">
-        <div id="sr-content" className="page-breadcrumbs">
+        <div id="main-content" className="page-breadcrumbs">
           <Breadcrumbs separator="›" aria-label="breadcrumb">
             {breadcrumbs}
           </Breadcrumbs>
