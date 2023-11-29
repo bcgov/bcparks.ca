@@ -308,10 +308,12 @@
     border-radius: 4px;
     text-align: center;
     padding: 24px;
-    @media screen and (min-width: $lgBreakpoint) {
-      width: 885px;
+    @media screen and (min-width: $mdBreakpoint) {
       text-align: left;      
       padding: 40px;
+    }
+    @media screen and (min-width: $lgBreakpoint) {
+      width: 885px;
     }
     h1.text-white {
       font-size: 1.5rem;
@@ -322,7 +324,7 @@
       flex-grow: 1;
       flex-direction: column;
       margin-top: 24px;
-      @media screen and (min-width: $lgBreakpoint) {
+      @media screen and (min-width: $mdBreakpoint) {
         flex-direction: row;
       }
       span.or-span {
@@ -330,24 +332,24 @@
         font-size: 1.125rem;
         line-height: 50px;
         margin: 0;
-        @media screen and (min-width: $lgBreakpoint) {
+        @media screen and (min-width: $mdBreakpoint) {
           margin: 0 24px;
         }
       }
       .park-search-typeahead, .city-search-typeahead {
         width: 100%;
-        @media screen and (min-width: $lgBreakpoint) {
+        @media screen and (min-width: $mdBreakpoint) {
           width: 300px;
         }
       }
       .parks-search-button {
-        height: 50px;
+        height: 48px;
         width: 100%;
         color: $colorBlue;
         background: $colorGold;
         font-size:1.125rem;
         margin: 24px 0 0 0;
-        @media screen and (min-width: $lgBreakpoint) {
+        @media screen and (min-width: $mdBreakpoint) {
           width: 130px;
           margin: 0 0 0 16px;
         }

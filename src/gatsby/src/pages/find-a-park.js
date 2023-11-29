@@ -725,35 +725,6 @@ export default function FindAPark({ location, data }) {
               </div>
             </div>
           </div>
-          {/* filter chips for mobile */}
-          <div className="search-results-list d-block d-lg-none mt-3">
-            <div className="row">
-              <div className="col-12">
-                {filterSelections.length > 0 && filterSelections.map((f, index) => (
-                  <Chip
-                    key={index}
-                    label={shortenFilterLabel(f.label)}
-                    onClick={handleFilterDelete(f)}
-                    onDelete={handleFilterDelete(f)}
-                    variant="outlined"
-                    className="park-filter-chip font-weight-bold"
-                    deleteIcon={<CancelIcon className="close-icon" />}
-                  />
-                ))}
-                {filterSelections.length > 0 && (
-                  <Link
-                    className="clear-filter-link"
-                    onClick={handleClearFilter}
-                    onKeyDown={e => handleKeyDownClearFilter(e)}
-                    tabIndex="0"
-                    role="button"
-                  >
-                    Clear filters
-                  </Link>
-                )}
-              </div>
-            </div>
-          </div>
           <div className="row no-gutters">
             {/* filter checkbox for desktop */}
             <div className="search-results-quick-filter col-12 col-lg-3 d-none d-lg-block pr-3">
@@ -804,7 +775,7 @@ export default function FindAPark({ location, data }) {
             <div className="col-12 col-lg-9">
               <div className="search-results-list">
                 {/* park results text */}
-                <p className="result-count-text sm-p10">
+                <p className="result-count-text">
                   {(isLoading || isCityNameLoading) && <>Searching...</>}
                   {(!isLoading && !isCityNameLoading) && (
                     <>
@@ -830,6 +801,31 @@ export default function FindAPark({ location, data }) {
                     </>
                   )}
                 </p>
+                {/* filter chips for mobile */}
+                <div className="d-block d-lg-none">
+                  {filterSelections.length > 0 && filterSelections.map((f, index) => (
+                    <Chip
+                      key={index}
+                      label={shortenFilterLabel(f.label)}
+                      onClick={handleFilterDelete(f)}
+                      onDelete={handleFilterDelete(f)}
+                      variant="outlined"
+                      className="park-filter-chip font-weight-bold"
+                      deleteIcon={<CancelIcon className="close-icon" />}
+                    />
+                  ))}
+                  {filterSelections.length > 0 && (
+                    <Link
+                      className="clear-filter-link"
+                      onClick={handleClearFilter}
+                      onKeyDown={e => handleKeyDownClearFilter(e)}
+                      tabIndex="0"
+                      role="button"
+                    >
+                      Clear filters
+                    </Link>
+                  )}
+                </div>
                 {/* filter chips for desktop */}
                 <div className="d-none d-lg-block">
                   {filterSelections.length > 0 && filterSelections.map((f, index) => (
