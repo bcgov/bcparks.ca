@@ -6,6 +6,8 @@ import PermissionToast from "./permissionToast"
 import NearMeIcon from "@mui/icons-material/NearMe"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 
+let permissionDeniedCount = 0
+
 const HighlightText = ({ city, input }) => {
   const words = city.split(" ")
   return (
@@ -21,6 +23,8 @@ const HighlightText = ({ city, input }) => {
 
 const CityNameSearch = ({
   isCityNameLoading,
+  hasPermission,
+  setHasPermission,
   showPosition,
   currentLocation,
   optionLimit,
@@ -52,9 +56,8 @@ const CityNameSearch = ({
 
   // useState and constants
   const [hasResult, setHasResult] = useState(false)
-  const [hasPermission, setHasPermission] = useState(true)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [hasBeenDenied, setHasBeenDenied] = useState(false)
+  const [isToastOpen, setIsToastOpen] = useState(false)
   const cities = data?.allStrapiSearchCity?.nodes || []
   const typeaheadRef = useRef(null)
 
@@ -91,12 +94,9 @@ const CityNameSearch = ({
   const showError = (error) => {
     switch (error.code) {
       case error.PERMISSION_DENIED:
+        setIsToastOpen(true)
         setHasPermission(false)
-        if (!hasPermission) {
-          setHasBeenDenied(true)
-        } else {
-          setHasBeenDenied(false)
-        }
+        permissionDeniedCount += 1
         // clear input field if user denies current location
         setSelectedItems([])
         console.log("User denied the request for Geolocation.")
@@ -143,8 +143,17 @@ const CityNameSearch = ({
       const activeOption = cityOptions(optionLimit)[activeIndex]
       if (activeOption !== undefined) {
         handleSearch([activeOption])
-      } else if (optionsLength - activeIndex === 1 || optionsLength - activeIndex === 2) {
-        handleSearch([currentLocation])
+        setSelectedItems([activeOption])
+      } else if (optionsLength - activeIndex === 1 || optionsLength - activeIndex === 2) {        
+        if (hasPermission) {
+          handleSearch([currentLocation])
+          setSelectedItems([currentLocation])
+          // handleKeyDownGetLocation(e)
+          setIsDropdownOpen(false)
+        } else {
+          setIsToastOpen(true)
+          permissionDeniedCount += 1
+        }
       } else if (optionsLength - activeIndex > 2) {
         handleSearch()
       }
@@ -177,10 +186,29 @@ const CityNameSearch = ({
     checkResult(cityText)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityText])
+  useEffect(() => {
+    // check for location permission when the component mounts
+    if (navigator.permissions) {
+      navigator.permissions.query({ name: 'geolocation' }).then((permissionStatus) => {
+        if (permissionStatus.state === 'granted') {
+          setHasPermission(true)
+        } else {
+          setHasPermission(false)
+        }
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
-      {!hasPermission && <PermissionToast hasBeenDenied={hasBeenDenied} />}
+      {(isToastOpen && !hasPermission) &&
+        <PermissionToast
+          isToastOpen={isToastOpen}
+          setIsToastOpen={setIsToastOpen}
+          permissionDeniedCount={permissionDeniedCount}
+        />
+      }
       <Typeahead
         ref={typeaheadRef}
         id="city-search-typehead"
@@ -189,7 +217,7 @@ const CityNameSearch = ({
         labelKey={city => `${city.cityName}`}
         options={cityOptions(optionLimit)}
         selected={selectedItems}
-        onChange={setSelectedItems}
+        onChange={(selected) => { !(!hasPermission && selected[0]?.strapi_id === 0) && setSelectedItems(selected) }}
         onInputChange={handleInputChange}
         onKeyDown={handleKeyDownSearch}
         onFocus={handleFocusInput}
