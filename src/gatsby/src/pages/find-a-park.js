@@ -314,7 +314,7 @@ export default function FindAPark({ location, data }) {
     if (searchText === "") {
       setSearchText(inputText)
     }
-    if (clickedCity !== undefined) {
+    if (clickedCity?.length > 0) {
       setSelectedCity(clickedCity)
     } else if (cityText.length > 0) {
       const enteredCity = searchCities.filter(city =>

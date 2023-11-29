@@ -34,6 +34,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
   const [isCityNameLoading, setIsCityNameLoading] = useState(false)
   const [selectedCity, setSelectedCity] = useState([])
   const [hasPermission, setHasPermission] = useState(false)
+  const [isMatched, setIsMatched] = useState(false)
   const [currentLocation, setCurrentLocation] = useState({
     strapi_id: 0,
     cityName: "Current location",
@@ -46,17 +47,8 @@ const MainSearch = ({ hasCityNameSearch }) => {
   const searchParkFilter = (clickedCity) => {
     let findAPark = "/find-a-park/";
     let queryText = searchText || inputText;
-    if (clickedCity !== undefined) {
-      setSelectedCity(clickedCity)
-    } else if (cityText.length > 0) {
-      const enteredCity = searchCities.filter(city =>
-        city.cityName.toLowerCase() === cityText.toLowerCase())
-      if (enteredCity.length > 0) {
-        setSelectedCity(enteredCity)
-      }
-    }
     const queryString = qs.stringify({
-      l: selectedCity[0]?.strapi_id,
+      l: clickedCity?.length ? clickedCity[0].strapi_id : selectedCity[0]?.strapi_id,
       q: queryText.length ? queryText : undefined
     })
     if (queryString.length) {
@@ -87,6 +79,13 @@ const MainSearch = ({ hasCityNameSearch }) => {
   }
   const handleCityNameInputChange = (text) => {
     setCityText(text)
+    // check if the entered city exists in the list
+    const enteredCity = searchCities.filter(city =>
+      city.cityName.toLowerCase() === text.toLowerCase())
+    if (enteredCity) {
+      setSelectedCity(enteredCity)
+      setIsMatched(true)
+    }
   }
   const handleKeyDownSearchPark = (e) => {
     if (e.key === "Enter") {
@@ -105,29 +104,27 @@ const MainSearch = ({ hasCityNameSearch }) => {
 
   // useEffect
   useEffect(() => {
-    if (searchText || (selectedCity.length > 0 &&
-      (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0)
-    )) {
-      setIsCityNameLoading(false)
+    if (searchText) {
+      setInputText(searchText)
       searchParkFilter()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText, selectedCity])
-
+  }, [searchText])
+  useEffect(() => {
+    if (selectedCity.length > 0 && !isMatched) {
+      searchParkFilter()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCity, isMatched])
   useEffect(() => {
     if (selectedCity.length > 0) {
       if (selectedCity[0].latitude === 0 || selectedCity[0].longitude === 0) {
         setIsCityNameLoading(true)
-      }
-      if (currentLocation.latitude !== 0 || currentLocation.longitude !== 0) {
-        setSelectedCity([currentLocation])
-        if (currentLocation === selectedCity[0]) {
-          searchParkFilter()
-        }
+        searchParkFilter()
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCity, currentLocation])
+  }, [selectedCity])
 
   return (
     <div className="parks-search-wrapper">

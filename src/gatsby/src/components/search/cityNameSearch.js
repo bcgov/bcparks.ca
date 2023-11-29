@@ -143,9 +143,10 @@ const CityNameSearch = ({
       const activeOption = cityOptions(optionLimit)[activeIndex]
       if (activeOption !== undefined) {
         handleSearch([activeOption])
-      } else if (optionsLength - activeIndex === 1 || optionsLength - activeIndex === 2) {
-        handleSearch([currentLocation])
+        setSelectedItems([activeOption])
+      } else if (optionsLength - activeIndex === 1 || optionsLength - activeIndex === 2) {        
         if (hasPermission) {
+          handleSearch([currentLocation])
           setSelectedItems([currentLocation])
           // handleKeyDownGetLocation(e)
           setIsDropdownOpen(false)
