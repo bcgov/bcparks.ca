@@ -959,6 +959,13 @@ div[class$="-singleValue"] {
     color: $colorBlue;
   }
 
+  .result-count-text {
+    margin-top: 16px;
+    @media screen and (min-width: $lgBreakpoint) {
+      margin-top: 0;
+    }
+  }
+
   .search-results-list {
     padding: 0px !important;
     .more-result-text {
