@@ -61,6 +61,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
     })
   }
   const showPosition = (position) => {
+    setHasPermission(true)
     setCurrentLocation(currentLocation => ({
       ...currentLocation,
       latitude: position.coords.latitude,

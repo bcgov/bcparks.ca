@@ -148,12 +148,11 @@ const CityNameSearch = ({
         if (hasPermission) {
           handleSearch([currentLocation])
           setSelectedItems([currentLocation])
-          // handleKeyDownGetLocation(e)
           setIsDropdownOpen(false)
         } else {
-          setIsToastOpen(true)
           permissionDeniedCount += 1
         }
+        handleClickGetLocation()
       } else if (optionsLength - activeIndex > 2) {
         handleSearch()
       }
