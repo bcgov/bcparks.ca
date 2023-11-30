@@ -1377,8 +1377,12 @@ a.desktop-park-link {
   }
   &.has-text--true, &.is-dropdown-open--true {
     input.form-control {
-      border-width: 3px;
       padding: 18px 16px 0;
+    }
+  }
+  &.is-dropdown-open--true {
+    input.form-control {
+      border-width: 3px;
     }
   }
   .dropdown-menu {
