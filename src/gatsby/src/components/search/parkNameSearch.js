@@ -117,6 +117,11 @@ const ParkNameSearch = ({
       document.body.removeEventListener("click", handleClickOutside)
     }
   }, [])
+  useEffect(() => {
+    if (searchText === "") {
+      setIsDropdownOpen(false)
+    }
+  },[searchText])
 
   return (
     <AsyncTypeahead
