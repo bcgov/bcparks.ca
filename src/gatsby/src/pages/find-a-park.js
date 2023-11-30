@@ -337,6 +337,9 @@ export default function FindAPark({ location, data }) {
   }
   const handleSearchNameInputChange = (text) => {
     setInputText(text)
+    if (text === "") {
+      setSearchText("")
+    }
   }
   const handleCityNameInputChange = (text) => {
     setCityText(text)
