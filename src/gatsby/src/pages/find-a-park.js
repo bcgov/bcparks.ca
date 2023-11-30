@@ -399,6 +399,7 @@ export default function FindAPark({ location, data }) {
 
   // functions
   const showPosition = (position) => {
+    setHasPermission(true)
     setCurrentLocation(currentLocation => ({
       ...currentLocation,
       latitude: position.coords.latitude,
