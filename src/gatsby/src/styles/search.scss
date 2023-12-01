@@ -1347,12 +1347,10 @@ a.desktop-park-link {
       &:hover {
         border-width: 2px;
       }
-      &:focus {
+      &:focus, &:focus-visible {
         border-width: 3px;
+        box-shadow: 0px 0px 0px 2px $colorWhite, 0px 0px 0px 4px $colorBlueMed;
         padding: 18px 16px 0;
-      }
-      &[aria-expanded="true"] {
-        border-radius: 4px 4px 0 0;
       }
       &:focus~label, 
       &:not(:placeholder-shown)~label {
@@ -1377,14 +1375,20 @@ a.desktop-park-link {
   }
   &.has-text--true, &.is-dropdown-open--true {
     input.form-control {
-      border-width: 3px;
       padding: 18px 16px 0;
+    }
+  }
+  &.is-dropdown-open--true {
+    input.form-control {
+      border-width: 3px;
+      box-shadow: 0px 0px 0px 2px $colorWhite, 0px 0px 0px 4px $colorBlueMed;
     }
   }
   .dropdown-menu {
     width: 100%;
     max-height: 360px !important;
-    border-top: none;
+    top: 45px !important;
+    transform: none !important;
     border-width: 3px;
     border-color: $colorGreyMed;
     border-radius: 0 0 4px 4px;
