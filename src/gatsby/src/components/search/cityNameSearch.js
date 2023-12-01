@@ -253,7 +253,6 @@ const CityNameSearch = ({
             {(results.length === 0 && cityText) &&
               <MenuItem
                 tabIndex={-1}
-                position={results.length}
                 key={results.length}
                 className="no-suggestion-text"
               >
@@ -262,8 +261,8 @@ const CityNameSearch = ({
             }
             <MenuItem
               option={currentLocation}
-              position={results.length > 0 ? results.length : 1}
-              key={results.length > 0 ? results.length : 1}
+              position={results.length > 0 ? results.length : 0}
+              key={results.length > 0 ? results.length : (results.length === 0 && cityText ? 1 : 0)}
               onClick={handleClickGetLocation}
               className="current-location-text"
             >
