@@ -55,7 +55,6 @@ const CityNameSearch = ({
   `)
 
   // useState and constants
-  const [hasResult, setHasResult] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isToastOpen, setIsToastOpen] = useState(false)
   const cities = data?.allStrapiSearchCity?.nodes || []
@@ -78,18 +77,14 @@ const CityNameSearch = ({
         return a.cityName.localeCompare(b.cityName)
       }
     })
-    return cityText ? sortedCities.slice(0, optionLimit) : []
+    return [...(cityText ? sortedCities.slice(0, optionLimit) : []), ...[currentLocation]]
   }
-  const checkResult = (text) => {
+  const hasResult = (text) => {
     const cityTextLower = text.toLowerCase()
     const results = cities.filter(city =>
       city.cityName.toLowerCase().startsWith(cityTextLower) || city.cityName.toLowerCase().includes(` ${cityTextLower}`)
     )
-    if (results.length > 0) {
-      setHasResult(true)
-    } else {
-      setHasResult(false)
-    }
+    return results.length > 0;
   }
   const showError = (error) => {
     switch (error.code) {
@@ -128,14 +123,20 @@ const CityNameSearch = ({
   }
   // select an option with arrow keys and search parks with enter key 
   const handleKeyDownInput = (e) => {
-    const optionsLength = hasResult ? cityOptions(optionLimit).length + 1 : 2
+    const optionsLength = typeaheadRef.current.items.length;
     let activeIndex = typeaheadRef.current.state.activeIndex
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault()
       if (e.key === 'ArrowUp') {
-        activeIndex = (activeIndex - 1 + optionsLength) % optionsLength
+        activeIndex = activeIndex - 1
       } else if (e.key === 'ArrowDown') {
-        activeIndex = (activeIndex + 1) % optionsLength
+        activeIndex = activeIndex + 1
+      }
+      if (activeIndex > optionsLength) {
+        activeIndex = -1; // go to the text input
+      }
+      if (activeIndex < -1) {
+        activeIndex = optionsLength - 1; // go to the last item
       }
       typeaheadRef.current.setState({ activeIndex })
     } else if (e.key === 'Enter') {
@@ -175,14 +176,13 @@ const CityNameSearch = ({
   }, [])
   useEffect(() => {
     // clear input field if text does not exist in options
-    if (!isDropdownOpen && cityText.length > 0 && !hasResult) {
+    if (!isDropdownOpen && cityText.length > 0 && !hasResult(cityText)) {
       setCityText("")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDropdownOpen, cityText, hasResult])
+  }, [isDropdownOpen, cityText])
   useEffect(() => {
     if (cityText) {
-      checkResult(cityText)
       setIsDropdownOpen(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -216,6 +216,7 @@ const CityNameSearch = ({
         minLength={1}
         isLoading={isCityNameLoading}
         labelKey={city => `${city.cityName}`}
+        filterBy={() => true}
         options={cityOptions(optionLimit)}
         selected={selectedItems}
         onChange={(selected) => { !(!hasPermission && selected[0]?.strapi_id === 0) && setSelectedItems(selected) }}
@@ -246,35 +247,33 @@ const CityNameSearch = ({
             </Form.Group>
           )
         }}
-        renderMenu={cities => (
+        renderMenu={results => (
           <Menu id="city-search-typeahead">
-            {cities.map((city, index) => (
-              <MenuItem option={city} position={index} key={index}>
-                <HighlightText
-                  city={city.cityName}
-                  input={cityText}
-                />
-              </MenuItem>
-            ))}
-            {(!hasResult && cityText) &&
+            {(results.length === 1 && cityText) &&
               <MenuItem
                 tabIndex={-1}
-                position={cities.length}
-                key={cities.length}
+                key={results.length}
                 className="no-suggestion-text"
               >
                 No suggestions, please check your spelling or try a larger city in B.C.
               </MenuItem>
             }
-            <MenuItem
-              option={currentLocation}
-              position={hasResult ? cities.length : cities.length + 1}
-              key={hasResult ? cities.length : cities.length + 1}
-              onClick={handleClickGetLocation}
-              className="current-location-text"
-            >
-              <NearMeIcon />{currentLocation.cityName}
-            </MenuItem>
+            {results.map((city, index) => {
+              return city.strapi_id !== 0 ?
+                <MenuItem option={city} position={index} key={index}>
+                  <HighlightText
+                    city={city.cityName}
+                    input={cityText}
+                  />
+                </MenuItem>
+                : <MenuItem option={city} position={index} key={index}
+                  onClick={handleClickGetLocation}
+                  className="current-location-text"
+                >
+                  <NearMeIcon />{currentLocation.cityName}
+                </MenuItem>
+            }
+            )}
           </Menu>
         )}
       >
