@@ -123,14 +123,20 @@ const CityNameSearch = ({
   }
   // select an option with arrow keys and search parks with enter key 
   const handleKeyDownInput = (e) => {
-    const optionsLength = hasResult(cityText) ? cityOptions(optionLimit).length + 1 : 2
+    const optionsLength = typeaheadRef.current.items.length;
     let activeIndex = typeaheadRef.current.state.activeIndex
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault()
       if (e.key === 'ArrowUp') {
-        activeIndex = (activeIndex - 1 + optionsLength) % optionsLength
+        activeIndex = activeIndex - 1
       } else if (e.key === 'ArrowDown') {
-        activeIndex = (activeIndex + 1) % optionsLength
+        activeIndex = activeIndex + 1
+      }
+      if (activeIndex > optionsLength) {
+        activeIndex = -1; // go to the text input
+      }
+      if (activeIndex < -1) {
+        activeIndex = optionsLength - 1; // go to the last item
       }
       typeaheadRef.current.setState({ activeIndex })
     } else if (e.key === 'Enter') {
