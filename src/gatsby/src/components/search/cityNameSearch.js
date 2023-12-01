@@ -77,7 +77,7 @@ const CityNameSearch = ({
         return a.cityName.localeCompare(b.cityName)
       }
     })
-    return cityText ? sortedCities.slice(0, optionLimit) : []
+    return [...(cityText ? sortedCities.slice(0, optionLimit) : []), ...[currentLocation]]
   }
   const hasResult = (text) => {
     const cityTextLower = text.toLowerCase()
@@ -210,6 +210,7 @@ const CityNameSearch = ({
         minLength={1}
         isLoading={isCityNameLoading}
         labelKey={city => `${city.cityName}`}
+        filterBy={() => true}
         options={cityOptions(optionLimit)}
         selected={selectedItems}
         onChange={(selected) => { !(!hasPermission && selected[0]?.strapi_id === 0) && setSelectedItems(selected) }}
@@ -242,15 +243,7 @@ const CityNameSearch = ({
         }}
         renderMenu={results => (
           <Menu id="city-search-typeahead">
-            {results.map((city, index) => (
-              <MenuItem option={city} position={index} key={index}>
-                <HighlightText
-                  city={city.cityName}
-                  input={cityText}
-                />
-              </MenuItem>
-            ))}
-            {(results.length === 0 && cityText) &&
+            {(results.length === 1 && cityText) &&
               <MenuItem
                 tabIndex={-1}
                 key={results.length}
@@ -259,15 +252,22 @@ const CityNameSearch = ({
                 No suggestions, please check your spelling or try a larger city in B.C.
               </MenuItem>
             }
-            <MenuItem
-              option={currentLocation}
-              position={results.length > 0 ? results.length : 0}
-              key={results.length > 0 ? results.length : (results.length === 0 && cityText ? 1 : 0)}
-              onClick={handleClickGetLocation}
-              className="current-location-text"
-            >
-              <NearMeIcon />{currentLocation.cityName}
-            </MenuItem>
+            {results.map((city, index) => {
+              return city.strapi_id !== 0 ?
+                <MenuItem option={city} position={index} key={index}>
+                  <HighlightText
+                    city={city.cityName}
+                    input={cityText}
+                  />
+                </MenuItem>
+                : <MenuItem option={city} position={index} key={index}
+                  onClick={handleClickGetLocation}
+                  className="current-location-text"
+                >
+                  <NearMeIcon />{currentLocation.cityName}
+                </MenuItem>
+            }
+            )}
           </Menu>
         )}
       >
