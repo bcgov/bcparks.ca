@@ -55,7 +55,6 @@ const CityNameSearch = ({
   `)
 
   // useState and constants
-  const [hasResult, setHasResult] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isToastOpen, setIsToastOpen] = useState(false)
   const cities = data?.allStrapiSearchCity?.nodes || []
@@ -80,16 +79,12 @@ const CityNameSearch = ({
     })
     return cityText ? sortedCities.slice(0, optionLimit) : []
   }
-  const checkResult = (text) => {
+  const hasResult = (text) => {
     const cityTextLower = text.toLowerCase()
     const results = cities.filter(city =>
       city.cityName.toLowerCase().startsWith(cityTextLower) || city.cityName.toLowerCase().includes(` ${cityTextLower}`)
     )
-    if (results.length > 0) {
-      setHasResult(true)
-    } else {
-      setHasResult(false)
-    }
+    return results.length > 0;
   }
   const showError = (error) => {
     switch (error.code) {
@@ -128,7 +123,7 @@ const CityNameSearch = ({
   }
   // select an option with arrow keys and search parks with enter key 
   const handleKeyDownInput = (e) => {
-    const optionsLength = hasResult ? cityOptions(optionLimit).length + 1 : 2
+    const optionsLength = hasResult(cityText) ? cityOptions(optionLimit).length + 1 : 2
     let activeIndex = typeaheadRef.current.state.activeIndex
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault()
@@ -175,14 +170,13 @@ const CityNameSearch = ({
   }, [])
   useEffect(() => {
     // clear input field if text does not exist in options
-    if (!isDropdownOpen && cityText.length > 0 && !hasResult) {
+    if (!isDropdownOpen && cityText.length > 0 && !hasResult(cityText)) {
       setCityText("")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDropdownOpen, cityText, hasResult])
+  }, [isDropdownOpen, cityText])
   useEffect(() => {
     if (cityText) {
-      checkResult(cityText)
       setIsDropdownOpen(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -246,9 +240,9 @@ const CityNameSearch = ({
             </Form.Group>
           )
         }}
-        renderMenu={cities => (
+        renderMenu={results => (
           <Menu id="city-search-typeahead">
-            {cities.map((city, index) => (
+            {results.map((city, index) => (
               <MenuItem option={city} position={index} key={index}>
                 <HighlightText
                   city={city.cityName}
@@ -256,11 +250,11 @@ const CityNameSearch = ({
                 />
               </MenuItem>
             ))}
-            {(!hasResult && cityText) &&
+            {(results.length === 0 && cityText) &&
               <MenuItem
                 tabIndex={-1}
-                position={cities.length}
-                key={cities.length}
+                position={results.length}
+                key={results.length}
                 className="no-suggestion-text"
               >
                 No suggestions, please check your spelling or try a larger city in B.C.
@@ -268,8 +262,8 @@ const CityNameSearch = ({
             }
             <MenuItem
               option={currentLocation}
-              position={hasResult ? cities.length : cities.length + 1}
-              key={hasResult ? cities.length : cities.length + 1}
+              position={results.length > 0 ? results.length : 1}
+              key={results.length > 0 ? results.length : 1}
               onClick={handleClickGetLocation}
               className="current-location-text"
             >
