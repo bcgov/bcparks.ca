@@ -92,11 +92,10 @@ const ParkNameSearch = ({
       const activeOption = options[activeIndex]
       if (activeOption !== undefined) {
         handleChange([activeOption])
-        setIsDropdownOpen(false)
       } else {
         handleKeyDownSearch(e)
-        setIsDropdownOpen(false)
       }
+      setIsDropdownOpen(false)
     } else if (e.key === 'Tab') {
       setIsDropdownOpen(false)
     }

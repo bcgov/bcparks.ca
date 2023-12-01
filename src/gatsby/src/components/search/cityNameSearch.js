@@ -148,7 +148,6 @@ const CityNameSearch = ({
         if (hasPermission) {
           handleSearch([currentLocation])
           setSelectedItems([currentLocation])
-          setIsDropdownOpen(false)
         } else {
           permissionDeniedCount += 1
         }
@@ -182,7 +181,10 @@ const CityNameSearch = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDropdownOpen, cityText, hasResult])
   useEffect(() => {
-    checkResult(cityText)
+    if (cityText) {
+      checkResult(cityText)
+      setIsDropdownOpen(true)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityText])
   useEffect(() => {
