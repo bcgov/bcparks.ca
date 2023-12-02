@@ -864,22 +864,20 @@ export default function FindAPark({ location, data }) {
                 )}
                 {(!isLoading && !isCityNameLoading) && (
                   <>
-                    {!searchResults ||
-                      (searchResults.length === 0 && (
-                        <NoSearchResults
-                          hasPark={inputText.length > 0}
-                          hasCity={selectedCity.length > 0}
-                          hasFilter={filterSelections.length > 0}
-                          handleClickClearCity={handleClickClearCity}
-                          handleKeyDownClearCity={handleKeyDownClearCity}
-                          handleClickClearPark={handleClickClearPark}
-                          handleKeyDownClearPark={handleKeyDownClearPark}
-                          handleClickClearFilter={handleClearFilter}
-                          handleKeyDownClearFilter={handleKeyDownClearFilter}
-                        />
-                      ))}
-                    {/* park results cards */}
-                    {searchResults && searchResults.length > 0 && (
+                    {!searchResults || searchResults.length === 0 ? (
+                      <NoSearchResults
+                        hasPark={inputText.length > 0}
+                        hasCity={selectedCity.length > 0}
+                        hasFilter={filterSelections.length > 0}
+                        handleClickClearCity={handleClickClearCity}
+                        handleKeyDownClearCity={handleKeyDownClearCity}
+                        handleClickClearPark={handleClickClearPark}
+                        handleKeyDownClearPark={handleKeyDownClearPark}
+                        handleClickClearFilter={handleClearFilter}
+                        handleKeyDownClearFilter={handleKeyDownClearFilter}
+                      />
+                    ) : (
+                      // park results cards
                       <>
                         {selectedCity.length > 0 &&
                           (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) ? (
