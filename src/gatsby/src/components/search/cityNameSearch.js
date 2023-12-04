@@ -145,7 +145,7 @@ const CityNameSearch = ({
       if (activeOption !== undefined) {
         handleSearch([activeOption])
         setSelectedItems([activeOption])
-      } else if (optionsLength - activeIndex === 1 || optionsLength - activeIndex === 2) {        
+      } else if (optionsLength - activeIndex === 1 || optionsLength - activeIndex === 2) {
         if (hasPermission) {
           handleSearch([currentLocation])
           setSelectedItems([currentLocation])
@@ -219,7 +219,11 @@ const CityNameSearch = ({
         filterBy={() => true}
         options={cityOptions(optionLimit)}
         selected={selectedItems}
-        onChange={(selected) => { !(!hasPermission && selected[0]?.strapi_id === 0) && setSelectedItems(selected) }}
+        onChange={(selected) => {
+          !(!hasPermission && selected[0]?.strapi_id === 0) &&
+          handleSearch(selected)
+          setSelectedItems(selected)
+        }}
         onInputChange={handleInputChange}
         onKeyDown={handleKeyDownSearch}
         onFocus={handleFocusInput}
