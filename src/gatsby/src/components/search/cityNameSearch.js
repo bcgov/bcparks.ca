@@ -240,6 +240,7 @@ const CityNameSearch = ({
                   referenceElementRef(node)
                 }}
                 onKeyDown={handleKeyDownInput}
+                enterkeyhint="search"
               />
               <label htmlFor="city-search-typeahead">
                 Near a city
