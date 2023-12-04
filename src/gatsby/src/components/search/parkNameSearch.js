@@ -153,6 +153,7 @@ const ParkNameSearch = ({
                 referenceElementRef(node)
               }}
               onKeyDown={handleKeyDownInput}
+              enterkeyhint="search"
             />
             <label htmlFor="park-search-typeahead">
               By park name
