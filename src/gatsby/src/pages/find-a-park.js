@@ -311,7 +311,7 @@ export default function FindAPark({ location, data }) {
   // event handlers - for searching
   const handleSearch = (clickedCity) => {
     setCurrentPage(1)
-    if (searchText === "" || searchText !== inputText) {
+    if (searchText === "" || (inputText && (searchText !== inputText))) {
       setSearchText(inputText)
     }
     if (clickedCity?.length > 0) {
@@ -584,7 +584,9 @@ export default function FindAPark({ location, data }) {
     if (qsAreas !== areas) {
       setQsAreas(areas);
     }
-    setInputText(searchText)
+    if (searchText) {
+      setInputText(searchText)
+    }
     if (qsLocation !== "0") {
       setSelectedCity(searchCities.filter(city =>
         city.strapi_id.toString() === qsLocation
