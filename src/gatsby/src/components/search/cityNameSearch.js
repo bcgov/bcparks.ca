@@ -109,17 +109,30 @@ const CityNameSearch = ({
         console.log("An unspecified error occurred.")
     }
   }
-
-  // event handlers
-  const handleClickGetLocation = () => {
+  const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition, showError)
     } else {
       console.log("Geolocation is not supported by your browser")
     }
   }
+
+  // event handlers
   const handleFocusInput = () => {
     setIsDropdownOpen(true)
+  }
+  const handleOnChange = (selected) => {
+    if (selected.length > 0 && selected[0].strapi_id === 0) {
+      // select and search current location only if user allows
+      if (hasPermission) {
+        handleSearch(selected)
+        setSelectedItems(selected)
+      }
+      getLocation()
+    } else {
+      handleSearch(selected)
+      setSelectedItems(selected)
+    }
   }
   // select an option with arrow keys and search parks with enter key 
   const handleKeyDownInput = (e) => {
@@ -143,17 +156,8 @@ const CityNameSearch = ({
       e.preventDefault()
       const activeOption = cityOptions(optionLimit)[activeIndex]
       if (activeOption !== undefined) {
-        handleSearch([activeOption])
-        setSelectedItems([activeOption])
-      } else if (optionsLength - activeIndex === 1 || optionsLength - activeIndex === 2) {
-        if (hasPermission) {
-          handleSearch([currentLocation])
-          setSelectedItems([currentLocation])
-        } else {
-          permissionDeniedCount += 1
-        }
-        handleClickGetLocation()
-      } else if (optionsLength - activeIndex > 2) {
+        handleOnChange([activeOption])
+      } else {
         handleSearch()
       }
       setIsDropdownOpen(false)
@@ -219,11 +223,7 @@ const CityNameSearch = ({
         filterBy={() => true}
         options={cityOptions(optionLimit)}
         selected={selectedItems}
-        onChange={(selected) => {
-          !(!hasPermission && selected[0]?.strapi_id === 0) &&
-          handleSearch(selected)
-          setSelectedItems(selected)
-        }}
+        onChange={(selected) => { handleOnChange(selected) }}
         onInputChange={handleInputChange}
         onKeyDown={handleKeyDownSearch}
         onFocus={handleFocusInput}
@@ -272,7 +272,6 @@ const CityNameSearch = ({
                   />
                 </MenuItem>
                 : <MenuItem option={city} position={index} key={index}
-                  onClick={handleClickGetLocation}
                   className="current-location-text"
                 >
                   <NearMeIcon />{currentLocation.cityName}
