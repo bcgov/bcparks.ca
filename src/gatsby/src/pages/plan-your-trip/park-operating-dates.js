@@ -201,7 +201,7 @@ const ParkLink = ({ park }) => {
                       {subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
                     </>
                   ) : (
-                    <>N/A</>
+                    <>Not known</>
                   )
                 )}
               </td>
@@ -213,11 +213,7 @@ const ParkLink = ({ park }) => {
                     )}
                   </ul>
                 ) : (
-                  subArea.facilityIsCamping ? (
-                    <>No {"("}first come, first served{")"}</>
-                  ) : (
-                    <>N/A</>
-                  )
+                  <>No {"("}first come, first served{")"}</>
                 )}
               </td>
             </tr>
@@ -258,10 +254,12 @@ const ParkLink = ({ park }) => {
                   ) : (
                     subArea.operationDates.length > 0 ? (
                       <>
-                        {subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
+                        <br />{subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
                       </>
                     ) : (
-                      <>N/A</>
+                      <>
+                        <br />Not known
+                      </>
                     )
                   )}
                 </div>
@@ -274,15 +272,9 @@ const ParkLink = ({ park }) => {
                       )}
                     </ul>
                   ) : (
-                    subArea.facilityIsCamping ? (
-                      <>
-                        <br />No {"("}first come, first served{")"}
-                      </>
-                    ) : (
-                      <>
-                        <br />N/A
-                      </>
-                    )
+                    <>
+                      <br />No {"("}first come, first served{")"}
+                    </>
                   )}
                 </div>
               </li>
@@ -395,7 +387,7 @@ const ParkOperatingDatesPage = () => {
       <div className="max-width-override">
         <Header mode="internal" content={menuContent} />
       </div>
-      <div id="sr-content" className="static-content--header unique-page--header page-breadcrumbs">
+      <div id="main-content" className="static-content--header unique-page--header page-breadcrumbs">
         <Breadcrumbs separator="›" aria-label="breadcrumb">
           {breadcrumbs}
         </Breadcrumbs>

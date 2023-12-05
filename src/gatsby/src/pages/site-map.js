@@ -18,7 +18,7 @@ const SitemapPage = ({ data }) => {
       Home
     </Link>,
     <div key="2" className="breadcrumb-text">
-      Site Map
+      Site map
     </div>,
   ]
 
@@ -26,7 +26,7 @@ const SitemapPage = ({ data }) => {
     <>
       <Header mode="internal" content={menuContent} />
 
-      <div id="sr-content" className="static-content-container">
+      <div id="main-content" className="static-content-container">
         <Breadcrumbs
           separator="›"
           aria-label="breadcrumb"
@@ -34,7 +34,7 @@ const SitemapPage = ({ data }) => {
         >
           {breadcrumbs}
         </Breadcrumbs>
-        <div className="sitemap-header">Sitemap</div>
+        <div className="sitemap-header">Site map</div>
         This is the main structure of the website, subject to change.
         <MegaMenu content={menuContent} menuMode="sitemap" />
       </div>
@@ -46,7 +46,7 @@ const SitemapPage = ({ data }) => {
 export default SitemapPage
 
 export const Head = () => (
-  <Seo title="Site Map" />
+  <Seo title="Site map" />
 )
 
 export const query = graphql`

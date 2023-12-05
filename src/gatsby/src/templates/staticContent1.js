@@ -153,7 +153,7 @@ export default function StaticContent1({ pageContext }) {
       </div>
       {hasTitle && (
         <div className="static-content--header">
-          <div id="sr-content" className="page-breadcrumbs">
+          <div id="main-content" className="page-breadcrumbs">
             <Breadcrumbs separator="›" aria-label="breadcrumb">
               {renderBreadcrumbs(menuContent, pageContext?.page)}
             </Breadcrumbs>
@@ -172,30 +172,26 @@ export default function StaticContent1({ pageContext }) {
         </div>
       )}
       {hasSections && (
-        <div className="page-menu--mobile">
-          <div className="d-block d-md-none">
-            <PageMenu
-              pageSections={pageSections}
-              activeSection={activeSection}
-              menuStyle="select"
-            />
-          </div>
+        <div className="page-menu--mobile d-block d-md-none">
+          <PageMenu
+            pageSections={pageSections}
+            activeSection={activeSection}
+            menuStyle="select"
+          />
         </div>
       )}
       <div className="static-content-container">
         <div className="page-content-wrapper">
           {hasSections ? (
-            <div className="row">
-              <div className="page-menu--desktop col-md-3 col-12 d-none d-md-block">
-                <div className="">
-                  <PageMenu
-                    pageSections={pageSections}
-                    activeSection={activeSection}
-                    menuStyle="nav"
-                  />
-                </div>
+            <div className="row no-gutters">
+              <div className="page-menu--desktop col-md-4 col-12 d-none d-md-block">
+                <PageMenu
+                  pageSections={pageSections}
+                  activeSection={activeSection}
+                  menuStyle="nav"
+                />
               </div>
-              <div className="page-content col-md-9 col-12">
+              <div className="page-content col-md-8 col-12">
                 {hasPageHeader && (
                   <div className="header-content">
                     {headerContent.introHtml.data.introHtml &&
@@ -241,12 +237,12 @@ export default function StaticContent1({ pageContext }) {
   )
 }
 
-export const Head = ({pageContext}) => {
+export const Head = ({ pageContext }) => {
   const meta =
     pageContext?.page?.Content.find(c =>
       Boolean(c.strapi_component === "parks.seo")
     ) || {}
-  
+
   const headerContent =
     pageContext?.page?.Content.find(c =>
       Boolean(c.strapi_component === "parks.page-header")

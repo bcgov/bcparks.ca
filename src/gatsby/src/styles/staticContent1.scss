@@ -1,8 +1,8 @@
 @import "variables.scss";
 
 .static-content-container {
-  max-width: 1140px;
-  padding: 20px 40px 35px 40px;
+  max-width: 1000px;
+  padding: 20px 20px 35px;
   margin: 0px auto;
 
   @media screen and (max-width: 415px) {
@@ -34,8 +34,15 @@
       background-color: $colorWhite !important;
     }
   }
-  a:hover {
-    color: $colorGold;
+  a:not(.btn):not(.nav-link) {
+    color: $colorBlueMed;
+    text-decoration: underline;
+    &:hover {
+      color: $colorBlue;
+    }
+    &:active, &:focus, &:focus-visible {
+      outline: -webkit-focus-ring-color auto 2px;
+    }
   }
 }
 
@@ -101,8 +108,9 @@
 .page-content-wrapper {
   .page-content {
     position: relative;
+    padding: 0 16px;
     .header-content > div {
-      margin-top: 80px;
+      margin-top: 64px;
     }
     & > div:last-of-type {
       min-height: 600px;

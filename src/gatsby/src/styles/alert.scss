@@ -1,0 +1,68 @@
+@import "variables.scss";
+
+.emergency-alert {
+  .alert-container {
+    min-height: 55px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 16px;
+
+    &.has-more-characters--true {
+      max-width: 692px;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+
+    a {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    span.partition {
+      padding: 0 4px;
+    }
+
+    svg {
+      font-size: 1rem;
+    }
+
+    .icon {
+      margin-right: 16px;
+    }
+
+    .button {
+      height: 16px;
+      margin-left: 16px;
+
+      &:focus-visible {
+        outline: -webkit-focus-ring-color auto 1px;
+        outline-offset: 1px;
+      }
+    }
+  }
+
+  &.alert-bg-red {
+    color: $colorWhite;
+    background-color: $colorRed;
+
+    a {
+      color: $colorWhite;
+    }
+
+    .button {
+      color: $colorWhite;
+    }
+  }
+
+  &.alert-bg-yellow {
+    color: $colorBlue;
+    background-color: $colorGold;
+
+    a {
+      color: $colorBlue;
+    }
+  }
+}

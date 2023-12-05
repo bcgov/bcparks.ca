@@ -75,41 +75,41 @@ export default function Home({ data }) {
   const menuContent = data?.allStrapiMenu?.nodes || []
 
   return (
-        <div id="home">
-          <div className="park-search-container-wrapper">
-            <Header mode="internal" content={menuContent} />
-            <ScrollToTop />
-            <div id="sr-content" className="park-search">
-              <div id="home-parks-search">
-                <MainSearch />
-              </div>
-              <div className="home-page-search-bg">
-                <StaticImage
-                  src="../images/home/search_bg.png"
-                  placeholder="none"
-                  loading="eager"
-                  style={{ display: "block" }}
-                  alt="Mount Robson Park"
-                />
-              </div>
-            </div>
+    <div id="home">
+      <div className="park-search-container-wrapper">
+        <Header mode="internal" content={menuContent} />
+        <ScrollToTop />
+        <div id="main-content" className="park-search">
+          <div id="home-parks-search">
+            <MainSearch hasCityNameSearch={true} />
           </div>
-          <div className="home-content-width-override">
-            <div id="main">
-              {pageContent.map(content => (
-                <div key={content.strapi_component + "-" + content.id}>
-                  <PageContent
-                    contentType={content.strapi_component}
-                    content={content}
-                  ></PageContent>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div>
-            <Footer />
+          <div className="home-page-search-bg">
+            <StaticImage
+              src="../images/home/search_bg.png"
+              placeholder="none"
+              loading="eager"
+              style={{ display: "block" }}
+              alt="Mount Robson Park"
+            />
           </div>
         </div>
+      </div>
+      <div className="home-content-width-override">
+        <div id="main">
+          {pageContent.map(content => (
+            <div key={content.strapi_component + "-" + content.id}>
+              <PageContent
+                contentType={content.strapi_component}
+                content={content}
+              ></PageContent>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <Footer />
+      </div>
+    </div>
   )
 }
 

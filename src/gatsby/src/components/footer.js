@@ -78,7 +78,7 @@ export default function Footer() {
   ]
   const footerMenu = [menu1, menu2, menu3]
   const utilityMenu = [
-    { display: "Sitemap", link: "/sitemap/" },
+    { display: "Site map", link: "/site-map/" },
     { display: "Disclaimer", link: "https://www2.gov.bc.ca/gov/content/home/disclaimer" },
     { display: "Privacy", link: "https://www2.gov.bc.ca/gov/content/home/privacy" },
     { display: "Accessibility", link: "https://www2.gov.bc.ca/gov/content/home/accessible-government" },

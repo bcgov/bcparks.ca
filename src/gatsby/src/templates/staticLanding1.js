@@ -53,7 +53,7 @@ const LandingPage = ({ pageContext }) => {
       <ScrollToTop />
       <CssBaseline />
       <Header mode="internal" content={menuContent} />
-      <div id="sr-content"></div>
+      <div id="main-content"></div>
       {linkContent.length > 0 && (
         <div id="intro-content" className="bcp-landing-intro">
           {introContent.map(content => (
@@ -68,16 +68,15 @@ const LandingPage = ({ pageContext }) => {
       {linkContent.length > 0 && (
         <div id="link-content" className="bcp-landing-links">
           <div className="container">
-            {linkContent.map(content => (
-              <div key={content.id} className="row">
-                <div className="col">
-                  <PageContent
-                    contentType={content.strapi_component}
-                    content={content}
-                  />
-                </div>
-              </div>
-            ))}
+            {linkContent
+              .filter(content => content.strapi_component === "parks.link-card")
+              .map(content => (
+                <PageContent
+                  key={content.id}
+                  contentType={content.strapi_component}
+                  content={content}
+                />
+              ))}
           </div>
         </div>
       )}
@@ -113,7 +112,7 @@ const LandingPage = ({ pageContext }) => {
       )}
       <div className="bcp-landing-park-search d-none d-lg-block">
         <div className="container">
-          <div className="row">
+          <div className="row no-gutters">
             <div className="col">
               <StaticImage
                 src="../images/landing/footer-find-your-next-adventure.png"
@@ -121,7 +120,7 @@ const LandingPage = ({ pageContext }) => {
               />
             </div>
             <div className="col">
-              <MainSearch />
+              <MainSearch hasCityNameSearch={false} />
             </div>
           </div>
         </div>
@@ -133,7 +132,7 @@ const LandingPage = ({ pageContext }) => {
 
 export default LandingPage
 
-export const Head = ({pageContext}) => {
+export const Head = ({ pageContext }) => {
   const { page } = pageContext
   const components = page?.Content || []
   const meta =

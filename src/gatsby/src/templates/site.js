@@ -2,12 +2,8 @@ import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
-import {
-  Container,
-  Grid,
-  CssBaseline,
-  Breadcrumbs,
-} from "@mui/material"
+import { CssBaseline, Breadcrumbs } from "@mui/material"
+
 import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
@@ -28,8 +24,6 @@ import SafetyInfo from "../components/park/safetyInfo"
 import MapLocation from "../components/park/mapLocation"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
-
-import { StyledGrid } from "../utils/constants"
 
 export default function SiteTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
@@ -234,7 +228,7 @@ export default function SiteTemplate({ data }) {
     >
       Find a park
     </GatsbyLink>,
-    <GatsbyLink key="3" 
+    <GatsbyLink key="3"
       to={`/${park?.slug ? park.slug : 'parks/protected-area'}`}
     >
       {park?.protectedAreaName}
@@ -249,155 +243,128 @@ export default function SiteTemplate({ data }) {
       <Header mode="internal" content={menuContent} />
       <ScrollToTop />
       <CssBaseline />
-
-      <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-        <Grid item xs={12} sm={12}>
-          <ParkPhotoGallery photos={photos} />
-        </Grid>
-      </div>
-      <div className="container parks-container">
-        <Container id="sr-content" className="park-info-container" maxWidth={false}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12}>
-              <div className="p30t d-none d-lg-block" />
-              <Breadcrumbs
-                separator="›"
-                aria-label="breadcrumb"
-                className="p20t"
-              >
-                {breadcrumbs}
-              </Breadcrumbs>
-            </Grid>
-            {!isLoadingProtectedArea && !protectedAreaLoadError && (
-              <Grid item xs={12} sm={12}>
-                <ParkHeader
-                  slug={`${park.slug}/${site.slug}`}
-                  parkName={`${park?.protectedAreaName}: ${site.siteName}`}
-                  hasReservations={hasReservations}
-                  hasDayUsePass={hasDayUsePass}
-                  hasCampfireBan={hasCampfireBan}
-                  isLoadingAdvisories={isLoadingAdvisories}
-                  advisoryLoadError={advisoryLoadError}
-                  advisories={advisories}
-                />
-              </Grid>
-            )}
-          </Grid>
-        </Container>
-      </div>
-      <div className="page-menu--mobile">
-        <div className="d-block d-md-none">
+      <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
+        <div className="container parks-container order-2">
+          <div id="main-content" className="park-info-container pt-4">
+            <Breadcrumbs
+              separator="›"
+              aria-label="breadcrumb"
+              className="p20t"
+            >
+              {breadcrumbs}
+            </Breadcrumbs>
+          </div>
+          {!isLoadingProtectedArea && !protectedAreaLoadError && (
+            <div>
+              <ParkHeader
+                slug={`${park.slug}/${site.slug}`}
+                parkName={`${park?.protectedAreaName}: ${site.siteName}`}
+                hasReservations={hasReservations}
+                hasDayUsePass={hasDayUsePass}
+                hasCampfireBan={hasCampfireBan}
+                isLoadingAdvisories={isLoadingAdvisories}
+                advisoryLoadError={advisoryLoadError}
+                advisories={advisories}
+              />
+            </div>
+          )}
+        </div>
+        <div className="page-menu--mobile d-block d-md-none order-3">
           <PageMenu
             pageSections={menuItems}
             activeSection={activeSection}
             menuStyle="select"
           />
         </div>
+        <div className="container parks-container gallery-container order-1">
+          <div className="park-info-container">
+            <ParkPhotoGallery photos={photos} />
+          </div>
+        </div>
       </div>
-      <div className="container parks-container">
-        <Container className="park-info-container" maxWidth={false}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12}>
-              <div className="d-none d-lg-block">
-                <ParkPhotoGallery photos={photos} />
+      <div className="container parks-container main-container">
+        <div className="row no-gutters park-info-container">
+          <div className="page-menu--desktop d-none d-md-block col-12 col-md-4">
+            <PageMenu
+              pageSections={menuItems}
+              activeSection={activeSection}
+              menuStyle="nav"
+            />
+          </div>
+          <div className="page-content col-12 col-md-8">
+            {menuItems[0].visible && (
+              <div ref={parkOverviewRef} className="w-100">
+                <ParkOverview data={description} type="site" />
               </div>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={3}
-              lg={3}
-              className="page-menu--desktop d-none d-lg-block"
-            >
-              <PageMenu
-                pageSections={menuItems}
-                activeSection={activeSection}
-                menuStyle="nav"
-              />
-            </Grid>
-            <StyledGrid
-              item
-              xs={12}
-              sm={12}
-              md={9}
-              lg={9}
-              className="main-container"
-            >
-              {menuItems[0].visible && (
-                <div ref={parkOverviewRef} className="w-100">
-                  <ParkOverview data={description} type="site" />
-                </div>
-              )}
-              {menuItems[1].visible && (
-                <div ref={advisoryRef} className="w-100">
-                  {isLoadingAdvisories && (
-                    <div className="mb-5">
-                      <h2 className="section-heading">{`Advisories`}</h2>
-                      <div className="spinner-border" role="status">
-                        <span className="sr-only">Loading...</span>
-                      </div>
+            )}
+            {menuItems[1].visible && (
+              <div ref={advisoryRef} className="w-100">
+                {isLoadingAdvisories && (
+                  <div className="mb-5">
+                    <h2 className="section-heading">{`Advisories`}</h2>
+                    <div className="spinner-border" role="status">
+                      <span className="sr-only">Loading...</span>
                     </div>
-                  )}
-                  {!isLoadingAdvisories && advisoryLoadError && (
-                    <div className="mb-5">
-                      <div className="alert alert-danger" role="alert">
-                        An error occurred while loading current public
-                        advisories.
-                      </div>
+                  </div>
+                )}
+                {!isLoadingAdvisories && advisoryLoadError && (
+                  <div className="mb-5">
+                    <div className="alert alert-danger" role="alert">
+                      An error occurred while loading current public
+                      advisories.
                     </div>
-                  )}
-                  {!isLoadingAdvisories && !advisoryLoadError && (
-                    <AdvisoryDetails advisories={advisories} />
-                  )}
-                </div>
-              )}
-              {menuItems[2].visible && (
-                <div ref={safetyRef} className="w-100">
-                  <SafetyInfo safetyInfo={safetyInfo} />
-                </div>
-              )}
-              {menuItems[3].visible && (
-                <div ref={campingRef} className="w-100">
-                  <CampingDetails
-                    data={{
-                      activeCampings: activeCampings,
-                      reservations: site.reservations,
-                      hasDayUsePass: hasDayUsePass,
-                      hasReservations: hasReservations,
+                  </div>
+                )}
+                {!isLoadingAdvisories && !advisoryLoadError && (
+                  <AdvisoryDetails advisories={advisories} />
+                )}
+              </div>
+            )}
+            {menuItems[2].visible && (
+              <div ref={safetyRef} className="w-100">
+                <SafetyInfo safetyInfo={safetyInfo} />
+              </div>
+            )}
+            {menuItems[3].visible && (
+              <div ref={campingRef} className="w-100">
+                <CampingDetails
+                  data={{
+                    activeCampings: activeCampings,
+                    reservations: site.reservations,
+                    hasDayUsePass: hasDayUsePass,
+                    hasReservations: hasReservations,
+                  }}
+                />
+              </div>
+            )}
+            {menuItems[4].visible && (
+              <div ref={facilityRef} className="w-100">
+                <ParkFacility data={nonCampingFacilities} />
+              </div>
+            )}
+            {menuItems[5].visible && (
+              <div ref={activityRef} className="w-100">
+                <ParkActivity data={nonCampingActivities} />
+              </div>
+            )}
+            {menuItems[6].visible && (
+              <div ref={mapLocationRef} className="w-100">
+                <MapLocation data={mapData} />
+                {locationNotes && (
+                  <div id="park-location-notes-container"
+                    dangerouslySetInnerHTML={{
+                      __html: locationNotes,
                     }}
-                  />
-                </div>
-              )}
-              {menuItems[4].visible && (
-                <div ref={facilityRef} className="w-100">
-                  <ParkFacility data={nonCampingFacilities} />
-                </div>
-              )}
-              {menuItems[5].visible && (
-                <div ref={activityRef} className="w-100">
-                  <ParkActivity data={nonCampingActivities} />
-                </div>
-              )}
-              {menuItems[6].visible && (
-                <div ref={mapLocationRef} className="w-100">
-                  <MapLocation data={mapData} />
-                  {locationNotes && (
-                    <div id="park-location-notes-container"
-                      dangerouslySetInnerHTML={{
-                        __html: locationNotes,
-                      }}
-                    >
-                    </div>
-                  )}
-                </div>
-              )}
-            </StyledGrid>
-          </Grid>
-        </Container>
+                  >
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
       <Footer />
-    </div >
+    </div>
   )
 }
 
