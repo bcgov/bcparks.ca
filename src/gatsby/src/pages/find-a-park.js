@@ -484,6 +484,7 @@ export default function FindAPark({ location, data }) {
       && qsActivitiesInitialized
       && qsAreasInitialized
       && qsFacilitiesInitialized
+      && (selectedCity.length > 0 || qsLocation === "0" || !qsLocation)
       && Math.sign(qsCampingFacilities.length) === Math.sign(selectedCampingFacilities.length)
       && Math.sign(qsActivities.length) === Math.sign(selectedActivities.length)
       && Math.sign(qsAreas.length) === Math.sign(selectedAreas.length)
