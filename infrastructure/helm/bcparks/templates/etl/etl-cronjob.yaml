@@ -46,6 +46,10 @@ spec:
                     secretKeyRef:
                       name: {{ .Release.Name }}-{{ .Values.etl.componentName }}-secret
                       key: PARK_NAMES_API_KEY
+                - name: DISABLE_BCWFS_CRON
+                  value: "false"
+                - name: DISABLE_PARK_NAMES_CRON
+                  value: "false"
           restartPolicy: "Never"
           terminationGracePeriodSeconds: 30
           activeDeadlineSeconds: 1600
