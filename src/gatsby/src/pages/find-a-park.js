@@ -643,6 +643,7 @@ export default function FindAPark({ location, data }) {
       }
       setQsLocation(selectedCity[0].strapi_id.toString())
     } else {
+      setQsLocation("");
       setIsCityNameLoading(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
