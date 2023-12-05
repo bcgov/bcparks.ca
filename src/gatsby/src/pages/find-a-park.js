@@ -311,7 +311,7 @@ export default function FindAPark({ location, data }) {
   // event handlers - for searching
   const handleSearch = (clickedCity) => {
     setCurrentPage(1)
-    if (searchText === "" || inputText && (searchText !== inputText)) {
+    if (searchText === "" || (inputText && (searchText !== inputText))) {
       setSearchText(inputText)
     }
     if (clickedCity?.length > 0) {
