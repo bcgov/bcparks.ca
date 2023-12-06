@@ -16,9 +16,14 @@
   }
   // link style
   a {
-    color: $colorBlue;
+    color: $colorBlueMed;
+    &:hover {
+      color: $colorBlueMed;
+    }
     &:focus-visible {
-      outline: -webkit-focus-ring-color auto 2px;
+      color: $colorBlueMed;
+      outline: $colorBlueMed auto 2px;
+      outline-offset: 2px;
     }
   }
   .page-content {
@@ -30,7 +35,11 @@
         color: $colorBlue;
       }
       &:active, &:focus, &:focus-visible {
-        outline: -webkit-focus-ring-color auto 2px;
+        color: $colorBlue;
+        border-radius: 4px;
+        border: $colorWhite solid 2px;
+        outline: $colorBlueMed solid 2px;
+        outline-offset: 0px;
       }
       &.park-overview-link {
         display: inline-block;
@@ -134,7 +143,8 @@
     color: $colorBlueMed;
     &:active, &:focus, &:focus-visible {
       color: $colorBlueMed;
-      outline: -webkit-focus-ring-color auto 2px;
+      outline: $colorBlueMed auto 2px;
+      outline-offset: 2px;
     }
   }
 }

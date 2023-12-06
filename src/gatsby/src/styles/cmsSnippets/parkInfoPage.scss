@@ -39,13 +39,12 @@
   position: relative;
   display: inline-block;
   color: $colorBlueMed !important;
-  text-decoration: none;
+  text-decoration: none !important;
   cursor: pointer;
   margin-bottom: 16px;
   &:hover,
   &:focus {
-    color: $colorBlue;
-    text-decoration: underline;
+    text-decoration: underline !important;
   }
   i {
     position: absolute;

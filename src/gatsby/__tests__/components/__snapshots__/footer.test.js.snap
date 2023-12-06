@@ -18,6 +18,7 @@ exports[`Footer renders correctly 1`] = `
           className="mb-5"
         >
           <a
+            className="d-inline-block"
             href="/"
           />
         </div>
@@ -173,6 +174,7 @@ exports[`Footer renders correctly 1`] = `
                   className="d-inline-block mt-3"
                 >
                   <a
+                    className="d-inline-block"
                     href="https://www.facebook.com/YourBCParks/"
                   />
                 </div>
@@ -180,6 +182,7 @@ exports[`Footer renders correctly 1`] = `
                   className="d-inline-block mt-3 ml-3"
                 >
                   <a
+                    className="d-inline-block"
                     href="https://www.instagram.com/yourbcparks"
                   />
                 </div>
