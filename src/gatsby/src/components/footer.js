@@ -27,7 +27,7 @@ function FooterMenu({ items, menuIndex }) {
       {menuIndex === 2 && (
         <li>
           <div className="d-inline-block mt-3">
-            <a href="https://www.facebook.com/YourBCParks/">
+            <a className="d-inline-block" href="https://www.facebook.com/YourBCParks/">
               <StaticImage
                 src="../images/Facebook_Negative.svg"
                 placeholder="none"
@@ -37,7 +37,7 @@ function FooterMenu({ items, menuIndex }) {
             </a>
           </div>
           <div className="d-inline-block mt-3 ml-3">
-            <a href="https://www.instagram.com/yourbcparks">
+            <a className="d-inline-block" href="https://www.instagram.com/yourbcparks">
               <StaticImage
                 src="../images/Instagram_Negative.svg"
                 placeholder="none"
@@ -92,7 +92,7 @@ export default function Footer() {
         <div className="row no-gutters">
           <div className="col col-12 col-md-4">
             <div className="mb-5">
-              <a href="/">
+              <a className="d-inline-block" href="/">
                 <StaticImage
                   src="../images/BCParks_Wordmark_White-cropped.svg"
                   placeholder="none"
