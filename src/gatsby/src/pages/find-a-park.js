@@ -588,10 +588,12 @@ export default function FindAPark({ location, data }) {
     if (searchText) {
       setInputText(searchText)
     }
-    if (qsLocation !== "0") {
-      setSelectedCity(searchCities.filter(city =>
-        city.strapi_id.toString() === qsLocation
-      ))
+    if (qsLocation && qsLocation !== "0") {
+      const selectedCities = searchCities.filter(city => city.strapi_id.toString() === qsLocation)
+      if (!selectedCities.length) {
+        setQsLocation("")
+      }
+      setSelectedCity(selectedCities)
     }
     if (qsLocation === "0") {
       setIsCityNameLoading(true)
@@ -643,7 +645,6 @@ export default function FindAPark({ location, data }) {
       }
       setQsLocation(selectedCity[0].strapi_id.toString())
     } else {
-      setQsLocation("");
       setIsCityNameLoading(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
