@@ -717,6 +717,11 @@ export const query = graphql`
           isCamping
         }
       }
+      parkOperationDates {
+        operatingYear
+        gateOpenDate
+        gateCloseDate
+      }
       biogeoclimaticZones {
         zone
       }

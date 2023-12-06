@@ -3,97 +3,25 @@ import { graphql, useStaticQuery, Link as GatsbyLink } from "gatsby"
 import { Breadcrumbs, Link } from "@mui/material"
 import BlockIcon from '@mui/icons-material/Block'
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
-import _ from "lodash"
-import moment from "moment"
 
 import Header from "../../components/header"
 import Footer from "../../components/footer"
 import Seo from "../../components/seo"
 import ScrollToTop from "../../components/scrollToTop"
-
+import { datePhrase, processDateRanges } from "../../utils/parkDatesHelper"
 import "../../styles/listPage.scss"
 
 const ParkLink = ({ park }) => {
   const parkOperation = park.parkOperation || []
   const subAreas = park.parkOperationSubAreas.filter(a => a.isActive) || []
 
-  const datePhrase = (openDate, closeDate, fmt, yearRoundText, delimiter, prefix) => {
-    if (openDate && closeDate) {
-      try {
-        const open = moment(openDate).format(fmt)
-        const close = moment(closeDate).format(fmt)
-        const openYearRound =
-          open.indexOf("Jan 1") === 0 && close.indexOf("Dec 31") === 0
-        let output = openYearRound ? yearRoundText : `${prefix || ""}${open}${delimiter}${close}`
-
-        return output.replace(/ /g, "\u00A0")
-      } catch (err) {
-        console.error("Err formatting date " + openDate + ", " + closeDate)
-        return ""
-      }
-    } else {
-      return ""
-    }
-  }
-
   const fmt = "MMM D, yyyy"
-  const yr = "year-round"
+  let yr = "year-round"
   const thisYear = new Date().getFullYear()
   let parkDates = datePhrase(parkOperation.openDate, parkOperation.closeDate, fmt, yr, " to ", "from ")
 
   if (parkDates !== yr && !parkDates.includes(thisYear)) {
     parkDates = ""
-  }
-
-  const processDateRanges = (arr) => {
-    const newArr = []
-    for (let dateRange of arr) {
-      const startYear = moment(dateRange.start).year();
-      const endYear = moment(dateRange.end).year();
-      if (startYear === endYear) {
-        newArr.push(dateRange)
-      } else if (endYear > startYear) {
-        for (let year = startYear; year <= endYear; year++) {
-          if (year === startYear) {
-            newArr.push({ start: dateRange.start, end: `${year}-12-31` })
-          } else if (year === endYear) {
-            newArr.push({ start: `${year}-01-01`, end: dateRange.end })
-          } else {
-            newArr.push({ start: `${year}-01-01`, end: `${year}-12-31` })
-          }
-        }
-      } else {
-        newArr.push(dateRange)
-      }
-    }
-
-    const sortedUniqueFutureDates = _.uniqWith(newArr, _.isEqual)
-      .filter(dateRange => moment(dateRange.end).year() >= new Date().getFullYear())
-      .sort((a, b) => {
-        return a.start < b.start ? -1 : 1
-      })
-
-    let groupedByYear = []
-    const fmt = "MMM D"
-    const yr = "Year-round"
-    let prevYear = 0
-    let phrase = ""
-    for (let dateRange of sortedUniqueFutureDates) {
-      const year = moment(dateRange.start).year();
-      if (phrase !== "" && year !== prevYear) {
-        groupedByYear.push(phrase);
-      }
-      if (year !== prevYear) {
-        phrase = `${year}: ${datePhrase(dateRange.start, dateRange.end, fmt, yr, "–")}`
-      } else {
-        phrase += `, ${datePhrase(dateRange.start, dateRange.end, fmt, yr, "–")}`
-      }
-      prevYear = year;
-    }
-    if (phrase !== "") {
-      groupedByYear.push(phrase);
-    }
-    return groupedByYear
   }
 
   for (let idx in subAreas) {
@@ -130,10 +58,13 @@ const ParkLink = ({ park }) => {
       }
     }
 
-    subArea.operationDates = processDateRanges(subArea.operationDates)
-    subArea.serviceDates = processDateRanges(subArea.serviceDates)
-    subArea.resDates = processDateRanges(subArea.resDates)
-    subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates)
+    yr = "Year-round"
+    const fmt = "MMM D"
+
+    subArea.operationDates = processDateRanges(subArea.operationDates, fmt, yr, "–")
+    subArea.serviceDates = processDateRanges(subArea.serviceDates, fmt, yr, "–")
+    subArea.resDates = processDateRanges(subArea.resDates, fmt, yr, "–")
+    subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates, fmt, yr, "–")
 
     if (subArea.serviceDates.length === 0
       && subArea.resDates.length === 0
@@ -326,6 +257,11 @@ const ParkOperatingDatesPage = () => {
               facilityName
               isCamping
             }
+          }
+          parkOperationDates {
+            operatingYear
+            gateOpenDate
+            gateCloseDate
           }
         }
       }

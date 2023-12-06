@@ -40,6 +40,7 @@ module.exports = {
           "legacy-redirect",
           "menu",
           "park-operation",
+          "park-operation-date",
           "park-operation-sub-area",
           "park-photo",
           "park-sub-page",
@@ -79,6 +80,9 @@ module.exports = {
                   populate: ["facilityType"]
                 },
                 parkOperation: {
+                  fields: "*"
+                },
+                parkOperationDates: {
                   fields: "*"
                 },
                 parkOperationSubAreas: {
