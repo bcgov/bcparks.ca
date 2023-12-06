@@ -64,7 +64,8 @@ const loadData = async function () {
   const strapiQuery = {
     fields: [
       "orcs",
-      "protectedAreaName"
+      "protectedAreaName",
+      "searchTerms"
     ],
     populate: {
       parkNames: {
@@ -151,8 +152,25 @@ const loadData = async function () {
             { headers: httpReqHeaders }
           );
         } catch (error) {
-          logger.error(`Error updating park ${p.orcs}\n${JSON.stringify(error)}"`);
+          logger.error(`Error updating park ${p.orcs}\n${JSON.stringify(error)}`);
         }
+      }
+    }
+
+    // update the searchTerms
+    if (p.dataRegister && p.dataRegister?.searchTerms !== (p.strapi.searchTerms || "")) {
+      logger.info(`Updating the searchTerms for park ${p.orcs}`);
+      try {
+        await axios.put(`${process.env.STRAPI_BASE_URL}/api/protected-areas/${p.id}`,
+          {
+            "data": {
+              "searchTerms": p.dataRegister.searchTerms || ""
+            }
+          },
+          { headers: httpReqHeaders }
+        );
+      } catch (error) {
+        logger.error(`Error updating searchTerms for park ${p.orcs}\n${JSON.stringify(error)}`);
       }
     }
   }

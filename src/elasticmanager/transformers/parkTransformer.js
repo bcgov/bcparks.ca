@@ -46,8 +46,15 @@ exports.createElasticPark = async function (park, photos) {
         return n.parkName.toLowerCase();
       });
     park.parkNames = [...new Set(parkNames || [])];
+  } else {
+    park.parNames = [];
   }
 
+  // add the searchTerms to the parkNames
+  if (park.searchTerms && !park.parkNames.find(n => n === park.searchTerms.toLowerCase())) {
+    park.parkNames.push(park.searchTerms.toLowerCase())
+  }
+  
   // store protectedAreaName as lowercase for sorting
   park.nameLowerCase = park.protectedAreaName.toLowerCase().replace(/\./g, '');
 
@@ -147,6 +154,7 @@ exports.createElasticPark = async function (park, photos) {
   delete park.latitude;
   delete park.longitude;
   delete park.geoShape;
+  delete park.searchTerms;
 
   return park;
 };

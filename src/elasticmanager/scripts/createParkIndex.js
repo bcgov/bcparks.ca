@@ -2,7 +2,8 @@ const { getLogger } = require('../utils/logging');
 const elasticClient = require('../utils/elasticClient');
 
 /**
- * Creates a new park index in Elasticsearch
+ * Creates a new park index in Elasticsearch.  
+ * Only fields with special settings need to be included in these mappings.
  */
 const createParkIndex = async function () {
   elasticClient.initializeESClient();

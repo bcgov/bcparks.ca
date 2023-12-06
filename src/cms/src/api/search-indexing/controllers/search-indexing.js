@@ -11,6 +11,7 @@ module.exports = ({ strapi }) => ({
     query.fields = [
       "orcs",
       "protectedAreaName",
+      "searchTerms",
       "marineProtectedArea",
       "typeCode",
       "hasCampfireBan",
