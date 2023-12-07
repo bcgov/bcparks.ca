@@ -188,11 +188,11 @@ const CityNameSearch = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDropdownOpen, cityText])
   useEffect(() => {
-    if (cityText) {
+    if (cityText && !selectedItems.length) {
       setIsDropdownOpen(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cityText])
+  }, [cityText, selectedItems])
   useEffect(() => {
     if (selectedItems.length > 0 && selectedItems[0].strapi_id !== 0 && cityText !== selectedItems[0].cityName) {
       setCityText(selectedItems[0].cityName)

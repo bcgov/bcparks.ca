@@ -341,6 +341,10 @@ export default function FindAPark({ location, data }) {
   }
   const handleCityNameInputChange = (text) => {
     setCityText(text)
+    // clear all city states if text field is cleared
+    if (text === "") {
+      handleClickClearCity()
+    }
   }
   const handleClickClearPark = () => {
     setCurrentPage(1)
