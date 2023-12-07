@@ -34,7 +34,7 @@ const CityNameSearch = ({
   setCityText,
   handleInputChange,
   handleKeyDownSearch,
-  handleClick,
+  handleClear,
   handleSearch
 }) => {
   const data = useStaticQuery(graphql`
@@ -163,8 +163,8 @@ const CityNameSearch = ({
       setIsDropdownOpen(false)
     } else if (e.key === 'Tab') {
       setIsDropdownOpen(false)
-    } else if (e.key === 'Backspace' && cityText === "") {
-      handleClick()
+    } else if (e.key === 'Backspace' && cityText.length <= 1) {
+      handleClear()
     }
   }
 
@@ -193,6 +193,12 @@ const CityNameSearch = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityText])
+  useEffect(() => {
+    if (selectedItems.length > 0 && selectedItems[0].strapi_id !== 0 && cityText !== selectedItems[0].cityName) {
+      setCityText(selectedItems[0].cityName)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedItems])
   useEffect(() => {
     // check for location permission when the component mounts
     if (navigator.permissions) {
@@ -289,7 +295,7 @@ const CityNameSearch = ({
               <ClearButton
                 onClick={() => {
                   onClear()
-                  handleClick()
+                  handleClear()
                   setIsDropdownOpen(false)
                 }}
               />
