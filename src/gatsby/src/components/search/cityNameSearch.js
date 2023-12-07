@@ -163,6 +163,8 @@ const CityNameSearch = ({
       setIsDropdownOpen(false)
     } else if (e.key === 'Tab') {
       setIsDropdownOpen(false)
+    } else if (e.key === 'Backspace' && cityText === "") {
+      handleClick()
     }
   }
 
