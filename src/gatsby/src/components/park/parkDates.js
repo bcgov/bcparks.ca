@@ -12,7 +12,7 @@ import HTMLArea from "../HTMLArea"
 import StaticIcon from "./staticIcon"
 import { ParkAccessFromAdvisories } from "../../components/park/parkAccessStatus"
 import { countsList } from "../../utils/constants"
-import { datePhrase, processDateRanges } from "../../utils/parkDatesHelper"
+import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
 
 export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesList }) => {
   const [isShow, setIsShow] = useState(false)
@@ -167,62 +167,32 @@ export default function ParkDates({ data }) {
 
   // -------- Operating Dates --------
 
+  const thisYear = new Date().getFullYear()  
+
   // Overall operating dates for parks, to display above subareas
   let fmt = "MMMM D, yyyy"  // date format for overall operating dates
   const yr = "year-round" // lowercase for overall operating dates
-  let parkDates = datePhrase(parkOperation.openDate, parkOperation.closeDate, fmt, yr, " to ", "")
+  const parkOperationDates = dataCopy.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
+  let parkDates = datePhrase(parkOperationDates.gateOpenDate, parkOperationDates.gateCloseDate, fmt, yr, " to ", "")  
 
   // make sure the parkDates is valid
-  const thisYear = new Date().getFullYear()
-  if (parkDates !== yr && !parkDates.includes(thisYear)) {
+    if (parkDates !== yr && !parkDates.includes(thisYear)) {
     parkDates = "";
   }
 
   // ---- Subarea Dates -----
+  fmt = "MMMM D"
 
   for (let idx in subAreas) {
-    const subArea = subAreas[idx]
+    let subArea = subAreas[idx]
 
     if (subArea.isActive) {
-      const typeObj = subArea.parkSubAreaType || {}
-      const iconUrl = typeObj.iconUrl || ""
-      const typeIcon = iconUrl.split("/")[iconUrl.split("/").length - 1] // ignore path, get filename
-      subArea.typeIcon = typeIcon
+      const iconUrl = subArea.parkSubAreaType?.iconUrl || ""
+      subArea.typeIcon = iconUrl.split("/")[iconUrl.split("/").length - 1] // ignore path, get filename
 
-      const facilityType = subArea.facilityType || {}
-      subArea.facilityName = facilityType.facilityName || ""
+      subArea.facilityName = subArea.facilityType?.facilityName || ""
+      subArea = groupSubAreaDates(subArea);
 
-      // Subarea operating dates
-      const saDates = subArea.parkOperationSubAreaDates
-      subArea.operationDates = []
-      subArea.offSeasonDates = []
-      subArea.resDates = []
-      subArea.serviceDates = []
-
-      for (let dIdx in saDates) {
-        const dateRec = saDates[dIdx]
-        if (dateRec.isActive) {
-          subArea.operationDates.push({
-            start: dateRec.openDate,
-            end: dateRec.closeDate
-          })
-          subArea.serviceDates.push({
-            start: dateRec.serviceStartDate,
-            end: dateRec.serviceEndDate
-          })
-          subArea.resDates.push({
-            start: dateRec.reservationStartDate,
-            end: dateRec.reservationEndDate
-          })
-          subArea.offSeasonDates.push({
-            start: dateRec.offSeasonStartDate,
-            end: dateRec.offSeasonEndDate
-          })
-        }
-      }
-
-      fmt = "MMMM D"
-  
       // get distinct date ranges sorted chronologically
       subArea.operationDates = processDateRanges(subArea.operationDates, fmt, yr, " to ")
       subArea.serviceDates = processDateRanges(subArea.serviceDates, fmt, yr, " to ")

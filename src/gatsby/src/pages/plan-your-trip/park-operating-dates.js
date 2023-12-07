@@ -8,64 +8,42 @@ import Header from "../../components/header"
 import Footer from "../../components/footer"
 import Seo from "../../components/seo"
 import ScrollToTop from "../../components/scrollToTop"
-import { datePhrase, processDateRanges } from "../../utils/parkDatesHelper"
+import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
 import "../../styles/listPage.scss"
 
 const ParkLink = ({ park }) => {
-  const parkOperation = park.parkOperation || []
+  const thisYear = new Date().getFullYear()
+  const parkOperationDates = park.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
   const subAreas = park.parkOperationSubAreas.filter(a => a.isActive) || []
 
-  const fmt = "MMM D, yyyy"
+  // Overall operating dates for parks, to display above subareas
+  let fmt = "MMM D, yyyy"
   let yr = "year-round"
-  const thisYear = new Date().getFullYear()
-  let parkDates = datePhrase(parkOperation.openDate, parkOperation.closeDate, fmt, yr, " to ", "from ")
+  let parkDates = datePhrase(parkOperationDates.gateOpenDate, parkOperationDates.gateCloseDate, fmt, yr, " to ", "from ")
 
   if (parkDates !== yr && !parkDates.includes(thisYear)) {
     parkDates = ""
   }
 
+  // ---- Subarea Dates -----
+  yr = "Year-round"
+  fmt = "MMM D"
+
   for (let idx in subAreas) {
-    const subArea = subAreas[idx]
+    let subArea = subAreas[idx]
     const facilityType = subArea.facilityType || {}
     subArea.facilityName = facilityType.facilityName || ""
     subArea.facilityIsCamping = facilityType.isCamping || false
 
-    const saDates = subArea.parkOperationSubAreaDates
-    subArea.operationDates = []
-    subArea.offSeasonDates = []
-    subArea.resDates = []
-    subArea.serviceDates = []
+    subArea = groupSubAreaDates(subArea)
 
-    for (let dIdx in saDates) {
-      const dateRec = saDates[dIdx]
-      if (dateRec.isActive) {
-        subArea.operationDates.push({
-          start: dateRec.openDate,
-          end: dateRec.closeDate
-        })
-        subArea.serviceDates.push({
-          start: dateRec.serviceStartDate,
-          end: dateRec.serviceEndDate
-        })
-        subArea.resDates.push({
-          start: dateRec.reservationStartDate,
-          end: dateRec.reservationEndDate
-        })
-        subArea.offSeasonDates.push({
-          start: dateRec.offSeasonStartDate,
-          end: dateRec.offSeasonEndDate
-        })
-      }
-    }
-
-    yr = "Year-round"
-    const fmt = "MMM D"
-
+    // get distinct date ranges sorted chronologically
     subArea.operationDates = processDateRanges(subArea.operationDates, fmt, yr, "–")
     subArea.serviceDates = processDateRanges(subArea.serviceDates, fmt, yr, "–")
     subArea.resDates = processDateRanges(subArea.resDates, fmt, yr, "–")
     subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates, fmt, yr, "–")
 
+    // add a placeholder if no dates are available for the current year
     if (subArea.serviceDates.length === 0
       && subArea.resDates.length === 0
       && subArea.offSeasonDates.length === 0) {
@@ -233,10 +211,6 @@ const ParkOperatingDatesPage = () => {
           protectedAreaName
           marineProtectedArea
           type
-          parkOperation {
-            openDate
-            closeDate
-          }
           parkOperationSubAreas {
             isOpen
             isCleanAirSite

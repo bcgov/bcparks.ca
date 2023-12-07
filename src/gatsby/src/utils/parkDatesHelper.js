@@ -71,7 +71,39 @@ const processDateRanges = (arr, fmt, yr, delimiter) => {
   return groupedByYear
 }
 
+const groupSubAreaDates = (subArea) => {
+  const saDates = subArea.parkOperationSubAreaDates
+  subArea.operationDates = []
+  subArea.offSeasonDates = []
+  subArea.resDates = []
+  subArea.serviceDates = []
+
+  for (let dIdx in saDates) {
+    const dateRec = saDates[dIdx]
+    if (dateRec.isActive) {
+      subArea.operationDates.push({
+        start: dateRec.openDate,
+        end: dateRec.closeDate
+      })
+      subArea.serviceDates.push({
+        start: dateRec.serviceStartDate,
+        end: dateRec.serviceEndDate
+      })
+      subArea.resDates.push({
+        start: dateRec.reservationStartDate,
+        end: dateRec.reservationEndDate
+      })
+      subArea.offSeasonDates.push({
+        start: dateRec.offSeasonStartDate,
+        end: dateRec.offSeasonEndDate
+      })
+    }
+  }
+  return subArea;
+}
+
 export {
   datePhrase,
-  processDateRanges
+  processDateRanges,
+  groupSubAreaDates
 }
