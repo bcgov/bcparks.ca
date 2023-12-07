@@ -2,11 +2,11 @@
 
 .static-content-container {
   max-width: 1000px;
-  padding: 20px 20px 35px;
+  padding: 16px;
   margin: 0px auto;
 
-  @media screen and (max-width: 415px) {
-    padding: 16px;
+  @media (min-width: $smBreakpoint) {
+    padding: 20px 20px 35px;
   }
 
   .card {
@@ -112,7 +112,11 @@
 .page-content-wrapper {
   .page-content {
     position: relative;
+    max-width: 640px;
     padding: 0 16px;
+    @media (min-width: $mdBreakpoint) {
+      max-width: 66.66667%;
+    }
     .header-content > div {
       margin-top: 64px;
     }
