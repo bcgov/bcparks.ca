@@ -32,6 +32,8 @@ spec:
               env:
                 - name: BCWFS_BANS_API
                   value: {{ .Values.etl.env.bcwfsBansApi }}
+                - name: PARK_NAMES_API
+                  value: {{ .Values.etl.env.parkNamesApi }}
                 - name: STRAPI_BASE_URL
                   value: {{ .Values.cms.env.externalUrl }}
                 - name: STRAPI_API_TOKEN
@@ -39,6 +41,15 @@ spec:
                     secretKeyRef:
                       name: {{ .Release.Name }}-{{ .Values.etl.componentName }}-secret
                       key: STRAPI_API_TOKEN
+                - name: PARK_NAMES_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Release.Name }}-{{ .Values.etl.componentName }}-secret
+                      key: PARK_NAMES_API_KEY
+                - name: DISABLE_BCWFS_CRON
+                  value: "false"
+                - name: DISABLE_PARK_NAMES_CRON
+                  value: "false"
           restartPolicy: "Never"
           terminationGracePeriodSeconds: 30
           activeDeadlineSeconds: 1600

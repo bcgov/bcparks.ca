@@ -3,25 +3,14 @@ import { parseISO } from 'date-fns';
 import _ from 'lodash';
 import * as dotenv from 'dotenv';
 import { promises as fs } from 'fs';
+import * as qs from 'qs'
 
 import { dataFileSpecified, getDataFilePath } from '../utils/commandLine.js';
 import { getLogger } from '../utils/logging.js';
 
-function compareBans(ban1, ban2) {
-    return ban1.attributes.type === ban2.attributes.type
-        && ban1.attributes.prohibitionDescription === ban2.attributes.prohibitionDescription
-        && ban1.attributes.effectiveDate === ban2.attributes.effectiveDate
-        && ban1.attributes.bulletinURL === ban2.attributes.bulletinURL
-        && (
-            ban1.attributes.fireCentre === (ban2.attributes.fireCentre?.data?.id || null)
-            || ban2.attributes.fireCentre === (ban1.attributes.fireCentre?.data?.id || null)
-        )
-        && (
-            ban1.attributes.fireZone === (ban2.attributes.fireZone?.data?.id || null)
-            || ban2.attributes.fireZone === (ban1.attributes.fireZone?.data?.id || null)
-        );
-};
-
+/**
+ *  This is the main processing pipeline for the BCWFS sync
+ */
 const loadData = async function () {
     dotenv.config({
         path: `.env`,
@@ -102,8 +91,18 @@ const loadData = async function () {
     }
 
     // get a list of existing bans from Strapi
+    const strapiQuery = {
+        populate: {
+            fireCentre: {
+                fields: ["id"]
+            },
+            fireZone: {
+                fields: ["id"]
+            }
+        }
+    };
     try {
-        const response = await axios.get(`${process.env.STRAPI_BASE_URL}/api/fire-ban-prohibitions?populate[fireCentre][fields][0]=id&populate[fireZone][fields][0]=id`);
+        const response = await axios.get(`${process.env.STRAPI_BASE_URL}/api/fire-ban-prohibitions?${qs.stringify(strapiQuery)}`);
         for (const strapiBan of response.data.data) {
             strapiBans.push(strapiBan);
         }
@@ -153,6 +152,24 @@ const loadData = async function () {
     }
 
     logger.info("DONE!")
+};
+
+/**
+ *  Compares two records to see if anything has changed
+ */
+function compareBans(ban1, ban2) {
+    return ban1.attributes.type === ban2.attributes.type
+        && ban1.attributes.prohibitionDescription === ban2.attributes.prohibitionDescription
+        && ban1.attributes.effectiveDate === ban2.attributes.effectiveDate
+        && ban1.attributes.bulletinURL === ban2.attributes.bulletinURL
+        && (
+            ban1.attributes.fireCentre === (ban2.attributes.fireCentre?.data?.id || null)
+            || ban2.attributes.fireCentre === (ban1.attributes.fireCentre?.data?.id || null)
+        )
+        && (
+            ban1.attributes.fireZone === (ban2.attributes.fireZone?.data?.id || null)
+            || ban2.attributes.fireZone === (ban1.attributes.fireZone?.data?.id || null)
+        );
 };
 
 export default loadData;

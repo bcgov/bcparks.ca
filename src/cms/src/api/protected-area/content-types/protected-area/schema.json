@@ -297,6 +297,9 @@
       "relation": "oneToOne",
       "target": "api::geo-shape.geo-shape",
       "mappedBy": "protectedArea"
+    },
+    "searchTerms": {
+      "type": "string"
     }
   }
 }

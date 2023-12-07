@@ -1,6 +1,6 @@
 const qs = require('qs');
 const { getLogger } = require('../utils/logging');
-const { createElasticPark } = require('../transformers/park');
+const { createElasticPark } = require('../transformers/parkTransformer');
 const { readQueue, removeFromQueue } = require('../utils/taskQueue');
 const elasticClient = require('../utils/elasticClient');
 const { cmsAxios } = require("../utils/axiosConfig");
