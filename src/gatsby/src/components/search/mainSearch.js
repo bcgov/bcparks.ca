@@ -56,7 +56,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
     }
     navigate(findAPark, {
       state: {
-        "qsCity": selectedCity
+        "selectedCity": clickedCity || selectedCity
       },
     })
   }
