@@ -1063,6 +1063,7 @@ export default function Advisory({
                   styling="bcgov-normal-white btn"
                   onClick={() => {
                     setToBack();
+                    sessionStorage.clear();
                   }}
                 />
                 <h2 className="mt-3 mb-0">
@@ -1163,7 +1164,6 @@ export default function Advisory({
                   isSubmitting,
                   isSavingDraft,
                   updateAdvisory,
-                  setToBack,
                   formError,
                   setFormError,
                 }}

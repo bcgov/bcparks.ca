@@ -49,28 +49,25 @@
   color: white !important;
   font-weight: 700 !important;
   font-style: normal !important;
-  background-color: #234075 !important;
+  background-color: var(--color-blue) !important;
 }
 
 .bcgov-normal-blue:hover {
-  background-color: rgba(43, 91, 164, 1) !important;
   color: white !important;
+  background-color: var(--color-med-blue) !important;
 }
 
 .bcgov-normal-white {
-  color: #234075 !important;
+  color: var(--color-blue) !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
   background-color: white !important;
-  border-width: 1px !important;
-  border-style: solid !important;
-  border-color: rgba(204, 204, 204, 1) !important;
+  border: 1px solid var(--color-blue) !important;
 }
 
 .bcgov-normal-white:hover {
   box-sizing: border-box !important;
-  border-width: 1px !important;
-  border-style: solid !important;
-  background-color: rgba(242, 242, 242, 1) !important;
-  border-color: rgba(204, 204, 204, 1) !important;
+  background-color: var(--color-light-blue) !important;
 }
 
 .bcgov-normal-light {
@@ -111,6 +108,11 @@
 
 .btn {
   border-radius: 5px !important;
+}
+.btn:focus, .btn:focus-visible {
+  box-shadow: none !important;
+  outline: 2px auto var(--color-med-blue) !important;
+  outline-offset: 4px !important;
 }
 
 .bcgov-datepicker-wrapper input {

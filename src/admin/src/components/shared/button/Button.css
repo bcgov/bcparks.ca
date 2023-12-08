@@ -2,28 +2,22 @@
   color: white;
   font-weight: 700;
   font-style: normal;
-  background-color: #003366;
+  background-color: var(--color-blue) !important;
 }
 
 .bcgov-normal-blue:hover {
-  background-color: rgba(43, 91, 164, 1);
   color: white;
+  background-color: var(--color-med-blue) !important;
 }
 
 .bcgov-normal-white {
-  color: #003366;
-  background-color: white;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgba(204, 204, 204, 1);
+  color: var(--color-blue) !important;
+  border: 1px solid var(--color-blue) !important;
 }
 
 .bcgov-normal-white:hover {
   box-sizing: border-box;
-  border-width: 1px;
-  border-style: solid;
-  background-color: rgba(242, 242, 242, 1);
-  border-color: rgba(204, 204, 204, 1);
+  background-color: var(--color-light-blue) !important;
 }
 
 .bcgov-consistent-width {
@@ -32,7 +26,7 @@
 
 .bcgov-button {
   min-width: 150px;
-  min-height: 40px;
+  min-height: 48px;
 }
 
 @media (max-width: 575.98px) {

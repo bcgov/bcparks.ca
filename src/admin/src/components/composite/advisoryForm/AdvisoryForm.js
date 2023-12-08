@@ -127,7 +127,6 @@ export default function AdvisoryForm({
     isSubmitting,
     isSavingDraft,
     updateAdvisory,
-    setToBack,
     formError,
     setFormError,
   },
@@ -970,13 +969,13 @@ export default function AdvisoryForm({
           </div>
           <div className="row">
             <div className="col-lg-4 col-md-4"></div>
-            <div className="col-lg-7 col-md-8 col-sm-12 button-row ad-btn-group">
+            <div className="col-lg-7 col-md-8 col-sm-12 ad-btn-group">
               {!PrivateElement(["approver"]) && (
                 <>
                   {mode === "create" && (
                     <>
                       <Button
-                        label="Submit"
+                        label={(isStatHoliday || isAfterHours) ? "Submit" : "Submit for approval"}
                         styling="bcgov-normal-blue btn"
                         onClick={() => {
                           if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
@@ -986,8 +985,8 @@ export default function AdvisoryForm({
                         hasLoader={isSubmitting}
                       />
                       <Button
-                        label="Save Draft"
-                        styling="bcgov-normal-light btn"
+                        label="Save draft"
+                        styling="bcgov-normal-white btn"
                         onClick={() => {
                           if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
                             saveAdvisory("draft");
@@ -1000,7 +999,7 @@ export default function AdvisoryForm({
                   {mode === "update" && (
                     <>
                       <Button
-                        label="Submit"
+                        label={(isStatHoliday || isAfterHours) ? "Submit" : "Submit for approval"}
                         styling="bcgov-normal-blue btn"
                         onClick={() => {
                           if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
@@ -1010,8 +1009,8 @@ export default function AdvisoryForm({
                         hasLoader={isSubmitting}
                       />
                       <Button
-                        label="Save Draft"
-                        styling="bcgov-normal-light btn"
+                        label="Save draft"
+                        styling="bcgov-normal-white btn"
                         onClick={() => {
                           if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
                             updateAdvisory("draft");
@@ -1021,21 +1020,13 @@ export default function AdvisoryForm({
                       />
                     </>
                   )}
-                  <Button
-                    label="Cancel"
-                    styling="bcgov-normal-light btn"
-                    onClick={() => {
-                      sessionStorage.clear();
-                      setToBack();
-                    }}
-                  />
                 </>
               )}
               {PrivateElement(["approver"]) && (
                 <>
                   {mode === "create" && (
                     <Button
-                      label="Create"
+                      label="Create advisory"
                       styling="bcgov-normal-blue btn"
                       onClick={() => {
                         if (validAdvisoryData(advisoryData, linksRef, true, mode)) {
@@ -1047,7 +1038,7 @@ export default function AdvisoryForm({
                   )}
                   {mode === "update" && (
                     <Button
-                      label="Update"
+                      label="Update advisory"
                       styling="bcgov-normal-blue btn"
                       onClick={() => {
                         if (validAdvisoryData(advisoryData, linksRef, true, mode)) {
@@ -1057,14 +1048,6 @@ export default function AdvisoryForm({
                       hasLoader={isSubmitting}
                     />
                   )}
-                  <Button
-                    label="Cancel"
-                    styling="bcgov-normal-light btn"
-                    onClick={() => {
-                      sessionStorage.clear();
-                      setToBack();
-                    }}
-                  />
                 </>
               )}
             </div>
@@ -1169,7 +1152,6 @@ AdvisoryForm.propTypes = {
     isSubmitting: PropTypes.bool,
     isSavingDraft: PropTypes.bool,
     updateAdvisory: PropTypes.func.isRequired,
-    setToBack: PropTypes.func.isRequired,
     formError: PropTypes.string,
     setFormError: PropTypes.func.isRequired,
   }).isRequired,
