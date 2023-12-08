@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react"
 import { Link as GatsbyLink } from "gatsby"
-import moment from "moment"
-import _ from "lodash"
 
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Accordion from "react-bootstrap/Accordion"
 import Container from "react-bootstrap/Container"
+import { Link } from "@mui/material"
 
 import HtmlContent from "./htmlContent"
 import HTMLArea from "../HTMLArea"
 import StaticIcon from "./staticIcon"
 import { ParkAccessFromAdvisories } from "../../components/park/parkAccessStatus"
 import { countsList } from "../../utils/constants"
-import { Link } from "@mui/material"
+import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
 
 export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesList }) => {
   const [isShow, setIsShow] = useState(false)
@@ -168,144 +167,37 @@ export default function ParkDates({ data }) {
 
   // -------- Operating Dates --------
 
-  const datePhrase = (openDate, closeDate, fmt, yearRoundText) => {
-    if (openDate && closeDate) {
-      try {
-        const open = moment(openDate).format(fmt)
-        const close = moment(closeDate).format(fmt)
-
-        // check if dates go from jan 1 to dec 31
-        // for puposes of checking if year-round, ignoring year
-        const openYearRound =
-          open.indexOf("January 1") === 0 && close.indexOf("December 31") === 0
-        let output = openYearRound ? yearRoundText : open + " to " + close
-
-        return output
-      } catch (err) {
-        console.error("Err formatting date " + openDate + ", " + closeDate)
-        return ""
-      }
-    } else {
-      return "" // at least one date missing
-    }
-  }
+  const thisYear = new Date().getFullYear()  
 
   // Overall operating dates for parks, to display above subareas
-  const fmt = "MMMM D, yyyy"  // date format for overall operating dates
+  let fmt = "MMMM D, yyyy"  // date format for overall operating dates
   const yr = "year-round" // lowercase for overall operating dates
-  let parkDates = datePhrase(parkOperation.openDate, parkOperation.closeDate, fmt, yr)
+  const parkOperationDates = dataCopy.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
+  let parkDates = datePhrase(parkOperationDates.gateOpenDate, parkOperationDates.gateCloseDate, fmt, yr, " to ", "")  
 
   // make sure the parkDates is valid
-  const thisYear = new Date().getFullYear()
-  if (parkDates !== yr && !parkDates.includes(thisYear)) {
+    if (parkDates !== yr && !parkDates.includes(thisYear)) {
     parkDates = "";
   }
 
   // ---- Subarea Dates -----
-
-  // get unique date ranges, excluding years in the past, 
-  //sorted chronologically by start date and formatted as date pharses
-  const processDateRanges = (arr) => {
-
-    // split date ranges spanning multiple years into 1 row for each year
-    const newArr = []
-    for (let dateRange of arr) {
-      const startYear = moment(dateRange.start).year();
-      const endYear = moment(dateRange.end).year();
-      if (startYear === endYear) {
-        newArr.push(dateRange);
-      } else if (endYear > startYear) {
-        for (let year = startYear; year <= endYear; year++) {
-          if (year === startYear) {
-            newArr.push({ start: dateRange.start, end: `${year}-12-31` })
-          } else if (year === endYear) {
-            newArr.push({ start: `${year}-01-01`, end: dateRange.end })
-          } else {
-            newArr.push({ start: `${year}-01-01`, end: `${year}-12-31` })
-          }
-        }
-      } else {
-        newArr.push(dateRange) // fallback for invalid date ranges
-      }
-    }
-
-    // get sorted unique dates, omitting past years
-    const sortedUniqueFutureDates = _.uniqWith(newArr, _.isEqual)
-      .filter(dateRange => moment(dateRange.end).year() >= new Date().getFullYear())
-      .sort((a, b) => {
-        return a.start < b.start ? -1 : 1
-      })
-
-    // group dates by year
-    let groupedByYear = []
-    const fmt = "MMMM D" // date format for subareas
-    const yr = "Year-round" // capitalized for subareas
-    let prevYear = 0;
-    let phrase = "";
-    for (let dateRange of sortedUniqueFutureDates) {
-      const year = moment(dateRange.start).year();
-      if (phrase !== "" && year !== prevYear) {
-        groupedByYear.push(phrase);
-      }
-      if (year !== prevYear) {
-        phrase = `${year}: ${datePhrase(dateRange.start, dateRange.end, fmt, yr)}`
-      } else {
-        phrase += `, ${datePhrase(dateRange.start, dateRange.end, fmt, yr)}`
-      }
-      prevYear = year;
-    }
-    if (phrase !== "") {
-      groupedByYear.push(phrase);
-    }
-    return groupedByYear
-  }
+  fmt = "MMMM D"
 
   for (let idx in subAreas) {
-    const subArea = subAreas[idx]
+    let subArea = subAreas[idx]
 
     if (subArea.isActive) {
-      const typeObj = subArea.parkSubAreaType || {}
-      const iconUrl = typeObj.iconUrl || ""
-      const typeIcon = iconUrl.split("/")[iconUrl.split("/").length - 1] // ignore path, get filename
-      subArea.typeIcon = typeIcon
+      const iconUrl = subArea.parkSubAreaType?.iconUrl || ""
+      subArea.typeIcon = iconUrl.split("/")[iconUrl.split("/").length - 1] // ignore path, get filename
 
-      const facilityType = subArea.facilityType || {}
-      subArea.facilityName = facilityType.facilityName || ""
-
-      // Subarea operating dates
-      const saDates = subArea.parkOperationSubAreaDates
-      subArea.operationDates = []
-      subArea.offSeasonDates = []
-      subArea.resDates = []
-      subArea.serviceDates = []
-
-      for (let dIdx in saDates) {
-        const dateRec = saDates[dIdx]
-        if (dateRec.isActive) {
-          subArea.operationDates.push({
-            start: dateRec.openDate,
-            end: dateRec.closeDate
-          })
-          subArea.serviceDates.push({
-            start: dateRec.serviceStartDate,
-            end: dateRec.serviceEndDate
-          })
-          subArea.resDates.push({
-            start: dateRec.reservationStartDate,
-            end: dateRec.reservationEndDate
-          })
-          subArea.offSeasonDates.push({
-            start: dateRec.offSeasonStartDate,
-            end: dateRec.offSeasonEndDate
-          })
-        }
-      }
+      subArea.facilityName = subArea.facilityType?.facilityName || ""
+      subArea = groupSubAreaDates(subArea);
 
       // get distinct date ranges sorted chronologically
-      subArea.operationDates = processDateRanges(subArea.operationDates)
-      subArea.serviceDates = processDateRanges(subArea.serviceDates)
-      subArea.resDates = processDateRanges(subArea.resDates)
-      subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates)
+      subArea.operationDates = processDateRanges(subArea.operationDates, fmt, yr, " to ")
+      subArea.serviceDates = processDateRanges(subArea.serviceDates, fmt, yr, " to ")
+      subArea.resDates = processDateRanges(subArea.resDates, fmt, yr, " to ")
+      subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates, fmt, yr, " to ")
 
       // add a placeholder if no dates are available for the current year
       if (subArea.serviceDates.length === 0

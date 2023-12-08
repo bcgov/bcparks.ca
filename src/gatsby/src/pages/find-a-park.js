@@ -178,18 +178,15 @@ export default function FindAPark({ location, data }) {
   const [qsCampingFacilities, setQsCampingFacilities, qsCampingsInitialized] = useQueryParamString("c", "")
   const [qsActivities, setQsActivities, qsActivitiesInitialized] = useQueryParamString("a", "")
   const [qsFacilities, setQsFacilities, qsFacilitiesInitialized] = useQueryParamString("f", "")
-  const [qsLocation, setQsLocation, qsLocationInitialized] = useQueryParamString(
-    "l", location.state?.qsLocation ? location.state.qsLocation : "")
+  const [qsLocation, setQsLocation, qsLocationInitialized] = useQueryParamString("l")
   const [searchText, setSearchText, searchTextInitialized] = useQueryParamString(
     "q", location.state?.searchText ? location.state.searchText : ""
   )
-  const [qsCity, setQsCity] = useState(location.state?.qsCity ? location.state.qsCity : [])
-
   const [selectedAreas, setSelectedAreas] = useState([])
   const [selectedCampingFacilities, setSelectedCampingFacilities] = useState([])
   const [selectedActivities, setSelectedActivities] = useState([])
   const [selectedFacilities, setSelectedFacilities] = useState([])
-  const [selectedCity, setSelectedCity] = useState([])
+  const [selectedCity, setSelectedCity] = useState(location.state?.selectedCity ? location.state.selectedCity : [])
   const [inputText, setInputText] = useState("")
   const [cityText, setCityText] = useState("")
 
@@ -344,6 +341,10 @@ export default function FindAPark({ location, data }) {
   }
   const handleCityNameInputChange = (text) => {
     setCityText(text)
+    // clear all city states if text field is cleared
+    if (text === "") {
+      handleClickClearCity()
+    }
   }
   const handleClickClearPark = () => {
     setCurrentPage(1)
@@ -355,7 +356,6 @@ export default function FindAPark({ location, data }) {
     setCityText("")
     setSelectedCity([])
     setQsLocation("")
-    setQsCity([])
   }
   const handleKeyDownClearPark = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -588,10 +588,12 @@ export default function FindAPark({ location, data }) {
     if (searchText) {
       setInputText(searchText)
     }
-    if (qsLocation !== "0") {
-      setSelectedCity(searchCities.filter(city =>
-        city.strapi_id.toString() === qsLocation
-      ))
+    if (qsLocation && qsLocation !== "0") {
+      const selectedCities = searchCities.filter(city => city.strapi_id.toString() === qsLocation)
+      if (!selectedCities.length) {
+        setQsLocation("")
+      }
+      setSelectedCity(selectedCities)
     }
     if (qsLocation === "0") {
       setIsCityNameLoading(true)
@@ -643,17 +645,10 @@ export default function FindAPark({ location, data }) {
       }
       setQsLocation(selectedCity[0].strapi_id.toString())
     } else {
-      setQsLocation("");
       setIsCityNameLoading(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCity])
-
-  useEffect(() => {
-    if (qsCity.length > 0) {
-      setSelectedCity(qsCity)
-    }
-  }, [qsCity])
 
   useEffect(() => {
     if (currentLocation.latitude !== 0 || currentLocation.longitude !== 0) {
@@ -679,7 +674,7 @@ export default function FindAPark({ location, data }) {
                 handleChange={handleSearchNameChange}
                 handleInputChange={handleSearchNameInputChange}
                 handleKeyDownSearch={handleKeyDownSearchPark}
-                handleClick={handleClickClearPark}
+                handleClear={handleClickClearPark}
               />
               <span className="or-span">or</span>
               <CityNameSearch
@@ -689,13 +684,13 @@ export default function FindAPark({ location, data }) {
                 showPosition={showPosition}
                 currentLocation={currentLocation}
                 optionLimit={useScreenSize().width > 767 ? 7 : 4}
-                selectedItems={qsCity.length > 0 ? qsCity : selectedCity}
+                selectedItems={selectedCity}
                 setSelectedItems={setSelectedCity}
                 cityText={cityText}
                 setCityText={setCityText}
                 handleInputChange={handleCityNameInputChange}
                 handleKeyDownSearch={handleKeyDownSearchPark}
-                handleClick={handleClickClearCity}
+                handleClear={handleClickClearCity}
                 handleSearch={handleSearch}
               />
               <Button

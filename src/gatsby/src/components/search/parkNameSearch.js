@@ -30,7 +30,7 @@ const ParkNameSearch = ({
   handleChange,
   handleInputChange,
   handleKeyDownSearch,
-  handleClick
+  handleClear
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -180,7 +180,7 @@ const ParkNameSearch = ({
             <ClearButton
               onClick={() => {
                 onClear()
-                handleClick()
+                handleClear()
                 setOptions([])
                 setIsDropdownOpen(false)
               }}

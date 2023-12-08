@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_operation_dates",
+  "info": {
+    "singularName": "park-operation-date",
+    "pluralName": "park-operation-dates",
+    "displayName": "Park-operation-date",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "operatingYear": {
+      "type": "integer",
+      "required": true
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "parkOperationDates"
+    },
+    "gateOpenDate": {
+      "type": "date"
+    },
+    "gateCloseDate": {
+      "type": "date"
+    },
+    "adminNote": {
+      "type": "text"
+    }
+  }
+}

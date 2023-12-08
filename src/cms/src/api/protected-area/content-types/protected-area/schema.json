@@ -298,8 +298,14 @@
       "target": "api::geo-shape.geo-shape",
       "mappedBy": "protectedArea"
     },
+    "parkOperationDates": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-operation-date.park-operation-date",
+      "mappedBy": "protectedArea"
+    },
     "searchTerms": {
       "type": "string"
-    }
+	}
   }
 }
