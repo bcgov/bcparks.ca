@@ -946,11 +946,11 @@ export default function Advisory({
   };
 
   const updateMediaLink = async (media, id, link) => {
-    const isProtocolExist =/(https|http?)/gi;
+    const isProtocolExist = /(https|http?)/gi;
 
     const path = media.url?.match(isProtocolExist);
-    const getUrl = path?.length ? media.url : config.REACT_APP_CMS_BASE_URL + media.url 
-    
+    const getUrl = path?.length ? media.url : config.REACT_APP_CMS_BASE_URL + media.url
+
     const linkRequest = {
       data: {
         title: link.title ? link.title : media.name,
@@ -1057,7 +1057,7 @@ export default function Advisory({
           )}
           {!isLoadingPage && (
             <>
-              <div className="container-fluid d-sm-flex align-items-center">
+              <div className="container-fluid">
                 <Button
                   label="Back"
                   styling="bcgov-normal-white btn"
@@ -1065,9 +1065,12 @@ export default function Advisory({
                     setToBack();
                   }}
                 />
-                <h2 className="mt-3 mt-sm-0 mb-0 ml-sm-3">
-                  Create a new advisory
+                <h2 className="mt-3 mb-0">
+                  {mode === "create" ? "Create a new" : "Edit"} advisory
                 </h2>
+                <small className="small-text">
+                  <span className="required">*</span> indicates a required field
+                </small>
               </div>
               <AdvisoryForm
                 mode={mode}

@@ -306,6 +306,15 @@
   text-transform: none !important;
 }
 
+.small-text {
+  font-size: 0.875rem;
+  color: var(--color-grey);
+}
+
+.required {
+  color: var(--color-red);
+}
+
 @media (max-width: 575.98px) {
   .page {
     flex-direction: column;

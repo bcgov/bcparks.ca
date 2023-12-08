@@ -1,3 +1,13 @@
+:root {
+  --color-blue: #003366;
+  --color-med-blue: #2464a4;
+  --color-light-blue: #ecf6ff;
+  --color-grey: #1a1a1a;
+  --color-light-grey: #f2f2f2;
+  --color-yellow: #fcba19;
+  --color-red: #d8292f;
+}
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
