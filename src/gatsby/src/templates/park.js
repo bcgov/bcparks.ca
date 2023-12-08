@@ -389,7 +389,8 @@ export default function ParkTemplate({ data }) {
                     parkOperation: park.parkOperation,
                     subAreas: park.parkOperationSubAreas,
                     advisories: advisories,
-                    marineProtectedArea: park.marineProtectedArea
+                    marineProtectedArea: park.marineProtectedArea,
+                    parkOperationDates: park.parkOperationDates
                   }}
                 />
               </div>
@@ -604,8 +605,6 @@ export const query = graphql`
         }
       }
       parkOperation {
-        openDate
-        closeDate
         isActive
         hasReservations
         hasBackcountryReservations
@@ -716,6 +715,11 @@ export const query = graphql`
           rank
           isCamping
         }
+      }
+      parkOperationDates {
+        operatingYear
+        gateOpenDate
+        gateCloseDate
       }
       biogeoclimaticZones {
         zone
