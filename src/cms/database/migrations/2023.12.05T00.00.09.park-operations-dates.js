@@ -10,7 +10,7 @@ async function up(knex) {
             `)
       .then(async (resp) => {
         for (const row of resp.rows) {
-          const year = row.open_date.substring(0, 4);
+          const year = (row.open_date || "").substring(0, 4);
           if (year === '2023') {
             // directly copy the open_date and close_date to 2023 dates
             await knex('park_operation_dates')
