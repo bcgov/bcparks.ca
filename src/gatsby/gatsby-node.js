@@ -77,7 +77,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     terrestrialEcosections: [STRAPI_TERRESTRIAL_ECOSECTION] @link(by: "id", from: "terrestrialEcosections___NODE")
     parkActivities: [STRAPI_PARK_ACTIVITY] @link(by: "id", from: "parkActivities___NODE")
     parkFacilities: [STRAPI_PARK_FACILITY] @link(by: "id", from: "parkFacilities___NODE")
-    seo: STRAPI_COMPONENT_PARKS_SEO
+    seo: STRAPI__COMPONENT_PARKS_SEO
   }
 
   type STRAPI_PARK_OPERATION implements Node {
@@ -94,13 +94,13 @@ exports.createSchemaCustomization = ({ actions }) => {
     boatLaunches: String
   }
 
-  type STRAPI_COMPONENT_PARKS_SEO implements Node {
+  type STRAPI__COMPONENT_PARKS_SEO implements Node {
     metaKeywords: String
     metaTitle: String
     metaDescription: String
   }
 
-  type STRAPI_COMPONENT_PARKS_FANCY_LINK implements Node @dontInfer {
+  type STRAPI__COMPONENT_PARKS_FANCY_LINK implements Node @dontInfer {
     linkText: String
     url: String
   }
@@ -140,7 +140,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     isActive: Boolean
     colour: String
     description: String
-    links: [STRAPI_COMPONENT_PARKS_FANCY_LINK] @link(by: "id", from: "links___NODE")
+    links: [STRAPI__COMPONENT_PARKS_FANCY_LINK] @link(by: "id", from: "links___NODE")
   }
   `
   createTypes(typeDefs)
