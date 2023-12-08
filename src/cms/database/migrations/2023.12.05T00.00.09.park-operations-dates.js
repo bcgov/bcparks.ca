@@ -20,7 +20,7 @@ async function up(knex) {
                 const newId = resp2[0].id;
                 await knex('park_operation_dates_protected_area_links').insert({ park_operation_date_id: newId, protected_area_id: row.protected_area_id });
               })
-            if (row.is_date_range_annual == 'true') {
+            if (row.is_date_range_annual === true) {
               // insert published 2024 dates if is_date_range_annual is true
               await knex('park_operation_dates')
                 .insert({ operating_year: 2024, gate_open_date: row.open_date.replace("2023", "2024"), gate_close_date: row.close_date.replace("2023", "2024"), published_at: new Date().toISOString() })
