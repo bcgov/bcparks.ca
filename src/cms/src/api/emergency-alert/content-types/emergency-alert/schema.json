@@ -16,6 +16,14 @@
       "default": false,
       "required": true
     },
+    "activeDate": {
+      "type": "date",
+      "required": false
+    },
+    "inactiveDate": {
+      "type": "date",
+      "required": false
+    },
     "colour": {
       "type": "enumeration",
       "enum": [

@@ -48,17 +48,7 @@ module.exports = {
           "search-area",
           "search-city",
           "management-document",
-          // "emergency-alert",
-          {
-            singularName: "emergency-alert",
-            queryParams: {
-              populate: {
-                links: {
-                  fields: "*"
-                }
-              }              
-            }
-          },
+          "emergency-alert",
           {
             singularName: "page",
             queryParams: {
