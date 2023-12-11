@@ -253,6 +253,8 @@ etl:
 
   # Enabled by default.  Overriden for aplha-dev and alpha-test
   enabled: true
+  disableBcwfsCron: true
+  disableParkNamesCron: false
 
   # Run the cron job every hour at 15 minutes past the hour
   schedule: "15 * * * *"

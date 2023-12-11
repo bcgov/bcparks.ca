@@ -1,4 +1,3 @@
-{{- if .Values.etl.enabled }}
 kind: "CronJob"
 apiVersion: "batch/v1"
 metadata:
@@ -9,6 +8,7 @@ metadata:
 spec:
   schedule: {{ .Values.etl.schedule }}
   concurrencyPolicy: "Forbid"
+  suspend: {{ not .Values.etl.enabled }}
   successfulJobsHistoryLimit: {{ .Values.etl.successfulJobsHistoryLimit }}
   failedJobsHistoryLimit: {{ .Values.etl.failedJobsHistoryLimit }}
   jobTemplate:
@@ -47,11 +47,10 @@ spec:
                       name: {{ .Release.Name }}-{{ .Values.etl.componentName }}-secret
                       key: PARK_NAMES_API_KEY
                 - name: DISABLE_BCWFS_CRON
-                  value: "false"
+                  value: {{ .Values.etl.disableBcwfsCron | quote }}
                 - name: DISABLE_PARK_NAMES_CRON
-                  value: "false"
+                  value: {{ .Values.etl.disableParkNamesCron | quote }}
           restartPolicy: "Never"
           terminationGracePeriodSeconds: 30
           activeDeadlineSeconds: 1600
           dnsPolicy: "ClusterFirst"
-{{- end }}

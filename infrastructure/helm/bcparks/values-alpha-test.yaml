@@ -57,4 +57,4 @@ public:
     maxReplicas: 1
 
 etl:
-  enabled: false
+  enabled: true

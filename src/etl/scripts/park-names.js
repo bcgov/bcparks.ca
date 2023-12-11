@@ -90,6 +90,7 @@ const loadData = async function () {
       const phoneticName = getParkName(strapiPark, PHONETIC_NAME_TYPE);
       strapiPark.strapi = {
         protectedAreaName: strapiPark.attributes.protectedAreaName,
+        searchTerms: strapiPark.attributes.searchTerms,
         legalName: legalName.name,
         legalNameId: legalName.id,
         legalNameSource: legalName.source,
@@ -158,13 +159,13 @@ const loadData = async function () {
     }
 
     // update the searchTerms
-    if (p.dataRegister && p.dataRegister?.searchTerms !== (p.strapi.searchTerms || "")) {
+    if ((p.dataRegister?.searchTerms || null) !== p.strapi.searchTerms) {
       logger.info(`Updating the searchTerms for park ${p.orcs}`);
       try {
         await axios.put(`${process.env.STRAPI_BASE_URL}/api/protected-areas/${p.id}`,
           {
             "data": {
-              "searchTerms": p.dataRegister.searchTerms || ""
+              "searchTerms": p.dataRegister?.searchTerms || null
             }
           },
           { headers: httpReqHeaders }
