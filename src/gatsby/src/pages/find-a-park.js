@@ -198,7 +198,7 @@ export default function FindAPark({ location, data }) {
   const itemsPerPage = 10
   const [currentPage, setCurrentPage, currentPageInitialized] = useQueryParamString("p", 1)
   const [isLoading, setIsLoading] = useState(true)
-  const [isCityNameLoading, setIsCityNameLoading] = useState(false)
+  const [acquiringGeolocation, setAcquiringGeolocation] = useState(false)
   const [isKeyDownLoadingMore, setIsKeyDownLoadingMore] = useState(false)
 
   const [openFilter, setOpenFilter] = useState(false)
@@ -601,10 +601,11 @@ export default function FindAPark({ location, data }) {
       setSelectedCity(selectedCities)
     }
     if (qsLocation === "0") {
-      setIsCityNameLoading(true)
+      setAcquiringGeolocation(true)
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition)
       } else {
+        setAcquiringGeolocation(false);
         console.log("Geolocation is not supported by your browser")
       }
     }
@@ -643,14 +644,14 @@ export default function FindAPark({ location, data }) {
   useEffect(() => {
     if (selectedCity.length > 0) {
       if (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) {
-        setIsCityNameLoading(false)
+        setAcquiringGeolocation(false)
       }
       if (selectedCity[0].latitude === 0 || selectedCity[0].longitude === 0) {
-        setIsCityNameLoading(true)
+        setAcquiringGeolocation(true)
       }
       setQsLocation(selectedCity[0].strapi_id.toString())
     } else {
-      setIsCityNameLoading(false)
+      setAcquiringGeolocation(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCity])
@@ -683,7 +684,7 @@ export default function FindAPark({ location, data }) {
               />
               <span className="or-span">or</span>
               <CityNameSearch
-                isCityNameLoading={hasPermission && isCityNameLoading}
+                acquiringGeolocation={hasPermission && acquiringGeolocation}
                 hasPermission={hasPermission}
                 setHasPermission={setHasPermission}
                 showPosition={showPosition}
@@ -785,8 +786,8 @@ export default function FindAPark({ location, data }) {
               <div className="search-results-list">
                 {/* park results text */}
                 <p className="result-count-text">
-                  {(isLoading || isCityNameLoading) && <>Searching...</>}
-                  {(!isLoading && !isCityNameLoading) && (
+                  {(isLoading || acquiringGeolocation) && <>Searching...</>}
+                  {(!isLoading && !acquiringGeolocation) && (
                     <>
                       <b>
                         {selectedCity.length > 0 &&
@@ -862,12 +863,12 @@ export default function FindAPark({ location, data }) {
                 </div>
               </div>
               <div className="search-results-list">
-                {(isLoading || isCityNameLoading) && (
+                {(isLoading || acquiringGeolocation) && (
                   <div className="container mt-5">
                     <LinearProgress />
                   </div>
                 )}
-                {(!isLoading && !isCityNameLoading) && (
+                {(!isLoading && !acquiringGeolocation) && (
                   <>
                     {!searchResults || searchResults.length === 0 ? (
                       <NoSearchResults
