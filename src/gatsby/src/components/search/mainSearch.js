@@ -112,20 +112,22 @@ const MainSearch = ({ hasCityNameSearch }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText])
   useEffect(() => {
-    if (selectedCity.length > 0 && !isMatched) {
+    if (selectedCity.length > 0 && !isMatched && selectedCity[0]?.strapi_id !== 0) {
       searchParkFilter()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCity, isMatched])
   useEffect(() => {
     if (selectedCity.length > 0) {
-      if (selectedCity[0].latitude === 0 || selectedCity[0].longitude === 0) {
+      if (selectedCity[0].strapi_id === 0) {
         setIsCityNameLoading(true)
-        searchParkFilter()
+        if (hasPermission) {
+          searchParkFilter()
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCity])
+  }, [selectedCity, hasPermission])
 
   return (
     <div className="parks-search-wrapper">
@@ -137,7 +139,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
           handleChange={handleSearchNameChange}
           handleInputChange={handleSearchNameInputChange}
           handleKeyDownSearch={handleKeyDownSearchPark}
-          handleClick={handleClickClearPark}
+          handleClear={handleClickClearPark}
         />
         {hasCityNameSearch && (
           <>
@@ -155,7 +157,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
               setCityText={setCityText}
               handleInputChange={handleCityNameInputChange}
               handleKeyDownSearch={handleKeyDownSearchPark}
-              handleClick={handleClickClearCity}
+              handleClear={handleClickClearCity}
               handleSearch={searchParkFilter}
             />
           </>
