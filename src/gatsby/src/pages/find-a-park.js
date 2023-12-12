@@ -453,8 +453,11 @@ export default function FindAPark({ location, data }) {
       params.queryText = searchText;
     }
     if (selectedCity.length) {
-      params.near = `${selectedCity[0].latitude},${selectedCity[0].longitude}`;
-      params.radius = 100;
+      const city = selectedCity[0];
+      if (city.latitude !== 0 || city.longitude !== 0) {
+        params.near = `${city.latitude},${city.longitude}`;
+        params.radius = 100;
+      }
     }
     if (selectedAreas.length > 0) {
       params.areas = selectedAreas.map(area => area.value)
