@@ -22,7 +22,7 @@ const HighlightText = ({ city, input }) => {
 }
 
 const CityNameSearch = ({
-  isCityNameLoading,
+  acquiringGeolocation,
   hasPermission,
   setHasPermission,
   showPosition,
@@ -226,7 +226,7 @@ const CityNameSearch = ({
         ref={typeaheadRef}
         id="city-search-typehead"
         minLength={1}
-        isLoading={isCityNameLoading}
+        isLoading={acquiringGeolocation}
         labelKey={city => `${city.cityName}`}
         filterBy={() => true}
         options={cityOptions(optionLimit)}

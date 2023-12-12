@@ -31,7 +31,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
   const [inputText, setInputText] = useState("")
   const [searchText, setSearchText] = useState("")
   const [cityText, setCityText] = useState("")
-  const [isCityNameLoading, setIsCityNameLoading] = useState(false)
+  const [acquiringGeolocation, setAcquiringGeolocation] = useState(false)
   const [selectedCity, setSelectedCity] = useState([])
   const [hasPermission, setHasPermission] = useState(false)
   const [isMatched, setIsMatched] = useState(false)
@@ -120,7 +120,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
   useEffect(() => {
     if (selectedCity.length > 0) {
       if (selectedCity[0].strapi_id === 0) {
-        setIsCityNameLoading(true)
+        setAcquiringGeolocation(true)
         if (hasPermission) {
           searchParkFilter()
         }
@@ -145,7 +145,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
           <>
             <span className="or-span">or</span>
             <CityNameSearch
-              isCityNameLoading={hasPermission && isCityNameLoading}
+              acquiringGeolocation={hasPermission && acquiringGeolocation}
               hasPermission={hasPermission}
               setHasPermission={setHasPermission}
               showPosition={showPosition}
