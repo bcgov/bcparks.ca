@@ -603,7 +603,7 @@ export default function FindAPark({ location, data }) {
       }
       setSelectedCity(selectedCities)
     }
-    if (qsLocation === "0") {
+    if (qsLocation === "0" && hasPermission) {
       setAcquiringGeolocation(true)
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition)
