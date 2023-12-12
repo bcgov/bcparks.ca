@@ -126,8 +126,8 @@ const CityNameSearch = ({
       // select and search current location only if user allows
       if (hasPermission) {
         handleSearch(selected)
-        setSelectedItems(selected)
       }
+      setSelectedItems(selected)
       getLocation()
     } else {
       handleSearch(selected)
