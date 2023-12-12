@@ -603,13 +603,17 @@ export default function FindAPark({ location, data }) {
       }
       setSelectedCity(selectedCities)
     }
-    if (qsLocation === "0" && hasPermission) {
-      setAcquiringGeolocation(true)
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition)
+    if (qsLocation === "0") {
+      if (hasPermission) {
+        setAcquiringGeolocation(true)
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition)
+        } else {
+          setAcquiringGeolocation(false);
+          console.log("Geolocation is not supported by your browser")
+        }
       } else {
-        setAcquiringGeolocation(false);
-        console.log("Geolocation is not supported by your browser")
+        setQsLocation(undefined);
       }
     }
     sessionStorage.setItem("lastSearch", window.location.search);
