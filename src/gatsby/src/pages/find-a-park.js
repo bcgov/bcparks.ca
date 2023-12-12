@@ -448,11 +448,13 @@ export default function FindAPark({ location, data }) {
 
   // params
   const params = useMemo(() => {
-    const params = {
-      queryText: searchText,
-      near: selectedCity.length > 0 ?
-        `${selectedCity[0].latitude},${selectedCity[0].longitude}` : "0,0",
-      radius: 100
+    const params = {};
+    if (searchText) {
+      params.queryText = searchText;
+    }
+    if (selectedCity.length) {
+      params.near = `${selectedCity[0].latitude},${selectedCity[0].longitude}`;
+      params.radius = 100;
     }
     if (selectedAreas.length > 0) {
       params.areas = selectedAreas.map(area => area.value)
@@ -501,9 +503,12 @@ export default function FindAPark({ location, data }) {
         params: { ...params, _start: 0, _limit: currentPage * itemsPerPage },
       })
       // second Axios request
-      const request2 = axios.get(searchApiUrl, {
-        params: { ...params, radius: 50, _start: 0, _limit: 0 },
-      })
+      let request2 = null;
+      if (selectedCity.length) {
+        request2 = axios.get(searchApiUrl, {
+          params: { ...params, radius: 50, _start: 0, _limit: 0 },
+        })
+      }
       Promise.all([request1, request2])
         .then(([resultResponse1, resultResponse2]) => {
           if (resultResponse1.status === 200) {
@@ -519,7 +524,7 @@ export default function FindAPark({ location, data }) {
             setSearchResults([])
             setTotalResults(0)
           }
-          if (resultResponse2.status === 200) {
+          if (request2 && resultResponse2.status === 200) {
             const total = parseInt(resultResponse2.data.meta.pagination.total, 10)
             setTotalResultsWithinFifty(total)
           } else {
