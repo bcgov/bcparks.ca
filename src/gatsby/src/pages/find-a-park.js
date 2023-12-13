@@ -446,7 +446,7 @@ export default function FindAPark({ location, data }) {
     selectedFacilities,
   ])
 
-  // params
+  // bulid the params object (args used for REST queries)
   const params = useMemo(() => {
     const params = {};
     if (searchText) {
@@ -498,6 +498,8 @@ export default function FindAPark({ location, data }) {
   }
 
   // useEffect
+
+  // makes REST calls and refreshes the page as the use adds and removes filters
   useEffect(() => {
     if (queryParamStateSyncComplete()) {
       setIsLoading(true)
@@ -545,11 +547,12 @@ export default function FindAPark({ location, data }) {
     qsCampingFacilities,
     qsFacilities,
     qsAreas,
+    qsLocation,
     searchTextInitialized,
-    qsLocationInitialized,
     currentPageInitialized
   ])
 
+  // apply querystring state to complex state objects
   useEffect(() => {
     function arr(list) {
       return list.split("_").map(Number);
@@ -566,14 +569,36 @@ export default function FindAPark({ location, data }) {
     if (selectedAreas.length === 0 && qsAreas.length > 0) {
       setSelectedAreas(areaItems.filter(x => arr(qsAreas).includes(x.value)));
     }
+    if (qsLocation && qsLocation !== "0") {
+      const selectedCities = searchCities.filter(city => city.strapi_id.toString() === qsLocation)
+      if (!selectedCities.length) {
+        setQsLocation(undefined)
+      }
+      setSelectedCity(selectedCities)
+    }
+    if (qsLocation === "0") {
+      setAcquiringGeolocation(true)
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, () => {
+          setAcquiringGeolocation(false)
+          setQsLocation(undefined)
+          setSelectedCity([])
+        })
+      } else {
+        setAcquiringGeolocation(false);
+        console.log("Geolocation is not supported by your browser")
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     qsActivities,
     qsCampingFacilities,
     qsFacilities,
-    qsAreas
+    qsAreas,
+    qsLocation
   ])
 
+  // save changes made to complex state objects into the querystring
   useEffect(() => {
     function qs(list) {
       return list.map(x => x.value).sort((a, b) => a - b).join("_");
@@ -597,26 +622,6 @@ export default function FindAPark({ location, data }) {
     if (searchText) {
       setInputText(searchText)
     }
-    if (qsLocation && qsLocation !== "0") {
-      const selectedCities = searchCities.filter(city => city.strapi_id.toString() === qsLocation)
-      if (!selectedCities.length) {
-        setQsLocation(undefined)
-      }
-      setSelectedCity(selectedCities)
-    }
-    if (qsLocation === "0") {
-      setAcquiringGeolocation(true)
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, () => {  
-          setAcquiringGeolocation(false)
-          setQsLocation(undefined)
-          setSelectedCity([])
-         })
-      } else {
-        setAcquiringGeolocation(false);
-        console.log("Geolocation is not supported by your browser")
-      }
-    }
     sessionStorage.setItem("lastSearch", window.location.search);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -625,7 +630,6 @@ export default function FindAPark({ location, data }) {
     selectedFacilities,
     selectedAreas,
     searchText,
-    qsLocation,
     currentPage
   ])
 
