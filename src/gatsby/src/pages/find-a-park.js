@@ -355,7 +355,7 @@ export default function FindAPark({ location, data }) {
     setCurrentPage(1)
     setCityText("")
     setSelectedCity([])
-    setQsLocation("")
+    setQsLocation(undefined)
   }
   const handleKeyDownClearPark = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -599,21 +599,17 @@ export default function FindAPark({ location, data }) {
     if (qsLocation && qsLocation !== "0") {
       const selectedCities = searchCities.filter(city => city.strapi_id.toString() === qsLocation)
       if (!selectedCities.length) {
-        setQsLocation("")
+        setQsLocation(undefined)
       }
       setSelectedCity(selectedCities)
     }
-    if (qsLocation === "0") {
-      if (hasPermission) {
-        setAcquiringGeolocation(true)
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition)
-        } else {
-          setAcquiringGeolocation(false);
-          console.log("Geolocation is not supported by your browser")
-        }
+    if (qsLocation === "0" && hasPermission) {
+      setAcquiringGeolocation(true)
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition)
       } else {
-        setQsLocation(undefined);
+        setAcquiringGeolocation(false);
+        console.log("Geolocation is not supported by your browser")
       }
     }
     sessionStorage.setItem("lastSearch", window.location.search);
