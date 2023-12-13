@@ -32,15 +32,12 @@ import {
 } from "../../../validators/AdvisoryValidator";
 
 import PrivateElement from "../../../auth/PrivateElement";
-import AdvisoryHistory from "../advisoryHistory/AdvisoryHistory";
 import LightTooltip from "../../shared/tooltip/LightTooltip";
 import AdvisoryAreaPicker from "../advisoryAreaPicker/AdvisoryAreaPicker";
 
 export default function AdvisoryForm({
   mode,
   data: {
-    advisoryNumber,
-    revisionNumber,
     ticketNumber,
     setTicketNumber,
     listingRank,
@@ -249,39 +246,6 @@ export default function AdvisoryForm({
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <form className="mt-5">
         <div className="container-fluid ad-form">
-          {advisoryNumber && (
-            <>
-              <div className="row heading">
-                Advisory number
-              </div>
-              <div className="row">
-                <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-                  Advisory number
-                </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
-                  <TextField
-                    value={advisoryNumber}
-                    className="bcgov-input ad-disabled"
-                    variant="outlined"
-                    disabled
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-                  Revision number
-                </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
-                  <TextField
-                    value={revisionNumber}
-                    className="bcgov-input ad-disabled"
-                    variant="outlined"
-                    disabled
-                  />
-                </div>
-              </div>
-            </>
-          )}
           <div className="row heading">
             Affected area
           </div>
@@ -1179,9 +1143,6 @@ export default function AdvisoryForm({
               )}
             </div>
           </div>
-          <br />
-          <br />
-          <AdvisoryHistory data={{ advisoryNumber }} />
         </div>
       </form>
     </MuiPickersUtilsProvider>
@@ -1191,8 +1152,6 @@ export default function AdvisoryForm({
 AdvisoryForm.propTypes = {
   mode: PropTypes.string.isRequired,
   data: PropTypes.shape({
-    advisoryNumber: PropTypes.number,
-    revisionNumber: PropTypes.number,
     ticketNumber: PropTypes.string,
     setTicketNumber: PropTypes.func.isRequired,
     listingRank: PropTypes.number,

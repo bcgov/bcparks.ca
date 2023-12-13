@@ -1078,8 +1078,6 @@ export default function Advisory({
               <AdvisoryForm
                 mode={mode}
                 data={{
-                  advisoryNumber,
-                  revisionNumber,
                   ticketNumber,
                   setTicketNumber,
                   listingRank,
