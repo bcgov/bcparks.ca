@@ -480,6 +480,7 @@ nav {
 }
 /* END DESKTOP */
 
+/* SITEMAP */
 .sitemap-header {
   font-size: 2.6rem;
   font-weight: 700;
@@ -497,152 +498,60 @@ nav {
   }
 }
 .mega-menu.menu-mode--sitemap {
-  margin-top: 60px;
-  margin-bottom: 40px;
-  min-height: 200px;
-
-  .menu-wrapper {
-    position: static;
-  }
-  .menu-toggle {
-    display: none;
-  }
-  .menu-header {
-    font-weight: bold;
-  }
-  .menu-order {
-    display: inline-block;
-    margin: 0px 10px;
-    width: 100px;
-    vertical-align: top;
-  }
-  .menu-title {
-    display: inline-block;
-    margin: 0px 6px;
-    width: 200px;
-    vertical-align: top;
-  }
-  .menu-url {
-    display: inline-block;
-    margin-right: 10px;
-    vertical-align: top;
-  }
-  .menu-button__arr {
-    display: none;
-  }
+  margin: 40px 0;
   .menu-level--0 {
-    display: none;
+    & > ul.menu-button-list {
+      & > li.menu-button {
+        &.menu-back,
+        &.menu-header {
+          display: none;
+        }
+        &.menu-button--unselected {
+          display: none;
+        }
+      }
+      .menu-level-0-children {
+        & > nav > ul > li.menu-header {
+          font-size: 1.5rem;
+          font-weight: bold;
+          margin-bottom: 16px;
+          a {
+            color: $colorBlue;
+          }
+        }
+      }
+    }
   }
   .menu-level--1 {
-    margin-top: 10px;
-  }
-  .menu-level--2 {
-    margin-top: 10px;
-    padding-left: 12%;
-    .menu-header {
-      margin-bottom: 20px;
-      .menu-button__title {
-        color: $colorBlueMed;
-        margin-left: 0px;
-      }
-    }
-
-    .menu-button__title {
-      color: #000;
-      margin-left: 12%;
-      margin-bottom: 6px;
-      font-size: 1.25rem;
-      color: $colorBlueMed;
-    }
-  }
-  .menu-level--3 {
-    padding-left: 60px;
-  }
-  .menu-children--selected {
-    background: #ffc;
-  }
-  .menu-children--unselected {
-    background: #fff;
-  }
-
-  .menu-button {
-    a {
-      color: $colorBlue;
-      display: inline;
-    }
-    a:hover {
-      color: $colorBlue;
-    }
-  }
-  .menu-button__title {
-    color: $colorBlue;
-    cursor: pointer;
-  }
-  .menu-button--selected {
-    background: #9f9;
-  }
-  .menu-level-0-children {
-    .menu-button a {
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
-  }
-  .menu-level-1-children.menu-children-exist--false {
     .menu-button {
-      margin-top: 10px;
-      margin-left: 12%;
-
-      a {
-        color: $colorBlueMed;
-      }
-    }
-  }
-  .menu-level--1 .menu-button {
-    display: none;
-  }
-  .menu-level--1 .menu-button.menu-header {
-    display: block;
-  }
-  .menu-level-2-children {
-    display: none;
-  }
-
-  @include media-breakpoint-down(md) {
-    /* mobile sizing */
-    .menu-back {
       display: none;
     }
-    .menu-level-0-children {
-      .menu-button a {
-        font-size: 1.3rem;
-      }
+    .menu-button.menu-header {
+      display: block;
     }
-    .menu-button__title {
-      font-size: 1.3rem;
-    }
-    .menu-level--1,
-    .menu-level--2 {
-      margin-top: 6px;
-    }
-    .menu-level-1-children.menu-children-exist--false {
-      .menu-button {
-        margin-top: 10px;
+    & > ul.menu-button-list {
+      & > li.menu-header {
+        font-size: 1.5rem;
+        font-weight: bold;
         a {
-          font-size: 1.1rem;
+          color: $colorBlue;
+        }
+      }
+      .menu-level-1-children {
+        & > nav > ul > li.menu-button {
+          &.menu-header {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin: 16px 0 16px 64px;
+          }
         }
       }
     }
-    .menu-level--2 {
-      .menu-button__title {
-        font-size: 1rem;
-      }
-      .menu-header {
-        margin-bottom: 6px;
-
-        .menu-button__title {
-          font-size: 1.1rem;
-        }
-      }
-    }
+  }
+  .menu-level-2-children {
+    padding-left: 128px;
+  }
+  svg.MuiSvgIcon-root {
+    display: none;
   }
 }

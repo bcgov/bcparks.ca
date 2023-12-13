@@ -178,7 +178,7 @@ export default function FindAPark({ location, data }) {
   const [qsCampingFacilities, setQsCampingFacilities, qsCampingsInitialized] = useQueryParamString("c", "")
   const [qsActivities, setQsActivities, qsActivitiesInitialized] = useQueryParamString("a", "")
   const [qsFacilities, setQsFacilities, qsFacilitiesInitialized] = useQueryParamString("f", "")
-  const [qsLocation, setQsLocation, qsLocationInitialized] = useQueryParamString("l")
+  const [qsLocation, setQsLocation, qsLocationInitialized] = useQueryParamString("l", "")
   const [searchText, setSearchText, searchTextInitialized] = useQueryParamString(
     "q", location.state?.searchText ? location.state.searchText : ""
   )
@@ -198,7 +198,7 @@ export default function FindAPark({ location, data }) {
   const itemsPerPage = 10
   const [currentPage, setCurrentPage, currentPageInitialized] = useQueryParamString("p", 1)
   const [isLoading, setIsLoading] = useState(true)
-  const [isCityNameLoading, setIsCityNameLoading] = useState(false)
+  const [acquiringGeolocation, setAcquiringGeolocation] = useState(false)
   const [isKeyDownLoadingMore, setIsKeyDownLoadingMore] = useState(false)
 
   const [openFilter, setOpenFilter] = useState(false)
@@ -355,7 +355,7 @@ export default function FindAPark({ location, data }) {
     setCurrentPage(1)
     setCityText("")
     setSelectedCity([])
-    setQsLocation("")
+    setQsLocation(undefined)
   }
   const handleKeyDownClearPark = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -448,11 +448,16 @@ export default function FindAPark({ location, data }) {
 
   // params
   const params = useMemo(() => {
-    const params = {
-      queryText: searchText,
-      near: selectedCity.length > 0 ?
-        `${selectedCity[0].latitude},${selectedCity[0].longitude}` : "0,0",
-      radius: 100
+    const params = {};
+    if (searchText) {
+      params.queryText = searchText;
+    }
+    if (selectedCity.length) {
+      const city = selectedCity[0];
+      if (city.latitude !== 0 || city.longitude !== 0) {
+        params.near = `${city.latitude},${city.longitude}`;
+        params.radius = 100;
+      }
     }
     if (selectedAreas.length > 0) {
       params.areas = selectedAreas.map(area => area.value)
@@ -477,6 +482,7 @@ export default function FindAPark({ location, data }) {
   ])
 
   const queryParamStateSyncComplete = () => {
+    const hasCity = selectedCity.length > 0 && (selectedCity[0].latitude !== 0 || selectedCity[0].longitude !== 0);
     return currentPageInitialized
       && searchTextInitialized
       && qsLocationInitialized
@@ -484,7 +490,7 @@ export default function FindAPark({ location, data }) {
       && qsActivitiesInitialized
       && qsAreasInitialized
       && qsFacilitiesInitialized
-      && (selectedCity.length > 0 || qsLocation === "0" || !qsLocation)
+      && (hasCity || !qsLocation)
       && Math.sign(qsCampingFacilities.length) === Math.sign(selectedCampingFacilities.length)
       && Math.sign(qsActivities.length) === Math.sign(selectedActivities.length)
       && Math.sign(qsAreas.length) === Math.sign(selectedAreas.length)
@@ -501,9 +507,12 @@ export default function FindAPark({ location, data }) {
         params: { ...params, _start: 0, _limit: currentPage * itemsPerPage },
       })
       // second Axios request
-      const request2 = axios.get(searchApiUrl, {
-        params: { ...params, radius: 50, _start: 0, _limit: 0 },
-      })
+      let request2 = null;
+      if (selectedCity.length) {
+        request2 = axios.get(searchApiUrl, {
+          params: { ...params, radius: 50, _start: 0, _limit: 0 },
+        })
+      }
       Promise.all([request1, request2])
         .then(([resultResponse1, resultResponse2]) => {
           if (resultResponse1.status === 200) {
@@ -519,7 +528,7 @@ export default function FindAPark({ location, data }) {
             setSearchResults([])
             setTotalResults(0)
           }
-          if (resultResponse2.status === 200) {
+          if (request2 && resultResponse2.status === 200) {
             const total = parseInt(resultResponse2.data.meta.pagination.total, 10)
             setTotalResultsWithinFifty(total)
           } else {
@@ -591,15 +600,20 @@ export default function FindAPark({ location, data }) {
     if (qsLocation && qsLocation !== "0") {
       const selectedCities = searchCities.filter(city => city.strapi_id.toString() === qsLocation)
       if (!selectedCities.length) {
-        setQsLocation("")
+        setQsLocation(undefined)
       }
       setSelectedCity(selectedCities)
     }
     if (qsLocation === "0") {
-      setIsCityNameLoading(true)
+      setAcquiringGeolocation(true)
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition)
+        navigator.geolocation.getCurrentPosition(showPosition, () => {  
+          setAcquiringGeolocation(false)
+          setQsLocation(undefined)
+          setSelectedCity([])
+         })
       } else {
+        setAcquiringGeolocation(false);
         console.log("Geolocation is not supported by your browser")
       }
     }
@@ -638,14 +652,14 @@ export default function FindAPark({ location, data }) {
   useEffect(() => {
     if (selectedCity.length > 0) {
       if (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) {
-        setIsCityNameLoading(false)
+        setAcquiringGeolocation(false)
       }
       if (selectedCity[0].latitude === 0 || selectedCity[0].longitude === 0) {
-        setIsCityNameLoading(true)
+        setAcquiringGeolocation(true)
       }
       setQsLocation(selectedCity[0].strapi_id.toString())
     } else {
-      setIsCityNameLoading(false)
+      setAcquiringGeolocation(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCity])
@@ -678,7 +692,7 @@ export default function FindAPark({ location, data }) {
               />
               <span className="or-span">or</span>
               <CityNameSearch
-                isCityNameLoading={hasPermission && isCityNameLoading}
+                acquiringGeolocation={hasPermission && acquiringGeolocation}
                 hasPermission={hasPermission}
                 setHasPermission={setHasPermission}
                 showPosition={showPosition}
@@ -780,8 +794,8 @@ export default function FindAPark({ location, data }) {
               <div className="search-results-list">
                 {/* park results text */}
                 <p className="result-count-text">
-                  {(isLoading || isCityNameLoading) && <>Searching...</>}
-                  {(!isLoading && !isCityNameLoading) && (
+                  {(isLoading || acquiringGeolocation) && <>Searching...</>}
+                  {(!isLoading && !acquiringGeolocation) && (
                     <>
                       <b>
                         {selectedCity.length > 0 &&
@@ -857,12 +871,12 @@ export default function FindAPark({ location, data }) {
                 </div>
               </div>
               <div className="search-results-list">
-                {(isLoading || isCityNameLoading) && (
+                {(isLoading || acquiringGeolocation) && (
                   <div className="container mt-5">
                     <LinearProgress />
                   </div>
                 )}
-                {(!isLoading && !isCityNameLoading) && (
+                {(!isLoading && !acquiringGeolocation) && (
                   <>
                     {!searchResults || searchResults.length === 0 ? (
                       <NoSearchResults

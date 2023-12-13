@@ -31,7 +31,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
   const [inputText, setInputText] = useState("")
   const [searchText, setSearchText] = useState("")
   const [cityText, setCityText] = useState("")
-  const [isCityNameLoading, setIsCityNameLoading] = useState(false)
+  const [acquiringGeolocation, setAcquiringGeolocation] = useState(false)
   const [selectedCity, setSelectedCity] = useState([])
   const [hasPermission, setHasPermission] = useState(false)
   const [isMatched, setIsMatched] = useState(false)
@@ -112,20 +112,22 @@ const MainSearch = ({ hasCityNameSearch }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText])
   useEffect(() => {
-    if (selectedCity.length > 0 && !isMatched) {
+    if (selectedCity.length > 0 && !isMatched && selectedCity[0]?.strapi_id !== 0) {
       searchParkFilter()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCity, isMatched])
   useEffect(() => {
     if (selectedCity.length > 0) {
-      if (selectedCity[0].latitude === 0 || selectedCity[0].longitude === 0) {
-        setIsCityNameLoading(true)
-        searchParkFilter()
+      if (selectedCity[0].strapi_id === 0) {
+        setAcquiringGeolocation(true)
+        if (hasPermission) {
+          searchParkFilter()
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCity])
+  }, [selectedCity, hasPermission])
 
   return (
     <div className="parks-search-wrapper">
@@ -137,13 +139,13 @@ const MainSearch = ({ hasCityNameSearch }) => {
           handleChange={handleSearchNameChange}
           handleInputChange={handleSearchNameInputChange}
           handleKeyDownSearch={handleKeyDownSearchPark}
-          handleClick={handleClickClearPark}
+          handleClear={handleClickClearPark}
         />
         {hasCityNameSearch && (
           <>
             <span className="or-span">or</span>
             <CityNameSearch
-              isCityNameLoading={hasPermission && isCityNameLoading}
+              acquiringGeolocation={hasPermission && acquiringGeolocation}
               hasPermission={hasPermission}
               setHasPermission={setHasPermission}
               showPosition={showPosition}
@@ -155,7 +157,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
               setCityText={setCityText}
               handleInputChange={handleCityNameInputChange}
               handleKeyDownSearch={handleKeyDownSearchPark}
-              handleClick={handleClickClearCity}
+              handleClear={handleClickClearCity}
               handleSearch={searchParkFilter}
             />
           </>
