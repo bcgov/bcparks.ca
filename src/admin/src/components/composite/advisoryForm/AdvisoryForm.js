@@ -1043,47 +1043,41 @@ export default function AdvisoryForm({
                   <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
                   </div>
                   <div className="col-lg-7 col-md-8 col-sm-12">
-                    <div className="field-bg-blue">
-                      <div className="ad-field ad-flex-wrap ad-flex">
-                        <div className="col-12">
-                          <div className="row">
-                            <div className="col-1">
-                              <WarningIcon className="warningIcon" />
-                            </div>
-                            <div className="col-11">
-                              <p>
-                                <b>This is an after-hours advisory.</b><br />
-                                The web team business hours are<br />
-                                Monday to Friday, 8:30AM – 4:30PM
-                              </p>
-                              <div className="d-flex">
-                                <Radio
-                                  checked={isAfterHourPublish}
-                                  onChange={() => {
-                                    setIsAfterHourPublish(true);
-                                  }}
-                                  value="Publish"
-                                  name="after-hour-submission"
-                                  inputProps={{ "aria-label": "Publish immediately" }}
-                                />
-                                <p><b>Urgent/safety-related.</b> Publish immediately.</p>
-                              </div>
-                              <div className="d-flex">
-                                <Radio
-                                  checked={!isAfterHourPublish}
-                                  onChange={() => {
-                                    setIsAfterHourPublish(false);
-                                  }}
-                                  value="Review"
-                                  name="after-hour-submission"
-                                  inputProps={{
-                                    "aria-label": "Submit for web team review",
-                                  }}
-                                />
-                                <p><b>Advisory is not urgent.</b> Submit for web team review.</p>
-                              </div>
-                            </div>
-                          </div>
+                    <div className="d-flex field-bg-blue">
+                      <WarningIcon className="warningIcon" />
+                      <div className="ml-3">
+                        <p>
+                          <b>This is an after-hours advisory</b><br />
+                          The web team's business hours are<br />
+                          Monday to Friday, 8:30AM – 4:30PM.
+                        </p>
+                        <div className="d-flex mt-3">
+                          <Radio
+                            checked={isAfterHourPublish}
+                            onChange={() => {
+                              setIsAfterHourPublish(true);
+                            }}
+                            value="Publish"
+                            name="after-hour-submission"
+                            inputProps={{ "aria-label": "Publish immediately" }}
+                            className="mr-2"
+                          />
+                          <p><b className="required">Urgent/safety-related.</b> Publish immediately.</p>
+                        </div>
+                        <div className="d-flex mt-3">
+                          <Radio
+                            checked={!isAfterHourPublish}
+                            onChange={() => {
+                              setIsAfterHourPublish(false);
+                            }}
+                            value="Review"
+                            name="after-hour-submission"
+                            inputProps={{
+                              "aria-label": "Submit for web team review",
+                            }}
+                            className="mr-2"
+                          />
+                          <p><b>Advisory is not urgent.</b> Submit for web team review.</p>
                         </div>
                       </div>
                     </div>

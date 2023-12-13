@@ -38,7 +38,7 @@
 }
 
 .warningIcon {
-  color: #e3a82b !important;
+  color: var(--color-yellow);
 }
 
 .helpIcon {
@@ -274,10 +274,8 @@
   text-align: center !important;
 }
 
-.field-bg-blue,
-.bg-blue,
-.bg-blue div {
-  background: #e3eaf8 0% 0% no-repeat padding-box !important;
+.field-bg-blue {
+  background-color: var(--color-light-blue);
 }
 
 .field-bg-grey {

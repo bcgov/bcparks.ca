@@ -72,8 +72,16 @@
   margin-top: 10px !important;
 }
 
+.ad-af-hour-box .field-bg-blue {
+  padding: 15px;
+}
+
 .ad-af-hour-box p {
   margin-bottom: 0px !important;
+}
+
+.ad-af-hour-box svg.warningIcon {
+  font-size: 44px;
 }
 
 .ad-interval-select {
