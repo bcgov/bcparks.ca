@@ -178,7 +178,7 @@ export default function FindAPark({ location, data }) {
   const [qsCampingFacilities, setQsCampingFacilities, qsCampingsInitialized] = useQueryParamString("c", "")
   const [qsActivities, setQsActivities, qsActivitiesInitialized] = useQueryParamString("a", "")
   const [qsFacilities, setQsFacilities, qsFacilitiesInitialized] = useQueryParamString("f", "")
-  const [qsLocation, setQsLocation, qsLocationInitialized] = useQueryParamString("l")
+  const [qsLocation, setQsLocation, qsLocationInitialized] = useQueryParamString("l", "")
   const [searchText, setSearchText, searchTextInitialized] = useQueryParamString(
     "q", location.state?.searchText ? location.state.searchText : ""
   )
@@ -482,6 +482,7 @@ export default function FindAPark({ location, data }) {
   ])
 
   const queryParamStateSyncComplete = () => {
+    const hasCity = selectedCity.length > 0 && (selectedCity[0].latitude !== 0 || selectedCity[0].longitude !== 0);
     return currentPageInitialized
       && searchTextInitialized
       && qsLocationInitialized
@@ -489,7 +490,7 @@ export default function FindAPark({ location, data }) {
       && qsActivitiesInitialized
       && qsAreasInitialized
       && qsFacilitiesInitialized
-      && (selectedCity.length > 0 || qsLocation === "0" || !qsLocation)
+      && (hasCity || !qsLocation)
       && Math.sign(qsCampingFacilities.length) === Math.sign(selectedCampingFacilities.length)
       && Math.sign(qsActivities.length) === Math.sign(selectedActivities.length)
       && Math.sign(qsAreas.length) === Math.sign(selectedAreas.length)
@@ -606,7 +607,11 @@ export default function FindAPark({ location, data }) {
     if (qsLocation === "0") {
       setAcquiringGeolocation(true)
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition)
+        navigator.geolocation.getCurrentPosition(showPosition, () => {  
+          setAcquiringGeolocation(false)
+          setQsLocation(undefined)
+          setSelectedCity([])
+         })
       } else {
         setAcquiringGeolocation(false);
         console.log("Geolocation is not supported by your browser")
