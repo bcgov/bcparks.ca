@@ -583,7 +583,7 @@ export default function FindAPark({ location, data }) {
           setAcquiringGeolocation(false)
           setQsLocation(undefined)
           setSelectedCity([])
-        })
+        }, { maximumAge: 600000 })
       } else {
         setAcquiringGeolocation(false);
         console.log("Geolocation is not supported by your browser")
@@ -655,13 +655,14 @@ export default function FindAPark({ location, data }) {
 
   useEffect(() => {
     if (selectedCity.length > 0) {
-      if (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) {
-        setAcquiringGeolocation(false)
-      }
       if (selectedCity[0].latitude === 0 || selectedCity[0].longitude === 0) {
         setAcquiringGeolocation(true)
+      } else {
+        setAcquiringGeolocation(false)
       }
-      setQsLocation(selectedCity[0].strapi_id.toString())
+      if (qsLocation !== selectedCity[0].strapi_id.toString()) {
+        setQsLocation(selectedCity[0].strapi_id.toString())
+      }
     } else {
       setAcquiringGeolocation(false)
     }
@@ -798,7 +799,8 @@ export default function FindAPark({ location, data }) {
               <div className="search-results-list">
                 {/* park results text */}
                 <p className="result-count-text">
-                  {(isLoading || acquiringGeolocation) && <>Searching...</>}
+                  {acquiringGeolocation && <>Getting location...</>}
+                  {(isLoading && !acquiringGeolocation) && <>Searching...</>}
                   {(!isLoading && !acquiringGeolocation) && (
                     <>
                       <b>
