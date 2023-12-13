@@ -15,7 +15,6 @@ import {
 import AdvisoryForm from "../../composite/advisoryForm/AdvisoryForm";
 import Header from "../../composite/header/Header";
 import { Loader } from "../../shared/loader/Loader";
-import { Button } from "../../shared/button/Button";
 import {
   getProtectedAreas,
   getRegions,
@@ -35,6 +34,7 @@ import {
 import { hasRole } from "../../../utils/AuthenticationUtil";
 import { labelCompare } from "../../../utils/AppUtil";
 import config from "../../../utils/config";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 export default function Advisory({
   mode,
@@ -1058,15 +1058,17 @@ export default function Advisory({
           {!isLoadingPage && (
             <>
               <div className="container-fluid">
-                <Button
-                  label="Back"
-                  styling="bcgov-normal-white btn"
+                <button
+                  type="button"
+                  className="btn btn-link btn-back"
                   onClick={() => {
                     setToBack();
                     sessionStorage.clear();
-                  }}
-                />
-                <h2 className="mt-3 mb-0">
+                  }}>
+                  <ArrowBackIcon />
+                  Back to Public Advisories
+                </button>
+                <h2 className="mt-5 mb-0">
                   {mode === "create" ? "Create a new" : "Edit"} advisory
                 </h2>
                 <small className="small-text">

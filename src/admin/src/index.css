@@ -19,10 +19,14 @@ main {
   padding-bottom: 0px !important;
   min-height: 100vh !important;
   position: relative;
-  color: #234075 !important;
+  color: var(--color-grey) !important;
 }
 
 .page-loader {
   padding-top: 20% !important;
   text-align: center !important;
+}
+
+h1, h2 {
+  color: var(--color-blue);
 }

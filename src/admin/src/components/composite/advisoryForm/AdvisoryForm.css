@@ -5,8 +5,7 @@
 
 .ad-label {
   text-align: right;
-  font-weight: bold;
-  color: #234075 !important;
+  color: var(--color-grey) !important;
   vertical-align: middle !important;
 }
 
@@ -58,6 +57,15 @@
 
 .row {
   padding: 5px 0px;
+}
+
+.row.heading {
+  font-weight: bold;
+  font-size: 1.125rem;
+  color: var(--color-grey);
+  background-color: var(--color-light-grey);
+  margin: 32px 0;
+  padding: 4px 16px !important;
 }
 
 .ad-af-hour-box {

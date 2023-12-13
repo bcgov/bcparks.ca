@@ -115,6 +115,15 @@
   outline-offset: 4px !important;
 }
 
+.btn-link.btn-back {
+  text-decoration: none !important;
+  padding: 0;
+}
+
+.btn-link.btn-boolean {
+  padding: 0;
+}
+
 .bcgov-datepicker-wrapper input {
   opacity: 1 !important;
   color: #234075 !important;
@@ -269,6 +278,11 @@
 .bg-blue,
 .bg-blue div {
   background: #e3eaf8 0% 0% no-repeat padding-box !important;
+}
+
+.field-bg-grey {
+  color: var(--color-grey);
+  background-color: var(--color-light-grey);
 }
 
 :focus {
