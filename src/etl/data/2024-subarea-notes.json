@@ -15,19 +15,19 @@
         "id": 316,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "A portion of the campground is open from Nov 1 - March 31, during which time a winter fee is in effect (no water or firewood)."
+        "offSeasonNote": "A portion of the campground is open from November 1 to March 31. During this time, a winter camping fee is in effect. Water and firewood are NOT available."
     },
     {
         "id": 315,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "A portion of the campground is open from Nov 1 - March 29, during which time a winter fee is in effect (no water or firewood)."
+        "offSeasonNote": "A portion of the campground is open from November 1 to March 29. During this time, a winter camping fee is in effect. Water and firewood are NOT available."
     },
     {
         "id": 318,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "A portion of the campground is open from Nov 1 - March 29, during which time a winter fee is in effect (no water or firewood)."
+        "offSeasonNote": "A portion of the campground is open from November 1 to March 29. During this time, a winter camping fee is in effect. Water and firewood are NOT available."
     },
     {
         "id": 337,
@@ -39,7 +39,7 @@
         "id": 338,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping is available; year-round fees are in effect."
+        "offSeasonNote": "Winter camping is available. Year-round fees are in effect."
     },
     {
         "id": 341,
@@ -49,7 +49,7 @@
     },
     {
         "id": 343,
-        "serviceNote": "Currently closed to camping",
+        "serviceNote": "Currently closed to camping.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -57,25 +57,25 @@
         "id": 366,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Day-use only - no winter camping."
+        "offSeasonNote": "Day-use only. No winter camping."
     },
     {
         "id": 377,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Flores Island is accessible year-round; there is no winter camping fee at this time."
+        "offSeasonNote": "Flores Island is accessible year-round. There is no winter camping fee at this time."
     },
     {
         "id": 380,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter fees in effect from November 1 - March 10 with no water, no firewood, and no sani-station available."
+        "offSeasonNote": "Winter fees are in effect from November 1 to March 10. During this time, water, firewood, and the sani-station are NOT available."
     },
     {
         "id": 382,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter fees in effect from November 1 - March 10 with no water, no firewood, and no sani-station available."
+        "offSeasonNote": "Winter fees are in effect from November 1 to March 10. During this time, water, firewood, and the sani-station are NOT available."
     },
     {
         "id": 398,
@@ -87,13 +87,13 @@
         "id": 411,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter/off-season fees in effect from November 1 - March 10 with no water, no firewood, and no sani-station available."
+        "offSeasonNote": "Winter camping fees are in effect from November 1 to March 10. During this time, water, firewood, and the sani-station are NOT available."
     },
     {
         "id": 415,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "A portion of the campground is open from Nov 1 - March 31, during which time a winter fee is in effect (no water or firewood)."
+        "offSeasonNote": "A portion of the campground is open from November 1 to March 31. During this time, a winter camping fee is in effect. Water and firewood are NOT available."
     },
     {
         "id": 417,
@@ -105,25 +105,25 @@
         "id": 445,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Campground is closed during the off-season."
+        "offSeasonNote": "The campground is closed during the off-season."
     },
     {
         "id": 446,
-        "serviceNote": "Permit required",
+        "serviceNote": "Permit required.",
         "reservationNote": "",
-        "offSeasonNote": "Use extreme caution in winter season due to slippery surfaces."
+        "offSeasonNote": "Use extreme caution in the winter season due to slippery surfaces."
     },
     {
         "id": 23,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Day-use only - no winter camping."
+        "offSeasonNote": "Day-use only. No winter camping."
     },
     {
         "id": 24,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Day-use only - no winter camping."
+        "offSeasonNote": "Day-use only. No winter camping."
     },
     {
         "id": 33,
@@ -135,25 +135,25 @@
         "id": 55,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter fee from Nov. 1 to March 14; no services."
+        "offSeasonNote": "A winter camping fee is in effect from November 1 to March 14. During this time, no services are available."
     },
     {
         "id": 54,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter fee from Nov. 1 to March 14; no services."
+        "offSeasonNote": "A winter camping fee is in effect from November 1 to March 14. During this time, no services are available."
     },
     {
         "id": 75,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services."
+        "offSeasonNote": "No camping fees are charged during the off-season and no services are available."
     },
     {
         "id": 76,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services."
+        "offSeasonNote": "No camping fees are charged during the off-season and no services are available."
     },
     {
         "id": 75,
@@ -165,7 +165,7 @@
         "id": 99,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping is permitted in this park; fees in effect year-round."
+        "offSeasonNote": "Winter camping is allowed in this park. Camping fees are in effect year-round."
     },
     {
         "id": 117,
@@ -177,7 +177,7 @@
         "id": 515,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Not open during off season."
+        "offSeasonNote": "Not open during off-season"
     },
     {
         "id": 120,
@@ -189,31 +189,31 @@
         "id": 119,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Operational year-round. Winter fee in effect from November 1 – March 10."
+        "offSeasonNote": "Operational year-round. A winter camping fee is in effect from November 1 to March 10."
     },
     {
         "id": 118,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Operational year-round. Winter fee in effect from November 1 – March 10."
+        "offSeasonNote": "Operational year-round. A winter camping fee is in effect from November 1 to March 10."
     },
     {
         "id": 131,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is open during the off-season. A winter fee is charged from Nov. 1 to March 14; no services."
+        "offSeasonNote": "The gate is open during the off-season. A winter camping fee is charged from November 1 to March 14. During this time, noo services are available."
     },
     {
         "id": 130,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is open during the off-season. A winter fee is charged from Nov. 1 to March 14; no services."
+        "offSeasonNote": "The gate is open during the off-season. A winter camping fee is charged from November 1 to March 14. During this time, noo services are available."
     },
     {
         "id": 129,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is open during the off-season. A winter fee is charged from Nov. 1 to March 14; no services."
+        "offSeasonNote": "The gate is open during the off-season. A winter camping fee is charged from November 1 to March 14. During this time, noo services are available."
     },
     {
         "id": 80,
@@ -231,31 +231,31 @@
         "id": 157,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Open year-round. Winter fee is in effect from from October 16 - April 14."
+        "offSeasonNote": "Open year-round. A winter camping fee is in effect from October 16 to April 14."
     },
     {
         "id": 158,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Campground gate is closed during the off-season."
+        "offSeasonNote": "The campground gate is closed during the off-season."
     },
     {
         "id": 159,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Year-round - winter fee in effect from Nov. 16 to March 31 with no services provided."
+        "offSeasonNote": "Camping is available year-round. A winter fee in effect from November 16 to March 31. During this time, no services are provided."
     },
     {
         "id": 166,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "The gates are closed during the off-season from November 1 to March 31."
+        "offSeasonNote": "The gates are closed during the off-season (November 1 to March 31)."
     },
     {
         "id": 170,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "The gates are closed during the off-season from Nov. 1 to March 31."
+        "offSeasonNote": "The gates are closed during the off-season (November 1 to March 31)."
     },
     {
         "id": 167,
@@ -267,13 +267,13 @@
         "id": 168,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "The gates are closed during the off-season from Nov. 1 to March 31."
+        "offSeasonNote": "The gates are closed during the off-season (November 1 to March 31)."
     },
     {
         "id": 169,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "The gates are closed during the off-season from Nov. 1 to March 31."
+        "offSeasonNote": "The gates are closed during the off-season (November 1 to March 31)."
     },
     {
         "id": 547,
@@ -327,7 +327,7 @@
         "id": 171,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Year-round for Buttle Lake Marine, Elk River, Forbidden Plateau, Bedwell and Baby Bedwell."
+        "offSeasonNote": "Camping is available year-round at Buttle Lake Marine, Elk River, Forbidden Plateau, Bedwell, and Baby Bedwell."
     },
     {
         "id": 189,
@@ -345,7 +345,7 @@
         "id": 259,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "After September 30, the gate remains open until the first snow fall. The campground is still accessible, but may not offer full services such as water, security etc."
+        "offSeasonNote": "After September 30, the gate remains open until the first snowfall. The campground is still accessible, but may not offer full services such as water and security."
     },
     {
         "id": 488,
@@ -399,7 +399,7 @@
         "id": 340,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate closed during the off season."
+        "offSeasonNote": "The gate is closed during the off-season."
     },
     {
         "id": 339,
@@ -457,7 +457,7 @@
     },
     {
         "id": 425,
-        "serviceNote": "Gate is locked from 10pm to 8am.",
+        "serviceNote": "The gate is locked from 10 pm to 8 am.",
         "reservationNote": "",
         "offSeasonNote": "Campground gates are closed during the off-season."
     },
@@ -465,7 +465,7 @@
         "id": 436,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season. Boat launch open until the day after Thanksgiving weekend."
+        "offSeasonNote": "The gate is closed during the off-season. The boat launch is open until the day after Thanksgiving weekend."
     },
     {
         "id": 437,
@@ -477,13 +477,13 @@
         "id": 18,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season, but there is access to the boat launch until Oct. 11."
+        "offSeasonNote": "The gate is closed during the off-season, but there is access to the boat launch until October 11."
     },
     {
         "id": 17,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season, but there is access to the boat launch until Oct. 11."
+        "offSeasonNote": "The gate is closed during the off-season, but there is access to the boat launch until October 11."
     },
     {
         "id": 192,
@@ -531,7 +531,7 @@
         "id": 200,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season."
+        "offSeasonNote": "The gate is closed during the off-season."
     },
     {
         "id": 201,
@@ -547,15 +547,15 @@
     },
     {
         "id": 232,
-        "serviceNote": "Year-round",
-        "reservationNote": "Backcountry registration available through Discover Camping or self-registration in park.",
-        "offSeasonNote": "Winter camping in permitted in designated sites. "
+        "serviceNote": "Year-round.",
+        "reservationNote": "Backcountry permit registration available through the reservation service or by self-registration in the park.",
+        "offSeasonNote": "Winter camping in allowed on designated sites. "
     },
     {
         "id": 244,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "No services provided during the off-season."
+        "offSeasonNote": "No services are provided during the off-season."
     },
     {
         "id": 264,
@@ -571,13 +571,13 @@
     },
     {
         "id": 279,
-        "serviceNote": "<p>A backcountry registration permit is required year round and can be purchased online or from the park operator during the main operational camping period (July 1 to October 2).</p>",
+        "serviceNote": "<p>A backcountry permit is required year-round. You can register for your permit online or get it from the park operator during the main camping season (July 1 to October 2).</p><p>Visit the <a href=\"https://bcparks.ca/reservations/backcountry-camping/permit-registration/\">BC Parks backcountry permit registration</a> page for more information.</p>",
         "reservationNote": "",
-        "offSeasonNote": "No services  "
+        "offSeasonNote": "No services."
     },
     {
         "id": 280,
-        "serviceNote": "<p>A backcountry registration permit is required year round and can be purchased online or from the park operator during the main operational camping period (July 1 to October 2).</p>",
+        "serviceNote": "<p>A backcountry permit is required year-round. You can register for your permit online or get it from the park operator during the main camping season (July 1 to October 2).</p><p>Visit the <a href=\"https://bcparks.ca/reservations/backcountry-camping/permit-registration/\">BC Parks backcountry permit registration</a> page for more information.</p>",
         "reservationNote": "",
         "offSeasonNote": "No services  "
     },
@@ -591,7 +591,7 @@
         "id": 297,
         "serviceNote": "See park contact for information.",
         "reservationNote": "",
-        "offSeasonNote": "During the winter season there are 5 km of set cross country ski tracks and a warming hut. Trail fees apply."
+        "offSeasonNote": "During the winter season, 5 km of cross-country ski tracks and a warming hut are available. Trail fees apply."
     },
     {
         "id": 342,
@@ -602,13 +602,13 @@
     {
         "id": 360,
         "serviceNote": "Year-round",
-        "reservationNote": "Backcountry registration available through Discover Camping or self-registration in park.",
+        "reservationNote": "Backcountry registration available through reservation service or self-registration in park.",
         "offSeasonNote": "All designated sites are available for winter camping."
     },
     {
         "id": 361,
         "serviceNote": "Year-round",
-        "reservationNote": "Reservations booked through PO, the ACC",
+        "reservationNote": "Reservations booked through PO, the ACC.",
         "offSeasonNote": ""
     },
     {
@@ -692,7 +692,7 @@
     {
         "id": 9,
         "serviceNote": "Year-round",
-        "reservationNote": "Registrations available on Discover Camping. Backcountry fees collected by the ACC in summer months.",
+        "reservationNote": "Registrations available through reservation service. Backcountry fees collected by the ACC in summer months. ",
         "offSeasonNote": ""
     },
     {
@@ -703,13 +703,13 @@
     },
     {
         "id": 11,
-        "serviceNote": "Summer only - reservable during snow-free months",
+        "serviceNote": "Summer only - reservable during snow-free months.",
         "reservationNote": "Reservations available in summer through <a href=\"https://www.alpineclubofcanada.ca/silver-spray-cabin/\">Silver Spray Cabin - Alpine Club of Canada</a>.",
         "offSeasonNote": ""
     },
     {
         "id": 12,
-        "serviceNote": "Summer only - reservable during snow-free months",
+        "serviceNote": "Summer only - reservable during snow-free months.",
         "reservationNote": "Reservations available in summer through <a href=\"https://www.alpineclubofcanada.ca/woodbury-cabin/\">Woodbury Cabin - Alpine Club of Canada</a>.",
         "offSeasonNote": ""
     },
@@ -861,7 +861,7 @@
         "id": 128,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is locked in the off-season."
+        "offSeasonNote": "Gate is closed during the off-season."
     },
     {
         "id": 176,
@@ -907,13 +907,13 @@
     },
     {
         "id": 519,
-        "serviceNote": "The gate for this area is typically left open year round, general operating dates vary from April-October.",
+        "serviceNote": "The gate for this area is typically left open year round, general operating dates vary from April to October.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
     {
         "id": 520,
-        "serviceNote": "The gate for this area is typically left open year round, general operating dates vary from April-October.",
+        "serviceNote": "The gate for this area is typically left open year round, general operating dates vary from April to October.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -925,7 +925,7 @@
     },
     {
         "id": 197,
-        "serviceNote": "weather permitting",
+        "serviceNote": "Weather permitting.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -968,7 +968,7 @@
     {
         "id": 225,
         "serviceNote": "",
-        "reservationNote": "Permit registration required May 15 - October 1",
+        "reservationNote": "Permit registration required May 15 to October 1.",
         "offSeasonNote": "Winter camping available; dependent on snow levels and Whiteswan Lake ice conditions."
     },
     {
@@ -981,7 +981,7 @@
         "id": 233,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "closed during off-season."
+        "offSeasonNote": "Gate is closed during the off-season."
     },
     {
         "id": 320,
@@ -1051,7 +1051,7 @@
     },
     {
         "id": 328,
-        "serviceNote": "Open from 7am to dusk.",
+        "serviceNote": "Open from 7 am to dusk.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -1069,9 +1069,9 @@
     },
     {
         "id": 405,
-        "serviceNote": "Campground access: road conditions permitting",
+        "serviceNote": "Campground access: road conditions permitting.",
         "reservationNote": "",
-        "offSeasonNote": "Winter fee from Oct. 16 to March 31; minimal services."
+        "offSeasonNote": "Winter fee from October 16 to March 31; minimal services."
     },
     {
         "id": 409,
@@ -1117,7 +1117,7 @@
     },
     {
         "id": 97,
-        "serviceNote": "Park gate closes daily at 8pm.",
+        "serviceNote": "Park gate closes daily at 8 pm.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -1149,35 +1149,35 @@
         "id": 110,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping fee Nov. 14 to Feb. 28; reduced services. Gate is open during the off-season."
+        "offSeasonNote": "Winter camping fee November 14 to February 28; reduced services. Gate is open during the off-season."
     },
     {
         "id": 111,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping fee Nov. 14 to Feb. 28; reduced services. Gate is open during the off-season."
+        "offSeasonNote": "Winter camping fee November 14 to February 28; reduced services. Gate is open during the off-season."
     },
     {
         "id": 109,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping fee Nov. 14 to Feb. 28; reduced services. Gate is open during the off-season."
+        "offSeasonNote": "Winter camping fee November 14 to February 28; reduced services. Gate is open during the off-season."
     },
     {
         "id": 112,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping fee Nov. 14 to Feb. 28; reduced services. Gate is open during the off-season."
+        "offSeasonNote": "Winter camping fee November 14 to February 28; reduced services. Gate is open during the off-season."
     },
     {
         "id": 108,
         "serviceNote": "",
         "reservationNote": "Get more information and make a reservation on the <a href=\"https://seatoskyparks.com/accommodation/cabins/\">Sea to Sky Parks website</a>.",
-        "offSeasonNote": "Cabins are reservable year-round. Peak season rates Dec. 17 to Jan. 7."
+        "offSeasonNote": "Cabins are reservable year-round. Peak season rates December 17 to January 7."
     },
     {
         "id": 126,
-        "serviceNote": "7:00 am to 11:00 pm",
+        "serviceNote": "7 am to 11 pm",
         "reservationNote": "",
         "offSeasonNote": "Campground is closed during the off-season."
     },
@@ -1197,13 +1197,13 @@
         "id": 137,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "October 14 - March 28; winter camping fees in effect."
+        "offSeasonNote": "Winter camping fees are in effect from October 14 to March 28."
     },
     {
         "id": 136,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Walk-in camping is not permitted if the gate is locked."
+        "offSeasonNote": "Walk-in camping is not allowed if the gate is locked."
     },
     {
         "id": 516,
@@ -1221,73 +1221,73 @@
         "id": 146,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season."
+        "offSeasonNote": "The gate is closed during the off-season."
     },
     {
         "id": 149,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season. Opening date may change due to snow pack or other weather conditions."
+        "offSeasonNote": "The gate is closed during the off-season. The opening date may change depending on snow pack or other weather conditions."
     },
     {
         "id": 151,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season. Opening date may change due to snow pack or other weather conditions."
+        "offSeasonNote": "The gate is closed during the off-season. The opening date may change depending on snow pack and other weather conditions."
     },
     {
         "id": 152,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Wilderness camping is permitted year-round, but access to designated wilderness campsites can be difficult due to inclement weather / snow coverage."
+        "offSeasonNote": "Wilderness camping is allowed year-round. Access to designated wilderness campsites can be difficult due to bad weather and snow coverage."
     },
     {
         "id": 153,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season. Opening date may change due to snow pack or other weather conditions."
+        "offSeasonNote": "The gate is closed during the off-season. The opening date may change depending on snow pack and other weather conditions."
     },
     {
         "id": 301,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Please note: Opening date may change due to snow pack or other weather conditions."
+        "offSeasonNote": "The opening date may change depending on snow pack and other weather conditions."
     },
     {
         "id": 302,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Please note: Opening date may change due to snow pack or other weather conditions."
+        "offSeasonNote": "The opening date may change depending on snow pack and other weather conditions."
     },
     {
         "id": 303,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Please note: Opening date may change due to snow pack or other weather conditions."
+        "offSeasonNote": "The opening date may change depending on snow pack and other weather conditions."
     },
     {
         "id": 304,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Please note: Opening date may change due to snow pack or other weather conditions."
+        "offSeasonNote": "The opening date may change depending on snow pack and other weather conditions."
     },
     {
         "id": 305,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Please note: Opening date may change due to snow pack or other weather conditions."
+        "offSeasonNote": "The opening date may change depending on snow pack and other weather conditions."
     },
     {
         "id": 300,
         "serviceNote": "",
-        "reservationNote": "Outside of the reservable dates campers are allowed to hike in the backcountry but no backcountry permit fees are collected.",
-        "offSeasonNote": "Please note: Opening date may change due to snow pack or other weather conditions."
+        "reservationNote": "Outside the reservable dates, campers are allowed to hike in the backcountry but no backcountry permit fees are collected.",
+        "offSeasonNote": "The opening date may change depending on snow pack and other weather conditions."
     },
     {
         "id": 241,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season."
+        "offSeasonNote": "The gate is closed during the off-season."
     },
     {
         "id": 251,
@@ -1309,7 +1309,7 @@
     },
     {
         "id": 248,
-        "serviceNote": "Now closed perminently",
+        "serviceNote": "Now closed permanently.",
         "reservationNote": "",
         "offSeasonNote": "Gates are locked during the off-season."
     },
@@ -1317,31 +1317,31 @@
         "id": 267,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season."
+        "offSeasonNote": "The gate is closed during the off-season."
     },
     {
         "id": 555,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Campground closed during the off-season."
+        "offSeasonNote": "The campground is closed during the off-season."
     },
     {
         "id": 292,
-        "serviceNote": "dependent on weather and snow level.",
+        "serviceNote": "Dependent on weather and snow level.",
         "reservationNote": "",
-        "offSeasonNote": "Opening and closing dates are estimates and are dependent on weather conditions and snow pack. Campgrounds are open as early as snow conditions permit and closed when access is not guaranteed. Usually open mid-June until mid-October. Please contact Park Operator for further information."
+        "offSeasonNote": "Opening and closing dates are estimates and are dependent on weather conditions and snow pack. Campgrounds open as early as snow conditions allow and close when access cannot be guaranteed. Opening dates are usually mid-June to mid-October. Please contact the park operator for more information."
     },
     {
         "id": 293,
-        "serviceNote": "Backcountry camping will reqire a permit year round.",
+        "serviceNote": "A permit is required for backcountry camping year-round.",
         "reservationNote": "",
-        "offSeasonNote": "Opening and closing dates are estimates and are dependent on weather conditions and snow pack. Campgrounds are open as early as snow conditions permit and closed when access is not guaranteed. Usually open mid-June until mid-October. Please contact Park Operator for further information."
+        "offSeasonNote": "Opening and closing dates are estimates and are dependent on weather conditions and snow pack. Campgrounds open as early as snow conditions allow and close when access cannot be guaranteed. Opening dates are usually mid-June to mid-October. Please contact the park operator for more information."
     },
     {
         "id": 294,
-        "serviceNote": "Weather permitting. New core area reservations in 2024 from Victoria Day weekend to mid Sept.",
+        "serviceNote": "Weather permitting, core-area reservations in 2024 are available from Victoria Day weekend to mid-September. ",
         "reservationNote": "",
-        "offSeasonNote": "Opening and closing dates are estimates and are dependent on weather conditions and snow pack. Campgrounds are open as early as snow conditions permit and closed when access is not guaranteed. Usually open mid-June until mid-October. Please contact Park Operator for further information."
+        "offSeasonNote": "Opening and closing dates are estimates and are dependent on weather conditions and snow pack. Campgrounds open as early as snow conditions allow and close when access cannot be guaranteed. Opening dates are usually mid-June to mid-October. Please contact the park operator for more information."
     },
     {
         "id": 306,
@@ -1353,13 +1353,13 @@
         "id": 311,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Accessible year-round, weather permitting. Walk-in from the gate; no fee, no services."
+        "offSeasonNote": "Accessible year-round, weather permitting. Walk in from the gate. No camping fees are charged and no services are provided."
     },
     {
         "id": 313,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Accessible year-round, weather permitting. Walk-in from the gate; no fee, no services."
+        "offSeasonNote": "Accessible year-round, weather permitting. Walk in from the gate. No camping fees are charged and no services are provided."
     },
     {
         "id": 346,
@@ -1387,9 +1387,9 @@
     },
     {
         "id": 352,
-        "serviceNote": "Site is open year-round and there is a short winter camping season.",
+        "serviceNote": "The site is open year-round and there is a short winter camping season.",
         "reservationNote": "",
-        "offSeasonNote": "Self-Contained Vehicle Camping &ndash; first come, first served winter camping. No fires permitted."
+        "offSeasonNote": "Self-contained vehicle camping and first come, first served winter camping. No fires permitted."
     },
     {
         "id": 355,
@@ -1401,7 +1401,7 @@
         "id": 537,
         "serviceNote": "",
         "reservationNote": "Reservations for Skyview Campground can be made through the <a href=\"https://online.rezexpert.com/book?business_code=400340\">Manning Park Resort Skyview booking system</a>.",
-        "offSeasonNote": "Sites 58-87 closed for winter as of Oct. 10, 2022."
+        "offSeasonNote": "Sites 58 to 87 are closed for winter."
     },
     {
         "id": 345,
@@ -1423,7 +1423,7 @@
     },
     {
         "id": 347,
-        "serviceNote": "Permit required year-round. Reservations required for Buckhorn Campground during peak season.",
+        "serviceNote": "A permit is required year-round. Reservations are required for Buckhorn Campground during the peak season.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -1448,7 +1448,7 @@
     {
         "id": 479,
         "serviceNote": "",
-        "reservationNote": "Outside of the reservable dates, the sites are first-come, first-served.",
+        "reservationNote": "Outside the reservable dates, all sites are available on a first-come, first-served basis.",
         "offSeasonNote": ""
     },
     {
@@ -1473,7 +1473,7 @@
         "id": 400,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is locked during off-season, but the park is accessible on foot."
+        "offSeasonNote": "The gate is locked during the off-season, but you can access the park by foot."
     },
     {
         "id": 480,
@@ -1491,13 +1491,13 @@
         "id": 442,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season."
+        "offSeasonNote": "The gate is closed during the off-season."
     },
     {
         "id": 444,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season."
+        "offSeasonNote": "The gate is closed during the off-season."
     },
     {
         "id": 452,
@@ -1525,13 +1525,13 @@
     },
     {
         "id": 459,
-        "serviceNote": "Weather dependent",
+        "serviceNote": "Weather dependent.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
     {
         "id": 461,
-        "serviceNote": "Weather dependent",
+        "serviceNote": "Weather dependent.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -1545,13 +1545,13 @@
         "id": 463,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "The park is open year-round. Gates are locked there is no vehicle access to park."
+        "offSeasonNote": "The park is open year-round. Gates are locked and there is no vehicle access to park."
     },
     {
         "id": 464,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "The park is open year-round. Gates are locked there is no vehicle access to park."
+        "offSeasonNote": "The park is open year-round. Gates are locked and there is no vehicle access to park."
     },
     {
         "id": 31,
@@ -1593,7 +1593,7 @@
         "id": 52,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "The park is open year-round with services from approximately June 23, or when snow melts, to Sept. 24."
+        "offSeasonNote": "The park is open year-round with services available from around June 23 (or whenever the snow melts) to September 24."
     },
     {
         "id": 560,
@@ -1605,31 +1605,31 @@
         "id": 561,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping October 10 until snowfall."
+        "offSeasonNote": "Winter camping is available from October 10 until snowfall."
     },
     {
         "id": 88,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping October 10 until snowfall."
+        "offSeasonNote": "Winter camping is available from October 10 until snowfall."
     },
     {
         "id": 89,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping October 10 until snowfall."
+        "offSeasonNote": "Winter camping is available from October 10 until snowfall."
     },
     {
         "id": 90,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Park is open during the off-season."
+        "offSeasonNote": "The park is open during the off-season."
     },
     {
         "id": 562,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season."
+        "offSeasonNote": "The gate is closed during the off-season."
     },
     {
         "id": 147,
@@ -1647,13 +1647,13 @@
         "id": 163,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season; no fee, no services."
+        "offSeasonNote": "The gate is closed during the off-season. No camping fees are collected and no services are available."
     },
     {
         "id": 164,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season; no fee, no services."
+        "offSeasonNote": "The gate is closed during the off-season. No camping fees are collected and no services are available."
     },
     {
         "id": 177,
@@ -1663,7 +1663,7 @@
     },
     {
         "id": 178,
-        "serviceNote": "The entrance gate is locked nightly between 11pm &ndash; 7am.",
+        "serviceNote": "The entrance gate locked nightly from 11 pm to 7 am.",
         "reservationNote": "",
         "offSeasonNote": "The gate is locked during the off-season."
     },
@@ -1675,69 +1675,69 @@
     },
     {
         "id": 181,
-        "serviceNote": "The entrance gate is locked nightly between 11pm &ndash; 7am.",
+        "serviceNote": "The entrance gate locked nightly from 11 pm to 7 am.",
         "reservationNote": "",
-        "offSeasonNote": "Gate is locked during the off-season."
+        "offSeasonNote": "The gate is locked during the off-season."
     },
     {
         "id": 206,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Accessible year-round, weather permitting. Gate is closed during the off-season. Walk in from the gate; winter fee in effect, no services."
+        "offSeasonNote": "Accessible year-round, weather permitting. The gate is closed during the off-season. Walk in from the gate. Winter camping fees are in effect. No services are provided."
     },
     {
         "id": 258,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "No water or services available until May 15. The gate is locked during the off-season."
+        "offSeasonNote": "No water or services are available until May 15. The gate is locked during the off-season."
     },
     {
         "id": 287,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Open/close dates may change due to weather. From Sept. 17, no fees apply and no services are provided, the park is open until the campground is inaccessible due to weather."
+        "offSeasonNote": "Opening and closing dates may change based on weather. From September 17, no fees apply and no services are provided. The park is open until the campground is inaccessible due to weather."
     },
     {
         "id": 289,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Open/close dates may change due to weather. From Sept. 17, no fees apply and no services are provided, the park is open until the campground is inaccessible due to weather."
+        "offSeasonNote": "Opening and closing dates may change based on weather. From September 17, no fees apply and no services are provided. The park is open until the campground is inaccessible due to weather."
     },
     {
         "id": 285,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Open/close dates may change due to weather. From Sept. 17, no fees apply and no services are provided, the park is open until the campground is inaccessible due to weather."
+        "offSeasonNote": "Opening and closing dates may change based on weather. From September 17, no fees apply and no services are provided. The park is open until the campground is inaccessible due to weather."
     },
     {
         "id": 288,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Open/close dates may change due to weather. From Sept. 17, no fees apply and no services are provided, the park is open until the campground is inaccessible due to weather."
+        "offSeasonNote": "Opening and closing dates may change based on weather. From September 17, no fees apply and no services are provided. The park is open until the campground is inaccessible due to weather."
     },
     {
         "id": 290,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Open/close dates may change due to weather. From Sept. 17, no fees apply and no services are provided, the park is open until the campground is inaccessible due to weather."
+        "offSeasonNote": "Opening and closing dates may change based on weather. From September 17, no fees apply and no services are provided. The park is open until the campground is inaccessible due to weather."
     },
     {
         "id": 291,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Open/close dates may change due to weather. From Sept. 17, no fees apply and no services are provided, the park is open until the campground is inaccessible due to weather."
+        "offSeasonNote": "Opening and closing dates may change based on weather. From September 17, no fees apply and no services are provided. The park is open until the campground is inaccessible due to weather."
     },
     {
         "id": 286,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Open/close dates may change due to weather. From Sept. 17, no fees apply and no services are provided, the park is open until the campground is inaccessible due to weather."
+        "offSeasonNote": "Opening and closing dates may change based on weather. From September 17, no fees apply and no services are provided. The park is open until the campground is inaccessible due to weather."
     },
     {
         "id": 319,
         "serviceNote": "Opening date is subject to snow melt.",
         "reservationNote": "",
-        "offSeasonNote": "Day-use area gate is open year-round for winter activities, but no services are provided. The area is user-maintained."
+        "offSeasonNote": "The day-use area gate is open year-round for winter activities, but no services are provided. This area is user-maintained."
     },
     {
         "id": 65,
@@ -1747,7 +1747,7 @@
     },
     {
         "id": 67,
-        "serviceNote": "Weather permitting",
+        "serviceNote": "Weather permitting.",
         "reservationNote": "",
         "offSeasonNote": "Campground gates are closed during the off-season."
     },
@@ -1771,7 +1771,7 @@
     },
     {
         "id": 66,
-        "serviceNote": "No services or fees",
+        "serviceNote": "No services or fees.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -1791,7 +1791,7 @@
         "id": 94,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season."
+        "offSeasonNote": "The gate is closed during the off-season."
     },
     {
         "id": 115,
@@ -1809,7 +1809,7 @@
         "id": 172,
         "serviceNote": "",
         "reservationNote": "Cabins are available for reservation through the <a href=\"https://www.pgbrs.org/\">PGBRS website</a>.",
-        "offSeasonNote": "The 16km forest service road is not plowed. Typical snow free road conditions are mid-June to mid-October."
+        "offSeasonNote": "The 16 km forest service road is not plowed. Typical snow free road conditions are mid-June to mid-October."
     },
     {
         "id": 173,
@@ -1825,7 +1825,7 @@
     },
     {
         "id": 198,
-        "serviceNote": "Weather permitting",
+        "serviceNote": "Weather permitting.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -1837,7 +1837,7 @@
     },
     {
         "id": 223,
-        "serviceNote": "Weather permitting",
+        "serviceNote": "Weather permitting.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -1893,7 +1893,7 @@
         "id": 22,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter fee from Oct. 1 to April 30; reduced services."
+        "offSeasonNote": "Winter fee from October 1 to April 30; reduced services."
     },
     {
         "id": 50,
@@ -1983,61 +1983,61 @@
         "id": 261,
         "serviceNote": "Throughout the year until snowfall. The main park road is not plowed during winter.",
         "reservationNote": "First come, first served, only.",
-        "offSeasonNote": "High density campground remains accessible in the fall after the main campground closes but may does not offer full services such as water, regular garbage collection, security, firewood sales or regular garbage collection. Please bring your own firewood and do not collect firewood from within The park. Be \"bear aware.\" A reminder: there is no cellular phone coverage in The park."
+        "offSeasonNote": "High density campground remains accessible in the fall after the main campground closes but may not offer full services such as water, regular garbage collection, security and firewood sales. Please bring your own firewood and do not collect firewood from within the park. Be \"bear aware.\" A reminder: there is no cellular phone coverage in the park."
     },
     {
         "id": 526,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services"
+        "offSeasonNote": "Off-season; no fees, no services."
     },
     {
         "id": 524,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services"
+        "offSeasonNote": "Off-season; no fees, no services."
     },
     {
         "id": 527,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services"
+        "offSeasonNote": "Off-season; no fees, no services."
     },
     {
         "id": 528,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services"
+        "offSeasonNote": "Off-season; no fees, no services."
     },
     {
         "id": 532,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services"
+        "offSeasonNote": "Off-season; no fees, no services."
     },
     {
         "id": 531,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services"
+        "offSeasonNote": "Off-season; no fees, no services."
     },
     {
         "id": 530,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services"
+        "offSeasonNote": "Off-season; no fees, no services."
     },
     {
         "id": 336,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services"
+        "offSeasonNote": "Off-season; no fees, no services."
     },
     {
         "id": 529,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services"
+        "offSeasonNote": "Off-season; no fees, no services."
     },
     {
         "id": 383,
@@ -2077,7 +2077,7 @@
     },
     {
         "id": 390,
-        "serviceNote": "Winter camping only",
+        "serviceNote": "Winter camping only.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -2115,13 +2115,13 @@
         "id": 440,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services"
+        "offSeasonNote": "Off-season; no fees, no services."
     },
     {
         "id": 439,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services"
+        "offSeasonNote": "Off-season; no fees, no services."
     },
     {
         "id": 443,
@@ -2133,13 +2133,13 @@
         "id": 35,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services"
+        "offSeasonNote": "Off-season; no fees, no services."
     },
     {
         "id": 533,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services"
+        "offSeasonNote": "Off-season; no fees, no services."
     },
     {
         "id": 77,
@@ -2151,7 +2151,7 @@
         "id": 91,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed to main campground area during the off-season. There are four tent-only sites open in the off-season; no fee, no services, user-maintained."
+        "offSeasonNote": "Gate is closed to main campground area during the off-season. There are four tent-only sites open in the off-season; no fees, no services, user-maintained."
     },
     {
         "id": 106,
@@ -2185,7 +2185,7 @@
     },
     {
         "id": 104,
-        "serviceNote": "Currently closed for the duration of the 2020 season",
+        "serviceNote": "",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -2199,7 +2199,7 @@
         "id": 127,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fees, no services"
+        "offSeasonNote": "Off-season; no fees, no services."
     },
     {
         "id": 132,
@@ -2209,7 +2209,7 @@
     },
     {
         "id": 140,
-        "serviceNote": "gate is closed between 10pm and 7am",
+        "serviceNote": "Gate is closed between 10 pm and 7 am.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -2217,13 +2217,13 @@
         "id": 160,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "The gate is closed during the off-season. Walk-in from the gate; no fee, no services."
+        "offSeasonNote": "The gate is closed during the off-season. Walk-in from the gate; no fees, no services."
     },
     {
         "id": 161,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "The gate is closed during the off-season. Walk-in from the gate; no fee, no services."
+        "offSeasonNote": "The gate is closed during the off-season. Walk-in from the gate; no fees, no services."
     },
     {
         "id": 472,
@@ -2233,13 +2233,13 @@
     },
     {
         "id": 121,
-        "serviceNote": "gate at the entrance of the park is locked from 11:00pm to 7:00am",
+        "serviceNote": "Gate at the entrance of the park is locked from 11 pm to 7 am.",
         "reservationNote": "",
         "offSeasonNote": "Gate is locked in the off-season."
     },
     {
         "id": 139,
-        "serviceNote": "weather permitting",
+        "serviceNote": "Weather permitting.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -2269,7 +2269,7 @@
     },
     {
         "id": 550,
-        "serviceNote": "The gate is locked daily from 10:00 pm to 7:00 am during the operating season.",
+        "serviceNote": "The gate is locked daily from 10 pm to 7 am during the operating season.",
         "reservationNote": "",
         "offSeasonNote": "The gate is closed during the off-season and walk-in is permitted."
     },
@@ -2317,7 +2317,7 @@
     },
     {
         "id": 283,
-        "serviceNote": "Fees are only collected from May 1 to Sept. 30, when backcountry services are provided.",
+        "serviceNote": "Fees are only collected from May 1 to September 30, when backcountry services are provided.",
         "reservationNote": "",
         "offSeasonNote": ""
     },
@@ -2341,9 +2341,9 @@
     },
     {
         "id": 367,
-        "serviceNote": "open year-round",
+        "serviceNote": "Open year-round.",
         "reservationNote": "",
-        "offSeasonNote": "Winter fee from Nov. 1 to March 31, 2020 with no services provided. Campers must be self-sufficient."
+        "offSeasonNote": "No services provided. Campers must be self-sufficient."
     },
     {
         "id": 441,
@@ -2403,31 +2403,31 @@
         "id": 46,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping fee from October 31 to November 30 and March 1 to March 31 with no services provided. Campers must be self-sufficient. Gates are locked outside of these dates. Year-round camping is offered at Elk Falls."
+        "offSeasonNote": "Winter camping fees are in effect from October 31 to November 30 and March 1 to March 31. During these periods, no services are provided. Campers must be self-sufficient. Gates are locked outside these dates. Year-round camping is offered at Elk Falls."
     },
     {
         "id": 47,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping fee from October 31 to November 30 and March 1 to March 31 with no services provided. Campers must be self-sufficient. Gates are locked outside of these dates. Year-round camping is offered at Elk Falls."
+        "offSeasonNote": "Winter camping fees are in effect from October 31 to November 30 and March 1 to March 31. During these periods, no services are provided. Campers must be self-sufficient. Gates are locked outside these dates. Year-round camping is offered at Elk Falls."
     },
     {
         "id": 48,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping fee from October 31 to November 30 and March 1 to March 31 with no services provided. Campers must be self-sufficient. Gates are locked outside of these dates. Year-round camping is offered at Elk Falls."
+        "offSeasonNote": "Winter camping fees are in effect from October 31 to November 30 and March 1 to March 31. During these periods, no services are provided. Campers must be self-sufficient. Gates are locked outside these dates. Year-round camping is offered at Elk Falls."
     },
     {
         "id": 49,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping fee from October 31 to November 30 and March 1 to March 31 with no services provided. Campers must be self-sufficient. Gates are locked outside of these dates. Year-round camping is offered at Elk Falls."
+        "offSeasonNote": "Winter camping fees are in effect from October 31 to November 30 and March 1 to March 31. During these periods, no services are provided. Campers must be self-sufficient. Gates are locked outside these dates. Year-round camping is offered at Elk Falls."
     },
     {
         "id": 45,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping fee from October 31 to November 30, 2020 and March 1 to March 31, 2021 with no services provided. Campers must be self-sufficient. Gates are locked outside of these dates. Year-round camping is offered at Elk Falls."
+        "offSeasonNote": "Winter camping fees are in effect from October 31 to November 30 and March 1 to March 31. During these periods, no services are provided. Campers must be self-sufficient. Gates are locked outside these dates. Year-round camping is offered at Elk Falls."
     },
     {
         "id": 44,
@@ -2439,7 +2439,7 @@
         "id": 56,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter rates in effect Oct. 1 &ndash; April 30; no services provided."
+        "offSeasonNote": "Winter camping fees are in effect from October 1 to April 30. During this period,  no services provided."
     },
     {
         "id": 559,
@@ -2451,13 +2451,13 @@
         "id": 116,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Winter camping is available; no fees, no services."
+        "offSeasonNote": "Winter camping is available. No fees are collected and no services are provided."
     },
     {
         "id": 138,
-        "serviceNote": "The gate to the campground is locked November 1st - April 1st",
+        "serviceNote": "The gate to the campground is locked from November 1 to April 1.",
         "reservationNote": "",
-        "offSeasonNote": "Off-season camping from October 1 to May 14 with no services provided; visitors must be self-sufficient."
+        "offSeasonNote": "Off-season camping is available from October 1 to May 14 with no services provided. Visitors must be self-sufficient."
     },
     {
         "id": 155,
@@ -2469,7 +2469,7 @@
         "id": 231,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "The gates are closed in the off-season and camping is not permitted."
+        "offSeasonNote": "The gates are closed in the off-season and camping is not allowed."
     },
     {
         "id": 514,
@@ -2487,73 +2487,73 @@
         "id": 307,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fee, no services"
+        "offSeasonNote": "Off-season camping is allowed. No fees are collected and no services are provided."
     },
     {
         "id": 410,
-        "serviceNote": "Closed",
+        "serviceNote": "Closed.",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the winter season."
+        "offSeasonNote": "The gate is closed during the off-season."
     },
     {
         "id": 433,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Campground gate is closed during the off-season. Margaret Falls Trail is open year-round. Gate to day use, and boat launch is closed after first snow fall or December 1st."
+        "offSeasonNote": "The campground gate is closed during the off-season. Margaret Falls Trail is open year-round. The gate to the day-use area and boat launch is closed after first snowfall or December 1."
     },
     {
         "id": 434,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Campground gate is closed during the off-season. Margaret Falls Trail is open year-round. Gate to day use, and boat launch is closed after first snow fall or December 1st."
+        "offSeasonNote": "The campground gate is closed during the off-season. Margaret Falls Trail is open year-round. The gate to the day-use area and boat launch is closed after first snowfall or December 1."
     },
     {
         "id": 435,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Campground gate is closed during the off-season. Margaret Falls Trail is open year-round. Gate to day-use, and boat launch is closed after first snow fall or December 1st."
+        "offSeasonNote": "The campground gate is closed during the off-season. Margaret Falls Trail is open year-round. The gate to the day-use area and boat launch is closed after first snowfall or December 1."
     },
     {
         "id": 447,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Park gate is closed January 1st or when inaccessible by ice and/or snow, open when roads are clear."
+        "offSeasonNote": "The park gate is closed from January 1 or when made inaccessible by ice or snow. "
     },
     {
         "id": 448,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Park gate is closed January 1st or when inaccessible by ice and/or snow, open when roads are clear."
+        "offSeasonNote": "The park gate is closed from January 1 or when made inaccessible by ice or snow. "
     },
     {
         "id": 449,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Park gate is closed January 1st or when inaccessible by ice and/or snow, open when roads are clear."
+        "offSeasonNote": "The park gate is closed from January 1 or when made inaccessible by ice or snow. "
     },
     {
         "id": 456,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "One pit toilet open at campsite #41 &ndash; user maintained. Kentucky gate is closed Oct. 1. Alleyne Campground remains open without fees or services."
+        "offSeasonNote": "One user-maintained pit toilet is open at campsite 41. Kentucky gate is closed October 1. Alleyne Campground remains open without fees or services."
     },
     {
         "id": 458,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "One pit toilet open at campsite #41 &ndash; user maintained. Kentucky gate is closed Oct. 1. Alleyne Campground remains open without fees or services."
+        "offSeasonNote": "One user-maintained pit toilet is open at campsite 41. Kentucky gate is closed October 1. Alleyne Campground remains open without fees or services."
     },
     {
         "id": 19,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Self-contained units (please choose a vacant campsite); sani-station is closed; no fee, no services. Park gate is closed when lake freezes over or roads are unsafe due to ice and/or snow. Open at ice off and roads are clear."
+        "offSeasonNote": "Self-contained units are allowed (please choose a vacant campsite). The sani-station is closed. No fees are collected and no services are provided. The park gate is closed when the lake freezes over or roads are unsafe due to ice or snow. The gate opens when the roads are clear and ice-free."
     },
     {
         "id": 38,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Access barricades in place from Oct. 1 to May 1 annually. No services or fees."
+        "offSeasonNote": "Access barricades are in place from October 1 to May 1, every year. No services are provided and no fees are colected."
     },
     {
         "id": 492,
@@ -2565,59 +2565,59 @@
         "id": 53,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Park gate is open to boat launch and Loop 1 campsites, no fees, no services until Oct 31, reopens April 1."
+        "offSeasonNote": "The park gate to the boat launch and Loop 1 campsites is open. Off-season camping, with no fees collected and no services provided, is available until Oct 31. The campground reopens on April 1."
     },
     {
         "id": 81,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Park gate is closed during the off-season.  No fee, no services."
+        "offSeasonNote": "The park gate is closed during the off-season. No fees are collected and no services are provided."
     },
     {
         "id": 83,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season; the day-use area remains open."
+        "offSeasonNote": "The gate is closed during the off-season. The day-use area remains open."
     },
     {
         "id": 95,
-        "serviceNote": "gate to the park is locked between 11:00pm and 7:00am",
+        "serviceNote": "The park gate is locked between 11 pm and 7 am.",
         "reservationNote": "",
-        "offSeasonNote": "Main gate is closed Oct. 31 or when snow impedes vehicle traffic. Self-contained units in the day-use area; no fee, no services."
+        "offSeasonNote": "The main gate is closed on October 31 or when snow prevents vehicle access. Self-contained units are allowed in the day-use area. No fees are collected and no services are provided."
     },
     {
         "id": 96,
-        "serviceNote": "gate to the park is locked between 11:00pm and 7:00am",
+        "serviceNote": "The park gate is locked between 11 pm and 7 am.",
         "reservationNote": "",
-        "offSeasonNote": "Main gate is closed Oct. 31 or when snow impedes vehicle traffic. Self-contained units in the day-use area; no fee, no services."
+        "offSeasonNote": "The main gate is closed on October 31 or when snow prevents vehicle access. Self-contained units are allowed in the day-use area. No fees are collected and no services are provided."
     },
     {
         "id": 123,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fee, no services."
+        "offSeasonNote": "During the off-season, no fees are collected and no services are provided."
     },
     {
         "id": 124,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fee, no services."
+        "offSeasonNote": "During the off-season, no fees are collected and no services are provided."
     },
     {
         "id": 125,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fee, no services."
+        "offSeasonNote": "During the off-season, no fees are collected and no services are provided."
     },
     {
         "id": 144,
         "serviceNote": "",
-        "reservationNote": "Sites 79-245 are closed for reservations from May 1-14, May 18-June 12, and Sept. 7-Oct. 12.",
-        "offSeasonNote": "The gate is closed during the off-season and the campground is closed. During the off-season, the day-use area is accessible via Ashe Road. The beach and boat launch are open year-round and are accessed via the day-use area in the off-season."
+        "reservationNote": "Sites 79-245 are closed for reservations from May 1-14, May 18-June 12, and September 7-October 12.",
+        "offSeasonNote": "The gate is closed during the off-season and the campground is closed. The day-use area is accessible via Ashe Road. The beach and boat launch are open year-round and are accessed via the day-use area."
     },
     {
         "id": 143,
-        "serviceNote": "The overflow sites are only available on a temporary basis until an individual campsite becomes available. These sites are only available for self-contained camping units and no individual amenities (Eg;  Picnic tables or campfire rings) are available.",
+        "serviceNote": "The overflow sites are only available on a temporary basis until an individual campsite becomes available. These sites are only available for self-contained camping units. No individual amenities, such as picnic tables or campfire rings, are available.",
         "reservationNote": "",
         "offSeasonNote": "The gate is closed during the off-season and the campground is closed. During the off-season, the day-use area is accessible via Ashe Road. The beach and boat launch are open year-round and are accessed via the day-use area in the off-season."
     },
@@ -2631,25 +2631,25 @@
         "id": 145,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fee, no services."
+        "offSeasonNote": "During the off-season, no fees are collected and no services are provided."
     },
     {
         "id": 154,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed in the off-season."
+        "offSeasonNote": "The gate is closed in the off-season."
     },
     {
         "id": 539,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed in the off season."
+        "offSeasonNote": "The gate is closed in the off-season."
     },
     {
         "id": 162,
-        "serviceNote": "Services may be available and fees charged later/earlier than this date, weather permitting. For confirmation, please use the contact information listed to the left.",
+        "serviceNote": "Services may be available and fees charged later or earlier than this date, weather permitting. For confirmation, please use the contact information listed on this page.",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season. Walk-in from the gate; no fee, no services."
+        "offSeasonNote": "The gate is closed during the off-season. Walk in from the gate. No fees are collected and no services are provided."
     },
     {
         "id": 494,
@@ -2665,74 +2665,74 @@
     },
     {
         "id": 199,
-        "serviceNote": "Services may be available and fees charged later/earlier than this date, weather permitting. For confirmation, please use the park contact information listed on this page.",
+        "serviceNote": "Services may be available and fees charged later or earlier than this date, weather permitting. For confirmation, please use the contact information listed on this page.",
         "reservationNote": "",
-        "offSeasonNote": "Off-season: no fee, no services. The gate will be closed from late winter until ice-free in the spring."
+        "offSeasonNote": "During the off-season, no fees are collected and no services are provided. The gate is closed from late winter until roads are ice-free in the spring."
     },
     {
         "id": 212,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season."
+        "offSeasonNote": "The gate is closed during the off-season."
     },
     {
         "id": 213,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is closed during the off-season."
+        "offSeasonNote": "The gate is closed during the off-season."
     },
     {
         "id": 215,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Park is open during the off-season; no fee, no services."
+        "offSeasonNote": "The park is open during the off-season. No fees are collected and no services are provided."
     },
     {
         "id": 219,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Gate is open during the off-season; no fee, no services."
+        "offSeasonNote": "The gate is open during the off-season. No fees are collected and no services are provided."
     },
     {
         "id": 217,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Park is open during the off-season; no fee, no services."
+        "offSeasonNote": "The park is open during the off-season. No fees are collected and no services are provided."
     },
     {
         "id": 210,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Access may be open earlier depending on weather conditions. Off season: no fee, no services."
+        "offSeasonNote": "Access may be open earlier depending on weather conditions. During the off-season, no fees are collected and no services are provided."
     },
     {
         "id": 211,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Access may be open earlier depending on weather conditions. Off season: no fee, no services."
+        "offSeasonNote": "Access may be open earlier depending on weather conditions. During the off-season, no fees are collected and no services are provided."
     },
     {
         "id": 214,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Park is open during the off-season; no fee, no services."
+        "offSeasonNote": "The park is open during the off-season. No fees are collected and no services are provided."
     },
     {
         "id": 218,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Access may be open earlier depending on weather conditions. Off season: no fee, no services."
+        "offSeasonNote": "Access may be open earlier depending on weather conditions. During the off-season, no fees are collected and no services are provided."
     },
     {
         "id": 220,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": "Park is open during the off-season; no fee, no services."
+        "offSeasonNote": "The park is open during the off-season. No fees are collected and no services are provided."
     },
     {
         "id": 497,
         "serviceNote": "",
         "reservationNote": "",
-        "offSeasonNote": ""
+        "offSeasonNote": "The park is open during the off-season. No fees are collected and no services are provided."
     }
 ]
