@@ -39,27 +39,24 @@ function ParkAccessFromAdvisories(advisories) {
   let parkStatusColor = "blue"
 
   for (let advisory of advisories) {
-    if (advisory.accessStatus?.precedence) {
-      // advisory is coming from parks details page
+    if (advisory.accessStatus) {
+      // data is coming from /api/public-advisories/items and already includes the accessStatus
       accessStatuses.push({
         precedence: advisory.accessStatus.precedence,
         color: advisory.accessStatus.color,
         text: advisory.accessStatus.groupLabel,
       })
-    }
-    if (advisory.accessStatusId) {
-      // advisory is coming from find-a-park
-      // get accessStatus based on accessStatusId
-      let thisStatus = accessStatusList.find(status => {
+    } else {
+      let accessStatus = accessStatusList.find(status => {
         return status.strapi_id === advisory.accessStatusId
       })
-      if (!thisStatus) {
+      if (!accessStatus) {
         break
       } else {
         accessStatuses.push({
-          precedence: thisStatus.precedence,
-          color: thisStatus.color,
-          text: thisStatus.groupLabel,
+          precedence: accessStatus.precedence,
+          color: accessStatus.color,
+          text: accessStatus.groupLabel,
         })
       }
     }

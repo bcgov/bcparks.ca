@@ -9,6 +9,11 @@ module.exports = {
       method: "GET",
       path: "/public-advisories/items",
       handler: "public-advisory.items",
+    },
+    {
+      method: "GET",
+      path: "/public-advisories/access-statuses",
+      handler: "public-advisory.getAccessStatusesByProtectedArea",
     }
   ],
 };

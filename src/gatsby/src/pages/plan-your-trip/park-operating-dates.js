@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import axios from "axios"
 import { graphql, useStaticQuery, Link as GatsbyLink } from "gatsby"
 import { Breadcrumbs, Link } from "@mui/material"
 import BlockIcon from '@mui/icons-material/Block'
@@ -8,10 +9,11 @@ import Header from "../../components/header"
 import Footer from "../../components/footer"
 import Seo from "../../components/seo"
 import ScrollToTop from "../../components/scrollToTop"
+import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
 import "../../styles/listPage.scss"
 
-const ParkLink = ({ park }) => {
+const ParkLink = ({ park, advisories }) => {
   const thisYear = new Date().getFullYear()
   const parkOperationDates = park.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
   const subAreas = park.parkOperationSubAreas.filter(a => a.isActive) || []
@@ -53,12 +55,15 @@ const ParkLink = ({ park }) => {
 
   return (
     <div className="park-list">
-      <h2>
-        <GatsbyLink to={`/${park.slug}`}>
-          {park.protectedAreaName}
-          <ExpandCircleDownIcon />
-        </GatsbyLink>
-      </h2>
+      <div className="d-md-flex justify-content-between">
+        <h2>
+          <GatsbyLink to={`/${park.slug}`}>
+            {park.protectedAreaName}
+            <ExpandCircleDownIcon />
+          </GatsbyLink>
+        </h2>
+        <ParkAccessStatus advisories={advisories} slug={park.slug} />
+      </div>
       {parkDates &&
         <p>
           The {park.type.toLowerCase()} {park.marineProtectedArea !== 'Y' && "gate"} is open {parkDates}.
@@ -209,6 +214,7 @@ const ParkOperatingDatesPage = () => {
         }
       ) {
         nodes {
+          strapi_id
           slug
           protectedAreaName
           marineProtectedArea
@@ -263,13 +269,31 @@ const ParkOperatingDatesPage = () => {
           }
         }
       }
+      site {
+        siteMetadata {
+          apiURL
+        }
+      }
     }
   `)
 
+  const apiBaseUrl = `${queryData.site.siteMetadata.apiURL}/api`
   const menuContent = queryData?.allStrapiMenu?.nodes || []
-  const parks = queryData?.allStrapiProtectedArea?.nodes || []
 
   const [currentFilter, setCurrentFilter] = useState("All")
+  const [parks, setParks] = useState([])
+  const [accessStatuses, setAccessStatuses] = useState({})
+
+  useEffect(() => {
+    setParks(queryData?.allStrapiProtectedArea?.nodes || [])
+    axios.get(`${apiBaseUrl}/public-advisories/access-statuses`)
+      .then(response => {
+        if (response.status === 200) {
+          setAccessStatuses(response.data);
+        }
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleClick = (e) => {
     setCurrentFilter(e.target.value)
@@ -366,14 +390,14 @@ const ParkOperatingDatesPage = () => {
               filters.map((filter, index) => (
                 <div key={index} className="list">
                   {filtering(filter).map((park, index) => (
-                    <ParkLink park={park} key={index} />
+                    <ParkLink park={park} advisories={accessStatuses[park.strapi_id] || []} key={index} />
                   ))}
                 </div>
               ))
             ) : (
               <div className="list">
                 {filtering(currentFilter).map((park, index) => (
-                  <ParkLink park={park} key={index} />
+                  <ParkLink park={park} advisories={accessStatuses[park.strapi_id] || []} key={index} />
                 ))}
               </div>
             )}
