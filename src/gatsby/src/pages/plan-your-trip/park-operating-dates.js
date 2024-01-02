@@ -59,9 +59,11 @@ const ParkLink = ({ park }) => {
           <ExpandCircleDownIcon />
         </GatsbyLink>
       </h2>
-      <p>
-        The {park.type.toLowerCase()} {park.marineProtectedArea !== 'Y' && "gate"} is open {parkDates}.
-      </p>
+      {parkDates &&
+        <p>
+          The {park.type.toLowerCase()} {park.marineProtectedArea !== 'Y' && "gate"} is open {parkDates}.
+        </p>
+      }
       {/* display table list if the screen size is bigger than 768 px */}
       <table className="table">
         <thead className="thead-light">
