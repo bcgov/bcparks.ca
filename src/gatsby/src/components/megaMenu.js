@@ -14,6 +14,7 @@ const MegaMenu = ({ content, menuMode }) => {
   const [selections, setSelections] = useState({}) // the selected item at each level, i.e. selection breadcrumbs
   const [isMenuOpen, setIsMenuOpen] = useState(false) // currently only used for mobile - menu closed at first
   const [hasClickedTwice, setHasClickedTwice] = useState(false)
+  const ROOT_MENU_URL = '/'
   let sectionImages = {}
   let menuCollection
   let menuElements
@@ -28,7 +29,7 @@ const MegaMenu = ({ content, menuMode }) => {
     // i.e. the breadcrumbs back to home
     // this allows us to highlight the selected parents and
     // keep the correct menus open
-    if (item.url === "/") {
+    if (item.url === ROOT_MENU_URL) {
       // have reached home,
       // add home at level 0 and return, ending he recursion
       obj[0] = item
@@ -167,7 +168,7 @@ const MegaMenu = ({ content, menuMode }) => {
     // create sorted + structured menuTree from menuContent
 
     // pick the root of the tree
-    let t = menuContent.filter(item => item.url === "/")
+    let t = menuContent.filter(item => item.url === ROOT_MENU_URL)
 
     // sort all levels of the menu
     t = sortedTree(t, 0) // pass root at level 0
@@ -199,7 +200,7 @@ const MegaMenu = ({ content, menuMode }) => {
   }, [menuElements])
 
   // get images for top level sections
-  let sections = content.filter(item => item.strapi_parent?.url === "/")
+  let sections = content.filter(item => item.strapi_parent?.url === ROOT_MENU_URL)
   sections.forEach(item => {
     sectionImages[item.order] = item.imgUrl || ""
   })
@@ -237,11 +238,11 @@ const MegaMenu = ({ content, menuMode }) => {
               </li>
               <li className="menu-button menu-header">
                 {item.url.toLowerCase().startsWith('http') ?
-                  <a className="menu-button__title" href={item.url || "/"} role="menuitem">
+                  <a className="menu-button__title" href={item.url || ROOT_MENU_URL} role="menuitem">
                     {item.title}
                     <ExpandCircleDownIcon className="menu-button__title--icon" />
                   </a> :
-                  <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
+                  <Link className="menu-button__title" to={item.url || ROOT_MENU_URL} role="menuitem">
                     {item.title}
                     <ExpandCircleDownIcon className="menu-button__title--icon" />
                   </Link>
@@ -295,10 +296,10 @@ const MegaMenu = ({ content, menuMode }) => {
             <ul role="presentation">
               <li className="menu-button menu-header">
                 {item.url.toLowerCase().startsWith('http') ?
-                  <a className="menu-button__title" href={item.url || "/"} role="menuitem">
+                  <a className="menu-button__title" href={item.url || ROOT_MENU_URL} role="menuitem">
                     {item.title}
                   </a> :
-                  <Link className="menu-button__title" to={item.url || "/"} role="menuitem">
+                  <Link className="menu-button__title" to={item.url || ROOT_MENU_URL} role="menuitem">
                     {item.title}
                   </Link>
                 }
