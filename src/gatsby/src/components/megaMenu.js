@@ -28,7 +28,7 @@ const MegaMenu = ({ content, menuMode }) => {
     // i.e. the breadcrumbs back to home
     // this allows us to highlight the selected parents and
     // keep the correct menus open
-    if (item.strapi_id === 1) {
+    if (item.url === "/") {
       // have reached home,
       // add home at level 0 and return, ending he recursion
       obj[0] = item
@@ -167,7 +167,7 @@ const MegaMenu = ({ content, menuMode }) => {
     // create sorted + structured menuTree from menuContent
 
     // pick the root of the tree
-    let t = menuContent.filter(item => item.strapi_id === 1)
+    let t = menuContent.filter(item => item.url === "/")
 
     // sort all levels of the menu
     t = sortedTree(t, 0) // pass root at level 0
@@ -199,7 +199,7 @@ const MegaMenu = ({ content, menuMode }) => {
   }, [menuElements])
 
   // get images for top level sections
-  let sections = content.filter(item => item.strapi_parent?.id === 1)
+  let sections = content.filter(item => item.strapi_parent?.url === "/")
   sections.forEach(item => {
     sectionImages[item.order] = item.imgUrl || ""
   })
