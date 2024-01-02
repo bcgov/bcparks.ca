@@ -129,6 +129,29 @@ module.exports = createCoreController(
                 data: results || [],
                 meta: { pagination: pagination }
             };
+        },
+        async getAccessStatusesByProtectedArea(ctx) {
+            const entries = await strapi.entityService.findMany('api::public-advisory.public-advisory', {
+                fields: ["id"],
+                populate: {
+                    accessStatus: { fields: ["id"] },
+                    protectedAreas: { fields: ["id"] }
+                },
+                publicationState: "live"
+            });
+            const results = {};
+            for (const advisory of entries) {
+                for (const pa of advisory.protectedAreas) {
+                    if (!results[pa.id]) {
+                        results[pa.id] = [{ accessStatusId: advisory.accessStatus.id }]
+                    } else {
+                        if (!results[pa.id].find(x => x.accessStatusId === advisory.accessStatus.id)) {
+                            results[pa.id].push({ accessStatusId: advisory.accessStatus.id })
+                        }
+                    }
+                }
+            }
+            return results;
         }
     })
 );
