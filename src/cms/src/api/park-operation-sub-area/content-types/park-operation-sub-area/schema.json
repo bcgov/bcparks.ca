@@ -49,6 +49,9 @@
     "isOpen": {
       "type": "boolean"
     },
+    "offSeasonUse": {
+      "type": "boolean"
+    },
     "hasReservations": {
       "type": "boolean"
     },
