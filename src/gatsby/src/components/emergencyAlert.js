@@ -35,8 +35,11 @@ const EmergencyAlert = () => {
     characterCount = descriptionCount + linkTextCount
   }
   const [show, setShow] = useState(() => {
-    const storedAlertValue = sessionStorage.getItem("alert")
-    return storedAlertValue !== "false"
+    if (typeof window !== "undefined" && window.sessionStorage) {
+      const storedAlertValue = sessionStorage.getItem("alert")
+      return storedAlertValue !== "false"
+    }
+    return true
   })
 
   const handleClick = () => {
