@@ -34,10 +34,14 @@ const EmergencyAlert = () => {
     )
     characterCount = descriptionCount + linkTextCount
   }
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState(() => {
+    const storedAlertValue = sessionStorage.getItem("alert")
+    return storedAlertValue !== "false"
+  })
 
   const handleClick = () => {
     setShow(false)
+    sessionStorage.setItem("alert", "false")
   }
   const handleKeyDown = (e) => {
     if (e.key === "Enter" || e.key === " ") {

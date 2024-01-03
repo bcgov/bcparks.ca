@@ -30,12 +30,13 @@
     }
 
     .icon {
-      margin-right: 16px;
+      margin-right: 24px;
     }
 
     .button {
       height: 16px;
-      margin-left: 16px;
+      cursor: pointer;
+      margin-left: 24px;
 
       &:focus-visible {
         outline: -webkit-focus-ring-color auto 1px;
