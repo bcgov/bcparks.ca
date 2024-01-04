@@ -34,13 +34,7 @@ const EmergencyAlert = () => {
     )
     characterCount = descriptionCount + linkTextCount
   }
-  const [show, setShow] = useState(() => {
-    if (typeof window !== "undefined" && window.sessionStorage) {
-      const storedAlertValue = sessionStorage.getItem("alert")
-      return storedAlertValue !== "false"
-    }
-    return true
-  })
+  const [show, setShow] = useState(false)
 
   const handleClick = () => {
     setShow(false)
@@ -52,13 +46,12 @@ const EmergencyAlert = () => {
     }
   }
 
-  // prevent the alert flash for the first mount
   useEffect(() => {
     if (typeof window !== "undefined" && window.sessionStorage) {
       const storedAlertValue = sessionStorage.getItem("alert")
-      if (storedAlertValue !== null) {
-        setShow(storedAlertValue !== "false")
-      }
+      setShow(storedAlertValue !== "false")
+    } else {
+      setShow(true)
     }
   }, [])
 
