@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleExclamation, faXmark } from "@fortawesome/free-solid-svg-icons"
@@ -51,6 +51,16 @@ const EmergencyAlert = () => {
       handleClick()
     }
   }
+
+  // prevent the alert flash for the first mount
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.sessionStorage) {
+      const storedAlertValue = sessionStorage.getItem("alert")
+      if (storedAlertValue !== null) {
+        setShow(storedAlertValue !== "false")
+      }
+    }
+  }, [])
 
   return (
     alerts.length > 0 && show && (
