@@ -40,7 +40,7 @@ export default function Advisory({
   mode,
   page: { setError, cmsData, setCmsData },
 }) {
-  const [advisoryNumber, setAdvisoryNumber] = useState();
+  // const [advisoryNumber, setAdvisoryNumber] = useState();
   const [revisionNumber, setRevisionNumber] = useState();
   const [standardMessages, setStandardMessages] = useState([]);
   const [selectedStandardMessages, setSelectedStandardMessages] = useState([]);
@@ -147,7 +147,7 @@ export default function Advisory({
           .then((res) => {
             linksRef.current = [];
             const advisoryData = res.data.data;
-            setAdvisoryNumber(advisoryData.advisoryNumber);
+            // setAdvisoryNumber(advisoryData.advisoryNumber);
             setRevisionNumber(advisoryData.revisionNumber);
             setHeadline(advisoryData.title || "");
             setDescription(advisoryData.description || "");

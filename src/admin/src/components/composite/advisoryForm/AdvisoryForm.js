@@ -132,7 +132,7 @@ export default function AdvisoryForm({
   const [eventTypeError, setEventTypeError] = useState("");
   const [urgencyError, setUrgencyError] = useState("");
   const [advisoryStatusError, setAdvisoryStatusError] = useState("");
-  const [ticketNumberError, setTicketNumberError] = useState("");
+  // const [ticketNumberError, setTicketNumberError] = useState("");
   const [headlineError, setHeadlineError] = useState("");
   const [advisoryDateError, setAdvisoryDateError] = useState("");
   const [startDateError, setStartDateError] = useState("");
@@ -144,7 +144,7 @@ export default function AdvisoryForm({
 
   const advisoryData = {
     listingRank: { value: listingRank, setError: setListingRankError, text: "listing rank" },
-    ticketNumber: { value: ticketNumber, setError: setTicketNumberError },
+    // ticketNumber: { value: ticketNumber, setError: setTicketNumberError },
     headline: { value: headline, setError: setHeadlineError, text: "headline" },
     eventType: {
       value: eventType,
@@ -215,11 +215,11 @@ export default function AdvisoryForm({
     placeholder: "Advisory Submitted by",
   };
 
-  const ticketNumberInput = {
-    id: "ticketNumber",
-    required: false,
-    placeholder: "Discover Camping Ticket Number",
-  };
+  // const ticketNumberInput = {
+  //   id: "ticketNumber",
+  //   required: false,
+  //   placeholder: "Discover Camping Ticket Number",
+  // };
 
   const listingRankInput = {
     id: "listing",
