@@ -206,7 +206,7 @@ const ParkOperatingDatesPage = () => {
   const queryData = useStaticQuery(graphql`
     query {
       allStrapiProtectedArea(
-        sort: {protectedAreaName: ASC}
+        sort: {slug: ASC}
         filter: {
           isDisplayed: {eq: true},
           parkOperation: {isActive: {eq: true}},
@@ -279,13 +279,14 @@ const ParkOperatingDatesPage = () => {
 
   const apiBaseUrl = `${queryData.site.siteMetadata.apiURL}/api`
   const menuContent = queryData?.allStrapiMenu?.nodes || []
+  const protectedAreas = queryData?.allStrapiProtectedArea?.nodes || []
 
   const [currentFilter, setCurrentFilter] = useState("All")
   const [parks, setParks] = useState([])
   const [accessStatuses, setAccessStatuses] = useState({})
 
   useEffect(() => {
-    setParks(queryData?.allStrapiProtectedArea?.nodes || [])
+    setParks(protectedAreas)
     axios.get(`${apiBaseUrl}/public-advisories/access-statuses`)
       .then(response => {
         if (response.status === 200) {
@@ -299,7 +300,7 @@ const ParkOperatingDatesPage = () => {
     setCurrentFilter(e.target.value)
   }
   const filtering = (char) =>
-    parks.filter(park => park.protectedAreaName.charAt(0).toUpperCase() === char)
+    parks.filter(park => park.slug.charAt(0).toUpperCase() === char)
 
   const filters = [
     "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
