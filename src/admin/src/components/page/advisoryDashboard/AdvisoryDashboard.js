@@ -301,7 +301,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
           switch (rowData.urgency?.urgency?.toLowerCase()) {
             case "low":
               return {
-                borderLeft: "8px solid #06f542",
+                borderLeft: "8px solid #2454a4",
               };
             case "medium":
               return {

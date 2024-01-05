@@ -5,8 +5,7 @@
 
 .ad-label {
   text-align: right;
-  font-weight: bold;
-  color: #234075 !important;
+  color: var(--color-grey) !important;
   vertical-align: middle !important;
 }
 
@@ -60,12 +59,29 @@
   padding: 5px 0px;
 }
 
+.row.heading {
+  font-weight: bold;
+  font-size: 1.125rem;
+  color: var(--color-grey);
+  background-color: var(--color-light-grey);
+  margin: 32px 0;
+  padding: 4px 16px !important;
+}
+
 .ad-af-hour-box {
   margin-top: 10px !important;
 }
 
+.ad-af-hour-box .field-bg-blue {
+  padding: 15px;
+}
+
 .ad-af-hour-box p {
   margin-bottom: 0px !important;
+}
+
+.ad-af-hour-box svg.warningIcon {
+  font-size: 44px;
 }
 
 .ad-interval-select {

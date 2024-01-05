@@ -15,7 +15,6 @@ import {
 import AdvisoryForm from "../../composite/advisoryForm/AdvisoryForm";
 import Header from "../../composite/header/Header";
 import { Loader } from "../../shared/loader/Loader";
-import { Button } from "../../shared/button/Button";
 import {
   getProtectedAreas,
   getRegions,
@@ -35,6 +34,7 @@ import {
 import { hasRole } from "../../../utils/AuthenticationUtil";
 import { labelCompare } from "../../../utils/AppUtil";
 import config from "../../../utils/config";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 export default function Advisory({
   mode,
@@ -946,11 +946,11 @@ export default function Advisory({
   };
 
   const updateMediaLink = async (media, id, link) => {
-    const isProtocolExist =/(https|http?)/gi;
+    const isProtocolExist = /(https|http?)/gi;
 
     const path = media.url?.match(isProtocolExist);
-    const getUrl = path?.length ? media.url : config.REACT_APP_CMS_BASE_URL + media.url 
-    
+    const getUrl = path?.length ? media.url : config.REACT_APP_CMS_BASE_URL + media.url
+
     const linkRequest = {
       data: {
         title: link.title ? link.title : media.name,
@@ -1057,23 +1057,27 @@ export default function Advisory({
           )}
           {!isLoadingPage && (
             <>
-              <div className="container-fluid d-sm-flex align-items-center">
-                <Button
-                  label="Back"
-                  styling="bcgov-normal-white btn"
+              <div className="container-fluid">
+                <button
+                  type="button"
+                  className="btn btn-link btn-back"
                   onClick={() => {
                     setToBack();
-                  }}
-                />
-                <h2 className="mt-3 mt-sm-0 mb-0 ml-sm-3">
-                  Create a new advisory
+                    sessionStorage.clear();
+                  }}>
+                  <ArrowBackIcon />
+                  Back to Public Advisories
+                </button>
+                <h2 className="mt-5 mb-0">
+                  {mode === "create" ? "Create a new" : "Edit"} advisory
                 </h2>
+                <small className="small-text">
+                  <span className="required">*</span> indicates a required field
+                </small>
               </div>
               <AdvisoryForm
                 mode={mode}
                 data={{
-                  advisoryNumber,
-                  revisionNumber,
                   ticketNumber,
                   setTicketNumber,
                   listingRank,
@@ -1160,7 +1164,6 @@ export default function Advisory({
                   isSubmitting,
                   isSavingDraft,
                   updateAdvisory,
-                  setToBack,
                   formError,
                   setFormError,
                 }}

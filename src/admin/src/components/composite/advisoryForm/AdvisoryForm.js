@@ -32,15 +32,12 @@ import {
 } from "../../../validators/AdvisoryValidator";
 
 import PrivateElement from "../../../auth/PrivateElement";
-import AdvisoryHistory from "../advisoryHistory/AdvisoryHistory";
 import LightTooltip from "../../shared/tooltip/LightTooltip";
 import AdvisoryAreaPicker from "../advisoryAreaPicker/AdvisoryAreaPicker";
 
 export default function AdvisoryForm({
   mode,
   data: {
-    advisoryNumber,
-    revisionNumber,
     ticketNumber,
     setTicketNumber,
     listingRank,
@@ -127,7 +124,6 @@ export default function AdvisoryForm({
     isSubmitting,
     isSavingDraft,
     updateAdvisory,
-    setToBack,
     formError,
     setFormError,
   },
@@ -250,38 +246,41 @@ export default function AdvisoryForm({
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <form className="mt-5">
         <div className="container-fluid ad-form">
-          {advisoryNumber && (
-            <>
-              <div className="row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-                  Advisory Number
-                </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
-                  <TextField
-                    value={advisoryNumber}
-                    className="bcgov-input ad-disabled"
-                    variant="outlined"
-                    disabled
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-                  Revision Number
-                </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
-                  <TextField
-                    value={revisionNumber}
-                    className="bcgov-input ad-disabled"
-                    variant="outlined"
-                    disabled
-                  />
-                </div>
-              </div>
-            </>
-          )}
+          <div className="row heading">
+            Affected area
+          </div>
+          <AdvisoryAreaPicker
+            data={{
+              protectedAreas,
+              selectedProtectedAreas,
+              setSelectedProtectedAreas,
+              regions,
+              selectedRegions,
+              setSelectedRegions,
+              sections,
+              selectedSections,
+              setSelectedSections,
+              managementAreas,
+              selectedManagementAreas,
+              setSelectedManagementAreas,
+              sites,
+              selectedSites,
+              setSelectedSites,
+              fireCentres,
+              selectedFireCentres,
+              setSelectedFireCentres,
+              fireZones,
+              selectedFireZones,
+              setSelectedFireZones,
+              advisoryData,
+              protectedAreaError
+            }}
+          />
+          <div className="row heading">
+            Advisory content
+          </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
               Headline
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
@@ -303,8 +302,8 @@ export default function AdvisoryForm({
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
-              Event Type
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
+              Event type
               <LightTooltip
                 arrow
                 title="Please select the most appropriate event type that your advisory falls under, this does impact the front-end. 
@@ -336,30 +335,8 @@ export default function AdvisoryForm({
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Park Access Status
-              <LightTooltip
-                arrow
-                title="This applies any applicable symbols or icons relating to the park access status to the advisory.
-                Such as full closure or partial closure icons."
-              >
-                <HelpIcon className="helpIcon" />
-              </LightTooltip>
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <Select
-                options={accessStatuses}
-                value={accessStatuses.filter((e) => e.value === accessStatus)}
-                onChange={(e) => setAccessStatus(e ? e.value : 0)}
-                placeholder="Select an access status"
-                className="bcgov-select"
-                isClearable
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
-              Urgency Level
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
+              Urgency level
               <LightTooltip
                 arrow
                 title="Dependant on your advisory, the urgency level can be used to prioritize your alert above existing alerts for the same park page.
@@ -368,7 +345,7 @@ export default function AdvisoryForm({
                 <HelpIcon className="helpIcon" />
               </LightTooltip>
             </div>
-            <div className="col-lg-8 col-md-8 col-sm-12">
+            <div className="col-lg-7 col-md-8 col-sm-12">
               <FormControl error>
                 <ButtonGroup
                   className="ad-btn-group"
@@ -395,131 +372,8 @@ export default function AdvisoryForm({
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-6 col-6 ad-label">
-              Safety Related
-            </div>
-            <div className="col-lg-8 col-md-8 col-sm-6 col-6">
-              <Checkbox
-                checked={isSafetyRelated}
-                onChange={(e) => {
-                  setIsSafetyRelated(e.target.checked);
-                }}
-                inputProps={{ "aria-label": "safety related" }}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Description
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <TextField
-                value={description}
-                onChange={(event) => {
-                  setDescription(event.target.value);
-                }}
-                multiline
-                rows={2}
-                rowsMax={10}
-                className="bcgov-input"
-                variant="outlined"
-                InputProps={{ ...descriptionInput }}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Standard Message(s)
-              <LightTooltip
-                arrow
-                title="Standard messages are chosen from a list of generic, pre-defined and approved messages. 
-                This content will be added below any text entered in the description on the park page.
-                There is no requirement to have both a description and standard messaging."
-              >
-                <HelpIcon className="helpIcon" />
-              </LightTooltip>
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <Select
-                options={standardMessages}
-                value={selectedStandardMessages}
-                onChange={(e) => {
-                  setSelectedStandardMessages(e);
-                }}
-                placeholder="Add standard message"
-                className="bcgov-select"
-                isMulti
-                isClearable
-              />
-            </div>
-          </div>
-          <AdvisoryAreaPicker
-            data={{
-              protectedAreas,
-              selectedProtectedAreas,
-              setSelectedProtectedAreas,
-              regions,
-              selectedRegions,
-              setSelectedRegions,
-              sections,
-              selectedSections,
-              setSelectedSections,
-              managementAreas,
-              selectedManagementAreas,
-              setSelectedManagementAreas,
-              sites,
-              selectedSites,
-              setSelectedSites,
-              fireCentres,
-              selectedFireCentres,
-              setSelectedFireCentres,
-              fireZones,
-              selectedFireZones,
-              setSelectedFireZones,
-              advisoryData,
-              protectedAreaError
-            }}
-          />
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-6 col-6 ad-label">
-              Reservations Affected
-            </div>
-            <div className="col-lg-8 col-md-8 col-sm-6 col-6">
-              <Checkbox
-                checked={isReservationAffected}
-                onChange={(e) => {
-                  setIsReservationAffected(e.target.checked);
-                }}
-                inputProps={{
-                  "aria-label": "Discover camping affected",
-                }}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              DC Ticket Number
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <TextField
-                value={ticketNumber}
-                onChange={(event) => {
-                  setTicketNumber(event.target.value);
-                }}
-                className="bcgov-input"
-                variant="outlined"
-                InputProps={{ ...ticketNumberInput }}
-                error={ticketNumberError !== ""}
-                helperText={ticketNumberError}
-                onBlur={() => {
-                  validateOptionalNumber(advisoryData.ticketNumber);
-                }}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Listing Rank
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Listing rank
               <LightTooltip
                 arrow
                 title="Advisories, by default, are listed by date in descending order. 
@@ -547,203 +401,95 @@ export default function AdvisoryForm({
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Effective date
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Park access status
+              <LightTooltip
+                arrow
+                title="This applies any applicable symbols or icons relating to the park access status to the advisory.
+                Such as full closure or partial closure icons."
+              >
+                <HelpIcon className="helpIcon" />
+              </LightTooltip>
             </div>
-            <div className="col-lg-8 col-md-8 col-sm-12">
-              <div className="field-bg-blue">
-                <div className="ad-field ad-flex-wrap ad-flex">
-                  <div className="col-lg-8 col-md-12 col-sm-12">
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
-                        <div className="ad-flex">
-                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label bcgov-required">
-                            Advisory Date
-                          </div>
-                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
-                            <KeyboardDateTimePicker
-                              id="advisoryDate"
-                              value={advisoryDate}
-                              onChange={handleAdvisoryDateChange}
-                              format="MMMM DD, yyyy hh:mm A"
-                              className={`bcgov-datepicker-wrapper ${advisoryDateError !== ""
-                                  ? "bcgov-datepicker-wrapper-error"
-                                  : ""
-                                }`}
-                              error={advisoryDateError !== ""}
-                              helperText={advisoryDateError}
-                              onBlur={() => {
-                                validateRequiredDate(advisoryData.advisoryDate);
-                              }}
-                            />
-                            <VisibilityToggle
-                              toggle={{
-                                toggleState: displayAdvisoryDate,
-                                setToggleState: setDisplayAdvisoryDate,
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
-                        <div className="ad-flex">
-                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                            Start Date
-                          </div>
-                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
-                            <KeyboardDateTimePicker
-                              id="startDate"
-                              value={startDate}
-                              onChange={setStartDate}
-                              format="MMMM DD, yyyy hh:mm A"
-                              className={`bcgov-datepicker-wrapper ${startDateError !== ""
-                                  ? "bcgov-datepicker-wrapper-error"
-                                  : ""
-                                }`}
-                              error={startDateError !== ""}
-                              helperText={startDateError}
-                              onBlur={() => {
-                                validateOptionalDate(advisoryData.startDate);
-                              }}
-                            />
-                            <VisibilityToggle
-                              toggle={{
-                                toggleState: displayStartDate,
-                                setToggleState: setDisplayStartDate,
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
-                        <div className="ad-flex">
-                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                            End Date
-                          </div>
-                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
-                            <KeyboardDateTimePicker
-                              id="endDate"
-                              value={endDate}
-                              onChange={setEndDate}
-                              format="MMMM DD, yyyy hh:mm A"
-                              className={`bcgov-datepicker-wrapper ${endDateError !== ""
-                                  ? "bcgov-datepicker-wrapper-error"
-                                  : ""
-                                }`}
-                              error={endDateError !== ""}
-                              helperText={endDateError}
-                              onBlur={() => {
-                                validateOptionalDate(advisoryData.endDate);
-                              }}
-                              minDate={startDate}
-                              minDateMessage="End date should not be before Advisory date"
-                            />
-                            <VisibilityToggle
-                              toggle={{
-                                toggleState: displayEndDate,
-                                setToggleState: setDisplayEndDate,
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {mode === "update" && (
-                      <div className="row">
-                        <div className="col-lg-12 col-md-12 col-sm-12 plr0">
-                          <div className="ad-flex">
-                            <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                              Updated Date
-                            </div>
-                            <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
-                              <KeyboardDateTimePicker
-                                id="updatedDate"
-                                value={updatedDate}
-                                onChange={setUpdatedDate}
-                                format="MMMM DD, yyyy hh:mm A"
-                                className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
-                                    ? "bcgov-datepicker-wrapper-error"
-                                    : ""
-                                  }`}
-                                error={updatedDateError !== ""}
-                                helperText={updatedDateError}
-                                onBlur={() => {
-                                  validateOptionalDate(
-                                    advisoryData.updatedDate
-                                  );
-                                }}
-                              />
-                              <VisibilityToggle
-                                toggle={{
-                                  toggleState: displayUpdatedDate,
-                                  setToggleState: setDisplayUpdatedDate,
-                                }}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
-                        <div className="ad-flex">
-                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                            Expiry Date
-                          </div>
-                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
-                            <KeyboardDateTimePicker
-                              id="expiryDate"
-                              value={expiryDate}
-                              onChange={setExpiryDate}
-                              format="MMMM DD, yyyy hh:mm A"
-                              className={`bcgov-datepicker-wrapper  mr40 ${expiryDateError !== ""
-                                  ? "bcgov-datepicker-wrapper-error"
-                                  : ""
-                                }`}
-                              error={expiryDateError !== ""}
-                              helperText={expiryDateError}
-                              onBlur={() => {
-                                validateOptionalDate(advisoryData.expiryDate);
-                              }}
-                              minDate={startDate}
-                              minDateMessage="Expiry date should not be before Advisory date"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-12 col-sm-12 plr0 ad-auto-margin">
-                    <div className="ad-flex">
-                      <div className="p10 col-lg-4 col-md-3 col-sm-12 ad-duration-label">
-                        Duration
-                      </div>
-                      <div className="p10 ml15 col-lg-8 col-md-6 col-sm-8 col-8 pt3 ad-interval-box">
-                        <Select
-                          options={intervals}
-                          onChange={handleDurationIntervalChange}
-                          placeholder="Select"
-                          className="pbm3 ad-interval-select bcgov-select"
-                        />
-                        <Select
-                          options={intervalUnits}
-                          onChange={handleDurationUnitChange}
-                          placeholder="Select"
-                          className="ad-interval-select bcgov-select"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <Select
+                options={accessStatuses}
+                value={accessStatuses.filter((e) => e.value === accessStatus)}
+                onChange={(e) => setAccessStatus(e ? e.value : 0)}
+                placeholder="Select an access status"
+                className="bcgov-select"
+                isClearable
+              />
             </div>
           </div>
-          <div className="row ">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">Links</div>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Standard message(s)
+              <LightTooltip
+                arrow
+                title="Standard messages are chosen from a list of generic, pre-defined and approved messages. 
+                This content will be added below any text entered in the description on the park page.
+                There is no requirement to have both a description and standard messaging."
+              >
+                <HelpIcon className="helpIcon" />
+              </LightTooltip>
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <Select
+                options={standardMessages}
+                value={selectedStandardMessages}
+                onChange={(e) => {
+                  setSelectedStandardMessages(e);
+                }}
+                placeholder="Add standard message"
+                className="bcgov-select"
+                isMulti
+                isClearable
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Description
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <TextField
+                value={description}
+                onChange={(event) => {
+                  setDescription(event.target.value);
+                }}
+                multiline
+                rows={4}
+                rowsMax={10}
+                className="bcgov-input"
+                variant="outlined"
+                InputProps={{ ...descriptionInput }}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Standard message preview
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <TextField
+                // value={description}
+                // onChange={(event) => {
+                //   setDescription(event.target.value);
+                // }}
+                multiline
+                rows={4}
+                rowsMax={10}
+                className="bcgov-input"
+                variant="outlined"
+              // InputProps={{ ...descriptionInput }}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Add supporting information
+            </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               {linksRef.current.map((l, idx) => (
                 <div key={idx}>
@@ -838,26 +584,356 @@ export default function AdvisoryForm({
             </div>
           </div>
           <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Event dates
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <div className="field-bg-grey">
+                <div className="ad-field ad-flex-wrap ad-flex">
+                  <div className="col-lg-8 col-md-12 col-sm-12">
+                    <div className="row">
+                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
+                        <div className="ad-flex">
+                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
+                            Start date
+                          </div>
+                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
+                            <KeyboardDateTimePicker
+                              id="startDate"
+                              value={startDate}
+                              onChange={setStartDate}
+                              format="MMMM DD, yyyy hh:mm A"
+                              className={`bcgov-datepicker-wrapper ${startDateError !== ""
+                                ? "bcgov-datepicker-wrapper-error"
+                                : ""
+                                }`}
+                              error={startDateError !== ""}
+                              helperText={startDateError}
+                              onBlur={() => {
+                                validateOptionalDate(advisoryData.startDate);
+                              }}
+                            />
+                            <VisibilityToggle
+                              toggle={{
+                                toggleState: displayStartDate,
+                                setToggleState: setDisplayStartDate,
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
+                        <div className="ad-flex">
+                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
+                            Duration
+                          </div>
+                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
+                            <Select
+                              options={intervals}
+                              onChange={handleDurationIntervalChange}
+                              placeholder="Select"
+                              className="pbm3 ad-interval-select bcgov-select"
+                            />
+                            <Select
+                              options={intervalUnits}
+                              onChange={handleDurationUnitChange}
+                              placeholder="Select"
+                              className="ad-interval-select bcgov-select"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
+                        <div className="ad-flex">
+                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
+                            End date
+                          </div>
+                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
+                            <KeyboardDateTimePicker
+                              id="endDate"
+                              value={endDate}
+                              onChange={setEndDate}
+                              format="MMMM DD, yyyy hh:mm A"
+                              className={`bcgov-datepicker-wrapper ${endDateError !== ""
+                                ? "bcgov-datepicker-wrapper-error"
+                                : ""
+                                }`}
+                              error={endDateError !== ""}
+                              helperText={endDateError}
+                              onBlur={() => {
+                                validateOptionalDate(advisoryData.endDate);
+                              }}
+                              minDate={startDate}
+                              minDateMessage="End date should not be before Advisory date"
+                            />
+                            <VisibilityToggle
+                              toggle={{
+                                toggleState: displayEndDate,
+                                setToggleState: setDisplayEndDate,
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {mode === "update" && (
+                      <div className="row">
+                        <div className="col-lg-12 col-md-12 col-sm-12 plr0">
+                          <div className="ad-flex">
+                            <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
+                              Updated date
+                            </div>
+                            <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
+                              <KeyboardDateTimePicker
+                                id="updatedDate"
+                                value={updatedDate}
+                                onChange={setUpdatedDate}
+                                format="MMMM DD, yyyy hh:mm A"
+                                className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
+                                  ? "bcgov-datepicker-wrapper-error"
+                                  : ""
+                                  }`}
+                                error={updatedDateError !== ""}
+                                helperText={updatedDateError}
+                                onBlur={() => {
+                                  validateOptionalDate(
+                                    advisoryData.updatedDate
+                                  );
+                                }}
+                              />
+                              <VisibilityToggle
+                                toggle={{
+                                  toggleState: displayUpdatedDate,
+                                  setToggleState: setDisplayUpdatedDate,
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Displayed date
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <Select
+                // options={standardMessages}
+                // value={selectedStandardMessages}
+                // onChange={(e) => {
+                //   setSelectedStandardMessages(e);
+                // }}
+                placeholder="Posted date"
+                className="bcgov-select"
+                isMulti
+                isClearable
+              />
+            </div>
+          </div>
+          {/* DC Ticket Number can be removed */}
+          {/* <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              Internal Notes
+              DC Ticket Number
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               <TextField
-                value={notes}
+                value={ticketNumber}
                 onChange={(event) => {
-                  setNotes(event.target.value);
+                  setTicketNumber(event.target.value);
                 }}
                 className="bcgov-input"
                 variant="outlined"
-                InputProps={{ ...notesInput }}
+                InputProps={{ ...ticketNumberInput }}
+                error={ticketNumberError !== ""}
+                helperText={ticketNumberError}
+                onBlur={() => {
+                  validateOptionalNumber(advisoryData.ticketNumber);
+                }}
               />
+            </div>
+          </div> */}
+          <div className="row heading">
+            Internal details
+          </div>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Post dates
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <div className="field-bg-grey">
+                <div className="ad-field ad-flex-wrap ad-flex">
+                  <div className="col-lg-8 col-md-12 col-sm-12">
+                    <div className="row">
+                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
+                        <div className="ad-flex">
+                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label bcgov-required">
+                            Advisory date
+                          </div>
+                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
+                            <KeyboardDateTimePicker
+                              id="advisoryDate"
+                              value={advisoryDate}
+                              onChange={handleAdvisoryDateChange}
+                              format="MMMM DD, yyyy hh:mm A"
+                              className={`bcgov-datepicker-wrapper ${advisoryDateError !== ""
+                                ? "bcgov-datepicker-wrapper-error"
+                                : ""
+                                }`}
+                              error={advisoryDateError !== ""}
+                              helperText={advisoryDateError}
+                              onBlur={() => {
+                                validateRequiredDate(advisoryData.advisoryDate);
+                              }}
+                            />
+                            <VisibilityToggle
+                              toggle={{
+                                toggleState: displayAdvisoryDate,
+                                setToggleState: setDisplayAdvisoryDate,
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
+                        <div className="ad-flex">
+                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
+                            Posting date
+                          </div>
+                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
+                            <KeyboardDateTimePicker
+                              id="expiryDate"
+                              value={expiryDate}
+                              onChange={setExpiryDate}
+                              format="MMMM DD, yyyy hh:mm A"
+                              className={`bcgov-datepicker-wrapper  mr40 ${expiryDateError !== ""
+                                ? "bcgov-datepicker-wrapper-error"
+                                : ""
+                                }`}
+                              error={expiryDateError !== ""}
+                              helperText={expiryDateError}
+                              onBlur={() => {
+                                validateOptionalDate(advisoryData.expiryDate);
+                              }}
+                              minDate={startDate}
+                              minDateMessage="Expiry date should not be before Advisory date"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
+                        <div className="ad-flex">
+                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
+                            Expiry date
+                          </div>
+                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
+                            <KeyboardDateTimePicker
+                              id="expiryDate"
+                              value={expiryDate}
+                              onChange={setExpiryDate}
+                              format="MMMM DD, yyyy hh:mm A"
+                              className={`bcgov-datepicker-wrapper  mr40 ${expiryDateError !== ""
+                                ? "bcgov-datepicker-wrapper-error"
+                                : ""
+                                }`}
+                              error={expiryDateError !== ""}
+                              helperText={expiryDateError}
+                              onBlur={() => {
+                                validateOptionalDate(advisoryData.expiryDate);
+                              }}
+                              minDate={startDate}
+                              minDateMessage="Expiry date should not be before Advisory date"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {mode === "update" && (
+                      <div className="row">
+                        <div className="col-lg-12 col-md-12 col-sm-12 plr0">
+                          <div className="ad-flex">
+                            <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
+                              Updated date
+                            </div>
+                            <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
+                              <KeyboardDateTimePicker
+                                id="updatedDate"
+                                value={updatedDate}
+                                onChange={setUpdatedDate}
+                                format="MMMM DD, yyyy hh:mm A"
+                                className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
+                                  ? "bcgov-datepicker-wrapper-error"
+                                  : ""
+                                  }`}
+                                error={updatedDateError !== ""}
+                                helperText={updatedDateError}
+                                onBlur={() => {
+                                  validateOptionalDate(
+                                    advisoryData.updatedDate
+                                  );
+                                }}
+                              />
+                              <VisibilityToggle
+                                toggle={{
+                                  toggleState: displayUpdatedDate,
+                                  setToggleState: setDisplayUpdatedDate,
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
+              Advisory status
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${advisoryStatusError !== "" ? "bcgov-select-error" : ""
+                  }`}
+                error
+              >
+                <Select
+                  options={advisoryStatuses}
+                  value={advisoryStatuses.filter(
+                    (a) => a.value === advisoryStatus
+                  )}
+                  onChange={(e) => setAdvisoryStatus(e ? e.value : 0)}
+                  placeholder="Select an advisory status"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredSelect(advisoryData.advisoryStatus);
+                  }}
+                  isClearable
+                />
+                <FormHelperText>{advisoryStatusError}</FormHelperText>
+              </FormControl>
             </div>
           </div>
           {PrivateElement(["approver"]) && (
             <>
               <div className="row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
-                  Submitted By
+                <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
+                  Requested by
                 </div>
                 <div className="col-lg-7 col-md-8 col-sm-12">
                   <TextField
@@ -876,92 +952,106 @@ export default function AdvisoryForm({
                   />
                 </div>
               </div>
-
               <div className="row">
-                <div className="col-lg-4 col-md-4 col-sm-12 ad-label bcgov-required">
-                  Advisory Status
+                <div className="col-lg-3 col-md-4 col-sm-6 col-6 ad-label">
+                  Public safety related
+                </div>
+                <div className="col-lg-7 col-md-8 col-sm-6 col-6">
+                  <Checkbox
+                    checked={isSafetyRelated}
+                    onChange={(e) => {
+                      setIsSafetyRelated(e.target.checked);
+                    }}
+                    inputProps={{ "aria-label": "safety related" }}
+                  />
+                </div>
+              </div>
+              {/* Reservations Affected can be removed */}
+              {/* <div className="row">
+                <div className="col-lg-3 col-md-4 col-sm-6 col-6 ad-label">
+                  Reservations Affected
+                </div>
+                <div className="col-lg-7 col-md-8 col-sm-6 col-6">
+                  <Checkbox
+                    checked={isReservationAffected}
+                    onChange={(e) => {
+                      setIsReservationAffected(e.target.checked);
+                    }}
+                    inputProps={{
+                      "aria-label": "Discover camping affected",
+                    }}
+                  />
+                </div>
+              </div> */}
+              <div className="row">
+                <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+                  Internal notes
                 </div>
                 <div className="col-lg-7 col-md-8 col-sm-12">
-                  <FormControl
+                  <TextField
+                    value={notes}
+                    onChange={(event) => {
+                      setNotes(event.target.value);
+                    }}
+                    className="bcgov-input"
                     variant="outlined"
-                    className={`bcgov-select-form ${advisoryStatusError !== "" ? "bcgov-select-error" : ""
-                      }`}
-                    error
-                  >
-                    <Select
-                      options={advisoryStatuses}
-                      value={advisoryStatuses.filter(
-                        (a) => a.value === advisoryStatus
-                      )}
-                      onChange={(e) => setAdvisoryStatus(e ? e.value : 0)}
-                      placeholder="Select an advisory status"
-                      className="bcgov-select"
-                      onBlur={() => {
-                        validateRequiredSelect(advisoryData.advisoryStatus);
-                      }}
-                      isClearable
-                    />
-                    <FormHelperText>{advisoryStatusError}</FormHelperText>
-                  </FormControl>
+                    InputProps={{ ...notesInput }}
+                  />
                 </div>
               </div>
             </>
           )}
           {!PrivateElement(["approver"]) && (isStatHoliday || isAfterHours) && (
-            <div className="ad-af-hour-box">
-              <div className="row">
-                <div className="col-lg-4 col-md-4 col-sm-1 col-1 ad-label">
-                  <WarningIcon className="warningIcon" />
-                </div>
-                <div className="col-lg-8 col-md-8 col-sm-11 col-11">
-                  <p>
-                    <b>
-                      This is an after-hours advisory. <br />
-                      The web team business hours are Monday to Friday,
-                      8:30AM–4:30PM
-                    </b>
-                  </p>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-4 col-md-4 col-sm-1 col-1 ad-label">
-                  <Radio
-                    checked={isAfterHourPublish}
-                    onChange={() => {
-                      setIsAfterHourPublish(true);
-                    }}
-                    value="Publish"
-                    name="after-hour-submission"
-                    inputProps={{ "aria-label": "Publish immediately" }}
-                  />
-                </div>
-                <div className="col-lg-8 col-md-8 col-sm-11 col-11">
-                  <p>Advisory is urgent/safety-related. Publish immediately.</p>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-4 col-md-4 col-sm-1 col-1 ad-label">
-                  <Radio
-                    checked={!isAfterHourPublish}
-                    onChange={() => {
-                      setIsAfterHourPublish(false);
-                    }}
-                    value="Review"
-                    name="after-hour-submission"
-                    inputProps={{
-                      "aria-label": "Submit for web team review",
-                    }}
-                  />
-                </div>
-                <div className="col-lg-8 col-md-8 col-sm-11 col-11">
-                  <p>Advisory is not urgent. Submit for web team review.</p>
+              <div className="ad-af-hour-box">
+                <div className="row">
+                  <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+                  </div>
+                  <div className="col-lg-7 col-md-8 col-sm-12">
+                    <div className="d-flex field-bg-blue">
+                      <WarningIcon className="warningIcon" />
+                      <div className="ml-3">
+                        <p>
+                          <b>This is an after-hours advisory</b><br />
+                          The web team's business hours are<br />
+                          Monday to Friday, 8:30AM – 4:30PM.
+                        </p>
+                        <div className="d-flex mt-3">
+                          <Radio
+                            checked={isAfterHourPublish}
+                            onChange={() => {
+                              setIsAfterHourPublish(true);
+                            }}
+                            value="Publish"
+                            name="after-hour-submission"
+                            inputProps={{ "aria-label": "Publish immediately" }}
+                            className="mr-2"
+                          />
+                          <p><b className="required">Urgent/safety-related.</b> Publish immediately.</p>
+                        </div>
+                        <div className="d-flex mt-3">
+                          <Radio
+                            checked={!isAfterHourPublish}
+                            onChange={() => {
+                              setIsAfterHourPublish(false);
+                            }}
+                            value="Review"
+                            name="after-hour-submission"
+                            inputProps={{
+                              "aria-label": "Submit for web team review",
+                            }}
+                            className="mr-2"
+                          />
+                          <p><b>Advisory is not urgent.</b> Submit for web team review.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
           <br />
           <div className="row">
-            <div className="col-lg-4 col-md-4"></div>
+            <div className="col-lg-3 col-md-4"></div>
             <div className="col-lg-7 col-md-8 col-sm-12 ad-form-error">
               <FormControl error>
                 <FormHelperText>{formError}</FormHelperText>
@@ -969,14 +1059,14 @@ export default function AdvisoryForm({
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-4 col-md-4"></div>
-            <div className="col-lg-7 col-md-8 col-sm-12 button-row ad-btn-group">
+            <div className="col-lg-3 col-md-4"></div>
+            <div className="col-lg-7 col-md-8 col-sm-12 ad-btn-group">
               {!PrivateElement(["approver"]) && (
                 <>
                   {mode === "create" && (
                     <>
                       <Button
-                        label="Submit"
+                        label={(isStatHoliday || isAfterHours) ? "Submit" : "Submit for approval"}
                         styling="bcgov-normal-blue btn"
                         onClick={() => {
                           if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
@@ -986,8 +1076,8 @@ export default function AdvisoryForm({
                         hasLoader={isSubmitting}
                       />
                       <Button
-                        label="Save Draft"
-                        styling="bcgov-normal-light btn"
+                        label="Save draft"
+                        styling="bcgov-normal-white btn"
                         onClick={() => {
                           if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
                             saveAdvisory("draft");
@@ -1000,7 +1090,7 @@ export default function AdvisoryForm({
                   {mode === "update" && (
                     <>
                       <Button
-                        label="Submit"
+                        label={(isStatHoliday || isAfterHours) ? "Submit" : "Submit for approval"}
                         styling="bcgov-normal-blue btn"
                         onClick={() => {
                           if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
@@ -1010,8 +1100,8 @@ export default function AdvisoryForm({
                         hasLoader={isSubmitting}
                       />
                       <Button
-                        label="Save Draft"
-                        styling="bcgov-normal-light btn"
+                        label="Save draft"
+                        styling="bcgov-normal-white btn"
                         onClick={() => {
                           if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
                             updateAdvisory("draft");
@@ -1021,21 +1111,13 @@ export default function AdvisoryForm({
                       />
                     </>
                   )}
-                  <Button
-                    label="Cancel"
-                    styling="bcgov-normal-light btn"
-                    onClick={() => {
-                      sessionStorage.clear();
-                      setToBack();
-                    }}
-                  />
                 </>
               )}
               {PrivateElement(["approver"]) && (
                 <>
                   {mode === "create" && (
                     <Button
-                      label="Create"
+                      label="Create advisory"
                       styling="bcgov-normal-blue btn"
                       onClick={() => {
                         if (validAdvisoryData(advisoryData, linksRef, true, mode)) {
@@ -1047,7 +1129,7 @@ export default function AdvisoryForm({
                   )}
                   {mode === "update" && (
                     <Button
-                      label="Update"
+                      label="Update advisory"
                       styling="bcgov-normal-blue btn"
                       onClick={() => {
                         if (validAdvisoryData(advisoryData, linksRef, true, mode)) {
@@ -1057,21 +1139,10 @@ export default function AdvisoryForm({
                       hasLoader={isSubmitting}
                     />
                   )}
-                  <Button
-                    label="Cancel"
-                    styling="bcgov-normal-light btn"
-                    onClick={() => {
-                      sessionStorage.clear();
-                      setToBack();
-                    }}
-                  />
                 </>
               )}
             </div>
           </div>
-          <br />
-          <br />
-          <AdvisoryHistory data={{ advisoryNumber }} />
         </div>
       </form>
     </MuiPickersUtilsProvider>
@@ -1081,8 +1152,6 @@ export default function AdvisoryForm({
 AdvisoryForm.propTypes = {
   mode: PropTypes.string.isRequired,
   data: PropTypes.shape({
-    advisoryNumber: PropTypes.number,
-    revisionNumber: PropTypes.number,
     ticketNumber: PropTypes.string,
     setTicketNumber: PropTypes.func.isRequired,
     listingRank: PropTypes.number,
@@ -1169,7 +1238,6 @@ AdvisoryForm.propTypes = {
     isSubmitting: PropTypes.bool,
     isSavingDraft: PropTypes.bool,
     updateAdvisory: PropTypes.func.isRequired,
-    setToBack: PropTypes.func.isRequired,
     formError: PropTypes.string,
     setFormError: PropTypes.func.isRequired,
   }).isRequired,

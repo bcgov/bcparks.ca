@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./AdvisoryAreaPicker.css";
 import {
@@ -39,6 +39,8 @@ export default function AdvisoryAreaPicker({
     protectedAreaError
   },
 }) {
+  const [isShow, setIsShow] = useState(false)
+
   const handleRemoveProtectedArea = async (updatedParksList) => {
     const deletedParks = selectedProtectedAreas.filter(park => !updatedParksList?.includes(park));
     if (deletedParks.length) {
@@ -153,11 +155,12 @@ export default function AdvisoryAreaPicker({
   return (
     <>
       <div className="row">
-        <div className="col-lg-4 col-md-4 col-sm-12  bcgov-required ad-label">
-          Affected area:
+        <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
         </div>
         <div className="col-lg-7 col-md-8 col-sm-12">
-          <span>Select at least one</span>
+          <span>
+            Select at least one park <b>or</b> search for groups of parks by other area{"("}s{")"}
+          </span>
           <LightTooltip
             arrow
             title="Please select the park that your advisory is affecting.
@@ -178,150 +181,176 @@ export default function AdvisoryAreaPicker({
               <FormHelperText>{protectedAreaError}</FormHelperText>
             </FormControl>
           }
+          {!isShow &&
+            <button
+              type="button"
+              className="btn btn-link btn-boolean"
+              onClick={() => setIsShow(true)}
+            >
+              Show other areas
+            </button>
+          }
         </div>
       </div>
+      {isShow && (
+        <>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Fire Centre(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
+                  }`}
+                error
+              >
+                <Select
+                  options={fireCentres}
+                  value={selectedFireCentres}
+                  onChange={(e) => {
+                    setSelectedFireCentres(e);
+                    handleChangeRelations({ updatedFireCentres: e });
+                  }}
+                  placeholder="Select a Fire Centre"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredAffectedArea(advisoryData.protectedArea);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Fire Zone(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
+                  }`}
+                error
+              >
+                <Select
+                  options={fireZones}
+                  value={selectedFireZones}
+                  onChange={(e) => {
+                    setSelectedFireZones(e);
+                    handleChangeRelations({ updatedFireZones: e });
+                  }}
+                  placeholder="Select a Fire Zone"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredAffectedArea(advisoryData.protectedArea);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Region(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
+                  }`}
+                error
+              >
+                <Select
+                  options={regions}
+                  value={selectedRegions}
+                  onChange={(e) => {
+                    setSelectedRegions(e);
+                    handleChangeRelations({ updatedRegions: e });
+                  }}
+                  placeholder="Select a Region"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredAffectedArea(advisoryData.protectedArea);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Section(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
+                  }`}
+                error
+              >
+                <Select
+                  options={sections}
+                  value={selectedSections}
+                  onChange={(e) => {
+                    setSelectedSections(e);
+                    handleChangeRelations({ updatedSections: e });
+                  }}
+                  placeholder="Select a Section"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredAffectedArea(advisoryData.protectedArea);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Management Area(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
+                  }`}
+                error
+              >
+                <Select
+                  options={managementAreas}
+                  value={selectedManagementAreas}
+                  onChange={(e) => {
+                    setSelectedManagementAreas(e);
+                    handleChangeRelations({ updatedManagementAreas: e });
+                  }}
+                  placeholder="Select a Management Area"
+                  isMulti="true"
+                  className="bcgov-select"
+                  onBlur={() => {
+                    validateRequiredAffectedArea(advisoryData.protectedArea);
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12">
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <button
+                type="button"
+                className="btn btn-link btn-boolean"
+                onClick={() => setIsShow(false)}
+              >
+                Hide other areas
+              </button>
+            </div>
+          </div>
+        </>
+      )}
       <div className="row">
-        <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-          Region(s)
-        </div>
-        <div className="col-lg-7 col-md-8 col-sm-12">
-          <FormControl
-            variant="outlined"
-            className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
-              }`}
-            error
-          >
-            <Select
-              options={regions}
-              value={selectedRegions}
-              onChange={(e) => {
-                setSelectedRegions(e);
-                handleChangeRelations({ updatedRegions: e });
-              }}
-              placeholder="Select a Region"
-              isMulti="true"
-              className="bcgov-select"
-              onBlur={() => {
-                validateRequiredAffectedArea(advisoryData.protectedArea);
-              }}
-            />
-          </FormControl>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-          Section(s)
-        </div>
-        <div className="col-lg-7 col-md-8 col-sm-12">
-          <FormControl
-            variant="outlined"
-            className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
-              }`}
-            error
-          >
-            <Select
-              options={sections}
-              value={selectedSections}
-              onChange={(e) => {
-                setSelectedSections(e);
-                handleChangeRelations({ updatedSections: e });
-              }}
-              placeholder="Select a Section"
-              isMulti="true"
-              className="bcgov-select"
-              onBlur={() => {
-                validateRequiredAffectedArea(advisoryData.protectedArea);
-              }}
-            />
-          </FormControl>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-          Management Area(s)
-        </div>
-        <div className="col-lg-7 col-md-8 col-sm-12">
-          <FormControl
-            variant="outlined"
-            className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
-              }`}
-            error
-          >
-            <Select
-              options={managementAreas}
-              value={selectedManagementAreas}
-              onChange={(e) => {
-                setSelectedManagementAreas(e);
-                handleChangeRelations({ updatedManagementAreas: e });
-              }}
-              placeholder="Select a Management Area"
-              isMulti="true"
-              className="bcgov-select"
-              onBlur={() => {
-                validateRequiredAffectedArea(advisoryData.protectedArea);
-              }}
-            />
-          </FormControl>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-          Fire Centre(s)
-        </div>
-        <div className="col-lg-7 col-md-8 col-sm-12">
-          <FormControl
-            variant="outlined"
-            className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
-              }`}
-            error
-          >
-            <Select
-              options={fireCentres}
-              value={selectedFireCentres}
-              onChange={(e) => {
-                setSelectedFireCentres(e);
-                handleChangeRelations({ updatedFireCentres: e });
-              }}
-              placeholder="Select a Fire Centre"
-              isMulti="true"
-              className="bcgov-select"
-              onBlur={() => {
-                validateRequiredAffectedArea(advisoryData.protectedArea);
-              }}
-            />
-          </FormControl>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-          Fire Zone(s)
-        </div>
-        <div className="col-lg-7 col-md-8 col-sm-12">
-          <FormControl
-            variant="outlined"
-            className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
-              }`}
-            error
-          >
-            <Select
-              options={fireZones}
-              value={selectedFireZones}
-              onChange={(e) => {
-                setSelectedFireZones(e);
-                handleChangeRelations({ updatedFireZones: e });
-              }}
-              placeholder="Select a Fire Zone"
-              isMulti="true"
-              className="bcgov-select"
-              onBlur={() => {
-                validateRequiredAffectedArea(advisoryData.protectedArea);
-              }}
-            />
-          </FormControl>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+        <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
           Park(s)
         </div>
         <div className="col-lg-7 col-md-8 col-sm-12">
@@ -355,7 +384,7 @@ export default function AdvisoryAreaPicker({
         </div>
       </div>
       <div className="row">
-        <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
+        <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
           Site(s)
         </div>
         <div className="col-lg-7 col-md-8 col-sm-12">
