@@ -9,8 +9,6 @@ import ScrollToTop from "../../../components/scrollToTop"
 
 import "../../../styles/listPage.scss"
 
-const replaceSpecialCharacters = require('replace-special-characters')
-
 const DocumentLink = ({ park }) => {
   const docs = park.managementDocuments
   const calcYear = (date) => date.split('-').shift()
@@ -60,11 +58,12 @@ const ApprovedListPage = () => {
   const queryData = useStaticQuery(graphql`
     query {
       allStrapiProtectedArea(
-        sort: {protectedAreaName: ASC}
+        sort: {slug: ASC}
         filter: {managementDocuments: {elemMatch: {publishedAt: {ne: null}}}}
       ) {
         nodes {
           orcs
+          slug
           protectedAreaName
           managementDocuments {
             url
@@ -106,14 +105,6 @@ const ApprovedListPage = () => {
 
   const menuContent = queryData?.allStrapiMenu?.nodes || []
   const parks = queryData?.allStrapiProtectedArea?.nodes || []
-  parks.sort((a, b) => {
-    // compare protected area name including special characters
-    const parkA = replaceSpecialCharacters(a.protectedAreaName).toLowerCase()
-    const parkB = replaceSpecialCharacters(b.protectedAreaName).toLowerCase()
-    if (parkA < parkB) { return -1 }
-    if (parkA > parkB) { return 1 }
-    return 0;
-  })
 
   const [currentFilter, setCurrentFilter] = useState("All")
 
@@ -121,7 +112,7 @@ const ApprovedListPage = () => {
     setCurrentFilter(e.target.value)
   }
   const filtering = (char) =>
-    parks.filter(park => replaceSpecialCharacters(park.protectedAreaName).charAt(0).toUpperCase() === char)
+    parks.filter(park => park.slug.charAt(0).toUpperCase() === char)
 
   const filters = [
     "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",

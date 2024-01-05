@@ -52,7 +52,6 @@
     "react-typography": "^0.16.19",
     "react-use-query-param-string": "^2.0.10",
     "react-use-scrollspy": "^3.0.1",
-    "replace-special-characters": "^1.2.7",
     "sass": "1.32.12",
     "seamless-scroll-polyfill": "^2.3.0",
     "slugify": "^1.6.5",

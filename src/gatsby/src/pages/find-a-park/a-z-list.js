@@ -9,8 +9,6 @@ import ScrollToTop from "../../components/scrollToTop"
 
 import "../../styles/listPage.scss"
 
-const replaceSpecialCharacters = require('replace-special-characters')
-
 const ParkLink = ({ park }) => {
 
   return (
@@ -26,7 +24,7 @@ const ParksPage = () => {
   const queryData = useStaticQuery(graphql`
     query {
       allStrapiProtectedArea(
-        sort: {protectedAreaName: ASC}
+        sort: {slug: ASC}
         filter: {isDisplayed: {eq: true}}
       ) {
         nodes {
@@ -61,22 +59,13 @@ const ParksPage = () => {
 
   const menuContent = queryData?.allStrapiMenu?.nodes || []
   const parks = queryData?.allStrapiProtectedArea?.nodes || []
-  parks.sort((a, b) => {
-    // compare protected area name including special characters
-    const parkA = replaceSpecialCharacters(a.protectedAreaName).toLowerCase()
-    const parkB = replaceSpecialCharacters(b.protectedAreaName).toLowerCase()
-    if (parkA < parkB) { return -1 }
-    if (parkA > parkB) { return 1 }
-    return 0;
-  })
-
   const [currentFilter, setCurrentFilter] = useState("All")
 
   const handleClick = (e) => {
     setCurrentFilter(e.target.value)
   }
   const filtering = (char) =>
-    parks.filter(park => replaceSpecialCharacters(park.protectedAreaName).charAt(0).toUpperCase() === char)
+    parks.filter(park => park.slug.charAt(0).toUpperCase() === char)
 
   const filters = [
     "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
