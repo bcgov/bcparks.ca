@@ -58,11 +58,12 @@ const ApprovedListPage = () => {
   const queryData = useStaticQuery(graphql`
     query {
       allStrapiProtectedArea(
-        sort: {protectedAreaName: ASC}
+        sort: {slug: ASC}
         filter: {managementDocuments: {elemMatch: {publishedAt: {ne: null}}}}
       ) {
         nodes {
           orcs
+          slug
           protectedAreaName
           managementDocuments {
             url
@@ -111,7 +112,7 @@ const ApprovedListPage = () => {
     setCurrentFilter(e.target.value)
   }
   const filtering = (char) =>
-    parks.filter(park => park.protectedAreaName.charAt(0).toUpperCase() === char)
+    parks.filter(park => park.slug.charAt(0).toUpperCase() === char)
 
   const filters = [
     "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",

@@ -24,7 +24,7 @@ const ParksPage = () => {
   const queryData = useStaticQuery(graphql`
     query {
       allStrapiProtectedArea(
-        sort: {protectedAreaName: ASC}
+        sort: {slug: ASC}
         filter: {isDisplayed: {eq: true}}
       ) {
         nodes {
@@ -59,14 +59,13 @@ const ParksPage = () => {
 
   const menuContent = queryData?.allStrapiMenu?.nodes || []
   const parks = queryData?.allStrapiProtectedArea?.nodes || []
-
   const [currentFilter, setCurrentFilter] = useState("All")
 
   const handleClick = (e) => {
     setCurrentFilter(e.target.value)
   }
   const filtering = (char) =>
-    parks.filter(park => park.protectedAreaName.charAt(0).toUpperCase() === char)
+    parks.filter(park => park.slug.charAt(0).toUpperCase() === char)
 
   const filters = [
     "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
