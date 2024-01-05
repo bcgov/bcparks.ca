@@ -7,8 +7,8 @@ import * as qs from 'qs'
 import { dataFileSpecified, getDataFilePath } from '../utils/commandLine.js';
 import { getLogger } from '../utils/logging.js';
 
-const LEGAL_NAME_TYPE = 1;
-const PHONETIC_NAME_TYPE = 3;
+const LEGAL_NAME_TYPE = "Legal";
+const PHONETIC_NAME_TYPE = "Phonetic";
 const DR_SOURCE = "Parks Data Register";
 
 /**
@@ -54,6 +54,11 @@ const loadData = async function () {
     }
   }
 
+  // get the list of park name types
+  const parkNameTypes = (await axios.get(`${process.env.STRAPI_BASE_URL}/api/park-name-types`)).data.data;
+  const legalNameType = parkNameTypes.find(t => t.attributes.nameType === LEGAL_NAME_TYPE);
+  const phoneticNameType = parkNameTypes.find(t => t.attributes.nameType === PHONETIC_NAME_TYPE);
+
   // convert the dataRegisterParks to a dictionary
   const parksDict = {};
   for (const park of dataRegisterParks) {
@@ -70,7 +75,7 @@ const loadData = async function () {
     populate: {
       parkNames: {
         fields: ["parkName", "source"],
-        populate: { "parkNameType": { fields: ["nameTypeId"] } }
+        populate: { "parkNameType": { fields: ["nameType"] } }
       }
     },
     pagination: {
@@ -117,7 +122,7 @@ const loadData = async function () {
       await updateParkName(
         p.strapi.legalNameId,
         p.id,
-        LEGAL_NAME_TYPE,
+        legalNameType,
         p.orcs,
         p.dataRegister?.legalName,
         p.strapi.legalName,
@@ -131,7 +136,7 @@ const loadData = async function () {
       await updateParkName(
         p.strapi.phoneticNameId,
         p.id,
-        PHONETIC_NAME_TYPE,
+        phoneticNameType,
         p.orcs,
         p.dataRegister?.phoneticName,
         p.strapi.phoneticName,
@@ -183,8 +188,8 @@ const loadData = async function () {
 /**
  *  Gets a simlified park name from the list of park names associated with a protected area
  */
-const getParkName = function (strapiPark, nameTypeId) {
-  const parkName = strapiPark.attributes.parkNames?.data.find(p => p?.attributes?.parkNameType?.data?.attributes?.nameTypeId === nameTypeId)
+const getParkName = function (strapiPark, nameType) {
+  const parkName = strapiPark.attributes.parkNames?.data.find(p => p?.attributes?.parkNameType?.data?.attributes?.nameType === nameType)
   return {
     id: parkName?.id || null,
     name: (parkName?.attributes?.parkName || ""),
@@ -196,23 +201,13 @@ const getParkName = function (strapiPark, nameTypeId) {
 /**
  *  Updates, inserts, or deletes a park name
  */
-const updateParkName = async function (parkNameId, protectedAreaId, nameTypeId, orcs, newName, oldName, source) {
-  let nameType = "";
+const updateParkName = async function (parkNameId, protectedAreaId, nameTypeObj, orcs, newName, oldName, source) {
+  const nameType = `${nameTypeObj.attributes.nameType.toLowerCase()}Name`;
   const logger = getLogger();
   const httpReqHeaders = {
     'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
     'Content-Type': 'application/json'
   };
-  switch (nameTypeId) {
-    case LEGAL_NAME_TYPE:
-      nameType = "legalName";
-      break;
-    case PHONETIC_NAME_TYPE:
-      nameType = "phoneticName";
-      break;
-    default:
-      nameType = "unknownName";
-  }
   if (newName) {
     if (parkNameId) {
       logger.info(`Updating ${nameType} for park ${orcs} from "${oldName}" to "${newName}"`);
@@ -237,8 +232,7 @@ const updateParkName = async function (parkNameId, protectedAreaId, nameTypeId, 
             "data": {
               "parkName": newName,
               "source": DR_SOURCE,
-              "parkNameType": { connect: [{ id: nameTypeId }] },
-              "nameTypeId": nameTypeId,
+              "parkNameType": { connect: [{ id: nameTypeObj.id }] },
               "protectedArea": { connect: [{ id: protectedAreaId }] }
             }
           },
