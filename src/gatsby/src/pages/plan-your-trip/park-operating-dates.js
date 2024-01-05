@@ -13,6 +13,8 @@ import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
 import "../../styles/listPage.scss"
 
+const replaceSpecialCharacters = require('replace-special-characters')
+
 const ParkLink = ({ park, advisories }) => {
   const thisYear = new Date().getFullYear()
   const parkOperationDates = park.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
@@ -279,13 +281,22 @@ const ParkOperatingDatesPage = () => {
 
   const apiBaseUrl = `${queryData.site.siteMetadata.apiURL}/api`
   const menuContent = queryData?.allStrapiMenu?.nodes || []
+  const protectedAreas = queryData?.allStrapiProtectedArea?.nodes || []
+  protectedAreas.sort((a, b) => {
+    // compare protected area name including special characters
+    const parkA = replaceSpecialCharacters(a.protectedAreaName).toLowerCase()
+    const parkB = replaceSpecialCharacters(b.protectedAreaName).toLowerCase()
+    if (parkA < parkB) { return -1 }
+    if (parkA > parkB) { return 1 }
+    return 0;
+  })
 
   const [currentFilter, setCurrentFilter] = useState("All")
   const [parks, setParks] = useState([])
   const [accessStatuses, setAccessStatuses] = useState({})
 
   useEffect(() => {
-    setParks(queryData?.allStrapiProtectedArea?.nodes || [])
+    setParks(protectedAreas)
     axios.get(`${apiBaseUrl}/public-advisories/access-statuses`)
       .then(response => {
         if (response.status === 200) {
@@ -299,7 +310,7 @@ const ParkOperatingDatesPage = () => {
     setCurrentFilter(e.target.value)
   }
   const filtering = (char) =>
-    parks.filter(park => park.protectedAreaName.charAt(0).toUpperCase() === char)
+    parks.filter(park => replaceSpecialCharacters(park.protectedAreaName).charAt(0).toUpperCase() === char)
 
   const filters = [
     "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
