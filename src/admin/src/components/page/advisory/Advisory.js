@@ -477,6 +477,7 @@ export default function Advisory({
           setUrgencies([...urgencies]);
           const advisoryStatusData = res[10];
           const restrictedAdvisoryStatusCodes = ["INA", "APR"];
+          const desiredOrder = ['PUB', 'INA', 'DFT', 'APR', 'ARQ'];
           const tempAdvisoryStatuses = advisoryStatusData.map((s) => {
             let result = null;
             if (restrictedAdvisoryStatusCodes.includes(s.code) && approver) {
@@ -494,7 +495,10 @@ export default function Advisory({
             }
             return result;
           });
-          const advisoryStatuses = tempAdvisoryStatuses.filter(
+          const sortedStatus = tempAdvisoryStatuses.sort(
+            (a, b) => desiredOrder.indexOf(a.code) - desiredOrder.indexOf(b.code)
+          );
+          const advisoryStatuses = sortedStatus.filter(
             (s) => s !== null
           );
           setAdvisoryStatuses([...advisoryStatuses]);
