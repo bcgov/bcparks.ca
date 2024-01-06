@@ -23,12 +23,6 @@
     "hasReservations": {
       "type": "boolean"
     },
-    "openDate": {
-      "type": "date"
-    },
-    "closeDate": {
-      "type": "date"
-    },
     "isDateRangeAnnual": {
       "type": "boolean"
     },
