@@ -8,7 +8,7 @@ const About = () => {
       <Header />
       <div className={styles.Home} data-testid="Home">
         <div className="container hm-container mt-5">
-          <h3 className="mb-5">BC Parks Staff Portal</h3>
+          <h3 className="mb-5">Staff web portal</h3>
           <h4 className="m-2 p-0">Version: 1.0.0</h4>
           <h4 className="m-2 p-0">Last Updated: June 15, 2021</h4>
         </div>

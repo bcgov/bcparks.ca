@@ -30,7 +30,7 @@ export default function Error({ page: { error } }) {
     } else if (error.message === "Unauthorized") {
       errorContent = (
         <div>
-          <h1>BC Parks Staff Portal</h1>
+          <h1>Staff web portal</h1>
           <br />
           <p>
             Please contact the web team at{" "}
