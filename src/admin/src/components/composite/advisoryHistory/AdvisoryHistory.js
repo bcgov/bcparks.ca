@@ -42,7 +42,7 @@ export default function AdvisoryHistory({ data: { advisoryNumber } }) {
                   submittedTime: moment(ad.createdDate).format(
                     "MMMM DD, yyyy hh:mm A"
                   ),
-                  displayText: "Submitted by",
+                  displayText: "Requested by",
                   dateToCompare: moment(ad.createdDate).valueOf(),
                 };
                 advisoriesHistory.push(record);

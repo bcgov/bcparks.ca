@@ -173,7 +173,7 @@ export default function AdvisoryForm({
     submittedBy: {
       value: submittedBy,
       setError: setSubmittedByError,
-      text: "submitted by",
+      text: "requested by",
     },
     advisoryStatus: {
       value: advisoryStatus,
@@ -212,7 +212,7 @@ export default function AdvisoryForm({
   const submitterInput = {
     id: "submitter",
     required: false,
-    placeholder: "Advisory Submitted by",
+    placeholder: "Advisory requested by",
   };
 
   // const ticketNumberInput = {

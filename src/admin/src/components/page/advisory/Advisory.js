@@ -528,7 +528,7 @@ export default function Advisory({
             }
             setIsLoadingPage(false);
           }
-          setSubmittedBy(keycloak.tokenParsed.name);
+          // setSubmittedBy(keycloak.tokenParsed.name);
           setIsLoadingData(false);
         })
         .catch(() => {
