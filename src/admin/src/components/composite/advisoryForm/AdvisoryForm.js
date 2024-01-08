@@ -21,6 +21,7 @@ import WarningIcon from "@material-ui/icons/Warning";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 import HelpIcon from "@material-ui/icons/Help";
+import CheckIcon from "@material-ui/icons/Check";
 import VisibilityToggle from "../../base/visibilityToggle/VisibilityToggle";
 import {
   validateOptionalNumber,
@@ -348,25 +349,35 @@ export default function AdvisoryForm({
             <div className="col-lg-7 col-md-8 col-sm-12">
               <FormControl error>
                 <ButtonGroup
-                  className="ad-btn-group"
-                  color="primary"
+                  className="ad-btn-group urgency-btn-group"
+                  variant="outlined"
                   aria-label="outlined primary button group"
                 >
                   {urgencies.map((u) => (
-                    <Button
+                    <Btn
                       key={u.value}
-                      label={u.label}
-                      styling={
-                        urgency === u.value
-                          ? "bcgov-normal-blue btn"
-                          : "bcgov-normal-white btn"
-                      }
                       onClick={() => {
                         setUrgency(u.value);
                       }}
-                    />
+                      className={urgency === u.value && `btn-urgency-${urgency}`}
+                      style={{textTransform: 'none'}}
+                    >
+                      {urgency === u.value && <CheckIcon />}
+                      {u.label}
+                    </Btn>
                   ))}
                 </ButtonGroup>
+                <div className="urgency-helper-text mt-1">
+                  {urgency === 1 && (
+                    <small>Medium urgency for safety and health related</small>
+                  )}
+                  {urgency === 2 && (
+                    <small>Low urgency for discretion and warnings</small>
+                  )}
+                  {urgency === 3 && (
+                    <small>High urgency for immediate danger and closures</small>
+                  )}
+                </div>
                 <FormHelperText>{urgencyError}</FormHelperText>
               </FormControl>
             </div>
@@ -1002,53 +1013,53 @@ export default function AdvisoryForm({
             </>
           )}
           {!PrivateElement(["approver"]) && (isStatHoliday || isAfterHours) && (
-              <div className="ad-af-hour-box">
-                <div className="row">
-                  <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-                  </div>
-                  <div className="col-lg-7 col-md-8 col-sm-12">
-                    <div className="d-flex field-bg-blue">
-                      <WarningIcon className="warningIcon" />
-                      <div className="ml-3">
-                        <p>
-                          <b>This is an after-hours advisory</b><br />
-                          The web team's business hours are<br />
-                          Monday to Friday, 8:30am – 4:30pm.
-                        </p>
-                        <div className="d-flex mt-3">
-                          <Radio
-                            checked={isAfterHourPublish}
-                            onChange={() => {
-                              setIsAfterHourPublish(true);
-                            }}
-                            value="Publish"
-                            name="after-hour-submission"
-                            inputProps={{ "aria-label": "Publish immediately" }}
-                            className="mr-2"
-                          />
-                          <p><b className="required">Urgent/safety-related advisory.</b> Publish immediately.</p>
-                        </div>
-                        <div className="d-flex mt-3">
-                          <Radio
-                            checked={!isAfterHourPublish}
-                            onChange={() => {
-                              setIsAfterHourPublish(false);
-                            }}
-                            value="Review"
-                            name="after-hour-submission"
-                            inputProps={{
-                              "aria-label": "Submit for web team review",
-                            }}
-                            className="mr-2"
-                          />
-                          <p><b>Advisory is not urgent.</b> Submit for web team review.</p>
-                        </div>
+            <div className="ad-af-hour-box">
+              <div className="row">
+                <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+                </div>
+                <div className="col-lg-7 col-md-8 col-sm-12">
+                  <div className="d-flex field-bg-blue">
+                    <WarningIcon className="warningIcon" />
+                    <div className="ml-3">
+                      <p>
+                        <b>This is an after-hours advisory</b><br />
+                        The web team's business hours are<br />
+                        Monday to Friday, 8:30AM – 4:30PM.
+                      </p>
+                      <div className="d-flex mt-3">
+                        <Radio
+                          checked={isAfterHourPublish}
+                          onChange={() => {
+                            setIsAfterHourPublish(true);
+                          }}
+                          value="Publish"
+                          name="after-hour-submission"
+                          inputProps={{ "aria-label": "Publish immediately" }}
+                          className="mr-2"
+                        />
+                        <p><b className="required">Urgent/safety-related.</b> Publish immediately.</p>
+                      </div>
+                      <div className="d-flex mt-3">
+                        <Radio
+                          checked={!isAfterHourPublish}
+                          onChange={() => {
+                            setIsAfterHourPublish(false);
+                          }}
+                          value="Review"
+                          name="after-hour-submission"
+                          inputProps={{
+                            "aria-label": "Submit for web team review",
+                          }}
+                          className="mr-2"
+                        />
+                        <p><b>Advisory is not urgent.</b> Submit for web team review.</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            )}
+            </div>
+          )}
           <br />
           <div className="row">
             <div className="col-lg-3 col-md-4"></div>

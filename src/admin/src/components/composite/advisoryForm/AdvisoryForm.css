@@ -9,6 +9,22 @@
   vertical-align: middle !important;
 }
 
+.urgency-btn-group button {
+  width: 100px;
+  height: 40px;
+  line-height: 1;
+  border-radius: 100px;
+  padding: 0;
+}
+.urgency-btn-group button .MuiButton-label {
+  font-size: 1rem;
+}
+.urgency-btn-group button .MuiButton-label .MuiSvgIcon-root {
+  width: 18px;
+  height: 18px;
+  margin-right: 4px;
+}
+
 .ad-btn-group .bcgov-button {
   margin-right: 5px !important;
 }

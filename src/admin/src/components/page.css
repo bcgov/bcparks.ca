@@ -124,6 +124,21 @@
   padding: 0;
 }
 
+.btn-urgency-1 {
+  color: var(--color-grey) !important;
+  background-color: var(--color-yellow) !important;
+}
+
+.btn-urgency-2 {
+  color: white !important;
+  background-color: var(--color-med-blue) !important;
+}
+
+.btn-urgency-3 {
+  color: white !important;
+  background-color: var(--color-red) !important;
+}
+
 .bcgov-datepicker-wrapper input {
   opacity: 1 !important;
   color: #234075 !important;
