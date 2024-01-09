@@ -10,7 +10,6 @@ import { Link } from "@mui/material"
 import HtmlContent from "./htmlContent"
 import HTMLArea from "../HTMLArea"
 import StaticIcon from "./staticIcon"
-import { ParkAccessFromAdvisories } from "../../components/park/parkAccessStatus"
 import { countsList } from "../../utils/constants"
 import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
 
@@ -155,10 +154,6 @@ export default function ParkDates({ data }) {
 
   const advisories = dataCopy.advisories || []
 
-  const parkStatus = ParkAccessFromAdvisories(advisories)
-  const parkStatusText = parkStatus.parkStatusText
-  const parkStatusIcon = parkStatus.parkStatusIcon
-
   const [open, setOpen] = useState(false)
 
   // Operations record is required, even if subarea records are present
@@ -250,16 +245,6 @@ export default function ParkDates({ data }) {
                   <GatsbyLink to="#park-advisory-details-container">Check advisories</GatsbyLink> before visiting.
                   Dates may change without notice.
                 </div>
-                <h4 className="my-3">
-                  {parkType} status:
-                  <img
-                    src={parkStatusIcon}
-                    alt=""
-                    className="mx-1"
-                    style={{ width: 32, height: 32 }}
-                  />
-                  {parkStatusText}
-                </h4>
                 {parkDates && (
                   <h4 className="my-3">
                     The {parkType.toLowerCase()} {marineProtectedArea !== 'Y' && "gate"} is open {parkDates}
