@@ -62,13 +62,16 @@ const ParkLink = ({ park, advisories }) => {
             <ExpandCircleDownIcon />
           </GatsbyLink>
         </h2>
-        <ParkAccessStatus advisories={advisories} slug={park.slug} />
       </div>
-      {parkDates &&
-        <p>
-          The {park.type.toLowerCase()} {park.marineProtectedArea !== 'Y' && "gate"} is open {parkDates}.
-        </p>
-      }
+      <div className="d-flex flex-wrap">
+        <ParkAccessStatus advisories={advisories} slug={park.slug} />
+        {parkDates &&
+          <p>
+            {advisories.every(advisory => advisory.accessStatusId === 3) && ". "}
+            The {park.type.toLowerCase()} {park.marineProtectedArea !== 'Y' && "gate"} is open {parkDates}.
+          </p>
+        }
+      </div>
       {/* display table list if the screen size is bigger than 768 px */}
       <table className="table">
         <thead className="thead-light">

@@ -169,8 +169,7 @@
 
   // park-access-status on the park operating dates page
   .access-status-icon {
-    min-width: 160px;
-    font-size: 0.875rem;
+    margin-bottom: 16px;
 
     a {
       text-decoration: underline;
@@ -180,11 +179,6 @@
     img {
       width: 24px;
       height: 24px;
-    }
-
-    @media screen and (max-width: $mdBreakpoint) {
-      margin-top: -8px;
-      margin-bottom: 12px;
     }
   }
 }
