@@ -14,16 +14,16 @@
   },
   "dependencies": {
     "@_sh/strapi-plugin-ckeditor": "^2.0.4",
-    "@babel/plugin-transform-block-scoping": "^7.23.0",
+    "@babel/plugin-transform-block-scoping": "^7.23.4",
     "@ckeditor/ckeditor5-markdown-gfm": "^36.0.1",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@opensearch-project/opensearch": "^2.4.0",
-    "@strapi/plugin-documentation": "4.14.4",
-    "@strapi/plugin-graphql": "4.14.4",
-    "@strapi/plugin-users-permissions": "4.14.4",
-    "@strapi/provider-email-nodemailer": "4.14.4",
-    "@strapi/provider-upload-aws-s3": "4.14.4",
-    "@strapi/strapi": "4.14.4",
+    "@strapi/plugin-documentation": "4.16.2",
+    "@strapi/plugin-graphql": "4.16.2",
+    "@strapi/plugin-users-permissions": "4.16.2",
+    "@strapi/provider-email-nodemailer": "4.16.2",
+    "@strapi/provider-upload-aws-s3": "4.16.2",
+    "@strapi/strapi": "4.16.2",
     "codemirror": "5.65.12",
     "jwks-rsa": "^2.1.5",
     "pg": "^8.11.3",
@@ -38,10 +38,10 @@
     "npm": ">=6.0.0"
   },
   "devDependencies": {
-    "eslint": "^8.51.0",
+    "eslint": "^8.56.0",
     "eslint-config-prettier": "^8.10.0",
     "jest": "^29.7.0",
-    "sqlite3": "^5.1.4",
+    "sqlite3": "^5.1.7",
     "supertest": "^6.3.3"
   },
   "jest": {
