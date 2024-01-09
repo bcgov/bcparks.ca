@@ -360,7 +360,7 @@ export default function AdvisoryForm({
                         setUrgency(u.value);
                       }}
                       className={urgency === u.value && `btn-urgency-${urgency}`}
-                      style={{textTransform: 'none'}}
+                      style={{ textTransform: 'none' }}
                     >
                       {urgency === u.value && <CheckIcon />}
                       {u.label}
@@ -503,95 +503,136 @@ export default function AdvisoryForm({
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               {linksRef.current.map((l, idx) => (
-                <div key={idx}>
-                  <div className="ad-link-flex">
-                    <Select
-                      options={linkTypes}
-                      onChange={(e) => {
-                        updateLink(idx, "type", e.value);
-                      }}
-                      value={linkTypes.filter((o) => o.value === l.type)}
-                      className="ad-link-select bcgov-select"
-                      placeholder="Select a link type"
-                    />
-                    <div
-                      className="ad-link-close ad-add-link pointer div-btn "
-                      tabIndex="0"
-                      onClick={() => {
-                        removeLink(idx);
-                      }}
-                      onKeyPress={(e) => {
-                        if (e.key === "Enter") {
-                          removeLink(idx);
-                        }
-                      }}
-                    >
-                      <CloseIcon />
+                <div key={idx} className="field-bg-grey">
+                  <div className="row">
+                    <div className="col-12 col-lg-3 col-md-2 ad-label">
+                      Type
                     </div>
-                  </div>
-                  <div className="ad-link-group">
-                    <TextField
-                      value={l.title}
-                      onChange={(event) => {
-                        updateLink(idx, "title", event.target.value);
-                      }}
-                      className="bcgov-input"
-                      variant="outlined"
-                      InputProps={{ ...linkTitleInput }}
-                      error={l.url !== "" && l.title === ""}
-                      helperText={(l.url && !l.title) ? "Please enter link title too" : ""}
-                    />
-                    <TextField
-                      value={l.file ? l.file.url : l.url}
-                      onChange={(event) => {
-                        updateLink(idx, "url", event.target.value);
-                      }}
-                      className="bcgov-input"
-                      variant="outlined"
-                      InputProps={{ ...linkUrlInput }}
-                      error={l.title !== "" && l.url === ""}
-                      helperText={(l.title && !l.url) ? "Please enter URL too" : ""}
-                    />
-                    <div className="ad-flex">
-                      <TextField
-                        value={l.file ? l.file.name : ""}
-                        className="bcgov-input mr10"
-                        variant="outlined"
-                        placeholder="Select files for upload"
+                    <div className="col-12 col-lg-9 col-md-8 ad-flex">
+                      <Select
+                        options={linkTypes}
+                        onChange={(e) => {
+                          updateLink(idx, "type", e.value);
+                        }}
+                        value={linkTypes.filter((o) => o.value === l.type)}
+                        className="ad-link-select bcgov-select"
+                        placeholder="Link or document type"
                       />
-                      <Btn
-                        variant="contained"
-                        component="label"
-                        className="bcgov-normal-blue btn transform-none ad-upload-btn"
+                      <div
+                        className="ad-link-close ad-add-link pointer div-btn"
+                        tabIndex="0"
+                        onClick={() => {
+                          removeLink(idx);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            removeLink(idx);
+                          }
+                        }}
                       >
-                        Browse
-                        <input
-                          type="file"
-                          accept=".jpg,.gif,.png,.gif,.pdf"
-                          hidden
-                          onChange={({ target }) => {
-                            handleFileCapture(target.files, idx);
-                          }}
-                        />
-                      </Btn>
+                        <CloseIcon />
+                      </div>
                     </div>
                   </div>
+                  <div className="row">
+                    <div className="col-12 col-lg-3 col-md-2 ad-label">
+                      Title
+                    </div>
+                    <div className="col-12 col-lg-9 col-md-8">
+                      <TextField
+                        value={l.title}
+                        onChange={(event) => {
+                          updateLink(idx, "title", event.target.value);
+                        }}
+                        className="bcgov-input"
+                        variant="outlined"
+                        InputProps={{ ...linkTitleInput }}
+                        error={l.url !== "" && l.title === ""}
+                        helperText={(l.url && !l.title) ? "Please enter link title too" : ""}
+                      />
+                    </div>
+                  </div>
+                  {l.format === "url" && (
+                    <div className="row">
+                      <div className="col-12 col-lg-3 col-md-2 ad-label">
+                        URL
+                      </div>
+                      <div className="col-12 col-lg-9 col-md-8">
+                        <TextField
+                          value={l.file ? l.file.url : l.url}
+                          onChange={(event) => {
+                            updateLink(idx, "url", event.target.value);
+                          }}
+                          className="bcgov-input"
+                          variant="outlined"
+                          InputProps={{ ...linkUrlInput }}
+                          error={l.title !== "" && l.url === ""}
+                          helperText={(l.title && !l.url) ? "Please enter URL too" : ""}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  {l.format === "file" && (
+                    <div className="row">
+                      <div className="col-12 col-lg-3 col-md-2 ad-label">
+                        File
+                      </div>
+                      <div className="col-12 col-lg-9 col-md-8 ad-flex">
+                        <TextField
+                          value={l.file ? l.file.name : ""}
+                          className="bcgov-input mr10"
+                          variant="outlined"
+                          placeholder="Select files for upload"
+                        />
+                        <Btn
+                          variant="contained"
+                          component="label"
+                          className="bcgov-normal-blue btn transform-none ad-upload-btn"
+                        >
+                          Browse
+                          <input
+                            type="file"
+                            accept=".jpg,.gif,.png,.gif,.pdf"
+                            hidden
+                            onChange={({ target }) => {
+                              handleFileCapture(target.files, idx);
+                            }}
+                          />
+                        </Btn>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
-              <div
+              <button
                 tabIndex="0"
                 className="ad-add-link pointer div-btn"
-                onKeyPress={(e) => {
+                onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    addLink();
+                    addLink("file");
                   }
                 }}
                 onClick={() => {
-                  addLink();
+                  addLink("file");
                 }}
               >
-                <AddIcon />
-              </div>
+                + Upload file
+              </button>
+              <span>OR</span>
+              <button
+                tabIndex="0"
+                className="ad-add-link pointer div-btn"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    addLink("url");
+                  }
+                }}
+                onClick={() => {
+                  addLink("url");
+                }}
+              >
+                + Add URL
+              </button>
             </div>
           </div>
           <div className="row">
@@ -600,135 +641,149 @@ export default function AdvisoryForm({
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               <div className="field-bg-grey">
-                <div className="ad-field ad-flex-wrap ad-flex">
-                  <div className="col-lg-8 col-md-12 col-sm-12">
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
-                        <div className="ad-flex">
-                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                            Start date
-                          </div>
-                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
-                            <KeyboardDateTimePicker
-                              id="startDate"
-                              value={startDate}
-                              onChange={setStartDate}
-                              format="MMMM DD, yyyy hh:mm A"
-                              className={`bcgov-datepicker-wrapper ${startDateError !== ""
-                                ? "bcgov-datepicker-wrapper-error"
-                                : ""
-                                }`}
-                              error={startDateError !== ""}
-                              helperText={startDateError}
-                              onBlur={() => {
-                                validateOptionalDate(advisoryData.startDate);
-                              }}
-                            />
-                            <VisibilityToggle
-                              toggle={{
-                                toggleState: displayStartDate,
-                                setToggleState: setDisplayStartDate,
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
-                        <div className="ad-flex">
-                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                            Duration
-                          </div>
-                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
-                            <Select
-                              options={intervals}
-                              onChange={handleDurationIntervalChange}
-                              placeholder="Select"
-                              className="pbm3 ad-interval-select bcgov-select"
-                            />
-                            <Select
-                              options={intervalUnits}
-                              onChange={handleDurationUnitChange}
-                              placeholder="Select"
-                              className="ad-interval-select bcgov-select"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
-                        <div className="ad-flex">
-                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                            End date
-                          </div>
-                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
-                            <KeyboardDateTimePicker
-                              id="endDate"
-                              value={endDate}
-                              onChange={setEndDate}
-                              format="MMMM DD, yyyy hh:mm A"
-                              className={`bcgov-datepicker-wrapper ${endDateError !== ""
-                                ? "bcgov-datepicker-wrapper-error"
-                                : ""
-                                }`}
-                              error={endDateError !== ""}
-                              helperText={endDateError}
-                              onBlur={() => {
-                                validateOptionalDate(advisoryData.endDate);
-                              }}
-                              minDate={startDate}
-                              minDateMessage="End date should not be before Advisory date"
-                            />
-                            <VisibilityToggle
-                              toggle={{
-                                toggleState: displayEndDate,
-                                setToggleState: setDisplayEndDate,
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {mode === "update" && (
-                      <div className="row">
-                        <div className="col-lg-12 col-md-12 col-sm-12 plr0">
-                          <div className="ad-flex">
-                            <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                              Updated date
-                            </div>
-                            <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
-                              <KeyboardDateTimePicker
-                                id="updatedDate"
-                                value={updatedDate}
-                                onChange={setUpdatedDate}
-                                format="MMMM DD, yyyy hh:mm A"
-                                className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
-                                  ? "bcgov-datepicker-wrapper-error"
-                                  : ""
-                                  }`}
-                                error={updatedDateError !== ""}
-                                helperText={updatedDateError}
-                                onBlur={() => {
-                                  validateOptionalDate(
-                                    advisoryData.updatedDate
-                                  );
-                                }}
-                              />
-                              <VisibilityToggle
-                                toggle={{
-                                  toggleState: displayUpdatedDate,
-                                  setToggleState: setDisplayUpdatedDate,
-                                }}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                <div className="row">
+                  <div className="col-12 col-lg-3 col-md-4 ad-label">
+                    Start date
+                  </div>
+                  <div className="col-12 col-lg-5 col-md-8">
+                    <KeyboardDateTimePicker
+                      id="startDate"
+                      value={startDate}
+                      onChange={setStartDate}
+                      format="MMMM DD, yyyy hh:mm A"
+                      className={`bcgov-datepicker-wrapper ${startDateError !== ""
+                        ? "bcgov-datepicker-wrapper-error"
+                        : ""
+                        }`}
+                      error={startDateError !== ""}
+                      helperText={startDateError}
+                      onBlur={() => {
+                        validateOptionalDate(advisoryData.startDate);
+                      }}
+                    />
+                  </div>
+                  <div className="col-12 col-lg-1 col-md-4 ad-label">
+                    Time
+                  </div>
+                  <div className="col-12 col-lg-3 col-md-8">
+                    <KeyboardDateTimePicker
+                      id="startDate"
+                      value={startDate}
+                      onChange={setStartDate}
+                      format="MMMM DD, yyyy hh:mm A"
+                      className={`bcgov-datepicker-wrapper ${startDateError !== ""
+                        ? "bcgov-datepicker-wrapper-error"
+                        : ""
+                        }`}
+                      error={startDateError !== ""}
+                      helperText={startDateError}
+                      onBlur={() => {
+                        validateOptionalDate(advisoryData.startDate);
+                      }}
+                    />
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-12 col-lg-3 col-md-4 ad-label">
+                    Duration
+                  </div>
+                  <div className="col-12 col-lg-5 col-md-8 ad-flex">
+                    <Select
+                      options={intervals}
+                      onChange={handleDurationIntervalChange}
+                      placeholder="Select"
+                      className="pbm3 ad-interval-select bcgov-select"
+                    />
+                    <Select
+                      options={intervalUnits}
+                      onChange={handleDurationUnitChange}
+                      placeholder="Select"
+                      className="ad-interval-select bcgov-select"
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12 col-lg-3 col-md-4 ad-label">
+                    End date
+                  </div>
+                  <div className="col-12 col-lg-5 col-md-8">
+                    <KeyboardDateTimePicker
+                      id="endDate"
+                      value={endDate}
+                      onChange={setEndDate}
+                      format="MMMM DD, yyyy hh:mm A"
+                      className={`bcgov-datepicker-wrapper ${endDateError !== ""
+                        ? "bcgov-datepicker-wrapper-error"
+                        : ""
+                        }`}
+                      error={endDateError !== ""}
+                      helperText={endDateError}
+                      onBlur={() => {
+                        validateOptionalDate(advisoryData.endDate);
+                      }}
+                      minDate={startDate}
+                      minDateMessage="End date should not be before Advisory date"
+                    />
+                  </div>
+                  <div className="col-12 col-lg-1 col-md-4 ad-label">
+                    Time
+                  </div>
+                  <div className="col-12 col-lg-3 col-md-8">
+                    <KeyboardDateTimePicker
+                      id="endDate"
+                      value={endDate}
+                      onChange={setEndDate}
+                      format="MMMM DD, yyyy hh:mm A"
+                      className={`bcgov-datepicker-wrapper ${endDateError !== ""
+                        ? "bcgov-datepicker-wrapper-error"
+                        : ""
+                        }`}
+                      error={endDateError !== ""}
+                      helperText={endDateError}
+                      onBlur={() => {
+                        validateOptionalDate(advisoryData.endDate);
+                      }}
+                      minDate={startDate}
+                      minDateMessage="End date should not be before Advisory date"
+                    />
+                  </div>
+                </div>
+                {mode === "update" && (
+                  <div className="row">
+                    <div className="col-lg-12 col-md-12 col-sm-12 plr0">
+                      <div className="ad-flex">
+                        <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
+                          Updated date
+                        </div>
+                        <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
+                          <KeyboardDateTimePicker
+                            id="updatedDate"
+                            value={updatedDate}
+                            onChange={setUpdatedDate}
+                            format="MMMM DD, yyyy hh:mm A"
+                            className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
+                              ? "bcgov-datepicker-wrapper-error"
+                              : ""
+                              }`}
+                            error={updatedDateError !== ""}
+                            helperText={updatedDateError}
+                            onBlur={() => {
+                              validateOptionalDate(
+                                advisoryData.updatedDate
+                              );
+                            }}
+                          />
+                          <VisibilityToggle
+                            toggle={{
+                              toggleState: displayUpdatedDate,
+                              setToggleState: setDisplayUpdatedDate,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

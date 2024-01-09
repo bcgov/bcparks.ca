@@ -296,6 +296,8 @@
 .field-bg-grey {
   color: var(--color-grey);
   background-color: var(--color-light-grey);
+  margin: 8px 0;
+  padding: 16px;
 }
 
 :focus {

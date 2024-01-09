@@ -607,10 +607,10 @@ export default function Advisory({
     setLinks(linkIds);
   };
 
-  const addLink = () => {
+  const addLink = (format) => {
     linksRef.current = [
       ...linksRef.current,
-      { title: "", url: "", type: defaultLinkType },
+      { title: "", url: "", type: defaultLinkType, format: format},
     ];
     setLinkIds();
   };
