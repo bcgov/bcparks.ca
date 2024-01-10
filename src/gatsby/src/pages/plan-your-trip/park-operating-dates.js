@@ -67,8 +67,7 @@ const ParkLink = ({ park, advisories }) => {
         <ParkAccessStatus advisories={advisories} slug={park.slug} />
         {parkDates &&
           <p>
-            {advisories.every(advisory => advisory.accessStatusId === 3) && ". "}
-            The {park.type.toLowerCase()} {park.marineProtectedArea !== 'Y' && "gate"} is open {parkDates}.
+            . The {park.type.toLowerCase()} {park.marineProtectedArea !== 'Y' && "gate"} is open {parkDates}.
           </p>
         }
       </div>
