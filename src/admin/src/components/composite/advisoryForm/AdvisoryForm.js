@@ -13,13 +13,13 @@ import {
 } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import {
+  TimePicker,
   KeyboardDateTimePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import Select from "react-select";
 import WarningIcon from "@material-ui/icons/Warning";
 import CloseIcon from "@material-ui/icons/Close";
-import AddIcon from "@material-ui/icons/Add";
 import HelpIcon from "@material-ui/icons/Help";
 import CheckIcon from "@material-ui/icons/Check";
 import VisibilityToggle from "../../base/visibilityToggle/VisibilityToggle";
@@ -666,20 +666,11 @@ export default function AdvisoryForm({
                     Time
                   </div>
                   <div className="col-12 col-lg-3 col-md-8">
-                    <KeyboardDateTimePicker
-                      id="startDate"
-                      value={startDate}
-                      onChange={setStartDate}
-                      format="MMMM DD, yyyy hh:mm A"
+                    <TimePicker
                       className={`bcgov-datepicker-wrapper ${startDateError !== ""
                         ? "bcgov-datepicker-wrapper-error"
                         : ""
                         }`}
-                      error={startDateError !== ""}
-                      helperText={startDateError}
-                      onBlur={() => {
-                        validateOptionalDate(advisoryData.startDate);
-                      }}
                     />
                   </div>
                 </div>
@@ -729,58 +720,48 @@ export default function AdvisoryForm({
                     Time
                   </div>
                   <div className="col-12 col-lg-3 col-md-8">
-                    <KeyboardDateTimePicker
-                      id="endDate"
-                      value={endDate}
-                      onChange={setEndDate}
-                      format="MMMM DD, yyyy hh:mm A"
+                    <TimePicker
                       className={`bcgov-datepicker-wrapper ${endDateError !== ""
                         ? "bcgov-datepicker-wrapper-error"
                         : ""
                         }`}
-                      error={endDateError !== ""}
-                      helperText={endDateError}
-                      onBlur={() => {
-                        validateOptionalDate(advisoryData.endDate);
-                      }}
-                      minDate={startDate}
-                      minDateMessage="End date should not be before Advisory date"
                     />
                   </div>
                 </div>
                 {mode === "update" && (
                   <div className="row">
-                    <div className="col-lg-12 col-md-12 col-sm-12 plr0">
-                      <div className="ad-flex">
-                        <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                          Updated date
-                        </div>
-                        <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
-                          <KeyboardDateTimePicker
-                            id="updatedDate"
-                            value={updatedDate}
-                            onChange={setUpdatedDate}
-                            format="MMMM DD, yyyy hh:mm A"
-                            className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
-                              ? "bcgov-datepicker-wrapper-error"
-                              : ""
-                              }`}
-                            error={updatedDateError !== ""}
-                            helperText={updatedDateError}
-                            onBlur={() => {
-                              validateOptionalDate(
-                                advisoryData.updatedDate
-                              );
-                            }}
-                          />
-                          <VisibilityToggle
-                            toggle={{
-                              toggleState: displayUpdatedDate,
-                              setToggleState: setDisplayUpdatedDate,
-                            }}
-                          />
-                        </div>
-                      </div>
+                    <div className="col-12 col-lg-3 col-md-4 ad-label">
+                      Updated date
+                    </div>
+                    <div className="col-12 col-lg-5 col-md-8">
+                      <KeyboardDateTimePicker
+                        id="updatedDate"
+                        value={updatedDate}
+                        onChange={setUpdatedDate}
+                        format="MMMM DD, yyyy hh:mm A"
+                        className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
+                          ? "bcgov-datepicker-wrapper-error"
+                          : ""
+                          }`}
+                        error={updatedDateError !== ""}
+                        helperText={updatedDateError}
+                        onBlur={() => {
+                          validateOptionalDate(
+                            advisoryData.updatedDate
+                          );
+                        }}
+                      />
+                    </div>
+                    <div className="col-12 col-lg-1 col-md-4 ad-label">
+                      Time
+                    </div>
+                    <div className="col-12 col-lg-3 col-md-8">
+                      <TimePicker
+                        className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
+                          ? "bcgov-datepicker-wrapper-error"
+                          : ""
+                          }`}
+                      />
                     </div>
                   </div>
                 )}
@@ -836,134 +817,111 @@ export default function AdvisoryForm({
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               <div className="field-bg-grey">
-                <div className="ad-field ad-flex-wrap ad-flex">
-                  <div className="col-lg-8 col-md-12 col-sm-12">
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
-                        <div className="ad-flex">
-                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label bcgov-required">
-                            Advisory date
-                          </div>
-                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
-                            <KeyboardDateTimePicker
-                              id="advisoryDate"
-                              value={advisoryDate}
-                              onChange={handleAdvisoryDateChange}
-                              format="MMMM DD, yyyy hh:mm A"
-                              className={`bcgov-datepicker-wrapper ${advisoryDateError !== ""
-                                ? "bcgov-datepicker-wrapper-error"
-                                : ""
-                                }`}
-                              error={advisoryDateError !== ""}
-                              helperText={advisoryDateError}
-                              onBlur={() => {
-                                validateRequiredDate(advisoryData.advisoryDate);
-                              }}
-                            />
-                            <VisibilityToggle
-                              toggle={{
-                                toggleState: displayAdvisoryDate,
-                                setToggleState: setDisplayAdvisoryDate,
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
-                        <div className="ad-flex">
-                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                            Posting date
-                          </div>
-                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
-                            <KeyboardDateTimePicker
-                              id="expiryDate"
-                              value={expiryDate}
-                              onChange={setExpiryDate}
-                              format="MMMM DD, yyyy hh:mm A"
-                              className={`bcgov-datepicker-wrapper  mr40 ${expiryDateError !== ""
-                                ? "bcgov-datepicker-wrapper-error"
-                                : ""
-                                }`}
-                              error={expiryDateError !== ""}
-                              helperText={expiryDateError}
-                              onBlur={() => {
-                                validateOptionalDate(advisoryData.expiryDate);
-                              }}
-                              minDate={startDate}
-                              minDateMessage="Expiry date should not be before Advisory date"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12 col-sm-12 plr0">
-                        <div className="ad-flex">
-                          <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                            Expiry date
-                          </div>
-                          <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
-                            <KeyboardDateTimePicker
-                              id="expiryDate"
-                              value={expiryDate}
-                              onChange={setExpiryDate}
-                              format="MMMM DD, yyyy hh:mm A"
-                              className={`bcgov-datepicker-wrapper  mr40 ${expiryDateError !== ""
-                                ? "bcgov-datepicker-wrapper-error"
-                                : ""
-                                }`}
-                              error={expiryDateError !== ""}
-                              helperText={expiryDateError}
-                              onBlur={() => {
-                                validateOptionalDate(advisoryData.expiryDate);
-                              }}
-                              minDate={startDate}
-                              minDateMessage="Expiry date should not be before Advisory date"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {mode === "update" && (
-                      <div className="row">
-                        <div className="col-lg-12 col-md-12 col-sm-12 plr0">
-                          <div className="ad-flex">
-                            <div className="p10 col-lg-3 col-md-3 col-sm-12 ad-date-label">
-                              Updated date
-                            </div>
-                            <div className="col-lg-9 col-md-9 col-sm-12 ad-flex-date">
-                              <KeyboardDateTimePicker
-                                id="updatedDate"
-                                value={updatedDate}
-                                onChange={setUpdatedDate}
-                                format="MMMM DD, yyyy hh:mm A"
-                                className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
-                                  ? "bcgov-datepicker-wrapper-error"
-                                  : ""
-                                  }`}
-                                error={updatedDateError !== ""}
-                                helperText={updatedDateError}
-                                onBlur={() => {
-                                  validateOptionalDate(
-                                    advisoryData.updatedDate
-                                  );
-                                }}
-                              />
-                              <VisibilityToggle
-                                toggle={{
-                                  toggleState: displayUpdatedDate,
-                                  setToggleState: setDisplayUpdatedDate,
-                                }}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                <div className="row">
+                  <div className="col-12 col-lg-3 col-md-4 ad-label bcgov-required">
+                    Posting date
+                  </div>
+                  <div className="col-12 col-lg-5 col-md-8">
+                    <KeyboardDateTimePicker
+                      id="advisoryDate"
+                      value={advisoryDate}
+                      onChange={handleAdvisoryDateChange}
+                      format="MMMM DD, yyyy hh:mm A"
+                      className={`bcgov-datepicker-wrapper ${advisoryDateError !== ""
+                        ? "bcgov-datepicker-wrapper-error"
+                        : ""
+                        }`}
+                      error={advisoryDateError !== ""}
+                      helperText={advisoryDateError}
+                      onBlur={() => {
+                        validateRequiredDate(advisoryData.advisoryDate);
+                      }}
+                    />
+                  </div>
+                  <div className="col-12 col-lg-1 col-md-4 ad-label">
+                    Time
+                  </div>
+                  <div className="col-12 col-lg-3 col-md-8">
+                    <TimePicker
+                      className={`bcgov-datepicker-wrapper ${advisoryDateError !== ""
+                        ? "bcgov-datepicker-wrapper-error"
+                        : ""
+                        }`}
+                    />
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-12 col-lg-3 col-md-4 ad-label">
+                    Expiry date
+                  </div>
+                  <div className="col-12 col-lg-5 col-md-8">
+                    <KeyboardDateTimePicker
+                      id="expiryDate"
+                      value={expiryDate}
+                      onChange={setExpiryDate}
+                      format="MMMM DD, yyyy hh:mm A"
+                      className={`bcgov-datepicker-wrapper  mr40 ${expiryDateError !== ""
+                        ? "bcgov-datepicker-wrapper-error"
+                        : ""
+                        }`}
+                      error={expiryDateError !== ""}
+                      helperText={expiryDateError}
+                      onBlur={() => {
+                        validateOptionalDate(advisoryData.expiryDate);
+                      }}
+                      minDate={startDate}
+                      minDateMessage="Expiry date should not be before Advisory date"
+                    />
+                  </div>
+                  <div className="col-12 col-lg-1 col-md-4 ad-label">
+                    Time
+                  </div>
+                  <div className="col-12 col-lg-3 col-md-8">
+                    <TimePicker
+                      className={`bcgov-datepicker-wrapper  mr40 ${expiryDateError !== ""
+                        ? "bcgov-datepicker-wrapper-error"
+                        : ""
+                        }`}
+                    />
+                  </div>
+                </div>
+                {mode === "update" && (
+                  <div className="row">
+                    <div className="col-12 col-lg-3 col-md-4 ad-label">
+                      Updated date
+                    </div>
+                    <div className="col-12 col-lg-5 col-md-8">
+                      <KeyboardDateTimePicker
+                        id="updatedDate"
+                        value={updatedDate}
+                        onChange={setUpdatedDate}
+                        format="MMMM DD, yyyy hh:mm A"
+                        className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
+                          ? "bcgov-datepicker-wrapper-error"
+                          : ""
+                          }`}
+                        error={updatedDateError !== ""}
+                        helperText={updatedDateError}
+                        onBlur={() => {
+                          validateOptionalDate(
+                            advisoryData.updatedDate
+                          );
+                        }}
+                      />
+                    </div>
+                    <div className="col-12 col-lg-1 col-md-4 ad-label">
+                      Time
+                    </div>
+                    <div className="col-12 col-lg-3 col-md-8">
+                      <TimePicker
+                        className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
+                          ? "bcgov-datepicker-wrapper-error"
+                          : ""
+                          }`}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
