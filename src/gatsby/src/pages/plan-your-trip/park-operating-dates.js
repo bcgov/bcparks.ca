@@ -56,7 +56,7 @@ const ParkLink = ({ park, advisories }) => {
   return (
     <div className="park-list">
       <div className="d-md-flex justify-content-between">
-        <h2>
+        <h2 className="mb-2">
           <GatsbyLink to={`/${park.slug}`}>
             {park.protectedAreaName}
             <ExpandCircleDownIcon />
