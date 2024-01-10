@@ -77,7 +77,6 @@ cms:
     minReplicas: 1
     maxReplicas: 1
     cpuUtilizationThreshold: 125
-    memoryUtilizationThreshold: 125
 
 patroni:
   componentName: patroni
@@ -172,7 +171,6 @@ public:
     minReplicas: 1
     maxReplicas: 1
     cpuUtilizationThreshold: 125
-    memoryUtilizationThreshold: 125
 
 backup:
   componentName: postgres-backup
@@ -251,7 +249,7 @@ redis:
 etl:
   componentName: etl
 
-  # Enabled by default.  Overriden for aplha-dev and alpha-test
+  # Enabled by default.  Overriden for aplha-dev
   enabled: true
   disableBcwfsCron: true
   disableParkNamesCron: false
