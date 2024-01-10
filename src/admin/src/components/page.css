@@ -129,7 +129,8 @@
   background-color: var(--color-yellow) !important;
 }
 
-.btn-urgency-2 {
+.btn-urgency-2,
+.btn-safety-selected {
   color: white !important;
   background-color: var(--color-med-blue) !important;
 }

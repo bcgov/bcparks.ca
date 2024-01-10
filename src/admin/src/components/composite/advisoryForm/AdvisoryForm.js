@@ -999,13 +999,26 @@ export default function AdvisoryForm({
               Public safety related
             </div>
             <div className="col-lg-7 col-md-8 col-sm-6 col-6">
-              <Checkbox
-                checked={isSafetyRelated}
-                onChange={(e) => {
-                  setIsSafetyRelated(e.target.checked);
-                }}
-                inputProps={{ "aria-label": "safety related" }}
-              />
+              <ButtonGroup
+                className="ad-btn-group safety-btn-group"
+                variant="outlined"
+                aria-label="outlined primary button group"
+              >
+                <Btn
+                  onClick={() => setIsSafetyRelated(true)}
+                  className={isSafetyRelated === true && `btn-safety-selected`}
+                  style={{ textTransform: 'none' }}
+                >
+                  {isSafetyRelated && <CheckIcon />} Yes
+                </Btn>
+                <Btn
+                  onClick={() => setIsSafetyRelated(false)}
+                  className={isSafetyRelated === false && `btn-safety-selected`}
+                  style={{ textTransform: 'none' }}
+                >
+                  {!isSafetyRelated && <CheckIcon />} No
+                </Btn>
+              </ButtonGroup>
             </div>
           </div>
           <div className="row">
