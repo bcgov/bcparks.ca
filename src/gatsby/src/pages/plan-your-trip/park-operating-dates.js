@@ -63,12 +63,13 @@ const ParkLink = ({ park, advisories }) => {
           </GatsbyLink>
         </h2>
       </div>
-      <div className="d-flex flex-wrap">
+      <div className="d-flex flex-wrap mb-3">
         <ParkAccessStatus advisories={advisories} slug={park.slug} />
         {parkDates &&
-          <p>
-            . The {park.type.toLowerCase()} {park.marineProtectedArea !== 'Y' && "gate"} is open {parkDates}.
-          </p>
+          <>
+            <span className="mr-1">.</span>
+            <span>The {park.type.toLowerCase()} {park.marineProtectedArea !== 'Y' && "gate"} is open {parkDates}.</span>
+          </>
         }
       </div>
       {/* display table list if the screen size is bigger than 768 px */}
