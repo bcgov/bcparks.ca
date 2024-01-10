@@ -22,7 +22,6 @@ import WarningIcon from "@material-ui/icons/Warning";
 import CloseIcon from "@material-ui/icons/Close";
 import HelpIcon from "@material-ui/icons/Help";
 import CheckIcon from "@material-ui/icons/Check";
-import VisibilityToggle from "../../base/visibilityToggle/VisibilityToggle";
 import {
   validateOptionalNumber,
   validateRequiredText,
@@ -925,36 +924,36 @@ export default function AdvisoryForm({
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
-              Advisory status
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${advisoryStatusError !== "" ? "bcgov-select-error" : ""
-                  }`}
-                error
-              >
-                <Select
-                  options={advisoryStatuses}
-                  value={advisoryStatuses.filter(
-                    (a) => a.value === advisoryStatus
-                  )}
-                  onChange={(e) => setAdvisoryStatus(e ? e.value : 0)}
-                  placeholder="Select an advisory status"
-                  className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredSelect(advisoryData.advisoryStatus);
-                  }}
-                  isClearable
-                />
-                <FormHelperText>{advisoryStatusError}</FormHelperText>
-              </FormControl>
-            </div>
-          </div>
           {PrivateElement(["approver"]) && (
             <>
+              <div className="row">
+                <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
+                  Advisory status
+                </div>
+                <div className="col-lg-7 col-md-8 col-sm-12">
+                  <FormControl
+                    variant="outlined"
+                    className={`bcgov-select-form ${advisoryStatusError !== "" ? "bcgov-select-error" : ""
+                      }`}
+                    error
+                  >
+                    <Select
+                      options={advisoryStatuses}
+                      value={advisoryStatuses.filter(
+                        (a) => a.value === advisoryStatus
+                      )}
+                      onChange={(e) => setAdvisoryStatus(e ? e.value : 0)}
+                      placeholder="Select an advisory status"
+                      className="bcgov-select"
+                      onBlur={() => {
+                        validateRequiredSelect(advisoryData.advisoryStatus);
+                      }}
+                      isClearable
+                    />
+                    <FormHelperText>{advisoryStatusError}</FormHelperText>
+                  </FormControl>
+                </div>
+              </div>
               <div className="row">
                 <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
                   Requested by
@@ -976,20 +975,6 @@ export default function AdvisoryForm({
                   />
                 </div>
               </div>
-              <div className="row">
-                <div className="col-lg-3 col-md-4 col-sm-6 col-6 ad-label">
-                  Public safety related
-                </div>
-                <div className="col-lg-7 col-md-8 col-sm-6 col-6">
-                  <Checkbox
-                    checked={isSafetyRelated}
-                    onChange={(e) => {
-                      setIsSafetyRelated(e.target.checked);
-                    }}
-                    inputProps={{ "aria-label": "safety related" }}
-                  />
-                </div>
-              </div>
               {/* Reservations Affected can be removed */}
               {/* <div className="row">
                 <div className="col-lg-3 col-md-4 col-sm-6 col-6 ad-label">
@@ -1007,24 +992,38 @@ export default function AdvisoryForm({
                   />
                 </div>
               </div> */}
-              <div className="row">
-                <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-                  Internal notes
-                </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
-                  <TextField
-                    value={notes}
-                    onChange={(event) => {
-                      setNotes(event.target.value);
-                    }}
-                    className="bcgov-input"
-                    variant="outlined"
-                    InputProps={{ ...notesInput }}
-                  />
-                </div>
-              </div>
             </>
           )}
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-6 col-6 ad-label">
+              Public safety related
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-6 col-6">
+              <Checkbox
+                checked={isSafetyRelated}
+                onChange={(e) => {
+                  setIsSafetyRelated(e.target.checked);
+                }}
+                inputProps={{ "aria-label": "safety related" }}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Internal notes
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <TextField
+                value={notes}
+                onChange={(event) => {
+                  setNotes(event.target.value);
+                }}
+                className="bcgov-input"
+                variant="outlined"
+                InputProps={{ ...notesInput }}
+              />
+            </div>
+          </div>
           {!PrivateElement(["approver"]) && (isStatHoliday || isAfterHours) && (
             <div className="ad-af-hour-box">
               <div className="row">

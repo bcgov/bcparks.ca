@@ -1070,7 +1070,7 @@ export default function Advisory({
                     sessionStorage.clear();
                   }}>
                   <ArrowBackIcon />
-                  Back to Public Advisories
+                  Back to public advisories
                 </button>
                 <h2 className="mt-5 mb-0">
                   {mode === "create" ? "Create a new" : "Edit"} advisory
