@@ -100,12 +100,10 @@ export default function ParkAccessStatus({ advisories, slug }) {
           {parkStatusText}
         </>
       ) : (
-        <Link to={`/${slug}/#park-advisory-details-container`}>
-          <>
-            <img src={parkStatusIcon} alt="" className="mr-2" />
-            {parkStatusText}
-          </>
-        </Link>
+        <>
+          <img src={parkStatusIcon} alt="" className="mr-2" />
+          {parkStatusText}, <Link to={`/${slug}/#park-advisory-details-container`}>check advisories</Link>
+        </>
       )}
     </div>
   )
