@@ -580,7 +580,7 @@ export default function Advisory({
   };
 
   const handleDurationIntervalChange = (e) => {
-    durationIntervalRef.current = e.value;
+    durationIntervalRef.current = parseInt(e.target.value);
     calculateExpiryDate();
   };
 

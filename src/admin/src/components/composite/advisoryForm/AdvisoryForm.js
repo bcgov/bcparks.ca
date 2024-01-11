@@ -6,7 +6,6 @@ import {
   TextField,
   ButtonGroup,
   Radio,
-  Checkbox,
   FormControl,
   FormHelperText,
   Button as Btn
@@ -677,13 +676,14 @@ export default function AdvisoryForm({
                   <div className="col-12 col-lg-3 col-md-4 ad-label">
                     Duration
                   </div>
-                  <div className="col-12 col-lg-5 col-md-8 ad-flex">
-                    <Select
-                      options={intervals}
+                  <div className="col-12 col-lg-5 col-md-8 d-flex">
+                    <TextField
+                      type="number"
+                      variant="outlined"
+                      InputProps={{inputProps: { min: 0 }}}
                       onChange={handleDurationIntervalChange}
-                      placeholder="Select"
-                      className="pbm3 ad-interval-select bcgov-select"
-                    />
+                      className="ad-interval-input bcgov-input"
+                    />                      
                     <Select
                       options={intervalUnits}
                       onChange={handleDurationUnitChange}

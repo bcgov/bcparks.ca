@@ -103,9 +103,13 @@
   font-size: 44px;
 }
 
+.ad-interval-input {
+  width: 80px !important;
+}
+
 .ad-interval-select {
   width: 100% !important;
-  margin-left: 0px !important;
+  margin-left: 8px !important;
 }
 
 .ad-link-select {
