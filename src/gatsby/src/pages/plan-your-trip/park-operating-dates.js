@@ -9,11 +9,10 @@ import Header from "../../components/header"
 import Footer from "../../components/footer"
 import Seo from "../../components/seo"
 import ScrollToTop from "../../components/scrollToTop"
-import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
 import "../../styles/listPage.scss"
 
-const ParkLink = ({ park, advisories }) => {
+const ParkLink = ({ park }) => {
   const thisYear = new Date().getFullYear()
   const parkOperationDates = park.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
   const subAreas = park.parkOperationSubAreas.filter(a => a.isActive) || []
@@ -55,23 +54,17 @@ const ParkLink = ({ park, advisories }) => {
 
   return (
     <div className="park-list">
-      <div className="d-md-flex justify-content-between mb-2">
-        <h2 className="mb-0">
-          <GatsbyLink to={`/${park.slug}`}>
-            {park.protectedAreaName}
-            <ExpandCircleDownIcon />
-          </GatsbyLink>
-        </h2>
-      </div>
-      <div className="d-flex flex-wrap mb-3">
-        <ParkAccessStatus advisories={advisories} slug={park.slug} />
-        {parkDates &&
-          <>
-            <span className="mr-1">.</span>
-            <span>The {park.type.toLowerCase()} {park.marineProtectedArea !== 'Y' && "gate"} is open {parkDates}.</span>
-          </>
-        }
-      </div>
+      <h2>
+        <GatsbyLink to={`/${park.slug}`}>
+          {park.protectedAreaName}
+          <ExpandCircleDownIcon />
+        </GatsbyLink>
+      </h2>
+      {parkDates &&
+        <p>
+          The {park.type.toLowerCase()} {park.marineProtectedArea !== 'Y' && "gate"} is open {parkDates}.
+        </p>
+      }
       {/* display table list if the screen size is bigger than 768 px */}
       <table className="table">
         <thead className="thead-light">
