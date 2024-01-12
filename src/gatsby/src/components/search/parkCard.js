@@ -184,6 +184,8 @@ const ParkCard = ({ r }) => {
                       <ParkAccessStatus
                         advisories={r.advisories}
                         slug={r.slug}
+                        subAreas={r.parkOperationSubAreas}
+                        operationDates={r.parkOperationDates}
                       />
                       {r.hasCampfireBan &&
                         <div className="campfire-ban-icon">
@@ -287,6 +289,8 @@ const ParkCard = ({ r }) => {
                     <ParkAccessStatus
                       advisories={r.advisories}
                       slug={r.slug}
+                      subAreas={r.parkOperationSubAreas}
+                      operationDates={r.parkOperationDates}
                     />
                     {r.hasCampfireBan &&
                       <div className="campfire-ban-icon">

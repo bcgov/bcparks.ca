@@ -14,6 +14,9 @@ export default function ParkHeader({
   isLoadingAdvisories,
   advisoryLoadError,
   advisories,
+  subAreas,
+  operationDates,
+  onStatusCalculated
 }) {
   const reservationsURL = "https://camping.bcparks.ca"
   const dayUsePassURL = "https://reserve.bcparks.ca/dayuse"
@@ -28,7 +31,13 @@ export default function ParkHeader({
           {!isLoadingAdvisories && !advisoryLoadError && (
             <div className="col-12 col-lg-6 d-flex justify-content-around flex-column flex-lg-row order-lg-1 card-parent">
               <div className="row d-flex align-items-center mb-3 mb-lg-0 card-child">
-                <ParkAccessStatus advisories={advisories} slug={slug} />
+                <ParkAccessStatus
+                  advisories={advisories}
+                  slug={slug}
+                  subAreas={subAreas}
+                  operationDates={operationDates}
+                  onStatusCalculated={onStatusCalculated}
+                />
               </div>
               {hasCampfireBan &&
                 <div className="row d-flex align-items-center mb-3 mb-lg-0 card-child">
@@ -65,4 +74,7 @@ ParkHeader.propTypes = {
   advisoryLoadError: PropTypes.any,
   hasReservations: PropTypes.bool,
   advisories: PropTypes.array,
+  subAreas: PropTypes.array.isRequired,
+  operationDates: PropTypes.array.isRequired,
+  onStatusCalculated: PropTypes.func
 }
