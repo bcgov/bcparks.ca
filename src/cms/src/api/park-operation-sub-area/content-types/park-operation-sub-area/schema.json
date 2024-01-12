@@ -165,6 +165,9 @@
       "relation": "manyToOne",
       "target": "api::facility-type.facility-type",
       "inversedBy": "parkOperationSubAreas"
+    },
+    "closureAffectsAccessStatus": {
+      "type": "boolean"
     }
   }
 }

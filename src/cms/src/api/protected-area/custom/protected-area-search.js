@@ -182,7 +182,7 @@ function parseSearchFilters(query) {
 
 function parseSearchOffset(query) {
   const offset = parseInt(query._start, 10) || 0;
-  const limit = parseInt(query._limit, 10);
+  let limit = parseInt(query._limit, 10);
   if (!limit && limit !== 0) {
     limit = 10
   }

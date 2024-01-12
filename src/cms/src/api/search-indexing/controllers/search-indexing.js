@@ -65,6 +65,20 @@ module.exports = ({ strapi }) => ({
       geoShape: {
         fields: ["geometry"],
       },
+      parkOperationDates: {
+        fields: ["operatingYear", "gateOpenDate", "gateCloseDate", "publishedAt"]
+      },
+      parkOperationSubAreas: {
+        fields: ["isActive", "isOpen", "closureAffectsAccessStatus", "publishedAt"],
+        populate: {
+          "parkOperationSubAreaDates": {
+            fields: ["operatingYear", "openDate", "closeDate", "isActive", "publishedAt"]
+          },
+          "parkSubAreaType": {
+            fields: ["id"]
+          }
+        }
+      }
     };
     query.publicationState = "preview";
 
