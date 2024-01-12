@@ -21,11 +21,11 @@ module.exports = {
   },
   async beforeDelete(event) {
     let { where } = event.params;
-    const subArea = await strapi.entityService.findOne(
-      "api::park-operation-sub-area.park-operation-sub-area", where.id, {
+    const parkDate = await strapi.entityService.findOne(
+      "api::park-operation-date.park-operation-date", where.id, {
       fields: ['id'],
       populate: { protectedArea: { fields: ['id'] } }
     });
-    await indexPark(subArea.protectedArea.id)
+    await indexPark(parkDate.protectedArea.id)
   }
 };

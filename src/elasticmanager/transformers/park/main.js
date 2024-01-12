@@ -1,5 +1,6 @@
 const _ = require("lodash");
-const geo = require("../utils/geoHelpers")
+const geo = require("./geoshape");
+const operatingDates = require("./operatingDates");
 
 /**
  * Transforms a protectedArea retrieved from Strapi into a JSON format
@@ -148,7 +149,13 @@ exports.createElasticPark = async function (park, photos) {
   // in Elasticsearch
   park.geoBoundary = geo.outline(flattenedGeometry);
 
-  // delete fields that are only used for indexing
+  // remove unnecessary operating dates
+  park.parkOperationDates = operatingDates.convertParkOperationDates(park.parkOperationDates);
+
+  // remove unnecessary subareas and subarea dates
+  park.parkOperationSubAreas = operatingDates.convertParkOperationSubAreas(park.parkOperationSubAreas);
+
+  // delete raw fields that were used for transformation
   delete park.isDisplayed;
   delete park.publishedAt;
   delete park.latitude;
