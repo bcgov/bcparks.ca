@@ -158,7 +158,6 @@
 
 .MuiInputBase-input {
   padding: 10px !important;
-  color: #234075 !important;
 }
 
 .MuiInputBase-input::placeholder {
@@ -212,6 +211,22 @@
 .bcgov-input {
   width: 100% !important;
   background-color: white;
+}
+
+.bcgov-textarea {
+  width: 100%;
+  height: auto;
+  min-height: 96px;
+  max-height: 200px;
+  background-color: white;
+  overflow: auto;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.bcgov-textarea .standard-message:not(:last-of-type) {
+  margin-bottom: 16px;
 }
 
 .bcgov-datepicker-wrapper {
@@ -310,7 +325,8 @@
 .MuiTableCell-root div,
 .MuiTableCell-root span,
 .MuiTableCell-root,
-.MuiInputBase-root {
+.MuiInputBase-root,
+.MuiTypography-root {
   font-family: BCSans, Verdana, Arial, sans serif !important;
 }
 

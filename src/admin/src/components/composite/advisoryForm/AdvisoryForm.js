@@ -8,7 +8,8 @@ import {
   Radio,
   FormControl,
   FormHelperText,
-  Button as Btn
+  Button as Btn,
+  Typography
 } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import {
@@ -226,7 +227,7 @@ export default function AdvisoryForm({
     required: true,
     placeholder: "Listing Rank",
   };
-  
+
   const displayedDateOptions = (mode === "update") ? [
     { label: "Posted date", value: "posted" },
     ({ label: "Updated date", value: "updated" }),
@@ -506,18 +507,17 @@ export default function AdvisoryForm({
               Standard message preview
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
-              <TextField
-                // value={description}
-                // onChange={(event) => {
-                //   setDescription(event.target.value);
-                // }}
-                multiline
-                rows={4}
-                rowsMax={10}
-                className="bcgov-input"
-                variant="outlined"
-              // InputProps={{ ...descriptionInput }}
-              />
+              <div className="bcgov-textarea">
+                {selectedStandardMessages.map((message, i) => (
+                  <Typography
+                    key={i}
+                    component="div"
+                    className="standard-message"
+                    dangerouslySetInnerHTML={{
+                      __html: message.obj.description
+                    }} />
+                ))}
+              </div>
             </div>
           </div>
           <div className="row">
