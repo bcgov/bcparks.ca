@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./AdvisoryForm.css";
 import { Button } from "../../shared/button/Button";
@@ -37,8 +37,8 @@ import AdvisoryAreaPicker from "../advisoryAreaPicker/AdvisoryAreaPicker";
 export default function AdvisoryForm({
   mode,
   data: {
-    ticketNumber,
-    setTicketNumber,
+    // ticketNumber,
+    // setTicketNumber,
     listingRank,
     setListingRank,
     headline,
@@ -80,23 +80,23 @@ export default function AdvisoryForm({
     setUrgency,
     isSafetyRelated,
     setIsSafetyRelated,
-    isReservationAffected,
-    setIsReservationAffected,
+    // isReservationAffected,
+    // setIsReservationAffected,
     advisoryDate,
     handleAdvisoryDateChange,
-    displayAdvisoryDate,
+    // displayAdvisoryDate,
     setDisplayAdvisoryDate,
     startDate,
     setStartDate,
-    displayStartDate,
+    // displayStartDate,
     setDisplayStartDate,
     endDate,
     setEndDate,
-    displayEndDate,
+    // displayEndDate,
     setDisplayEndDate,
     updatedDate,
     setUpdatedDate,
-    displayUpdatedDate,
+    // displayUpdatedDate,
     setDisplayUpdatedDate,
     expiryDate,
     setExpiryDate,
@@ -140,6 +140,7 @@ export default function AdvisoryForm({
   const [updatedDateError, setUpdatedDateError] = useState("");
   const [submittedByError, setSubmittedByError] = useState("");
   const [listingRankError, setListingRankError] = useState("");
+  const [selectedDisplayedDateOption, setSelectedDisplayedDateOption] = useState("posted");
 
   const advisoryData = {
     listingRank: { value: listingRank, setError: setListingRankError, text: "listing rank" },
@@ -225,12 +226,14 @@ export default function AdvisoryForm({
     required: true,
     placeholder: "Listing Rank",
   };
-
-  const intervals = [
-    { label: "Two", value: 2 },
-    { label: "Three", value: 3 },
-    { label: "Four", value: 4 },
-    { label: "Five", value: 5 },
+  
+  const displayedDateOptions = (mode === "update") ? [
+    { label: "Posted date", value: "posted" },
+    ({ label: "Updated date", value: "updated" }),
+    { label: "No dates", value: "no" }
+  ] : [
+    { label: "Posted date", value: "posted" },
+    { label: "No dates", value: "no" }
   ];
 
   // Moment Intervals ref: https://momentjscom.readthedocs.io/en/latest/moment/03-manipulating/01-add/
@@ -240,6 +243,28 @@ export default function AdvisoryForm({
     { label: "Weeks", value: "w" },
     { label: "Months", value: "M" },
   ];
+
+  useEffect(() => {
+    if (selectedDisplayedDateOption === "posted") {
+      setDisplayAdvisoryDate(true)
+      setDisplayUpdatedDate(false)
+      setDisplayStartDate(false)
+      setDisplayEndDate(false)
+    }
+    if (selectedDisplayedDateOption === "updated") {
+      setDisplayAdvisoryDate(false)
+      setDisplayUpdatedDate(true)
+      setDisplayStartDate(false)
+      setDisplayEndDate(false)
+    }
+    if (selectedDisplayedDateOption === "no") {
+      setDisplayAdvisoryDate(false)
+      setDisplayUpdatedDate(false)
+      setDisplayStartDate(false)
+      setDisplayEndDate(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDisplayedDateOption])
 
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -680,10 +705,10 @@ export default function AdvisoryForm({
                     <TextField
                       type="number"
                       variant="outlined"
-                      InputProps={{inputProps: { min: 0 }}}
+                      InputProps={{ inputProps: { min: 0 } }}
                       onChange={handleDurationIntervalChange}
                       className="ad-interval-input bcgov-input"
-                    />                      
+                    />
                     <Select
                       options={intervalUnits}
                       onChange={handleDurationUnitChange}
@@ -727,43 +752,6 @@ export default function AdvisoryForm({
                     />
                   </div>
                 </div>
-                {mode === "update" && (
-                  <div className="row">
-                    <div className="col-12 col-lg-3 col-md-4 ad-label">
-                      Updated date
-                    </div>
-                    <div className="col-12 col-lg-5 col-md-8">
-                      <KeyboardDateTimePicker
-                        id="updatedDate"
-                        value={updatedDate}
-                        onChange={setUpdatedDate}
-                        format="MMMM DD, yyyy hh:mm A"
-                        className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
-                          ? "bcgov-datepicker-wrapper-error"
-                          : ""
-                          }`}
-                        error={updatedDateError !== ""}
-                        helperText={updatedDateError}
-                        onBlur={() => {
-                          validateOptionalDate(
-                            advisoryData.updatedDate
-                          );
-                        }}
-                      />
-                    </div>
-                    <div className="col-12 col-lg-1 col-md-4 ad-label">
-                      Time
-                    </div>
-                    <div className="col-12 col-lg-3 col-md-8">
-                      <TimePicker
-                        className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
-                          ? "bcgov-datepicker-wrapper-error"
-                          : ""
-                          }`}
-                      />
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -773,14 +761,13 @@ export default function AdvisoryForm({
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               <Select
-                // options={standardMessages}
-                // value={selectedStandardMessages}
-                // onChange={(e) => {
-                //   setSelectedStandardMessages(e);
-                // }}
+                options={displayedDateOptions}
+                defaultValue={displayedDateOptions[0]}
+                onChange={(e) => {
+                  setSelectedDisplayedDateOption(e.value);
+                }}
                 placeholder="Posted date"
                 className="bcgov-select"
-                isMulti
                 isClearable
               />
             </div>
