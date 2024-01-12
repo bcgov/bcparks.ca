@@ -104,6 +104,7 @@ export default function ParkTemplate({ data }) {
   const [protectedAreaLoadError, setProtectedAreaLoadError] = useState(false)
   const [isLoadingProtectedArea, setIsLoadingProtectedArea] = useState(true)
   const [hasCampfireBan, setHasCampfireBan] = useState(false)
+  const [parkAccessStatus, setParkAccessStatus] = useState(null)
 
   useEffect(() => {
     setIsLoadingAdvisories(true)
@@ -142,6 +143,10 @@ export default function ParkTemplate({ data }) {
       window.location.replace(href)
     }
   }, [isLoadingProtectedArea, isLoadingAdvisories])
+
+  const handleAccessStatus = function (statusObj) {
+    setParkAccessStatus(statusObj);
+  };
 
   const parkOverviewRef = useRef("")
   const advisoryRef = useRef("")
@@ -328,6 +333,7 @@ export default function ParkTemplate({ data }) {
                 advisories={advisories}
                 subAreas={park.parkOperationSubAreas}
                 operationDates={park.parkOperationDates}
+                onStatusCalculated={handleAccessStatus}
               />
             </div>
           )}
@@ -379,7 +385,7 @@ export default function ParkTemplate({ data }) {
                   </div>
                 )}
                 {!isLoadingAdvisories && !advisoryLoadError && (
-                  <AdvisoryDetails advisories={advisories} />
+                  <AdvisoryDetails advisories={advisories} accessStatusData={parkAccessStatus} />
                 )}
               </div>
             )}

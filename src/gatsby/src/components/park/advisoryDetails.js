@@ -19,7 +19,7 @@ const formatDate = isoDate => {
   return isoDate ? format(parseJSON(isoDate), "MMMM d, yyyy") : ""
 }
 
-export default function AdvisoryDetails({ advisories }) {
+export default function AdvisoryDetails({ advisories, accessStatusData }) {
   let expandedsInitial = []
   advisories.sort((a, b) => {
     return b.listingRank - a.listingRank
@@ -28,6 +28,33 @@ export default function AdvisoryDetails({ advisories }) {
   }).forEach((advisory, index) => {
     expandedsInitial[index] = false
   })
+
+  const [addedSeasonalRestriction, setAddedSeasonalRestriction] = useState(false)
+
+  if (accessStatusData?.mainGateClosure && !addedSeasonalRestriction) {
+    advisories.push({
+      id: -1,
+      title: "Limited access to this park during winter season",
+      description: `<p>Vehicle access to the park is not available during the winter season. Visitors 
+                    can still access the park on foot, but parking may not be available. Check 
+                    <a href="#park-dates-container">dates of operation</a> for details and gate 
+                    opening dates.</p>`,
+      urgency: { "color": "blue" },
+    });
+    setAddedSeasonalRestriction(true);
+  }
+  else if (accessStatusData?.areaClosure && !addedSeasonalRestriction) {
+    advisories.push({
+      id: -1,
+      title: "Limited access to some areas during the winter season",
+      description: `<p>Vehicle access to some areas of the park is not available during the winter season. 
+                    Visitors can still access them on foot, but parking may not be available. Check 
+                    <a href="#park-dates-container">dates of operation</a> for details and opening 
+                    dates.</p>`,
+      urgency: { "color": "blue" },
+    });
+    setAddedSeasonalRestriction(true);
+  }
 
   const [allExpanded, setAllExpanded] = useState(false)
   const [expandeds, setExpandeds] = useState(expandedsInitial)
@@ -214,4 +241,5 @@ export default function AdvisoryDetails({ advisories }) {
 
 AdvisoryDetails.propTypes = {
   advisories: PropTypes.array.isRequired,
+  accessStatusData: PropTypes.object,
 }
