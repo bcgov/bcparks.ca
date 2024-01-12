@@ -257,7 +257,9 @@ module.exports = ({ strapi }) => ({
             "parkLocations.searchArea",
             "parkLocations.searchAreaNum",
             "advisories",
-            "parkPhotos"
+            "parkPhotos",
+            "parkOperationSubAreas",
+            "parkOperationDates"
           ],
           aggs: aggregations
         }

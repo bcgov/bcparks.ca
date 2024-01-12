@@ -35,6 +35,11 @@
       "relation": "oneToMany",
       "target": "api::park-operation-sub-area.park-operation-sub-area",
       "mappedBy": "parkSubAreaType"
+    },
+    "closureAffectsAccessStatus": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     }
   }
 }
