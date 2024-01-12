@@ -166,4 +166,25 @@
       margin-bottom: 32px;
     }
   }
+
+  // park-access-status on the park operating dates page
+  .operating-dates-list {
+    .access-status-icon {
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    @media screen and (max-width: $mdBreakpoint) {
+      .gate-text {
+        display: block;
+        margin-left: calc(24px + 0.5rem);
+      }
+    }
+
+    div.access-status-icon {
+      display: inline-block;
+    }
+  }
 }

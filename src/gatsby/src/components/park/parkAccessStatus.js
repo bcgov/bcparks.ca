@@ -135,7 +135,7 @@ function parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, stat
   }
 }
 
-export default function ParkAccessStatus({ advisories, slug, subAreas, operationDates, onStatusCalculated }) {
+export default function ParkAccessStatus({ advisories, slug, subAreas, operationDates, onStatusCalculated, punctuation }) {
 
   const staticData = useStaticQuery(
     graphql`
@@ -187,12 +187,13 @@ export default function ParkAccessStatus({ advisories, slug, subAreas, operation
             {accessStatus.parkStatusText}
           </>
         ) : (
-          <Link to={`/${slug}/#park-advisory-details-container`}>
-            <>
-              <img src={accessStatus.parkStatusIcon} alt="" className="mr-2" />
-              {accessStatus.parkStatusText}
-            </>
-          </Link>
+          <>
+            <img src={accessStatus.parkStatusIcon} alt="" className="mr-2" />
+            {accessStatus.parkStatusText}{", "}
+            <Link to={`/${slug}/#park-advisory-details-container`}>
+              check advisories{punctuation}
+            </Link>
+          </>
         )}
       </>)}
     </div>
@@ -205,5 +206,6 @@ ParkAccessStatus.propTypes = {
   slug: PropTypes.string.isRequired,
   subAreas: PropTypes.array.isRequired,
   operationDates: PropTypes.array.isRequired,
-  onStatusCalculated: PropTypes.func
+  onStatusCalculated: PropTypes.func,
+  punctuation: PropTypes.string
 }
