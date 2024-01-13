@@ -92,6 +92,11 @@ exports.createSchemaCustomization = ({ actions }) => {
     longStaySites: String
     groupSitesReservable: String
     boatLaunches: String
+    closureAffectsAccessStatus: Boolean
+  }
+
+  type STRAPI_PARK_OPERATION_SUB_AREA_TYPE implements Node {
+    closureAffectsAccessStatus: Boolean
   }
 
   type STRAPI__COMPONENT_PARKS_SEO implements Node {
