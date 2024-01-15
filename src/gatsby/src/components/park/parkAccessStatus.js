@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { graphql, useStaticQuery, Link } from "gatsby"
 import { format } from "date-fns"
@@ -162,18 +162,21 @@ export default function ParkAccessStatus({ advisories, slug, subAreas, operation
 
   const [accessStatus, setAccessStatus] = useState(null)
 
-  if (accessStatus === null) {
-    const mainGateClosure = checkParkClosure(operationDates);
-    const areaClosure = checkSubAreaClosure(subAreas, staticData);
-    const status = parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData);
+  useEffect(() => {
+    if (accessStatus === null) {
+      const mainGateClosure = checkParkClosure(operationDates);
+      const areaClosure = checkSubAreaClosure(subAreas, staticData);
+      const status = parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData);
 
-    setAccessStatus(status)
+      setAccessStatus(status)
 
-    if (onStatusCalculated !== undefined) {
-      // return the accessStatus to the parent component if a function prop was passed in
-      onStatusCalculated(status);
+      if (onStatusCalculated !== undefined) {
+        // return the accessStatus to the parent component if a function prop was passed in
+        onStatusCalculated(status);
+      }
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [operationDates, subAreas, advisories]);
 
   return (
     <div className="access-status-icon">

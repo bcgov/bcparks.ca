@@ -9,7 +9,7 @@ import { CssBaseline, Breadcrumbs } from "@mui/material"
 import useScrollSpy from "react-use-scrollspy"
 
 import { capitalizeFirstLetter, isNullOrWhiteSpace } from "../utils/helpers";
-import { loadAdvisories } from '../utils/advisoryHelper';
+import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from '../utils/advisoryHelper';
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -105,6 +105,7 @@ export default function ParkTemplate({ data }) {
   const [isLoadingProtectedArea, setIsLoadingProtectedArea] = useState(true)
   const [hasCampfireBan, setHasCampfireBan] = useState(false)
   const [parkAccessStatus, setParkAccessStatus] = useState(null)
+  const [addedWinterGateAdvisory, setAddedWinterGateAdvisory] = useState(false)
 
   useEffect(() => {
     setIsLoadingAdvisories(true)
@@ -279,6 +280,16 @@ export default function ParkTemplate({ data }) {
   }
 
   const parkName = park.protectedAreaName;
+
+  // add seasonal advisory
+  if (parkAccessStatus?.mainGateClosure && !addedWinterGateAdvisory) {
+    advisories.push(WINTER_FULL_PARK_ADVISORY);
+    setAddedWinterGateAdvisory(true);
+  }
+  else if (parkAccessStatus?.areaClosure && !addedWinterGateAdvisory) {
+    advisories.push(WINTER_SUB_AREA_ADVISORY);
+    setAddedWinterGateAdvisory(true);
+  }  
 
   const breadcrumbs = [
     <GatsbyLink key="1" to="/">
