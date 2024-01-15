@@ -152,8 +152,6 @@ export default function ParkDates({ data }) {
   const marineProtectedArea = dataCopy.marineProtectedArea || ""
   subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
 
-  const advisories = dataCopy.advisories || []
-
   const [open, setOpen] = useState(false)
 
   // Operations record is required, even if subarea records are present

@@ -326,6 +326,8 @@ export default function ParkTemplate({ data }) {
                 isLoadingAdvisories={isLoadingAdvisories}
                 advisoryLoadError={advisoryLoadError}
                 advisories={advisories}
+                subAreas={park.parkOperationSubAreas}
+                operationDates={park.parkOperationDates}
               />
             </div>
           )}
@@ -689,6 +691,7 @@ export const query = graphql`
         reservationNote
         offSeasonNote
         adminNote
+        closureAffectsAccessStatus
         parkOperationSubAreaDates {
           isActive
           operatingYear
@@ -706,6 +709,7 @@ export const query = graphql`
           subAreaType
           subAreaTypeCode
           iconUrl
+          closureAffectsAccessStatus
         }
         facilityType {
           facilityName

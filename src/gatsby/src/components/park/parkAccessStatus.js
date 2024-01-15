@@ -1,6 +1,7 @@
-import React from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { graphql, useStaticQuery, Link } from "gatsby"
+import { format } from "date-fns"
 
 import blueStatusIcon from "../../images/park/blue-status-64.png"
 import redStatusIcon from "../../images/park/red-status-64.png"
@@ -13,26 +14,66 @@ const ICONS = {
   red: redStatusIcon,
 }
 
-function ParkAccessFromAdvisories(advisories) {
-  const data = useStaticQuery(
-    graphql`
-      {
-        allStrapiAccessStatus {
-          nodes {
-            id
-            strapi_id
-            color
-            accessStatus
-            groupLabel
-            precedence
-          }
-        }
+const thisYear = new Date().getFullYear();
+const today = format(new Date(), "yyyy-MM-dd");
+
+function checkParkClosure(operatingDates) {
+  const dates = operatingDates.filter(d => d.operatingYear === thisYear);
+  for (const d of dates) {
+    if (d.gateOpenDate && d.gateOpenDate > today) {
+      return true;
+    }
+    if (d.gateCloseDate && d.gateCloseDate < today) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function checkSubAreaClosure(subAreas, staticData) {
+  const subAreaTypeList = staticData?.allStrapiParkOperationSubAreaType.nodes
+  for (const subArea of subAreas) {
+    // standardize date from graphQL with date from elasticSearch
+    if (subArea.parkSubAreaType) {
+      if (subArea.closureAffectsAccessStatus === null) {
+        subArea.closureAffectsAccessStatus = subArea.parkSubAreaType.closureAffectsAccessStatus;
       }
-    `
-  )
+    } else if (subArea.subAreaTypeId) {
+      let subAreaType = subAreaTypeList.find(type => {
+        return type.strapi_id === subArea.subAreaTypeId
+      });
+      subArea.closureAffectsAccessStatus = subArea.isIgnored === null
+        ? subAreaType.closureAffectsAccessStatus
+        : !subArea.isIgnored;
+    }
+    // skip ignored subareas
+    if (!subArea.closureAffectsAccessStatus) {
+      break;
+    }
+    if (subArea.isActive !== true || subArea.isOpen !== true) {
+      break;
+    }
+    // check the dates to see if any subareas are closed
+    const dates = subArea.parkOperationSubAreaDates.filter(d =>
+      d.operatingYear === thisYear &&
+      d.isActive === true
+    );
+    for (const d of dates) {
+      if (d.openDate && d.openDate > today) {
+        return true;
+      }
+      if (d.closeDate && d.closeDate < today) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData) {
 
   let accessStatuses = []
-  const accessStatusList = data?.allStrapiAccessStatus.nodes
+  const accessStatusList = staticData?.allStrapiAccessStatus.nodes
 
   let parkStatusIcon = blueStatusIcon
   let parkStatusText = "Open"
@@ -75,42 +116,85 @@ function ParkAccessFromAdvisories(advisories) {
     parkStatusColor = accessStatuses[0].color
   }
 
+  if (parkStatusText === "Open" && (mainGateClosure || areaClosure)) {
+    parkStatusText = "Seasonal restrictions";
+  }
+
   return {
     parkStatusIcon: parkStatusIcon,
     parkStatusText: parkStatusText,
     parkStatusColor: parkStatusColor,
+    mainGateClosure: mainGateClosure,
+    areaClosure: areaClosure
   }
 }
-export { ParkAccessFromAdvisories }
 
-export default function ParkAccessStatus({ advisories, slug }) {
-  const {
-    parkStatusIcon,
-    parkStatusText,
-  } = ParkAccessFromAdvisories(advisories)
+export default function ParkAccessStatus({ advisories, slug, subAreas, operationDates, onStatusCalculated }) {
 
-  // unfortunately, incoming advisories from parks details and explore pages are structured differently.
-  // we need to differentiate between the two structures.
+  const staticData = useStaticQuery(
+    graphql`
+      {
+        allStrapiAccessStatus {
+          nodes {
+            id
+            strapi_id
+            color
+            accessStatus
+            groupLabel
+            precedence
+          }
+        }
+        allStrapiParkOperationSubAreaType {
+          nodes {
+            strapi_id
+            closureAffectsAccessStatus
+          }
+        }
+      }
+    `
+  )
+
+  const [accessStatus, setAccessStatus] = useState(null)
+
+  if (accessStatus === null) {
+    const mainGateClosure = checkParkClosure(operationDates);
+    const areaClosure = checkSubAreaClosure(subAreas, staticData);
+    const status = parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData);
+
+    setAccessStatus(status)
+
+    if (onStatusCalculated !== undefined) {
+      // return the accessStatus to the parent component if a function prop was passed in
+      onStatusCalculated(status);
+    }
+  }
 
   return (
     <div className="access-status-icon">
-      {parkStatusText === "Open" ? (
-        <>
-          <img src={parkStatusIcon} alt="" className="mr-2" />
-          {parkStatusText}
-        </>
-      ) : (
-        <Link to={`/${slug}/#park-advisory-details-container`}>
+      {accessStatus && (<>
+        {accessStatus.parkStatusText === "Open" ? (
           <>
-            <img src={parkStatusIcon} alt="" className="mr-2" />
-            {parkStatusText}
+            <img src={accessStatus.parkStatusIcon} alt="" className="mr-2" />
+            {accessStatus.parkStatusText}
           </>
-        </Link>
-      )}
+        ) : (
+          <Link to={`/${slug}/#park-advisory-details-container`}>
+            <>
+              <img src={accessStatus.parkStatusIcon} alt="" className="mr-2" />
+              {accessStatus.parkStatusText}
+            </>
+          </Link>
+        )}
+      </>)}
     </div>
+
   )
 }
 
 ParkAccessStatus.propTypes = {
-  advisories: PropTypes.array,
+  advisories: PropTypes.array.isRequired,
+  slug: PropTypes.string.isRequired,
+  subAreas: PropTypes.array.isRequired,
+  operationDates: PropTypes.array.isRequired,
+  onStatusCalculated: PropTypes.func
 }
