@@ -160,16 +160,16 @@ export default function ParkDates({ data }) {
 
   // -------- Operating Dates --------
 
-  const thisYear = new Date().getFullYear()  
+  const thisYear = new Date().getFullYear()
 
   // Overall operating dates for parks, to display above subareas
   let fmt = "MMMM D, yyyy"  // date format for overall operating dates
   const yr = "year-round" // lowercase for overall operating dates
   const parkOperationDates = dataCopy.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
-  let parkDates = datePhrase(parkOperationDates.gateOpenDate, parkOperationDates.gateCloseDate, fmt, yr, " to ", "")  
+  let parkDates = datePhrase(parkOperationDates.gateOpenDate, parkOperationDates.gateCloseDate, fmt, yr, " to ", "")
 
   // make sure the parkDates is valid
-    if (parkDates !== yr && !parkDates.includes(thisYear)) {
+  if (parkDates !== yr && !parkDates.includes(thisYear)) {
     parkDates = "";
   }
 
@@ -238,12 +238,12 @@ export default function ParkDates({ data }) {
           )}
           {hasOperations && (
             <>
-              <div className="text-center mb-4">
+              <div className="mb-4">
                 <div>
                   <GatsbyLink to="#park-advisory-details-container">Check advisories</GatsbyLink> before visiting.
                   Dates may change without notice.
                 </div>
-                {parkDates && (
+                {(parkDates && !(parkOperation.hasParkGate === false)) && (
                   <h4 className="my-3">
                     The {parkType.toLowerCase()} {marineProtectedArea !== 'Y' && "gate"} is open {parkDates}
                   </h4>
