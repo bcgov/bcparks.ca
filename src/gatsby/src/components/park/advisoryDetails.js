@@ -29,33 +29,6 @@ export default function AdvisoryDetails({ advisories, accessStatusData }) {
     expandedsInitial[index] = false
   })
 
-  const [addedWinterGateAdvisory, setAddedWinterGateAdvisory] = useState(false)
-
-  if (accessStatusData?.mainGateClosure && !addedWinterGateAdvisory) {
-    advisories.push({
-      id: -1,
-      title: "Limited access to this park during winter season",
-      description: `<p>Vehicle access to the park is not available during the winter season. Visitors 
-                    can still access the park on foot, but parking may not be available. Check 
-                    <a href="#park-dates-container">dates of operation</a> for details and gate 
-                    opening dates.</p>`,
-      urgency: { "color": "blue" },
-    });
-    setAddedWinterGateAdvisory(true);
-  }
-  else if (accessStatusData?.areaClosure && !addedWinterGateAdvisory) {
-    advisories.push({
-      id: -1,
-      title: "Limited access to some areas during the winter season",
-      description: `<p>Vehicle access to some areas of the park is not available during the winter season. 
-                    Visitors can still access them on foot, but parking may not be available. Check 
-                    <a href="#park-dates-container">dates of operation</a> for details and opening 
-                    dates.</p>`,
-      urgency: { "color": "blue" },
-    });
-    setAddedWinterGateAdvisory(true);
-  }
-
   const [allExpanded, setAllExpanded] = useState(false)
   const [expandeds, setExpandeds] = useState(expandedsInitial)
 
