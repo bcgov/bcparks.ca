@@ -18,6 +18,9 @@ const thisYear = new Date().getFullYear();
 const today = format(new Date(), "yyyy-MM-dd");
 
 function checkParkClosure(operatingDates) {
+  if (!operatingDates) {
+    return false;
+  }
   const dates = operatingDates.filter(d => d.operatingYear === thisYear);
   for (const d of dates) {
     if (d.gateOpenDate && d.gateOpenDate > today) {
@@ -31,6 +34,9 @@ function checkParkClosure(operatingDates) {
 }
 
 function checkSubAreaClosure(subAreas, staticData) {
+  if (!subAreas) {
+    return false;
+  }
   const subAreaTypeList = staticData?.allStrapiParkOperationSubAreaType.nodes
   for (const subArea of subAreas) {
     // standardize date from graphQL with date from elasticSearch
