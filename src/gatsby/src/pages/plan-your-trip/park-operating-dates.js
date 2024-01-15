@@ -14,6 +14,7 @@ import "../../styles/listPage.scss"
 
 const ParkLink = ({ park }) => {
   const thisYear = new Date().getFullYear()
+  const parkOperation = park.parkOperation
   const parkOperationDates = park.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
   const subAreas = park.parkOperationSubAreas.filter(a => a.isActive) || []
 
@@ -60,11 +61,11 @@ const ParkLink = ({ park }) => {
           <ExpandCircleDownIcon />
         </GatsbyLink>
       </h2>
-      {parkDates &&
+      {(parkDates && !(parkOperation.hasParkGate === false)) && (
         <p>
           The {park.type.toLowerCase()} {park.marineProtectedArea !== 'Y' && "gate"} is open {parkDates}.
         </p>
-      }
+      )}
       {/* display table list if the screen size is bigger than 768 px */}
       <table className="table">
         <thead className="thead-light">
@@ -215,6 +216,9 @@ const ParkOperatingDatesPage = () => {
           protectedAreaName
           marineProtectedArea
           type
+          parkOperation {
+            hasParkGate
+          }
           parkOperationSubAreas {
             isOpen
             isCleanAirSite
