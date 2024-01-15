@@ -42,6 +42,7 @@ module.exports = {
           "park-operation",
           "park-operation-date",
           "park-operation-sub-area",
+          "park-operation-sub-area-type",
           "park-photo",
           "park-sub-page",
           "public-advisory",
@@ -76,7 +77,12 @@ module.exports = {
                   fields: "*"
                 },
                 parkOperationSubAreas: {
-                  fields: "*"
+                  fields: "*",
+                  populate: {
+                    parkOperationSubAreaType: {
+                      fields: "*"
+                    }
+                  }
                 },
                 managementDocuments: {
                   populate: ["documentType"]

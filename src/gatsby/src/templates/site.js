@@ -265,6 +265,8 @@ export default function SiteTemplate({ data }) {
                 isLoadingAdvisories={isLoadingAdvisories}
                 advisoryLoadError={advisoryLoadError}
                 advisories={advisories}
+                subAreas={park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)}
+                operationDates={park.parkOperationDates}
               />
             </div>
           )}
@@ -424,6 +426,26 @@ export const query = graphql`
         orcs
         slug
         protectedAreaName
+        parkOperationDates {
+          operatingYear
+          gateOpenDate
+          gateCloseDate
+        }
+        parkOperationSubAreas {
+          orcsSiteNumber
+          isActive
+          isOpen
+          closureAffectsAccessStatus
+          parkOperationSubAreaDates {
+            isActive
+            operatingYear
+            openDate
+            closeDate
+          }
+          parkSubAreaType {
+            closureAffectsAccessStatus
+          }
+        }
       }
       parkActivities {
         isActive

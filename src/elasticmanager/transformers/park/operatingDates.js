@@ -26,7 +26,7 @@ const convertParkOperationSubAreas = function (parkOperationSubAreas) {
       const sa = {
         isActive: true,
         isOpen: true,
-        subareaTypeId: subarea?.parkSubAreaType?.id,
+        subAreaTypeId: subarea?.parkSubAreaType?.id,
         isIgnored: subarea.closureAffectsAccessStatus === null ? null : !subarea.closureAffectsAccessStatus,
         parkOperationSubAreaDates: subarea.parkOperationSubAreaDates
           .filter(d =>
