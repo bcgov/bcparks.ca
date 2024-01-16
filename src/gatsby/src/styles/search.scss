@@ -1422,9 +1422,13 @@ a.desktop-park-link {
   }
   .rbt-aux {
     width: auto;
+    right: 4px;
     button.close {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
+      color: $colorGreyMed;
+      background-color: $colorWhite;
+      opacity: 1;
       margin: 0;
     }
     .spinner-border {
