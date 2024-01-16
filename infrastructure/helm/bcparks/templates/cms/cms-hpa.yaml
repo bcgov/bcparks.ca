@@ -17,12 +17,6 @@ spec:
   metrics:
     - type: Resource
       resource:
-        name: memory
-        target:
-          type: Utilization
-          averageUtilization: {{ .Values.cms.hpa.memoryUtilizationThreshold }}
-    - type: Resource
-      resource:
         name: cpu
         target:
           type: Utilization
