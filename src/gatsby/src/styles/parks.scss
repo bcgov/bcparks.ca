@@ -389,3 +389,15 @@ h2.section-heading {
 .anchor-link {
   padding-top: 64px;
 }
+
+.access-status-icon {
+  img {
+    float: left;
+    margin-bottom: 8px;
+  }
+  a {
+    display: block;
+    white-space: nowrap;
+    text-decoration: underline;
+  }
+}

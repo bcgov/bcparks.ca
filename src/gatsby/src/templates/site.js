@@ -25,6 +25,8 @@ import MapLocation from "../components/park/mapLocation"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
+import "../styles/parks.scss"
+
 export default function SiteTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
 
