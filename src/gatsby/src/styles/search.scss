@@ -1094,6 +1094,7 @@ div[class$="-singleValue"] {
     }
   }
 
+  // park card icon
   .access-status-icon {
     margin-bottom: 8px;
     img {
@@ -1112,6 +1113,11 @@ div[class$="-singleValue"] {
       margin-top: 8px;
       p {
         font-size: 0.875rem;
+      }
+    }
+    .access-status-icon {
+      a {
+        margin-top: 0;
       }
     }
   }
