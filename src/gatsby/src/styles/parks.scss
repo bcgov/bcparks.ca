@@ -391,10 +391,13 @@ h2.section-heading {
 }
 
 .access-status-icon {
+  img {
+    float: left;
+    margin-bottom: 8px;
+  }
   a {
     display: block;
-    margin-left: calc(32px + 0.5rem);
+    white-space: nowrap;
     text-decoration: underline;
-    margin-top: -8px;
   }
 }
