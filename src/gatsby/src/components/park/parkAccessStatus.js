@@ -180,15 +180,15 @@ export default function ParkAccessStatus({ advisories, slug, subAreas, operation
         {accessStatus.parkStatusText === "Open" ? (
           <>
             <img src={accessStatus.parkStatusIcon} alt="" className="mr-2" />
-            {accessStatus.parkStatusText}
+            {accessStatus.parkStatusText}{punctuation}
           </>
         ) : (
           <>
             <img src={accessStatus.parkStatusIcon} alt="" className="mr-2" />
             {accessStatus.parkStatusText}{", "}
             <Link to={`/${slug}/#park-advisory-details-container`}>
-              check advisories{punctuation}
-            </Link>
+              check advisories
+            </Link>{punctuation}
           </>
         )}
       </>)}
