@@ -12,24 +12,24 @@ import {
   Typography
 } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
-import {
-  TimePicker,
-  KeyboardDateTimePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Select from "react-select";
 import WarningIcon from "@material-ui/icons/Warning";
 import CloseIcon from "@material-ui/icons/Close";
 import HelpIcon from "@material-ui/icons/Help";
 import CheckIcon from "@material-ui/icons/Check";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import ScheduleIcon from "@material-ui/icons/Schedule";
 import {
   validateOptionalNumber,
   validateRequiredText,
   validateRequiredSelect,
-  validateRequiredDate,
-  validateOptionalDate,
+  // validateRequiredDate,
+  // validateOptionalDate,
   validAdvisoryData,
 } from "../../../validators/AdvisoryValidator";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import PrivateElement from "../../../auth/PrivateElement";
 import LightTooltip from "../../shared/tooltip/LightTooltip";
@@ -669,7 +669,7 @@ export default function AdvisoryForm({
                     Start date
                   </div>
                   <div className="col-12 col-lg-5 col-md-8">
-                    <KeyboardDateTimePicker
+                    {/* <KeyboardDateTimePicker
                       id="startDate"
                       value={startDate}
                       onChange={setStartDate}
@@ -683,18 +683,37 @@ export default function AdvisoryForm({
                       onBlur={() => {
                         validateOptionalDate(advisoryData.startDate);
                       }}
+                    /> */}
+                    <DatePicker
+                      id="startDate"
+                      selected={startDate}
+                      onChange={(date) => { setStartDate(date) }}
+                      dateFormat="MMMM d, yyyy"
+                      className="bcgov-datepicker"
                     />
+                    <CalendarTodayIcon />
                   </div>
                   <div className="col-12 col-lg-1 col-md-4 ad-label">
                     Time
                   </div>
                   <div className="col-12 col-lg-3 col-md-8">
-                    <TimePicker
+                    {/* <TimePicker
                       className={`bcgov-datepicker-wrapper ${startDateError !== ""
                         ? "bcgov-datepicker-wrapper-error"
                         : ""
                         }`}
+                    /> */}
+                    <DatePicker
+                      selected={startDate}
+                      onChange={(date) => setStartDate(date)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={15}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                      className="bcgov-timepicker"
                     />
+                    <ScheduleIcon />
                   </div>
                 </div>
                 <div className="row">
@@ -722,7 +741,7 @@ export default function AdvisoryForm({
                     End date
                   </div>
                   <div className="col-12 col-lg-5 col-md-8">
-                    <KeyboardDateTimePicker
+                    {/* <KeyboardDateTimePicker
                       id="endDate"
                       value={endDate}
                       onChange={setEndDate}
@@ -738,18 +757,38 @@ export default function AdvisoryForm({
                       }}
                       minDate={startDate}
                       minDateMessage="End date should not be before Advisory date"
+                    /> */}
+                    <DatePicker
+                      id="endDate"
+                      selected={endDate}
+                      onChange={(date) => { setEndDate(date) }}
+                      dateFormat="MMMM d, yyyy"
+                      minDate={startDate}
+                      className="bcgov-datepicker"
                     />
+                    <CalendarTodayIcon />
                   </div>
                   <div className="col-12 col-lg-1 col-md-4 ad-label">
                     Time
                   </div>
                   <div className="col-12 col-lg-3 col-md-8">
-                    <TimePicker
+                    {/* <TimePicker
                       className={`bcgov-datepicker-wrapper ${endDateError !== ""
                         ? "bcgov-datepicker-wrapper-error"
                         : ""
                         }`}
+                    /> */}
+                    <DatePicker
+                      selected={endDate}
+                      onChange={(date) => setEndDate(date)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={15}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                      className="bcgov-timepicker"
                     />
+                    <ScheduleIcon />
                   </div>
                 </div>
               </div>
@@ -808,7 +847,7 @@ export default function AdvisoryForm({
                     Posting date
                   </div>
                   <div className="col-12 col-lg-5 col-md-8">
-                    <KeyboardDateTimePicker
+                    {/* <KeyboardDateTimePicker
                       id="advisoryDate"
                       value={advisoryDate}
                       onChange={handleAdvisoryDateChange}
@@ -822,18 +861,37 @@ export default function AdvisoryForm({
                       onBlur={() => {
                         validateRequiredDate(advisoryData.advisoryDate);
                       }}
+                    /> */}
+                    <DatePicker
+                      id="advisoryDate"
+                      selected={advisoryDate}
+                      onChange={(date) => { handleAdvisoryDateChange(date) }}
+                      dateFormat="MMMM d, yyyy"
+                      className="bcgov-datepicker"
                     />
+                    <CalendarTodayIcon />
                   </div>
                   <div className="col-12 col-lg-1 col-md-4 ad-label">
                     Time
                   </div>
                   <div className="col-12 col-lg-3 col-md-8">
-                    <TimePicker
+                    {/* <TimePicker
                       className={`bcgov-datepicker-wrapper ${advisoryDateError !== ""
                         ? "bcgov-datepicker-wrapper-error"
                         : ""
                         }`}
+                    /> */}
+                    <DatePicker
+                      selected={advisoryDate}
+                      onChange={(date) => handleAdvisoryDateChange(date)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={15}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                      className="bcgov-timepicker"
                     />
+                    <ScheduleIcon />
                   </div>
                 </div>
                 <div className="row">
@@ -841,7 +899,7 @@ export default function AdvisoryForm({
                     Expiry date
                   </div>
                   <div className="col-12 col-lg-5 col-md-8">
-                    <KeyboardDateTimePicker
+                    {/* <KeyboardDateTimePicker
                       id="expiryDate"
                       value={expiryDate}
                       onChange={setExpiryDate}
@@ -857,18 +915,38 @@ export default function AdvisoryForm({
                       }}
                       minDate={startDate}
                       minDateMessage="Expiry date should not be before Advisory date"
+                    /> */}
+                    <DatePicker
+                      id="expiryDate"
+                      selected={expiryDate}
+                      onChange={(date) => { setExpiryDate(date) }}
+                      dateFormat="MMMM d, yyyy"
+                      minDate={startDate}
+                      className="bcgov-datepicker"
                     />
+                    <CalendarTodayIcon />
                   </div>
                   <div className="col-12 col-lg-1 col-md-4 ad-label">
                     Time
                   </div>
                   <div className="col-12 col-lg-3 col-md-8">
-                    <TimePicker
+                    {/* <TimePicker
                       className={`bcgov-datepicker-wrapper  mr40 ${expiryDateError !== ""
                         ? "bcgov-datepicker-wrapper-error"
                         : ""
                         }`}
+                    /> */}
+                    <DatePicker
+                      selected={expiryDate}
+                      onChange={(date) => { setExpiryDate(date) }}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={15}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                      className="bcgov-timepicker"
                     />
+                    <ScheduleIcon />
                   </div>
                 </div>
                 {mode === "update" && (
@@ -877,7 +955,7 @@ export default function AdvisoryForm({
                       Updated date
                     </div>
                     <div className="col-12 col-lg-5 col-md-8">
-                      <KeyboardDateTimePicker
+                      {/* <KeyboardDateTimePicker
                         id="updatedDate"
                         value={updatedDate}
                         onChange={setUpdatedDate}
@@ -893,18 +971,37 @@ export default function AdvisoryForm({
                             advisoryData.updatedDate
                           );
                         }}
+                      /> */}
+                      <DatePicker
+                        id="updatedDate"
+                        selected={updatedDate}
+                        onChange={(date) => { setUpdatedDate(date) }}
+                        dateFormat="MMMM d, yyyy"
+                        className="bcgov-datepicker"
                       />
+                      <CalendarTodayIcon />
                     </div>
                     <div className="col-12 col-lg-1 col-md-4 ad-label">
                       Time
                     </div>
                     <div className="col-12 col-lg-3 col-md-8">
-                      <TimePicker
+                      {/* <TimePicker
                         className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
                           ? "bcgov-datepicker-wrapper-error"
                           : ""
                           }`}
+                      /> */}
+                      <DatePicker
+                        selected={updatedDate}
+                        onChange={(date) => { setUpdatedDate(date) }}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={15}
+                        timeCaption="Time"
+                        dateFormat="h:mm aa"
+                        className="bcgov-timepicker"
                       />
+                      <ScheduleIcon />
                     </div>
                   </div>
                 )}

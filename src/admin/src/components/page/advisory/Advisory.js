@@ -73,18 +73,21 @@ export default function Advisory({
   const [description, setDescription] = useState("");
   const [isSafetyRelated, setIsSafetyRelated] = useState(false);
   const [isReservationAffected, setIsReservationAffected] = useState(false);
-  const [advisoryDate, setAdvisoryDate] = useState(
-    moment().tz("America/Vancouver")
-  );
+  const [advisoryDate, setAdvisoryDate] = useState(new Date());
+  // const [advisoryDate, setAdvisoryDate] = useState(
+  //   moment().tz("America/Vancouver")
+  // );
   const [displayAdvisoryDate, setDisplayAdvisoryDate] = useState(true);
-  const [startDate, setStartDate] = useState(moment().tz("America/Vancouver"));
+  const [startDate, setStartDate] = useState(new Date());
+  // const [startDate, setStartDate] = useState(moment().tz("America/Vancouver"));
   const [displayStartDate, setDisplayStartDate] = useState(false);
   const [endDate, setEndDate] = useState(null);
   const [displayEndDate, setDisplayEndDate] = useState(false);
   const [expiryDate, setExpiryDate] = useState(null);
-  const [updatedDate, setUpdatedDate] = useState(
-    moment().tz("America/Vancouver")
-  );
+  const [updatedDate, setUpdatedDate] = useState(new Date());
+  // const [updatedDate, setUpdatedDate] = useState(
+  //   moment().tz("America/Vancouver")
+  // );
   const [displayUpdatedDate, setDisplayUpdatedDate] = useState(false);
   const [notes, setNotes] = useState("");
   const [submittedBy, setSubmittedBy] = useState("");
@@ -162,7 +165,8 @@ export default function Advisory({
             setSubmittedBy(advisoryData.submittedBy || "");
             if (advisoryData.advisoryDate) {
               setAdvisoryDate(
-                moment(advisoryData.advisoryDate).tz("America/Vancouver")
+                new Date(advisoryData.advisoryDate)
+                // moment(advisoryData.advisoryDate).tz("America/Vancouver")
               );
               advisoryDateRef.current = moment(advisoryData.advisoryDate).tz(
                 "America/Vancouver"
@@ -170,21 +174,25 @@ export default function Advisory({
             }
             if (advisoryData.effectiveDate) {
               setStartDate(
-                moment(advisoryData.effectiveDate).tz("America/Vancouver")
+                new Date(advisoryData.effectiveDate)
+                // moment(advisoryData.effectiveDate).tz("America/Vancouver")
               );
             }
             if (advisoryData.endDate) {
-              setEndDate(moment(advisoryData.endDate).tz("America/Vancouver"));
+              setEndDate(advisoryData.endDate)
+              // setEndDate(moment(advisoryData.endDate).tz("America/Vancouver"));
             }
 
             if (advisoryData.expiryDate) {
               setExpiryDate(
-                moment(advisoryData.expiryDate).tz("America/Vancouver")
+                new Date(advisoryData.expiryDate)
+                // moment(advisoryData.expiryDate).tz("America/Vancouver")
               );
             }
             if (advisoryData.updatedDate) {
               setUpdatedDate(
-                moment(advisoryData.updatedDate).tz("America/Vancouver")
+                new Date(advisoryData.updatedDate)
+                // moment(advisoryData.updatedDate).tz("America/Vancouver")
               );
             }
             if (advisoryData.accessStatus) {
