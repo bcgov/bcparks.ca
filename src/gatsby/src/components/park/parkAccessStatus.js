@@ -163,17 +163,13 @@ export default function ParkAccessStatus({ advisories, slug, subAreas, operation
   const [accessStatus, setAccessStatus] = useState(null)
 
   useEffect(() => {
-    if (accessStatus === null) {
-      const mainGateClosure = checkParkClosure(operationDates);
-      const areaClosure = checkSubAreaClosure(subAreas, staticData);
-      const status = parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData);
-
-      setAccessStatus(status)
-
-      if (onStatusCalculated !== undefined) {
-        // return the accessStatus to the parent component if a function prop was passed in
-        onStatusCalculated(status);
-      }
+    const mainGateClosure = checkParkClosure(operationDates);
+    const areaClosure = checkSubAreaClosure(subAreas, staticData);
+    const status = parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData);
+    setAccessStatus(status)
+    if (onStatusCalculated !== undefined) {
+      // return the accessStatus to the parent component if a function prop was passed in
+      onStatusCalculated(status);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [operationDates, subAreas, advisories]);
