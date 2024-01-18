@@ -78,10 +78,10 @@ export function validateDate(field) {
 
 export function validateLinks(links) {
   const checkLinks = links.map((link) => {
-    if ((link.title && !link.url) || (!link.title && link.url)) {
-      return false;
+    if (link.type && link.title && (link.file || link.url)) {
+      return true;
     }
-    return true;
+    return false;
   })
   return checkLinks.every(Boolean);
 }
