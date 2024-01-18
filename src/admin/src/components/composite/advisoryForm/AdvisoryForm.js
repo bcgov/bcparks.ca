@@ -190,7 +190,7 @@ export default function AdvisoryForm({
   };
   const descriptionInput = {
     id: "description",
-    required: true,
+    required: false,
   };
   const linkTitleInput = {
     id: "link",
@@ -599,47 +599,49 @@ export default function AdvisoryForm({
                       <div className="col-12 col-lg-9 col-md-8 ad-flex">
                         <TextField
                           value={l.file ? l.file.name : ""}
-                          className="bcgov-input mr10"
+                          className="bcgov-input"
                           variant="outlined"
                         />
-                        <Btn
-                          variant="contained"
-                          component="label"
-                          className="bcgov-normal-blue btn transform-none ad-upload-btn"
-                        >
-                          Browse
-                          <input
-                            type="file"
-                            accept=".jpg,.gif,.png,.gif,.pdf"
-                            hidden
-                            onChange={({ target }) => {
-                              handleFileCapture(target.files, idx);
-                            }}
-                          />
-                        </Btn>
                       </div>
                     </div>
                   )}
                 </div>
               ))}
-              <button
-                tabIndex="0"
-                className="ad-add-link pointer div-btn"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
+              <input
+                id="file-upload"
+                hidden
+                type="file"
+                accept=".jpg,.gif,.png,.gif,.pdf"
+                // onChange={({ target }) => {
+                //   handleFileCapture(target.files, idx);
+                // }}
+                onChange={(e) => {
+                  handleFileCapture(e.target.files, 0);
+                }}
+              />
+              <label htmlFor="file-upload">
+                <Btn
+                  variant="outlined"
+                  component="span"
+                  className="ad-add-link pointer div-btn"
+                  style={{ textTransform: 'none' }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      addLink("file");
+                    }
+                  }}
+                  onClick={() => {
                     addLink("file");
-                  }
-                }}
-                onClick={() => {
-                  addLink("file");
-                }}
-              >
-                + Upload file
-              </button>
+                  }}
+                >
+                  + Upload file
+                </Btn>
+              </label>
               <span>OR</span>
-              <button
-                tabIndex="0"
+              <Btn
+                variant="outlined"
                 className="ad-add-link pointer div-btn"
+                style={{ textTransform: 'none' }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     addLink("url");
@@ -650,7 +652,7 @@ export default function AdvisoryForm({
                 }}
               >
                 + Add URL
-              </button>
+              </Btn>
             </div>
           </div>
           <div className="row">
