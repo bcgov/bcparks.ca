@@ -1,6 +1,3 @@
-import { Grid } from "@mui/material"
-import { styled } from '@mui/material/styles';
-
 export const PARK_NAME_TYPE = {
   Legal: 1,
   Escaped: 2,
@@ -100,18 +97,3 @@ export const countsList = [
   },
   { display: "TOTAL", countVar: "totalCapacity", isActive: false },
 ]
-
-// for stylings
-export const StyledGrid = styled(Grid)((
-  {
-    theme
-  }
-) => ({
-  [theme.breakpoints.up("sm")]: {
-    width: "calc(100% - 230px)",
-  },
-  "& > div:last-of-type": {
-    minHeight: "600px",
-  },
-  appBarOffset: theme.mixins.toolbar,
-}));

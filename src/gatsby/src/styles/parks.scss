@@ -55,6 +55,9 @@
         }
       }
     }
+    & > div.w-100:last-of-type {
+      min-height: calc(100vh - 380px);
+    }
   }
 }
 
