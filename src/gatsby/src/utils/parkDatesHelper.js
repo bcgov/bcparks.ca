@@ -1,7 +1,7 @@
 import moment from "moment"
 import _ from "lodash"
 
-const datePhrase = (openDate, closeDate, fmt, yearRoundText, delimiter, prefix) => {
+const datePhrase = (openDate, closeDate, fmt, yearRoundText, delimiter, prefix, nowrap) => {
   if (openDate && closeDate) {
     try {
       const open = moment(openDate).format(fmt)
@@ -10,7 +10,10 @@ const datePhrase = (openDate, closeDate, fmt, yearRoundText, delimiter, prefix) 
         (open.indexOf("Jan 1") === 0 && close.indexOf("Dec 31") === 0) ||
         (open.indexOf("January 1") === 0 && close.indexOf("December 31") === 0)
       let output = openYearRound ? yearRoundText : `${prefix || ""}${open}${delimiter}${close}`
-      return output.replace(/ /g, "\u00A0")
+      if (nowrap) {
+        return output.replace(/ /g, "\u00A0")
+      }
+      return output;
     } catch (err) {
       console.error("Err formatting date " + openDate + ", " + closeDate)
       return ""
@@ -59,9 +62,9 @@ const processDateRanges = (arr, fmt, yr, delimiter) => {
       groupedByYear.push(phrase);
     }
     if (year !== prevYear) {
-      phrase = `${year}: ${datePhrase(dateRange.start, dateRange.end, fmt, yr, delimiter)}`
+      phrase = `${year}: ${datePhrase(dateRange.start, dateRange.end, fmt, yr, delimiter, "", true)}`
     } else {
-      phrase += `, ${datePhrase(dateRange.start, dateRange.end, fmt, yr, delimiter)}`
+      phrase += `, ${datePhrase(dateRange.start, dateRange.end, fmt, yr, delimiter, "", true)}`
     }
     prevYear = year;
   }

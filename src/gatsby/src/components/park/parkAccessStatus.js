@@ -180,7 +180,7 @@ export default function ParkAccessStatus({ advisories, slug, subAreas, operation
         {accessStatus.parkStatusText === "Open" ? (
           <>
             <img src={accessStatus.parkStatusIcon} alt="" className="mr-2" />
-            {accessStatus.parkStatusText}
+            {accessStatus.parkStatusText}{punctuation}
           </>
         ) : (
           <>
