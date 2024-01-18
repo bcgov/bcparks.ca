@@ -121,7 +121,7 @@
       margin-top: 64px;
     }
     & > div:last-of-type {
-      min-height: 600px;
+      min-height: calc(100vh - 380px);
     }
   }
 }
