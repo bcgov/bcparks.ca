@@ -179,15 +179,14 @@
         display: inline;
       }
     }
+    .gate-text {
+      margin-left: 24px;
+      padding-left: 0.5rem;
+    }
 
     @media screen and (max-width: $mdBreakpoint) {
       .access-status-icon {
         margin-top: 8px;
-      }
-      .gate-text {
-        display: block;
-        margin-left: 24px;
-        padding-left: 0.5rem;
       }
     }
   }
