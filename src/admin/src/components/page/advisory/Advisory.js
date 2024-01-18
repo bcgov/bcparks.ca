@@ -105,9 +105,10 @@ export default function Advisory({
   const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const linksRef = useRef([]);
-  const durationUnitRef = useRef("h");
+  const durationUnitRef = useRef("M");
   const durationIntervalRef = useRef(0);
-  const advisoryDateRef = useRef(moment().tz("America/Vancouver"));
+  const advisoryDateRef = useRef(new Date());
+  // const advisoryDateRef = useRef(moment().tz("America/Vancouver"));
   const [advisoryId, setAdvisoryId] = useState();
   const [isApprover, setIsApprover] = useState(false);
   const [formError, setFormError] = useState("");
@@ -646,12 +647,13 @@ export default function Advisory({
   };
 
   const calculateExpiryDate = () => {
-    setEndDate(
+    const newEndDate = (
       moment(advisoryDateRef.current).add(
         durationIntervalRef.current,
         durationUnitRef.current
       )
     );
+    setEndDate(newEndDate._d)
   };
 
   const isValidLink = (link) => {
@@ -1090,8 +1092,8 @@ export default function Advisory({
               <AdvisoryForm
                 mode={mode}
                 data={{
-                  ticketNumber,
-                  setTicketNumber,
+                  // ticketNumber,
+                  // setTicketNumber,
                   listingRank,
                   setListingRank,
                   headline,
@@ -1133,23 +1135,23 @@ export default function Advisory({
                   setUrgency,
                   isSafetyRelated,
                   setIsSafetyRelated,
-                  isReservationAffected,
-                  setIsReservationAffected,
+                  // isReservationAffected,
+                  // setIsReservationAffected,
                   advisoryDate,
                   handleAdvisoryDateChange,
-                  displayAdvisoryDate,
+                  // displayAdvisoryDate,
                   setDisplayAdvisoryDate,
                   startDate,
                   setStartDate,
-                  displayStartDate,
+                  // displayStartDate,
                   setDisplayStartDate,
                   endDate,
                   setEndDate,
-                  displayEndDate,
+                  // displayEndDate,
                   setDisplayEndDate,
                   updatedDate,
                   setUpdatedDate,
-                  displayUpdatedDate,
+                  // displayUpdatedDate,
                   setDisplayUpdatedDate,
                   expiryDate,
                   setExpiryDate,

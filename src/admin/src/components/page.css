@@ -194,11 +194,6 @@
   color: #234075 !important;
 }
 
-.bcgov-select [class*="-MenuList"] [class*="-option"],
-[class*="-singleValue"] {
-  color: #234075 !important;
-}
-
 .bcgov-select [class*="-placeholder"] {
   color: #9b9b9b !important;
 }

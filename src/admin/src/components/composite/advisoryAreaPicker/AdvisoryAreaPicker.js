@@ -212,7 +212,7 @@ export default function AdvisoryAreaPicker({
                     setSelectedFireCentres(e);
                     handleChangeRelations({ updatedFireCentres: e });
                   }}
-                  placeholder="Select a Fire Centre"
+                  placeholder="Select Fire Centre(s)"
                   isMulti="true"
                   className="bcgov-select"
                   onBlur={() => {
@@ -240,7 +240,7 @@ export default function AdvisoryAreaPicker({
                     setSelectedFireZones(e);
                     handleChangeRelations({ updatedFireZones: e });
                   }}
-                  placeholder="Select a Fire Zone"
+                  placeholder="Select Fire Zone(s)"
                   isMulti="true"
                   className="bcgov-select"
                   onBlur={() => {
@@ -268,7 +268,7 @@ export default function AdvisoryAreaPicker({
                     setSelectedRegions(e);
                     handleChangeRelations({ updatedRegions: e });
                   }}
-                  placeholder="Select a Region"
+                  placeholder="Select Region(s)"
                   isMulti="true"
                   className="bcgov-select"
                   onBlur={() => {
@@ -296,7 +296,7 @@ export default function AdvisoryAreaPicker({
                     setSelectedSections(e);
                     handleChangeRelations({ updatedSections: e });
                   }}
-                  placeholder="Select a Section"
+                  placeholder="Select Section(s)"
                   isMulti="true"
                   className="bcgov-select"
                   onBlur={() => {
@@ -324,7 +324,7 @@ export default function AdvisoryAreaPicker({
                     setSelectedManagementAreas(e);
                     handleChangeRelations({ updatedManagementAreas: e });
                   }}
-                  placeholder="Select a Management Area"
+                  placeholder="Select Management Area(s)"
                   isMulti="true"
                   className="bcgov-select"
                   onBlur={() => {
@@ -372,7 +372,7 @@ export default function AdvisoryAreaPicker({
                   handleRemoveProtectedArea(e);
                 }
               }}
-              placeholder="Select a Park"
+              placeholder="Select Park(s)"
               isMulti="true"
               className="bcgov-select"
               onBlur={() => {
@@ -401,7 +401,7 @@ export default function AdvisoryAreaPicker({
                 setSelectedSites(e);
                 handleChangeRelations({ updatedSites: e });
               }}
-              placeholder="Select a Site"
+              placeholder="Select Site(s)"
               isMulti="true"
               className="bcgov-select"
               onBlur={() => {

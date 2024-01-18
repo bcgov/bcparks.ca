@@ -187,33 +187,27 @@ export default function AdvisoryForm({
   const headlineInput = {
     id: "headline",
     required: false,
-    placeholder: "Advisory Headline",
   };
   const descriptionInput = {
     id: "description",
     required: true,
-    placeholder: "Description of advisory",
   };
   const linkTitleInput = {
     id: "link",
     required: false,
-    placeholder: "Link Title",
   };
   const linkUrlInput = {
     id: "url",
     required: false,
-    placeholder: "URL",
   };
   const notesInput = {
     id: "notes",
     required: false,
-    placeholder: "Notes",
   };
 
   const submitterInput = {
     id: "submitter",
     required: false,
-    placeholder: "Advisory requested by",
   };
 
   // const ticketNumberInput = {
@@ -224,7 +218,7 @@ export default function AdvisoryForm({
 
   const listingRankInput = {
     id: "listing",
-    required: true,
+    required: false,
     placeholder: "Listing Rank",
   };
 
@@ -420,6 +414,7 @@ export default function AdvisoryForm({
             </div>
             <div className="col-lg-7 col-md-8 col-sm-12">
               <TextField
+                type="number"
                 value={listingRank}
                 onChange={(event) => {
                   setListingRank(event.target.value);
@@ -427,6 +422,7 @@ export default function AdvisoryForm({
                 className="bcgov-input"
                 variant="outlined"
                 InputProps={{ ...listingRankInput }}
+                inputProps={{ min: 0 }}
                 error={listingRankError !== ""}
                 helperText={listingRankError}
                 onBlur={() => {
@@ -451,7 +447,7 @@ export default function AdvisoryForm({
                 options={accessStatuses}
                 value={accessStatuses.filter((e) => e.value === accessStatus)}
                 onChange={(e) => setAccessStatus(e ? e.value : 0)}
-                placeholder="Select an access status"
+                placeholder="Select park access status"
                 className="bcgov-select"
                 isClearable
               />
@@ -476,7 +472,7 @@ export default function AdvisoryForm({
                 onChange={(e) => {
                   setSelectedStandardMessages(e);
                 }}
-                placeholder="Add standard message"
+                placeholder="Add standard message(s)"
                 className="bcgov-select"
                 isMulti
                 isClearable
@@ -605,7 +601,6 @@ export default function AdvisoryForm({
                           value={l.file ? l.file.name : ""}
                           className="bcgov-input mr10"
                           variant="outlined"
-                          placeholder="Select files for upload"
                         />
                         <Btn
                           variant="contained"
@@ -731,7 +726,7 @@ export default function AdvisoryForm({
                     <Select
                       options={intervalUnits}
                       onChange={handleDurationUnitChange}
-                      placeholder="Select"
+                      defaultValue={intervalUnits[3]}
                       className="ad-interval-select bcgov-select"
                     />
                   </div>
@@ -1272,8 +1267,8 @@ export default function AdvisoryForm({
 AdvisoryForm.propTypes = {
   mode: PropTypes.string.isRequired,
   data: PropTypes.shape({
-    ticketNumber: PropTypes.string,
-    setTicketNumber: PropTypes.func.isRequired,
+    // ticketNumber: PropTypes.string,
+    // setTicketNumber: PropTypes.func.isRequired,
     listingRank: PropTypes.number,
     setListingRank: PropTypes.func.isRequired,
     headline: PropTypes.string,
@@ -1315,23 +1310,23 @@ AdvisoryForm.propTypes = {
     setUrgency: PropTypes.func.isRequired,
     isSafetyRelated: PropTypes.bool,
     setIsSafetyRelated: PropTypes.func.isRequired,
-    isReservationAffected: PropTypes.bool,
-    setIsReservationAffected: PropTypes.func.isRequired,
+    // isReservationAffected: PropTypes.bool,
+    // setIsReservationAffected: PropTypes.func.isRequired,
     advisoryDate: PropTypes.object,
     handleAdvisoryDateChange: PropTypes.func.isRequired,
-    displayAdvisoryDate: PropTypes.bool,
+    // displayAdvisoryDate: PropTypes.bool,
     setDisplayAdvisoryDate: PropTypes.func.isRequired,
     startDate: PropTypes.object,
     setStartDate: PropTypes.func.isRequired,
-    displayStartDate: PropTypes.bool,
+    // displayStartDate: PropTypes.bool,
     setDisplayStartDate: PropTypes.func.isRequired,
     endDate: PropTypes.object,
     setEndDate: PropTypes.func.isRequired,
-    displayEndDate: PropTypes.bool,
+    // displayEndDate: PropTypes.bool,
     setDisplayEndDate: PropTypes.func.isRequired,
     updatedDate: PropTypes.object,
     setUpdatedDate: PropTypes.func.isRequired,
-    displayUpdatedDate: PropTypes.bool,
+    // displayUpdatedDate: PropTypes.bool,
     setDisplayUpdatedDate: PropTypes.func.isRequired,
     expiryDate: PropTypes.object,
     setExpiryDate: PropTypes.func.isRequired,
@@ -1358,6 +1353,7 @@ AdvisoryForm.propTypes = {
     isSubmitting: PropTypes.bool,
     isSavingDraft: PropTypes.bool,
     updateAdvisory: PropTypes.func.isRequired,
+    // setToBack: PropTypes.func.isRequired,
     formError: PropTypes.string,
     setFormError: PropTypes.func.isRequired,
   }).isRequired,
