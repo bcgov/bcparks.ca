@@ -37,10 +37,10 @@
   a:not(.btn):not(.nav-link) {
     color: $colorBlueMed;
     text-decoration: underline;
-    &:hover {
+    &:hover, &:active, &:focus {
       color: $colorBlue;
     }
-    &:active, &:focus, &:focus-visible {
+    &:focus-visible {
       color: $colorBlue;
       border-radius: 4px;
       border: $colorWhite solid 2px;
