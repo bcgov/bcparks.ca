@@ -149,7 +149,6 @@ export default function ParkDates({ data }) {
   const parkOperation = dataCopy.parkOperation || {}
   const parkType = dataCopy.parkType
   const subAreas = dataCopy.subAreas || []
-  const marineProtectedArea = dataCopy.marineProtectedArea || ""
   subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
 
   const [open, setOpen] = useState(false)
@@ -243,9 +242,9 @@ export default function ParkDates({ data }) {
                   <GatsbyLink to="#park-advisory-details-container">Check advisories</GatsbyLink> before visiting.
                   Dates may change without notice.
                 </div>
-                {(parkDates && !(parkOperation.hasParkGate === false)) && (
+                {parkDates && (
                   <h4 className="my-3">
-                    The {parkType.toLowerCase()} {marineProtectedArea !== 'Y' && "gate"} is open {parkDates}
+                    The {parkType.toLowerCase()} {parkOperation.hasParkGate !== false && "gate"} is open {parkDates}
                   </h4>
                 )}
                 {!parkDates && (

@@ -65,25 +65,20 @@ const ParkLink = ({ park, advisories }) => {
         </h2>
       </div>
       <div className="mb-3">
-        {(parkDates && parkOperation.hasParkGate !== false) ? (
-          <>
-            <div className="mr-1">
-              <ParkAccessStatus
-                advisories={advisories}
-                slug={park.slug}
-                subAreas={park.parkOperationSubAreas}
-                operationDates={park.parkOperationDates}
-              />
-              .
-            </div>
-            <div className="gate-text">The {park.type.toLowerCase()} {park.marineProtectedArea !== 'Y' && "gate"} is open {parkDates}.</div>
-          </>
-        ) : (<ParkAccessStatus
-            advisories={advisories}
-            slug={park.slug}
-            subAreas={park.parkOperationSubAreas}
-            operationDates={park.parkOperationDates}
-            punctuation="." />)}
+        <>
+          <span className="mr-1">
+            <ParkAccessStatus
+              advisories={advisories}
+              slug={park.slug}
+              subAreas={park.parkOperationSubAreas}
+              operationDates={park.parkOperationDates}
+              punctuation={parkDates ? "." : ""}
+            />
+          </span>
+          {parkDates && (
+            <span className="gate-text">The {park.type.toLowerCase()} {parkOperation.hasParkGate !== false && "gate"} is open {parkDates}.</span>
+          )}
+        </>
       </div>
       {/* display table list if the screen size is bigger than 768 px */}
       <table className="table">
