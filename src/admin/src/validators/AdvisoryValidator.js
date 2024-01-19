@@ -78,10 +78,10 @@ export function validateDate(field) {
 
 export function validateLinks(links) {
   const checkLinks = links.map((link) => {
-    if ((link.title && !link.url) || (!link.title && link.url)) {
-      return false;
+    if (link.type && link.title && (link.file || link.url))  {
+      return true;
     }
-    return true;
+    return false;
   })
   return checkLinks.every(Boolean);
 }
@@ -90,7 +90,7 @@ export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) 
   advisoryData.formError("");
   const validListingRankNumber = validateOptionalNumber(advisoryData.listingRank);
   const validListingRankRequired = validateRequiredText(advisoryData.listingRank);
-  const validTicketNumber = validateOptionalNumber(advisoryData.ticketNumber);
+  // const validTicketNumber = validateOptionalNumber(advisoryData.ticketNumber);
   const validHeadline = validateRequiredText(advisoryData.headline);
   const validEventType = validateRequiredSelect(advisoryData.eventType);
   const validUrgency = validateRequiredSelect(advisoryData.urgency);
@@ -104,7 +104,7 @@ export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) 
   let validData =
     validListingRankNumber &&
     validListingRankRequired &&
-    validTicketNumber &&
+    // validTicketNumber &&
     validHeadline &&
     validEventType &&
     validUrgency &&
