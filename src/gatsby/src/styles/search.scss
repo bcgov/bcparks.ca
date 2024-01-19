@@ -1436,6 +1436,9 @@ a.desktop-park-link {
       background-color: $colorWhite;
       opacity: 1;
       margin: 0;
+      &:hover {
+        opacity: 1;
+      }
     }
     .spinner-border {
       width: 32px;
