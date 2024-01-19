@@ -141,7 +141,7 @@ export default function AdvisoryForm({
   const [updatedDateError, setUpdatedDateError] = useState("");
   const [submittedByError, setSubmittedByError] = useState("");
   const [listingRankError, setListingRankError] = useState("");
-  const [selectedDisplayedDateOption, setSelectedDisplayedDateOption] = useState("posted");
+  const [selectedDisplayedDateOption, setSelectedDisplayedDateOption] = useState("posting");
 
   const advisoryData = {
     listingRank: { value: listingRank, setError: setListingRankError, text: "listing rank" },
@@ -223,11 +223,11 @@ export default function AdvisoryForm({
   };
 
   const displayedDateOptions = (mode === "update") ? [
-    { label: "Posted date", value: "posted" },
+    { label: "Posting date", value: "posting" },
     ({ label: "Updated date", value: "updated" }),
     { label: "No dates", value: "no" }
   ] : [
-    { label: "Posted date", value: "posted" },
+    { label: "Posting date", value: "posting" },
     { label: "No dates", value: "no" }
   ];
 
@@ -240,7 +240,7 @@ export default function AdvisoryForm({
   ];
 
   useEffect(() => {
-    if (selectedDisplayedDateOption === "posted") {
+    if (selectedDisplayedDateOption === "posting") {
       setDisplayAdvisoryDate(true)
       setDisplayUpdatedDate(false)
       setDisplayStartDate(false)
@@ -814,7 +814,6 @@ export default function AdvisoryForm({
                 onChange={(e) => {
                   setSelectedDisplayedDateOption(e.value);
                 }}
-                placeholder="Posted date"
                 className="bcgov-select"
                 isClearable
               />
