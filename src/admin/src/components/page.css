@@ -152,6 +152,10 @@
   text-align: center !important;
 }
 
+.react-datepicker-wrapper input {
+  height: 39px;
+}
+
 .MuiOutlinedInput-multiline {
   padding: 0px !important;
 }
@@ -233,8 +237,12 @@
 .react-datepicker-wrapper {
   width: calc(100% - 32px);
 }
-.react-datepicker-wrapper + .MuiSvgIcon-root {
-  margin-left: 8px;
+
+.react-datepicker-wrapper + .MuiSvgIcon-root,
+.react-datepicker__tab-loop  + .MuiSvgIcon-root {
+  position: absolute;
+  top: 8px;
+  right: 16px;
 }
 
 .bcgov-move-right {

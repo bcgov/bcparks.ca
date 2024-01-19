@@ -689,6 +689,9 @@ export default function AdvisoryForm({
                       className="bcgov-datepicker"
                     />
                     <CalendarTodayIcon />
+                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                      month dd, yyyy
+                    </span>
                   </div>
                   <div className="col-12 col-lg-1 col-md-4 ad-label">
                     Time
@@ -711,6 +714,9 @@ export default function AdvisoryForm({
                       className="bcgov-timepicker"
                     />
                     <ScheduleIcon />
+                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                      hh:mm aa
+                    </span>
                   </div>
                 </div>
                 <div className="row">
@@ -764,6 +770,9 @@ export default function AdvisoryForm({
                       className="bcgov-datepicker"
                     />
                     <CalendarTodayIcon />
+                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                      month dd, yyyy
+                    </span>
                   </div>
                   <div className="col-12 col-lg-1 col-md-4 ad-label">
                     Time
@@ -786,6 +795,9 @@ export default function AdvisoryForm({
                       className="bcgov-timepicker"
                     />
                     <ScheduleIcon />
+                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                      hh:mm aa
+                    </span>
                   </div>
                 </div>
               </div>
@@ -867,6 +879,9 @@ export default function AdvisoryForm({
                       className="bcgov-datepicker"
                     />
                     <CalendarTodayIcon />
+                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                      month dd, yyyy
+                    </span>
                   </div>
                   <div className="col-12 col-lg-1 col-md-4 ad-label">
                     Time
@@ -889,6 +904,9 @@ export default function AdvisoryForm({
                       className="bcgov-timepicker"
                     />
                     <ScheduleIcon />
+                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                      hh:mm aa
+                    </span>
                   </div>
                 </div>
                 <div className="row">
@@ -922,6 +940,9 @@ export default function AdvisoryForm({
                       className="bcgov-datepicker"
                     />
                     <CalendarTodayIcon />
+                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                      month dd, yyyy
+                    </span>
                   </div>
                   <div className="col-12 col-lg-1 col-md-4 ad-label">
                     Time
@@ -944,6 +965,9 @@ export default function AdvisoryForm({
                       className="bcgov-timepicker"
                     />
                     <ScheduleIcon />
+                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                      hh:mm aa
+                    </span>
                   </div>
                 </div>
                 {mode === "update" && (
@@ -977,6 +1001,9 @@ export default function AdvisoryForm({
                         className="bcgov-datepicker"
                       />
                       <CalendarTodayIcon />
+                      <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                        month dd, yyyy
+                      </span>
                     </div>
                     <div className="col-12 col-lg-1 col-md-4 ad-label">
                       Time
@@ -999,6 +1026,9 @@ export default function AdvisoryForm({
                         className="bcgov-timepicker"
                       />
                       <ScheduleIcon />
+                      <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                        hh:mm aa
+                      </span>
                     </div>
                   </div>
                 )}
@@ -1166,8 +1196,7 @@ export default function AdvisoryForm({
               </div>
             </div>
           )}
-          <br />
-          <div className="row">
+          <div className="row my-2">
             <div className="col-lg-3 col-md-4"></div>
             <div className="col-lg-7 col-md-8 col-sm-12 ad-form-error">
               <FormControl error>
