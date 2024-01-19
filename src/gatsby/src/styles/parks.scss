@@ -35,10 +35,10 @@
     a:not(.btn) {
       color: $colorBlueMed;
       text-decoration: underline;
-      &:hover {
+      &:hover, &:active, &:focus {
         color: $colorBlue;
       }
-      &:active, &:focus, &:focus-visible {
+      &:focus-visible {
         color: $colorBlue;
         border-radius: 4px;
         border: $colorWhite solid 2px;
@@ -148,7 +148,10 @@
 .MuiBreadcrumbs-root {
   a {
     color: $colorBlueMed;
-    &:active, &:focus, &:focus-visible {
+    &:hover, &:active, &:focus {
+      text-decoration: underline;
+    }
+    &:focus-visible {
       color: $colorBlueMed;
       outline: $colorBlueMed auto 2px;
       outline-offset: 2px;
