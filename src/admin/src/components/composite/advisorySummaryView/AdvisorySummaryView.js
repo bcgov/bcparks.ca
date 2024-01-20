@@ -246,24 +246,6 @@ export default function AdvisorySummaryView({
           </div>
         </div>
       )}
-      <div className="row">
-        <div className="col-lg-4 col-md-6 col-12 ad-label">
-          Reservations Affected
-        </div>
-        <div className="col-lg-8 col-md-6 col-12">
-          {advisory.isReservationsAffected ? "Yes" : "No"}
-        </div>
-      </div>
-      {advisory.dcTicketNumber && (
-        <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">
-            DC Ticket Number
-          </div>
-          <div className="col-lg-8 col-md-6 col-12">
-            {advisory.dcTicketNumber}
-          </div>
-        </div>
-      )}
       {advisory.listingRank !== null && advisory.listingRank >= 0 && (
         <div className="row">
           <div className="col-lg-4 col-md-6 col-12 ad-label">Listing Rank</div>

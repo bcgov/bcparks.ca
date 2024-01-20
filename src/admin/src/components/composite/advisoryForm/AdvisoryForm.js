@@ -38,8 +38,6 @@ import AdvisoryAreaPicker from "../advisoryAreaPicker/AdvisoryAreaPicker";
 export default function AdvisoryForm({
   mode,
   data: {
-    // ticketNumber,
-    // setTicketNumber,
     listingRank,
     setListingRank,
     headline,
@@ -81,8 +79,6 @@ export default function AdvisoryForm({
     setUrgency,
     isSafetyRelated,
     setIsSafetyRelated,
-    // isReservationAffected,
-    // setIsReservationAffected,
     advisoryDate,
     handleAdvisoryDateChange,
     // displayAdvisoryDate,
@@ -132,7 +128,6 @@ export default function AdvisoryForm({
   const [eventTypeError, setEventTypeError] = useState("");
   const [urgencyError, setUrgencyError] = useState("");
   const [advisoryStatusError, setAdvisoryStatusError] = useState("");
-  // const [ticketNumberError, setTicketNumberError] = useState("");
   const [headlineError, setHeadlineError] = useState("");
   const [advisoryDateError, setAdvisoryDateError] = useState("");
   const [startDateError, setStartDateError] = useState("");
@@ -145,7 +140,6 @@ export default function AdvisoryForm({
 
   const advisoryData = {
     listingRank: { value: listingRank, setError: setListingRankError, text: "listing rank" },
-    // ticketNumber: { value: ticketNumber, setError: setTicketNumberError },
     headline: { value: headline, setError: setHeadlineError, text: "headline" },
     eventType: {
       value: eventType,
@@ -209,12 +203,6 @@ export default function AdvisoryForm({
     id: "submitter",
     required: false,
   };
-
-  // const ticketNumberInput = {
-  //   id: "ticketNumber",
-  //   required: false,
-  //   placeholder: "Discover Camping Ticket Number",
-  // };
 
   const listingRankInput = {
     id: "listing",
@@ -819,28 +807,6 @@ export default function AdvisoryForm({
               />
             </div>
           </div>
-          {/* DC Ticket Number can be removed */}
-          {/* <div className="row">
-            <div className="col-lg-4 col-md-4 col-sm-12 ad-label">
-              DC Ticket Number
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <TextField
-                value={ticketNumber}
-                onChange={(event) => {
-                  setTicketNumber(event.target.value);
-                }}
-                className="bcgov-input"
-                variant="outlined"
-                InputProps={{ ...ticketNumberInput }}
-                error={ticketNumberError !== ""}
-                helperText={ticketNumberError}
-                onBlur={() => {
-                  validateOptionalNumber(advisoryData.ticketNumber);
-                }}
-              />
-            </div>
-          </div> */}
           <div className="row heading">
             Internal details
           </div>
@@ -1085,23 +1051,6 @@ export default function AdvisoryForm({
                   />
                 </div>
               </div>
-              {/* Reservations Affected can be removed */}
-              {/* <div className="row">
-                <div className="col-lg-3 col-md-4 col-sm-6 col-6 ad-label">
-                  Reservations Affected
-                </div>
-                <div className="col-lg-7 col-md-8 col-sm-6 col-6">
-                  <Checkbox
-                    checked={isReservationAffected}
-                    onChange={(e) => {
-                      setIsReservationAffected(e.target.checked);
-                    }}
-                    inputProps={{
-                      "aria-label": "Discover camping affected",
-                    }}
-                  />
-                </div>
-              </div> */}
             </>
           )}
           <div className="row">
@@ -1297,8 +1246,6 @@ export default function AdvisoryForm({
 AdvisoryForm.propTypes = {
   mode: PropTypes.string.isRequired,
   data: PropTypes.shape({
-    // ticketNumber: PropTypes.string,
-    // setTicketNumber: PropTypes.func.isRequired,
     listingRank: PropTypes.number,
     setListingRank: PropTypes.func.isRequired,
     headline: PropTypes.string,
@@ -1340,8 +1287,6 @@ AdvisoryForm.propTypes = {
     setUrgency: PropTypes.func.isRequired,
     isSafetyRelated: PropTypes.bool,
     setIsSafetyRelated: PropTypes.func.isRequired,
-    // isReservationAffected: PropTypes.bool,
-    // setIsReservationAffected: PropTypes.func.isRequired,
     advisoryDate: PropTypes.object,
     handleAdvisoryDateChange: PropTypes.func.isRequired,
     // displayAdvisoryDate: PropTypes.bool,

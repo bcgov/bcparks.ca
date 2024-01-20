@@ -68,11 +68,9 @@ export default function Advisory({
   const [advisoryStatus, setAdvisoryStatus] = useState();
   const [linkTypes, setLinkTypes] = useState([]);
   const [links, setLinks] = useState([]);
-  const [ticketNumber, setTicketNumber] = useState("");
   const [headline, setHeadline] = useState("");
   const [description, setDescription] = useState("");
   const [isSafetyRelated, setIsSafetyRelated] = useState(false);
-  const [isReservationAffected, setIsReservationAffected] = useState(false);
   const [advisoryDate, setAdvisoryDate] = useState(new Date());
   // const [advisoryDate, setAdvisoryDate] = useState(
   //   moment().tz("America/Vancouver")
@@ -155,7 +153,6 @@ export default function Advisory({
             setRevisionNumber(advisoryData.revisionNumber);
             setHeadline(advisoryData.title || "");
             setDescription(advisoryData.description || "");
-            setTicketNumber(advisoryData.dcTicketNumber || "");
             if (advisoryData.isSafetyRelated) {
               setIsSafetyRelated(advisoryData.isSafetyRelated);
             }
@@ -207,9 +204,6 @@ export default function Advisory({
             }
             if (advisoryData.advisoryStatus) {
               setAdvisoryStatus(advisoryData.advisoryStatus.id);
-            }
-            if (advisoryData.isReservationsAffected) {
-              setIsReservationAffected(advisoryData.isReservationsAffected);
             }
             setDisplayAdvisoryDate(
               advisoryData.isAdvisoryDateDisplayed
@@ -345,7 +339,6 @@ export default function Advisory({
     mode,
     setHeadline,
     setDescription,
-    setTicketNumber,
     setIsSafetyRelated,
     setListingRank,
     setSubmittedBy,
@@ -358,7 +351,6 @@ export default function Advisory({
     setEndDate,
     setExpiryDate,
     setAccessStatus,
-    setIsReservationAffected,
     setDisplayAdvisoryDate,
     setDisplayStartDate,
     setDisplayEndDate,
@@ -782,7 +774,6 @@ export default function Advisory({
         const newAdvisory = {
           title: headline,
           description: description,
-          dcTicketNumber: ticketNumber,
           revisionNumber: revisionNumber,
           isSafetyRelated: isSafetyRelated,
           listingRank: parseInt(listingRank),
@@ -807,7 +798,6 @@ export default function Advisory({
           sites: selSites,
           fireCentres: selFireCentres,
           fireZones: selFireZones,
-          isReservationsAffected: isReservationAffected,
           isAdvisoryDateDisplayed: displayAdvisoryDate,
           isEffectiveDateDisplayed: displayStartDate,
           isEndDateDisplayed: displayEndDate,
@@ -872,7 +862,6 @@ export default function Advisory({
           const updatedAdvisory = {
             title: headline,
             description: description,
-            dcTicketNumber: ticketNumber,
             revisionNumber: revisionNumber,
             isSafetyRelated: isSafetyRelated,
             listingRank: parseInt(listingRank),
@@ -898,7 +887,6 @@ export default function Advisory({
             sites: selSites,
             fireCentres: selFireCentres,
             fireZones: selFireZones,
-            isReservationsAffected: isReservationAffected,
             isAdvisoryDateDisplayed: displayAdvisoryDate,
             isEffectiveDateDisplayed: displayStartDate,
             isEndDateDisplayed: displayEndDate,
@@ -1092,8 +1080,6 @@ export default function Advisory({
               <AdvisoryForm
                 mode={mode}
                 data={{
-                  // ticketNumber,
-                  // setTicketNumber,
                   listingRank,
                   setListingRank,
                   headline,
@@ -1135,8 +1121,6 @@ export default function Advisory({
                   setUrgency,
                   isSafetyRelated,
                   setIsSafetyRelated,
-                  // isReservationAffected,
-                  // setIsReservationAffected,
                   advisoryDate,
                   handleAdvisoryDateChange,
                   // displayAdvisoryDate,
