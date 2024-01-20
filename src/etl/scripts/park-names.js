@@ -29,6 +29,7 @@ const loadData = async function () {
 
   const strapiParks = [];
   let dataRegisterParks;
+  let errorCount = 0;
 
   if (dataFileSpecified()) {
     // get a list of parks from the local filesystem (for testing purposes)
@@ -119,7 +120,7 @@ const loadData = async function () {
 
     // update the legal name
     if (p.dataRegister?.legalName !== p.strapi.legalName) {
-      await updateParkName(
+      errorCount += await updateParkName(
         p.strapi.legalNameId,
         p.id,
         legalNameType,
@@ -133,7 +134,7 @@ const loadData = async function () {
 
     // update the phonetic name
     if (p.dataRegister?.phoneticName !== p.strapi.phoneticName) {
-      await updateParkName(
+      errorCount += await updateParkName(
         p.strapi.phoneticNameId,
         p.id,
         phoneticNameType,
@@ -181,6 +182,10 @@ const loadData = async function () {
     }
   }
 
+  if (errorCount > 0) {
+    process.exit(1);
+  }
+
   logger.info("DONE!")
 };
 
@@ -223,6 +228,7 @@ const updateParkName = async function (parkNameId, protectedAreaId, nameTypeObj,
         );
       } catch (error) {
         logger.error(`Error updating ${nameType} for park ${orcs}\n${JSON.stringify(error)}"`);
+        return 1;
       }
     } else {
       logger.info(`Adding ${nameType} "${newName}" for park ${orcs}`);
@@ -240,6 +246,7 @@ const updateParkName = async function (parkNameId, protectedAreaId, nameTypeObj,
         );
       } catch (error) {
         logger.error(`Error adding ${nameType} for park ${orcs}\n${JSON.stringify(error)}"`);
+        return 1;
       }
     }
   } else {
@@ -252,9 +259,11 @@ const updateParkName = async function (parkNameId, protectedAreaId, nameTypeObj,
         );
       } catch (error) {
         logger.error(`Error deleting ${nameType} "${oldName}" for park ${orcs}\n${JSON.stringify(error)}"`);
+        return 1;
       }
     }
   }
+  return 0;
 };
 
 export default loadData;
