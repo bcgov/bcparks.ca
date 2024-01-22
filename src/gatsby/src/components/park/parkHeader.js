@@ -37,6 +37,7 @@ export default function ParkHeader({
                   subAreas={subAreas}
                   operationDates={operationDates}
                   onStatusCalculated={onStatusCalculated}
+                  hideLink={true}
                 />
               </div>
               {hasCampfireBan &&
