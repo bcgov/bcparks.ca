@@ -42,6 +42,7 @@ module.exports = {
           "park-operation",
           "park-operation-date",
           "park-operation-sub-area",
+          "park-operation-sub-area-date",
           "park-operation-sub-area-type",
           "park-photo",
           "park-sub-page",
