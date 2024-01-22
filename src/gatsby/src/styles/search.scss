@@ -1272,7 +1272,7 @@ div[class$="-singleValue"] {
     margin-bottom: 0;
     &:focus-visible {
       outline-offset: 1px;
-      outline: -webkit-focus-ring-color auto 1px;
+      outline: $colorBlueMed auto 1px;
     }
   }
 }
@@ -1327,10 +1327,9 @@ head {
 a.desktop-park-link {
   color: $colorBlue;
   &:focus-visible {
-    border-radius: 1px;
+    border-radius: 0.25rem;
     outline-offset: 0;
-    outline: 2px solid Highlight;
-    outline: 2px solid -webkit-focus-ring-color;
+    outline: 2px solid $colorBlueMed;      
   }
   &:focus, &:hover {
     color: $colorBlue;
