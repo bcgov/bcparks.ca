@@ -307,6 +307,7 @@ export default function Advisory({
                     url: l.url || "",
                     id: l.id,
                     file: l.file,
+                    format: l.format || "",
                     isModified: false,
                     isFileModified: false,
                   },

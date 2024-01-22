@@ -512,7 +512,7 @@ export default function AdvisoryForm({
               {linksRef.current.map((l, idx) => (
                 <div key={idx} className="field-bg-grey">
                   <div className="row">
-                    <div className="col-12 col-lg-3 col-md-2 ad-label">
+                    <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
                       Type
                     </div>
                     <div className="col-12 col-lg-9 col-md-8 ad-flex">
@@ -542,10 +542,10 @@ export default function AdvisoryForm({
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-12 col-lg-3 col-md-2 ad-label">
+                    <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
                       Title
                     </div>
-                    <div className="col-12 col-lg-9 col-md-8">
+                    <div className="col-12 col-lg-9">
                       <TextField
                         value={l.title}
                         onChange={(event) => {
@@ -554,14 +554,16 @@ export default function AdvisoryForm({
                         className="bcgov-input"
                         variant="outlined"
                         InputProps={{ ...linkTitleInput }}
-                        error={l.url !== "" && l.title === ""}
-                        helperText={(l.url && !l.title) ? "Please enter link title too" : ""}
+                        error={(l.type !== "" || l.file !== "" || l.url !== "") && l.title === ""}
+                        helperText={((l.type !== "" || l.file !== "" || l.url !== "") && l.title === "")
+                          ? "Please enter link title too" : ""
+                        }
                       />
                     </div>
                   </div>
                   {l.format === "url" && (
                     <div className="row">
-                      <div className="col-12 col-lg-3 col-md-2 ad-label">
+                      <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
                         URL
                       </div>
                       <div className="col-12 col-lg-9 col-md-8">
@@ -573,15 +575,17 @@ export default function AdvisoryForm({
                           className="bcgov-input"
                           variant="outlined"
                           InputProps={{ ...linkUrlInput }}
-                          error={l.title !== "" && l.url === ""}
-                          helperText={(l.title && !l.url) ? "Please enter URL too" : ""}
+                          error={(l.type !== "" || l.title !== "") && l.url === ""}
+                          helperText={((l.type !== "" || l.title !== "") && l.url === "")
+                            ? "Please enter URL too" : ""
+                          }
                         />
                       </div>
                     </div>
                   )}
                   {l.format === "file" && (
                     <div className="row">
-                      <div className="col-12 col-lg-3 col-md-2 ad-label">
+                      <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
                         File
                       </div>
                       <div className="col-12 col-lg-9 col-md-8 ad-flex">
@@ -600,11 +604,11 @@ export default function AdvisoryForm({
                 hidden
                 type="file"
                 accept=".jpg,.gif,.png,.gif,.pdf"
-                // onChange={({ target }) => {
-                //   handleFileCapture(target.files, idx);
-                // }}
                 onChange={(e) => {
-                  handleFileCapture(e.target.files, 0);
+                  handleFileCapture(
+                    e.target.files,
+                    linksRef.current.length > 0 ? linksRef.current.length - 1 : 0
+                  );
                 }}
               />
               <label htmlFor="file-upload">
