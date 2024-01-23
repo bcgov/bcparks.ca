@@ -24,8 +24,8 @@ import {
   validateOptionalNumber,
   validateRequiredText,
   validateRequiredSelect,
-  // validateRequiredDate,
-  // validateOptionalDate,
+  validateRequiredDate,
+  validateOptionalDate,
   validAdvisoryData,
 } from "../../../validators/AdvisoryValidator";
 import DatePicker from 'react-datepicker';
@@ -658,27 +658,15 @@ export default function AdvisoryForm({
                     Start date
                   </div>
                   <div className="col-12 col-lg-5 col-md-8">
-                    {/* <KeyboardDateTimePicker
-                      id="startDate"
-                      value={startDate}
-                      onChange={setStartDate}
-                      format="MMMM DD, yyyy hh:mm A"
-                      className={`bcgov-datepicker-wrapper ${startDateError !== ""
-                        ? "bcgov-datepicker-wrapper-error"
-                        : ""
-                        }`}
-                      error={startDateError !== ""}
-                      helperText={startDateError}
-                      onBlur={() => {
-                        validateOptionalDate(advisoryData.startDate);
-                      }}
-                    /> */}
                     <DatePicker
                       id="startDate"
                       selected={startDate}
                       onChange={(date) => { setStartDate(date) }}
                       dateFormat="MMMM d, yyyy"
-                      className="bcgov-datepicker"
+                      className={`${startDateError !== "" ? "error" : ""}`}
+                      onBlur={() => {
+                        validateOptionalDate(advisoryData.startDate);
+                      }}
                     />
                     <CalendarTodayIcon />
                     <span className="MuiFormHelperText-root MuiFormHelperText-contained">
@@ -689,12 +677,6 @@ export default function AdvisoryForm({
                     Time
                   </div>
                   <div className="col-12 col-lg-3 col-md-8">
-                    {/* <TimePicker
-                      className={`bcgov-datepicker-wrapper ${startDateError !== ""
-                        ? "bcgov-datepicker-wrapper-error"
-                        : ""
-                        }`}
-                    /> */}
                     <DatePicker
                       selected={startDate}
                       onChange={(date) => setStartDate(date)}
@@ -703,7 +685,7 @@ export default function AdvisoryForm({
                       timeIntervals={15}
                       timeCaption="Time"
                       dateFormat="h:mm aa"
-                      className="bcgov-timepicker"
+                      className={`${startDateError !== "" ? "error" : ""}`}
                     />
                     <ScheduleIcon />
                     <span className="MuiFormHelperText-root MuiFormHelperText-contained">
@@ -736,46 +718,34 @@ export default function AdvisoryForm({
                     End date
                   </div>
                   <div className="col-12 col-lg-5 col-md-8">
-                    {/* <KeyboardDateTimePicker
-                      id="endDate"
-                      value={endDate}
-                      onChange={setEndDate}
-                      format="MMMM DD, yyyy hh:mm A"
-                      className={`bcgov-datepicker-wrapper ${endDateError !== ""
-                        ? "bcgov-datepicker-wrapper-error"
-                        : ""
-                        }`}
-                      error={endDateError !== ""}
-                      helperText={endDateError}
-                      onBlur={() => {
-                        validateOptionalDate(advisoryData.endDate);
-                      }}
-                      minDate={startDate}
-                      minDateMessage="End date should not be before Advisory date"
-                    /> */}
                     <DatePicker
                       id="endDate"
                       selected={endDate}
                       onChange={(date) => { setEndDate(date) }}
                       dateFormat="MMMM d, yyyy"
                       minDate={startDate}
-                      className="bcgov-datepicker"
+                      className={`${endDateError !== "" ? "error" : ""}`}
+                      onBlur={() => {
+                        validateOptionalDate(advisoryData.endDate);
+                      }}
                     />
                     <CalendarTodayIcon />
                     <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                       month dd, yyyy
                     </span>
+                    {endDateError !== "" &&
+                      <>
+                        <br />
+                        <span className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">
+                          End date should not be before Posting date
+                        </span>
+                      </>
+                    }
                   </div>
                   <div className="col-12 col-lg-1 col-md-4 ad-label">
                     Time
                   </div>
                   <div className="col-12 col-lg-3 col-md-8">
-                    {/* <TimePicker
-                      className={`bcgov-datepicker-wrapper ${endDateError !== ""
-                        ? "bcgov-datepicker-wrapper-error"
-                        : ""
-                        }`}
-                    /> */}
                     <DatePicker
                       selected={endDate}
                       onChange={(date) => setEndDate(date)}
@@ -784,7 +754,7 @@ export default function AdvisoryForm({
                       timeIntervals={15}
                       timeCaption="Time"
                       dateFormat="h:mm aa"
-                      className="bcgov-timepicker"
+                      className={`${endDateError !== "" ? "error" : ""}`}
                     />
                     <ScheduleIcon />
                     <span className="MuiFormHelperText-root MuiFormHelperText-contained">
@@ -825,43 +795,33 @@ export default function AdvisoryForm({
                     Posting date
                   </div>
                   <div className="col-12 col-lg-5 col-md-8">
-                    {/* <KeyboardDateTimePicker
-                      id="advisoryDate"
-                      value={advisoryDate}
-                      onChange={handleAdvisoryDateChange}
-                      format="MMMM DD, yyyy hh:mm A"
-                      className={`bcgov-datepicker-wrapper ${advisoryDateError !== ""
-                        ? "bcgov-datepicker-wrapper-error"
-                        : ""
-                        }`}
-                      error={advisoryDateError !== ""}
-                      helperText={advisoryDateError}
-                      onBlur={() => {
-                        validateRequiredDate(advisoryData.advisoryDate);
-                      }}
-                    /> */}
                     <DatePicker
                       id="advisoryDate"
                       selected={advisoryDate}
                       onChange={(date) => { handleAdvisoryDateChange(date) }}
                       dateFormat="MMMM d, yyyy"
-                      className="bcgov-datepicker"
+                      className={`${advisoryDateError !== "" ? "error" : ""}`}
+                      onBlur={() => {
+                        validateRequiredDate(advisoryData.advisoryDate);
+                      }}
                     />
                     <CalendarTodayIcon />
                     <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                       month dd, yyyy
                     </span>
+                    {advisoryDateError !== "" &&
+                      <>
+                        <br />
+                        <span className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">
+                          Please enter valid date
+                        </span>
+                      </>
+                    }
                   </div>
                   <div className="col-12 col-lg-1 col-md-4 ad-label">
                     Time
                   </div>
                   <div className="col-12 col-lg-3 col-md-8">
-                    {/* <TimePicker
-                      className={`bcgov-datepicker-wrapper ${advisoryDateError !== ""
-                        ? "bcgov-datepicker-wrapper-error"
-                        : ""
-                        }`}
-                    /> */}
                     <DatePicker
                       selected={advisoryDate}
                       onChange={(date) => handleAdvisoryDateChange(date)}
@@ -870,7 +830,7 @@ export default function AdvisoryForm({
                       timeIntervals={15}
                       timeCaption="Time"
                       dateFormat="h:mm aa"
-                      className="bcgov-timepicker"
+                      className={`${advisoryDateError !== "" ? "error" : ""}`}
                     />
                     <ScheduleIcon />
                     <span className="MuiFormHelperText-root MuiFormHelperText-contained">
@@ -883,46 +843,34 @@ export default function AdvisoryForm({
                     Expiry date
                   </div>
                   <div className="col-12 col-lg-5 col-md-8">
-                    {/* <KeyboardDateTimePicker
-                      id="expiryDate"
-                      value={expiryDate}
-                      onChange={setExpiryDate}
-                      format="MMMM DD, yyyy hh:mm A"
-                      className={`bcgov-datepicker-wrapper  mr40 ${expiryDateError !== ""
-                        ? "bcgov-datepicker-wrapper-error"
-                        : ""
-                        }`}
-                      error={expiryDateError !== ""}
-                      helperText={expiryDateError}
-                      onBlur={() => {
-                        validateOptionalDate(advisoryData.expiryDate);
-                      }}
-                      minDate={startDate}
-                      minDateMessage="Expiry date should not be before Advisory date"
-                    /> */}
                     <DatePicker
                       id="expiryDate"
                       selected={expiryDate}
                       onChange={(date) => { setExpiryDate(date) }}
                       dateFormat="MMMM d, yyyy"
                       minDate={startDate}
-                      className="bcgov-datepicker"
+                      className={`${expiryDateError !== "" ? "error" : ""}`}
+                      onBlur={() => {
+                        validateOptionalDate(advisoryData.expiryDate);
+                      }}
                     />
                     <CalendarTodayIcon />
                     <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                       month dd, yyyy
                     </span>
+                    {expiryDateError !== "" &&
+                      <>
+                        <br />
+                        <span className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">
+                          Expiry date should not be before Posting date
+                        </span>
+                      </>
+                    }
                   </div>
                   <div className="col-12 col-lg-1 col-md-4 ad-label">
                     Time
                   </div>
                   <div className="col-12 col-lg-3 col-md-8">
-                    {/* <TimePicker
-                      className={`bcgov-datepicker-wrapper  mr40 ${expiryDateError !== ""
-                        ? "bcgov-datepicker-wrapper-error"
-                        : ""
-                        }`}
-                    /> */}
                     <DatePicker
                       selected={expiryDate}
                       onChange={(date) => { setExpiryDate(date) }}
@@ -931,7 +879,7 @@ export default function AdvisoryForm({
                       timeIntervals={15}
                       timeCaption="Time"
                       dateFormat="h:mm aa"
-                      className="bcgov-timepicker"
+                      className={`${expiryDateError !== "" ? "error" : ""}`}
                     />
                     <ScheduleIcon />
                     <span className="MuiFormHelperText-root MuiFormHelperText-contained">
@@ -945,29 +893,15 @@ export default function AdvisoryForm({
                       Updated date
                     </div>
                     <div className="col-12 col-lg-5 col-md-8">
-                      {/* <KeyboardDateTimePicker
-                        id="updatedDate"
-                        value={updatedDate}
-                        onChange={setUpdatedDate}
-                        format="MMMM DD, yyyy hh:mm A"
-                        className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
-                          ? "bcgov-datepicker-wrapper-error"
-                          : ""
-                          }`}
-                        error={updatedDateError !== ""}
-                        helperText={updatedDateError}
-                        onBlur={() => {
-                          validateOptionalDate(
-                            advisoryData.updatedDate
-                          );
-                        }}
-                      /> */}
                       <DatePicker
                         id="updatedDate"
                         selected={updatedDate}
                         onChange={(date) => { setUpdatedDate(date) }}
                         dateFormat="MMMM d, yyyy"
-                        className="bcgov-datepicker"
+                        className={`${updatedDateError !== "" ? "error" : ""}`}
+                        onBlur={() => {
+                          validateOptionalDate(advisoryData.updatedDate);
+                        }}
                       />
                       <CalendarTodayIcon />
                       <span className="MuiFormHelperText-root MuiFormHelperText-contained">
@@ -978,12 +912,6 @@ export default function AdvisoryForm({
                       Time
                     </div>
                     <div className="col-12 col-lg-3 col-md-8">
-                      {/* <TimePicker
-                        className={`bcgov-datepicker-wrapper ${updatedDateError !== ""
-                          ? "bcgov-datepicker-wrapper-error"
-                          : ""
-                          }`}
-                      /> */}
                       <DatePicker
                         selected={updatedDate}
                         onChange={(date) => { setUpdatedDate(date) }}
@@ -992,7 +920,7 @@ export default function AdvisoryForm({
                         timeIntervals={15}
                         timeCaption="Time"
                         dateFormat="h:mm aa"
-                        className="bcgov-timepicker"
+                        className={`${updatedDateError !== "" ? "error" : ""}`}
                       />
                       <ScheduleIcon />
                       <span className="MuiFormHelperText-root MuiFormHelperText-contained">

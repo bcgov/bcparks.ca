@@ -156,6 +156,10 @@
   height: 39px;
 }
 
+.react-datepicker-wrapper input.error {
+  border: 1px solid red !important;
+}
+
 .MuiOutlinedInput-multiline {
   padding: 0px !important;
 }
