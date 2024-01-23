@@ -48,7 +48,6 @@
 
 .ad-link-close {
   margin-left: auto !important;
-  margin-bottom: 5px !important;
 }
 
 .ad-flex-wrap {
@@ -113,11 +112,10 @@
 }
 
 .ad-link-select {
-  width: 60% !important;
+  width: calc(100% - 48px) !important;
 }
 
-.ad-link-group div,
-.ad-link-select {
+.ad-link-group div {
   padding-bottom: 5px !important;
 }
 

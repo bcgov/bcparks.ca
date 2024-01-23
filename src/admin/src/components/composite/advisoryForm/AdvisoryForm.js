@@ -355,7 +355,7 @@ export default function AdvisoryForm({
             <div className="col-lg-7 col-md-8 col-sm-12">
               <FormControl error>
                 <ButtonGroup
-                  className="ad-btn-group urgency-btn-group"
+                  className="urgency-btn-group"
                   variant="outlined"
                   aria-label="outlined primary button group"
                 >
@@ -515,7 +515,7 @@ export default function AdvisoryForm({
                     <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
                       Type
                     </div>
-                    <div className="col-12 col-lg-9 col-md-8 ad-flex">
+                    <div className="col-12 col-lg-9 col-md-10 d-flex">
                       <Select
                         options={linkTypes}
                         onChange={(e) => {
@@ -545,7 +545,7 @@ export default function AdvisoryForm({
                     <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
                       Title
                     </div>
-                    <div className="col-12 col-lg-9">
+                    <div className="col-12 col-lg-9 col-md-10">
                       <TextField
                         value={l.title}
                         onChange={(event) => {
@@ -561,12 +561,12 @@ export default function AdvisoryForm({
                       />
                     </div>
                   </div>
-                  {l.format === "url" && (
+                  {(l.url || l.format === "url") && (
                     <div className="row">
                       <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
                         URL
                       </div>
-                      <div className="col-12 col-lg-9 col-md-8">
+                      <div className="col-12 col-lg-9 col-md-10">
                         <TextField
                           value={l.file ? l.file.url : l.url}
                           onChange={(event) => {
@@ -1058,12 +1058,12 @@ export default function AdvisoryForm({
             </>
           )}
           <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-6 col-6 ad-label">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
               Public safety related
             </div>
-            <div className="col-lg-7 col-md-8 col-sm-6 col-6">
+            <div className="col-lg-7 col-md-8 col-sm-12">
               <ButtonGroup
-                className="ad-btn-group safety-btn-group"
+                className="safety-btn-group"
                 variant="outlined"
                 aria-label="outlined primary button group"
               >
