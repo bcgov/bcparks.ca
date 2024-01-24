@@ -9,7 +9,14 @@ const HighlightText = ({ park, input }) => {
   const parkWords = park.toLowerCase().split(" ")
   const inputWords = input.toLowerCase().split(" ")
   const camelCase = (word) => {
-    return word.charAt(0).toUpperCase() + word.slice(1)
+    // convert the character to upper case after "." such as E.C. Manning Park
+    // but not the case if it has "[]" such as Say Nuth Khaw Yum Park [a.k.a. Indian Arm Park]
+    if (word.includes(".") && !word.includes("[") && !word.includes("]")) {
+      return word.split(".").map(part =>
+        part.charAt(0).toUpperCase() + part.slice(1).toLowerCase()).join(".")
+    } else {
+      return word.charAt(0).toUpperCase() + word.slice(1)
+    }
   }
   return (
     parkWords.map((word, index) => {
@@ -126,7 +133,7 @@ const ParkNameSearch = ({
     if (searchText === "") {
       setIsDropdownOpen(false)
     }
-  },[searchText])
+  }, [searchText])
 
   return (
     <AsyncTypeahead
