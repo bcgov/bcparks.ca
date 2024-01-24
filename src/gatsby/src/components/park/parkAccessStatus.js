@@ -54,10 +54,10 @@ function checkSubAreaClosure(subAreas, staticData) {
     }
     // skip ignored subareas
     if (!subArea.closureAffectsAccessStatus) {
-      break;
+      continue;
     }
     if (subArea.isActive !== true || subArea.isOpen !== true) {
-      break;
+      continue;
     }
     // check the dates to see if any subareas are closed
     const dates = subArea.parkOperationSubAreaDates.filter(d =>
