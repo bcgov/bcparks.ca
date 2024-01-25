@@ -261,7 +261,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::public-advisory.public-advisory",
-      "mappedBy": "protectedArea"
+      "mappedBy": "protectedAreas"
     },
     "parkPhotos": {
       "type": "relation",
@@ -306,6 +306,6 @@
     },
     "searchTerms": {
       "type": "string"
-	}
+    }
   }
 }
