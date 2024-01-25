@@ -6,29 +6,11 @@ import { Form } from "react-bootstrap"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 
 const HighlightText = ({ park, input }) => {
-  const parkWords = park.toLowerCase().split(" ")
-  const inputWords = input.toLowerCase().split(" ")
-  const camelCase = (word) => {
-    // convert the character to upper case after "." such as E.C. Manning Park
-    // but not the case if it has "[]" such as Say Nuth Khaw Yum Park [a.k.a. Indian Arm Park]
-    if (word.includes(".") && !word.includes("[") && !word.includes("]")) {
-      return word.split(".").map(part =>
-        part.charAt(0).toUpperCase() + part.slice(1).toLowerCase()).join(".")
-    } else {
-      return word.charAt(0).toUpperCase() + word.slice(1)
-    }
-  }
-  return (
-    parkWords.map((word, index) => {
-      const shouldHighlight = inputWords.includes(word)
-      return (
-        <span key={index}>
-          {shouldHighlight ? camelCase(word) : <b>{camelCase(word)}</b>}
-          {index !== parkWords.length - 1 ? " " : ""}
-        </span>
-      )
-    })
-  )
+  // for the park names including "." such as E.C. Manning Park
+  const pattern = input.split('').map(char => `${char}[^\\w]*`).join('')
+  const regex = new RegExp(pattern, 'gi')
+  const highlightedText = park.replace(regex, match => `<b>${match}</b>`)
+  return <span dangerouslySetInnerHTML={{ __html: highlightedText }} />
 }
 
 const ParkNameSearch = ({
