@@ -11,8 +11,6 @@ import {
   Button as Btn,
   Typography
 } from "@material-ui/core";
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Select from "react-select";
 import WarningIcon from "@material-ui/icons/Warning";
 import CloseIcon from "@material-ui/icons/Close";
@@ -207,7 +205,6 @@ export default function AdvisoryForm({
   const listingRankInput = {
     id: "listing",
     required: false,
-    placeholder: "Listing Rank",
   };
 
   const displayedDateOptions = (mode === "update") ? [
@@ -250,928 +247,926 @@ export default function AdvisoryForm({
   }, [selectedDisplayedDateOption])
 
   return (
-    <MuiPickersUtilsProvider utils={MomentUtils}>
-      <form className="mt-5">
-        <div className="container-fluid ad-form">
-          <div className="row heading">
-            Affected area
+    <form className="mt-5">
+      <div className="container-fluid ad-form">
+        <div className="row heading">
+          Affected area
+        </div>
+        <AdvisoryAreaPicker
+          data={{
+            protectedAreas,
+            selectedProtectedAreas,
+            setSelectedProtectedAreas,
+            regions,
+            selectedRegions,
+            setSelectedRegions,
+            sections,
+            selectedSections,
+            setSelectedSections,
+            managementAreas,
+            selectedManagementAreas,
+            setSelectedManagementAreas,
+            sites,
+            selectedSites,
+            setSelectedSites,
+            fireCentres,
+            selectedFireCentres,
+            setSelectedFireCentres,
+            fireZones,
+            selectedFireZones,
+            setSelectedFireZones,
+            advisoryData,
+            protectedAreaError
+          }}
+        />
+        <div className="row heading">
+          Advisory content
+        </div>
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
+            Headline
           </div>
-          <AdvisoryAreaPicker
-            data={{
-              protectedAreas,
-              selectedProtectedAreas,
-              setSelectedProtectedAreas,
-              regions,
-              selectedRegions,
-              setSelectedRegions,
-              sections,
-              selectedSections,
-              setSelectedSections,
-              managementAreas,
-              selectedManagementAreas,
-              setSelectedManagementAreas,
-              sites,
-              selectedSites,
-              setSelectedSites,
-              fireCentres,
-              selectedFireCentres,
-              setSelectedFireCentres,
-              fireZones,
-              selectedFireZones,
-              setSelectedFireZones,
-              advisoryData,
-              protectedAreaError
-            }}
-          />
-          <div className="row heading">
-            Advisory content
+          <div className="col-lg-7 col-md-8 col-sm-12">
+            <TextField
+              value={headline}
+              onChange={(event) => {
+                setHeadline(event.target.value);
+              }}
+              className="bcgov-input"
+              variant="outlined"
+              inputProps={{ maxLength: 255 }}
+              InputProps={{ ...headlineInput }}
+              error={headlineError !== ""}
+              helperText={headlineError}
+              onBlur={() => {
+                validateRequiredText(advisoryData.headline);
+              }}
+            />
           </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
-              Headline
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <TextField
-                value={headline}
-                onChange={(event) => {
-                  setHeadline(event.target.value);
-                }}
-                className="bcgov-input"
-                variant="outlined"
-                inputProps={{ maxLength: 255 }}
-                InputProps={{ ...headlineInput }}
-                error={headlineError !== ""}
-                helperText={headlineError}
-                onBlur={() => {
-                  validateRequiredText(advisoryData.headline);
-                }}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
-              Event type
-              <LightTooltip
-                arrow
-                title="Please select the most appropriate event type that your advisory falls under, this does impact the front-end. 
+        </div>
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
+            Event type
+            <LightTooltip
+              arrow
+              title="Please select the most appropriate event type that your advisory falls under, this does impact the front-end. 
                 For example, freshet and wildfire event types load conditional content to their respective flood and wildfire pages."
-              >
-                <HelpIcon className="helpIcon" />
-              </LightTooltip>
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl
-                variant="outlined"
-                className={`bcgov-select-form ${eventTypeError !== "" ? "bcgov-select-error" : ""
-                  }`}
-                error
-              >
-                <Select
-                  options={eventTypes}
-                  value={eventTypes.filter((e) => e.value === eventType)}
-                  onChange={(e) => setEventType(e ? e.value : 0)}
-                  placeholder="Select an event type"
-                  className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredSelect(advisoryData.eventType);
-                  }}
-                  isClearable
-                />
-                <FormHelperText>{eventTypeError}</FormHelperText>
-              </FormControl>
-            </div>
+            >
+              <HelpIcon className="helpIcon" />
+            </LightTooltip>
           </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
-              Urgency level
-              <LightTooltip
-                arrow
-                title="Dependant on your advisory, the urgency level can be used to prioritize your alert above existing alerts for the same park page.
+          <div className="col-lg-7 col-md-8 col-sm-12">
+            <FormControl
+              variant="outlined"
+              className={`bcgov-select-form ${eventTypeError !== "" ? "bcgov-select-error" : ""
+                }`}
+              error
+            >
+              <Select
+                options={eventTypes}
+                value={eventTypes.filter((e) => e.value === eventType)}
+                onChange={(e) => setEventType(e ? e.value : 0)}
+                placeholder="Select an event type"
+                className="bcgov-select"
+                onBlur={() => {
+                  validateRequiredSelect(advisoryData.eventType);
+                }}
+                isClearable
+              />
+              <FormHelperText>{eventTypeError}</FormHelperText>
+            </FormControl>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
+            Urgency level
+            <LightTooltip
+              arrow
+              title="Dependant on your advisory, the urgency level can be used to prioritize your alert above existing alerts for the same park page.
                 Ie, assigning a high urgency re wildfire closure will place that advisory at the top."
-              >
-                <HelpIcon className="helpIcon" />
-              </LightTooltip>
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <FormControl error>
-                <ButtonGroup
-                  className="urgency-btn-group"
-                  variant="outlined"
-                  aria-label="outlined primary button group"
-                >
-                  {urgencies.map((u) => (
-                    <Btn
-                      key={u.value}
-                      onClick={() => {
-                        setUrgency(u.value);
-                      }}
-                      className={urgency === u.value && `btn-urgency-${urgency}`}
-                      style={{ textTransform: 'none' }}
-                    >
-                      {urgency === u.value && <CheckIcon />}
-                      {u.label}
-                    </Btn>
-                  ))}
-                </ButtonGroup>
-                <div className="urgency-helper-text mt-1">
-                  {urgency === 1 && (
-                    <small>Medium urgency for safety and health related</small>
-                  )}
-                  {urgency === 2 && (
-                    <small>Low urgency for discretion and warnings</small>
-                  )}
-                  {urgency === 3 && (
-                    <small>High urgency for immediate danger and closures</small>
-                  )}
-                </div>
-                <FormHelperText>{urgencyError}</FormHelperText>
-              </FormControl>
-            </div>
+            >
+              <HelpIcon className="helpIcon" />
+            </LightTooltip>
           </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-              Listing rank
-              <LightTooltip
-                arrow
-                title="Advisories, by default, are listed by date in descending order. 
+          <div className="col-lg-7 col-md-8 col-sm-12">
+            <FormControl error>
+              <ButtonGroup
+                className="urgency-btn-group"
+                variant="outlined"
+                aria-label="outlined primary button group"
+              >
+                {urgencies.map((u) => (
+                  <Btn
+                    key={u.value}
+                    onClick={() => {
+                      setUrgency(u.value);
+                    }}
+                    className={urgency === u.value && `btn-urgency-${urgency}`}
+                    style={{ textTransform: 'none' }}
+                  >
+                    {urgency === u.value && <CheckIcon />}
+                    {u.label}
+                  </Btn>
+                ))}
+              </ButtonGroup>
+              <div className="urgency-helper-text mt-1">
+                {urgency === 1 && (
+                  <small>Medium urgency for safety and health related</small>
+                )}
+                {urgency === 2 && (
+                  <small>Low urgency for discretion and warnings</small>
+                )}
+                {urgency === 3 && (
+                  <small>High urgency for immediate danger and closures</small>
+                )}
+              </div>
+              <FormHelperText>{urgencyError}</FormHelperText>
+            </FormControl>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+            Listing rank
+            <LightTooltip
+              arrow
+              title="Advisories, by default, are listed by date in descending order. 
                 Listing Rank is a number that is used to override the chronological sort order for advisories. 
                 A higher listing rank number will give the advisory a higher priority in the list."
-              >
-                <HelpIcon className="helpIcon" />
-              </LightTooltip>
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <TextField
-                type="number"
-                value={listingRank}
-                onChange={(event) => {
-                  setListingRank(event.target.value);
-                }}
-                className="bcgov-input"
-                variant="outlined"
-                InputProps={{ ...listingRankInput }}
-                inputProps={{ min: 0 }}
-                error={listingRankError !== ""}
-                helperText={listingRankError}
-                onBlur={() => {
-                  validateOptionalNumber(advisoryData.listingRank);
-                }}
-              />
-            </div>
+            >
+              <HelpIcon className="helpIcon" />
+            </LightTooltip>
           </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-              Park access status
-              <LightTooltip
-                arrow
-                title="This applies any applicable symbols or icons relating to the park access status to the advisory.
+          <div className="col-lg-7 col-md-8 col-sm-12">
+            <TextField
+              type="number"
+              value={listingRank}
+              onChange={(event) => {
+                setListingRank(event.target.value);
+              }}
+              className="bcgov-input"
+              variant="outlined"
+              InputProps={{ ...listingRankInput }}
+              inputProps={{ min: 0 }}
+              error={listingRankError !== ""}
+              helperText={listingRankError}
+              onBlur={() => {
+                validateOptionalNumber(advisoryData.listingRank);
+              }}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+            Park access status
+            <LightTooltip
+              arrow
+              title="This applies any applicable symbols or icons relating to the park access status to the advisory.
                 Such as full closure or partial closure icons."
-              >
-                <HelpIcon className="helpIcon" />
-              </LightTooltip>
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <Select
-                options={accessStatuses}
-                value={accessStatuses.filter((e) => e.value === accessStatus)}
-                onChange={(e) => setAccessStatus(e ? e.value : 0)}
-                placeholder="Select park access status"
-                className="bcgov-select"
-                isClearable
-              />
-            </div>
+            >
+              <HelpIcon className="helpIcon" />
+            </LightTooltip>
           </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-              Standard message(s)
-              <LightTooltip
-                arrow
-                title="Standard messages are chosen from a list of generic, pre-defined and approved messages. 
+          <div className="col-lg-7 col-md-8 col-sm-12">
+            <Select
+              options={accessStatuses}
+              value={accessStatuses.filter((e) => e.value === accessStatus)}
+              onChange={(e) => setAccessStatus(e ? e.value : 0)}
+              placeholder="Select park access status"
+              className="bcgov-select"
+              isClearable
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+            Standard message(s)
+            <LightTooltip
+              arrow
+              title="Standard messages are chosen from a list of generic, pre-defined and approved messages. 
                 This content will be added below any text entered in the description on the park page.
                 There is no requirement to have both a description and standard messaging."
-              >
-                <HelpIcon className="helpIcon" />
-              </LightTooltip>
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <Select
-                options={standardMessages}
-                value={selectedStandardMessages}
-                onChange={(e) => {
-                  setSelectedStandardMessages(e);
-                }}
-                placeholder="Add standard message(s)"
-                className="bcgov-select"
-                isMulti
-                isClearable
-              />
+            >
+              <HelpIcon className="helpIcon" />
+            </LightTooltip>
+          </div>
+          <div className="col-lg-7 col-md-8 col-sm-12">
+            <Select
+              options={standardMessages}
+              value={selectedStandardMessages}
+              onChange={(e) => {
+                setSelectedStandardMessages(e);
+              }}
+              placeholder="Add standard message(s)"
+              className="bcgov-select"
+              isMulti
+              isClearable
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+            Description
+          </div>
+          <div className="col-lg-7 col-md-8 col-sm-12">
+            <TextField
+              value={description}
+              onChange={(event) => {
+                setDescription(event.target.value);
+              }}
+              multiline
+              rows={4}
+              rowsMax={10}
+              className="bcgov-input"
+              variant="outlined"
+              InputProps={{ ...descriptionInput }}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+            Standard message preview
+          </div>
+          <div className="col-lg-7 col-md-8 col-sm-12">
+            <div className="bcgov-textarea">
+              {selectedStandardMessages.map((message, i) => (
+                <Typography
+                  key={i}
+                  component="div"
+                  className="standard-message"
+                  dangerouslySetInnerHTML={{
+                    __html: message.obj.description
+                  }} />
+              ))}
             </div>
           </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-              Description
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <TextField
-                value={description}
-                onChange={(event) => {
-                  setDescription(event.target.value);
-                }}
-                multiline
-                rows={4}
-                rowsMax={10}
-                className="bcgov-input"
-                variant="outlined"
-                InputProps={{ ...descriptionInput }}
-              />
-            </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+            Add supporting information
           </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-              Standard message preview
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <div className="bcgov-textarea">
-                {selectedStandardMessages.map((message, i) => (
-                  <Typography
-                    key={i}
-                    component="div"
-                    className="standard-message"
-                    dangerouslySetInnerHTML={{
-                      __html: message.obj.description
-                    }} />
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-              Add supporting information
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              {linksRef.current.map((l, idx) => (
-                <div key={idx} className="field-bg-grey">
-                  <div className="row">
-                    <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
-                      Type
-                    </div>
-                    <div className="col-12 col-lg-9 col-md-10 d-flex">
-                      <Select
-                        options={linkTypes}
-                        onChange={(e) => {
-                          updateLink(idx, "type", e.value);
-                        }}
-                        value={linkTypes.filter((o) => o.value === l.type)}
-                        className="ad-link-select bcgov-select"
-                        placeholder="Link or document type"
-                      />
-                      <div
-                        className="ad-link-close ad-add-link pointer div-btn"
-                        tabIndex="0"
-                        onClick={() => {
+          <div className="col-lg-7 col-md-8 col-sm-12">
+            {linksRef.current.map((l, idx) => (
+              <div key={idx} className="field-bg-grey">
+                <div className="row">
+                  <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
+                    Type
+                  </div>
+                  <div className="col-12 col-lg-9 col-md-10 d-flex">
+                    <Select
+                      options={linkTypes}
+                      onChange={(e) => {
+                        updateLink(idx, "type", e.value);
+                      }}
+                      value={linkTypes.filter((o) => o.value === l.type)}
+                      className="ad-link-select bcgov-select"
+                      placeholder="Link or document type"
+                    />
+                    <div
+                      className="ad-link-close ad-add-link pointer div-btn"
+                      tabIndex="0"
+                      onClick={() => {
+                        removeLink(idx);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
                           removeLink(idx);
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            removeLink(idx);
-                          }
-                        }}
-                      >
-                        <CloseIcon />
-                      </div>
+                        }
+                      }}
+                    >
+                      <CloseIcon />
                     </div>
                   </div>
+                </div>
+                <div className="row">
+                  <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
+                    Title
+                  </div>
+                  <div className="col-12 col-lg-9 col-md-10">
+                    <TextField
+                      value={l.title}
+                      onChange={(event) => {
+                        updateLink(idx, "title", event.target.value);
+                      }}
+                      className="bcgov-input"
+                      variant="outlined"
+                      InputProps={{ ...linkTitleInput }}
+                      error={(l.type !== "" || l.file !== "" || l.url !== "") && l.title === ""}
+                      helperText={((l.type !== "" || l.file !== "" || l.url !== "") && l.title === "")
+                        ? "Please enter link title too" : ""
+                      }
+                    />
+                  </div>
+                </div>
+                {(l.url || l.format === "url") && (
                   <div className="row">
                     <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
-                      Title
+                      URL
                     </div>
                     <div className="col-12 col-lg-9 col-md-10">
                       <TextField
-                        value={l.title}
+                        value={l.file ? l.file.url : l.url}
                         onChange={(event) => {
-                          updateLink(idx, "title", event.target.value);
+                          updateLink(idx, "url", event.target.value);
                         }}
                         className="bcgov-input"
                         variant="outlined"
-                        InputProps={{ ...linkTitleInput }}
-                        error={(l.type !== "" || l.file !== "" || l.url !== "") && l.title === ""}
-                        helperText={((l.type !== "" || l.file !== "" || l.url !== "") && l.title === "")
-                          ? "Please enter link title too" : ""
+                        InputProps={{ ...linkUrlInput }}
+                        error={(l.type !== "" || l.title !== "") && l.url === ""}
+                        helperText={((l.type !== "" || l.title !== "") && l.url === "")
+                          ? "Please enter URL too" : ""
                         }
                       />
                     </div>
                   </div>
-                  {(l.url || l.format === "url") && (
-                    <div className="row">
-                      <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
-                        URL
-                      </div>
-                      <div className="col-12 col-lg-9 col-md-10">
-                        <TextField
-                          value={l.file ? l.file.url : l.url}
-                          onChange={(event) => {
-                            updateLink(idx, "url", event.target.value);
-                          }}
-                          className="bcgov-input"
-                          variant="outlined"
-                          InputProps={{ ...linkUrlInput }}
-                          error={(l.type !== "" || l.title !== "") && l.url === ""}
-                          helperText={((l.type !== "" || l.title !== "") && l.url === "")
-                            ? "Please enter URL too" : ""
-                          }
-                        />
-                      </div>
-                    </div>
-                  )}
-                  {l.format === "file" && (
-                    <div className="row">
-                      <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
-                        File
-                      </div>
-                      <div className="col-12 col-lg-9 col-md-8 ad-flex">
-                        <TextField
-                          value={l.file ? l.file.name : ""}
-                          className="bcgov-input"
-                          variant="outlined"
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-              <input
-                id="file-upload"
-                hidden
-                type="file"
-                accept=".jpg,.gif,.png,.gif,.pdf"
-                onChange={(e) => {
-                  handleFileCapture(
-                    e.target.files,
-                    linksRef.current.length > 0 ? linksRef.current.length - 1 : 0
-                  );
-                }}
-              />
-              <label htmlFor="file-upload">
-                <Btn
-                  variant="outlined"
-                  component="span"
-                  className="ad-add-link pointer div-btn"
-                  style={{ textTransform: 'none' }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      addLink("file");
-                    }
-                  }}
-                  onClick={() => {
-                    addLink("file");
-                  }}
-                >
-                  + Upload file
-                </Btn>
-              </label>
-              <span>OR</span>
-              <Btn
-                variant="outlined"
-                className="ad-add-link pointer div-btn"
-                style={{ textTransform: 'none' }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    addLink("url");
-                  }
-                }}
-                onClick={() => {
-                  addLink("url");
-                }}
-              >
-                + Add URL
-              </Btn>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-              Event dates
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <div className="field-bg-grey">
-                <div className="row">
-                  <div className="col-12 col-lg-3 col-md-4 ad-label">
-                    Start date
-                  </div>
-                  <div className="col-12 col-lg-5 col-md-8">
-                    <DatePicker
-                      id="startDate"
-                      selected={startDate}
-                      onChange={(date) => { setStartDate(date) }}
-                      dateFormat="MMMM d, yyyy"
-                      className={`${startDateError !== "" ? "error" : ""}`}
-                      onBlur={() => {
-                        validateOptionalDate(advisoryData.startDate);
-                      }}
-                    />
-                    <CalendarTodayIcon />
-                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
-                      month dd, yyyy
-                    </span>
-                  </div>
-                  <div className="col-12 col-lg-1 col-md-4 ad-label">
-                    Time
-                  </div>
-                  <div className="col-12 col-lg-3 col-md-8">
-                    <DatePicker
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={15}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                      className={`${startDateError !== "" ? "error" : ""}`}
-                    />
-                    <ScheduleIcon />
-                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
-                      hh:mm aa
-                    </span>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-12 col-lg-3 col-md-4 ad-label">
-                    Duration
-                  </div>
-                  <div className="col-12 col-lg-5 col-md-8 d-flex">
-                    <TextField
-                      type="number"
-                      variant="outlined"
-                      InputProps={{ inputProps: { min: 0 } }}
-                      onChange={handleDurationIntervalChange}
-                      className="ad-interval-input bcgov-input"
-                    />
-                    <Select
-                      options={intervalUnits}
-                      onChange={handleDurationUnitChange}
-                      defaultValue={intervalUnits[3]}
-                      className="ad-interval-select bcgov-select"
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-12 col-lg-3 col-md-4 ad-label">
-                    End date
-                  </div>
-                  <div className="col-12 col-lg-5 col-md-8">
-                    <DatePicker
-                      id="endDate"
-                      selected={endDate}
-                      onChange={(date) => { setEndDate(date) }}
-                      dateFormat="MMMM d, yyyy"
-                      minDate={startDate}
-                      className={`${endDateError !== "" ? "error" : ""}`}
-                      onBlur={() => {
-                        validateOptionalDate(advisoryData.endDate);
-                      }}
-                    />
-                    <CalendarTodayIcon />
-                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
-                      month dd, yyyy
-                    </span>
-                    {endDateError !== "" &&
-                      <>
-                        <br />
-                        <span className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">
-                          End date should not be before Posting date
-                        </span>
-                      </>
-                    }
-                  </div>
-                  <div className="col-12 col-lg-1 col-md-4 ad-label">
-                    Time
-                  </div>
-                  <div className="col-12 col-lg-3 col-md-8">
-                    <DatePicker
-                      selected={endDate}
-                      onChange={(date) => setEndDate(date)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={15}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                      className={`${endDateError !== "" ? "error" : ""}`}
-                    />
-                    <ScheduleIcon />
-                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
-                      hh:mm aa
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-              Displayed date
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <Select
-                options={displayedDateOptions}
-                defaultValue={displayedDateOptions[0]}
-                onChange={(e) => {
-                  setSelectedDisplayedDateOption(e.value);
-                }}
-                className="bcgov-select"
-                isClearable
-              />
-            </div>
-          </div>
-          <div className="row heading">
-            Internal details
-          </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-              Post dates
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <div className="field-bg-grey">
-                <div className="row">
-                  <div className="col-12 col-lg-3 col-md-4 ad-label bcgov-required">
-                    Posting date
-                  </div>
-                  <div className="col-12 col-lg-5 col-md-8">
-                    <DatePicker
-                      id="advisoryDate"
-                      selected={advisoryDate}
-                      onChange={(date) => { handleAdvisoryDateChange(date) }}
-                      dateFormat="MMMM d, yyyy"
-                      className={`${advisoryDateError !== "" ? "error" : ""}`}
-                      onBlur={() => {
-                        validateRequiredDate(advisoryData.advisoryDate);
-                      }}
-                    />
-                    <CalendarTodayIcon />
-                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
-                      month dd, yyyy
-                    </span>
-                    {advisoryDateError !== "" &&
-                      <>
-                        <br />
-                        <span className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">
-                          Please enter valid date
-                        </span>
-                      </>
-                    }
-                  </div>
-                  <div className="col-12 col-lg-1 col-md-4 ad-label">
-                    Time
-                  </div>
-                  <div className="col-12 col-lg-3 col-md-8">
-                    <DatePicker
-                      selected={advisoryDate}
-                      onChange={(date) => handleAdvisoryDateChange(date)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={15}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                      className={`${advisoryDateError !== "" ? "error" : ""}`}
-                    />
-                    <ScheduleIcon />
-                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
-                      hh:mm aa
-                    </span>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-12 col-lg-3 col-md-4 ad-label">
-                    Expiry date
-                  </div>
-                  <div className="col-12 col-lg-5 col-md-8">
-                    <DatePicker
-                      id="expiryDate"
-                      selected={expiryDate}
-                      onChange={(date) => { setExpiryDate(date) }}
-                      dateFormat="MMMM d, yyyy"
-                      minDate={startDate}
-                      className={`${expiryDateError !== "" ? "error" : ""}`}
-                      onBlur={() => {
-                        validateOptionalDate(advisoryData.expiryDate);
-                      }}
-                    />
-                    <CalendarTodayIcon />
-                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
-                      month dd, yyyy
-                    </span>
-                    {expiryDateError !== "" &&
-                      <>
-                        <br />
-                        <span className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">
-                          Expiry date should not be before Posting date
-                        </span>
-                      </>
-                    }
-                  </div>
-                  <div className="col-12 col-lg-1 col-md-4 ad-label">
-                    Time
-                  </div>
-                  <div className="col-12 col-lg-3 col-md-8">
-                    <DatePicker
-                      selected={expiryDate}
-                      onChange={(date) => { setExpiryDate(date) }}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={15}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                      className={`${expiryDateError !== "" ? "error" : ""}`}
-                    />
-                    <ScheduleIcon />
-                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
-                      hh:mm aa
-                    </span>
-                  </div>
-                </div>
-                {mode === "update" && (
+                )}
+                {l.format === "file" && (
                   <div className="row">
-                    <div className="col-12 col-lg-3 col-md-4 ad-label">
-                      Updated date
+                    <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
+                      File
                     </div>
-                    <div className="col-12 col-lg-5 col-md-8">
-                      <DatePicker
-                        id="updatedDate"
-                        selected={updatedDate}
-                        onChange={(date) => { setUpdatedDate(date) }}
-                        dateFormat="MMMM d, yyyy"
-                        className={`${updatedDateError !== "" ? "error" : ""}`}
-                        onBlur={() => {
-                          validateOptionalDate(advisoryData.updatedDate);
-                        }}
+                    <div className="col-12 col-lg-9 col-md-8 ad-flex">
+                      <TextField
+                        value={l.file ? l.file.name : ""}
+                        className="bcgov-input"
+                        variant="outlined"
                       />
-                      <CalendarTodayIcon />
-                      <span className="MuiFormHelperText-root MuiFormHelperText-contained">
-                        month dd, yyyy
-                      </span>
-                    </div>
-                    <div className="col-12 col-lg-1 col-md-4 ad-label">
-                      Time
-                    </div>
-                    <div className="col-12 col-lg-3 col-md-8">
-                      <DatePicker
-                        selected={updatedDate}
-                        onChange={(date) => { setUpdatedDate(date) }}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={15}
-                        timeCaption="Time"
-                        dateFormat="h:mm aa"
-                        className={`${updatedDateError !== "" ? "error" : ""}`}
-                      />
-                      <ScheduleIcon />
-                      <span className="MuiFormHelperText-root MuiFormHelperText-contained">
-                        hh:mm aa
-                      </span>
                     </div>
                   </div>
                 )}
               </div>
-            </div>
+            ))}
+            <input
+              id="file-upload"
+              hidden
+              type="file"
+              accept=".jpg,.gif,.png,.gif,.pdf"
+              onChange={(e) => {
+                handleFileCapture(
+                  e.target.files,
+                  linksRef.current.length > 0 ? linksRef.current.length - 1 : 0
+                );
+              }}
+            />
+            <label htmlFor="file-upload">
+              <Btn
+                variant="outlined"
+                component="span"
+                className="ad-add-link pointer div-btn"
+                style={{ textTransform: 'none' }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    addLink("file");
+                  }
+                }}
+                onClick={() => {
+                  addLink("file");
+                }}
+              >
+                + Upload file
+              </Btn>
+            </label>
+            <span>OR</span>
+            <Btn
+              variant="outlined"
+              className="ad-add-link pointer div-btn"
+              style={{ textTransform: 'none' }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  addLink("url");
+                }
+              }}
+              onClick={() => {
+                addLink("url");
+              }}
+            >
+              + Add URL
+            </Btn>
           </div>
-          {PrivateElement(["approver"]) && (
-            <>
+        </div>
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+            Event dates
+          </div>
+          <div className="col-lg-7 col-md-8 col-sm-12">
+            <div className="field-bg-grey">
               <div className="row">
-                <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
-                  Advisory status
+                <div className="col-12 col-lg-3 col-md-4 ad-label">
+                  Start date
                 </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
-                  <FormControl
-                    variant="outlined"
-                    className={`bcgov-select-form ${advisoryStatusError !== "" ? "bcgov-select-error" : ""
-                      }`}
-                    error
-                  >
-                    <Select
-                      options={advisoryStatuses}
-                      value={advisoryStatuses.filter(
-                        (a) => a.value === advisoryStatus
-                      )}
-                      onChange={(e) => setAdvisoryStatus(e ? e.value : 0)}
-                      placeholder="Select an advisory status"
-                      className="bcgov-select"
-                      onBlur={() => {
-                        validateRequiredSelect(advisoryData.advisoryStatus);
-                      }}
-                      isClearable
-                    />
-                    <FormHelperText>{advisoryStatusError}</FormHelperText>
-                  </FormControl>
+                <div className="col-12 col-lg-5 col-md-8">
+                  <DatePicker
+                    id="startDate"
+                    selected={startDate}
+                    onChange={(date) => { setStartDate(date) }}
+                    dateFormat="MMMM d, yyyy"
+                    className={`${startDateError !== "" ? "error" : ""}`}
+                    onBlur={() => {
+                      validateOptionalDate(advisoryData.startDate);
+                    }}
+                  />
+                  <CalendarTodayIcon />
+                  <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                    month dd, yyyy
+                  </span>
+                </div>
+                <div className="col-12 col-lg-1 col-md-4 ad-label">
+                  Time
+                </div>
+                <div className="col-12 col-lg-3 col-md-8">
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption="Time"
+                    dateFormat="h:mm aa"
+                    className={`${startDateError !== "" ? "error" : ""}`}
+                  />
+                  <ScheduleIcon />
+                  <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                    hh:mm aa
+                  </span>
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
-                  Requested by
+                <div className="col-12 col-lg-3 col-md-4 ad-label">
+                  Duration
                 </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
+                <div className="col-12 col-lg-5 col-md-8 d-flex">
                   <TextField
-                    value={submittedBy}
-                    onChange={(event) => {
-                      setSubmittedBy(event.target.value);
-                    }}
-                    className="bcgov-input"
+                    type="number"
                     variant="outlined"
-                    InputProps={{ ...submitterInput }}
-                    error={submittedByError !== ""}
-                    helperText={submittedByError}
-                    onBlur={() => {
-                      validateRequiredText(advisoryData.submittedBy);
-                    }}
+                    InputProps={{ inputProps: { min: 0 } }}
+                    onChange={handleDurationIntervalChange}
+                    className="ad-interval-input bcgov-input"
+                  />
+                  <Select
+                    options={intervalUnits}
+                    onChange={handleDurationUnitChange}
+                    defaultValue={intervalUnits[3]}
+                    className="ad-interval-select bcgov-select"
                   />
                 </div>
               </div>
-            </>
-          )}
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-              Public safety related
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <ButtonGroup
-                className="safety-btn-group"
-                variant="outlined"
-                aria-label="outlined primary button group"
-              >
-                <Btn
-                  onClick={() => setIsSafetyRelated(true)}
-                  className={isSafetyRelated === true && `btn-safety-selected`}
-                  style={{ textTransform: 'none' }}
-                >
-                  {isSafetyRelated && <CheckIcon />} Yes
-                </Btn>
-                <Btn
-                  onClick={() => setIsSafetyRelated(false)}
-                  className={isSafetyRelated === false && `btn-safety-selected`}
-                  style={{ textTransform: 'none' }}
-                >
-                  {!isSafetyRelated && <CheckIcon />} No
-                </Btn>
-              </ButtonGroup>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
-              Internal notes
-            </div>
-            <div className="col-lg-7 col-md-8 col-sm-12">
-              <TextField
-                value={notes}
-                onChange={(event) => {
-                  setNotes(event.target.value);
-                }}
-                className="bcgov-input"
-                variant="outlined"
-                InputProps={{ ...notesInput }}
-              />
-            </div>
-          </div>
-          {!PrivateElement(["approver"]) && (isStatHoliday || isAfterHours) && (
-            <div className="ad-af-hour-box">
               <div className="row">
-                <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+                <div className="col-12 col-lg-3 col-md-4 ad-label">
+                  End date
                 </div>
-                <div className="col-lg-7 col-md-8 col-sm-12">
-                  <div className="d-flex field-bg-blue">
-                    <WarningIcon className="warningIcon" />
-                    <div className="ml-3">
-                      <p>
-                        <b>This is an after-hours advisory</b><br />
-                        The web team's business hours are<br />
-                        Monday to Friday, 8:30AM – 4:30PM.
-                      </p>
-                      <div className="d-flex mt-3">
-                        <Radio
-                          checked={isAfterHourPublish}
-                          onChange={() => {
-                            setIsAfterHourPublish(true);
-                          }}
-                          value="Publish"
-                          name="after-hour-submission"
-                          inputProps={{ "aria-label": "Publish immediately" }}
-                          className="mr-2"
-                        />
-                        <p><b className="required">Urgent/safety-related.</b> Publish immediately.</p>
-                      </div>
-                      <div className="d-flex mt-3">
-                        <Radio
-                          checked={!isAfterHourPublish}
-                          onChange={() => {
-                            setIsAfterHourPublish(false);
-                          }}
-                          value="Review"
-                          name="after-hour-submission"
-                          inputProps={{
-                            "aria-label": "Submit for web team review",
-                          }}
-                          className="mr-2"
-                        />
-                        <p><b>Advisory is not urgent.</b> Submit for web team review.</p>
-                      </div>
+                <div className="col-12 col-lg-5 col-md-8">
+                  <DatePicker
+                    id="endDate"
+                    selected={endDate}
+                    onChange={(date) => { setEndDate(date) }}
+                    dateFormat="MMMM d, yyyy"
+                    minDate={startDate}
+                    className={`${endDateError !== "" ? "error" : ""}`}
+                    onBlur={() => {
+                      validateOptionalDate(advisoryData.endDate);
+                    }}
+                  />
+                  <CalendarTodayIcon />
+                  <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                    month dd, yyyy
+                  </span>
+                  {endDateError !== "" &&
+                    <>
+                      <br />
+                      <span className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">
+                        End date should not be before Posting date
+                      </span>
+                    </>
+                  }
+                </div>
+                <div className="col-12 col-lg-1 col-md-4 ad-label">
+                  Time
+                </div>
+                <div className="col-12 col-lg-3 col-md-8">
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => setEndDate(date)}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption="Time"
+                    dateFormat="h:mm aa"
+                    className={`${endDateError !== "" ? "error" : ""}`}
+                  />
+                  <ScheduleIcon />
+                  <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                    hh:mm aa
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+            Displayed date
+          </div>
+          <div className="col-lg-7 col-md-8 col-sm-12">
+            <Select
+              options={displayedDateOptions}
+              defaultValue={displayedDateOptions[0]}
+              onChange={(e) => {
+                setSelectedDisplayedDateOption(e.value);
+              }}
+              className="bcgov-select"
+              isClearable
+            />
+          </div>
+        </div>
+        <div className="row heading">
+          Internal details
+        </div>
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+            Post dates
+          </div>
+          <div className="col-lg-7 col-md-8 col-sm-12">
+            <div className="field-bg-grey">
+              <div className="row">
+                <div className="col-12 col-lg-3 col-md-4 ad-label bcgov-required">
+                  Posting date
+                </div>
+                <div className="col-12 col-lg-5 col-md-8">
+                  <DatePicker
+                    id="advisoryDate"
+                    selected={advisoryDate}
+                    onChange={(date) => { handleAdvisoryDateChange(date) }}
+                    dateFormat="MMMM d, yyyy"
+                    className={`${advisoryDateError !== "" ? "error" : ""}`}
+                    onBlur={() => {
+                      validateRequiredDate(advisoryData.advisoryDate);
+                    }}
+                  />
+                  <CalendarTodayIcon />
+                  <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                    month dd, yyyy
+                  </span>
+                  {advisoryDateError !== "" &&
+                    <>
+                      <br />
+                      <span className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">
+                        Please enter valid date
+                      </span>
+                    </>
+                  }
+                </div>
+                <div className="col-12 col-lg-1 col-md-4 ad-label">
+                  Time
+                </div>
+                <div className="col-12 col-lg-3 col-md-8">
+                  <DatePicker
+                    selected={advisoryDate}
+                    onChange={(date) => handleAdvisoryDateChange(date)}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption="Time"
+                    dateFormat="h:mm aa"
+                    className={`${advisoryDateError !== "" ? "error" : ""}`}
+                  />
+                  <ScheduleIcon />
+                  <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                    hh:mm aa
+                  </span>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 col-lg-3 col-md-4 ad-label">
+                  Expiry date
+                </div>
+                <div className="col-12 col-lg-5 col-md-8">
+                  <DatePicker
+                    id="expiryDate"
+                    selected={expiryDate}
+                    onChange={(date) => { setExpiryDate(date) }}
+                    dateFormat="MMMM d, yyyy"
+                    minDate={startDate}
+                    className={`${expiryDateError !== "" ? "error" : ""}`}
+                    onBlur={() => {
+                      validateOptionalDate(advisoryData.expiryDate);
+                    }}
+                  />
+                  <CalendarTodayIcon />
+                  <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                    month dd, yyyy
+                  </span>
+                  {expiryDateError !== "" &&
+                    <>
+                      <br />
+                      <span className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">
+                        Expiry date should not be before Posting date
+                      </span>
+                    </>
+                  }
+                </div>
+                <div className="col-12 col-lg-1 col-md-4 ad-label">
+                  Time
+                </div>
+                <div className="col-12 col-lg-3 col-md-8">
+                  <DatePicker
+                    selected={expiryDate}
+                    onChange={(date) => { setExpiryDate(date) }}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption="Time"
+                    dateFormat="h:mm aa"
+                    className={`${expiryDateError !== "" ? "error" : ""}`}
+                  />
+                  <ScheduleIcon />
+                  <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                    hh:mm aa
+                  </span>
+                </div>
+              </div>
+              {mode === "update" && (
+                <div className="row">
+                  <div className="col-12 col-lg-3 col-md-4 ad-label">
+                    Updated date
+                  </div>
+                  <div className="col-12 col-lg-5 col-md-8">
+                    <DatePicker
+                      id="updatedDate"
+                      selected={updatedDate}
+                      onChange={(date) => { setUpdatedDate(date) }}
+                      dateFormat="MMMM d, yyyy"
+                      className={`${updatedDateError !== "" ? "error" : ""}`}
+                      onBlur={() => {
+                        validateOptionalDate(advisoryData.updatedDate);
+                      }}
+                    />
+                    <CalendarTodayIcon />
+                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                      month dd, yyyy
+                    </span>
+                  </div>
+                  <div className="col-12 col-lg-1 col-md-4 ad-label">
+                    Time
+                  </div>
+                  <div className="col-12 col-lg-3 col-md-8">
+                    <DatePicker
+                      selected={updatedDate}
+                      onChange={(date) => { setUpdatedDate(date) }}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={15}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                      className={`${updatedDateError !== "" ? "error" : ""}`}
+                    />
+                    <ScheduleIcon />
+                    <span className="MuiFormHelperText-root MuiFormHelperText-contained">
+                      hh:mm aa
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        {PrivateElement(["approver"]) && (
+          <>
+            <div className="row">
+              <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
+                Advisory status
+              </div>
+              <div className="col-lg-7 col-md-8 col-sm-12">
+                <FormControl
+                  variant="outlined"
+                  className={`bcgov-select-form ${advisoryStatusError !== "" ? "bcgov-select-error" : ""
+                    }`}
+                  error
+                >
+                  <Select
+                    options={advisoryStatuses}
+                    value={advisoryStatuses.filter(
+                      (a) => a.value === advisoryStatus
+                    )}
+                    onChange={(e) => setAdvisoryStatus(e ? e.value : 0)}
+                    placeholder="Select an advisory status"
+                    className="bcgov-select"
+                    onBlur={() => {
+                      validateRequiredSelect(advisoryData.advisoryStatus);
+                    }}
+                    isClearable
+                  />
+                  <FormHelperText>{advisoryStatusError}</FormHelperText>
+                </FormControl>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
+                Requested by
+              </div>
+              <div className="col-lg-7 col-md-8 col-sm-12">
+                <TextField
+                  value={submittedBy}
+                  onChange={(event) => {
+                    setSubmittedBy(event.target.value);
+                  }}
+                  className="bcgov-input"
+                  variant="outlined"
+                  InputProps={{ ...submitterInput }}
+                  error={submittedByError !== ""}
+                  helperText={submittedByError}
+                  onBlur={() => {
+                    validateRequiredText(advisoryData.submittedBy);
+                  }}
+                />
+              </div>
+            </div>
+          </>
+        )}
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+            Public safety related
+          </div>
+          <div className="col-lg-7 col-md-8 col-sm-12">
+            <ButtonGroup
+              className="safety-btn-group"
+              variant="outlined"
+              aria-label="outlined primary button group"
+            >
+              <Btn
+                onClick={() => setIsSafetyRelated(true)}
+                className={isSafetyRelated === true && `btn-safety-selected`}
+                style={{ textTransform: 'none' }}
+              >
+                {isSafetyRelated && <CheckIcon />} Yes
+              </Btn>
+              <Btn
+                onClick={() => setIsSafetyRelated(false)}
+                className={isSafetyRelated === false && `btn-safety-selected`}
+                style={{ textTransform: 'none' }}
+              >
+                {!isSafetyRelated && <CheckIcon />} No
+              </Btn>
+            </ButtonGroup>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+            Internal notes
+          </div>
+          <div className="col-lg-7 col-md-8 col-sm-12">
+            <TextField
+              value={notes}
+              onChange={(event) => {
+                setNotes(event.target.value);
+              }}
+              className="bcgov-input"
+              variant="outlined"
+              InputProps={{ ...notesInput }}
+            />
+          </div>
+        </div>
+        {!PrivateElement(["approver"]) && (isStatHoliday || isAfterHours) && (
+          <div className="ad-af-hour-box">
+            <div className="row">
+              <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              </div>
+              <div className="col-lg-7 col-md-8 col-sm-12">
+                <div className="d-flex field-bg-blue">
+                  <WarningIcon className="warningIcon" />
+                  <div className="ml-3">
+                    <p>
+                      <b>This is an after-hours advisory</b><br />
+                      The web team's business hours are<br />
+                      Monday to Friday, 8:30AM – 4:30PM.
+                    </p>
+                    <div className="d-flex mt-3">
+                      <Radio
+                        checked={isAfterHourPublish}
+                        onChange={() => {
+                          setIsAfterHourPublish(true);
+                        }}
+                        value="Publish"
+                        name="after-hour-submission"
+                        inputProps={{ "aria-label": "Publish immediately" }}
+                        className="mr-2"
+                      />
+                      <p><b className="required">Urgent/safety-related.</b> Publish immediately.</p>
+                    </div>
+                    <div className="d-flex mt-3">
+                      <Radio
+                        checked={!isAfterHourPublish}
+                        onChange={() => {
+                          setIsAfterHourPublish(false);
+                        }}
+                        value="Review"
+                        name="after-hour-submission"
+                        inputProps={{
+                          "aria-label": "Submit for web team review",
+                        }}
+                        className="mr-2"
+                      />
+                      <p><b>Advisory is not urgent.</b> Submit for web team review.</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          )}
-          <div className="row my-2">
-            <div className="col-lg-3 col-md-4"></div>
-            <div className="col-lg-7 col-md-8 col-sm-12 ad-form-error">
-              <FormControl error>
-                <FormHelperText>{formError}</FormHelperText>
-              </FormControl>
-            </div>
           </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4"></div>
-            <div className="col-lg-7 col-md-8 col-sm-12 ad-btn-group">
-              {!PrivateElement(["approver"]) && (
-                <>
-                  {mode === "create" && (
-                    <>
-                      <Button
-                        label={(isStatHoliday || isAfterHours) ? "Submit" : "Submit for approval"}
-                        styling="bcgov-normal-blue btn"
-                        onClick={() => {
-                          if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
-                            saveAdvisory("submit");
-                          }
-                        }}
-                        hasLoader={isSubmitting}
-                      />
-                      <Button
-                        label="Save draft"
-                        styling="bcgov-normal-white btn"
-                        onClick={() => {
-                          if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
-                            saveAdvisory("draft");
-                          }
-                        }}
-                        hasLoader={isSavingDraft}
-                      />
-                    </>
-                  )}
-                  {mode === "update" && (
-                    <>
-                      <Button
-                        label={(isStatHoliday || isAfterHours) ? "Submit" : "Submit for approval"}
-                        styling="bcgov-normal-blue btn"
-                        onClick={() => {
-                          if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
-                            updateAdvisory("submit");
-                          }
-                        }}
-                        hasLoader={isSubmitting}
-                      />
-                      <Button
-                        label="Save draft"
-                        styling="bcgov-normal-white btn"
-                        onClick={() => {
-                          if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
-                            updateAdvisory("draft");
-                          }
-                        }}
-                        hasLoader={isSavingDraft}
-                      />
-                    </>
-                  )}
-                </>
-              )}
-              {PrivateElement(["approver"]) && (
-                <>
-                  {mode === "create" && (
-                    <Button
-                      label="Create advisory"
-                      styling="bcgov-normal-blue btn"
-                      onClick={() => {
-                        if (validAdvisoryData(advisoryData, linksRef, true, mode)) {
-                          saveAdvisory();
-                        }
-                      }}
-                      hasLoader={isSubmitting}
-                    />
-                  )}
-                  {mode === "update" && (
-                    <Button
-                      label="Update advisory"
-                      styling="bcgov-normal-blue btn"
-                      onClick={() => {
-                        if (validAdvisoryData(advisoryData, linksRef, true, mode)) {
-                          updateAdvisory();
-                        }
-                      }}
-                      hasLoader={isSubmitting}
-                    />
-                  )}
-                </>
-              )}
-            </div>
+        )}
+        <div className="row my-2">
+          <div className="col-lg-3 col-md-4"></div>
+          <div className="col-lg-7 col-md-8 col-sm-12 ad-form-error">
+            <FormControl error>
+              <FormHelperText>{formError}</FormHelperText>
+            </FormControl>
           </div>
         </div>
-      </form>
-    </MuiPickersUtilsProvider>
+        <div className="row">
+          <div className="col-lg-3 col-md-4"></div>
+          <div className="col-lg-7 col-md-8 col-sm-12 ad-btn-group">
+            {!PrivateElement(["approver"]) && (
+              <>
+                {mode === "create" && (
+                  <>
+                    <Button
+                      label={(isStatHoliday || isAfterHours) ? "Submit" : "Submit for approval"}
+                      styling="bcgov-normal-blue btn"
+                      onClick={() => {
+                        if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
+                          saveAdvisory("submit");
+                        }
+                      }}
+                      hasLoader={isSubmitting}
+                    />
+                    <Button
+                      label="Save draft"
+                      styling="bcgov-normal-white btn"
+                      onClick={() => {
+                        if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
+                          saveAdvisory("draft");
+                        }
+                      }}
+                      hasLoader={isSavingDraft}
+                    />
+                  </>
+                )}
+                {mode === "update" && (
+                  <>
+                    <Button
+                      label={(isStatHoliday || isAfterHours) ? "Submit" : "Submit for approval"}
+                      styling="bcgov-normal-blue btn"
+                      onClick={() => {
+                        if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
+                          updateAdvisory("submit");
+                        }
+                      }}
+                      hasLoader={isSubmitting}
+                    />
+                    <Button
+                      label="Save draft"
+                      styling="bcgov-normal-white btn"
+                      onClick={() => {
+                        if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
+                          updateAdvisory("draft");
+                        }
+                      }}
+                      hasLoader={isSavingDraft}
+                    />
+                  </>
+                )}
+              </>
+            )}
+            {PrivateElement(["approver"]) && (
+              <>
+                {mode === "create" && (
+                  <Button
+                    label="Create advisory"
+                    styling="bcgov-normal-blue btn"
+                    onClick={() => {
+                      if (validAdvisoryData(advisoryData, linksRef, true, mode)) {
+                        saveAdvisory();
+                      }
+                    }}
+                    hasLoader={isSubmitting}
+                  />
+                )}
+                {mode === "update" && (
+                  <Button
+                    label="Update advisory"
+                    styling="bcgov-normal-blue btn"
+                    onClick={() => {
+                      if (validAdvisoryData(advisoryData, linksRef, true, mode)) {
+                        updateAdvisory();
+                      }
+                    }}
+                    hasLoader={isSubmitting}
+                  />
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </form>
   );
 }
 

@@ -71,21 +71,18 @@ export default function Advisory({
   const [headline, setHeadline] = useState("");
   const [description, setDescription] = useState("");
   const [isSafetyRelated, setIsSafetyRelated] = useState(false);
-  const [advisoryDate, setAdvisoryDate] = useState(new Date());
-  // const [advisoryDate, setAdvisoryDate] = useState(
-  //   moment().tz("America/Vancouver")
-  // );
+  const [advisoryDate, setAdvisoryDate] = useState(
+    moment().tz("America/Vancouver").toDate()
+  );
   const [displayAdvisoryDate, setDisplayAdvisoryDate] = useState(true);
-  const [startDate, setStartDate] = useState(new Date());
-  // const [startDate, setStartDate] = useState(moment().tz("America/Vancouver"));
+  const [startDate, setStartDate] = useState(moment().tz("America/Vancouver").toDate());
   const [displayStartDate, setDisplayStartDate] = useState(false);
   const [endDate, setEndDate] = useState(null);
   const [displayEndDate, setDisplayEndDate] = useState(false);
   const [expiryDate, setExpiryDate] = useState(null);
-  const [updatedDate, setUpdatedDate] = useState(new Date());
-  // const [updatedDate, setUpdatedDate] = useState(
-  //   moment().tz("America/Vancouver")
-  // );
+  const [updatedDate, setUpdatedDate] = useState(
+    moment().tz("America/Vancouver").toDate()
+  );
   const [displayUpdatedDate, setDisplayUpdatedDate] = useState(false);
   const [notes, setNotes] = useState("");
   const [submittedBy, setSubmittedBy] = useState("");
@@ -105,8 +102,7 @@ export default function Advisory({
   const linksRef = useRef([]);
   const durationUnitRef = useRef("M");
   const durationIntervalRef = useRef(0);
-  const advisoryDateRef = useRef(new Date());
-  // const advisoryDateRef = useRef(moment().tz("America/Vancouver"));
+  const advisoryDateRef = useRef(moment().tz("America/Vancouver").toDate());
   const [advisoryId, setAdvisoryId] = useState();
   const [isApprover, setIsApprover] = useState(false);
   const [formError, setFormError] = useState("");
@@ -163,34 +159,30 @@ export default function Advisory({
             setSubmittedBy(advisoryData.submittedBy || "");
             if (advisoryData.advisoryDate) {
               setAdvisoryDate(
-                new Date(advisoryData.advisoryDate)
-                // moment(advisoryData.advisoryDate).tz("America/Vancouver")
+                moment(advisoryData.advisoryDate).tz("America/Vancouver").toDate()
               );
-              advisoryDateRef.current = moment(advisoryData.advisoryDate).tz(
-                "America/Vancouver"
-              );
+              advisoryDateRef.current =
+                moment(advisoryData.advisoryDate).tz("America/Vancouver").toDate();
             }
             if (advisoryData.effectiveDate) {
               setStartDate(
-                new Date(advisoryData.effectiveDate)
-                // moment(advisoryData.effectiveDate).tz("America/Vancouver")
+                moment(advisoryData.effectiveDate).tz("America/Vancouver").toDate()
               );
             }
             if (advisoryData.endDate) {
-              setEndDate(advisoryData.endDate)
-              // setEndDate(moment(advisoryData.endDate).tz("America/Vancouver"));
+              setEndDate(
+                moment(advisoryData.endDate).tz("America/Vancouver").toDate()
+              );
             }
 
             if (advisoryData.expiryDate) {
               setExpiryDate(
-                new Date(advisoryData.expiryDate)
-                // moment(advisoryData.expiryDate).tz("America/Vancouver")
+                moment(advisoryData.expiryDate).tz("America/Vancouver").toDate()
               );
             }
             if (advisoryData.updatedDate) {
               setUpdatedDate(
-                new Date(advisoryData.updatedDate)
-                // moment(advisoryData.updatedDate).tz("America/Vancouver")
+                moment(advisoryData.updatedDate).tz("America/Vancouver").toDate()
               );
             }
             if (advisoryData.accessStatus) {

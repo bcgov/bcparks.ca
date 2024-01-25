@@ -9,7 +9,6 @@
     "@material-ui/data-grid": "4.0.0-alpha.22",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "4.0.0-alpha.58",
-    "@material-ui/pickers": "^3.3.11",
     "@react-keycloak/web": "^3.4.0",
     "@storybook/addon-actions": "^6.1.21",
     "@storybook/addon-queryparams": "^6.1.21",
