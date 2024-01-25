@@ -240,6 +240,7 @@ const ParkOperatingDatesPage = () => {
             isActive
             closureAffectsAccessStatus
             parkOperationSubAreaDates {
+              operatingYear
               isActive
               openDate
               closeDate
