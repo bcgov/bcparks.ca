@@ -39,7 +39,7 @@
       margin-left: 24px;
 
       &:focus-visible {
-        outline: -webkit-focus-ring-color auto 1px;
+        outline: $colorBlueMed auto 1px;
         outline-offset: 1px;
       }
     }
