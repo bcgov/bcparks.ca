@@ -389,9 +389,10 @@ export default function AdvisoryForm({
             Listing rank
             <LightTooltip
               arrow
-              title="Advisories, by default, are listed by date in descending order. 
-                Listing Rank is a number that is used to override the chronological sort order for advisories. 
-                A higher listing rank number will give the advisory a higher priority in the list."
+              title="To display an advisory at the top of the list, add a Listing Rank number.
+              The advisory with the highest number will be displayed at the top.
+              If the Listing Rank number is zero,
+              advisories are ordered by urgency level and date added."
             >
               <HelpIcon className="helpIcon" />
             </LightTooltip>
