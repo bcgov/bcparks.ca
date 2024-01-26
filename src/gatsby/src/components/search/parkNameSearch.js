@@ -6,22 +6,11 @@ import { Form } from "react-bootstrap"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 
 const HighlightText = ({ park, input }) => {
-  const parkWords = park.toLowerCase().split(" ")
-  const inputWords = input.toLowerCase().split(" ")
-  const camelCase = (word) => {
-    return word.charAt(0).toUpperCase() + word.slice(1)
-  }
-  return (
-    parkWords.map((word, index) => {
-      const shouldHighlight = inputWords.includes(word)
-      return (
-        <span key={index}>
-          {shouldHighlight ? camelCase(word) : <b>{camelCase(word)}</b>}
-          {index !== parkWords.length - 1 ? " " : ""}
-        </span>
-      )
-    })
-  )
+  // for the park names including "." such as E.C. Manning Park
+  const pattern = input.split('').map(char => `${char}[^\\w]*`).join('')
+  const regex = new RegExp(pattern, 'gi')
+  const highlightedText = park.replace(regex, match => `<b>${match}</b>`)
+  return <span dangerouslySetInnerHTML={{ __html: highlightedText }} />
 }
 
 const ParkNameSearch = ({
@@ -126,7 +115,7 @@ const ParkNameSearch = ({
     if (searchText === "") {
       setIsDropdownOpen(false)
     }
-  },[searchText])
+  }, [searchText])
 
   return (
     <AsyncTypeahead

@@ -9,16 +9,9 @@ import "react-bootstrap-typeahead/css/Typeahead.css"
 let permissionDeniedCount = 0
 
 const HighlightText = ({ city, input }) => {
-  const words = city.split(" ")
-  return (
-    words.map((word, index) => {
-      if (word.toLowerCase() === input) {
-        return <span key={index}> {word} </span>
-      } else {
-        return <b key={index}> {word} </b>
-      }
-    })
-  )
+  const regex = new RegExp(input, 'gi')
+  const highlightedText = city.replace(regex, match => `<b>${match}</b>`)
+  return <span dangerouslySetInnerHTML={{ __html: highlightedText }} />
 }
 
 const CityNameSearch = ({
