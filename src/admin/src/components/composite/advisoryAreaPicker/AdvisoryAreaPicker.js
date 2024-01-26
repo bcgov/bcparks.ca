@@ -171,16 +171,6 @@ export default function AdvisoryAreaPicker({
           >
             <HelpIcon className="helpIcon" />
           </LightTooltip>
-          {protectedAreaError &&
-            <FormControl
-              variant="outlined"
-              className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
-                }`}
-              error
-            >
-              <FormHelperText>{protectedAreaError}</FormHelperText>
-            </FormControl>
-          }
           {!isShow &&
             <button
               type="button"
@@ -201,9 +191,7 @@ export default function AdvisoryAreaPicker({
             <div className="col-lg-7 col-md-8 col-sm-12">
               <FormControl
                 variant="outlined"
-                className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
-                  }`}
-                error
+                className="bcgov-select-form"
               >
                 <Select
                   options={fireCentres}
@@ -215,9 +203,6 @@ export default function AdvisoryAreaPicker({
                   placeholder="Select Fire Centre(s)"
                   isMulti="true"
                   className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredAffectedArea(advisoryData.protectedArea);
-                  }}
                 />
               </FormControl>
             </div>
@@ -229,9 +214,7 @@ export default function AdvisoryAreaPicker({
             <div className="col-lg-7 col-md-8 col-sm-12">
               <FormControl
                 variant="outlined"
-                className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
-                  }`}
-                error
+                className="bcgov-select-form"
               >
                 <Select
                   options={fireZones}
@@ -243,9 +226,6 @@ export default function AdvisoryAreaPicker({
                   placeholder="Select Fire Zone(s)"
                   isMulti="true"
                   className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredAffectedArea(advisoryData.protectedArea);
-                  }}
                 />
               </FormControl>
             </div>
@@ -257,9 +237,7 @@ export default function AdvisoryAreaPicker({
             <div className="col-lg-7 col-md-8 col-sm-12">
               <FormControl
                 variant="outlined"
-                className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
-                  }`}
-                error
+                className="bcgov-select-form"
               >
                 <Select
                   options={regions}
@@ -271,9 +249,6 @@ export default function AdvisoryAreaPicker({
                   placeholder="Select Region(s)"
                   isMulti="true"
                   className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredAffectedArea(advisoryData.protectedArea);
-                  }}
                 />
               </FormControl>
             </div>
@@ -285,9 +260,7 @@ export default function AdvisoryAreaPicker({
             <div className="col-lg-7 col-md-8 col-sm-12">
               <FormControl
                 variant="outlined"
-                className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
-                  }`}
-                error
+                className="bcgov-select-form"
               >
                 <Select
                   options={sections}
@@ -299,9 +272,6 @@ export default function AdvisoryAreaPicker({
                   placeholder="Select Section(s)"
                   isMulti="true"
                   className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredAffectedArea(advisoryData.protectedArea);
-                  }}
                 />
               </FormControl>
             </div>
@@ -313,9 +283,7 @@ export default function AdvisoryAreaPicker({
             <div className="col-lg-7 col-md-8 col-sm-12">
               <FormControl
                 variant="outlined"
-                className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
-                  }`}
-                error
+                className="bcgov-select-form"
               >
                 <Select
                   options={managementAreas}
@@ -327,9 +295,6 @@ export default function AdvisoryAreaPicker({
                   placeholder="Select Management Area(s)"
                   isMulti="true"
                   className="bcgov-select"
-                  onBlur={() => {
-                    validateRequiredAffectedArea(advisoryData.protectedArea);
-                  }}
                 />
               </FormControl>
             </div>
@@ -380,6 +345,7 @@ export default function AdvisoryAreaPicker({
               }}
               styles={customSelectStyles}
             />
+            <FormHelperText>{protectedAreaError}</FormHelperText>
           </FormControl>
         </div>
       </div>
@@ -390,9 +356,7 @@ export default function AdvisoryAreaPicker({
         <div className="col-lg-7 col-md-8 col-sm-12">
           <FormControl
             variant="outlined"
-            className={`bcgov-select-form ${protectedAreaError !== "" ? "bcgov-select-error" : ""
-              }`}
-            error
+            className="bcgov-select-form"
           >
             <Select
               options={sites}
@@ -404,9 +368,6 @@ export default function AdvisoryAreaPicker({
               placeholder="Select Site(s)"
               isMulti="true"
               className="bcgov-select"
-              onBlur={() => {
-                validateRequiredAffectedArea(advisoryData.protectedArea);
-              }}
             />
           </FormControl>
         </div>

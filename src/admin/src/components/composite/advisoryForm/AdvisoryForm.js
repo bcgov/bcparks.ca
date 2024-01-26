@@ -155,7 +155,7 @@ export default function AdvisoryForm({
         selectedSites,
       ],
       setError: setProtectedAreaError,
-      text: "at least one affected area",
+      text: "at least one park",
     },
     urgency: { value: urgency, setError: setUrgencyError, text: "urgency" },
     advisoryDate: { value: advisoryDate, setError: setAdvisoryDateError },

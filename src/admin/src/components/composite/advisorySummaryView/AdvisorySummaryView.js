@@ -282,20 +282,31 @@ export default function AdvisorySummaryView({
             Links and documents
           </div>
           <div className="col-lg-7 col-md-8 col-12">
+            {console.log(advisory.links)}
             {advisory.links.map((l) => (
               <div key={l.id}>
                 {l.url && (
-                  <a
-                    href={l?.file?.url ? l.file.url : l.url}
-                    rel="noreferrer"
-                    target="_blank"
-                    className="ad-anchor"
-                  >
-                    {l.type &&
-                      advisory.linkTypes.filter((t) => t.id === l.type)[0].type}
-                    {l.type && " - "}
-                    {l.title} <LaunchIcon className="launchIcon" />
-                  </a>
+                  <>
+                    <a
+                      href={l?.file?.url ? l.file.url : l.url}
+                      rel="noreferrer"
+                      target="_blank"
+                      className="d-block ad-anchor"
+                    >
+                      {l.type &&
+                        advisory.linkTypes.filter((t) => t.id === l.type)[0].type}
+                      {l.type && " - "}
+                      {l.title}
+                    </a>
+                    <a
+                      href={l?.file?.url ? l.file.url : l.url}
+                      rel="noreferrer"
+                      target="_blank"
+                      className="d-block ad-anchor"
+                    >
+                      Link <LaunchIcon className="launchIcon" />
+                    </a>
+                  </>
                 )}
               </div>
             ))}
