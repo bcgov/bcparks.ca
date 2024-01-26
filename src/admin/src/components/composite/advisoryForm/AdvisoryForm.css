@@ -86,6 +86,10 @@
   padding: 4px 16px !important;
 }
 
+.row.title {
+  color: var(--color-blue);
+}
+
 .ad-af-hour-box {
   margin-top: 10px !important;
 }

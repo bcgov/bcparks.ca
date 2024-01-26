@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./AdvisorySummaryView.css";
 import LaunchIcon from "@material-ui/icons/Launch";
@@ -22,128 +22,20 @@ export default function AdvisorySummaryView({
 }) {
   const { ClipboardItem } = window;
   const publicUrl = config.REACT_APP_PUBLIC_URL;
+  const [showParks, setShowParks] = useState(false)
+  const [showSites, setShowSites] = useState(false)
 
   return (
     <>
-      <div className="row">
-        <div className="col-lg-4 col-md-6 col-12 ad-label">Advisory Number</div>
-        <div className="col-lg-8 col-md-6 col-12">
-          {advisory.advisoryNumber}
-        </div>
+      <div className="row heading">
+        Affected area
       </div>
-      <div className="row">
-        <div className="col-lg-4 col-md-6 col-12 ad-label">Revision Number</div>
-        <div className="col-lg-8 col-md-6 col-12">
-          {advisory.revisionNumber}
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-lg-4 col-md-6 col-12 ad-label">Headline</div>
-        <div
-          className="col-lg-8 col-md-6 col-12"
-          dangerouslySetInnerHTML={{ __html: advisory.title }}>
-        </div>
-      </div>
-      {advisory.eventType && (
-        <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">Event Type</div>
-          <div className="col-lg-8 col-md-6 col-12">
-            {advisory.eventType.eventType}
-          </div>
-        </div>
-      )}
-      {advisory.accessStatus && (
-        <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">
-            Park Access Status
-          </div>
-          <div className="col-lg-8 col-md-6 col-12">
-            {advisory.accessStatus.accessStatus}
-          </div>
-        </div>
-      )}
-      {advisory.urgency && (
-        <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">Urgency Level</div>
-          <div className="col-lg-8 col-md-6 col-12">
-            {advisory.urgency.urgency}
-          </div>
-        </div>
-      )}
-      <div className="row">
-        <div className="col-lg-4 col-md-6 col-12 ad-label">Safety Related</div>
-        <div className="col-lg-8 col-md-6 col-12">
-          {advisory.isSafetyRelated ? "Yes" : "No"}
-        </div>
-      </div>
-      {advisory.description && (
-        <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">Description</div>
-          <div
-            className="col-lg-8 col-md-6 col-12"
-            dangerouslySetInnerHTML={{ __html: advisory.description }}>
-          </div>
-        </div>
-      )}
-      {!showOriginalAdvisory &&
-        advisory.standardMessages &&
-        advisory.standardMessages.length > 0 && (
-          <div className="row">
-            <div className="col-lg-4 col-md-6 col-12 ad-label">
-              Standard Messages
-            </div>
-            <div className="col-lg-8 col-md-6 col-12">
-              {advisory.standardMessages.map((m, index) => (
-                <div
-                  key={index}
-                  dangerouslySetInnerHTML={{ __html: m.description }}
-                ></div>
-              ))}
-            </div>
-          </div>
-        )}
-      {advisory.regions.length > 0 && (
-        <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">
-            Associated Region(s)
-          </div>
-          <div className="col-lg-8 col-md-6 col-12">
-            {advisory.regions.map((r) => (
-              <div key={r.id}>{r.regionName} Region</div>
-            ))}
-          </div>
-        </div>
-      )}
-      {advisory.sections.length > 0 && (
-        <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">
-            Associated Section(s)
-          </div>
-          <div className="col-lg-8 col-md-6 col-12">
-            {advisory.sections.map((s) => (
-              <div key={s.id}>{s.sectionName} Section</div>
-            ))}
-          </div>
-        </div>
-      )}
-      {advisory.managementAreas.length > 0 && (
-        <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">
-            Associated Management Area(s)
-          </div>
-          <div className="col-lg-8 col-md-6 col-12">
-            {advisory.managementAreas.map((m) => (
-              <div key={m.id}>{m.managementAreaName} Management Area</div>
-            ))}
-          </div>
-        </div>
-      )}
       {advisory.fireCentres.length > 0 && (
         <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">
-            Associated Fire Centre(s)
+          <div className="col-lg-3 col-md-4 col-12 ad-label">
+            Fire Centre(s)
           </div>
-          <div className="col-lg-8 col-md-6 col-12">
+          <div className="col-lg-7 col-md-8 col-12">
             {advisory.fireCentres.map((f) => (
               <div key={f.id}>{f.fireCentreName}</div>
             ))}
@@ -152,22 +44,58 @@ export default function AdvisorySummaryView({
       )}
       {advisory.fireZones.length > 0 && (
         <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">
-            Associated Fire Zone(s)
+          <div className="col-lg-3 col-md-4 col-12 ad-label">
+            Fire Zone(s)
           </div>
-          <div className="col-lg-8 col-md-6 col-12">
+          <div className="col-lg-7 col-md-8 col-12">
             {advisory.fireZones.map((f) => (
               <div key={f.id}>{f.fireZoneName}</div>
             ))}
           </div>
         </div>
       )}
-      <div className="row">
-        <div className="col-lg-4 col-md-6 col-12 ad-label">
-          Associated Park(s)
+      {advisory.regions.length > 0 && (
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-12 ad-label">
+            Region(s)
+          </div>
+          <div className="col-lg-7 col-md-8 col-12">
+            {advisory.regions.map((r) => (
+              <div key={r.id}>{r.regionName} Region</div>
+            ))}
+          </div>
         </div>
-        <div className="col-lg-8 col-md-6 col-12">
-          {advisory.protectedAreas.map((p) => (
+      )}
+      {advisory.sections.length > 0 && (
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-12 ad-label">
+            Section(s)
+          </div>
+          <div className="col-lg-7 col-md-8 col-12">
+            {advisory.sections.map((s) => (
+              <div key={s.id}>{s.sectionName} Section</div>
+            ))}
+          </div>
+        </div>
+      )}
+      {advisory.managementAreas.length > 0 && (
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-12 ad-label">
+            Management Area(s)
+          </div>
+          <div className="col-lg-7 col-md-8 col-12">
+            {advisory.managementAreas.map((m) => (
+              <div key={m.id}>{m.managementAreaName} Management Area</div>
+            ))}
+          </div>
+        </div>
+      )}
+      <div className="row">
+        <div className="col-lg-3 col-md-4 col-12 ad-label">
+          Park(s)
+        </div>
+        <div className="col-lg-7 col-md-8 col-12">
+          {(showParks ? advisory.protectedAreas : advisory.protectedAreas.slice(0, 5)).map((p) => (
             <div key={p.id}>
               {p.url && (
                 <a
@@ -182,11 +110,20 @@ export default function AdvisorySummaryView({
               {!p.url && p.protectedAreaName}
             </div>
           ))}
+          {advisory.protectedAreas.length > 5 &&
+            <button
+              type="button"
+              className="btn btn-link btn-boolean d-block my-2"
+              onClick={() => setShowParks(!showParks)}
+            >
+              {showParks ? "Hide" : "Show"} all parks affected
+            </button>
+          }
           <Chip
             icon={<FileCopyOutlinedIcon />}
-            label="Copy all"
+            label="Copy all URLs"
             clickable
-            className="ad-copy"
+            className="ad-copy bcgov-button bcgov-normal-white"
             onClick={() => {
               const type = "text/html";
               const blob = new Blob([parkUrls], { type });
@@ -205,11 +142,11 @@ export default function AdvisorySummaryView({
       </div>
       {advisory.sites.length > 0 && (
         <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">
-            Associated Site(s)
+          <div className="col-lg-3 col-md-4 col-12 ad-label">
+            Site(s)
           </div>
-          <div className="col-lg-8 col-md-6 col-12">
-            {advisory.sites.map((s) => (
+          <div className="col-lg-7 col-md-8 col-12">
+            {(showSites ? advisory.sites : advisory.sites.slice(0, 5)).map((s) => (
               <div key={s.id}>
                 {s.url && (
                   <a
@@ -224,11 +161,20 @@ export default function AdvisorySummaryView({
                 {!s.url && s.siteName}
               </div>
             ))}
+            {advisory.sites.length > 5 &&
+              <button
+                type="button"
+                className="btn btn-link btn-boolean d-block my-2"
+                onClick={() => setShowSites(!showSites)}
+              >
+                {showSites ? "Hide" : "Show"} all sites affected
+              </button>
+            }
             <Chip
               icon={<FileCopyOutlinedIcon />}
-              label="Copy all"
+              label="Copy all URLs"
               clickable
-              className="ad-copy"
+              className="ad-copy bcgov-button bcgov-normal-white"
               onClick={() => {
                 const type = "text/html";
                 const blob = new Blob([siteUrls], { type });
@@ -246,81 +192,101 @@ export default function AdvisorySummaryView({
           </div>
         </div>
       )}
+      <div className="row heading">
+        Affected content
+      </div>
+      <div className="row">
+        <div className="col-lg-3 col-md-4 col-12 ad-label">Headline</div>
+        <div
+          className="col-lg-7 col-md-8 col-12"
+          dangerouslySetInnerHTML={{ __html: advisory.title }}>
+        </div>
+      </div>
+      {advisory.eventType && (
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-12 ad-label">Event type</div>
+          <div className="col-lg-7 col-md-8 col-12">
+            {advisory.eventType.eventType}
+          </div>
+        </div>
+      )}
+      {advisory.urgency && (
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-12 ad-label">Urgency level</div>
+          <div className="col-lg-7 col-md-8 col-12">
+            {advisory.urgency.urgency}
+          </div>
+        </div>
+      )}
       {advisory.listingRank !== null && advisory.listingRank >= 0 && (
         <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">Listing Rank</div>
-          <div className="col-lg-8 col-md-6 col-12">{advisory.listingRank}</div>
+          <div className="col-lg-3 col-md-4 col-12 ad-label">Listing Rank</div>
+          <div className="col-lg-7 col-md-8 col-12">{advisory.listingRank}</div>
         </div>
       )}
-      {advisory.advisoryDate && (
+      {advisory.accessStatus && (
         <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">Advisory Date</div>
-          <div className="col-lg-8 col-md-6 col-12 ad-flex">
-            {moment(advisory.advisoryDate).format("MMMM DD, yyyy hh:mm A")}
-            <div className="ml15">
-              {(advisory.isAdvisoryDateDisplayed && (
-                <VisibilityOutlinedIcon className="visibilityIcon" />
-              )) || <VisibilityOffOutlinedIcon className="visibilityIcon" />}
+          <div className="col-lg-3 col-md-4 col-12 ad-label">
+            Park status
+          </div>
+          <div className="col-lg-7 col-md-8 col-12">
+            {advisory.accessStatus.accessStatus}
+          </div>
+        </div>
+      )}
+      {!showOriginalAdvisory &&
+        advisory.standardMessages &&
+        advisory.standardMessages.length > 0 && (
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-12 ad-label">
+              Standard message(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-12">
+              {advisory.standardMessages.map((m, index) => (
+                <div key={index}>
+                  {m.title}
+                </div>
+              ))}
             </div>
           </div>
+        )}
+      {advisory.description && (
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-12 ad-label">Description</div>
+          <div
+            className="col-lg-7 col-md-8 col-12"
+            dangerouslySetInnerHTML={{ __html: advisory.description }}>
+          </div>
         </div>
       )}
-      {advisory.effectiveDate && (
-        <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">Start Date</div>
-          <div className="col-lg-8 col-md-6 col-12 ad-flex">
-            {moment(advisory.effectiveDate).format("MMMM DD, yyyy hh:mm A")}
-            <div className="ml15">
-              {(advisory.isEffectiveDateDisplayed && (
-                <VisibilityOutlinedIcon className="visibilityIcon" />
-              )) || <VisibilityOffOutlinedIcon className="visibilityIcon" />}
+      {!showOriginalAdvisory &&
+        advisory.standardMessages &&
+        advisory.standardMessages.length > 0 && (
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-12 ad-label">
+              Standard message preview
+            </div>
+            <div className="col-lg-7 col-md-8 col-12">
+              {advisory.standardMessages.map((m, index) => (
+                <div
+                  key={index}
+                  dangerouslySetInnerHTML={{ __html: m.description }}
+                ></div>
+              ))}
             </div>
           </div>
-        </div>
-      )}
-      {advisory.endDate && (
-        <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">End Date</div>
-          <div className="col-lg-8 col-md-6 col-12 ad-flex">
-            {moment(advisory.endDate).format("MMMM DD, yyyy hh:mm A")}
-            <div className="ml15">
-              {(advisory.isEndDateDisplayed && (
-                <VisibilityOutlinedIcon className="visibilityIcon" />
-              )) || <VisibilityOffOutlinedIcon className="visibilityIcon" />}
-            </div>
-          </div>
-        </div>
-      )}
-      {advisory.updatedDate && (
-        <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">Updated Date</div>
-          <div className="col-lg-8 col-md-6 col-12 ad-flex">
-            {moment(advisory.updatedDate).format("MMMM DD, yyyy hh:mm A")}
-            <div className="ml15">
-              {(advisory.isUpdatedDateDisplayed && (
-                <VisibilityOutlinedIcon className="visibilityIcon" />
-              )) || <VisibilityOffOutlinedIcon className="visibilityIcon" />}
-            </div>
-          </div>
-        </div>
-      )}
-      {advisory.expiryDate && (
-        <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">Expiry Date</div>
-          <div className="col-lg-8 col-md-6 col-12 ad-flex">
-            {moment(advisory.expiryDate).format("MMMM DD, yyyy hh:mm A")}
-          </div>
-        </div>
-      )}
+        )}
       {advisory.links.length > 0 && (
         <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">Links</div>
-          <div className="col-lg-8 col-md-6 col-12">
+          <div className="col-lg-3 col-md-4 col-12 ad-label">
+            Links and documents
+          </div>
+          <div className="col-lg-7 col-md-8 col-12">
             {advisory.links.map((l) => (
               <div key={l.id}>
                 {l.url && (
                   <a
-                    href={l?.file?.url ? l.file.url: l.url}
+                    href={l?.file?.url ? l.file.url : l.url}
                     rel="noreferrer"
                     target="_blank"
                     className="ad-anchor"
@@ -336,28 +302,109 @@ export default function AdvisorySummaryView({
           </div>
         </div>
       )}
-      {advisory.note && (
+      {advisory.effectiveDate && (
         <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">
-            Internal Notes
+          <div className="col-lg-3 col-md-4 col-12 ad-label">Start date</div>
+          <div className="col-lg-7 col-md-8 col-12 ad-flex">
+            {moment(advisory.effectiveDate).format("MMMM DD, yyyy hh:mm A")}
+            <div className="ml15">
+              {(advisory.isEffectiveDateDisplayed && (
+                <VisibilityOutlinedIcon className="visibilityIcon" />
+              )) || <VisibilityOffOutlinedIcon className="visibilityIcon" />}
+            </div>
           </div>
-          <div
-            className="col-lg-8 col-md-6 col-12"
-            dangerouslySetInnerHTML={{ __html: advisory.note }}>
+        </div>
+      )}
+      {advisory.endDate && (
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-12 ad-label">End date</div>
+          <div className="col-lg-7 col-md-8 col-12 ad-flex">
+            {moment(advisory.endDate).format("MMMM DD, yyyy hh:mm A")}
+            <div className="ml15">
+              {(advisory.isEndDateDisplayed && (
+                <VisibilityOutlinedIcon className="visibilityIcon" />
+              )) || <VisibilityOffOutlinedIcon className="visibilityIcon" />}
+            </div>
+          </div>
+        </div>
+      )}
+      {advisory.updatedDate && (
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-12 ad-label">Updated date</div>
+          <div className="col-lg-7 col-md-8 col-12 ad-flex">
+            {moment(advisory.updatedDate).format("MMMM DD, yyyy hh:mm A")}
+            <div className="ml15">
+              {(advisory.isUpdatedDateDisplayed && (
+                <VisibilityOutlinedIcon className="visibilityIcon" />
+              )) || <VisibilityOffOutlinedIcon className="visibilityIcon" />}
+            </div>
+          </div>
+        </div>
+      )}
+      <div className="row heading">
+        Internal details
+      </div>
+      {advisory.advisoryDate && (
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-12 ad-label">Posting date</div>
+          <div className="col-lg-7 col-md-8 col-12 ad-flex">
+            {moment(advisory.advisoryDate).format("MMMM DD, yyyy hh:mm A")}
+            <div className="ml15">
+              {(advisory.isAdvisoryDateDisplayed && (
+                <VisibilityOutlinedIcon className="visibilityIcon" />
+              )) || <VisibilityOffOutlinedIcon className="visibilityIcon" />}
+            </div>
+          </div>
+        </div>
+      )}
+      {advisory.expiryDate && (
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-12 ad-label">Expiry date</div>
+          <div className="col-lg-7 col-md-8 col-12 ad-flex">
+            {moment(advisory.expiryDate).format("MMMM DD, yyyy hh:mm A")}
           </div>
         </div>
       )}
       {advisory.advisoryStatus && (
         <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">
-            Advisory Status
+          <div className="col-lg-3 col-md-4 col-12 ad-label">
+            Advisory status
           </div>
-          <div className="col-lg-8 col-md-6 col-12">
+          <div className="col-lg-7 col-md-8 col-12">
             {advisory.advisoryStatus.advisoryStatus}
           </div>
         </div>
       )}
-
+      <div className="row">
+        <div className="col-lg-3 col-md-4 col-12 ad-label">
+          Requested by
+        </div>
+        <div className="col-lg-7 col-md-8 col-12">
+          {advisory.submittedBy}
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-3 col-md-4 col-12 ad-label">
+          Public safety related
+        </div>
+        <div className="col-lg-7 col-md-8 col-12">
+          {advisory.isSafetyRelated ? "Yes" : "No"}
+        </div>
+      </div>
+      {advisory.note && (
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-12 ad-label">
+            Internal notes
+          </div>
+          <div
+            className="col-lg-7 col-md-8 col-12"
+            dangerouslySetInnerHTML={{ __html: advisory.note }}>
+          </div>
+        </div>
+      )}
+      <div className="row heading">
+        History
+      </div>
       <AdvisoryHistory data={{ advisoryNumber: advisory.advisoryNumber }} />
     </>
   );
