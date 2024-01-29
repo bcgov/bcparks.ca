@@ -282,7 +282,6 @@ export default function AdvisorySummaryView({
             Links and documents
           </div>
           <div className="col-lg-7 col-md-8 col-12">
-            {console.log(advisory.links)}
             {advisory.links.map((l) => (
               <div key={l.id}>
                 {l.url && (
@@ -352,6 +351,18 @@ export default function AdvisorySummaryView({
           </div>
         </div>
       )}
+      <div className="row">
+        <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+          Displayed date
+        </div>
+        <div className="col-lg-7 col-md-8 col-sm-12">
+          {!advisory.isEffectiveDateDisplayed && !advisory.isEndDateDisplayed &&
+            (advisory.isAdvisoryDateDisplayed ? "Posting date" :
+              advisory.isUpdatedDateDisplayed ? "Updated date" :
+                "No dates")
+          }
+        </div>
+      </div>
       <div className="row heading">
         Internal details
       </div>

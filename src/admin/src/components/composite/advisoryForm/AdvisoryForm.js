@@ -79,19 +79,19 @@ export default function AdvisoryForm({
     setIsSafetyRelated,
     advisoryDate,
     handleAdvisoryDateChange,
-    // displayAdvisoryDate,
+    displayAdvisoryDate,
     setDisplayAdvisoryDate,
     startDate,
     setStartDate,
-    // displayStartDate,
+    displayStartDate,
     setDisplayStartDate,
     endDate,
     setEndDate,
-    // displayEndDate,
+    displayEndDate,
     setDisplayEndDate,
     updatedDate,
     setUpdatedDate,
-    // displayUpdatedDate,
+    displayUpdatedDate,
     setDisplayUpdatedDate,
     expiryDate,
     setExpiryDate,
@@ -769,7 +769,12 @@ export default function AdvisoryForm({
           <div className="col-lg-7 col-md-8 col-sm-12">
             <Select
               options={displayedDateOptions}
-              defaultValue={displayedDateOptions[0]}
+              defaultValue={
+                !displayStartDate && !displayEndDate &&
+                (displayAdvisoryDate ? displayedDateOptions[0] :
+                  displayUpdatedDate ? displayedDateOptions[1] :
+                    displayedDateOptions[2])
+              }
               onChange={(e) => {
                 setSelectedDisplayedDateOption(e.value);
               }}
@@ -1217,19 +1222,19 @@ AdvisoryForm.propTypes = {
     setIsSafetyRelated: PropTypes.func.isRequired,
     advisoryDate: PropTypes.object,
     handleAdvisoryDateChange: PropTypes.func.isRequired,
-    // displayAdvisoryDate: PropTypes.bool,
+    displayAdvisoryDate: PropTypes.bool,
     setDisplayAdvisoryDate: PropTypes.func.isRequired,
     startDate: PropTypes.object,
     setStartDate: PropTypes.func.isRequired,
-    // displayStartDate: PropTypes.bool,
+    displayStartDate: PropTypes.bool,
     setDisplayStartDate: PropTypes.func.isRequired,
     endDate: PropTypes.object,
     setEndDate: PropTypes.func.isRequired,
-    // displayEndDate: PropTypes.bool,
+    displayEndDate: PropTypes.bool,
     setDisplayEndDate: PropTypes.func.isRequired,
     updatedDate: PropTypes.object,
     setUpdatedDate: PropTypes.func.isRequired,
-    // displayUpdatedDate: PropTypes.bool,
+    displayUpdatedDate: PropTypes.bool,
     setDisplayUpdatedDate: PropTypes.func.isRequired,
     expiryDate: PropTypes.object,
     setExpiryDate: PropTypes.func.isRequired,
@@ -1256,7 +1261,6 @@ AdvisoryForm.propTypes = {
     isSubmitting: PropTypes.bool,
     isSavingDraft: PropTypes.bool,
     updateAdvisory: PropTypes.func.isRequired,
-    // setToBack: PropTypes.func.isRequired,
     formError: PropTypes.string,
     setFormError: PropTypes.func.isRequired,
   }).isRequired,
