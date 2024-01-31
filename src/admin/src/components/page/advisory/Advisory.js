@@ -40,7 +40,6 @@ export default function Advisory({
   mode,
   page: { setError, cmsData, setCmsData },
 }) {
-  // const [advisoryNumber, setAdvisoryNumber] = useState();
   const [revisionNumber, setRevisionNumber] = useState();
   const [standardMessages, setStandardMessages] = useState([]);
   const [selectedStandardMessages, setSelectedStandardMessages] = useState([]);
@@ -68,22 +67,20 @@ export default function Advisory({
   const [advisoryStatus, setAdvisoryStatus] = useState();
   const [linkTypes, setLinkTypes] = useState([]);
   const [links, setLinks] = useState([]);
-  const [ticketNumber, setTicketNumber] = useState("");
   const [headline, setHeadline] = useState("");
   const [description, setDescription] = useState("");
   const [isSafetyRelated, setIsSafetyRelated] = useState(false);
-  const [isReservationAffected, setIsReservationAffected] = useState(false);
   const [advisoryDate, setAdvisoryDate] = useState(
-    moment().tz("America/Vancouver")
+    moment().tz("America/Vancouver").toDate()
   );
   const [displayAdvisoryDate, setDisplayAdvisoryDate] = useState(true);
-  const [startDate, setStartDate] = useState(moment().tz("America/Vancouver"));
+  const [startDate, setStartDate] = useState(moment().tz("America/Vancouver").toDate());
   const [displayStartDate, setDisplayStartDate] = useState(false);
   const [endDate, setEndDate] = useState(null);
   const [displayEndDate, setDisplayEndDate] = useState(false);
   const [expiryDate, setExpiryDate] = useState(null);
   const [updatedDate, setUpdatedDate] = useState(
-    moment().tz("America/Vancouver")
+    moment().tz("America/Vancouver").toDate()
   );
   const [displayUpdatedDate, setDisplayUpdatedDate] = useState(false);
   const [notes, setNotes] = useState("");
@@ -102,9 +99,9 @@ export default function Advisory({
   const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const linksRef = useRef([]);
-  const durationUnitRef = useRef("h");
+  const durationUnitRef = useRef("M");
   const durationIntervalRef = useRef(0);
-  const advisoryDateRef = useRef(moment().tz("America/Vancouver"));
+  const advisoryDateRef = useRef(moment().tz("America/Vancouver").toDate());
   const [advisoryId, setAdvisoryId] = useState();
   const [isApprover, setIsApprover] = useState(false);
   const [formError, setFormError] = useState("");
@@ -147,11 +144,9 @@ export default function Advisory({
           .then((res) => {
             linksRef.current = [];
             const advisoryData = res.data.data;
-            // setAdvisoryNumber(advisoryData.advisoryNumber);
             setRevisionNumber(advisoryData.revisionNumber);
             setHeadline(advisoryData.title || "");
             setDescription(advisoryData.description || "");
-            setTicketNumber(advisoryData.dcTicketNumber || "");
             if (advisoryData.isSafetyRelated) {
               setIsSafetyRelated(advisoryData.isSafetyRelated);
             }
@@ -162,29 +157,30 @@ export default function Advisory({
             setSubmittedBy(advisoryData.submittedBy || "");
             if (advisoryData.advisoryDate) {
               setAdvisoryDate(
-                moment(advisoryData.advisoryDate).tz("America/Vancouver")
+                moment(advisoryData.advisoryDate).tz("America/Vancouver").toDate()
               );
-              advisoryDateRef.current = moment(advisoryData.advisoryDate).tz(
-                "America/Vancouver"
-              );
+              advisoryDateRef.current =
+                moment(advisoryData.advisoryDate).tz("America/Vancouver").toDate();
             }
             if (advisoryData.effectiveDate) {
               setStartDate(
-                moment(advisoryData.effectiveDate).tz("America/Vancouver")
+                moment(advisoryData.effectiveDate).tz("America/Vancouver").toDate()
               );
             }
             if (advisoryData.endDate) {
-              setEndDate(moment(advisoryData.endDate).tz("America/Vancouver"));
+              setEndDate(
+                moment(advisoryData.endDate).tz("America/Vancouver").toDate()
+              );
             }
 
             if (advisoryData.expiryDate) {
               setExpiryDate(
-                moment(advisoryData.expiryDate).tz("America/Vancouver")
+                moment(advisoryData.expiryDate).tz("America/Vancouver").toDate()
               );
             }
             if (advisoryData.updatedDate) {
               setUpdatedDate(
-                moment(advisoryData.updatedDate).tz("America/Vancouver")
+                moment(advisoryData.updatedDate).tz("America/Vancouver").toDate()
               );
             }
             if (advisoryData.accessStatus) {
@@ -198,9 +194,6 @@ export default function Advisory({
             }
             if (advisoryData.advisoryStatus) {
               setAdvisoryStatus(advisoryData.advisoryStatus.id);
-            }
-            if (advisoryData.isReservationsAffected) {
-              setIsReservationAffected(advisoryData.isReservationsAffected);
             }
             setDisplayAdvisoryDate(
               advisoryData.isAdvisoryDateDisplayed
@@ -304,6 +297,7 @@ export default function Advisory({
                     url: l.url || "",
                     id: l.id,
                     file: l.file,
+                    format: l.format || "",
                     isModified: false,
                     isFileModified: false,
                   },
@@ -336,7 +330,6 @@ export default function Advisory({
     mode,
     setHeadline,
     setDescription,
-    setTicketNumber,
     setIsSafetyRelated,
     setListingRank,
     setSubmittedBy,
@@ -349,7 +342,6 @@ export default function Advisory({
     setEndDate,
     setExpiryDate,
     setAccessStatus,
-    setIsReservationAffected,
     setDisplayAdvisoryDate,
     setDisplayStartDate,
     setDisplayEndDate,
@@ -477,8 +469,9 @@ export default function Advisory({
           setUrgencies([...urgencies]);
           const advisoryStatusData = res[10];
           const restrictedAdvisoryStatusCodes = ["INA", "APR"];
+          const desiredOrder = ['PUB', 'INA', 'DFT', 'APR', 'ARQ'];
           const tempAdvisoryStatuses = advisoryStatusData.map((s) => {
-            let result = null;
+            let result = {};
             if (restrictedAdvisoryStatusCodes.includes(s.code) && approver) {
               result = {
                 code: s.code,
@@ -494,7 +487,10 @@ export default function Advisory({
             }
             return result;
           });
-          const advisoryStatuses = tempAdvisoryStatuses.filter(
+          const sortedStatus = tempAdvisoryStatuses.sort(
+            (a, b) => desiredOrder.indexOf(a.code) - desiredOrder.indexOf(b.code)
+          );
+          const advisoryStatuses = sortedStatus.filter(
             (s) => s !== null
           );
           setAdvisoryStatuses([...advisoryStatuses]);
@@ -576,7 +572,7 @@ export default function Advisory({
   };
 
   const handleDurationIntervalChange = (e) => {
-    durationIntervalRef.current = e.value;
+    durationIntervalRef.current = parseInt(e.target.value);
     calculateExpiryDate();
   };
 
@@ -603,10 +599,10 @@ export default function Advisory({
     setLinks(linkIds);
   };
 
-  const addLink = () => {
+  const addLink = (format) => {
     linksRef.current = [
       ...linksRef.current,
-      { title: "", url: "", type: defaultLinkType },
+      { title: "", url: "", type: defaultLinkType, format: format },
     ];
     setLinkIds();
   };
@@ -634,12 +630,13 @@ export default function Advisory({
   };
 
   const calculateExpiryDate = () => {
-    setEndDate(
+    const newEndDate = (
       moment(advisoryDateRef.current).add(
         durationIntervalRef.current,
         durationUnitRef.current
       )
     );
+    setEndDate(newEndDate._d)
   };
 
   const isValidLink = (link) => {
@@ -768,7 +765,6 @@ export default function Advisory({
         const newAdvisory = {
           title: headline,
           description: description,
-          dcTicketNumber: ticketNumber,
           revisionNumber: revisionNumber,
           isSafetyRelated: isSafetyRelated,
           listingRank: parseInt(listingRank),
@@ -793,7 +789,6 @@ export default function Advisory({
           sites: selSites,
           fireCentres: selFireCentres,
           fireZones: selFireZones,
-          isReservationsAffected: isReservationAffected,
           isAdvisoryDateDisplayed: displayAdvisoryDate,
           isEffectiveDateDisplayed: displayStartDate,
           isEndDateDisplayed: displayEndDate,
@@ -858,7 +853,6 @@ export default function Advisory({
           const updatedAdvisory = {
             title: headline,
             description: description,
-            dcTicketNumber: ticketNumber,
             revisionNumber: revisionNumber,
             isSafetyRelated: isSafetyRelated,
             listingRank: parseInt(listingRank),
@@ -884,7 +878,6 @@ export default function Advisory({
             sites: selSites,
             fireCentres: selFireCentres,
             fireZones: selFireZones,
-            isReservationsAffected: isReservationAffected,
             isAdvisoryDateDisplayed: displayAdvisoryDate,
             isEffectiveDateDisplayed: displayStartDate,
             isEndDateDisplayed: displayEndDate,
@@ -1066,7 +1059,7 @@ export default function Advisory({
                     sessionStorage.clear();
                   }}>
                   <ArrowBackIcon />
-                  Back to Public Advisories
+                  Back to public advisories
                 </button>
                 <h2 className="mt-5 mb-0">
                   {mode === "create" ? "Create a new" : "Edit"} advisory
@@ -1078,8 +1071,6 @@ export default function Advisory({
               <AdvisoryForm
                 mode={mode}
                 data={{
-                  ticketNumber,
-                  setTicketNumber,
                   listingRank,
                   setListingRank,
                   headline,
@@ -1121,8 +1112,6 @@ export default function Advisory({
                   setUrgency,
                   isSafetyRelated,
                   setIsSafetyRelated,
-                  isReservationAffected,
-                  setIsReservationAffected,
                   advisoryDate,
                   handleAdvisoryDateChange,
                   displayAdvisoryDate,

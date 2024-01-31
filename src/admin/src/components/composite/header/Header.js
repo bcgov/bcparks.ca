@@ -55,7 +55,7 @@ export default function Header() {
                   onKeyDown={(e) => goHome(e, history)}
                   tabIndex={0}
                 >
-                  BC Parks Staff Portal
+                  Staff web portal
                 </div>
               </div>
             </div>

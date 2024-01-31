@@ -42,7 +42,7 @@ export default function AdvisoryHistory({ data: { advisoryNumber } }) {
                   submittedTime: moment(ad.createdDate).format(
                     "MMMM DD, yyyy hh:mm A"
                   ),
-                  displayText: "Submitted by",
+                  displayText: "Requested by",
                   dateToCompare: moment(ad.createdDate).valueOf(),
                 };
                 advisoriesHistory.push(record);
@@ -68,18 +68,11 @@ export default function AdvisoryHistory({ data: { advisoryNumber } }) {
   return (
     <div className="ad-history-container">
       {advisoryHistory.length > 0 && (
-        <div className="row">
-          <div className="col-lg-4 col-md-6 col-12 ad-label">History</div>
-          <div className="col-lg-8 col-md-6 col-12">
-            {advisoryHistory.map((ah, index) => (
-              <div key={index}>
-                <div>
-                  {ah.displayText} {ah.submitter} at {ah.submittedTime}
-                </div>
-              </div>
-            ))}
+        advisoryHistory.map((ah, index) => (
+          <div key={index} className="row">
+            Revision number {ah.revisionNumber} {ah.displayText.toLowerCase()} {ah.submitter} at {ah.submittedTime}
           </div>
-        </div>
+        ))
       )}
     </div>
   );

@@ -33,7 +33,7 @@ export default function Home({ page: { setError } }) {
       <Header />
       <div className={styles.Home} data-testid="Home">
         <div className="container hm-container">
-          <h1>BC Parks Staff Portal</h1>
+          <h1>Staff web portal</h1>
           <h3>Please log in to continue</h3>
           <div className="row">
             <div className="col-lg-4"></div>

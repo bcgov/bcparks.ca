@@ -9,6 +9,25 @@
   vertical-align: middle !important;
 }
 
+.urgency-btn-group button,
+.safety-btn-group button {
+  width: 100px;
+  height: 40px;
+  line-height: 1;
+  border-radius: 100px;
+  padding: 0;
+}
+.urgency-btn-group button .MuiButton-label,
+.safety-btn-group button .MuiButton-label {
+  font-size: 1rem;
+}
+.urgency-btn-group button .MuiButton-label .MuiSvgIcon-root,
+.safety-btn-group button .MuiButton-label .MuiSvgIcon-root {
+  width: 18px;
+  height: 18px;
+  margin-right: 4px;
+}
+
 .ad-btn-group .bcgov-button {
   margin-right: 5px !important;
 }
@@ -29,7 +48,6 @@
 
 .ad-link-close {
   margin-left: auto !important;
-  margin-bottom: 5px !important;
 }
 
 .ad-flex-wrap {
@@ -68,6 +86,10 @@
   padding: 4px 16px !important;
 }
 
+.row.title {
+  color: var(--color-blue);
+}
+
 .ad-af-hour-box {
   margin-top: 10px !important;
 }
@@ -84,17 +106,20 @@
   font-size: 44px;
 }
 
+.ad-interval-input {
+  width: 80px !important;
+}
+
 .ad-interval-select {
   width: 100% !important;
-  margin-left: 0px !important;
+  margin-left: 8px !important;
 }
 
 .ad-link-select {
-  width: 60% !important;
+  width: calc(100% - 48px) !important;
 }
 
-.ad-link-group div,
-.ad-link-select {
+.ad-link-group div {
   padding-bottom: 5px !important;
 }
 
@@ -102,11 +127,21 @@
   margin: auto !important;
 }
 
-.ad-add-link {
-  border: 1px solid #c1dbee;
-  padding: 5px !important;
-  border-radius: 4px;
-  text-align: center !important;
+.ad-add-link:not(.ad-link-close) {
+  height: 40px;
+  font-size: 0.875rem;
+  background-color: white;
+  border-radius: 100px;
+  border: 1px solid var(--color-med-grey);
+  padding: 0 16px;
+}
+
+.ad-add-link:not(.ad-link-close):first-of-type {
+  margin-right: 16px;
+}
+
+.ad-add-link:not(.ad-link-close):last-of-type {
+  margin-left: 16px;
 }
 
 .ad-btn-row {

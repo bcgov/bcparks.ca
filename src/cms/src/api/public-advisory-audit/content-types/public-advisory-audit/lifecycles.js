@@ -105,7 +105,6 @@ const isAdvisoryEqual = (newData, oldData) => {
   const fieldsToCompare = {
     title: null,
     description: null,
-    dcTicketNumber: null,
     isSafetyRelated: null,
     listingRank: null,
     note: null,
@@ -126,7 +125,6 @@ const isAdvisoryEqual = (newData, oldData) => {
     sites: [],
     fireCentres: [],
     fireZones: [],
-    isReservationsAffected: null,
     isAdvisoryDateDisplayed: null,
     isEffectiveDateDisplayed: null,
     isEndDateDisplayed: null,

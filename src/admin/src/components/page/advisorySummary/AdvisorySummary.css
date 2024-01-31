@@ -6,6 +6,10 @@
   color: #234075 !important;
 }
 
+.MuiChip-root {
+  border-radius: 5px !important;
+}
+
 .launchIcon:hover,
 .ad-anchor:hover,
 .ad-copy:hover {
@@ -17,23 +21,8 @@
   color: #234075 !important;
 }
 
-.ad-copy {
-  color: #234075 !important;
-  border-radius: 2px !important;
-  width: 100px !important;
-  background-color: #fff !important;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 5px !important;
-  height: 28px !important;
-  margin: 10px 0px !important;
-}
-
 .ad-summary .row {
   margin: 5px 0px !important;
-  /* background-color: #e3eaf8 !important; */
-}
-
-.ad-wrap-reverse {
-  flex-wrap: wrap-reverse !important;
 }
 
 .ad-right {

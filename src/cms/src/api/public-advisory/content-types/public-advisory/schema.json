@@ -27,9 +27,6 @@
     "description": {
       "type": "text"
     },
-    "dcTicketNumber": {
-      "type": "text"
-    },
     "isSafetyRelated": {
       "type": "boolean"
     },

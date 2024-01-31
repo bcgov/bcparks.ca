@@ -5,10 +5,11 @@ import { cmsAxios } from "../../../axios_config";
 import { useKeycloak } from "@react-keycloak/web";
 import "./AdvisorySummary.css";
 import Header from "../../composite/header/Header";
-import { Loader } from  "../../shared/loader/Loader";
+import { Loader } from "../../shared/loader/Loader";
 import Alert from "@material-ui/lab/Alert";
 import { Snackbar, Link } from "@material-ui/core";
-import { Button } from  "../../shared/button/Button";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { Button } from "../../shared/button/Button";
 import { getLinkTypes } from "../../../utils/CmsDataUtil";
 import AdvisorySummaryView from "../../composite/advisorySummaryView/AdvisorySummaryView";
 
@@ -241,59 +242,63 @@ export default function AdvisorySummary({
             </div>
           )}
           {!isLoadingPage && (
-            <div className="container pt10b30">
-              <div className="row ad-wrap-reverse">
-                <div className="container-fluid col-lg-3 col-md-12 col-12">
-                  <div className="button-row ad-btn-group">
-                    <br />
-                    <Button
-                      label="Back"
-                      styling="bcgov-normal-white btn mt10"
-                      onClick={() => {
-                        setToDashboard(true);
-                      }}
-                    />
-                    <Button
-                      label="Edit"
-                      styling="bcgov-normal-blue btn mt10"
-                      onClick={() => {
-                        setToUpdate(true);
-                      }}
-                    />
-                  </div>
+            <div>
+              <div>
+                <div className="container-fluid">
+                  <button
+                    type="button"
+                    className="btn btn-link btn-back"
+                    onClick={() => {
+                      setToDashboard(true);
+                    }}>
+                    <ArrowBackIcon />
+                    Back to public advisories
+                  </button>
                 </div>
                 {!showOriginalAdvisory && (
-                  <div className="container-fluid ad-summary col-lg-9 col-md-12 col-12">
+                  <div className="container-fluid ad-summary mt-4">
                     {confirmationText && (
-                      <>
-                        <Alert severity="success">{confirmationText}</Alert>
-                        <br />
-                      </>
+                      <Alert severity="success">{confirmationText}</Alert>
                     )}
                     {isCurrentlyPublished && (
-                      <div className="row">
-                        <div className="col-lg-12 col-md-12 col-12 ad-right">
-                          <Link
-                            component="button"
-                            onClick={() => {
-                              setShowOriginalAdvisory(true);
-                            }}
-                          >
-                            View published version
-                          </Link>
-                        </div>
+                      <div className="container-fluid ad-right mt-4">
+                        <Link
+                          component="button"
+                          onClick={() => {
+                            setShowOriginalAdvisory(true);
+                          }}
+                        >
+                          View published version
+                        </Link>
                       </div>
                     )}
-                    <AdvisorySummaryView
-                      data={{
-                        advisory,
-                        isPublished,
-                        parkUrls,
-                        siteUrls,
-                        handleOpenSnackBar,
-                        showOriginalAdvisory,
-                      }}
-                    />
+                    <div className="mt-5 container-fluid ad-form">
+                      <div className="row title">
+                        <div className="col-md-8 col-12">
+                          <p>Advisory #{advisory.advisoryNumber}</p>
+                          <h2>{advisory.title}</h2>
+                        </div>
+                        <div className="col-md-4 col-12 d-flex align-items-center justify-content-end">
+                          <Button
+                            label="Edit"
+                            styling="bcgov-normal-blue btn mt10"
+                            onClick={() => {
+                              setToUpdate(true);
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <AdvisorySummaryView
+                        data={{
+                          advisory,
+                          isPublished,
+                          parkUrls,
+                          siteUrls,
+                          handleOpenSnackBar,
+                          showOriginalAdvisory,
+                        }}
+                      />
+                    </div>
                   </div>
                 )}
                 {showOriginalAdvisory && (
@@ -341,6 +346,7 @@ export default function AdvisorySummary({
             </div>
           )}
         </div>
+        <br />
       </div>
     </main>
   );
