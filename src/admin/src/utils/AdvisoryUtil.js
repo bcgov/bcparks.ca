@@ -220,7 +220,7 @@ export function calculateIsStatHoliday(
               setCmsData(data);
               // Write Statutory Data to CMS cache
               cmsAxios
-                .put(`statutory-holiday`, res.data, {
+                .put(`statutory-holiday`, { "id": 1, "data": { ...res.data } }, {
                   headers: { Authorization: `Bearer ${token}` }
                 })
                 .catch((error) => {
