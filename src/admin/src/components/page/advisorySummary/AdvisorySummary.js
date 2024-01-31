@@ -57,13 +57,9 @@ export default function AdvisorySummary({
                 const url = isAdvisoryPublished
                   ? p.url
                   : p.url.replace("bcparks", "www.bcparks");
-                return parkUrlInfo.push(
-                  "<a href='" + url + "'>" + p.protectedAreaName + "</a>"
-                );
+                return parkUrlInfo.push(url);
               } else {
-                return parkUrlInfo.push(
-                  "<span>" + p.protectedAreaName + "</span>"
-                );
+                return parkUrlInfo.push(p.protectedAreaName);
               }
             });
             const parkUrlText = parkUrlInfo.join("<br/>");
@@ -73,14 +69,12 @@ export default function AdvisorySummary({
                 const url = isAdvisoryPublished
                   ? s.url
                   : s.url.replace("bcparks", "www.bcparks");
-                return siteUrlInfo.push(
-                  "<a href='" + url + "'>" + s.siteName + "</a>"
-                );
+                return siteUrlInfo.push(url);
               } else {
-                return siteUrlInfo.push("<span>" + s.siteName + "</span>");
+                return siteUrlInfo.push(s.siteName);
               }
             });
-            const siteUrlText = siteUrlInfo.join("<br/>");
+            const siteUrlText = siteUrlInfo.join("\n");
             setCurrentSiteUrls(siteUrlText);
           })
           .catch((error) => {
@@ -125,9 +119,7 @@ export default function AdvisorySummary({
                 : p.url.replace("bcparks", "www.bcparks");
               return parkUrlInfo.push(url);
             } else {
-              return parkUrlInfo.push(
-                "<span>" + p.protectedAreaName + "</span>"
-              );
+              return parkUrlInfo.push(p.protectedAreaName);
             }
           });
           const parkUrlText = parkUrlInfo.join("\n");
@@ -140,7 +132,7 @@ export default function AdvisorySummary({
                 : s.url.replace("bcparks", "www.bcparks");
               return siteUrlInfo.push(url);
             } else {
-              return siteUrlInfo.push("<span>" + s.siteName + "</span>");
+              return siteUrlInfo.push(s.siteName);
             }
           });
           const siteUrlText = siteUrlInfo.join("\n");
