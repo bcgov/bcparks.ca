@@ -20,7 +20,6 @@ export default function AdvisorySummaryView({
     showOriginalAdvisory,
   },
 }) {
-  const { ClipboardItem } = window;
   const publicUrl = config.REACT_APP_PUBLIC_URL;
   const [showParks, setShowParks] = useState(false)
   const [showSites, setShowSites] = useState(false)
@@ -125,11 +124,8 @@ export default function AdvisorySummaryView({
             clickable
             className="ad-copy bcgov-button bcgov-normal-white"
             onClick={() => {
-              const type = "text/html";
-              const blob = new Blob([parkUrls], { type });
-              let data = [new ClipboardItem({ [type]: blob })];
               navigator.clipboard
-                .write(data)
+                .writeText(parkUrls)
                 .then(() => {
                   handleOpenSnackBar("Park urls copied to clipboard");
                 })
@@ -176,11 +172,8 @@ export default function AdvisorySummaryView({
               clickable
               className="ad-copy bcgov-button bcgov-normal-white"
               onClick={() => {
-                const type = "text/html";
-                const blob = new Blob([siteUrls], { type });
-                let data = [new ClipboardItem({ [type]: blob })];
                 navigator.clipboard
-                  .write(data)
+                  .writeText(siteUrls)
                   .then(() => {
                     handleOpenSnackBar("Site urls copied to clipboard");
                   })
