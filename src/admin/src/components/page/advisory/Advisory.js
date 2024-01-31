@@ -471,7 +471,7 @@ export default function Advisory({
           const restrictedAdvisoryStatusCodes = ["INA", "APR"];
           const desiredOrder = ['PUB', 'INA', 'DFT', 'APR', 'ARQ'];
           const tempAdvisoryStatuses = advisoryStatusData.map((s) => {
-            let result = null;
+            let result = {};
             if (restrictedAdvisoryStatusCodes.includes(s.code) && approver) {
               result = {
                 code: s.code,
@@ -520,7 +520,7 @@ export default function Advisory({
             }
             setIsLoadingPage(false);
           }
-          // setSubmittedBy(keycloak.tokenParsed.name);
+          setSubmittedBy(keycloak.tokenParsed.name);
           setIsLoadingData(false);
         })
         .catch(() => {
