@@ -1042,7 +1042,7 @@ export default function AdvisoryForm({
                     <p>
                       <b>This is an after-hours advisory</b><br />
                       The web team's business hours are<br />
-                      Monday to Friday, 8:30AM – 4:30PM.
+                      Monday to Friday, 8:30 am – 4:30 pm.
                     </p>
                     <div className="d-flex mt-3">
                       <Radio
@@ -1055,7 +1055,7 @@ export default function AdvisoryForm({
                         inputProps={{ "aria-label": "Publish immediately" }}
                         className="mr-2"
                       />
-                      <p><b className="required">Urgent/safety-related.</b> Publish immediately.</p>
+                      <p><b className="required">Urgent/safety-related advisory.</b> Publish immediately.</p>
                     </div>
                     <div className="d-flex mt-3">
                       <Radio
