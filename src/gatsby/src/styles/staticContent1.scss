@@ -10,7 +10,7 @@
   }
 
   .card {
-    border-color: $colorBlueLight !important;
+    border-color: $colorBlueMed !important;
     border-width: 1px !important;
     &.border-secondary {
       border-color: #ced4da !important;
@@ -25,7 +25,7 @@
       }
     }
     .card-title {
-      color: $colorBlueLight;
+      color: $colorBlueMed;
     }
     .card-body {
       padding: 0;
@@ -137,7 +137,7 @@
   .content-zone-intro {
     .content-zone-header {
       font-size: 1.5rem;
-      color: $colorText;
+      color: $colorGrey;
       font-weight: bold;
       margin-bottom: 0;
       padding-bottom: 20px;
@@ -168,14 +168,14 @@
     }
     .card-header {
       background-color: $colorWhite;
-      border: 1px solid $colorBlueLight;
+      border: 1px solid $colorBlueMed;
     }
     .card-body {
       padding: 20px;
-      color: $colorBlueLight;
+      color: $colorBlueMed;
     }
     .collapse-toggle {
-      color: $colorBlueLight;
+      color: $colorBlueMed;
       &:focus,
       &:focus-visible {
         outline: unset !important;
@@ -198,7 +198,7 @@
   }
   .content-zone-header {
     font-size: 1.5rem;
-    color: $colorBlueLight;
+    color: $colorBlueMed;
     font-weight: bold;
     margin-bottom: 0;
   }

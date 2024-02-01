@@ -79,7 +79,7 @@
 }
 
 .blue-alert {
-  background-color: $colorGrey !important;
+  background-color: $colorBackgroundGrey !important;
 }
 
 .raw-html-content {
@@ -92,7 +92,7 @@
 
 // TODO: destroy this .grey-background thing up with fire
 .grey-background {
-  background-color: $colorGreyLight !important;
+  background-color: $colorBackgroundGrey !important;
 }
 
 .grey-background .MuiPaper-root,
@@ -100,7 +100,7 @@
   background-color: transparent;
 
   .red-alert {
-    background-color: $colorGrey !important;
+    background-color: $colorBackgroundGrey !important;
   }
 
   &.bc-bg-yellow {

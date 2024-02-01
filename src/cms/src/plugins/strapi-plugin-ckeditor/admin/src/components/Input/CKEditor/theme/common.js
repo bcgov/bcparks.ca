@@ -277,7 +277,7 @@ export const common = css`
     }
 
     blockquote.callout-box {
-      background-color: #D9EAF7;
+      background-color: #c7e3fd;
       font-size: 1rem;
       font-weight: 700;
       border-radius: 4px;

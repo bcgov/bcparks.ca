@@ -22,7 +22,7 @@ body {
 }
 
 body {
-  color: $colorText;
+  color: $colorGrey;
   letter-spacing: normal;
   font-family: $globalFont;
 }
@@ -104,7 +104,7 @@ blockquote {
 
 .callout-box {
   color: $colorBlue;
-  background-color: #D9EAF7;
+  background-color: $colorBlueLight;
   font-size: 1rem;
   font-weight: 700;
   border: none;
@@ -125,7 +125,7 @@ figure.table {
   table {
     width: 100%;
     th {
-      background: $colorGreyLight;
+      background: $colorBackgroundGrey;
     }
   }
 
@@ -161,7 +161,7 @@ figure.table {
       height: 5px;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: rgba( #000, .2);
+      background-color: rgba($colorBlack, .2);
       border-radius: 5px;
     }
   }

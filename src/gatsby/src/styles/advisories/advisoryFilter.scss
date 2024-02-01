@@ -12,6 +12,9 @@
 
   .MuiInputBase-root {
     background: $colorWhite;
+    .MuiOutlinedInput-notchedOutline {
+      border-color: $colorGreyMed;
+    }
   }
   // required for accessibility
   .MuiInputBase-input:focus,

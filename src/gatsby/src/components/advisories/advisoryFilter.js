@@ -71,7 +71,7 @@ const Root = styled('div')((
     fontWeight: "bold",
     fontSize: "1rem",
     lineHeight: "1.75rem",
-    color: "#000",
+    color: "#1a1a1a",
     fontFamily: "unset",
     marginBottom: "0px",
   },
