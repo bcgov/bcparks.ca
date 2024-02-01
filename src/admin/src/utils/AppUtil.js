@@ -28,3 +28,16 @@ export function dateCompare(a, b) {
   }
   return 0;
 }
+
+export function camelCaseToSentenceCase(input) {
+  // split the string into words based on capital letters
+  const words = input.match(/[A-Z][a-z]+/g)
+  if (!words) {
+    return input
+  }
+  // lowercase all words except the first one
+  const sentenceCasedWords = words.map((word, index) =>
+    index === 0 ? word : word.toLowerCase()
+  )
+  return sentenceCasedWords.join(' ')
+}
