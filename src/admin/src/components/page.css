@@ -124,15 +124,15 @@
   padding: 0;
 }
 
-.btn-urgency-1 {
-  color: var(--color-grey) !important;
-  background-color: var(--color-yellow) !important;
-}
-
-.btn-urgency-2,
-.btn-safety-selected {
+.btn-urgency-1,
+.btn-safety-selected  {
   color: white !important;
   background-color: var(--color-med-blue) !important;
+}
+
+.btn-urgency-2 {
+  color: var(--color-grey) !important;
+  background-color: var(--color-yellow) !important;
 }
 
 .btn-urgency-3 {

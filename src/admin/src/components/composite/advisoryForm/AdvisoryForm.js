@@ -371,10 +371,10 @@ export default function AdvisoryForm({
               </ButtonGroup>
               <div className="urgency-helper-text mt-1">
                 {urgency === 1 && (
-                  <small>Medium urgency for safety and health related</small>
+                  <small>Low urgency for discretion and warnings</small>
                 )}
                 {urgency === 2 && (
-                  <small>Low urgency for discretion and warnings</small>
+                  <small>Medium urgency for safety and health related</small>
                 )}
                 {urgency === 3 && (
                   <small>High urgency for immediate danger and closures</small>
