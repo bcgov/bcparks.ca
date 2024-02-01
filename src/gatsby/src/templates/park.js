@@ -140,8 +140,11 @@ export default function ParkTemplate({ data }) {
 
   useEffect(() => {
     if (window.location.hash && !isLoadingProtectedArea && !isLoadingAdvisories) {
-      const href = window.location.href
-      window.location.replace(href)
+      const id = window.location.hash.replace("#", "")
+      const element = document.getElementById(id) || document.querySelector(window.location.hash)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
     }
   }, [isLoadingProtectedArea, isLoadingAdvisories])
 
@@ -289,7 +292,7 @@ export default function ParkTemplate({ data }) {
   else if (parkAccessStatus?.areaClosure && !addedWinterGateAdvisory) {
     advisories.push(WINTER_SUB_AREA_ADVISORY);
     setAddedWinterGateAdvisory(true);
-  }  
+  }
 
   const breadcrumbs = [
     <GatsbyLink key="1" to="/">
