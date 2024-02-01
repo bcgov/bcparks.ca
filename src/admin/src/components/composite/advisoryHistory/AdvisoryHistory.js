@@ -66,7 +66,7 @@ export default function AdvisoryHistory({ data: { advisoryNumber } }) {
     }
   }, [advisoryNumber, initialized, keycloak, setAdvisoryHistory]);
   return (
-    <div className="ad-history-container">
+    <div className="ad-history-container px-3">
       {advisoryHistory.length > 0 && (
         advisoryHistory.map((ah, index) => (
           <div key={index} className="row">
