@@ -32,7 +32,7 @@ import {
   getStandardMessages,
 } from "../../../utils/CmsDataUtil";
 import { hasRole } from "../../../utils/AuthenticationUtil";
-import { labelCompare } from "../../../utils/AppUtil";
+import { labelCompare, camelCaseToSentenceCase } from "../../../utils/AppUtil";
 import config from "../../../utils/config";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
@@ -476,13 +476,13 @@ export default function Advisory({
             if (restrictedAdvisoryStatusCodes.includes(s.code) && approver) {
               result = {
                 code: s.code,
-                label: s.advisoryStatus,
+                label: camelCaseToSentenceCase(s.advisoryStatus),
                 value: s.id,
               };
             } else if (!restrictedAdvisoryStatusCodes.includes(s.code)) {
               result = {
                 code: s.code,
-                label: s.advisoryStatus,
+                label: camelCaseToSentenceCase(s.advisoryStatus),
                 value: s.id,
               };
             }
