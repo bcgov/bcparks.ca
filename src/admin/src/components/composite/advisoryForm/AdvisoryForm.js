@@ -361,7 +361,7 @@ export default function AdvisoryForm({
                     onClick={() => {
                       setUrgency(u.value);
                     }}
-                    className={urgency === u.value && `btn-urgency-${urgency}`}
+                    className={urgency === u.value && `btn-urgency-${u.sequence}`}
                     style={{ textTransform: 'none' }}
                   >
                     {urgency === u.value && <CheckIcon />}
@@ -369,17 +369,19 @@ export default function AdvisoryForm({
                   </Btn>
                 ))}
               </ButtonGroup>
-              <div className="urgency-helper-text mt-1">
-                {urgency === 1 && (
-                  <small>Low urgency for discretion and warnings</small>
-                )}
-                {urgency === 2 && (
-                  <small>Medium urgency for safety and health related</small>
-                )}
-                {urgency === 3 && (
-                  <small>High urgency for immediate danger and closures</small>
-                )}
-              </div>
+              {urgencies.map((u) => (urgency === u.value && (
+                <div className="urgency-helper-text mt-1">
+                  {u.sequence === 1 && (
+                    <small>Low urgency for discretion and warnings</small>
+                  )}
+                  {u.sequence === 2 && (
+                    <small>Medium urgency for safety and health related</small>
+                  )}
+                  {u.sequence === 3 && (
+                    <small>High urgency for immediate danger and closures</small>
+                  )}
+                </div>
+              )))}
               <FormHelperText>{urgencyError}</FormHelperText>
             </FormControl>
           </div>

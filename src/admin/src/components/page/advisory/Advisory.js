@@ -464,7 +464,8 @@ export default function Advisory({
           const urgencyData = res[9];
           const urgencies = urgencyData.map((u) => ({
             label: u.urgency,
-            value: u.sequence,
+            value: u.id,
+            sequence: u.sequence
           }));
           setUrgencies([...urgencies]);
           const advisoryStatusData = res[10];
