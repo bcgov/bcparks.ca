@@ -98,7 +98,6 @@ export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) 
   const validStartDate = validateOptionalDate(advisoryData.startDate);
   const validEndDate = validateOptionalDate(advisoryData.endDate);
   const validExpiryDate = validateOptionalDate(advisoryData.expiryDate);
-  const validSubmittedBy = validateRequiredText(advisoryData.submittedBy);
   const validLinks = validateLinks(linksRef.current);
   let validData =
     validListingRankNumber &&
@@ -111,13 +110,18 @@ export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) 
     validStartDate &&
     validEndDate &&
     validExpiryDate &&
-    validSubmittedBy &&
     validLinks;
   if (validateStatus) {
     const validAdvisoryStatus = validateRequiredSelect(
       advisoryData.advisoryStatus
     );
     validData = validData && validAdvisoryStatus;
+  }
+  if (validateStatus) {
+    const validSubmittedBy = validateRequiredText(
+      advisoryData.submittedBy
+    );
+    validData = validData && validSubmittedBy
   }
   if (mode === "update") {
     const validUpdatedDate = validateOptionalDate(advisoryData.updatedDate);

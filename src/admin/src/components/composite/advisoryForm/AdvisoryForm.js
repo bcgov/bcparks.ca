@@ -370,7 +370,7 @@ export default function AdvisoryForm({
                 ))}
               </ButtonGroup>
               {urgencies.map((u) => (urgency === u.value && (
-                <div className="urgency-helper-text mt-1">
+                <div key={u.value} className="urgency-helper-text mt-1">
                   {u.sequence === 1 && (
                     <small>Low urgency for discretion and warnings</small>
                   )}
