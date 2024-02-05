@@ -8,10 +8,9 @@ import { Button } from "../../shared/button/Button";
 import DataTable from "../../composite/dataTable/DataTable";
 import Select from "react-select";
 import Moment from "react-moment";
-import { Loader } from  "../../shared/loader/Loader";
+import { Loader } from "../../shared/loader/Loader";
 import IconButton from "@material-ui/core/IconButton";
 import Chip from "@material-ui/core/Chip";
-import TimerIcon from "@material-ui/icons/Timer";
 import Tooltip from "@material-ui/core/Tooltip";
 import LightTooltip from "../../shared/tooltip/LightTooltip";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -74,7 +73,7 @@ export default function AdvisoryDashboard({
   // Preserve filters
   const savedFilters = JSON.parse(localStorage.getItem('advisoryFilters'));
   const defaultPageFilters = [
-    { filterName: 'region', filterValue: '', type: 'page'},
+    { filterName: 'region', filterValue: '', type: 'page' },
     { filterName: 'park', filterValue: '', type: 'page' },
   ];
   const [filters, setFilters] = useState([...(savedFilters || defaultPageFilters)]);
@@ -105,7 +104,7 @@ export default function AdvisoryDashboard({
 
   useEffect(() => {
     let isMounted = true;
-  
+
     const fetchData = async () => {
       setIsLoading(true);
       if (initialized && keycloak) {
@@ -118,11 +117,11 @@ export default function AdvisoryDashboard({
           getProtectedAreas(cmsData, setCmsData),
           getLatestPublicAdvisoryAudits(keycloak, archived)
         ])
-        .catch(() => {
-          setError({ status: 500, message: "Error loading data" });
-          setToError(true);
-          setIsLoading(false);
-        });
+          .catch(() => {
+            setError({ status: 500, message: "Error loading data" });
+            setToError(true);
+            setIsLoading(false);
+          });
         // Regions
         const regionsData = res[0];
         // Management Areas
@@ -239,7 +238,7 @@ export default function AdvisoryDashboard({
   };
 
 
-const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
+  const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
     const advisoryStatuses = await getAdvisoryStatuses(cmsData, setCmsData);
     if (advisoryStatuses) {
       const publishedStatus = advisoryStatuses.filter((as) => as.code === "PUB");
@@ -414,10 +413,27 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
     },
     {
       field: "advisoryDate",
-      title: "Posted Date",
+      title: "Posting date",
       render: (rowData) => {
         if (rowData.advisoryDate)
           return <Moment format="YYYY/MM/DD">{rowData.advisoryDate}</Moment>;
+      },
+    },
+    {
+      field: "endDate",
+      title: "End date",
+      render: (rowData) => {
+        if (rowData.endDate) {
+          return <Moment format="YYYY/MM/DD">{rowData.endDate}</Moment>;
+        }
+      },
+    },
+    {
+      field: "expiryDate",
+      title: "Expiry date",
+      render: (rowData) => {
+        if (rowData.expiryDate)
+          return <Moment format="YYYY/MM/DD">{rowData.expiryDate}</Moment>;
       },
     },
     {
@@ -430,62 +446,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
         return <div dangerouslySetInnerHTML={{ __html: rowData.title }}></div>;
       },
     },
-    { field: "eventType.eventType", title: "Event Type" },
-    {
-      field: "effectiveDate",
-      title: "Start Date",
-      render: (rowData) => {
-        if (rowData.effectiveDate)
-          return <Moment format="YYYY/MM/DD">{rowData.effectiveDate}</Moment>;
-      },
-    },
-    {
-      field: "endDate",
-      title: "End Date",
-      render: (rowData) => {
-        if (rowData.endDate) {
-          return (
-            <div className="text-nowrap">
-              <Moment format="YYYY/MM/DD">{rowData.endDate}</Moment>
-              {rowData.expiryDate && (
-                <Tooltip
-                  title={
-                    <span>
-                      This advisory will be removed on{" "}
-                      <Moment format="YYYY/MM/DD">{rowData.expiryDate}</Moment>
-                    </span>
-                  }
-                >
-                  <TimerIcon color="primary" />
-                </Tooltip>
-              )}
-            </div>
-          );
-        }
-      },
-    },
-    {
-      field: "expired",
-      title: "Expired",
-      render: (rowData) => {
-        return (
-          <>
-            {rowData.expired === "Y" && (
-              <Tooltip
-                title={
-                  <span>
-                    Expired on{" "}
-                    <Moment format="YYYY/MM/DD">{rowData.expiryDate}</Moment>
-                  </span>
-                }
-              >
-                <Chip size="small" label={rowData.expired} />
-              </Tooltip>
-            )}
-          </>
-        );
-      },
-    },
+    { field: "eventType.eventType", title: "Event type" },
     {
       field: "associatedParks",
       title: "Associated Park(s)",
@@ -523,7 +484,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
         }
 
         const parksCount = rowData.protectedAreas.length;
-        let protectedAreas = rowData.protectedAreas.slice(0, displayCount);        
+        let protectedAreas = rowData.protectedAreas.slice(0, displayCount);
         return (
           <div>
             {protectedAreas.map((p, i) => (
@@ -569,10 +530,10 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
     return <Redirect to="/bcparks/create-advisory" />;
   }
   if (toError || hasErrors) {
-    console.log('toError || hasErrors', toError , hasErrors)
+    console.log('toError || hasErrors', toError, hasErrors)
     return <Redirect push to="/bcparks/error" />;
   }
-  
+
   return (
     <>
       <div className="container-fluid">
@@ -595,7 +556,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
           <div className="col-xl-4 col-md-4 col-sm-12">
             <Select
               value={selectedRegion}
-              options={regions.map((r) => ({ label: r.regionName + " Region", value: r.id }) )}
+              options={regions.map((r) => ({ label: r.regionName + " Region", value: r.id }))}
               onChange={(e) => {
                 setSelectedRegion(e);
                 setSelectedRegionId(e ? e.value : 0);
@@ -604,13 +565,13 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
                 setSelectedParkId(-1); // Do not filter by parkId
 
                 let arr = [...filters.filter((o) => !(o.type === 'page'))];
-                    setFilters([
-                      ...arr,
-                      {type: 'page', filterName: 'region', filterValue: e ? e.value : 0},
-                      {type: 'page', filterName: 'park', filterValue: 0}, // Reset park filter
-                    ]);
-                  }}              
-                  placeholder="Select a Region..."
+                setFilters([
+                  ...arr,
+                  { type: 'page', filterName: 'region', filterValue: e ? e.value : 0 },
+                  { type: 'page', filterName: 'park', filterValue: 0 }, // Reset park filter
+                ]);
+              }}
+              placeholder="Select a Region..."
               className="bcgov-select"
               isClearable
             />
@@ -624,7 +585,7 @@ const getCurrentPublishedAdvisories = async (cmsData, setCmsData) => {
                 setSelectedParkId(e ? e.value : 0);
 
                 let arr = [...filters.filter((o) => !(o.type === 'page' && o.filterName === 'park'))];
-                    setFilters([...arr, {type: 'page', filterName: 'park', filterValue: e ? e.value : 0}]);
+                setFilters([...arr, { type: 'page', filterName: 'park', filterValue: e ? e.value : 0 }]);
               }}
               placeholder="Select a Park..."
               className="bcgov-select"
