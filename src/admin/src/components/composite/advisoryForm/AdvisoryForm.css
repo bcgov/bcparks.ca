@@ -6,7 +6,6 @@
 .ad-label {
   text-align: right;
   color: var(--color-grey) !important;
-  vertical-align: middle !important;
 }
 
 .urgency-btn-group button,
@@ -130,18 +129,28 @@
 .ad-add-link:not(.ad-link-close) {
   height: 40px;
   font-size: 0.875rem;
+  line-height: 2;
   background-color: white;
   border-radius: 100px;
   border: 1px solid var(--color-med-grey);
   padding: 0 16px;
 }
 
-.ad-add-link:not(.ad-link-close):first-of-type {
+.ad-add-link.add-file {
   margin-right: 16px;
 }
 
-.ad-add-link:not(.ad-link-close):last-of-type {
+.ad-add-link.add-url{
   margin-left: 16px;
+}
+
+.clear-url-btn {
+  position: absolute !important;
+  right: 8px;
+}
+
+.clear-url-btn:hover, .clear-url-btn:active {
+  background-color: white !important;
 }
 
 .ad-btn-row {
