@@ -49,6 +49,7 @@ module.exports = {
 
         // publish advisories - audit table
         draftAdvisoryToPublishAudit.forEach(async (advisory) => {
+          strapi.log.info(`publishing approved public-advisory-audit [advisoryNumber:${advisory.advisoryNumber}]`);
           await strapi.entityService.update(
             "api::public-advisory-audit.public-advisory-audit", advisory.id, {
               data: {
@@ -61,7 +62,13 @@ module.exports = {
                 removalDate: null,
               }
             }
-          );
+          )
+            .catch((error) => {
+              strapi.log.error(
+                `error updating public-advisory-audit #${advisory.advisoryNumber}`,
+                error
+              );
+            });
         });
 
         // fetch advisories to unpublish - public advisory table
@@ -79,12 +86,19 @@ module.exports = {
 
         // delete advisories - public advisory table
         advisoryToUnpublish.forEach(async (advisory) => {
+          strapi.log.info(`unpublishing public-advisory [advisoryNumber:${advisory.advisoryNumber}]`);
           await strapi.entityService.update(
             "api::public-advisory.public-advisory", advisory.id, {
             data: {
               publishedAt: null,
             }
           })
+            .catch((error) => {
+              strapi.log.error(
+                `error updating public-advisory #${advisory.advisoryNumber}`,
+                error
+              );
+            });
         })
 
         // unpublish advisories - audit table
@@ -97,6 +111,7 @@ module.exports = {
             }
           });
           if (advisoryAudit.length) {
+            strapi.log.info(`setting public-advisory-audit to inactive [advisoryNumber:${advisory.advisoryNumber}]`);
             await strapi.entityService.update(
               "api::public-advisory-audit.public-advisory-audit", advisoryAudit[0].id, {
               data: {
@@ -112,7 +127,7 @@ module.exports = {
             )
               .catch((error) => {
                 strapi.log.error(
-                  `error updating public-advisory-audit, advisory-number: ${advisory.advisoryNumber}`,
+                  `error updating public-advisory-audit #${advisory.advisoryNumber}`,
                   error
                 );
               });
