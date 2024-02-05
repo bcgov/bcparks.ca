@@ -186,7 +186,7 @@ export default function AdvisorySummaryView({
         </div>
       )}
       <div className="row heading">
-        Affected content
+        Advisory content
       </div>
       <div className="row">
         <div className="col-lg-3 col-md-4 col-12 ad-label">Headline</div>

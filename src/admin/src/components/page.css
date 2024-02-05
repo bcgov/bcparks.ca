@@ -215,7 +215,14 @@
 
 .bcgov-input {
   width: 100% !important;
+}
+
+.bcgov-input input {
   background-color: white;
+}
+
+.bcgov-input .MuiOutlinedInput-adornedEnd {
+  padding-right: 0 !important;
 }
 
 .bcgov-textarea {
@@ -329,7 +336,7 @@
 .field-bg-grey {
   color: var(--color-grey);
   background-color: var(--color-light-grey);
-  margin: 8px 0;
+  margin-bottom: 8px;
   padding: 16px;
 }
 

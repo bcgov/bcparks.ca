@@ -9,7 +9,8 @@ import {
   FormControl,
   FormHelperText,
   Button as Btn,
-  Typography
+  Typography,
+  IconButton
 } from "@material-ui/core";
 import Select from "react-select";
 import WarningIcon from "@material-ui/icons/Warning";
@@ -504,7 +505,7 @@ export default function AdvisoryForm({
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label pt-1">
             Add supporting information
           </div>
           <div className="col-lg-7 col-md-8 col-sm-12">
@@ -573,11 +574,21 @@ export default function AdvisoryForm({
                         }}
                         className="bcgov-input"
                         variant="outlined"
-                        InputProps={{ ...linkUrlInput }}
                         error={(l.type !== "" || l.title !== "") && l.url === ""}
                         helperText={((l.type !== "" || l.title !== "") && l.url === "")
                           ? "Please enter URL too" : ""
                         }
+                        InputProps={{
+                          ...linkUrlInput,
+                          endAdornment: (
+                            <IconButton
+                              onClick={() => updateLink(idx, "url", "")}
+                              className="clear-url-btn"
+                            >
+                              <CloseIcon />
+                            </IconButton>
+                          ),
+                        }}
                       />
                     </div>
                   </div>
@@ -610,11 +621,11 @@ export default function AdvisoryForm({
                 );
               }}
             />
-            <label htmlFor="file-upload">
+            <label htmlFor="file-upload" className="mb-0">
               <Btn
                 variant="outlined"
                 component="span"
-                className="ad-add-link pointer div-btn"
+                className="ad-add-link add-file"
                 style={{ textTransform: 'none' }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
@@ -631,7 +642,7 @@ export default function AdvisoryForm({
             <span>OR</span>
             <Btn
               variant="outlined"
-              className="ad-add-link pointer div-btn"
+              className="ad-add-link add-url"
               style={{ textTransform: 'none' }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
@@ -642,7 +653,7 @@ export default function AdvisoryForm({
                 addLink("url");
               }}
             >
-              + Add URL
+              Add URL
             </Btn>
           </div>
         </div>
