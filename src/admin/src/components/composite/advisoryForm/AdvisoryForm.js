@@ -715,6 +715,13 @@ export default function AdvisoryForm({
               <div className="row">
                 <div className="col-12 col-lg-3 col-md-4 ad-label">
                   End date
+                  <LightTooltip
+                    arrow
+                    title="Enter the event's end date.
+                      If end date is unknown, enter a date when the advisory should be reviewed for relevance."
+                  >
+                    <HelpIcon className="helpIcon" />
+                  </LightTooltip>
                 </div>
                 <div className="col-12 col-lg-5 col-md-8">
                   <DatePicker
@@ -845,6 +852,12 @@ export default function AdvisoryForm({
               <div className="row">
                 <div className="col-12 col-lg-3 col-md-4 ad-label">
                   Expiry date
+                  <LightTooltip
+                    arrow
+                    title="The advisory will be automatically removed on this date."
+                  >
+                    <HelpIcon className="helpIcon" />
+                  </LightTooltip>
                 </div>
                 <div className="col-12 col-lg-5 col-md-8">
                   <DatePicker
