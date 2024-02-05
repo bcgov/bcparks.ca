@@ -1,6 +1,5 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -79,18 +78,18 @@ export default function Home({ data }) {
       <div className="park-search-container-wrapper">
         <Header mode="internal" content={menuContent} />
         <ScrollToTop />
-        <div id="main-content" className="park-search">
+        <div
+          id="main-content"
+          className="park-search"
+          style={{
+            backgroundImage: `url(${require("../images/home/search_bg.png").default})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center"
+          }}
+        >
           <div id="home-parks-search">
             <MainSearch hasCityNameSearch={true} />
-          </div>
-          <div className="home-page-search-bg">
-            <StaticImage
-              src="../images/home/search_bg.png"
-              placeholder="none"
-              loading="eager"
-              style={{ display: "block" }}
-              alt="Mount Robson Park"
-            />
           </div>
         </div>
       </div>
