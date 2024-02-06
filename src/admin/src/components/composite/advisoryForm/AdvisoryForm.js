@@ -17,8 +17,6 @@ import WarningIcon from "@material-ui/icons/Warning";
 import CloseIcon from "@material-ui/icons/Close";
 import HelpIcon from "@material-ui/icons/Help";
 import CheckIcon from "@material-ui/icons/Check";
-import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
-import ScheduleIcon from "@material-ui/icons/Schedule";
 import {
   validateOptionalNumber,
   validateRequiredText,
@@ -703,7 +701,6 @@ export default function AdvisoryForm({
                       validateOptionalDate(advisoryData.startDate);
                     }}
                   />
-                  <CalendarTodayIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     month dd, yyyy
                   </span>
@@ -722,7 +719,6 @@ export default function AdvisoryForm({
                     dateFormat="h:mm aa"
                     className={`${startDateError !== "" ? "error" : ""}`}
                   />
-                  <ScheduleIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     hh:mm aa
                   </span>
@@ -771,7 +767,6 @@ export default function AdvisoryForm({
                       validateOptionalDate(advisoryData.endDate);
                     }}
                   />
-                  <CalendarTodayIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     month dd, yyyy
                   </span>
@@ -798,7 +793,6 @@ export default function AdvisoryForm({
                     dateFormat="h:mm aa"
                     className={`${endDateError !== "" ? "error" : ""}`}
                   />
-                  <ScheduleIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     hh:mm aa
                   </span>
@@ -847,7 +841,6 @@ export default function AdvisoryForm({
                       validateRequiredDate(advisoryData.advisoryDate);
                     }}
                   />
-                  <CalendarTodayIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     month dd, yyyy
                   </span>
@@ -874,7 +867,6 @@ export default function AdvisoryForm({
                     dateFormat="h:mm aa"
                     className={`${advisoryDateError !== "" ? "error" : ""}`}
                   />
-                  <ScheduleIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     hh:mm aa
                   </span>
@@ -902,7 +894,6 @@ export default function AdvisoryForm({
                       validateOptionalDate(advisoryData.expiryDate);
                     }}
                   />
-                  <CalendarTodayIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     month dd, yyyy
                   </span>
@@ -929,7 +920,6 @@ export default function AdvisoryForm({
                     dateFormat="h:mm aa"
                     className={`${expiryDateError !== "" ? "error" : ""}`}
                   />
-                  <ScheduleIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     hh:mm aa
                   </span>
@@ -951,7 +941,6 @@ export default function AdvisoryForm({
                         validateOptionalDate(advisoryData.updatedDate);
                       }}
                     />
-                    <CalendarTodayIcon />
                     <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                       month dd, yyyy
                     </span>
@@ -970,7 +959,6 @@ export default function AdvisoryForm({
                       dateFormat="h:mm aa"
                       className={`${updatedDateError !== "" ? "error" : ""}`}
                     />
-                    <ScheduleIcon />
                     <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                       hh:mm aa
                     </span>

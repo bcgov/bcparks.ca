@@ -189,12 +189,9 @@
   margin-bottom: 16px;
 }
 
-.bcgov-datepicker-wrapper {
-  width: 100% !important;
-}
-
+.bcgov-datepicker-wrapper,
 .react-datepicker-wrapper {
-  width: calc(100% - 32px);
+  width: 100% !important;
 }
 
 .react-datepicker-wrapper + .MuiSvgIcon-root,
