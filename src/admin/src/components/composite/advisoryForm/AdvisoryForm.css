@@ -147,6 +147,7 @@
 .clear-url-btn {
   position: absolute !important;
   right: 8px;
+  background-color: white !important;
 }
 
 .clear-url-btn:hover, .clear-url-btn:active {
