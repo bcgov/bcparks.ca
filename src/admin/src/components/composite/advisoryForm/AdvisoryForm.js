@@ -214,17 +214,23 @@ export default function AdvisoryForm({
     { label: "No date", value: "no" }
   ];
 
+  const POSTING_DATE = 0;
+  const UPDATED_DATE = 1;
+  const START_DATE = 2;
+  const EVENT_DATE_RANGE = 3;
+  const NO_DATE = 4;
+
   const getDisplayedDate = () => {
     if (!displayStartDate && !displayEndDate && !displayAdvisoryDate && !displayUpdatedDate) {
-      return displayedDateOptions[4];
+      return displayedDateOptions[NO_DATE];
     } else if (!displayStartDate && !displayEndDate && displayAdvisoryDate && !displayUpdatedDate) {
-      return displayedDateOptions[0];
+      return displayedDateOptions[POSTING_DATE];
     } else if (!displayStartDate && !displayEndDate && !displayAdvisoryDate && displayUpdatedDate) {
-      return displayedDateOptions[1];
+      return displayedDateOptions[UPDATED_DATE];
     } else if (displayStartDate && !displayEndDate && !displayAdvisoryDate && !displayUpdatedDate) {
-      return displayedDateOptions[2];
+      return displayedDateOptions[START_DATE];
     } else if (displayStartDate && displayEndDate && !displayAdvisoryDate && !displayUpdatedDate) {
-      return displayedDateOptions[3];
+      return displayedDateOptions[EVENT_DATE_RANGE];
     }
   };
 
