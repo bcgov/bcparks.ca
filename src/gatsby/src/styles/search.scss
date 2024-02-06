@@ -118,20 +118,15 @@ h3.subtitle {
 }
 
 .park-search {
-  font-family: $globalFont;
   width: 100%;
-  position: relative;  
+  height: 550px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $globalFont;
 
   @media screen and (min-width: $lgBreakpoint) {
-    max-height: 636px;
-  }
-
-  @media screen and (max-width: $mediumBreakpoint) {
-    height: 550px;
-    img {
-      height: 550px !important;
-      object-fit: cover;
-    }
+    height: 600px;
   }
 
   img {
