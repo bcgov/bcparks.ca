@@ -1,24 +1,17 @@
+.ad-copy {
+  border-radius: 5px !important;
+  margin: 16px 0 !important;
+}
+
 .launchIcon,
 .ad-copy .MuiChip-icon {
   width: 20px !important;
   height: 20px !important;
   margin-top: -2px !important;
-  color: #234075 !important;
 }
 
-.MuiChip-root {
-  border-radius: 5px !important;
-}
-
-.launchIcon:hover,
-.ad-anchor:hover,
-.ad-copy:hover {
-  color: #0592d3 !important;
-}
-
-.ad-anchor {
-  text-decoration: none !important;
-  color: #234075 !important;
+.ad-copy .MuiChip-icon {
+  color: var(--color-blue) !important;
 }
 
 .ad-summary .row {

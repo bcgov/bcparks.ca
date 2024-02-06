@@ -24,6 +24,20 @@ export default function AdvisorySummaryView({
   const [showParks, setShowParks] = useState(false)
   const [showSites, setShowSites] = useState(false)
 
+  const getDisplayedDate = (advisory) => {
+    if (!advisory.isEffectiveDateDisplayed && !advisory.isEndDateDisplayed && !advisory.isAdvisoryDateDisplayed && !advisory.isUpdatedDateDisplayed) {
+      return "No date";
+    } else if (!advisory.isEffectiveDateDisplayed && !advisory.isEndDateDisplayed && advisory.isAdvisoryDateDisplayed && !advisory.isUpdatedDateDisplayed) {
+      return "Posting date";
+    } else if (!advisory.isEffectiveDateDisplayed && !advisory.isEndDateDisplayed && !advisory.isAdvisoryDateDisplayed && advisory.isUpdatedDateDisplayed) {
+      return "Updated date";
+    } else if (advisory.isEffectiveDateDisplayed && !advisory.isEndDateDisplayed && !advisory.isAdvisoryDateDisplayed && !advisory.isUpdatedDateDisplayed) {
+      return "Start date";
+    } else if (advisory.isEffectiveDateDisplayed && advisory.isEndDateDisplayed && !advisory.isAdvisoryDateDisplayed && !advisory.isUpdatedDateDisplayed) {
+      return "Event date range";
+    }
+  }
+
   return (
     <>
       <div className="row heading">
@@ -112,7 +126,7 @@ export default function AdvisorySummaryView({
           {advisory.protectedAreas.length > 5 &&
             <button
               type="button"
-              className="btn btn-link btn-boolean d-block my-2"
+              className="btn btn-link btn-boolean d-block mt-2"
               onClick={() => setShowParks(!showParks)}
             >
               {showParks ? "Hide" : "Show"} all parks affected
@@ -160,7 +174,7 @@ export default function AdvisorySummaryView({
             {advisory.sites.length > 5 &&
               <button
                 type="button"
-                className="btn btn-link btn-boolean d-block my-2"
+                className="btn btn-link btn-boolean d-block mt-2"
                 onClick={() => setShowSites(!showSites)}
               >
                 {showSites ? "Hide" : "Show"} all sites affected
@@ -289,14 +303,7 @@ export default function AdvisorySummaryView({
                         advisory.linkTypes.filter((t) => t.id === l.type)[0].type}
                       {l.type && " - "}
                       {l.title}
-                    </a>
-                    <a
-                      href={l?.file?.url ? l.file.url : l.url}
-                      rel="noreferrer"
-                      target="_blank"
-                      className="d-block ad-anchor"
-                    >
-                      Link <LaunchIcon className="launchIcon" />
+                      <LaunchIcon className="launchIcon" />
                     </a>
                   </>
                 )}
@@ -349,11 +356,7 @@ export default function AdvisorySummaryView({
           Displayed date
         </div>
         <div className="col-lg-7 col-md-8 col-sm-12">
-          {!advisory.isEffectiveDateDisplayed && !advisory.isEndDateDisplayed &&
-            (advisory.isAdvisoryDateDisplayed ? "Posting date" :
-              advisory.isUpdatedDateDisplayed ? "Updated date" :
-                "No dates")
-          }
+          {getDisplayedDate(advisory)}
         </div>
       </div>
       <div className="row heading">

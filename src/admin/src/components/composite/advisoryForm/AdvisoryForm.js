@@ -17,8 +17,6 @@ import WarningIcon from "@material-ui/icons/Warning";
 import CloseIcon from "@material-ui/icons/Close";
 import HelpIcon from "@material-ui/icons/Help";
 import CheckIcon from "@material-ui/icons/Check";
-import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
-import ScheduleIcon from "@material-ui/icons/Schedule";
 import {
   validateOptionalNumber,
   validateRequiredText,
@@ -208,14 +206,33 @@ export default function AdvisoryForm({
     required: false,
   };
 
-  const displayedDateOptions = (mode === "update") ? [
+  const displayedDateOptions = [
     { label: "Posting date", value: "posting" },
-    ({ label: "Updated date", value: "updated" }),
-    { label: "No dates", value: "no" }
-  ] : [
-    { label: "Posting date", value: "posting" },
-    { label: "No dates", value: "no" }
+    ...(mode === "update" ? [{ label: "Updated date", value: "updated" }] : []),
+    { label: "Start date", value: "start" },
+    { label: "Event date range", value: "event" },
+    { label: "No date", value: "no" }
   ];
+
+  const POSTING_DATE = 0;
+  const UPDATED_DATE = 1;
+  const START_DATE = 2;
+  const EVENT_DATE_RANGE = 3;
+  const NO_DATE = 4;
+
+  const getDisplayedDate = () => {
+    if (!displayStartDate && !displayEndDate && !displayAdvisoryDate && !displayUpdatedDate) {
+      return displayedDateOptions[NO_DATE];
+    } else if (!displayStartDate && !displayEndDate && displayAdvisoryDate && !displayUpdatedDate) {
+      return displayedDateOptions[POSTING_DATE];
+    } else if (!displayStartDate && !displayEndDate && !displayAdvisoryDate && displayUpdatedDate) {
+      return displayedDateOptions[UPDATED_DATE];
+    } else if (displayStartDate && !displayEndDate && !displayAdvisoryDate && !displayUpdatedDate) {
+      return displayedDateOptions[START_DATE];
+    } else if (displayStartDate && displayEndDate && !displayAdvisoryDate && !displayUpdatedDate) {
+      return displayedDateOptions[EVENT_DATE_RANGE];
+    }
+  };
 
   // Moment Intervals ref: https://momentjscom.readthedocs.io/en/latest/moment/03-manipulating/01-add/
   const intervalUnits = [
@@ -237,6 +254,18 @@ export default function AdvisoryForm({
       setDisplayUpdatedDate(true)
       setDisplayStartDate(false)
       setDisplayEndDate(false)
+    }
+    if (selectedDisplayedDateOption === "start") {
+      setDisplayAdvisoryDate(false)
+      setDisplayUpdatedDate(false)
+      setDisplayStartDate(true)
+      setDisplayEndDate(false)
+    }
+    if (selectedDisplayedDateOption === "event") {
+      setDisplayAdvisoryDate(false)
+      setDisplayUpdatedDate(false)
+      setDisplayStartDate(true)
+      setDisplayEndDate(true)
     }
     if (selectedDisplayedDateOption === "no") {
       setDisplayAdvisoryDate(false)
@@ -678,7 +707,6 @@ export default function AdvisoryForm({
                       validateOptionalDate(advisoryData.startDate);
                     }}
                   />
-                  <CalendarTodayIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     month dd, yyyy
                   </span>
@@ -697,7 +725,6 @@ export default function AdvisoryForm({
                     dateFormat="h:mm aa"
                     className={`${startDateError !== "" ? "error" : ""}`}
                   />
-                  <ScheduleIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     hh:mm aa
                   </span>
@@ -746,7 +773,6 @@ export default function AdvisoryForm({
                       validateOptionalDate(advisoryData.endDate);
                     }}
                   />
-                  <CalendarTodayIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     month dd, yyyy
                   </span>
@@ -773,7 +799,6 @@ export default function AdvisoryForm({
                     dateFormat="h:mm aa"
                     className={`${endDateError !== "" ? "error" : ""}`}
                   />
-                  <ScheduleIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     hh:mm aa
                   </span>
@@ -789,12 +814,7 @@ export default function AdvisoryForm({
           <div className="col-lg-7 col-md-8 col-sm-12">
             <Select
               options={displayedDateOptions}
-              defaultValue={
-                !displayStartDate && !displayEndDate &&
-                (displayAdvisoryDate ? displayedDateOptions[0] :
-                  displayUpdatedDate ? displayedDateOptions[1] :
-                    displayedDateOptions[2])
-              }
+              defaultValue={getDisplayedDate()}
               onChange={(e) => {
                 setSelectedDisplayedDateOption(e.value);
               }}
@@ -827,7 +847,6 @@ export default function AdvisoryForm({
                       validateRequiredDate(advisoryData.advisoryDate);
                     }}
                   />
-                  <CalendarTodayIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     month dd, yyyy
                   </span>
@@ -854,7 +873,6 @@ export default function AdvisoryForm({
                     dateFormat="h:mm aa"
                     className={`${advisoryDateError !== "" ? "error" : ""}`}
                   />
-                  <ScheduleIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     hh:mm aa
                   </span>
@@ -882,7 +900,6 @@ export default function AdvisoryForm({
                       validateOptionalDate(advisoryData.expiryDate);
                     }}
                   />
-                  <CalendarTodayIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     month dd, yyyy
                   </span>
@@ -909,7 +926,6 @@ export default function AdvisoryForm({
                     dateFormat="h:mm aa"
                     className={`${expiryDateError !== "" ? "error" : ""}`}
                   />
-                  <ScheduleIcon />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                     hh:mm aa
                   </span>
@@ -931,7 +947,6 @@ export default function AdvisoryForm({
                         validateOptionalDate(advisoryData.updatedDate);
                       }}
                     />
-                    <CalendarTodayIcon />
                     <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                       month dd, yyyy
                     </span>
@@ -950,7 +965,6 @@ export default function AdvisoryForm({
                       dateFormat="h:mm aa"
                       className={`${updatedDateError !== "" ? "error" : ""}`}
                     />
-                    <ScheduleIcon />
                     <span className="MuiFormHelperText-root MuiFormHelperText-contained">
                       hh:mm aa
                     </span>
