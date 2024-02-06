@@ -23,11 +23,19 @@ main {
   color: var(--color-grey) !important;
 }
 
+h1, h2 {
+  color: var(--color-blue);
+}
+
+a {
+  color: var(--color-med-blue) !important;
+}
+
+a:hover {
+  color: var(--color-blue) !important;
+}
+
 .page-loader {
   padding-top: 20% !important;
   text-align: center !important;
-}
-
-h1, h2 {
-  color: var(--color-blue);
 }

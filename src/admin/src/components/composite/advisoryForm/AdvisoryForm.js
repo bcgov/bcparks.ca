@@ -208,14 +208,27 @@ export default function AdvisoryForm({
     required: false,
   };
 
-  const displayedDateOptions = (mode === "update") ? [
+  const displayedDateOptions = [
     { label: "Posting date", value: "posting" },
-    ({ label: "Updated date", value: "updated" }),
-    { label: "No dates", value: "no" }
-  ] : [
-    { label: "Posting date", value: "posting" },
-    { label: "No dates", value: "no" }
+    ...(mode === "update" ? [{ label: "Updated date", value: "updated" }] : []),
+    { label: "Start date", value: "start" },
+    { label: "Event date range", value: "event" },
+    { label: "No date", value: "no" }
   ];
+
+  const getDisplayedDate = () => {
+    if (!displayStartDate && !displayEndDate && !displayAdvisoryDate && !displayUpdatedDate) {
+      return displayedDateOptions[4];
+    } else if (!displayStartDate && !displayEndDate && displayAdvisoryDate && !displayUpdatedDate) {
+      return displayedDateOptions[0];
+    } else if (!displayStartDate && !displayEndDate && !displayAdvisoryDate && displayUpdatedDate) {
+      return displayedDateOptions[1];
+    } else if (displayStartDate && !displayEndDate && !displayAdvisoryDate && !displayUpdatedDate) {
+      return displayedDateOptions[2];
+    } else if (displayStartDate && displayEndDate && !displayAdvisoryDate && !displayUpdatedDate) {
+      return displayedDateOptions[3];
+    }
+  };
 
   // Moment Intervals ref: https://momentjscom.readthedocs.io/en/latest/moment/03-manipulating/01-add/
   const intervalUnits = [
@@ -237,6 +250,18 @@ export default function AdvisoryForm({
       setDisplayUpdatedDate(true)
       setDisplayStartDate(false)
       setDisplayEndDate(false)
+    }
+    if (selectedDisplayedDateOption === "start") {
+      setDisplayAdvisoryDate(false)
+      setDisplayUpdatedDate(false)
+      setDisplayStartDate(true)
+      setDisplayEndDate(false)
+    }
+    if (selectedDisplayedDateOption === "event") {
+      setDisplayAdvisoryDate(false)
+      setDisplayUpdatedDate(false)
+      setDisplayStartDate(true)
+      setDisplayEndDate(true)
     }
     if (selectedDisplayedDateOption === "no") {
       setDisplayAdvisoryDate(false)
@@ -789,12 +814,7 @@ export default function AdvisoryForm({
           <div className="col-lg-7 col-md-8 col-sm-12">
             <Select
               options={displayedDateOptions}
-              defaultValue={
-                !displayStartDate && !displayEndDate &&
-                (displayAdvisoryDate ? displayedDateOptions[0] :
-                  displayUpdatedDate ? displayedDateOptions[1] :
-                    displayedDateOptions[2])
-              }
+              defaultValue={getDisplayedDate()}
               onChange={(e) => {
                 setSelectedDisplayedDateOption(e.value);
               }}
