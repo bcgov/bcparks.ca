@@ -291,15 +291,11 @@
 /* ------------- SEARCH ------------ */
 
 #home-parks-search {
-  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  position: absolute;
-  top: calc(50% - 160px);
-  left: 16px;
-  @media screen and (min-width: $lgBreakpoint) {
-    top: calc(50% - 90px);
-    left: calc(50% - 442px);
-  }
+  z-index: 2;
   .parks-search-wrapper {
     min-height: 180px;
     width: calc(100% - 32px);
