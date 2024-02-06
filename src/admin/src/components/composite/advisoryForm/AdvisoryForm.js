@@ -135,7 +135,7 @@ export default function AdvisoryForm({
   const [updatedDateError, setUpdatedDateError] = useState("");
   const [submittedByError, setSubmittedByError] = useState("");
   const [listingRankError, setListingRankError] = useState("");
-  const [selectedDisplayedDateOption, setSelectedDisplayedDateOption] = useState("posting");
+  const [selectedDisplayedDateOption, setSelectedDisplayedDateOption] = useState("");
 
   const advisoryData = {
     listingRank: { value: listingRank, setError: setListingRankError, text: "listing rank" },
