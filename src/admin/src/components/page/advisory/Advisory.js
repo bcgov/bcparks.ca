@@ -85,6 +85,7 @@ export default function Advisory({
   const [displayUpdatedDate, setDisplayUpdatedDate] = useState(false);
   const [notes, setNotes] = useState("");
   const [submittedBy, setSubmittedBy] = useState("");
+  const [submitter, setSubmitter] = useState("")
   const [listingRank, setListingRank] = useState(0);
   const [toError, setToError] = useState(false);
   const [toDashboard, setToDashboard] = useState(false);
@@ -521,7 +522,7 @@ export default function Advisory({
             }
             setIsLoadingPage(false);
           }
-          setSubmittedBy(keycloak.tokenParsed.name);
+          setSubmitter(keycloak.tokenParsed.name);
           setIsLoadingData(false);
         })
         .catch(() => {
@@ -770,7 +771,7 @@ export default function Advisory({
           isSafetyRelated: isSafetyRelated,
           listingRank: parseInt(listingRank),
           note: notes,
-          submittedBy: submittedBy,
+          submittedBy: submittedBy ? submittedBy : submitter,
           createdDate: moment().toISOString(),
           createdBy: keycloak.tokenParsed.name,
           advisoryDate: advisoryDate,
