@@ -550,7 +550,7 @@ export default function AdvisoryForm({
                       onChange={(e) => {
                         updateLink(idx, "type", e.value);
                       }}
-                      value={linkTypes.filter((o) => o.value === l.type)}
+                      value={linkTypes.filter((o) => o.label === l.type)}
                       className="ad-link-select bcgov-select"
                       placeholder="Link or document type"
                     />
