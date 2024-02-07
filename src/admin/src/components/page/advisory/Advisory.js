@@ -35,6 +35,7 @@ import { hasRole } from "../../../utils/AuthenticationUtil";
 import { labelCompare, camelCaseToSentenceCase } from "../../../utils/AppUtil";
 import config from "../../../utils/config";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import qs from "qs";
 
 export default function Advisory({
   mode,
@@ -110,6 +111,27 @@ export default function Advisory({
 
   const { id } = useParams();
 
+  const query = qs.stringify({
+    publicationState: "preview",
+    populate: {
+      accessStatus: { populate: "*" },
+      advisoryStatus: { populate: "*" },
+      eventType: { populate: "*" },
+      fireCentres: { fields: ["id"] },
+      fireZones: { fields: ["id"] },
+      links: { populate: { type: { fields: ["type"] } } },
+      urgency: { populate: "*" },
+      managementAreas: { fields: ["id"] },
+      protectedAreas: { fields: ["id"] },
+      regions: { fields: ["id"] },
+      sections: { fields: ["id"]},
+      sites: { fields: ["id"] },
+      standardMessages: { populate: "*" },
+    },
+  }, {
+    encodeValuesOnly: true,
+  });
+
   useEffect(() => {
     if (initialized && keycloak) {
       Promise.resolve(getBusinessHours(cmsData, setCmsData)).then((res) => {
@@ -137,7 +159,7 @@ export default function Advisory({
         setAdvisoryId(id);
         cmsAxios
           .get(
-            `public-advisory-audits/${id}?publicationState=preview&populate=*`,
+            `public-advisory-audits/${id}?${query}`,
             {
               headers: { Authorization: `Bearer ${keycloak.token}` }
             }
@@ -293,7 +315,7 @@ export default function Advisory({
                 linksRef.current = [
                   ...linksRef.current,
                   {
-                    type: l.type,
+                    type: l.type.type,
                     title: l.title || "",
                     url: l.url || "",
                     id: l.id,
@@ -328,6 +350,7 @@ export default function Advisory({
     }
   }, [
     id,
+    query,
     mode,
     setHeadline,
     setDescription,
