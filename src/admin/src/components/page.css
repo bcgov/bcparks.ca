@@ -173,6 +173,10 @@
   padding-right: 0 !important;
 }
 
+.bcgov-input .MuiOutlinedInput-adornedEnd input {
+  padding-right: 32px !important;
+}
+
 .bcgov-textarea {
   width: 100%;
   height: auto;
