@@ -590,7 +590,7 @@ export default function AdvisoryForm({
                     />
                   </div>
                 </div>
-                {(l.url || l.format === "url") && (
+                {l.format !== "file" ? (
                   <div className="row">
                     <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
                       URL
@@ -621,8 +621,7 @@ export default function AdvisoryForm({
                       />
                     </div>
                   </div>
-                )}
-                {l.format === "file" && (
+                ) : (
                   <div className="row">
                     <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
                       File
