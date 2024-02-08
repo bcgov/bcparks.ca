@@ -538,10 +538,10 @@ export default function AdvisoryDashboard({
     <>
       <div className="container-fluid">
         <div className="row ad-row">
-          <div className="col-lg-6 col-md-4 col-sm-12 ad-label">
+          <div className="col-lg-6 col-md-4 col-sm-12">
             <h2 className="float-left">Public Advisories</h2>
           </div>
-          <div className="col-lg-6 col-md-4 col-sm-12 ad-label">
+          <div className="col-lg-6 col-md-4 col-sm-12 text-right">
             <Button
               label="Create a new Advisory"
               styling="bcgov-normal-yellow btn"

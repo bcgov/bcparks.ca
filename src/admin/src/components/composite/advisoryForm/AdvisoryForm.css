@@ -5,7 +5,11 @@
 
 .ad-label {
   text-align: right;
-  color: var(--color-grey) !important;
+  padding-top: 8px;
+}
+
+.ad-summary-label {
+  text-align: right;
 }
 
 .urgency-btn-group button,
@@ -178,7 +182,8 @@
 }
 
 @media (max-width: 767.98px) {
-  .ad-label {
+  .ad-label,
+  .ad-summary-label {
     text-align: left !important;
   }
   .ad-flex,

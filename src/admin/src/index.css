@@ -35,6 +35,11 @@ a:hover {
   color: var(--color-blue) !important;
 }
 
+a:focus-visible {
+  outline: 2px auto var(--color-med-blue) !important;
+  outline-offset: 2px !important;
+}
+
 .page-loader {
   padding-top: 20% !important;
   text-align: center !important;
