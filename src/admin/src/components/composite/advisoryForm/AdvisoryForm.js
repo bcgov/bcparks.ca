@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import "./AdvisoryForm.css";
 import { Button } from "../../shared/button/Button";
@@ -241,6 +241,17 @@ export default function AdvisoryForm({
     { label: "Weeks", value: "w" },
     { label: "Months", value: "M" },
   ];
+
+  // Ref for the hidden file input
+  const fileInputRef = useRef(null);
+  const triggerFileSelect = (file) => {
+    if (file) {
+      return;
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 
   useEffect(() => {
     if (selectedDisplayedDateOption === "posting") {
@@ -534,7 +545,7 @@ export default function AdvisoryForm({
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-sm-12 ad-label pt-1">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
             Add supporting information
           </div>
           <div className="col-lg-7 col-md-8 col-sm-12">
@@ -627,10 +638,36 @@ export default function AdvisoryForm({
                       File
                     </div>
                     <div className="col-12 col-lg-9 col-md-8 ad-flex">
+                      <input
+                        hidden
+                        ref={fileInputRef}
+                        type="file"
+                        accept=".jpg,.gif,.png,.gif,.pdf"
+                        onChange={(e) => {
+                          handleFileCapture(
+                            e.target.files,
+                            linksRef.current.length > 0 ? linksRef.current.length - 1 : 0
+                          );
+                        }}
+                      />
                       <TextField
                         value={l.file ? l.file.name : ""}
                         className="bcgov-input"
                         variant="outlined"
+                        onClick={() => triggerFileSelect(l.file)}
+                        InputProps={{
+                          endAdornment: (
+                            <IconButton
+                              onClick={(e) => {
+                                e.stopPropagation(); 
+                                updateLink(idx, "file", "")
+                              }}
+                              className="clear-url-btn"
+                            >
+                              <CloseIcon />
+                            </IconButton>
+                          )
+                        }}
                       />
                     </div>
                   </div>
@@ -686,7 +723,7 @@ export default function AdvisoryForm({
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label pt-4">
             Event dates
           </div>
           <div className="col-lg-7 col-md-8 col-sm-12">
@@ -826,7 +863,7 @@ export default function AdvisoryForm({
           Internal details
         </div>
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label pt-4">
             Post dates
           </div>
           <div className="col-lg-7 col-md-8 col-sm-12">

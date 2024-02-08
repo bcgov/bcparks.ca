@@ -5,8 +5,6 @@ import LaunchIcon from "@material-ui/icons/Launch";
 import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
 import Chip from "@material-ui/core/Chip";
 import moment from "moment";
-import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
-import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
 import AdvisoryHistory from "../advisoryHistory/AdvisoryHistory";
 import config from "../../../utils/config";
 
@@ -45,7 +43,7 @@ export default function AdvisorySummaryView({
       </div>
       {advisory.fireCentres.length > 0 && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
             Fire Centre(s)
           </div>
           <div className="col-lg-7 col-md-8 col-12">
@@ -57,7 +55,7 @@ export default function AdvisorySummaryView({
       )}
       {advisory.fireZones.length > 0 && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
             Fire Zone(s)
           </div>
           <div className="col-lg-7 col-md-8 col-12">
@@ -69,7 +67,7 @@ export default function AdvisorySummaryView({
       )}
       {advisory.regions.length > 0 && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
             Region(s)
           </div>
           <div className="col-lg-7 col-md-8 col-12">
@@ -81,7 +79,7 @@ export default function AdvisorySummaryView({
       )}
       {advisory.sections.length > 0 && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
             Section(s)
           </div>
           <div className="col-lg-7 col-md-8 col-12">
@@ -93,7 +91,7 @@ export default function AdvisorySummaryView({
       )}
       {advisory.managementAreas.length > 0 && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
             Management Area(s)
           </div>
           <div className="col-lg-7 col-md-8 col-12">
@@ -104,12 +102,12 @@ export default function AdvisorySummaryView({
         </div>
       )}
       <div className="row">
-        <div className="col-lg-3 col-md-4 col-12 ad-label">
+        <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
           Park(s)
         </div>
         <div className="col-lg-7 col-md-8 col-12">
           {(showParks ? advisory.protectedAreas : advisory.protectedAreas.slice(0, 5)).map((p) => (
-            <div key={p.id}>
+            <div key={p.id} className="mb-3">
               {p.url && (
                 <a
                   href={p.url.replace("https://bcparks.ca", publicUrl)}
@@ -117,7 +115,7 @@ export default function AdvisorySummaryView({
                   target="_blank"
                   className="ad-anchor"
                 >
-                  {p.protectedAreaName} <LaunchIcon className="launchIcon" />
+                  {p.protectedAreaName}<LaunchIcon className="launchIcon" />
                 </a>
               )}
               {!p.url && p.protectedAreaName}
@@ -126,7 +124,7 @@ export default function AdvisorySummaryView({
           {advisory.protectedAreas.length > 5 &&
             <button
               type="button"
-              className="btn btn-link btn-boolean d-block mt-2"
+              className="btn btn-link btn-boolean d-block mt-4"
               onClick={() => setShowParks(!showParks)}
             >
               {showParks ? "Hide" : "Show"} all parks affected
@@ -152,12 +150,12 @@ export default function AdvisorySummaryView({
       </div>
       {advisory.sites.length > 0 && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
             Site(s)
           </div>
           <div className="col-lg-7 col-md-8 col-12">
             {(showSites ? advisory.sites : advisory.sites.slice(0, 5)).map((s) => (
-              <div key={s.id}>
+              <div key={s.id} className="mb-3">
                 {s.url && (
                   <a
                     href={s.url.replace("https://bcparks.ca", publicUrl)}
@@ -165,7 +163,7 @@ export default function AdvisorySummaryView({
                     target="_blank"
                     className="ad-anchor"
                   >
-                    {s.siteName} <LaunchIcon className="launchIcon" />
+                    {s.siteName}<LaunchIcon className="launchIcon" />
                   </a>
                 )}
                 {!s.url && s.siteName}
@@ -174,7 +172,7 @@ export default function AdvisorySummaryView({
             {advisory.sites.length > 5 &&
               <button
                 type="button"
-                className="btn btn-link btn-boolean d-block mt-2"
+                className="btn btn-link btn-boolean d-block mt-4"
                 onClick={() => setShowSites(!showSites)}
               >
                 {showSites ? "Hide" : "Show"} all sites affected
@@ -203,7 +201,7 @@ export default function AdvisorySummaryView({
         Advisory content
       </div>
       <div className="row">
-        <div className="col-lg-3 col-md-4 col-12 ad-label">Headline</div>
+        <div className="col-lg-3 col-md-4 col-12 ad-summary-label">Headline</div>
         <div
           className="col-lg-7 col-md-8 col-12"
           dangerouslySetInnerHTML={{ __html: advisory.title }}>
@@ -211,7 +209,7 @@ export default function AdvisorySummaryView({
       </div>
       {advisory.eventType && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">Event type</div>
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">Event type</div>
           <div className="col-lg-7 col-md-8 col-12">
             {advisory.eventType.eventType}
           </div>
@@ -219,7 +217,7 @@ export default function AdvisorySummaryView({
       )}
       {advisory.urgency && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">Urgency level</div>
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">Urgency level</div>
           <div className="col-lg-7 col-md-8 col-12">
             {advisory.urgency.urgency}
           </div>
@@ -227,13 +225,13 @@ export default function AdvisorySummaryView({
       )}
       {advisory.listingRank !== null && advisory.listingRank >= 0 && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">Listing Rank</div>
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">Listing Rank</div>
           <div className="col-lg-7 col-md-8 col-12">{advisory.listingRank}</div>
         </div>
       )}
       {advisory.accessStatus && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
             Park status
           </div>
           <div className="col-lg-7 col-md-8 col-12">
@@ -245,7 +243,7 @@ export default function AdvisorySummaryView({
         advisory.standardMessages &&
         advisory.standardMessages.length > 0 && (
           <div className="row">
-            <div className="col-lg-3 col-md-4 col-12 ad-label">
+            <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
               Standard message(s)
             </div>
             <div className="col-lg-7 col-md-8 col-12">
@@ -259,7 +257,7 @@ export default function AdvisorySummaryView({
         )}
       {advisory.description && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">Description</div>
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">Description</div>
           <div
             className="col-lg-7 col-md-8 col-12"
             dangerouslySetInnerHTML={{ __html: advisory.description }}>
@@ -270,7 +268,7 @@ export default function AdvisorySummaryView({
         advisory.standardMessages &&
         advisory.standardMessages.length > 0 && (
           <div className="row">
-            <div className="col-lg-3 col-md-4 col-12 ad-label">
+            <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
               Standard message preview
             </div>
             <div className="col-lg-7 col-md-8 col-12">
@@ -285,7 +283,7 @@ export default function AdvisorySummaryView({
         )}
       {advisory.links.length > 0 && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
             Links and documents
           </div>
           <div className="col-lg-7 col-md-8 col-12">
@@ -314,45 +312,30 @@ export default function AdvisorySummaryView({
       )}
       {advisory.effectiveDate && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">Start date</div>
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">Start date</div>
           <div className="col-lg-7 col-md-8 col-12 ad-flex">
             {moment(advisory.effectiveDate).format("MMMM DD, yyyy hh:mm A")}
-            <div className="ml15">
-              {(advisory.isEffectiveDateDisplayed && (
-                <VisibilityOutlinedIcon className="visibilityIcon" />
-              )) || <VisibilityOffOutlinedIcon className="visibilityIcon" />}
-            </div>
           </div>
         </div>
       )}
       {advisory.endDate && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">End date</div>
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">End date</div>
           <div className="col-lg-7 col-md-8 col-12 ad-flex">
             {moment(advisory.endDate).format("MMMM DD, yyyy hh:mm A")}
-            <div className="ml15">
-              {(advisory.isEndDateDisplayed && (
-                <VisibilityOutlinedIcon className="visibilityIcon" />
-              )) || <VisibilityOffOutlinedIcon className="visibilityIcon" />}
-            </div>
           </div>
         </div>
       )}
       {advisory.updatedDate && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">Updated date</div>
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">Updated date</div>
           <div className="col-lg-7 col-md-8 col-12 ad-flex">
             {moment(advisory.updatedDate).format("MMMM DD, yyyy hh:mm A")}
-            <div className="ml15">
-              {(advisory.isUpdatedDateDisplayed && (
-                <VisibilityOutlinedIcon className="visibilityIcon" />
-              )) || <VisibilityOffOutlinedIcon className="visibilityIcon" />}
-            </div>
           </div>
         </div>
       )}
       <div className="row">
-        <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+        <div className="col-lg-3 col-md-4 col-sm-12 ad-summary-label">
           Displayed date
         </div>
         <div className="col-lg-7 col-md-8 col-sm-12">
@@ -364,20 +347,15 @@ export default function AdvisorySummaryView({
       </div>
       {advisory.advisoryDate && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">Posting date</div>
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">Posting date</div>
           <div className="col-lg-7 col-md-8 col-12 ad-flex">
             {moment(advisory.advisoryDate).format("MMMM DD, yyyy hh:mm A")}
-            <div className="ml15">
-              {(advisory.isAdvisoryDateDisplayed && (
-                <VisibilityOutlinedIcon className="visibilityIcon" />
-              )) || <VisibilityOffOutlinedIcon className="visibilityIcon" />}
-            </div>
           </div>
         </div>
       )}
       {advisory.expiryDate && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">Expiry date</div>
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">Expiry date</div>
           <div className="col-lg-7 col-md-8 col-12 ad-flex">
             {moment(advisory.expiryDate).format("MMMM DD, yyyy hh:mm A")}
           </div>
@@ -385,7 +363,7 @@ export default function AdvisorySummaryView({
       )}
       {advisory.advisoryStatus && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
             Advisory status
           </div>
           <div className="col-lg-7 col-md-8 col-12">
@@ -394,7 +372,7 @@ export default function AdvisorySummaryView({
         </div>
       )}
       <div className="row">
-        <div className="col-lg-3 col-md-4 col-12 ad-label">
+        <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
           Requested by
         </div>
         <div className="col-lg-7 col-md-8 col-12">
@@ -402,7 +380,7 @@ export default function AdvisorySummaryView({
         </div>
       </div>
       <div className="row">
-        <div className="col-lg-3 col-md-4 col-12 ad-label">
+        <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
           Public safety related
         </div>
         <div className="col-lg-7 col-md-8 col-12">
@@ -411,7 +389,7 @@ export default function AdvisorySummaryView({
       </div>
       {advisory.note && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-label">
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
             Internal notes
           </div>
           <div
