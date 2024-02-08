@@ -107,7 +107,7 @@ export default function AdvisorySummaryView({
         </div>
         <div className="col-lg-7 col-md-8 col-12">
           {(showParks ? advisory.protectedAreas : advisory.protectedAreas.slice(0, 5)).map((p) => (
-            <div key={p.id}>
+            <div key={p.id} className="mb-3">
               {p.url && (
                 <a
                   href={p.url.replace("https://bcparks.ca", publicUrl)}
@@ -115,7 +115,7 @@ export default function AdvisorySummaryView({
                   target="_blank"
                   className="ad-anchor"
                 >
-                  {p.protectedAreaName} <LaunchIcon className="launchIcon" />
+                  {p.protectedAreaName}<LaunchIcon className="launchIcon" />
                 </a>
               )}
               {!p.url && p.protectedAreaName}
@@ -124,7 +124,7 @@ export default function AdvisorySummaryView({
           {advisory.protectedAreas.length > 5 &&
             <button
               type="button"
-              className="btn btn-link btn-boolean d-block mt-2"
+              className="btn btn-link btn-boolean d-block mt-4"
               onClick={() => setShowParks(!showParks)}
             >
               {showParks ? "Hide" : "Show"} all parks affected
@@ -155,7 +155,7 @@ export default function AdvisorySummaryView({
           </div>
           <div className="col-lg-7 col-md-8 col-12">
             {(showSites ? advisory.sites : advisory.sites.slice(0, 5)).map((s) => (
-              <div key={s.id}>
+              <div key={s.id} className="mb-3">
                 {s.url && (
                   <a
                     href={s.url.replace("https://bcparks.ca", publicUrl)}
@@ -163,7 +163,7 @@ export default function AdvisorySummaryView({
                     target="_blank"
                     className="ad-anchor"
                   >
-                    {s.siteName} <LaunchIcon className="launchIcon" />
+                    {s.siteName}<LaunchIcon className="launchIcon" />
                   </a>
                 )}
                 {!s.url && s.siteName}
@@ -172,7 +172,7 @@ export default function AdvisorySummaryView({
             {advisory.sites.length > 5 &&
               <button
                 type="button"
-                className="btn btn-link btn-boolean d-block mt-2"
+                className="btn btn-link btn-boolean d-block mt-4"
                 onClick={() => setShowSites(!showSites)}
               >
                 {showSites ? "Hide" : "Show"} all sites affected
