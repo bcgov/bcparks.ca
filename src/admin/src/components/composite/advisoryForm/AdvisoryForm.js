@@ -659,7 +659,7 @@ export default function AdvisoryForm({
                           endAdornment: (
                             <IconButton
                               onClick={(e) => {
-                                e.stopPropagation(); 
+                                e.stopPropagation();
                                 updateLink(idx, "file", "")
                               }}
                               className="clear-url-btn"
@@ -738,6 +738,7 @@ export default function AdvisoryForm({
                     selected={startDate}
                     onChange={(date) => { setStartDate(date) }}
                     dateFormat="MMMM d, yyyy"
+                    maxDate={endDate}
                     className={`${startDateError !== "" ? "error" : ""}`}
                     onBlur={() => {
                       validateOptionalDate(advisoryData.startDate);
@@ -774,7 +775,7 @@ export default function AdvisoryForm({
                   <TextField
                     type="number"
                     variant="outlined"
-                    InputProps={{ inputProps: { min: 0 } }}
+                    inputProps={{ min: 0, max: 24 }}
                     onChange={handleDurationIntervalChange}
                     className="ad-interval-input bcgov-input"
                   />
