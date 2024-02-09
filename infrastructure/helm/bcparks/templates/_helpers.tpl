@@ -113,6 +113,6 @@ https://{{ .Release.Name }}-{{ .Values.public.componentName }}-{{ .Release.Names
 {{- end -}}
 
 {{ define "bcparks_elasticmanager_fullname" -}}
-{{ .Release.Name }}-{{ .Values.elasticmanager.componentName }}
+{{ .Release.Name }}-{{ .Values.scheduler.componentName }}
 {{- end -}}
 

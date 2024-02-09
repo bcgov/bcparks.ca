@@ -3,14 +3,14 @@ apiVersion: apps/v1
 metadata:
   name: {{ template "bcparks_elasticmanager_fullname" . }}
   labels:
-    component: {{ .Values.elasticmanager.componentName }}
+    component: {{ .Values.scheduler.componentName }}
     release: {{ .Release.Name }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     heritage: {{ .Release.Service }}
 spec:
   selector:
     matchLabels:
-      component: {{ .Values.elasticmanager.componentName }}
+      component: {{ .Values.scheduler.componentName }}
       release: {{ .Release.Name }}
   replicas: 1
   strategy:
@@ -21,15 +21,15 @@ spec:
   template:
     metadata:
       labels:
-        component: {{ .Values.elasticmanager.componentName }}
+        component: {{ .Values.scheduler.componentName }}
         release: {{ .Release.Name }}
     spec:
       containers:
-        - name: {{ .Values.elasticmanager.componentName }}
+        - name: {{ .Values.scheduler.componentName }}
           resources:
-{{ toYaml .Values.elasticmanager.resources | indent 12 }}
-          image: {{ .Values.images.elasticmanager.name }}:{{ .Values.images.elasticmanager.tag }}
-          imagePullPolicy: {{ .Values.elasticmanager.imagePullPolicy }}
+{{ toYaml .Values.scheduler.resources | indent 12 }}
+          image: {{ .Values.images.scheduler.name }}:{{ .Values.images.scheduler.tag }}
+          imagePullPolicy: {{ .Values.scheduler.imagePullPolicy }}
           envFrom:
             - secretRef:
                 name: {{ template "bcparks_elasticsearch_secret" . }}
@@ -46,9 +46,9 @@ spec:
             - name: BCPARKS_ENVIRONMENT
               value: {{ .Values.cms.env.environment }}
             - name: BATCH_SIZE
-              value: {{ .Values.elasticmanager.env.batchSize | quote }}
+              value: {{ .Values.scheduler.env.batchSize | quote }}
             - name: GEOSHAPE_URL
-              value: {{ .Values.elasticmanager.env.shapeDataApi | quote }}
+              value: {{ .Values.scheduler.env.shapeDataApi | quote }}
           livenessProbe:
             exec:
               command:

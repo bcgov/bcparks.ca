@@ -25,7 +25,7 @@ jobs:
           oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi-develop:latest strapi-develop:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag maintenance-develop:latest maintenance-develop:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag etl-develop:latest etl-develop:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag elasticmanager-develop:latest elasticmanager-develop:${{ env.ENVIRONMENT }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag scheduler-develop:latest scheduler-develop:${{ env.ENVIRONMENT }}
 
       - name: Trigger Gatsby static build workflow
         uses: peter-evans/repository-dispatch@v2
@@ -39,4 +39,4 @@ jobs:
           oc -n ${{ env.NAMESPACE }} rollout restart deployment develop-admin
           oc -n ${{ env.NAMESPACE }} rollout restart deployment develop-cms
           oc -n ${{ env.NAMESPACE }} rollout restart deployment develop-maintenance
-          oc -n ${{ env.NAMESPACE }} rollout restart deployment develop-elasticmanager
+          oc -n ${{ env.NAMESPACE }} rollout restart deployment develop-scheduler

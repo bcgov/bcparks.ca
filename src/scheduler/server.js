@@ -26,9 +26,9 @@ const { populateGeoShapes } = require('./scripts/populateGeoShapes');
   // (use shell command to prevent file locking)
   exec('date +%s > lastrun.txt')
 
-  // run every 2 minutes on the :00
-  schedule.scheduleJob("index-parks", "*/1 * * * *", async () => {
-    const runningJobs = schedule.scheduledJobs["index-parks"].running;
+  // run every minute
+  schedule.scheduleJob("strapi-cron", "*/1 * * * *", async () => {
+    const runningJobs = schedule.scheduledJobs["strapi-cron"].running;
     if (runningJobs > 0) {
       logger.warn(`Skipping the next cron. A previous job is still running.`)
       return;

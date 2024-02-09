@@ -181,10 +181,10 @@ jobs:
 
       - name: Push Docker image
         run: docker push --all-tags ${{ steps.build_image.outputs.image }}
-  build-elasticmanager:
+  build-scheduler:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: elasticmanager-${{ github.ref_name }}
+      IMAGE_NAME: scheduler-${{ github.ref_name }}
       BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-18:1-32
     steps:
       - name: Git Checkout
@@ -204,7 +204,7 @@ jobs:
         id: build_image
         uses: redhat-actions/s2i-build@v2
         with:
-          path_context: "src/elasticmanager"
+          path_context: "src/scheduler"
           builder_image: ${{ env.BUILDER_IMAGE }}
           image: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}
           tags: latest ${{ env.SHORT_SHA }}
@@ -230,4 +230,4 @@ jobs:
           oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-admin
           oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-cms
           oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-maintenance
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-elasticmanager
+          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-scheduler

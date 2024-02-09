@@ -17,8 +17,8 @@ images:
   etl:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/etl-develop
     tag: test
-  elasticmanager:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/elasticmanager-develop
+  scheduler:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/scheduler-develop
     tag: test
 
 cms:
