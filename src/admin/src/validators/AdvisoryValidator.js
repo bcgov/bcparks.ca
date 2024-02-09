@@ -89,7 +89,6 @@ export function validateLinks(links) {
 export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) {
   advisoryData.formError("");
   const validListingRankNumber = validateOptionalNumber(advisoryData.listingRank);
-  const validListingRankRequired = validateRequiredText(advisoryData.listingRank);
   const validHeadline = validateRequiredText(advisoryData.headline);
   const validEventType = validateRequiredSelect(advisoryData.eventType);
   const validUrgency = validateRequiredSelect(advisoryData.urgency);
@@ -101,7 +100,6 @@ export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) 
   const validLinks = validateLinks(linksRef.current);
   let validData =
     validListingRankNumber &&
-    validListingRankRequired &&
     validHeadline &&
     validEventType &&
     validUrgency &&
