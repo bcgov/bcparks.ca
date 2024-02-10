@@ -432,9 +432,9 @@ export default function AdvisoryForm({
             Listing rank
             <LightTooltip
               arrow
-              title="To display an advisory at the top of the list, add a Listing Rank number.
+              title="To display an advisory at the top of the list, add a Listing rank number.
               The advisory with the highest number will be displayed at the top.
-              If the Listing Rank number is zero,
+              If the Listing rank number is zero,
               advisories are ordered by urgency level and date added."
             >
               <HelpIcon className="helpIcon" />
@@ -593,6 +593,7 @@ export default function AdvisoryForm({
                       }}
                       className="bcgov-input"
                       variant="outlined"
+                      inputProps={{ maxLength: 255 }}
                       InputProps={{ ...linkTitleInput }}
                       error={(l.type !== "" || l.file !== "" || l.url !== "") && l.title === ""}
                       helperText={((l.type !== "" || l.file !== "" || l.url !== "") && l.title === "")
@@ -618,6 +619,7 @@ export default function AdvisoryForm({
                         helperText={((l.type !== "" || l.title !== "") && l.url === "")
                           ? "Please enter URL too" : ""
                         }
+                        inputProps={{ maxLength: 255 }}
                         InputProps={{
                           ...linkUrlInput,
                           endAdornment: (
@@ -1053,6 +1055,7 @@ export default function AdvisoryForm({
                   }}
                   className="bcgov-input"
                   variant="outlined"
+                  inputProps={{ maxLength: 255 }}
                   InputProps={{ ...submitterInput }}
                   error={submittedByError !== ""}
                   helperText={submittedByError}
