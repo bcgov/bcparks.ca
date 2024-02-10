@@ -268,7 +268,7 @@ export default function AdvisorySummary({
                         </div>
                         <div className="col-md-4 col-12 d-flex align-items-center justify-content-end">
                           <Button
-                            label="Edit"
+                            label="Edit advisory"
                             styling="bcgov-normal-blue btn mt10"
                             onClick={() => {
                               setToUpdate(true);

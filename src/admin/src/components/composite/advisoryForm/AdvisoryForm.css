@@ -89,7 +89,7 @@
   padding: 4px 16px !important;
 }
 
-.row.title {
+.row.title h2 {
   color: var(--color-blue);
 }
 
