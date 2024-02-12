@@ -86,6 +86,19 @@ export function validateLinks(links) {
   return checkLinks.every(Boolean);
 }
 
+export function validateLink(link, setError) {
+  const hasTypeError = !link.type;
+  const hasTitleError = !link.title;
+  const hasUrlError = !link.url;
+  const hasFileError = !link.file;
+
+  if (hasTypeError || hasTitleError || hasUrlError || hasFileError) {
+    setError(true);
+  } else {
+    setError(false);
+  }
+}
+
 export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) {
   advisoryData.formError("");
   const validListingRankNumber = validateOptionalNumber(advisoryData.listingRank);

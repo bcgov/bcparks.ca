@@ -24,6 +24,7 @@ import {
   validateRequiredDate,
   validateOptionalDate,
   validAdvisoryData,
+  validateLink
 } from "../../../validators/AdvisoryValidator";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -133,6 +134,10 @@ export default function AdvisoryForm({
   const [updatedDateError, setUpdatedDateError] = useState("");
   const [submittedByError, setSubmittedByError] = useState("");
   const [listingRankError, setListingRankError] = useState("");
+  const [linkTypeError, setLinkTypeError] = useState(false);
+  const [linkTitleError, setLinkTitleError] = useState(false);
+  const [linkUrlError, setLinkUrlError] = useState(false);
+  const [linkFileError, setLinkFileError] = useState(false);
   const [selectedDisplayedDateOption, setSelectedDisplayedDateOption] = useState("");
 
   const advisoryData = {
@@ -556,15 +561,23 @@ export default function AdvisoryForm({
                     Type
                   </div>
                   <div className="col-12 col-lg-9 col-md-10 d-flex">
-                    <Select
-                      options={linkTypes}
-                      onChange={(e) => {
-                        updateLink(idx, "type", e.value);
-                      }}
-                      value={linkTypes.filter((o) => o.label === l.type)}
-                      className="ad-link-select bcgov-select"
-                      placeholder="Link or document type"
-                    />
+                    <FormControl
+                      variant="outlined"
+                      className={`bcgov-select-form ${linkTypeError ? "bcgov-select-error" : ""}`}
+                      error
+                    >
+                      <Select
+                        options={linkTypes}
+                        onChange={(e) => {
+                          updateLink(idx, "type", e.value);
+                        }}
+                        value={linkTypes.filter((o) => o.label === l.type)}
+                        className="ad-link-select bcgov-select"
+                        placeholder="Link or document type"
+                        onBlur={() => validateLink(l, setLinkTypeError)}
+                      />
+                      <FormHelperText>{linkTypeError && "Please enter link type too"}</FormHelperText>
+                    </FormControl>
                     <div
                       className="ad-link-close ad-add-link pointer div-btn"
                       tabIndex="0"
@@ -594,10 +607,9 @@ export default function AdvisoryForm({
                       className="bcgov-input"
                       variant="outlined"
                       InputProps={{ ...linkTitleInput }}
-                      error={(l.type !== "" || l.file !== "" || l.url !== "") && l.title === ""}
-                      helperText={((l.type !== "" || l.file !== "" || l.url !== "") && l.title === "")
-                        ? "Please enter link title too" : ""
-                      }
+                      error={linkTitleError}
+                      helperText={linkTitleError && "Please enter link title too"}
+                      onBlur={() => validateLink(l, setLinkTitleError)}
                     />
                   </div>
                 </div>
@@ -614,10 +626,9 @@ export default function AdvisoryForm({
                         }}
                         className="bcgov-input"
                         variant="outlined"
-                        error={(l.type !== "" || l.title !== "") && l.url === ""}
-                        helperText={((l.type !== "" || l.title !== "") && l.url === "")
-                          ? "Please enter URL too" : ""
-                        }
+                        error={linkUrlError}
+                        helperText={linkUrlError && "Please enter URL too"}
+                        onBlur={() => validateLink(l, setLinkUrlError)}
                         InputProps={{
                           ...linkUrlInput,
                           endAdornment: (
@@ -655,6 +666,9 @@ export default function AdvisoryForm({
                         className="bcgov-input"
                         variant="outlined"
                         onClick={() => triggerFileSelect(l.file)}
+                        error={linkFileError}
+                        helperText={linkFileError && "Please enter file too"}
+                        onBlur={() => validateLink(l, setLinkFileError)}
                         InputProps={{
                           endAdornment: (
                             <IconButton
