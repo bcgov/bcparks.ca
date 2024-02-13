@@ -93,6 +93,9 @@
     "modifiedBy": {
       "type": "string"
     },
+    "modifiedByRole": {
+      "type": "string"
+    },
     "accessStatus": {
       "type": "relation",
       "relation": "oneToOne",
@@ -161,6 +164,15 @@
     },
     "publishedRevisionNumber": {
       "type": "integer"
+    },
+    "createdByName": {
+      "type": "string"
+    },
+    "createdByRole": {
+      "type": "string"
+    },
+    "isUrgentAfterHours": {
+      "type": "boolean"
     }
   }
 }
