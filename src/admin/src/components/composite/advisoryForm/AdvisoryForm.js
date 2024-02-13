@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./AdvisoryForm.css";
 import { Button } from "../../shared/button/Button";
@@ -241,17 +241,6 @@ export default function AdvisoryForm({
     { label: "Weeks", value: "w" },
     { label: "Months", value: "M" },
   ];
-
-  // Ref for the hidden file input
-  const fileInputRef = useRef(null);
-  const triggerFileSelect = (file) => {
-    if (file) {
-      return;
-    }
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
 
   useEffect(() => {
     if (selectedDisplayedDateOption === "posting") {
@@ -640,37 +629,51 @@ export default function AdvisoryForm({
                       File
                     </div>
                     <div className="col-12 col-lg-9 col-md-8 ad-flex">
-                      <input
-                        hidden
-                        ref={fileInputRef}
-                        type="file"
-                        accept=".jpg,.gif,.png,.gif,.pdf"
-                        onChange={(e) => {
-                          handleFileCapture(
-                            e.target.files,
-                            linksRef.current.length > 0 ? linksRef.current.length - 1 : 0
-                          );
-                        }}
-                      />
-                      <TextField
-                        value={l.file ? l.file.name : ""}
-                        className="bcgov-input"
-                        variant="outlined"
-                        onClick={() => triggerFileSelect(l.file)}
-                        InputProps={{
-                          endAdornment: (
-                            <IconButton
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                updateLink(idx, "file", "")
-                              }}
-                              className="clear-url-btn"
+                      {l.file ? (
+                        <TextField
+                          value={l.file ? l.file.name : ""}
+                          className="bcgov-input"
+                          variant="outlined"
+                          InputProps={{
+                            endAdornment: (
+                              <IconButton
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  updateLink(idx, "file", "")
+                                }}
+                                className="clear-url-btn"
+                              >
+                                <CloseIcon />
+                              </IconButton>
+                            )
+                          }}
+                        />
+                      ) : (
+                        <>
+                          <input
+                            id="file-upload"
+                            hidden
+                            type="file"
+                            accept=".jpg,.gif,.png,.gif,.pdf"
+                            onChange={(e) => {
+                              handleFileCapture(
+                                e.target.files,
+                                linksRef.current.length > 0 ? linksRef.current.length - 1 : 0
+                              );
+                            }}
+                          />
+                          <label htmlFor="file-upload" className="mb-0">
+                            <Btn
+                              variant="outlined"
+                              component="span"
+                              className="ad-add-link add-file"
+                              style={{ textTransform: 'none' }}
                             >
-                              <CloseIcon />
-                            </IconButton>
-                          )
-                        }}
-                      />
+                              Browse
+                            </Btn>
+                          </label>
+                        </>
+                      )}
                     </div>
                   </div>
                 )}
