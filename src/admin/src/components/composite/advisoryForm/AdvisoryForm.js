@@ -439,7 +439,7 @@ export default function AdvisoryForm({
               className="bcgov-input"
               variant="outlined"
               InputProps={{ ...listingRankInput }}
-              inputProps={{ min: 0 }}
+              inputProps={{ min: 0, max: 9999 }}
               error={listingRankError !== ""}
               helperText={listingRankError}
               onBlur={() => {
