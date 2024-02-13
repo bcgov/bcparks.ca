@@ -225,7 +225,7 @@ export default function AdvisorySummaryView({
       )}
       {advisory.listingRank !== null && advisory.listingRank >= 0 && (
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">Listing Rank</div>
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">Listing rank</div>
           <div className="col-lg-7 col-md-8 col-12">{advisory.listingRank}</div>
         </div>
       )}
