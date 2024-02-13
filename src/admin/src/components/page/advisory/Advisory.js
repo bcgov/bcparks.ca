@@ -101,8 +101,6 @@ export default function Advisory({
   const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const linksRef = useRef([]);
-  const durationUnitRef = useRef("M");
-  const durationIntervalRef = useRef(0);
   const advisoryDateRef = useRef(moment().tz("America/Vancouver").toDate());
   const [advisoryId, setAdvisoryId] = useState();
   const [isApprover, setIsApprover] = useState(false);
@@ -590,22 +588,9 @@ export default function Advisory({
     }
   };
 
-  const handleDurationIntervalChange = (e) => {
-    durationIntervalRef.current = parseInt(e.target.value);
-    calculateExpiryDate();
-  };
-
-  const handleDurationUnitChange = (e) => {
-    durationUnitRef.current = e.value;
-    calculateExpiryDate();
-  };
-
   const handleAdvisoryDateChange = (e) => {
     setAdvisoryDate(e);
     advisoryDateRef.current = e;
-    if (durationIntervalRef.current > 0) {
-      calculateExpiryDate();
-    }
   };
 
   const setLinkIds = () => {
@@ -646,16 +631,6 @@ export default function Advisory({
     tempLinks[index].isFileModified = true;
     linksRef.current = [...tempLinks];
     setLinkIds();
-  };
-
-  const calculateExpiryDate = () => {
-    const newEndDate = (
-      moment(advisoryDateRef.current).add(
-        durationIntervalRef.current,
-        durationUnitRef.current
-      )
-    );
-    setEndDate(newEndDate._d)
   };
 
   const isValidLink = (link) => {
@@ -1149,8 +1124,6 @@ export default function Advisory({
                   setDisplayUpdatedDate,
                   expiryDate,
                   setExpiryDate,
-                  handleDurationIntervalChange,
-                  handleDurationUnitChange,
                   linksRef,
                   linkTypes,
                   removeLink,

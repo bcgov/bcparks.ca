@@ -94,8 +94,6 @@ export default function AdvisoryForm({
     setDisplayUpdatedDate,
     expiryDate,
     setExpiryDate,
-    handleDurationIntervalChange,
-    handleDurationUnitChange,
     linksRef,
     linkTypes,
     removeLink,
@@ -233,14 +231,6 @@ export default function AdvisoryForm({
       return displayedDateOptions[EVENT_DATE_RANGE];
     }
   };
-
-  // Moment Intervals ref: https://momentjscom.readthedocs.io/en/latest/moment/03-manipulating/01-add/
-  const intervalUnits = [
-    { label: "Hours", value: "h" },
-    { label: "Days", value: "d" },
-    { label: "Weeks", value: "w" },
-    { label: "Months", value: "M" },
-  ];
 
   useEffect(() => {
     if (selectedDisplayedDateOption === "posting") {
@@ -774,26 +764,6 @@ export default function AdvisoryForm({
               </div>
               <div className="row">
                 <div className="col-12 col-lg-3 col-md-4 ad-label">
-                  Duration
-                </div>
-                <div className="col-12 col-lg-5 col-md-8 d-flex">
-                  <TextField
-                    type="number"
-                    variant="outlined"
-                    inputProps={{ min: 0, max: 24 }}
-                    onChange={handleDurationIntervalChange}
-                    className="ad-interval-input bcgov-input"
-                  />
-                  <Select
-                    options={intervalUnits}
-                    onChange={handleDurationUnitChange}
-                    defaultValue={intervalUnits[3]}
-                    className="ad-interval-select bcgov-select"
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-12 col-lg-3 col-md-4 ad-label">
                   End date
                   <LightTooltip
                     arrow
@@ -1323,8 +1293,6 @@ AdvisoryForm.propTypes = {
     setDisplayUpdatedDate: PropTypes.func.isRequired,
     expiryDate: PropTypes.object,
     setExpiryDate: PropTypes.func.isRequired,
-    handleDurationIntervalChange: PropTypes.func.isRequired,
-    handleDurationUnitChange: PropTypes.func.isRequired,
     linksRef: PropTypes.object.isRequired,
     linkTypes: PropTypes.array.isRequired,
     removeLink: PropTypes.func.isRequired,
