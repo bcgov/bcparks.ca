@@ -765,7 +765,6 @@ export default function Advisory({
           note: notes,
           submittedBy: submittedBy ? submittedBy : submitter,
           createdDate: moment().toISOString(),
-          createdBy: keycloak.tokenParsed.name,
           advisoryDate: advisoryDate,
           effectiveDate: startDate,
           endDate: endDate,
@@ -788,7 +787,9 @@ export default function Advisory({
           isEndDateDisplayed: displayEndDate,
           published_at: new Date(),
           isLatestRevision: true,
-          created_by: keycloak.tokenParsed.name,
+          createdByName: keycloak.tokenParsed.name,
+          createdByRole: isApprover ? "approver" : "submitter",
+          isUrgentAfterHours: !isApprover && (isAfterHours || isStatHoliday) && isAfterHourPublish
         };
 
         cmsAxios // -audit OR -audits
@@ -855,6 +856,7 @@ export default function Advisory({
             updatedDate: updatedDate,
             modifiedDate: moment().toISOString(),
             modifiedBy: keycloak.tokenParsed.name,
+            modifiedByRole: isApprover ? "approver" : "submitter",
             advisoryDate: advisoryDate,
             effectiveDate: startDate,
             endDate: endDate,

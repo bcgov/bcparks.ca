@@ -89,9 +89,6 @@
     "modifiedDate": {
       "type": "datetime"
     },
-    "modifiedBy": {
-      "type": "string"
-    },
     "accessStatus": {
       "type": "relation",
       "relation": "oneToOne",
