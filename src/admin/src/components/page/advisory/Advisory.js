@@ -107,7 +107,6 @@ export default function Advisory({
   const [advisoryId, setAdvisoryId] = useState();
   const [isApprover, setIsApprover] = useState(false);
   const [formError, setFormError] = useState("");
-  const [defaultLinkType, setDefaultLinkType] = useState();
 
   const { id } = useParams();
 
@@ -119,7 +118,7 @@ export default function Advisory({
       eventType: { populate: "*" },
       fireCentres: { fields: ["id"] },
       fireZones: { fields: ["id"] },
-      links: { populate: { type: { fields: ["type"] }, file: { populate: "*" } } },
+      links: { populate: { type: { populate: "*" }, file: { populate: "*" } } },
       urgency: { populate: "*" },
       managementAreas: { fields: ["id"] },
       protectedAreas: { fields: ["id"] },
@@ -315,7 +314,7 @@ export default function Advisory({
                 linksRef.current = [
                   ...linksRef.current,
                   {
-                    type: l.type.type,
+                    type: l.type.id,
                     title: l.title || "",
                     url: l.url || "",
                     id: l.id,
@@ -525,11 +524,6 @@ export default function Advisory({
             value: lt.id,
           }));
           setLinkTypes([...linkTypes]);
-          const linkType = linkTypes.filter((l) => l.label === "General");
-          if (linkType.length > 0) {
-            setDefaultLinkType(linkType[0].value);
-          }
-
           const standardMessageData = res[12];
           const standardMessages = standardMessageData.map((m) => ({
             label: m.title,
@@ -627,7 +621,7 @@ export default function Advisory({
   const addLink = (format) => {
     linksRef.current = [
       ...linksRef.current,
-      { title: "", url: "", type: defaultLinkType, format: format },
+      { title: "", url: "", format: format },
     ];
     setLinkIds();
   };
@@ -727,7 +721,7 @@ export default function Advisory({
             message: "Could not process advisory update",
           });
         });
-      return res.data;
+      return res.data.data;
     }
   };
 
