@@ -426,6 +426,9 @@ export default function AdvisoryForm({
               onChange={(event) => {
                 setListingRank(event.target.value);
               }}
+              onWheel={(event) => {
+                event.target.blur();
+              }}
               className="bcgov-input"
               variant="outlined"
               InputProps={{ ...listingRankInput }}
