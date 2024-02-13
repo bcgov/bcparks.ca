@@ -879,6 +879,7 @@ export default function AdvisoryForm({
                     selected={advisoryDate}
                     onChange={(date) => { handleAdvisoryDateChange(date) }}
                     dateFormat="MMMM d, yyyy"
+                    maxDate={expiryDate}
                     className={`${advisoryDateError !== "" ? "error" : ""}`}
                     onBlur={() => {
                       validateRequiredDate(advisoryData.advisoryDate);
@@ -931,7 +932,7 @@ export default function AdvisoryForm({
                     selected={expiryDate}
                     onChange={(date) => { setExpiryDate(date) }}
                     dateFormat="MMMM d, yyyy"
-                    minDate={startDate}
+                    minDate={advisoryDate}
                     className={`${expiryDateError !== "" ? "error" : ""}`}
                     onBlur={() => {
                       validateOptionalDate(advisoryData.expiryDate);
@@ -979,6 +980,7 @@ export default function AdvisoryForm({
                       selected={updatedDate}
                       onChange={(date) => { setUpdatedDate(date) }}
                       dateFormat="MMMM d, yyyy"
+                      minDate={advisoryDate}
                       className={`${updatedDateError !== "" ? "error" : ""}`}
                       onBlur={() => {
                         validateOptionalDate(advisoryData.updatedDate);
