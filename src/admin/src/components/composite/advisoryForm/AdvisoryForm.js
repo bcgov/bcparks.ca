@@ -132,10 +132,10 @@ export default function AdvisoryForm({
   const [updatedDateError, setUpdatedDateError] = useState("");
   const [submittedByError, setSubmittedByError] = useState("");
   const [listingRankError, setListingRankError] = useState("");
-  const [linkTypeError, setLinkTypeError] = useState(false);
-  const [linkTitleError, setLinkTitleError] = useState(false);
-  const [linkUrlError, setLinkUrlError] = useState(false);
-  const [linkFileError, setLinkFileError] = useState(false);
+  const [linkTypeErrors, setLinkTypeErrors] = useState(new Array(linksRef.current.length).fill(false));
+  const [linkTitleErrors, setLinkTitleErrors] = useState(new Array(linksRef.current.length).fill(false));
+  const [linkUrlErrors, setLinkUrlErrors] = useState(new Array(linksRef.current.length).fill(false));
+  const [linkFileErrors, setLinkFileErrors] = useState(new Array(linksRef.current.length).fill(false));
   const [selectedDisplayedDateOption, setSelectedDisplayedDateOption] = useState("");
 
   const advisoryData = {
@@ -545,7 +545,8 @@ export default function AdvisoryForm({
                   <div className="col-12 col-lg-9 col-md-10 d-flex">
                     <FormControl
                       variant="outlined"
-                      className={`bcgov-select-form ${linkTypeError ? "bcgov-select-error" : ""}`}
+                      className={`bcgov-select-form ${linkTypeErrors[idx] ?
+                        "bcgov-select-error" : ""}`}
                       error
                     >
                       <Select
@@ -556,9 +557,11 @@ export default function AdvisoryForm({
                         value={linkTypes.filter((o) => o.value === l.type)}
                         className="ad-link-select bcgov-select"
                         placeholder="Link or document type"
-                        onBlur={() => validateLink(l, "type", setLinkTypeError)}
+                        onBlur={() => validateLink(l, idx, "type", setLinkTypeErrors)}
                       />
-                      <FormHelperText>{linkTypeError && "Please enter link type too"}</FormHelperText>
+                      <FormHelperText>
+                        {linkTypeErrors[idx] && "Please enter link type too"}
+                      </FormHelperText>
                     </FormControl>
                     <div
                       className="ad-link-close ad-add-link pointer div-btn"
@@ -590,9 +593,9 @@ export default function AdvisoryForm({
                       variant="outlined"
                       inputProps={{ maxLength: 255 }}
                       InputProps={{ ...linkTitleInput }}
-                      error={linkTitleError}
-                      helperText={linkTitleError && "Please enter link title too"}
-                      onBlur={() => validateLink(l, "title", setLinkTitleError)}
+                      error={linkTitleErrors[idx]}
+                      helperText={linkTitleErrors[idx] && "Please enter link title too"}
+                      onBlur={() => validateLink(l, idx, "title", setLinkTitleErrors)}
                     />
                   </div>
                 </div>
@@ -609,9 +612,9 @@ export default function AdvisoryForm({
                         }}
                         className="bcgov-input"
                         variant="outlined"
-                        error={linkUrlError}
-                        helperText={linkUrlError && "Please enter URL too"}
-                        onBlur={() => validateLink(l, "url", setLinkUrlError)}
+                        error={linkUrlErrors[idx]}
+                        helperText={linkUrlErrors[idx] && "Please enter URL too"}
+                        onBlur={() => validateLink(l, idx, "url", setLinkUrlErrors)}
                         inputProps={{ maxLength: 255 }}
                         InputProps={{
                           ...linkUrlInput,
@@ -644,7 +647,7 @@ export default function AdvisoryForm({
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   updateLink(idx, "file", "")
-                                  validateLink(l, "file", setLinkFileError)
+                                  validateLink(l, idx, "file", setLinkFileErrors)
                                 }}
                                 className="clear-url-btn"
                               >
@@ -676,7 +679,7 @@ export default function AdvisoryForm({
                             >
                               Browse
                             </Btn>
-                            {linkFileError &&
+                            {linkFileErrors[idx] &&
                               <span className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error d-block">
                                 Please upload file too
                               </span>
