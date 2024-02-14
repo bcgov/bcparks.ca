@@ -86,35 +86,23 @@ export function validateLinks(links) {
   return checkLinks.every(Boolean);
 }
 
-export function validateLink(link, field, setError) {
-  if (field === "type") {
-    if (!link.type) {
-      setError(true);
-    } else {
-      setError(false);
-    }
+export function validateLink(link, index, field, setErrors) {
+  let hasError = false;
+  if (field === "type" && !link.type) {
+    hasError = true;
+  } else if (field === "title" && !link.title) {
+    hasError = true;
+  } else if (field === "url" && !link.url) {
+    hasError = true;
+  } else if (field === "file" && !link.file) {
+    hasError = true;
   }
-  if (field === "title") {
-    if (!link.title) {
-      setError(true);
-    } else {
-      setError(false);
-    }
-  }
-  if (field === "url") {
-    if (!link.url) {
-      setError(true);
-    } else {
-      setError(false);
-    }
-  }
-  if (field === "file") {
-    if (!link.file) {
-      setError(true);
-    } else {
-      setError(false);
-    }
-  }
+
+  setErrors(prevErrors => {
+    const newErrors = [...prevErrors];
+    newErrors[index] = hasError;
+    return newErrors;
+  });
 }
 
 export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) {
