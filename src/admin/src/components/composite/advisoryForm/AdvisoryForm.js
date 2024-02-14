@@ -24,7 +24,8 @@ import {
   validateRequiredDate,
   validateOptionalDate,
   validAdvisoryData,
-  validateLink
+  validateLink,
+  validateDisplayedDate
 } from "../../../validators/AdvisoryValidator";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -136,6 +137,7 @@ export default function AdvisoryForm({
   const [linkTitleErrors, setLinkTitleErrors] = useState(new Array(linksRef.current.length).fill(false));
   const [linkUrlErrors, setLinkUrlErrors] = useState(new Array(linksRef.current.length).fill(false));
   const [linkFileErrors, setLinkFileErrors] = useState(new Array(linksRef.current.length).fill(false));
+  const [displayedDateError, setDisplayedDateError] = useState(false);
   const [selectedDisplayedDateOption, setSelectedDisplayedDateOption] = useState("");
 
   const advisoryData = {
@@ -174,6 +176,17 @@ export default function AdvisoryForm({
       value: advisoryStatus,
       setError: setAdvisoryStatusError,
       text: "advisory status",
+    },
+    displayedDate: {
+      value: {
+        advisoryDate: advisoryDate,
+        startDate: startDate,
+        endDate: endDate,
+        expiryDate: expiryDate,
+        updatedDate: updatedDate,
+        displayedDateOption: selectedDisplayedDateOption,
+      },
+      setError: setDisplayedDateError,
     },
     formError: setFormError,
   };
@@ -270,6 +283,8 @@ export default function AdvisoryForm({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDisplayedDateOption])
+
+  console.log("advisoryData.displayedDate",advisoryData.displayedDate)
 
   return (
     <form className="mt-5">
@@ -806,6 +821,7 @@ export default function AdvisoryForm({
                     className={`${endDateError !== "" ? "error" : ""}`}
                     onBlur={() => {
                       validateOptionalDate(advisoryData.endDate);
+                      validateDisplayedDate(advisoryData.displayedDate);
                     }}
                   />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
@@ -847,15 +863,28 @@ export default function AdvisoryForm({
             Displayed date
           </div>
           <div className="col-lg-7 col-md-8 col-sm-12">
-            <Select
-              options={displayedDateOptions}
-              defaultValue={getDisplayedDate()}
-              onChange={(e) => {
-                setSelectedDisplayedDateOption(e.value);
-              }}
-              className="bcgov-select"
-              isClearable
-            />
+            <FormControl
+              variant="outlined"
+              className={`bcgov-select-form ${displayedDateError ?
+                "bcgov-select-error" : ""}`}
+                error
+                >
+              {console.log("displayedDateError",displayedDateError)}
+              <Select
+                options={displayedDateOptions}
+                defaultValue={getDisplayedDate()}
+                onChange={(e) => {
+                  setSelectedDisplayedDateOption(e.value);
+                }}
+                className="bcgov-select"
+                onBlur={() => {
+                  validateDisplayedDate(advisoryData.displayedDate);
+                }}
+              />
+              <FormHelperText>
+                {displayedDateError}
+              </FormHelperText>
+            </FormControl>
           </div>
         </div>
         <div className="row heading">
