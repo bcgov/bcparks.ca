@@ -22,7 +22,7 @@
     "keycloak-js": "^12.0.4",
     "material-table": "^1.69.2",
     "moment": "^2.30.1",
-    "moment-timezone": "^0.5.44",
+    "moment-timezone": "^0.5.45",
     "prop-types": "^15.7.2",
     "qs": "^6.11.0",
     "query-string": "^6.14.1",
