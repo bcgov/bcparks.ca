@@ -86,6 +86,37 @@ export function validateLinks(links) {
   return checkLinks.every(Boolean);
 }
 
+export function validateLink(link, field, setError) {
+  if (field === "type") {
+    if (!link.type) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  }
+  if (field === "title") {
+    if (!link.title) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  }
+  if (field === "url") {
+    if (!link.url) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  }
+  if (field === "file") {
+    if (!link.file) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  }
+}
+
 export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) {
   advisoryData.formError("");
   const validListingRankNumber = validateOptionalNumber(advisoryData.listingRank);
