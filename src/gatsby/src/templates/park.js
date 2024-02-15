@@ -448,7 +448,7 @@ export default function ParkTemplate({ data }) {
             )}
             {menuItems[7].visible && (
               <div ref={activityRef} className="w-100">
-                <ParkActivity data={nonCampingActivities} />
+                <ParkActivity data={nonCampingActivities} slug={park.slug}/>
               </div>
             )}
             {menuItems[8].visible && (
