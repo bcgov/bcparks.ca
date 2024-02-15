@@ -154,13 +154,15 @@ export default function ParkActivity({ data, slug }) {
           ))}
         </Col>
       </Row>
-      <Row className="mt-3">
-        <Col className="d-flex">
-          <img
-            src={DiscoverParksLogo}
-            alt="Discover Parks Logo"
-            className="discover-parks-logo"
-          />
+      <Row className="discpver-parks mt-3">
+        <Col className="discpver-parks__col">
+          <div className="discpver-parks__col--left">
+            <img
+              src={DiscoverParksLogo}
+              alt="Discover Parks Logo"
+              className="discover-parks-logo"
+            />
+          </div>
           <div>
             For more guided and self-guided activities, visit <Link href={`https://www.discoverparks.ca/parks/${slug}`} target="_blank" rel="noopener noreferrer">
               discoverparks.ca

@@ -72,9 +72,26 @@
   cursor: pointer;
 }
 
-.discover-parks-logo {
-  width: 150px;
-  height: auto;
-  object-fit: contain;
-  margin-right: 16px;
+.discpver-parks {
+  &__col {
+    display: block;
+    @media (min-width: $smBreakpoint) {
+      display: flex;
+    }
+    &--left {
+      min-width: 150px;
+      display: flex;
+      justify-content: center;
+      margin: 0 0 16px 0;
+      @media (min-width: $smBreakpoint) {
+        display: block;
+        margin: 0 16px 0 0;
+      }
+    }
+  }
+  .discover-parks-logo {
+    width: 150px;
+    height: auto;
+    object-fit: contain;
+  }
 }
