@@ -137,7 +137,7 @@ export default function AdvisoryForm({
   const [linkTitleErrors, setLinkTitleErrors] = useState(new Array(linksRef.current.length).fill(false));
   const [linkUrlErrors, setLinkUrlErrors] = useState(new Array(linksRef.current.length).fill(false));
   const [linkFileErrors, setLinkFileErrors] = useState(new Array(linksRef.current.length).fill(false));
-  const [displayedDateError, setDisplayedDateError] = useState(false);
+  const [displayedDateError, setDisplayedDateError] = useState("");
   const [selectedDisplayedDateOption, setSelectedDisplayedDateOption] = useState("");
 
   const advisoryData = {
@@ -283,8 +283,6 @@ export default function AdvisoryForm({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDisplayedDateOption])
-
-  console.log("advisoryData.displayedDate",advisoryData.displayedDate)
 
   return (
     <form className="mt-5">
@@ -775,6 +773,7 @@ export default function AdvisoryForm({
                     className={`${startDateError !== "" ? "error" : ""}`}
                     onBlur={() => {
                       validateOptionalDate(advisoryData.startDate);
+                      validateDisplayedDate(advisoryData.displayedDate);
                     }}
                   />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
@@ -910,6 +909,7 @@ export default function AdvisoryForm({
                     className={`${advisoryDateError !== "" ? "error" : ""}`}
                     onBlur={() => {
                       validateRequiredDate(advisoryData.advisoryDate);
+                      validateDisplayedDate(advisoryData.displayedDate);
                     }}
                   />
                   <span className="MuiFormHelperText-root MuiFormHelperText-contained">
@@ -1011,6 +1011,7 @@ export default function AdvisoryForm({
                       className={`${updatedDateError !== "" ? "error" : ""}`}
                       onBlur={() => {
                         validateOptionalDate(advisoryData.updatedDate);
+                        validateDisplayedDate(advisoryData.displayedDate);
                       }}
                     />
                     <span className="MuiFormHelperText-root MuiFormHelperText-contained">
