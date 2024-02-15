@@ -15,12 +15,13 @@ on:
         - main
       buildEnv:
         description: "Rebuild public for which environment?"
-        default: 'test'
+        default: 'prod'
         type: choice
         required: true
         options:
-        - dev
+        - prod
         - test
+        - dev
 
 concurrency:
   group: publish-gatsby-${{ github.event.client_payload.branch }}${{ github.event.inputs.branchName }}-${{ github.event.client_payload.env }}${{ github.event.inputs.buildEnv }}
