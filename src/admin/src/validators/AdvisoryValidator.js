@@ -137,7 +137,6 @@ export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) 
   const validExpiryDate = validateOptionalDate(advisoryData.expiryDate);
   const validLinks = validateLinks(linksRef.current);
   const validDisplayedDate = validateDisplayedDate(advisoryData.displayedDate);
-  console.log(advisoryData.displayedDate)
   let validData =
     validListingRankNumber &&
     validHeadline &&

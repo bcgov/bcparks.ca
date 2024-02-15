@@ -864,11 +864,10 @@ export default function AdvisoryForm({
           <div className="col-lg-7 col-md-8 col-sm-12">
             <FormControl
               variant="outlined"
-              className={`bcgov-select-form ${displayedDateError ?
+              className={`bcgov-select-form ${displayedDateError !== "" ?
                 "bcgov-select-error" : ""}`}
                 error
                 >
-              {console.log("displayedDateError",displayedDateError)}
               <Select
                 options={displayedDateOptions}
                 defaultValue={getDisplayedDate()}
