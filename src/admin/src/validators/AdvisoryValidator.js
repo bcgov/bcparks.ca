@@ -104,6 +104,25 @@ export function validateLink(link, index, field, setErrors) {
     return newErrors;
   });
 }
+export function validateDisplayedDate(field) {
+  const obj = field.value;
+  if ((obj.displayedDateOption === "" || obj.displayedDateOption === "posting") && !obj.advisoryDate) {
+    field.setError("Please enter a date for 'Advisory date'");
+    return false;
+  } else if (obj.displayedDateOption === "start" && !obj.startDate) {
+    field.setError("Please enter a date for 'Start date'");
+    return false;
+  } else if (obj.displayedDateOption === "updated" && !obj.updatedDate) {
+    field.setError("Please enter a date for 'Updated date'");
+    return false;
+  } else if (obj.displayedDateOption === "event" && (!obj.startDate || !obj.endDate)) {
+    field.setError("Please enter dates for 'Start date' and 'End date'");
+    return false;
+  } else {
+    field.setError("");
+    return true;
+  }
+}
 
 export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) {
   advisoryData.formError("");
@@ -117,6 +136,7 @@ export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) 
   const validEndDate = validateOptionalDate(advisoryData.endDate);
   const validExpiryDate = validateOptionalDate(advisoryData.expiryDate);
   const validLinks = validateLinks(linksRef.current);
+  const validDisplayedDate = validateDisplayedDate(advisoryData.displayedDate);
   let validData =
     validListingRankNumber &&
     validHeadline &&
@@ -127,6 +147,7 @@ export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) 
     validStartDate &&
     validEndDate &&
     validExpiryDate &&
+    validDisplayedDate &&
     validLinks;
   if (validateStatus) {
     const validAdvisoryStatus = validateRequiredSelect(
