@@ -245,7 +245,9 @@ export default function AdvisoryDashboard({
 
       if (publishedStatus?.length > 0) {
         const result = await cmsAxios
-          .get(`/public-advisories?filters[advisoryStatus][code]=PUB&fields[0]=advisoryNumber&pagination[limit]=-1&sort=createdAt:DESC`)
+          .get(`/public-advisories?filters[advisoryStatus][code]=PUB&fields[0]=advisoryNumber&pagination[limit]=-1&sort=createdAt:DESC`, {
+            headers: { Authorization: `Bearer ${keycloak.token}` }
+          })
           .catch(() => {
             setHasErrors(true);
           });
