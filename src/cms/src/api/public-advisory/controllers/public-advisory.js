@@ -73,7 +73,7 @@ module.exports = createCoreController(
             ctx.query = populateStandardMessages(ctx.query);
 
             if (ctx.query.queryText !== undefined) {
-                ({ results: entities } = await strapi.service("api::public-advisory.public-advisory").search(ctx.query));
+                ({ results: entities } = await strapi.service("api::public-advisory.search").search(ctx.query));
                 pagination = {};
             } else {
                 ({ results: entities, pagination } = await strapi.service("api::public-advisory.public-advisory").find(ctx.query));
@@ -94,7 +94,7 @@ module.exports = createCoreController(
         },
         async count(ctx) {
             if (ctx.query.queryText !== undefined) {
-                return await strapi.service("api::public-advisory.public-advisory").countSearch(ctx.query);
+                return await strapi.service("api::public-advisory.search").countSearch(ctx.query);
             }
             return (await strapi.service("api::public-advisory.public-advisory").find(ctx.query)).pagination.total;
         },
@@ -152,6 +152,21 @@ module.exports = createCoreController(
                 }
             }
             return results;
+        },
+        async triggerScheduled(ctx) {
+
+            const advisoryStatusMap = await strapi.service("api::public-advisory.scheduling").getAdvisoryStatusMap();
+            const publishedCount = await strapi.service("api::public-advisory.scheduling").publish(advisoryStatusMap);
+            const expiredCount = await strapi.service("api::public-advisory.scheduling").expire(advisoryStatusMap);
+
+            const cachePlugin = strapi.plugins["rest-cache"];
+            if (cachePlugin && (publishedCount > 0 || expiredCount > 0)) {
+                await cachePlugin.services.cacheStore.clearByUid('api::public-advisory.public-advisory');
+            }
+
+            ctx.send({
+                message: `Scheduled public advisory processing complete. ${publishedCount} published. ${expiredCount} expired.`
+            }, 201);
         }
     })
 );
