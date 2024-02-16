@@ -9,7 +9,6 @@
  *
  * See more details here: https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/configurations.html#cron-tasks
  */
-const _ = require("lodash");
 
 module.exports = {
   // Execute the cron at 2 minutes past every hour.
@@ -38,7 +37,7 @@ module.exports = {
             filters: {
               isLatestRevision: true,
               advisoryDate: {
-                $lte: new Date()
+                $lte: new Date().toISOString()
               },
               advisoryStatus: advisoryStatusMap["APR"].id,
             },
@@ -76,7 +75,7 @@ module.exports = {
           "api::public-advisory.public-advisory", {
             filters: {
               expiryDate: {
-                $lte: new Date()
+                $lte: new Date().toISOString()
               },
               advisoryStatus: advisoryStatusMap["PUB"].id,
             },
