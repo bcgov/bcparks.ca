@@ -460,12 +460,14 @@ export default function AdvisoryForm({
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+          <div className="col-lg-3 col-md-4 col-sm-12 ad-label bcgov-required">
             Park access status
             <LightTooltip
               arrow
-              title="This applies any applicable symbols or icons relating to the park access status to the advisory.
-                Such as full closure or partial closure icons."
+              title="This status describes how the advisory event affects access to the park. 
+              The default is 'Open'. This selection triggers information to be displayed in various areas,
+              such as on the BC Parks Map, closure/warning status icons in the various park lists,
+              and closure status on park pages."
             >
               <HelpIcon className="helpIcon" />
             </LightTooltip>
@@ -477,7 +479,6 @@ export default function AdvisoryForm({
               onChange={(e) => setAccessStatus(e ? e.value : 0)}
               placeholder="Select park access status"
               className="bcgov-select"
-              isClearable
             />
           </div>
         </div>
