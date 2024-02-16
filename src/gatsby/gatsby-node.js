@@ -78,6 +78,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkActivities: [STRAPI_PARK_ACTIVITY] @link(by: "id", from: "parkActivities___NODE")
     parkFacilities: [STRAPI_PARK_FACILITY] @link(by: "id", from: "parkFacilities___NODE")
     seo: STRAPI__COMPONENT_PARKS_SEO
+    hasDiscoverParksLink: Boolean
   }
 
   type STRAPI_PARK_OPERATION implements Node {
