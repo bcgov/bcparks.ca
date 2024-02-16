@@ -137,6 +137,7 @@ export default function AdvisoryForm({
   const [linkTitleErrors, setLinkTitleErrors] = useState(new Array(linksRef.current.length).fill(false));
   const [linkUrlErrors, setLinkUrlErrors] = useState(new Array(linksRef.current.length).fill(false));
   const [linkFileErrors, setLinkFileErrors] = useState(new Array(linksRef.current.length).fill(false));
+  const [hasFileDeleted, setHasFileDeleted] = useState(new Array(linksRef.current.length).fill(false));
   const [displayedDateError, setDisplayedDateError] = useState("");
   const [selectedDisplayedDateOption, setSelectedDisplayedDateOption] = useState("");
 
@@ -249,6 +250,17 @@ export default function AdvisoryForm({
       return displayedDateOptions[EVENT_DATE_RANGE];
     }
   };
+
+  // Check if the URL format is a file
+  const isFile = (url) => {
+    const fileExtensions = ['.jpg', '.jpeg', '.gif', '.png', '.pdf'];
+    for (const extension of fileExtensions) {
+      if (url.endsWith(extension)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   useEffect(() => {
     if (selectedDisplayedDateOption === "posting") {
@@ -613,7 +625,7 @@ export default function AdvisoryForm({
                     />
                   </div>
                 </div>
-                {l.format !== "file" ? (
+                {(l.format !== "file" && !hasFileDeleted[idx]) ? (
                   <div className="row">
                     <div className="col-12 col-lg-3 col-md-2 ad-label bcgov-required">
                       URL
@@ -634,7 +646,13 @@ export default function AdvisoryForm({
                           ...linkUrlInput,
                           endAdornment: (
                             <IconButton
-                              onClick={() => updateLink(idx, "url", "")}
+                              onClick={() => {
+                                isFile(l.url) && setHasFileDeleted(prev => {
+                                  hasFileDeleted[idx] = true;
+                                  return [...prev];
+                                });
+                                updateLink(idx, "url", "");
+                              }}
                               className="clear-url-btn"
                             >
                               <CloseIcon />
@@ -679,8 +697,7 @@ export default function AdvisoryForm({
                             accept=".jpg,.gif,.png,.gif,.pdf"
                             onChange={(e) => {
                               handleFileCapture(
-                                e.target.files,
-                                linksRef.current.length > 0 ? linksRef.current.length - 1 : 0
+                                e.target.files, idx
                               );
                             }}
                           />
