@@ -448,7 +448,11 @@ export default function ParkTemplate({ data }) {
             )}
             {menuItems[7].visible && (
               <div ref={activityRef} className="w-100">
-                <ParkActivity data={nonCampingActivities} slug={park.slug}/>
+                <ParkActivity
+                  data={nonCampingActivities}
+                  slug={park.slug}
+                  hasDiscoverParksLink={park.hasDiscoverParksLink}
+                />
               </div>
             )}
             {menuItems[8].visible && (
@@ -527,6 +531,7 @@ export const query = graphql`
       type
       typeCode
       hasCampfireBan
+      hasDiscoverParksLink
       locationNotes {
         data {
           locationNotes

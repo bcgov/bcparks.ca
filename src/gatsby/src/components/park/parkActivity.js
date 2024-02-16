@@ -71,7 +71,7 @@ export const AccordionList = ({ eventKey, activity, open }) => {
   )
 }
 
-export default function ParkActivity({ data, slug }) {
+export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
   const [activityData] = useState(
     JSON.parse(JSON.stringify(data)) // deep copy
   )
@@ -154,24 +154,26 @@ export default function ParkActivity({ data, slug }) {
           ))}
         </Col>
       </Row>
-      <Row className="discpver-parks mt-3">
-        <Col className="discpver-parks__col">
-          <div className="discpver-parks__col--left">
-            <img
-              src={DiscoverParksLogo}
-              alt="Discover Parks Logo"
-              className="discover-parks-logo"
-            />
-          </div>
-          <div>
-            For more guided and self-guided activities, visit <Link href={`https://www.discoverparks.ca/parks/${slug}`} target="_blank" rel="noopener noreferrer">
-              discoverparks.ca
-            </Link>. Discover Parks is developed by <Link href="https://bcparksfoundation.ca" target="_blank" rel="noopener noreferrer">
-              BC Parks Foundation
-            </Link>, our official charitable partner.
-          </div>
-        </Col>
-      </Row>
+      {hasDiscoverParksLink && (
+        <Row className="discpver-parks mt-3">
+          <Col className="discpver-parks__col">
+            <div className="discpver-parks__col--left">
+              <img
+                src={DiscoverParksLogo}
+                alt="Discover Parks Logo"
+                className="discover-parks-logo"
+              />
+            </div>
+            <div>
+              For more guided and self-guided activities,
+              visit <Link href={`https://www.discoverparks.ca/parks/${slug}`} target="_blank" rel="noopener noreferrer">
+                discoverparks.ca</Link>. Discover Parks is developed
+              by <Link href="https://bcparksfoundation.ca" target="_blank" rel="noopener noreferrer">
+                BC Parks Foundation</Link>, our official charitable partner.
+            </div>
+          </Col>
+        </Row>
+      )}
     </div>
   )
 }
