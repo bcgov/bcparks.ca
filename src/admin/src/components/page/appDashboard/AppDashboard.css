@@ -78,3 +78,9 @@
     width: 100% !important;
   }
 }
+
+@media (max-width: 768px) {
+  .app-tabs {
+    padding-top: 80px;
+  }
+}
