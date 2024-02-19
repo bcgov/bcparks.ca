@@ -210,6 +210,18 @@
   right: 16px;
 }
 
+.react-datepicker__navigation {
+  opacity: 0.5;
+}
+.react-datepicker__navigation:hover {
+  opacity: 1;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: var(--color-grey) !important;
+  top: 15px !important;
+}
+
 .bcgov-move-right {
   display: none !important;
 }
