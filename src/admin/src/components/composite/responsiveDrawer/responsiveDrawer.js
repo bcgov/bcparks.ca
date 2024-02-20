@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import AccountInfo from '../accountInfo/AccountInfo';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -22,12 +23,6 @@ const ResponsiveDrawer = () => {
     {
       "text": "Advisories",
       "link": "/bcparks/dashboard"
-    }, {
-      "text": "Park Acess Status",
-      "link": "/park-access-status"
-    }, {
-      "text": "Activities & Facilities",
-      "link": "/activities-facilities"
     }
   ]
 
@@ -39,6 +34,9 @@ const ResponsiveDrawer = () => {
             <ListItemText primary={item.text} />
           </ListItem>
         ))}
+        <ListItem>
+          <AccountInfo />
+        </ListItem>
       </List>
     </div>
   );
