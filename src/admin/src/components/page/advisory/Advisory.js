@@ -882,6 +882,10 @@ export default function Advisory({
             isLatestRevision: true
           };
 
+          if (!isApprover && (isAfterHours || isStatHoliday) && isAfterHourPublish) {
+            updatedAdvisory.isUrgentAfterHours = true;
+          }
+
           cmsAxios
             .put(`public-advisory-audits/${id}`, { data: updatedAdvisory }, {
               headers: { Authorization: `Bearer ${keycloak.token}` }

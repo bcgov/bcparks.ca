@@ -20,13 +20,14 @@ exports.indexParks = async function (options) {
     indexed = [];
 
     if (options?.id) {
+      // fake the readQueue response if we are indexing a specific park (by id).
       queue = [{ attributes: { numericData: options.id } }];
     } else {
       try {
         queue = await readQueue("elastic index park", options);
       } catch (error) {
         logger.error(`indexParks() failed while retrieving 'elastic index park' tasks: ${error}`);
-        return;;
+        return;
       }
     }
 
@@ -34,7 +35,7 @@ exports.indexParks = async function (options) {
       parkList = await getBatch(queue, options);
     } catch (error) {
       logger.error(`indexParks() failed while retrieving parks: ${error}`);
-      return;;
+      return;
     }
 
     try {
@@ -42,7 +43,7 @@ exports.indexParks = async function (options) {
       photoList = await getPhotos(orcsList);
     } catch (error) {
       logger.error(`indexParks() failed while retrieving photos: ${error}`);
-      return;;
+      return;
     }
 
     for (const park of parkList) {
@@ -57,7 +58,7 @@ exports.indexParks = async function (options) {
       await removeFromQueue(indexed);
     } catch (error) {
       logger.error(`Failed while removing queued 'elastic index park' tasks: ${error}`);
-      return;;
+      return;
     }
   } while (indexed.length > 0 && !options?.id)
 
@@ -69,7 +70,7 @@ exports.indexParks = async function (options) {
       queue = await readQueue("elastic remove park", options);
     } catch (error) {
       logger.error(`indexParks() failed while retrieving 'elastic remove park' tasks: ${error}`);
-      return;;
+      return;
     }
 
     for (const task of queue) {
@@ -85,7 +86,7 @@ exports.indexParks = async function (options) {
       await removeFromQueue(removed);
     } catch (error) {
       logger.error(`Failed while removing queued 'elastic remove park' tasks: ${error}`);
-      return;;
+      return;
     }
   } while (removed.length > 0);
 

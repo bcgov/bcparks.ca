@@ -9,6 +9,7 @@ const { deleteParkIndex } = require('./elasticsearch/scripts/deleteParkIndex');
 const { queueAll } = require('./elasticsearch/scripts/queueAllParks');
 const { populateGeoShapes } = require('./elasticsearch/scripts/populateGeoShapes');
 const { triggerAdvisories } = require('./advisory-scheduling/scripts/triggerScheduled');
+const { sendAdvisoryEmails } = require('./email-alerts/scripts/sendAdvisoryEmails');
 
 (async () => {
   dotenv.config({
@@ -96,6 +97,19 @@ const { triggerAdvisories } = require('./advisory-scheduling/scripts/triggerSche
     await triggerAdvisories();
   }
 
+  /**
+   * Trigger sending queued emails
+   * (manually triggered via OpenShift terminal / mainly for debugging purposes)
+   */
+  if (scriptKeySpecified("emailsend")) {
+    logger.info("Sending queued emails");
+    await sendAdvisoryEmails([]);
+  }
+  if (scriptKeySpecified("emailtest")) {
+    logger.info("Writing rendered email templates to 'mail-test-[#].html'");
+    await sendAdvisoryEmails([]);
+  }
+
   if (noCommandLineArgs() || scriptKeySpecified("help")) {
     console.log("\nUsage: \n");
     console.log("node manage.js [command]\n");
@@ -108,5 +122,7 @@ const { triggerAdvisories } = require('./advisory-scheduling/scripts/triggerSche
     console.log("geoshapes   : populate the geo-shapes collection in Strapi");
     console.log("[integer]   : re-index a specified protectedAreaId\n");
     console.log("advisories  : trigger scheduled public advisory publishing & expiry");
+    console.log("emailsend   : send queued emails");
+    console.log("emailtest   : test email template (writes to file 'mail-test-[#].html')");
   }
 })();

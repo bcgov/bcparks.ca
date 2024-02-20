@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title><%= title %></title>
+  <style type="text/css">
+    .logo-subheading-text {
+      display: inline-block;
+      font-size: 16pt;
+      white-space: nowrap;
+      margin-top: 10px;
+      color: #003366;
+    }
+
+    .urgency-level {
+      font-size: 13pt;
+      margin-bottom: 12px;
+    }
+
+    .advisory-headline {
+      font-size: 18pt;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .affected-area-pill {
+      background-color: #003366;
+      color: #FFFFFF;
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 15px;
+      margin-right: 10px;
+      margin-bottom: 4px;
+    }
+
+    .parks-affected-count {
+      white-space: nowrap;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .manage-advisory-button {
+      background-color: #003366;
+      color: #FFFFFF !important;
+      display: inline-block;
+      padding: 10px 10px;
+      border-radius: 3px;
+      margin: 20px 10px 0 0;
+      text-decoration: none;
+    }
+
+    .manage-advisory-button:active,
+    .manage-advisory-button:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body style="font-family: Arial, Helvetica;">
+  <img src="cid:logo.png" alt="BC Parks" title="BC Parks Logo" style="margin: 8px 16px 0px 0px;" width="150" />
+
+  <span class="logo-subheading-text">
+    Staff web portal
+  </span>
+
+  <p style="font-size: 16pt">
+    <%= title %>
+  </p>
+
+  <p class="urgency-level">
+    <strong>Urgency level:</strong>
+    <%= data.urgency.urgency.toLowerCase() %>
+  </p>
+
+  <p class="advisory-headline">
+    <%= data.title %>
+  </p>
+
+  <% data.fireCentres.forEach((val) => { %>
+  <div class="affected-area-pill">
+    <%= val.fireCentreName %>
+  </div>
+  <% }) %>
+
+  <% data.fireZones.forEach((val) => { %>
+  <div class="affected-area-pill">
+    <%= val.fireZoneName %>
+  </div>
+  <% }) %>
+
+  <% data.regions.forEach((val)=> { %>
+  <div class="affected-area-pill">
+    <%= val.regionName %> Region
+  </div>
+  <% }) %>
+
+  <% data.sections.forEach((val) => { %>
+  <div class="affected-area-pill">
+    <%= val.sectionName %> Section
+  </div>
+  <% }) %>
+
+  <% data.managementAreas.forEach((val) => { %>
+  <div class="affected-area-pill">
+    <%= val.managementAreaName %> Management Area
+  </div>
+  <% }) %>
+
+  <% if (data.fireCentres.length || data.fireZones.length || data.regions.length || data.sections.length || data.managementAreas.length) { %>
+  <span class="parks-affected-count">
+    <%= data.protectedAreas.length %> parks affected
+  </span>
+  <% } else { %>
+  <p style="margin-top: 4px">
+    <% data.protectedAreas.forEach((val) => { %>
+    <a style="margin-right: 4px" href="https://bcparks.ca/<%= val.slug %>">
+      <%= val.protectedAreaName %>
+    </a>
+    <% }) %>
+    <% data.sites.forEach((val) => { %>
+    <a style="margin-right: 4px" href="https://bcparks.ca/<%= val.protectedArea.slug %>/<%= val.slug %>">
+      <%= val.siteName %>
+    </a>
+    <% }) %>
+  </p>
+  <% } %>
+
+
+  <div style="margin-top: 32px">
+    <%- data.description %>
+
+    <% data.standardMessages.forEach((val)=>{ %>
+    <%- val.description %>
+    <% }) %>
+  </div>
+
+  <p style="margin-top: 32px">
+    <% data.links.forEach((val) => { %>
+    <a href="<%= val.url %>">
+      <%= val.title %>
+      <% if (val.url.toLowerCase().endsWith(".pdf")) { %>
+      [PDF]
+      <% } else {%>
+      [<%= val.type.type %>]
+      <% } %>
+    </a>
+    <br />
+    <% }) %>
+  </p>
+
+  <p style="margin-top: 32px">
+    Posted <%= postedDate %> at <%= postedTime %>
+  </p>
+
+  <hr />
+
+  <% if (data.note) { %>
+  <p style="margin-top: 32px">
+    <strong>Notes:</strong>
+    <%- data.note %>
+  </p>
+  <% } %>
+
+  <a href="https://<%= environment %>staff.bcparks.ca/bcparks/advisory-summary/<%= advisoryNumber %>" class="manage-advisory-button">Manage Advisory</a>
+
+</body>
+
+</html>
