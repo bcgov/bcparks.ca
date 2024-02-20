@@ -2,11 +2,11 @@ const schedule = require("node-schedule");
 const dotenv = require('dotenv');
 const { exec } = require("child_process");
 
-const { getLogger } = require('./utils/logging');
-const { indexParks } = require('./scripts/indexParks');
-const { createParkIndex, parkIndexExists } = require('./scripts/createParkIndex');
-const { queueAll } = require('./scripts/queueAllParks');
-const { populateGeoShapes } = require('./scripts/populateGeoShapes');
+const { getLogger } = require('./shared/logging');
+const { indexParks } = require('./elasticsearch/scripts/indexParks');
+const { createParkIndex, parkIndexExists } = require('./elasticsearch/scripts/createParkIndex');
+const { queueAll } = require('./elasticsearch/scripts/queueAllParks');
+const { populateGeoShapes } = require('./elasticsearch/scripts/populateGeoShapes');
 
 (async () => {
   dotenv.config({
