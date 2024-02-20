@@ -1,7 +1,7 @@
 const axios = require('axios');
 const qs = require('qs');
-const { getLogger } = require('../utils/logging');
-const { cmsAxios } = require('../utils/axiosConfig');
+const { getLogger } = require('../../shared/logging');
+const { cmsAxios } = require('../../shared/axiosConfig');
 
 /**
  * Populates the Geo-shapes collection in Strapi

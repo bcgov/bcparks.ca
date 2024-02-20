@@ -31,7 +31,7 @@ jobs:
           oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi-main:${{ env.SHORT_SHA }} strapi-main:${{ env.RELEASE_VERSION }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag maintenance-main:${{ env.SHORT_SHA }} maintenance-main:${{ env.RELEASE_VERSION }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag etl-main:${{ env.SHORT_SHA }} etl-main:${{ env.RELEASE_VERSION }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag elasticmanager-main:${{ env.SHORT_SHA }} elasticmanager-main:${{ env.RELEASE_VERSION }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag scheduler-main:${{ env.SHORT_SHA }} scheduler-main:${{ env.RELEASE_VERSION }}
 
       - name: Delete images tags with commit hash
         run: |
@@ -40,4 +40,4 @@ jobs:
           oc -n ${{ env.TOOLS_NAMESPACE }} tag -d strapi-main:${{ env.SHORT_SHA }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag -d maintenance-main:${{ env.SHORT_SHA }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag -d etl-main:${{ env.SHORT_SHA }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d elasticmanager-main:${{ env.SHORT_SHA }}
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d scheduler-main:${{ env.SHORT_SHA }}

@@ -12,7 +12,7 @@ images:
     tag: test
   etl:
     tag: test
-  elasticmanager:
+  scheduler:
     tag: test
 
 cms:

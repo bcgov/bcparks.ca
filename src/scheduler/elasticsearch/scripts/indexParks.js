@@ -1,9 +1,9 @@
 const qs = require('qs');
-const { getLogger } = require('../utils/logging');
+const { getLogger } = require('../../shared/logging');
 const { createElasticPark } = require('../transformers/park/main');
-const { readQueue, removeFromQueue } = require('../utils/taskQueue');
+const { readQueue, removeFromQueue } = require('../../shared/taskQueue');
 const elasticClient = require('../utils/elasticClient');
-const { cmsAxios } = require("../utils/axiosConfig");
+const { cmsAxios } = require("../../shared/axiosConfig");
 
 exports.indexParks = async function (options) {
 

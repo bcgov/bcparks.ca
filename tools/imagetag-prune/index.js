@@ -35,8 +35,8 @@ const IMAGESTRAMS_TO_CLEAN = splitAndTrim(process.env.IMAGESTRAMS_TO_CLEAN) || [
   "public-main",
   "strapi-develop",
   "strapi-main",
-  "elasticmanager-main",
-  "elasticmanager-develop"
+  "scheduler-main",
+  "scheduler-develop"
 ];
 
 // Always keep the last "NUM_RELEASES_TO_KEEP" tags

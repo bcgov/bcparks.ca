@@ -1,13 +1,13 @@
 
 const dotenv = require('dotenv');
 
-const { scriptKeySpecified, idSpecified, noCommandLineArgs } = require('./utils/commandLine');
-const { getLogger } = require('./utils/logging');
-const { indexParks } = require('./scripts/indexParks');
-const { createParkIndex, parkIndexExists } = require('./scripts/createParkIndex');
-const { deleteParkIndex } = require('./scripts/deleteParkIndex');
-const { queueAll } = require('./scripts/queueAllParks');
-const { populateGeoShapes } = require('./scripts/populateGeoShapes');
+const { scriptKeySpecified, idSpecified, noCommandLineArgs } = require('./shared/commandLine');
+const { getLogger } = require('./shared/logging');
+const { indexParks } = require('./elasticsearch/scripts/indexParks');
+const { createParkIndex, parkIndexExists } = require('./elasticsearch/scripts/createParkIndex');
+const { deleteParkIndex } = require('./elasticsearch/scripts/deleteParkIndex');
+const { queueAll } = require('./elasticsearch/scripts/queueAllParks');
+const { populateGeoShapes } = require('./elasticsearch/scripts/populateGeoShapes');
 
 (async () => {
   dotenv.config({

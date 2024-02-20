@@ -1,4 +1,4 @@
-const { getLogger } = require('../utils/logging');
+const { getLogger } = require('../../shared/logging');
 const elasticClient = require('../utils/elasticClient');
 
 /**

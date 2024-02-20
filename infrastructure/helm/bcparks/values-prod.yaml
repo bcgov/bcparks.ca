@@ -12,7 +12,7 @@ images:
     tag: prod
   etl:
     tag: prod
-  elasticmanager:
+  scheduler:
     tag: prod
 
 cms:

@@ -1,5 +1,5 @@
-const { cmsAxios } = require("../utils/axiosConfig");
-const { getLogger } = require('../utils/logging');
+const { cmsAxios } = require("./axiosConfig");
+const { getLogger } = require('./logging');
 const qs = require('qs');
 
 const readQueue = async function (actionName, options) {

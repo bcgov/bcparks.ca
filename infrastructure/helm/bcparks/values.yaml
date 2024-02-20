@@ -35,8 +35,8 @@ images:
   etl:
     name: image-registry.openshift-image-registry.svc:5000/61d198-tools/etl-main
     tag: latest
-  elasticmanager:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/elasticmanager-main
+  scheduler:
+    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/scheduler-main
     tag: latest
 
 cms:
@@ -273,10 +273,10 @@ etl:
       cpu: 250m
       memory: 250Mi
 
-elasticmanager:
+scheduler:
   imagePullPolicy: Always
 
-  componentName: elasticmanager
+  componentName: scheduler
 
   env:
     batchSize: 20

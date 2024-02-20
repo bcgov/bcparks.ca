@@ -1,5 +1,5 @@
-const { cmsAxios } = require("../utils/axiosConfig");
-const { getLogger } = require('../utils/logging');
+const { cmsAxios } = require("../../shared/axiosConfig");
+const { getLogger } = require('../../shared/logging');
 
 /**
  * Adds all protectedAreas to the queuedTasks so they will 
