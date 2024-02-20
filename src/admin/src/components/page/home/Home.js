@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { useKeycloak } from "@react-keycloak/web";
 import { Button } from  "../../shared/button/Button";
 import Header from "../../composite/header/Header";
-import styles from "./Home.css";
+import "./Home.css";
 import config from "../../../utils/config";
 
 export default function Home({ page: { setError } }) {
@@ -31,7 +31,7 @@ export default function Home({ page: { setError } }) {
   return (
     <main>
       <Header />
-      <div className={styles.Home} data-testid="Home">
+      <div className="Home" data-testid="Home">
         <div className="container hm-container">
           <h1>Staff web portal</h1>
           <h3>Please log in to continue</h3>

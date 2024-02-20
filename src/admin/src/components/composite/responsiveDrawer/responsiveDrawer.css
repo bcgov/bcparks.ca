@@ -33,5 +33,7 @@
 }
 
 .responsive-drawer .MuiList-root .MuiListItem-root {
-  border-bottom: 1px solid #e0e0e0;
+  color: var(--color-blue) !important;
+  border-bottom: 1px solid var(--color-light-grey);
+  padding: 16px 24px;
 }

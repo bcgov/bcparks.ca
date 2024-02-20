@@ -416,7 +416,6 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
   return (
     <main>
       <Header />
-      <br />
       <div className="ParkInfo" data-testid="ParkInfo">
         <div className="container">
           {isLoading && (
@@ -429,7 +428,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
               <div className="container-fluid">
                 <Button
                   label="Back"
-                  styling="bcgov-normal-white btn mt10"
+                  styling="bcgov-normal-white btn mt-4"
                   onClick={() => {
                     setToDashboard(true);
                   }}

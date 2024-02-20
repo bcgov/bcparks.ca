@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -20,12 +21,12 @@ const ResponsiveDrawer = () => {
   const items = [
     {
       "text": "Advisories",
-      "link": "/advisories "
+      "link": "/bcparks/dashboard"
     }, {
       "text": "Park Acess Status",
       "link": "/park-access-status"
     }, {
-      "text": "Activities & Facilities ",
+      "text": "Activities & Facilities",
       "link": "/activities-facilities"
     }
   ]
@@ -34,7 +35,7 @@ const ResponsiveDrawer = () => {
     <div>
       <List>
         {items.map((item, index) => (
-          <ListItem button key={index}>
+          <ListItem key={index} button component={Link} to={item.link}>
             <ListItemText primary={item.text} />
           </ListItem>
         ))}

@@ -84,7 +84,7 @@
   font-weight: bold;
   font-size: 1.125rem;
   color: var(--color-grey);
-  background-color: var(--color-light-grey);
+  background-color: var(--color-background-grey);
   margin: 32px 0;
   padding: 4px 16px !important;
 }

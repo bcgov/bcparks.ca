@@ -1036,7 +1036,6 @@ export default function Advisory({
   return (
     <main>
       <Header />
-      <br />
       <div className="Advisory" data-testid="Advisory">
         <div className="container">
           {isLoadingPage && (
@@ -1049,7 +1048,7 @@ export default function Advisory({
               <div className="container-fluid">
                 <button
                   type="button"
-                  className="btn btn-link btn-back"
+                  className="btn btn-link btn-back mt-4"
                   onClick={() => {
                     setToBack();
                     sessionStorage.clear();

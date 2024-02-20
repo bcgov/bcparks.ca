@@ -57,7 +57,6 @@
   .app-tab .MuiTabs-scroller,
   .app-tab .MuiTabs-scrollable {
     padding: 0px !important;
-    padding-top: 30px !important;
   }
   .app-tab .MuiTab-wrapper {
     text-align: center !important;
@@ -76,11 +75,5 @@
 
   .app-tab .MuiButtonBase-root {
     width: 100% !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .app-tabs {
-    padding-top: 80px;
   }
 }
