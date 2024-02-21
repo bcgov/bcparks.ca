@@ -8,6 +8,7 @@ const { createParkIndex, parkIndexExists } = require('./elasticsearch/scripts/cr
 const { deleteParkIndex } = require('./elasticsearch/scripts/deleteParkIndex');
 const { queueAll } = require('./elasticsearch/scripts/queueAllParks');
 const { populateGeoShapes } = require('./elasticsearch/scripts/populateGeoShapes');
+const { triggerAdvisories } = require('./advisory-scheduling/scripts/triggerScheduled');
 
 (async () => {
   dotenv.config({
@@ -59,6 +60,7 @@ const { populateGeoShapes } = require('./elasticsearch/scripts/populateGeoShapes
   * (manually triggered via OpenShift terminal)
    */
   if (scriptKeySpecified("geoshapes")) {
+    logger.info("Populating geoshapes")
     await populateGeoShapes();
   }
 
@@ -81,19 +83,30 @@ const { populateGeoShapes } = require('./elasticsearch/scripts/populateGeoShapes
    * (manually triggered via terminal / mainly for local debugging)
    */
   if (idSpecified()) {
+    logger.info(`Indexing park id #${process.argv[2]}`);
     await indexParks({ id: Number(process.argv[2]) });
   }
 
+  /**
+   * Trigger scheduled public advisory publishing & expiry
+   * (manually triggered via OpenShift terminal / mainly for debugging purposes)
+   */
+  if (scriptKeySpecified("advisories")) {
+    logger.info("Triggering scheduled public advisory publishing & expiry");
+    await triggerAdvisories();
+  }
+
   if (noCommandLineArgs() || scriptKeySpecified("help")) {
-    console.log("\nUsage: \n")
-    console.log("node manage.js [command]\n")
-    console.log("Command options:\n")
-    console.log("help        : show this screen")
-    console.log("reindex     : re-index all parks")
-    console.log("rebuild     : re-create the park index and re-index all parks")
-    console.log("deleteindex : delete the park index")
-    console.log("once        : run the cron task one time")
-    console.log("geoshapes   : populate the geo-shapes collection in Strapi")
-    console.log("[integer]   : re-index a specified protectedAreaId\n")
+    console.log("\nUsage: \n");
+    console.log("node manage.js [command]\n");
+    console.log("Command options:\n");
+    console.log("help        : show this screen");
+    console.log("reindex     : re-index all parks");
+    console.log("rebuild     : re-create the park index and re-index all parks");
+    console.log("deleteindex : delete the park index");
+    console.log("once        : run the cron task one time");
+    console.log("geoshapes   : populate the geo-shapes collection in Strapi");
+    console.log("[integer]   : re-index a specified protectedAreaId\n");
+    console.log("advisories  : trigger scheduled public advisory publishing & expiry");
   }
 })();

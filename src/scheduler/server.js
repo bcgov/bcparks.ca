@@ -7,6 +7,7 @@ const { indexParks } = require('./elasticsearch/scripts/indexParks');
 const { createParkIndex, parkIndexExists } = require('./elasticsearch/scripts/createParkIndex');
 const { queueAll } = require('./elasticsearch/scripts/queueAllParks');
 const { populateGeoShapes } = require('./elasticsearch/scripts/populateGeoShapes');
+const { triggerAdvisories } = require('./advisory-scheduling/scripts/triggerScheduled');
 
 (async () => {
   dotenv.config({
@@ -35,6 +36,7 @@ const { populateGeoShapes } = require('./elasticsearch/scripts/populateGeoShapes
     }
     try {
       logger.info("Starting cron");
+      await triggerAdvisories();
       await populateGeoShapes({ silent: true });
       if (!(await parkIndexExists())) {
         logger.warn(
