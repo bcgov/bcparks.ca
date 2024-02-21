@@ -158,11 +158,13 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
         <Row className="discpver-parks mt-3">
           <Col className="discpver-parks__col">
             <div className="discpver-parks__col--left">
-              <img
-                src={DiscoverParksLogo}
-                alt="Discover Parks Logo"
-                className="discover-parks-logo"
-              />
+              <Link href={`https://www.discoverparks.ca/parks/${slug}`} target="_blank" rel="noopener noreferrer" className="d-inline-block">
+                <img
+                  src={DiscoverParksLogo}
+                  alt="Discover Parks Logo"
+                  className="discover-parks-logo"
+                />
+              </Link>
             </div>
             <div>
               For more guided and self-guided activities,
