@@ -318,7 +318,7 @@ const MegaMenu = ({ content, menuMode }) => {
           <nav className="header-nav">
             <Link to="/">
               <StaticImage
-                src="../images/logo/BCID_BCParks_Horiz_Reg-Text_RGB_rev-cropped.svg"
+                src="../images/logo/BCParks_Primary_Reversed-cropped.svg"
                 placeholder="none"
                 loading="eager"
                 height={64}
