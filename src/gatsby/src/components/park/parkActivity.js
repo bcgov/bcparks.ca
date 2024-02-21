@@ -158,7 +158,7 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
         <Row className="discpver-parks mt-3">
           <Col className="discpver-parks__col">
             <div className="discpver-parks__col--left">
-              <Link href={`https://www.discoverparks.ca/parks/${slug}`} target="_blank" rel="noopener noreferrer" className="d-inline-block">
+              <Link href={`https://www.discoverparks.ca/parks/${slug}`} target="_blank" rel="noopener" className="d-inline-block">
                 <img
                   src={DiscoverParksLogo}
                   alt="Discover Parks Logo"
@@ -168,9 +168,9 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
             </div>
             <div>
               For more guided and self-guided activities,
-              visit <Link href={`https://www.discoverparks.ca/parks/${slug}`} target="_blank" rel="noopener noreferrer">
+              visit <Link href={`https://www.discoverparks.ca/parks/${slug}`} target="_blank" rel="noopener">
                 discoverparks.ca</Link>. Discover Parks is developed
-              by <Link href="https://bcparksfoundation.ca" target="_blank" rel="noopener noreferrer">
+              by <Link href="https://bcparksfoundation.ca" target="_blank" rel="noopener">
                 BC Parks Foundation</Link>, our official charitable partner.
             </div>
           </Col>
