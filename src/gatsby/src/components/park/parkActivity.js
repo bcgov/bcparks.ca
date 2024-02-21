@@ -165,10 +165,10 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
               />
             </div>
             <div>
-              For more guided and self-guided activities,
-              visit <Link href={`https://www.discoverparks.ca/parks/${slug}`} target="_blank" rel="noopener noreferrer">
+              For more events and activities happening at this park,
+              visit <Link href={`https://www.discoverparks.ca/parks/${slug}`} target="_blank" rel="noopener">
                 discoverparks.ca</Link>. Discover Parks is developed
-              by <Link href="https://bcparksfoundation.ca" target="_blank" rel="noopener noreferrer">
+              by <Link href="https://bcparksfoundation.ca" target="_blank" rel="noopener">
                 BC Parks Foundation</Link>, our official charitable partner.
             </div>
           </Col>
