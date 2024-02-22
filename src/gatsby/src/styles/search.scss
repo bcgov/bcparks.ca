@@ -314,15 +314,26 @@ h3.subtitle {
   }
 
   .park-filter-chip {
-    margin: 0 4px 8px 0 !important;
-    min-width: 130px;
+    background-color: $colorBlue !important;
+    border: none;
+    margin: 0 8px 8px 0 !important;
+    &:hover,
+    &:focus {
+      background-color: $colorBlueMed !important;
+    }
+    &:focus-visible {
+      outline: 2px solid $colorBlueMed;
+      outline-offset: 2px;
+    }
 
     .MuiChip-label {
-      text-align: left !important;
+      color: $colorWhite !important;
+      padding: 0 14px !important;
     }
 
     .MuiChip-deleteIcon {
-      margin-left: 5px;
+      color: $colorWhite !important;
+      margin-right: 8px;
     }
   }
 
@@ -937,15 +948,6 @@ div[class$="-singleValue"] {
     padding-left: 20px !important;
   }
 
-  .MuiPaginationItem-page {
-    color: $colorBlue;
-  }
-
-  .MuiPaginationItem-root {
-    border-radius: 0px !important;
-    background-color: $colorWhite !important;
-  }
-
   .park-content {
     display: flex;
     align-content: space-between;
@@ -1021,81 +1023,9 @@ div[class$="-singleValue"] {
     }
   }
 
-  .MuiPaginationItem-page.Mui-selected {
-    background-color: $colorBlue !important;
-    color: $colorWhite !important;
-  }
-
-  .MuiPaginationItem-page.Mui-selected:hover {
-    background-color: #00468b !important;
-  }
-
-  .MuiChip-outlined {
-    background-color: $colorBlue !important;
-    border-radius: 5000px !important;
-    &:hover,
-    &:focus {
-      background-color: #00468b !important;
-    }
-    &:focus-visible {
-      outline: 2px solid #00468b;
-      outline-offset: 2px;
-    }
-  }
-
-  .MuiChip-label {
-    color: $colorWhite !important;
-  }
-
-  .MuiPaginationItem-page.Mui-disabled {
-    opacity: 0.5 !important;
-  }
-
-  .MuiPaginationItem-ellipsis {
-    background-color: transparent !important;
-  }
-
-  .search-icon {
-    color: #00468b !important;
-  }
-
-  .close-icon {
-    color: $colorWhite !important;
-  }
-
-  .close-icon:hover {
-    color: $colorBackgroundGrey !important;
-  }
-
-  .close-icon {
-    width: 17px !important;
-  }
-
-  .clear-icon-button {
-    height: auto !important;
-    .clear-icon {
-      &:hover {
-        cursor: pointer;
-      }
-    }
-  }
-
-  .large-pagination {
-    display: block !important;
-  }
-
-  .small-pagination {
-    display: none !important;
-  }
-
   .MuiPaper-elevation1 {
     box-shadow: none !important;
     border-radius: 10px !important;
-  }
-
-  .park-quick-link {
-    font-size: 0.875rem !important;
-    padding: 0px !important;
   }
 
   @media (min-width: 1200px) {
@@ -1105,13 +1035,6 @@ div[class$="-singleValue"] {
   }
 
   @media (max-width: 575.98px) {
-    .large-pagination {
-      display: none !important;
-    }
-
-    .small-pagination {
-      display: block !important;
-    }
     .small-m-auto {
       margin: auto !important;
     }
