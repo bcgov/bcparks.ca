@@ -8,6 +8,7 @@ import { Link } from "@mui/material"
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
 
+import DiscoverParksLogo from "../../images/discover-parks-instagram-dark-green-icon-with-text.png"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
@@ -70,7 +71,7 @@ export const AccordionList = ({ eventKey, activity, open }) => {
   )
 }
 
-export default function ParkActivity({ data }) {
+export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
   const [activityData] = useState(
     JSON.parse(JSON.stringify(data)) // deep copy
   )
@@ -153,6 +154,26 @@ export default function ParkActivity({ data }) {
           ))}
         </Col>
       </Row>
+      {hasDiscoverParksLink && (
+        <Row className="discpver-parks mt-3">
+          <Col className="discpver-parks__col">
+            <div className="discpver-parks__col--left">
+              <img
+                src={DiscoverParksLogo}
+                alt="Discover Parks Logo"
+                className="discover-parks-logo"
+              />
+            </div>
+            <div>
+              For more events and activities happening at this park,
+              visit <Link href={`https://www.discoverparks.ca/parks/${slug}`} target="_blank" rel="noopener">
+                discoverparks.ca</Link>. Discover Parks is developed
+              by <Link href="https://bcparksfoundation.ca" target="_blank" rel="noopener">
+                BC Parks Foundation</Link>, our official charitable partner.
+            </div>
+          </Col>
+        </Row>
+      )}
     </div>
   )
 }

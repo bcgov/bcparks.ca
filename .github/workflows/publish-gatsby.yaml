@@ -6,20 +6,22 @@ on:
   workflow_dispatch:
     inputs:
       branchName:
-        description: "Rebuild public for which branch? (develop, main)"
+        description: "Rebuild public for which branch?"
         default: 'main'
+        type: choice
         required: true
         options:
         - develop
         - main
       buildEnv:
-        description: "Rebuild public for which environment? (dev, test, prod)"
+        description: "Rebuild public for which environment?"
         default: 'prod'
+        type: choice
         required: true
         options:
-        - dev
-        - test
         - prod
+        - test
+        - dev
 
 concurrency:
   group: publish-gatsby-${{ github.event.client_payload.branch }}${{ github.event.inputs.branchName }}-${{ github.event.client_payload.env }}${{ github.event.inputs.buildEnv }}

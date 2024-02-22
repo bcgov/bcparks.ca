@@ -306,6 +306,10 @@
     },
     "searchTerms": {
       "type": "string"
+    },
+    "hasDiscoverParksLink": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
