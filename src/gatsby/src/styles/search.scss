@@ -198,7 +198,7 @@ h3.subtitle {
       align-items: center;
       justify-content: space-between;
       svg.MuiSvgIcon-root {
-        color: #656565;
+        color: $colorGreyMed;
         font-size: 1.25rem;
       }
     }
@@ -263,7 +263,7 @@ h3.subtitle {
     padding: 0px !important;
     margin-right: 10px;
     &.Mui-disabled {
-      color: #c7c7c7 !important;
+      color: $colorGreyLight !important;
       background-color: #e4e4e4;
     }
   }
@@ -392,7 +392,7 @@ div[class$="-singleValue"] {
       width: 100%;
       &.link-button {
         font-size: 1.125rem;
-        border: 1px solid #c7c7c7 !important;
+        border: 1px solid $colorGreyLight !important;
         margin-top: 8px;
         &:hover {
           color: $colorWhite !important;
@@ -414,7 +414,7 @@ div[class$="-singleValue"] {
   display: flex;
   justify-content: center;
   .load-more-button {
-    border: 1px solid #c7c7c7 !important;
+    border: 1px solid $colorGreyLight !important;
     @media screen and (min-width: $lgBreakpoint) {
       height: 50px !important;
       width: 200px !important;
@@ -699,7 +699,7 @@ div[class$="-singleValue"] {
   color: $colorBlue !important;
   cursor: pointer;
   svg.MuiSvgIcon-root {
-    color: #656565;
+    color: $colorGreyMed;
     font-size: 1.5rem;
     margin: 0 0 2px 8px;
   }
@@ -1354,7 +1354,7 @@ a.desktop-park-link {
   min-height: 332px;
   display: flex;
   align-items: center;
-  background-color: #C7E3FD;
+  background-color: $colorBlueLight;
   @media screen and (min-width: $mdBreakpoint) {
     min-height: 164px;
   }
@@ -1461,7 +1461,7 @@ a.desktop-park-link {
     }
   }
   .toast-body {
-    color: #656565;
+    color: $colorGreyMed;
     background-color: $colorWhite;
     padding: 0 16px 16px;
   }

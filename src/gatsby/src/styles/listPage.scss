@@ -81,6 +81,22 @@
       }
     }
   }
+  // table - overriding the bootstrap table class
+  .table {
+    thead {
+      th {
+        border-bottom: 2px solid $colorGreyLight !important;
+      }
+    }
+    .thead-light {
+      th {
+        border-color: $colorGreyLight !important;
+      }
+    }
+    td {
+      border-top: 1px solid $colorGreyLight !important;
+    }
+  }
 
   // card
   .card {

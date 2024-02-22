@@ -13,7 +13,7 @@
     border-color: $colorBlueMed !important;
     border-width: 1px !important;
     &.border-secondary {
-      border-color: #ced4da !important;
+      border-color: $colorGreyLight !important;
       border-width: 2px !important;
     }
 
@@ -105,7 +105,7 @@
 }
 
 .page-header--caption {
-  color: #656565;
+  color: $colorGreyMed;
   font-size: 0.9rem;
   margin-bottom: 60px;
 }

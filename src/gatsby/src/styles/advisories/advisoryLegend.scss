@@ -8,7 +8,7 @@
     line-height: 1rem;
 
     @include media-breakpoint-up(md) {
-      background: #f2f2f2;
+      background: $colorBackgroundGrey;
       height: 100%;
       margin: 2px;
       padding: 5% 5%;
