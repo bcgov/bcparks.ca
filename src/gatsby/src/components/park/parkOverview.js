@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 
 import { capitalizeFirstLetter } from "../../utils/helpers";
 
@@ -16,11 +16,33 @@ const classes = {
 export default function ParkOverview({ data: parkOverview, type }) {
   const [expanded, setExpanded] = useState(false)
   const [height, setHeight] = useState(0)
+  const [oldHash, setOldHash] = useState("");
   const ref = useRef(null)
 
+  const checkHash = useCallback(() => {
+    const hash = window.document.location.hash;
+    const idInOverview = !!window.document.querySelector(`#park-overview-container ${hash}`);
+    if (hash && idInOverview) {
+      setExpanded(true)
+    }
+  }, [setExpanded])
+
   useEffect(() => {
-    setHeight(ref.current.clientHeight)
-  }, [expanded])
+    // when the hash changes, check 
+    window.addEventListener("hashchange", function (e) {
+      checkHash();
+    })
+    checkHash();
+  }, [parkOverview, checkHash])
+
+  useEffect(() => {
+    setHeight(ref.current.clientHeight);
+    const hash = window.document.location.hash;
+    if (oldHash !== hash) {
+      window.document.getElementById(hash.slice(1)).scrollIntoView();
+      setOldHash(hash);
+    }
+  }, [expanded, oldHash, setOldHash])
 
   const isLong = height > 259
 
