@@ -34,14 +34,15 @@ const Seo = ({ description, title, keywords, image, children }) => {
       <title>{title + ' | ' + defaultTitle}</title>
       <meta name="description" content={metaDescription} />
       <meta name="keywords" content={metaKeywords} />
-      <meta name="og:title" content={title + ' | ' + defaultTitle} />
-      <meta name="og:description" content={metaDescription} />
-      <meta name="og:site_name" content={defaultTitle} />
-      <meta name="og:type" content="website" />
-      <meta name="og:image" content={metaImage} />
+      <meta property="og:title" content={title + ' | ' + defaultTitle} />
+      <meta property="og:description" content={metaDescription} />
+      <meta property="og:site_name" content={defaultTitle} />
+      <meta property="og:type" content="website" />
+      <meta property="og:image" content={metaImage} />
       <meta name="twitter:title" content={title + ' | ' + defaultTitle} />
       <meta name="twitter:description" content={metaDescription} />
-      <meta name="twitter:card" content={metaImage} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:image" content={metaImage} />
       {children}
     </>
   )
