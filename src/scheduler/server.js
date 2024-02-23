@@ -8,6 +8,7 @@ const { createParkIndex, parkIndexExists } = require('./elasticsearch/scripts/cr
 const { queueAll } = require('./elasticsearch/scripts/queueAllParks');
 const { populateGeoShapes } = require('./elasticsearch/scripts/populateGeoShapes');
 const { triggerAdvisories } = require('./advisory-scheduling/scripts/triggerScheduled');
+const { sendAdvisoryEmails } = require('./email-alerts/scripts/sendAdvisoryEmails');
 
 (async () => {
   dotenv.config({
@@ -15,6 +16,8 @@ const { triggerAdvisories } = require('./advisory-scheduling/scripts/triggerSche
   });
 
   const logger = getLogger();
+
+  let recentAdvisoryEmails = [];
 
   /**
    * Starts the cron job to reindex parks as entries are added to the queuedTasks 
@@ -25,7 +28,7 @@ const { triggerAdvisories } = require('./advisory-scheduling/scripts/triggerSche
 
   // record pod readiness for health checks when the cron job first starts
   // (use shell command to prevent file locking)
-  exec('date +%s > lastrun.txt')
+  exec('date +%s > lastrun.txt');
 
   // run every minute
   schedule.scheduleJob("strapi-cron", "*/1 * * * *", async () => {
@@ -37,6 +40,7 @@ const { triggerAdvisories } = require('./advisory-scheduling/scripts/triggerSche
     try {
       logger.info("Starting cron");
       await triggerAdvisories();
+      recentAdvisoryEmails = await sendAdvisoryEmails(recentAdvisoryEmails);
       await populateGeoShapes({ silent: true });
       if (!(await parkIndexExists())) {
         logger.warn(

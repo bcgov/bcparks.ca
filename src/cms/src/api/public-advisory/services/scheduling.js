@@ -4,10 +4,12 @@
  * public advisory scheduling service
  */
 
+const { queueAdvisoryEmail } = require("../../../helpers/taskQueue.js");
+
 module.exports = ({ strapi }) => ({
 
   expire: async (advisoryStatusMap) => {
-    let deletedAdvisoryCount = 0;
+    let expiredAdvisoryCount = 0;
 
     if (Object.keys(advisoryStatusMap).length > 0) {
       // fetch advisories to unpublish - public advisory table
@@ -32,7 +34,15 @@ module.exports = ({ strapi }) => ({
             publishedAt: null,
           }
         })
-          .then(() => { deletedAdvisoryCount++; })
+          .then(async (advisory) => {
+            expiredAdvisoryCount++;
+            await queueAdvisoryEmail(
+              "Expired advisory removed",
+              "An expired advisory was removed",
+              advisory.advisoryNumber,
+              "public-advisory-audit::services::scheduling::expire()"
+            );
+          })
           .catch((error) => {
             strapi.log.error(
               `error updating public-advisory #${advisory.advisoryNumber}`,
@@ -74,7 +84,7 @@ module.exports = ({ strapi }) => ({
         }
       });
     }
-    return deletedAdvisoryCount;
+    return expiredAdvisoryCount;
   },
   publish: async (advisoryStatusMap) => {
     if (Object.keys(advisoryStatusMap).length > 0) {
@@ -93,7 +103,7 @@ module.exports = ({ strapi }) => ({
       }
       );
 
-      let updatedCount = 0;
+      let publishedAdviosryCount = 0;
 
       // publish advisories - audit table
       draftAdvisoryToPublishAudit.forEach(async (advisory) => {
@@ -111,7 +121,14 @@ module.exports = ({ strapi }) => ({
           }
         }
         )
-          .then(() => { updatedCount++; })
+          .then(async (advisory) => {
+            publishedAdviosryCount++;
+            await queueAdvisoryEmail(
+              "Scheduled advisory posted",
+              "A scheduled advisory was posted",
+              advisory.advisoryNumber,
+              "public-advisory-audit::services::scheduling::publish()");
+          })
           .catch((error) => {
             strapi.log.error(
               `error updating public-advisory-audit #${advisory.advisoryNumber}`,
@@ -120,7 +137,7 @@ module.exports = ({ strapi }) => ({
           });
       });
 
-      return updatedCount;
+      return publishedAdviosryCount;
     }
   },
   getAdvisoryStatusMap: async () => {

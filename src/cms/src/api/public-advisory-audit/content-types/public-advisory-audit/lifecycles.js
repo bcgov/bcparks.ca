@@ -4,6 +4,8 @@
  * to customize this model
  */
 
+const { queueAdvisoryEmail } = require("../../../../helpers/taskQueue.js");
+
 const getNextAdvisoryNumber = async () => {
   const result = await strapi.db.query('api::public-advisory-audit.public-advisory-audit').findOne({
     orderBy: {
@@ -160,6 +162,27 @@ module.exports = {
     const newPublicAdvisoryAudit = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', ctx.result.id, {
       populate: "*"
     });
+
+    const newAdvisoryStatus = newPublicAdvisoryAudit.advisoryStatus?.code;
+
+    if (newAdvisoryStatus === "ARQ") {
+      await queueAdvisoryEmail(
+        "Approval requested",
+        "Approval requested for the following advisory",
+        newPublicAdvisoryAudit.advisoryNumber,
+        "public-advisory-audit::lifecycles::afterCreate()"
+      );
+    }
+
+    if (newAdvisoryStatus === "PUB" && newPublicAdvisoryAudit.isUrgentAfterHours) {
+      await queueAdvisoryEmail(
+        "After-hours advisory posted",
+        "An after-hours advisory was posted",
+        newPublicAdvisoryAudit.advisoryNumber,
+        "public-advisory-audit::lifecycles::afterCreate()"
+      );
+    }
+
     copyToPublicAdvisory(newPublicAdvisoryAudit);
   },
   beforeUpdate: async (ctx) => {
@@ -175,6 +198,9 @@ module.exports = {
 
     if (!oldPublicAdvisory) return;
     if (!oldPublicAdvisory.publishedAt) return;
+
+    // save the status of the old advisory so we can get it back in afterUpdate()
+    ctx.state.oldStatus = oldPublicAdvisory.advisoryStatus?.code;
 
     const oldAdvisoryStatus = oldPublicAdvisory.advisoryStatus
       ? oldPublicAdvisory.advisoryStatus.code
@@ -213,6 +239,31 @@ module.exports = {
     const publicAdvisoryAudit = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', ctx.result.id, {
       populate: "*"
     });
+
+    const oldAdvisoryStatus = ctx.state.oldStatus; // saved by beforeUpdate() above
+    const newAdvisoryStatus = publicAdvisoryAudit.advisoryStatus?.code;
+
+    if (newAdvisoryStatus === "ARQ" && oldAdvisoryStatus !== "ARQ") {
+      await queueAdvisoryEmail(
+        "Approval requested",
+        "Approval requested for the following advisory",
+        publicAdvisoryAudit.advisoryNumber,
+        "public-advisory-audit::lifecycles::afterUpdate()"
+      );
+    }
+
+    if (
+      newAdvisoryStatus === "PUB" && oldAdvisoryStatus !== "PUB" &&
+      publicAdvisoryAudit.modifiedByRole === "submitter" && publicAdvisoryAudit.isUrgentAfterHours
+    ) {
+      await queueAdvisoryEmail(
+        "After-hours advisory posted",
+        "An after-hours advisory was posted",
+        publicAdvisoryAudit.advisoryNumber,
+        "public-advisory-audit::lifecycles::afterUpdate()"
+      );
+    }
+
     copyToPublicAdvisory(publicAdvisoryAudit);
   },
 };

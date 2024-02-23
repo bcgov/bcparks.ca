@@ -193,6 +193,7 @@ bcparks.ca-scrape.laccdb
 **/yarn-error.log*
 
 **/cms/data/images/*
+**/scheduler/mail-test-**.html
 
 # Don't ignore .s2i bin
 !**/.s2i/bin/
