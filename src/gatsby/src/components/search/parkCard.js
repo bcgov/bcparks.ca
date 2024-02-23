@@ -7,7 +7,7 @@ import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
 
 import parksLogo from "../../images/Mask_Group_5.png"
-import campingIcon from "../../../static/icons/vehicle-accessible-camping.svg"
+import campingIcon from "../../../static/icons/frontcountry-camping.svg"
 import backcountryCampingIcon from "../../../static/icons/wilderness-camping.svg"
 import hikingIcon from "../../../static/icons/hiking.svg"
 import picincIcon from "../../../static/icons/picnic-areas.svg"
@@ -47,8 +47,8 @@ const FeatureIcons = ({ park }) => {
 
   return (
     <>
-      {campings.some(x => x.code === 'vehicle-accessible-camping') &&
-        <Icon src={campingIcon} label="Vehicle accesible camping" size={iconSize} />
+      {campings.some(x => x.code === 'frontcountry-camping') &&
+        <Icon src={campingIcon} label="Frontcountry camping" size={iconSize} />
       }
       {campings.some(x => x.code === 'backcountry-camping') &&
         <Icon src={backcountryCampingIcon} label="Backcountry camping" size={iconSize} />
