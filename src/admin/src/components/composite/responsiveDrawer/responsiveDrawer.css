@@ -1,0 +1,57 @@
+.responsive-drawer-container .MuiAppBar-colorPrimary {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.responsive-drawer-container .MuiToolbar-root {
+  padding: 0;
+}
+
+.responsive-drawer-container .MuiSvgIcon-root {
+  font-size: 2rem;
+}
+
+.responsive-drawer-container nav {
+  border-bottom: none !important;
+}
+
+.responsive-drawer.MuiDrawer-root {
+  top: 80px !important;
+}
+
+.responsive-drawer .MuiBackdrop-root {
+  top: 80px;
+}
+
+.responsive-drawer .MuiDrawer-paper {
+  width: 100%;
+  top: 80px;
+}
+
+.responsive-drawer .MuiList-root {
+  padding: 0;
+}
+
+.responsive-drawer .MuiList-root .MuiListItem-root {
+  color: var(--color-blue) !important;
+  border-bottom: 1px solid var(--color-light-grey);
+  padding: 16px 24px;
+}
+
+.responsive-drawer .MuiList-root .MuiListItem-root:last-child {
+  border-bottom: none;
+}
+
+.responsive-drawer .MuiList-root .MuiListItem-root .account-info-box {
+  text-align: left !important;
+}
+
+.responsive-drawer .MuiList-root .MuiListItem-root .account-info-box p,
+.responsive-drawer .MuiList-root .MuiListItem-root .account-info-box button {
+  font-size: 1rem !important;
+  color: var(--color-blue) !important;
+}
+
+.responsive-drawer .MuiList-root .MuiListItem-root .account-info-box p {
+  color: var(--color-grey) !important;
+}

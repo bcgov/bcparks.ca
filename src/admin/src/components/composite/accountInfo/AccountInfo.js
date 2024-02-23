@@ -7,22 +7,20 @@ import config from "../../../utils/config";
 const AccountInfo = () => {
   const { keycloak } = useKeycloak();
   return (
-    <div>
-      {keycloak && keycloak.authenticated && (
-        <div className="account-info-box">
-          <p>Welcome, {keycloak.tokenParsed.name}</p>
-          <Button
-            label="Logout"
-            styling="btn"
-            onClick={() => {
-              keycloak.logout({
-                redirectUri: `${config.REACT_APP_FRONTEND_BASE_URL}/bcparks`,
-              });
-            }}
-          />
-        </div>
-      )}
-    </div>
+    keycloak && keycloak.authenticated && (
+      <div className="account-info-box">
+        <p>{keycloak.tokenParsed.name}</p>
+        <Button
+          label="Logout"
+          styling="btn"
+          onClick={() => {
+            keycloak.logout({
+              redirectUri: `${config.REACT_APP_FRONTEND_BASE_URL}/bcparks`,
+            });
+          }}
+        />
+      </div>
+    )
   );
 };
 

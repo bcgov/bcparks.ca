@@ -221,7 +221,6 @@ export default function AdvisorySummary({
   return (
     <main>
       <Header />
-      <br />
       <div className="AdvisorySummary" data-testid="AdvisorySummary">
         <div className="container">
           {isLoadingPage && (
@@ -235,7 +234,7 @@ export default function AdvisorySummary({
                 <div className="container-fluid">
                   <button
                     type="button"
-                    className="btn btn-link btn-back"
+                    className="btn btn-link btn-back mt-4"
                     onClick={() => {
                       setToDashboard(true);
                     }}>
