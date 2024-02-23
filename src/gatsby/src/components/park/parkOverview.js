@@ -28,7 +28,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
   }, [setExpanded])
 
   useEffect(() => {
-    // when the user click an anchor link, check if they are navigating to something in the 
+    // when the user clicks an anchor link, check if they are navigating to something in the 
     // park overview section and expand the section if it's collapsed
     window.addEventListener("hashchange", function (e) {
       checkHash();
