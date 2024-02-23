@@ -1,49 +1,48 @@
 .navbar > .container-fluid {
   width: 95% !important;
-  justify-content: inherit !important;
+  justify-content: space-between !important;
   padding: 0px !important;
 }
 
 .navbar {
-  min-height: 130px !important;
+  min-height: 120px !important;
+}
+
+.navbar-brand {
+  display: flex !important;
+  align-items: baseline;
+  margin: 0px !important;
+  padding: 0px !important;
 }
 
 .pointer {
   cursor: pointer;
 }
 
-.img-fluid {
-  padding-top: 15px !important;
-}
-
-.nav-box {
-  display: flex !important;
-}
-
 .nav-title {
-  margin-top: auto !important;
-  margin-bottom: -15px !important;
   font-size: 30px !important;
-  margin-left: 20px !important;
+  margin-left: 32px !important;
 }
 
-@media (max-width: 575.98px) {
-  .navbar > .container-fluid {
-    display: block !important;
-    flex-flow: row nowrap !important;
-    justify-content: flex-start !important;
+@media (max-width: 768px) {
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
   }
-  .nav-box {
-    display: block !important;
-    text-align: center !important;
+
+  .navbar {
+    min-height: 80px !important;
   }
-  .nav-link {
-    padding: 0px !important;
+
+  .navbar-brand {
+    align-items: center;
   }
+
   .nav-title {
     font-size: 20px !important;
-    display: block !important;
-    margin: 0px !important;
-    padding-top: 15px !important;
+    margin-left: 16px !important;
   }
 }

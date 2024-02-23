@@ -9,6 +9,8 @@
 }
 
 .account-info-box button {
+  min-width: auto;
+  min-height: auto;
   color: #fff !important;
   padding: 0px !important;
   text-align: right !important;
