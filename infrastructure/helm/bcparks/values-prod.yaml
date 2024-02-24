@@ -79,3 +79,7 @@ public:
 etl:
   env:
     parkNamesApi: https://data.bcparks.ca/api/parks/names?status=established
+
+scheduler:
+  env:
+    emailEnabled: true

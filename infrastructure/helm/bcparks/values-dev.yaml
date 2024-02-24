@@ -13,3 +13,8 @@ admin:
 
 patroni:
   replicas: 1
+
+scheduler:
+  env:
+    emailEnabled: true
+    emailRecipient: manuji@oxd.com,mike@oxd.com
