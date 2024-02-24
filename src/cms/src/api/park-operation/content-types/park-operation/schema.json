@@ -39,16 +39,16 @@
       "type": "boolean"
     },
     "reservationUrl": {
-      "type": "string"
+      "type": "text"
     },
     "backcountryReservationUrl": {
-      "type": "string"
+      "type": "text"
     },
     "backcountryPermitUrl": {
-      "type": "string"
+      "type": "text"
     },
     "dayUsePassUrl": {
-      "type": "string"
+      "type": "text"
     },
     "hasParkGate": {
       "type": "boolean"
