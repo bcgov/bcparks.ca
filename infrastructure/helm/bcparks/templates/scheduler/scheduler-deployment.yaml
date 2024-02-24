@@ -50,11 +50,11 @@ spec:
             - name: GEOSHAPE_URL
               value: {{ .Values.scheduler.env.shapeDataApi | quote }}
             - name: EMAIL_ENABLED
-              value: {{ .Values.scheduler.env.emailEnabled }}
+              value: {{ .Values.scheduler.env.emailEnabled | quote }}
             - name: EMAIL_SERVER
               value: {{ .Values.scheduler.env.emailServer }}
             - name: EMAIL_PORT
-              value: {{ .Values.scheduler.env.emailPort }}
+              value: {{ .Values.scheduler.env.emailPort | quote }}
             - name: EMAIL_SENDER
               value: {{ .Values.scheduler.env.emailSender }}
             - name: EMAIL_RECIPIENT
