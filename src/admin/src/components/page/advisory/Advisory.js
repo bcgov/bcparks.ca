@@ -75,14 +75,12 @@ export default function Advisory({
     moment().tz("America/Vancouver").toDate()
   );
   const [displayAdvisoryDate, setDisplayAdvisoryDate] = useState(true);
-  const [startDate, setStartDate] = useState(moment().tz("America/Vancouver").toDate());
+  const [startDate, setStartDate] = useState(null);
   const [displayStartDate, setDisplayStartDate] = useState(false);
   const [endDate, setEndDate] = useState(null);
   const [displayEndDate, setDisplayEndDate] = useState(false);
   const [expiryDate, setExpiryDate] = useState(null);
-  const [updatedDate, setUpdatedDate] = useState(
-    moment().tz("America/Vancouver").toDate()
-  );
+  const [updatedDate, setUpdatedDate] = useState(null);
   const [displayUpdatedDate, setDisplayUpdatedDate] = useState(false);
   const [notes, setNotes] = useState("");
   const [submittedBy, setSubmittedBy] = useState("");
@@ -535,6 +533,7 @@ export default function Advisory({
             if (defaultUrgency.length > 0) {
               setUrgency(defaultUrgency[0].value);
             }
+            setStartDate(moment().tz("America/Vancouver").toDate());
             setIsLoadingPage(false);
           }
           setSubmitter(keycloak.tokenParsed.name);
