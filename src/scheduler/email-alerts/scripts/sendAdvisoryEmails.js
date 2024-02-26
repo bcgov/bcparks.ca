@@ -52,7 +52,9 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
       }
 
       if (scriptKeySpecified("emailsend") || noCommandLineArgs()) {
-        await send(emailData.subject, htmlMessageBody, emailData.data.title);
+        if (process.env.EMAIL_ENABLED.toLowerCase() !== "false") {
+          await send(emailData.subject, htmlMessageBody, emailData.data.title);
+        }
         await removeFromQueue([message.id])
       }
     }

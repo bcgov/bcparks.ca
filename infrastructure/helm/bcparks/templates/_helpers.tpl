@@ -112,7 +112,7 @@ https://{{ .Release.Name }}-{{ .Values.public.componentName }}-{{ .Release.Names
 {{ .Release.Name }}-elasticsearch-secret
 {{- end -}}
 
-{{ define "bcparks_elasticmanager_fullname" -}}
+{{ define "bcparks_scheduler_fullname" -}}
 {{ .Release.Name }}-{{ .Values.scheduler.componentName }}
 {{- end -}}
 

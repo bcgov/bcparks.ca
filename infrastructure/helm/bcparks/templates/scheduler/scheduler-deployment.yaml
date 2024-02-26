@@ -1,7 +1,7 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: {{ template "bcparks_elasticmanager_fullname" . }}
+  name: {{ template "bcparks_scheduler_fullname" . }}
   labels:
     component: {{ .Values.scheduler.componentName }}
     release: {{ .Release.Name }}
@@ -49,6 +49,16 @@ spec:
               value: {{ .Values.scheduler.env.batchSize | quote }}
             - name: GEOSHAPE_URL
               value: {{ .Values.scheduler.env.shapeDataApi | quote }}
+            - name: EMAIL_ENABLED
+              value: {{ .Values.scheduler.env.emailEnabled | quote }}
+            - name: EMAIL_SERVER
+              value: {{ .Values.scheduler.env.emailServer }}
+            - name: EMAIL_PORT
+              value: {{ .Values.scheduler.env.emailPort | quote }}
+            - name: EMAIL_SENDER
+              value: {{ .Values.scheduler.env.emailSender }}
+            - name: EMAIL_RECIPIENT
+              value: {{ .Values.scheduler.env.emailRecipient | quote }}
           livenessProbe:
             exec:
               command:

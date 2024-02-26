@@ -47,3 +47,7 @@ backup:
 public:
   hpa:
     maxReplicas: 2
+
+scheduler:
+  env:
+    emailEnabled: true

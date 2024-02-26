@@ -36,3 +36,8 @@ backup:
 
 etl:
   enabled: false
+
+scheduler:
+  env:
+    emailEnabled: true
+    emailRecipient: manuji@oxd.com,mike@oxd.com
