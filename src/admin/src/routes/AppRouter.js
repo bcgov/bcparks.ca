@@ -10,6 +10,7 @@ import ParkInfo from "../components/page/parkInfo/ParkInfo";
 import { PrivateRoute } from "../auth/PrivateRoute";
 import CmsContents from "../components/page/cmsContents/CmsContents";
 import ParkAccessStatus from "../components/page/parkAccessStatus/ParkAccessStatus";
+import AdvisoryLink from "../components/page/advisoryLink/AdvisoryLink";
 
 function AppRouter() {
   const [ error, setError] = useState({});
@@ -61,6 +62,11 @@ function AppRouter() {
             path="/bcparks/advisory-summary/:id"
             component={AdvisorySummary}
             props={{ page: { setError, cmsData, setCmsData } }}
+          />
+          <PrivateRoute
+            roles={["submitter", "approver"]}
+            path="/bcparks/advisory-link/:advisoryNumber"
+            component={AdvisoryLink}
           />
           <Route path="/bcparks/error">
             <Error page={{ error }} />
