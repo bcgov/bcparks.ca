@@ -7,7 +7,7 @@ import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
 
 import parksLogo from "../../images/park-card.png"
-import campingIcon from "../../../static/icons/vehicle-accessible-camping.svg"
+import campingIcon from "../../../static/icons/frontcountry-camping.svg"
 import backcountryCampingIcon from "../../../static/icons/wilderness-camping.svg"
 import hikingIcon from "../../../static/icons/hiking.svg"
 import picincIcon from "../../../static/icons/picnic-areas.svg"
