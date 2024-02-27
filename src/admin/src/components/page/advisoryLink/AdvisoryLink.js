@@ -15,8 +15,8 @@ export default function AdvisoryLink() {
   const { advisoryNumber } = useParams();
 
   useEffect(() => {
-    if (initialized) {
-      if (parseInt(advisoryNumber)) {
+    if (parseInt(advisoryNumber)) {
+      if (initialized) {
         if (!keycloak.authenticated) {
           keycloak.login({
             redirectUri: `${config.REACT_APP_FRONTEND_BASE_URL}/bcparks/advisory-link/${advisoryNumber}`,
@@ -36,6 +36,8 @@ export default function AdvisoryLink() {
             history.replace(`/bcparks/dashboard`);
           });
       }
+    } else {
+      history.replace(`/bcparks`);
     }
   }, [
     initialized,

@@ -13,7 +13,7 @@ import ParkAccessStatus from "../components/page/parkAccessStatus/ParkAccessStat
 import AdvisoryLink from "../components/page/advisoryLink/AdvisoryLink";
 
 function AppRouter() {
-  const [ error, setError] = useState({});
+  const [error, setError] = useState({});
   const [cmsData, setCmsData] = useState({});
 
   return (
@@ -69,6 +69,7 @@ function AppRouter() {
           <Route path="/bcparks/error">
             <Error page={{ error }} />
           </Route>
+          <Redirect from="*" to="/bcparks" />
         </Switch>
       </BrowserRouter>
     </div>
