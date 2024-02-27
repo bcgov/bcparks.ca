@@ -10,9 +10,10 @@ import ParkInfo from "../components/page/parkInfo/ParkInfo";
 import { PrivateRoute } from "../auth/PrivateRoute";
 import CmsContents from "../components/page/cmsContents/CmsContents";
 import ParkAccessStatus from "../components/page/parkAccessStatus/ParkAccessStatus";
+import AdvisoryLink from "../components/page/advisoryLink/AdvisoryLink";
 
 function AppRouter() {
-  const [ error, setError] = useState({});
+  const [error, setError] = useState({});
   const [cmsData, setCmsData] = useState({});
 
   return (
@@ -62,9 +63,13 @@ function AppRouter() {
             component={AdvisorySummary}
             props={{ page: { setError, cmsData, setCmsData } }}
           />
+          <Route exact path="/bcparks/advisory-link/:advisoryNumber">
+            <AdvisoryLink />
+          </Route>
           <Route path="/bcparks/error">
             <Error page={{ error }} />
           </Route>
+          <Redirect from="*" to="/bcparks" />
         </Switch>
       </BrowserRouter>
     </div>

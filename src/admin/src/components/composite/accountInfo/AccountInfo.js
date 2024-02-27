@@ -7,7 +7,7 @@ import config from "../../../utils/config";
 const AccountInfo = () => {
   const { keycloak } = useKeycloak();
   return (
-    keycloak && keycloak.authenticated && (
+    keycloak && keycloak.authenticated ? (
       <div className="account-info-box">
         <p>{keycloak.tokenParsed.name}</p>
         <Button
@@ -20,7 +20,7 @@ const AccountInfo = () => {
           }}
         />
       </div>
-    )
+    ) : <div></div>
   );
 };
 
