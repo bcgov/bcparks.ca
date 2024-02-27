@@ -152,7 +152,7 @@ module.exports = {
         background_color: `#003366`,
         theme_color: `#003366`,
         display: `minimal-ui`,
-        icon: `src/images/BCID_BCParks_Favicon_RGB_Pos.png`, // This path is relative to the root of the site.
+        icon: `src/images/bcid-favicon-32x32.png`, // This path is relative to the root of the site.
       },
     },
     `gatsby-plugin-meta-redirect`,
