@@ -86,6 +86,7 @@ module.exports = ({ strapi }) => ({
     }
     return expiredAdvisoryCount;
   },
+
   publish: async (advisoryStatusMap) => {
     if (Object.keys(advisoryStatusMap).length > 0) {
       // fetch advisories to publish - audit table
@@ -140,6 +141,40 @@ module.exports = ({ strapi }) => ({
       return publishedAdviosryCount;
     }
   },
+
+  expiringSoon: async (advisoryStatusMap) => {
+    if (Object.keys(advisoryStatusMap).length > 0) {
+      const today = new Date();
+      const nextWeek = new Date(today.setTime(today.getTime() + 7 * 24 * 60 * 60 * 1000));
+      const rangeStart = new Date(nextWeek.setTime(nextWeek.getTime() - 60 * 1000)).toISOString();
+      const rangeEnd = new Date(nextWeek.setTime(nextWeek.getTime() + 120 * 1000)).toISOString();
+      const expiringSoon = await strapi.entityService.findMany(
+        "api::public-advisory-audit.public-advisory-audit", {
+        filters: {
+          isLatestRevision: true,
+          expiryDate: {
+            $gte: rangeStart
+          },
+          expiryDate: {
+            $lte: rangeEnd
+          },
+          advisoryStatus: advisoryStatusMap["PUB"].id,
+          publicationState: "live"
+        }
+      });
+      expiringSoon.forEach(async (advisory) => {
+        strapi.log.info(`advisory expiring soon [advisoryNumber:${advisory.advisoryNumber}]`);
+        await queueAdvisoryEmail(
+          "Advisory expiring soon",
+          "This advisory will be expiring in one week",
+          advisory.advisoryNumber,
+          "public-advisory-audit::services::scheduling::expiringSoon()");
+      });
+      return expiringSoon.length;
+    }
+    return 0;
+  },
+
   getAdvisoryStatusMap: async () => {
     // fetch advisory statuses
     const advisoryStatus = await strapi.entityService.findMany(

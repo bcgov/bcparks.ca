@@ -36,10 +36,13 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
 
       const emailData = {
         ...emailInfo,
-        ...{ data: advisoryInfo[0] },
-        ...{ postedDate: format(parseJSON(advisoryInfo[0].advisoryDate), "MMMM d, yyyy") },
-        ...{ postedTime: format(parseJSON(advisoryInfo[0].advisoryDate), "h:mma").toLowerCase() },
-        ...{ environment: "alpha-dev-" } // todo: need to specify which environment
+        ...{
+          data: advisoryInfo[0],
+          postedDate: format(parseJSON(advisoryInfo[0].advisoryDate), "MMMM d, yyyy"),
+          postedTime: format(parseJSON(advisoryInfo[0].advisoryDate), "h:mma").toLowerCase(),
+          publicUrl: process.env.PUBLIC_URL,
+          adminUrl: process.env.ADMIN_URL
+        }
       };
 
       // render the email template
@@ -53,7 +56,9 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
 
       if (scriptKeySpecified("emailsend") || noCommandLineArgs()) {
         if (process.env.EMAIL_ENABLED.toLowerCase() !== "false") {
-          await send(emailData.subject, htmlMessageBody, emailData.data.title);
+          const subject = `${emailData.subject}: ${emailData.data.title}`;
+          const summary = emailData.data.description.replace(/(<([^>]+)>)/gi, "");
+          await send(subject, htmlMessageBody, summary);
         }
         await removeFromQueue([message.id])
       }

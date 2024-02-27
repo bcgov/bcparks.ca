@@ -13,7 +13,7 @@ exports.send = async function (subject, body, summary) {
   });
 
   await transporter.sendMail({
-    from: process.env.EMAIL_SENDER,
+    from: `Staff Web Portal <${process.env.EMAIL_SENDER}>`,
     to: process.env.EMAIL_RECIPIENT,
     subject: subject,
     text: summary,
