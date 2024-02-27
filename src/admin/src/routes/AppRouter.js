@@ -63,11 +63,9 @@ function AppRouter() {
             component={AdvisorySummary}
             props={{ page: { setError, cmsData, setCmsData } }}
           />
-          <PrivateRoute
-            roles={["submitter", "approver"]}
-            path="/bcparks/advisory-link/:advisoryNumber"
-            component={AdvisoryLink}
-          />
+          <Route exact path="/bcparks/advisory-link/:advisoryNumber">
+            <AdvisoryLink />
+          </Route>
           <Route path="/bcparks/error">
             <Error page={{ error }} />
           </Route>
