@@ -158,6 +158,7 @@ module.exports = createCoreController(
             const advisoryStatusMap = await strapi.service("api::public-advisory.scheduling").getAdvisoryStatusMap();
             const publishedCount = await strapi.service("api::public-advisory.scheduling").publish(advisoryStatusMap);
             const expiredCount = await strapi.service("api::public-advisory.scheduling").expire(advisoryStatusMap);
+            const expiringSoonCount = await strapi.service("api::public-advisory.scheduling").expiringSoon(advisoryStatusMap);
 
             const cachePlugin = strapi.plugins["rest-cache"];
             if (cachePlugin && (publishedCount > 0 || expiredCount > 0)) {
@@ -165,7 +166,7 @@ module.exports = createCoreController(
             }
 
             ctx.send({
-                message: `Scheduled public advisory processing complete. ${publishedCount} published. ${expiredCount} expired.`
+                message: `Scheduled public advisory processing complete. ${publishedCount} published. ${expiredCount} expired. ${expiringSoonCount} expiring soon.`
             }, 201);
         }
     })

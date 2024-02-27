@@ -54,10 +54,18 @@
     .manage-advisory-button:hover {
       text-decoration: underline;
     }
+
+    .link {
+      color: #2464a4 !important;
+    }
+
+    .mr-1 {
+      margin-right: 4px;
+    }
   </style>
 </head>
 
-<body style="font-family: Arial, Helvetica;">
+<body style="font-family: Arial, Helvetica; color: #1a1a1a">
   <img src="cid:logo.png" alt="BC Parks" title="BC Parks Logo" style="margin: 8px 16px 0px 0px;" width="150" />
 
   <span class="logo-subheading-text">
@@ -114,12 +122,12 @@
   <% } else { %>
   <p style="margin-top: 4px">
     <% data.protectedAreas.forEach((val) => { %>
-    <a style="margin-right: 4px" href="https://bcparks.ca/<%= val.slug %>">
+    <a class="link mr-1" href="<%= publicUrl %>/<%= val.slug %>">
       <%= val.protectedAreaName %>
     </a>
     <% }) %>
     <% data.sites.forEach((val) => { %>
-    <a style="margin-right: 4px" href="https://bcparks.ca/<%= val.protectedArea.slug %>/<%= val.slug %>">
+    <a class="link mr-1" href="<%= publicUrl %>/<%= val.protectedArea.slug %>/<%= val.slug %>">
       <%= val.siteName %>
     </a>
     <% }) %>
@@ -137,7 +145,7 @@
 
   <p style="margin-top: 32px">
     <% data.links.forEach((val) => { %>
-    <a href="<%= val.url %>">
+    <a href="<%= val.url %>" class="link">
       <%= val.title %>
       <% if (val.url.toLowerCase().endsWith(".pdf")) { %>
       [PDF]
@@ -149,8 +157,8 @@
     <% }) %>
   </p>
 
-  <p style="margin-top: 32px">
-    Posted <%= postedDate %> at <%= postedTime %>
+  <p style=" margin-top: 32px">
+      Posted <%= postedDate %> at <%= postedTime %>
   </p>
 
   <hr />
@@ -162,7 +170,7 @@
   </p>
   <% } %>
 
-  <a href="https://<%= environment %>staff.bcparks.ca/bcparks/advisory-summary/<%= advisoryNumber %>" class="manage-advisory-button">Manage Advisory</a>
+  <a href="<%= adminUrl %>/bcparks/advisory-summary/<%= advisoryNumber %>" class="manage-advisory-button">Manage Advisory</a>
 
 </body>
 

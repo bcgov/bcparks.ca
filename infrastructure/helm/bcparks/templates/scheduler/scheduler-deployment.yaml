@@ -59,6 +59,10 @@ spec:
               value: {{ .Values.scheduler.env.emailSender }}
             - name: EMAIL_RECIPIENT
               value: {{ .Values.scheduler.env.emailRecipient | quote }}
+            - name: PUBLIC_URL
+              value: {{ .Values.admin.env.publicUrl | quote }}
+            - name: ADMIN_URL
+              value: {{ .Values.admin.env.externalUrl | quote }}
           livenessProbe:
             exec:
               command:
