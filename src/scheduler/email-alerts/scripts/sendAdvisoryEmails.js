@@ -4,7 +4,8 @@ const { readQueue, removeFromQueue } = require('../../shared/taskQueue');
 const qs = require('qs');
 const ejs = require('ejs');
 const { writeFile } = require('fs');
-const { format, parseJSON } = require('date-fns')
+const { parseJSON } = require('date-fns')
+const { formatInTimeZone } = require('date-fns-tz');
 const { scriptKeySpecified, noCommandLineArgs } = require('../../shared/commandLine');
 const { send } = require('./mailer');
 
@@ -33,13 +34,15 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
       const emailInfo = message.attributes?.jsonData;
 
       const advisoryInfo = await getAdvisoryInfo(advisoryNumber);
+      const postingDate = parseJSON(advisoryInfo[0].advisoryDate);
+      const tz = "America/Vancouver";
 
       const emailData = {
         ...emailInfo,
         ...{
           data: advisoryInfo[0],
-          postedDate: format(parseJSON(advisoryInfo[0].advisoryDate), "MMMM d, yyyy"),
-          postedTime: format(parseJSON(advisoryInfo[0].advisoryDate), "h:mma").toLowerCase(),
+          postedDate: formatInTimeZone(postingDate, tz, "MMMM d, yyyy"),
+          postedTime: formatInTimeZone(postingDate, tz, "h:mma").toLowerCase(),
           publicUrl: process.env.PUBLIC_URL,
           adminUrl: process.env.ADMIN_URL
         }
@@ -80,8 +83,7 @@ const getAdvisoryInfo = async function (advisoryNumber) {
       fireCentres: { fields: ["fireCentreName"] },
       fireZones: { fields: ["fireZoneName"] },
       links: {
-        fields: ["title", "url"],
-        populate: { type: { fields: ["type"] } }
+        fields: ["title", "url"]
       },
       managementAreas: { fields: ["managementAreaName"] },
       protectedAreas: { fields: ["protectedAreaName", "slug"] },
