@@ -60,8 +60,10 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
           const summary = emailData.data.description.replace(/(<([^>]+)>)/gi, "");
           await send(subject, htmlMessageBody, summary);
         }
-        await removeFromQueue([message.id])
       }
+    }
+    if (scriptKeySpecified("emailsend") || noCommandLineArgs()) {
+      await removeFromQueue([message.id])
     }
   }
 
