@@ -822,14 +822,10 @@ div[class$="-singleValue"] {
 }
 
 .search-result-logo-image {
-  width: 200px;
-  display: block;
-  margin-top: 125px;
-  margin-left: auto;
-  margin-right: auto;
-  @media screen and (min-width: $lgBreakpoint) {
-    margin-top: 75px;
-  }
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .park-quick-view-dialog-content {
