@@ -1,90 +1,89 @@
 import React from "react"
+import { graphql, useStaticQuery, Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 
 import "../styles/footer.scss"
 
-function FooterMenu({ items, menuIndex }) {
+function FooterMenu({ item, menuIndex }) {
   return (
-    <ul className="footer-menu-list list-unstyled text-white">
-      {items.map((item, index) => (
-        <li key={index}>
-          {item.type === "header" && (
-            <>
-              <div className="font-weight-bold">{item.display}</div>
-              <div className="footer-menu-divider"></div>
-            </>
-          )}
-          {item.type === "link" && (
-            <>
-              <div key={index} className="mt-2">
-                <a href={item.link}>{item.display}</a>
+    item.strapi_children.length > 0 && (
+      <div className="col col-12 col-sm-4 footer-menu-container" key={menuIndex}>
+        <ul className="footer-menu-list list-unstyled text-white">
+          <li>
+            <div className="font-weight-bold">{item.title}</div>
+            <div className="footer-menu-divider"></div>
+          </li>
+          {item.strapi_children.map((child, index) => (
+            <li key={index} className="mt-2">
+              {child.isExternalUrl ?
+                <a href={child.url} target="_blank" rel="noopener noreferrer">
+                  {child.title}
+                </a>
+                :
+                <Link to={child.url}>
+                  {child.title}
+                </Link>
+              }
+            </li>
+          ))}
+          {/* Add social media links if it's menu3 */}
+          {item.order === 3 && (
+            <li>
+              <div className="d-inline-block mt-3">
+                <a className="d-inline-block" href="https://www.facebook.com/YourBCParks/" target="_blank" rel="noopener noreferrer">
+                  <StaticImage
+                    src="../images/Facebook_Negative.svg"
+                    placeholder="none"
+                    loading="eager"
+                    alt="Facebook"
+                  />
+                </a>
               </div>
-            </>
+              <div className="d-inline-block mt-3 ml-3">
+                <a className="d-inline-block" href="https://www.instagram.com/yourbcparks" target="_blank" rel="noopener noreferrer">
+                  <StaticImage
+                    src="../images/Instagram_Negative.svg"
+                    placeholder="none"
+                    loading="eager"
+                    alt="Instagram"
+                  />
+                </a>
+              </div>
+            </li>
           )}
-        </li>
-      ))}
-      {/* Add social media links if it's menu3 */}
-      {menuIndex === 2 && (
-        <li>
-          <div className="d-inline-block mt-3">
-            <a className="d-inline-block" href="https://www.facebook.com/YourBCParks/">
-              <StaticImage
-                src="../images/Facebook_Negative.svg"
-                placeholder="none"
-                loading="eager"
-                alt="Facebook"
-              />
-            </a>
-          </div>
-          <div className="d-inline-block mt-3 ml-3">
-            <a className="d-inline-block" href="https://www.instagram.com/yourbcparks">
-              <StaticImage
-                src="../images/Instagram_Negative.svg"
-                placeholder="none"
-                loading="eager"
-                alt="Instagram"
-              />
-            </a>
-          </div>
-        </li>
-      )}
-    </ul>
+        </ul>
+      </div>
+    )
   )
 }
 
 export default function Footer() {
-  // Arrays of footer menus
-  // TODO replace with data from Strapi
-  const menu1 = [
-    { type: "header", display: "Get a permit" },
-    { type: "link", display: "Park-use permits", link: "/park-use-permits/" },
-    { type: "link", display: "Filming in parks", link: "/park-use-permits/filming-in-parks/" },
-    { type: "link", display: "Travel trade", link: "/park-use-permits/travel-trade/" },
-  ]
-  const menu2 = [
-    { type: "header", display: "Get involved" },
-    { type: "link", display: "Donate", link: "/get-involved/donate/" },
-    { type: "link", display: "Buy a licence plate", link: "/get-involved/buy-licence-plate/" },
-    { type: "link", display: "Volunteer", link: "/get-involved/volunteer/" },
-  ]
-  const menu3 = [
-    { type: "header", display: "Stay connected" },
-    { type: "link", display: "Contact us", link: "/contact/" },
-    {
-      type: "link",
-      display: "BC Parks blog",
-      link: "https://engage.gov.bc.ca/bcparksblog/",
-    },
-  ]
-  const footerMenu = [menu1, menu2, menu3]
-  const utilityMenu = [
-    { display: "Site map", link: "/site-map/" },
-    { display: "Disclaimer", link: "https://www2.gov.bc.ca/gov/content/home/disclaimer" },
-    { display: "Privacy", link: "https://www2.gov.bc.ca/gov/content/home/privacy" },
-    { display: "Accessibility", link: "https://www2.gov.bc.ca/gov/content/home/accessible-government" },
-    { display: "Copyright", link: "https://www2.gov.bc.ca/gov/content/home/copyright" },
-  ]
+  const data = useStaticQuery(graphql`{
+      allStrapiFooterMenu(
+        sort: {order: ASC}
+      ) {
+        nodes {
+          title
+          order
+          strapi_children {
+            title
+            order
+            url
+            isExternalUrl
+          }
+        }
+      }
+    }
+  `)
 
+  const footerMenu = data?.allStrapiFooterMenu?.nodes || []
+  const utilityMenu = [
+    { title: "Site map", url: "/site-map/", isExternalUrl: false },
+    { title: "Disclaimer", url: "https://www2.gov.bc.ca/gov/content/home/disclaimer", isExternalUrl: true },
+    { title: "Privacy", url: "https://www2.gov.bc.ca/gov/content/home/privacy", isExternalUrl: true },
+    { title: "Accessibility", url: "https://www2.gov.bc.ca/gov/content/home/accessible-government", isExternalUrl: true },
+    { title: "Copyright", url: "https://www2.gov.bc.ca/gov/content/home/copyright", isExternalUrl: true },
+  ]
 
   return (
     <footer id="footer">
@@ -106,9 +105,7 @@ export default function Footer() {
           <div className="col col-12 col-md-8">
             <div className="row no-gutters">
               {footerMenu.map((item, index) => (
-                <div className="col col-12 col-sm-4 footer-menu-container" key={index}>
-                  <FooterMenu items={item} menuIndex={index}></FooterMenu>
-                </div>
+                <FooterMenu item={item} menuIndex={index} />
               ))}
             </div>
           </div>
@@ -120,6 +117,15 @@ export default function Footer() {
               key={index}
             >
               <a href={item.link}>{item.display}</a>
+              {item.isExternalUrl ?
+                <a href={item.url} target="_blank" rel="noopener noreferrer">
+                  {item.title}
+                </a>
+                :
+                <Link to={item.url}>
+                  {item.title}
+                </Link>
+              }
             </div>
           ))}
         </div>

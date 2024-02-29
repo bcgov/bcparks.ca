@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "footer_menus",
+  "info": {
+    "singularName": "footer-menu",
+    "pluralName": "footer-menus",
+    "displayName": "Footer-menu",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "order": {
+      "type": "integer",
+      "required": true,
+      "default": 1,
+      "min": 1
+    },
+    "url": {
+      "type": "string"
+    },
+    "isExternalUrl": {
+      "type": "boolean",
+      "default": false
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::footer-menu.footer-menu",
+      "inversedBy": "children"
+    },
+    "children": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::footer-menu.footer-menu",
+      "mappedBy": "parent"
+    }
+  }
+}

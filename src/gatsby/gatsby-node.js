@@ -148,6 +148,13 @@ exports.createSchemaCustomization = ({ actions }) => {
     description: String
     links: [STRAPI__COMPONENT_PARKS_FANCY_LINK] @link(by: "id", from: "links___NODE")
   }
+
+  type STRAPI_FOOTER_MENU implements Node {
+    title: String
+    order: Int
+    url: String
+    isExternalUrl: Boolean
+  }
   `
   createTypes(typeDefs)
 }

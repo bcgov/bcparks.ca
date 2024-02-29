@@ -39,6 +39,7 @@ module.exports = {
           "facility-type",
           "legacy-redirect",
           "menu",
+          "footer-menu",
           "park-operation",
           "park-operation-date",
           "park-operation-sub-area",
