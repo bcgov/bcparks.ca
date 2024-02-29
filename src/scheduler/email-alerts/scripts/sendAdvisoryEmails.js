@@ -67,7 +67,7 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
           const fromName = process.env.BCPARKS_ENVIRONMENT.toLowerCase() === 'prod'
             ? "Staff Web Portal"
             : process.env.BCPARKS_ENVIRONMENT.toUpperCase();
-          await send(subject, htmlMessageBody, summary, fromNames);
+          await send(subject, htmlMessageBody, summary, fromName);
         }
       }
     }
