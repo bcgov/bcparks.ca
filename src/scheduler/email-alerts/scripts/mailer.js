@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-exports.send = async function (subject, body, summary) {
+exports.send = async function (subject, body, summary, fromName) {
 
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_SERVER,
@@ -13,7 +13,7 @@ exports.send = async function (subject, body, summary) {
   });
 
   await transporter.sendMail({
-    from: `Staff Web Portal <${process.env.EMAIL_SENDER}>`,
+    from: `${fromName} <${process.env.EMAIL_SENDER}>`,
     to: process.env.EMAIL_RECIPIENT,
     subject: subject,
     text: summary,

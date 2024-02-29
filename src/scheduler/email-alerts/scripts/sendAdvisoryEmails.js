@@ -29,6 +29,9 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
 
   for (const message of queue) {
     const advisoryNumber = message.attributes?.numericData;
+    if (!recentAdvisoryEmails) {
+      recentAdvisoryEmails = [];
+    }
     if (!recentAdvisoryEmails.find(e => e.advisoryNumber === advisoryNumber)) {
       sent.push({ "advisoryNumber": advisoryNumber, "lastEmailSent": new Date().toISOString() });
       const emailInfo = message.attributes?.jsonData;
@@ -61,7 +64,10 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
         if (process.env.EMAIL_ENABLED.toLowerCase() !== "false") {
           const subject = `${emailData.subject}: ${emailData.data.title}`;
           const summary = emailData.data.description.replace(/(<([^>]+)>)/gi, "");
-          await send(subject, htmlMessageBody, summary);
+          const fromName = process.env.BCPARKS_ENVIRONMENT.toLowerCase() === 'prod'
+            ? "Staff Web Portal"
+            : process.env.BCPARKS_ENVIRONMENT.toUpperCase();
+          await send(subject, htmlMessageBody, summary, fromNames);
         }
       }
     }

@@ -151,16 +151,22 @@ module.exports = ({ strapi }) => ({
       const expiringSoon = await strapi.entityService.findMany(
         "api::public-advisory-audit.public-advisory-audit", {
         filters: {
-          isLatestRevision: true,
-          expiryDate: {
-            $gte: rangeStart
-          },
-          expiryDate: {
-            $lte: rangeEnd
-          },
-          advisoryStatus: advisoryStatusMap["PUB"].id,
-          publicationState: "live"
-        }
+          $and: [
+            {
+              isLatestRevision: true,
+            },
+            {
+              expiryDate: { $gte: rangeStart }
+            },
+            {
+              expiryDate: { $lte: rangeEnd }
+            },
+            {
+              advisoryStatus: advisoryStatusMap["PUB"].id
+            }
+          ]
+        },
+        publicationState: "live"
       });
       expiringSoon.forEach(async (advisory) => {
         strapi.log.info(`advisory expiring soon [advisoryNumber:${advisory.advisoryNumber}]`);
