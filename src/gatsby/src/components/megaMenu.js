@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react"
 import PropTypes from "prop-types"
 import { Link, navigate } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
+import Logo from "../images/logo/BCParks_Primary_Reversed-cropped.svg"
+import LogoVertical from "../images/logo/BCParks_Primary_Reversed_Vertical.svg"
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
 
 import "../styles/megaMenu/megaMenu.scss"
@@ -251,11 +252,11 @@ const MegaMenu = ({ content, menuMode }) => {
               {item.strapi_children.map((page, index) => (
                 <React.Fragment key={index}>
                   <li className={
-                      "menu-button menu-button--" +
-                      (page === selections[page.treeLevel]
-                        ? "selected"
-                        : "unselected")
-                    }
+                    "menu-button menu-button--" +
+                    (page === selections[page.treeLevel]
+                      ? "selected"
+                      : "unselected")
+                  }
                   >
                     <a
                       className={`menu-button__title ${
@@ -274,15 +275,15 @@ const MegaMenu = ({ content, menuMode }) => {
                     </a>
                   </li>
                   <div className={
-                      "menu-children menu-children-exist--" +
-                      page.hasChildren +
-                      " menu-level-" +
-                      item.treeLevel +
-                      "-children menu-children--" +
-                      (page === selections[page.treeLevel]
-                        ? "selected"
-                        : "unselected")
-                    }
+                    "menu-children menu-children-exist--" +
+                    page.hasChildren +
+                    " menu-level-" +
+                    item.treeLevel +
+                    "-children menu-children--" +
+                    (page === selections[page.treeLevel]
+                      ? "selected"
+                      : "unselected")
+                  }
                   >
                     {generateMenus(page, menuMode)}
                   </div>
@@ -317,20 +318,16 @@ const MegaMenu = ({ content, menuMode }) => {
         <div className="header-wrapper">
           <nav className="header-nav">
             <Link to="/">
-              <StaticImage
-                src="../images/logo/BCParks_Primary_Reversed-cropped.svg"
-                placeholder="none"
-                loading="eager"
-                height={64}
+              <img
+                src={Logo}
                 alt="BC Parks Logo"
+                style={{ height: 64 }}
                 className="bc-parks-logo--desktop d-none d-lg-block"
               />
-              <StaticImage
-                src="../images/logo/BCParks_Primary_Reversed_Vertical.svg"
-                placeholder="none"
-                loading="eager"
-                height={64}
+              <img
+                src={LogoVertical}
                 alt="BC Parks Logo"
+                style={{ height: 64 }}
                 className="bc-parks-logo--mobile d-block d-lg-none"
               />
             </Link>
