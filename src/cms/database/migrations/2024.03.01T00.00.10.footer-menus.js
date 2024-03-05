@@ -123,6 +123,7 @@ async function up(knex) {
     await knex('footer_menus_parent_links').insert({ footer_menu_id: 9, inv_footer_menu_id: 2 });
     await knex('footer_menus_parent_links').insert({ footer_menu_id: 10, inv_footer_menu_id: 3 });
     await knex('footer_menus_parent_links').insert({ footer_menu_id: 11, inv_footer_menu_id: 3 });
+    await knex.raw('ALTER SEQUENCE footer_menus_id_seq RESTART WITH 12');
 
   }
 }
