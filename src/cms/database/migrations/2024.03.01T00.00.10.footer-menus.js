@@ -9,7 +9,6 @@ const rows = [
     "created_at": "2024-02-28T20:00:30.277Z",
     "updated_at": "2024-02-28T20:00:34.193Z",
     "published_at": "2024-02-28T20:00:34.188Z",
-    "is_external_url": null
   },
   {
     "id": 2,
@@ -19,7 +18,6 @@ const rows = [
     "created_at": "2024-02-28T20:00:46.501Z",
     "updated_at": "2024-02-28T20:00:52.027Z",
     "published_at": "2024-02-28T20:00:52.023Z",
-    "is_external_url": null
   },
   {
     "id": 3,
@@ -29,7 +27,6 @@ const rows = [
     "created_at": "2024-02-28T20:01:08.932Z",
     "updated_at": "2024-02-28T20:01:14.896Z",
     "published_at": "2024-02-28T20:01:14.890Z",
-    "is_external_url": null
   },
   {
     "id": 4,
@@ -39,7 +36,6 @@ const rows = [
     "created_at": "2024-02-28T20:02:21.754Z",
     "updated_at": "2024-02-29T00:44:03.372Z",
     "published_at": "2024-02-28T20:02:23.565Z",
-    "is_external_url": false
   },
   {
     "id": 5,
@@ -49,7 +45,6 @@ const rows = [
     "created_at": "2024-02-28T20:03:11.438Z",
     "updated_at": "2024-02-29T00:44:12.753Z",
     "published_at": "2024-02-28T20:05:00.216Z",
-    "is_external_url": false
   },
   {
     "id": 6,
@@ -59,7 +54,6 @@ const rows = [
     "created_at": "2024-02-28T20:05:49.900Z",
     "updated_at": "2024-02-29T00:44:18.653Z",
     "published_at": "2024-02-28T20:05:50.901Z",
-    "is_external_url": false
   },
   {
     "id": 7,
@@ -69,7 +63,6 @@ const rows = [
     "created_at": "2024-02-28T20:06:36.277Z",
     "updated_at": "2024-02-29T00:44:25.134Z",
     "published_at": "2024-02-28T20:06:37.432Z",
-    "is_external_url": false
   },
   {
     "id": 8,
@@ -79,7 +72,6 @@ const rows = [
     "created_at": "2024-02-28T20:08:19.223Z",
     "updated_at": "2024-02-29T00:44:31.469Z",
     "published_at": "2024-02-28T20:08:20.055Z",
-    "is_external_url": false
   },
   {
     "id": 9,
@@ -89,7 +81,6 @@ const rows = [
     "created_at": "2024-02-28T20:08:54.946Z",
     "updated_at": "2024-02-29T00:44:38.028Z",
     "published_at": "2024-02-28T20:08:56.012Z",
-    "is_external_url": false
   },
   {
     "id": 10,
@@ -99,7 +90,6 @@ const rows = [
     "created_at": "2024-02-28T20:11:12.168Z",
     "updated_at": "2024-02-29T00:44:43.803Z",
     "published_at": "2024-02-28T20:11:18.011Z",
-    "is_external_url": false
   },
   {
     "id": 11,
@@ -109,7 +99,6 @@ const rows = [
     "created_at": "2024-02-28T20:11:48.149Z",
     "updated_at": "2024-02-28T23:52:54.317Z",
     "published_at": "2024-02-28T20:11:49.430Z",
-    "is_external_url": true
   }
 ]
 

@@ -24,10 +24,6 @@
     "url": {
       "type": "string"
     },
-    "isExternalUrl": {
-      "type": "boolean",
-      "default": false
-    },
     "parent": {
       "type": "relation",
       "relation": "manyToOne",

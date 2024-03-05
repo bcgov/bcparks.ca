@@ -153,7 +153,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     title: String
     order: Int
     url: String
-    isExternalUrl: Boolean
   }
   `
   createTypes(typeDefs)

@@ -6,7 +6,8 @@ import "../styles/footer.scss"
 
 function FooterMenu({ item, menuIndex }) {
   return (
-    item.strapi_children.length > 0 && (
+    // Do not render menu items with order > 3
+    item.strapi_children.length > 0 && item.order < 4 && (
       <div className="col col-12 col-sm-4 footer-menu-container" key={menuIndex}>
         <ul className="footer-menu-list list-unstyled text-white">
           <li>
@@ -15,22 +16,16 @@ function FooterMenu({ item, menuIndex }) {
           </li>
           {item.strapi_children.map((child, index) => (
             <li key={index} className="mt-2">
-              {child.isExternalUrl ?
-                <a href={child.url} target="_blank" rel="noopener noreferrer">
-                  {child.title}
-                </a>
-                :
-                <Link to={child.url}>
-                  {child.title}
-                </Link>
-              }
+              <a href={child.url}>
+                {child.title}
+              </a>
             </li>
           ))}
           {/* Add social media links if it's menu3 */}
           {item.order === 3 && (
             <li>
               <div className="d-inline-block mt-3">
-                <a className="d-inline-block" href="https://www.facebook.com/YourBCParks/" target="_blank" rel="noopener noreferrer">
+                <a className="d-inline-block" href="https://www.facebook.com/YourBCParks/">
                   <StaticImage
                     src="../images/Facebook_Negative.svg"
                     placeholder="none"
@@ -40,7 +35,7 @@ function FooterMenu({ item, menuIndex }) {
                 </a>
               </div>
               <div className="d-inline-block mt-3 ml-3">
-                <a className="d-inline-block" href="https://www.instagram.com/yourbcparks" target="_blank" rel="noopener noreferrer">
+                <a className="d-inline-block" href="https://www.instagram.com/yourbcparks/">
                   <StaticImage
                     src="../images/Instagram_Negative.svg"
                     placeholder="none"
@@ -69,7 +64,6 @@ export default function Footer() {
             title
             order
             url
-            isExternalUrl
           }
         }
       }
@@ -78,11 +72,11 @@ export default function Footer() {
 
   const footerMenu = data?.allStrapiFooterMenu?.nodes || []
   const utilityMenu = [
-    { title: "Site map", url: "/site-map/", isExternalUrl: false },
-    { title: "Disclaimer", url: "https://www2.gov.bc.ca/gov/content/home/disclaimer", isExternalUrl: true },
-    { title: "Privacy", url: "https://www2.gov.bc.ca/gov/content/home/privacy", isExternalUrl: true },
-    { title: "Accessibility", url: "https://www2.gov.bc.ca/gov/content/home/accessible-government", isExternalUrl: true },
-    { title: "Copyright", url: "https://www2.gov.bc.ca/gov/content/home/copyright", isExternalUrl: true },
+    { title: "Site map", url: "/site-map/" },
+    { title: "Disclaimer", url: "https://www2.gov.bc.ca/gov/content/home/disclaimer" },
+    { title: "Privacy", url: "https://www2.gov.bc.ca/gov/content/home/privacy" },
+    { title: "Accessibility", url: "https://www2.gov.bc.ca/gov/content/home/accessible-government" },
+    { title: "Copyright", url: "https://www2.gov.bc.ca/gov/content/home/copyright" },
   ]
 
   return (
@@ -116,16 +110,9 @@ export default function Footer() {
               className="footer-utility-link d-inline-block"
               key={index}
             >
-              <a href={item.link}>{item.display}</a>
-              {item.isExternalUrl ?
-                <a href={item.url} target="_blank" rel="noopener noreferrer">
-                  {item.title}
-                </a>
-                :
-                <Link to={item.url}>
-                  {item.title}
-                </Link>
-              }
+              <a href={item.url}>
+                {item.title}
+              </a>
             </div>
           ))}
         </div>
