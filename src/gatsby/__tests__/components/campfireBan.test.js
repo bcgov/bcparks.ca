@@ -1,11 +1,11 @@
 import React from "react"
 import renderer from "react-test-renderer"
-import Footer from "../../src/components/footer"
+import CampfireBan from "../../src/components/campfireBan"
 
 // Sample test adapted from https://www.gatsbyjs.com/docs/how-to/testing/unit-testing/
-describe("Footer", () => {
+describe("CampfireBan", () => {
   it("renders correctly", () => {
-    const tree = renderer.create(<Footer />).toJSON()
+    const tree = renderer.create(<CampfireBan />).toJSON()
     expect(tree).toMatchSnapshot()
   })
 })

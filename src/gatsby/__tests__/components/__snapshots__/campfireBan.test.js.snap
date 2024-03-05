@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CampfireBan renders correctly 1`] = `
+Array [
+  <div>
+    <img
+      alt="Campfires are prohibited"
+      className="mr-1"
+      src="test-file-stub"
+    />
+  </div>,
+  <div>
+    No campfires
+  </div>,
+]
+`;
