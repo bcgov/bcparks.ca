@@ -153,6 +153,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     title: String
     order: Int
     url: String
+    strapi_children: [STRAPI_FOOTER_MENU] @link(by: "id", from: "strapi_children___NODE")
   }
   `
   createTypes(typeDefs)
