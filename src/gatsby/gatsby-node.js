@@ -149,11 +149,17 @@ exports.createSchemaCustomization = ({ actions }) => {
     links: [STRAPI__COMPONENT_PARKS_FANCY_LINK] @link(by: "id", from: "links___NODE")
   }
 
-  type STRAPI_FOOTER_MENU implements Node {
+  type STRAPI_FOOTER_MENU_CHILDREN {
     title: String
     order: Int
     url: String
-    strapi_children: [STRAPI_FOOTER_MENU] @link(by: "id", from: "strapi_children___NODE")
+  }
+
+  type STRAPI_FOOTER_MENU implements Node @derivedTypes @dontInfer {
+    title: String
+    order: Int
+    url: String
+    strapi_children: [STRAPI_FOOTER_MENU_CHILDREN]
   }
   `
   createTypes(typeDefs)
