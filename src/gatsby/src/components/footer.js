@@ -1,10 +1,14 @@
 import React from "react"
-import { graphql, useStaticQuery, Link } from "gatsby"
+import { graphql, useStaticQuery } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 
 import "../styles/footer.scss"
 
 function FooterMenu({ item, menuIndex }) {
+  // Sort children by order
+  const sortedChildren = item.strapi_children && item.strapi_children.length > 0
+    ? [...item.strapi_children].sort((a, b) => a.order - b.order) : []
+
   return (
     // Do not render menu items with order > 3
     item.strapi_children.length > 0 && item.order < 4 && (
@@ -14,7 +18,7 @@ function FooterMenu({ item, menuIndex }) {
             <div className="font-weight-bold">{item.title}</div>
             <div className="footer-menu-divider"></div>
           </li>
-          {item.strapi_children.map((child, index) => (
+          {sortedChildren.map((child, index) => (
             <li key={index} className="mt-2">
               <a href={child.url}>
                 {child.title}
