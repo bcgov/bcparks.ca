@@ -125,7 +125,7 @@ nav {
       transition: background-color 0.1s;
       cursor: pointer;
       border-bottom: 1px solid #ccc;
-      color: #000;
+      color: $colorGreyMed;
 
       .menu-button__title {
         color: $colorBlue;
@@ -461,7 +461,7 @@ nav {
       width: 100%;
     }
     .menu-arrow {
-      color: #000;
+      color: $colorGreyMed;
       float: right;
       display: block;
     }

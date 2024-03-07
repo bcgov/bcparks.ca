@@ -835,7 +835,7 @@ export default function FindAPark({ location, data }) {
                       onDelete={handleFilterDelete(f)}
                       variant="outlined"
                       className="park-filter-chip font-weight-bold"
-                      deleteIcon={<CancelIcon className="close-icon" />}
+                      deleteIcon={<CancelIcon />}
                     />
                   ))}
                   {filterSelections.length > 0 && (
@@ -860,7 +860,7 @@ export default function FindAPark({ location, data }) {
                       onDelete={handleFilterDelete(f)}
                       variant="outlined"
                       className="park-filter-chip font-weight-bold"
-                      deleteIcon={<CancelIcon className="close-icon" />}
+                      deleteIcon={<CancelIcon />}
                     />
                   ))}
                   {filterSelections.length > 0 && (

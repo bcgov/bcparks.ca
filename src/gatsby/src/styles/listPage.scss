@@ -21,7 +21,7 @@
     }
   }
   h3 {
-    color: #494949;
+    color: $colorGrey;
     font-size: 1.25rem;
   }
   h4 {
@@ -35,7 +35,7 @@
     margin-bottom: 0;
     svg.MuiSvgIcon-root {
       font-size: 1rem;
-      color: red;
+      color: $colorRed;
     }
   }
   ul {
@@ -66,19 +66,35 @@
     thead {
       th {
         width: 25%;
-        border-top: 2px solid #ced4da !important;
-        background-color: $colorGreyLight !important;
+        border-top: 2px solid $colorGreyLight !important;
+        background-color: $colorBackgroundGrey !important;
       }
     }
     tbody {
       tr:last-of-type {
         td {
-          border-bottom: 1px solid #ced4da;
+          border-bottom: 1px solid $colorGreyLight;
         }
       }
       svg.MuiSvgIcon-root {
-        color: red;
+        color: $colorRed;
       }
+    }
+  }
+  // table - overriding the bootstrap table class
+  .table {
+    thead {
+      th {
+        border-bottom: 2px solid $colorGreyLight !important;
+      }
+    }
+    .thead-light {
+      th {
+        border-color: $colorGreyLight !important;
+      }
+    }
+    td {
+      border-top: 1px solid $colorGreyLight !important;
     }
   }
 
@@ -96,12 +112,12 @@
       .list-group {
         .list-group-item {
           border-top: 0;
-          border-bottom:  1px solid #ced4da;
+          border-bottom: 1px solid $colorGreyLight;
           margin: 0 24px;
           padding: 0 0 24px 0;
           &--container {
             b {
-              color: #494949;
+              color: $colorGrey;
             }
             & + .list-group-item--container {
               margin-top: 8px;
@@ -139,9 +155,9 @@
       }
       &:hover, &:focus-visible {
         color: $colorBlue;
-        background-color: $colorWaterBlue;
+        background-color: $colorIceBlue;
         font-weight: 700;
-        box-shadow: inset 0px 0px 0px 3px $colorWaterBlue;
+        box-shadow: inset 0px 0px 0px 3px $colorIceBlue;
       }
 
       &-selected--true {

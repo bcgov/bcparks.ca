@@ -126,7 +126,7 @@
 
   &--footer {
 
-    border:solid 1px #c7c7c7;
+    border:solid 1px $colorGreyLight;
     background: $colorWhite;
     
       .card-img {
@@ -146,7 +146,7 @@
             margin-top:10px;
         }
         .card-body-subtitle {
-            color:black;
+            color: $colorGrey;
             padding:10px 30px;
         }
         .card-button {
