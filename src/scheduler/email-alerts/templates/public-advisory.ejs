@@ -147,23 +147,22 @@
     <% data.links.forEach((val) => { %>
     <a href="<%= val.url %>" class="link">
       <%= val.title %>
-      <% if (val.url.toLowerCase().endsWith(".pdf")) { %>
-      [PDF]
-      <% } %>
     </a>
     <br />
     <% }) %>
   </p>
 
+  <% if (dateLabel && dateString) { %>
   <p style=" margin-top: 32px">
-      Posted <%= postedDate %> at <%= postedTime %>
+    <%= dateLabel %> <%= dateString %>
   </p>
+  <% } %>
 
   <hr />
 
   <% if (data.note) { %>
   <p style="margin-top: 32px">
-    <strong>Notes:</strong>
+    <strong>Internal note:</strong>
     <%- data.note %>
   </p>
   <% } %>

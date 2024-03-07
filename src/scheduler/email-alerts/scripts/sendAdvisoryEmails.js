@@ -36,16 +36,36 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
       sent.push({ "advisoryNumber": advisoryNumber, "lastEmailSent": new Date().toISOString() });
       const emailInfo = message.attributes?.jsonData;
 
-      const advisoryInfo = await getAdvisoryInfo(advisoryNumber);
-      const postingDate = parseJSON(advisoryInfo[0].advisoryDate);
+      const advisory = (await getAdvisoryInfo(advisoryNumber))[0];
+
+      let dateLabel = "";
+      let dateString = "";
+
       const tz = "America/Vancouver";
+      const fmt = "MMMM dd, yyyy hh:mm a"
+
+      if (advisory.isAdvisoryDateDisplayed) {
+        dateLabel = "Posted";
+        dateString = formatInTimeZone(parseJSON(advisory.advisoryDate), tz, fmt);
+      } else if (advisory.isUpdatedDateDisplayed) {
+        dateLabel = "Updated";
+        dateString = formatInTimeZone(parseJSON(advisory.updatedDate), tz, fmt);
+      } else if (advisory.isEffectiveDateDisplayed && advisory.isEndDateDisplayed) {
+        const effectiveDate = parseJSON(advisory.effectiveDate);
+        const endDate = parseJSON(advisory.endDate);
+        dateLabel = "In effect";
+        dateString = `${formatInTimeZone(effectiveDate, tz, fmt)} to ${formatInTimeZone(endDate, tz, fmt)}`;
+      } else if (advisory.isEffectiveDateDisplayed) {
+        dateLabel = "In effect";
+        dateString = formatInTimeZone(parseJSON(advisory.effectiveDate), tz, fmt);
+      }
 
       const emailData = {
         ...emailInfo,
         ...{
-          data: advisoryInfo[0],
-          postedDate: formatInTimeZone(postingDate, tz, "MMMM d, yyyy"),
-          postedTime: formatInTimeZone(postingDate, tz, "h:mma").toLowerCase(),
+          data: advisory,
+          dateLabel: dateLabel,
+          dateString: dateString,
           publicUrl: process.env.PUBLIC_URL,
           adminUrl: process.env.ADMIN_URL
         }
