@@ -37,14 +37,6 @@
         "Home66Width",
         "HomeFullWidth"
       ]
-    },
-    "access_status": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::access-status.access-status"
-    },
-    "test": {
-      "type": "boolean"
     }
   }
 }
