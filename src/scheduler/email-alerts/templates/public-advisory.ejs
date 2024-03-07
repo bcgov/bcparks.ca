@@ -52,7 +52,12 @@
 
     .manage-advisory-button:active,
     .manage-advisory-button:hover {
-      text-decoration: underline;
+      background-color: #2464a4;
+    }
+
+    .manage-advisory-button:focus-visible {
+      outline: 2px solid #2464a4;
+      outline-offset: 2px;
     }
 
     .link {
@@ -168,7 +173,7 @@
   </p>
   <% } %>
 
-  <a href="<%= adminUrl %>/bcparks/advisory-link/<%= advisoryNumber %>" class="manage-advisory-button">Manage Advisory</a>
+  <a href="<%= adminUrl %>/bcparks/advisory-link/<%= advisoryNumber %>" class="manage-advisory-button">Manage advisory</a>
 
 </body>
 
