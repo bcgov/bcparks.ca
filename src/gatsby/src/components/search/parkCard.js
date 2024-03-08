@@ -272,15 +272,15 @@ const ParkCard = ({ r }) => {
                   )}
 
                 <div className="col-12 park-content-mobile">
-                  <GatsbyLink
-                    to={`/${r.slug}/`}
-                    className="p10t underline-hover"
-                  >
-                    <h2 className="park-heading-text">
+                  <h2 className="park-heading-text">
+                    <GatsbyLink
+                      to={`/${r.slug}/`}
+                      className="underline-hover mobile-park-link"
+                    >
                       {r.protectedAreaName}
                       <ExpandCircleDownIcon className="park-heading-icon" />
-                    </h2>
-                  </GatsbyLink>
+                    </GatsbyLink>
+                  </h2>
                   <p>{locationLabel(r.parkLocations)}</p>
                   <div>
                     <FeatureIcons park={r} />

@@ -7,11 +7,10 @@
   }
   h2 {
     a {
-      color: $colorBlue;
-      text-decoration: none;
+      color: $colorBlue !important;
+      text-decoration: none !important;
       &:hover {
-        color: $colorBlue !important;
-        text-decoration: underline;
+        text-decoration: underline !important;
       }
       svg.MuiSvgIcon-root {
         font-size: 1.25rem;

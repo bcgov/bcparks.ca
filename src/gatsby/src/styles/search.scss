@@ -1006,7 +1006,7 @@ div[class$="-singleValue"] {
 
   .park-content-mobile {
     padding: 16px;
-    a {
+    a:not(.mobile-park-link) {
       display: block;
       color: $colorBlue;
       text-decoration: underline;
@@ -1146,12 +1146,12 @@ head {
   color: $colorBlue;
 }
 
-a.desktop-park-link {
+a.desktop-park-link,
+a.mobile-park-link {
   color: $colorBlue;
   &:focus-visible {
-    border-radius: 0.25rem;
-    outline-offset: 0;
-    outline: 2px solid $colorBlueMed;      
+    outline: 2px auto $colorBlueMed;     
+    outline-offset: 2px;
   }
   &:focus, &:hover {
     color: $colorBlue;
