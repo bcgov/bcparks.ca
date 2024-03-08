@@ -266,9 +266,17 @@ li.post-separator {
 
   a {
     display: block;
+    color: $colorBlueMed;
     text-decoration: none;
-    &:hover {
+    &:hover, &:focus-visible {
+      color: $colorBlueMed;
       text-decoration: underline;
+    }
+    &:focus-visible {
+      border: $colorWhite solid 2px;
+      outline: $colorBlueMed solid 2px;
+      outline-offset: 0px;
+      border-radius: 4px;
     }
   }
 

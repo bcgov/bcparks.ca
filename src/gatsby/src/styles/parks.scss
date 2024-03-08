@@ -138,6 +138,7 @@
   a {
     color: $colorBlueMed;
     &:hover, &:focus-visible {
+      color: $colorBlueMed;
       text-decoration: underline;
     }
     &:focus-visible {
