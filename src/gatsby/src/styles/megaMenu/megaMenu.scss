@@ -275,8 +275,12 @@ nav {
             line-height: normal;
             display: inline-block;
             text-align: center;
-            &:not(:focus):hover {
+            &:hover, &:focus-visible {
               text-decoration: underline;
+              background-color: transparent;
+            }
+            &:focus-visible {
+              outline: $colorWhite auto 2px;
             }
             &.has-children {
               padding-right: 28px;
@@ -425,6 +429,14 @@ nav {
         display: block;
         width: 100%;
         padding: 8px 10px;
+        &:hover, &:focus-visible {
+          text-decoration: underline;
+          background-color: $colorBackgroundGrey;
+        }
+        &:focus-visible {
+          outline: $colorBlueMed auto 2px;
+          outline-offset: 2px;
+        }
 
         .menu-button__arr {
           float: right;
