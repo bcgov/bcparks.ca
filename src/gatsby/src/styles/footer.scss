@@ -96,15 +96,14 @@
   a {
     color: $colorWhite;
     text-decoration: none;
-    &:hover, &:active, &:focus {
+    &:hover, &:focus-visible {
       text-decoration: underline;
     }
     &:focus-visible {
-      text-decoration: underline;
-      border-radius: 4px;
       border: $colorWhite solid 2px;
       outline: $colorBlueMed solid 2px;
       outline-offset: 0px;
+      border-radius: 4px;
     }
   }
 }

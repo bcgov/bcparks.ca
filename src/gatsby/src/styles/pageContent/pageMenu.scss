@@ -28,7 +28,10 @@
       text-decoration: underline;
     }
     &:focus-visible {
-      outline: $colorBlueMed auto 2px;
+      border: $colorWhite solid 2px;
+      outline: $colorBlueMed solid 2px;
+      outline-offset: 0px;
+      border-radius: 4px;
     }
     &:first-of-type {
       margin-top: 64px;
