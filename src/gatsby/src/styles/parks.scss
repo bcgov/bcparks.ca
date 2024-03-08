@@ -14,18 +14,6 @@
       padding: 0;
     }
   }
-  // link style
-  a {
-    color: $colorBlueMed;
-    &:hover {
-      color: $colorBlueMed;
-    }
-    &:focus-visible {
-      color: $colorBlueMed;
-      outline: $colorBlueMed auto 2px;
-      outline-offset: 2px;
-    }
-  }
   .page-content {
     max-width: 640px;
     padding: 0 16px;

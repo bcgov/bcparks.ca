@@ -23,16 +23,12 @@
     border-radius: 0px;
     margin-top: 15px;
     padding: 6px 12px;
-    &:hover {
+    &:hover, &:focus-visible {
+      color: $colorBlue;
       text-decoration: underline;
     }
-    &:hover, &:active, &:focus {
-      color: $colorBlueMed;
-    }
     &:focus-visible {
-      color: $colorBlueMed;
       outline: $colorBlueMed auto 2px;
-      outline-offset: 2px;
     }
     &:first-of-type {
       margin-top: 64px;
@@ -43,9 +39,10 @@
   display: none;
 }
 .page-menu--desktop [active-section="true"] {
+  color: $colorBlue;
   font-weight: bold;
   box-sizing: border-box;
-  border-left: $colorBlueMed solid 3px;
+  border-left: $colorBlue solid 3px;
 }
 .page-menu--mobile {
   top: 0px;
