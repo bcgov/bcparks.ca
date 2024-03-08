@@ -32,10 +32,11 @@ const getNextRevisionNumber = async (advisoryNumber) => {
   return ++maxRevisionNumber;
 };
 
-const createPublicAdvisoryAudit = async (data) => {
+const archiveOldPublicAdvisoryAudit = async (data) => {
   delete data.id;
   delete data.updatedBy;
   delete data.createdBy;
+  delete data.links; // keep links connected to the latest revision, not the archived version
   data.publishedAt = null;
   data.isLatestRevision = false;
 
@@ -210,7 +211,10 @@ module.exports = {
 
     // flow 5: system updates
     if (newPublicAdvisory.modifiedBy === "system") {
-      await createPublicAdvisoryAudit(oldPublicAdvisory);
+      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
+      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
+        oldPublicAdvisory.advisoryNumber
+      );
       return;
     }
 
@@ -219,7 +223,7 @@ module.exports = {
       oldAdvisoryStatus === "INA" &&
       oldPublicAdvisory.modifiedBy === "system"
     ) {
-      await createPublicAdvisoryAudit(oldPublicAdvisory);
+      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
         oldPublicAdvisory.advisoryNumber
       );
@@ -228,7 +232,7 @@ module.exports = {
 
     // flow 3: update published advisory
     if (oldAdvisoryStatus === "PUB") {
-      await createPublicAdvisoryAudit(oldPublicAdvisory);
+      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
         oldPublicAdvisory.advisoryNumber
       );
