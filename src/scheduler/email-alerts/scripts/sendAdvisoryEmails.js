@@ -19,6 +19,10 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
   let sent = [];
   const logger = getLogger();
 
+  if (!recentAdvisoryEmails) {
+    recentAdvisoryEmails = [];
+  }
+
   // get items from the queue with the action 'email advisory'
   try {
     queue = await readQueue("email advisory");
@@ -29,9 +33,6 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
 
   for (const message of queue) {
     const advisoryNumber = message.attributes?.numericData;
-    if (!recentAdvisoryEmails) {
-      recentAdvisoryEmails = [];
-    }
     if (!recentAdvisoryEmails.find(e => e.advisoryNumber === advisoryNumber)) {
       sent.push({ "advisoryNumber": advisoryNumber, "lastEmailSent": new Date().toISOString() });
       const emailInfo = message.attributes?.jsonData;
