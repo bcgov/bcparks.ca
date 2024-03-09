@@ -967,10 +967,13 @@ div[class$="-singleValue"] {
         flex-wrap: wrap;
         margin-right: 8px;
         a {
-          color: $colorBlue;
           text-decoration: underline;
-          text-decoration-color: $colorBlue;
           margin-left: 4px;
+          &:focus-visible {
+            color: $colorBlue;
+            outline: 2px auto $colorBlueMed;
+            outline-offset: 2px;
+          }
           p {
             font-size: 0.875rem;
             margin-bottom: 0;
@@ -989,9 +992,12 @@ div[class$="-singleValue"] {
     line-height: 1.5rem;
     color: $colorGrey;
     a {
-      color: $colorBlue;
       text-decoration: underline;
-      text-decoration-color: $colorBlue;
+      &:focus-visible {
+        color: $colorBlue;
+        outline: 2px auto $colorBlueMed;
+        outline-offset: 2px;
+      }
     }
   }
 
@@ -1008,9 +1014,7 @@ div[class$="-singleValue"] {
     padding: 16px;
     a:not(.mobile-park-link) {
       display: block;
-      color: $colorBlue;
       text-decoration: underline;
-      text-decoration-color: $colorBlue;
       margin-top: 8px;
       p {
         font-size: 0.875rem;
@@ -1152,9 +1156,6 @@ a.mobile-park-link {
   &:focus-visible {
     outline: 2px auto $colorBlueMed;     
     outline-offset: 2px;
-  }
-  &:focus, &:hover {
-    color: $colorBlue;
   }
 }
 
