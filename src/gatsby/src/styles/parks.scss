@@ -37,8 +37,8 @@
         display: inline-block;
         text-decoration: none;
         margin-top: 24px;
-        &:hover {
-          color: $colorBlueMed;
+        &:hover, &:focus-visible {
+          color: $colorBlue;
           text-decoration: underline;
         }
       }

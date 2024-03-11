@@ -130,15 +130,15 @@ const DesktopFilters = ({
           underline="hover"
         >
           {showMoreAreas ? (
-            <div style={{ color: `#2464A4` }}>
+            <>
               Show all {areaItems.length}
               <ExpandMore fontSize="small" />
-            </div>
+            </>
           ) : (
-            <div style={{ color: `#2464A4` }}>
+            <>
               Show less
               <ExpandLess fontSize="small" />
-            </div>
+            </>
           )}
         </Link>
 
@@ -174,15 +174,15 @@ const DesktopFilters = ({
           underline="hover"
         >
           {showMoreActivities ? (
-            <div style={{ color: `#2464A4` }}>
+            <>
               Show all {activityItems.length}
               <ExpandMore fontSize="small" />
-            </div>
+            </>
           ) : (
-            <div style={{ color: `#2464A4` }}>
+            <>
               Show less
               <ExpandLess fontSize="small" />
-            </div>
+            </>
           )}
         </Link>
       </fieldset>
@@ -209,15 +209,15 @@ const DesktopFilters = ({
           underline="hover"
         >
           {showMoreFacilities ? (
-            <div style={{ color: `#2464A4` }}>
+            <>
               Show all {facilityItems.length}
               <ExpandMore fontSize="small" />
-            </div>
+            </>
           ) : (
-            <div style={{ color: `#2464A4` }}>
+            <>
               Show less
               <ExpandLess fontSize="small" />
-            </div>
+            </>
           )}
         </Link>
       </fieldset>

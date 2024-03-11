@@ -12,46 +12,43 @@
 }
 
 .expand-icon {
-  color: rgba(0, 0, 0, 0.54);
-
-  &.open {
-    font-size: 1.5rem;
+  .open {
+    font-size: 1rem;
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     -o-transform: rotate(180deg);
     transform: rotate(180deg);
     transition: 0.3s;
+    padding-top: 2px;
   }
 
-  &.close {
-    font-size: 1.5rem;
+  .close {
+    font-size: 1rem;
     -webkit-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
     -ms-transform: rotate(0deg);
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
     transition: 0.3s;
+    padding-top: 5px;
   }
 }
 
-.MuiTypography-root.expand-link.expand-icon {
-  position: relative;
+.MuiTypography-root.expand-link.expand-icon,
+.park-overview-link.expand-icon {
   display: inline-block;
   color: $colorBlueMed !important;
   text-decoration: none !important;
   cursor: pointer;
   margin-bottom: 16px;
-  &:hover,
-  &:focus {
+  &:hover, &:focus-visible {
+    color: $colorBlue !important;
     text-decoration: underline !important;
   }
   i {
-    position: absolute;
-    top: 0;
-    right: -24px;
-    float: none;
-    color: rgba(0, 0, 0, 0.54);
+    color: inherit;
+    font-size: 0.875rem;
     opacity: 1;
     margin-left: 8px;
   }
