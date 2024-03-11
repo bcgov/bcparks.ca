@@ -893,9 +893,19 @@ div[class$="-singleValue"] {
   }
 
   .park-links {
-    a.map-link {
-      svg.MuiSvgIcon-root {
-        font-size: 1rem;
+    a {
+      &:focus-visible {
+        color: $colorBlue;
+        text-decoration: underline;
+        border: $colorWhite solid 2px;
+        outline: $colorBlueMed solid 2px;
+        outline-offset: 0px;
+        border-radius: 4px; 
+      }
+      &.map-link {
+        svg.MuiSvgIcon-root {
+          font-size: 1rem;
+        }
       }
     }
   }
