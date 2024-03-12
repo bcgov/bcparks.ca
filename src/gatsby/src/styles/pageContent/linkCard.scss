@@ -66,17 +66,20 @@
   }
 
   .card-button {
-    background: $colorWhite;
-    color: $colorBlue;
-    width: 180px;
-    padding: 10px 20px;
-    line-height: 30px;
-    border-radius: 4px;
+    height: 48px;
+    width: 155px;
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    line-height: 1.5;
+    color: $colorBlue;
+    background-color: $colorWhite;
+    border-radius: 4px;
     margin-top: auto;
-    text-decoration: none;
+    padding: 0 16px;
     i {
-      margin: auto 0 auto auto;
+      margin-left: 8px;
       font-size: 1rem;
     }
     @media screen and (max-width: $lgBreakpoint) {
@@ -150,9 +153,9 @@
             padding:10px 30px;
         }
         .card-button {
-            background: $colorBlue;
-            color: $colorWhite;
-            margin:10px 30px;
+          color: $colorWhite;
+          background-color: $colorBlue;
+          margin: 10px 30px;
         }
       }
 
@@ -191,8 +194,8 @@
             color:$colorBlue;
         }
         .card-button {
-            background: $colorGold;
-            color: $colorBlue;
+          color: $colorBlue;
+          background-color: $colorGold;
         }
         
     }
@@ -208,7 +211,7 @@
 
     .card-button {
       color: $colorBlue;
-      background: $colorGold;
+      background-color: $colorGold;
     }
 
     &.link-card--horz {
@@ -246,6 +249,16 @@
           transform: scale(1.15);
         }
       }
+    }
+  }
+
+  &:focus-visible {
+    .card-button {
+      color: $colorBlue;
+      background-color: $colorGold;
+      border: $colorWhite solid 2px;
+      outline: $colorBlueMed solid 2px;
+      outline-offset: 0px;
     }
   }
 }
