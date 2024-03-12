@@ -313,12 +313,44 @@ a.underline-hover {
 
 // button
 a.btn {
+  height: 48px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  line-height: 1.5;
+  border-radius: 4px;
+  padding: 0 16px;
+  
+  &.btn-warning {
+    color: $colorBlue;
+    background-color: $colorGold;
+    border: $colorGold 2px solid;
+    &:hover, &:focus-visible {
+      color: $colorWhite;
+      background-color: $colorBlueMed;
+    }
+    &:hover {
+      border: $colorBlueMed solid 2px;
+    }
+  }
+
   &.btn-primary {
     color: $colorWhite;
-    background-color: #234075;
-    &:hover {
+    background-color: $colorBlue;
+    border: $colorBlue 2px solid;
+    &:hover, &:focus-visible {
       color: $colorWhite;
-      background-color: #203458;
+      background-color: $colorBlueMed;
     }
+    &:hover {
+      border: $colorBlueMed 2px solid;
+    }
+  }
+
+  &:focus-visible {
+    border: $colorWhite solid 2px;
+    outline: $colorBlueMed solid 2px;
+    outline-offset: 0px;
   }
 }

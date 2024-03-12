@@ -36,34 +36,17 @@
 }
 
 a.btn.book-campsite-btn {
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  line-height: 1.5;
   color: $colorBlue;
   background-color: $colorWhite;
   border: $colorWhite solid 2px;
-  border-radius: 4px;
-  padding: auto 16px;
   &:hover, &:focus-visible {
-    border: $colorGold solid 2px;
     background-color: $colorGold;
   }
   &:hover {
     border: $colorGold solid 2px;
   }
-  &:focus-visible {
-    border: $colorWhite solid 2px;
-    outline: $colorBlueMed solid 2px;
-    outline-offset: 0px;
-  }
   @include media-breakpoint-down(md) {
     margin-right: 40px;
-  }
-  @include media-breakpoint-down(xs) {
-    width: 140px;
   }
 }
 

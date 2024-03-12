@@ -348,28 +348,6 @@ h2.section-heading {
 
   .button-parent {
     a.btn  {
-      width: 100%;
-      border: 2px solid transparent;
-      @media (min-width: $lgBreakpoint) {
-        width: unset !important;
-      }
-      &.btn-warning {
-        color: $colorBlue;
-        background-color: $colorGold;
-        border-color: $colorGold;
-        &:hover {
-          text-decoration: underline;
-          background-color: transparent;
-        }
-      }
-      &.btn-primary {
-        background-color: $colorBlue;
-        border-color: $colorBlue;
-        &:hover {
-          color: $colorBlue;
-          background-color: $colorWhite;
-        }
-      }
       &+.btn {
         margin-top: 16px;
         @media (min-width: $lgBreakpoint) {
