@@ -387,3 +387,45 @@ a.btn {
     outline-offset: 0px;
   }
 }
+
+.btn-scroll {
+  position: fixed;
+  right: 5%;
+  bottom: 2vh;
+  z-index: 100;
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  padding: 0;
+  &--inner {
+    height: 44px;
+    width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $colorWhite;
+    background-color: rgba($colorBlue, .75);
+    border: $colorWhite solid 2px;
+    border-radius: 50%;
+  }
+  &:hover {
+    .btn-scroll--inner {
+      background-color: $colorBlue;
+    }
+  }
+  &:focus {
+    outline: none;
+  }
+  &:focus-visible {
+    border: $colorWhite solid 2px;
+    outline: $colorBlueMed solid 2px;
+    outline-offset: 0px;
+    .btn-scroll--inner {
+      background-color: $colorBlue;
+    }
+  }
+
+  @media screen and (min-width: $smBreakpoint) {
+    right: 2%;
+  }
+}
