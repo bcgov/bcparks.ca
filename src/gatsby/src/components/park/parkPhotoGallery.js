@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Button, Grid, Box, Divider } from "@mui/material"
+import { Grid, Box, Divider } from "@mui/material"
 import PhotoLibraryOutlinedIcon from "@mui/icons-material/PhotoLibraryOutlined"
 import Lightbox from "yet-another-react-lightbox"
 import Captions from "yet-another-react-lightbox/plugins/captions"
@@ -15,8 +15,8 @@ import ParkPhoto from "./parkPhoto"
 
 const ShowPhotos = ({ text, setShowPhotos, setOpen }) => {
   return (
-    <Button
-      className="show-photo-text"
+    <button
+      className="show-photo-button"
       onClick={() => {
         setShowPhotos(true)
         setOpen(true)
@@ -24,7 +24,7 @@ const ShowPhotos = ({ text, setShowPhotos, setOpen }) => {
     >
       <PhotoLibraryOutlinedIcon className="photo-icon" />
       {text}
-    </Button>
+    </button>
   )
 }
 
@@ -93,7 +93,7 @@ export default function ParkPhotoGallery({ photos }) {
                         alt={parkPhotos[0].altText}
                       />
                     </Grid>
-                    <Grid item xs={12} md={6} className="show-photo-button">
+                    <Grid item xs={12} md={6} className="show-photo-grid">
                       <ParkPhoto
                         type="blur"
                         src={parkPhotos[0].imageUrl}
@@ -101,7 +101,7 @@ export default function ParkPhotoGallery({ photos }) {
                       />
                       <div className="show-photos">
                         <ShowPhotos
-                          text="Show Photos"
+                          text="Show photos"
                           setShowPhotos={setShowPhoto}
                           setOpen={setOpen}
                         />
@@ -122,7 +122,7 @@ export default function ParkPhotoGallery({ photos }) {
                           alt={parkPhotos[0].altText}
                         />
                       </Grid>
-                      <Grid item xs={12} md={6} className="show-photo-button">
+                      <Grid item xs={12} md={6} className="show-photo-grid">
                         <ParkPhoto
                           type="big"
                           src={parkPhotos[1].imageUrl}
@@ -131,7 +131,7 @@ export default function ParkPhotoGallery({ photos }) {
 
                         <div className="show-photos">
                           <ShowPhotos
-                            text="Show Photos"
+                            text="Show photos"
                             setShowPhotos={setShowPhoto}
                             setOpen={setOpen}
                           />
@@ -177,7 +177,7 @@ export default function ParkPhotoGallery({ photos }) {
                       container
                       xs={12}
                       md={6}
-                      className="show-photo-button"
+                      className="show-photo-grid"
                     >
                       <>
                         {parkPhotos
@@ -213,7 +213,7 @@ export default function ParkPhotoGallery({ photos }) {
                           ))}
                         <div className="show-photos-5">
                           <ShowPhotos
-                            text="Show Photos"
+                            text="Show photos"
                             setShowPhotos={setShowPhoto}
                             setOpen={setOpen}
                           />
