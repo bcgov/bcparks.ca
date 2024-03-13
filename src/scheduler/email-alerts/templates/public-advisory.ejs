@@ -4,135 +4,86 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title><%= title %></title>
-  <style type="text/css">
-    .logo-subheading-text {
-      display: inline-block;
-      font-size: 16pt;
-      white-space: nowrap;
-      margin-top: 10px;
-      color: #003366;
-    }
-
-    .urgency-level {
-      font-size: 13pt;
-      margin-bottom: 12px;
-    }
-
-    .advisory-headline {
-      font-size: 18pt;
-      font-weight: bold;
-      margin: 0;
-    }
-
-    .affected-area-pill {
-      background-color: #003366;
-      color: #FFFFFF;
-      display: inline-block;
-      padding: 6px 10px;
-      border-radius: 15px;
-      margin-right: 10px;
-      margin-bottom: 4px;
-    }
-
-    .parks-affected-count {
-      white-space: nowrap;
-      display: inline-block;
-      margin-top: 10px;
-    }
-
-    .manage-advisory-button {
-      background-color: #003366;
-      color: #FFFFFF !important;
-      display: inline-block;
-      padding: 10px 10px;
-      border-radius: 3px;
-      margin: 20px 10px 0 0;
-      text-decoration: none;
-    }
-
-    .manage-advisory-button:active,
-    .manage-advisory-button:hover {
-      background-color: #2464a4;
-    }
-
-    .manage-advisory-button:focus-visible {
-      outline: 2px solid #2464a4;
-      outline-offset: 2px;
-    }
-
-    .link {
-      color: #2464a4 !important;
-    }
-
-    .mr-1 {
-      margin-right: 4px;
-    }
-  </style>
 </head>
 
 <body style="font-family: Arial, Helvetica; color: #1a1a1a">
   <img src="cid:logo.png" alt="BC Parks" title="BC Parks Logo" style="margin: 8px 16px 0px 0px;" width="150" />
 
-  <span class="logo-subheading-text">
-    Staff web portal
+  <span style="display:inline-block;font-size:16pt;white-space:nowrap;margin-top:10px;color:#003366;">
+    &nbsp;Staff web portal
   </span>
 
   <p style="font-size: 16pt">
     <%= title %>
   </p>
 
-  <p class="urgency-level">
+  <p style="font-size:13pt;margin-bottom:12px;">
     <strong>Urgency level:</strong>
     <%= data.urgency.urgency.toLowerCase() %>
   </p>
 
-  <p class="advisory-headline">
+  <p style="font-size:18pt;font-weight:bold;margin:0;">
     <%= data.title %>
   </p>
 
   <% data.fireCentres.forEach((val) => { %>
-  <div class="affected-area-pill">
-    <%= val.fireCentreName %>
-  </div>
+  <span style="display: inline-block; text-align: center; background-color: #c7e3fd; color: #003366;">
+    <span style="display: inline-block; color: #003366; border-color: #c7e3fd; border-width: 5px 10px; border-style: solid; white-space: nowrap;">
+      <%= val.fireCentreName %>
+    </span>
+  </span>
+  &nbsp;
   <% }) %>
 
   <% data.fireZones.forEach((val) => { %>
-  <div class="affected-area-pill">
-    <%= val.fireZoneName %>
-  </div>
+  <span style="display: inline-block; text-align: center; background-color: #c7e3fd; color: #003366;">
+    <span style="display: inline-block; color: #003366; border-color: #c7e3fd; border-width: 5px 10px; border-style: solid; white-space: nowrap;">
+      <%= val.fireZoneName %>
+    </span>
+  </span>
+  &nbsp;
   <% }) %>
 
   <% data.regions.forEach((val)=> { %>
-  <div class="affected-area-pill">
-    <%= val.regionName %> Region
-  </div>
+  <span style="display: inline-block; text-align: center; background-color: #c7e3fd; color: #003366;">
+    <span style="display: inline-block; color: #003366; border-color: #c7e3fd; border-width: 5px 10px; border-style: solid; white-space: nowrap;">
+      <%= val.regionName %> Region
+    </span>
+  </span>
+  &nbsp;
   <% }) %>
 
   <% data.sections.forEach((val) => { %>
-  <div class="affected-area-pill">
-    <%= val.sectionName %> Section
-  </div>
+  <span style="display: inline-block; text-align: center; background-color: #c7e3fd; color: #003366;">
+    <span style="display: inline-block; color: #003366; border-color: #c7e3fd; border-width: 5px 10px; border-style: solid; white-space: nowrap;">
+      <%= val.sectionName %> Section
+    </span>
+  </span>
+  &nbsp;
   <% }) %>
 
-  <% data.managementAreas.forEach((val) => { %>
-  <div class="affected-area-pill">
-    <%= val.managementAreaName %> Management Area
-  </div>
+  <% data.sections.forEach((val) => { %>
+  <span style="display: inline-block; text-align: center; background-color: #c7e3fd; color: #003366;">
+    <span style="display: inline-block; color: #003366; border-color: #c7e3fd; border-width: 5px 10px; border-style: solid; white-space: nowrap;">
+      <%= val.managementAreaName %> Management Area
+    </span>
+  </span>
+  &nbsp;
   <% }) %>
 
   <% if (data.fireCentres.length || data.fireZones.length || data.regions.length || data.sections.length || data.managementAreas.length) { %>
-  <span class="parks-affected-count">
+  <span style="white-space:nowrap;display:inline-block;margin-top:10px;">
     <%= data.protectedAreas.length %> parks affected
   </span>
   <% } else { %>
   <p style="margin-top: 4px">
     <% data.protectedAreas.forEach((val) => { %>
-    <a class="link mr-1" href="<%= publicUrl %>/<%= val.slug %>">
+    <a style="color:#2464a4!important;margin-right:4px;" href="<%= publicUrl %>/<%= val.slug %>">
       <%= val.protectedAreaName %>
     </a>
     <% }) %>
     <% data.sites.forEach((val) => { %>
-    <a class="link mr-1" href="<%= publicUrl %>/<%= val.protectedArea.slug %>/<%= val.slug %>">
+    <a style="color:#2464a4!important;margin-right:4px;" href="<%= publicUrl %>/<%= val.protectedArea.slug %>/<%= val.slug %>">
       <%= val.siteName %>
     </a>
     <% }) %>
@@ -150,7 +101,7 @@
 
   <p style="margin-top: 32px">
     <% data.links.forEach((val) => { %>
-    <a href="<%= val.url %>" class="link">
+    <a href="<%= val.url %>" style="color:#2464a4!important;">
       <%= val.title %>
     </a>
     <br />
@@ -172,7 +123,14 @@
   </p>
   <% } %>
 
-  <a href="<%= adminUrl %>/bcparks/advisory-link/<%= advisoryNumber %>" class="manage-advisory-button">Manage advisory</a>
+  <span style="display: inline-block; text-align: center; background-color: #003366; border: 1px solid #002447; color: white;">
+    <span style="display: inline-block; background-color: #003366; color: white; border-width: 1px 0 0 1px; border-color: #0070e0; border-style: solid;">
+      <a style="display: inline-block; text-decoration: none; color: white; border-color: #003366; border-width: 5px 15px; border-style: solid; white-space: nowrap;" 
+      href="<%= adminUrl %>/bcparks/advisory-link/<%= advisoryNumber %>">
+        Manage advisory
+      </a>
+    </span>
+  </span>
 
 </body>
 
