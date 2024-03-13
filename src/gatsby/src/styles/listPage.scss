@@ -158,6 +158,10 @@
         font-weight: 700;
         box-shadow: inset 0px 0px 0px 3px $colorIceBlue;
       }
+      &:focus-visible {
+        outline: $colorBlueMed solid 2px;
+        outline-offset: 2px;
+      }
 
       &-selected--true {
         color: $colorWhite;
