@@ -351,15 +351,14 @@ const MobileFilters = ({
         <DialogActions className="park-filter-dialog-action d-block">
           <div className="row">
             <div className="col-12 mt8">
-              <Button
-                variant="contained"
+              <button
                 onClick={() => {
                   searchParkFilter()
                 }}
-                className="bcgov-button bcgov-normal-blue"
+                className="bcgov-button bcgov-normal-blue w-100"
               >
                 Show {totalResults} {totalResults > 1 ? "parks" : "park"}
-              </Button>
+              </button>
             </div>
             <div className="col-12 d-flex justify-content-center mt24">
               <Link

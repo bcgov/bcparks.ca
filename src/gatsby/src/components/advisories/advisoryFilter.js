@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { styled } from '@mui/material/styles';
 import {
   Box,
-  Button,
   TextField,
   InputAdornment,
   Checkbox,
@@ -197,17 +196,15 @@ const AdvisoryFilter = ({
           <label htmlFor="search-button" className={classes.filterLabel}>
             <span className="sr-only">Search</span> &nbsp;
           </label>
-          <Button
+          <button
             id="search-button"
-            variant="contained"
-            fullWidth
             onClick={() => {
               handleSearch()
             }}
-            className="bcgov-normal-blue mobile-search-element-height h50p"
+            className="bcgov-normal-blue mobile-search-element-height h50p w-100"
           >
             Search
-          </Button>
+          </button>
         </div>
       </div>
 

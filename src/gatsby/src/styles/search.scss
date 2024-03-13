@@ -250,9 +250,6 @@ h3.subtitle {
     height: 50px;
   }
 
-  .search-icon {
-    color: #00468b !important;
-  }
 }
 .park-filter-dialog,
 .search-results-main {
@@ -588,20 +585,24 @@ div[class$="-singleValue"] {
 }
 
 .bcgov-normal-blue {
-  color: $colorWhite !important;
-  font-style: normal !important;
-  background-color: $colorBlue !important;
-  font-family: $globalFont;
-
-  @media screen and (max-width: $mediumBreakpoint) {
-    font-weight: normal !important;
+  height: 48px;
+  color: $colorWhite;
+  background-color: $colorBlue;
+  font-weight: 700;
+  border: none;
+  border-radius: 4px;
+  padding: 0;
+  &:hover, &:focus-visible {
+    background-color: $colorBlueMed;
   }
-  box-shadow: unset !important;
-}
-
-.bcgov-normal-blue:hover {
-  background-color: $colorBlue !important;
-  color: $colorWhite !important;
+  &:focus {
+    outline: none;
+  }
+  &:focus-visible {
+    border: $colorWhite solid 2px;
+    outline: $colorBlueMed solid 2px;
+    outline-offset: 0px;
+  }
 }
 
 .bcgov-normal-white {
@@ -634,10 +635,6 @@ div[class$="-singleValue"] {
   border-width: 1px !important;
   border-style: solid !important;
   background-color: $colorWhite !important;
-}
-
-.bcgov-button {
-  height: 39px;
 }
 
 .no-wrap {

@@ -712,12 +712,12 @@ export default function FindAPark({ location, data }) {
                 handleClear={handleClickClearCity}
                 handleSearch={handleSearch}
               />
-              <Button
-                className="bcgov-normal-blue mobile-search-element-height h50p"
+              <button
+                className="bcgov-normal-blue mobile-search-element-height"
                 onClick={handleSearch}
               >
                 Search
-              </Button>
+              </button>
             </div>
           </div>
         </div>

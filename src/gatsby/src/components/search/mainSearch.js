@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { navigate, graphql, useStaticQuery } from "gatsby"
-import { Button } from "@mui/material"
 import ParkNameSearch from "./parkNameSearch"
 import CityNameSearch from "./cityNameSearch"
 import { useScreenSize } from "../../utils/helpers"
@@ -162,12 +161,12 @@ const MainSearch = ({ hasCityNameSearch }) => {
             />
           </>
         )}
-        <Button
+        <button
           className="parks-search-button"
           onClick={searchParkFilter}
         >
           Search
-        </Button>
+        </button>
       </div>
     </div>
   )

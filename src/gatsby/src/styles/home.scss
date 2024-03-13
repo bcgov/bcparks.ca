@@ -126,18 +126,6 @@
           width: 300px;
         }
       }
-      .parks-search-button {
-        height: 48px;
-        width: 100%;
-        color: $colorBlue;
-        background: $colorGold;
-        font-size:1.125rem;
-        margin: 24px 0 0 0;
-        @media screen and (min-width: $mdBreakpoint) {
-          width: 130px;
-          margin: 0 0 0 16px;
-        }
-      }
     }
   }
 }
