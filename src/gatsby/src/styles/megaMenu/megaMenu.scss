@@ -270,10 +270,6 @@ nav {
               text-decoration: underline;
               background-color: transparent;
             }
-            &:focus-visible {
-              outline: $colorWhite solid 2px;
-              border-radius: 2px;
-            }
             &.has-children {
               padding-right: 28px;
               &::after {
@@ -426,8 +422,10 @@ nav {
           background-color: $colorBackgroundGrey;
         }
         &:focus-visible {
-          outline: $colorBlueMed auto 2px;
-          outline-offset: 2px;
+          border: $colorWhite solid 2px;
+          outline: $colorBlueMed solid 2px;
+          outline-offset: 0px;
+          border-radius: 4px;
         }
 
         .menu-button__arr {

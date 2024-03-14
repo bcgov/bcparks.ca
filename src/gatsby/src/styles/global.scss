@@ -272,6 +272,9 @@ li.post-separator {
       color: $colorBlueMed;
       text-decoration: underline;
     }
+    &:focus {
+      color: $colorBlueMed !important;
+    }
     &:focus-visible {
       border: $colorWhite solid 2px;
       outline: $colorBlueMed solid 2px;
@@ -340,11 +343,11 @@ button.btn:not(.btn-link) {
     color: $colorWhite;
     background-color: $colorBlue;
     border: $colorBlue 2px solid;
-    &:hover, &:active, &:focus, &:focus-visible {
+    &:hover, &:focus-visible {
       color: $colorWhite;
       background-color: $colorBlueMed !important;
     }
-    &:hover, &:active, &:focus {
+    &:hover{
       border: $colorBlueMed 2px solid !important;
     }
   }
@@ -353,14 +356,21 @@ button.btn:not(.btn-link) {
   &.btn-light {
     color: $colorBlue !important;
     background-color: $colorWhite;
-    border: $colorBlue 2px solid;
-    &:hover, &:active, &:focus, &:focus-visible {
+    border: $colorBlue 1px solid;
+    &:hover, &:focus-visible {
       background-color: $colorIceBlue !important;
-      border: $colorBlue 2px solid !important;
+      border: $colorBlue 1px solid !important;
     }
     &:focus-visible {
       outline: $colorBlueMed solid 2px;
       outline-offset: 2px;
+    }
+  }
+
+  &.btn-light {
+    border: $colorBlue 2px solid !important;
+    &:hover, &:focus-visible {
+      border: $colorBlue 2px solid !important;
     }
   }
 
@@ -394,10 +404,8 @@ button.btn:not(.btn-link) {
   margin: 24px 0 0 0 !important;
   padding: 0 !important;
   &:hover, &:focus-visible {
+    color: $colorBlue;
     background-color: $colorGold;
-  }
-  &:focus {
-    outline: none;
   }
   &:focus-visible {
     border: $colorWhite solid 2px;

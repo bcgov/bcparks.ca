@@ -17,4 +17,7 @@ a {
     color: $colorBlue;
     text-decoration: underline;
   }
+  &:not(.btn):focus {
+    color: $colorBlue;
+  }
 }

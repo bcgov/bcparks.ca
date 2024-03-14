@@ -141,6 +141,9 @@
       color: $colorBlueMed;
       text-decoration: underline;
     }
+    &:focus {
+      color: $colorBlueMed;
+    }
     &:focus-visible {
       border: $colorWhite solid 2px;
       outline: $colorBlueMed solid 2px;

@@ -141,11 +141,13 @@
       height: 42px;
       color: $colorBlue;
       font-size: 0.75rem;
+      font-weight: 400;
       border: 1px solid $colorBlue;
       border-radius: 0;
       box-shadow: inset 0px 0px 0px 3px $colorWhite;
       margin-top: 12px;
       margin-left: -1px;
+      padding: 0;
       &:first-child {
         border-radius: 4px 0 0 4px;
       }
@@ -159,6 +161,7 @@
         box-shadow: inset 0px 0px 0px 3px $colorIceBlue;
       }
       &:focus-visible {
+        border: 1px solid $colorBlue;
         outline: $colorBlueMed solid 2px;
         outline-offset: 2px;
       }
