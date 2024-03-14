@@ -233,15 +233,15 @@
 }
 
 .show-photo-button {
-  height: 48px;
   color: $colorWhite;
   background-color: rgba($colorGrey, 0.5);
-  font-weight: 700;
-  border: none;
-  border-radius: 4px;
-  padding: 0 16px;
+  border: transparent solid 2px;
   &:hover, &:focus-visible {
+    color: $colorWhite;
     background-color: $colorGrey;
+  }
+  &:hover {
+    border: $colorGrey solid 2px;
   }
   &:focus {
     outline: none;

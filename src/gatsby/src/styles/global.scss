@@ -313,7 +313,7 @@ a.underline-hover {
 
 // button
 a.btn,
-button.btn {
+button.btn:not(.btn-link) {
   height: 48px;
   display: inline-flex !important;
   align-items: center;
@@ -389,15 +389,10 @@ button.btn {
 }
 
 .parks-search-button {
-  height: 48px;
-  width: 100%;
   color: $colorBlue;
   background-color: $colorWhite;
-  font-weight: 700;
-  border: none;
-  border-radius: 4px;
-  margin: 24px 0 0 0;
-  padding: 0;
+  margin: 24px 0 0 0 !important;
+  padding: 0 !important;
   &:hover, &:focus-visible {
     background-color: $colorGold;
   }
@@ -410,8 +405,8 @@ button.btn {
     outline-offset: 0px;
   }
   @media screen and (min-width: $mdBreakpoint) {
-    width: 130px;
-    margin: 0 0 0 16px;
+    width: 130px !important;
+    margin: 0 0 0 16px !important;
   }
 }
 

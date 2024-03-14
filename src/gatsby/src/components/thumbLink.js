@@ -26,12 +26,14 @@ export default function ThumbLink({ imageLink, title, navLink }) {
 
   return (
     <div className="col-lg-4 col-md-12 mt-2">
-      <button className="thumb-link" onClick={() => navigate(navLink)}>
-        <div>
-          <GatsbyImage image={image.childImageSharp.gatsbyImageData} alt={title} />
-          <div className="mt-4 text-left">
-            <h3>{title}</h3>
-          </div>
+      <button
+        aria-label="Page link"
+        className="thumb-link"
+        onClick={() => navigate(navLink)}
+      >
+        <GatsbyImage image={image.childImageSharp.gatsbyImageData} alt={title} />
+        <div className="mt-4 text-left">
+          <h3>{title}</h3>
         </div>
       </button>
     </div>

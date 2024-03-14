@@ -162,7 +162,8 @@ const MainSearch = ({ hasCityNameSearch }) => {
           </>
         )}
         <button
-          className="parks-search-button"
+          aria-label="Search"
+          className="btn parks-search-button"
           onClick={searchParkFilter}
         >
           Search

@@ -16,7 +16,8 @@ import ParkPhoto from "./parkPhoto"
 const ShowPhotos = ({ text, setShowPhotos, setOpen }) => {
   return (
     <button
-      className="show-photo-button"
+      aria-label="Show photos"
+      className="btn show-photo-button"
       onClick={() => {
         setShowPhotos(true)
         setOpen(true)
@@ -230,7 +231,7 @@ export default function ParkPhotoGallery({ photos }) {
         )}
       </div>
       <div className="d-block d-sm-block d-xs-block d-md-block d-lg-none d-xl-none">
-        {parkPhotos.length === 0 && <div className="p20t"></div>}
+        {parkPhotos.length === 0 && <div className="pt-3"></div>}
         {parkPhotos.length > 0 && (
           <Grid
             item

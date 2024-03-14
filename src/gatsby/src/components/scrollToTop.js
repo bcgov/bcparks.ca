@@ -25,8 +25,8 @@ export default function ScrollToTop() {
   return (
     isVisible && (
       <button
-        onClick={handleClick}
         aria-label="scroll to top"
+        onClick={handleClick}
         className="btn-scroll"
       >
         <div className="btn-scroll--inner">

@@ -40,6 +40,7 @@ const ParkLinksModal = ({ data: { openModal, setOpenModal } }) => {
       </DialogContent>
       <DialogActions className="container">
         <button
+          aria-label="Cancel"
           onClick={() => {
             handleCloseModal()
           }}

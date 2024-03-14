@@ -198,6 +198,7 @@ const AdvisoryFilter = ({
           </label>
           <button
             id="search-button"
+            aria-label="Search"
             onClick={() => {
               handleSearch()
             }}

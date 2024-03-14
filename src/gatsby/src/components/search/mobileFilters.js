@@ -114,7 +114,7 @@ const MobileFilters = ({
               <ExpandMore fontSize="small" />
             )}
           </Link>
-          <div className="row p20t">
+          <div className="row mt-3">
             <div className="col-12">
               <div className="park-filter-options">
                 <div className="park-filter-option-label flex-display">
@@ -184,7 +184,7 @@ const MobileFilters = ({
               </div>
             </div>
           </div>
-          <div className="row p20t">
+          <div className="row mt-3">
             <div className="col-12">
               <div className="park-filter-options">
                 <div className="park-filter-option-label flex-display">
@@ -225,7 +225,7 @@ const MobileFilters = ({
             </div>
           </div>
 
-          <div className="row p20t">
+          <div className="row mt-3">
             <div className="col-12">
               <div className="park-filter-options">
                 <div className="park-filter-option-label flex-display">
@@ -266,7 +266,7 @@ const MobileFilters = ({
             </div>
           </div>
 
-          <div className="row p20t">
+          <div className="row mt-3">
             <div className="col-12">
               <div className="park-filter-options">
 
@@ -307,7 +307,7 @@ const MobileFilters = ({
               </div>
             </div>
           </div>
-          <div className="row p20t">
+          <div className="row mt-3">
             <div className="col-12">
               <div className="park-filter-options">
                 <div className="park-filter-option-label flex-display">
@@ -350,8 +350,9 @@ const MobileFilters = ({
         </DialogContent>
         <DialogActions className="park-filter-dialog-action d-block">
           <div className="row">
-            <div className="col-12 mt8">
+            <div className="col-12">
               <button
+                aria-label="Show parks"
                 onClick={() => {
                   searchParkFilter()
                 }}
@@ -360,7 +361,7 @@ const MobileFilters = ({
                 Show {totalResults} {totalResults > 1 ? "parks" : "park"}
               </button>
             </div>
-            <div className="col-12 d-flex justify-content-center mt24">
+            <div className="col-12 d-flex justify-content-center mt-3">
               <Link
                 className="clear-filter-link"
                 onClick={handleClearFilter}

@@ -712,6 +712,7 @@ export default function FindAPark({ location, data }) {
                 handleSearch={handleSearch}
               />
               <button
+                aria-label="Search"
                 className="btn btn-primary"
                 onClick={handleSearch}
               >
@@ -729,6 +730,7 @@ export default function FindAPark({ location, data }) {
             <div className="row">
               <div className="col-12 col-md-6">
                 <button
+                  aria-label="Filter"
                   onClick={handleClickOpenFilter}
                   className="btn btn-secondary w-100"
                 >
@@ -737,6 +739,7 @@ export default function FindAPark({ location, data }) {
               </div>
               <div className="col-12 col-md-6">
                 <button
+                  aria-label="More ways to find a park"
                   onClick={handleClickOpenModal}
                   className="btn btn-secondary w-100 mt-3 mt-md-0"
                 >
@@ -748,7 +751,7 @@ export default function FindAPark({ location, data }) {
           <div className="row no-gutters">
             {/* filter checkbox for desktop */}
             <div className="search-results-quick-filter col-12 col-lg-3 d-none d-lg-block pr-3">
-              <div className="mb32">
+              <div className="mb-4">
                 <h3 className="subtitle mb-2">Filter</h3>
                 <DesktopFilters
                   data={{
@@ -916,9 +919,10 @@ export default function FindAPark({ location, data }) {
                             <ParkCard r={r} key={index} />
                           ))
                         )}
-                        <div className="load-more-button-container mt32">
+                        <div className="load-more-button-container mt-4">
                           {totalResults > searchResults.length && (
                             <button
+                              aria-label="Load more results"
                               onClick={handleLoadMore}
                               onKeyDown={e => handleKeyDownLoadMore(e)}
                               className="btn btn-secondary load-more-button"

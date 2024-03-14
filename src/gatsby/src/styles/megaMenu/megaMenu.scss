@@ -485,14 +485,6 @@ nav {
 /* END DESKTOP */
 
 /* SITEMAP */
-.sitemap-header {
-  font-size: 2.6rem;
-  font-weight: 700;
-  color: $colorBlue;
-  @include media-breakpoint-down(md) {
-    font-size: 1.75rem;
-  }
-}
 .menu-toggle.menu-mode--sitemap {
   display: none;
 }

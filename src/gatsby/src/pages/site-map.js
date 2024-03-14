@@ -6,6 +6,7 @@ import Footer from "../components/footer"
 import Header from "../components/header"
 import MegaMenu from "../components/megaMenu.js"
 import Seo from "../components/seo"
+import ScrollToTop from "../components/scrollToTop"
 
 import "../styles/staticContent1.scss"
 
@@ -24,18 +25,26 @@ const SitemapPage = ({ data }) => {
 
   return (
     <>
+      <ScrollToTop />
       <Header mode="internal" content={menuContent} />
-
-      <div id="main-content" className="static-content-container">
-        <Breadcrumbs
-          separator="›"
-          aria-label="breadcrumb"
-          className="p10t sm-p10"
-        >
+      <div id="main-content" className="static-content--header unique-page--header page-breadcrumbs">
+        <Breadcrumbs separator="›" aria-label="breadcrumb">
           {breadcrumbs}
         </Breadcrumbs>
-        <div className="sitemap-header">Site map</div>
-        This is the main structure of the website, subject to change.
+      </div>
+      <div className="static-content-container">
+        <h1 className="header-title">
+          Site map
+        </h1>
+      </div>
+      <div className="static-content-container">
+        <div className="intro-text-container">
+          <p>
+            This is the main structure of the website, subject to change.
+          </p>
+        </div>
+      </div>
+      <div className="static-content-container">
         <MegaMenu content={menuContent} menuMode="sitemap" />
       </div>
       <Footer />

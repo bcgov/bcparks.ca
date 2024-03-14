@@ -70,7 +70,7 @@ const DesktopFilters = ({
   return (
     <div className="">
       <fieldset className="mb-2">
-        <legend className="filter-heading p10t">Popular</legend>
+        <legend className="filter-heading">Popular</legend>
         <Filter
           filterItems={campingFacilityItems.filter(
             c => c.value === 36

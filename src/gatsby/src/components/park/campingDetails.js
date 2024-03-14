@@ -140,6 +140,7 @@ export default function CampingDetails({ data }) {
         {data.hasReservations && (
           <Col className="mb-3" lg="4">
             <button
+              aria-label="Book camping"
               className="btn btn-warning w-100"
               onClick={() => toCamping()}
             >

@@ -216,6 +216,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                           </div>
                         )}
                         <button
+                          aria-label="Parks affected"
                           className="btn btn-link"
                           onClick={() => setOpen(!open)}
                         >
