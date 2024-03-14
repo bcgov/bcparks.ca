@@ -180,7 +180,7 @@ const ParkCard = ({ r }) => {
                     <div className="park-content-bottom--left">
                       <FeatureIcons park={r} />
                     </div>
-                    <div className="park-content-bottom--right text-blue">
+                    <div className="park-content-bottom--right">
                       <ParkAccessStatus
                         advisories={r.advisories}
                         slug={r.slug}

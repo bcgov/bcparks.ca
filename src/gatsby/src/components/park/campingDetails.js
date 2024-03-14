@@ -134,24 +134,19 @@ export default function CampingDetails({ data }) {
   return (
     <div id="park-camping-details-container" className="anchor-link">
       <Row>
+        <Col>
+          <h2 className="section-heading">Camping</h2>
+        </Col>
         {data.hasReservations && (
-          <Col
-            lg={{ span: 4, order: "last" }}
-            xl={3}
-            md={{ span: 12, order: "first" }}
-            className="mb-3"
-          >
+          <Col className="mb-3" lg="4">
             <button
-              className="btn btn-warning btn-block booking-button p-2"
+              className="btn btn-warning w-100"
               onClick={() => toCamping()}
             >
               Book camping
             </button>
           </Col>
         )}
-        <Col md={{ order: "last" }} lg={{ order: "first" }}>
-          <h2 className="section-heading">Camping</h2>
-        </Col>
       </Row>
       {parkOperation &&
         <Row>

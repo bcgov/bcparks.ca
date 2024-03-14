@@ -10,15 +10,6 @@
   font-family: $globalFont;
 }
 
-.MuiLink-underlineHover {
-  &:hover {
-    color: $colorBlue;
-    &:focus {
-      color: inherit;
-    }
-  }
-}
-
 h3.subtitle {
   color: $colorGrey;
   font-size: 1.25rem;
@@ -32,10 +23,6 @@ h3.subtitle {
   padding: 32px 0;
 }
 
-.heading-white-space {
-  white-space: normal;
-}
-
 .park-search {
   width: 100%;
   height: 550px;
@@ -47,117 +34,6 @@ h3.subtitle {
   @media screen and (min-width: $lgBreakpoint) {
     height: 600px;
   }
-
-  img {
-    width: 100%;
-  }
-  .park-search-container {
-    position: absolute;
-    z-index: 1299;
-    overflow: visible;
-    width: 100%;
-    text-align: center;
-    white-space: nowrap;
-    font-family: $globalFont;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 1.4rem;
-    color: rgba(255, 249, 249, 1);
-
-    .mobile-search-element-height {
-      height: 50px;
-    }
-
-    @media screen and (max-width: $mediumBreakpoint) {
-      height: inherit;
-      top: unset !important;
-    }
-
-    @media screen and (max-width: $mediumBreakpoint) {
-      h2 {
-        font-size: 2.3125rem;
-      }
-      button > span {
-        font-size: 0.875rem;
-      }
-      .mobile-filter {
-        border: 1px solid $colorWhite !important;
-        width: 100%;
-      }
-      .mobile-search-element-height {
-        height: 53px !important;
-      }
-    }
-
-    @media screen and (min-width: 376px) and (max-width: $mediumBreakpoint) {
-      .park-search-group {
-        padding: 0 17%;
-      }
-    }
-
-    @media screen and (min-width: $lgBreakpoint) {
-      background: url("../images/u149.svg");
-      bottom: 0;
-      top: unset;
-      width: 50%;
-      height: 100%;
-      transform: skewX(20deg);
-      transform-origin: bottom;
-    }
-  }
-
-  .park-search-container-inner {
-    @media screen and (min-width: $lgBreakpoint) {
-      height: 100%;
-      > div {
-        padding-left: 15%;
-      }
-    }
-  }
-
-  .park-search-container-inner-align{
-    @media screen and (min-width: $lgBreakpoint) {
-      max-width: 500px;
-    }
-  }
-
-  #search-title {
-    font-family: $globalFont;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 2rem;
-    padding: 30px;
-  }
-
-}
-
-.park-search-text-wrapper {
-  @media screen and (min-width: $lgBreakpoint) {
-    padding-left: 40px !important;
-  }
-}
-
-.yellow-divider {
-  background-color: $colorGold;
-  height: 3px;
-}
-
-.grey-divider-light {
-  background-color: $colorBackgroundGrey;
-}
-
-.vertical-divider {
-  height: 100%;
-  background-color: $colorBackgroundGrey;
-}
-
-.divider-div {
-  padding: 0px 25px !important;
-}
-
-.grey-divider {
-  height: 3px;
-  background-color: $colorBackgroundGrey;
 }
 
 .filter-options-container {
@@ -396,20 +272,10 @@ div[class$="-singleValue"] {
   .container {
     max-width: 300px;
     padding: 16px;
-    .bcgov-button {
+    a.btn {
       width: 100%;
       &.link-button {
-        font-size: 1.125rem;
-        border: 1px solid $colorGreyLight !important;
         margin-top: 8px;
-        &:hover {
-          color: $colorWhite !important;
-          border: 1px solid $colorBlue !important;
-        }
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
         svg.MuiSvgIcon-root {
           font-size: inherit;
           margin-left: 4px;
@@ -422,28 +288,10 @@ div[class$="-singleValue"] {
   display: flex;
   justify-content: center;
   .load-more-button {
-    border: 1px solid $colorGreyLight !important;
     @media screen and (min-width: $lgBreakpoint) {
-      height: 50px !important;
       width: 200px !important;
     }
   }
-}
-
-.pb20 {
-  padding-bottom: 20px;
-}
-
-.p10 {
-  padding: 10px !important;
-}
-
-.p20 {
-  padding: 20px !important;
-}
-
-.p25 {
-  padding: 25px !important;
 }
 
 .p10t {
@@ -454,47 +302,6 @@ div[class$="-singleValue"] {
   padding-top: 20px !important;
 }
 
-.p30t {
-  padding-top: 30px !important;
-}
-
-.p40t {
-  padding-top: 40px !important;
-}
-
-.p30 {
-  padding: 30px !important;
-}
-
-.p30lr {
-  padding: 0px 30px !important;
-}
-
-.p0 {
-  padding: 0px !important;
-}
-
-.p5l {
-  padding-left: 5px !important;
-}
-
-.p20lr {
-  padding: 0px 20px !important;
-}
-
-.p10l {
-  padding-left: 10px !important;
-}
-
-.p15l {
-  padding-left: 15px !important;
-}
-
-.p20l,
-.p20l-filter {
-  padding-left: 20px !important;
-}
-
 .m20t {
   margin-top: 20px !important;
   @media screen and (min-width: $lgBreakpoint) {
@@ -502,59 +309,6 @@ div[class$="-singleValue"] {
       margin-top: 0 !important;
     }
   }
-}
-
-.m15t {
-  margin-top: 15px !important;
-}
-
-.m10t {
-  margin-top: 10px !important;
-}
-
-
-.p2030 {
-  padding: 20px 30px !important;
-}
-
-.pr3 {
-  padding-right: 3px !important;
-}
-
-.pr10 {
-  padding-right: 10px !important;
-}
-
-.pr15 {
-  padding-right: 15px !important;
-}
-
-.pr20 {
-  padding-right: 20px;
-}
-
-.pr30 {
-  padding-right: 30px !important;
-}
-
-.pl15 {
-  padding-left: 15px !important;
-}
-
-.mtm5 {
-  margin-top: -5px !important;
-}
-
-.mtm7 {
-  margin-top: -7px !important;
-}
-
-.mr5 {
-  margin-right: 5px !important;
-}
-
-.mr10 {
-  margin-right: 10px !important;
 }
 
 .mt8 {
@@ -569,10 +323,6 @@ div[class$="-singleValue"] {
   margin-top: 32px;
 }
 
-.mb20 {
-  margin-bottom: 20px;
-}
-
 .mb32 {
   margin-bottom: 32px;
 }
@@ -584,69 +334,8 @@ div[class$="-singleValue"] {
   height: 50px !important;
 }
 
-.bcgov-normal-blue {
-  height: 48px;
-  color: $colorWhite;
-  background-color: $colorBlue;
-  font-weight: 700;
-  border: none;
-  border-radius: 4px;
-  padding: 0;
-  &:hover, &:focus-visible {
-    background-color: $colorBlueMed;
-  }
-  &:focus {
-    outline: none;
-  }
-  &:focus-visible {
-    border: $colorWhite solid 2px;
-    outline: $colorBlueMed solid 2px;
-    outline-offset: 0px;
-  }
-}
-
-.bcgov-normal-white {
-  color: $colorBlue !important;
-  font-style: normal !important;
-  background-color: $colorWhite !important;
-  font-family: $globalFont;
-  box-shadow: unset !important;
-  border: 1px solid $colorBlue !important;
-}
-
-.bcgov-normal-white:hover {
-  background-color: $colorBlue !important;
-  color: $colorWhite !important;
-}
-
-.bcgov-normal-gold {
-  background-color: $colorGold !important;
-}
-.bcgov-normal-transparent {
-  color: $colorBlue !important;
-  font-style: normal !important;
-  background-color: transparent !important;
-  border: 1px solid $colorBlue !important;
-  font-family: $globalFont;
-  box-shadow: unset !important;
-}
-
-.bcgov-normal-transparent:hover {
-  border-width: 1px !important;
-  border-style: solid !important;
-  background-color: $colorWhite !important;
-}
-
 .no-wrap {
   white-space: nowrap !important;
-}
-
-.bcgov-loader-show {
-  display: inline-block !important;
-}
-
-.park-af-list {
-  display: inline-block !important;
 }
 
 .flex-display,
@@ -660,11 +349,6 @@ div[class$="-singleValue"] {
 
 .pointer {
   cursor: pointer !important;
-}
-
-.align-center {
-  text-align: center;
-  vertical-align: middle;
 }
 
 .m-auto {
@@ -717,14 +401,6 @@ div[class$="-singleValue"] {
   background-color: $colorBlue;
 }
 
-.park-quick-view-dialog .MuiPaper-elevation24 {
-  box-shadow: unset !important;
-}
-
-.park-quick-view-dialog .MuiDialogContent-root {
-  padding: 0px !important;
-}
-
 .park-image-div {
   height: 200px !important;
   width: 250px !important;
@@ -746,10 +422,6 @@ div[class$="-singleValue"] {
   height: 100%;
   object-fit: cover;
   object-position: center;
-}
-
-.park-quick-view-dialog-content {
-  overflow-x: hidden !important;
 }
 
 .park-carousel,
@@ -852,24 +524,6 @@ div[class$="-singleValue"] {
 }
 
 .search-results-main {
-  .park-search-text-box-container {
-    padding-right: 20px;
-  }
-
-  #search-results {
-    box-sizing: border-box;
-    overflow: hidden;
-    z-index: 2;
-    top: 200px;
-    width: 100%;
-    padding: 0;
-    text-align: left;
-  }
-
-  .text-blue {
-    color: $colorBlue;
-  }
-
   .result-count-text {
     margin-top: 16px;
     @media screen and (min-width: $lgBreakpoint) {
@@ -882,10 +536,6 @@ div[class$="-singleValue"] {
     .more-result-text {
       margin-top: 42px;
       margin-bottom: 0;
-    }
-    button.bcgov-normal-blue,
-    button.bcgov-normal-white {
-      height: 50px;
     }
   }
 
@@ -1050,12 +700,6 @@ div[class$="-singleValue"] {
   }
 
   @media (max-width: 575.98px) {
-    .small-m-auto {
-      margin: auto !important;
-    }
-    .small-flex-display {
-      display: flex !important;
-    }
     .park-content {
       margin: 0px 10px !important;
     }
@@ -1122,12 +766,6 @@ div[class$="-singleValue"] {
   }
 }
 
-@media (max-width: $mediumBreakpoint) {
-  .p20l-filter {
-    padding-left: 0px !important;
-  }
-}
-
 @media (max-width: 575.98px) {
   .bcgov-button {
     min-width: 0px !important;
@@ -1144,10 +782,6 @@ div[class$="-singleValue"] {
 
   .search-results-main .search-results-list {
     padding: 0px 16px !important;
-  }
-
-  .w50 {
-    width: 50% !important;
   }
 }
 
@@ -1353,7 +987,7 @@ a.mobile-park-link {
             width: calc((100% - 180px) / 2);
           }
         }
-        button.bcgov-normal-blue {
+        button.btn-primary {
           width: 100%;
           margin-top: 16px;
           margin-left: 0;

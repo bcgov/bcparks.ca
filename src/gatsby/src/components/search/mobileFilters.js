@@ -355,7 +355,7 @@ const MobileFilters = ({
                 onClick={() => {
                   searchParkFilter()
                 }}
-                className="bcgov-button bcgov-normal-blue w-100"
+                className="btn btn-primary w-100"
               >
                 Show {totalResults} {totalResults > 1 ? "parks" : "park"}
               </button>

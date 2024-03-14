@@ -1,16 +1,5 @@
 @import "../variables.scss";
 
-.booking-button {
-  background-color: $colorGold !important;
-  border: 2px solid $colorGold !important;
-
-  &:hover {
-    background-color: transparent !important;
-    border: 2px solid $colorGold !important;
-    text-decoration: underline;
-  }
-}
-
 .expand-icon {
   .open {
     font-size: 1rem;

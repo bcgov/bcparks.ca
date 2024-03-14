@@ -6,7 +6,6 @@ import {
   Chip,
   Link,
   LinearProgress,
-  Button,
 } from "@mui/material"
 import CancelIcon from "@mui/icons-material/Cancel"
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
@@ -713,7 +712,7 @@ export default function FindAPark({ location, data }) {
                 handleSearch={handleSearch}
               />
               <button
-                className="bcgov-normal-blue mobile-search-element-height"
+                className="btn btn-primary"
                 onClick={handleSearch}
               >
                 Search
@@ -729,22 +728,20 @@ export default function FindAPark({ location, data }) {
           <div className="search-results-list d-block d-lg-none">
             <div className="row">
               <div className="col-12 col-md-6">
-                <Button
-                  variant="outlined"
+                <button
                   onClick={handleClickOpenFilter}
-                  className="bcgov-button bcgov-normal-white font-weight-bold"
+                  className="btn btn-secondary w-100"
                 >
                   Filter
-                </Button>
+                </button>
               </div>
               <div className="col-12 col-md-6">
-                <Button
-                  variant="outlined"
+                <button
                   onClick={handleClickOpenModal}
-                  className="bcgov-button bcgov-normal-white font-weight-bold mt-3 mt-md-0"
+                  className="btn btn-secondary w-100 mt-3 mt-md-0"
                 >
                   More ways to find a park
-                </Button>
+                </button>
               </div>
             </div>
           </div>
@@ -921,14 +918,13 @@ export default function FindAPark({ location, data }) {
                         )}
                         <div className="load-more-button-container mt32">
                           {totalResults > searchResults.length && (
-                            <Button
-                              variant="outlined"
+                            <button
                               onClick={handleLoadMore}
                               onKeyDown={e => handleKeyDownLoadMore(e)}
-                              className="bcgov-button bcgov-normal-white load-more-button"
+                              className="btn btn-secondary load-more-button"
                             >
                               Load more
-                            </Button>
+                            </button>
                           )}
                           {totalResults === searchResults.length && (
                             <p className="mb-0">End of results</p>

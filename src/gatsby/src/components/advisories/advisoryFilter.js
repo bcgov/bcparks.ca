@@ -201,7 +201,7 @@ const AdvisoryFilter = ({
             onClick={() => {
               handleSearch()
             }}
-            className="bcgov-normal-blue mobile-search-element-height h50p w-100"
+            className="btn btn-primary h50p w-100"
           >
             Search
           </button>

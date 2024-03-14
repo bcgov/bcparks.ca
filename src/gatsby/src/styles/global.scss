@@ -308,12 +308,12 @@ a.underline-hover {
   &:hover, &:focus {
     color: $colorBlue;
     text-decoration: underline;
-    text-decoration-color: $colorBlue
   }
 }
 
 // button
-a.btn {
+a.btn,
+button.btn {
   height: 48px;
   display: inline-flex !important;
   align-items: center;
