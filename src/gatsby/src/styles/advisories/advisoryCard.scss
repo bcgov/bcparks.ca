@@ -1,8 +1,8 @@
 @import "../variables.scss";
 
 .advisoryCard {
-  color: $colorBlack;
-  background: $colorGreyLight;
+  color: $colorGrey;
+  background: $colorBackgroundGrey;
   border-radius: 4px !important;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .dateCircle {
-  background: #656565;
+  background: $colorGreyMed;
   color: #fff;
   width: 7.5rem;
   height: 7.5rem;
@@ -43,7 +43,7 @@
   border-radius: 50%;
   text-align: center;
   &.yellowAlert {
-    color: $colorText;
+    color: $colorGrey;
   }
 }
 
@@ -63,15 +63,15 @@
 }
 
 .blueAlert {
-  background: #2464a4;
+  background: $colorBlueMed;
 }
 
 .redAlert {
-  background: #d8292f;
+  background: $colorRed;
 }
 
 .yellowAlert {
-  background: #fcba19;
+  background: $colorGold;
 }
 
 .contentArea {
@@ -80,7 +80,7 @@
 
 .detailsArea {
   border: solid transparent !important;
-  background: #f2f2f2 !important;
+  background: $colorBackgroundGrey !important;
   a {
     color: $colorBlue;
     margin-top: 8px;

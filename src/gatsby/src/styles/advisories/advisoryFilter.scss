@@ -5,13 +5,16 @@
 
 .advisory-filter-container {
   @include media-breakpoint-up(md) {
-    background: #f2f2f2;
+    background: $colorBackgroundGrey;
     padding: 1rem;
     margin: 0;
   }
 
   .MuiInputBase-root {
     background: $colorWhite;
+    .MuiOutlinedInput-notchedOutline {
+      border-color: $colorGreyMed;
+    }
   }
   // required for accessibility
   .MuiInputBase-input:focus,

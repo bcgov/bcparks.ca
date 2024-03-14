@@ -53,10 +53,10 @@ export default function ParkHeader({
           <div className="col-12 col-lg-6 button-parent pb-4 pb-lg-0">
             <div className="row">
             {hasReservations && (
-                <a href={reservationsURL} className="btn btn-lg btn-warning mr-lg-3">Book camping</a>
+                <a href={reservationsURL} className="btn btn-warning mr-lg-3">Book camping</a>
               )}
               {hasDayUsePass && (
-                <a href={dayUsePassURL} className="btn btn-lg btn-primary">Get a day-use pass</a>
+                <a href={dayUsePassURL} className="btn btn-primary">Get a day-use pass</a>
               )}
             </div>
           </div>

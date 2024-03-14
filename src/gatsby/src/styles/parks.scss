@@ -14,18 +14,6 @@
       padding: 0;
     }
   }
-  // link style
-  a {
-    color: $colorBlueMed;
-    &:hover {
-      color: $colorBlueMed;
-    }
-    &:focus-visible {
-      color: $colorBlueMed;
-      outline: $colorBlueMed auto 2px;
-      outline-offset: 2px;
-    }
-  }
   .page-content {
     max-width: 640px;
     padding: 0 16px;
@@ -49,8 +37,8 @@
         display: inline-block;
         text-decoration: none;
         margin-top: 24px;
-        &:hover {
-          color: $colorBlueMed;
+        &:hover, &:focus-visible {
+          color: $colorBlue;
           text-decoration: underline;
         }
       }
@@ -79,7 +67,7 @@
 }
 
 .blue-alert {
-  background-color: $colorGrey !important;
+  background-color: $colorBackgroundGrey !important;
 }
 
 .raw-html-content {
@@ -92,7 +80,7 @@
 
 // TODO: destroy this .grey-background thing up with fire
 .grey-background {
-  background-color: $colorGreyLight !important;
+  background-color: $colorBackgroundGrey !important;
 }
 
 .grey-background .MuiPaper-root,
@@ -100,7 +88,7 @@
   background-color: transparent;
 
   .red-alert {
-    background-color: $colorGrey !important;
+    background-color: $colorBackgroundGrey !important;
   }
 
   &.bc-bg-yellow {
@@ -137,24 +125,30 @@
 // Breadcrumbs
 
 .breadcrumb-text {
-  color: #313132 !important;
+  color: $colorGrey !important;
 }
 
 .MuiBreadcrumbs-separator {
-  color: #313132 !important;
+  color: $colorGrey !important;
   font-size: 1.25rem !important;
+  margin-bottom: 2px;
 }
 
 .MuiBreadcrumbs-root {
   a {
     color: $colorBlueMed;
-    &:hover, &:active, &:focus {
+    &:hover, &:focus-visible {
+      color: $colorBlueMed;
       text-decoration: underline;
     }
-    &:focus-visible {
+    &:focus {
       color: $colorBlueMed;
-      outline: $colorBlueMed auto 2px;
-      outline-offset: 2px;
+    }
+    &:focus-visible {
+      border: $colorWhite solid 2px;
+      outline: $colorBlueMed solid 2px;
+      outline-offset: 0px;
+      border-radius: 4px;
     }
   }
 }
@@ -241,14 +235,28 @@
   right: 0;
 }
 
-.show-photo-text {
-  background-color: rgba(0, 0, 0, 0.5) !important;
-  color: $colorWhite !important;
-  padding: 10px !important;
-  border-radius: 10px !important;
+.show-photo-button {
+  color: $colorWhite;
+  background-color: rgba($colorGrey, 0.5);
+  border: transparent solid 2px;
+  &:hover, &:focus-visible {
+    color: $colorWhite;
+    background-color: $colorGrey;
+  }
+  &:hover {
+    border: $colorGrey solid 2px;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:focus-visible {
+    border: $colorWhite solid 2px;
+    outline: $colorBlueMed solid 2px;
+    outline-offset: 0px;
+  }
 }
 
-.show-photo-button {
+.show-photo-grid {
   position: relative;
   .MuiGrid-item {
     padding: 4px;
@@ -336,6 +344,16 @@ h2.section-heading {
       a {
         flex: 1 1 100%;
         font-size: 0.875rem !important;
+        &:hover, &:focus-visible {
+          color: $colorBlue;
+          text-decoration: underline;
+        }
+        &:focus-visible {
+          border: $colorWhite solid 2px;
+          outline: $colorBlueMed solid 2px;
+          outline-offset: 0px;
+          border-radius: 4px;
+        }
       }
       @media (min-width: $lgBreakpoint) {
         &:first-child {
@@ -347,28 +365,6 @@ h2.section-heading {
 
   .button-parent {
     a.btn  {
-      width: 100%;
-      border: 2px solid transparent;
-      @media (min-width: $lgBreakpoint) {
-        width: unset !important;
-      }
-      &.btn-warning {
-        color: $colorBlue;
-        background-color: $colorGold;
-        border-color: $colorGold;
-        &:hover {
-          text-decoration: underline;
-          background-color: transparent;
-        }
-      }
-      &.btn-primary {
-        background-color: $colorBlue;
-        border-color: $colorBlue;
-        &:hover {
-          color: $colorBlue;
-          background-color: $colorWhite;
-        }
-      }
       &+.btn {
         margin-top: 16px;
         @media (min-width: $lgBreakpoint) {

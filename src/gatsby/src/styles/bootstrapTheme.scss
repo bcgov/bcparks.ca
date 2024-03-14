@@ -11,10 +11,13 @@
 // https://github.com/digitalspace/bcparks-bootstrap-theme/
 
 a {
-  color: $colorBlueLight;
+  color: $colorBlueMed;
   text-decoration: none;
   &:hover {
-    color: $colorBlueLinkHover;
+    color: $colorBlue;
     text-decoration: underline;
+  }
+  &:not(.btn):focus {
+    color: $colorBlue;
   }
 }

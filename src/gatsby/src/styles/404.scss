@@ -8,13 +8,11 @@
     font-weight: 100;
   }
 
-  .btn-outline-primary{
-    border: none !important;
-    justify-content: left !important;
-  }
-
   .thumb-link{
     color: white !important;
+    background-color: transparent;
+    border: none !important;
+    justify-content: left !important;
   }
 
   .footer{
@@ -40,14 +38,14 @@
       text-decoration: none;
     }
     a:hover{
-      color: #036;
+      color: $colorBlue;
     }
   }
 
   .banner-text-dark-link{
     font-size: 1rem;
     a{
-      color: #036;
+      color: $colorBlue;
       text-decoration: none;
     }
   }

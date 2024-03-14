@@ -39,11 +39,12 @@ export default function ParkOverview({ data: parkOverview, type }) {
       {isLong && 
         <a
           href="#park-overview-container"
-          className="park-overview-link"
+          className="park-overview-link expand-icon"
           onClick={() => {
             setExpanded(!expanded)
           }}>
         {expanded ? "Read less" : "Read more"}
+        <i className={`fa fa-angle-down ${expanded ? "open" : "close"}`}></i>
       </a>
       }
       </div>

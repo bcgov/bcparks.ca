@@ -22,7 +22,7 @@ body {
 }
 
 body {
-  color: $colorText;
+  color: $colorGrey;
   letter-spacing: normal;
   font-family: $globalFont;
 }
@@ -104,7 +104,7 @@ blockquote {
 
 .callout-box {
   color: $colorBlue;
-  background-color: #D9EAF7;
+  background-color: $colorBlueLight;
   font-size: 1rem;
   font-weight: 700;
   border: none;
@@ -125,7 +125,7 @@ figure.table {
   table {
     width: 100%;
     th {
-      background: $colorGreyLight;
+      background: $colorBackgroundGrey;
     }
   }
 
@@ -161,7 +161,7 @@ figure.table {
       height: 5px;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: rgba( #000, .2);
+      background-color: rgba($colorBlack, .2);
       border-radius: 5px;
     }
   }
@@ -266,15 +266,26 @@ li.post-separator {
 
   a {
     display: block;
+    color: $colorBlueMed;
     text-decoration: none;
-    &:hover {
+    &:hover, &:focus-visible {
+      color: $colorBlueMed;
       text-decoration: underline;
+    }
+    &:focus {
+      color: $colorBlueMed !important;
+    }
+    &:focus-visible {
+      border: $colorWhite solid 2px;
+      outline: $colorBlueMed solid 2px;
+      outline-offset: 0px;
+      border-radius: 4px;
     }
   }
 
   .bcp-breadcrumbs__separator {
     display: flex;
-    color: #313132;
+    color: $colorGrey;
     font-size: 1.25rem;
     margin: 0 4px 2px 8px;
 
@@ -297,20 +308,154 @@ li.post-separator {
 a.underline-hover {
   text-decoration: none;
 
-  &:hover {
+  &:hover, &:focus {
+    color: $colorBlue;
     text-decoration: underline;
-    text-decoration-color: $colorBlue
   }
 }
 
 // button
-a.btn {
+a.btn,
+button.btn:not(.btn-link) {
+  height: 48px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  line-height: 1.5;
+  border-radius: 4px;
+  padding: 0 16px;
+
+  &.btn-warning {
+    color: $colorBlue;
+    background-color: $colorGold;
+    border: $colorGold 2px solid;
+    &:hover, &:focus-visible {
+      color: $colorWhite;
+      background-color: $colorBlueMed;
+    }
+    &:hover {
+      border: $colorBlueMed solid 2px;
+    }
+  }
+
   &.btn-primary {
     color: $colorWhite;
-    background-color: #234075;
-    &:hover {
+    background-color: $colorBlue;
+    border: $colorBlue 2px solid;
+    &:hover, &:focus-visible {
       color: $colorWhite;
-      background-color: #203458;
+      background-color: $colorBlueMed !important;
     }
+    &:hover{
+      border: $colorBlueMed 2px solid !important;
+    }
+  }
+
+  &.btn-secondary,
+  &.btn-light {
+    color: $colorBlue !important;
+    background-color: $colorWhite;
+    border: $colorBlue 1px solid;
+    &:hover, &:focus-visible {
+      background-color: $colorIceBlue !important;
+      border: $colorBlue 1px solid !important;
+    }
+    &:focus-visible {
+      outline: $colorBlueMed solid 2px;
+      outline-offset: 2px;
+    }
+  }
+
+  &.btn-light {
+    border: $colorBlue 2px solid !important;
+    &:hover, &:focus-visible {
+      border: $colorBlue 2px solid !important;
+    }
+  }
+
+  &.btn-icon {
+    &::after {
+      content: "\f138";
+      display: inline-block;
+      font-size: 1rem;
+      font-family: "Font Awesome 5 Free";
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      margin-left: 8px;
+    }
+  }
+
+  &:focus {
+    box-shadow: none !important;
+  }
+  &:focus-visible {
+    border: $colorWhite solid 2px;
+    outline: $colorBlueMed solid 2px;
+    outline-offset: 0px;
+  }
+}
+
+.parks-search-button {
+  color: $colorBlue;
+  background-color: $colorWhite;
+  margin: 24px 0 0 0 !important;
+  padding: 0 !important;
+  &:hover, &:focus-visible {
+    color: $colorBlue;
+    background-color: $colorGold;
+  }
+  &:focus-visible {
+    border: $colorWhite solid 2px;
+    outline: $colorBlueMed solid 2px;
+    outline-offset: 0px;
+  }
+  @media screen and (min-width: $mdBreakpoint) {
+    width: 130px !important;
+    margin: 0 0 0 16px !important;
+  }
+}
+
+.btn-scroll {
+  position: fixed;
+  right: 5%;
+  bottom: 2vh;
+  z-index: 100;
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  padding: 0;
+  &--inner {
+    height: 44px;
+    width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $colorWhite;
+    background-color: rgba($colorBlue, .75);
+    border: $colorWhite solid 2px;
+    border-radius: 50%;
+  }
+  &:hover {
+    .btn-scroll--inner {
+      background-color: $colorBlue;
+    }
+  }
+  &:focus {
+    outline: none;
+  }
+  &:focus-visible {
+    border: $colorWhite solid 2px;
+    outline: $colorBlueMed solid 2px;
+    outline-offset: 0px;
+    .btn-scroll--inner {
+      background-color: $colorBlue;
+    }
+  }
+
+  @media screen and (min-width: $smBreakpoint) {
+    right: 2%;
   }
 }

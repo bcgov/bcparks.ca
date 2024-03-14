@@ -277,7 +277,7 @@ export const common = css`
     }
 
     blockquote.callout-box {
-      background-color: #D9EAF7;
+      background-color: #c7e3fd;
       font-size: 1rem;
       font-weight: 700;
       border-radius: 4px;
@@ -289,10 +289,48 @@ export const common = css`
       background-color: #FFFF00;
     }
 
-    a.btn.btn-primary {
-      background-color: #38598a;
-      color: #fff;
-      padding: .375rem .75rem;
+    a.btn {
+      height: 48px;
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      line-height: 1.5;
+      text-decoration: none;
+      border-radius: 4px;
+      padding: 0 16px;
+
+      &.btn-warning {
+        color: #003366;
+        background-color: #fcba19;
+        border: #fcba19 2px solid;
+        &:hover {
+          color: #fff;
+          background-color: #2464a4;
+          border: #2464a4 solid 2px;
+        }
+      }
+    
+      &.btn-primary {
+        color: #fff;
+        background-color: #003366;
+        border: #003366 2px solid;
+        &:hover {
+          color: #fff;
+          background-color: #2464a4;
+          border: #2464a4 2px solid;
+        }
+      }
+    
+      &.btn-secondary,
+      &.btn-light {
+        color: #003366;
+        background-color: #fff;
+        border: #003366 2px solid;
+        &:hover {
+          background-color: #ecf6ff;
+        }
+      }
     }
 
     ol li.lower-alpha {

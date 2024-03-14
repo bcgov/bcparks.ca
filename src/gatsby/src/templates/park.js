@@ -325,11 +325,10 @@ export default function ParkTemplate({ data }) {
       <CssBaseline />
       <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
         <div className="container parks-container order-2">
-          <div id="main-content" className="park-info-container pt-4">
+          <div id="main-content" className="park-info-container pt-5">
             <Breadcrumbs
               separator="›"
               aria-label="breadcrumb"
-              className="p20t"
             >
               {breadcrumbs}
             </Breadcrumbs>

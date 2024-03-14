@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { styled } from '@mui/material/styles';
 import {
   Box,
-  Button,
   TextField,
   InputAdornment,
   Checkbox,
@@ -71,7 +70,7 @@ const Root = styled('div')((
     fontWeight: "bold",
     fontSize: "1rem",
     lineHeight: "1.75rem",
-    color: "#000",
+    color: "#1a1a1a",
     fontFamily: "unset",
     marginBottom: "0px",
   },
@@ -197,17 +196,16 @@ const AdvisoryFilter = ({
           <label htmlFor="search-button" className={classes.filterLabel}>
             <span className="sr-only">Search</span> &nbsp;
           </label>
-          <Button
+          <button
             id="search-button"
-            variant="contained"
-            fullWidth
+            aria-label="Search"
             onClick={() => {
               handleSearch()
             }}
-            className="bcgov-normal-blue mobile-search-element-height h50p"
+            className="btn btn-primary h50p w-100"
           >
             Search
-          </Button>
+          </button>
         </div>
       </div>
 

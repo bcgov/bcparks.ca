@@ -6,7 +6,6 @@ import {
   Chip,
   Link,
   LinearProgress,
-  Button,
 } from "@mui/material"
 import CancelIcon from "@mui/icons-material/Cancel"
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
@@ -712,12 +711,13 @@ export default function FindAPark({ location, data }) {
                 handleClear={handleClickClearCity}
                 handleSearch={handleSearch}
               />
-              <Button
-                className="bcgov-normal-blue mobile-search-element-height h50p"
+              <button
+                aria-label="Search"
+                className="btn btn-primary"
                 onClick={handleSearch}
               >
                 Search
-              </Button>
+              </button>
             </div>
           </div>
         </div>
@@ -729,29 +729,29 @@ export default function FindAPark({ location, data }) {
           <div className="search-results-list d-block d-lg-none">
             <div className="row">
               <div className="col-12 col-md-6">
-                <Button
-                  variant="outlined"
+                <button
+                  aria-label="Filter"
                   onClick={handleClickOpenFilter}
-                  className="bcgov-button bcgov-normal-white font-weight-bold"
+                  className="btn btn-secondary w-100"
                 >
                   Filter
-                </Button>
+                </button>
               </div>
               <div className="col-12 col-md-6">
-                <Button
-                  variant="outlined"
+                <button
+                  aria-label="More ways to find a park"
                   onClick={handleClickOpenModal}
-                  className="bcgov-button bcgov-normal-white font-weight-bold mt-3 mt-md-0"
+                  className="btn btn-secondary w-100 mt-3 mt-md-0"
                 >
                   More ways to find a park
-                </Button>
+                </button>
               </div>
             </div>
           </div>
           <div className="row no-gutters">
             {/* filter checkbox for desktop */}
             <div className="search-results-quick-filter col-12 col-lg-3 d-none d-lg-block pr-3">
-              <div className="mb32">
+              <div className="mb-4">
                 <h3 className="subtitle mb-2">Filter</h3>
                 <DesktopFilters
                   data={{
@@ -835,7 +835,7 @@ export default function FindAPark({ location, data }) {
                       onDelete={handleFilterDelete(f)}
                       variant="outlined"
                       className="park-filter-chip font-weight-bold"
-                      deleteIcon={<CancelIcon className="close-icon" />}
+                      deleteIcon={<CancelIcon />}
                     />
                   ))}
                   {filterSelections.length > 0 && (
@@ -860,7 +860,7 @@ export default function FindAPark({ location, data }) {
                       onDelete={handleFilterDelete(f)}
                       variant="outlined"
                       className="park-filter-chip font-weight-bold"
-                      deleteIcon={<CancelIcon className="close-icon" />}
+                      deleteIcon={<CancelIcon />}
                     />
                   ))}
                   {filterSelections.length > 0 && (
@@ -919,16 +919,16 @@ export default function FindAPark({ location, data }) {
                             <ParkCard r={r} key={index} />
                           ))
                         )}
-                        <div className="load-more-button-container mt32">
+                        <div className="load-more-button-container mt-4">
                           {totalResults > searchResults.length && (
-                            <Button
-                              variant="outlined"
+                            <button
+                              aria-label="Load more results"
                               onClick={handleLoadMore}
                               onKeyDown={e => handleKeyDownLoadMore(e)}
-                              className="bcgov-button bcgov-normal-white load-more-button"
+                              className="btn btn-secondary load-more-button"
                             >
                               Load more
-                            </Button>
+                            </button>
                           )}
                           {totalResults === searchResults.length && (
                             <p className="mb-0">End of results</p>

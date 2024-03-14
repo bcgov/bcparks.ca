@@ -1,22 +1,24 @@
+// This file is archived since intro.js is no longer used
+
 .intro-page{  
   a.btn {
     background-color: #fff;
-    border: 2px solid #036;
+    border: 2px solid $colorBlue;
     border-radius: 5px;
-    color: #036;
+    color: $colorBlue;
     text-align: center;
     text-decoration: none;
   }
 
   a.btn:hover {
-    background-color: #036;
+    background-color: $colorBlue;
     color: #fff;
   }
 
   .beta-welcome {
     padding-top: 80px;
     margin-bottom: 100px;
-    color: #003366;
+    color: $colorBlue;
     background-image: url("https://nrs.objectstore.gov.bc.ca/kuwyyf/beta_landing_image_background_credit_michael_benz_1408791a9c.jpeg");
     background-position: center;
     background-repeat: no-repeat;
@@ -54,7 +56,7 @@
     margin-top: 160px;
 
     h2 {
-      color: #003366;
+      color: $colorBlue;
     }
   }
 
@@ -62,7 +64,7 @@
     margin-top: 160px;
 
     h2 {
-      color: #003366;
+      color: $colorBlue;
     }
 
     p {
@@ -104,7 +106,7 @@
 
   .research_narrow-screen_content {
     width: 100%;
-    background-color: #036;
+    background-color: $colorBlue;
     border-radius: 0 0 16px 16px;
     padding: 48px 32px;
   }
@@ -120,12 +122,12 @@
   }
 
   .research_narrow-screen_content a:hover {
-    color: #fcba19;
+    color: $colorGold;
   }
 
   .social-media {
     margin-top: 100px;
-    color: #003366;
+    color: $colorBlue;
 
     a {
       margin: 0 8px;
