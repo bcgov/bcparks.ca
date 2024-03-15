@@ -299,17 +299,6 @@ export const common = css`
       text-decoration: none;
       border-radius: 4px;
       padding: 0 16px;
-
-      &.btn-warning {
-        color: #003366;
-        background-color: #fcba19;
-        border: #fcba19 2px solid;
-        &:hover {
-          color: #fff;
-          background-color: #2464a4;
-          border: #2464a4 solid 2px;
-        }
-      }
     
       &.btn-primary {
         color: #fff;
@@ -322,13 +311,49 @@ export const common = css`
         }
       }
     
+      &.btn-yellow,
+      &.btn-warning {
+        color: #003366;
+        background-color: #fcba19;
+        border: #fcba19 2px solid;
+        &:hover {
+          color: #fff;
+          background-color: #2464a4;
+          border: #2464a4 solid 2px;
+        }
+      }
+
+      &.btn-white {
+        color: #003366;
+        background-color: #fff;
+        border: #fff solid 2px;
+        &:hover {
+          background-color: #fcba19;
+          border: #fcba19 solid 2px;
+        }
+      }
+
       &.btn-secondary,
       &.btn-light {
         color: #003366;
         background-color: #fff;
-        border: #003366 2px solid;
+        border: #003366 1px solid;
         &:hover {
           background-color: #ecf6ff;
+        }
+      }
+
+      &.btn-icon {
+        &::after {
+          content: "\f138";
+          display: inline-block;
+          font-size: 0.875rem;
+          font-family: "Font Awesome 5 Free";
+          font-style: normal;
+          font-variant: normal;
+          text-rendering: auto;
+          -webkit-font-smoothing: antialiased;
+          margin-left: 8px;
         }
       }
     }

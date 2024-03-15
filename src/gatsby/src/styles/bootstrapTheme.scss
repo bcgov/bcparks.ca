@@ -21,3 +21,13 @@ a {
     color: $colorBlue;
   }
 }
+
+.btn-primary:not(:disabled):not(.disabled):active {
+  background-color: $colorBlue;
+  border-color: $colorBlue;
+}
+
+.btn-secondary:not(:disabled):not(.disabled):active {
+  background-color: $colorWhite;
+  border-color: $colorBlue;
+}
