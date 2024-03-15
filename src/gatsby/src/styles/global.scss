@@ -326,6 +326,20 @@ button.btn:not(.btn-link) {
   border-radius: 4px;
   padding: 0 16px;
 
+  &.btn-primary {
+    color: $colorWhite !important;
+    background-color: $colorBlue;
+    border: $colorBlue 2px solid;
+    &:hover, &:focus-visible {
+      color: $colorWhite;
+      background-color: $colorBlueMed !important;
+    }
+    &:hover{
+      border: $colorBlueMed 2px solid !important;
+    }
+  }
+
+  &.btn-yellow,
   &.btn-warning {
     color: $colorBlue;
     background-color: $colorGold;
@@ -339,16 +353,15 @@ button.btn:not(.btn-link) {
     }
   }
 
-  &.btn-primary {
-    color: $colorWhite;
-    background-color: $colorBlue;
-    border: $colorBlue 2px solid;
+  &.btn-white {
+    color: $colorBlue !important;
+    background-color: $colorWhite;
+    border: $colorWhite solid 2px;
     &:hover, &:focus-visible {
-      color: $colorWhite;
-      background-color: $colorBlueMed !important;
+      background-color: $colorGold;
     }
-    &:hover{
-      border: $colorBlueMed 2px solid !important;
+    &:hover {
+      border: $colorGold solid 2px;
     }
   }
 
@@ -378,7 +391,7 @@ button.btn:not(.btn-link) {
     &::after {
       content: "\f138";
       display: inline-block;
-      font-size: 1rem;
+      font-size: 0.875rem;
       font-family: "Font Awesome 5 Free";
       font-style: normal;
       font-variant: normal;
