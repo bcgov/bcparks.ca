@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "natural_resource_districts",
+  "info": {
+    "singularName": "natural-resource-district",
+    "pluralName": "natural-resource-districts",
+    "displayName": "Natural-resource-district",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "naturalResourceDistrictName": {
+      "type": "string",
+      "required": true
+    },
+    "naturalResourceDistrictCode": {
+      "type": "string",
+      "required": true,
+      "maxLength": 3,
+      "minLength": 3,
+      "unique": true
+    },
+    "protectedAreas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "naturalResourceDistricts"
+    }
+  }
+}

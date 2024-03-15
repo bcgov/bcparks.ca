@@ -9,13 +9,7 @@
     "description": ""
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
-    "draftAndPublish": true,
-    "privateAttributes": [
-      "search_text",
-      "search_rank"
-    ]
+    "draftAndPublish": true
   },
   "attributes": {
     "orcs": {
@@ -121,6 +115,12 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::fire-zone.fire-zone",
+      "mappedBy": "protectedAreas"
+    },
+    "naturalResourceDistricts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::natural-resource-district.natural-resource-district",
       "mappedBy": "protectedAreas"
     },
     "managementAreas": {
