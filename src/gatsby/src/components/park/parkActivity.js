@@ -166,10 +166,10 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
             </div>
             <div>
               For more events and activities happening at this park,
-              visit <Link href={`https://www.discoverparks.ca/parks/${slug}`} target="_blank" rel="noopener">
-                discoverparks.ca</Link>. Discover Parks is developed
-              by <Link href="https://bcparksfoundation.ca" target="_blank" rel="noopener">
-                BC Parks Foundation</Link>, our official charitable partner.
+              visit <a href={`https://www.discoverparks.ca/parks/${slug}`}>
+                discoverparks.ca</a>. Discover Parks is developed
+              by <a href="https://bcparksfoundation.ca">
+                BC Parks Foundation</a>, our official charitable partner.
             </div>
           </Col>
         </Row>
