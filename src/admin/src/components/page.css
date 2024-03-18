@@ -315,7 +315,7 @@
 .MuiTableCell-root,
 .MuiInputBase-root,
 .MuiTypography-root {
-  font-family: BCSans, Verdana, Arial, sans serif !important;
+  font-family: 'BC Sans', 'Noto sans', Verdana, Arial, sans-serif !important;
 }
 
 .MuiInput-underline:before,

@@ -12,6 +12,7 @@
 
 body {
   margin: 0;
+  font-family: 'BC Sans', 'Noto sans', Verdana, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
