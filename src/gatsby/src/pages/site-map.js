@@ -25,7 +25,6 @@ const SitemapPage = ({ data }) => {
 
   return (
     <>
-      <ScrollToTop />
       <Header mode="internal" content={menuContent} />
       <div id="main-content" className="static-content--header unique-page--header page-breadcrumbs">
         <Breadcrumbs separator="›" aria-label="breadcrumb">
@@ -47,6 +46,7 @@ const SitemapPage = ({ data }) => {
       <div className="static-content-container">
         <MegaMenu content={menuContent} menuMode="sitemap" />
       </div>
+      <ScrollToTop />
       <Footer />
     </>
   )

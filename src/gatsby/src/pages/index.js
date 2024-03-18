@@ -77,7 +77,6 @@ export default function Home({ data }) {
     <div id="home">
       <div className="park-search-container-wrapper">
         <Header mode="internal" content={menuContent} />
-        <ScrollToTop />
         <div
           id="main-content"
           className="park-search"
@@ -106,6 +105,7 @@ export default function Home({ data }) {
         </div>
       </div>
       <div>
+        <ScrollToTop />
         <Footer />
       </div>
     </div>

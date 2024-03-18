@@ -147,7 +147,6 @@ export default function StaticContent1({ pageContext }) {
 
   return (
     <>
-      <ScrollToTop />
       <div className="max-width-override" ref={sectionRefs[0]}>
         <Header mode="internal" content={menuContent} />
       </div>
@@ -231,6 +230,7 @@ export default function StaticContent1({ pageContext }) {
         </div>
       </div>
       <div className="max-width-override">
+        <ScrollToTop />
         <Footer />
       </div>
     </>

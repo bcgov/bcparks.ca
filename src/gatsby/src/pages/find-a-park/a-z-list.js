@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { graphql, useStaticQuery, Link as GatsbyLink  } from "gatsby"
+import { graphql, useStaticQuery, Link as GatsbyLink } from "gatsby"
 import { Breadcrumbs, Link } from "@mui/material"
 
 import Header from "../../components/header"
@@ -85,7 +85,6 @@ const ParksPage = () => {
 
   return (
     <div className="list-page">
-      <ScrollToTop />
       <div className="max-width-override">
         <Header mode="internal" content={menuContent} />
       </div>
@@ -145,6 +144,7 @@ const ParksPage = () => {
         </div>
       </div>
       <div className="max-width-override">
+        <ScrollToTop />
         <Footer />
       </div>
     </div>

@@ -97,7 +97,6 @@ export default function ParkSubPage({ data }) {
 
   return (
     <>
-      <ScrollToTop />
       <div className="max-width-override" ref={sectionRefs[0]}>
         <Header mode="internal" content={menuContent} />
       </div>
@@ -179,6 +178,7 @@ export default function ParkSubPage({ data }) {
         </div>
       </div>
       <div className="max-width-override">
+        <ScrollToTop />
         <Footer />
       </div>
     </>
