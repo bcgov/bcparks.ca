@@ -590,8 +590,10 @@ div[class$="-singleValue"] {
           margin-left: 4px;
           &:focus-visible {
             color: $colorBlue;
-            outline: 2px auto $colorBlueMed;
-            outline-offset: 2px;
+            border: $colorWhite solid 2px;
+            outline: $colorBlueMed solid 2px;
+            outline-offset: 0px;
+            border-radius: 4px; 
           }
           p {
             font-size: 0.875rem;
@@ -614,8 +616,10 @@ div[class$="-singleValue"] {
       text-decoration: underline;
       &:focus-visible {
         color: $colorBlue;
-        outline: 2px auto $colorBlueMed;
-        outline-offset: 2px;
+        border: $colorWhite solid 2px;
+        outline: $colorBlueMed solid 2px;
+        outline-offset: 0px;
+        border-radius: 4px; 
       }
     }
   }

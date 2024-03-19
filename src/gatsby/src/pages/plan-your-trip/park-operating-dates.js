@@ -339,7 +339,6 @@ const ParkOperatingDatesPage = () => {
 
   return (
     <div className="list-page">
-      <ScrollToTop />
       <div className="max-width-override">
         <Header mode="internal" content={menuContent} />
       </div>
@@ -426,6 +425,7 @@ const ParkOperatingDatesPage = () => {
         </div>
       </div>
       <div className="max-width-override">
+        <ScrollToTop />
         <Footer />
       </div>
     </div>

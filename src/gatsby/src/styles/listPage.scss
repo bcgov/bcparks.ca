@@ -9,7 +9,7 @@
     a {
       color: $colorBlue !important;
       text-decoration: none !important;
-      &:hover {
+      &:hover, &:focus-visible {
         text-decoration: underline !important;
       }
       svg.MuiSvgIcon-root {

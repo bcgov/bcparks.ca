@@ -386,7 +386,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   return (
     <Root>
       <Header mode="internal" content={menuContent} />
-      <ScrollToTop />
       <Container id="main-content">
         <div className="page-breadcrumbs">
           <Breadcrumbs separator="›" aria-label="breadcrumb">
@@ -435,6 +434,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       </Container>
       <br />
       <br />
+      <ScrollToTop />
       <Footer />
     </Root>
   )

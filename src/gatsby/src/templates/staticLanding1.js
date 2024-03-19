@@ -50,7 +50,6 @@ const LandingPage = ({ pageContext }) => {
 
   return (
     <>
-      <ScrollToTop />
       <CssBaseline />
       <Header mode="internal" content={menuContent} />
       <div id="main-content"></div>
@@ -125,6 +124,7 @@ const LandingPage = ({ pageContext }) => {
           </div>
         </div>
       </div>
+      <ScrollToTop />
       <Footer />
     </>
   )

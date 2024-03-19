@@ -321,7 +321,6 @@ export default function ParkTemplate({ data }) {
   return (
     <div className="grey-background">
       <Header mode="internal" content={menuContent} />
-      <ScrollToTop />
       <CssBaseline />
       <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
         <div className="container parks-container order-2">
@@ -490,6 +489,7 @@ export default function ParkTemplate({ data }) {
           </div>
         </div>
       </div>
+      <ScrollToTop />
       <Footer />
     </div>
   )

@@ -677,7 +677,6 @@ export default function FindAPark({ location, data }) {
   return (
     <>
       <Header content={menuContent} />
-      <ScrollToTop />
       {/* new search header section */}
       <div id="main-content" className="search-header">
         <div className="container">
@@ -969,6 +968,7 @@ export default function FindAPark({ location, data }) {
         }}
       />
       <ParkLinksModal data={{ openModal, setOpenModal }} />
+      <ScrollToTop />
       <Footer />
     </>
   )
