@@ -363,6 +363,9 @@ button.btn:not(.btn-link) {
     &:hover {
       border: $colorGold solid 2px;
     }
+    &:focus-visible {
+      box-shadow: inset 0 0 0 1px $colorBlue !important;
+    }
   }
 
   &.btn-secondary,
@@ -376,7 +379,7 @@ button.btn:not(.btn-link) {
     }
     &:focus-visible {
       outline: $colorBlueMed solid 2px;
-      outline-offset: 2px;
+      outline-offset: 3px;
     }
   }
 
@@ -407,22 +410,14 @@ button.btn:not(.btn-link) {
   &:focus-visible {
     border: $colorWhite solid 2px;
     outline: $colorBlueMed solid 2px;
-    outline-offset: 0px;
+    outline-offset: 1px;
   }
 }
 
-.parks-search-button {
-  color: $colorBlue;
-  background-color: $colorWhite;
+button.btn.parks-search-button {
   margin: 24px 0 0 0 !important;
   padding: 0 !important;
-  &:hover, &:focus-visible {
-    color: $colorBlue;
-    background-color: $colorGold;
-  }
   &:focus-visible {
-    border: $colorWhite solid 2px;
-    outline: $colorBlueMed solid 2px;
     outline-offset: 0px;
   }
   @media screen and (min-width: $mdBreakpoint) {
