@@ -120,6 +120,29 @@ export const common = css`
       color: inherit;
     }
 
+    a.learn-more-link {
+      text-decoration: none;
+      position: relative;
+      padding-right: 14px;
+      &:hover {
+        text-decoration: underline;
+      }
+      &::after {
+        content: "\f054";
+        display: inline-block;
+        font-weight: 700;
+        font-size: 0.625rem;
+        font-family: "Font Awesome 5 Free";
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        position: absolute;
+        top: 4px;
+        right: 0;
+      }
+    }
+
     .table {
       margin: 0;
       width: 100%; // Custom Styles BCParks
