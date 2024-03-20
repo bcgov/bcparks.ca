@@ -299,12 +299,7 @@ li.post-separator {
     we might want to split these out into individual files eventually
 **/
 
-//buttons
-.btn-lg {
-  font-size: 1rem !important;
-  padding: 0.75rem 2.25rem;
-}
-
+// links
 a.underline-hover {
   text-decoration: none;
 
@@ -314,7 +309,20 @@ a.underline-hover {
   }
 }
 
-// button
+a.learn-more-link {
+  text-decoration: none;
+  &::after {
+    content: "\003E";
+    margin-left: 4px;
+  }
+}
+
+//buttons
+.btn-lg {
+  font-size: 1rem !important;
+  padding: 0.75rem 2.25rem;
+}
+
 a.btn,
 button.btn:not(.btn-link) {
   height: 48px;

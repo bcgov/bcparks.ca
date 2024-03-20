@@ -21,33 +21,36 @@
   }
 
   .home-advisory-button {
-    .btn-primary {
-      &:hover, &:focus-visible {
-        color: $colorBlue !important;
-        background-color: $colorGold !important; 
-        .text-white {
+    a.btn {
+      font-weight: 400;
+      &.btn-primary {
+        &:hover, &:focus-visible {
           color: $colorBlue !important;
+          background-color: $colorGold !important; 
+          .text-white {
+            color: $colorBlue !important;
+          }
+        }
+        &:hover {
+          border: $colorGold 2px solid !important;
+        }
+        &::after {
+          content: "\f138";
+          display: inline-block;
+          font-weight: 700;
+          font-size: 0.875rem;
+          font-family: "Font Awesome 5 Free";
+          font-style: normal;
+          font-variant: normal;
+          text-rendering: auto;
+          -webkit-font-smoothing: antialiased;
+          margin-left: 8px;
         }
       }
-      &:hover {
-        border: $colorGold 2px solid !important;
-      }
-      &::after {
-        content: "\f138";
-        display: inline-block;
-        font-size: 0.875rem;
-        font-family: "Font Awesome 5 Free";
-        font-style: normal;
-        font-variant: normal;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased;
-        margin-left: 8px;
-      }
-    }
-
-    .btn-light {
-      .text-primary {
-        color: $colorBlue !important;
+      &.btn-light {
+        .text-primary {
+          color: $colorBlue !important;
+        }
       }
     }
   }
