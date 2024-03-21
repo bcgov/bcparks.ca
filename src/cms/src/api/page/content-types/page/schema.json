@@ -30,6 +30,16 @@
       ],
       "required": true
     },
+    "PageHeader": {
+      "type": "component",
+      "repeatable": false,
+      "component": "parks.page-header"
+    },
+    "Seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "parks.seo"
+    },
     "Content": {
       "type": "dynamiczone",
       "components": [
