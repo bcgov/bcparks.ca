@@ -4,7 +4,7 @@ import { StaticImage } from "gatsby-plugin-image"
 
 import "../styles/footer.scss"
 
-function FooterMenu({ item, menuIndex }) {
+function FooterMenu({ item }) {
   // Sort children by order
   const sortedChildren = item.strapi_children && item.strapi_children.length > 0
     ? [...item.strapi_children].sort((a, b) => a.order - b.order) : []
@@ -12,7 +12,7 @@ function FooterMenu({ item, menuIndex }) {
   return (
     // Do not render menu items with order > 3
     item.strapi_children.length > 0 && item.order < 4 && (
-      <div className="col col-12 col-sm-4 footer-menu-container" key={menuIndex}>
+      <div className="col col-12 col-sm-4 footer-menu-container">
         <ul className="footer-menu-list list-unstyled text-white">
           <li>
             <div className="font-weight-bold">{item.title}</div>
@@ -103,7 +103,7 @@ export default function Footer() {
           <div className="col col-12 col-md-8">
             <div className="row no-gutters">
               {footerMenu.map((item, index) => (
-                <FooterMenu item={item} menuIndex={index} />
+                <FooterMenu item={item} key={index} />
               ))}
             </div>
           </div>
