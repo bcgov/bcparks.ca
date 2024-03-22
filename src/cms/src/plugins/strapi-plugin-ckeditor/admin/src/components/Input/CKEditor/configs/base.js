@@ -192,11 +192,59 @@ const base = {
           rel: "noopener",
         }
       },
+      makeLinkWithIcon: {
+        mode: 'manual',
+        label: 'Link with icon',
+        attributes: {
+            class: 'learn-more-link',
+        }
+      },
       makeButton: {
         mode: 'manual',
         label: 'Primary button',
         attributes: {
-            class: 'btn btn-primary'
+            class: 'btn btn-primary',
+            role: "button"
+        }
+      },
+      makeWhiteButton: {
+        mode: 'manual',
+        label: 'White button',
+        attributes: {
+          class: 'btn btn-white',
+          role: "button"
+        }
+      },
+      makeYellowButton: {
+        mode: 'manual',
+        label: 'Yellow button',
+        attributes: {
+          class: 'btn btn-yellow',
+          role: "button"
+        }
+      },
+      makeSecondaryButton: {
+        mode: 'manual',
+        label: 'Secondary button',
+        attributes: {
+          class: 'btn btn-secondary',
+          role: "button"
+        }
+      },
+      makeButtonWithIcon: {
+        mode: 'manual',
+        label: 'Primary button with icon',
+        attributes: {
+            class: 'btn btn-primary btn-icon',
+            role: "button"
+        }
+      },
+      makeWhiteButtonWithIcon: {
+        mode: 'manual',
+        label: 'White button with icon',
+        attributes: {
+            class: 'btn btn-white btn-icon',
+            role: "button"
         }
       },
     },
