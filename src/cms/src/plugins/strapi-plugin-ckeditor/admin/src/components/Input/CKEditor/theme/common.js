@@ -1,4 +1,5 @@
 import { css } from "styled-components";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 // Add BC Parks Override CSS at the bottom of this file only
 
@@ -140,6 +141,7 @@ export const common = css`
         position: absolute;
         top: 4px;
         right: 0;
+        line-height: 1;
       }
     }
 
