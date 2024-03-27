@@ -1,4 +1,5 @@
 import { css } from "styled-components";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 // Add BC Parks Override CSS at the bottom of this file only
 
@@ -118,6 +119,30 @@ export const common = css`
     a:not([href]):not([tabindex]) {
       text-decoration: none;
       color: inherit;
+    }
+
+    a.learn-more-link {
+      text-decoration: none;
+      position: relative;
+      padding-right: 14px;
+      &:hover {
+        text-decoration: underline;
+      }
+      &::after {
+        content: "\f054";
+        display: inline-block;
+        font-weight: 700;
+        font-size: 0.625rem;
+        font-family: "Font Awesome 5 Free";
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        position: absolute;
+        top: 4px;
+        right: 0;
+        line-height: 1;
+      }
     }
 
     .table {
