@@ -144,7 +144,7 @@
       font-weight: 400;
       border: 1px solid $colorBlue;
       border-radius: 0;
-      box-shadow: inset 0px 0px 0px 3px $colorWhite;
+      box-shadow: inset 0px 0px 0px 2px $colorWhite;
       margin-top: 12px;
       margin-left: -1px;
       padding: 0;
@@ -158,12 +158,18 @@
         color: $colorBlue;
         background-color: $colorIceBlue;
         font-weight: 700;
-        box-shadow: inset 0px 0px 0px 3px $colorIceBlue;
+        box-shadow: inset 0px 0px 0px 2px $colorIceBlue;
+      }
+      &:focus {
+        box-shadow: inset 0px 0px 0px 2px $colorWhite !important;
       }
       &:focus-visible {
         border: 1px solid $colorBlue;
         outline: $colorBlueMed solid 2px;
         outline-offset: 2px;
+        box-shadow: inset 0px 0px 0px 2px $colorIceBlue !important;
+        margin-right: 5px;
+        margin-left: 4px;
       }
 
       &-selected--true {
@@ -173,7 +179,7 @@
         &:hover {
           color: $colorWhite;
           background-color: $colorBlue;
-          box-shadow: inset 0px 0px 0px 3px $colorWhite;
+          box-shadow: inset 0px 0px 0px 2px $colorWhite;
         }
       }
     }
