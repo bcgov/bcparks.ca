@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "gatsby"
+import parksLogo from "../images/park-card.png"
 
 // function to check if a string contains anything besides html tags and whitespace characters
 export const isNullOrWhiteSpace = (str) => !str || !str.toString().replace(/(<([^>]+)>)|^\s+|\s+$|\s+/g, "");
@@ -31,6 +32,9 @@ export const renderBreadcrumbs = (menuContent, pageContext) => {
   }
 }
 export const addSmallImagePrefix = (str) => {
+  if (!str) {
+    return parksLogo
+  }
   let url = str
   // fallback in case imageUrl has already prefix
   // remove another prefix from str
