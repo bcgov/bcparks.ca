@@ -253,6 +253,7 @@ etl:
   enabled: true
   disableBcwfsCron: true
   disableParkNamesCron: false
+  enableBcwfsStandalonePropagation: false
 
   # Run the cron job every hour at 15 minutes past the hour
   schedule: "15 * * * *"

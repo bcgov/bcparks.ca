@@ -141,8 +141,8 @@ const loadData = async function () {
     if (insertions.length > 0 || deletions.length > 0) {
         logger.info(`Propagating firebans to protected areas`);
         try {
-            await axios.post(`${process.env.STRAPI_BASE_URL}/api/fire-ban-prohibitions/propagate`, {}, { headers: httpReqHeaders });
-            logger.info(`Propagation complete`);
+            const { data } = await axios.post(`${process.env.STRAPI_BASE_URL}/api/fire-ban-prohibitions/propagate`, {}, { headers: httpReqHeaders });
+            logger.info(data.message);
         } catch (error) {
             const { response } = error;
             const { data } = response;

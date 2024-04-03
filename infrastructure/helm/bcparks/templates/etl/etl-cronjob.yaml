@@ -48,6 +48,8 @@ spec:
                       key: PARK_NAMES_API_KEY
                 - name: DISABLE_BCWFS_CRON
                   value: {{ .Values.etl.disableBcwfsCron | quote }}
+                - name: ENABLE_BCWFS_STANDALONE_PROPAGATION
+                  value: {{ .Values.etl.enableBcwfsStandalonePropagation | quote }}
                 - name: DISABLE_PARK_NAMES_CRON
                   value: {{ .Values.etl.disableParkNamesCron | quote }}
           restartPolicy: "Never"
