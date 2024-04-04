@@ -35,6 +35,11 @@
       "relation": "oneToOne",
       "target": "api::fire-zone.fire-zone"
     },
+    "naturalResourceDistrict": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::natural-resource-district.natural-resource-district"
+    },
     "fireCentreSource": {
       "type": "string"
     }

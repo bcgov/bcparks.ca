@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv';
 
 import bcwfsLoadData from './scripts/bcwfs-bans.js';
+import bcwfsPropagateData from './scripts/bcwfs-propagate.js';
 import parkNamesLoadData from './scripts/park-names.js';
 import subareaDatesLoadData from './scripts/subarea-dates.js';
 import subareaNotesLoadData from './scripts/subarea-notes.js';
@@ -49,6 +50,11 @@ const DAILY_RUN_HOUR_UTC = 8;
         if (process.env.DISABLE_BCWFS_CRON !== "true") {
             await bcwfsLoadData();
         }
+
+        if (process.env.DISABLE_BCWFS_CRON === "true" && process.env.ENABLE_BCWFS_STANDALONE_PROPAGATION === "true") {
+            await bcwfsPropagateData();
+        }
+
         // add more hourly jobs here
 
         // Run these jobs daily at 12:15am PST or 1:15am PDT

@@ -59,10 +59,20 @@ module.exports = createCoreService(
 
       for (const ban of campfireBans) {
 
+        if (ban.naturalResourceDistrict) {
+          // get a list of protectedAreaIds to have firebans added.
+          const protectedAreaIds = await getProtectedAreasByNaturalResourceDistrictToAddBan(
+            [ban.naturalResourceDistrict.id]
+          );
+
+          // add the campfire ban to all protectedAreas matching the natural resource district
+          const count = await addProtectedAreaFireBans(protectedAreaIds, ban.effectiveDate);
+          rowsUpdated += count;
+        }
+
         let fireZones = [];
-        if (ban.fireZone) {
-          fireZones = [ban.fireZone.id];
-        } else if (ban.fireCentre) {
+
+        if (ban.fireCentre) {
           // turn fireCentre into an array of firezones
           const zones = await strapi.db.query("api::fire-zone.fire-zone")
             .findMany({
@@ -71,36 +81,16 @@ module.exports = createCoreService(
           fireZones = zones.map(z => z.id);
         }
 
+        if (ban.fireZone && !fireZones.includes(ban.fireZone.id)) {
+          fireZones = [...[ban.fireZone.id], ...fireZones];
+        }
+
         if (fireZones.length) {
-          // get a list of protectedAreaIds to have firebans added. This needs to 
-          // be 2 parts because updateMany can't use deep filtering in the "where" criteria, 
-          // but findMany can.
-          const protectedAreas = await strapi.db.query("api::protected-area.protected-area")
-            .findMany({
-              where: {
-                fireZones: {
-                  id: { $in: fireZones },
-                },
-                $or: [
-                  { hasCampfireBanOverride: false },
-                  { hasCampfireBanOverride: { $null: true } }
-                ]
-              }
-            });
-          const protectedAreaIds = protectedAreas.map(p => p.id);
+          // get a list of protectedAreaIds to have firebans added.
+          const protectedAreaIds = await getProtectedAreasByFireZoneToAddBan(fireZones);
 
           // add the campfire ban to all protectedAreas matching the firezones
-          const { count } = await strapi.db.query("api::protected-area.protected-area")
-            .updateMany({
-              where: {
-                id: { $in: protectedAreaIds }
-              },
-              data: {
-                campfireBanEffectiveDate: ban.effectiveDate?.split('T')[0],
-                campfireBanRescindedDate: null,
-                hasCampfireBan: true
-              },
-            });
+          const count = await addProtectedAreaFireBans(protectedAreaIds, ban.effectiveDate);
           rowsUpdated += count;
         }
       }
@@ -123,3 +113,56 @@ module.exports = createCoreService(
     }
   })
 );
+
+/* get a list of protectedAreaIds in a list of natural resource districts to have firebans added
+ */
+const getProtectedAreasByNaturalResourceDistrictToAddBan = async (naturalResourceDistricts) => {
+  const protectedAreas = await strapi.db.query("api::protected-area.protected-area")
+    .findMany({
+      where: {
+        naturalResourceDistricts: {
+          id: { $in: naturalResourceDistricts },
+        },
+        $or: [
+          { hasCampfireBanOverride: false },
+          { hasCampfireBanOverride: { $null: true } }
+        ]
+      }
+    });
+  return protectedAreas.map(p => p.id);
+};
+
+/* get a list of protectedAreaIds in a list of firzones to have firebans added
+ */
+const getProtectedAreasByFireZoneToAddBan = async (fireZones) => {
+  const protectedAreas = await strapi.db.query("api::protected-area.protected-area")
+    .findMany({
+      where: {
+        fireZones: {
+          id: { $in: fireZones },
+        },
+        $or: [
+          { hasCampfireBanOverride: false },
+          { hasCampfireBanOverride: { $null: true } }
+        ]
+      }
+    });
+  return protectedAreas.map(p => p.id);
+};
+
+/* Adds fire bans to a list of protected areas
+ */
+const addProtectedAreaFireBans = async (protectedAreaIds, effectiveDate) => {
+  const { count } = await strapi.db.query("api::protected-area.protected-area")
+    .updateMany({
+      where: {
+        id: { $in: protectedAreaIds }
+      },
+      data: {
+        campfireBanEffectiveDate: effectiveDate?.split('T')[0],
+        campfireBanRescindedDate: null,
+        hasCampfireBan: true
+      },
+    });
+  return count;
+};
