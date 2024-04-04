@@ -77,6 +77,7 @@ export function generateProtectedAreasListForSelectedRelations(
   selectedSites,
   selectedFireCentres,
   selectedFireZones,
+  selectedNaturalResourceDistricts,
   managementAreas,
   fireZones,
   sites
@@ -88,6 +89,7 @@ export function generateProtectedAreasListForSelectedRelations(
   const selSites = [];
   const selFireCentres = [];
   const selFireZones = [];
+  const selNaturalResourceDistricts = [];
   setAreaValues(
     selectedRegions,
     selRegions,
@@ -136,6 +138,14 @@ export function generateProtectedAreasListForSelectedRelations(
     sites,
     null
   );
+  setAreaValues(
+    selectedNaturalResourceDistricts,
+    selNaturalResourceDistricts,
+    selProtectedAreas,
+    selSites,
+    sites,
+    null
+  );  
   return selProtectedAreas;
 }
 
@@ -150,7 +160,7 @@ const setAreaValues = (
   if (areas && areas.length > 0) {
     areas.forEach((a) => {
       selAreas.push(a.value);
-      if (a.type === "managementArea" || a.type === "fireZone") {
+      if (a.type === "managementArea" || a.type === "fireZone" || a.type === "naturalResourceDistrict") {
         addProtectedAreas(
           a.obj.protectedAreas,
           sites,

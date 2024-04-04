@@ -81,6 +81,7 @@ const buildQuery = function (query) {
     eventType: true,
     fireCentres: true,
     fireZones: true,
+    naturalResourceDistricts: true,
     links: true,
     managementAreas: true,
     protectedAreas: { fields: ["protectedAreaName", "slug", "isDisplayed", "publishedAt", "orcs"] },

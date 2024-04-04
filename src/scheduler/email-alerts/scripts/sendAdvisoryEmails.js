@@ -109,6 +109,7 @@ const getAdvisoryInfo = async function (advisoryNumber) {
     populate: {
       fireCentres: { fields: ["fireCentreName"] },
       fireZones: { fields: ["fireZoneName"] },
+      naturalResourceDistricts: { fields: ["naturalResourceDistrictName"] },
       links: {
         fields: ["title", "url"]
       },

@@ -110,6 +110,9 @@ const getProtectedAreaStatus = async (ctx) => {
         fireCentre: { fields: ["id"]}
       }
     },
+    naturalResourceDistricts: {
+      fields: ["naturalResourceDistrictName"],
+    },
     managementAreas: {
       fields: ["managementAreaName"],
       populate: {
@@ -242,6 +245,12 @@ const getProtectedAreaStatus = async (ctx) => {
       ),
     ];
 
+    const naturalResourceDistricts = [
+      ...new Set(
+        protectedArea.naturalResourceDistricts.map((naturalResourceDistrict) => naturalResourceDistrict.naturalResourceDistrictName)
+      ),
+    ];
+
     const parkActivities = protectedArea.parkActivities.map((a) => {
       return {
         activityName: a.activityType.activityName,
@@ -311,6 +320,7 @@ const getProtectedAreaStatus = async (ctx) => {
       accessStatusRescindedDate: publicAdvisory.endDate,
       fireCentres: fireCentres,
       fireZones: fireZones,
+      naturalResourceDistricts: naturalResourceDistricts,
       isFogZone: boolToYN(protectedArea.isFogZone),
       regions: regions,
       sections: sections,

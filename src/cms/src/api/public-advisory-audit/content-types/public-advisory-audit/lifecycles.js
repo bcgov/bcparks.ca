@@ -128,6 +128,7 @@ const isAdvisoryEqual = (newData, oldData) => {
     sites: [],
     fireCentres: [],
     fireZones: [],
+    naturalResourceDistricts: [],
     isAdvisoryDateDisplayed: null,
     isEffectiveDateDisplayed: null,
     isEndDateDisplayed: null,

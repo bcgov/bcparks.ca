@@ -135,6 +135,11 @@
       "relation": "oneToMany",
       "target": "api::fire-zone.fire-zone"
     },
+    "naturalResourceDistricts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::natural-resource-district.natural-resource-district"
+    },
     "sites": {
       "type": "relation",
       "relation": "oneToMany",

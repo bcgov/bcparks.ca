@@ -44,6 +44,15 @@
   &nbsp;
   <% }) %>
 
+  <% data.naturalResourceDistricts.forEach((val) => { %>
+    <span style="display: inline-block; text-align: center; background-color: #c7e3fd; color: #003366;">
+      <span style="display: inline-block; color: #003366; border-color: #c7e3fd; border-width: 5px 10px; border-style: solid; white-space: nowrap;">
+        <%= val.naturalResourceDistrictName %>
+      </span>
+    </span>
+    &nbsp;
+    <% }) %>
+
   <% data.regions.forEach((val)=> { %>
   <span style="display: inline-block; text-align: center; background-color: #c7e3fd; color: #003366;">
     <span style="display: inline-block; color: #003366; border-color: #c7e3fd; border-width: 5px 10px; border-style: solid; white-space: nowrap;">
@@ -71,7 +80,7 @@
   &nbsp;
   <% }) %>
 
-  <% if (data.fireCentres.length || data.fireZones.length || data.regions.length || data.sections.length || data.managementAreas.length) { %>
+  <% if (data.fireCentres.length || data.fireZones.length || data.naturalResourceDistricts.length || data.regions.length || data.sections.length || data.managementAreas.length) { %>
   <span style="white-space:nowrap;display:inline-block;margin-top:10px;">
     <%= data.protectedAreas.length %> parks affected
   </span>
