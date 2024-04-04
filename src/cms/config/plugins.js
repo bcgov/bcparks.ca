@@ -150,6 +150,9 @@ module.exports = ({ env }) => {
             "api::fire-centre.fire-centre": {
               GET: true,
             },
+            "api::natural-resource-district.natural-resource-district": {
+              GET: true,
+            },
             "api::event-type.event-type": {
               GET: true,
             },

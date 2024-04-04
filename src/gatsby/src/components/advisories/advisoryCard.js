@@ -17,6 +17,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
   const showFireZones = advisory.fireZones?.length > 0 && !showFireCentres; // 2nd priority
   const showRegions = advisory.regions?.length > 0 && !showFireCentres && !showFireZones; // 3rd priority
   const showSections = advisory.sections?.length > 0 && !showFireCentres && !showFireZones && !showRegions;  // 4th priority
+  const showNaturalResourceDistricts = advisory.naturalResourceDistricts?.length > 0 && !showFireCentres && !showFireZones && !showRegions && !showSections;  // 5th priority
 
   const checkAdditionalParks = () => {
 
@@ -24,6 +25,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
     const advisoryFireZones = advisory.fireZones.map(z => { return z.id })
     const advisoryRegions = advisory.regions.map(r => { return r.id })
     const advisorySections = advisory.sections.map(s => { return s.id })
+    const advisoryNaturalResourceDistricts = advisory.naturalResourceDistricts.map(n => { return n.id })
 
     const parkCameFromFireCentre = (paKey) => {
       const parkFireCentres = parkInfoHash[paKey]?.fireCentres || [];
@@ -45,6 +47,11 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
       return parkSections.some(x => advisorySections.includes(x))
     }
 
+    const parkCameFromNaturalResourceDistrict = (paKey) => {
+      const parkNaturalResourceDistricts = parkInfoHash[paKey]?.naturalResourceDistricts || [];
+      return parkNaturalResourceDistricts.some(x => advisoryNaturalResourceDistricts.includes(x))
+    }    
+
     for (const pa of advisory.protectedAreas) {
       const paKey = pa.id.toString();
       if (showFireCentres && !parkCameFromFireCentre(paKey)) {
@@ -57,6 +64,9 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
         return true;
       }
       if (showSections && !parkCameFromSection(paKey)) {
+        return true;
+      }
+      if (showNaturalResourceDistricts && !parkCameFromNaturalResourceDistrict(paKey)) {
         return true;
       }
     }
@@ -185,6 +195,15 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                             key={index}
                           >
                             {section.sectionName} section
+                          </Link>
+                        ))}
+                      {showNaturalResourceDistricts && advisory.naturalResourceDistricts.map(
+                        (naturalResourceDistrict, index) => (
+                          <Link
+                            className="parkLink badge badge-pill badge-primary mb-2 mr-2"
+                            key={index}
+                          >
+                            {sentenceCase(naturalResourceDistrict.naturalResourceDistrictName, "Natural Resource District")}
                           </Link>
                         ))}
                       {hasAdditionalParks &&

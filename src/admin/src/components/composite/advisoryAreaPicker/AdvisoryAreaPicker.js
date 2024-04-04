@@ -35,6 +35,9 @@ export default function AdvisoryAreaPicker({
     fireZones,
     selectedFireZones,
     setSelectedFireZones,
+    naturalResourceDistricts,
+    selectedNaturalResourceDistricts,
+    setSelectedNaturalResourceDistricts,
     advisoryData,
     protectedAreaError
   },
@@ -51,6 +54,7 @@ export default function AdvisoryAreaPicker({
         section,
         fireZone,
         fireCentre,
+        naturalResourceDistrict,
         sites
       } = await Promise.resolve(getParkRelations(parkId));
 
@@ -74,7 +78,10 @@ export default function AdvisoryAreaPicker({
         const newFireCentres = selectedFireCentres.filter(fc => fc.value !== fireCentre.id);
         setSelectedFireCentres(newFireCentres);
       }
-
+      if (naturalResourceDistrict && selectedNaturalResourceDistricts.length) {
+        const newNaturalResourceDistricts = selectedNaturalResourceDistricts.filter(nrd => nrd.value !== naturalResourceDistrict.id);
+        setSelectedNaturalResourceDistricts(newNaturalResourceDistricts);
+      }      
       if (sites && sites.data.length && selectedSites.length) {
         const parkSites = sites.data.map(x => x.id);
         const newSites = selectedSites.filter(s => !parkSites.includes(s.value));
@@ -89,6 +96,7 @@ export default function AdvisoryAreaPicker({
     setSelectedSections([]);
     setSelectedFireZones([]);
     setSelectedFireCentres([]);
+    setSelectedNaturalResourceDistricts([]);
     setSelectedSites([]);
   };
 
@@ -98,7 +106,8 @@ export default function AdvisoryAreaPicker({
     updatedManagementAreas,
     updatedSites,
     updatedFireZones,
-    updatedFireCentres
+    updatedFireCentres,
+    updatedNaturalResourceDistricts
   }) => {
     // get current the list of park ids before the change
     const currentlySelected = selectedProtectedAreas.map(x => x.value);
@@ -111,6 +120,7 @@ export default function AdvisoryAreaPicker({
       selectedSites,
       selectedFireCentres,
       selectedFireZones,
+      selectedNaturalResourceDistricts,
       managementAreas,
       fireZones,
       sites
@@ -127,6 +137,7 @@ export default function AdvisoryAreaPicker({
       updatedSites || selectedSites,
       updatedFireCentres || selectedFireCentres,
       updatedFireZones || selectedFireZones,
+      updatedNaturalResourceDistricts || selectedManagementAreas,
       managementAreas,
       fireZones,
       sites
@@ -224,6 +235,29 @@ export default function AdvisoryAreaPicker({
                     handleChangeRelations({ updatedFireZones: e });
                   }}
                   placeholder="Select Fire Zone(s)"
+                  isMulti="true"
+                  className="bcgov-select"
+                />
+              </FormControl>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-3 col-md-4 col-sm-12 ad-label">
+              Natural Resource District(s)
+            </div>
+            <div className="col-lg-7 col-md-8 col-sm-12">
+              <FormControl
+                variant="outlined"
+                className="bcgov-select-form"
+              >
+                <Select
+                  options={naturalResourceDistricts}
+                  value={selectedNaturalResourceDistricts}
+                  onChange={(e) => {
+                    setSelectedNaturalResourceDistricts(e);
+                    handleChangeRelations({ updatedNaturalResourceDistricts: e });
+                  }}
+                  placeholder="Select Natural Resource District(s)"
                   isMulti="true"
                   className="bcgov-select"
                 />
@@ -400,6 +434,9 @@ AdvisoryAreaPicker.propTypes = {
     fireZones: PropTypes.array.isRequired,
     selectedFireZones: PropTypes.array,
     setSelectedFireZones: PropTypes.func.isRequired,
+    naturalResourceDistricts: PropTypes.array.isRequired,
+    selectedNaturalResourceDistricts: PropTypes.array,
+    setSelectedNaturalResourceDistricts: PropTypes.func.isRequired,
     advisoryData: PropTypes.object,
     protectedAreaError: PropTypes.string
   }).isRequired,

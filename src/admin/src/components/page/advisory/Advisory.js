@@ -23,6 +23,7 @@ import {
   getSites,
   getFireCentres,
   getFireZones,
+  getNaturalResourceDistricts,
   getEventTypes,
   getAccessStatuses,
   getUrgencies,
@@ -58,6 +59,8 @@ export default function Advisory({
   const [selectedFireCentres, setSelectedFireCentres] = useState([]);
   const [fireZones, setFireZones] = useState([]);
   const [selectedFireZones, setSelectedFireZones] = useState([]);
+  const [naturalResourceDistricts, setNaturalResourceDistricts] = useState([]);
+  const [selectedNaturalResourceDistricts, setSelectedNaturalResourceDistricts] = useState([]);
   const [eventTypes, setEventTypes] = useState([]);
   const [eventType, setEventType] = useState();
   const [accessStatuses, setAccessStatuses] = useState([]);
@@ -114,6 +117,7 @@ export default function Advisory({
       eventType: { populate: "*" },
       fireCentres: { fields: ["id"] },
       fireZones: { fields: ["id"] },
+      naturalResourceDistricts: { fields: ["id"] },
       links: { populate: { type: { populate: "*" }, file: { populate: "*" } } },
       urgency: { populate: "*" },
       managementAreas: { fields: ["id"] },
@@ -240,6 +244,7 @@ export default function Advisory({
             const siteInfo = advisoryData.sites;
             const fireCentreInfo = advisoryData.fireCentres;
             const fireZoneInfo = advisoryData.fireZones;
+            const naturalResourceDistrictInfo = advisoryData.naturalResourceDistricts;
 
             if (standardMessageInfo) {
               const selStandardMessages = [];
@@ -304,6 +309,13 @@ export default function Advisory({
               });
               setSelectedFireZones([...selFireZones]);
             }
+            if (naturalResourceDistrictInfo) {
+              const selNaturalResourceDistricts = [];
+              naturalResourceDistrictInfo.forEach((f) => {
+                selNaturalResourceDistricts.push(naturalResourceDistricts.find((l) => l.value === f.id));
+              });
+              setSelectedNaturalResourceDistricts([...selNaturalResourceDistricts]);
+            }            
             const links = advisoryData.links;
             if (links.length > 0) {
               links.forEach((l) => {
@@ -386,6 +398,8 @@ export default function Advisory({
     setSelectedFireCentres,
     fireZones,
     setSelectedFireZones,
+    naturalResourceDistricts,
+    setSelectedNaturalResourceDistricts,
     keycloak,
   ]);
 
@@ -401,6 +415,7 @@ export default function Advisory({
         getSites(cmsData, setCmsData),
         getFireCentres(cmsData, setCmsData),
         getFireZones(cmsData, setCmsData),
+        getNaturalResourceDistricts(cmsData, setCmsData),
         getEventTypes(cmsData, setCmsData),
         getAccessStatuses(cmsData, setCmsData),
         getUrgencies(cmsData, setCmsData),
@@ -466,13 +481,21 @@ export default function Advisory({
             obj: f,
           }));
           setFireZones([...fireZones]);
-          const eventTypeData = res[7];
+          const naturalResourceDistrictData = res[7];
+          const naturalResourceDistricts = naturalResourceDistrictData.map((f) => ({
+            label: f.naturalResourceDistrictName,
+            value: f.id,
+            type: "naturalResourceDistrict",
+            obj: f,
+          }));
+          setNaturalResourceDistricts([...naturalResourceDistricts]);
+          const eventTypeData = res[8];
           const eventTypes = eventTypeData.map((et) => ({
             label: et.eventType,
             value: et.id,
           }));
           setEventTypes([...eventTypes]);
-          const accessStatusData = res[8];
+          const accessStatusData = res[9];
           const accessStatuses = accessStatusData.map((a) => ({
             label: a.accessStatus,
             value: a.id,
@@ -480,14 +503,14 @@ export default function Advisory({
           setAccessStatuses([...accessStatuses]);
           const accessStatus = accessStatuses.filter((a) => a.label === "Open");
           setAccessStatus(accessStatus[0].value);
-          const urgencyData = res[9];
+          const urgencyData = res[10];
           const urgencies = urgencyData.map((u) => ({
             label: u.urgency,
             value: u.id,
             sequence: u.sequence
           }));
           setUrgencies([...urgencies]);
-          const advisoryStatusData = res[10];
+          const advisoryStatusData = res[11];
           const restrictedAdvisoryStatusCodes = ["INA", "APR"];
           const desiredOrder = ['PUB', 'INA', 'DFT', 'APR', 'ARQ'];
           const tempAdvisoryStatuses = advisoryStatusData.map((s) => {
@@ -514,13 +537,13 @@ export default function Advisory({
             (s) => s !== null
           );
           setAdvisoryStatuses([...advisoryStatuses]);
-          const linkTypeData = res[11];
+          const linkTypeData = res[12];
           const linkTypes = linkTypeData.map((lt) => ({
             label: lt.type,
             value: lt.id,
           }));
           setLinkTypes([...linkTypes]);
-          const standardMessageData = res[12];
+          const standardMessageData = res[13];
           const standardMessages = standardMessageData.map((m) => ({
             label: m.title,
             value: m.id,
@@ -558,6 +581,7 @@ export default function Advisory({
     setSites,
     setFireCentres,
     setFireZones,
+    setNaturalResourceDistricts,
     setUrgencies,
     setAdvisoryStatuses,
     setAccessStatuses,
@@ -753,6 +777,7 @@ export default function Advisory({
       const selSites = selectedSites.map(x => x.value);
       const selFireCentres = selectedFireCentres.map(x => x.value);
       const selFireZones = selectedFireZones.map(x => x.value);
+      const selNaturalResourceDistricts = selectedNaturalResourceDistricts.map(x => x.value);
 
       Promise.resolve(saveLinks()).then((savedLinks) => {
         const newAdvisory = {
@@ -781,6 +806,7 @@ export default function Advisory({
           sites: selSites,
           fireCentres: selFireCentres,
           fireZones: selFireZones,
+          naturalResourceDistricts: selNaturalResourceDistricts,
           isAdvisoryDateDisplayed: displayAdvisoryDate,
           isEffectiveDateDisplayed: displayStartDate,
           isEndDateDisplayed: displayEndDate,
@@ -830,6 +856,7 @@ export default function Advisory({
       const selSites = selectedSites.map(x => x.value);
       const selFireCentres = selectedFireCentres.map(x => x.value);
       const selFireZones = selectedFireZones.map(x => x.value);
+      const selNaturalResourceDistricts = selectedNaturalResourceDistricts.map(x => x.value);
 
       if (
         (!selProtectedAreas || selProtectedAreas.length === 0) &&
@@ -873,6 +900,7 @@ export default function Advisory({
             sites: selSites,
             fireCentres: selFireCentres,
             fireZones: selFireZones,
+            naturalResourceDistricts: selNaturalResourceDistricts,
             isAdvisoryDateDisplayed: displayAdvisoryDate,
             isEffectiveDateDisplayed: displayStartDate,
             isEndDateDisplayed: displayEndDate,
@@ -1105,6 +1133,9 @@ export default function Advisory({
                   fireZones,
                   selectedFireZones,
                   setSelectedFireZones,
+                  naturalResourceDistricts,
+                  selectedNaturalResourceDistricts,
+                  setSelectedNaturalResourceDistricts,
                   urgencies,
                   urgency,
                   setUrgency,

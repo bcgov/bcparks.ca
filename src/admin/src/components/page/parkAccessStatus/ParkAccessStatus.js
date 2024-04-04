@@ -24,6 +24,7 @@ export default function ParkAccessStatus() {
       park.regionsStr = park.regions.join(", ");
       park.fireCentresStr = park.fireCentres.join(", ");
       park.fireZonesStr = park.fireZones.join(", ");
+      park.naturalResourceDistrictsStr = park.naturalResourceDistricts.join(", ");
       park.accessStatusEffectiveDate = formatDate(
         park.accessStatusEffectiveDate
       );
@@ -85,6 +86,7 @@ export default function ParkAccessStatus() {
               { title: "Management Area", field: "managementAreasStr" },
               { title: "Fire Centre", field: "fireCentresStr" },
               { title: "Fire Zone", field: "fireZonesStr" },
+              { title: "Natural Resource District", field: "naturalResourceDistrictsStr" },
               { title: "Access Status", field: "accessStatus" },
               {
                 title: "Access Details",

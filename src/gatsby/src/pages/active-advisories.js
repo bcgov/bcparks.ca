@@ -327,6 +327,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         sections: x.managementAreas.map(m => { return m.section?.id }),
         regions: x.managementAreas.map(m => { return m.region?.id }),
         fireZones: x.fireZones.map(m => { return m.strapi_id }),
+        naturalResourceDistricts: x.naturalResourceDistricts.map(m => { return m.strapi_id }),
         fireCentres: x.fireZones.map(m => { return m.fireCentre?.id })
       };
     }
@@ -492,6 +493,9 @@ export const query = graphql`
           fireCentre {
             id
           }
+        }
+        naturalResourceDistricts {
+          strapi_id
         }
       }
     }

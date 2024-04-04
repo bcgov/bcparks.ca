@@ -104,6 +104,9 @@ module.exports = {
                 fireZones: {
                   populate: ["fireCentre"]
                 },
+                naturalResourceDistricts: {
+                  fields: "*"
+                },
                 managementAreas: {
                   populate: ["region", "section"]
                 }

@@ -65,6 +65,18 @@ export default function AdvisorySummaryView({
           </div>
         </div>
       )}
+      {advisory.naturalResourceDistricts.length > 0 && (
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-12 ad-summary-label">
+            Natural Resource District(s)
+          </div>
+          <div className="col-lg-7 col-md-8 col-12">
+            {advisory.naturalResourceDistricts.map((n) => (
+              <div key={n.id}>{n.naturalResourceDistrictName}</div>
+            ))}
+          </div>
+        </div>
+      )}
       {advisory.regions.length > 0 && (
         <div className="row">
           <div className="col-lg-3 col-md-4 col-12 ad-summary-label">

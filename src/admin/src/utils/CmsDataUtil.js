@@ -131,6 +131,22 @@ export function getFireZones(cmsData, setCmsData) {
     }
 }
 
+export function getNaturalResourceDistricts(cmsData, setCmsData) {
+    if (!cmsData.naturalResourceDistricts) {
+        const result = cmsAxios
+            .get(`/natural-resource-districts?${querySort("naturalResourceDistrictName")}&populate=*`)
+            .then((res) => {
+                const data = cmsData;
+                data.naturalResourceDistricts = res.data.data;
+                setCmsData(data);
+                return res.data.data;
+            });
+        return result;
+    } else {
+        return cmsData.naturalResourceDistricts;
+    }
+}
+
 export function getEventTypes(cmsData, setCmsData) {
     if (!cmsData.eventTypes) {
         const result = cmsAxios
@@ -254,6 +270,9 @@ export function getParkRelations(parkId) {
                 },
                 sites: {
                     fields: ["id"]
+                },
+                naturalResourceDistricts: {
+                    fields: ["id"]
                 }
             }
         },
@@ -271,6 +290,7 @@ export function getParkRelations(parkId) {
                 const section = managementArea?.attributes.section?.data;
                 const fireZone = parkInfo.fireZones?.data[0];
                 const fireCentre = fireZone?.attributes.fireCentre?.data;
+                const naturalResourceDistrict = parkInfo.naturalResourceDistricts?.data[0];
                 const sites = parkInfo.sites;
                 return {
                     managementArea: managementArea,
@@ -278,6 +298,7 @@ export function getParkRelations(parkId) {
                     section: section,
                     fireZone: fireZone,
                     fireCentre: fireCentre,
+                    naturalResourceDistrict: naturalResourceDistrict,
                     sites: sites
                 };
             } else {
@@ -287,6 +308,7 @@ export function getParkRelations(parkId) {
                     section: null,
                     fireZone: null,
                     fireCentre: null,
+                    naturalResourceDistrict: null,
                     sites: null
                 };
             }
