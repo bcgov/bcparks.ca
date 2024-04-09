@@ -40,6 +40,9 @@
       "type": "boolean",
       "default": false,
       "required": true
+    },
+    "reservationTemplateString": {
+      "type": "text"
     }
   }
 }

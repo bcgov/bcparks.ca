@@ -168,6 +168,9 @@
     },
     "closureAffectsAccessStatus": {
       "type": "boolean"
+    },
+    "reservationOverrideUrl": {
+      "type": "text"
     }
   }
 }
