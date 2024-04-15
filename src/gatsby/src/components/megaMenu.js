@@ -165,6 +165,13 @@ const MegaMenu = ({ content, menuMode }) => {
     [menuContent]
   )
 
+  const handleClick = useCallback((e) => {
+    if (!(menuElements.some((el) => el.parentElement.contains(e.target)))) {
+      menuReset()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [menuElements])
+
   useEffect(() => {
     // create sorted + structured menuTree from menuContent
 
@@ -188,11 +195,6 @@ const MegaMenu = ({ content, menuMode }) => {
 
   useEffect(() => {
     if (menuElements.length === 0) { return }
-    const handleClick = (e) => {
-      if (!(menuElements.some((el) => el.parentElement.contains(e.target)))) {
-        menuReset()
-      }
-    }
     document.addEventListener("click", handleClick)
     return () => {
       document.removeEventListener("click", handleClick)
