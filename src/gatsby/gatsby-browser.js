@@ -1,3 +1,4 @@
+import { newTracker, enableActivityTracking, trackPageView } from '@snowplow/browser-tracker';
 import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css"
 import "@bcgov/bc-sans/css/BC_Sans.css"
 import "jquery/dist/jquery.slim"
@@ -5,7 +6,23 @@ import "bootstrap/dist/js/bootstrap.bundle"
 import "@fortawesome/fontawesome-free/css/all.min.css"
 import "./src/styles/style.scss"
 
+// Snowplow tracking
+// see https://docs.snowplow.io/docs/collecting-data/collecting-from-own-applications/javascript-trackers/web-tracker/quick-start-guide/?platform=browser
+export const onInitialClientRender = () => {
+  newTracker('sp1', 'spt.apps.gov.bc.ca', { 
+    appId: 'Snowplow_standalone', 
+    plugins: [],
+    debug: true
+  });
+
+  enableActivityTracking({
+    minimumVisitLength: 30,
+    heartbeatDelay: 10
+  });
+};
+
 export const onRouteUpdate = ({ location, prevLocation }) => {
+  trackPageView({ title: document.title, url: location.href });
   sessionStorage.setItem("prevPath", prevLocation ? prevLocation.pathname : null);
 };
 
