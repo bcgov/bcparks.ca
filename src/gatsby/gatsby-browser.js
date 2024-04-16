@@ -1,4 +1,5 @@
-import { newTracker, enableActivityTracking, refreshLinkClickTracking, trackPageView } from '@snowplow/browser-tracker';
+import { newTracker, enableActivityTracking, trackPageView } from '@snowplow/browser-tracker';
+import { refreshLinkClickTracking } from '@snowplow/browser-plugin-link-click-tracking';
 import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css"
 import "@bcgov/bc-sans/css/BC_Sans.css"
 import "jquery/dist/jquery.slim"
