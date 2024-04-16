@@ -1,5 +1,3 @@
-import { newTracker, enableActivityTracking, trackPageView } from '@snowplow/browser-tracker';
-import { refreshLinkClickTracking } from '@snowplow/browser-plugin-link-click-tracking';
 import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css"
 import "@bcgov/bc-sans/css/BC_Sans.css"
 import "jquery/dist/jquery.slim"
@@ -10,22 +8,27 @@ import "./src/styles/style.scss"
 // Snowplow tracking
 // see https://docs.snowplow.io/docs/collecting-data/collecting-from-own-applications/javascript-trackers/web-tracker/quick-start-guide/?platform=browser
 export const onInitialClientRender = () => {
-  newTracker('sp1', 'spt.apps.gov.bc.ca', { 
-    appId: 'Snowplow_standalone', 
-    plugins: [],
-    debug: true
+  window.snowplow("newTracker", "sp1", "spt.apps.gov.bc.ca", {
+    appId: "Snowplow_standalone",
+    cookieDomain: null,
+    platform: "web",
+    post: true,
+    contexts: {
+      webPage: true,
+      performanceTiming: true
+    },
+    plugins: [
+      { name: "LinkClickTrackingPlugin", options: {} }
+    ]
   });
 
-  enableActivityTracking({
-    minimumVisitLength: 30,
-    heartbeatDelay: 10
-  });
-
-  refreshLinkClickTracking();
+  window.snowplow("enableActivityTracking", 30, 10);
+  window.snowplow("enableLinkClickTracking");
+  window.snowplow("trackPageView");
 };
 
 export const onRouteUpdate = ({ location, prevLocation }) => {
-  trackPageView({ title: document.title, url: location.href });
+  window.snowplow("trackPageView");
   sessionStorage.setItem("prevPath", prevLocation ? prevLocation.pathname : null);
 };
 

@@ -18,8 +18,6 @@
     "@loadable/webpack-plugin": "^5.15.2",
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.14",
-    "@snowplow/browser-plugin-link-click-tracking": "^3.23.0",
-    "@snowplow/browser-tracker": "^3.23.0",
     "axios": "^0.22.0",
     "bootstrap": "~4.3.1",
     "cheerio": "^1.0.0-rc.12",
