@@ -6,6 +6,7 @@ import {
 } from "@mui/material"
 import CheckIcon from '@mui/icons-material/Check'
 import { styled } from '@mui/material/styles'
+import { trackStructEvent } from '@snowplow/browser-tracker'
 
 const CheckboxIcon = styled("span")(() => ({
   borderRadius: 4,
@@ -58,10 +59,18 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck, filterTyp
               checked={checked}
               onChange={event => {
                 handleFilterCheck(item, event)
+                trackStructEvent({
+                  category: 'Checkbox',
+                  action: event.target.checked ? 'Check' : 'Uncheck',
+                  label: item.label,
+                  property: 'filter-checkbox',
+                  value: event.target.checked ? 1 : 0
+                })
               }}
               name={item.label}
               icon={<CheckboxIcon />}
               checkedIcon={<CheckedIcon />}
+              className="filter-checkbox"
             />
           }
           label={`${shortenFilterLabel(item.label, filterType)} (${item.count})`}
