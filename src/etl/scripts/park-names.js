@@ -158,6 +158,14 @@ const loadData = async function () {
             },
             { headers: httpReqHeaders }
           );
+          await queueNameChangeNotification(
+            {
+              oldName: p.strapi.protectedAreaName,
+              newName: p.dataRegister?.displayName || ""
+            },
+            p.orcs,
+            httpReqHeaders
+          );
         } catch (error) {
           logger.error(`Error updating park ${p.orcs}\n${JSON.stringify(error)}`);
         }
@@ -265,5 +273,27 @@ const updateParkName = async function (parkNameId, protectedAreaId, nameTypeObj,
   }
   return 0;
 };
+
+
+/**
+ * Adds a notification to the task queue
+ */
+const queueNameChangeNotification = async function (changeInfo, orcs, httpReqHeaders) {
+  try {
+    await axios.post(`${process.env.STRAPI_BASE_URL}/api/queued-tasks`,
+      {
+        data: {
+          action: 'email parkname change',
+          numericData: orcs,
+          jsonData: changeInfo
+        }
+      },
+      { headers: httpReqHeaders }
+    );
+  } catch (error) {
+    const logger = getLogger();
+    logger.error(`Error queuing parkname change message for orcs ${orcs}\n${JSON.stringify(error)}`);
+  }
+}
 
 export default loadData;

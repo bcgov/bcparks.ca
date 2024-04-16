@@ -10,6 +10,7 @@ const { queueAll } = require('./elasticsearch/scripts/queueAllParks');
 const { populateGeoShapes } = require('./elasticsearch/scripts/populateGeoShapes');
 const { triggerAdvisories } = require('./advisory-scheduling/scripts/triggerScheduled');
 const { sendAdvisoryEmails } = require('./email-alerts/scripts/sendAdvisoryEmails');
+const { sendParkNamesEmails } = require('./email-alerts/scripts/sendParkNamesEmails');
 
 (async () => {
   dotenv.config({
@@ -104,10 +105,12 @@ const { sendAdvisoryEmails } = require('./email-alerts/scripts/sendAdvisoryEmail
   if (scriptKeySpecified("emailsend")) {
     logger.info("Sending queued emails");
     await sendAdvisoryEmails([]);
+    await sendParkNamesEmails();
   }
   if (scriptKeySpecified("emailtest")) {
     logger.info("Writing rendered email templates to 'mail-test-[#].html'");
     await sendAdvisoryEmails([]);
+    await sendParkNamesEmails();
   }
 
   if (noCommandLineArgs() || scriptKeySpecified("help")) {
