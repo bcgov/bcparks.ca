@@ -8,27 +8,29 @@ import "./src/styles/style.scss"
 // Snowplow tracking
 // see https://docs.snowplow.io/docs/collecting-data/collecting-from-own-applications/javascript-trackers/web-tracker/quick-start-guide/?platform=browser
 export const onInitialClientRender = () => {
-  window.snowplow("newTracker", "sp1", "spt.apps.gov.bc.ca", {
-    appId: "Snowplow_standalone",
-    cookieDomain: null,
-    platform: "web",
-    post: true,
-    contexts: {
-      webPage: true,
-      performanceTiming: true
-    },
-    plugins: [
-      { name: "LinkClickTrackingPlugin", options: {} }
-    ]
-  });
+  if (typeof window.snowplow === 'function') {
+    window.snowplow("newTracker", "rt", "spt.apps.gov.bc.ca", {
+      appId: "Snowplow_standalone",
+      cookieLifetime: 86400 * 548,
+      platform: "web",
+      post: true,
+      contexts: {
+        webPage: true,
+        performanceTiming: true
+      }
+    });
 
-  window.snowplow("enableActivityTracking", 30, 10);
-  window.snowplow("enableLinkClickTracking");
-  window.snowplow("trackPageView");
+    // ping every 30 seconds after 30 seconds
+    window.snowplow("enableActivityTracking", 30, 30);
+    window.snowplow("enableLinkClickTracking");
+    window.snowplow("trackPageView");
+  }
 };
 
 export const onRouteUpdate = ({ location, prevLocation }) => {
-  window.snowplow("trackPageView");
+  if (typeof window.snowplow === 'function') {
+    window.snowplow("trackPageView");
+  }
   sessionStorage.setItem("prevPath", prevLocation ? prevLocation.pathname : null);
 };
 
