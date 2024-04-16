@@ -1,4 +1,4 @@
-import { newTracker, enableActivityTracking, trackPageView } from '@snowplow/browser-tracker';
+import { newTracker, enableActivityTracking, refreshLinkClickTracking, trackPageView } from '@snowplow/browser-tracker';
 import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css"
 import "@bcgov/bc-sans/css/BC_Sans.css"
 import "jquery/dist/jquery.slim"
@@ -19,6 +19,8 @@ export const onInitialClientRender = () => {
     minimumVisitLength: 30,
     heartbeatDelay: 10
   });
+
+  refreshLinkClickTracking();
 };
 
 export const onRouteUpdate = ({ location, prevLocation }) => {
