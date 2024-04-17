@@ -73,9 +73,10 @@ h3.subtitle {
     .flex-display {
       align-items: center;
       justify-content: space-between;
-      svg.MuiSvgIcon-root {
+      i {
+        font-size: 1rem;
         color: $colorGreyMed;
-        font-size: 1.25rem;
+        margin-left: 6px;
       }
     }
   }
@@ -83,6 +84,12 @@ h3.subtitle {
   .park-filter-dialog-content .MuiTypography-root {
     font-family: $globalFont;
     font-size: $bodyFont !important;
+    &.MuiLink-underlineHover {
+      i {
+        font-size: 1rem;
+        margin-left: 6px;
+      }
+    }
   }
 
   .park-filter-dialog-content, .park-filter-dialog-action {
@@ -527,6 +534,10 @@ div[class$="-singleValue"] {
         outline: $colorBlueMed solid 2px;
         outline-offset: 0px;
         border-radius: 4px;
+      }
+      i {
+        font-size: 1rem;
+        margin-left: 6px;
       }
     }
 
