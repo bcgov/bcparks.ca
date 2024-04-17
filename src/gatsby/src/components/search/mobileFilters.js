@@ -8,8 +8,6 @@ import {
   Collapse,
 } from "@mui/material"
 import IconButton from '@mui/material/IconButton'
-import ExpandLess from "@mui/icons-material/ExpandLess"
-import ExpandMore from "@mui/icons-material/ExpandMore"
 import CloseIcon from '@mui/icons-material/Close'
 import Filter from "./filter"
 
@@ -108,9 +106,9 @@ const MobileFilters = ({
           >
             {expandAll ? "Collapse" : "Expand"} all
             {expandAll ? (
-              <ExpandLess fontSize="small" />
+              <i className="fa fa-angle-up"></i>
             ) : (
-              <ExpandMore fontSize="small" />
+              <i className="fa fa-angle-down"></i>
             )}
           </Link>
           <div className="row mt-3">
@@ -132,9 +130,9 @@ const MobileFilters = ({
                       Popular
                     </div>
                     {showFilters[0] ? (
-                      <ExpandLess fontSize="large" />
+                      <i className="fa fa-angle-up"></i>
                     ) : (
-                      <ExpandMore fontSize="large" />
+                      <i className="fa fa-angle-down"></i>
                     )}
                   </div>
                 </div>
@@ -202,9 +200,9 @@ const MobileFilters = ({
                       Area
                     </div>
                     {showFilters[1] ? (
-                      <ExpandLess fontSize="large" />
+                      <i className="fa fa-angle-up"></i>
                     ) : (
-                      <ExpandMore fontSize="large" />
+                      <i className="fa fa-angle-down"></i>
                     )}
                   </div>
                 </div>
@@ -243,9 +241,9 @@ const MobileFilters = ({
                       Camping
                     </div>
                     {showFilters[2] ? (
-                      <ExpandLess fontSize="large" />
+                      <i className="fa fa-angle-up"></i>
                     ) : (
-                      <ExpandMore fontSize="large" />
+                      <i className="fa fa-angle-down"></i>
                     )}
                   </div>
                 </div>
@@ -285,9 +283,9 @@ const MobileFilters = ({
                       Activities
                     </div>
                     {showFilters[3] ? (
-                      <ExpandLess fontSize="large" />
+                      <i className="fa fa-angle-up"></i>
                     ) : (
-                      <ExpandMore fontSize="large" />
+                      <i className="fa fa-angle-down"></i>
                     )}
                   </div>
                 </div>
@@ -325,9 +323,9 @@ const MobileFilters = ({
                       Facilities
                     </div>
                     {showFilters[4] ? (
-                      <ExpandLess fontSize="large" />
+                      <i className="fa fa-angle-up"></i>
                     ) : (
-                      <ExpandMore fontSize="large" />
+                      <i className="fa fa-angle-down"></i>
                     )}
                   </div>
                 </div>

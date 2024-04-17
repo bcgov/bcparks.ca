@@ -3,8 +3,6 @@ import PropTypes from "prop-types"
 import {
   Link
 } from "@mui/material"
-import ExpandLess from "@mui/icons-material/ExpandLess"
-import ExpandMore from "@mui/icons-material/ExpandMore"
 import Filter from "./filter"
 
 import "../../styles/search.scss"
@@ -132,12 +130,12 @@ const DesktopFilters = ({
           {showMoreAreas ? (
             <>
               Show all {areaItems.length}
-              <ExpandMore fontSize="small" />
+              <i className="fa fa-angle-down"></i>
             </>
           ) : (
             <>
               Show less
-              <ExpandLess fontSize="small" />
+              <i className="fa fa-angle-up"></i>
             </>
           )}
         </Link>
@@ -176,12 +174,12 @@ const DesktopFilters = ({
           {showMoreActivities ? (
             <>
               Show all {activityItems.length}
-              <ExpandMore fontSize="small" />
+              <i className="fa fa-angle-down"></i>
             </>
           ) : (
             <>
               Show less
-              <ExpandLess fontSize="small" />
+              <i className="fa fa-angle-up"></i>
             </>
           )}
         </Link>
@@ -211,12 +209,12 @@ const DesktopFilters = ({
           {showMoreFacilities ? (
             <>
               Show all {facilityItems.length}
-              <ExpandMore fontSize="small" />
+              <i className="fa fa-angle-down"></i>
             </>
           ) : (
             <>
               Show less
-              <ExpandLess fontSize="small" />
+              <i className="fa fa-angle-up"></i>
             </>
           )}
         </Link>
