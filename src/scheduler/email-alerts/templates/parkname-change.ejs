@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>A Protected Area Name Was Changed</title>
+</head>
+
+<body style="font-family: Arial, Helvetica; color: #1a1a1a">
+  <img src="cid:logo.png" alt="BC Parks" title="BC Parks Logo" style="margin: 8px 16px 0px 0px;" width="150" />
+
+  <span style="display:inline-block;font-size:16pt;white-space:nowrap;margin-top:10px;color:#003366;">
+    &nbsp;Staff web portal
+  </span>
+
+  <p style="font-size: 16pt">
+    A protected area name was changed by an automated sync with the Park Names Data Register.
+  </p>
+
+  <p style="font-size:14pt;margin-bottom:8px;">
+    <strong>Old Name:</strong>
+    <%= oldName %>
+  </p>
+
+  <p style="font-size:14pt;margin-bottom:8px;">
+    <strong>New Name:</strong>
+    <%= newName %>
+  </p>
+
+  <p>
+    The protectedAreaName field in Strapi has already been updated to reflect this change, but there may be other instances of the name in Strapi that require manual updating.
+    Please manually review and update the following data for this protected area:
+  </p>
+
+  &#x25A2; Descriptions and other rich text editor fields<br />
+  &#x25A2; Slug fields <i>(if you change a slug make sure you create a redirect)</i><br />
+  &#x25A2; Park activity descriptions<br />
+  &#x25A2; Park facility descriptions<br />
+  &#x25A2; Park name types not supported by the data register <i>(historic, escaped, basic)</i><br />
+  &#x25A2; Park operation notes<br />
+  &#x25A2; Park operation subarea notes<br />
+  &#x25A2; Park photos<br />
+  &#x25A2; Park subpages<br />
+  &#x25A2; Park sites<br />
+  
+</body>
+
+</html>

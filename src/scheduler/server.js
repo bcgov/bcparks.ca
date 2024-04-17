@@ -9,6 +9,7 @@ const { queueAll } = require('./elasticsearch/scripts/queueAllParks');
 const { populateGeoShapes } = require('./elasticsearch/scripts/populateGeoShapes');
 const { triggerAdvisories } = require('./advisory-scheduling/scripts/triggerScheduled');
 const { sendAdvisoryEmails } = require('./email-alerts/scripts/sendAdvisoryEmails');
+const { sendParkNamesEmails } = require('./email-alerts/scripts/sendParkNamesEmails');
 
 (async () => {
   dotenv.config({
@@ -41,6 +42,7 @@ const { sendAdvisoryEmails } = require('./email-alerts/scripts/sendAdvisoryEmail
       logger.info("Starting cron");
       await triggerAdvisories();
       recentAdvisoryEmails = await sendAdvisoryEmails(recentAdvisoryEmails);
+      await sendParkNamesEmails();
       await populateGeoShapes({ silent: true });
       if (!(await parkIndexExists())) {
         logger.warn(
