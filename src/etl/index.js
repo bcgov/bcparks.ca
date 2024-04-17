@@ -51,7 +51,7 @@ const DAILY_RUN_HOUR_UTC = 8;
             await bcwfsLoadData();
         }
 
-        if (process.env.DISABLE_BCWFS_CRON === "true" && process.env.ENABLE_BCWFS_STANDALONE_PROPAGATION === "true") {
+        if (process.env.DISABLE_BCWFS_CRON !== "true" || process.env.ENABLE_BCWFS_STANDALONE_PROPAGATION === "true") {
             await bcwfsPropagateData();
         }
 
