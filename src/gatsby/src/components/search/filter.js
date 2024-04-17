@@ -58,6 +58,22 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck, filterTyp
               checked={checked}
               onChange={event => {
                 handleFilterCheck(item, event)
+                if (typeof window.snowplow === 'function') {
+                  window.snowplow(
+                    // function
+                    "trackStructEvent",
+                    // category
+                    "park-search",
+                    // action
+                    event.target.checked ? "select-filter" : "unselect-filter",
+                    // label
+                    item.label,
+                    // property
+                    "filter-type",
+                    // value
+                    item.filterType
+                  )
+                }
               }}
               name={item.label}
               icon={<CheckboxIcon />}

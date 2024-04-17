@@ -260,21 +260,30 @@ const MegaMenu = ({ content, menuMode }) => {
                       : "unselected")
                   }
                   >
-                    <a
-                      className={`menu-button__title ${
-                        page.hasChildren && "has-children"
-                      }`}
-                      href={page.url}
-                      role="button"
-                      tabIndex={0}
-                      onFocus={e => menuFocus(e, page)}
-                      onClick={e => sectionClick(e, page, menuMode)}
-                    >
-                      {page.title}
-                      {page.hasChildren && (
-                        <i className="menu-button__arr fa fa-chevron-right"></i>
-                      )}
-                    </a>
+                    {page.url.toLowerCase().startsWith('http') ?
+                      <a
+                        className="menu-button__title"
+                        href={page.url}
+                        role="menuitem"
+                      >
+                        {page.title}
+                      </a>
+                      :
+                      <Link
+                        className={`menu-button__title ${
+                          page.hasChildren && "has-children"
+                        }`}
+                        to={page.url}
+                        role="menuitem"
+                        onFocus={e => menuFocus(e, page)}
+                        onClick={e => sectionClick(e, page, menuMode)}
+                      >
+                        {page.title}
+                        {page.hasChildren && (
+                          <i className="menu-button__arr fa fa-chevron-right"></i>
+                        )}
+                      </Link>
+                    }
                   </li>
                   <div className={
                     "menu-children menu-children-exist--" +

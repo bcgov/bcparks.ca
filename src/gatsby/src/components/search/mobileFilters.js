@@ -156,11 +156,13 @@ const MobileFilters = ({
                     )}
                     selectedFilterItems={selectedActivities}
                     handleFilterCheck={handleActivityCheck}
+                    filterType="popular"
                   />
                   <Filter
                     filterItems={facilityItems.filter(f => f.value === 6)}
                     selectedFilterItems={selectedFacilities}
                     handleFilterCheck={handleFacilityCheck}
+                    filterType="popular"
                   />
                   <Filter
                     filterItems={activityItems.filter(
@@ -168,6 +170,7 @@ const MobileFilters = ({
                     )}
                     selectedFilterItems={selectedActivities}
                     handleFilterCheck={handleActivityCheck}
+                    filterType="popular"
                   />
                   <Filter
                     filterItems={campingFacilityItems.filter(
@@ -216,6 +219,7 @@ const MobileFilters = ({
                     filterItems={alphabeticAreaItems}
                     selectedFilterItems={selectedAreas}
                     handleFilterCheck={handleAreaCheck}
+                    filterType="area"
                   />
                 </Collapse>
               </div>
@@ -233,7 +237,7 @@ const MobileFilters = ({
                     }}
                     tabIndex="0"
                     role="button"
-                    onKeyPress={() => {
+                    onKeyDown={() => {
                       handleShowFilterClick(2)
                     }}
                   >
@@ -257,6 +261,7 @@ const MobileFilters = ({
                     filterItems={campingFacilityItems}
                     selectedFilterItems={selectedCampingFacilities}
                     handleFilterCheck={handleCampingFacilityCheck}
+                    filterType="camping"
                   />
                 </Collapse>
               </div>
@@ -275,7 +280,7 @@ const MobileFilters = ({
                     }}
                     tabIndex="0"
                     role="button"
-                    onKeyPress={() => {
+                    onKeyDown={() => {
                       handleShowFilterClick(3)
                     }}
                   >
@@ -299,6 +304,7 @@ const MobileFilters = ({
                     filterItems={activityItems}
                     selectedFilterItems={selectedActivities}
                     handleFilterCheck={handleActivityCheck}
+                    filterType="activities"
                   />
                 </Collapse>
               </div>
@@ -315,7 +321,7 @@ const MobileFilters = ({
                     }}
                     tabIndex="0"
                     role="button"
-                    onKeyPress={() => {
+                    onKeyDown={() => {
                       handleShowFilterClick(4)
                     }}
                   >
@@ -339,6 +345,7 @@ const MobileFilters = ({
                     filterItems={facilityItems}
                     selectedFilterItems={selectedFacilities}
                     handleFilterCheck={handleFacilityCheck}
+                    filterType="facilities"
                   />
                 </Collapse>
               </div>

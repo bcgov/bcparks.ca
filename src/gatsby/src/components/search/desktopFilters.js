@@ -83,11 +83,13 @@ const DesktopFilters = ({
           )}
           selectedFilterItems={selectedActivities}
           handleFilterCheck={handleActivityCheck}
+          filterType="popular"
         />
         <Filter
           filterItems={facilityItems.filter(f => f.value === 6)}
           selectedFilterItems={selectedFacilities}
           handleFilterCheck={handleFacilityCheck}
+          filterType="popular"
         />
         <Filter
           filterItems={activityItems.filter(
@@ -95,6 +97,7 @@ const DesktopFilters = ({
           )}
           selectedFilterItems={selectedActivities}
           handleFilterCheck={handleActivityCheck}
+          filterType="popular"
         />
         <Filter
           filterItems={campingFacilityItems.filter(
@@ -111,6 +114,7 @@ const DesktopFilters = ({
           filterItems={areaItems.slice(0, truncatedAreaFilterLength)}
           selectedFilterItems={selectedAreas}
           handleFilterCheck={handleAreaCheck}
+          filterType="area"
         />
         <Link
           className="ml-auto pointer"
@@ -139,7 +143,6 @@ const DesktopFilters = ({
             </>
           )}
         </Link>
-
       </fieldset>
       <fieldset className="mb-2">
         <legend className="filter-heading">Camping</legend>
@@ -147,6 +150,7 @@ const DesktopFilters = ({
           filterItems={campingFacilityItems}
           selectedFilterItems={selectedCampingFacilities}
           handleFilterCheck={handleCampingFacilityCheck}
+          filterType="camping"
         />
       </fieldset>
       <fieldset className="mb-2">
@@ -155,6 +159,7 @@ const DesktopFilters = ({
           filterItems={activityItems.slice(0, truncatedActivityFilterLength)}
           selectedFilterItems={selectedActivities}
           handleFilterCheck={handleActivityCheck}
+          filterType="activities"
         />
         <Link
           className="ml-auto pointer"
@@ -190,6 +195,7 @@ const DesktopFilters = ({
           filterItems={facilityItems.slice(0, truncatedFacilityFilterLength)}
           selectedFilterItems={selectedFacilities}
           handleFilterCheck={handleFacilityCheck}
+          filterType="facilities"
         />
         <Link
           className="ml-auto pointer"

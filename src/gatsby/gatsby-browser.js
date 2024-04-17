@@ -6,6 +6,9 @@ import "@fortawesome/fontawesome-free/css/all.min.css"
 import "./src/styles/style.scss"
 
 export const onRouteUpdate = ({ location, prevLocation }) => {
+  if (typeof window.snowplow === 'function') {
+    window.snowplow("trackPageView");
+  }
   sessionStorage.setItem("prevPath", prevLocation ? prevLocation.pathname : null);
 };
 
