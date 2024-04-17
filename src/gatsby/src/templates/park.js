@@ -397,7 +397,7 @@ export default function ParkTemplate({ data }) {
                   </div>
                 )}
                 {!isLoadingAdvisories && !advisoryLoadError && (
-                  <AdvisoryDetails advisories={advisories} accessStatusData={parkAccessStatus} />
+                  <AdvisoryDetails advisories={advisories} parkType={parkType} />
                 )}
               </div>
             )}
