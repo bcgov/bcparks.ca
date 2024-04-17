@@ -78,7 +78,6 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck, filterTyp
               name={item.label}
               icon={<CheckboxIcon />}
               checkedIcon={<CheckedIcon />}
-              className="filter-checkbox"
             />
           }
           label={`${shortenFilterLabel(item.label, filterType)} (${item.count})`}

@@ -5,28 +5,6 @@ import "bootstrap/dist/js/bootstrap.bundle"
 import "@fortawesome/fontawesome-free/css/all.min.css"
 import "./src/styles/style.scss"
 
-// Snowplow tracking
-// see https://docs.snowplow.io/docs/collecting-data/collecting-from-own-applications/javascript-trackers/web-tracker/quick-start-guide/?platform=browser
-export const onInitialClientRender = () => {
-  if (typeof window.snowplow === 'function') {
-    window.snowplow("newTracker", "rt", "spt.apps.gov.bc.ca", {
-      appId: "Snowplow_standalone",
-      cookieLifetime: 86400 * 548,
-      platform: "web",
-      post: true,
-      contexts: {
-        webPage: true,
-        performanceTiming: true
-      }
-    });
-
-    // ping every 30 seconds after 30 seconds
-    window.snowplow("enableActivityTracking", 30, 30);
-    window.snowplow("enableLinkClickTracking");
-    window.snowplow("trackPageView");
-  }
-};
-
 export const onRouteUpdate = ({ location, prevLocation }) => {
   if (typeof window.snowplow === 'function') {
     window.snowplow("trackPageView");
