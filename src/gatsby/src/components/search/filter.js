@@ -60,12 +60,18 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck, filterTyp
                 handleFilterCheck(item, event)
                 if (typeof window.snowplow === 'function') {
                   window.snowplow(
+                    // function
                     "trackStructEvent",
-                    "Checkbox",
-                    event.target.checked ? "Check" : "Uncheck",
-                    `${item.filterType} - ${item.label}`,
-                    "filter-checkbox",
-                    event.target.checked ? 1 : 0
+                    // category
+                    "park-search",
+                    // action
+                    event.target.checked ? "select-filter" : "unselect-filter",
+                    // label
+                    item.label,
+                    // property
+                    "filter-type",
+                    // value
+                    item.filterType
                   )
                 }
               }}
