@@ -136,22 +136,6 @@ const loadData = async function () {
     }
     logger.info(`${insertions.length} bans added to Strapi.`);
     logger.info(`${strapiBans.length - deletions.length} bans unchanged.`);
-
-    // propagate the bans to protected areas in Strapi
-    if (insertions.length > 0 || deletions.length > 0) {
-        logger.info(`Propagating firebans to protected areas`);
-        try {
-            const { data } = await axios.post(`${process.env.STRAPI_BASE_URL}/api/fire-ban-prohibitions/propagate`, {}, { headers: httpReqHeaders });
-            logger.info(data.message);
-        } catch (error) {
-            const { response } = error;
-            const { data } = response;
-            logger.error(`Propagation failed: ${data?.error?.message}. ${data?.error?.details}.`)
-            process.exit(1);
-        }
-    }
-
-    logger.info("DONE!")
 };
 
 /**
