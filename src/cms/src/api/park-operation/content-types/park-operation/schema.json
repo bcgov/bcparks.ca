@@ -9,8 +9,6 @@
     "description": ""
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
     "draftAndPublish": true
   },
   "attributes": {
@@ -166,6 +164,12 @@
     },
     "camisMapId": {
       "type": "biginteger"
+    },
+    "openTime": {
+      "type": "time"
+    },
+    "closeTime": {
+      "type": "time"
     }
   }
 }

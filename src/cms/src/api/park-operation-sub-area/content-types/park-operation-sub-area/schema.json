@@ -5,11 +5,10 @@
     "singularName": "park-operation-sub-area",
     "pluralName": "park-operation-sub-areas",
     "displayName": "Park-operation-sub-area",
-    "name": "park-operation-sub-area"
+    "name": "park-operation-sub-area",
+    "description": ""
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
     "draftAndPublish": true
   },
   "attributes": {
@@ -171,6 +170,15 @@
     },
     "reservationOverrideUrl": {
       "type": "text"
+    },
+    "hasGate": {
+      "type": "boolean"
+    },
+    "openTime": {
+      "type": "time"
+    },
+    "closeTime": {
+      "type": "time"
     }
   }
 }
