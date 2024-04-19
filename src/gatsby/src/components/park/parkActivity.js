@@ -3,7 +3,6 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Accordion from "react-bootstrap/Accordion"
 import Container from "react-bootstrap/Container"
-import { Link } from "@mui/material"
 
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
@@ -127,10 +126,7 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
       <Row>
         <Col>
           {activityData.length > 1 && (
-            <Link
-              role="link"
-              tabIndex="0"
-              underline="hover"
+            <button
               onClick={() => setOpen(!open)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
@@ -138,11 +134,11 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
                   setOpen(!open)
                 }
               }}
-              className="expand-link expand-icon"
+              className="btn btn-link expand-link expand-icon"
             >
               {open ? "Collapse all" : "Expand all"}
               <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
-            </Link>
+            </button>
           )}
           {activityData.map((activity, index) => (
             <AccordionList

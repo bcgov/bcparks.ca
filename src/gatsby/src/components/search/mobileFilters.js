@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import {
-  Link,
   Dialog,
   DialogContent,
   DialogActions,
@@ -97,12 +96,9 @@ const MobileFilters = ({
               <CloseIcon />
             </IconButton>
           </div>
-          <Link
-            className="expand-link"
+          <button
+            className="btn btn-link expand-link expand-icon"
             onClick={handleExpandAll}
-            tabIndex="0"
-            role="link"
-            underline="hover"
           >
             {expandAll ? "Collapse" : "Expand"} all
             {expandAll ? (
@@ -110,7 +106,7 @@ const MobileFilters = ({
             ) : (
               <i className="fa fa-angle-down"></i>
             )}
-          </Link>
+          </button>
           <div className="row mt-3">
             <div className="col-12">
               <div className="park-filter-options">
@@ -366,14 +362,12 @@ const MobileFilters = ({
               </button>
             </div>
             <div className="col-12 d-flex justify-content-center mt-3">
-              <Link
-                className="clear-filter-link"
+              <button
+                className="btn btn-link clear-filter-link"
                 onClick={handleClearFilter}
-                tabIndex="0"
-                role="link"
               >
                 Clear filters
-              </Link>
+              </button>
             </div>
           </div>
         </DialogActions>

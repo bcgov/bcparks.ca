@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { styled } from '@mui/material/styles';
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import axios from "axios"
-import { Container, Breadcrumbs, Link, CircularProgress } from "@mui/material"
+import { Container, Breadcrumbs, CircularProgress } from "@mui/material"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -376,7 +376,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const parkInfoHash = buildParkInfoHash();
 
   const breadcrumbs = [
-    <Link key="1" href="/" underline="hover">
+    <Link key="1" to="/">
       Home
     </Link>,
     <div key="2" className="breadcrumb-text">

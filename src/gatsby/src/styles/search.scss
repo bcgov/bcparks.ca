@@ -81,10 +81,8 @@ h3.subtitle {
     }
   }
 
-  .park-filter-dialog-content .MuiTypography-root {
-    font-family: $globalFont;
-    font-size: $bodyFont !important;
-    &.MuiLink-underlineHover {
+  .park-filter-dialog-content {
+    .expand-link {
       i {
         font-size: 1rem;
         margin-left: 6px;
@@ -347,18 +345,13 @@ div[class$="-singleValue"] {
 
 .clear-filter-link {
   display: inline-block;
-  color: $colorBlue !important;
-  cursor: pointer;
+  color: $colorBlueMed;
   margin: 0 8px !important;
-}
-
-.expand-link {
-  color: $colorBlue !important;
-  cursor: pointer;
-  svg.MuiSvgIcon-root {
-    color: $colorGreyMed;
-    font-size: 1.5rem;
-    margin: 0 0 2px 8px;
+  &:focus-visible {
+    border: $colorWhite solid 2px;
+    outline: $colorBlueMed solid 2px;
+    outline-offset: 0px;
+    border-radius: 4px;
   }
 }
 
@@ -523,8 +516,9 @@ div[class$="-singleValue"] {
   }
 
   .search-results-quick-filter {
-    .MuiLink-underlineHover {
+    .show-all-link {
       color: $colorBlueMed;
+      text-decoration: none;
       &:hover, &:focus-visible {
         color: $colorBlue;
         text-decoration: underline;

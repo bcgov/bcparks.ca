@@ -2,11 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { graphql, Link as GatsbyLink } from "gatsby"
 import axios from "axios"
 import { orderBy } from "lodash"
-import {
-  Chip,
-  Link,
-  LinearProgress,
-} from "@mui/material"
+import { Chip, LinearProgress } from "@mui/material"
 import CancelIcon from "@mui/icons-material/Cancel"
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { useQueryParamString } from 'react-use-query-param-string'
@@ -836,15 +832,13 @@ export default function FindAPark({ location, data }) {
                     />
                   ))}
                   {filterSelections.length > 0 && (
-                    <Link
-                      className="clear-filter-link"
+                    <button
+                      className="btn btn-link clear-filter-link"
                       onClick={handleClearFilter}
                       onKeyDown={e => handleKeyDownClearFilter(e)}
-                      tabIndex="0"
-                      role="button"
                     >
                       Clear filters
-                    </Link>
+                    </button>
                   )}
                 </div>
                 {/* filter chips for desktop */}
@@ -861,15 +855,13 @@ export default function FindAPark({ location, data }) {
                     />
                   ))}
                   {filterSelections.length > 0 && (
-                    <Link
-                      className="clear-filter-link"
+                    <button
+                      className="btn btn-link clear-filter-link"
                       onClick={handleClearFilter}
                       onKeyDown={e => handleKeyDownClearFilter(e)}
-                      tabIndex="0"
-                      role="button"
                     >
                       Clear filters
-                    </Link>
+                    </button>
                   )}
                 </div>
               </div>

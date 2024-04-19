@@ -5,7 +5,6 @@ import Accordion from "react-bootstrap/Accordion"
 import Col from "react-bootstrap/Col"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
-import { Link } from "@mui/material"
 
 import HtmlContent from "./htmlContent"
 
@@ -97,10 +96,7 @@ export default function AdvisoryDetails({ advisories, parkType }) {
         {advisories.length > 0 && (
           <Col>
             {advisories.length > 1 && (
-              <Link
-                role="link"
-                tabIndex="0"
-                underline="hover"
+              <button
                 onClick={() => {
                   expandAll(!allExpanded)
                   setAllExpanded(!allExpanded)
@@ -112,11 +108,11 @@ export default function AdvisoryDetails({ advisories, parkType }) {
                     setAllExpanded(!allExpanded)
                   }
                 }}
-                className="expand-link expand-icon"
+                className="btn btn-link expand-link expand-icon"
               >
                 {allExpanded ? "Collapse all" : "Expand all"}
                 <i className={`fa fa-angle-down ${allExpanded ? "open" : "close"}`}></i>
-              </Link>
+              </button>
             )}
             {advisoriesWithFormatting.map((advisory, index) => (
               <Accordion

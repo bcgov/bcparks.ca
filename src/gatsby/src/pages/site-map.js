@@ -1,6 +1,6 @@
 import React from "react"
-import { graphql } from "gatsby"
-import { Link, Breadcrumbs } from "@mui/material"
+import { graphql, Link } from "gatsby"
+import { Breadcrumbs } from "@mui/material"
 
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -15,7 +15,7 @@ const SitemapPage = ({ data }) => {
 
   const breadcrumbs = [
     // TODO convert MUI breadcrumbs and use gatsby Link
-    <Link key="1" href="/" underline="hover">
+    <Link key="1" to="/">
       Home
     </Link>,
     <div key="2" className="breadcrumb-text">

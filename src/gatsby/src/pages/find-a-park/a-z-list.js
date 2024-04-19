@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import { graphql, useStaticQuery, Link as GatsbyLink } from "gatsby"
-import { Breadcrumbs, Link } from "@mui/material"
+import { graphql, useStaticQuery, Link } from "gatsby"
+import { Breadcrumbs } from "@mui/material"
 
 import Header from "../../components/header"
 import Footer from "../../components/footer"
@@ -13,9 +13,9 @@ const ParkLink = ({ park }) => {
 
   return (
     <p>
-      <GatsbyLink to={`/${park.slug}`}>
+      <Link to={`/${park.slug}`}>
         {park.protectedAreaName}
-      </GatsbyLink>
+      </Link>
     </p>
   )
 }
@@ -72,10 +72,10 @@ const ParksPage = () => {
     "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
   ]
   const breadcrumbs = [
-    <Link key="1" href="/" underline="hover">
+    <Link key="1" to="/">
       Home
     </Link>,
-    <Link key="2" href="/find-a-park" underline="hover">
+    <Link key="2" to="/find-a-park">
       Find a Park
     </Link>,
     <div key="3" className="breadcrumb-text">

@@ -4,7 +4,6 @@ import Accordion from "react-bootstrap/Accordion"
 import Col from "react-bootstrap/Col"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
-import { Link } from "@mui/material"
 
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
@@ -178,10 +177,7 @@ export default function CampingDetails({ data }) {
       <Row>
         <Col>
           {activeCampings.length > 1 && (
-            <Link
-              role="link"
-              tabIndex="0"
-              underline="hover"
+            <button
               onClick={() => setOpen(!open)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
@@ -189,11 +185,11 @@ export default function CampingDetails({ data }) {
                   setOpen(!open)
                 }
               }}
-              className="expand-link expand-icon"
+              className="btn btn-link expand-link expand-icon"
             >
               {open ? "Collapse all" : "Expand all"}
               <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
-            </Link>
+            </button>
           )}
           {activeCampings.length > 0 &&
             !isNullOrWhiteSpace(reservations) && (

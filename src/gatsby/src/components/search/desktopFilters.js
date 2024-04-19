@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
-import {
-  Link
-} from "@mui/material"
 import Filter from "./filter"
 
 import "../../styles/search.scss"
@@ -116,8 +113,8 @@ const DesktopFilters = ({
           handleFilterCheck={handleAreaCheck}
           filterType="area"
         />
-        <Link
-          className="ml-auto pointer"
+        <button
+          className="btn btn-link show-all-link"
           onClick={() => {
             setMoreAreas(!showMoreAreas)
           }}
@@ -127,9 +124,6 @@ const DesktopFilters = ({
               setMoreAreas(!showMoreAreas)
             }
           }}
-          tabIndex="0"
-          role="link"
-          underline="hover"
         >
           {showMoreAreas ? (
             <>
@@ -142,7 +136,7 @@ const DesktopFilters = ({
               <i className="fa fa-angle-up"></i>
             </>
           )}
-        </Link>
+        </button>
       </fieldset>
       <fieldset className="mb-2">
         <legend className="filter-heading">Camping</legend>
@@ -161,8 +155,8 @@ const DesktopFilters = ({
           handleFilterCheck={handleActivityCheck}
           filterType="activities"
         />
-        <Link
-          className="ml-auto pointer"
+        <button
+          className="btn btn-link show-all-link"
           onClick={() => {
             setMoreActivites(!showMoreActivities)
           }}
@@ -172,9 +166,6 @@ const DesktopFilters = ({
               setMoreActivites(!showMoreActivities)
             }
           }}
-          tabIndex="0"
-          role="link"
-          underline="hover"
         >
           {showMoreActivities ? (
             <>
@@ -187,7 +178,7 @@ const DesktopFilters = ({
               <i className="fa fa-angle-up"></i>
             </>
           )}
-        </Link>
+        </button>
       </fieldset>
       <fieldset>
         <legend className="filter-heading">Facilities</legend>
@@ -197,8 +188,8 @@ const DesktopFilters = ({
           handleFilterCheck={handleFacilityCheck}
           filterType="facilities"
         />
-        <Link
-          className="ml-auto pointer"
+        <button
+          className="btn btn-link show-all-link"
           onClick={() => {
             setMoreFacilities(!showMoreFacilities)
           }}
@@ -208,9 +199,6 @@ const DesktopFilters = ({
               setMoreFacilities(!showMoreFacilities)
             }
           }}
-          tabIndex="0"
-          role="link"
-          underline="hover"
         >
           {showMoreFacilities ? (
             <>
@@ -223,7 +211,7 @@ const DesktopFilters = ({
               <i className="fa fa-angle-up"></i>
             </>
           )}
-        </Link>
+        </button>
       </fieldset>
     </div>
   );
