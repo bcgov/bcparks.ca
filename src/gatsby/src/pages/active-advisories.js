@@ -2,8 +2,9 @@ import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { styled } from '@mui/material/styles';
 import { graphql, Link } from "gatsby"
 import axios from "axios"
-import { Container, Breadcrumbs, CircularProgress } from "@mui/material"
+import { Container, CircularProgress } from "@mui/material"
 
+import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
 import Header from "../components/header"
 import Seo from "../components/seo"
@@ -389,9 +390,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       <Header mode="internal" content={menuContent} />
       <Container id="main-content">
         <div className="page-breadcrumbs">
-          <Breadcrumbs separator="›" aria-label="breadcrumb">
-            {breadcrumbs}
-          </Breadcrumbs>
+          <Breadcrumbs breadcrumbs={breadcrumbs} />
         </div>
         <h1>{pageTitle}</h1>
         <div className={classes.advisoriesHeader}>

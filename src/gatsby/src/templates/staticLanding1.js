@@ -1,8 +1,9 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
-import { CssBaseline, Breadcrumbs } from "@mui/material"
+import { CssBaseline } from "@mui/material"
 
+import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
 import Header from "../components/header"
 import Seo from "../components/seo"
@@ -47,6 +48,7 @@ const LandingPage = ({ pageContext }) => {
   const components = page?.Content || []
   const introContent = components.slice(0, 1)
   const linkContent = components.slice(1)
+  const breadcrumbs = renderBreadcrumbs(menuContent, pageContext?.page)
 
   return (
     <>
@@ -90,9 +92,7 @@ const LandingPage = ({ pageContext }) => {
             <div className="container">
               <div className="row d-none d-lg-block">
                 <div className="col">
-                  <Breadcrumbs separator="›" aria-label="breadcrumb">
-                    {renderBreadcrumbs(menuContent, pageContext?.page)}
-                  </Breadcrumbs>
+                  <Breadcrumbs breadcrumbs={breadcrumbs} />
                 </div>
               </div>
               <div className="row">

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 import { graphql, useStaticQuery, Link } from "gatsby"
-import { Breadcrumbs } from "@mui/material"
 import BlockIcon from '@mui/icons-material/Block'
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
 
+import Breadcrumbs from "../../components/breadcrumbs"
 import Header from "../../components/header"
 import Footer from "../../components/footer"
 import Seo from "../../components/seo"
@@ -353,9 +353,7 @@ const ParkOperatingDatesPage = () => {
         <Header mode="internal" content={menuContent} />
       </div>
       <div id="main-content" className="static-content--header unique-page--header page-breadcrumbs">
-        <Breadcrumbs separator="›" aria-label="breadcrumb">
-          {breadcrumbs}
-        </Breadcrumbs>
+        <Breadcrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="static-content-container">
         <h1 className="header-title">

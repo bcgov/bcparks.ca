@@ -4,13 +4,14 @@ import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
 import loadable from '@loadable/component'
 
-import { CssBaseline, Breadcrumbs } from "@mui/material"
+import { CssBaseline } from "@mui/material"
 
 import useScrollSpy from "react-use-scrollspy"
 
 import { capitalizeFirstLetter, isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from '../utils/advisoryHelper';
 
+import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
 import Header from "../components/header"
 import PageMenu from "../components/pageContent/pageMenu"
@@ -325,12 +326,7 @@ export default function ParkTemplate({ data }) {
       <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
         <div className="container parks-container order-2">
           <div id="main-content" className="park-info-container pt-5">
-            <Breadcrumbs
-              separator="›"
-              aria-label="breadcrumb"
-            >
-              {breadcrumbs}
-            </Breadcrumbs>
+            <Breadcrumbs breadcrumbs={breadcrumbs} />
           </div>
           {!isLoadingProtectedArea && !protectedAreaLoadError && (
             <div>
