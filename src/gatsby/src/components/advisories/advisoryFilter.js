@@ -8,7 +8,8 @@ import {
   FormControlLabel,
 } from "@mui/material"
 import Autocomplete from '@mui/material/Autocomplete'
-import SearchIcon from "@mui/icons-material/Search"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 
 import { getAdvisoryTypeFromUrl } from "../../utils/advisoryHelper";
 import "../../styles/advisories/advisoryFilter.scss"
@@ -158,7 +159,7 @@ const AdvisoryFilter = ({
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon className="search-icon" />
+                  <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" />
                 </InputAdornment>
               ),
             }}

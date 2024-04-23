@@ -6,7 +6,8 @@ import {
   DialogContent,
   DialogActions,
 } from "@mui/material"
-import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
 
 import "../../styles/search.scss"
 
@@ -35,7 +36,7 @@ const ParkLinksModal = ({ data: { openModal, setOpenModal } }) => {
           href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000"
         >
           Map
-          <OpenInNewIcon />
+          <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="link-icon" />
         </a>
       </DialogContent>
       <DialogActions className="container">

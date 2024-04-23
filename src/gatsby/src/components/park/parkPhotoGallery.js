@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Grid, Box, Divider } from "@mui/material"
-import PhotoLibraryOutlinedIcon from "@mui/icons-material/PhotoLibraryOutlined"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faImages } from "@fortawesome/free-regular-svg-icons"
 import Lightbox from "yet-another-react-lightbox"
 import Captions from "yet-another-react-lightbox/plugins/captions"
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails"
@@ -23,7 +24,7 @@ const ShowPhotos = ({ text, setShowPhotos, setOpen }) => {
         setOpen(true)
       }}
     >
-      <PhotoLibraryOutlinedIcon className="photo-icon" />
+      <FontAwesomeIcon icon={faImages} className="photo-icon" />
       {text}
     </button>
   )

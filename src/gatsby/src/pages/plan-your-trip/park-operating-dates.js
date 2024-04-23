@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 import { graphql, useStaticQuery, Link } from "gatsby"
-import BlockIcon from '@mui/icons-material/Block'
-import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faBan, faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
 
 import Breadcrumbs from "../../components/breadcrumbs"
 import Header from "../../components/header"
@@ -63,7 +63,7 @@ const ParkLink = ({ park, advisories }) => {
         <h2 className="mb-0">
           <Link to={`/${park.slug}`}>
             {park.protectedAreaName}
-            <ExpandCircleDownIcon />
+            <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
           </Link>
         </h2>
       </div>
@@ -104,7 +104,7 @@ const ParkLink = ({ park, advisories }) => {
                 {!subArea.isOpen &&
                   <>
                     <br />
-                    {"("}<BlockIcon /> Temporarily closed{")"}
+                    {"("}<FontAwesomeIcon icon={faBan} className="ban-icon" /> Temporarily closed{")"}
                   </>
                 }
                 {subArea.isCleanAirSite &&
@@ -163,7 +163,7 @@ const ParkLink = ({ park, advisories }) => {
                 <h4>{subArea.parkSubArea}</h4>
               </div>
               {!subArea.isOpen &&
-                <h5 className="mt-2">{"("}<BlockIcon /> Temporarily closed{")"}</h5>
+                <h5 className="mt-2">{"("}<FontAwesomeIcon icon={faBan} className="ban-icon" /> Temporarily closed{")"}</h5>
               }
               {subArea.isCleanAirSite &&
                 <h5 className="mt-2">{"("}Clean air site{")"}</h5>

@@ -7,7 +7,8 @@ import {
   Collapse,
 } from "@mui/material"
 import IconButton from '@mui/material/IconButton'
-import CloseIcon from '@mui/icons-material/Close'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import Filter from "./filter"
 
 import "../../styles/search.scss"
@@ -93,7 +94,7 @@ const MobileFilters = ({
                 handleCloseFilter()
               }}
             >
-              <CloseIcon />
+              <FontAwesomeIcon icon={faXmark} />
             </IconButton>
           </div>
           <button

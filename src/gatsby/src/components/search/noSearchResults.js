@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
-import SearchIcon from '@mui/icons-material/Search'
-import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSearch, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
 
 import "../../styles/search.scss"
 
@@ -19,7 +19,7 @@ const NoSearchResults = ({
   return (
     <div className="no-results-container">
       <div className="no-results-header">
-        <SearchIcon />
+        <FontAwesomeIcon icon={faSearch} className="search-icon" />
         <div className="no-results-header--right">
           <h2>Sorry...</h2>
           <p><b>no parks matched your search.</b></p>
@@ -83,7 +83,7 @@ const NoSearchResults = ({
             href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000"
           >
             Map of parks
-            <OpenInNewIcon />
+            <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="link-icon" />
           </a>
         </li>
       </ul>

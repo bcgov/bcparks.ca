@@ -4,8 +4,9 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material"
-import CheckIcon from '@mui/icons-material/Check'
 import { styled } from '@mui/material/styles'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCheck } from "@fortawesome/free-solid-svg-icons"
 
 const CheckboxIcon = styled("span")(() => ({
   borderRadius: 4,
@@ -16,14 +17,6 @@ const CheckboxIcon = styled("span")(() => ({
     boxShadow: "inset 0 0 0 1px #c7c7c7",
   },
 }))
-
-const CheckedIcon = styled(CheckIcon)({
-  borderRadius: 4,
-  width: 32,
-  height: 32,
-  color: "#fff",
-  backgroundColor: "#003366",
-})
 
 const shortenFilterLabel = (label, filterType) => {
   if (filterType === "popular") {
@@ -75,15 +68,16 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck, filterTyp
               }}
               name={item.label}
               icon={<CheckboxIcon />}
-              checkedIcon={<CheckedIcon />}
+              checkedIcon={<FontAwesomeIcon icon={faCheck} className="check-icon" />}
             />
           }
           label={`${shortenFilterLabel(item.label, filterType)} (${item.count})`}
           className={
+            "filter-checkbox " + (
             selectedFilterItems.filter(
               selectedFilterItem =>
                 selectedFilterItem.value === item.value
-            ).length === 1 ? "text-light-blue" : ""
+            ).length === 1 ? "text-light-blue" : "")
           }
           disabled={item.count === 0 && !checked}
         />)

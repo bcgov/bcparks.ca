@@ -125,11 +125,10 @@ nav {
         display: block;
         line-height: 40px;
         &--icon {
-          width: 1.25rem;
-          height: 1.25rem;
-          font-size: 1.25rem;
-          rotate: 270deg;
-          margin: 0 0 4px 8px;
+          width: 1rem;
+          height: 1rem;
+          font-size: 1rem;
+          margin: 0 0 2px 8px;
         }
       }
       .menu-button__arr {
@@ -450,11 +449,10 @@ nav {
             bottom: 0;
           }
           &--icon {
-            width: 1.25rem;
-            height: 1.25rem;
-            font-size: 1.25rem;
-            rotate: 270deg;
-            margin: 0 0 4px 8px;
+            width: 1rem;
+            height: 1rem;
+            font-size: 1rem;
+            margin: 0 0 2px 8px;
           }
         }
       }
@@ -545,7 +543,7 @@ nav {
   .menu-level-2-children {
     padding-left: 128px;
   }
-  svg.MuiSvgIcon-root {
+  svg.menu-button__title--icon {
     display: none;
   }
 }

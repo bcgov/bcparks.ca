@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faAngleUp } from "@fortawesome/free-solid-svg-icons"
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false)
@@ -30,7 +31,7 @@ export default function ScrollToTop() {
         className="btn-scroll"
       >
         <div className="btn-scroll--inner">
-          <KeyboardArrowUpIcon />
+          <FontAwesomeIcon icon={faAngleUp} />
         </div>
       </button>
     )

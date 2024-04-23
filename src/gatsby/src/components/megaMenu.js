@@ -3,7 +3,8 @@ import PropTypes from "prop-types"
 import { Link, navigate } from "gatsby"
 import Logo from "../images/logo/BCParks_Primary_Reversed-cropped.svg"
 import LogoVertical from "../images/logo/BCParks_Primary_Reversed_Vertical.svg"
-import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
 
 import "../styles/megaMenu/megaMenu.scss"
 
@@ -243,11 +244,11 @@ const MegaMenu = ({ content, menuMode }) => {
                 {item.url.toLowerCase().startsWith('http') ?
                   <a className="menu-button__title" href={item.url || ROOT_MENU_URL} role="menuitem">
                     {item.title}
-                    <ExpandCircleDownIcon className="menu-button__title--icon" />
+                    <FontAwesomeIcon icon={faCircleChevronRight} className="menu-button__title--icon" />
                   </a> :
                   <Link className="menu-button__title" to={item.url || ROOT_MENU_URL} role="menuitem">
                     {item.title}
-                    <ExpandCircleDownIcon className="menu-button__title--icon" />
+                    <FontAwesomeIcon icon={faCircleChevronRight} className="menu-button__title--icon" />
                   </Link>
                 }
               </li>

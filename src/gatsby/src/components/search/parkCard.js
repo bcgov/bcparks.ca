@@ -2,7 +2,8 @@ import React, { useState } from "react"
 import { Link as GatsbyLink } from "gatsby"
 import { Card, CardContent } from "@mui/material"
 import Carousel from "react-material-ui-carousel"
-import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
 
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
 
@@ -171,7 +172,7 @@ const ParkCard = ({ r }) => {
                         className="underline-hover desktop-park-link"
                       >
                         {r.protectedAreaName}
-                        <ExpandCircleDownIcon className="park-heading-icon" />
+                        <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
                       </GatsbyLink>
                     </h2>
                     <p>{locationLabel(r.parkLocations)}</p>
@@ -278,7 +279,7 @@ const ParkCard = ({ r }) => {
                       className="underline-hover mobile-park-link"
                     >
                       {r.protectedAreaName}
-                      <ExpandCircleDownIcon className="park-heading-icon" />
+                      <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
                     </GatsbyLink>
                   </h2>
                   <p>{locationLabel(r.parkLocations)}</p>
