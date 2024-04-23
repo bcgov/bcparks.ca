@@ -119,6 +119,7 @@ figure.media div[data-oembed-url] {
 
 img { max-width: 100%; }
 
+// table
 // This is temp as we should be rendering <table class="table"> through CKEditor
 // so that tables pick up standard boostrap styles
 figure.table {
@@ -126,6 +127,10 @@ figure.table {
     width: 100%;
     th {
       background: $colorBackgroundGrey;
+      border-top: 1px solid $colorGreyLight;
+    }
+    td {
+      border-top: 1px solid $colorGreyLight;
     }
   }
 
