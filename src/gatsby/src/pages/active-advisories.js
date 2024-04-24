@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { styled } from '@mui/material/styles';
 import { graphql, Link } from "gatsby"
 import axios from "axios"
-import { Container, CircularProgress } from "@mui/material"
+import { CircularProgress } from "@mui/material"
 
 import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
@@ -388,10 +388,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   return (
     <Root>
       <Header mode="internal" content={menuContent} />
-      <Container id="main-content">
-        <div className="page-breadcrumbs">
-          <Breadcrumbs breadcrumbs={breadcrumbs} />
-        </div>
+      <div id="main-content" className="static-content--header unique-page--header page-breadcrumbs">
+        <Breadcrumbs breadcrumbs={breadcrumbs} />
+      </div>
+      <div className="static-content-container">
         <h1>{pageTitle}</h1>
         <div className={classes.advisoriesHeader}>
           <div className={classes.advisoryCountNotice}>
@@ -431,9 +431,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
             setPage={setPage}
           ></AdvisoryPageNav>
         </div>
-      </Container>
-      <br />
-      <br />
+      </div>
       <ScrollToTop />
       <Footer />
     </Root>

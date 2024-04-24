@@ -467,14 +467,6 @@ div[class$="-singleValue"] {
   height: 32px !important;
 }
 
-.search-result-card {
-  min-height: 300px !important;
-  .park-overview-icon {
-    width: 24px;
-    height: 24px;
-  }
-}
-
 .park-heading-text {
   color: $colorBlue;
   font-size: 1.25rem;
@@ -565,7 +557,9 @@ div[class$="-singleValue"] {
   }
 
   .park-card {
-    padding: 0px !important;
+    background-color: $colorWhite;
+    border-radius: 10px;
+    overflow: hidden;
   }
 
   .park-card-desktop {

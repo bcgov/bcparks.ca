@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { styled } from '@mui/material/styles';
 import {
-  Box,
   TextField,
   InputAdornment,
   Checkbox,
@@ -210,10 +209,10 @@ const AdvisoryFilter = ({
         </div>
       </div>
 
-      <Box sx={{ marginTop: "10px" }}>
-        <Box className={classes.filterBy}>
+      <div className="mt-3">
+        <div className={classes.filterBy}>
           <b>Filters</b>
-        </Box>
+        </div>
         <FormControlLabel
           className={
             classes.filterElement +
@@ -250,7 +249,7 @@ const AdvisoryFilter = ({
           }
           label="Park names"
         />
-      </Box>
+      </div>
     </Root>
   );
 }
