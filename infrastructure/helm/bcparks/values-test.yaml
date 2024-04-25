@@ -20,9 +20,6 @@ cms:
     environment: test
     externalUrl: https://test-cms.bcparks.ca
 
-  hpa:
-    maxReplicas: 2
-
 admin:
   env:
     externalUrl: https://test-staff.bcparks.ca
@@ -32,21 +29,17 @@ patroni:
   replicas: 1
 
   pvc:
-    size: 5Gi
+    size: 2Gi
 
 backup:
   enabled: true
 
   pvc:
-    size: 10Gi
+    size: 2Gi
 
   enironment:
     friendlyName: bcparks.ca CMS Postgres Backup [test]
-    name: 61d198-test
-
-public:
-  hpa:
-    maxReplicas: 2
+    name: c1643c-test
 
 scheduler:
   env:

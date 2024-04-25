@@ -18,10 +18,10 @@ images:
 cms:
   resources:
     limits:
-      cpu: 650m
+      cpu: 400m
       memory: 1250Mi
     requests:
-      cpu: 125m
+      cpu: 175m
       memory: 625Mi
 
   env:
@@ -42,25 +42,25 @@ admin:
 patroni:
   resources:
     limits:
-      cpu: 750m
-      memory: 2Gi
+      cpu: 400m
+      memory: 1500Mi
     requests:
       cpu: 200m
-      memory: 1Gi
+      memory: 750Mi
   replicas: 3
 
   pvc:
-    size: 10Gi
+    size: 6Gi
 
 backup:
   enabled: true
 
   pvc:
-    size: 10Gi
+    size: 6Gi
 
   enironment:
     friendlyName: bcparks.ca CMS Postgres Backup [prod]
-    name: 61d198-prod
+    name: c1643c-prod
 
 public:
   resources:
