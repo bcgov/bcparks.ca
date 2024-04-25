@@ -766,7 +766,9 @@ a.mobile-park-link {
   }
 }
 
-// new park name and city name search form
+// park name search, city name search, advisory search
+.advisory-search,
+.event-search-typeahead,
 .park-search-typeahead,
 .city-search-typeahead {
   width: 100%;
@@ -830,6 +832,8 @@ a.mobile-park-link {
     margin: 0;
     padding: 16px;
     a.dropdown-item {
+      color: $colorGrey !important;
+      text-decoration: none !important;
       overflow: visible;
       white-space: normal;
       margin-top: 16px;
@@ -838,9 +842,8 @@ a.mobile-park-link {
         margin-top: 0;
       }
       &:hover, &:focus, &:active, &.active {
-        color: $colorGrey;
         background-color: transparent;
-        text-decoration: underline;
+        text-decoration: underline !important;
       }
       &.no-suggestion-text {
         cursor: default;
