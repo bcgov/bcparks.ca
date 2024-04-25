@@ -212,8 +212,18 @@ jobs:
       - name: Set up secret file
         run: |
           echo $OPENSHIFT_LICENSE_PLATE >> secrets.txt
+          echo $OPENSHIFT_EXTERNAL_REPOSITORY >> secrets.txt
+          echo $OPENSHIFT_SA_PASSWORD >> secrets.txt
+          echo $OPENSHIFT_SA_USERNAME >> secrets.txt
+          echo $OPENSHIFT_SERVER_URL >> secrets.txt
+          echo $OPENSHIFT_SERVICE_TOKEN >> secrets.txt
         env:
-          OPENSHIFT_LICENSE_PLATE: ${{secrets.OPENSHIFT_LICENSE_PLATE}}     
+          OPENSHIFT_EXTERNAL_REPOSITORY: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          OPENSHIFT_LICENSE_PLATE: ${{secrets.OPENSHIFT_LICENSE_PLATE}}
+          OPENSHIFT_SA_PASSWORD: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+          OPENSHIFT_SA_USERNAME: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          OPENSHIFT_SERVER_URL: ${{secrets.OPENSHIFT_SERVER_URL}}
+          OPENSHIFT_SERVICE_TOKEN: ${{secrets.OPENSHIFT_SERVICE_TOKEN}}
     
       - name: Run tmate
         uses: mxschmitt/action-tmate@v2
