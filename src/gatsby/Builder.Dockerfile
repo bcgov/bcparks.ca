@@ -1,4 +1,5 @@
-FROM image-registry.apps.silver.devops.gov.bc.ca/61d198-tools/node:18-slim
+#FROM image-registry.apps.silver.devops.gov.bc.ca/61d198-tools/node:18-slim
+FROM node:18.20-slim
 
 ENV GATSBY_HOME=/gatsby
 
