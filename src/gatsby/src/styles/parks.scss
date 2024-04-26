@@ -83,21 +83,6 @@
   background-color: $colorBackgroundGrey !important;
 }
 
-.grey-background .MuiPaper-root,
-.grey-background .MuiBox-root {
-  background-color: transparent;
-
-  .red-alert {
-    background-color: $colorBackgroundGrey !important;
-  }
-
-  &.bc-bg-yellow {
-    background-color: $colorGold;
-  }
-}
-
-
-
 #park-menu-mobile {
   position: sticky;
   position: -webkit-sticky;
@@ -263,7 +248,7 @@
   right: 16px;
 }
 
-// Section headers (replacing MUI)
+// Section headers
 h2.section-heading {
   position: relative;
   padding-bottom: 2rem;
@@ -280,20 +265,18 @@ h2.section-heading {
   }
 }
 
-// Park header (replacing MUI)
-
-// remove the !important once MUI is gone
+// Park header
 #park-header-container {
   .card-parent {
     .card-child {
-      font-size: 0.875rem !important;
+      font-size: 0.875rem;
       img {
         width: 32px;
         height: 32px;
       }
       a {
         flex: 1 1 100%;
-        font-size: 0.875rem !important;
+        font-size: 0.875rem;
         &:hover, &:focus-visible {
           color: $colorBlue;
           text-decoration: underline;

@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react"
-import { styled } from '@mui/material/styles';
 import { graphql, Link } from "gatsby"
 import axios from "axios"
-import { CircularProgress } from "@mui/material"
+import { ProgressBar } from "react-bootstrap"
 
 import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
@@ -17,46 +16,6 @@ import { capitalizeFirstLetter } from "../utils/helpers"
 import { getAdvisoryTypeFromUrl } from "../utils/advisoryHelper"
 
 import "../styles/home.scss"
-
-const PREFIX = 'PublicActiveAdvisoriesPage';
-
-const classes = {
-  advisoriesHeader: `${PREFIX}-advisoriesHeader`,
-  advisoryCountNotice: `${PREFIX}-advisoryCountNotice`,
-  loadingArea: `${PREFIX}-loadingArea`,
-  loadingText: `${PREFIX}-loadingText`,
-  filterResult: `${PREFIX}-filterResult`
-};
-
-const Root = styled('div')((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.advisoriesHeader}`]: {
-    marginBottom: "2px",
-  },
-
-  [`& .${classes.advisoryCountNotice}`]: {
-    paddingBottom: "20px",
-    "& div": {
-      display: "inline",
-    },
-  },
-
-  [`& .${classes.loadingArea}`]: {
-    display: "flex",
-    justifyContent: "left",
-  },
-
-  [`& .${classes.loadingText}`]: {
-    padding: "8px",
-  },
-
-  [`& .${classes.filterResult}`]: {
-    paddingBottom: "20px",
-  }
-}));
 
 const PublicActiveAdvisoriesPage = ({ data }) => {
   const [advisories, setAdvisories] = useState([]) // array of advisories
@@ -386,15 +345,15 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   ]
 
   return (
-    <Root>
+    <div>
       <Header mode="internal" content={menuContent} />
       <div id="main-content" className="static-content--header unique-page--header page-breadcrumbs">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="static-content-container">
         <h1>{pageTitle}</h1>
-        <div className={classes.advisoriesHeader}>
-          <div className={classes.advisoryCountNotice}>
+        <div className="mb-2">
+          <div className="mb-2">
             {filterCount} active advisories in BC Parks
           </div>
           <AdvisoryFilter
@@ -403,15 +362,12 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
             filterFunctions={filterFunctions}></AdvisoryFilter>
         </div>
 
-        <div className={isDataOld ? classes.loadingArea : "hidden"}>
-          <div className={classes.loadingSpinner}>
-            <CircularProgress></CircularProgress>
-          </div>
-          <div className={classes.loadingText}>Loading...</div>
+        <div className={isDataOld ? "my-2" : "hidden"}>
+            <ProgressBar animated now={100} />
         </div>
 
         <div className={isDataOld ? "hidden" : undefined}>
-          <div className={isAnySearch ? classes.filterResult : "hidden"}>
+          <div className={isAnySearch ? "my-2" : "hidden"}>
             {!isSearchError && (
               <>Advisories that match your search: {filterCount}</>
             )}
@@ -434,7 +390,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       </div>
       <ScrollToTop />
       <Footer />
-    </Root>
+    </div>
   )
 }
 

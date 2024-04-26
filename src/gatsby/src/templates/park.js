@@ -4,8 +4,6 @@ import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
 import loadable from '@loadable/component'
 
-import { CssBaseline } from "@mui/material"
-
 import useScrollSpy from "react-use-scrollspy"
 
 import { capitalizeFirstLetter, isNullOrWhiteSpace } from "../utils/helpers";
@@ -322,7 +320,6 @@ export default function ParkTemplate({ data }) {
   return (
     <div className="grey-background">
       <Header mode="internal" content={menuContent} />
-      <CssBaseline />
       <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
         <div className="container parks-container order-2">
           <div id="main-content" className="park-info-container pt-5">

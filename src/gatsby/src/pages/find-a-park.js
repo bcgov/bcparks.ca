@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { graphql, Link as GatsbyLink } from "gatsby"
 import axios from "axios"
 import { orderBy } from "lodash"
-import { Chip, LinearProgress } from "@mui/material"
+import ProgressBar from "react-bootstrap/ProgressBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleXmark, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
 import { useQueryParamString } from 'react-use-query-param-string'
@@ -821,15 +821,15 @@ export default function FindAPark({ location, data }) {
                 {/* filter chips for mobile */}
                 <div className="d-block d-lg-none">
                   {filterSelections.length > 0 && filterSelections.map((f, index) => (
-                    <Chip
+                    <button
                       key={index}
-                      label={shortenFilterLabel(f.label)}
                       onClick={handleFilterDelete(f)}
                       onDelete={handleFilterDelete(f)}
-                      variant="outlined"
-                      className="park-filter-chip font-weight-bold"
-                      deleteIcon={<FontAwesomeIcon icon={faCircleXmark} />}
-                    />
+                      className="btn btn-primary park-filter-chip"
+                    >
+                      {shortenFilterLabel(f.label)}
+                      <FontAwesomeIcon icon={faCircleXmark} className="close-icon" />
+                    </button>
                   ))}
                   {filterSelections.length > 0 && (
                     <button
@@ -844,15 +844,15 @@ export default function FindAPark({ location, data }) {
                 {/* filter chips for desktop */}
                 <div className="d-none d-lg-block">
                   {filterSelections.length > 0 && filterSelections.map((f, index) => (
-                    <Chip
+                    <button
                       key={index}
-                      label={shortenFilterLabel(f.label)}
                       onClick={handleFilterDelete(f)}
                       onDelete={handleFilterDelete(f)}
-                      variant="outlined"
-                      className="park-filter-chip font-weight-bold"
-                      deleteIcon={<FontAwesomeIcon icon={faCircleXmark} />}
-                    />
+                      className="btn btn-primary park-filter-chip"
+                    >
+                      {shortenFilterLabel(f.label)}
+                      <FontAwesomeIcon icon={faCircleXmark} className="close-icon" />
+                    </button>
                   ))}
                   {filterSelections.length > 0 && (
                     <button
@@ -868,7 +868,7 @@ export default function FindAPark({ location, data }) {
               <div className="search-results-list">
                 {(isLoading || acquiringGeolocation) && (
                   <div className="container mt-5">
-                    <LinearProgress />
+                    <ProgressBar animated now={100} />
                   </div>
                 )}
                 {(!isLoading && !acquiringGeolocation) && (

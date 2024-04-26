@@ -1,7 +1,6 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
-import { CssBaseline } from "@mui/material"
 
 import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
@@ -52,7 +51,6 @@ const LandingPage = ({ pageContext }) => {
 
   return (
     <>
-      <CssBaseline />
       <Header mode="internal" content={menuContent} />
       <div id="main-content"></div>
       {linkContent.length > 0 && (
