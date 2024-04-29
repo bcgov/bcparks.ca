@@ -22,6 +22,7 @@ const AdvisoryFilter = ({
   const [filterText, setFilterText] = useState(getSearchText())
   const [isParksFilter, setIsParksFilter] = useState(getFilter("parks"))
   const [isKeywordFilter, setIsKeywordsFilter] = useState(getFilter("keyword"))
+  const [eventText, setEventText] = useState("")
 
   // Local handlers, calls to parent methods
   // will trigger useEffect functions in parent
@@ -47,6 +48,9 @@ const AdvisoryFilter = ({
   const handleKeywordsFilterChange = () => {
     setIsKeywordsFilter(!isKeywordFilter)
     setFilter("keywords", !isKeywordFilter)
+  }
+  const handleInputChange = (text) => {
+    setEventText(text)
   }
 
   const getEventType = () => {
@@ -89,7 +93,7 @@ const AdvisoryFilter = ({
             minLength={1}
             labelKey="label"
             placeholder=" "
-            className="event-search-typeahead"
+            className={`event-search-typeahead has-text--${eventText.length > 0 ? 'true' : 'false'}`}
             clearButton
             options={eventTypes}
             value={getEventType()}
@@ -97,6 +101,7 @@ const AdvisoryFilter = ({
             onChange={e => handleTypeFilterChange(
               e.length ? e[0].value : defaultEventType.value
             )}
+            onInputChange={e => handleInputChange(e)}
             renderInput={({ ref, ...props }) => (
               <Form.Group controlId="event-search-typeahead">
                 <Form.Control ref={ref} {...props} />

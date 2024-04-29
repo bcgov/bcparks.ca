@@ -14,11 +14,11 @@
 }
 
 .parkLink {
-  font-size: 0.9rem;
-  min-height: 30px;
-  font-weight: 200;
+  min-height: 32px;
   display: inline-flex;
   align-items: center;
+  font-size: 1rem;
+  font-weight: 400;
   white-space: pre-line;
   border: solid 1px $colorBlue;
 }
