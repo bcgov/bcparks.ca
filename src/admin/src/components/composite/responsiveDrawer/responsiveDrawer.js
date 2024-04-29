@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import AccountInfo from '../accountInfo/AccountInfo';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,25 +11,33 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import './responsiveDrawer.css';
 
-const ResponsiveDrawer = () => {
+const ResponsiveDrawer = ({ handleTabChange }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleClick = (item) => {
+    handleTabChange(null, item.value);
+    setMobileOpen(false);
+  };
+
   const items = [
-    {
-      "text": "Advisories",
-      "link": "/bcparks/dashboard"
-    }
+    { "value": 0, "text": "Advisories" },
+    { "value": 1, "text": "Park Access Status" },
+    { "value": 2, "text": "Activities & Facilities" }
   ]
 
   const drawer = (
     <div>
       <List>
         {items.map((item, index) => (
-          <ListItem key={index} button component={Link} to={item.link}>
+          <ListItem
+            key={index}
+            button
+            onClick={() => handleClick(item)}
+          >
             <ListItemText primary={item.text} />
           </ListItem>
         ))}

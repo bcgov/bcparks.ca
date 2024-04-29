@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./AppDashboard.css";
 import Tabs from "@material-ui/core/Tabs";
@@ -16,12 +16,17 @@ export default function AppDashboard({
   page: { setError, cmsData, setCmsData },
 }) {
   const [tabIndex, setTabIndex] = useState(0);
-  const { index } = useLocation();
   const [tabOrientation, setTabOrientation] = useState("vertical");
+  const history = useHistory();
+  const tabNames = ["park-access-status", "activities-and-facilities"];
 
   useEffect(() => {
-    if (index) {
-      setTabIndex(index);
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      const tabIndex = tabNames.indexOf(hash) + 1;
+      if (tabIndex !== 0) {
+        setTabIndex(tabIndex);
+      }
     }
     const width = window ? window.innerWidth : 0;
     if (width > 991.98) {
@@ -29,15 +34,21 @@ export default function AppDashboard({
     } else {
       setTabOrientation("horizontal");
     }
-  }, [setTabIndex, setTabOrientation, index]);
+    // eslint-disable-next-line 
+  }, [setTabIndex, setTabOrientation]);
 
   const handleTabChange = (event, val) => {
     setTabIndex(val);
+    if (val > 0) {
+      history.push(`#${tabNames[val - 1]}`);
+    } else {
+      history.push('/');
+    }
   };
 
   return (
     <main>
-      <Header />
+      <Header handleTabChange={handleTabChange} />
       <div className="app-container" data-testid="AppDashboard">
         <div className="app-tabs">
           <Tabs
