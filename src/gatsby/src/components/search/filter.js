@@ -67,11 +67,9 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck, filterTyp
                     // action
                     event.target.checked ? "select-filter" : "unselect-filter",
                     // label
-                    item.label,
+                    `${item.filterType} - ${item.label}`,
                     // property
-                    "filter-type",
-                    // value
-                    item.filterType
+                    "filter-type"
                   )
                 }
               }}

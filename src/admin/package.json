@@ -48,7 +48,7 @@
     "cross-env": "^7.0.3",
     "jest": "26.6.0",
     "react-scripts": "^5.0.1",
-    "webpack": "4.46.0"
+    "webpack": "5.91.0"
   },
   "scripts": {
     "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider craco start",
