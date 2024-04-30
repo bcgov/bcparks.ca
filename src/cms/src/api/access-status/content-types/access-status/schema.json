@@ -5,11 +5,10 @@
     "singularName": "access-status",
     "pluralName": "access-statuses",
     "displayName": "Access-status",
-    "name": "access-status"
+    "name": "access-status",
+    "description": ""
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
     "draftAndPublish": true
   },
   "attributes": {
@@ -24,6 +23,9 @@
     },
     "groupLabel": {
       "type": "string"
+    },
+    "description": {
+      "type": "text"
     }
   }
 }
