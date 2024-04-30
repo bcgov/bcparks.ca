@@ -24,18 +24,17 @@ const populateStandardMessages = function (query) {
     return query;
 }
 
-const appendStandardMessages = function(entity) {
+const appendStandardMessages = function (entity) {
     if (entity) {
         const { description = "", standardMessages } = entity;
         if (standardMessages && standardMessages.length > 0) {
             entity.description = (
-                description +
-                " " +
+                "<p>" + description + "</p>" +
                 standardMessages.map((m) => m.description).join(" ")
             ).trim();
         }
     }
-    return entity;    
+    return entity;
 }
 
 module.exports = createCoreController(
