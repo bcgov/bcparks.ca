@@ -625,7 +625,6 @@ export default function AdvisoryDashboard({
           data-testid="AdvisoryDashboard"
         >
           <br />
-
           <div className="container-fluid">
             <DataTable
               key={publicAdvisories.length}
@@ -633,7 +632,7 @@ export default function AdvisoryDashboard({
                 filtering: true,
                 search: false,
                 pageSize: 50,
-                pageSizeOptions: [25, 50, 100],
+                pageSizeOptions: [25, 50, publicAdvisories.length],
               }}
               onFilterChange={(filters) => {
                 const advisoryFilters = JSON.parse(localStorage.getItem('advisoryFilters'));
