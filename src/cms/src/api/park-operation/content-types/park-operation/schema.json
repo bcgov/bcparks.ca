@@ -9,8 +9,6 @@
     "description": ""
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
     "draftAndPublish": true
   },
   "attributes": {
@@ -166,6 +164,15 @@
     },
     "camisMapId": {
       "type": "biginteger"
+    },
+    "gateOpenTime": {
+      "type": "time"
+    },
+    "gateCloseTime": {
+      "type": "time"
+    },
+    "gateNote": {
+      "type": "text"
     }
   }
 }
