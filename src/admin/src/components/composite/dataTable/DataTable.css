@@ -6,10 +6,19 @@
   padding: 2px !important;
 }
 
-.data-table .MuiTableCell-root input {
+.data-table .MuiTableCell-root .MuiTextField-root {
+  width: 100%;
+}
+
+.data-table .MuiTableCell-root input,
+.data-table .MuiTableCell-root .MuiInput-input{
+  height: 32px;
+  color: var(--color-blue);
   background-color: #f0f2f5;
-  padding: 2px !important;
+  font-size: 0.875rem;
+  line-height: 2rem;
   margin: 2px 0px 2px 0px !important;
+  padding: 2px !important;
 }
 
 .data-table .MuiTablePagination-input {
