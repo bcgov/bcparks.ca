@@ -19,7 +19,7 @@ const formatDate = isoDate => {
   return isoDate ? format(parseJSON(isoDate), "MMMM d, yyyy") : ""
 }
 
-export default function AdvisoryDetails({ advisories, accessStatusData }) {
+export default function AdvisoryDetails({ advisories, parkType }) {
   let expandedsInitial = []
   advisories.sort((a, b) => {
     return b.listingRank - a.listingRank
@@ -89,9 +89,9 @@ export default function AdvisoryDetails({ advisories, accessStatusData }) {
       <Row>
         {advisories.length === 0 && (
           <Col>
-            <HtmlContent>
-              There are no reported advisories for this park
-            </HtmlContent>
+            <p>
+              There are no reported advisories for this {parkType.toLowerCase()}
+            </p>
           </Col>
         )}
         {advisories.length > 0 && (
@@ -214,5 +214,5 @@ export default function AdvisoryDetails({ advisories, accessStatusData }) {
 
 AdvisoryDetails.propTypes = {
   advisories: PropTypes.array.isRequired,
-  accessStatusData: PropTypes.object,
+  parkType: PropTypes.string,
 }

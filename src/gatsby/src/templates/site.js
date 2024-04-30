@@ -318,7 +318,7 @@ export default function SiteTemplate({ data }) {
                   </div>
                 )}
                 {!isLoadingAdvisories && !advisoryLoadError && (
-                  <AdvisoryDetails advisories={advisories} />
+                  <AdvisoryDetails advisories={advisories} parkType="site" />
                 )}
               </div>
             )}
