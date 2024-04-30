@@ -232,7 +232,7 @@ export default function ParkDates({ data }) {
         <Col>
           {!hasOperations && (
             <div className="font-italic">
-              There is currently no operating date information available
+              No dates available
             </div>
           )}
           {hasOperations && (
