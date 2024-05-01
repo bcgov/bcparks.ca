@@ -49,7 +49,7 @@ jobs:
               echo "DEPLOYMENT_NAME=main-public" >> $GITHUB_ENV
           else
               echo "BRANCH=alpha" >> $GITHUB_ENV
-              echo "BUILDER_IMAGE_NAME=public-builder-alpha >> $GITHUB_ENV
+              echo "BUILDER_IMAGE_NAME=public-builder-alpha" >> $GITHUB_ENV
               echo "IMAGE_NAME=public-alpha" >> $GITHUB_ENV
               echo "DEPLOYMENT_NAME=alpha-public" >> $GITHUB_ENV
           fi
