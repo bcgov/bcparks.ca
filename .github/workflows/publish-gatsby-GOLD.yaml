@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       branchName:
-        description: "Rebuild public for which branch?"
+        description: "Publish gatsby for which branch?"
         default: 'main'
         type: choice
         required: true
@@ -14,7 +14,7 @@ on:
         - alpha
         - main
       buildEnv:
-        description: "Rebuild public for which environment?"
+        description: "Publish gatsby for which environment?"
         default: 'prod'
         type: choice
         required: true
@@ -24,7 +24,7 @@ on:
         - dev
 
 concurrency:
-  group: publish-gatsby-${{ github.event.client_payload.branch }}${{ github.event.inputs.branchName }}-${{ github.event.client_payload.env }}${{ github.event.inputs.buildEnv }}
+  group: publish-gatsby-gold-${{ github.event.client_payload.branch }}${{ github.event.inputs.branchName }}-${{ github.event.client_payload.env }}${{ github.event.inputs.buildEnv }}
   cancel-in-progress: true
 
 env:
