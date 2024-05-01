@@ -10,6 +10,7 @@ import Footer from "../../components/footer"
 import Seo from "../../components/seo"
 import ScrollToTop from "../../components/scrollToTop"
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
+import StaticIcon from "../../components/park/staticIcon"
 import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
 import "../../styles/listPage.scss"
 
@@ -37,6 +38,8 @@ const ParkLink = ({ park, advisories }) => {
     const facilityType = subArea.facilityType || {}
     subArea.facilityName = facilityType.facilityName || ""
     subArea.facilityIsCamping = facilityType.isCamping || false
+    const iconUrl = subArea.parkSubAreaType?.iconUrl || ""
+    subArea.typeIcon = iconUrl.split("/")[iconUrl.split("/").length - 1]
 
     subArea = groupSubAreaDates(subArea)
 
@@ -94,7 +97,10 @@ const ParkLink = ({ park, advisories }) => {
           {subAreas.map((subArea, index) => (
             <tr key={index}>
               <td>
-                {subArea.parkSubArea}
+                <div className="subarea-name">
+                  <StaticIcon name={subArea.typeIcon} size={32} />
+                  {subArea.parkSubArea}
+                </div>
                 {!subArea.isOpen &&
                   <>
                     <br />
@@ -152,12 +158,15 @@ const ParkLink = ({ park, advisories }) => {
         {subAreas.map((subArea, index) => (
           <div className="card-body" key={index}>
             <div className="card-title">
-              <h4>{subArea.parkSubArea}</h4>
+              <div className="subarea-name">
+                <StaticIcon name={subArea.typeIcon} size={32} />
+                <h4>{subArea.parkSubArea}</h4>
+              </div>
               {!subArea.isOpen &&
-                <h5>{"("}<BlockIcon /> Temporarily closed{")"}</h5>
+                <h5 className="mt-2">{"("}<BlockIcon /> Temporarily closed{")"}</h5>
               }
               {subArea.isCleanAirSite &&
-                <h5>{"("}Clean air site{")"}</h5>
+                <h5 className="mt-2">{"("}Clean air site{")"}</h5>
               }
             </div>
             <ul className="list-group list-group-flush">
@@ -256,6 +265,7 @@ const ParkOperatingDatesPage = () => {
               isCamping
             }
             parkSubAreaType {
+              iconUrl
               closureAffectsAccessStatus
             }
           }
