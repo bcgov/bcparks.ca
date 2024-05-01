@@ -109,20 +109,20 @@ jobs:
 
       - name: Cache Gatsby Cache Folder
         uses: actions/cache@v3
-        id: gatsby-cache-folder
+        id: gatsby-cache-gold-folder
         with:
           path: gatsby/.cache
-          key: ${{ runner.os }}-cache-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
+          key: ${{ runner.os }}-cache-gatsby-gold-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
           restore-keys: |
-            ${{ runner.os }}-cache-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
+            ${{ runner.os }}-cache-gatsby-gold-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
       - name: Cache Gatsby Public Folder
         uses: actions/cache@v3
-        id: gatsby-public-folder
+        id: gatsby-gold-public-folder
         with:
           path: gatsby/public
-          key: ${{ runner.os }}-public-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
+          key: ${{ runner.os }}-public-gatsby-gold-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
           restore-keys: |
-            ${{ runner.os }}-public-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
+            ${{ runner.os }}-public-gatsby-gold-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
       - name: Build static
         run: |
           # Run the builder image as container since you can't directly copy file from an image
