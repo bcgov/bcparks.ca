@@ -240,7 +240,7 @@ export function getBusinessHours(cmsData, setCmsData) {
 export function getStandardMessages(cmsData, setCmsData) {
     if (!cmsData.standardMessages) {
         const result = cmsAxios
-            .get(`/standard-messages?${querySort("title")}`)
+            .get(`/standard-messages?${querySort("precedence")}`)
             .then((res) => {
                 const data = cmsData;
                 data.standardMessages = res.data.data;
