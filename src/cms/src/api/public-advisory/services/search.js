@@ -88,7 +88,7 @@ const buildQuery = function (query) {
     regions: true,
     sections: true,
     sites: { fields: ["siteName", "slug", "isDisplayed", "publishedAt", "orcsSiteNumber"] },
-    standardMesages: true,
+    standardMessages: true,
     urgency: true
   };
 
