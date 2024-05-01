@@ -67,12 +67,29 @@
         width: 25%;
         border-top: 2px solid $colorGreyLight !important;
         background-color: $colorBackgroundGrey !important;
+        &:first-of-type {
+          width: 30%;
+        }
+        &:nth-of-type(3) {
+          width: 20%;
+        }
       }
     }
     tbody {
-      tr:last-of-type {
+      tr {
         td {
-          border-bottom: 1px solid $colorGreyLight;
+          .subarea-name {
+            display: flex;
+            align-items: center;
+            img {
+              margin-right: 8px;
+            }
+          }
+        }
+        &:last-of-type {
+          td {
+            border-bottom: 1px solid $colorGreyLight;
+          }
         }
       }
       svg.MuiSvgIcon-root {
@@ -107,6 +124,13 @@
       .card-title {
         margin-bottom: 0;
         padding: 24px;
+        .subarea-name {
+          display: flex;
+          align-items: center;
+          img {
+            margin-right: 8px;
+          }
+        }
       }
       .list-group {
         .list-group-item {
