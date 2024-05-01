@@ -118,7 +118,7 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          event-type: publish-gatsby
+          event-type: publish-gatsby-GOLD
           client-payload: '{"env": "dev", "branch": "${{ github.ref_name }}" }'
 
   build-maintenance:
