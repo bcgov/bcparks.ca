@@ -9,7 +9,6 @@ import AppDashboard from "../components/page/appDashboard/AppDashboard";
 import ParkInfo from "../components/page/parkInfo/ParkInfo";
 import { PrivateRoute } from "../auth/PrivateRoute";
 import CmsContents from "../components/page/cmsContents/CmsContents";
-import ParkAccessStatus from "../components/page/parkAccessStatus/ParkAccessStatus";
 import AdvisoryLink from "../components/page/advisoryLink/AdvisoryLink";
 
 function AppRouter() {
@@ -30,12 +29,21 @@ function AppRouter() {
           <Route exact path="/bcparks/cms-contents">
             <CmsContents />
           </Route>
-          <Route exact path="/bcparks/park-access-status">
-            <ParkAccessStatus />
-          </Route>
           <PrivateRoute
             roles={["submitter", "approver"]}
             path="/bcparks/dashboard"
+            component={AppDashboard}
+            props={{ page: { setError, cmsData, setCmsData } }}
+          />
+          <PrivateRoute
+            roles={["submitter", "approver"]}
+            path="/bcparks/park-access-status"
+            component={AppDashboard}
+            props={{ page: { setError, cmsData, setCmsData } }}
+          />
+          <PrivateRoute
+            roles={["submitter", "approver"]}
+            path="/bcparks/activities-and-facilities"
             component={AppDashboard}
             props={{ page: { setError, cmsData, setCmsData } }}
           />

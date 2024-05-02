@@ -18,15 +18,13 @@ export default function AppDashboard({
   const [tabIndex, setTabIndex] = useState(0);
   const [tabOrientation, setTabOrientation] = useState("vertical");
   const history = useHistory();
-  const tabNames = ["park-access-status", "activities-and-facilities"];
+  const tabUrls = ["dashboard", "park-access-status", "activities-and-facilities"];
 
   useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    if (hash) {
-      const tabIndex = tabNames.indexOf(hash) + 1;
-      if (tabIndex !== 0) {
-        setTabIndex(tabIndex);
-      }
+    const path = window.location.pathname.replace('/bcparks/', '');
+    const tabIndex = tabUrls.indexOf(path);
+    if (tabIndex >= 0) {
+      setTabIndex(tabIndex);
     }
     const width = window ? window.innerWidth : 0;
     if (width > 991.98) {
@@ -39,10 +37,18 @@ export default function AppDashboard({
 
   const handleTabChange = (event, val) => {
     setTabIndex(val);
-    if (val > 0) {
-      history.push(`#${tabNames[val - 1]}`);
-    } else {
-      history.push('/');
+    switch (val) {
+      case 0:
+        history.push('/bcparks/dashboard');
+        break;
+      case 1:
+        history.push('/bcparks/park-access-status');
+        break;
+      case 2:
+        history.push('/bcparks/activities-and-facilities');
+        break;
+      default:
+        history.push('/');
     }
   };
 
