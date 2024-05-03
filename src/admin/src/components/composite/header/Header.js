@@ -12,12 +12,12 @@ export const goHome = (e, history) => {
   if (
     history.location &&
     history.location.pathname &&
-    history.location.pathname === "/bcparks"
+    history.location.pathname === "/"
   ) {
     return false;
   }
 
-  if (history.location.pathname === "/bcparks/error") {
+  if (history.location.pathname === "/error") {
     sessionStorage.clear();
     history.push("/");
     return true;
@@ -27,7 +27,7 @@ export const goHome = (e, history) => {
   return true;
 };
 
-export default function Header() {
+export default function Header({ handleTabChange }) {
   const history = useHistory();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -76,7 +76,7 @@ export default function Header() {
           {windowWidth > 768 ?
             <AccountInfo />
             :
-            <ResponsiveDrawer />
+            <ResponsiveDrawer handleTabChange={handleTabChange} />
           }
         </div>
       </nav>

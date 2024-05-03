@@ -19,7 +19,7 @@ export default function AdvisoryLink() {
       if (initialized) {
         if (!keycloak.authenticated) {
           keycloak.login({
-            redirectUri: `${config.REACT_APP_FRONTEND_BASE_URL}/bcparks/advisory-link/${advisoryNumber}`,
+            redirectUri: `${config.REACT_APP_FRONTEND_BASE_URL}/advisory-link/${advisoryNumber}`,
             idpHint: 'idir'
           })
         }
@@ -30,14 +30,14 @@ export default function AdvisoryLink() {
             }),
         )
           .then((res) => {
-            history.replace(`/bcparks/advisory-summary/${res.data.data[0].id}`);
+            history.replace(`/advisory-summary/${res.data.data[0].id}`);
           })
           .catch((err) => {
-            history.replace(`/bcparks/dashboard`);
+            history.replace(`/advisories`);
           });
       }
     } else {
-      history.replace(`/bcparks`);
+      history.replace(`/`);
     }
   }, [
     initialized,

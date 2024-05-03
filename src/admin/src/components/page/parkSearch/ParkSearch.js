@@ -208,11 +208,11 @@ export default function ParkSearch({
   };
 
   if (toDetails) {
-    return <Redirect push to={`/bcparks/park-info/${protectedArea}`} />;
+    return <Redirect push to={`/park-info/${protectedArea}`} />;
   }
 
   if (toError) {
-    return <Redirect push to="/bcparks/error" />;
+    return <Redirect push to="/error" />;
   }
 
   return (

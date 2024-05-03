@@ -203,7 +203,7 @@ export default function AdvisorySummary({
       <Redirect
         push
         to={{
-          pathname: `/bcparks/dashboard`,
+          pathname: `/advisories`,
           index: index >= 0 ? index : 0,
         }}
       />
@@ -211,11 +211,11 @@ export default function AdvisorySummary({
   }
 
   if (toUpdate) {
-    return <Redirect push to={`/bcparks/update-advisory/${id}`} />;
+    return <Redirect push to={`/update-advisory/${id}`} />;
   }
 
   if (toError) {
-    return <Redirect push to="/bcparks/error" />;
+    return <Redirect push to="/error" />;
   }
 
   return (

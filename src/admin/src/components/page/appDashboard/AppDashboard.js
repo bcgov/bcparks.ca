@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./AppDashboard.css";
 import Tabs from "@material-ui/core/Tabs";
@@ -16,12 +16,15 @@ export default function AppDashboard({
   page: { setError, cmsData, setCmsData },
 }) {
   const [tabIndex, setTabIndex] = useState(0);
-  const { index } = useLocation();
   const [tabOrientation, setTabOrientation] = useState("vertical");
+  const history = useHistory();
+  const tabUrls = ["/dashboard", "/park-access-status", "/activities-and-facilities"];
 
   useEffect(() => {
-    if (index) {
-      setTabIndex(index);
+    const path = window.location.pathname;
+    const tabIndex = tabUrls.indexOf(path);
+    if (tabIndex >= 0) {
+      setTabIndex(tabIndex);
     }
     const width = window ? window.innerWidth : 0;
     if (width > 991.98) {
@@ -29,15 +32,29 @@ export default function AppDashboard({
     } else {
       setTabOrientation("horizontal");
     }
-  }, [setTabIndex, setTabOrientation, index]);
+    // eslint-disable-next-line 
+  }, [setTabIndex, setTabOrientation]);
 
   const handleTabChange = (event, val) => {
     setTabIndex(val);
+    switch (val) {
+      case 0:
+        history.push('/advisories');
+        break;
+      case 1:
+        history.push('/park-access-status');
+        break;
+      case 2:
+        history.push('/activities-and-facilities');
+        break;
+      default:
+        history.push('/');
+    }
   };
 
   return (
     <main>
-      <Header />
+      <Header handleTabChange={handleTabChange} />
       <div className="app-container" data-testid="AppDashboard">
         <div className="app-tabs">
           <Tabs
