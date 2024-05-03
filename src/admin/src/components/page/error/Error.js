@@ -9,7 +9,7 @@ export default function Error({ page: { error } }) {
   const [toHome, setToHome] = useState(false);
 
   if (toHome) {
-    return <Redirect to="/bcparks" />;
+    return <Redirect to="/" />;
   }
   let errorContent;
   if (!error) {

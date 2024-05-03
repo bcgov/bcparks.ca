@@ -18,10 +18,10 @@ export default function AppDashboard({
   const [tabIndex, setTabIndex] = useState(0);
   const [tabOrientation, setTabOrientation] = useState("vertical");
   const history = useHistory();
-  const tabUrls = ["dashboard", "park-access-status", "activities-and-facilities"];
+  const tabUrls = ["/dashboard", "/park-access-status", "/activities-and-facilities"];
 
   useEffect(() => {
-    const path = window.location.pathname.replace('/bcparks/', '');
+    const path = window.location.pathname;
     const tabIndex = tabUrls.indexOf(path);
     if (tabIndex >= 0) {
       setTabIndex(tabIndex);
@@ -39,13 +39,13 @@ export default function AppDashboard({
     setTabIndex(val);
     switch (val) {
       case 0:
-        history.push('/bcparks/dashboard');
+        history.push('/advisories');
         break;
       case 1:
-        history.push('/bcparks/park-access-status');
+        history.push('/park-access-status');
         break;
       case 2:
-        history.push('/bcparks/activities-and-facilities');
+        history.push('/activities-and-facilities');
         break;
       default:
         history.push('/');

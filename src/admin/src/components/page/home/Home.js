@@ -21,7 +21,7 @@ export default function Home({ page: { setError } }) {
     return (
       <Redirect
         to={{
-          pathname: `/bcparks/dashboard`,
+          pathname: `/advisories`,
           index: 0,
         }}
       />
@@ -44,7 +44,7 @@ export default function Home({ page: { setError } }) {
                     <Button
                       onClick={() =>
                         keycloak.login({
-                          redirectUri: `${config.REACT_APP_FRONTEND_BASE_URL}/bcparks/dashboard`,
+                          redirectUri: `${config.REACT_APP_FRONTEND_BASE_URL}/advisories`,
                           idpHint: 'idir'
                         })
                       }

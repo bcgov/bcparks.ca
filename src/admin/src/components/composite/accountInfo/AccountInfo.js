@@ -15,7 +15,7 @@ const AccountInfo = () => {
           styling="btn"
           onClick={() => {
             keycloak.logout({
-              redirectUri: `${config.REACT_APP_FRONTEND_BASE_URL}/bcparks`,
+              redirectUri: `${config.REACT_APP_FRONTEND_BASE_URL}`,
             });
           }}
         />

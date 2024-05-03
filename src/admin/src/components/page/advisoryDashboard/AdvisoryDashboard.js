@@ -544,11 +544,11 @@ export default function AdvisoryDashboard({
   ];
 
   if (toCreate) {
-    return <Redirect to="/bcparks/create-advisory" />;
+    return <Redirect to="/create-advisory" />;
   }
   if (toError || hasErrors) {
     console.log('toError || hasErrors', toError, hasErrors)
-    return <Redirect push to="/bcparks/error" />;
+    return <Redirect push to="/error" />;
   }
 
   return (

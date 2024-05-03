@@ -12,12 +12,12 @@ export const goHome = (e, history) => {
   if (
     history.location &&
     history.location.pathname &&
-    history.location.pathname === "/bcparks"
+    history.location.pathname === "/"
   ) {
     return false;
   }
 
-  if (history.location.pathname === "/bcparks/error") {
+  if (history.location.pathname === "/error") {
     sessionStorage.clear();
     history.push("/");
     return true;

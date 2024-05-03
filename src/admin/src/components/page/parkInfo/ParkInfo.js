@@ -403,14 +403,14 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
       <Redirect
         push
         to={{
-          pathname: `/bcparks/dashboard`,
+          pathname: `/advisories`,
           index: 2,
         }}
       />
     );
   }
   if (toError) {
-    return <Redirect push to="/bcparks/error" />;
+    return <Redirect push to="/error" />;
   }
 
   return (
