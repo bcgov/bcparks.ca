@@ -9,6 +9,7 @@ import Seo from "../components/seo"
 import MainSearch from "../components/search/mainSearch"
 import PageContent from "../components/pageContent/pageContent"
 import ScrollToTop from "../components/scrollToTop"
+import HTMLArea from "../components/HTMLArea"
 
 import { renderBreadcrumbs } from "../utils/helpers";
 
@@ -45,67 +46,71 @@ const LandingPage = ({ pageContext }) => {
   const menuContent = queryData?.allStrapiMenu?.nodes || []
   const { page } = pageContext
   const components = page?.Content || []
-  const introContent = components.slice(0, 1)
-  const linkContent = components.slice(1)
+  const introContents = components.filter(component => component.strapi_component === "parks.html-area")
+  const linkContents = components.filter(component => component.strapi_component === "parks.link-card")
+  const pageHeader = page?.PageHeader || null
 
   return (
     <>
       <CssBaseline />
       <Header mode="internal" content={menuContent} />
       <div id="main-content"></div>
-      {linkContent.length > 0 && (
-        <div id="intro-content" className="bcp-landing-intro">
-          {introContent.map(content => (
+      {/* page header */}
+      <div id="intro-content" className="bcp-landing-intro">
+        {pageHeader ? (
+          <>
+            <div
+              className="bcp-landing-intro__image"
+              style={{ backgroundImage: `url(${pageHeader.imageUrl})` }}
+            >
+            </div>
+            <div className="bcp-landing-intro__text">
+              <div className="container">
+                <div className="row d-none d-lg-block">
+                  <div className="col">
+                    <Breadcrumbs separator="›" aria-label="breadcrumb">
+                      {renderBreadcrumbs(menuContent, pageContext?.page)}
+                    </Breadcrumbs>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col">
+                    <h1>{pageHeader.pageTitle}</h1>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col">
+                    <HTMLArea isVisible>
+                      {pageHeader.introHtml.data.introHtml}
+                    </HTMLArea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          // It can be removed after all data is migrated to pageHeader and seo
+          introContents.length > 0 &&
+          introContents.map(content => (
             <PageContent
               key={content.id}
               contentType={content.strapi_component}
               content={content}
             />
-          ))}
-        </div>
-      )}
-      {linkContent.length > 0 && (
+          ))
+        )}
+      </div>
+      {/* link cards */}
+      {linkContents.length > 0 && (
         <div id="link-content" className="bcp-landing-links">
           <div className="container">
-            {linkContent
-              .filter(content => content.strapi_component === "parks.link-card")
-              .map(content => (
-                <PageContent
-                  key={content.id}
-                  contentType={content.strapi_component}
-                  content={content}
-                />
-              ))}
-          </div>
-        </div>
-      )}
-      {/* This is a temporary attempt not to break the existing hard code HTMLArea */}
-      {/* For the edge case: show breadcrumbs and title if there's no HTMLArea */}
-      {linkContent.length === 0 && (
-        <div className="bcp-landing-intro">
-          <div className="bcp-landing-intro__image">
-            {/* TODO: here should be landing image */}
-          </div>
-          <div className="bcp-landing-intro__text">
-            <div className="container">
-              <div className="row d-none d-lg-block">
-                <div className="col">
-                  <Breadcrumbs separator="›" aria-label="breadcrumb">
-                    {renderBreadcrumbs(menuContent, pageContext?.page)}
-                  </Breadcrumbs>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col">
-                  <h1>{page?.Title}</h1>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col">
-                  {/* TODO: here should be some text */}
-                </div>
-              </div>
-            </div>
+            {linkContents.map(content => (
+              <PageContent
+                key={content.id}
+                contentType={content.strapi_component}
+                content={content}
+              />
+            ))}
           </div>
         </div>
       )}
@@ -137,12 +142,21 @@ export const Head = ({ pageContext }) => {
   const components = page?.Content || []
   const meta =
     components.find(component => component.strapi_component === "parks.seo") || {}
+  const seo = page?.Seo || null
 
   return (
-    <Seo
-      title={meta?.metaTitle || page?.Title}
-      description={meta?.metaDescription}
-      keywords={meta?.metaKeywords}
-    />
+    seo ? (
+      <Seo
+        title={seo?.metaTitle || page?.Title}
+        description={seo?.metaDescription}
+        keywords={seo?.metaKeywords}
+      />
+    ) : (
+      <Seo
+        title={meta?.metaTitle || page?.Title}
+        description={meta?.metaDescription}
+        keywords={meta?.metaKeywords}
+      />
+    )
   )
 }
