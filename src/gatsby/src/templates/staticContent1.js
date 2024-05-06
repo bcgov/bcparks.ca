@@ -46,39 +46,17 @@ export default function StaticContent1({ pageContext }) {
   `)
 
   const menuContent = queryData?.allStrapiMenu?.nodes || []
-  const pageContent = pageContext?.page?.Content
+  const { page } = pageContext
+  const pageContent = page?.Content || []
   const filteredContent = pageContent.filter(c =>
-    Boolean(c.strapi_component !== "parks.page-header") &&
-    Boolean(c.strapi_component !== "parks.seo")
-  ) || []
-  const meta =
-    pageContext?.page?.Content.find(c =>
-      Boolean(c.strapi_component === "parks.seo")
-    ) || {}
+    c.strapi_component !== "parks.page-header" &&
+    c.strapi_component !== "parks.seo") || []
+  const headerContent = pageContent.find(c => c.strapi_component === "parks.page-header") || {}
+  const pageHeader = page?.PageHeader || null
+  const hasPageHeader = (pageHeader.pageTitle !== undefined || headerContent.pageTitle !== undefined)
 
-  // look for PageHeader content
-  // if it exists, will affect the layout of the top of the page
-  // note that it does not matter what position the component is in, it will appear at the top
-  // note that if there are more than one such component, it will pick the first
-  const headerContent =
-    pageContext?.page?.Content.find(c =>
-      Boolean(c.strapi_component === "parks.page-header")
-    ) || {}
-  const hasPageHeader = headerContent.pageTitle !== undefined
 
-  // Get page title from Title field
-  // if not there, get title from pageTitle, if there is a PageHeader component
-  // otherwise, page title & breadcrumb assumed to be in the content
-  let pageTitle = pageContext.page.Title
-  if (!pageTitle) {
-    pageTitle = headerContent.pageTitle
-  }
-  const hasTitle = pageTitle !== undefined
-
-  const sections =
-    pageContent.filter(c =>
-      Boolean(c.strapi_component === "parks.page-section")
-    ) || []
+  const sections = pageContent.filter(c => c.strapi_component === "parks.page-section") || []
   const hasSections = sections.length > 0
 
   // create page sections for sticky sidebar menu
@@ -105,34 +83,32 @@ export default function StaticContent1({ pageContext }) {
 
   let pageSections = []
   if (hasSections) {
-    let firstSectionTitle = pageTitle
+    let firstSectionTitle = page.Title
     if (!firstSectionTitle) {
       // get page title, using same method as renderBreadcrumbs
       // this assume the page is in the menu, use metaTitle from SEO otherwise
-      const slug = pageContext?.page?.Slug
+      const slug = page?.Slug
       const current = menuContent.find(mc => mc.url === slug)
-      firstSectionTitle = current ? current.title : meta.metaTitle
+      firstSectionTitle = current.title
     }
     pageSections = [
       { display: firstSectionTitle, sectionIndex: 0, id: 0, link: "#" },
     ]
 
     let sectionIndex = 0
-    for (const c of pageContent) {
+    for (const s of sections) {
       sectionIndex += 1
-      if (c.strapi_component === "parks.page-section") {
-        // each section needs an index to be used for in-page navigation
-        // and scrollspy highlighting
-        const titleId = slugify(c.sectionTitle).toLowerCase()
-        c.sectionIndex = sectionIndex
-        pageSections.push({
-          display: c.sectionTitle,
-          sectionIndex: sectionIndex,
-          id: c.id,
-          link: "#" + titleId,
-          visible: true // Default
-        })
-      }
+      // each section needs an index to be used for in-page navigation
+      // and scrollspy highlighting
+      const titleId = slugify(s.sectionTitle).toLowerCase()
+      s.sectionIndex = sectionIndex
+      pageSections.push({
+        display: s.sectionTitle,
+        sectionIndex: sectionIndex,
+        id: s.id,
+        link: "#" + titleId,
+        visible: true // Default
+      })
     }
   }
 
@@ -150,26 +126,40 @@ export default function StaticContent1({ pageContext }) {
       <div className="max-width-override" ref={sectionRefs[0]}>
         <Header mode="internal" content={menuContent} />
       </div>
-      {hasTitle && (
-        <div className="static-content--header">
-          <div id="main-content" className="page-breadcrumbs">
-            <Breadcrumbs separator="›" aria-label="breadcrumb">
-              {renderBreadcrumbs(menuContent, pageContext?.page)}
-            </Breadcrumbs>
-          </div>
-          {headerContent.imageUrl && (
+      <div className="static-content--header">
+        <div id="main-content" className="page-breadcrumbs">
+          <Breadcrumbs separator="›" aria-label="breadcrumb">
+            {renderBreadcrumbs(menuContent, page)}
+          </Breadcrumbs>
+        </div>
+        {/* page header */}
+        {pageHeader ? (
+          <>
+            <div className="header-image-wrapper">
+              <img
+                src={pageHeader.imageUrl}
+                alt={pageHeader.pageTitle}
+              />
+            </div>
+            <h1 className="header-title">
+              {pageHeader.pageTitle}
+            </h1>
+          </>
+        ) : (
+          <>
             <div className="header-image-wrapper">
               <img
                 src={headerContent.imageUrl}
-                alt=""
+                alt={headerContent.pageTitle || page.Title}
               />
             </div>
-          )}
-          <h1 className="header-title">
-            {pageTitle}
-          </h1>
-        </div>
-      )}
+            <h1 className="header-title">
+              {headerContent.pageTitle || page.Title}
+            </h1>
+          </>
+        )}
+      </div>
+      {/* page sections */}
       {hasSections && (
         <div className="page-menu--mobile d-block d-md-none">
           <PageMenu
@@ -191,13 +181,15 @@ export default function StaticContent1({ pageContext }) {
                 />
               </div>
               <div className="page-content col-md-8 col-12">
-                {hasPageHeader && (
+                {hasPageHeader && (pageHeader.introHtml.data.introHtml || headerContent.introHtml.data.introHtml) &&
                   <div className="header-content">
-                    {headerContent.introHtml.data.introHtml &&
+                    {pageHeader.introHtml.data.introHtml ? (
+                      <HTMLArea isVisible>{pageHeader.introHtml.data.introHtml}</HTMLArea>
+                    ) : (
                       <HTMLArea isVisible>{headerContent.introHtml.data.introHtml}</HTMLArea>
-                    }
+                    )}
                   </div>
-                )}
+                }
                 {filteredContent.map(content => (
                   <div
                     ref={sectionRefs[content.sectionIndex]}
@@ -213,11 +205,15 @@ export default function StaticContent1({ pageContext }) {
             </div>
           ) : (
             <div>
-              {hasPageHeader && headerContent.introHtml && (
+              {hasPageHeader && (pageHeader.introHtml.data.introHtml || headerContent.introHtml.data.introHtml) &&
                 <div className="header-content">
-                  <HTMLArea isVisible>{headerContent.introHtml}</HTMLArea>
+                  {pageHeader.introHtml.data.introHtml ? (
+                    <HTMLArea isVisible>{pageHeader.introHtml.data.introHtml}</HTMLArea>
+                  ) : (
+                    <HTMLArea isVisible>{headerContent.introHtml.data.introHtml}</HTMLArea>
+                  )}
                 </div>
-              )}
+              }
               {filteredContent.map(content => (
                 <PageContent
                   contentType={content.strapi_component}
@@ -238,27 +234,28 @@ export default function StaticContent1({ pageContext }) {
 }
 
 export const Head = ({ pageContext }) => {
-  const meta =
-    pageContext?.page?.Content.find(c =>
-      Boolean(c.strapi_component === "parks.seo")
-    ) || {}
-
-  const headerContent =
-    pageContext?.page?.Content.find(c =>
-      Boolean(c.strapi_component === "parks.page-header")
-    ) || {}
-
-  let pageTitle = pageContext.page.Title
-  if (!pageTitle) {
-    pageTitle = headerContent.pageTitle
-  }
+  const { page } = pageContext
+  const components = page?.Content || []
+  const headerContent = components.find(c => c.strapi_component === "parks.page-header") || {}
+  const pageHeader = page?.PageHeader || null
+  const meta = components.find(c => c.strapi_component === "parks.seo") || {}
+  const seo = page?.Seo || null
 
   return (
-    <Seo
-      title={meta?.metaTitle || pageTitle}
-      description={meta?.metaDescription}
-      keywords={meta?.metaKeywords}
-      image={headerContent?.imageUrl}
-    />
+    seo ? (
+      <Seo
+        title={seo?.metaTitle || page?.Title}
+        description={seo?.metaDescription}
+        keywords={seo?.metaKeywords}
+        image={pageHeader?.imageUrl || headerContent?.imageUrl}
+      />
+    ) : (
+      <Seo
+        title={meta?.metaTitle || page?.Title}
+        description={meta?.metaDescription}
+        keywords={meta?.metaKeywords}
+        image={pageHeader?.imageUrl || headerContent?.imageUrl}
+      />
+    )
   )
 }

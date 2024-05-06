@@ -69,7 +69,7 @@ const LandingPage = ({ pageContext }) => {
                 <div className="row d-none d-lg-block">
                   <div className="col">
                     <Breadcrumbs separator="›" aria-label="breadcrumb">
-                      {renderBreadcrumbs(menuContent, pageContext?.page)}
+                      {renderBreadcrumbs(menuContent, page)}
                     </Breadcrumbs>
                   </div>
                 </div>
