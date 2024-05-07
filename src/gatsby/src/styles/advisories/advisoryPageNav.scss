@@ -1,0 +1,33 @@
+@import "../variables.scss";
+
+.page-nav {
+  display: flex;
+  justify-content: center;
+  color: $colorBlue;
+  margin-top: 32px;
+  &-item {
+    &--prev {
+      cursor: pointer;
+      margin: 0 4px;
+    }
+    &--next {
+      cursor: pointer;
+      margin: 0 4px;
+    }
+    &--number {
+      cursor: pointer;
+      width: 1.5rem;
+      height: 1.5rem;
+      text-align: center;
+      margin: 0 4px;
+      .selected {
+        color: $colorWhite;
+        background-color: $colorBlue;
+        border-radius: 4px;
+      }
+    }
+    &--dot {
+      line-height: 1rem;
+    }
+  }
+}

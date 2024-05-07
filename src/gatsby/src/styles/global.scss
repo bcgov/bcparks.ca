@@ -495,3 +495,32 @@ button.btn:not(.btn-link) {
     right: 2%;
   }
 }
+
+// breadcurmbs
+nav.breadcrumbs {
+  ol {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    li {
+      display: flex;
+      line-height: 2rem;
+      a {
+        &:hover, &:focus, &:focus-visible {
+          color: $colorBlueMed;
+          text-decoration: underline;
+        }
+        &:focus-visible {
+          border: $colorWhite solid 2px;
+          outline: $colorBlueMed solid 2px;
+          outline-offset: 0px;
+          border-radius: 4px;
+        }
+      }
+      .separator {
+        font-size: 1.25rem;
+        margin: 0 8px;
+      }
+    }
+  }
+}

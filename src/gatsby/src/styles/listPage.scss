@@ -12,10 +12,9 @@
       &:hover, &:focus-visible {
         text-decoration: underline !important;
       }
-      svg.MuiSvgIcon-root {
-        font-size: 1.25rem;
-        rotate: 270deg;
-        margin: 0 0 4px 8px;
+      svg.park-heading-icon {
+        font-size: 1rem;
+        margin: 0 0 2px 8px;
       }
     }
   }
@@ -32,8 +31,8 @@
     color: $colorBlue;
     font-size: 1rem;
     margin-bottom: 0;
-    svg.MuiSvgIcon-root {
-      font-size: 1rem;
+    svg.ban-icon {
+      font-size: 0.875rem;
       color: $colorRed;
     }
   }
@@ -92,8 +91,10 @@
           }
         }
       }
-      svg.MuiSvgIcon-root {
+      svg.ban-icon {
+        font-size: 1.25rem;
         color: $colorRed;
+        vertical-align: -0.25rem;
       }
     }
   }

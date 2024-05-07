@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import { graphql, useStaticQuery, Link as GatsbyLink } from "gatsby"
-import { Breadcrumbs, Link } from "@mui/material"
+import { graphql, useStaticQuery, Link } from "gatsby"
 
+import Breadcrumbs from "../../../components/breadcrumbs"
 import Header from "../../../components/header"
 import Footer from "../../../components/footer"
 import Seo from "../../../components/seo"
@@ -119,13 +119,13 @@ const ApprovedListPage = () => {
     "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
   ]
   const breadcrumbs = [
-    <Link key="1" href="/" underline="hover">
+    <Link key="1" to="/">
       Home
     </Link>,
-    <Link key="2" href="/about" underline="hover">
+    <Link key="2" to="/about">
       About
     </Link>,
-    <Link key="3" href="/about/management-plans" underline="hover">
+    <Link key="3" to="/about/management-plans">
       Management plans
     </Link>,
     <div key="4" className="breadcrumb-text">
@@ -139,9 +139,7 @@ const ApprovedListPage = () => {
         <Header mode="internal" content={menuContent} />
       </div>
       <div id="main-content" className="static-content--header unique-page--header page-breadcrumbs">
-        <Breadcrumbs separator="›" aria-label="breadcrumb">
-          {breadcrumbs}
-        </Breadcrumbs>
+        <Breadcrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="static-content-container">
         <h1 className="header-title">
@@ -167,7 +165,7 @@ const ApprovedListPage = () => {
         </p>
         <p>
           To learn more about what management plans are and how they are developed,
-          visit the <GatsbyLink to="/about/management-plans/planning-process">management planning process</GatsbyLink> page.
+          visit the <Link to="/about/management-plans/planning-process">management planning process</Link> page.
         </p>
       </div>
 

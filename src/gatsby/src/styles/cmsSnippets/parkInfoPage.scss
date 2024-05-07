@@ -24,7 +24,7 @@
   }
 }
 
-.MuiTypography-root.expand-link.expand-icon,
+.expand-link.expand-icon,
 .park-overview-link.expand-icon {
   display: inline-block;
   color: $colorBlueMed !important;
@@ -34,6 +34,12 @@
   &:hover, &:focus-visible {
     color: $colorBlue !important;
     text-decoration: underline !important;
+  }
+  &:focus-visible {
+    border-radius: 4px;
+    border: $colorWhite solid 2px;
+    outline: $colorBlueMed solid 2px;
+    outline-offset: 0px;
   }
   i {
     color: inherit;

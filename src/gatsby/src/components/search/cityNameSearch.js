@@ -3,7 +3,8 @@ import { graphql, useStaticQuery } from "gatsby"
 import { Typeahead, ClearButton, Menu, MenuItem } from "react-bootstrap-typeahead"
 import { Form } from "react-bootstrap"
 import PermissionToast from "./permissionToast"
-import NearMeIcon from "@mui/icons-material/NearMe"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faLocationArrow } from "@fortawesome/free-solid-svg-icons"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 
 let permissionDeniedCount = 0
@@ -275,7 +276,8 @@ const CityNameSearch = ({
                 : <MenuItem option={city} position={index} key={index}
                   className="current-location-text"
                 >
-                  <NearMeIcon />{currentLocation.cityName}
+                  <FontAwesomeIcon icon={faLocationArrow} className="location-icon" />
+                  {currentLocation.cityName}
                 </MenuItem>
             }
             )}

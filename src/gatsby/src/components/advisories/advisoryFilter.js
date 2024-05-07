@@ -1,88 +1,9 @@
 import React, { useState } from "react"
-import { styled } from '@mui/material/styles';
-import {
-  Box,
-  TextField,
-  InputAdornment,
-  Checkbox,
-  FormControlLabel,
-} from "@mui/material"
-import Autocomplete from '@mui/material/Autocomplete'
-import SearchIcon from "@mui/icons-material/Search"
+import Form from "react-bootstrap/Form"
+import { Typeahead } from "react-bootstrap-typeahead"
 
 import { getAdvisoryTypeFromUrl } from "../../utils/advisoryHelper";
 import "../../styles/advisories/advisoryFilter.scss"
-
-const PREFIX = 'AdvisoryFilter';
-
-const classes = {
-  searchBox: `${PREFIX}-searchBox`,
-  selectEndAdornment: `${PREFIX}-selectEndAdornment`,
-  filterElement: `${PREFIX}-filterElement`,
-  filterSearch: `${PREFIX}-filterSearch`,
-  filterType: `${PREFIX}-filterType`,
-  filterLabel: `${PREFIX}-filterLabel`,
-  filterBy: `${PREFIX}-filterBy`
-};
-
-const Root = styled('div')((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.searchBox}`]: {
-    marginRight: "10px",
-    width: "100%",
-  },
-  [`& .${classes.selectEndAdornment}`]: {
-    top: 0
-  },
-  [`& .${classes.filterElement}`]: {
-    [theme.breakpoints.up("sm")]: {
-      marginRight: "4%",
-    },
-    [theme.breakpoints.down("sm")]: {
-      marginBottom: "15px",
-      marginLeft: "10px",
-      "& .MuiCheckbox-root": {
-        marginRight: "0px",
-        paddingRight: "5px",
-      },
-    },
-  },
-  [`& .${classes.filterSearch}`]: {
-    [theme.breakpoints.down("sm")]: {
-      width: "99%",
-    },
-    [theme.breakpoints.up("sm")]: {
-      width: "25%",
-    },
-  },
-  [`& .${classes.filterType}`]: {
-    [theme.breakpoints.down("sm")]: {
-      width: "60%",
-    },
-    [theme.breakpoints.up("sm")]: {
-      width: "15%",
-    },
-  },
-  [`& .${classes.filterLabel}`]: {
-    fontWeight: "bold",
-    fontSize: "1rem",
-    lineHeight: "1.75rem",
-    color: "#1a1a1a",
-    fontFamily: "unset",
-    marginBottom: "0px",
-  },
-  [`& .${classes.filterBy}`]: {
-    [theme.breakpoints.up("sm")]: {
-      display: "inline-flex",
-      marginRight: "15px",
-      verticalAlign: "middle",
-      marginBottom: "10px",
-    },
-  }
-}));
 
 const AdvisoryFilter = ({
   eventTypes = [],
@@ -101,6 +22,7 @@ const AdvisoryFilter = ({
   const [filterText, setFilterText] = useState(getSearchText())
   const [isParksFilter, setIsParksFilter] = useState(getFilter("parks"))
   const [isKeywordFilter, setIsKeywordsFilter] = useState(getFilter("keyword"))
+  const [eventText, setEventText] = useState("")
 
   // Local handlers, calls to parent methods
   // will trigger useEffect functions in parent
@@ -127,130 +49,102 @@ const AdvisoryFilter = ({
     setIsKeywordsFilter(!isKeywordFilter)
     setFilter("keywords", !isKeywordFilter)
   }
+  const handleInputChange = (text) => {
+    setEventText(text)
+  }
 
   const getEventType = () => {
     return eventTypes.find((o) => o.value === getType()) || defaultEventType
   }
 
-
   return (
-    <Root className="advisory-filter-container">
+    <div className="advisory-filter-container">
       <div className="row">
         <div className="col-12 col-md-6">
-          <label htmlFor="advisory-search-text" className={classes.filterLabel}>
-            Search
-          </label>
-          <TextField
-            id="advisory-search-text"
-            variant="outlined"
-            placeholder="Search"
-            className={classes.searchBox + " h50p"}
-            value={filterText}
-            onChange={event => {
-              setFilterText(event.target.value)
-            }}
-            onKeyPress={ev => {
-              if (ev.key === "Enter") {
-                updateAdvisoriesSearchText(filterText)
-                ev.preventDefault()
-              }
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon className="search-icon" />
-                </InputAdornment>
-              ),
-            }}
-          />
+          <Form.Label><b>Search</b></Form.Label>
+          <div
+            className={`advisory-search has-text--${filterText.length > 0 ? 'true' : 'false'}`}
+          >
+            <Form.Group controlId="advisory-search">
+              <Form.Control
+                id="advisory-search"
+                placeholder=" "
+                value={filterText}
+                onChange={e =>
+                  setFilterText(e.target.value)
+                }
+                onKeyDown={e => {
+                  if (e.key === "Enter") {
+                    updateAdvisoriesSearchText(filterText)
+                    e.preventDefault()
+                  }
+                }}
+              />
+              <label htmlFor="advisory-search">
+                Search
+              </label>
+            </Form.Group>
+          </div>
         </div>
         <div className="col-7 col-md-4">
-          <label htmlFor="advisory-type" className={classes.filterLabel}>
-            Event
-          </label>
-          <Autocomplete
-            id="advisory-type"
-            aria-label="advisory-type"
-            defaultValue={defaultEventType}
-            value={getEventType()}
-            classes={{
-              endAdornment: classes.selectEndAdornment,
-            }}
-            className={"h50p"}
+          <Form.Label><b>Event</b></Form.Label>
+          <Typeahead
+            id="event-search-typeahead"
+            minLength={1}
+            labelKey="label"
+            placeholder=" "
+            className={`event-search-typeahead has-text--${eventText.length > 0 ? 'true' : 'false'}`}
+            clearButton
             options={eventTypes}
-            getOptionLabel={(option) => option.label}
-            onChange={(event, obj) => {
-                handleTypeFilterChange(obj ? obj.value : defaultEventType.value)
-              }
-            }
-            renderInput={(params) =>
-              <TextField
-                {...params}
-                variant="outlined"
-                placeholder={defaultEventType.label}
-              />
-            }
+            value={getEventType()}
+            defaultValue={defaultEventType}
+            onChange={e => handleTypeFilterChange(
+              e.length ? e[0].value : defaultEventType.value
+            )}
+            onInputChange={e => handleInputChange(e)}
+            renderInput={({ ref, ...props }) => (
+              <Form.Group controlId="event-search-typeahead">
+                <Form.Control ref={ref} {...props} />
+                <label htmlFor="event-search-typeahead">
+                  Select an event
+                </label>
+              </Form.Group>
+            )}
           />
         </div>
         <div className="col-5 col-md-2">
-          <label htmlFor="search-button" className={classes.filterLabel}>
-            <span className="sr-only">Search</span> &nbsp;
-          </label>
+          <Form.Label>&nbsp;</Form.Label>
           <button
-            id="search-button"
             aria-label="Search"
-            onClick={() => {
-              handleSearch()
-            }}
-            className="btn btn-primary h50p w-100"
+            onClick={handleSearch}
+            className="btn btn-primary w-100"
           >
             Search
           </button>
         </div>
       </div>
-
-      <Box sx={{ marginTop: "10px" }}>
-        <Box className={classes.filterBy}>
+      <div className="row mt-3">
+        <div className="col-auto">
           <b>Filters</b>
-        </Box>
-        <FormControlLabel
-          className={
-            classes.filterElement +
-            " " +
-            (isKeywordFilter ? "text-light-blue no-wrap" : "no-wrap")
-          }
-          control={
-            <Checkbox
-              checked={isKeywordFilter}
-              style={{ color: "#38598a" }}
-              onChange={event => {
-                handleKeywordsFilterChange()
-              }}
-              name="keywords"
-            />
-          }
-          label="Keywords"
-        />
-        <FormControlLabel
-          className={
-            classes.filterElement +
-            " " +
-            (isParksFilter ? "text-light-blue no-wrap" : "no-wrap")
-          }
-          control={
-            <Checkbox
-              checked={isParksFilter}
-              style={{ color: "#38598a" }}
-              onChange={event => {
-                handleParksFilterChange()
-              }}
-              name="parks"
-            />
-          }
-          label="Park names"
-        />
-      </Box>
-    </Root>
+        </div>
+        <div className="col-auto">
+          <Form.Check
+            type="checkbox"
+            label="Keywords"
+            checked={isKeywordFilter}
+            onChange={handleKeywordsFilterChange}
+          />
+        </div>
+        <div className="col-auto">
+          <Form.Check
+            type="checkbox"
+            label="Park names"
+            checked={isParksFilter}
+            onChange={handleParksFilterChange}
+          />
+        </div>
+      </div>
+    </div>
   );
 }
 

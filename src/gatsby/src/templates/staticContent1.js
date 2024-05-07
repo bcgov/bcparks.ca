@@ -1,8 +1,8 @@
 import React, { useRef } from "react"
 import { graphql, useStaticQuery } from "gatsby"
-import { Breadcrumbs } from "@mui/material"
 import useScrollSpy from "react-use-scrollspy"
 
+import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
 import Header from "../components/header"
 import HTMLArea from "../components/HTMLArea"
@@ -47,6 +47,7 @@ export default function StaticContent1({ pageContext }) {
 
   const menuContent = queryData?.allStrapiMenu?.nodes || []
   const pageContent = pageContext?.page?.Content
+  const breadcrumbs = renderBreadcrumbs(menuContent, pageContext?.page)
   const filteredContent = pageContent.filter(c =>
     Boolean(c.strapi_component !== "parks.page-header") &&
     Boolean(c.strapi_component !== "parks.seo")
@@ -153,9 +154,7 @@ export default function StaticContent1({ pageContext }) {
       {hasTitle && (
         <div className="static-content--header">
           <div id="main-content" className="page-breadcrumbs">
-            <Breadcrumbs separator="›" aria-label="breadcrumb">
-              {renderBreadcrumbs(menuContent, pageContext?.page)}
-            </Breadcrumbs>
+            <Breadcrumbs breadcrumbs={breadcrumbs} />
           </div>
           {headerContent.imageUrl && (
             <div className="header-image-wrapper">

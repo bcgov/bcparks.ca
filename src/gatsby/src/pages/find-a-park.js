@@ -2,13 +2,9 @@ import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { graphql, Link as GatsbyLink } from "gatsby"
 import axios from "axios"
 import { orderBy } from "lodash"
-import {
-  Chip,
-  Link,
-  LinearProgress,
-} from "@mui/material"
-import CancelIcon from "@mui/icons-material/Cancel"
-import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import ProgressBar from "react-bootstrap/ProgressBar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCircleXmark, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
 import { useQueryParamString } from 'react-use-query-param-string'
 
 import Footer from "../components/footer"
@@ -786,7 +782,7 @@ export default function FindAPark({ location, data }) {
                     href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000"
                   >
                     Map
-                    <OpenInNewIcon />
+                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="link-icon" />
                   </a>
                 </div>
               </div>
@@ -825,58 +821,54 @@ export default function FindAPark({ location, data }) {
                 {/* filter chips for mobile */}
                 <div className="d-block d-lg-none">
                   {filterSelections.length > 0 && filterSelections.map((f, index) => (
-                    <Chip
+                    <button
                       key={index}
-                      label={shortenFilterLabel(f.label)}
                       onClick={handleFilterDelete(f)}
                       onDelete={handleFilterDelete(f)}
-                      variant="outlined"
-                      className="park-filter-chip font-weight-bold"
-                      deleteIcon={<CancelIcon />}
-                    />
+                      className="btn btn-primary park-filter-chip"
+                    >
+                      {shortenFilterLabel(f.label)}
+                      <FontAwesomeIcon icon={faCircleXmark} className="close-icon" />
+                    </button>
                   ))}
                   {filterSelections.length > 0 && (
-                    <Link
-                      className="clear-filter-link"
+                    <button
+                      className="btn btn-link clear-filter-link"
                       onClick={handleClearFilter}
                       onKeyDown={e => handleKeyDownClearFilter(e)}
-                      tabIndex="0"
-                      role="button"
                     >
                       Clear filters
-                    </Link>
+                    </button>
                   )}
                 </div>
                 {/* filter chips for desktop */}
                 <div className="d-none d-lg-block">
                   {filterSelections.length > 0 && filterSelections.map((f, index) => (
-                    <Chip
+                    <button
                       key={index}
-                      label={shortenFilterLabel(f.label)}
                       onClick={handleFilterDelete(f)}
                       onDelete={handleFilterDelete(f)}
-                      variant="outlined"
-                      className="park-filter-chip font-weight-bold"
-                      deleteIcon={<CancelIcon />}
-                    />
+                      className="btn btn-primary park-filter-chip"
+                    >
+                      {shortenFilterLabel(f.label)}
+                      <FontAwesomeIcon icon={faCircleXmark} className="close-icon" />
+                    </button>
                   ))}
                   {filterSelections.length > 0 && (
-                    <Link
-                      className="clear-filter-link"
+                    <button
+                      className="btn btn-link clear-filter-link"
                       onClick={handleClearFilter}
                       onKeyDown={e => handleKeyDownClearFilter(e)}
-                      tabIndex="0"
-                      role="button"
                     >
                       Clear filters
-                    </Link>
+                    </button>
                   )}
                 </div>
               </div>
               <div className="search-results-list">
                 {(isLoading || acquiringGeolocation) && (
                   <div className="container mt-5">
-                    <LinearProgress />
+                    <ProgressBar animated now={100} />
                   </div>
                 )}
                 {(!isLoading && !acquiringGeolocation) && (

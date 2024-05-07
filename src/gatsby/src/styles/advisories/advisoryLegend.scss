@@ -6,16 +6,13 @@
 .advisory-legend {
   .advisory-legend-item {
     line-height: 1rem;
+    background-color: $colorBackgroundGrey;
+    margin: 2px;
+    padding: 16px;
 
     @include media-breakpoint-up(md) {
-      background: $colorBackgroundGrey;
       height: 100%;
       margin: 2px;
-      padding: 5% 5%;
-    }
-    @include media-breakpoint-down(sm) {
-      margin-left: 1rem;
-      margin-bottom: 1rem;
     }
 
     .legend-icon {
@@ -38,6 +35,9 @@
     padding: 0px 4px 0px 0px;
     margin: 0px;
     border-radius: 4px;
+    @include media-breakpoint-down(sm) {
+      padding: 0px;
+    }
   }
   .col:last-child {
     padding: 0px;

@@ -1,15 +1,5 @@
 @import "variables.scss";
 
-.MuiTypography-root {
-  font-family: $globalFont;
-  font-size: $bodyFont !important;
-}
-
-.MuiButton-root {
-  text-transform: none !important;
-  font-family: $globalFont;
-}
-
 h3.subtitle {
   color: $colorGrey;
   font-size: 1.25rem;
@@ -37,186 +27,130 @@ h3.subtitle {
 }
 
 .filter-options-container {
-  .MuiTypography-root {
-    color: $colorGrey;
-    line-height: 2;
-  }
-  .MuiIconButton-root .MuiSvgIcon-root {
-    font-size: 1.875rem;
-    color: $colorGrey;
-  }
+  margin-bottom: 0;
 
-  .MuiFormControlLabel-root {
-    align-items: flex-start;
-    margin-left: 0;
-    margin-right: 0;
+  // checkbox
+  .form-check {
+    display: flex;
+    position: static;
+    margin-bottom: 8px;
+    padding: 0;
+    input.form-check-input {
+      width: 2rem;
+      height: 2rem;
+      position: static;
+      border-color: $colorGreyMed;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0;
+      &:checked::before {
+        display: inline-block;
+        width: 2rem;
+        height: 2rem;
+        content: "\f00c";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        font-size: 1rem;
+        color: $colorWhite;
+        background-color: $colorBlue;
+        border-radius: 4px;
+        padding: 4px 0 0 8px;
+      }
+    }
+    label.form-check-label {
+      line-height: 2rem;
+      margin-left: 8px;
+    }
   }
 }
 
-.park-filter-dialog,
-.park-links-modal {
-  font-size: $bodyFont !important;
-  font-family: $globalFont;
-
-  .park-filter-title {
-    color: $colorGrey;
-  }
-
-  .park-filter-options {
-    background-color: $colorWhite !important;
-    border: 1px solid $colorBlue;
-    border-radius: 5px;
-  }
-
-  .park-filter-option-label {
-    height: 50px !important;
-    .flex-display {
-      align-items: center;
-      justify-content: space-between;
-      i {
-        font-size: 1rem;
-        color: $colorGreyMed;
-        margin-left: 6px;
-      }
+// modal
+.modal.park-filter-modal,
+.modal.park-links-modal {
+  .modal-dialog {
+    margin: auto 32px;
+    @media screen and (min-width: $smBreakpoint) {
+      margin: auto;
     }
   }
-
-  .park-filter-dialog-content .MuiTypography-root {
-    font-family: $globalFont;
-    font-size: $bodyFont !important;
-    &.MuiLink-underlineHover {
-      i {
-        font-size: 1rem;
-        margin-left: 6px;
+  .modal-dialog-scrollable {
+    height: 100vh;
+    align-items: center;
+  }
+  .modal-content {
+    background-color: $colorBackgroundGrey;
+    .park-filter-modal-content {
+      &--header {
+        display: flex;
+        justify-content: space-between;
+        button.btn {
+          color: $colorGrey;
+          height: 24px;
+          width: 24px;
+          font-size: 1.25rem;
+          padding: 0;
+        }
       }
-    }
-  }
-
-  .park-filter-dialog-content, .park-filter-dialog-action {
-    padding: 16px !important;
-  }
-
-  .park-filter-dialog-content {
-    &--header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      h1 {
+      .expand-link {
         margin-bottom: 0;
+        i {
+          font-size: 1rem;
+          margin-left: 6px;
+        }
       }
-      button {
-        color: $colorGrey;
-        &:hover {
-          background-color: none;
+      .park-filter-options {
+        background-color: $colorWhite !important;
+        border: 1px solid $colorGreyMed;
+        border-radius: 4px;
+        margin-top: 16px;
+        .park-filter-option-label {
+          height: 50px !important;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          i {
+            font-size: 1rem;
+            color: $colorGreyMed;
+            margin-left: 6px;
+          }
         }
       }
     }
-  }
-
-  .MuiDialog-paperWidthSm {
-    border-radius: 0px !important;
-    background-color: $colorBackgroundGrey !important;
-    width: 1000px !important;
-    max-width: 1000px !important;
-    height: 100%;
-    max-height: 100%;
-    margin: 0px;
-    @media screen and (min-width: $smBreakpoint) {
-      height: auto;
-      max-height: auto;
-      margin: 16px;
+    .park-links-modal-content {
+      a.btn {
+        width: 100%;
+        &.link-button {
+          margin-top: 8px;
+          svg.link-icon {
+            font-size: 0.875rem;
+            margin-left: 4px;
+          }
+        }
+      }
+    }
+  
+    .modal-footer {
+      .clear-filter-link {
+        margin: 0 !important;
+      }
     }
   }
 }
-.park-filter-dialog,
+
 .search-results-main {
-  .MuiCheckbox-root {
-    color: $colorBlue !important;
-    background-color: #fff;
-    border-radius: 4px;
-    padding: 0px !important;
-    margin-right: 10px;
-    &.Mui-disabled {
-      color: $colorGreyLight !important;
-      background-color: #e4e4e4;
+  // filter chip
+  .btn.park-filter-chip {
+    height: auto;
+    border-radius: 32px;
+    font-size: 0.875rem;
+    margin: 0 8px 8px 0;
+    padding: 4px 12px;
+    svg.close-icon {
+      font-size: 1rem;
+      margin-left: 8px;
     }
   }
 
-  .MuiCheckbox-root:hover {
-    background-color: $colorBackgroundGrey !important;
-  }
-
-  .no-filters-text {
-    font-style: italic;
-    text-align: center;
-    padding: 15px;
-  }
-
-  .park-filter-text {
-    .MuiOutlinedInput-root {
-      border-radius: 5px !important;
-      background-color: $colorWhite !important;
-      font-family: $globalFont;
-      font-size: $bodyFont !important;
-      height: 50px;
-    }
-  }
-
-  .MuiButton-root {
-    font-size: $bodyFont !important;
-    width: 100% !important;
-    border-radius: 5px !important;
-  }
-
-  div[class$="-placeholder"] {
-    color: #9b9b9b !important;
-    font-family: $globalFont;
-  }
-
-  .park-filter-chip-list-container {
-    padding: 10px 20px !important;
-  }
-
-  .park-filter-chip-list {
-    border: none !important;
-    padding-right: 10px;
-    margin-top: -5px;
-  }
-
-  .close-icon-blue {
-    color: $colorBlue;
-  }
-
-  .park-filter-chip {
-    background-color: $colorBlue !important;
-    border: none;
-    margin: 0 8px 8px 0 !important;
-    &:hover,
-    &:focus {
-      background-color: $colorBlueMed !important;
-    }
-    &:focus-visible {
-      outline: 2px solid $colorBlueMed;
-      outline-offset: 2px;
-    }
-
-    .MuiChip-label {
-      color: $colorWhite !important;
-      padding: 0 14px !important;
-    }
-
-    .MuiChip-deleteIcon {
-      color: $colorWhite !important;
-      margin-right: 8px;
-    }
-  }
-
-  .MuiChip-label {
-    color: $colorBlue !important;
-    font-size: 0.8rem !important;
-    font-family: $globalFont;
-  }
   .park-select-label {
     font-size: $bodyFont !important;
   }
@@ -270,22 +204,6 @@ div[class$="-singleValue"] {
     }
   }
 }
-.park-links-modal {
-  .container {
-    max-width: 300px;
-    padding: 16px;
-    a.btn {
-      width: 100%;
-      &.link-button {
-        margin-top: 8px;
-        svg.MuiSvgIcon-root {
-          font-size: inherit;
-          margin-left: 4px;
-        }
-      }
-    }
-  }
-}
 .load-more-button-container {
   display: flex;
   justify-content: center;
@@ -306,7 +224,6 @@ div[class$="-singleValue"] {
 }
 
 .h50p,
-.h50p .MuiInputBase-root,
 .h50p [class*="-control"],
 .h50p button {
   height: 50px !important;
@@ -335,10 +252,6 @@ div[class$="-singleValue"] {
 
 .text-light-blue {
   color: $colorBlueMed !important;
-
-  .MuiTypography-root {
-    color: $colorBlueMed !important;
-  }
 }
 
 .link {
@@ -347,18 +260,13 @@ div[class$="-singleValue"] {
 
 .clear-filter-link {
   display: inline-block;
-  color: $colorBlue !important;
-  cursor: pointer;
+  color: $colorBlueMed;
   margin: 0 8px !important;
-}
-
-.expand-link {
-  color: $colorBlue !important;
-  cursor: pointer;
-  svg.MuiSvgIcon-root {
-    color: $colorGreyMed;
-    font-size: 1.5rem;
-    margin: 0 0 2px 8px;
+  &:focus-visible {
+    border: $colorWhite solid 2px;
+    outline: $colorBlueMed solid 2px;
+    outline-offset: 0px;
+    border-radius: 4px;
   }
 }
 
@@ -404,7 +312,7 @@ div[class$="-singleValue"] {
       z-index: 1;
       pointer-events: none;
       color: rgba($colorWhite, .6);
-      .MuiSvgIcon-root {
+      svg {
         width: 8px;
         height: 8px;
         margin: 0 4px;
@@ -465,26 +373,17 @@ div[class$="-singleValue"] {
   height: 32px !important;
 }
 
-.search-result-card {
-  min-height: 300px !important;
-  .park-overview-icon {
-    width: 24px;
-    height: 24px;
-  }
-}
-
 .park-heading-text {
   color: $colorBlue;
   font-size: 1.25rem;
   line-height: 2rem;
   text-wrap: balance;
   margin-bottom: 4px;
-  .park-heading-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    font-size: 1.25rem;
-    rotate: 270deg;
-    margin: 0 0 4px 8px;
+  svg.park-heading-icon {
+    width: 1rem;
+    height: 1rem;
+    font-size: 1rem;
+    margin: 0 0 2px 8px;
   }
 }
 
@@ -515,16 +414,18 @@ div[class$="-singleValue"] {
         border-radius: 4px; 
       }
       &.map-link {
-        svg.MuiSvgIcon-root {
-          font-size: 1rem;
+        svg.link-icon {
+          font-size: 0.875rem;
+          margin-left: 4px;
         }
       }
     }
   }
 
   .search-results-quick-filter {
-    .MuiLink-underlineHover {
+    .show-all-link {
       color: $colorBlueMed;
+      text-decoration: none;
       &:hover, &:focus-visible {
         color: $colorBlue;
         text-decoration: underline;
@@ -562,7 +463,9 @@ div[class$="-singleValue"] {
   }
 
   .park-card {
-    padding: 0px !important;
+    background-color: $colorWhite;
+    border-radius: 10px;
+    overflow: hidden;
   }
 
   .park-card-desktop {
@@ -618,6 +521,10 @@ div[class$="-singleValue"] {
     }
   }
 
+  .progress-bar {
+    background-color: $colorBlueMed;
+  }
+
   // park card icon
   .access-status-icon, .campfire-ban-icon {
     font-size: 0.875rem;
@@ -661,11 +568,6 @@ div[class$="-singleValue"] {
     }
   }
 
-  .MuiPaper-elevation1 {
-    box-shadow: none !important;
-    border-radius: 10px !important;
-  }
-
   @media (min-width: 1200px) {
     .container {
       max-width: 1440px !important;
@@ -688,7 +590,7 @@ div[class$="-singleValue"] {
   .no-results-header {
     display: flex;
     margin-bottom: 24px;
-    svg.MuiSvgIcon-root {
+    svg.search-icon {
       font-size: 3rem;
       @media (max-width: $smBreakpoint) {
         display: none;
@@ -717,8 +619,9 @@ div[class$="-singleValue"] {
   a {
     text-decoration: underline;
     &.map-link {
-      svg.MuiSvgIcon-root {
-        font-size: 1rem !important;
+      svg.link-icon {
+        font-size: 0.875rem !important;
+        margin-left: 4px;
       }
     }
   }
@@ -768,7 +671,9 @@ a.mobile-park-link {
   }
 }
 
-// new park name and city name search form
+// park name search, city name search, advisory search
+.advisory-search,
+.event-search-typeahead,
 .park-search-typeahead,
 .city-search-typeahead {
   width: 100%;
@@ -832,6 +737,8 @@ a.mobile-park-link {
     margin: 0;
     padding: 16px;
     a.dropdown-item {
+      color: $colorGrey !important;
+      text-decoration: none !important;
       overflow: visible;
       white-space: normal;
       margin-top: 16px;
@@ -840,18 +747,18 @@ a.mobile-park-link {
         margin-top: 0;
       }
       &:hover, &:focus, &:active, &.active {
-        color: $colorGrey;
         background-color: transparent;
-        text-decoration: underline;
+        text-decoration: underline !important;
       }
       &.no-suggestion-text {
         cursor: default;
         text-decoration: none;
       }
       &.current-location-text {
-        svg.MuiSvgIcon-root {
+        svg.location-icon {
+          font-size: 1.125rem;
           color: $colorGreyMed;
-          font-size: 1.25rem;
+          vertical-align: -0.2rem;
           margin-right: 8px;
         }
       }

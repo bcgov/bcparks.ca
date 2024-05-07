@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
-import { graphql, useStaticQuery, Link as GatsbyLink } from "gatsby"
-import { Breadcrumbs, Link } from "@mui/material"
-import BlockIcon from '@mui/icons-material/Block'
-import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
+import { graphql, useStaticQuery, Link } from "gatsby"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faBan, faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
 
+import Breadcrumbs from "../../components/breadcrumbs"
 import Header from "../../components/header"
 import Footer from "../../components/footer"
 import Seo from "../../components/seo"
@@ -61,10 +61,10 @@ const ParkLink = ({ park, advisories }) => {
     <div className="park-list operating-dates-list">
       <div className="d-md-flex justify-content-between mb-2">
         <h2 className="mb-0">
-          <GatsbyLink to={`/${park.slug}`}>
+          <Link to={`/${park.slug}`}>
             {park.protectedAreaName}
-            <ExpandCircleDownIcon />
-          </GatsbyLink>
+            <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
+          </Link>
         </h2>
       </div>
       <div className="mb-3">
@@ -104,7 +104,7 @@ const ParkLink = ({ park, advisories }) => {
                 {!subArea.isOpen &&
                   <>
                     <br />
-                    {"("}<BlockIcon /> Temporarily closed{")"}
+                    {"("}<FontAwesomeIcon icon={faBan} className="ban-icon" /> Temporarily closed{")"}
                   </>
                 }
                 {subArea.isCleanAirSite &&
@@ -163,7 +163,7 @@ const ParkLink = ({ park, advisories }) => {
                 <h4>{subArea.parkSubArea}</h4>
               </div>
               {!subArea.isOpen &&
-                <h5 className="mt-2">{"("}<BlockIcon /> Temporarily closed{")"}</h5>
+                <h5 className="mt-2">{"("}<FontAwesomeIcon icon={faBan} className="ban-icon" /> Temporarily closed{")"}</h5>
               }
               {subArea.isCleanAirSite &&
                 <h5 className="mt-2">{"("}Clean air site{")"}</h5>
@@ -336,10 +336,10 @@ const ParkOperatingDatesPage = () => {
     "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
   ]
   const breadcrumbs = [
-    <Link key="1" href="/" underline="hover">
+    <Link key="1" to="/">
       Home
     </Link>,
-    <Link key="2" href="/plan-your-trip" underline="hover">
+    <Link key="2" to="/plan-your-trip">
       Plan your trip
     </Link>,
     <div key="3" className="breadcrumb-text">
@@ -353,9 +353,7 @@ const ParkOperatingDatesPage = () => {
         <Header mode="internal" content={menuContent} />
       </div>
       <div id="main-content" className="static-content--header unique-page--header page-breadcrumbs">
-        <Breadcrumbs separator="›" aria-label="breadcrumb">
-          {breadcrumbs}
-        </Breadcrumbs>
+        <Breadcrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="static-content-container">
         <h1 className="header-title">
@@ -366,27 +364,27 @@ const ParkOperatingDatesPage = () => {
         <div className="intro-text-container">
           <p>
             This page provides a list of planned operating dates for BC Parks and their facilities.
-            All dates are subject to change without notice. Be sure to <GatsbyLink to="/find-a-park">check the park</GatsbyLink> page
-            or the <GatsbyLink to="/active-advisories">active advisories</GatsbyLink> page for warnings and closures.
+            All dates are subject to change without notice. Be sure to <Link to="/find-a-park">check the park</Link> page
+            or the <Link to="/active-advisories">active advisories</Link> page for warnings and closures.
           </p>
           <ul>
             <li>
               <b>Main operating season: </b>
               During these dates, the facility is open, and operates with full services.
               Any fees are charged at the regular rate. Parks may have different services and fees,
-              so <GatsbyLink to="/find-a-park">check the park</GatsbyLink> page for details.
+              so <Link to="/find-a-park">check the park</Link> page for details.
             </li>
             <li>
               <b>Winter season: </b>
               During these dates, the facility is open, but may offer limited services and charge a reduced winter camping fee.
-              {" "}<GatsbyLink to="/find-a-park">Check the park</GatsbyLink> page for details.
+              {" "}<Link to="/find-a-park">Check the park</Link> page for details.
               When a facility is not operating, there are no fees and no services provided.
             </li>
             <li>
               <b>Booking required: </b>
-              During these dates, <GatsbyLink to="/reservations">reservations</GatsbyLink> are available,
-              or you must purchase a <GatsbyLink to="/reservations/backcountry-camping/permit-registration">backcountry permit</GatsbyLink>.
-              To find out which booking you need, <GatsbyLink to="/find-a-park">check the park</GatsbyLink> page.
+              During these dates, <Link to="/reservations">reservations</Link> are available,
+              or you must purchase a <Link to="/reservations/backcountry-camping/permit-registration">backcountry permit</Link>.
+              To find out which booking you need, <Link to="/find-a-park">check the park</Link> page.
               If a reservable campground is open outside of these dates, sites are available on a first come, first served basis.
             </li>
           </ul>

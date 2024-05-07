@@ -1,8 +1,8 @@
 import React, { useRef } from "react"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
-import { Breadcrumbs } from "@mui/material"
 import useScrollSpy from "react-use-scrollspy"
 
+import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
 import Header from "../components/header"
 import HTMLArea from "../components/HTMLArea"
@@ -102,9 +102,7 @@ export default function ParkSubPage({ data }) {
       </div>
       <div className="static-content--header">
         <div id="main-content" className="page-breadcrumbs">
-          <Breadcrumbs separator="›" aria-label="breadcrumb">
-            {breadcrumbs}
-          </Breadcrumbs>
+          <Breadcrumbs breadcrumbs={breadcrumbs} />
         </div>
         {header?.imageUrl && (
           <div className="header-image-wrapper">

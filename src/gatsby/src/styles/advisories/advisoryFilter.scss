@@ -1,24 +1,42 @@
 @import "../variables.scss";
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
 
 .advisory-filter-container {
-  @include media-breakpoint-up(md) {
-    background: $colorBackgroundGrey;
-    padding: 1rem;
-    margin: 0;
+  background: $colorBackgroundGrey;
+  padding: 16px;
+
+  .advisory-search {
+    position: relative;
   }
 
-  .MuiInputBase-root {
-    background: $colorWhite;
-    .MuiOutlinedInput-notchedOutline {
+  .form-check {
+    display: flex;
+    position: static;
+    padding: 0;
+    input.form-check-input {
+      width: 1.5rem;
+      height: 1.5rem;
+      position: static;
       border-color: $colorGreyMed;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0;
+      &:checked::before {
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        content: "\f00c";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        font-size: 0.875rem;
+        color: $colorWhite;
+        background-color: $colorBlue;
+        border-radius: 4px;
+        padding: 2px 0 0 5px;
+      }
     }
-  }
-  // required for accessibility
-  .MuiInputBase-input:focus,
-  .MuiInputBase-input:focus-visible {
-    outline: unset !important;
+    label.form-check-label {
+      line-height: 1.5rem;
+      margin-left: 8px;
+    }
   }
 }

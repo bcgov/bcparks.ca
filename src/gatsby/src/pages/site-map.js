@@ -1,7 +1,7 @@
 import React from "react"
-import { graphql } from "gatsby"
-import { Link, Breadcrumbs } from "@mui/material"
+import { graphql, Link } from "gatsby"
 
+import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
 import Header from "../components/header"
 import MegaMenu from "../components/megaMenu.js"
@@ -14,8 +14,7 @@ const SitemapPage = ({ data }) => {
   const menuContent = data?.allStrapiMenu?.nodes || []
 
   const breadcrumbs = [
-    // TODO convert MUI breadcrumbs and use gatsby Link
-    <Link key="1" href="/" underline="hover">
+    <Link key="1" to="/">
       Home
     </Link>,
     <div key="2" className="breadcrumb-text">
@@ -27,9 +26,7 @@ const SitemapPage = ({ data }) => {
     <>
       <Header mode="internal" content={menuContent} />
       <div id="main-content" className="static-content--header unique-page--header page-breadcrumbs">
-        <Breadcrumbs separator="›" aria-label="breadcrumb">
-          {breadcrumbs}
-        </Breadcrumbs>
+        <Breadcrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="static-content-container">
         <h1 className="header-title">
