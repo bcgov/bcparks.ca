@@ -56,6 +56,12 @@ module.exports = {
             singularName: "page",
             queryParams: {
               populate: {
+                PageHeader: {
+                  fields: "*"
+                },
+                Seo: {
+                  fields: "*"
+                },
                 Content: {
                   populate: ["cards"]
                 }
