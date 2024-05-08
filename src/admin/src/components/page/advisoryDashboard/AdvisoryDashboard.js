@@ -428,7 +428,6 @@ export default function AdvisoryDashboard({
     {
       field: "advisoryDate",
       title: "Posting date",
-      type: "date",
       render: (rowData) => {
         if (rowData.advisoryDate)
           return <Moment format="YYYY/MM/DD">{rowData.advisoryDate}</Moment>;
@@ -437,7 +436,6 @@ export default function AdvisoryDashboard({
     {
       field: "endDate",
       title: "End date",
-      type: "date",
       render: (rowData) => {
         if (rowData.endDate) {
           return <Moment format="YYYY/MM/DD">{rowData.endDate}</Moment>;
@@ -447,7 +445,6 @@ export default function AdvisoryDashboard({
     {
       field: "expiryDate",
       title: "Expiry date",
-      type: "date",
       render: (rowData) => {
         if (rowData.expiryDate)
           return <Moment format="YYYY/MM/DD">{rowData.expiryDate}</Moment>;
