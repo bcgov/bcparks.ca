@@ -54,8 +54,12 @@ export default function StaticContent1({ pageContext }) {
   const headerContent = pageContents.find(c => c.strapi_component === "parks.page-header") || {}
   // New non-repeatable page header component
   const pageHeader = page?.PageHeader || null
+  const hasPageHeader =
+    pageHeader?.pageTitle &&
+    pageHeader?.imageUrl &&
+    pageHeader?.introHtml.data.introHtml.length > 0
   const hasPageHeaderIntro = (
-    pageHeader.introHtml.data.introHtml || headerContent.introHtml.data.introHtml)
+    pageHeader?.introHtml.data.introHtml.length > 0 || headerContent?.introHtml.data.introHtml.length > 0)
   const sectionContents = pageContents.filter(c => c.strapi_component === "parks.page-section") || []
   const hasSections = sectionContents.length > 0
   const breadcrumbs = renderBreadcrumbs(menuContents, pageContext?.page)
@@ -128,16 +132,16 @@ export default function StaticContent1({ pageContext }) {
         </div>
         {/* Display new non-repeatable pageHeader component if exists */}
         {/* Otherwise, display old repeatable seo/pageHeader component */}
-        {pageHeader ? (
+        {(hasPageHeader && hasPageHeader !== null) ? (
           <>
             <div className="header-image-wrapper">
               <img
                 src={pageHeader.imageUrl}
-                alt={pageHeader.pageTitle || page.Title}
+                alt={pageHeader.pageTitle}
               />
             </div>
             <h1 className="header-title">
-              {pageHeader.pageTitle || page.Title}
+              {pageHeader.pageTitle}
             </h1>
           </>
         ) : (
@@ -179,7 +183,7 @@ export default function StaticContent1({ pageContext }) {
                 {/* Otherwise, display old repeatable seo/pageHeader component */}
                 {hasPageHeaderIntro && (
                   <div className="header-content">
-                    {pageHeader.introHtml.data.introHtml ? (
+                    {(hasPageHeader && hasPageHeader !== null) ? (
                       <HTMLArea isVisible>{pageHeader.introHtml.data.introHtml}</HTMLArea>
                     ) : (
                       <HTMLArea isVisible>{headerContent.introHtml.data.introHtml}</HTMLArea>
@@ -205,7 +209,7 @@ export default function StaticContent1({ pageContext }) {
               {/* Otherwise, display old repeatable seo/pageHeader component */}
               {hasPageHeaderIntro && (
                 <div className="header-content">
-                  {pageHeader.introHtml.data.introHtml ? (
+                  {(hasPageHeader && hasPageHeader !== null) ? (
                     <HTMLArea isVisible>{pageHeader.introHtml.data.introHtml}</HTMLArea>
                   ) : (
                     <HTMLArea isVisible>{headerContent.introHtml.data.introHtml}</HTMLArea>
@@ -244,20 +248,11 @@ export const Head = ({ pageContext }) => {
   return (
     // Display new non-repeatable seo/pageHeader component if exists
     // Otherwise, display old repeatable seo/pageHeader component
-    seo ? (
-      <Seo
-        title={seo?.metaTitle || page?.Title}
-        description={seo?.metaDescription}
-        keywords={seo?.metaKeywords}
-        image={pageHeader?.imageUrl || headerContent?.imageUrl}
-      />
-    ) : (
-      <Seo
-        title={meta?.metaTitle || page?.Title}
-        description={meta?.metaDescription}
-        keywords={meta?.metaKeywords}
-        image={pageHeader?.imageUrl || headerContent?.imageUrl}
-      />
-    )
+    <Seo
+      title={seo?.metaTitle || meta?.metaTitle}
+      description={seo?.metaDescription || meta?.metaDescription}
+      keywords={seo?.metaKeywords || meta?.metaKeywords}
+      image={pageHeader?.imageUrl || headerContent?.imageUrl}
+    />
   )
 }

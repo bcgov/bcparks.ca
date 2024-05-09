@@ -51,6 +51,10 @@ const LandingPage = ({ pageContext }) => {
   // New non-repeatable page header component
   const pageHeader = page?.PageHeader || null
   const breadcrumbs = renderBreadcrumbs(menuContents, pageContext?.page)
+  const hasPageHeader =
+    pageHeader?.pageTitle &&
+    pageHeader?.imageUrl &&
+    pageHeader?.introHtml.data.introHtml.length > 0
 
   return (
     <>
@@ -59,7 +63,7 @@ const LandingPage = ({ pageContext }) => {
       <div id="intro-content" className="bcp-landing-intro">
         {/* Display new non-repeatable pageHeader component if exists */}
         {/* Otherwise, display old repeatable pageHeader component */}
-        {pageHeader ? (
+        {(hasPageHeader && hasPageHeader !== null) ? (
           <>
             <div
               className="bcp-landing-intro__image"
@@ -147,18 +151,10 @@ export const Head = ({ pageContext }) => {
   return (
     // Display new non-repeatable seo component if exists
     // Otherwise, display old repeatable seo component
-    seo ? (
-      <Seo
-        title={seo?.metaTitle || page?.Title}
-        description={seo?.metaDescription}
-        keywords={seo?.metaKeywords}
-      />
-    ) : (
-      <Seo
-        title={meta?.metaTitle || page?.Title}
-        description={meta?.metaDescription}
-        keywords={meta?.metaKeywords}
-      />
-    )
+    <Seo
+      title={seo?.metaTitle || meta?.metaTitle}
+      description={seo?.metaDescription || meta?.metaDescription}
+      keywords={seo?.metaKeywords || meta?.metaKeywords}
+    />
   )
 }
