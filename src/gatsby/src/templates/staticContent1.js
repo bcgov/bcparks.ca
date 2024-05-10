@@ -57,9 +57,9 @@ export default function StaticContent1({ pageContext }) {
   const hasPageHeader =
     pageHeader?.pageTitle &&
     pageHeader?.imageUrl &&
-    pageHeader?.introHtml.data.introHtml.length > 0
+    pageHeader?.introHtml?.data?.introHtml.length > 0
   const hasPageHeaderIntro = (
-    pageHeader?.introHtml.data.introHtml.length > 0 || headerContent?.introHtml.data.introHtml.length > 0)
+    pageHeader?.introHtml?.data?.introHtml.length > 0 || headerContent?.introHtml?.data?.introHtml.length > 0)
   const sectionContents = pageContents.filter(c => c.strapi_component === "parks.page-section") || []
   const hasSections = sectionContents.length > 0
   const breadcrumbs = renderBreadcrumbs(menuContents, pageContext?.page)
