@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 import { graphql, useStaticQuery, Link } from "gatsby"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBan, faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
+import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
 
 import Breadcrumbs from "../../components/breadcrumbs"
 import Header from "../../components/header"
@@ -101,12 +101,6 @@ const ParkLink = ({ park, advisories }) => {
                   <StaticIcon name={subArea.typeIcon} size={32} />
                   {subArea.parkSubArea}
                 </div>
-                {!subArea.isOpen &&
-                  <>
-                    <br />
-                    {"("}<FontAwesomeIcon icon={faBan} className="ban-icon" /> Temporarily closed{")"}
-                  </>
-                }
                 {subArea.isCleanAirSite &&
                   <>
                     <br />
@@ -162,9 +156,6 @@ const ParkLink = ({ park, advisories }) => {
                 <StaticIcon name={subArea.typeIcon} size={32} />
                 <h4>{subArea.parkSubArea}</h4>
               </div>
-              {!subArea.isOpen &&
-                <h5 className="mt-2">{"("}<FontAwesomeIcon icon={faBan} className="ban-icon" /> Temporarily closed{")"}</h5>
-              }
               {subArea.isCleanAirSite &&
                 <h5 className="mt-2">{"("}Clean air site{")"}</h5>
               }
