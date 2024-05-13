@@ -26,6 +26,10 @@
     },
     "description": {
       "type": "text"
+    },
+    "hidesSeasonalAdvisory": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

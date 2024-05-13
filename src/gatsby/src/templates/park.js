@@ -104,7 +104,7 @@ export default function ParkTemplate({ data }) {
   const [isLoadingProtectedArea, setIsLoadingProtectedArea] = useState(true)
   const [hasCampfireBan, setHasCampfireBan] = useState(false)
   const [parkAccessStatus, setParkAccessStatus] = useState(null)
-  const [addedWinterGateAdvisory, setAddedWinterGateAdvisory] = useState(false)
+  const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
 
   useEffect(() => {
     setIsLoadingAdvisories(true)
@@ -283,14 +283,22 @@ export default function ParkTemplate({ data }) {
 
   const parkName = park.protectedAreaName;
 
-  // add seasonal advisory
-  if (parkAccessStatus?.mainGateClosure && !addedWinterGateAdvisory) {
-    advisories.push(WINTER_FULL_PARK_ADVISORY);
-    setAddedWinterGateAdvisory(true);
-  }
-  else if (parkAccessStatus?.areaClosure && !addedWinterGateAdvisory) {
-    advisories.push(WINTER_SUB_AREA_ADVISORY);
-    setAddedWinterGateAdvisory(true);
+  if (!addedSeasonalAdvisory) {
+    // suppress any seasonal advisories if another advisory overrides them.
+    // usually this is due to some sort of full park closure event.
+    if (advisories.some(a => a.accessStatus?.hidesSeasonalAdvisory)) {
+      setAddedSeasonalAdvisory(true);
+    }
+    // add park-level seasonal advisory
+    if (parkAccessStatus?.mainGateClosure) {
+      advisories.push(WINTER_FULL_PARK_ADVISORY);
+      setAddedSeasonalAdvisory(true);
+    }
+    // add subarea seasonal advisory
+    else if (parkAccessStatus?.areaClosure) {
+      advisories.push(WINTER_SUB_AREA_ADVISORY);
+      setAddedSeasonalAdvisory(true);
+    }
   }
 
   const breadcrumbs = [

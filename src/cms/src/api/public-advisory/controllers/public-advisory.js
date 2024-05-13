@@ -102,7 +102,15 @@ module.exports = createCoreController(
             let pagination;
 
             ctx.query.populate = {
-                accessStatus: { fields: ["accessStatus", "precedence", "color", "groupLabel"] },
+                accessStatus: {
+                    fields: [
+                        "accessStatus",
+                        "precedence",
+                        "color",
+                        "groupLabel",
+                        "hidesSeasonalAdvisory"
+                    ]
+                },
                 eventType: { fields: ["eventType", "precedence"] },
                 urgency: { fields: ["urgency", "code", "sequence", "color"] },
                 advisoryStatus: { fields: ["advisoryStatus", "code"] },
