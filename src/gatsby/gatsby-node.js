@@ -100,7 +100,72 @@ exports.createSchemaCustomization = ({ actions }) => {
     closureAffectsAccessStatus: Boolean
   }
 
+  type STRAPI__COMPONENT_PARKS_PAGE_HEADER_INTROHTML_TEXTNODE implements Node @dontInfer {
+    introHtml: String
+  }
+  
+  type STRAPI__COMPONENT_PARKS_PAGE_HEADER_INTROHTML implements Node {
+    data: STRAPI__COMPONENT_PARKS_PAGE_HEADER_INTROHTML_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI__COMPONENT_PARKS_PAGE_HEADER implements Node {
+    strapi_id: Int
+    strapi_component: String
+    pageTitle: String
+    imageUrl: String
+    introHtml: STRAPI__COMPONENT_PARKS_PAGE_HEADER_INTROHTML
+  }
+
+  type STRAPI__COMPONENT_PARKS_PAGE_SECTION_SECTIONHTML_TEXTNODE implements Node @dontInfer {
+    sectionHTML: String
+  }
+  
+  type STRAPI__COMPONENT_PARKS_PAGE_SECTION implements Node @derivedTypes @dontInfer {
+    strapi_id: Int
+    strapi_component: String
+    sectionTitle: String
+    sectionHTML: STRAPI__COMPONENT_PARKS_PAGE_SECTIONSectionHTML
+  }
+  
+  type STRAPI__COMPONENT_PARKS_PAGE_SECTIONSectionHTML {
+    data: STRAPI__COMPONENT_PARKS_PAGE_SECTION_SECTIONHTML_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+  
+  type STRAPI__COMPONENT_PARKS_HTML_AREA_HTML_TEXTNODE implements Node @dontInfer {
+    HTML: String
+  }
+
+  type STRAPI__COMPONENT_PARKS_HTML_AREA_HTML {
+    data: STRAPI__COMPONENT_PARKS_HTML_AREA_HTML_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI__COMPONENT_PARKS_HTML_AREA implements Node @derivedTypes @dontInfer {
+    strapi_id: Int
+    strapi_component: String
+    HTML: STRAPI__COMPONENT_PARKS_HTML_AREA_HTML
+  }  
+
+  type STRAPI__COMPONENT_PARKS_LINK_CARD implements Node @dontInfer {
+    strapi_id: Int
+    strapi_component: String
+    title: String
+    url: String
+    imageUrl: String
+    imageAltText: String
+    subTitle: String
+    buttonText: String
+    variation: String
+  }
+
+  type STRAPI__COMPONENT_PARKS_CARD_SET implements Node @dontInfer {
+    strapi_id: Int
+    strapi_component: String
+    cards: [STRAPI__COMPONENT_PARKS_LINK_CARD] @link(by: "id", from: "cards___NODE")
+  }
+
   type STRAPI__COMPONENT_PARKS_SEO implements Node {
+    strapi_id: Int
+    strapi_component: String
     metaKeywords: String
     metaTitle: String
     metaDescription: String
@@ -160,6 +225,16 @@ exports.createSchemaCustomization = ({ actions }) => {
     order: Int
     url: String
     strapi_children: [STRAPI_FOOTER_MENU_CHILDREN]
+  }
+
+  union ContentUnion = STRAPI__COMPONENT_PARKS_CARD_SET | STRAPI__COMPONENT_PARKS_HTML_AREA | STRAPI__COMPONENT_PARKS_LINK_CARD | STRAPI__COMPONENT_PARKS_PAGE_HEADER | STRAPI__COMPONENT_PARKS_PAGE_SECTION | STRAPI__COMPONENT_PARKS_SEO
+  type STRAPI_PAGE implements Node @dontInfer {
+    Slug: String
+    Title: String
+    Template: String
+    PageHeader: STRAPI__COMPONENT_PARKS_PAGE_HEADER
+    Seo: STRAPI__COMPONENT_PARKS_SEO
+    Content: [ContentUnion] @link(by: "id", from: "Content___NODE")
   }
   `
   createTypes(typeDefs)
