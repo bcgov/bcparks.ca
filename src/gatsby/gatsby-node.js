@@ -174,6 +174,20 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         Slug
         Title
         Template
+        PageHeader {
+          pageTitle
+          imageUrl
+          introHtml {
+            data {
+              introHtml
+            }
+          }
+        }
+        Seo {
+          metaTitle
+          metaDescription
+          metaKeywords
+        }
         Content {
           ... on STRAPI__COMPONENT_PARKS_CARD_SET {
             id
@@ -322,7 +336,7 @@ async function createStaticPage(query, { graphql, actions, reporter }) {
     })
   })
 }
-  
+
 async function createParkPage(query, { graphql, actions, reporter }) {
   const result = await strapiApiRequest(graphql, query)
   if (result.errors) {
@@ -337,7 +351,7 @@ async function createParkPage(query, { graphql, actions, reporter }) {
     })
   })
 }
-    
+
 async function createSitePage(query, { graphql, actions, reporter }) {
   const result = await strapiApiRequest(graphql, query)
   if (result.errors) {
@@ -373,7 +387,7 @@ async function createParkSubPages(query, { graphql, actions, reporter }) {
       component: require.resolve(`./src/templates/parkSubPage.js`),
       context: {
         protectedAreaSlug: parkSubPage.protectedArea?.slug,
-        ...parkSubPage 
+        ...parkSubPage
       },
     })
   })

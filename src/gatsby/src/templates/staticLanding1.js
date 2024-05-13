@@ -3,8 +3,9 @@ import { useStaticQuery, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 
 import Breadcrumbs from "../components/breadcrumbs"
-import Footer from "../components/footer"
 import Header from "../components/header"
+import Footer from "../components/footer"
+import HTMLArea from "../components/HTMLArea"
 import Seo from "../components/seo"
 import MainSearch from "../components/search/mainSearch"
 import PageContent from "../components/pageContent/pageContent"
@@ -42,68 +43,78 @@ const LandingPage = ({ pageContext }) => {
     }
   `)
 
-  const menuContent = queryData?.allStrapiMenu?.nodes || []
+  const menuContents = queryData?.allStrapiMenu?.nodes || []
   const { page } = pageContext
-  const components = page?.Content || []
-  const introContent = components.slice(0, 1)
-  const linkContent = components.slice(1)
-  const breadcrumbs = renderBreadcrumbs(menuContent, pageContext?.page)
+  const pageContents = page?.Content || []
+  const introContents = pageContents.filter(c => c.strapi_component === "parks.html-area")
+  const linkContents = pageContents.filter(c => c.strapi_component === "parks.link-card")
+  // New non-repeatable page header component
+  const pageHeader = page?.PageHeader || null
+  const breadcrumbs = renderBreadcrumbs(menuContents, pageContext?.page)
+  const hasPageHeader =
+    pageHeader?.pageTitle &&
+    pageHeader?.imageUrl &&
+    pageHeader?.introHtml.data.introHtml.length > 0
 
   return (
     <>
-      <Header mode="internal" content={menuContent} />
+      <Header mode="internal" content={menuContents} />
       <div id="main-content"></div>
-      {linkContent.length > 0 && (
-        <div id="intro-content" className="bcp-landing-intro">
-          {introContent.map(content => (
+      <div id="intro-content" className="bcp-landing-intro">
+        {/* Display new non-repeatable pageHeader component if exists */}
+        {/* Otherwise, display old repeatable pageHeader component */}
+        {(hasPageHeader && hasPageHeader !== null) ? (
+          <>
+            <div
+              className="bcp-landing-intro__image"
+              style={{ backgroundImage: `url(${pageHeader.imageUrl})` }}
+            >
+            </div>
+            <div className="bcp-landing-intro__text">
+              <div className="container">
+                <div className="row d-none d-lg-block">
+                  <div className="col">
+                    <div id="main-content" className="page-breadcrumbs">
+                      <Breadcrumbs breadcrumbs={breadcrumbs} />
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col">
+                    <h1>{pageHeader.pageTitle}</h1>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col">
+                    <HTMLArea isVisible>
+                      {pageHeader.introHtml.data.introHtml}
+                    </HTMLArea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          introContents.length > 0 &&
+          introContents.map(content => (
             <PageContent
               key={content.id}
               contentType={content.strapi_component}
               content={content}
             />
-          ))}
-        </div>
-      )}
-      {linkContent.length > 0 && (
+          ))
+        )}
+      </div>
+      {linkContents.length > 0 && (
         <div id="link-content" className="bcp-landing-links">
           <div className="container">
-            {linkContent
-              .filter(content => content.strapi_component === "parks.link-card")
-              .map(content => (
-                <PageContent
-                  key={content.id}
-                  contentType={content.strapi_component}
-                  content={content}
-                />
-              ))}
-          </div>
-        </div>
-      )}
-      {/* This is a temporary attempt not to break the existing hard code HTMLArea */}
-      {/* For the edge case: show breadcrumbs and title if there's no HTMLArea */}
-      {linkContent.length === 0 && (
-        <div className="bcp-landing-intro">
-          <div className="bcp-landing-intro__image">
-            {/* TODO: here should be landing image */}
-          </div>
-          <div className="bcp-landing-intro__text">
-            <div className="container">
-              <div className="row d-none d-lg-block">
-                <div className="col">
-                  <Breadcrumbs breadcrumbs={breadcrumbs} />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col">
-                  <h1>{page?.Title}</h1>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col">
-                  {/* TODO: here should be some text */}
-                </div>
-              </div>
-            </div>
+            {linkContents.map(content => (
+              <PageContent
+                key={content.id}
+                contentType={content.strapi_component}
+                content={content}
+              />
+            ))}
           </div>
         </div>
       )}
@@ -132,15 +143,18 @@ export default LandingPage
 
 export const Head = ({ pageContext }) => {
   const { page } = pageContext
-  const components = page?.Content || []
-  const meta =
-    components.find(component => component.strapi_component === "parks.seo") || {}
+  const pageContents = page?.Content || []
+  const meta = pageContents.find(c => c.strapi_component === "parks.seo") || {}
+  // New non-repeatable seo component
+  const seo = page?.Seo || null
 
   return (
+    // Display new non-repeatable seo component if exists
+    // Otherwise, display old repeatable seo component
     <Seo
-      title={meta?.metaTitle || page?.Title}
-      description={meta?.metaDescription}
-      keywords={meta?.metaKeywords}
+      title={seo?.metaTitle || meta?.metaTitle}
+      description={seo?.metaDescription || meta?.metaDescription}
+      keywords={seo?.metaKeywords || meta?.metaKeywords}
     />
   )
 }
