@@ -194,7 +194,7 @@ const base = {
       },
       makeLinkWithIcon: {
         mode: 'manual',
-        label: 'Link with icon',
+        label: 'Learn more link',
         attributes: {
             class: 'learn-more-link',
         }
@@ -207,44 +207,12 @@ const base = {
             role: "button"
         }
       },
-      makeWhiteButton: {
-        mode: 'manual',
-        label: 'White button',
-        attributes: {
-          class: 'btn btn-white',
-          role: "button"
-        }
-      },
-      makeYellowButton: {
-        mode: 'manual',
-        label: 'Yellow button',
-        attributes: {
-          class: 'btn btn-yellow',
-          role: "button"
-        }
-      },
       makeSecondaryButton: {
         mode: 'manual',
         label: 'Secondary button',
         attributes: {
           class: 'btn btn-secondary',
           role: "button"
-        }
-      },
-      makeButtonWithIcon: {
-        mode: 'manual',
-        label: 'Primary button with icon',
-        attributes: {
-            class: 'btn btn-primary btn-icon',
-            role: "button"
-        }
-      },
-      makeWhiteButtonWithIcon: {
-        mode: 'manual',
-        label: 'White button with icon',
-        attributes: {
-            class: 'btn btn-white btn-icon',
-            role: "button"
         }
       },
     },
