@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./ParkInfo.css";
-import { Redirect, useParams } from "react-router-dom";
+import { Redirect, useParams, useHistory } from "react-router-dom";
 import { Loader } from "../../shared/loader/Loader";
 import { useKeycloak } from "@react-keycloak/web";
 import Header from "../../composite/header/Header";
@@ -42,6 +42,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
   const [loadParkInfo, setLoadParkInfo] = useState(true);
   const { keycloak, initialized } = useKeycloak();
   const { id } = useParams();
+  const history = useHistory();
 
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -170,6 +171,22 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
 
   const handleTabChange = (event, val) => {
     setTabIndex(val);
+  };
+
+  const handleMenuChange = (event, val) => {
+    switch (val) {
+      case 0:
+        history.push('/advisories');
+        break;
+      case 1:
+        history.push('/park-access-status');
+        break;
+      case 2:
+        history.push('/activities-and-facilities');
+        break;
+      default:
+        history.push('/');
+    }
   };
 
   const handleActivityAccordionChange = (event, isExpanded, activityId) => {
@@ -415,7 +432,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
 
   return (
     <main>
-      <Header />
+      <Header handleTabChange={handleMenuChange} />
       <div className="ParkInfo" data-testid="ParkInfo">
         <div className="container">
           {isLoading && (
