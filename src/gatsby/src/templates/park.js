@@ -13,7 +13,6 @@ import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
 import Header from "../components/header"
 import PageMenu from "../components/pageContent/pageMenu"
-
 import About from "../components/park/about"
 import AdvisoryDetails from "../components/park/advisoryDetails"
 import CampingDetails from "../components/park/campingDetails"
@@ -30,7 +29,7 @@ import SafetyInfo from "../components/park/safetyInfo"
 import SpecialNote from "../components/park/specialNote"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
-
+import parksLogo from "../images/park-card.png"
 import "../styles/parks.scss"
 
 const AsyncMapLocation = loadable(() => import("../components/park/mapLocation"));
@@ -510,7 +509,7 @@ export const Head = ({ data }) => {
       title={seo?.metaTitle || park.protectedAreaName}
       description={seo?.metaDescription || parkDescriptionShort}
       keywords={seo?.metaKeywords}
-      image={photoUrl}
+      image={photoUrl || parksLogo}
     />
   )
 }
