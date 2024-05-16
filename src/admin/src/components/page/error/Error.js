@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import "../../page.css";
 import { Button } from "../../shared/button/Button";
@@ -7,6 +7,23 @@ import Header from "../../composite/header/Header";
 
 export default function Error({ page: { error } }) {
   const [toHome, setToHome] = useState(false);
+  const history = useHistory();
+
+  const handleMenuChange = (event, val) => {
+    switch (val) {
+      case 0:
+        history.push('/advisories');
+        break;
+      case 1:
+        history.push('/park-access-status');
+        break;
+      case 2:
+        history.push('/activities-and-facilities');
+        break;
+      default:
+        history.push('/');
+    }
+  };
 
   if (toHome) {
     return <Redirect to="/" />;
@@ -68,7 +85,7 @@ export default function Error({ page: { error } }) {
           again later.
           <br />
           <br />
-            {console.log('error', error)}
+          {console.log('error', error)}
           {error.message}
         </p>
       </div>
@@ -77,7 +94,7 @@ export default function Error({ page: { error } }) {
 
   return (
     <main>
-      <Header />
+      <Header handleTabChange={handleMenuChange} />
       <div className="page" data-testid="Error">
         <div className="content col-md-8">
           <br />

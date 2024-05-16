@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, useLocation, useParams } from "react-router-dom";
+import { Redirect, useLocation, useParams, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { cmsAxios } from "../../../axios_config";
 import { useKeycloak } from "@react-keycloak/web";
@@ -29,6 +29,7 @@ export default function AdvisorySummary({
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessageInfo, setSnackMessageInfo] = useState(undefined);
   const { id } = useParams();
+  const history = useHistory();
   const { confirmationText, index } = useLocation();
   const [isCurrentlyPublished, setIsCurrentlyPublished] = useState(false);
   const [showOriginalAdvisory, setShowOriginalAdvisory] = useState(false);
@@ -183,6 +184,22 @@ export default function AdvisorySummary({
     showOriginalAdvisory,
   ]);
 
+  const handleMenuChange = (event, val) => {
+    switch (val) {
+      case 0:
+        history.push('/advisories');
+        break;
+      case 1:
+        history.push('/park-access-status');
+        break;
+      case 2:
+        history.push('/activities-and-facilities');
+        break;
+      default:
+        history.push('/');
+    }
+  };
+
   const handleOpenSnackBar = (message) => {
     setSnackPack((prev) => [...prev, { message, key: new Date().getTime() }]);
   };
@@ -220,7 +237,7 @@ export default function AdvisorySummary({
 
   return (
     <main>
-      <Header />
+      <Header handleTabChange={handleMenuChange} />
       <div className="AdvisorySummary" data-testid="AdvisorySummary">
         <div className="container">
           {isLoadingPage && (

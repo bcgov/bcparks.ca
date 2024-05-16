@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { cmsAxios } from "../../../axios_config";
-import { Redirect, useParams } from "react-router-dom";
+import { Redirect, useParams, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./Advisory.css";
 import moment from "moment";
@@ -108,6 +108,7 @@ export default function Advisory({
   const [formError, setFormError] = useState("");
 
   const { id } = useParams();
+  const history = useHistory();
 
   const query = qs.stringify({
     publicationState: "preview",
@@ -611,6 +612,22 @@ export default function Advisory({
     }
   };
 
+  const handleMenuChange = (event, val) => {
+    switch (val) {
+      case 0:
+        history.push('/advisories');
+        break;
+      case 1:
+        history.push('/park-access-status');
+        break;
+      case 2:
+        history.push('/activities-and-facilities');
+        break;
+      default:
+        history.push('/');
+    }
+  };
+
   const handleAdvisoryDateChange = (e) => {
     setAdvisoryDate(e);
     advisoryDateRef.current = e;
@@ -1066,7 +1083,7 @@ export default function Advisory({
 
   return (
     <main>
-      <Header />
+      <Header handleTabChange={handleMenuChange} />
       <div className="Advisory" data-testid="Advisory">
         <div className="container">
           {isLoadingPage && (
