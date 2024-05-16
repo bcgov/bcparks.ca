@@ -232,8 +232,8 @@ exports.createSchemaCustomization = ({ actions }) => {
     Slug: String
     Title: String
     Template: String
-    PageHeader: STRAPI__COMPONENT_PARKS_PAGE_HEADER
-    Seo: STRAPI__COMPONENT_PARKS_SEO
+    PageHeader: STRAPI__COMPONENT_PARKS_PAGE_HEADER @link(by: "id", from: "PageHeader___NODE")
+    Seo: STRAPI__COMPONENT_PARKS_SEO @link(by: "id", from: "Seo___NODE")
     Content: [ContentUnion] @link(by: "id", from: "Content___NODE")
   }
   `
