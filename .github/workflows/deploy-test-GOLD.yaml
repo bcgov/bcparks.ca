@@ -1,4 +1,4 @@
-name: Deploy to Test
+name: Deploy to Test GOLD
 
 on:
   workflow_dispatch:
@@ -46,7 +46,7 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          event-type: publish-gatsby
+          event-type: publish-gatsby-GOLD
           client-payload: '{"env": "${{ env.ENVIRONMENT }}", "branch": "main"}'
 
       - name: Trigger new rollout
