@@ -115,6 +115,15 @@ module.exports = {
                 },
                 managementAreas: {
                   populate: ["region", "section"]
+                },
+                nearByParkOne: {
+                  fields: "*"
+                },
+                nearByParkTwo: {
+                  fields: "*"
+                },
+                nearByParkThree: {
+                  fields: "*"
                 }
               }
             },

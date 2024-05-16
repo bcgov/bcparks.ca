@@ -27,6 +27,7 @@ import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import SafetyInfo from "../components/park/safetyInfo"
 import SpecialNote from "../components/park/specialNote"
+import NearByParks from "../components/park/nearByParks"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 import parksLogo from "../images/park-card.png"
@@ -49,6 +50,8 @@ export default function ParkTemplate({ data }) {
   const natureAndCulture = park.natureAndCulture.data.natureAndCulture
   const reconciliationNotes = park.reconciliationNotes.data.reconciliationNotes
   const maps = park.maps.data.maps
+  const hasNearByParks = park.nearByParkOne !== null || park.nearByParkTwo !== null || park.nearByParkThree !== null
+  const nearByParks = hasNearByParks ? [park.nearByParkOne, park.nearByParkTwo, park.nearByParkThree] : []
 
   const activeActivities = sortBy(
     park.parkActivities.filter(
@@ -489,6 +492,7 @@ export default function ParkTemplate({ data }) {
           </div>
         </div>
       </div>
+      <NearByParks parks={nearByParks} />
       <ScrollToTop />
       <Footer />
     </div>
@@ -757,6 +761,159 @@ export const query = graphql`
       }
       terrestrialEcosections {
         terrestrialEcosection
+      }
+      nearByParkOne {
+        orcs
+        slug
+        protectedAreaName
+        parkActivities {
+          isActive
+          isActivityOpen
+          hideStandardCallout
+          description {
+            data
+          }
+          activityType {
+            activityName
+            activityCode
+            isActive
+            isCamping
+            icon
+            iconNA
+            rank
+            defaultDescription {
+              data
+            }
+            appendStandardCalloutText {
+              data
+            }
+          }
+        }
+        parkFacilities {
+          isActive
+          isFacilityOpen
+          hideStandardCallout
+          description {
+            data
+          }
+          facilityType {
+            facilityName
+            facilityCode
+            isActive
+            isCamping
+            icon
+            iconNA
+            rank
+            defaultDescription {
+              data
+            }
+            appendStandardCalloutText {
+              data
+            }
+          }
+        }
+      }
+      nearByParkTwo {
+        orcs
+        slug
+        protectedAreaName
+        parkActivities {
+          isActive
+          isActivityOpen
+          hideStandardCallout
+          description {
+            data
+          }
+          activityType {
+            activityName
+            activityCode
+            isActive
+            isCamping
+            icon
+            iconNA
+            rank
+            defaultDescription {
+              data
+            }
+            appendStandardCalloutText {
+              data
+            }
+          }
+        }
+        parkFacilities {
+          isActive
+          isFacilityOpen
+          hideStandardCallout
+          description {
+            data
+          }
+          facilityType {
+            facilityName
+            facilityCode
+            isActive
+            isCamping
+            icon
+            iconNA
+            rank
+            defaultDescription {
+              data
+            }
+            appendStandardCalloutText {
+              data
+            }
+          }
+        }
+      }
+      nearByParkThree {
+        orcs
+        slug
+        protectedAreaName
+        parkActivities {
+          isActive
+          isActivityOpen
+          hideStandardCallout
+          description {
+            data
+          }
+          activityType {
+            activityName
+            activityCode
+            isActive
+            isCamping
+            icon
+            iconNA
+            rank
+            defaultDescription {
+              data
+            }
+            appendStandardCalloutText {
+              data
+            }
+          }
+        }
+        parkFacilities {
+          isActive
+          isFacilityOpen
+          hideStandardCallout
+          description {
+            data
+          }
+          facilityType {
+            facilityName
+            facilityCode
+            isActive
+            isCamping
+            icon
+            iconNA
+            rank
+            defaultDescription {
+              data
+            }
+            appendStandardCalloutText {
+              data
+            }
+          }
+        }
       }
     }
     featuredPhotos: allStrapiParkPhoto(

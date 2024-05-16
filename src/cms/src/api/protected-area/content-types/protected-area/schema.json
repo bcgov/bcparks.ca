@@ -311,6 +311,21 @@
       "relation": "oneToMany",
       "target": "api::park-photo.park-photo",
       "mappedBy": "protectedArea"
+    },
+    "nearByParkOne": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::protected-area.protected-area"
+    },
+    "nearByParkTwo": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::protected-area.protected-area"
+    },
+    "nearByParkThree": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::protected-area.protected-area"
     }
   }
 }

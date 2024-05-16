@@ -40,6 +40,7 @@ const Icon = ({ src, label, size }) => {
 }
 
 const FeatureIcons = ({ park }) => {
+  console.log("park", park)
   const iconSize = 32;
   const facilities = park.parkFacilities.filter(f => [6].includes(f.num)) || [];
   const activities = park.parkActivities.filter(a => [1, 3, 8, 9].includes(a.num)) || [];
