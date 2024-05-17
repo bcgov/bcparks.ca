@@ -116,13 +116,13 @@ module.exports = {
                 managementAreas: {
                   populate: ["region", "section"]
                 },
-                nearByParkOne: {
+                nearbyParkOne: {
                   fields: "*"
                 },
-                nearByParkTwo: {
+                nearbyParkTwo: {
                   fields: "*"
                 },
-                nearByParkThree: {
+                nearbyParkThree: {
                   fields: "*"
                 }
               }

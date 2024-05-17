@@ -313,19 +313,21 @@
       "mappedBy": "protectedArea"
     },
     "nearByParkOne": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::protected-area.protected-area"
-    },
-    "nearByParkTwo": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::protected-area.protected-area"
-    },
-    "nearByParkThree": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::protected-area.protected-area"
+      "nearbyParkOne": {
+        "type": "relation",
+        "relation": "oneToOne",
+        "target": "api::protected-area.protected-area"
+      },
+      "nearbyParkTwo": {
+        "type": "relation",
+        "relation": "oneToOne",
+        "target": "api::protected-area.protected-area"
+      },
+      "nearbyParkThree": {
+        "type": "relation",
+        "relation": "oneToOne",
+        "target": "api::protected-area.protected-area"
+      }
     }
   }
 }

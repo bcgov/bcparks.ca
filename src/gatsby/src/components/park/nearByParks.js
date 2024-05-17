@@ -3,9 +3,9 @@ import { graphql, useStaticQuery } from "gatsby"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import NearByPark from "./nearByPark"
+import NearbyPark from "./nearbyPark"
 
-const NearByParks = ({ parks }) => {
+const NearbyParks = ({ parks }) => {
   const data = useStaticQuery(graphql`
     query {
       allStrapiParkPhoto(
@@ -32,13 +32,13 @@ const NearByParks = ({ parks }) => {
   const filteredPhotos = (orcs) => photos.filter(p => p.orcs === orcs)
 
   return (
-    <div id="near-by-parks-container">
+    <div id="nearby-parks-container">
       <Container className="border">
-        <h2>Near by parks</h2>
+        <h2>More parks to visit nearby</h2>
         <Row>
           {parks.map((park, index) =>
             <Col key={index} className="border">
-              <NearByPark park={park} photos={filteredPhotos(park.orcs)} />
+              <NearbyPark park={park} photos={filteredPhotos(park.orcs)} />
             </Col>
           )}
         </Row>
@@ -47,4 +47,4 @@ const NearByParks = ({ parks }) => {
   )
 }
 
-export default NearByParks
+export default NearbyParks

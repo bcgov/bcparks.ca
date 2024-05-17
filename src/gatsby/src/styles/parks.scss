@@ -321,9 +321,53 @@ h2.section-heading {
 }
 
 // near by parks section
-#near-by-parks-container {
+#nearby-parks-container {
   background-color: $colorBackgroundGrey;
-  border: 1px solid tomato;
+  padding: 32px 0;
+  h2 {
+    margin-bottom: 16px;
+  }
+  .container {
+    .row {
+      .col {
+        &:first-of-type {
+          padding-left: 0;
+          padding-right: 0;
+        }
+        & + .col {
+          padding-left: 32px;
+          padding-right: 0;
+        }
+      }
+    }
+  }
+  .park-card {
+    background-color: $colorWhite;
+    border-radius: 10px;
+    overflow: hidden;
+
+    .park-image-div-mobile {
+      height: 230px !important;
+      ol.carousel-indicators {
+        li {
+          height: 6px;
+          width: 6px;
+          border-radius: 6px;
+          border: none;
+        }
+      }
+      .carousel-inner {
+        height: 100%;
+      }
+    }
+    .park-content-mobile {
+      height: 170px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: space-between;
+      padding: 16px;
+    }
+  }
 }
 
 // page section

@@ -21,18 +21,18 @@ import { addSmallImagePrefix, handleImgError } from "../../utils/helpers"
 
 const Icon = ({ src, label, size }) => {
   return (
-    <img src={src}
+    <img
+      src={src}
       alt={label}
       aria-label={label}
-      className="mr-2"
       width={size}
       height={size}>
+      className="mr-2"
     </img>
   )
 }
 
 const FeatureIcons = ({ park }) => {
-  // console.log("park", park)
   const iconSize = 32;
   let facilities = [];
   let activities = [];
@@ -75,11 +75,9 @@ const FeatureIcons = ({ park }) => {
     });
   }
 
-  const filteredFacilities = facilities.length && facilities.filter(f => [6].includes(f.num)) || [];
+  const filteredFacilities = facilities.filter(f => [6].includes(f.num)) || [];
   const filteredActivities = activities.filter(a => [1, 3, 8, 9].includes(a.num)) || [];
   const filteredCampings = campings.filter(c => [1, 36].includes(c.num)) || [];
-
-  console.log("facilities", facilities)
 
   return (
     <>
@@ -104,93 +102,71 @@ const FeatureIcons = ({ park }) => {
       {filteredActivities.some(x => x.code === 'pets-on-leash') &&
         <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
       }
-      {filteredCampings.length ? (
-        <GatsbyLink to={`/${park.slug}/#park-camping-details-container`}>
-          <p aria-label="See all facilities and activities">see all</p>
-        </GatsbyLink>
-      ) : (
-        (filteredActivities.length > 0 || filteredFacilities.length > 0) && (
-          filteredFacilities.length ? (
-            <GatsbyLink to={`/${park.slug}/#park-facility-container`}>
-              <p aria-label="See all facilities and activities">see all</p>
-            </GatsbyLink>
-          ) : (
-            <GatsbyLink to={`/${park.slug}/#park-activity-container`}>
-              <p aria-label="See all facilities and activities">see all</p>
-            </GatsbyLink>
-          )
-        )
-      )}
     </>
   )
 }
 
-const NearByPark = ({ park, photos }) => {
+const NearbyPark = ({ park, photos }) => {
   const [hasError, setHasError] = useState(false)
-  // console.log("park", park)
-  // console.log("photos", photos)
-  // console.log(hasError)
 
   return (
-    <div className="park-card border">
-      <div className="park-card">
-        <div className="row no-gutters">
-          {photos &&
-            photos.length === 0 && (
-              <div className="col-12 park-image-div-mobile park-image-logo-div">
-                <img
-                  alt="logo"
-                  className="search-result-logo-image"
-                  src={parksLogo}
-                />
-              </div>
-            )}
-          {photos &&
-            photos.length === 1 && (
-              <div className={`${hasError ? "park-image-logo-div" : ""} col-12 park-image-div-mobile`}>
-                <img
-                  alt="park"
-                  className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
-                  src={hasError ? parksLogo : addSmallImagePrefix(photos[0].imageUrl)}
-                  onError={(e) => { handleImgError(e, photos[0], setHasError) }}
-                />
-              </div>
-            )}
-          {photos &&
-            photos.length > 1 && (
-              <div className={`${hasError ? "park-image-logo-div" : ""} col-12 park-image-div-mobile`}>
-                <Carousel fade className="park-carousel-mobile">
-                  {photos.map(
-                    (item, index) => {
-                      return (
-                        <Carousel.Item key={index}>
-                          <img
-                            alt="park carousel"
-                            className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
-                            src={hasError ? parksLogo : addSmallImagePrefix(item.imageUrl)}
-                            onError={(e) => { handleImgError(e, item, setHasError) }}
-                          />
-                        </Carousel.Item>
-                      )
-                    }
-                  )}
-                </Carousel>
-              </div>
-            )}
-
-          <div className="col-12 park-content-mobile">
-            <h2 className="park-heading-text">
-              <GatsbyLink
-                to={`/${park.slug}/`}
-                className="underline-hover mobile-park-link"
-              >
-                {park.protectedAreaName}
-                <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
-              </GatsbyLink>
-            </h2>
-            <div>
-              <FeatureIcons park={park} />
+    <div className="park-card">
+      <div className="row no-gutters">
+        {photos &&
+          photos.length === 0 && (
+            <div className="col-12 park-image-div-mobile park-image-logo-div">
+              <img
+                alt="logo"
+                className="search-result-logo-image"
+                src={parksLogo}
+              />
             </div>
+          )}
+        {photos &&
+          photos.length === 1 && (
+            <div className={`${hasError ? "park-image-logo-div" : ""} col-12 park-image-div-mobile`}>
+              <img
+                alt="park"
+                className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
+                src={hasError ? parksLogo : addSmallImagePrefix(photos[0].imageUrl)}
+                onError={(e) => { handleImgError(e, photos[0], setHasError) }}
+              />
+            </div>
+          )}
+        {photos &&
+          photos.length > 1 && (
+            <div className={`${hasError ? "park-image-logo-div" : ""} col-12 park-image-div-mobile`}>
+              <Carousel fade className="park-carousel-mobile">
+                {photos.map(
+                  (item, index) => {
+                    return (
+                      <Carousel.Item key={index}>
+                        <img
+                          alt="park carousel"
+                          className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
+                          src={hasError ? parksLogo : addSmallImagePrefix(item.imageUrl)}
+                          onError={(e) => { handleImgError(e, item, setHasError) }}
+                        />
+                      </Carousel.Item>
+                    )
+                  }
+                )}
+              </Carousel>
+            </div>
+          )}
+
+        <div className="col-12 park-content-mobile">
+          <h2 className="park-heading-text">
+            <GatsbyLink
+              to={`/${park.slug}/`}
+              className="underline-hover mobile-park-link"
+            >
+              {park.protectedAreaName}
+              <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
+            </GatsbyLink>
+          </h2>
+          <div>
+            <FeatureIcons park={park} />
           </div>
         </div>
       </div>
@@ -198,4 +174,4 @@ const NearByPark = ({ park, photos }) => {
   )
 }
 
-export default NearByPark
+export default NearbyPark
