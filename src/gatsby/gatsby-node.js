@@ -69,7 +69,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     facilityType: STRAPI_FACILITY_TYPE
     hideStandardCallout: Boolean
   }
-  
+
   type STRAPI_PROTECTED_AREA implements Node {
     managementDocuments:[STRAPI_MANAGEMENT_DOCUMENT] @link(by: "id", from: "managementDocuments___NODE")
     biogeoclimaticZones: [STRAPI_BIOGEOCLIMATIC_ZONE] @link(by: "id", from: "biogeoclimaticZones___NODE")
@@ -79,6 +79,9 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkFacilities: [STRAPI_PARK_FACILITY] @link(by: "id", from: "parkFacilities___NODE")
     seo: STRAPI__COMPONENT_PARKS_SEO
     hasDiscoverParksLink: Boolean
+    nearbyParkOne: STRAPI_PROTECTED_AREA @link(by: "id", from: "nearbyParkOne___NODE")
+    nearbyParkTwo: STRAPI_PROTECTED_AREA @link(by: "id", from: "nearbyParkTwo___NODE")
+    nearbyParkThree: STRAPI_PROTECTED_AREA @link(by: "id", from: "nearbyParkThree___NODE")
   }
 
   type STRAPI_PARK_OPERATION implements Node {

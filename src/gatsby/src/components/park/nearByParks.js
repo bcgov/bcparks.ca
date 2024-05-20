@@ -37,6 +37,7 @@ const NearbyParks = ({ parks }) => {
         <h2>More parks to visit nearby</h2>
         <Row>
           {parks.map((park, index) =>
+            park !== null &&
             <Col key={index} xs={12} lg={4} className="col">
               <NearbyPark park={park} photos={filteredPhotos(park.orcs)} />
             </Col>

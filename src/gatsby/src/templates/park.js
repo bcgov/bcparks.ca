@@ -492,7 +492,9 @@ export default function ParkTemplate({ data }) {
           </div>
         </div>
       </div>
-      <NearbyParks parks={nearbyParks} />
+      {hasNearbyParks &&
+        <NearbyParks parks={nearbyParks} />
+      }
       <ScrollToTop />
       <Footer />
     </div>
