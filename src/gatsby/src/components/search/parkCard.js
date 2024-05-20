@@ -4,16 +4,10 @@ import Carousel from "react-bootstrap/Carousel"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleChevronRight, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons"
 
+import FeatureIcons from "./featureIcons"
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
 
 import parksLogo from "../../images/park-card.png"
-import campingIcon from "../../../static/icons/frontcountry-camping.svg"
-import backcountryCampingIcon from "../../../static/icons/wilderness-camping.svg"
-import hikingIcon from "../../../static/icons/hiking.svg"
-import picincIcon from "../../../static/icons/picnic-areas.svg"
-import swimmingIcon from "../../../static/icons/swimming.svg"
-import cyclingIcon from "../../../static/icons/cycling.svg"
-import petsIcon from "../../../static/icons/pets-on-leash.svg"
 import campfireBanIcon from "../../../static/icons/campfire-ban.svg"
 
 import { addSmallImagePrefix, handleImgError } from "../../utils/helpers"
@@ -29,68 +23,33 @@ const locationLabel = (parkLocations) => {
 
 const Icon = ({ src, label, size }) => {
   return (
-    <img src={src}
+    <img
+      src={src}
       alt={label}
       aria-label={label}
-      className="mr-2"
       width={size}
-      height={size}>
-    </img>
-  )
-}
-
-const FeatureIcons = ({ park }) => {
-  const iconSize = 32;
-  const facilities = park.parkFacilities.filter(f => [6].includes(f.num)) || [];
-  const activities = park.parkActivities.filter(a => [1, 3, 8, 9].includes(a.num)) || [];
-  const campings = park.campingFacilities.filter(c => [1, 36].includes(c.num)) || [];
-
-  return (
-    <>
-      {campings.some(x => x.code === 'frontcountry-camping') &&
-        <Icon src={campingIcon} label="Frontcountry camping" size={iconSize} />
-      }
-      {campings.some(x => x.code === 'backcountry-camping') &&
-        <Icon src={backcountryCampingIcon} label="Backcountry camping" size={iconSize} />
-      }
-      {activities.some(x => x.code === 'hiking') &&
-        <Icon src={hikingIcon} label="Hiking" size={iconSize} />
-      }
-      {facilities.some(x => x.code === 'picnic-areas') &&
-        <Icon src={picincIcon} label="Picnic areas" size={iconSize} />
-      }
-      {activities.some(x => x.code === 'swimming') &&
-        <Icon src={swimmingIcon} label="Swimming" size={iconSize} />
-      }
-      {activities.some(x => x.code === 'cycling') &&
-        <Icon src={cyclingIcon} label="Cycling" size={iconSize} />
-      }
-      {activities.some(x => x.code === 'pets-on-leash') &&
-        <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
-      }
-      {campings.length ? (
-        <Link to={`/${park.slug}/#park-camping-details-container`}>
-          <p aria-label="See all facilities and activities">see all</p>
-        </Link>
-      ) : (
-        (activities.length > 0 || facilities.length > 0) && (
-          facilities.length ? (
-            <Link to={`/${park.slug}/#park-facility-container`}>
-              <p aria-label="See all facilities and activities">see all</p>
-            </Link>
-          ) : (
-            <Link to={`/${park.slug}/#park-activity-container`}>
-              <p aria-label="See all facilities and activities">see all</p>
-            </Link>
-          )
-        )
-      )}
-    </>
+      height={size}
+      className="mr-2"
+    />
   )
 }
 
 const ParkCard = ({ r }) => {
+  const [index, setIndex] = useState(0)
+  const [isTabFocused, setIsTabFocused] = useState(false)
   const [hasError, setHasError] = useState(false)
+
+  // event handlers
+  const handleSelect = (selectedIndex, e) => {
+    setIndex(selectedIndex)
+  }
+  const handleKeyDown = (e, photos) => {
+    if (e.key === 'ArrowRight') {
+      setIndex((oldIndex) => (oldIndex + 1) % photos.length)
+    } else if (e.key === 'ArrowLeft') {
+      setIndex((oldIndex) => (oldIndex - 1 + photos.length) % photos.length)
+    }
+  }
 
   return (
     <div className="m20t">
@@ -126,12 +85,20 @@ const ParkCard = ({ r }) => {
                   interval={null}
                   nextIcon={<FontAwesomeIcon icon={faCircleChevronRight} />}
                   prevIcon={<FontAwesomeIcon icon={faCircleChevronLeft} />}
-                  className="park-carousel"
+                  onSelect={handleSelect}
+                  activeIndex={index}
+                  className={`park-carousel tab-focus-${isTabFocused}`}
                 >
                   {r.parkPhotos.map(
                     (item, index) => {
                       return (
-                        <Carousel.Item key={index} tabIndex={0}>
+                        <Carousel.Item
+                          key={index}
+                          tabIndex={0}
+                          onFocus={() => setIsTabFocused(true)}
+                          onBlur={() => setIsTabFocused(false)}
+                          onKeyDown={() => handleKeyDown(r.parkPhotos)}
+                        >
                           <img
                             alt="park carousel"
                             key={index}
@@ -162,7 +129,13 @@ const ParkCard = ({ r }) => {
             </div>
             <div className="park-content-bottom">
               <div className="park-content-bottom--left">
-                <FeatureIcons park={r} />
+                <FeatureIcons
+                  page="find a park"
+                  slug={r.slug}
+                  parkFacilities={r.parkFacilities}
+                  parkActivities={r.parkActivities}
+                  campingFacilities={r.campingFacilities}
+                />
               </div>
               <div className="park-content-bottom--right">
                 <ParkAccessStatus
@@ -246,7 +219,13 @@ const ParkCard = ({ r }) => {
           </h2>
           <p>{locationLabel(r.parkLocations)}</p>
           <div>
-            <FeatureIcons park={r} />
+            <FeatureIcons
+              page="find a park"
+              slug={r.slug}
+              parkFacilities={r.parkFacilities}
+              parkActivities={r.parkActivities}
+              campingFacilities={r.campingFacilities}
+            />
           </div>
           <div className="text-blue">
             <ParkAccessStatus

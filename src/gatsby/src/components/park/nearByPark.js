@@ -4,33 +4,27 @@ import Carousel from "react-bootstrap/Carousel"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleChevronRight, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons"
 
+import FeatureIcons from "../search/featureIcons"
 import parksLogo from "../../images/park-card.png"
-import campingIcon from "../../../static/icons/frontcountry-camping.svg"
-import backcountryCampingIcon from "../../../static/icons/wilderness-camping.svg"
-import hikingIcon from "../../../static/icons/hiking.svg"
-import picincIcon from "../../../static/icons/picnic-areas.svg"
-import swimmingIcon from "../../../static/icons/swimming.svg"
-import cyclingIcon from "../../../static/icons/cycling.svg"
-import petsIcon from "../../../static/icons/pets-on-leash.svg"
-
 import { addSmallImagePrefix, handleImgError } from "../../utils/helpers"
 
-const Icon = ({ src, label, size }) => {
-  return (
-    <img
-      src={src}
-      alt={label}
-      aria-label={label}
-      width={size}
-      height={size}
-      className="mr-2"
-    >
-    </img>
-  )
-}
+const NearbyPark = ({ park, photos }) => {
+  const [index, setIndex] = useState(0)
+  const [isTabFocused, setIsTabFocused] = useState(false)
+  const [hasError, setHasError] = useState(false)
 
-const FeatureIcons = ({ park }) => {
-  const iconSize = 32;
+  // event handlers
+  const handleSelect = (selectedIndex, e) => {
+    setIndex(selectedIndex)
+  }
+  const handleKeyDown = (e, photos) => {
+    if (e.key === 'ArrowRight') {
+      setIndex((oldIndex) => (oldIndex + 1) % photos.length)
+    } else if (e.key === 'ArrowLeft') {
+      setIndex((oldIndex) => (oldIndex - 1 + photos.length) % photos.length)
+    }
+  }
+
   let facilities = [];
   let activities = [];
   let campings = [];
@@ -72,40 +66,6 @@ const FeatureIcons = ({ park }) => {
     });
   }
 
-  const filteredFacilities = facilities.filter(f => [6].includes(f.num)) || [];
-  const filteredActivities = activities.filter(a => [1, 3, 8, 9].includes(a.num)) || [];
-  const filteredCampings = campings.filter(c => [1, 36].includes(c.num)) || [];
-
-  return (
-    <>
-      {filteredCampings.some(x => x.code === 'frontcountry-camping') &&
-        <Icon src={campingIcon} label="Frontcountry camping" size={iconSize} />
-      }
-      {filteredCampings.some(x => x.code === 'backcountry-camping') &&
-        <Icon src={backcountryCampingIcon} label="Backcountry camping" size={iconSize} />
-      }
-      {filteredActivities.some(x => x.code === 'hiking') &&
-        <Icon src={hikingIcon} label="Hiking" size={iconSize} />
-      }
-      {filteredFacilities.some(x => x.code === 'picnic-areas') &&
-        <Icon src={picincIcon} label="Picnic areas" size={iconSize} />
-      }
-      {filteredActivities.some(x => x.code === 'swimming') &&
-        <Icon src={swimmingIcon} label="Swimming" size={iconSize} />
-      }
-      {filteredActivities.some(x => x.code === 'cycling') &&
-        <Icon src={cyclingIcon} label="Cycling" size={iconSize} />
-      }
-      {filteredActivities.some(x => x.code === 'pets-on-leash') &&
-        <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
-      }
-    </>
-  )
-}
-
-const NearbyPark = ({ park, photos }) => {
-  const [hasError, setHasError] = useState(false)
-
   return (
     <div className="park-card">
       {photos &&
@@ -137,17 +97,20 @@ const NearbyPark = ({ park, photos }) => {
               interval={null}
               nextIcon={<FontAwesomeIcon icon={faCircleChevronRight} />}
               prevIcon={<FontAwesomeIcon icon={faCircleChevronLeft} />}
-              className="park-carousel-mobile"
-              onKeyDown={(e) => {
-                if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
-                  e.preventDefault()
-                }
-              }}
+              onSelect={handleSelect}
+              activeIndex={index}
+              className={`park-carousel tab-focus-${isTabFocused}`}
             >
               {photos.map(
                 (item, index) => {
                   return (
-                    <Carousel.Item key={index} tabIndex={0}>
+                    <Carousel.Item 
+                    key={index} 
+                    tabIndex={0}
+                    onFocus={() => setIsTabFocused(true)}
+                    onBlur={() => setIsTabFocused(false)}
+                    onKeyDown={() => handleKeyDown(photos)}
+                    >
                       <img
                         alt="park carousel"
                         className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
@@ -173,7 +136,12 @@ const NearbyPark = ({ park, photos }) => {
           </Link>
         </h2>
         <div>
-          <FeatureIcons park={park} />
+          <FeatureIcons
+            page="park"
+            parkFacilities={facilities}
+            parkActivities={activities}
+            campingFacilities={campings}
+          />
         </div>
       </div>
     </div>

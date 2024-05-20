@@ -535,6 +535,12 @@ nav.breadcrumbs {
       display: flex;
     }
   }
+  &.tab-focus-true {
+    a.carousel-control-prev,
+    a.carousel-control-next {
+      display: flex;
+    }
+  }
   a.carousel-control-prev,
   a.carousel-control-next {
     display: flex;
@@ -560,6 +566,9 @@ nav.breadcrumbs {
     height: 100%;
     .carousel-item {
       height: 100%;
+      &:focus-visible{
+        outline: none;
+      }
     }
   }
 }
