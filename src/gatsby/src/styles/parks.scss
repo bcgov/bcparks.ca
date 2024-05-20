@@ -328,15 +328,16 @@ h2.section-heading {
     margin-bottom: 16px;
   }
   .container {
+    max-width: 1000px;
+    padding: 0 32px;
+    @media (min-width: $mdBreakpoint) {
+      padding: 0 20px;
+    }
     .row {
       .col {
-        &:first-of-type {
-          padding-left: 0;
-          padding-right: 0;
-        }
-        & + .col {
-          padding-left: 32px;
-          padding-right: 0;
+        margin-bottom: 16px;
+        @media (min-width: $lgBreakpoint) {
+          margin-bottom: 0;
         }
       }
     }
@@ -348,17 +349,6 @@ h2.section-heading {
 
     .park-image-div-mobile {
       height: 230px !important;
-      ol.carousel-indicators {
-        li {
-          height: 6px;
-          width: 6px;
-          border-radius: 6px;
-          border: none;
-        }
-      }
-      .carousel-inner {
-        height: 100%;
-      }
     }
     .park-content-mobile {
       height: 170px;
@@ -366,6 +356,9 @@ h2.section-heading {
       flex-wrap: wrap;
       align-content: space-between;
       padding: 16px;
+      h2.park-heading-text {
+        width: 100%;
+      }
     }
   }
 }

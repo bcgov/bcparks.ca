@@ -1,11 +1,8 @@
 import React, { useState } from "react"
-import { Link as GatsbyLink, StaticQuery } from "gatsby"
+import { Link } from "gatsby"
 import Carousel from "react-bootstrap/Carousel"
-// import Carousel from "react-material-ui-carousel"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
-
-import ParkAccessStatus from "./parkAccessStatus"
+import { faCircleChevronRight, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons"
 
 import parksLogo from "../../images/park-card.png"
 import campingIcon from "../../../static/icons/frontcountry-camping.svg"
@@ -15,7 +12,6 @@ import picincIcon from "../../../static/icons/picnic-areas.svg"
 import swimmingIcon from "../../../static/icons/swimming.svg"
 import cyclingIcon from "../../../static/icons/cycling.svg"
 import petsIcon from "../../../static/icons/pets-on-leash.svg"
-import campfireBanIcon from "../../../static/icons/campfire-ban.svg"
 
 import { addSmallImagePrefix, handleImgError } from "../../utils/helpers"
 
@@ -26,8 +22,9 @@ const Icon = ({ src, label, size }) => {
       alt={label}
       aria-label={label}
       width={size}
-      height={size}>
+      height={size}
       className="mr-2"
+    >
     </img>
   )
 }
@@ -111,63 +108,72 @@ const NearbyPark = ({ park, photos }) => {
 
   return (
     <div className="park-card">
-      <div className="row no-gutters">
-        {photos &&
-          photos.length === 0 && (
-            <div className="col-12 park-image-div-mobile park-image-logo-div">
-              <img
-                alt="logo"
-                className="search-result-logo-image"
-                src={parksLogo}
-              />
-            </div>
-          )}
-        {photos &&
-          photos.length === 1 && (
-            <div className={`${hasError ? "park-image-logo-div" : ""} col-12 park-image-div-mobile`}>
-              <img
-                alt="park"
-                className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
-                src={hasError ? parksLogo : addSmallImagePrefix(photos[0].imageUrl)}
-                onError={(e) => { handleImgError(e, photos[0], setHasError) }}
-              />
-            </div>
-          )}
-        {photos &&
-          photos.length > 1 && (
-            <div className={`${hasError ? "park-image-logo-div" : ""} col-12 park-image-div-mobile`}>
-              <Carousel fade className="park-carousel-mobile">
-                {photos.map(
-                  (item, index) => {
-                    return (
-                      <Carousel.Item key={index}>
-                        <img
-                          alt="park carousel"
-                          className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
-                          src={hasError ? parksLogo : addSmallImagePrefix(item.imageUrl)}
-                          onError={(e) => { handleImgError(e, item, setHasError) }}
-                        />
-                      </Carousel.Item>
-                    )
-                  }
-                )}
-              </Carousel>
-            </div>
-          )}
-
-        <div className="col-12 park-content-mobile">
-          <h2 className="park-heading-text">
-            <GatsbyLink
-              to={`/${park.slug}/`}
-              className="underline-hover mobile-park-link"
-            >
-              {park.protectedAreaName}
-              <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
-            </GatsbyLink>
-          </h2>
-          <div>
-            <FeatureIcons park={park} />
+      {photos &&
+        photos.length === 0 && (
+          <div className="park-image-div-mobile park-image-logo-div">
+            <img
+              alt="logo"
+              className="search-result-logo-image"
+              src={parksLogo}
+            />
           </div>
+        )}
+      {photos &&
+        photos.length === 1 && (
+          <div className={`${hasError ? "park-image-logo-div" : ""} park-image-div-mobile`}>
+            <img
+              alt="park"
+              className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
+              src={hasError ? parksLogo : addSmallImagePrefix(photos[0].imageUrl)}
+              onError={(e) => { handleImgError(e, photos[0], setHasError) }}
+            />
+          </div>
+        )}
+      {photos &&
+        photos.length > 1 && (
+          <div className={`${hasError ? "park-image-logo-div" : ""} park-image-div-mobile`}>
+            <Carousel
+              fade
+              interval={null}
+              nextIcon={<FontAwesomeIcon icon={faCircleChevronRight} />}
+              prevIcon={<FontAwesomeIcon icon={faCircleChevronLeft} />}
+              className="park-carousel-mobile"
+              onKeyDown={(e) => {
+                if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+                  e.preventDefault()
+                }
+              }}
+            >
+              {photos.map(
+                (item, index) => {
+                  return (
+                    <Carousel.Item key={index} tabIndex={0}>
+                      <img
+                        alt="park carousel"
+                        className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
+                        src={hasError ? parksLogo : addSmallImagePrefix(item.imageUrl)}
+                        onError={(e) => { handleImgError(e, item, setHasError) }}
+                      />
+                    </Carousel.Item>
+                  )
+                }
+              )}
+            </Carousel>
+          </div>
+        )}
+
+      <div className="park-content-mobile">
+        <h2 className="park-heading-text">
+          <Link
+            to={`/${park.slug}/`}
+            className="underline-hover mobile-park-link"
+          >
+            {park.protectedAreaName}
+            <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
+          </Link>
+        </h2>
+        <div>
+          <FeatureIcons park={park} />
         </div>
       </div>
     </div>

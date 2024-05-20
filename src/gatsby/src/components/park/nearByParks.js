@@ -33,11 +33,11 @@ const NearbyParks = ({ parks }) => {
 
   return (
     <div id="nearby-parks-container">
-      <Container className="border">
+      <Container>
         <h2>More parks to visit nearby</h2>
         <Row>
           {parks.map((park, index) =>
-            <Col key={index} className="border">
+            <Col key={index} xs={12} lg={4} className="col">
               <NearbyPark park={park} photos={filteredPhotos(park.orcs)} />
             </Col>
           )}
