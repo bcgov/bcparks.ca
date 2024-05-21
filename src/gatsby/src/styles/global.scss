@@ -500,6 +500,7 @@ button.btn:not(.btn-link) {
 nav.breadcrumbs {
   ol {
     display: flex;
+    flex-wrap: wrap;
     margin: 0;
     padding: 0;
     li {
