@@ -43,10 +43,42 @@ const getProtectedAreaIdByOrcs = async function (orcs) {
 
 module.exports = {
   async afterCreate(event) {
+    // If parkPhoto.protectedArea is selected, get that protectedArea.orcs in the parkPhoto.orcs
+    if (event.result?.protectedArea) {
+      const protectedAreaOrcs = event.result.protectedArea.orcs;
+      event.result.orcs = protectedAreaOrcs;
+      await strapi.entityService.update(
+        "api::park-photo.park-photo", event.result.id, { data: { orcs: protectedAreaOrcs } }
+      )
+    }
+    // If parkPhoto.site is selected, get that site.orcsSiteNumber in the parkPhoto.orcsSiteNumber
+    if (event.result?.site) {
+      const siteOrcs = event.result.site.orcsSiteNumber;
+      event.result.orcsSiteNumber = siteOrcs;
+      await strapi.entityService.update(
+        "api::park-photo.park-photo", event.result.id, { data: { orcsSiteNumber: siteOrcs } }
+      )
+    }
     const protectedAreaId = await getProtectedAreaIdByOrcs(event.result?.orcs);
     await indexPark(protectedAreaId);
   },
   async afterUpdate(event) {
+    // If parkPhoto.protectedArea is selected, get that protectedArea.orcs in the parkPhoto.orcs
+    if (event.result?.protectedArea) {
+      const protectedAreaOrcs = event.result.protectedArea.orcs;
+      event.result.orcs = protectedAreaOrcs;
+      await strapi.entityService.update(
+        "api::park-photo.park-photo", event.result.id, { data: { orcs: protectedAreaOrcs } }
+      )
+    }
+    // If parkPhoto.site is selected, get that site.orcsSiteNumber in the parkPhoto.orcsSiteNumber
+    if (event.result?.site) {
+      const siteOrcs = event.result.site.orcsSiteNumber;
+      event.result.orcsSiteNumber = siteOrcs;
+      await strapi.entityService.update(
+        "api::park-photo.park-photo", event.result.id, { data: { orcsSiteNumber: siteOrcs } }
+      )
+    }
     const newProtectedAreaId = await getProtectedAreaIdByOrcs(event.result?.orcs);
     await indexPark(newProtectedAreaId);
   },

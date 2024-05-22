@@ -263,11 +263,6 @@
       "target": "api::public-advisory.public-advisory",
       "mappedBy": "protectedAreas"
     },
-    "parkPhotos": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::park-photo.park-photo"
-    },
     "managementDocuments": {
       "type": "relation",
       "relation": "manyToMany",
@@ -310,6 +305,12 @@
     "hasDiscoverParksLink": {
       "type": "boolean",
       "default": false
+    },
+    "parkPhotos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-photo.park-photo",
+      "mappedBy": "protectedArea"
     }
   }
 }
