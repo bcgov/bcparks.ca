@@ -90,7 +90,7 @@ const AdvisoryFilter = ({
           <Form.Label><b>Event</b></Form.Label>
           <Typeahead
             id="event-search-typeahead"
-            minLength={1}
+            minLength={0}
             labelKey="label"
             placeholder=" "
             className={`event-search-typeahead has-text--${eventText.length > 0 ? 'true' : 'false'}`}
