@@ -52,7 +52,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
           onClick={() => {
             setExpanded(!expanded)
           }}>
-          {expanded ? "Read less" : "Read more"}
+          Show {expanded ? "less" : "more"} highlights
           <i className={`fa fa-angle-down ${expanded ? "open" : "close"}`}></i>
         </a>
       }
