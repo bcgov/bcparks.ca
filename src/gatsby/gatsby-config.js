@@ -117,13 +117,43 @@ module.exports = {
                   populate: ["region", "section"]
                 },
                 nearbyParkOne: {
-                  fields: "*"
+                  populate: ["orcs", "slug", "protectedAreaName"],
+                  parkActivities: {
+                    populate: ["isActive", {
+                      activityType: ["activityNumber", "activityCode", "isActive"]
+                    }]
+                  },
+                  parkFacilities: {
+                    populate: ["isActive", {
+                      facilityType: ["facilityNumber", "facilityCode", "isActive", "isCamping"]
+                    }]
+                  },
                 },
                 nearbyParkTwo: {
-                  fields: "*"
+                  populate: ["orcs", "slug", "protectedAreaName"],
+                  parkActivities: {
+                    populate: ["isActive", {
+                      activityType: ["activityNumber", "activityCode", "isActive"]
+                    }]
+                  },
+                  parkFacilities: {
+                    populate: ["isActive", {
+                      facilityType: ["facilityNumber", "facilityCode", "isActive", "isCamping"]
+                    }]
+                  },
                 },
                 nearbyParkThree: {
-                  fields: "*"
+                  populate: ["orcs", "slug", "protectedAreaName"],
+                  parkActivities: {
+                    populate: ["isActive", {
+                      activityType: ["activityNumber", "activityCode", "isActive"]
+                    }]
+                  },
+                  parkFacilities: {
+                    populate: ["isActive", {
+                      facilityType: ["facilityNumber", "facilityCode", "isActive", "isCamping"]
+                    }]
+                  },
                 }
               }
             },
