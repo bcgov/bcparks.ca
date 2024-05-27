@@ -3,7 +3,7 @@ name: Build dev on develop & main branch push
 on:
   push:
     branches:
-      - develop
+      - alpha
       - main
 
 concurrency:
@@ -26,9 +26,9 @@ jobs:
       - name: Login to OpenShift Container Repository
         uses: docker/login-action@v2
         with:
-          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
-          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+          registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
 
       - name: s2i Build
         id: build_image
@@ -36,7 +36,7 @@ jobs:
         with:
           path_context: "src/cms"
           builder_image: ${{ env.BUILDER_IMAGE }}
-          image: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}
+          image: ${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}
           tags: latest ${{ env.SHORT_SHA }}
           env_vars: STRAPI_ADMIN_BACKEND_URL=
 
@@ -54,14 +54,14 @@ jobs:
       - name: Set env
         run: |
           echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-          echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
+          echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
 
       - name: Login to OpenShift Container Repository
         uses: docker/login-action@v2
         with:
-          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
-          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+          registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -95,14 +95,14 @@ jobs:
       - name: Set env
         run: |
           echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-          echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
+          echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
 
       - name: Login to OpenShift Container Repository
         uses: docker/login-action@v2
         with:
-          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
-          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+          registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
 
       - name: Build and push builder image
         run: |
@@ -132,14 +132,14 @@ jobs:
       - name: Set env
         run: |
           echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-          echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
+          echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
 
       - name: Login to OpenShift Container Repository
         uses: docker/login-action@v2
         with:
-          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
-          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+          registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
 
       - name: Docker build
         run: |
@@ -166,9 +166,9 @@ jobs:
       - name: Login to OpenShift Container Repository
         uses: docker/login-action@v2
         with:
-          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
-          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+          registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
 
       - name: s2i Build
         id: build_image
@@ -176,7 +176,7 @@ jobs:
         with:
           path_context: "src/etl"
           builder_image: ${{ env.BUILDER_IMAGE }}
-          image: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}
+          image: ${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}
           tags: latest ${{ env.SHORT_SHA }}
 
       - name: Push Docker image
@@ -196,9 +196,9 @@ jobs:
       - name: Login to OpenShift Container Repository
         uses: docker/login-action@v2
         with:
-          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
-          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+          registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
 
       - name: s2i Build
         id: build_image
@@ -206,7 +206,7 @@ jobs:
         with:
           path_context: "src/scheduler"
           builder_image: ${{ env.BUILDER_IMAGE }}
-          image: ${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}
+          image: ${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}
           tags: latest ${{ env.SHORT_SHA }}
 
       - name: Push Docker image
@@ -222,12 +222,12 @@ jobs:
       - name: Login OpenShift
         uses: redhat-actions/oc-login@v1
         with:
-          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
-          openshift_token: ${{ secrets.OPENSHIFT_SERVICE_TOKEN }}
+          openshift_server_url: ${{ secrets.OPENSHIFT_GOLD_SERVER_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT_GOLD_SERVICE_TOKEN }}
 
       - name: Trigger rollout
         run: |
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-admin
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-cms
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-maintenance
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-scheduler
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-admin
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-cms
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-maintenance
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-scheduler
