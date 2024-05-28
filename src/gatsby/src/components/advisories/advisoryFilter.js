@@ -86,14 +86,16 @@ const AdvisoryFilter = ({
             </Form.Group>
           </div>
         </div>
-        <div className="col-7 col-md-4">
+        <div className="col-12 col-sm-7 col-md-4 mt-4 mt-md-0">
           <Form.Label><b>Event</b></Form.Label>
           <Typeahead
             id="event-search-typeahead"
             minLength={0}
             labelKey="label"
             placeholder=" "
-            className={`event-search-typeahead has-text--${eventText.length > 0 ? 'true' : 'false'}`}
+            className={`event-search-typeahead has-text--${
+              (eventText.length > 0 || getType() !== "") ? 'true' : 'false'}`
+            }
             clearButton
             options={eventTypes}
             value={getEventType()}
@@ -112,8 +114,7 @@ const AdvisoryFilter = ({
             )}
           />
         </div>
-        <div className="col-5 col-md-2">
-          <Form.Label>&nbsp;</Form.Label>
+        <div className="col-12 col-sm-5 col-md-2 d-flex align-self-end mt-4 mt-md-0">
           <button
             aria-label="Search"
             onClick={handleSearch}
@@ -123,8 +124,8 @@ const AdvisoryFilter = ({
           </button>
         </div>
       </div>
-      <div className="row mt-3">
-        <div className="col-auto">
+      <div className="row mt-4">
+        <div className="col-12 col-sm-auto">
           <b>Filters</b>
         </div>
         <div className="col-auto">
