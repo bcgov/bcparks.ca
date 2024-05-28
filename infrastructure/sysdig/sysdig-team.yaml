@@ -17,7 +17,7 @@ objects:
             role: ROLE_TEAM_MANAGER
           - name: robert.fiddler@gov.bc.ca
             role: ROLE_TEAM_MANAGER
-          - name: ayumi.tanaka@gov.bc.ca
+          - name: ayumi@oxd.com
             role: ROLE_TEAM_EDIT
           - name: sqa.manuji@gmail.com
             role: ROLE_TEAM_EDIT
