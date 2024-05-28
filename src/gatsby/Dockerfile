@@ -1,5 +1,4 @@
-#FROM image-registry.apps.silver.devops.gov.bc.ca/61d198-tools/caddy:latest
-FROM caddy:2.6.2-alpine
+FROM image-registry.apps.gold.devops.gov.bc.ca/c1643c-tools/caddy:latest
 
 ENV APP_ROOT=/usr/share/caddy
 ENV XDG_CONFIG_HOME=/tmp/config
