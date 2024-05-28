@@ -51,6 +51,8 @@ export default function ParkTemplate({ data }) {
   const maps = park.maps.data.maps
   const hasNearbyParks = park.nearbyParkOne !== null || park.nearbyParkTwo !== null || park.nearbyParkThree !== null
   const nearbyParks = hasNearbyParks ? [park.nearbyParkOne, park.nearbyParkTwo, park.nearbyParkThree] : []
+  const managementAreas = park.managementAreas || []
+  const searchArea = managementAreas[0]?.searchArea || {}
 
   const activeActivities = sortBy(
     park.parkActivities.filter(
@@ -342,6 +344,7 @@ export default function ParkTemplate({ data }) {
               advisories={advisories}
               advisoryLoadError={advisoryLoadError}
               isLoadingAdvisories={isLoadingAdvisories}
+              searchArea={searchArea}
               parkOperation={park.parkOperation}
               operationDates={park.parkOperationDates}
               subAreas={park.parkOperationSubAreas}
@@ -834,6 +837,11 @@ export const query = graphql`
             isActive
             isCamping
           }
+        }
+      }
+      managementAreas {
+        searchArea {
+          searchAreaName
         }
       }
     }

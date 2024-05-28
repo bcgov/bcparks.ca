@@ -7,6 +7,20 @@ import PropTypes from "prop-types"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons"
 import { faCalendar } from "@fortawesome/free-regular-svg-icons"
+import lowerMainland from "../../images/area-maps/area-maps-with-labels/1-lower-mainland-label.svg"
+import southIsland from "../../images/area-maps/area-maps-with-labels/2-south-island-label.svg"
+import okanagan from "../../images/area-maps/area-maps-with-labels/3-okanagan-label.svg"
+import seaToSky from "../../images/area-maps/area-maps-with-labels/4-sea-to-sky-label.svg"
+import kootenay from "../../images/area-maps/area-maps-with-labels/5-kootenay-label.svg"
+import thompson from "../../images/area-maps/area-maps-with-labels/6-thompson-label.svg"
+import cariboo from "../../images/area-maps/area-maps-with-labels/7-cariboo-label.svg"
+import haidaGwaii from "../../images/area-maps/area-maps-with-labels/8-haida-gwaii-label.svg"
+import northIsland from "../../images/area-maps/area-maps-with-labels/9-north-island-label.svg"
+import omineca from "../../images/area-maps/area-maps-with-labels/10-omineca-label.svg"
+import peace from "../../images/area-maps/area-maps-with-labels/11-peace-label.svg"
+import skeenaEast from "../../images/area-maps/area-maps-with-labels/12-skeena-east-label.svg"
+import skeenaWest from "../../images/area-maps/area-maps-with-labels/13-skeena-west-label.svg"
+import southCentralCoast from "../../images/area-maps/area-maps-with-labels/14-south-central-coast-label.svg"
 
 // URLs
 const reservationsURL = "https://camping.bcparks.ca"
@@ -23,6 +37,14 @@ const getParkOperationDates = (operationDates, thisYear) => {
   }
   return parkDates
 }
+// Helper function to get the area map image
+const convertToCamelCase = (str) => {
+  return str.split(" ").map((word, index) =>
+    index === 0 ? word.toLowerCase() : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join("")
+}
+const mapImages = {
+  lowerMainland, southIsland, okanagan, seaToSky, kootenay, thompson, cariboo, haidaGwaii, northIsland, omineca, peace, skeenaEast, skeenaWest, southCentralCoast
+}
 
 export default function ParkHeader({
   orcs,
@@ -38,6 +60,7 @@ export default function ParkHeader({
   advisories,
   advisoryLoadError,
   isLoadingAdvisories,
+  searchArea,
   parkOperation,
   operationDates,
   subAreas,
@@ -58,9 +81,8 @@ export default function ParkHeader({
           <>
             <div className="park-header-child">
               <FontAwesomeIcon icon={faLocationDot} />
-              {latitude && longitude && (
-                <a href={externalLink}>View detailed map.</a>
-              )}
+              {searchArea.searchAreaName}.&nbsp;
+              {latitude && longitude && (<a href={externalLink}>View detailed map.</a>)}
             </div>
             <div className="park-header-child">
               <ParkStatus
@@ -110,7 +132,10 @@ export default function ParkHeader({
         </div>
       </div>
       <div className="park-header--right">
-        image
+        <img
+          alt={searchArea.searchAreaName}
+          src={mapImages[convertToCamelCase(searchArea.searchAreaName)]}
+        />
       </div>
     </div >
   )
@@ -133,6 +158,7 @@ ParkHeader.propTypes = {
   advisories: PropTypes.array,
   advisoryLoadError: PropTypes.any,
   isLoadingAdvisories: PropTypes.bool.isRequired,
+  searchArea: PropTypes.object.isRequired,
   parkOperation: PropTypes.object.isRequired,
   operationDates: PropTypes.array.isRequired,
   subAreas: PropTypes.array.isRequired,

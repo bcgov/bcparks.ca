@@ -297,6 +297,11 @@ h2.section-heading {
     }
     &--right {
       width: 430px;
+      display: flex;
+      justify-content: flex-end;
+      img {
+        width: 250px;
+      }
     }
   }
 
