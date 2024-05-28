@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
-import loadable from '@loadable/component'
 
 import useScrollSpy from "react-use-scrollspy"
 
@@ -25,6 +24,7 @@ import ParkHeader from "../components/park/parkHeader"
 import ParkMapDetails from "../components/park/parkMapDetails"
 import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
+import MapLocation from "../components/park/mapLocation"
 import SafetyInfo from "../components/park/safetyInfo"
 import SpecialNote from "../components/park/specialNote"
 import NearbyParks from "../components/park/nearbyParks"
@@ -33,7 +33,6 @@ import Seo from "../components/seo"
 import parksLogo from "../images/park-card.png"
 import "../styles/parks.scss"
 
-const AsyncMapLocation = loadable(() => import("../components/park/mapLocation"));
 
 export default function ParkTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
@@ -276,13 +275,6 @@ export default function ParkTemplate({ data }) {
     },
   ]
 
-  const mapData = {
-    latitude: park.latitude,
-    longitude: park.longitude,
-    mapZoom: park.mapZoom,
-    parkOrcs: park.orcs
-  }
-
   const parkName = park.protectedAreaName;
 
   if (!addedSeasonalAdvisory) {
@@ -328,29 +320,33 @@ export default function ParkTemplate({ data }) {
   ]
 
   return (
-    <div className="grey-background">
+    <div>
       <Header mode="internal" content={menuContent} />
       <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
-        <div className="container parks-container order-2">
+        <div className="container parks-container bg-brown order-2">
           <div id="main-content" tabIndex={-1} className="park-info-container pt-5">
             <Breadcrumbs breadcrumbs={breadcrumbs} />
           </div>
           {!isLoadingProtectedArea && !protectedAreaLoadError && (
-            <div>
-              <ParkHeader
-                slug={park.slug}
-                parkName={parkName}
-                hasReservations={hasReservations}
-                hasDayUsePass={hasDayUsePass}
-                hasCampfireBan={hasCampfireBan}
-                isLoadingAdvisories={isLoadingAdvisories}
-                advisoryLoadError={advisoryLoadError}
-                advisories={advisories}
-                subAreas={park.parkOperationSubAreas}
-                operationDates={park.parkOperationDates}
-                onStatusCalculated={handleAccessStatus}
-              />
-            </div>
+            <ParkHeader
+              orcs={park.orcs}
+              slug={park.slug}
+              parkName={parkName}
+              parkType={parkType}
+              mapZoom={park.mapZoom}
+              latitude={park.latitude}
+              longitude={park.latitude}
+              hasCampfireBan={hasCampfireBan}
+              hasDayUsePass={hasDayUsePass}
+              hasReservations={hasReservations}
+              advisories={advisories}
+              advisoryLoadError={advisoryLoadError}
+              isLoadingAdvisories={isLoadingAdvisories}
+              parkOperation={park.parkOperation}
+              operationDates={park.parkOperationDates}
+              subAreas={park.parkOperationSubAreas}
+              onStatusCalculated={handleAccessStatus}
+            />
           )}
         </div>
         <div className="page-menu--mobile d-block d-md-none order-3">
@@ -458,15 +454,7 @@ export default function ParkTemplate({ data }) {
             )}
             {menuItems[8].visible && (
               <div ref={mapLocationRef} className="w-100">
-                <AsyncMapLocation data={mapData} />
-                {locationNotes && (
-                  <div id="park-location-notes-container"
-                    dangerouslySetInnerHTML={{
-                      __html: locationNotes,
-                    }}
-                  >
-                  </div>
-                )}
+                <MapLocation locationNotes={locationNotes} />
               </div>
             )}
             {menuItems[9].visible && (
