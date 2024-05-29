@@ -52,7 +52,7 @@ This step should be completed by someone familiar with OpenShift.  It involves r
 
 ### Indexing data for searching
 
-1. Navigate to the bcparks.ca/src/elastic directory.
+1. Navigate to the bcparks.ca/src/elasticmanager directory.
 
 2. Copy the .env.example file to .env (`cp .env.example .env`). 
 
