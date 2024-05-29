@@ -8,6 +8,9 @@ const { indexPark } = require("../../../../helpers/taskQueue.js");
  */
 
 const indexParkBySubAreaId = async (subAreaId) => {
+  if (!subAreaId) {
+    return;
+  }
   const subArea = await strapi.entityService.findOne(
     "api::park-operation-sub-area.park-operation-sub-area",
     subAreaId,
