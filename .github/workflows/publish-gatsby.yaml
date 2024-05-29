@@ -6,15 +6,15 @@ on:
   workflow_dispatch:
     inputs:
       branchName:
-        description: "Rebuild public for which branch?"
+        description: "Publish gatsby for which branch?"
         default: 'main'
         type: choice
         required: true
         options:
-        - develop
+        - alpha
         - main
       buildEnv:
-        description: "Rebuild public for which environment?"
+        description: "Publish gatsby for which environment?"
         default: 'prod'
         type: choice
         required: true
@@ -36,8 +36,8 @@ jobs:
     steps:
       - name: Validate inputs
         run: |
-          if [[ "${{ github.event.inputs.branchName }}" == "develop" && "${{ github.event.inputs.buildEnv }}" == "prod" ]]; then
-            echo "devlop/prod is not a valid environment combo"
+          if [[ "${{ github.event.inputs.branchName }}" == "alpha" && "${{ github.event.inputs.buildEnv }}" == "prod" ]]; then
+            echo "alpha/prod is not a valid environment combo"
             exit 1
           fi
       - name: Set env based on branch
@@ -48,37 +48,37 @@ jobs:
               echo "IMAGE_NAME=public-main" >> $GITHUB_ENV
               echo "DEPLOYMENT_NAME=main-public" >> $GITHUB_ENV
           else
-              echo "BRANCH=develop" >> $GITHUB_ENV
-              echo "BUILDER_IMAGE_NAME=public-builder-develop" >> $GITHUB_ENV
-              echo "IMAGE_NAME=public-develop" >> $GITHUB_ENV
-              echo "DEPLOYMENT_NAME=develop-public" >> $GITHUB_ENV
+              echo "BRANCH=alpha" >> $GITHUB_ENV
+              echo "BUILDER_IMAGE_NAME=public-builder-alpha" >> $GITHUB_ENV
+              echo "IMAGE_NAME=public-alpha" >> $GITHUB_ENV
+              echo "DEPLOYMENT_NAME=alpha-public" >> $GITHUB_ENV
           fi
       - name: Set vars
         id: vars
         run: |
-          echo "registry_image=${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_OUTPUT
-          echo "registry_builder_image=${{ secrets.OPENSHIFT_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools/${{ env.BUILDER_IMAGE_NAME }}" >> $GITHUB_OUTPUT
+          echo "registry_image=${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_OUTPUT
+          echo "registry_builder_image=${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.BUILDER_IMAGE_NAME }}" >> $GITHUB_OUTPUT
       - name: Set env based on client_payload
         run: |
           if [[ "${{ github.event.client_payload.env }}" == "prod" || "${{ github.event.inputs.buildEnv }}" == "prod" ]]; then
               echo "ENV_SUFFIX=prod" >> $GITHUB_ENV
               echo "IMAGE_TAG=prod" >> $GITHUB_ENV
               echo "STRAPI_SOURCE_URL=https://cms.bcparks.ca" >> $GITHUB_ENV
-              echo "REACT_APP_CMS_BASE_URL=https://bcparks.api.gov.bc.ca" >> $GITHUB_ENV
+              echo "REACT_APP_CMS_BASE_URL=https://cms.bcparks.ca" >> $GITHUB_ENV
               echo "REACT_APP_SITE_URL=https://bcparks.ca" >> $GITHUB_ENV
-              echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__MAIN_PROD }}" >> $GITHUB_ENV
+              echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__MAIN_PROD__GOLD }}" >> $GITHUB_ENV
           elif [[ "${{ github.event.client_payload.env }}" == "test" || "${{ github.event.inputs.buildEnv }}" == "test" ]]; then
               echo "ENV_SUFFIX=test" >> $GITHUB_ENV
               echo "IMAGE_TAG=test" >> $GITHUB_ENV
               if [[ "${{ github.event.client_payload.branch }}" == "main" || "${{ github.event.inputs.branchName }}" == "main" ]]; then
                   echo "STRAPI_SOURCE_URL=https://test-cms.bcparks.ca" >> $GITHUB_ENV              
-                  echo "REACT_APP_CMS_BASE_URL=https://bcparks-api-gov-bc-ca.test.api.gov.bc.ca" >> $GITHUB_ENV
+                  echo "REACT_APP_CMS_BASE_URL=https://bcparks.test.api.gov.bc.ca" >> $GITHUB_ENV
                   echo "REACT_APP_SITE_URL=https://test.bcparks.ca" >> $GITHUB_ENV
-                  echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__MAIN_TEST }}" >> $GITHUB_ENV
+                  echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__MAIN_TEST__GOLD }}" >> $GITHUB_ENV
               else
                   echo "REACT_APP_CMS_BASE_URL=https://alpha-test-cms.bcparks.ca" >> $GITHUB_ENV
                   echo "REACT_APP_SITE_URL=https://alpha-test.bcparks.ca" >> $GITHUB_ENV
-                  echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__DEVELOP_TEST }}" >> $GITHUB_ENV
+                  echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__ALPHA_TEST }}" >> $GITHUB_ENV
               fi
           else
               echo "ENV_SUFFIX=dev" >> $GITHUB_ENV
@@ -86,19 +86,19 @@ jobs:
               if [[ "${{ github.event.client_payload.branch }}" == "main" || "${{ github.event.inputs.branchName }}" == "main" ]]; then
                   echo "REACT_APP_CMS_BASE_URL=https://dev-cms.bcparks.ca" >> $GITHUB_ENV
                   echo "REACT_APP_SITE_URL=https://dev.bcparks.ca" >> $GITHUB_ENV
-                  echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__MAIN_DEV }}" >> $GITHUB_ENV
+                  echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__MAIN_DEV__GOLD }}" >> $GITHUB_ENV
               else
                   echo "REACT_APP_CMS_BASE_URL=https://alpha-dev-cms.bcparks.ca" >> $GITHUB_ENV
                   echo "REACT_APP_SITE_URL=https://alpha-dev.bcparks.ca" >> $GITHUB_ENV
-                  echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__DEVELOP_DEV }}" >> $GITHUB_ENV
+                  echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__ALPHA_DEV }}" >> $GITHUB_ENV
               fi
           fi
       - name: Login to OpenShift Container Repository
         uses: docker/login-action@v2
         with:
-          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
-          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
-          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
+          registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -139,12 +139,12 @@ jobs:
       - name: Login OpenShift
         uses: redhat-actions/oc-login@v1
         with:
-          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
-          openshift_token: ${{ secrets.OPENSHIFT_SERVICE_TOKEN }}
+          openshift_server_url: ${{ secrets.OPENSHIFT_GOLD_SERVER_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT_GOLD_SERVICE_TOKEN }}
 
       - name: Trigger rollout
         run: |
-          oc -n ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-${{ env.ENV_SUFFIX }} rollout restart deployment ${{ env.DEPLOYMENT_NAME }}
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-${{ env.ENV_SUFFIX }} rollout restart deployment ${{ env.DEPLOYMENT_NAME }}
 
   # alert-if-failure:
   #   if: ${{ always() && (needs.build.result=='failure')}}
@@ -155,4 +155,3 @@ jobs:
   #       id: failure_alert
   #       run: |
   #         curl -X POST -H 'Content-Type: application/json' --data '{"workflow":"${{github.workflow}}","repo":"${{github.repository}}"}' https://chat.developer.gov.bc.ca/hooks/${{ secrets.ROCKETCHAT_TOKEN }}
-

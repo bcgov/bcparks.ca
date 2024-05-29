@@ -3,22 +3,22 @@ cluster:
 
 images:
   strapi:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/strapi-develop
+    name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/strapi-alpha
     tag: test
   admin:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/admin-develop
+    name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/admin-alpha
     tag: test
   public:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/public-develop
+    name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/public-alpha
     tag: test
   maintenance:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/maintenance-develop
+    name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/maintenance-alpha
     tag: test
   etl:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/etl-develop
+    name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/etl-alpha
     tag: test
   scheduler:
-    name: image-registry.openshift-image-registry.svc:5000/61d198-tools/scheduler-develop
+    name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/scheduler-alpha
     tag: test
 
 cms:
@@ -28,7 +28,7 @@ cms:
 
   hpa:
     minReplicas: 1
-    maxReplicas: 1
+    maxReplicas: 2
 
 admin:
   env:
@@ -38,23 +38,17 @@ admin:
 patroni:
   replicas: 1
 
-  pvc:
-    size: 10Gi
-
 backup:
   enabled: true
 
-  pvc:
-    size: 10Gi
-
   enironment:
     friendlyName: bcparks.ca CMS Postgres Backup [alpha-test]
-    name: 61d198-test
+    name: c1643c-test
 
 public:
   hpa:
     minReplicas: 1
-    maxReplicas: 1
+    maxReplicas: 2
 
 etl:
   enabled: true
