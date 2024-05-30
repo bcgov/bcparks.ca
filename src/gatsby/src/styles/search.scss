@@ -750,6 +750,9 @@ a.mobile-park-link {
         background-color: transparent;
         text-decoration: underline !important;
       }
+      &.disabled {
+        color: $colorGreyMed !important;
+      }
       &.no-suggestion-text {
         cursor: default;
         text-decoration: none;
