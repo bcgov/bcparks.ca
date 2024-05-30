@@ -1,5 +1,5 @@
 import React from "react"
-import ParkStatus from "./parkStatus"
+import ParkAccessStatus from "./parkAccessStatus"
 import CampfireBan from "../campfireBan"
 import { datePhrase } from "../../utils/parkDatesHelper"
 
@@ -87,11 +87,12 @@ export default function ParkHeader({
               </div>
             )}
             <div className="park-header-child">
-              <ParkStatus
+              <ParkAccessStatus
                 advisories={advisories}
                 slug={slug}
                 subAreas={subAreas}
                 operationDates={operationDates}
+                punctuation={advisories.length > 0 ? `(${advisories.length}).`: ""}
                 onStatusCalculated={onStatusCalculated}
               />
             </div>
@@ -113,7 +114,7 @@ export default function ParkHeader({
                     )}
                   </p>
                 ) : (
-                  <p>Operating dates are unavailable</p>
+                  <p>Operating dates are unavailable.</p>
                 )}
                 <p>
                   <a href="#park-camping-details-container">Check campgrounds</a> and{" "}

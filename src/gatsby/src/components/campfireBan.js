@@ -6,7 +6,7 @@ export default function CampfireBan() {
   return (
     <>
       <FontAwesomeIcon icon={faFire} />
-      <p>Campfire ban in effect</p>
+      <p>Campfire ban in effect.</p>
     </>
   )
 }

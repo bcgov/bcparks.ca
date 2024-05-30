@@ -298,6 +298,11 @@ h2.section-heading {
       display: flex;
       align-items: center;
       margin-bottom: 16px;
+      .access-status-icon {
+        a {
+          display: inline;
+        }
+      }
     }
     &--left {
       width: 670px;
@@ -437,9 +442,9 @@ h2.section-heading {
 }
 
 .access-status-icon {
-  line-height: 2rem;
   img {
     float: left;
+    margin-right: 8px;
     margin-bottom: 8px;
   }
   a {
