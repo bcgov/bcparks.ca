@@ -207,13 +207,6 @@ export default function SiteTemplate({ data }) {
     },
   ]
 
-  const mapData = {
-    latitude: site.latitude,
-    longitude: site.longitude,
-    mapZoom: site.mapZoom,
-    parkOrcs: site.orcsSiteNumber
-  }
-
   const breadcrumbs = [
     <GatsbyLink key="1" to="/">
       Home
@@ -241,44 +234,52 @@ export default function SiteTemplate({ data }) {
   ]
 
   return (
-    <div className="grey-background">
+    <div>
       <Header mode="internal" content={menuContent} />
-      <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
-        <div className="container parks-container order-2">
-          <div id="main-content" tabIndex={-1} className="park-info-container pt-5">
+      <div className="park-header-container d-flex flex-wrap d-md-block">
+        <div className="parks-container bg-brown">
+          <div id="main-content" tabIndex={-1} className="park-info-container breadcrumb-container">
             <Breadcrumbs breadcrumbs={breadcrumbs} />
           </div>
           {!isLoadingProtectedArea && !protectedAreaLoadError && (
             <div>
               <ParkHeader
+                orcs={site.orcsSiteNumber}
                 slug={`${park.slug}/${site.slug}`}
                 parkName={`${park?.protectedAreaName}: ${site.siteName}`}
-                hasReservations={hasReservations}
-                hasDayUsePass={hasDayUsePass}
+                parkType="site"
+                mapZoom={site.mapZoom}
+                latitude={site.latitude}
+                longitude={site.longitude}
                 hasCampfireBan={hasCampfireBan}
-                isLoadingAdvisories={isLoadingAdvisories}
-                advisoryLoadError={advisoryLoadError}
+                hasDayUsePass={hasDayUsePass}
+                hasReservations={hasReservations}
                 advisories={advisories}
-                subAreas={park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)}
+                advisoryLoadError={advisoryLoadError}
+                isLoadingAdvisories={isLoadingAdvisories}
                 operationDates={park.parkOperationDates}
+                subAreas={park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)}
               />
             </div>
           )}
         </div>
-        <div className="page-menu--mobile d-block d-md-none order-3">
+        {/* <div className="page-menu--mobile d-block d-md-none">
           <PageMenu
             pageSections={menuItems}
             activeSection={activeSection}
             menuStyle="select"
           />
-        </div>
-        <div className="container parks-container gallery-container order-1">
+        </div> */}
+        <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
+          {photos.length > 0 && (
+            <div className="background-container bg-brown"></div>
+          )}
           <div className="park-info-container">
             <ParkPhotoGallery photos={photos} />
           </div>
         </div>
       </div>
-      <div className="container parks-container main-container">
+      <div className="parks-container main-container">
         <div className="row no-gutters park-info-container">
           <div className="page-menu--desktop d-none d-md-block col-12 col-md-4">
             <PageMenu
@@ -345,15 +346,7 @@ export default function SiteTemplate({ data }) {
             )}
             {menuItems[6].visible && (
               <div ref={mapLocationRef} className="w-100">
-                <MapLocation data={mapData} />
-                {locationNotes && (
-                  <div id="park-location-notes-container"
-                    dangerouslySetInnerHTML={{
-                      __html: locationNotes,
-                    }}
-                  >
-                  </div>
-                )}
+                <MapLocation locationNotes={locationNotes} />
               </div>
             )}
           </div>

@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -64,16 +63,9 @@ export default function ParkPhotoGallery({ photos }) {
         plugins={[Captions, Thumbnails, Zoom, Slideshow, Fullscreen]}
       />
       {/* photo gallery for pc */}
-      <div className="park-photo-gallery d-none d-lg-block my-4">
-        {parkPhotos.length === 0 && (
-          <Row>
-            <Col>
-              <hr />
-            </Col>
-          </Row>
-        )}
+      <div className="park-photo-gallery d-none d-md-block">
         {parkPhotos.length > 0 && (
-          <Container
+          <div
             id="park-photo-gallery-container"
             className="park-photo-gallery-container"
             onClick={() => {
@@ -83,7 +75,7 @@ export default function ParkPhotoGallery({ photos }) {
             }}
           >
             {parkPhotos.length === 1 && (
-              <Row onClick={() => setOpen(true)}>
+              <Row noGutters onClick={() => setOpen(true)}>
                 <Col className="px-0">
                   <ParkPhoto
                     type="big"
@@ -103,7 +95,7 @@ export default function ParkPhotoGallery({ photos }) {
             {(parkPhotos.length === 2 ||
               parkPhotos.length === 3 ||
               parkPhotos.length === 4) && (
-                <Row onClick={() => setOpen(true)}>
+                <Row noGutters onClick={() => setOpen(true)}>
                   <Col xs={12} md={6} className="pl-0 pr-1">
                     <ParkPhoto
                       type="big"
@@ -129,7 +121,7 @@ export default function ParkPhotoGallery({ photos }) {
                 </Row>
               )}
             {parkPhotos.length > 4 && (
-              <Row onClick={() => setOpen(true)}>
+              <Row noGutters onClick={() => setOpen(true)}>
                 <Col xs={12} md={6} className="pl-0 pr-1">
                   {parkPhotos
                     .filter(f => f.index === 0)
@@ -143,7 +135,7 @@ export default function ParkPhotoGallery({ photos }) {
                     ))}
                 </Col>
                 <Col xs={12} md={6} className="px-0">
-                  <Row className="position-relative no-gutters">
+                  <Row noGutters className="position-relative">
                     {parkPhotos
                       .filter(
                         photo => photo.index > 0 && photo.index <= 4
@@ -169,13 +161,13 @@ export default function ParkPhotoGallery({ photos }) {
                 </Col>
               </Row>
             )}
-          </Container>
+          </div>
         )}
       </div>
       {/* photo gallery for mobile */}
-      <div className="park-photo-gallery d-block d-lg-none">
+      <div className="park-photo-gallery d-block d-md-none">
         {parkPhotos.length > 0 && (
-          <Container
+          <div
             id="park-photo-gallery-container"
             className="park-photo-gallery-container"
             onClick={() => {
@@ -184,7 +176,7 @@ export default function ParkPhotoGallery({ photos }) {
               }
             }}
           >
-            <Row onClick={() => setOpen(true)}>
+            <Row noGutters onClick={() => setOpen(true)}>
               <Col className="px-0">
                 <ParkPhoto
                   type="big"
@@ -200,7 +192,7 @@ export default function ParkPhotoGallery({ photos }) {
                 </div>
               </Col>
             </Row>
-          </Container>
+          </div>
         )}
       </div>
     </>

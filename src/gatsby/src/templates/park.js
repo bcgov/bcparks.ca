@@ -33,7 +33,6 @@ import Seo from "../components/seo"
 import parksLogo from "../images/park-card.png"
 import "../styles/parks.scss"
 
-
 export default function ParkTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
 
@@ -324,9 +323,9 @@ export default function ParkTemplate({ data }) {
   return (
     <div>
       <Header mode="internal" content={menuContent} />
-      <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
-        <div className="container parks-container bg-brown order-2">
-          <div id="main-content" tabIndex={-1} className="park-info-container pt-5">
+      <div className="park-header-container d-flex flex-wrap d-md-block">
+        <div className="parks-container bg-brown">
+          <div id="main-content" tabIndex={-1} className="park-info-container breadcrumb-container">
             <Breadcrumbs breadcrumbs={breadcrumbs} />
           </div>
           {!isLoadingProtectedArea && !protectedAreaLoadError && (
@@ -352,20 +351,23 @@ export default function ParkTemplate({ data }) {
             />
           )}
         </div>
-        <div className="page-menu--mobile d-block d-md-none order-3">
+        {/* <div className="page-menu--mobile d-block d-md-none">
           <PageMenu
             pageSections={menuItems}
             activeSection={activeSection}
             menuStyle="select"
           />
-        </div>
-        <div className="container parks-container gallery-container order-1">
+        </div> */}
+        <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
+          {photos.length > 0 && (
+            <div className="background-container bg-brown"></div>
+          )}
           <div className="park-info-container">
             <ParkPhotoGallery photos={photos} />
           </div>
         </div>
       </div>
-      <div className="container parks-container main-container">
+      <div className="parks-container main-container">
         <div className="row no-gutters park-info-container">
           <div className="page-menu--desktop d-none d-md-block col-12 col-md-4">
             <PageMenu

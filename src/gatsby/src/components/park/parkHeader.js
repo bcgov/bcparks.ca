@@ -74,16 +74,18 @@ export default function ParkHeader({
   const parkDates = getParkOperationDates(operationDates, thisYear)
 
   return (
-    <div id="park-header-container" className="d-flex">
+    <div id="park-header-container" className="d-flex park-info-container">
       <div className="park-header park-header--left">
         <h1>{parkName}</h1>
         {!isLoadingAdvisories && !advisoryLoadError && (
           <>
-            <div className="park-header-child">
-              <FontAwesomeIcon icon={faLocationDot} />
-              {searchArea.searchAreaName}.&nbsp;
-              {latitude && longitude && (<a href={externalLink}>View detailed map.</a>)}
-            </div>
+            {searchArea?.searchAreaName && (
+              <div className="park-header-child">
+                <FontAwesomeIcon icon={faLocationDot} />
+                {searchArea.searchAreaName}.&nbsp;
+                {latitude && longitude && (<a href={externalLink}>View detailed map.</a>)}
+              </div>
+            )}
             <div className="park-header-child">
               <ParkStatus
                 advisories={advisories}
@@ -103,8 +105,8 @@ export default function ParkHeader({
               <div>
                 {parkDates ? (
                   <p>
-                    The {parkType.toLowerCase()} {parkOperation.hasParkGate !== false && "gate"} is open {parkDates}.
-                    {(parkOperation.gateOpenTime && parkOperation.gateCloseTime) && (
+                    The {parkType?.toLowerCase()} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}.
+                    {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) && (
                       <>
                         Gates are open from {parkOperation.gateOpenTime} to {parkOperation.gateCloseTime}.
                       </>
@@ -123,19 +125,20 @@ export default function ParkHeader({
         )}
         <div className="mt-4">
           {hasReservations && (
-            <a href={reservationsURL} className="btn btn-secondary mr-lg-3">Book camping</a>
+            <a href={reservationsURL} className="btn btn-secondary mr-3">Book camping</a>
           )}
           {hasDayUsePass && (
             <a href={dayUsePassURL} className="btn btn-secondary">Get a day-use pass</a>
-          )
-          }
+          )}
         </div>
       </div>
       <div className="park-header--right">
-        <img
-          alt={searchArea.searchAreaName}
-          src={mapImages[convertToCamelCase(searchArea.searchAreaName)]}
-        />
+        {searchArea?.searchAreaName && (
+          <img
+            alt={searchArea.searchAreaName}
+            src={mapImages[convertToCamelCase(searchArea.searchAreaName)]}
+          />
+        )}
       </div>
     </div >
   )

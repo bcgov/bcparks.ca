@@ -189,7 +189,7 @@ export default function ParkStatus({ advisories, slug, subAreas, operationDates,
               <>
                 {", "}
                 <Link to={`/${slug}/#park-advisory-details-container`} className="d-inline-block">
-                  check advisories.
+                  check advisories {`(${advisories.length})`}.
                 </Link>
                 {punctuation}
               </>
