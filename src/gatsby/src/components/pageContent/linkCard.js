@@ -25,7 +25,7 @@ export default function LinkCard({ url, title, subTitle, imageUrl, imageAltText,
       break;
     case "Footer": 
       wrapClasses += "col-12 col-lg-6 link-card--footer-wrapper"
-      cardClasses += "link-card link-card--footer"
+      cardClasses += "link-card--footer"
       break;
     case "LandingPage":
       cardClasses += "link-card--horz link-card--landing-page"
