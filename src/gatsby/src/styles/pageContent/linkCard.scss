@@ -18,6 +18,7 @@
   .card-img {
     height: 65%;
     overflow: hidden;
+    border-radius: 0;
     margin-bottom: unset;
     transition: border-left-width 250ms linear;
     img {

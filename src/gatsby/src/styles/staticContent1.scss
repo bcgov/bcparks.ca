@@ -34,7 +34,7 @@
       background-color: $colorWhite !important;
     }
   }
-  a:not(.btn):not(.nav-link):not(.badge) {
+  a:not(.btn):not(.nav-link):not(.badge):not(.link-card) {
     color: $colorBlueMed;
     text-decoration: underline;
     &:hover, &:active, &:focus {
