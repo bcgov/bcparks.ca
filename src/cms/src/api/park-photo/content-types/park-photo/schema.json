@@ -5,11 +5,10 @@
     "singularName": "park-photo",
     "pluralName": "park-photos",
     "displayName": "Park-photo",
-    "name": "park-photo"
+    "name": "park-photo",
+    "description": ""
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
     "draftAndPublish": true
   },
   "attributes": {
@@ -55,6 +54,18 @@
       "type": "integer",
       "required": true,
       "default": 100
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "parkPhotos"
+    },
+    "site": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::site.site",
+      "inversedBy": "parkPhotos"
     }
   }
 }

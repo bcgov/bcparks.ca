@@ -118,6 +118,12 @@
       "relation": "manyToMany",
       "target": "api::management-document.management-document",
       "mappedBy": "sites"
+    },
+    "parkPhotos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-photo.park-photo",
+      "mappedBy": "site"
     }
   }
 }
