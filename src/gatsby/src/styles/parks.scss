@@ -68,7 +68,7 @@
     @media (min-width: $smBreakpoint) {
       padding-bottom: 200px;
     }
-    @media (min-width: $mdBreakpoint) {
+    @media (min-width: $lgBreakpoint) {
       padding-bottom: 300px;
     }
   }
@@ -81,7 +81,6 @@
     top: 0;
     left: 0;
     @media (min-width: 1100px) {
-      width: auto;
       left: calc(50% - 550px);
     }
   }
@@ -177,11 +176,14 @@
   @media (min-width: $smBreakpoint) {
     height: 300px;
   }
-  @media (min-width: $mdBreakpoint) {
+  @media (min-width: $lgBreakpoint) {
     height: 400px;
   }
   &--small {
-    height: 196px;
+    height: 146px;
+    @media (min-width: $lgBreakpoint) {
+      height: 196px;
+    }
   }
   img {
     width: 100%;

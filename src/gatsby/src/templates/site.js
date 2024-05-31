@@ -20,8 +20,8 @@ import ParkFacility from "../components/park/parkFacility"
 import ParkHeader from "../components/park/parkHeader"
 import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
-import SafetyInfo from "../components/park/safetyInfo"
 import MapLocation from "../components/park/mapLocation"
+import SafetyInfo from "../components/park/safetyInfo"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
@@ -40,6 +40,8 @@ export default function SiteTemplate({ data }) {
   const description = site.description.data.description
   const safetyInfo = site.safetyInfo?.data?.safetyInfo
   const locationNotes = site.locationNotes.data.locationNotes
+  const managementAreas = park.managementAreas || []
+  const searchArea = managementAreas[0]?.searchArea || {}
 
   const activeActivities = sortBy(
     activities.filter(
@@ -213,7 +215,7 @@ export default function SiteTemplate({ data }) {
     </GatsbyLink>,
     <GatsbyLink
       key="2"
-      to="/find-a-park"
+      to="/find-a-park/"
       onClick={(e) => {
         if (sessionStorage.getItem("lastSearch")) {
           e.preventDefault();
@@ -223,7 +225,8 @@ export default function SiteTemplate({ data }) {
     >
       Find a park
     </GatsbyLink>,
-    <GatsbyLink key="3"
+    <GatsbyLink
+      key="3"
       to={`/${park?.slug ? park.slug : 'parks/protected-area'}`}
     >
       {park?.protectedAreaName}
@@ -242,25 +245,25 @@ export default function SiteTemplate({ data }) {
             <Breadcrumbs breadcrumbs={breadcrumbs} />
           </div>
           {!isLoadingProtectedArea && !protectedAreaLoadError && (
-            <div>
-              <ParkHeader
-                orcs={site.orcsSiteNumber}
-                slug={`${park.slug}/${site.slug}`}
-                parkName={`${park?.protectedAreaName}: ${site.siteName}`}
-                parkType="site"
-                mapZoom={site.mapZoom}
-                latitude={site.latitude}
-                longitude={site.longitude}
-                hasCampfireBan={hasCampfireBan}
-                hasDayUsePass={hasDayUsePass}
-                hasReservations={hasReservations}
-                advisories={advisories}
-                advisoryLoadError={advisoryLoadError}
-                isLoadingAdvisories={isLoadingAdvisories}
-                operationDates={park.parkOperationDates}
-                subAreas={park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)}
-              />
-            </div>
+            <ParkHeader
+              orcs={site.orcsSiteNumber}
+              slug={`${park.slug}/${site.slug}`}
+              parkName={`${park?.protectedAreaName}: ${site.siteName}`}
+              parkType="site"
+              mapZoom={site.mapZoom}
+              latitude={site.latitude}
+              longitude={site.longitude}
+              hasCampfireBan={hasCampfireBan}
+              hasDayUsePass={hasDayUsePass}
+              hasReservations={hasReservations}
+              advisories={advisories}
+              advisoryLoadError={advisoryLoadError}
+              isLoadingAdvisories={isLoadingAdvisories}
+              searchArea={searchArea}
+              parkOperation={site.parkOperation}
+              operationDates={park.parkOperationDates}
+              subAreas={park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)}
+            />
           )}
         </div>
         {/* <div className="page-menu--mobile d-block d-md-none">
@@ -434,6 +437,11 @@ export const query = graphql`
             closureAffectsAccessStatus
           }
         }
+        managementAreas {
+          searchArea {
+            searchAreaName
+          }
+        }
       }
       parkActivities {
         isActive
@@ -489,7 +497,8 @@ export const query = graphql`
     featuredPhotos: allStrapiParkPhoto(
       filter: {
         orcsSiteNumber: {eq: $orcsSiteNumber},
-        isFeatured: {eq: true}, isActive: {eq: true}
+        isFeatured: {eq: true},
+        isActive: {eq: true}
       }
       sort: [
         {sortOrder: ASC},
