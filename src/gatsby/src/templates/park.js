@@ -768,6 +768,12 @@ export const query = graphql`
         orcs
         slug
         protectedAreaName
+        parkPhotos {
+          isActive
+          isFeatured
+          sortOrder
+          imageUrl
+        }
         parkActivities {
           isActive
           activityType {
@@ -790,6 +796,12 @@ export const query = graphql`
         orcs
         slug
         protectedAreaName
+        parkPhotos {
+          isActive
+          isFeatured
+          sortOrder
+          imageUrl
+        }
         parkActivities {
           isActive
           activityType {
@@ -812,6 +824,12 @@ export const query = graphql`
         orcs
         slug
         protectedAreaName
+        parkPhotos {
+          isActive
+          isFeatured
+          sortOrder
+          imageUrl
+        }
         parkActivities {
           isActive
           activityType {

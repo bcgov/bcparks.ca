@@ -8,10 +8,21 @@ import FeatureIcons from "../search/featureIcons"
 import parksLogo from "../../images/park-card.png"
 import { addSmallImagePrefix, handleImgError } from "../../utils/helpers"
 
-const NearbyPark = ({ park, photos }) => {
+const NearbyPark = ({ park }) => {
   const [index, setIndex] = useState(0)
   const [isTabFocused, setIsTabFocused] = useState(false)
   const [hasError, setHasError] = useState(false)
+  // sort photos
+  const activePhotos = park.parkPhotos.filter(p => p.isActive)
+  const photos = activePhotos.sort((a, b) => {
+    if (a.isFeatured && !b.isFeatured) {
+      return -1
+    } else if (!a.isFeatured && b.isFeatured) {
+      return 1
+    } else {
+      return a.sortOrder - b.sortOrder
+    }
+  })
 
   // event handlers
   const handleSelect = (selectedIndex, e) => {

@@ -116,8 +116,14 @@ module.exports = {
                 managementAreas: {
                   populate: ["region", "section"]
                 },
+                parkPhotos: {
+                  fields: "*"
+                },
                 nearbyParkOne: {
                   populate: ["orcs", "slug", "protectedAreaName"],
+                  parkPhotos: {
+                    populate: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
+                  },
                   parkActivities: {
                     populate: ["isActive", {
                       activityType: ["activityNumber", "activityCode", "isActive"]
@@ -131,6 +137,9 @@ module.exports = {
                 },
                 nearbyParkTwo: {
                   populate: ["orcs", "slug", "protectedAreaName"],
+                  parkPhotos: {
+                    populate: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
+                  },
                   parkActivities: {
                     populate: ["isActive", {
                       activityType: ["activityNumber", "activityCode", "isActive"]
@@ -144,6 +153,9 @@ module.exports = {
                 },
                 nearbyParkThree: {
                   populate: ["orcs", "slug", "protectedAreaName"],
+                  parkPhotos: {
+                    populate: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
+                  },
                   parkActivities: {
                     populate: ["isActive", {
                       activityType: ["activityNumber", "activityCode", "isActive"]
