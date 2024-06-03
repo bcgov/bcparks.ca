@@ -1,11 +1,13 @@
 import React from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFire } from "@fortawesome/free-solid-svg-icons"
+import campfireBanIcon from "../images/park/campfire-ban.svg"
 
 export default function CampfireBan() {
   return (
     <>
-      <FontAwesomeIcon icon={faFire} />
+      <img
+        src={campfireBanIcon}
+        alt="Campfire ban in effect"
+      />
       <p>Campfire ban in effect.</p>
     </>
   )
