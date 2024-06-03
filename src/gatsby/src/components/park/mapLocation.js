@@ -1,16 +1,18 @@
-import React, { useRef } from "react"
+import React from "react"
+import HtmlContent from "./htmlContent"
 
-export default function MapLocation({ locationNotes }) {
-  const mapRef = useRef("")
+export default function MapLocation({ maps, locationNotes }) {
   return (
-    <div id="park-maps-location-container" className="anchor-link" ref={mapRef}>
+    <div id="park-maps-location-container" className="anchor-link">
       <h2 className="section-heading">Maps and location</h2>
+      {maps && (
+        <HtmlContent>{maps}</HtmlContent>
+      )}
       {locationNotes && (
-        <div
-          id="park-location-notes-container"
-          dangerouslySetInnerHTML={{ __html: locationNotes }}
-        >
-        </div>
+        <>
+          <h3>Getting there</h3>
+          <HtmlContent>{locationNotes}</HtmlContent>
+        </>
       )}
     </div>
   )

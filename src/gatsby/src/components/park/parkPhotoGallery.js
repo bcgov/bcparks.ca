@@ -67,9 +67,16 @@ export default function ParkPhotoGallery({ photos }) {
         {parkPhotos.length > 0 && (
           <div
             id="park-photo-gallery-container"
+            role="button"
+            tabIndex={0}
             className="park-photo-gallery-container"
             onClick={() => {
               if (!showPhoto) {
+                setShowPhoto(true)
+              }
+            }}
+            onKeyDown={(e) => {
+              if (!showPhoto && (e.key === "Enter" || e.key === " ")) {
                 setShowPhoto(true)
               }
             }}
@@ -169,9 +176,16 @@ export default function ParkPhotoGallery({ photos }) {
         {parkPhotos.length > 0 && (
           <div
             id="park-photo-gallery-container"
+            role="button"
+            tabIndex={0}
             className="park-photo-gallery-container"
             onClick={() => {
               if (!showPhoto) {
+                setShowPhoto(true)
+              }
+            }}
+            onKeyDown={(e) => {
+              if (!showPhoto && (e.key === "Enter" || e.key === " ")) {
                 setShowPhoto(true)
               }
             }}

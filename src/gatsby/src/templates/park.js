@@ -21,7 +21,6 @@ import ParkActivity from "../components/park/parkActivity"
 import ParkDates from "../components/park/parkDates"
 import ParkFacility from "../components/park/parkFacility"
 import ParkHeader from "../components/park/parkHeader"
-import ParkMapDetails from "../components/park/parkMapDetails"
 import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import MapLocation from "../components/park/mapLocation"
@@ -162,7 +161,6 @@ export default function ParkTemplate({ data }) {
   const facilityRef = useRef("")
   const activityRef = useRef("")
   const mapLocationRef = useRef("")
-  const activityMapRef = useRef("")
   const aboutRef = useRef("")
   const natureAndCultureRef = useRef("")
   const reconciliationRef = useRef("")
@@ -177,7 +175,6 @@ export default function ParkTemplate({ data }) {
     facilityRef,
     activityRef,
     mapLocationRef,
-    activityMapRef,
     aboutRef,
     natureAndCultureRef,
     reconciliationRef,
@@ -243,18 +240,12 @@ export default function ParkTemplate({ data }) {
     },
     {
       sectionIndex: 8,
-      display: "Location",
+      display: "Maps and location",
       link: "#park-maps-location-container",
-      visible: (park.latitude && park.longitude) || !isNullOrWhiteSpace(locationNotes),
+      visible: !isNullOrWhiteSpace(maps) || !isNullOrWhiteSpace(locationNotes)
     },
     {
       sectionIndex: 9,
-      display: capitalizeFirstLetter(`${parkType} and activity maps`),
-      link: "#park-map-details-container",
-      visible: !isNullOrWhiteSpace(maps),
-    },
-    {
-      sectionIndex: 10,
       display: capitalizeFirstLetter(`Learn about this ${parkType}`),
       link: "#park-about-container",
       visible:
@@ -263,13 +254,13 @@ export default function ParkTemplate({ data }) {
         !isNullOrWhiteSpace(park.parkContact.data.parkContact)
     },
     {
-      sectionIndex: 11,
+      sectionIndex: 10,
       display: "Nature and culture",
       link: "#park-nature-and-culture-container",
       visible: !isNullOrWhiteSpace(natureAndCulture),
     },
     {
-      sectionIndex: 12,
+      sectionIndex: 11,
       display: "Reconciliation with Indigenous Peoples",
       link: "#park-reconciliation-container",
       visible: !isNullOrWhiteSpace(reconciliationNotes),
@@ -459,25 +450,20 @@ export default function ParkTemplate({ data }) {
             )}
             {menuItems[8].visible && (
               <div ref={mapLocationRef} className="w-100">
-                <MapLocation locationNotes={locationNotes} />
+                <MapLocation maps={maps} locationNotes={locationNotes} />
               </div>
             )}
             {menuItems[9].visible && (
-              <div ref={activityMapRef} className="w-100">
-                <ParkMapDetails data={maps} type={parkType} />
-              </div>
-            )}
-            {menuItems[10].visible && (
               <div ref={aboutRef} className="w-100">
                 <About park={park} />
               </div>
             )}
-            {menuItems[11].visible && (
+            {menuItems[10].visible && (
               <div ref={natureAndCultureRef} className="w-100">
                 <NatureAndCulture data={natureAndCulture} />
               </div>
             )}
-            {menuItems[12].visible && (
+            {menuItems[11].visible && (
               <div ref={reconciliationRef} className="w-100">
                 <Reconciliation data={reconciliationNotes} />
               </div>
