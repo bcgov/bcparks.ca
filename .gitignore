@@ -198,3 +198,7 @@ bcparks.ca-scrape.laccdb
 # Don't ignore .s2i bin
 !**/.s2i/bin/
 *.sln.DotSettings.user
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
