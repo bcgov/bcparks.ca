@@ -230,11 +230,6 @@ const base = {
         classes: ["callout-box"],
       },
       {
-        name: "Primary button",
-        element: "a",
-        classes: ["btn", "btn-primary" ],
-      },
-      {
         name: "Legacy link",
         element: "a",
         classes: ["legacy-link"],
