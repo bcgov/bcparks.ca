@@ -16,6 +16,7 @@ const MegaMenu = ({ content, menuMode }) => {
   const [selections, setSelections] = useState({}) // the selected item at each level, i.e. selection breadcrumbs
   const [isMenuOpen, setIsMenuOpen] = useState(false) // currently only used for mobile - menu closed at first
   const [hasClickedTwice, setHasClickedTwice] = useState(false)
+  const [currentPath, setCurrentPath] = useState("")
   const ROOT_MENU_URL = '/'
   let sectionImages = {}
   let menuCollection
@@ -80,6 +81,10 @@ const MegaMenu = ({ content, menuMode }) => {
   const sectionClick = (e, section, menuMode) => {
     if (section.hasChildren) {
       e.preventDefault()
+    } else {
+      if (currentPath.includes(section.url)) {
+        setIsMenuOpen(false)
+      }
     }
 
     if (menuMode !== "sitemap") {
@@ -209,6 +214,13 @@ const MegaMenu = ({ content, menuMode }) => {
     sectionImages[item.order] = item.imgUrl || ""
   })
 
+  // get current path
+  useEffect(() => {
+    if (window.location) {
+      setCurrentPath(window.location.pathname)
+    }
+  }, [])
+
   // recursive menu generator which makes single version of DOM
   // that can be used for desktop, mobile and sitemap views of megamenu
   const generateMenus = (item, menuMode) => {
@@ -246,7 +258,12 @@ const MegaMenu = ({ content, menuMode }) => {
                     {item.title}
                     <FontAwesomeIcon icon={faCircleChevronRight} className="menu-button__title--icon" />
                   </a> :
-                  <Link className="menu-button__title" to={item.url || ROOT_MENU_URL} role="menuitem">
+                  <Link
+                    className="menu-button__title"
+                    to={item.url || ROOT_MENU_URL}
+                    role="menuitem"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
                     {item.title}
                     <FontAwesomeIcon icon={faCircleChevronRight} className="menu-button__title--icon" />
                   </Link>
