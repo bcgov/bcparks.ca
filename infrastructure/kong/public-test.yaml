@@ -415,28 +415,6 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: test_get_menus
-        methods:
-          - GET
-        paths:
-          - /api/menus
-        strip_path: false
-        hosts:
-          - bcparks.test.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: test_get_menus_id
-        methods:
-          - GET
-        paths:
-          - /api/menus/(?<id>\S+)$
-        strip_path: false
-        hosts:
-          - bcparks.test.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
         name: test_get_natural_resource_districts
         methods:
           - GET
@@ -970,28 +948,6 @@ services:
           - GET
         paths:
           - /api/urgencies/(?<id>\S+)$
-        strip_path: false
-        hosts:
-          - bcparks.test.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: test_get_websites
-        methods:
-          - GET
-        paths:
-          - /api/websites
-        strip_path: false
-        hosts:
-          - bcparks.test.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: test_get_websites_id
-        methods:
-          - GET
-        paths:
-          - /api/websites/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.test.api.gov.bc.ca
