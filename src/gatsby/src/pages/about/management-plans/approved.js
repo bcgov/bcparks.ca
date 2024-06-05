@@ -138,7 +138,7 @@ const ApprovedListPage = () => {
       <div className="max-width-override">
         <Header mode="internal" content={menuContent} />
       </div>
-      <div id="main-content" className="static-content--header unique-page--header page-breadcrumbs">
+      <div id="main-content" tabIndex={-1} className="static-content--header unique-page--header page-breadcrumbs">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="static-content-container">
@@ -181,8 +181,7 @@ const ApprovedListPage = () => {
                   aria-label={filter}
                   onClick={(e) => handleClick(e, filter)}
                   className={
-                    `btn btn-selected--${
-                      currentFilter === filter ? 'true' : 'false'
+                    `btn btn-selected--${currentFilter === filter ? 'true' : 'false'
                     }`
                   }
                 >

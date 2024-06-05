@@ -127,7 +127,7 @@ export default function StaticContent1({ pageContext }) {
         <Header mode="internal" content={menuContents} />
       </div>
       <div className="static-content--header">
-        <div id="main-content" className="page-breadcrumbs">
+        <div id="main-content" tabIndex={-1} className="page-breadcrumbs">
           <Breadcrumbs breadcrumbs={breadcrumbs} />
         </div>
         {/* Display new non-repeatable pageHeader component if exists */}

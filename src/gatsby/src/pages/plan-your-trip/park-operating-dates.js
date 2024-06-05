@@ -343,7 +343,7 @@ const ParkOperatingDatesPage = () => {
       <div className="max-width-override">
         <Header mode="internal" content={menuContent} />
       </div>
-      <div id="main-content" className="static-content--header unique-page--header page-breadcrumbs">
+      <div id="main-content" tabIndex={-1} className="static-content--header unique-page--header page-breadcrumbs">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="static-content-container">

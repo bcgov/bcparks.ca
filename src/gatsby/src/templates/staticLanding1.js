@@ -74,7 +74,7 @@ const LandingPage = ({ pageContext }) => {
               <div className="container">
                 <div className="row d-none d-lg-block">
                   <div className="col">
-                    <div id="main-content">
+                    <div id="main-content" tabIndex={-1}>
                       <Breadcrumbs breadcrumbs={breadcrumbs} />
                     </div>
                   </div>

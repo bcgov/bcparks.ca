@@ -329,7 +329,7 @@ export default function ParkTemplate({ data }) {
       <Header mode="internal" content={menuContent} />
       <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
         <div className="container parks-container order-2">
-          <div id="main-content" className="park-info-container pt-5">
+          <div id="main-content" tabIndex={-1} className="park-info-container pt-5">
             <Breadcrumbs breadcrumbs={breadcrumbs} />
           </div>
           {!isLoadingProtectedArea && !protectedAreaLoadError && (
