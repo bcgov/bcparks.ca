@@ -10,10 +10,6 @@ const fs = require("fs");
 const data = require("./public-documentation.json");
 
 const pathsToDelete = [
-  "/public-advisory-audits",
-  "/queued-tasks",
-  "/search-indexing",
-  "/statutory-holiday",
   "/tokens",
   "/email/settings",
   "/upload",
@@ -22,8 +18,6 @@ const pathsToDelete = [
   "/auth",
   "/connect",
   "/email",
-  "/geo-shapes",
-  "/search-cities"
 ];
 const paths = data.paths;
 
