@@ -31,6 +31,9 @@ import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 import parksLogo from "../images/park-card.png"
 import "../styles/parks.scss"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import VisitResponsibly from "../components/park/visitResponsibly"
 
 export default function ParkTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
@@ -396,6 +399,23 @@ export default function ParkTemplate({ data }) {
                 {!isLoadingAdvisories && !advisoryLoadError && (
                   <AdvisoryDetails advisories={advisories} parkType={parkType} />
                 )}
+                <blockquote className="callout-box">
+                  <p>
+                    Review the detailed guides under visit responsibly for more information
+                    on staying safe and preserving our natural spaces.
+                  </p>
+                </blockquote>
+                <Row>
+                  <Col xs={12} md={6}>
+                    <VisitResponsibly
+                      campings={activeCampings}
+                      activities={nonCampingActivities}
+                      marineProtectedArea={park.marineProtectedArea}
+                    />
+                  </Col>
+                  <Col xs={12} md={6}>
+                  </Col>
+                </Row>
               </div>
             )}
             {menuItems[2].visible && (
