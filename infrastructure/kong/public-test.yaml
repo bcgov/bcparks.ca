@@ -129,6 +129,28 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
+        name: test_get_emergency_alerts
+        methods:
+          - GET
+        paths:
+          - /api/emergency-alerts
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_emergency_alerts_id
+        methods:
+          - GET
+        paths:
+          - /api/emergency-alerts/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
         name: test_get_event_types
         methods:
           - GET
@@ -393,22 +415,22 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: test_get_menus
+        name: test_get_natural_resource_districts
         methods:
           - GET
         paths:
-          - /api/menus
+          - /api/natural-resource-districts
         strip_path: false
         hosts:
           - bcparks.test.api.gov.bc.ca
       - tags:
           - OAS3_import
           - ns.bcparks
-        name: test_get_menus_id
+        name: test_get_natural_resource_districts_id
         methods:
           - GET
         paths:
-          - /api/menus/(?<id>\S+)$
+          - /api/natural-resource-districts/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.test.api.gov.bc.ca
@@ -563,6 +585,28 @@ services:
           - GET
         paths:
           - /api/park-operations/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_operation_dates
+        methods:
+          - GET
+        paths:
+          - /api/park-operation-dates
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_operation_dates_id
+        methods:
+          - GET
+        paths:
+          - /api/park-operation-dates/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.test.api.gov.bc.ca
@@ -904,28 +948,6 @@ services:
           - GET
         paths:
           - /api/urgencies/(?<id>\S+)$
-        strip_path: false
-        hosts:
-          - bcparks.test.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: test_get_websites
-        methods:
-          - GET
-        paths:
-          - /api/websites
-        strip_path: false
-        hosts:
-          - bcparks.test.api.gov.bc.ca
-      - tags:
-          - OAS3_import
-          - ns.bcparks
-        name: test_get_websites_id
-        methods:
-          - GET
-        paths:
-          - /api/websites/(?<id>\S+)$
         strip_path: false
         hosts:
           - bcparks.test.api.gov.bc.ca

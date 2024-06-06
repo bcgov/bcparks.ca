@@ -169,6 +169,15 @@ module.exports = ({ env }) => {
           expiresIn: "7d",
         },
       },
-    }
+    },
+    documentation: {
+      enabled: true,
+      config: {
+        "x-strapi-config": {
+          // Do not generate for plugins
+          plugins: [],
+        },
+      },
+    },
   };
 };

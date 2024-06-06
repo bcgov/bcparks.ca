@@ -8,7 +8,22 @@ module.exports = {
    *
    * This gives you an opportunity to extend code.
    */
-  register(/*{ strapi }*/) {},
+  register({ strapi }) {
+    strapi
+      .plugin("documentation")
+      .service("override")
+      .excludeFromGeneration([
+        "public-advisory-audit",
+        "queued-task",
+        "search-indexing",
+        "statutory-holiday",
+        "geo-shape",
+        "search-city",
+        "footer-menu",
+        "menu",
+        "website"
+      ]);
+  },
 
   /**
    * An asynchronous bootstrap function that runs before

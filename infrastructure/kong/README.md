@@ -26,8 +26,10 @@ The important thing thing to note is in step #6 - once you run through the steps
 2. Copy the content of `src/cms/src/extensions/documentation/documentation/1.0.0/full_documentation.json` (the
    generated OpenAPI spec) to `infrastructure/kong/public-documentation.json` (overwriting the existing content).
 3. Run `node clean.js` to remove any private API endpoints from the file.
-4. Download the GWA CLI from https://github.com/bcgov/gwa-cli/releases
+4. Download the GWA CLI from https://github.com/bcgov/gwa-cli/releases. ***
 5. In the infrastructure/kong directory, run (for TEST):
+
+*** You will need gwa version 2.x to publish the API to the gateway, but you will also need version 1.x to run the commands below.  `gwa new` appears to be replaced by the `deck` cli for Kong.
 
    ```sh
    gwa new public-documentation.json --route-host=bcparks.api.gov.bc.ca --service-url=main-cms.c1643c-test.svc --plugins rate-limiting cors  --outfile=public-test.yaml
