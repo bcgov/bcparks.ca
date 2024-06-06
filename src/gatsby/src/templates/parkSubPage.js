@@ -101,7 +101,7 @@ export default function ParkSubPage({ data }) {
         <Header mode="internal" content={menuContent} />
       </div>
       <div className="static-content--header">
-        <div id="main-content" className="page-breadcrumbs">
+        <div id="main-content" tabIndex={-1} className="page-breadcrumbs">
           <Breadcrumbs breadcrumbs={breadcrumbs} />
         </div>
         {header?.imageUrl && (
