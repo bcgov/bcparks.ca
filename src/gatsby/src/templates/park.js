@@ -419,6 +419,8 @@ export default function ParkTemplate({ data }) {
                       subAreas={park.parkOperationSubAreas}
                       hasDayUsePass={hasDayUsePass}
                       hasReservations={hasReservations}
+                      hasBackcountryPermits={operations.hasBackcountryPermits}
+                      hasBackcountryReservations={operations.hasBackcountryReservations}
                     />
                   </Col>
                 </Row>
@@ -752,6 +754,7 @@ export const query = graphql`
         }
         facilityType {
           facilityName
+          facilityCode
           facilityNumber
           isActive
           icon
