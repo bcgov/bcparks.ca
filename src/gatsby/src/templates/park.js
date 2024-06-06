@@ -34,6 +34,7 @@ import "../styles/parks.scss"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import VisitResponsibly from "../components/park/visitResponsibly"
+import ReservationsRequired from "../components/park/reservationsRequired"
 
 export default function ParkTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
@@ -414,6 +415,11 @@ export default function ParkTemplate({ data }) {
                     />
                   </Col>
                   <Col xs={12} md={6}>
+                    <ReservationsRequired
+                      subAreas={park.parkOperationSubAreas}
+                      hasDayUsePass={hasDayUsePass}
+                      hasReservations={hasReservations}
+                    />
                   </Col>
                 </Row>
               </div>
