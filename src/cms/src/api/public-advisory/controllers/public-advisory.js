@@ -152,7 +152,7 @@ module.exports = createCoreController(
                     if (!results[pa.id]) {
                         results[pa.id] = [{ accessStatusId: advisory.accessStatus.id }]
                     } else {
-                        if (!results[pa.id].find(x => x.accessStatusId === advisory.accessStatus.id)) {
+                        if (!results[pa.id].find(x => x.accessStatusId === advisory.accessStatus?.id)) {
                             results[pa.id].push({ accessStatusId: advisory.accessStatus.id })
                         }
                     }
