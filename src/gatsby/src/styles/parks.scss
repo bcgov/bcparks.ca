@@ -318,6 +318,11 @@ h2.section-heading {
   &.expanded {
     max-height: none;
   }
+  hr {
+    color: transparent;
+    border: none;
+    margin: 0;
+  }
 }
 
 // near by parks section
