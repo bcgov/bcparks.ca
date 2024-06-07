@@ -96,28 +96,16 @@ module.exports = {
         )
       }
     }
-    // If parkPhoto.site is selected, get that site.orcsSiteNumber in the parkPhoto.orcsSiteNumber
-    if (event.result?.site !== undefined) {
-      const siteOrcs = event.result.site?.orcsSiteNumber;
-      if (event.result.orcsSiteNumber !== siteOrcs) {
-        event.result.orcsSiteNumber = siteOrcs;
-        await strapi.entityService.update(
-          "api::park-photo.park-photo", event.result.id, { data: { orcsSiteNumber: siteOrcs } }
-        )
-      }
-      // If parkPhoto.site is removed, set parkPhoto.orcsSiteNumber to null
-    } else if (event.result?.site === null) {
-      const currentOrcsSiteNumber = await getOrcsSiteNumber(event);
-      if (currentOrcsSiteNumber !== null) {
-        await strapi.entityService.update(
-          "api::park-photo.park-photo", event.result.id, { data: { orcsSiteNumber: null } }
-        )
-      }
-    }
     const newProtectedAreaId = await getProtectedAreaIdByOrcs(event.result?.orcs);
     await indexPark(newProtectedAreaId);
   },
   async beforeUpdate(event) {
+    if (event.params?.data?.protectedArea?.disconnect?.length > 0) {
+      event.params.data.orcs = null;
+    }
+    if (event.params?.data?.site?.disconnect?.length > 0) {
+      event.params.data.orcsSiteNumber = null;
+    }
     const oldOrcs = await getOrcs(event);
     const oldProtectedAreaId = await getProtectedAreaIdByOrcs(oldOrcs);
     await indexPark(oldProtectedAreaId);
