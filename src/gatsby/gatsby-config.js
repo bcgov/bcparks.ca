@@ -115,6 +115,57 @@ module.exports = {
                 },
                 managementAreas: {
                   populate: ["region", "section"]
+                },
+                parkPhotos: {
+                  fields: "*"
+                },
+                nearbyParkOne: {
+                  populate: ["orcs", "slug", "protectedAreaName"],
+                  parkPhotos: {
+                    populate: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
+                  },
+                  parkActivities: {
+                    populate: ["isActive", {
+                      activityType: ["activityNumber", "activityCode", "isActive"]
+                    }]
+                  },
+                  parkFacilities: {
+                    populate: ["isActive", {
+                      facilityType: ["facilityNumber", "facilityCode", "isActive", "isCamping"]
+                    }]
+                  },
+                },
+                nearbyParkTwo: {
+                  populate: ["orcs", "slug", "protectedAreaName"],
+                  parkPhotos: {
+                    populate: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
+                  },
+                  parkActivities: {
+                    populate: ["isActive", {
+                      activityType: ["activityNumber", "activityCode", "isActive"]
+                    }]
+                  },
+                  parkFacilities: {
+                    populate: ["isActive", {
+                      facilityType: ["facilityNumber", "facilityCode", "isActive", "isCamping"]
+                    }]
+                  },
+                },
+                nearbyParkThree: {
+                  populate: ["orcs", "slug", "protectedAreaName"],
+                  parkPhotos: {
+                    populate: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
+                  },
+                  parkActivities: {
+                    populate: ["isActive", {
+                      activityType: ["activityNumber", "activityCode", "isActive"]
+                    }]
+                  },
+                  parkFacilities: {
+                    populate: ["isActive", {
+                      facilityType: ["facilityNumber", "facilityCode", "isActive", "isCamping"]
+                    }]
+                  },
                 }
               }
             },

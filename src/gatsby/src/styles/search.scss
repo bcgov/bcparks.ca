@@ -297,69 +297,6 @@ div[class$="-singleValue"] {
   object-position: center;
 }
 
-.park-carousel,
-.park-carousel-mobile,
-.CarouselItem,
-.CarouselItem div {
-  height: 100% !important;
-}
-
-.park-carousel,
-.park-carousel-mobile {
-  .indicator {
-    margin-top: -30px;
-    &-button {
-      z-index: 1;
-      pointer-events: none;
-      color: rgba($colorWhite, .6);
-      svg {
-        width: 8px;
-        height: 8px;
-        margin: 0 4px;
-      }
-      &--active {
-        color: rgba($colorWhite, 1);
-      }
-    }
-  }
-}
-// display carousel nav with hovering on laptop
-.park-carousel {
-  .carousel-nav {
-    display: none;
-  }
-  &:hover {
-    .carousel-nav {
-      display: block;
-      &-botton {
-        width: 24px;
-        height: 24px;
-        color: $colorGrey;
-        background-color: rgba($colorWhite, .72);
-        &:hover, &:focus {
-          color: $colorGrey;
-          background-color: rgba($colorWhite, .72);
-        }
-      }
-    }
-  }
-}
-// display carousel nav without hovering on tablet/mobile
-.park-carousel-mobile  {
-  .carousel-nav {
-    display: block;
-    &-botton {
-      width: 24px;
-      height: 24px;
-      color: $colorGrey;
-      background-color: rgba($colorWhite, .72);
-      &:hover, &:focus {
-        color: $colorGrey;
-        background-color: rgba($colorWhite, .72);
-      }
-    }
-  }
-}
 
 .search-result-image {
   width: 100% !important;

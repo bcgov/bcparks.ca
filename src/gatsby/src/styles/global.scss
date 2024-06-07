@@ -525,3 +525,50 @@ nav.breadcrumbs {
     }
   }
 }
+
+// carousel
+.carousel {
+  height: 100%;
+  &:hover {
+    a.carousel-control-prev,
+    a.carousel-control-next{
+      display: flex;
+    }
+  }
+  &.tab-focus-true {
+    a.carousel-control-prev,
+    a.carousel-control-next {
+      display: flex;
+    }
+  }
+  a.carousel-control-prev,
+  a.carousel-control-next {
+    display: flex;
+    &:focus {
+      color: $colorWhite;
+    }
+    @media screen and (min-width: $mdBreakpoint) {
+      display: none;
+    }
+    svg {
+      font-size: 1.5rem;
+    }
+  }
+  ol.carousel-indicators {
+    li {
+      height: 6px;
+      width: 6px;
+      border-radius: 6px;
+      border: none;
+    }
+  }
+  .carousel-inner {
+    height: 100%;
+    .carousel-item {
+      height: 100%;
+      &:focus-visible{
+        outline: none;
+      }
+    }
+  }
+}

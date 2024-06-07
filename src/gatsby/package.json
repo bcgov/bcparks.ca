@@ -46,7 +46,6 @@
     "react-bootstrap-typeahead": "^6.3.2",
     "react-device-detect": "^2.0.1",
     "react-dom": "^18.2.0",
-    "react-material-ui-carousel": "^3.4.2",
     "react-select": "^5.8.0",
     "react-typography": "^0.16.19",
     "react-use-query-param-string": "^2.1.5",

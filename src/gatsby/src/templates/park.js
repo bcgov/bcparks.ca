@@ -27,6 +27,7 @@ import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
 import SafetyInfo from "../components/park/safetyInfo"
 import SpecialNote from "../components/park/specialNote"
+import NearbyParks from "../components/park/nearbyParks"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 import parksLogo from "../images/park-card.png"
@@ -49,6 +50,8 @@ export default function ParkTemplate({ data }) {
   const natureAndCulture = park.natureAndCulture.data.natureAndCulture
   const reconciliationNotes = park.reconciliationNotes.data.reconciliationNotes
   const maps = park.maps.data.maps
+  const hasNearbyParks = park.nearbyParkOne !== null || park.nearbyParkTwo !== null || park.nearbyParkThree !== null
+  const nearbyParks = hasNearbyParks ? [park.nearbyParkOne, park.nearbyParkTwo, park.nearbyParkThree] : []
 
   const activeActivities = sortBy(
     park.parkActivities.filter(
@@ -489,6 +492,9 @@ export default function ParkTemplate({ data }) {
           </div>
         </div>
       </div>
+      {hasNearbyParks &&
+        <NearbyParks parks={nearbyParks} />
+      }
       <ScrollToTop />
       <Footer />
     </div>
@@ -757,6 +763,90 @@ export const query = graphql`
       }
       terrestrialEcosections {
         terrestrialEcosection
+      }
+      nearbyParkOne {
+        orcs
+        slug
+        protectedAreaName
+        parkPhotos {
+          isActive
+          isFeatured
+          sortOrder
+          imageUrl
+        }
+        parkActivities {
+          isActive
+          activityType {
+            activityNumber
+            activityCode
+            isActive
+          }
+        }
+        parkFacilities {
+          isActive
+          facilityType {
+            facilityNumber
+            facilityCode
+            isActive
+            isCamping
+          }
+        }
+      }
+      nearbyParkTwo {
+        orcs
+        slug
+        protectedAreaName
+        parkPhotos {
+          isActive
+          isFeatured
+          sortOrder
+          imageUrl
+        }
+        parkActivities {
+          isActive
+          activityType {
+            activityNumber
+            activityCode
+            isActive
+          }
+        }
+        parkFacilities {
+          isActive
+          facilityType {
+            facilityNumber
+            facilityCode
+            isActive
+            isCamping
+          }
+        }
+      }
+      nearbyParkThree {
+        orcs
+        slug
+        protectedAreaName
+        parkPhotos {
+          isActive
+          isFeatured
+          sortOrder
+          imageUrl
+        }
+        parkActivities {
+          isActive
+          activityType {
+            activityNumber
+            activityCode
+            isActive
+          }
+        }
+        parkFacilities {
+          isActive
+          facilityType {
+            facilityNumber
+            facilityCode
+            isActive
+            isCamping
+          }
+        }
       }
     }
     featuredPhotos: allStrapiParkPhoto(
