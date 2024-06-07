@@ -163,7 +163,7 @@ ParkHeader.propTypes = {
   advisoryLoadError: PropTypes.any,
   isLoadingAdvisories: PropTypes.bool.isRequired,
   searchArea: PropTypes.object.isRequired,
-  parkOperation: PropTypes.object.isRequired,
+  parkOperation: PropTypes.object,
   operationDates: PropTypes.array.isRequired,
   subAreas: PropTypes.array.isRequired,
   onStatusCalculated: PropTypes.func
