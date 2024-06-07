@@ -342,13 +342,6 @@ export default function ParkTemplate({ data }) {
             />
           )}
         </div>
-        {/* <div className="page-menu--mobile d-block d-md-none">
-          <PageMenu
-            pageSections={menuItems}
-            activeSection={activeSection}
-            menuStyle="select"
-          />
-        </div> */}
         <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
           {photos.length > 0 && (
             <div className="background-container bg-brown"></div>
@@ -359,6 +352,13 @@ export default function ParkTemplate({ data }) {
         </div>
       </div>
       <div className="parks-container main-container">
+          <div className="page-menu--mobile d-block d-md-none">
+            <PageMenu
+              pageSections={menuItems}
+              activeSection={activeSection}
+              menuStyle="select"
+            />
+          </div>
         <div className="row no-gutters park-info-container">
           <div className="page-menu--desktop d-none d-md-block col-12 col-md-4">
             <PageMenu
