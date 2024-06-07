@@ -230,7 +230,7 @@ export default function ParkDates({ data }) {
       <Row>
         <Col>
           {!hasOperations && (
-            <div className="font-italic">
+            <div>
               No dates available
             </div>
           )}
