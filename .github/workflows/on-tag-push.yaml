@@ -6,8 +6,8 @@ on:
       - "*"
 
 env:
-  TOOLS_NAMESPACE: ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-tools
-  NAMESPACE: ${{ secrets.OPENSHIFT_LICENSE_PLATE }}-test
+  TOOLS_NAMESPACE: ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools
+  NAMESPACE: ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-test
 
 jobs:
   tag:
@@ -21,8 +21,8 @@ jobs:
       - name: Login OpenShift
         uses: redhat-actions/oc-login@v1
         with:
-          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER_URL }}
-          openshift_token: ${{ secrets.OPENSHIFT_SERVICE_TOKEN }}
+          openshift_server_url: ${{ secrets.OPENSHIFT_GOLD_SERVER_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT_GOLD_SERVICE_TOKEN }}
 
       - name: Tag images
         run: |
