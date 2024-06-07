@@ -87,12 +87,14 @@ module.exports = {
           "api::park-photo.park-photo", event.result.id, { data: { orcs: protectedAreaOrcs } }
         )
       }
-      // If parkPhoto.protectedArea is removed, set parkPhoto.orcs to null
-    } else if (event.result?.protectedArea === null) {
-      const currentOrcs = await getOrcs(event);
-      if (currentOrcs !== null) {
+    }
+    // If parkPhoto.site is selected, get that site.orcsSiteNumber in the parkPhoto.orcsSiteNumber
+    if (event.result?.site !== undefined) {
+      const siteOrcs = event.result.site?.orcsSiteNumber;
+      if (event.result.orcsSiteNumber !== siteOrcs) {
+        event.result.orcsSiteNumber = siteOrcs;
         await strapi.entityService.update(
-          "api::park-photo.park-photo", event.result.id, { data: { orcs: null } }
+          "api::park-photo.park-photo", event.result.id, { data: { orcsSiteNumber: siteOrcs } }
         )
       }
     }
