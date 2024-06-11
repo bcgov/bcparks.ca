@@ -49,21 +49,6 @@
   }
 }
 
-.park-details {
-  background-color: white;
-  color: $colorBlue;
-  border-radius: 4px;
-  border: 1px solid $colorBlue;
-
-  &:hover {
-    border: 1px solid $colorGold;
-  }
-}
-
-.accordion-toggle {
-  cursor: pointer;
-}
-
 .discpver-parks {
   &__col {
     display: block;

@@ -572,3 +572,39 @@ nav.breadcrumbs {
     }
   }
 }
+
+// accordion
+.accordion {
+  border-top: 1px solid $colorGrey;
+  border-bottom: 1px solid $colorGrey;
+  padding: 8px 16px;
+  & + .accordion {
+    border-top: none;
+  }
+  &.is-open {
+    &--true {
+      background-color: $colorGreyLight;
+    }
+  }
+  &.advisory-accordion {
+    padding: 12px 16px;
+    &.is-open {
+      &--true {
+        padding: 12px 16px;
+      }
+    }
+    img {
+      width: 28px;
+      height: 28px;
+    }
+  }
+  &-content {
+    padding-top: 32px;
+  }
+  &-toggle {
+    cursor: pointer;    
+    .accordion-header {
+      margin-left: 16px;
+    }
+  }
+}
