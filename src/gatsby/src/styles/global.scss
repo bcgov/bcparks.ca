@@ -583,7 +583,18 @@ nav.breadcrumbs {
   }
   &.is-open {
     &--true {
-      background-color: $colorGreyLight;
+      background-color: #f2f0eb;
+    }
+  }
+  &-content {
+    padding-top: 32px;
+  }
+  &-toggle {
+    cursor: pointer;    
+    .accordion-header {
+      font-weight: 700;
+      color: $colorBlue;
+      margin-left: 16px;
     }
   }
   &.advisory-accordion {
@@ -593,18 +604,14 @@ nav.breadcrumbs {
         padding: 12px 16px;
       }
     }
+    .accordion-toggle {
+      .accordion-header {
+        color: $colorGrey;
+      }
+    }
     img {
       width: 28px;
       height: 28px;
-    }
-  }
-  &-content {
-    padding-top: 32px;
-  }
-  &-toggle {
-    cursor: pointer;    
-    .accordion-header {
-      margin-left: 16px;
     }
   }
 }

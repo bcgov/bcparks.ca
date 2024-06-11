@@ -135,10 +135,9 @@ export default function AdvisoryDetails({ advisories, parkType }) {
                     <div className="d-flex align-items-center">
                       <img
                         src={advisory.alertIcon}
-                        className="mr-3"
                         alt="Alert icon"
                       ></img>
-                      <HtmlContent>{advisory.title}</HtmlContent>
+                      <HtmlContent className="accordion-header">{advisory.title}</HtmlContent>
                     </div>
                     <div className="d-flex align-items-center">
                       {expandeds[index] ?
