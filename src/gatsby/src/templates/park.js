@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
-import loadable from '@loadable/component'
 
 import useScrollSpy from "react-use-scrollspy"
 
@@ -22,9 +21,9 @@ import ParkActivity from "../components/park/parkActivity"
 import ParkDates from "../components/park/parkDates"
 import ParkFacility from "../components/park/parkFacility"
 import ParkHeader from "../components/park/parkHeader"
-import ParkMapDetails from "../components/park/parkMapDetails"
 import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
+import MapLocation from "../components/park/mapLocation"
 import SafetyInfo from "../components/park/safetyInfo"
 import SpecialNote from "../components/park/specialNote"
 import NearbyParks from "../components/park/nearbyParks"
@@ -32,8 +31,6 @@ import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 import parksLogo from "../images/park-card.png"
 import "../styles/parks.scss"
-
-const AsyncMapLocation = loadable(() => import("../components/park/mapLocation"));
 
 export default function ParkTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
@@ -52,6 +49,8 @@ export default function ParkTemplate({ data }) {
   const maps = park.maps.data.maps
   const hasNearbyParks = park.nearbyParkOne !== null || park.nearbyParkTwo !== null || park.nearbyParkThree !== null
   const nearbyParks = hasNearbyParks ? [park.nearbyParkOne, park.nearbyParkTwo, park.nearbyParkThree] : []
+  const managementAreas = park.managementAreas || []
+  const searchArea = managementAreas[0]?.searchArea || {}
 
   const activeActivities = sortBy(
     park.parkActivities.filter(
@@ -162,7 +161,6 @@ export default function ParkTemplate({ data }) {
   const facilityRef = useRef("")
   const activityRef = useRef("")
   const mapLocationRef = useRef("")
-  const activityMapRef = useRef("")
   const aboutRef = useRef("")
   const natureAndCultureRef = useRef("")
   const reconciliationRef = useRef("")
@@ -177,7 +175,6 @@ export default function ParkTemplate({ data }) {
     facilityRef,
     activityRef,
     mapLocationRef,
-    activityMapRef,
     aboutRef,
     natureAndCultureRef,
     reconciliationRef,
@@ -243,18 +240,12 @@ export default function ParkTemplate({ data }) {
     },
     {
       sectionIndex: 8,
-      display: "Location",
+      display: "Maps and location",
       link: "#park-maps-location-container",
-      visible: (park.latitude && park.longitude) || !isNullOrWhiteSpace(locationNotes),
+      visible: !isNullOrWhiteSpace(maps) || !isNullOrWhiteSpace(locationNotes)
     },
     {
       sectionIndex: 9,
-      display: capitalizeFirstLetter(`${parkType} and activity maps`),
-      link: "#park-map-details-container",
-      visible: !isNullOrWhiteSpace(maps),
-    },
-    {
-      sectionIndex: 10,
       display: capitalizeFirstLetter(`Learn about this ${parkType}`),
       link: "#park-about-container",
       visible:
@@ -263,25 +254,18 @@ export default function ParkTemplate({ data }) {
         !isNullOrWhiteSpace(park.parkContact.data.parkContact)
     },
     {
-      sectionIndex: 11,
+      sectionIndex: 10,
       display: "Nature and culture",
       link: "#park-nature-and-culture-container",
       visible: !isNullOrWhiteSpace(natureAndCulture),
     },
     {
-      sectionIndex: 12,
+      sectionIndex: 11,
       display: "Reconciliation with Indigenous Peoples",
       link: "#park-reconciliation-container",
       visible: !isNullOrWhiteSpace(reconciliationNotes),
     },
   ]
-
-  const mapData = {
-    latitude: park.latitude,
-    longitude: park.longitude,
-    mapZoom: park.mapZoom,
-    parkOrcs: park.orcs
-  }
 
   const parkName = park.protectedAreaName;
 
@@ -328,45 +312,53 @@ export default function ParkTemplate({ data }) {
   ]
 
   return (
-    <div className="grey-background">
+    <div>
       <Header mode="internal" content={menuContent} />
-      <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
-        <div className="container parks-container order-2">
-          <div id="main-content" tabIndex={-1} className="park-info-container pt-5">
+      <div className="park-header-container d-flex flex-wrap d-md-block">
+        <div className="parks-container bg-brown">
+          <div id="main-content" tabIndex={-1} className="park-info-container breadcrumb-container">
             <Breadcrumbs breadcrumbs={breadcrumbs} />
           </div>
           {!isLoadingProtectedArea && !protectedAreaLoadError && (
-            <div>
-              <ParkHeader
-                slug={park.slug}
-                parkName={parkName}
-                hasReservations={hasReservations}
-                hasDayUsePass={hasDayUsePass}
-                hasCampfireBan={hasCampfireBan}
-                isLoadingAdvisories={isLoadingAdvisories}
-                advisoryLoadError={advisoryLoadError}
-                advisories={advisories}
-                subAreas={park.parkOperationSubAreas}
-                operationDates={park.parkOperationDates}
-                onStatusCalculated={handleAccessStatus}
-              />
-            </div>
+            <ParkHeader
+              orcs={park.orcs}
+              slug={park.slug}
+              parkName={parkName}
+              parkType={parkType}
+              mapZoom={park.mapZoom}
+              latitude={park.latitude}
+              longitude={park.latitude}
+              hasCampfireBan={hasCampfireBan}
+              hasDayUsePass={hasDayUsePass}
+              hasReservations={hasReservations}
+              advisories={advisories}
+              advisoryLoadError={advisoryLoadError}
+              isLoadingAdvisories={isLoadingAdvisories}
+              searchArea={searchArea}
+              parkOperation={park.parkOperation}
+              operationDates={park.parkOperationDates}
+              subAreas={park.parkOperationSubAreas}
+              onStatusCalculated={handleAccessStatus}
+            />
           )}
         </div>
-        <div className="page-menu--mobile d-block d-md-none order-3">
-          <PageMenu
-            pageSections={menuItems}
-            activeSection={activeSection}
-            menuStyle="select"
-          />
-        </div>
-        <div className="container parks-container gallery-container order-1">
+        <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
+          {photos.length > 0 && (
+            <div className="background-container bg-brown"></div>
+          )}
           <div className="park-info-container">
             <ParkPhotoGallery photos={photos} />
           </div>
         </div>
       </div>
-      <div className="container parks-container main-container">
+      <div className="parks-container main-container">
+          <div className="page-menu--mobile d-block d-md-none">
+            <PageMenu
+              pageSections={menuItems}
+              activeSection={activeSection}
+              menuStyle="select"
+            />
+          </div>
         <div className="row no-gutters park-info-container">
           <div className="page-menu--desktop d-none d-md-block col-12 col-md-4">
             <PageMenu
@@ -458,33 +450,20 @@ export default function ParkTemplate({ data }) {
             )}
             {menuItems[8].visible && (
               <div ref={mapLocationRef} className="w-100">
-                <AsyncMapLocation data={mapData} />
-                {locationNotes && (
-                  <div id="park-location-notes-container"
-                    dangerouslySetInnerHTML={{
-                      __html: locationNotes,
-                    }}
-                  >
-                  </div>
-                )}
+                <MapLocation maps={maps} locationNotes={locationNotes} />
               </div>
             )}
             {menuItems[9].visible && (
-              <div ref={activityMapRef} className="w-100">
-                <ParkMapDetails data={maps} type={parkType} />
-              </div>
-            )}
-            {menuItems[10].visible && (
               <div ref={aboutRef} className="w-100">
                 <About park={park} />
               </div>
             )}
-            {menuItems[11].visible && (
+            {menuItems[10].visible && (
               <div ref={natureAndCultureRef} className="w-100">
                 <NatureAndCulture data={natureAndCulture} />
               </div>
             )}
-            {menuItems[12].visible && (
+            {menuItems[11].visible && (
               <div ref={reconciliationRef} className="w-100">
                 <Reconciliation data={reconciliationNotes} />
               </div>
@@ -846,6 +825,11 @@ export const query = graphql`
             isActive
             isCamping
           }
+        }
+      }
+      managementAreas {
+        searchArea {
+          searchAreaName
         }
       }
     }

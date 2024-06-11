@@ -2,15 +2,12 @@
 
 exports[`CampfireBan renders correctly 1`] = `
 Array [
-  <div>
-    <img
-      alt="Campfires are prohibited"
-      className="mr-1"
-      src="test-file-stub"
-    />
-  </div>,
-  <div>
-    No campfires
-  </div>,
+  <img
+    alt="Campfire ban in effect"
+    src="test-file-stub"
+  />,
+  <p>
+    Campfire ban in effect.
+  </p>,
 ]
 `;

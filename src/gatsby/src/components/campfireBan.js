@@ -1,14 +1,14 @@
 import React from "react"
-
-import campfireBanIcon from "../images/park/campfire-ban-48.png"
+import campfireBanIcon from "../images/park/campfire-ban.svg"
 
 export default function CampfireBan() {
   return (
     <>
-      <div>
-        <img src={campfireBanIcon} alt="Campfires are prohibited" className="mr-1" />
-      </div>
-      <div>No campfires</div>
+      <img
+        src={campfireBanIcon}
+        alt="Campfire ban in effect"
+      />
+      <p>Campfire ban in effect.</p>
     </>
   )
 }

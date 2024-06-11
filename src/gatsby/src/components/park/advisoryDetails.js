@@ -8,9 +8,9 @@ import Row from "react-bootstrap/Row"
 
 import HtmlContent from "./htmlContent"
 
-import blueAlertIcon from "../../images/park/blue-alert-64.png"
-import redAlertIcon from "../../images/park/red-alert-64.png"
-import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
+import blueAlertIcon from "../../images/park/blue-alert.svg"
+import redAlertIcon from "../../images/park/red-alert.svg"
+import yellowAlertIcon from "../../images/park/yellow-alert.svg"
 
 import "../../styles/advisories/advisoryDetails.scss"
 

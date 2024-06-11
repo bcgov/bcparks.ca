@@ -114,7 +114,7 @@ module.exports = {
                   fields: "*"
                 },
                 managementAreas: {
-                  populate: ["region", "section"]
+                  populate: ["region", "section", "searchArea"]
                 },
                 parkPhotos: {
                   fields: "*"

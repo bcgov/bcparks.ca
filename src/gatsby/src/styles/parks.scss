@@ -3,22 +3,32 @@
 // @import url("https://governmentofbc.maps.arcgis.com/apps/webappviewer/jimu.js/css/jimu-theme.css");
 
 .parks-container {
-  max-width: 1350px !important;
-  &.main-container {
-    max-width: 1000px !important;
-    padding: 0 16px;
-    @media (min-width: $smBreakpoint) {
-      padding: 0 20px;
+  max-width: none;
+  width: 100%;
+  padding: 0;
+  .park-info-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-left: 16px;
+    padding-right: 16px;
+    @media (min-width: $mdBreakpoint) {
+      padding-left: 32px;
+      padding-right: 32px;
     }
-    .park-info-container {
-      padding: 0;
+    @media (min-width: $xlBreakpoint) {
+      padding-left: 0;
+      padding-right: 0;
     }
+  }
+  .breadcrumb-container {
+    padding-top: 32px;
   }
   .page-content {
     max-width: 640px;
-    padding: 0 16px;
+    padding: 0;
     @media (min-width: $mdBreakpoint) {
       max-width: 66.66667%;
+      padding: 0 16px;
     }
     a:not(.btn) {
       color: $colorBlueMed;
@@ -50,11 +60,29 @@
 }
 
 .gallery-container {
+  position: relative;
   padding-left: 0;
   padding-right: 0;
-  @media (min-width: $mediumBreakpoint) {
-    padding-left: 15px;
-    padding-right: 15px;
+  &.has-photo--true {
+    padding-bottom: 100px;
+    @media (min-width: $smBreakpoint) {
+      padding-bottom: 200px;
+    }
+    @media (min-width: $lgBreakpoint) {
+      padding-bottom: 300px;
+    }
+  }
+  .background-container {
+    height: 100px;
+  }
+  .park-info-container {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    @media (min-width: 1100px) {
+      left: calc(50% - 550px);
+    }
   }
 }
 
@@ -82,6 +110,9 @@
 .grey-background {
   background-color: $colorBackgroundGrey !important;
 }
+.bg-brown {
+  background-color: $colorBrownLight;  
+}
 
 #park-menu-mobile {
   position: sticky;
@@ -97,14 +128,6 @@
   margin-top: 10px !important;
   color: $colorBlue !important;
   background: $colorWhite;
-}
-
-#mapDiv {
-  padding: 0;
-  margin: 0;
-  height: 500px;
-  width: 100%;
-  margin-bottom: 15px;
 }
 
 // Breadcrumbs
@@ -149,18 +172,18 @@
 }
 
 .park-photo {
-  height: 150px;
+  height: 200px;
   @media (min-width: $smBreakpoint) {
-    height: 200px;
-  }
-  @media (min-width: $mdBreakpoint) {
     height: 300px;
   }
   @media (min-width: $lgBreakpoint) {
     height: 400px;
   }
   &--small {
-    height: 196px;
+    height: 146px;
+    @media (min-width: $lgBreakpoint) {
+      height: 196px;
+    }
   }
   img {
     width: 100%;
@@ -267,6 +290,53 @@ h2.section-heading {
 
 // Park header
 #park-header-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-top: 32px;
+  padding-bottom: 32px;
+  .park-header {
+    width: 670px;
+    &-child {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      .access-status-icon {
+        a {
+          display: inline;
+        }
+      }
+    }
+    &--left {
+      width: 670px;
+      p {
+        margin-bottom: 0;
+      }
+      a:not(.btn) {
+        text-decoration: underline;
+      }
+      svg, img {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+        margin-bottom: 0;
+      }
+      svg {
+        color: $colorBlue;
+      }
+    }
+    &--right {
+      width: 430px;
+      display: none;
+      justify-content: flex-end;
+      img {
+        width: 250px;
+      }
+      @media (min-width: $mdBreakpoint) {
+        display: flex;;
+      }
+    }
+  }
+
   .card-parent {
     .card-child {
       font-size: 0.875rem;
@@ -327,7 +397,7 @@ h2.section-heading {
 
 // near by parks section
 #nearby-parks-container {
-  background-color: $colorBackgroundGrey;
+  background-color: $colorBrownMed;
   padding: 32px 0;
   h2 {
     margin-bottom: 16px;
@@ -374,9 +444,9 @@ h2.section-heading {
 }
 
 .access-status-icon {
-  line-height: 2rem;
   img {
     float: left;
+    margin-right: 8px;
     margin-bottom: 8px;
   }
   a {

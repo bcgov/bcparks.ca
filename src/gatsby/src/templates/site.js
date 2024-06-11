@@ -20,8 +20,8 @@ import ParkFacility from "../components/park/parkFacility"
 import ParkHeader from "../components/park/parkHeader"
 import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
-import SafetyInfo from "../components/park/safetyInfo"
 import MapLocation from "../components/park/mapLocation"
+import SafetyInfo from "../components/park/safetyInfo"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
@@ -40,6 +40,8 @@ export default function SiteTemplate({ data }) {
   const description = site.description.data.description
   const safetyInfo = site.safetyInfo?.data?.safetyInfo
   const locationNotes = site.locationNotes.data.locationNotes
+  const managementAreas = park.managementAreas || []
+  const searchArea = managementAreas[0]?.searchArea || {}
 
   const activeActivities = sortBy(
     activities.filter(
@@ -207,20 +209,13 @@ export default function SiteTemplate({ data }) {
     },
   ]
 
-  const mapData = {
-    latitude: site.latitude,
-    longitude: site.longitude,
-    mapZoom: site.mapZoom,
-    parkOrcs: site.orcsSiteNumber
-  }
-
   const breadcrumbs = [
     <GatsbyLink key="1" to="/">
       Home
     </GatsbyLink>,
     <GatsbyLink
       key="2"
-      to="/find-a-park"
+      to="/find-a-park/"
       onClick={(e) => {
         if (sessionStorage.getItem("lastSearch")) {
           e.preventDefault();
@@ -230,7 +225,8 @@ export default function SiteTemplate({ data }) {
     >
       Find a park
     </GatsbyLink>,
-    <GatsbyLink key="3"
+    <GatsbyLink
+      key="3"
       to={`/${park?.slug ? park.slug : 'parks/protected-area'}`}
     >
       {park?.protectedAreaName}
@@ -241,44 +237,52 @@ export default function SiteTemplate({ data }) {
   ]
 
   return (
-    <div className="grey-background">
+    <div>
       <Header mode="internal" content={menuContent} />
-      <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
-        <div className="container parks-container order-2">
-          <div id="main-content" tabIndex={-1} className="park-info-container pt-5">
+      <div className="park-header-container d-flex flex-wrap d-md-block">
+        <div className="parks-container bg-brown">
+          <div id="main-content" tabIndex={-1} className="park-info-container breadcrumb-container">
             <Breadcrumbs breadcrumbs={breadcrumbs} />
           </div>
           {!isLoadingProtectedArea && !protectedAreaLoadError && (
-            <div>
-              <ParkHeader
-                slug={`${park.slug}/${site.slug}`}
-                parkName={`${park?.protectedAreaName}: ${site.siteName}`}
-                hasReservations={hasReservations}
-                hasDayUsePass={hasDayUsePass}
-                hasCampfireBan={hasCampfireBan}
-                isLoadingAdvisories={isLoadingAdvisories}
-                advisoryLoadError={advisoryLoadError}
-                advisories={advisories}
-                subAreas={park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)}
-                operationDates={park.parkOperationDates}
-              />
-            </div>
+            <ParkHeader
+              orcs={site.orcsSiteNumber}
+              slug={`${park.slug}/${site.slug}`}
+              parkName={`${park?.protectedAreaName}: ${site.siteName}`}
+              parkType="site"
+              mapZoom={site.mapZoom}
+              latitude={site.latitude}
+              longitude={site.longitude}
+              hasCampfireBan={hasCampfireBan}
+              hasDayUsePass={hasDayUsePass}
+              hasReservations={hasReservations}
+              advisories={advisories}
+              advisoryLoadError={advisoryLoadError}
+              isLoadingAdvisories={isLoadingAdvisories}
+              searchArea={searchArea}
+              parkOperation={site.parkOperation}
+              operationDates={park.parkOperationDates}
+              subAreas={park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)}
+            />
           )}
         </div>
-        <div className="page-menu--mobile d-block d-md-none order-3">
+        <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
+          {photos.length > 0 && (
+            <div className="background-container bg-brown"></div>
+          )}
+          <div className="park-info-container">
+            <ParkPhotoGallery photos={photos} />
+          </div>
+        </div>
+      </div>
+      <div className="parks-container main-container">
+        <div className="page-menu--mobile d-block d-md-none">
           <PageMenu
             pageSections={menuItems}
             activeSection={activeSection}
             menuStyle="select"
           />
         </div>
-        <div className="container parks-container gallery-container order-1">
-          <div className="park-info-container">
-            <ParkPhotoGallery photos={photos} />
-          </div>
-        </div>
-      </div>
-      <div className="container parks-container main-container">
         <div className="row no-gutters park-info-container">
           <div className="page-menu--desktop d-none d-md-block col-12 col-md-4">
             <PageMenu
@@ -345,15 +349,7 @@ export default function SiteTemplate({ data }) {
             )}
             {menuItems[6].visible && (
               <div ref={mapLocationRef} className="w-100">
-                <MapLocation data={mapData} />
-                {locationNotes && (
-                  <div id="park-location-notes-container"
-                    dangerouslySetInnerHTML={{
-                      __html: locationNotes,
-                    }}
-                  >
-                  </div>
-                )}
+                <MapLocation locationNotes={locationNotes} />
               </div>
             )}
           </div>
@@ -441,6 +437,11 @@ export const query = graphql`
             closureAffectsAccessStatus
           }
         }
+        managementAreas {
+          searchArea {
+            searchAreaName
+          }
+        }
       }
       parkActivities {
         isActive
@@ -496,7 +497,8 @@ export const query = graphql`
     featuredPhotos: allStrapiParkPhoto(
       filter: {
         orcsSiteNumber: {eq: $orcsSiteNumber},
-        isFeatured: {eq: true}, isActive: {eq: true}
+        isFeatured: {eq: true},
+        isActive: {eq: true}
       }
       sort: [
         {sortOrder: ASC},
