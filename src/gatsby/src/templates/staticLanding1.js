@@ -72,7 +72,7 @@ const LandingPage = ({ pageContext }) => {
             </div>
             <div className="bcp-landing-intro__text">
               <div className="container">
-                <div className="row d-none d-lg-block">
+                <div className="row">
                   <div className="col">
                     <div id="main-content" tabIndex={-1}>
                       <Breadcrumbs breadcrumbs={breadcrumbs} />
