@@ -182,6 +182,12 @@
     },
     "gateNote": {
       "type": "text"
+    },
+    "gateOpensAtDawn": {
+      "type": "boolean"
+    },
+    "gateClosesAtDusk": {
+      "type": "boolean"
     }
   }
 }
