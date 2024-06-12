@@ -477,14 +477,19 @@ div[class$="-singleValue"] {
         border-radius: 4px; 
       }
     }
-  }
-
-  // park card icon
-  .access-status-icon {
-    margin-bottom: 8px;
-    img {
+    svg, img {
       width: 24px;
       height: 24px;
+    }
+  }
+  .access-status-icon {
+    margin-bottom: 8px;
+  }
+  .campfire-ban-icon {
+    display: flex;
+    svg {
+      color: $colorRed;
+      margin-right: 8px;
     }
   }
 

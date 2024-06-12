@@ -2,13 +2,12 @@ import React, { useState } from "react"
 import { Link } from "gatsby"
 import Carousel from "react-bootstrap/Carousel"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCircleChevronRight, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons"
+import { faBan, faCircleChevronRight, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons"
 
 import FeatureIcons from "./featureIcons"
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
 
 import parksLogo from "../../images/park-card.png"
-import campfireBanIcon from "../../../static/icons/campfire-ban.svg"
 
 import { addSmallImagePrefix, handleImgError } from "../../utils/helpers"
 
@@ -19,19 +18,6 @@ const locationLabel = (parkLocations) => {
   const arrList = parkLocations.map(p => { return p.searchArea });
   const distinctLocations = [...new Set(arrList)]
   return distinctLocations.join(", ");
-}
-
-const Icon = ({ src, label, size }) => {
-  return (
-    <img
-      src={src}
-      alt={label}
-      aria-label={label}
-      width={size}
-      height={size}
-      className="mr-2"
-    />
-  )
 }
 
 const ParkCard = ({ r }) => {
@@ -146,8 +132,8 @@ const ParkCard = ({ r }) => {
                 />
                 {r.hasCampfireBan &&
                   <div className="campfire-ban-icon">
-                    <Icon src={campfireBanIcon} label="Campfire ban" size="24" />
-                    <span>No campfires</span>
+                    <FontAwesomeIcon icon={faBan} />
+                    No campfires
                   </div>
                 }
               </div>
@@ -236,8 +222,8 @@ const ParkCard = ({ r }) => {
             />
             {r.hasCampfireBan &&
               <div className="campfire-ban-icon">
-                <Icon src={campfireBanIcon} label="Campfire ban" size="24" />
-                <span>No campfires</span>
+                <FontAwesomeIcon icon={faBan} />
+                No campfires
               </div>
             }
           </div>
