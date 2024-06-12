@@ -298,7 +298,6 @@ h2.section-heading {
     width: 670px;
     &-child {
       display: flex;
-      align-items: center;
       margin-bottom: 16px;
       .access-status-icon {
         a {
@@ -322,6 +321,9 @@ h2.section-heading {
       }
       svg {
         color: $colorBlue;
+        &.fa-ban {
+          color: $colorRed;
+        }
       }
     }
     &--right {

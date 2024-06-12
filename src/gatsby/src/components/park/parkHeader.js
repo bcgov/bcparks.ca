@@ -98,11 +98,6 @@ export default function ParkHeader({
                 onStatusCalculated={onStatusCalculated}
               />
             </div>
-            {hasCampfireBan &&
-              <div className="park-header-child">
-                <CampfireBan />
-              </div>
-            }
             <div className="park-header-child">
               <FontAwesomeIcon icon={faCalendar} />
               <div>
@@ -134,6 +129,11 @@ export default function ParkHeader({
                 )}
               </div>
             </div>
+            {hasCampfireBan &&
+              <div className="park-header-child">
+                <CampfireBan />
+              </div>
+            }
           </>
         )}
         <div className="mt-4">
