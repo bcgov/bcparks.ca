@@ -327,7 +327,9 @@ export default function ParkTemplate({ data }) {
               parkType={parkType}
               mapZoom={park.mapZoom}
               latitude={park.latitude}
-              longitude={park.latitude}
+              longitude={park.longitude}
+              campings={activeCampings}
+              facilities={nonCampingFacilities}
               hasCampfireBan={hasCampfireBan}
               hasDayUsePass={hasDayUsePass}
               hasReservations={hasReservations}

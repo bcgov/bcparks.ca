@@ -54,6 +54,8 @@ export default function ParkHeader({
   mapZoom,
   latitude,
   longitude,
+  campings,
+  facilities,
   hasCampfireBan,
   hasDayUsePass,
   hasReservations,
@@ -92,7 +94,7 @@ export default function ParkHeader({
                 slug={slug}
                 subAreas={subAreas}
                 operationDates={operationDates}
-                punctuation={advisories.length > 0 ? `(${advisories.length}).`: ""}
+                punctuation={advisories.length > 0 ? `(${advisories.length}).` : ""}
                 onStatusCalculated={onStatusCalculated}
               />
             </div>
@@ -116,10 +118,20 @@ export default function ParkHeader({
                 ) : (
                   <p>Operating dates are unavailable.</p>
                 )}
-                <p>
-                  <a href="#park-camping-details-container">Check campgrounds</a> and{" "}
-                  <a href="#park-facility-container">facilities</a> for additional dates.
-                </p>
+                {(campings.length > 0 || facilities.length > 0) && (
+                  <p>
+                    {campings.length > 0 &&
+                      <a href="#park-camping-details-container">Check campgrounds</a>
+                    }
+                    {facilities.length > 0 &&
+                      <>
+                        {campings.length > 0 ? " and " : ""}
+                        <a href="#park-facility-container">{campings.length > 0 ? "facilities" : "Check facilities"}</a>
+                      </>
+                    }
+                    {" "}for additional dates.
+                  </p>
+                )}
               </div>
             </div>
           </>
@@ -156,6 +168,8 @@ ParkHeader.propTypes = {
   mapZoom: PropTypes.number.isRequired,
   latitude: PropTypes.number.isRequired,
   longitude: PropTypes.number.isRequired,
+  campings: PropTypes.array,
+  facilities: PropTypes.array,
   hasCampfireBan: PropTypes.bool,
   hasDayUsePass: PropTypes.bool,
   hasReservations: PropTypes.bool,
