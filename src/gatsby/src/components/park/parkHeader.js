@@ -118,12 +118,20 @@ export default function ParkHeader({
                 ) : (
                   <p>Operating dates are unavailable.</p>
                 )}
-                {(campings.length > 0 && facilities.length > 0) &&
+                {(campings.length > 0 || facilities.length > 0) && (
                   <p>
-                    <a href="#park-camping-details-container">Check campgrounds</a> and{" "}
-                    <a href="#park-facility-container">facilities</a> for additional dates.
+                    {campings.length > 0 &&
+                      <a href="#park-camping-details-container">Check campgrounds</a>
+                    }
+                    {facilities.length > 0 &&
+                      <>
+                        {campings.length > 0 ? " and " : ""}
+                        <a href="#park-facility-container">{campings.length > 0 ? "facilities" : "Check facilities"}</a>
+                      </>
+                    }
+                    {" "}for additional dates.
                   </p>
-                }
+                )}
               </div>
             </div>
           </>
