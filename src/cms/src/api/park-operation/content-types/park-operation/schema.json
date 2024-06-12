@@ -177,7 +177,7 @@
     "gateOpensAtDawn": {
       "type": "boolean"
     },
-    "gateOpensAtDusk": {
+    "gateClosesAtDusk": {
       "type": "boolean"
     }
   }
