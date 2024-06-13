@@ -599,10 +599,16 @@ nav.breadcrumbs {
     }
   }
   &.advisory-accordion {
-    padding: 14px 16px;
+    padding: 8px 16px;
+    @media screen and (min-width: $smBreakpoint) {
+      padding: 14px 16px;
+    }
     &.is-open {
       &--true {
-        padding: 14px 16px;
+        padding: 8px 16px;
+        @media screen and (min-width: $smBreakpoint) {
+          padding: 14px 16px;
+        }
       }
     }
     .accordion-toggle {
