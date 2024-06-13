@@ -76,13 +76,13 @@ export default function ParkTemplate({ data }) {
       facility => facility.facilityType.isCamping
     )
   const nonCampingActivities =
-    activeActivities.filter(
-      activity => !activity.activityType.isCamping
-    )
+    activeActivities
+      .filter(activity => !activity.activityType.isCamping)
+      .sort((a, b) => a.activityType.activityName.localeCompare(b.activityType.activityName))
   const nonCampingFacilities =
-    activeFacilities.filter(
-      facility => !facility.facilityType.isCamping
-    )
+    activeFacilities
+      .filter(facility => !facility.facilityType.isCamping)
+      .sort((a, b) => a.facilityType.facilityName.localeCompare(b.facilityType.facilityName))
   const activeCampings = campingActivities.concat(campingFacilities).sort((a, b) => {
     if ((a.activityType?.activityName || a.facilityType?.facilityName) < (b.activityType?.activityName || b.facilityType?.facilityName)) {
       return -1;
@@ -234,7 +234,7 @@ export default function ParkTemplate({ data }) {
     },
     {
       sectionIndex: 7,
-      display: "Activities",
+      display: "Things to do",
       link: "#park-activity-container",
       visible: nonCampingActivities.length > 0,
     },
@@ -354,13 +354,13 @@ export default function ParkTemplate({ data }) {
         </div>
       </div>
       <div className="parks-container main-container">
-          <div className="page-menu--mobile d-block d-md-none">
-            <PageMenu
-              pageSections={menuItems}
-              activeSection={activeSection}
-              menuStyle="select"
-            />
-          </div>
+        <div className="page-menu--mobile d-block d-md-none">
+          <PageMenu
+            pageSections={menuItems}
+            activeSection={activeSection}
+            menuStyle="select"
+          />
+        </div>
         <div className="row no-gutters park-info-container">
           <div className="page-menu--desktop d-none d-md-block col-12 col-md-4">
             <PageMenu

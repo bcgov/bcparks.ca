@@ -115,7 +115,7 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
 
   return (
     <div id="park-activity-container" className="anchor-link">
-      <h2 className="section-heading">Activities</h2>
+      <h2 className="section-heading">Things to do</h2>
       <Row>
         <Col>
           {activityData.length > 1 && (
