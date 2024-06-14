@@ -235,7 +235,7 @@ export default function ParkDates({ data }) {
             <>
               <div className="mb-4">
                 <div>
-                  <GatsbyLink to="#park-advisory-details-container">Check advisories</GatsbyLink> before visiting.
+                  <GatsbyLink to="#park-know-before-you-go-container">Check advisories</GatsbyLink> before visiting.
                   Dates may change without notice.
                 </div>
                 {parkDates && (

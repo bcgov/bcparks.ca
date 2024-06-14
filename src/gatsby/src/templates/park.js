@@ -157,10 +157,8 @@ export default function ParkTemplate({ data }) {
   };
 
   const parkOverviewRef = useRef("")
-  const advisoryRef = useRef("")
+  const knowBeforeRef = useRef("")
   const parkDatesRef = useRef("")
-  const safetyRef = useRef("")
-  const specialRef = useRef("")
   const campingRef = useRef("")
   const facilityRef = useRef("")
   const activityRef = useRef("")
@@ -171,10 +169,8 @@ export default function ParkTemplate({ data }) {
 
   const sectionRefs = [
     parkOverviewRef,
-    advisoryRef,
+    knowBeforeRef,
     parkDatesRef,
-    safetyRef,
-    specialRef,
     campingRef,
     facilityRef,
     activityRef,
@@ -199,11 +195,8 @@ export default function ParkTemplate({ data }) {
     },
     {
       sectionIndex: 1,
-      display:
-        !isLoadingAdvisories && !advisoryLoadError
-          ? `Advisories (${advisories.length})`
-          : "Advisories",
-      link: "#park-advisory-details-container",
+      display: "Know before you go",
+      link: "#park-know-before-you-go-container",
       visible: true,
     },
     {
@@ -214,42 +207,30 @@ export default function ParkTemplate({ data }) {
     },
     {
       sectionIndex: 3,
-      display: "Safety info",
-      link: "#park-safety-info-container",
-      visible: !isNullOrWhiteSpace(safetyInfo),
-    },
-    {
-      sectionIndex: 4,
-      display: "Special notes",
-      link: "#park-special-notes-container",
-      visible: !isNullOrWhiteSpace(specialNotes),
-    },
-    {
-      sectionIndex: 5,
       display: "Camping",
       link: "#park-camping-details-container",
       visible: activeCampings.length > 0,
     },
     {
-      sectionIndex: 6,
+      sectionIndex: 4,
       display: "Facilities",
       link: "#park-facility-container",
       visible: nonCampingFacilities.length > 0,
     },
     {
-      sectionIndex: 7,
+      sectionIndex: 5,
       display: "Things to do",
       link: "#park-activity-container",
       visible: nonCampingActivities.length > 0,
     },
     {
-      sectionIndex: 8,
+      sectionIndex: 6,
       display: "Maps and location",
       link: "#park-maps-location-container",
       visible: !isNullOrWhiteSpace(maps) || !isNullOrWhiteSpace(locationNotes)
     },
     {
-      sectionIndex: 9,
+      sectionIndex: 7,
       display: capitalizeFirstLetter(`Learn about this ${parkType}`),
       link: "#park-about-container",
       visible:
@@ -258,13 +239,13 @@ export default function ParkTemplate({ data }) {
         !isNullOrWhiteSpace(park.parkContact.data.parkContact)
     },
     {
-      sectionIndex: 10,
+      sectionIndex: 8,
       display: "Nature and culture",
       link: "#park-nature-and-culture-container",
       visible: !isNullOrWhiteSpace(natureAndCulture),
     },
     {
-      sectionIndex: 11,
+      sectionIndex: 9,
       display: "Reconciliation with Indigenous Peoples",
       link: "#park-reconciliation-container",
       visible: !isNullOrWhiteSpace(reconciliationNotes),
@@ -380,50 +361,61 @@ export default function ParkTemplate({ data }) {
               </div>
             )}
             {menuItems[1].visible && (
-              <div ref={advisoryRef} className="w-100">
-                {isLoadingAdvisories && (
-                  <div className="mb-5">
-                    <h2 className="section-heading">{`Advisories`}</h2>
-                    <div className="spinner-border" role="status">
-                      <span className="sr-only">Loading...</span>
+              <div ref={knowBeforeRef} className="w-100">
+                <div id="park-know-before-you-go-container" className="anchor-link">
+                  <h2 className="section-heading">Know before you go</h2>
+                  {isLoadingAdvisories && (
+                    <div className="mb-5">
+                      <h2 className="section-heading">{`Advisories`}</h2>
+                      <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                      </div>
                     </div>
-                  </div>
-                )}
-                {!isLoadingAdvisories && advisoryLoadError && (
-                  <div className="mb-5">
-                    <div className="alert alert-danger" role="alert">
-                      An error occurred while loading current public
-                      advisories.
+                  )}
+                  {!isLoadingAdvisories && advisoryLoadError && (
+                    <div className="mb-5">
+                      <div className="alert alert-danger" role="alert">
+                        An error occurred while loading current public
+                        advisories.
+                      </div>
                     </div>
-                  </div>
-                )}
-                {!isLoadingAdvisories && !advisoryLoadError && (
-                  <AdvisoryDetails advisories={advisories} parkType={parkType} />
-                )}
-                <blockquote className="callout-box">
-                  <p>
-                    Review the detailed guides under visit responsibly for more information
-                    on staying safe and preserving our natural spaces.
-                  </p>
-                </blockquote>
-                <Row>
-                  <Col xs={12} md={6}>
-                    <VisitResponsibly
-                      campings={activeCampings}
-                      activities={nonCampingActivities}
-                      marineProtectedArea={park.marineProtectedArea}
-                    />
-                  </Col>
-                  <Col xs={12} md={6}>
-                    <ReservationsRequired
-                      subAreas={park.parkOperationSubAreas}
-                      hasDayUsePass={hasDayUsePass}
-                      hasReservations={hasReservations}
-                      hasBackcountryPermits={operations.hasBackcountryPermits}
-                      hasBackcountryReservations={operations.hasBackcountryReservations}
-                    />
-                  </Col>
-                </Row>
+                  )}
+                  {!isLoadingAdvisories && !advisoryLoadError && (
+                    <AdvisoryDetails advisories={advisories} parkType={parkType} />
+                  )}
+                  {!isNullOrWhiteSpace(safetyInfo) &&
+                    <SafetyInfo safetyInfo={safetyInfo} />
+                  }
+                  {!isNullOrWhiteSpace(specialNotes) &&
+                    <SpecialNote specialNotes={specialNotes} />
+                  }
+                  <blockquote className="callout-box mb-4">
+                    <p>
+                      Review the detailed guides under visit responsibly for more information
+                      on staying safe and preserving our natural spaces.
+                    </p>
+                  </blockquote>
+                  <Row>
+                    <Col xs={12} md={6}>
+                      <VisitResponsibly
+                        campings={activeCampings}
+                        activities={nonCampingActivities}
+                        marineProtectedArea={park.marineProtectedArea}
+                      />
+                    </Col>
+                    {(park.parkOperationSubAreas.length > 0 || hasDayUsePass) &&
+                      <Col xs={12} md={6}>
+                        <ReservationsRequired
+                          subAreas={park.parkOperationSubAreas}
+                          hasDayUsePass={hasDayUsePass}
+                          hasReservations={hasReservations}
+                          hasBackcountryPermits={operations.hasBackcountryPermits}
+                          hasBackcountryReservations={operations.hasBackcountryReservations}
+                        />
+                      </Col>
+                    }
+                  </Row>
+                </div>
               </div>
             )}
             {menuItems[2].visible && (
@@ -441,16 +433,6 @@ export default function ParkTemplate({ data }) {
               </div>
             )}
             {menuItems[3].visible && (
-              <div ref={safetyRef} className="w-100">
-                <SafetyInfo safetyInfo={safetyInfo} />
-              </div>
-            )}
-            {menuItems[4].visible && (
-              <div ref={specialRef} className="w-100">
-                <SpecialNote specialNotes={specialNotes} />
-              </div>
-            )}
-            {menuItems[5].visible && (
               <div ref={campingRef} className="w-100">
                 <CampingDetails
                   data={{
@@ -464,12 +446,12 @@ export default function ParkTemplate({ data }) {
                 />
               </div>
             )}
-            {menuItems[6].visible && (
+            {menuItems[4].visible && (
               <div ref={facilityRef} className="w-100">
                 <ParkFacility data={nonCampingFacilities} />
               </div>
             )}
-            {menuItems[7].visible && (
+            {menuItems[5].visible && (
               <div ref={activityRef} className="w-100">
                 <ParkActivity
                   data={nonCampingActivities}
@@ -478,22 +460,22 @@ export default function ParkTemplate({ data }) {
                 />
               </div>
             )}
-            {menuItems[8].visible && (
+            {menuItems[6].visible && (
               <div ref={mapLocationRef} className="w-100">
                 <MapLocation maps={maps} locationNotes={locationNotes} />
               </div>
             )}
-            {menuItems[9].visible && (
+            {menuItems[7].visible && (
               <div ref={aboutRef} className="w-100">
                 <About park={park} />
               </div>
             )}
-            {menuItems[10].visible && (
+            {menuItems[8].visible && (
               <div ref={natureAndCultureRef} className="w-100">
                 <NatureAndCulture data={natureAndCulture} />
               </div>
             )}
-            {menuItems[11].visible && (
+            {menuItems[9].visible && (
               <div ref={reconciliationRef} className="w-100">
                 <Reconciliation data={reconciliationNotes} />
               </div>
