@@ -94,8 +94,9 @@ export default function ParkHeader({
                 slug={slug}
                 subAreas={subAreas}
                 operationDates={operationDates}
-                punctuation={advisories.length > 0 ? `(${advisories.length}).` : ""}
                 onStatusCalculated={onStatusCalculated}
+                punctuation={advisories.length > 0 ? `(${advisories.length}).` : ""}
+                hidePunctuation={true}
               />
             </div>
             <div className="park-header-child">
@@ -136,9 +137,9 @@ export default function ParkHeader({
             }
           </>
         )}
-        <div className="mt-4">
+        <div>
           {hasReservations && (
-            <a href={reservationsURL} className="btn btn-secondary mr-3">Book camping</a>
+            <a href={reservationsURL} className="btn btn-secondary">Book camping</a>
           )}
           {hasDayUsePass && (
             <a href={dayUsePassURL} className="btn btn-secondary">Get a day-use pass</a>
