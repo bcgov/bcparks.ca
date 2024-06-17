@@ -4,6 +4,7 @@ import CampfireBan from "../campfireBan"
 import { datePhrase } from "../../utils/parkDatesHelper"
 
 import PropTypes from "prop-types"
+import { parseISO, format } from "date-fns"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons"
 import { faCalendar } from "@fortawesome/free-regular-svg-icons"
@@ -44,6 +45,12 @@ const convertToCamelCase = (str) => {
 }
 const mapImages = {
   lowerMainland, southIsland, okanagan, seaToSky, kootenay, thompson, cariboo, haidaGwaii, northIsland, omineca, peace, skeenaEast, skeenaWest, southCentralCoast
+}
+// Helper function to format gate open/close time e.g. "08:00:00" to "8 am"
+const formattedTime = (time) => {
+  // prepend a dummy date to the time string to parse it
+  const dateTime = parseISO(`1970-01-01T${time}`)
+  return format(dateTime, 'h aa').toLowerCase()
 }
 
 export default function ParkHeader({
@@ -106,9 +113,8 @@ export default function ParkHeader({
                   <p>
                     The {parkType?.toLowerCase()} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}.
                     {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) && (
-                      <>
-                        Gates are open from {parkOperation.gateOpenTime} to {parkOperation.gateCloseTime}.
-                      </>
+                      ` Gates are open from ${formattedTime(parkOperation.gateOpenTime)}
+                       – ${formattedTime(parkOperation.gateCloseTime)}.`
                     )}
                   </p>
                 ) : (
