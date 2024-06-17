@@ -159,12 +159,6 @@
       "target": "api::site.site",
       "inversedBy": "parkOperation"
     },
-    "camisResourceLocationId": {
-      "type": "biginteger"
-    },
-    "camisMapId": {
-      "type": "biginteger"
-    },
     "gateOpenTime": {
       "type": "time"
     },
