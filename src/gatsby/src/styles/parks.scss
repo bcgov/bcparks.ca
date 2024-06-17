@@ -298,7 +298,7 @@ h2.section-heading {
     width: 670px;
     &-child {
       display: flex;
-      margin-bottom: 16px;
+      margin-bottom: 24px;
       .access-status-icon {
         a {
           display: inline;
@@ -335,6 +335,12 @@ h2.section-heading {
       }
       @media (min-width: $mdBreakpoint) {
         display: flex;;
+      }
+    }
+    .btn.btn-secondary {
+      margin-top: 8px;
+      &:first-of-type {
+        margin-right: 16px;
       }
     }
   }
