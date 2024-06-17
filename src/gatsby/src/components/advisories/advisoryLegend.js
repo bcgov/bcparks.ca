@@ -1,45 +1,47 @@
 import React from "react"
 import "../../styles/advisories/advisoryLegend.scss"
+import redAlertIcon from "../../images/park/red-alert.svg"
+import yellowAlertIcon from "../../images/park/yellow-alert.svg"
+import blueAlertIcon from "../../images/park/blue-alert.svg"
 
 const AdvisoryLegend = () => {
   const legendItems = [
     {
       label: "High",
       description: "Immediate danger and closures",
-      color: "#d8292f",
+      icon: redAlertIcon,
     },
     {
       label: "Medium",
       description: "Safety and health related",
-      color: "#fcba19",
+      icon: yellowAlertIcon,
     },
     {
       label: "Low",
       description: "Discretion and warnings",
-      color: "#2464a4",
+      icon: blueAlertIcon,
     },
   ]
 
   return (
     <div className="advisory-legend">
-      <div className="row">
+      <div className="row no-gutters">
         {legendItems.map((legendItem, index) => {
           return (
             <div key={index} className="col col-12 col-md-4">
-              <div className="advisory-legend-item row">
-                <div className="col col-auto d-flex align-items-center">
-                  <div
-                    style={{ background: legendItem.color }}
-                    className="legend-icon mr-3"
-                  >
-                    &nbsp;
-                  </div>
+              <div className="advisory-legend-item">
+                <div className="d-flex align-items-center mr-3">
+                  <img
+                    src={legendItem.icon}
+                    alt="advisory status icon"
+                    className="advisory-status-icon"
+                  />
                 </div>
-                <div className="col">
-                  <strong className="legend-label d-md-block">
+                <div>
+                  <strong>
                     {legendItem.label}
                   </strong>
-                  <p className="legend-description mt-2 mb-0">
+                  <p className="mb-0">
                     {legendItem.description}
                   </p>
                 </div>
