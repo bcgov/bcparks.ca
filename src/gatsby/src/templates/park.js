@@ -403,7 +403,8 @@ export default function ParkTemplate({ data }) {
                         marineProtectedArea={park.marineProtectedArea}
                       />
                     </Col>
-                    {(park.parkOperationSubAreas.length > 0 || hasDayUsePass) &&
+                    {/* Waiting for CMS-40 */}
+                    {/* {(park.parkOperationSubAreas.length > 0 || hasDayUsePass) &&
                       <Col xs={12} md={6}>
                         <ReservationsRequired
                           subAreas={park.parkOperationSubAreas}
@@ -413,7 +414,7 @@ export default function ParkTemplate({ data }) {
                           hasBackcountryReservations={operations.hasBackcountryReservations}
                         />
                       </Col>
-                    }
+                    } */}
                   </Row>
                 </div>
               </div>
