@@ -17,13 +17,12 @@ const Icon = ({ src, label, size }) => {
       aria-label={label}
       width={size}
       height={size}
-      className="mr-2"
+      className="mt-2 mr-2"
     />
   )
 }
 
-const FeatureIcons = ({ page, slug, parkFacilities, parkActivities, campingFacilities }) => {
-  const iconSize = 32;
+const FeatureIcons = ({ page, slug, iconSize, parkFacilities, parkActivities, campingFacilities }) => {
   const facilities = parkFacilities.filter(f => [6].includes(f.num)) || [];
   const activities = parkActivities.filter(a => [1, 3, 8, 9].includes(a.num)) || [];
   const campings = campingFacilities.filter(c => [1, 36].includes(c.num)) || [];

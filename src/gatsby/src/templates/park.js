@@ -369,7 +369,7 @@ export default function ParkTemplate({ data }) {
               menuStyle="nav"
             />
           </div>
-          <div className="page-content col-12 col-md-8">
+          <div className={`page-content has-nearby-parks--${hasNearbyParks} col-12 col-md-8`}>
             {menuItems[0].visible && (
               <div ref={parkOverviewRef} className="w-100">
                 <ParkOverview data={description} type={parkType} />
@@ -660,6 +660,8 @@ export const query = graphql`
         offSeasonNote
         generalNote
         adminNote
+        gateOpenTime
+        gateCloseTime
       }
       parkOperationSubAreas {
         parkSubArea

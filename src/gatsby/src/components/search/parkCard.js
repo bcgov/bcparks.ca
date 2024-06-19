@@ -118,6 +118,7 @@ const ParkCard = ({ r }) => {
                 <FeatureIcons
                   page="find a park"
                   slug={r.slug}
+                  iconSize={32}
                   parkFacilities={r.parkFacilities}
                   parkActivities={r.parkActivities}
                   campingFacilities={r.campingFacilities}
@@ -208,6 +209,7 @@ const ParkCard = ({ r }) => {
             <FeatureIcons
               page="find a park"
               slug={r.slug}
+              iconSize={32}
               parkFacilities={r.parkFacilities}
               parkActivities={r.parkActivities}
               campingFacilities={r.campingFacilities}

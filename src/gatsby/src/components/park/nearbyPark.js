@@ -146,9 +146,11 @@ const NearbyPark = ({ park }) => {
             <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
           </Link>
         </h2>
-        <div>
+        <div className="w-100">
           <FeatureIcons
             page="park"
+            slug={park.slug}
+            iconSize={36}
             parkFacilities={facilities}
             parkActivities={activities}
             campingFacilities={campings}
