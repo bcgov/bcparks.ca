@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_parks_rte_list",
+  "info": {
+    "displayName": "Rich Text Editor List",
+    "icon": "bulletList",
+    "description": "Repeatable list of Rich Text Editor fields"
+  },
+  "options": {},
+  "attributes": {
+    "description": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor",
+      "required": true
+    }
+  }
+}
