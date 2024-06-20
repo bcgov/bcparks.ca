@@ -21,7 +21,6 @@ module.exports = {
         "search-city",
         "footer-menu",
         "menu",
-        "website"
       ]);
   },
 
