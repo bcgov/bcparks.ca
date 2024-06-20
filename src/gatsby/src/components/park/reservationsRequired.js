@@ -2,18 +2,22 @@ import React from "react"
 import { Link } from "gatsby"
 
 export default function ReservationsRequired({
-  subAreas, hasDayUsePass, hasReservations, hasBackcountryPermits, hasBackcountryReservations
+  subAreas,
+  reservationLinks,
+  hasDayUsePass,
+  hasReservations,
+  hasPicnic,
+  hasBackcountryPermits,
+  hasBackcountryReservations
 }) {
   const frontcountryCodes = ["frontcountry-camping", "group-camping", "walk-in-camping", "cabins-huts"]
   const backcountryCodes = ["backcountry-camping", "wilderness-camping"]
   const backcountryPermitCode = ["backcountry-camping"]
   const groupCampingCode = ["group-camping"]
-  const picnicCode = ["picnic-shelters"]
-  const hasFrontcountry = subAreas.some(s => frontcountryCodes.includes(s.facilityType.facilityCode))
-  const hasBackcountry = subAreas.some(s => backcountryCodes.includes(s.facilityType.facilityCode))
-  const hasBackcountryPermit = subAreas.some(s => backcountryPermitCode.includes(s.facilityType.facilityCode))
-  const hasGroupCamping = subAreas.some(s => groupCampingCode.includes(s.facilityType.facilityCode))
-  const hasPicnicShelters = subAreas.some(s => picnicCode.includes(s.facilityType.facilityCode))
+  const hasFrontcountry = subAreas.some(s => frontcountryCodes.includes(s.facilityType?.facilityCode))
+  const hasBackcountry = subAreas.some(s => backcountryCodes.includes(s.facilityType?.facilityCode))
+  const hasBackcountryPermit = subAreas.some(s => backcountryPermitCode.includes(s.facilityType?.facilityCode))
+  const hasGroupCamping = subAreas.some(s => groupCampingCode.includes(s.facilityType?.facilityCode))
 
   return (
     <>
@@ -36,7 +40,7 @@ export default function ReservationsRequired({
             </Link>
           </li>
         }
-        {(hasPicnicShelters && hasReservations) &&
+        {hasPicnic &&
           <li>
             <Link to="/reservations/picnic-shelters">
               Picnic shelters
@@ -64,6 +68,12 @@ export default function ReservationsRequired({
             </Link>
           </li>
         }
+        {reservationLinks?.length > 0 && reservationLinks.map((link, i) => (
+          <li
+            key={i}
+            dangerouslySetInnerHTML={{ __html: link.content.data.content.replace(/<\/?p>/g, '') }}>
+          </li>
+        ))}
       </ul>
     </>
   )

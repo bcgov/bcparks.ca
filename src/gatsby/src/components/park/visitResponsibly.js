@@ -8,12 +8,12 @@ export default function VisitResponsibly({ campings, activities, marineProtected
   const winterFacilityCode = ["winter-camping"]
   const winterActivityCode = ["winter-recreation"]
   const activityCodes = ["fishing", "hunting"]
-  const hasCamping = campings.some(c => campingFacilityCodes.includes(c.facilityType.facilityCode))
-  const hasBackcountry = campings.some(c => backcountryFacilityCodes.includes(c.facilityType.facilityCode))
-  const hasMarineCamping = campings.some(c => marineFacilityCode.includes(c.facilityType.facilityCode))
-  const hasWinterCamping = campings.some(c => winterFacilityCode.includes(c.facilityType.facilityCode))
-  const hasWinterActivities = activities.some(a => winterActivityCode.includes(a.activityType.activityCode))
-  const hasFishingOrHunting = activities.some(a => activityCodes.includes(a.activityType.activityCode))
+  const hasCamping = campings.some(c => campingFacilityCodes.includes(c.facilityType?.facilityCode))
+  const hasBackcountry = campings.some(c => backcountryFacilityCodes.includes(c.facilityType?.facilityCode))
+  const hasMarineCamping = campings.some(c => marineFacilityCode.includes(c.facilityType?.facilityCode))
+  const hasWinterCamping = campings.some(c => winterFacilityCode.includes(c.facilityType?.facilityCode))
+  const hasWinterActivities = activities.some(a => winterActivityCode.includes(a.activityType?.activityCode))
+  const hasFishingOrHunting = activities.some(a => activityCodes.includes(a.activityType?.activityCode))
 
   return (
     <>

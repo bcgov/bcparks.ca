@@ -77,7 +77,7 @@ export default function AdvisoryDetails({ advisories, parkType }) {
   })
 
   return (
-    <div className="mb-4">
+    <div id="park-advisory-details-container" className="mb-4">
       <h3>{`Advisories (${advisories.length})`}</h3>
       <Row>
         {advisories.length === 0 && (

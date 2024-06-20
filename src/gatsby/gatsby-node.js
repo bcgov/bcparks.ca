@@ -83,11 +83,26 @@ exports.createSchemaCustomization = ({ actions }) => {
     nearbyParkTwo: STRAPI_PROTECTED_AREA @link(by: "id", from: "nearbyParkTwo___NODE")
     nearbyParkThree: STRAPI_PROTECTED_AREA @link(by: "id", from: "nearbyParkThree___NODE")
   }
+  
+  type STRAPI__COMPONENT_PARKS_RTE_LIST_CONTENT_TEXTNODE implements Node @dontInfer {
+    content: String
+  }
+
+  type STRAPI__COMPONENT_PARKS_RTE_LISTContent {
+    data: STRAPI__COMPONENT_PARKS_RTE_LIST_CONTENT_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI__COMPONENT_PARKS_RTE_LIST implements Node @derivedTypes @dontInfer {
+    description: String
+    content: STRAPI__COMPONENT_PARKS_RTE_LISTContent
+  }
 
   type STRAPI_PARK_OPERATION implements Node {
     totalCapacity: String
     gateOpenTime: String
     gateCloseTime: String
+    hasPicnicShelterReservations: Boolean
+    customReservationLinks: [STRAPI__COMPONENT_PARKS_RTE_LIST] @link(by: "id", from: "customReservationLinks___NODE")
   }
 
   type STRAPI_PARK_OPERATION_SUB_AREA implements Node {

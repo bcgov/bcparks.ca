@@ -403,18 +403,19 @@ export default function ParkTemplate({ data }) {
                         marineProtectedArea={park.marineProtectedArea}
                       />
                     </Col>
-                    {/* Waiting for CMS-40 */}
-                    {/* {(park.parkOperationSubAreas.length > 0 || hasDayUsePass) &&
+                    {(park.parkOperationSubAreas.length > 0 || hasDayUsePass) &&
                       <Col xs={12} md={6}>
                         <ReservationsRequired
                           subAreas={park.parkOperationSubAreas}
+                          reservationLinks={operations.customReservationLinks}
                           hasDayUsePass={hasDayUsePass}
                           hasReservations={hasReservations}
+                          hasPicnic={operations.hasPicnicShelterReservations}
                           hasBackcountryPermits={operations.hasBackcountryPermits}
                           hasBackcountryReservations={operations.hasBackcountryReservations}
                         />
                       </Col>
-                    } */}
+                    }
                   </Row>
                 </div>
               </div>
@@ -673,6 +674,14 @@ export const query = graphql`
         adminNote
         gateOpenTime
         gateCloseTime
+        hasPicnicShelterReservations
+        customReservationLinks {
+          content {
+            data {
+              content
+            }
+          }
+        }
       }
       parkOperationSubAreas {
         parkSubArea
