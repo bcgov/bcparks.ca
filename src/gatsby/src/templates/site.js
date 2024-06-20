@@ -67,13 +67,13 @@ export default function SiteTemplate({ data }) {
       facility => facility.facilityType.isCamping
     )
   const nonCampingActivities =
-    activeActivities.filter(
-      activity => !activity.activityType.isCamping
-    )
+    activeActivities
+      .filter(activity => !activity.activityType.isCamping)
+      .sort((a, b) => a.activityType.activityName.localeCompare(b.activityType.activityName))
   const nonCampingFacilities =
-    activeFacilities.filter(
-      facility => !facility.facilityType.isCamping
-    )
+    activeFacilities
+      .filter(facility => !facility.facilityType.isCamping)
+      .sort((a, b) => a.facilityType.facilityName.localeCompare(b.facilityType.facilityName))
   const activeCampings = campingActivities.concat(campingFacilities).sort((a, b) => {
     if ((a.activityType?.activityName || a.facilityType?.facilityName) < (b.activityType?.activityName || b.facilityType?.facilityName)) {
       return -1;
@@ -197,7 +197,7 @@ export default function SiteTemplate({ data }) {
     },
     {
       sectionIndex: 5,
-      display: "Activities",
+      display: "Things to do",
       link: "#park-activity-container",
       visible: nonCampingActivities.length > 0,
     },
@@ -253,6 +253,8 @@ export default function SiteTemplate({ data }) {
               mapZoom={site.mapZoom}
               latitude={site.latitude}
               longitude={site.longitude}
+              campings={activeCampings}
+              facilities={nonCampingFacilities}
               hasCampfireBan={hasCampfireBan}
               hasDayUsePass={hasDayUsePass}
               hasReservations={hasReservations}

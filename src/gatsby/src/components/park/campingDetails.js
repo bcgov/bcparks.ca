@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { navigate } from "gatsby"
 import Accordion from "react-bootstrap/Accordion"
-import Col from "react-bootstrap/Col"
-import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
-
 import { countsList } from "../../utils/constants"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
@@ -17,7 +17,7 @@ function toCamping() {
 }
 
 export const AccordionList = ({ eventKey, camping, open, hasReservation, reservations }) => {
-  const [isShow, setIsShow] = useState(false);
+  const [isShow, setIsShow] = useState(false)
 
   useEffect(() => {
     setIsShow(open)
@@ -26,74 +26,68 @@ export const AccordionList = ({ eventKey, camping, open, hasReservation, reserva
   return (
     hasReservation ? (
       <Accordion
-        className="park-details mb-2"
         activeKey={isShow ? eventKey : ''}
+        className={`is-open--${isShow}`}
       >
         <Accordion.Toggle
-          as={Container}
+          as={"div"}
           aria-controls="reservations"
           eventKey={eventKey}
           onClick={() => setIsShow(!isShow)}
         >
           <div
             id="reservations"
-            className="d-flex justify-content-between p-3 accordion-toggle"
+            className="d-flex justify-content-between accordion-toggle"
           >
-            <div className="d-flex justify-content-left align-items-center pl-2">
-              <StaticIcon name="reservations" size={48} />
-              <HtmlContent className="pl-3 accordion-header">
+            <div className="d-flex align-items-center">
+              <StaticIcon name="reservations" size={36} />
+              <HtmlContent className="accordion-header">
                 Reservations
               </HtmlContent>
             </div>
-            <div className="d-flex align-items-center expand-icon">
-              <i
-                className={
-                  (isShow ? "open " : "close ") +
-                  "fa fa-angle-down mx-3"
-                }
-              ></i>
+            <div className="d-flex align-items-center">
+              {isShow ?
+                <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
+              }
             </div>
           </div>
         </Accordion.Toggle>
         <Accordion.Collapse eventKey={eventKey}>
-          <div className="p-4">
+          <div className="accordion-content">
             <HtmlContent>{reservations}</HtmlContent>
           </div>
         </Accordion.Collapse>
       </Accordion>
     ) : (
       <Accordion
-        className="park-details mb-2"
         activeKey={isShow ? eventKey : ''}
+        className={`is-open--${isShow}`}
       >
         <Accordion.Toggle
-          as={Container}
+          as={"div"}
           aria-controls={camping?.activityType?.activityName || camping?.facilityType?.facilityName}
           eventKey={eventKey}
           onClick={() => setIsShow(!isShow)}
         >
           <div
             id={camping?.activityType?.activityCode || camping?.facilityType?.facilityCode}
-            className="d-flex justify-content-between p-3 accordion-toggle"
+            className="d-flex justify-content-between accordion-toggle"
           >
-            <div className="d-flex justify-content-left align-items-center pl-2">
-              <StaticIcon name={camping?.activityType?.icon || camping?.facilityType?.icon} size={48} />
-              <HtmlContent className="pl-3 accordion-header">
+            <div className="d-flex align-items-center">
+              <StaticIcon name={camping?.activityType?.icon || camping?.facilityType?.icon} size={36} />
+              <HtmlContent className="accordion-header">
                 {camping?.activityType?.activityName || camping?.facilityType?.facilityName}
               </HtmlContent>
             </div>
-            <div className="d-flex align-items-center expand-icon">
-              <i
-                className={
-                  (isShow ? "open " : "close ") +
-                  "fa fa-angle-down mx-3"
-                }
-              ></i>
+            <div className="d-flex align-items-center">
+              {isShow ?
+                <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
+              }
             </div>
           </div>
         </Accordion.Toggle>
         <Accordion.Collapse eventKey={eventKey}>
-          <div className="p-4">
+          <div className="accordion-content">
             <HtmlContent>
               {!isNullOrWhiteSpace(camping.description.data) ?
                 camping.description.data : (
@@ -187,8 +181,11 @@ export default function CampingDetails({ data }) {
               }}
               className="btn btn-link expand-link expand-icon"
             >
-              {open ? "Collapse all" : "Expand all"}
-              <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
+              {open ?
+                <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
+                :
+                <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
+              }
             </button>
           )}
           {activeCampings.length > 0 &&

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
 import { Link as GatsbyLink } from "gatsby"
-
+import Accordion from "react-bootstrap/Accordion"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import Accordion from "react-bootstrap/Accordion"
-import Container from "react-bootstrap/Container"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "./htmlContent"
 import HTMLArea from "../HTMLArea"
@@ -21,34 +21,31 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
 
   return (
     <Accordion
-      className="park-details mb-2"
       activeKey={isShow ? eventKey : ''}
+      className={`is-open--${isShow}`}
     >
       <Accordion.Toggle
-        as={Container}
+        as={"div"}
         aria-controls={subArea.parkSubArea}
         eventKey={eventKey}
         onClick={() => setIsShow(!isShow)}
       >
-        <div className="d-flex justify-content-between p-3 accordion-toggle">
-          <div className="d-flex justify-content-left align-items-center pl-2">
-            <StaticIcon name={subArea.typeIcon} size={48} />
-            <HtmlContent className="pl-3 accordion-header">
+        <div className="d-flex justify-content-between accordion-toggle">
+          <div className="d-flex align-items-center">
+            <StaticIcon name={subArea.typeIcon} size={36} />
+            <HtmlContent className="accordion-header">
               {subArea.parkSubArea}
             </HtmlContent>
           </div>
-          <div className="d-flex align-items-center expand-icon">
-            <i
-              className={
-                (isShow ? "open " : "close ") +
-                "fa fa-angle-down mx-3"
-              }
-            ></i>
+          <div className="d-flex align-items-center">
+            {isShow ?
+              <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
+            }
           </div>
         </div>
       </Accordion.Toggle>
       <Accordion.Collapse eventKey={eventKey}>
-        <div className="p-4">
+        <div className="accordion-content">
           <dl>
             {subArea.facilityName && (
               <>
@@ -61,7 +58,7 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
                 <>
                   <dt className="mt-3">Number of campsites</dt>
                   <dd>
-                    <ul className="pl-3">
+                    <ul className="pl-4">
                       {countsList
                         .filter(count => isShown(count, subArea))
                         .map((count, index) => (
@@ -80,7 +77,7 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
                   Main operating season
                 </dt>
                 <dd>
-                  <ul className="pl-3">
+                  <ul className="pl-4">
                     {subArea.serviceDates.map((dateRange, index) =>
                       <li key={index}>{dateRange}</li>
                     )}
@@ -92,7 +89,7 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
               <dt className="mt-3">Winter season</dt>
               <dd>
                 {subArea.offSeasonDates.length > 0 ? (
-                  <ul className="pl-3">
+                  <ul className="pl-4">
                     {subArea.offSeasonDates.map((dateRange, index) =>
                       <li key={index}>{dateRange}</li>
                     )}
@@ -112,7 +109,7 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
               <>
                 <dt className="mt-3">Booking required</dt>
                 <dd>
-                  <ul className="pl-3">
+                  <ul className="pl-4">
                     {subArea.resDates.map((dateRange, index) =>
                       <li key={index}>{dateRange}</li>
                     )}
@@ -268,8 +265,11 @@ export default function ParkDates({ data }) {
                   }}
                   className="btn btn-link expand-link expand-icon"
                 >
-                  {open ? "Collapse all" : "Expand all"}
-                  <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
+                  {open ?
+                    <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
+                    :
+                    <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
+                  }
                 </button>
               )}
               {subAreas
