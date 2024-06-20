@@ -240,7 +240,7 @@ export default function ParkDates({ data }) {
                 </div>
                 {parkDates && (
                   <h4 className="my-3">
-                    The {parkType.toLowerCase()} {parkOperation.hasParkGate !== false && "gate"} is open {parkDates}
+                    The {parkType} {parkOperation.hasParkGate !== false && "gate"} is open {parkDates}
                   </h4>
                 )}
                 {!parkDates && (

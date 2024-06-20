@@ -40,7 +40,7 @@ export default function ParkTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
 
   const park = data.strapiProtectedArea
-  const parkType = park.type ?? "park"
+  const parkType = park.type.toLowerCase() ?? "park"
   const operations = park.parkOperation || {}
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
 
@@ -189,7 +189,7 @@ export default function ParkTemplate({ data }) {
   const menuItems = [
     {
       sectionIndex: 0,
-      display: capitalizeFirstLetter(`${parkType} overview`),
+      display: `Highlights in this ${parkType}`,
       link: "#park-overview-container",
       visible: !isNullOrWhiteSpace(description),
     },
@@ -231,7 +231,7 @@ export default function ParkTemplate({ data }) {
     },
     {
       sectionIndex: 7,
-      display: capitalizeFirstLetter(`Learn about this ${parkType}`),
+      display: `Learn about this ${parkType}`,
       link: "#park-about-container",
       visible:
         park.totalArea ||
@@ -240,7 +240,7 @@ export default function ParkTemplate({ data }) {
     },
     {
       sectionIndex: 8,
-      display: "Nature and culture",
+      display:  `About this ${parkType}`,
       link: "#park-nature-and-culture-container",
       visible: !isNullOrWhiteSpace(natureAndCulture),
     },
@@ -474,7 +474,7 @@ export default function ParkTemplate({ data }) {
             )}
             {menuItems[8].visible && (
               <div ref={natureAndCultureRef} className="w-100">
-                <NatureAndCulture data={natureAndCulture} />
+                <NatureAndCulture natureAndCulture={natureAndCulture} parkType={parkType} />
               </div>
             )}
             {menuItems[9].visible && (

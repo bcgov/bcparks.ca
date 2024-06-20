@@ -83,7 +83,7 @@ export default function AdvisoryDetails({ advisories, parkType }) {
         {advisories.length === 0 && (
           <Col>
             <p>
-              There are no reported advisories for this {parkType.toLowerCase()}
+              There are no reported advisories for this {parkType}
             </p>
           </Col>
         )}
