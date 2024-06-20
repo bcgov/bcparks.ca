@@ -87,7 +87,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   type STRAPI_PARK_OPERATION implements Node {
     totalCapacity: String
     gateOpenTime: String
-    geteCloseTime: String
+    gateCloseTime: String
   }
 
   type STRAPI_PARK_OPERATION_SUB_AREA implements Node {
