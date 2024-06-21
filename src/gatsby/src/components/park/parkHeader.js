@@ -6,7 +6,6 @@ import { datePhrase } from "../../utils/parkDatesHelper"
 import PropTypes from "prop-types"
 import { parseISO, format } from "date-fns"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons"
 import { faCalendar } from "@fortawesome/free-regular-svg-icons"
 import lowerMainland from "../../images/area-maps/area-maps-with-labels/1-lower-mainland-label.svg"
 import southIsland from "../../images/area-maps/area-maps-with-labels/2-south-island-label.svg"
@@ -90,7 +89,7 @@ export default function ParkHeader({
           <>
             {searchArea?.searchAreaName && (
               <div className="park-header-child">
-                <FontAwesomeIcon icon={faLocationDot} />
+                <FontAwesomeIcon icon="fa-regular fa-location-dot" />
                 {searchArea.searchAreaName}.&nbsp;
                 {latitude && longitude && (<a href={externalLink}>View detailed map.</a>)}
               </div>
