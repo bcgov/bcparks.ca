@@ -235,12 +235,12 @@ export default function ParkDates({ data }) {
             <>
               <div className="mb-4">
                 <div>
-                  <GatsbyLink to="#park-advisory-details-container">Check advisories</GatsbyLink> before visiting.
+                  <GatsbyLink to="#park-know-before-you-go-container">Check advisories</GatsbyLink> before visiting.
                   Dates may change without notice.
                 </div>
                 {parkDates && (
                   <h4 className="my-3">
-                    The {parkType.toLowerCase()} {parkOperation.hasParkGate !== false && "gate"} is open {parkDates}
+                    The {parkType} {parkOperation.hasParkGate !== false && "gate"} is open {parkDates}
                   </h4>
                 )}
                 {!parkDates && (

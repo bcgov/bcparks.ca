@@ -111,7 +111,7 @@ export default function ParkHeader({
               <div>
                 {parkDates ? (
                   <p>
-                    The {parkType?.toLowerCase()} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}.
+                    The {parkType} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}.
                     {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) && (
                       ` Gates are open from ${formattedTime(parkOperation.gateOpenTime)}
                        – ${formattedTime(parkOperation.gateCloseTime)}.`

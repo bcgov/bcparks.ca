@@ -194,7 +194,7 @@ export default function ParkAccessStatus({ advisories, slug, subAreas, operation
             {!hideLink && (
               <>
                 {", "}
-                <Link to={`/${slug}/#park-advisory-details-container`}>
+                <Link to={`/${slug}/#park-know-before-you-go-container`}>
                   check advisories {punctuation}
                 </Link>
               </>
