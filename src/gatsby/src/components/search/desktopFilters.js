@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import Filter from "./filter"
 
 import "../../styles/search.scss"
@@ -128,12 +130,12 @@ const DesktopFilters = ({
           {showMoreAreas ? (
             <>
               Show all {areaItems.length}
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             </>
           ) : (
             <>
               Show less
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             </>
           )}
         </button>
@@ -170,12 +172,12 @@ const DesktopFilters = ({
           {showMoreActivities ? (
             <>
               Show all {activityItems.length}
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             </>
           ) : (
             <>
               Show less
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             </>
           )}
         </button>
@@ -203,12 +205,12 @@ const DesktopFilters = ({
           {showMoreFacilities ? (
             <>
               Show all {facilityItems.length}
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             </>
           ) : (
             <>
               Show less
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             </>
           )}
         </button>

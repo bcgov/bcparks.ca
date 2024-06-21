@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import HtmlContent from "./htmlContent"
 import * as cheerio from 'cheerio';
 
@@ -52,8 +54,11 @@ export default function ParkOverview({ data: parkOverview, type }) {
           onClick={() => {
             setExpanded(!expanded)
           }}>
-          Show {expanded ? "less" : "more"} highlights
-          <i className={`fa fa-angle-down ${expanded ? "open" : "close"}`}></i>
+          {expanded ?
+            <>Show less highlights <FontAwesomeIcon icon={faChevronUp} /></>
+            :
+            <>Show more highlights <FontAwesomeIcon icon={faChevronDown} /></>
+          }
         </a>
       }
     </div>
