@@ -40,7 +40,6 @@ const { sendParkNamesEmails } = require('./email-alerts/scripts/sendParkNamesEma
     }
     try {
       logger.info("Starting cron");
-      await triggerAdvisories();
       recentAdvisoryEmails = await sendAdvisoryEmails(recentAdvisoryEmails);
       await sendParkNamesEmails();
       await populateGeoShapes({ silent: true });
@@ -56,6 +55,10 @@ const { sendParkNamesEmails } = require('./email-alerts/scripts/sendParkNamesEma
       } else {
         await indexParks();
       }
+      // run this task AFTER indexing parks. This gives a 1 minute buffer to ensure
+      // that all the lifecycle hooks and postgres replication have completed before
+      // sending data to Elasticsearch
+      await triggerAdvisories();
 
       // record pod liveness for health check every time the job runs
       // (use shell command to prevent file locking)

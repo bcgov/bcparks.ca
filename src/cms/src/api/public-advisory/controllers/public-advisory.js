@@ -172,6 +172,7 @@ module.exports = createCoreController(
             const cachePlugin = strapi.plugins["rest-cache"];
             if (cachePlugin && (publishedCount > 0 || expiredCount > 0)) {
                 await cachePlugin.services.cacheStore.clearByUid('api::public-advisory.public-advisory');
+                await cachePlugin.services.cacheStore.clearByUid('api::protected-area.protected-area');
             }
 
             ctx.send({
