@@ -36,6 +36,9 @@
       height: auto;
       margin-left: auto;
       order: 2;
+      width: 50vw;
+    }
+    @media screen and (min-width: 1440px) {
       width: 720px;
     }
   }

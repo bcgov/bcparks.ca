@@ -87,14 +87,6 @@ module.exports = {
           "api::park-photo.park-photo", event.result.id, { data: { orcs: protectedAreaOrcs } }
         )
       }
-      // If parkPhoto.protectedArea is removed, set parkPhoto.orcs to null
-    } else if (event.result?.protectedArea === null) {
-      const currentOrcs = await getOrcs(event);
-      if (currentOrcs !== null) {
-        await strapi.entityService.update(
-          "api::park-photo.park-photo", event.result.id, { data: { orcs: null } }
-        )
-      }
     }
     // If parkPhoto.site is selected, get that site.orcsSiteNumber in the parkPhoto.orcsSiteNumber
     if (event.result?.site !== undefined) {
@@ -105,19 +97,17 @@ module.exports = {
           "api::park-photo.park-photo", event.result.id, { data: { orcsSiteNumber: siteOrcs } }
         )
       }
-      // If parkPhoto.site is removed, set parkPhoto.orcsSiteNumber to null
-    } else if (event.result?.site === null) {
-      const currentOrcsSiteNumber = await getOrcsSiteNumber(event);
-      if (currentOrcsSiteNumber !== null) {
-        await strapi.entityService.update(
-          "api::park-photo.park-photo", event.result.id, { data: { orcsSiteNumber: null } }
-        )
-      }
     }
     const newProtectedAreaId = await getProtectedAreaIdByOrcs(event.result?.orcs);
     await indexPark(newProtectedAreaId);
   },
   async beforeUpdate(event) {
+    if (event.params?.data?.protectedArea?.disconnect?.length > 0) {
+      event.params.data.orcs = null;
+    }
+    if (event.params?.data?.site?.disconnect?.length > 0) {
+      event.params.data.orcsSiteNumber = null;
+    }
     const oldOrcs = await getOrcs(event);
     const oldProtectedAreaId = await getProtectedAreaIdByOrcs(oldOrcs);
     await indexPark(oldProtectedAreaId);

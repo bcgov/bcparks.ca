@@ -56,7 +56,6 @@ export default function StaticContent1({ pageContext }) {
   const pageHeader = page?.PageHeader || null
   const hasPageHeader =
     pageHeader?.pageTitle &&
-    pageHeader?.imageUrl &&
     pageHeader?.introHtml?.data?.introHtml.length > 0
   const hasPageHeaderIntro = (
     pageHeader?.introHtml?.data?.introHtml.length > 0 || headerContent?.introHtml?.data?.introHtml.length > 0)
@@ -134,24 +133,28 @@ export default function StaticContent1({ pageContext }) {
         {/* Otherwise, display old repeatable seo/pageHeader component */}
         {(hasPageHeader && hasPageHeader !== null) ? (
           <>
-            <div className="header-image-wrapper">
-              <img
-                src={pageHeader.imageUrl}
-                alt={pageHeader.pageTitle}
-              />
-            </div>
+            {pageHeader?.imageUrl &&
+              <div className="header-image-wrapper">
+                <img
+                  src={pageHeader.imageUrl}
+                  alt={pageHeader.pageTitle}
+                />
+              </div>
+            }
             <h1 className="header-title">
               {pageHeader.pageTitle}
             </h1>
           </>
         ) : (
           <>
-            <div className="header-image-wrapper">
-              <img
-                src={headerContent.imageUrl}
-                alt={headerContent.pageTitle || page.Title}
-              />
-            </div>
+            {headerContent?.imageUrl &&
+              <div className="header-image-wrapper">
+                <img
+                  src={headerContent.imageUrl}
+                  alt={headerContent.pageTitle || page.Title}
+                />
+              </div>
+            }
             <h1 className="header-title">
               {headerContent.pageTitle || page.Title}
             </h1>
