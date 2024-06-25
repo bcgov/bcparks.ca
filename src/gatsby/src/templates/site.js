@@ -139,18 +139,18 @@ export default function SiteTemplate({ data }) {
 
   const parkOverviewRef = useRef("")
   const knowBeforeRef = useRef("")
-  const campingRef = useRef("")
-  const facilityRef = useRef("")
-  const activityRef = useRef("")
   const mapLocationRef = useRef("")
+  const campingRef = useRef("")
+  const activityRef = useRef("")
+  const facilityRef = useRef("")
 
   const sectionRefs = [
     parkOverviewRef,
     knowBeforeRef,
-    campingRef,
-    facilityRef,
-    activityRef,
     mapLocationRef,
+    campingRef,
+    activityRef,
+    facilityRef,
   ]
 
   const activeSection = useScrollSpy({
@@ -162,8 +162,8 @@ export default function SiteTemplate({ data }) {
   const menuItems = [
     {
       sectionIndex: 0,
-      display: "Site overview",
-      link: "#park-overview-container",
+      display: "Highlights in this site",
+      link: "#park-highlights-container",
       visible: !isNullOrWhiteSpace(description),
     },
     {
@@ -174,27 +174,27 @@ export default function SiteTemplate({ data }) {
     },
     {
       sectionIndex: 2,
+      display: "Maps and Location",
+      link: "#park-maps-location-container",
+      visible: !isNullOrWhiteSpace(locationNotes),
+    },
+    {
+      sectionIndex: 3,
       display: "Camping",
       link: "#park-camping-details-container",
       visible: activeCampings.length > 0,
     },
     {
-      sectionIndex: 3,
-      display: "Facilities",
-      link: "#park-facility-container",
-      visible: nonCampingFacilities.length > 0,
-    },
-    {
       sectionIndex: 4,
       display: "Things to do",
-      link: "#park-activity-container",
+      link: "#park-things-to-do-container",
       visible: nonCampingActivities.length > 0,
     },
     {
       sectionIndex: 5,
-      display: "Location",
-      link: "#park-maps-location-container",
-      visible: (site.latitude && site.longitude) || !isNullOrWhiteSpace(locationNotes),
+      display: "Facilities",
+      link: "#park-facility-container",
+      visible: nonCampingFacilities.length > 0,
     },
   ]
 
@@ -318,6 +318,11 @@ export default function SiteTemplate({ data }) {
               </div>
             )}
             {menuItems[2].visible && (
+              <div ref={mapLocationRef} className="w-100">
+                <MapLocation locationNotes={locationNotes} />
+              </div>
+            )}
+            {menuItems[3].visible && (
               <div ref={campingRef} className="w-100">
                 <CampingDetails
                   data={{
@@ -329,19 +334,14 @@ export default function SiteTemplate({ data }) {
                 />
               </div>
             )}
-            {menuItems[3].visible && (
-              <div ref={facilityRef} className="w-100">
-                <ParkFacility data={nonCampingFacilities} />
-              </div>
-            )}
             {menuItems[4].visible && (
               <div ref={activityRef} className="w-100">
                 <ParkActivity data={nonCampingActivities} />
               </div>
             )}
             {menuItems[5].visible && (
-              <div ref={mapLocationRef} className="w-100">
-                <MapLocation locationNotes={locationNotes} />
+              <div ref={facilityRef} className="w-100">
+                <ParkFacility data={nonCampingFacilities} />
               </div>
             )}
           </div>

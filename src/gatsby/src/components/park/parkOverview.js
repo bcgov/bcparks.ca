@@ -36,20 +36,23 @@ export default function ParkOverview({ data: parkOverview, type }) {
   }, [])
 
   return (
-    <div id="park-overview-container" className="anchor-link">
+    <div id="park-highlights-container" className="anchor-link">
       <div
         ref={ref}
         className={expanded ? classes.expanded : classes.collapsed}
         style={{ maxHeight: expanded ? "none" : `${hasHr ? sectionHeight : 260}px` }}
       >
-        <h2 className="section-heading">Highlights in this {type}</h2>
+        {/* id="park-overview-container" can be removed once it's no longer used */}
+        <h2 id="park-overview-container" className="section-heading">
+          Highlights in this {type}
+        </h2>
         <HtmlContent className="park-overview-html">
           {expanded ? parkOverview : collapsedParkOverview}
         </HtmlContent>
       </div>
       {(hasHr || isLong) &&
         <a
-          href="#park-overview-container"
+          href="#park-highlights-container"
           className="park-overview-link expand-icon"
           onClick={() => {
             setExpanded(!expanded)

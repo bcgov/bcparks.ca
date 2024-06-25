@@ -5,14 +5,14 @@ import { graphql, Link as GatsbyLink, navigate } from "gatsby"
 
 import useScrollSpy from "react-use-scrollspy"
 
-import { capitalizeFirstLetter, isNullOrWhiteSpace } from "../utils/helpers";
+import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from '../utils/advisoryHelper';
 
 import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
 import Header from "../components/header"
 import PageMenu from "../components/pageContent/pageMenu"
-import About from "../components/park/about"
+import Contact from "../components/park/contact"
 import AdvisoryDetails from "../components/park/advisoryDetails"
 import CampingDetails from "../components/park/campingDetails"
 import NatureAndCulture from "../components/park/natureAndCulture"
@@ -51,6 +51,7 @@ export default function ParkTemplate({ data }) {
   const natureAndCulture = park.natureAndCulture.data.natureAndCulture
   const reconciliationNotes = park.reconciliationNotes.data.reconciliationNotes
   const maps = park.maps.data.maps
+  const contact = park.parkContact.data.parkContact
   const hasNearbyParks = park.nearbyParkOne !== null || park.nearbyParkTwo !== null || park.nearbyParkThree !== null
   const nearbyParks = hasNearbyParks ? [park.nearbyParkOne, park.nearbyParkTwo, park.nearbyParkThree] : []
   const managementAreas = park.managementAreas || []
@@ -158,26 +159,26 @@ export default function ParkTemplate({ data }) {
 
   const parkOverviewRef = useRef("")
   const knowBeforeRef = useRef("")
+  const mapLocationRef = useRef("")
   const parkDatesRef = useRef("")
   const campingRef = useRef("")
-  const facilityRef = useRef("")
   const activityRef = useRef("")
-  const mapLocationRef = useRef("")
+  const facilityRef = useRef("")
   const aboutRef = useRef("")
-  const natureAndCultureRef = useRef("")
   const reconciliationRef = useRef("")
+  const contactRef = useRef("")
 
   const sectionRefs = [
     parkOverviewRef,
     knowBeforeRef,
+    mapLocationRef,
     parkDatesRef,
     campingRef,
-    facilityRef,
     activityRef,
-    mapLocationRef,
+    facilityRef,
     aboutRef,
-    natureAndCultureRef,
     reconciliationRef,
+    contactRef,
   ]
 
   const activeSection = useScrollSpy({
@@ -190,7 +191,7 @@ export default function ParkTemplate({ data }) {
     {
       sectionIndex: 0,
       display: `Highlights in this ${parkType}`,
-      link: "#park-overview-container",
+      link: "#park-highlights-container",
       visible: !isNullOrWhiteSpace(description),
     },
     {
@@ -201,55 +202,52 @@ export default function ParkTemplate({ data }) {
     },
     {
       sectionIndex: 2,
-      display: "Dates of operation",
-      link: "#park-dates-container",
-      visible: park.parkOperation,
-    },
-    {
-      sectionIndex: 3,
-      display: "Camping",
-      link: "#park-camping-details-container",
-      visible: activeCampings.length > 0,
-    },
-    {
-      sectionIndex: 4,
-      display: "Facilities",
-      link: "#park-facility-container",
-      visible: nonCampingFacilities.length > 0,
-    },
-    {
-      sectionIndex: 5,
-      display: "Things to do",
-      link: "#park-activity-container",
-      visible: nonCampingActivities.length > 0,
-    },
-    {
-      sectionIndex: 6,
       display: "Maps and location",
       link: "#park-maps-location-container",
       visible: !isNullOrWhiteSpace(maps) || !isNullOrWhiteSpace(locationNotes)
     },
     {
-      sectionIndex: 7,
-      display: `Learn about this ${parkType}`,
-      link: "#park-about-container",
-      visible:
-        park.totalArea ||
-        park.establishedDate ||
-        !isNullOrWhiteSpace(park.parkContact.data.parkContact)
+      sectionIndex: 3,
+      display: "Dates of operation",
+      link: "#park-dates-container",
+      visible: park.parkOperation,
     },
     {
-      sectionIndex: 8,
-      display:  `About this ${parkType}`,
-      link: "#park-nature-and-culture-container",
+      sectionIndex: 4,
+      display: "Camping",
+      link: "#park-camping-details-container",
+      visible: activeCampings.length > 0,
+    },
+    {
+      sectionIndex: 5,
+      display: "Things to do",
+      link: "#park-things-to-do-container",
+      visible: nonCampingActivities.length > 0,
+    },
+    {
+      sectionIndex: 6,
+      display: "Facilities",
+      link: "#park-facility-container",
+      visible: nonCampingFacilities.length > 0,
+    },
+    {
+      sectionIndex: 7,
+      display: `About this ${parkType}`,
+      link: "#park-about-container",
       visible: !isNullOrWhiteSpace(natureAndCulture),
     },
     {
-      sectionIndex: 9,
+      sectionIndex: 8,
       display: "Reconciliation with Indigenous Peoples",
       link: "#park-reconciliation-container",
       visible: !isNullOrWhiteSpace(reconciliationNotes),
     },
+    {
+      sectionIndex: 9,
+      display: `Contact`,
+      link: "#park-contact-container",
+      visible: !isNullOrWhiteSpace(contact)
+    }
   ]
 
   const parkName = park.protectedAreaName;
@@ -421,6 +419,11 @@ export default function ParkTemplate({ data }) {
               </div>
             )}
             {menuItems[2].visible && (
+              <div ref={mapLocationRef} className="w-100">
+                <MapLocation maps={maps} locationNotes={locationNotes} />
+              </div>
+            )}
+            {menuItems[3].visible && (
               <div ref={parkDatesRef} className="w-100">
                 <ParkDates
                   data={{
@@ -434,7 +437,7 @@ export default function ParkTemplate({ data }) {
                 />
               </div>
             )}
-            {menuItems[3].visible && (
+            {menuItems[4].visible && (
               <div ref={campingRef} className="w-100">
                 <CampingDetails
                   data={{
@@ -448,11 +451,6 @@ export default function ParkTemplate({ data }) {
                 />
               </div>
             )}
-            {menuItems[4].visible && (
-              <div ref={facilityRef} className="w-100">
-                <ParkFacility data={nonCampingFacilities} />
-              </div>
-            )}
             {menuItems[5].visible && (
               <div ref={activityRef} className="w-100">
                 <ParkActivity
@@ -463,23 +461,29 @@ export default function ParkTemplate({ data }) {
               </div>
             )}
             {menuItems[6].visible && (
-              <div ref={mapLocationRef} className="w-100">
-                <MapLocation maps={maps} locationNotes={locationNotes} />
+              <div ref={facilityRef} className="w-100">
+                <ParkFacility data={nonCampingFacilities} />
               </div>
             )}
             {menuItems[7].visible && (
               <div ref={aboutRef} className="w-100">
-                <About park={park} />
+                <NatureAndCulture
+                  parkType={parkType}
+                  natureAndCulture={natureAndCulture}
+                  biogeoclimaticZones={park.biogeoclimaticZones}
+                  terrestrialEcosections={park.terrestrialEcosections}
+                  marineEcosections={park.marineEcosections}
+                />
               </div>
             )}
             {menuItems[8].visible && (
-              <div ref={natureAndCultureRef} className="w-100">
-                <NatureAndCulture natureAndCulture={natureAndCulture} parkType={parkType} />
+              <div ref={reconciliationRef} className="w-100">
+                <Reconciliation data={reconciliationNotes} />
               </div>
             )}
             {menuItems[9].visible && (
-              <div ref={reconciliationRef} className="w-100">
-                <Reconciliation data={reconciliationNotes} />
+              <div ref={contactRef} className="w-100">
+                <Contact parkType={parkType} contact={contact} />
               </div>
             )}
           </div>
