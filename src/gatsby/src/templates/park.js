@@ -35,6 +35,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import VisitResponsibly from "../components/park/visitResponsibly"
 import ReservationsRequired from "../components/park/reservationsRequired"
+import VisitorGuidelines from "../components/park/visitorGuidelines"
 
 export default function ParkTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
@@ -381,6 +382,11 @@ export default function ParkTemplate({ data }) {
                       on staying safe and preserving our natural spaces.
                     </p>
                   </blockquote>
+                  <Row>
+                    <Col>
+                      <VisitorGuidelines />
+                    </Col>
+                  </Row>
                   <Row>
                     <Col xs={12} md={6}>
                       <VisitResponsibly
