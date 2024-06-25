@@ -7,17 +7,20 @@ test.beforeEach(async ({page})=>{
     await page.goto(baseURL);
 })
 
+// Check that user can reach the home page
 test('Check that the page has connected', async ({page}) =>{
     await expect(page).toHaveTitle('Home | BC Parks');
     await expect(page).toHaveURL(baseURL);
 });
 
+// Checks the section headings on the home page
 test('Verify the headers are visible on the home page', async ({page}) =>{
     await expect(page.getByRole('heading', { name: 'Advisories' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'New to BC Parks?' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'About BC Parks'})).toBeVisible();
 });
 
+// Checks the Find a park search box
 test('Verify the Find a Park search box is present', async ({page}) =>{
     await expect(page.getByText('Find a parkBy park nameorNear')).toBeVisible();
     await expect(page.locator('h1', {name: 'Find a park'})).toBeVisible();
@@ -25,6 +28,7 @@ test('Verify the Find a Park search box is present', async ({page}) =>{
     await expect(page.getByRole('button', { name: 'Search'})).toBeVisible();
 });
 
+// Checks the park suggestion dropdown menu and redirect to Find a park page
 test('Check that the suggestion dropdown menu for park name is visible', async ({page}) =>{
     await page.getByLabel('By park name').click();
     await expect(page.getByLabel('menu-options')).toBeVisible();
@@ -36,6 +40,7 @@ test('Check that the suggestion dropdown menu for park name is visible', async (
     await expect(page).toHaveURL(baseURL + 'find-a-park/?q=Garibaldi Park');
 });
 
+// Checks the city suggestion dropdown menu and redirect to Find a park page
 test('Check that the suggestion dropdown menu for city is visible', async ({page}) =>{
     await page.getByLabel('Near a city').click();
     await expect(page.getByLabel('menu-options')).toBeVisible();
@@ -47,6 +52,7 @@ test('Check that the suggestion dropdown menu for city is visible', async ({page
     await expect(page).toHaveURL(baseURL + 'find-a-park/?l=268');
 });
 
+// Checks the park search button
 test('Search for a park via a valid park name from home page', async ({page}) =>{
     await page.getByLabel('By park name').fill('Garibaldi');
     await page.getByRole('button', {name: 'Search'}).click();
@@ -54,28 +60,13 @@ test('Search for a park via a valid park name from home page', async ({page}) =>
     await expect(page).toHaveTitle('Find a park | BC Parks');
 });
 
-test('Search for a park via suggestion from home page', async ({page})=>{
-    await page.getByLabel('By park name').fill('Garibaldi');
-    await expect(page.getByLabel('Garibaldi Park')).toBeVisible();
-    await page.getByLabel('Garibaldi Park').click();
-    await expect(page).toHaveURL(baseURL + 'find-a-park/?q=Garibaldi%20Park');
-});
-
-
-test('Search for a park via city from home page', async ({page}) =>{
-    await page.getByLabel('Near a city').fill('Vancouver');
-    await page.getByRole('button', {name: 'Search'}).click();
-    await expect(page).toHaveURL(baseURL + 'find-a-park/?l=1929');
-    await expect(page).toHaveTitle('Find a park | BC Parks');
-});
-
-
+// Checks redirect works when clicking search button
 test('Search for a park with no search terms', async ({page})=>{
     await page.getByRole('button', { name: 'Search'}).click();
     await expect(page).toHaveURL(baseURL + 'find-a-park/');
 });
 
-
+// Checks the advisory links are not broken
 test('Check that the redirect advisory links are working', async ({page})=>{
     await page.getByRole('link', { name: 'See flood advisories'}).click();
     await expect(page).toHaveURL(baseURL + 'active-advisories/?type=Flood');
@@ -90,6 +81,7 @@ test('Check that the redirect advisory links are working', async ({page})=>{
     await expect(page).toHaveTitle('Active advisories | BC Parks');
 });
 
+// Checks the New to BC Parks links are not broken
 test('Check that the redirect New to BC Parks links are working', async ({page})=>{
     await page.getByAltText('Campers sitting near a tent').click();
     await expect(page).toHaveURL(baseURL + 'reservations/');
@@ -108,6 +100,7 @@ test('Check that the redirect New to BC Parks links are working', async ({page})
     await expect(page).toHaveTitle('Visit responsibly - Province of British Columbia | BC Parks');
 });
 
+// Checks the About BC Parks links are working
 test('Check that the redirect About BC Parks links are working', async ({page})=>{
     await page.getByRole('link', { name: 'An indigenous carving' }).click();
     await expect(page).toHaveURL(baseURL + 'about/indigenous-relations-reconciliation/');
