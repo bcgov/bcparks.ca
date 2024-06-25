@@ -101,7 +101,7 @@ h3.subtitle {
       }
       .expand-link {
         margin-bottom: 0;
-        i {
+        svg {
           font-size: 1rem;
           margin-left: 6px;
         }
@@ -116,11 +116,6 @@ h3.subtitle {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          i {
-            font-size: 1rem;
-            color: $colorGreyMed;
-            margin-left: 6px;
-          }
         }
       }
     }
@@ -381,7 +376,7 @@ div[class$="-singleValue"] {
         outline-offset: 0px;
         border-radius: 4px;
       }
-      i {
+      svg {
         font-size: 1rem;
         margin-left: 6px;
       }

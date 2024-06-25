@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Modal, Collapse } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faChevronUp, faChevronDown, faXmark } from "@fortawesome/free-solid-svg-icons"
 import Filter from "./filter"
 
 import "../../styles/search.scss"
@@ -95,9 +95,9 @@ const MobileFilters = ({
         >
           {expandAll ? "Collapse" : "Expand"} all
           {expandAll ? (
-            <i className="fa fa-angle-up"></i>
+            <FontAwesomeIcon icon={faChevronUp} />
           ) : (
-            <i className="fa fa-angle-down"></i>
+            <FontAwesomeIcon icon={faChevronDown} />
           )}
         </button>
         <div className="park-filter-options">
@@ -116,9 +116,9 @@ const MobileFilters = ({
               Popular
             </div>
             {showFilters[0] ? (
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             ) : (
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
           <Collapse
@@ -183,9 +183,9 @@ const MobileFilters = ({
               Area
             </div>
             {showFilters[1] ? (
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             ) : (
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
           <Collapse
@@ -218,9 +218,9 @@ const MobileFilters = ({
               Camping
             </div>
             {showFilters[2] ? (
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             ) : (
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
           <Collapse
@@ -253,9 +253,9 @@ const MobileFilters = ({
               Activities
             </div>
             {showFilters[3] ? (
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             ) : (
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
           <Collapse
@@ -288,9 +288,9 @@ const MobileFilters = ({
               Facilities
             </div>
             {showFilters[4] ? (
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             ) : (
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
           <Collapse
