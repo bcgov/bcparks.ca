@@ -326,6 +326,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::protected-area.protected-area"
+    },
+    "parkGuildelines": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-guildeline.park-guildeline",
+      "mappedBy": "protectedArea"
     }
   }
 }

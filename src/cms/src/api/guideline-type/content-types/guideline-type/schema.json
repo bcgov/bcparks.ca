@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "guideline_types",
+  "info": {
+    "singularName": "guideline-type",
+    "pluralName": "guideline-types",
+    "displayName": "Guideline-type",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "guidelineNumber": {
+      "type": "integer",
+      "min": 1
+    },
+    "guidelineName": {
+      "type": "string"
+    },
+    "guidelineCode": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "enumeration",
+      "enum": [
+        "checklist",
+        "hiking",
+        "vehicle",
+        "pet",
+        "campfire"
+      ]
+    },
+    "defaultTitle": {
+      "type": "string"
+    },
+    "defaultDescription": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    }
+  }
+}
