@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_guildelines",
+  "info": {
+    "singularName": "park-guildeline",
+    "pluralName": "park-guildelines",
+    "displayName": "Park-guildeline"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer",
+      "min": 1
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "guidelineType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::guideline-type.guideline-type"
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "parkGuildelines"
+    }
+  }
+}
