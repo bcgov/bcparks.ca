@@ -8,9 +8,6 @@ images:
   strapi:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/strapi-main
     tag: latest
-  postgres:
-    name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/postgresql
-    tag: "13"
   pgbouncer:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/pgbouncer
     tag: latest
@@ -22,7 +19,7 @@ images:
     tag: latest
   patroni:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/patroni-postgres
-    tag: 2.0.1-12.4-latest
+    tag: 2.1.7-12.19-latest
   backup:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/backup-container
     tag: postgres-latest
