@@ -37,9 +37,9 @@ export const AccordionList = ({ eventKey, camping, open, hasReservation, reserva
           >
             <div className="d-flex align-items-center">
               <StaticIcon name="reservations" size={36} />
-              <HtmlContent className="accordion-header">
+              <div className="accordion-header">
                 Reservations
-              </HtmlContent>
+              </div>
             </div>
             <div className="d-flex align-items-center">
               {isShow ?

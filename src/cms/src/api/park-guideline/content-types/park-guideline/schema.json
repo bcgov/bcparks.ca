@@ -1,10 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "park_guildelines",
+  "collectionName": "park_guidelines",
   "info": {
-    "singularName": "park-guildeline",
-    "pluralName": "park-guildelines",
-    "displayName": "Park-guildeline"
+    "singularName": "park-guideline",
+    "pluralName": "park-guidelines",
+    "displayName": "Park-guideline",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -15,16 +16,28 @@
     },
     "order": {
       "type": "integer",
-      "min": 1
+      "min": 1,
+      "default": 1,
+      "required": true
     },
     "isActive": {
       "type": "boolean",
-      "default": true
+      "default": false,
+      "required": true
+    },
+    "overrideTitle": {
+      "type": "boolean"
+    },
+    "overrideDescription": {
+      "type": "boolean"
+    },
+    "appendDescription": {
+      "type": "boolean"
     },
     "title": {
       "type": "string"
     },
-    "Description": {
+    "description": {
       "type": "customField",
       "options": {
         "preset": "toolbar"
@@ -40,7 +53,7 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::protected-area.protected-area",
-      "inversedBy": "parkGuildelines"
+      "inversedBy": "parkGuidelines"
     }
   }
 }

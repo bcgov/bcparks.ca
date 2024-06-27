@@ -79,6 +79,26 @@ exports.createSchemaCustomization = ({ actions }) => {
     campingType: STRAPI_CAMPING_TYPE
     hideStandardCallout: Boolean
   }
+  
+  type STRAPI_GUIDELINE_TYPE implements Node @dontInfer {
+    guidelineNumber: Int
+    guidelineName: String
+    icon: String
+    defaultTitle: String
+    defaultDescription: DATA
+  }
+
+  type STRAPI_PARK_GUIDELINE implements Node @dontInfer {
+    name: String
+    order: Int
+    isActive: Boolean
+    overrideTitle: Boolean
+    overrideDescription: Boolean
+    appendDescription: Boolean
+    title: String
+    description: DATA
+    guidelineType: STRAPI_GUIDELINE_TYPE
+  }
 
   type STRAPI_PROTECTED_AREA implements Node {
     managementDocuments:[STRAPI_MANAGEMENT_DOCUMENT] @link(by: "id", from: "managementDocuments___NODE")
@@ -88,6 +108,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkActivities: [STRAPI_PARK_ACTIVITY] @link(by: "id", from: "parkActivities___NODE")
     parkFacilities: [STRAPI_PARK_FACILITY] @link(by: "id", from: "parkFacilities___NODE")
     parkCampingTypes: [STRAPI_PARK_CAMPING_TYPE] @link(by: "id", from: "parkCampingTypes___NODE")
+    parkGuidelines: [STRAPI_PARK_GUIDELINE] @link(by: "id", from: "parkGuidelines___NODE")
     seo: STRAPI__COMPONENT_PARKS_SEO
     hasDiscoverParksLink: Boolean
     nearbyParkOne: STRAPI_PROTECTED_AREA @link(by: "id", from: "nearbyParkOne___NODE")

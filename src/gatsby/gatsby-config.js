@@ -38,9 +38,11 @@ module.exports = {
           "activity-type",
           "facility-type",
           "camping-type",
+          "guideline-type",
           "legacy-redirect",
           "menu",
           "footer-menu",
+          "park-guideline",
           "park-operation",
           "park-operation-date",
           "park-operation-sub-area",
@@ -81,6 +83,9 @@ module.exports = {
                 },
                 parkCampingTypes: {
                   populate: ["campingType"]
+                },
+                parkGuidelines: {
+                  populate: ["guidelineType"]
                 },
                 parkOperation: {
                   fields: "*"

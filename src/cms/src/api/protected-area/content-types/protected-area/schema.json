@@ -333,10 +333,10 @@
       "relation": "oneToOne",
       "target": "api::protected-area.protected-area"
     },
-    "parkGuildelines": {
+    "parkGuidelines": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::park-guildeline.park-guildeline",
+      "target": "api::park-guideline.park-guideline",
       "mappedBy": "protectedArea"
     }
   }

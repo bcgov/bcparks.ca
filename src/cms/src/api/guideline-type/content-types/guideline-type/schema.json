@@ -13,33 +13,37 @@
   "attributes": {
     "guidelineNumber": {
       "type": "integer",
-      "min": 1
+      "min": 1,
+      "default": 1,
+      "required": true,
+      "unique": true
     },
     "guidelineName": {
-      "type": "string"
-    },
-    "guidelineCode": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "icon": {
       "type": "enumeration",
       "enum": [
-        "checklist",
-        "hiking",
-        "vehicle",
-        "pet",
-        "campfire"
-      ]
+        "list-check",
+        "person-hiking",
+        "car",
+        "dog-leashed",
+        "ban"
+      ],
+      "required": true
     },
     "defaultTitle": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "defaultDescription": {
       "type": "customField",
       "options": {
         "preset": "toolbar"
       },
-      "customField": "plugin::ckeditor5.CKEditor"
+      "customField": "plugin::ckeditor5.CKEditor",
+      "required": true
     }
   }
 }
