@@ -382,6 +382,13 @@ export default function ParkTemplate({ data }) {
                   {!isLoadingAdvisories && !advisoryLoadError && (
                     <AdvisoryDetails advisories={advisories} parkType={parkType} />
                   )}
+                  {park.parkGuidelines.length > 0 &&
+                    <Row>
+                      <Col>
+                        <VisitorGuidelines guidelines={park.parkGuidelines} />
+                      </Col>
+                    </Row>
+                  }
                   {!isNullOrWhiteSpace(safetyInfo) &&
                     <SafetyInfo safetyInfo={safetyInfo} />
                   }
@@ -394,11 +401,6 @@ export default function ParkTemplate({ data }) {
                       on staying safe and preserving our natural spaces.
                     </p>
                   </blockquote>
-                  <Row>
-                    <Col>
-                      <VisitorGuidelines />
-                    </Col>
-                  </Row>
                   <Row>
                     <Col xs={12} md={6}>
                       <VisitResponsibly
@@ -635,6 +637,24 @@ export const query = graphql`
             data
           }
           appendStandardCalloutText {
+            data
+          }
+        }
+      }
+      parkGuidelines {
+        order
+        isActive
+        overrideTitle
+        overrideDescription
+        appendDescription
+        title
+        description {
+          data
+        }
+        guidelineType {
+          icon
+          defaultTitle
+          defaultDescription {
             data
           }
         }
