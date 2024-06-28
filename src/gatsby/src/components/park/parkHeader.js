@@ -80,6 +80,8 @@ export default function ParkHeader({
   // Get the park operation dates
   const thisYear = new Date().getFullYear()
   const parkDates = getParkOperationDates(operationDates, thisYear)
+  const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
+  const parkDayUsePassURL = parkOperation?.dayUsePassUrl || dayUsePassURL
 
   return (
     <div id="park-header-container" className="d-flex park-info-container">
@@ -144,10 +146,10 @@ export default function ParkHeader({
         )}
         <div>
           {hasReservations && (
-            <a href={reservationsURL} className="btn btn-secondary">Book camping</a>
+            <a href={parkReservationsURL} className="btn btn-secondary">Book camping</a>
           )}
           {hasDayUsePass && (
-            <a href={dayUsePassURL} className="btn btn-secondary">Get a day-use pass</a>
+            <a href={parkDayUsePassURL} className="btn btn-secondary">Get a day-use pass</a>
           )}
         </div>
       </div>

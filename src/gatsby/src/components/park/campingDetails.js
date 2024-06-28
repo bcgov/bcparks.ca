@@ -12,10 +12,6 @@ import { countsList } from "../../utils/constants"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
-function toCamping() {
-  navigate("https://camping.bcparks.ca/")
-}
-
 export const AccordionList = ({ eventKey, camping, open, hasReservation, reservations }) => {
   const [isShow, setIsShow] = useState(false)
 
@@ -124,6 +120,12 @@ export default function CampingDetails({ data }) {
     return newText
   }
 
+  const toFrontCountryReservations = () => {
+    const reservationsURL = "https://camping.bcparks.ca"
+    const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
+    navigate(parkReservationsURL)
+  }  
+
   return (
     <div id="park-camping-details-container" className="anchor-link">
       <Row>
@@ -135,7 +137,7 @@ export default function CampingDetails({ data }) {
             <button
               aria-label="Book camping"
               className="btn btn-warning w-100"
-              onClick={() => toCamping()}
+              onClick={() => toFrontCountryReservations()}
             >
               Book camping
             </button>
