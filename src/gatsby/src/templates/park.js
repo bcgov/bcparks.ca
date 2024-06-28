@@ -15,7 +15,7 @@ import PageMenu from "../components/pageContent/pageMenu"
 import Contact from "../components/park/contact"
 import AdvisoryDetails from "../components/park/advisoryDetails"
 import CampingDetails from "../components/park/campingDetails"
-import NatureAndCulture from "../components/park/natureAndCulture"
+import About from "../components/park/about"
 import Reconciliation from "../components/park/reconciliation"
 import ParkActivity from "../components/park/parkActivity"
 import ParkDates from "../components/park/parkDates"
@@ -467,7 +467,7 @@ export default function ParkTemplate({ data }) {
             )}
             {menuItems[7].visible && (
               <div ref={aboutRef} className="w-100">
-                <NatureAndCulture
+                <About
                   parkType={parkType}
                   natureAndCulture={natureAndCulture}
                   biogeoclimaticZones={park.biogeoclimaticZones}
