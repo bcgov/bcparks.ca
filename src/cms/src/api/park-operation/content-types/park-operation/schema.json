@@ -182,6 +182,30 @@
     },
     "gateClosesAtDusk": {
       "type": "boolean"
+    },
+    "frontcountryReservationUrl": {
+      "type": "string"
+    },
+    "frontcountryGroupReservationUrl": {
+      "type": "string"
+    },
+    "frontcountryCabinReservationUrl": {
+      "type": "string"
+    },
+    "backcountryGroupReservationUrl": {
+      "type": "string"
+    },
+    "backcountryWildernessReservationUrl": {
+      "type": "string"
+    },
+    "backcountryShelterReservationUrl": {
+      "type": "string"
+    },
+    "canoeCircuitReservationUrl": {
+      "type": "string"
+    },
+    "groupPicnicReservationUrl": {
+      "type": "string"
     }
   }
 }
