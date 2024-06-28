@@ -9,7 +9,7 @@ import MenuLogoLocal from './extensions/local-icon.png';
 let envBanner = "Strapi"
 let MenuLogo = null
 
-switch (process.env.STRAPI_ADMIN_ENVIRONMENT) {
+switch (process?.env.STRAPI_ADMIN_ENVIRONMENT) {
   case "local":
     MenuLogo = MenuLogoLocal
     envBanner = "Local environment"
