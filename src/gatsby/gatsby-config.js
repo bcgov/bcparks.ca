@@ -42,7 +42,6 @@ module.exports = {
           "legacy-redirect",
           "menu",
           "footer-menu",
-          "park-guideline",
           "park-operation",
           "park-operation-date",
           "park-operation-sub-area",

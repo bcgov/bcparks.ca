@@ -650,17 +650,15 @@ export const query = graphql`
         }
       }
       parkGuidelines {
-        order
         isActive
-        overrideTitle
-        overrideDescription
-        appendDescription
+        rank
         title
         description {
           data
         }
         guidelineType {
           icon
+          defaultRank
           defaultTitle
           defaultDescription {
             data

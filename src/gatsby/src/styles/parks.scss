@@ -472,3 +472,22 @@ h2.section-heading {
     text-decoration: underline;
   }
 }
+
+// visitor guidelines
+.guideline {
+  margin-bottom: 16px;
+  &--left {
+    svg {
+      font-size: 2.25rem;
+      color: $colorBlue;
+    }
+  }
+  &--right {
+    h4 {
+      margin-bottom: 8px;
+    }
+    p {
+      margin-bottom: 0;
+    }
+  }
+}

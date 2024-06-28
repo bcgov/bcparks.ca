@@ -14,25 +14,15 @@
     "name": {
       "type": "string"
     },
-    "order": {
-      "type": "integer",
-      "min": 1,
-      "default": 1,
-      "required": true
-    },
     "isActive": {
       "type": "boolean",
       "default": false,
       "required": true
     },
-    "overrideTitle": {
-      "type": "boolean"
-    },
-    "overrideDescription": {
-      "type": "boolean"
-    },
-    "appendDescription": {
-      "type": "boolean"
+    "rank": {
+      "type": "integer",
+      "min": 1,
+      "default": 1
     },
     "title": {
       "type": "string"
@@ -54,6 +44,15 @@
       "relation": "manyToOne",
       "target": "api::protected-area.protected-area",
       "inversedBy": "parkGuidelines"
+    },
+    "mediaLink": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
     }
   }
 }

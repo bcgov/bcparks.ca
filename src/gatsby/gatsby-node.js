@@ -81,20 +81,17 @@ exports.createSchemaCustomization = ({ actions }) => {
   }
   
   type STRAPI_GUIDELINE_TYPE implements Node @dontInfer {
-    guidelineNumber: Int
     guidelineName: String
     icon: String
+    defaultRank: Int
     defaultTitle: String
     defaultDescription: DATA
   }
 
   type STRAPI_PARK_GUIDELINE implements Node @dontInfer {
     name: String
-    order: Int
     isActive: Boolean
-    overrideTitle: Boolean
-    overrideDescription: Boolean
-    appendDescription: Boolean
+    rank: Int
     title: String
     description: DATA
     guidelineType: STRAPI_GUIDELINE_TYPE
