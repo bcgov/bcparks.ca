@@ -11,7 +11,7 @@ export const Guideline = ({ guide }) => {
   return (
     <Row className="guideline mb-4">
       <Col xs="auto" className="guideline--left">
-      <FontAwesomeIcon icon={`fa-regular fa-${guidelineType.icon}`} />
+        <FontAwesomeIcon icon={`fa-regular fa-${guidelineType.icon}`} />
       </Col>
       <Col className="guideline--right">
         <h4>{guide.title ? guide.title : guidelineType.defaultTitle}</h4>
@@ -27,7 +27,7 @@ export default function VisitorGuidelines({ guidelines }) {
   console.log("guidelines", guidelines)
   // filter isActive and sort by order
   const sortedGuidelines =
-    guidelines.filter(guide => guide.isActive).sort((a, b) => a.order - b.order)
+    guidelines.filter(guide => guide.isActive).sort((a, b) => a.defaultRank - b.defaultRank)
   return (
     <>
       <h3>Visitor guidelines</h3>
