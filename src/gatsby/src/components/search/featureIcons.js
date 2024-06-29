@@ -62,7 +62,7 @@ const FeatureIcons = ({ page, slug, iconSize, parkFacilities, parkActivities, ca
                 <p aria-label="See all facilities and activities">see all</p>
               </Link>
             ) : (
-              <Link to={`/${slug}/#park-activity-container`}>
+              <Link to={`/${slug}/#park-things-to-do-container`}>
                 <p aria-label="See all facilities and activities">see all</p>
               </Link>
             )
