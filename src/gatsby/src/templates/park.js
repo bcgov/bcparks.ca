@@ -373,7 +373,7 @@ export default function ParkTemplate({ data }) {
                   {park.parkGuidelines.length > 0 &&
                     <Row>
                       <Col>
-                        <VisitorGuidelines guidelines={park.parkGuidelines} />
+                        <VisitorGuidelines guidelines={park.parkGuidelines} api={apiBaseUrl} />
                       </Col>
                     </Row>
                   }
@@ -650,6 +650,7 @@ export const query = graphql`
         }
       }
       parkGuidelines {
+        strapi_id
         isActive
         rank
         title

@@ -89,6 +89,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   }
 
   type STRAPI_PARK_GUIDELINE implements Node @dontInfer {
+    strapi_id: Int
     name: String
     isActive: Boolean
     rank: Int
