@@ -52,15 +52,16 @@ export const Guideline = ({ guide, api }) => {
 }
 
 export default function VisitorGuidelines({ guidelines, api }) {
+  console.log(guidelines)
   // filter isActive and sort by order
   const sortedGuidelines =
     guidelines.filter(guide => guide.isActive).sort((a, b) => {
-      // Check if both have guidelineType.rank
-      if (a.guidelineType.rank && b.guidelineType.rank) {
-        return a.guidelineType.rank - b.guidelineType.rank;
+      // Check if both have rank to override defaultRank
+      if (a.rank && b.rank) {
+        return a.rank - b.rank;
       }
-      // Fallback to defaultRank if one or both don't have guidelineType.rank
-      return a.defaultRank - b.defaultRank
+      // Fallback to defaultRank if one or both don't have rank
+      return a.guidelineType.defaultRank - b.guidelineType.defaultRank
     })
   return (
     <>
