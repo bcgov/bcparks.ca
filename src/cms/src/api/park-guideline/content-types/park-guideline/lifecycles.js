@@ -1,7 +1,5 @@
 "use strict";
 
-// const { indexPark } = require("../../../../helpers/taskQueue.js");
-
 const updateName = async (data, where) => {
 	if (where) {
 		const id = where.id

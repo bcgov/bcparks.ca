@@ -31,7 +31,7 @@ export const Guideline = ({ guide, api }) => {
   }, [api, guide.strapi_id])
 
   return (
-    <Row className="guideline mb-4">
+    <Row className="guideline">
       <Col xs="auto" className="guideline--left">
         <FontAwesomeIcon icon={`fa-regular fa-${guidelineType.icon}`} />
       </Col>
@@ -41,10 +41,10 @@ export const Guideline = ({ guide, api }) => {
           {guide.description.data ? guide.description.data : guidelineType.defaultDescription.data}
         </HtmlContent>
         {(!guideLoadError && media !== null) &&
-          <>
+          <p>
             View the <a href={media.url}>View the trail conditions report [PDF]</a>
             {` (${formatDate(media.updatedAt)})`}.
-          </>
+          </p>
         }
       </Col>
     </Row>
