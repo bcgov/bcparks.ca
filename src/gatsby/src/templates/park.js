@@ -35,6 +35,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import VisitResponsibly from "../components/park/visitResponsibly"
 import ReservationsRequired from "../components/park/reservationsRequired"
+import VisitorGuidelines from "../components/park/visitorGuidelines"
 
 export default function ParkTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
@@ -381,6 +382,13 @@ export default function ParkTemplate({ data }) {
                   {!isLoadingAdvisories && !advisoryLoadError && (
                     <AdvisoryDetails advisories={advisories} parkType={parkType} />
                   )}
+                  {park.parkGuidelines.length > 0 &&
+                    <Row>
+                      <Col>
+                        <VisitorGuidelines guidelines={park.parkGuidelines} api={apiBaseUrl} />
+                      </Col>
+                    </Row>
+                  }
                   {!isNullOrWhiteSpace(safetyInfo) &&
                     <SafetyInfo safetyInfo={safetyInfo} />
                   }
@@ -629,6 +637,23 @@ export const query = graphql`
             data
           }
           appendStandardCalloutText {
+            data
+          }
+        }
+      }
+      parkGuidelines {
+        strapi_id
+        isActive
+        rank
+        title
+        description {
+          data
+        }
+        guidelineType {
+          icon
+          defaultRank
+          defaultTitle
+          defaultDescription {
             data
           }
         }

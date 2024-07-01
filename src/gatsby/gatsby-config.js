@@ -37,6 +37,7 @@ module.exports = {
           "access-status",
           "activity-type",
           "facility-type",
+          "guideline-type",
           "legacy-redirect",
           "menu",
           "footer-menu",
@@ -77,6 +78,9 @@ module.exports = {
                 },
                 parkFacilities: {
                   populate: ["facilityType"]
+                },
+                parkGuidelines: {
+                  populate: ["guidelineType"]
                 },
                 parkOperation: {
                   fields: "*"
