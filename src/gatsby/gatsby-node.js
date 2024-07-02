@@ -80,14 +80,22 @@ exports.createSchemaCustomization = ({ actions }) => {
     hideStandardCallout: Boolean
   }
   
-  type STRAPI_GUIDELINE_TYPE implements Node @dontInfer {
+  type STRAPI_GUIDELINE_TYPE_DEFAULTDESCRIPTION_TEXTNODE implements Node @dontInfer {
+    defaultDescription: String
+  }
+
+  type STRAPI_GUIDELINE_TYPEDefaultDescription {
+    data: STRAPI_GUIDELINE_TYPE_DEFAULTDESCRIPTION_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_GUIDELINE_TYPE implements Node @derivedTypes @dontInfer {
     guidelineName: String
     icon: String
     defaultRank: Int
     defaultTitle: String
-    defaultDescription: DATA
+    defaultDescription: STRAPI_GUIDELINE_TYPEDefaultDescription
   }
-    
+
   type STRAPI__MEDIA implements Node @dontInfer {
     name: String
     url: String
@@ -95,13 +103,20 @@ exports.createSchemaCustomization = ({ actions }) => {
     updatedAt: Date
   }
 
+  type STRAPI_PARK_GUIDELINE_DESCRIPTION_TEXTNODE implements Node @dontInfer {
+    description: String
+  }
+
+  type STRAPI_PARK_GUIDELINEDescription {
+    data: STRAPI_PARK_GUIDELINE_DESCRIPTION_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
   type STRAPI_PARK_GUIDELINE implements Node @derivedTypes @dontInfer {
-    strapi_id: Int
     name: String
     isActive: Boolean
     rank: Int
     title: String
-    description: DATA
+    description: STRAPI_PARK_GUIDELINEDescription
     guidelineType: STRAPI_GUIDELINE_TYPE @link(by: "id", from: "guidelineType___NODE")
     mediaLink: STRAPI__MEDIA @link(by: "id", from: "mediaLink___NODE")
   }

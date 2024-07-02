@@ -650,19 +650,22 @@ export const query = graphql`
         }
       }
       parkGuidelines {
-        strapi_id
         isActive
         rank
         title
         description {
-          data
+          data {
+            description
+          }
         }
         guidelineType {
           icon
           defaultRank
           defaultTitle
           defaultDescription {
-            data
+            data {
+              defaultDescription 
+            }
           }
         }
         mediaLink {
