@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react"
-import axios from "axios"
+import React from "react"
 import { parseISO, format } from "date-fns"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -12,23 +11,9 @@ const formatDate = (str) => {
   return format(date, 'MMMM d, yyyy')
 }
 
-export const Guideline = ({ guide, api }) => {
+export const Guideline = ({ guide }) => {
   const guidelineType = guide.guidelineType
-  const [media, setMedia] = useState(null)
-  const [guideLoadError, setGuideLoadError] = useState(false)
-
-  // Get media data through api
-  useEffect(() => {
-    const getGuideData = async () => {
-      try {
-        const response = await axios.get(`${api}/park-guidelines/${guide.strapi_id}?populate=*`)
-        setMedia(response.data.data.attributes.mediaLink.data.attributes)
-      } catch (error) {
-        setGuideLoadError(true)
-      }
-    }
-    getGuideData()
-  }, [api, guide.strapi_id])
+  const media = guide.mediaLink
 
   return (
     <Row className="guideline">
@@ -40,9 +25,9 @@ export const Guideline = ({ guide, api }) => {
         <HtmlContent>
           {guide.description.data ? guide.description.data : guidelineType.defaultDescription.data}
         </HtmlContent>
-        {(!guideLoadError && media !== null) &&
+        {media !== null &&
           <p>
-            View the <a href={media.url}>View the trail conditions report [PDF]</a>
+            View the <a href={media.url}>trail conditions report [PDF]</a>
             {` (${formatDate(media.updatedAt)})`}.
           </p>
         }
@@ -51,9 +36,8 @@ export const Guideline = ({ guide, api }) => {
   )
 }
 
-export default function VisitorGuidelines({ guidelines, api }) {
-  console.log(guidelines)
-  // filter isActive and sort by order
+export default function VisitorGuidelines({ guidelines }) {
+  // Filter isActive and sort by order
   const sortedGuidelines =
     guidelines.filter(guide => guide.isActive).sort((a, b) => {
       // Check if both have rank to override defaultRank
@@ -67,7 +51,7 @@ export default function VisitorGuidelines({ guidelines, api }) {
     <>
       <h3>Visitor guidelines</h3>
       {sortedGuidelines.map((guide, index) => (
-        <Guideline key={index} guide={guide} api={api} />
+        <Guideline key={index} guide={guide} />
       ))}
     </>
   )

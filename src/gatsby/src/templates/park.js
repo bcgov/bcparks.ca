@@ -373,7 +373,7 @@ export default function ParkTemplate({ data }) {
                   {park.parkGuidelines.length > 0 &&
                     <Row>
                       <Col>
-                        <VisitorGuidelines guidelines={park.parkGuidelines} api={apiBaseUrl} />
+                        <VisitorGuidelines guidelines={park.parkGuidelines} />
                       </Col>
                     </Row>
                   }
@@ -664,6 +664,10 @@ export const query = graphql`
           defaultDescription {
             data
           }
+        }
+        mediaLink {
+          url
+          updatedAt
         }
       }
       parkOperation {

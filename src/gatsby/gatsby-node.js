@@ -87,15 +87,23 @@ exports.createSchemaCustomization = ({ actions }) => {
     defaultTitle: String
     defaultDescription: DATA
   }
+    
+  type STRAPI__MEDIA implements Node @dontInfer {
+    name: String
+    url: String
+    createdAt: Date
+    updatedAt: Date
+  }
 
-  type STRAPI_PARK_GUIDELINE implements Node @dontInfer {
+  type STRAPI_PARK_GUIDELINE implements Node @derivedTypes @dontInfer {
     strapi_id: Int
     name: String
     isActive: Boolean
     rank: Int
     title: String
     description: DATA
-    guidelineType: STRAPI_GUIDELINE_TYPE
+    guidelineType: STRAPI_GUIDELINE_TYPE @link(by: "id", from: "guidelineType___NODE")
+    mediaLink: STRAPI__MEDIA @link(by: "id", from: "mediaLink___NODE")
   }
 
   type STRAPI_PROTECTED_AREA implements Node {
